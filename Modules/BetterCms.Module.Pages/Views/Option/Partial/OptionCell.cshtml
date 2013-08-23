@@ -14,7 +14,7 @@
         <input type="checkbox" class="bcms-checkbox-holder" data-bind="
             checked: @(Model.ValueBind),
             click: onItemSelect,
-            event: {blur: onBlurField, focus: onStopEvent},
+            event: {blur: onBlurField, focus: onItemSelect},
             enterPress: onSave, 
             escPress: onCancelEdit
             @(Model.AutoFocus ? ", hasfocus: isActive() && hasFocus" : "") " />
@@ -39,7 +39,7 @@
             <input class="bcms-editor-field-box bcms-datepicker" data-bind="
                 value: @(Model.ValueBind),
                 click: onItemSelect,
-                event: {blur: onBlurField, focus: onStopEvent},
+                event: {blur: onBlurField, focus: onItemSelect},
                 enterPress: onSave, 
                 escPress: onCancelEdit,
                 afterRender: initDatePickers()

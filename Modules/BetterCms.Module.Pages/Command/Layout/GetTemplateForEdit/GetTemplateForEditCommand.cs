@@ -3,11 +3,11 @@ using System.Linq;
 
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Mvc.Commands;
-
+using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Templates;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.ViewModels.Option;
 
 using NHibernate.Transform;
 
@@ -15,11 +15,18 @@ namespace BetterCms.Module.Pages.Command.Layout.GetTemplateForEdit
 {
     public class GetTemplateForEditCommand : CommandBase, ICommand<Guid?, TemplateEditViewModel>
     {
+        private ILayoutService layoutService;
+
+        public GetTemplateForEditCommand(ILayoutService layoutService)
+        {
+            this.layoutService = layoutService;
+        }
+
         public TemplateEditViewModel Execute(Guid? templateId)
         {
             TemplateEditViewModel templateModel;
 
-            if (templateId == null)
+            if (!templateId.HasValue)
             {
                 templateModel = new TemplateEditViewModel();
             }
@@ -56,19 +63,6 @@ namespace BetterCms.Module.Pages.Command.Layout.GetTemplateForEdit
                     .TransformUsing(Transformers.AliasToBean<TemplateRegionItemViewModel>())
                     .Future<TemplateRegionItemViewModel>();
 
-                LayoutOption layoutOptionAlias = null;
-                OptionViewModel optionViewModelAlias = null;
-
-                var options = UnitOfWork.Session
-                      .QueryOver(() => layoutOptionAlias)
-                      .Where(() => layoutOptionAlias.Layout.Id == templateId && !layoutOptionAlias.IsDeleted)
-                      .SelectList(select => select
-                          .Select(() => layoutOptionAlias.Type).WithAlias(() => optionViewModelAlias.Type)
-                          .Select(() => layoutOptionAlias.DefaultValue).WithAlias(() => optionViewModelAlias.OptionDefaultValue)
-                          .Select(() => layoutOptionAlias.Key).WithAlias(() => optionViewModelAlias.OptionKey))
-                      .TransformUsing(Transformers.AliasToBean<OptionViewModel>())
-                      .Future<OptionViewModel>();
-
                 templateModel = templateFuture.Value;
                 if (templateModel == null)
                 {
@@ -76,7 +70,7 @@ namespace BetterCms.Module.Pages.Command.Layout.GetTemplateForEdit
                 }
 
                 templateModel.Regions = regions.ToList();
-                templateModel.Options = options.OrderBy(o => o.OptionKey).ToList();
+                templateModel.Options = layoutService.GetLayoutOptions(templateId.Value);
             }
 
             return templateModel;

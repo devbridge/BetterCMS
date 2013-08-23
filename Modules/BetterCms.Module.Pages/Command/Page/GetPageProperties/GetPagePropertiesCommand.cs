@@ -4,6 +4,7 @@ using System.Linq;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -35,7 +36,15 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         /// </summary>
         private readonly IOptionService optionService;
 
+        /// <summary>
+        /// The CMS configuration
+        /// </summary>
         private readonly ICmsConfiguration cmsConfiguration;
+        
+        /// <summary>
+        /// The layout service
+        /// </summary>
+        private readonly ILayoutService layoutService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetPagePropertiesCommand" /> class.
@@ -44,12 +53,15 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         /// <param name="categoryService">The category service.</param>
         /// <param name="optionService">The option service.</param>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
-        public GetPagePropertiesCommand(ITagService tagService, ICategoryService categoryService, IOptionService optionService, ICmsConfiguration cmsConfiguration)
+        /// <param name="layoutService">The layout service.</param>
+        public GetPagePropertiesCommand(ITagService tagService, ICategoryService categoryService, IOptionService optionService,
+            ICmsConfiguration cmsConfiguration, ILayoutService layoutService)
         {
             this.tagService = tagService;
             this.categoryService = categoryService;
             this.optionService = optionService;
             this.cmsConfiguration = cmsConfiguration;
+            this.layoutService = layoutService;
         }
 
         /// <summary>
@@ -140,6 +152,13 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                                                     ObjectId = x.ObjectId,
                                                     RoleOrUser = x.RoleOrUser
                                                 }).ToList();
+                }
+
+                // Get templates
+                model.Model.Templates = layoutService.GetLayouts();
+                if (!model.Model.TemplateId.HasDefaultValue())
+                {
+                    model.Model.Templates.Where(x => x.TemplateId == model.Model.TemplateId).ToList().ForEach(x => x.IsActive = true);
                 }
             }
 

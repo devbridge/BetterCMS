@@ -11,13 +11,13 @@ namespace BetterCms.Configuration
         private const string UseMinifiedResourcesAttribute = "useMinifiedResources";
         private const string ResourcesBasePathAttribute = "resourcesBasePath";
         private const string LoginUrlAttribute = "loginUrl";
+        private const string WebSiteUrlAttribute = "webSiteUrl";
         private const string PageNotFoundUrlAttribute = "pageNotFoundUrl";
         private const string UrlModeAttribute = "urlMode";
         private const string DatabaseNode = "database";
         private const string StorageNode = "storage";
         private const string CacheNode = "cache";
         private const string SecurityNode = "security";
-        private const string ApiNode = "api";
         private const string ModuleGalleryNode = "moduleGallery";
         private const string WorkingDirectoryRootPathAttribute = "workingDirectoryRootPath";
         private const string ArticleUrlPatternAttribute = "articleUrlPattern";
@@ -81,6 +81,19 @@ namespace BetterCms.Configuration
         {
             get { return Convert.ToString(this[LoginUrlAttribute]); }
             set { this[LoginUrlAttribute] = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the web site URL.
+        /// </summary>
+        /// <value>
+        /// The web site URL.
+        /// </value>
+        [ConfigurationProperty(WebSiteUrlAttribute, DefaultValue = "Auto", IsRequired = false)]
+        public string WebSiteUrl
+        {
+            get { return Convert.ToString(this[WebSiteUrlAttribute]); }
+            set { this[WebSiteUrlAttribute] = value; }
         }
 
         /// <summary>

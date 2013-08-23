@@ -30,6 +30,8 @@ namespace BetterCms.Module.Root.ViewModels.Shared
         public virtual bool AddPaging { get; set; }
 
         public virtual bool AddHiddenFields { get; set; }
+        
+        public virtual bool ShowMessages { get; set; }
 
         public virtual IList<EditableGridColumn> Columns { get; set; }
 

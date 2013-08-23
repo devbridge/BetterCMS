@@ -3,6 +3,7 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Services;
 
 using ServiceStack.ServiceInterface;
 
@@ -11,10 +12,13 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
     public class MediaTreeService : Service, IMediaTreeService
     {
         private readonly IRepository repository;
+        
+        private readonly IMediaFileService fileService;
 
-        public MediaTreeService(IRepository repository)
+        public MediaTreeService(IRepository repository, IMediaFileService fileService)
         {
             this.repository = repository;
+            this.fileService = fileService;
         }
 
         public GetMediaTreeResponse Get(GetMediaTreeRequest request)
@@ -76,6 +80,14 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
                                      Url = (media is MediaFile || media is MediaImage) ? ((MediaFile)media).PublicUrl : null,
                                      IsArchived = media.IsArchived
                                  }).ToList();
+
+            mediaItems.ForEach(media =>
+                                   {
+                                       if (media.MediaContentType == MediaContentType.File)
+                                       {
+                                           media.Url = fileService.GetDownloadFileUrl(mediaType, media.Id, media.Url);
+                                       }
+                                   });
 
             return GetChildren(mediaItems, null);
         }

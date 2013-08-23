@@ -152,9 +152,26 @@ namespace BetterCms.Module.Root.Services
             IEnumerable<IOption> parentOptions, Func<TEntity> entityCreator)
             where TEntity : Entity, IOption
         {
+            if (optionViewModels == null)
+            {
+                return;
+            }
+
+            if (savedOptionValues != null)
+            {
+                savedOptionValues.
+                    Where(sov => optionViewModels.All(ovm => ovm.OptionKey != sov.Key)).
+                    ToList().
+                    ForEach(del => repository.Delete(del));
+            }
+
             foreach (var optionViewModel in optionViewModels)
             {
-                var savedOptionValue = savedOptionValues.FirstOrDefault(f => f.Key.Trim().Equals(optionViewModel.OptionKey.Trim(), StringComparison.OrdinalIgnoreCase));
+                TEntity savedOptionValue = null;
+                if (savedOptionValues != null)
+                {
+                    savedOptionValue = savedOptionValues.FirstOrDefault(f => f.Key.Trim().Equals(optionViewModel.OptionKey.Trim(), StringComparison.OrdinalIgnoreCase));
+                }
                 var parentOption = parentOptions.FirstOrDefault(f => f.Key.Trim().Equals(optionViewModel.OptionKey.Trim(), StringComparison.OrdinalIgnoreCase));
                 var save = parentOption == null
                     || !string.IsNullOrEmpty(optionViewModel.OptionValue);

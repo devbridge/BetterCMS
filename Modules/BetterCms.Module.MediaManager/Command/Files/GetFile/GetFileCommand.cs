@@ -3,11 +3,14 @@ using System.Globalization;
 using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Services.Storage;
+
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.MediaManager.ViewModels.File;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Security;
@@ -24,17 +27,34 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
         /// </summary>
         private readonly ITagService tagService;
 
+        /// <summary>
+        /// The CMS configuration
+        /// </summary>
         private readonly ICmsConfiguration cmsConfiguration;
+
+        /// <summary>
+        /// The storage service
+        /// </summary>
+        private readonly IStorageService storageService;
+
+        /// <summary>
+        /// The file service
+        /// </summary>
+        private readonly IMediaFileService fileService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetFileCommand" /> class.
         /// </summary>
         /// <param name="tagService">The tag service.</param>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
-        public GetFileCommand(ITagService tagService, ICmsConfiguration cmsConfiguration)
+        /// <param name="storageService">The storage service.</param>
+        /// <param name="fileService">The file service.</param>
+        public GetFileCommand(ITagService tagService, ICmsConfiguration cmsConfiguration, IStorageService storageService, IMediaFileService fileService)
         {
             this.tagService = tagService;
             this.cmsConfiguration = cmsConfiguration;
+            this.storageService = storageService;
+            this.fileService = fileService;
         }
 
         /// <summary>
@@ -81,6 +101,8 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
                                                 ObjectId = x.ObjectId,
                                                 RoleOrUser = x.RoleOrUser
                                             }).ToList();
+
+                model.Url = fileService.GetDownloadFileUrl(MediaType.File, model.Id.ToGuidOrDefault(), model.Url);
             }
 
 

@@ -71,6 +71,12 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 return newItem;
             };
 
+            OptionValuesListViewModel.prototype.onAfterNewItemAdded = function (item) {
+                if (item.canEditOption !== false && item.key.domElement) {
+                    $(item.key.domElement).focus();
+                }
+            };
+
             return OptionValuesListViewModel;
         })(OptionsListViewModel);
 
@@ -146,21 +152,26 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 });
 
                 self.initDatePickers = function () {
-                    var datePickerOpts = {
-                        onSelect: function (newDate) {
-                            self.isSelected = true;
-                            self.editableValue(newDate);
-                        }
-                    },
-                        row = $('#' + self.rowId),
-                        datePickerBoxes;
+                    if (!self.datePickersRendered) {
+                        self.datePickersRendered = true;
 
-                    row.find(selectors.datePickers).initializeDatepicker(globalization.datePickerTooltipTitle, datePickerOpts);
+                        var datePickerOpts = {
+                            onSelect: function(newDate) {
+                                self.isSelected = true;
+                                self.editableValue(newDate);
+                            }
+                        },
+                            row = $('#' + self.rowId),
+                            datePickerBoxes,
+                            datePickers = row.find(selectors.datePickers);
 
-                    datePickerBoxes = row.find(selectors.datePickerBoxes);
-                    datePickerBoxes.on('click', self.onItemSelect);
-                    datePickerBoxes.on('focus', self.onItemSelect);
-                    datePickerBoxes.on('blur', self.onBlurField);
+                        datePickers.initializeDatepicker(globalization.datePickerTooltipTitle, datePickerOpts);
+
+                        datePickerBoxes = row.find(selectors.datePickerBoxes);
+                        datePickerBoxes.on('click', self.onItemSelect);
+                        datePickerBoxes.on('focus', self.onItemSelect);
+                        datePickerBoxes.on('blur', self.onBlurField);
+                    }
                 };
                 
                 // Set values
@@ -170,6 +181,18 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.type(item.Type);
                 self.canEditOption = item.CanEditOption;
                 self.disableFieldsEditing();
+
+                self.isActive.subscribe(function(newValue) {
+                    if (!newValue) {
+                        self.datePickersRendered = false;
+                    }
+                });
+                
+                self.type.subscribe(function (newValue) {
+                    if (newValue != optionTypes.dateTimeType) {
+                        self.datePickersRendered = false;
+                    }
+                });
             };
 
             OptionViewModel.prototype.getValueField = function() {

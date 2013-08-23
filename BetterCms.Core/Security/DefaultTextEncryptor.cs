@@ -24,30 +24,37 @@ namespace BetterCms.Core.Security
         }
 
         public string Encrypt(string text)
-        {         
+        {
             if (!configuration.Security.EnableContentEncryption)
             {
                 return text;
             }
 
-            var bytes = GetBytes();
-
-            using (var memoryStream = new MemoryStream())
+            try
             {
-                using (ICryptoTransform encryptor = cryptoProvider.CreateEncryptor(bytes, bytes))
-                {
-                    using (var cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write))
-                    {
-                        using (var writer = new StreamWriter(cryptoStream))
-                        {
-                            writer.Write(text);
-                            writer.Flush();
-                            cryptoStream.FlushFinalBlock();
+                var bytes = GetBytes();
 
-                            return Convert.ToBase64String(memoryStream.GetBuffer(), 0, (int)memoryStream.Length);
+                using (var memoryStream = new MemoryStream())
+                {
+                    using (ICryptoTransform encryptor = cryptoProvider.CreateEncryptor(bytes, bytes))
+                    {
+                        using (var cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write))
+                        {
+                            using (var writer = new StreamWriter(cryptoStream))
+                            {
+                                writer.Write(text);
+                                writer.Flush();
+                                cryptoStream.FlushFinalBlock();
+
+                                return Convert.ToBase64String(memoryStream.GetBuffer(), 0, (int)memoryStream.Length);
+                            }
                         }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new CmsException("Encryption failed.", ex);
             }
         }
 
@@ -58,20 +65,27 @@ namespace BetterCms.Core.Security
                 return encryptedText;
             }
 
-            var bytes = GetBytes();
-
-            using (var memoryStream = new MemoryStream(Convert.FromBase64String(encryptedText)))
+            try
             {
-                using (ICryptoTransform decryptor = cryptoProvider.CreateDecryptor(bytes, bytes))
+                var bytes = GetBytes();
+
+                using (var memoryStream = new MemoryStream(Convert.FromBase64String(encryptedText)))
                 {
-                    using (var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
+                    using (ICryptoTransform decryptor = cryptoProvider.CreateDecryptor(bytes, bytes))
                     {
-                        using (var reader = new StreamReader(cryptoStream))
+                        using (var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
                         {
-                            return reader.ReadToEnd();
+                            using (var reader = new StreamReader(cryptoStream))
+                            {
+                                return reader.ReadToEnd();
+                            }
                         }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new CmsException("Decryption failed.", ex);
             }
         }
 

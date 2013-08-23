@@ -9,7 +9,7 @@ namespace BetterCms.Module.Root.Models
     /// UserAccess entity.
     /// </summary>
     [Serializable]
-    public class UserAccess : EquatableEntity<UserAccess>
+    public class UserAccess : EquatableEntity<UserAccess>, IUserAccess
     {
         /// <summary>
         /// Gets or sets the object id.

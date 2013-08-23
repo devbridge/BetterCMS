@@ -4,6 +4,7 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Services;
 
 using ServiceStack.ServiceInterface;
 
@@ -13,9 +14,12 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
     {
         private readonly IRepository repository;
 
-        public FilesService(IRepository repository)
+        private readonly IMediaFileService fileService;
+
+        public FilesService(IRepository repository, IMediaFileService fileService)
         {
             this.repository = repository;
+            this.fileService = fileService;
         }
 
         public GetFilesResponse Get(GetFilesRequest request)
@@ -68,6 +72,14 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
                             ThumbnailId = media.Image.Id
 
                         }).ToDataListResponse(request);
+
+            listResponse.Items.ToList().ForEach(media =>
+                {
+                    if (media.MediaContentType == MediaContentType.File)
+                    {
+                        media.FileUrl = fileService.GetDownloadFileUrl(MediaType.File, media.Id, media.FileUrl);
+                    }
+                });
 
             return new GetFilesResponse
                        {

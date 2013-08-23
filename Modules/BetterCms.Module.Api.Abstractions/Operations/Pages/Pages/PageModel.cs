@@ -123,5 +123,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         /// </value>
         [DataMember]
         public bool IsArchived { get; set; }
+
+        [DataMember]
+        public System.Collections.Generic.List<OptionModel> Options  { get; set; }
     }
 }

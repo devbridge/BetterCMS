@@ -4,8 +4,10 @@ using System.Linq;
 
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Models.Extensions;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.MediaManager.ViewModels.Upload;
 using BetterCms.Module.Root.Models;
@@ -16,14 +18,18 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
     public class ConfirmUploadCommand : CommandBase, ICommand<MultiFileUploadViewModel, ConfirmUploadResponse>
     {
         private readonly ICmsConfiguration cmsConfiguration;
+        
+        private readonly IMediaFileService fileService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConfirmUploadCommand"/> class.
+        /// Initializes a new instance of the <see cref="ConfirmUploadCommand" /> class.
         /// </summary>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
-        public ConfirmUploadCommand(ICmsConfiguration cmsConfiguration)
+        /// <param name="fileService">The file service.</param>
+        public ConfirmUploadCommand(ICmsConfiguration cmsConfiguration, IMediaFileService fileService)
         {
             this.cmsConfiguration = cmsConfiguration;
+            this.fileService = fileService;
         }
 
         /// <summary>
@@ -165,7 +171,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
             model.Type = file.Type;
             model.Version = file.Version;
             model.ContentType = MediaContentType.File;
-            model.PublicUrl = file.PublicUrl;
+            model.PublicUrl = fileService.GetDownloadFileUrl(file.Type, file.Id, file.PublicUrl);
             model.FileExtension = file.OriginalFileExtension;
             model.IsProcessing = isProcessing;
             model.IsFailed = isFailed;

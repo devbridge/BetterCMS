@@ -196,7 +196,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
                 // Upload image to storage
                 bytes = image.GetBytes();
                 var memoryStream = new MemoryStream(bytes);
-                StorageService.UploadObject(new UploadRequest { InputStream = memoryStream, Uri = mediaImage.FileUri });
+                StorageService.UploadObject(new UploadRequest { InputStream = memoryStream, Uri = mediaImage.FileUri, IgnoreAccessControl = true });
                 
                 mediaImage.Size = bytes.Length;
 

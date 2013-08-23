@@ -7,12 +7,13 @@ using System.Web;
 using BetterCms.Configuration;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Core.Web;
+using BetterCms.Module.MediaManager.Controllers;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 using Common.Logging;
 
@@ -125,7 +126,7 @@ namespace BetterCms.Module.MediaManager.Services
             repository.Save(file);
             unitOfWork.Commit();
 
-            Task fileUploadTask = UploadMediaFileToStorage<MediaFile>(fileStream, file.FileUri, file.Id, media => { media.IsUploaded = true; }, media => { media.IsUploaded = false; });
+            Task fileUploadTask = UploadMediaFileToStorage<MediaFile>(fileStream, file.FileUri, file.Id, media => { media.IsUploaded = true; }, media => { media.IsUploaded = false; }, false);
             fileUploadTask.ContinueWith(
                 task =>
                     {
@@ -176,10 +177,11 @@ namespace BetterCms.Module.MediaManager.Services
         /// <param name="mediaId">The media id.</param>
         /// <param name="updateMediaAfterUpload">An action to update a specific field for the media after file upload.</param>
         /// <param name="updateMediaAfterFail">An action to update a specific field for the media after file upload fails.</param>
+        /// <param name="ignoreAccessControl">if set to <c>true</c> ignore access control.</param>
         /// <returns>
         /// Upload file task.
         /// </returns>
-        public Task UploadMediaFileToStorage<TMedia>(Stream sourceStream, Uri fileUri, Guid mediaId, Action<TMedia> updateMediaAfterUpload, Action<TMedia> updateMediaAfterFail) where TMedia : MediaFile
+        public Task UploadMediaFileToStorage<TMedia>(Stream sourceStream, Uri fileUri, Guid mediaId, Action<TMedia> updateMediaAfterUpload, Action<TMedia> updateMediaAfterFail, bool ignoreAccessControl) where TMedia : MediaFile
         {
             var stream = new MemoryStream();
 
@@ -193,6 +195,7 @@ namespace BetterCms.Module.MediaManager.Services
                     upload.CreateDirectory = true;
                     upload.Uri = fileUri;
                     upload.InputStream = stream;
+                    upload.IgnoreAccessControl = ignoreAccessControl;
 
                     storageService.UploadObject(upload);
                 });
@@ -265,6 +268,16 @@ namespace BetterCms.Module.MediaManager.Services
             }
 
             return rootPath;
+        }
+
+        public string GetDownloadFileUrl(MediaType type, Guid id, string fileUrl)
+        {
+            if (type == MediaType.Image || !configuration.AccessControlEnabled || !storageService.SecuredUrlsEnabled)
+            {
+                return fileUrl;
+            }
+
+            return CmsUrlHelper.GetFullActionUrl<FilesController>(f => f.Download(id.ToString()));
         }
     }
 }

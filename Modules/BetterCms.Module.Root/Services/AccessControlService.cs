@@ -41,37 +41,69 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <param name="objectId">The object id.</param>
         /// <param name="principal">The principal.</param>
-        /// <returns></returns>
+        /// <returns>Acces level for current principal</returns>
         public AccessLevel GetAccessLevel(Guid objectId, IPrincipal principal)
         {
             // TODO: Make cache length configurable value
             var accessList = cacheService.Get("bcms-useraccess-" + objectId, TimeSpan.FromMinutes(2),
                 () => repository.AsQueryable<UserAccess>().Where(x => x.ObjectId == objectId).ToList());
 
+            return GetAccessLevel(accessList, principal);
+        }
+
+        /// <summary>
+        /// Gets the access level.
+        /// </summary>
+        /// <param name="accessList">The access list.</param>
+        /// <param name="principal">The principal.</param>
+        /// <returns>Acces level for current principal</returns>
+        private AccessLevel GetAccessLevel(IEnumerable<IUserAccess> accessList, IPrincipal principal)
+        {
             var accessLevel = AccessLevel.NoPermissions;
 
-            // If use is not authenticated, check if anonymous user has access:
-            if (!principal.Identity.IsAuthenticated)
+            // If there are no permissions, object is accessible to everyone:
+            if (accessList.Count() == 0)
             {
-                var userAccess = accessList.FirstOrDefault(x => string.Equals(x.RoleOrUser, "Anonymous", StringComparison.OrdinalIgnoreCase));
-
-                if (userAccess != null)
-                {
-                    accessLevel = userAccess.AccessLevel;
-                }
-
-                return accessLevel;
+                return AccessLevel.ReadWrite;
             }
 
-            // Check user or role access level:
-            foreach (var userAccess in accessList)
+            // If user is not authenticated, check access level for "Everyone":
+            var everyone = accessList.FirstOrDefault(x => string.Equals(x.RoleOrUser, SpecialIdentities.Everyone, StringComparison.OrdinalIgnoreCase));
+
+            if (everyone != null)
             {
-                if (principal.IsInRole(userAccess.RoleOrUser) || principal.Identity.Name == userAccess.RoleOrUser)
+                accessLevel = everyone.AccessLevel;
+            }
+
+            // First check if there are explicit permissions for the user:
+            if (principal.Identity.IsAuthenticated)
+            {
+                var identityName = principal.Identity.Name;
+                var identityAccess = accessList.FirstOrDefault(x => string.Equals(x.RoleOrUser, identityName, StringComparison.OrdinalIgnoreCase));
+
+                if (identityAccess != null)
                 {
-                    // Highest available privilege wins:
-                    if (userAccess.AccessLevel > accessLevel)
+                    return identityAccess.AccessLevel;
+                }
+
+                // Check access level for "Authenticated User":
+                var authenticated = accessList.FirstOrDefault(x => string.Equals(x.RoleOrUser, SpecialIdentities.AuthenticatedUsers, StringComparison.OrdinalIgnoreCase));
+
+                if (authenticated != null && authenticated.AccessLevel > accessLevel)
+                {
+                    accessLevel = authenticated.AccessLevel;
+                }
+
+                // Check user or role access level:
+                foreach (var userAccess in accessList)
+                {
+                    if (principal.IsInRole(userAccess.RoleOrUser))
                     {
-                        accessLevel = userAccess.AccessLevel;
+                        // Highest available privilege wins:
+                        if (userAccess.AccessLevel > accessLevel)
+                        {
+                            accessLevel = userAccess.AccessLevel;
+                        }
                     }
                 }
             }
@@ -113,7 +145,7 @@ namespace BetterCms.Module.Root.Services
         /// Gets the default access list.
         /// </summary>
         /// <returns></returns>
-        public List<IUserAccess> GetDefaultAccessList()
+        public List<IUserAccess> GetDefaultAccessList(IPrincipal principal = null)
         {
             var list = new List<IUserAccess>();
 
@@ -124,6 +156,21 @@ namespace BetterCms.Module.Root.Services
                                  RoleOrUser = userAccess.RoleOrUser,
                                  AccessLevel = (AccessLevel)Enum.Parse(typeof(AccessLevel), userAccess.AccessLevel)
                              });
+            }
+
+            if (principal != null && principal.Identity.IsAuthenticated)
+            {
+                var identityName = principal.Identity.Name;
+                var accessLevel = GetAccessLevel(list, principal);
+
+                if (accessLevel != AccessLevel.ReadWrite && list.All(ua => ua.RoleOrUser != identityName))
+                {
+                    list.Add(new UserAccessViewModel
+                    {
+                        RoleOrUser = identityName,
+                        AccessLevel = AccessLevel.ReadWrite
+                    });
+                }
             }
 
             return list;

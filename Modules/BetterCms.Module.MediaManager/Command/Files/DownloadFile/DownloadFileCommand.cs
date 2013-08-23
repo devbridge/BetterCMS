@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Linq;
 using System.Web;
 
+using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services.Storage;
-using BetterCms.Module.MediaManager.Command.MediaManager.DownloadMedia;
+
+using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -16,15 +20,18 @@ namespace BetterCms.Module.MediaManager.Command.Files.DownloadFile
     public class DownloadFileCommand : CommandBase, ICommand<Guid, DownloadFileCommandResponse>
     {
         /// <summary>
-        /// Gets or sets the storage.
+        /// The storage service
         /// </summary>
-        /// <value>
-        /// The storage.
-        /// </value>
         private readonly IStorageService storageService;
 
+        /// <summary>
+        /// The CMS configuration
+        /// </summary>
         private readonly ICmsConfiguration cmsConfiguration;
 
+        /// <summary>
+        /// The access control service
+        /// </summary>
         private readonly IAccessControlService accessControlService;
 
         /// <summary>
@@ -44,37 +51,44 @@ namespace BetterCms.Module.MediaManager.Command.Files.DownloadFile
         /// Executes the specified id.
         /// </summary>
         /// <param name="id">The id.</param>
-        /// <returns>Response type of <see cref="DownloadFileCommandResponse"/></returns>
+        /// <returns>
+        /// Response type of <see cref="DownloadFileCommandResponse" />
+        /// </returns>
+        /// <exception cref="System.Web.HttpException">403;Access Forbidden</exception>
         public DownloadFileCommandResponse Execute(Guid id)
         {
-            if (cmsConfiguration.AccessControlEnabled)
-            {
-                var principal = SecurityService.GetCurrentPrincipal();
-                var accessLevel = accessControlService.GetAccessLevel(id, principal);
-
-                if (accessLevel == AccessLevel.Deny)
-                {
-                    throw new HttpException(403, "Access Forbidden");
-                }
-            }
-
-            var file = Repository.FirstOrDefault<MediaFile>(f => f.Id == id && !f.IsDeleted);
-            if (file != null)
-            {
-                var response = storageService.DownloadObject(file.FileUri);
-                if (response != null)
-                {
-                    return new DownloadFileCommandResponse
+            // Load file
+            var file = Repository
+                .AsQueryable<MediaFile>(f => f.Id == id && !f.IsDeleted)
+                .Select(f => new
                         {
-                            FileStream = response.ResponseStream,
-                            // TODO: Change so that content type is determined from file extension or stored in the database
-                            ContentMimeType = System.Net.Mime.MediaTypeNames.Application.Octet, // Specify the generic octet-stream MIME type.
-                            FileDownloadName = string.Format("{0}{1}", System.IO.Path.GetFileNameWithoutExtension(file.Title), file.OriginalFileExtension)
-                        };
-                }
+                            FileUri = f.FileUri,
+                            Title = f.Title,
+                            OriginalFileExtension = f.OriginalFileExtension,
+                            Type = f.Type,
+                            PublicUrl = f.PublicUrl
+                        })
+                .FirstOne();
+
+            // Access control is ALWAYS disabled for images
+            var accesControlEnabled = cmsConfiguration.AccessControlEnabled && file.Type != MediaType.Image;
+
+            if (!accesControlEnabled || !storageService.SecuredUrlsEnabled)
+            {
+                return new DownloadFileCommandResponse { RedirectUrl = file.PublicUrl };
             }
 
-            return null;
+            // Get download URL with security token
+            var principal = SecurityService.GetCurrentPrincipal();
+            var accessLevel = accessControlService.GetAccessLevel(id, principal);
+
+            if (accessLevel == AccessLevel.Deny)
+            {
+                throw new HttpException(403, "Access Forbidden");
+            }
+
+            var url = storageService.GetSecuredUrl(file.FileUri);
+            return new DownloadFileCommandResponse { RedirectUrl = url };
         }
     }
 }

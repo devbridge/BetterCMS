@@ -5,6 +5,7 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFiles
 {
     public class GetFilesCommand : GetMediaItemsCommandBase<MediaFile>
     {
+        
         /// <summary>
         /// Gets the type of the current media items.
         /// </summary>

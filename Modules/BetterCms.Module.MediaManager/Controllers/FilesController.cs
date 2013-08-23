@@ -2,6 +2,8 @@
 using System.Web.Mvc;
 
 using BetterCms.Core.Security;
+using BetterCms.Core.Services.Storage;
+
 using BetterCms.Module.MediaManager.Command.Files.DownloadFile;
 using BetterCms.Module.MediaManager.Command.Files.GetFile;
 using BetterCms.Module.MediaManager.Command.Files.GetFiles;
@@ -10,6 +12,7 @@ using BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.ViewModels.File;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -31,6 +34,14 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// The CMS configuration.
         /// </value>
         public ICmsConfiguration CmsConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the storage service.
+        /// </summary>
+        /// <value>
+        /// The storage service.
+        /// </value>
+        public IStorageService StorageService { get; set; }
 
         /// <summary>
         /// Gets the files list.
@@ -55,7 +66,7 @@ namespace BetterCms.Module.MediaManager.Controllers
                 success = false;
             }
 
-            return Json(new WireJson { Success = success, Data = model });
+            return WireJson(success, model);
         }
 
         /// <summary>
@@ -107,22 +118,20 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// Downloads the specified id.
         /// </summary>
         /// <param name="id">The id.</param>
-        /// <param name="forceToDownload">if set to <c>true</c> force to downlaod.</param>
         /// <returns>
         /// File to download.
         /// </returns>
         /// <exception cref="System.Web.HttpException">404;Page Not Found</exception>
-        public ActionResult Download(string id, bool forceToDownload = false)
+        public ActionResult Download(string id)
         {
-            if (!forceToDownload)
-            {
-                var file = GetCommand<GetFileCommand>().Execute(id.ToGuidOrDefault());
-                return Redirect(file.Url);
-            }
-
             var model = GetCommand<DownloadFileCommand>().ExecuteCommand(id.ToGuidOrDefault());
             if (model != null)
             {
+                if (!string.IsNullOrWhiteSpace(model.RedirectUrl))
+                {
+                    return Redirect(model.RedirectUrl);
+                }
+
                 model.FileStream.Position = 0;
                 return File(model.FileStream, model.ContentMimeType, model.FileDownloadName);
             }

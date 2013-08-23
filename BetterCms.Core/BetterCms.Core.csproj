@@ -181,6 +181,7 @@
     <Compile Include="Modules\Projections\EmptyContentAccessor.cs" />
     <Compile Include="Mvc\Attributes\IgnoreAutoRouteAttribute.cs" />
     <Compile Include="Security\DefaultTextEncryptor.cs" />
+    <Compile Include="Security\SpecialIdentities.cs" />
     <Compile Include="Security\UserRole.cs" />
     <Compile Include="Services\Storage\FtpStorageService.cs" />
     <Compile Include="Services\Storage\DownloadResponse.cs" />

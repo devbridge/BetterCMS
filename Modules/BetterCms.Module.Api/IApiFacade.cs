@@ -19,6 +19,6 @@ namespace BetterCms.Module.Api
         
         IMediaManagerApiOperations Media { get; }
 
-        IBlogApiOperations Blog { get; }
+        IBlogApiOperations Blog { get; }    
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 
+using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Service;
 
 namespace BetterCms.Core.Services.Storage
@@ -97,6 +98,16 @@ namespace BetterCms.Core.Services.Storage
             {
                 throw new StorageException(string.Format("An Uri scheme {0} is invalid. Uri {1} can't be processed with a {2} storage service.", uri.Scheme, uri, GetType().Name));
             }
-        }       
+        }
+
+        public bool SecuredUrlsEnabled
+        {
+            get { return false; }
+        }
+
+        public string GetSecuredUrl(Uri uri)
+        {
+            throw new CmsException("File system storage doesn't support token based security.");
+        }
     }
 }

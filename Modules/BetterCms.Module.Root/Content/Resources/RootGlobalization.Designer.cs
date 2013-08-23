@@ -61,6 +61,60 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add New User.
+        /// </summary>
+        public static string AccessControl_UserAccess_AddNewUser {
+            get {
+                return ResourceManager.GetString("AccessControl_UserAccess_AddNewUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Access.
+        /// </summary>
+        public static string AccessControl_UserAccess_NoAccess {
+            get {
+                return ResourceManager.GetString("AccessControl_UserAccess_NoAccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only Read.
+        /// </summary>
+        public static string AccessControl_UserAccess_Read {
+            get {
+                return ResourceManager.GetString("AccessControl_UserAccess_Read", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read &amp; Edit.
+        /// </summary>
+        public static string AccessControl_UserAccess_ReadAndEdit {
+            get {
+                return ResourceManager.GetString("AccessControl_UserAccess_ReadAndEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Users Access.
+        /// </summary>
+        public static string AccessControl_UserAccess_Title {
+            get {
+                return ResourceManager.GetString("AccessControl_UserAccess_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User.
+        /// </summary>
+        public static string AccessControl_UserAccess_User {
+            get {
+                return ResourceManager.GetString("AccessControl_UserAccess_User", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Attention!.
         /// </summary>
         public static string Alert_DefaultTitle {

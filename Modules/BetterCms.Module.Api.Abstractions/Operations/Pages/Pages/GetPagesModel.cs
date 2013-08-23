@@ -50,6 +50,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         /// The tags filter connector.
         /// </value>
         [DataMember]
-        public FilterConnector FilterByTagsConnector { get; set; }        
+        public FilterConnector FilterByTagsConnector { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to include page options collections to results.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if  to include page options collections to results; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool IncludePageOptions { get; set; }
     }
 }

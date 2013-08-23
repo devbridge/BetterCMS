@@ -1,6 +1,3 @@
-using System;
-using System.Configuration;
-
 using BetterCms.Configuration;
 
 namespace BetterCms
@@ -40,6 +37,14 @@ namespace BetterCms
         /// The login URL.
         /// </value>
         string LoginUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the web site URL.
+        /// </summary>
+        /// <value>
+        /// The web site URL.
+        /// </value>
+        string WebSiteUrl { get; set; }
 
         /// <summary>
         /// Gets the virtual root path (like "~/App_Data") of BetterCMS working directory. 

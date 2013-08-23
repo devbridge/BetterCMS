@@ -1,33 +1,36 @@
-﻿
-<div class="bcms-user-access" data-bind="with: accessControl">
-    <div class="bcms-input-list-holder">
-        <div class="bcms-tooltip-mark" data-message="Set user access"></div>
-        <div class="bcms-content-titles">Users Access</div>
-        <div class="bcms-access-table">
-            <div class="bcms-access-title clearfix">
-                <div class="bcms-access-title-text">User</div>
-                <div class="bcms-access-title-text">Read & Edit</div>
-                <div class="bcms-access-title-text">Only Read</div>
-                <div class="bcms-access-title-text">No Access</div>
-            </div>
-            <div data-bind="foreach: UserAccessList">
-                <div class="bcms-access-line clearfix">
-                    <div class="bcms-access-value">
-                        <div class="btn-acces-minus" data-bind="click: $parent.removeUser">&nbsp;</div>
-                        <span data-bind="text: RoleOrUser">Administrator</span>
-                    </div>
-                    <div class="bcms-access-value"><input type="radio" value="3" data-bind="checked: AccessLevel, attr: { name: $parent.getPropertyIndexer($index(), 'AccessLevel') }" /></div>
-                    <div class="bcms-access-value"><input type="radio" value="2" data-bind="checked: AccessLevel, attr: { name: $parent.getPropertyIndexer($index(), 'AccessLevel') }" /></div>
-                    <div class="bcms-access-value"><input type="radio" value="1" data-bind="checked: AccessLevel, attr: { name: $parent.getPropertyIndexer($index(), 'AccessLevel') }" /></div>
-                </div>
-                <input type="hidden" data-bind="attr: { name: $parent.getPropertyIndexer($index(), 'RoleOrUser'), value: RoleOrUser }" />
-            </div>
+﻿@using BetterCms.Module.Root.Content.Resources
 
-            <div class="bcms-access-line clearfix">
-                <div class="bcms-access-value-add">
-                    <div class="btn-acces-plus">&nbsp;</div>
-                    Add New User
-                    <input type="text" value="" data-bind="value: newUser, valueUpdate: 'afterkeydown', enterPress: addNewUser" />
+<div id="bcms-accesscontrol-context">
+    <div class="bcms-user-access" data-bind="with: accessControl">
+        <div class="bcms-input-list-holder">
+            <div class="bcms-tooltip-mark" data-message="Set user access"></div>
+            <div class="bcms-content-titles">@RootGlobalization.AccessControl_UserAccess_Title</div>
+            <div class="bcms-access-table">
+                <div class="bcms-access-title clearfix">
+                    <div class="bcms-access-title-text">@RootGlobalization.AccessControl_UserAccess_User</div>
+                    <div class="bcms-access-title-text">@RootGlobalization.AccessControl_UserAccess_ReadAndEdit</div>
+                    <div class="bcms-access-title-text">@RootGlobalization.AccessControl_UserAccess_Read</div>
+                    <div class="bcms-access-title-text">@RootGlobalization.AccessControl_UserAccess_NoAccess</div>
+                </div>
+                <div data-bind="foreach: UserAccessList">
+                    <div class="bcms-access-line clearfix">
+                        <div class="bcms-access-value">
+                            <div class="btn-acces-minus" data-bind="click: $parent.removeUser">&nbsp;</div>
+                            <span data-bind="text: RoleOrUser"></span>
+                        </div>
+                        <div class="bcms-access-value"><input type="radio" value="3" data-bind="checked: AccessLevel, attr: { name: $parent.getPropertyIndexer($index(), 'AccessLevel') }" /></div>
+                        <div class="bcms-access-value"><input type="radio" value="2" data-bind="checked: AccessLevel, attr: { name: $parent.getPropertyIndexer($index(), 'AccessLevel') }" /></div>
+                        <div class="bcms-access-value"><input type="radio" value="1" data-bind="checked: AccessLevel, attr: { name: $parent.getPropertyIndexer($index(), 'AccessLevel') }" /></div>
+                    </div>
+                    <input type="hidden" data-bind="attr: { name: $parent.getPropertyIndexer($index(), 'RoleOrUser'), value: RoleOrUser }" />
+                </div>
+
+                <div class="bcms-access-line clearfix">
+                    <div class="bcms-access-value-add">
+                        <div class="btn-acces-plus" data-bind="click: addNewUser">&nbsp;</div>
+                        @RootGlobalization.AccessControl_UserAccess_AddNewUser
+                        <input type="text" value="" data-bind="value: newUser, valueUpdate: 'afterkeydown', enterPress: addNewUser" />
+                    </div>
                 </div>
             </div>
         </div>

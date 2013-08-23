@@ -106,6 +106,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Options.
+        /// </summary>
+        public static string AddNewPage_Options {
+            get {
+                return ResourceManager.GetString("AddNewPage_Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 1. Create a page title (H1).
         /// </summary>
         public static string AddNewPage_PageTitle {
@@ -174,6 +183,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string AddNewPage_Template_Tooltip_Description {
             get {
                 return ResourceManager.GetString("AddNewPage_Template_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page.
+        /// </summary>
+        public static string AddNewPage_Title {
+            get {
+                return ResourceManager.GetString("AddNewPage_Title", resourceCulture);
             }
         }
         
