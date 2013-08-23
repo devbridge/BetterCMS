@@ -11,7 +11,7 @@ using BetterCms.Core.Dependencies;
 namespace BetterCms.Core.Security
 {
     /// <summary>
-    /// Hashes a string when it's saved and salt hashes it when it gets it from the database.
+    /// Encrypts a string when it's saved and decrypts it when it gets it from the database.
     /// </summary>
     public class EncryptableString : IUserType
     {

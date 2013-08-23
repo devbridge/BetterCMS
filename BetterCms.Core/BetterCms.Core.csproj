@@ -174,7 +174,6 @@
     <Compile Include="Security\BcmsAuthorizeAttribute.cs" />
     <Compile Include="Security\EncryptableString.cs" />
     <Compile Include="Security\IAccessControlService.cs" />
-    <Compile Include="Security\IEncryptable.cs" />
     <Compile Include="Security\ITextEncryptor.cs" />
     <Compile Include="Security\IUserAccess.cs" />
     <Compile Include="Security\IUserRole.cs" />

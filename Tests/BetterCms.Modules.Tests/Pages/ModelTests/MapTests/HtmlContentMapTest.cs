@@ -6,10 +6,11 @@ namespace BetterCms.Test.Module.Pages.ModelTests.MapTests
     public class HtmlContentMapTest : DatabaseTestBase
     {
         [Test]
-        public void Should_Insert_And_Retrieve_HtmlContent_Successfully()
+        public void Should_Insert_And_Retrieve_HtmlContent()
         {
             var htmlContent = TestDataProvider.CreateNewHtmlContent(200);
-            RunEntityMapTestsInTransaction(htmlContent); 
+
+            RunEntityMapTestsInTransaction(htmlContent);
         }
     }
 }
