@@ -15,6 +15,7 @@ using BetterCms.Module.Newsletter;
 using BetterCms.Module.Pages;
 using BetterCms.Module.Root;
 using BetterCms.Module.Users;
+using BetterCms.Module.Users.Api;
 using BetterCms.Test.Module.Helpers;
 using BetterCms.Tests.Helpers;
 
@@ -38,7 +39,8 @@ namespace BetterCms.Test.Module
                                                          typeof(NewsletterModuleDescriptor).Assembly,
                                                          typeof(MediaManagerModuleDescriptor).Assembly,
                                                          typeof(UsersModuleDescriptor).Assembly,
-                                                         typeof(ApiModuleDescriptor).Assembly
+                                                         typeof(ApiModuleDescriptor).Assembly,
+                                                         typeof(UsersApiModuleDescriptor).Assembly
                                                      });
             CreateContainer();
         }

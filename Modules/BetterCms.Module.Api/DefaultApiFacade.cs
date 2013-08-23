@@ -1,8 +1,5 @@
 ﻿using Autofac;
 
-using BetterCms.Core.Dependencies;
-using BetterCms.Core.Exceptions.Api;
-
 using BetterCms.Module.Api.Operations.Blog;
 using BetterCms.Module.Api.Operations.MediaManager;
 using BetterCms.Module.Api.Operations.Pages;
@@ -23,14 +20,15 @@ namespace BetterCms.Module.Api
 
         private readonly IBlogApiOperations blog;
         
-        private IUsersApiOperations users;
+        private readonly IUsersApiOperations users;
 
-        public DefaultApiFacade(IRootApiOperations root, IPagesApiOperations pages, IMediaManagerApiOperations media, IBlogApiOperations blog)
+        public DefaultApiFacade(IRootApiOperations root, IPagesApiOperations pages, IMediaManagerApiOperations media, IBlogApiOperations blog, IUsersApiOperations users)
         {
             this.root = root;
             this.pages = pages;
             this.media = media;
             this.blog = blog;
+            this.users = users;
         }
 
         public ILifetimeScope Scope
@@ -81,18 +79,6 @@ namespace BetterCms.Module.Api
         {
             get
             {
-                if (users == null)
-                {
-                    using (var container = ContextScopeProvider.CreateChildContainer())
-                    {
-                        users = container.Resolve<IUsersApiOperations>();
-                        if (users == null)
-                        {
-                            throw new CmsApiException("Users API interfaces has no implementation. Please install BetterCms.Module.Users.Api module.");
-                        }
-                    }
-                }
-
                 return users;
             }
         }

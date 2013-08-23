@@ -281,6 +281,10 @@
       <Project>{17BF5CA2-23B6-4796-8EF1-CDDF6D41A4F7}</Project>
       <Name>BetterCms.Module.Installation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Users.Api\BetterCms.Module.Users.Api.csproj">
+      <Project>{fcc9127a-74d2-41b1-8dee-0415db7a6c76}</Project>
+      <Name>BetterCms.Module.Users.Api</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Users\BetterCms.Module.Users.csproj">
       <Project>{C530025B-8AB7-402D-B60C-000C9A5D0446}</Project>
       <Name>BetterCms.Module.Users</Name>

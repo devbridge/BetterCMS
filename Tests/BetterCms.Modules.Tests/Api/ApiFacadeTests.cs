@@ -59,6 +59,12 @@ namespace BetterCms.Test.Module.Api
                 Assert.IsNotNull(api.Media.Images);
                 Assert.IsNotNull(api.Media.File);
                 Assert.IsNotNull(api.Media.Files);
+
+                Assert.IsNotNull(api.Users);
+                Assert.IsNotNull(api.Users.User);
+                Assert.IsNotNull(api.Users.Users);
+                Assert.IsNotNull(api.Users.Role);
+                Assert.IsNotNull(api.Users.Roles);
             }
 
             Assert.IsNull(apiContainer.Scope);

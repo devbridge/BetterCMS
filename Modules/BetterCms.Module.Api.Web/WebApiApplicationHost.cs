@@ -68,32 +68,30 @@ namespace BetterCms.Module.Api
                 {
                     throw new CmsApiException("Failed to resolve IAssemblyLoader.");
                 }
-            }
 
-            foreach (var module in modulesRegistry.GetModules())
-            {
-                try
+                foreach (var module in modulesRegistry.GetModules())
                 {
-                    var assembly = assemblyLoader.Load(module.ModuleDescriptor.AssemblyName);
-                    if (assembly != null)
+                    try
                     {
-                        var types = assemblyLoader.GetLoadableTypes(assembly);
-                        foreach (var type in types)
+                        var assembly = assemblyLoader.Load(module.ModuleDescriptor.AssemblyName);
+                        if (assembly != null)
                         {
-                            if (typeof(ServiceStack.ServiceInterface.Service).IsAssignableFrom(type) && type != null && type.IsPublic && type.IsClass && !type.IsAbstract)
+                            var types = assemblyLoader.GetLoadableTypes(assembly);
+                            foreach (var type in types)
                             {
-                                if (!assemblies.Contains(assembly))
+                                if (typeof(ServiceStack.ServiceInterface.Service).IsAssignableFrom(type) && type != null && type.IsPublic && type.IsClass
+                                    && !type.IsAbstract)
                                 {
                                     assemblies.Add(assembly);
+                                    break;
                                 }
-                                break;
                             }
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    logger.ErrorFormat("Failed to check for ServiceStack services in the assembly {0}.", ex, module.ModuleDescriptor.AssemblyName);
+                    catch (Exception ex)
+                    {
+                        logger.ErrorFormat("Failed to check for ServiceStack services in the assembly {0}.", ex, module.ModuleDescriptor.AssemblyName);
+                    }
                 }
             }
 
