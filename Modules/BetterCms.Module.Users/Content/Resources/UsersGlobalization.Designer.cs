@@ -79,6 +79,15 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot delete the role, because it&apos;s already assigned to users..
+        /// </summary>
+        public static string DeleteRole_Cannot_Delete_Populated_Role {
+            get {
+                return ResourceManager.GetString("DeleteRole_Cannot_Delete_Populated_Role", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to delete the role. Role {0} is CMS role and cannot be deleted..
         /// </summary>
         public static string DeleteRole_Cannot_Delete_Systematic_Role {

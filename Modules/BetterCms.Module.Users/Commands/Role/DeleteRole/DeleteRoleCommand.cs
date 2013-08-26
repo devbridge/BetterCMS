@@ -1,7 +1,6 @@
-﻿using BetterCms.Core.Exceptions.Mvc;
-using BetterCms.Core.Mvc.Commands;
+﻿using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Users.Content.Resources;
+using BetterCms.Module.Users.Services;
 
 namespace BetterCms.Module.Users.Commands.Role.DeleteRole
 {
@@ -11,24 +10,28 @@ namespace BetterCms.Module.Users.Commands.Role.DeleteRole
     public class DeleteRoleCommand : CommandBase, ICommand<DeleteRoleCommandRequest, bool>
     {
         /// <summary>
+        /// The role service
+        /// </summary>
+        private readonly IRoleService roleService;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteRoleCommand" /> class.
+        /// </summary>
+        /// <param name="roleService">The role service.</param>
+        public DeleteRoleCommand(IRoleService roleService)
+        {
+            this.roleService = roleService;
+        }
+
+        /// <summary>
         /// Executes this command.
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>Executed command result.</returns>
         public bool Execute(DeleteRoleCommandRequest request)
         {
-            var role = Repository.First<Models.Role>(request.RoleId);
-            role.Version = request.Version;
-
-            if (role.IsSystematic)
-            {
-                var logMessage = string.Format("Cannot delete systematic role: {0} {1}", role.Name, role.DisplayName);
-                var message = string.Format(UsersGlobalization.DeleteRole_Cannot_Delete_Systematic_Role, role.DisplayName ?? role.Name);
-
-                throw new ValidationException(() => message, logMessage);
-            }
-
-            Repository.Delete(role);
+            UnitOfWork.BeginTransaction();
+            var role = roleService.DeleteRole(request.RoleId, request.Version, false);
             UnitOfWork.Commit();
 
             // Notify.

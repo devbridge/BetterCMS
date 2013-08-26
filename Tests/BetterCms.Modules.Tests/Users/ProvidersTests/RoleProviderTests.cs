@@ -250,7 +250,7 @@ namespace BetterCms.Test.Module.Users.ProvidersTests
         }
 
         [Test]
-        [ExpectedException(typeof(ProviderException))]
+        [ExpectedException(typeof(ValidationException))]
         public void Should_Call_DeleteRole_Assigned_WithException_RoleIsPopulated()
         {
             RunActionInTransaction(session =>
@@ -272,7 +272,7 @@ namespace BetterCms.Test.Module.Users.ProvidersTests
         }
 
         [Test]
-        [ExpectedException(typeof(ProviderException))]
+        [ExpectedException(typeof(ValidationException))]
         public void Should_Call_DeleteRole_Assigned_WithException_RoleIsSystematic()
         {
             RunActionInTransaction(session =>

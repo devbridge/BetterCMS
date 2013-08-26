@@ -145,15 +145,15 @@ namespace BetterCms.Module.Users.Provider
         /// </returns>
         public override bool DeleteRole(string roleName, bool throwOnPopulatedRole)
         {
-            if (repository == null || unitOfWork == null)
+            if (roleService == null || unitOfWork == null)
             {
                 using (var container = ContextScopeProvider.CreateChildContainer())
                 {
-                    return DeleteRole(container.Resolve<IRepository>(), container.Resolve<IUnitOfWork>(), roleName, throwOnPopulatedRole);
+                    return DeleteRole(container.Resolve<IRoleService>(), container.Resolve<IUnitOfWork>(), roleName, throwOnPopulatedRole);
                 }
             }
 
-            return DeleteRole(repository, unitOfWork, roleName, throwOnPopulatedRole);
+            return DeleteRole(roleService, unitOfWork, roleName, throwOnPopulatedRole);
         }
 
         /// <summary>
@@ -286,35 +286,13 @@ namespace BetterCms.Module.Users.Provider
                 .FirstOrDefault() != null;
         }
 
-        private static bool DeleteRole(IRepository repository, IUnitOfWork unitOfWork, string roleName, bool throwOnPopulatedRole)
+        private static bool DeleteRole(IRoleService roleService, IUnitOfWork unitOfWork, string roleName, bool throwOnPopulatedRole)
         {
-            var role = repository
-                .AsQueryable<Models.Role>(r => r.Name == roleName)
-                .Select(r => new
-                {
-                    Id = r.Id,
-                    Version = r.Version,
-                    IsSystematic = r.IsSystematic,
-                    IsPopulated = r.UserRoles.Any()
-                })
-                .FirstOrDefault();
+            unitOfWork.BeginTransaction();
+            var role = roleService.DeleteRole(roleName, throwOnPopulatedRole);
+            unitOfWork.Commit();
 
-            if (role != null)
-            {
-                if (throwOnPopulatedRole && role.IsPopulated)
-                {
-                    throw new ProviderException("Cannot delete a populated role.");
-                }
-
-                if (role.IsSystematic)
-                {
-                    throw new ProviderException("Cannot delete a systematic role.");
-                }
-
-                unitOfWork.BeginTransaction();
-                repository.Delete<Models.Role>(role.Id, role.Version);
-                unitOfWork.Commit();
-            }
+            Events.UserEvents.Instance.OnRoleDeleted(role);
 
             return true;
         }

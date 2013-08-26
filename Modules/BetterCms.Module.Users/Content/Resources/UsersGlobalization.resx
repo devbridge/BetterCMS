@@ -300,4 +300,7 @@
   <data name="SiteSettings_Users_FullNameColumn" xml:space="preserve">
     <value>Full Name</value>
   </data>
+  <data name="DeleteRole_Cannot_Delete_Populated_Role" xml:space="preserve">
+    <value>Cannot delete the role, because it's already assigned to users.</value>
+  </data>
 </root>

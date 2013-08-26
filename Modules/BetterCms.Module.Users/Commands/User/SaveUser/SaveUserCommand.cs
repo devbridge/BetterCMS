@@ -162,7 +162,7 @@ namespace BetterCms.Module.Users.Commands.User.SaveUser
 
             if (!existIngId.HasDefaultValue())
             {
-                var message = string.Format(UsersGlobalization.SaveUse_UserEmailExists_Message, request.UserName);
+                var message = string.Format(UsersGlobalization.SaveUse_UserEmailExists_Message, request.Email);
                 var logMessage = string.Format("User Email already exists. User Name: {0}, User Email: {1}, Id: {2}", request.UserName, request.Email, request.Id);
 
                 throw new ValidationException(() => message, logMessage);
