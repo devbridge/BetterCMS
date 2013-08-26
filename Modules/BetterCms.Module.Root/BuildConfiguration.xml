@@ -32,6 +32,7 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.ko.grid.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.messages.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.modal.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.options.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.preview.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.redirect.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.sidemenu.js" />
