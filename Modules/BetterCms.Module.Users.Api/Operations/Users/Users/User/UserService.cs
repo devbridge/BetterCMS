@@ -45,10 +45,10 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users.User
                         FirstName = user.FirstName,
                         LastName = user.LastName,
                         Email = user.Email,
-                        ImageId = user.Image != null ? user.Image.Id : (System.Guid?)null,
-                        ImageCaption = user.Image != null ? user.Image.Caption : null,
-                        ImageThumbnailUrl = user.Image != null ? user.Image.PublicThumbnailUrl : null,
-                        ImageUrl = user.Image != null ? user.Image.PublicUrl : null
+                        ImageId = user.Image != null && !user.Image.IsDeleted ? user.Image.Id : (System.Guid?)null,
+                        ImageCaption = user.Image != null && !user.Image.IsDeleted ? user.Image.Caption : null,
+                        ImageThumbnailUrl = user.Image != null && !user.Image.IsDeleted ? user.Image.PublicThumbnailUrl : null,
+                        ImageUrl = user.Image != null && !user.Image.IsDeleted ? user.Image.PublicUrl : null
                     })
                 .FirstOne();
 
@@ -57,7 +57,7 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users.User
             if (request.Data.IncludeRoles)
             {
                 response.Roles = repository
-                    .AsQueryable<Models.UserRole>(role => role.User.Id == model.Id)
+                    .AsQueryable<Models.UserRole>(userRole => userRole.User.Id == model.Id && !userRole.Role.IsDeleted)
                     .OrderBy(role => role.Role.Name)
                     .Select(role => new RoleModel
                         {

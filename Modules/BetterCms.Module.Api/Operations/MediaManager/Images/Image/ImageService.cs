@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
@@ -44,8 +45,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
                                          ThumbnailHeight = media.ThumbnailHeight,
                                          ThumbnailSize = media.ThumbnailSize,
                                          IsArchived = media.IsArchived,
-                                         FolderId = media.Folder.Id,
-                                         FolderName = media.Folder.Title,
+                                         FolderId = media.Folder != null && !media.Folder.IsDeleted ? media.Folder.Id : (Guid?)null,
+                                         FolderName = media.Folder != null && !media.Folder.IsDeleted ? media.Folder.Title : null,
                                          PublishedOn = media.PublishedOn,
                                          OriginalFileName = media.OriginalFileName,
                                          OriginalFileExtension = media.OriginalFileExtension,
@@ -60,7 +61,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
             if (request.Data.IncludeTags)
             {
                 tags =
-                    repository.AsQueryable<MediaTag>(mediaTag => mediaTag.Media.Id == request.ImageId)
+                    repository.AsQueryable<MediaTag>(mediaTag => mediaTag.Media.Id == request.ImageId && !mediaTag.Tag.IsDeleted)
                               .OrderBy(mediaTag => mediaTag.Tag.Name)
                               .Select(media => new TagModel
                                       {

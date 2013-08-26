@@ -5,6 +5,7 @@ using System.Security.Principal;
 
 using BetterCms.Configuration;
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.Models;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services.Caching;
 using BetterCms.Module.Root.Models;
@@ -41,12 +42,12 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <param name="objectId">The object id.</param>
         /// <param name="principal">The principal.</param>
-        /// <returns>Acces level for current principal</returns>
-        public AccessLevel GetAccessLevel(Guid objectId, IPrincipal principal)
+        /// <returns>Access level for current principal</returns>
+        public AccessLevel GetAccessLevel<TAccess>(Guid objectId, IPrincipal principal) where TAccess : Entity, IAccess, new()
         {
             // TODO: Make cache length configurable value
             var accessList = cacheService.Get("bcms-useraccess-" + objectId, TimeSpan.FromMinutes(2),
-                () => repository.AsQueryable<UserAccess>().Where(x => x.ObjectId == objectId).ToList());
+                () => repository.AsQueryable<TAccess>().Where(x => x.ObjectId == objectId).ToList());
 
             return GetAccessLevel(accessList, principal);
         }
@@ -57,12 +58,12 @@ namespace BetterCms.Module.Root.Services
         /// <param name="accessList">The access list.</param>
         /// <param name="principal">The principal.</param>
         /// <returns>Acces level for current principal</returns>
-        private AccessLevel GetAccessLevel(IEnumerable<IUserAccess> accessList, IPrincipal principal)
+        private AccessLevel GetAccessLevel(IEnumerable<IAccess> accessList, IPrincipal principal)
         {
             var accessLevel = AccessLevel.NoPermissions;
 
             // If there are no permissions, object is accessible to everyone:
-            if (accessList.Count() == 0)
+            if (!accessList.Any())
             {
                 return AccessLevel.ReadWrite;
             }
@@ -96,7 +97,7 @@ namespace BetterCms.Module.Root.Services
 
                 // Check user or role access level:
                 foreach (var userAccess in accessList)
-                {
+                {                   
                     if (principal.IsInRole(userAccess.RoleOrUser))
                     {
                         // Highest available privilege wins:
@@ -116,14 +117,14 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <param name="userAccessList">The user access list.</param>
         /// <param name="objectId">The object id.</param>
-        public void UpdateAccessControl(IEnumerable<IUserAccess> userAccessList, Guid objectId)
+        public void UpdateAccessControl<TAccess>(IEnumerable<IAccess> userAccessList, Guid objectId) where TAccess : Entity, IAccess, new()
         {
             var accessList = userAccessList.ToList();
 
             // Ensure that each object has ObjectId:
             accessList.ForEach(x => x.ObjectId = objectId);
 
-            var entities = repository.AsQueryable<UserAccess>()
+            var entities = repository.AsQueryable<TAccess>()
                                 .Where(x => x.ObjectId == objectId)
                                 .ToList();
 
@@ -131,7 +132,7 @@ namespace BetterCms.Module.Root.Services
 
             var entitesToAdd = accessList
                                   .Where(x => entities.All(entity => entity.RoleOrUser != x.RoleOrUser))
-                                  .Select(ModelToEntity)
+                                  .Select(ModelToEntity<TAccess>)
                                   .ToList();
 
             var entitiesToUpdate = GetEntitiesToUpdate(accessList, entities);
@@ -145,9 +146,9 @@ namespace BetterCms.Module.Root.Services
         /// Gets the default access list.
         /// </summary>
         /// <returns></returns>
-        public List<IUserAccess> GetDefaultAccessList(IPrincipal principal = null)
+        public List<IAccess> GetDefaultAccessList(IPrincipal principal = null)
         {
-            var list = new List<IUserAccess>();
+            var list = new List<IAccess>();
 
             foreach (AccessControlElement userAccess in cmsConfiguration.DefaultAccessControlList)
             {
@@ -181,9 +182,9 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns></returns>
-        private static UserAccess ModelToEntity(IUserAccess model)
+        private static TAccess ModelToEntity<TAccess>(IAccess model) where TAccess : Entity, IAccess, new()
         {
-            return new UserAccess
+            return new TAccess
             {
                 ObjectId = model.ObjectId,
                 RoleOrUser = model.RoleOrUser,
@@ -197,13 +198,13 @@ namespace BetterCms.Module.Root.Services
         /// <param name="accessList">The access list.</param>
         /// <param name="entities">The entities.</param>
         /// <returns></returns>
-        private static List<UserAccess> GetEntitiesToUpdate(List<IUserAccess> accessList, List<UserAccess> entities)
+        private static List<TAccess> GetEntitiesToUpdate<TAccess>(List<IAccess> accessList, List<TAccess> entities) where TAccess : Entity, IAccess, new()
         {
-            var entitiesToUpdate = new List<UserAccess>();
+            var entitiesToUpdate = new List<TAccess>();
 
             foreach (var entity in entities)
             {
-                // Find user access object with the same Role and diferrent AccessLevel:
+                // Find user access object with the same Role and different AccessLevel:
                 var userAccess = accessList.FirstOrDefault(x => x.RoleOrUser == entity.RoleOrUser && x.AccessLevel != entity.AccessLevel);
 
                 // If found, add to updatables list:

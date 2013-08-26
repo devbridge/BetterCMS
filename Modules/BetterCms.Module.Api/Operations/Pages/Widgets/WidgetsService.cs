@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
@@ -45,8 +46,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets
                      IsPublished = widget.Status == ContentStatus.Published,
                      PublishedOn = widget.PublishedOn,
                      PublishedByUser = widget.PublishedByUser,
-                     CategoryId = widget.Category.Id,
-                     CategoryName = widget.Category.Name,
+                     CategoryId = widget.Category != null && !widget.Category.IsDeleted ? widget.Category.Id : (Guid?)null,
+                     CategoryName = widget.Category != null && !widget.Category.IsDeleted ?  widget.Category.Name : null,
                      OriginalWidgetType = widget.GetType()
                  }).ToDataListResponse(request);
 

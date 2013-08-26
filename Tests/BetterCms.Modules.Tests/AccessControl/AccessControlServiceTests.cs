@@ -23,18 +23,18 @@ namespace BetterCms.Test.Module.AccessControl
         public void Should_Return_Highest_AccessLevel_Based_On_Role()
         {
             var objectId = Guid.NewGuid();
-            var accesses = new List<IUserAccess>
+            var accesses = new List<IAccess>
             {
-                new UserAccess { RoleOrUser = "RoleA", AccessLevel = AccessLevel.Deny },
-                new UserAccess { RoleOrUser = "Admin", AccessLevel = AccessLevel.ReadWrite },
-                new UserAccess { RoleOrUser = "RoleB", AccessLevel = AccessLevel.Read }
+                new PageAccess { RoleOrUser = "RoleA", AccessLevel = AccessLevel.Deny },
+                new PageAccess { RoleOrUser = "Admin", AccessLevel = AccessLevel.ReadWrite },
+                new PageAccess { RoleOrUser = "RoleB", AccessLevel = AccessLevel.Read }
             };
 
             var service = CreateAccessControlService(objectId, accesses);
 
             var principal = new GenericPrincipal(new GenericIdentity("John"), new[] { "Admin" });
 
-            var accessLevel = service.GetAccessLevel(objectId, principal);
+            var accessLevel = service.GetAccessLevel<PageAccess>(objectId, principal);
 
             Assert.AreEqual(AccessLevel.ReadWrite, accessLevel);
         }
@@ -43,20 +43,20 @@ namespace BetterCms.Test.Module.AccessControl
         public void Should_Return_AccessLevel_Based_On_Identity_Name()
         {
             var objectId = Guid.NewGuid();
-            var accesses = new List<IUserAccess>
+            var accesses = new List<IAccess>
             {
-                new UserAccess { RoleOrUser = "Everyone", AccessLevel = AccessLevel.Read },
-                new UserAccess { RoleOrUser = "RoleA", AccessLevel = AccessLevel.Deny },
-                new UserAccess { RoleOrUser = "John Doe", AccessLevel = AccessLevel.ReadWrite },
-                new UserAccess { RoleOrUser = "Admin", AccessLevel = AccessLevel.Read },
-                new UserAccess { RoleOrUser = "RoleB", AccessLevel = AccessLevel.Read }
+                new PageAccess { RoleOrUser = "Everyone", AccessLevel = AccessLevel.Read },
+                new PageAccess { RoleOrUser = "RoleA", AccessLevel = AccessLevel.Deny },
+                new PageAccess { RoleOrUser = "John Doe", AccessLevel = AccessLevel.ReadWrite },
+                new PageAccess { RoleOrUser = "Admin", AccessLevel = AccessLevel.Read },
+                new PageAccess { RoleOrUser = "RoleB", AccessLevel = AccessLevel.Read }
             };
 
             var service = CreateAccessControlService(objectId, accesses);
 
             var principal = new GenericPrincipal(new GenericIdentity("John Doe"), new string[] { });
 
-            var accessLevel = service.GetAccessLevel(objectId, principal);
+            var accessLevel = service.GetAccessLevel<PageAccess>(objectId, principal);
 
             Assert.AreEqual(AccessLevel.ReadWrite, accessLevel);
         }
@@ -65,17 +65,17 @@ namespace BetterCms.Test.Module.AccessControl
         public void Should_Return_AccessLevel_NoPermissions()
         {
             var objectId = Guid.NewGuid();
-            var accesses = new List<IUserAccess>
+            var accesses = new List<IAccess>
             {
-                new UserAccess { RoleOrUser = "RoleA", AccessLevel = AccessLevel.Deny },
-                new UserAccess { RoleOrUser = "RoleB", AccessLevel = AccessLevel.Read }
+                new PageAccess { RoleOrUser = "RoleA", AccessLevel = AccessLevel.Deny },
+                new PageAccess { RoleOrUser = "RoleB", AccessLevel = AccessLevel.Read }
             };
 
             var service = CreateAccessControlService(objectId, accesses);
 
             var principal = new GenericPrincipal(new GenericIdentity("User"), new string[] { });
 
-            var accessLevel = service.GetAccessLevel(objectId, principal);
+            var accessLevel = service.GetAccessLevel<PageAccess>(objectId, principal);
 
             Assert.AreEqual(AccessLevel.NoPermissions, accessLevel);
         }
@@ -84,13 +84,13 @@ namespace BetterCms.Test.Module.AccessControl
         public void Should_Return_AccessLevel_Read_For_Anonymous_User()
         {
             var objectId = Guid.NewGuid();
-            var accesses = new List<IUserAccess>
+            var accesses = new List<IAccess>
             {
-                new UserAccess { RoleOrUser = "Everyone", AccessLevel = AccessLevel.Read },
-                new UserAccess { RoleOrUser = "RoleA", AccessLevel = AccessLevel.Deny },
-                new UserAccess { RoleOrUser = "John Doe", AccessLevel = AccessLevel.ReadWrite },
-                new UserAccess { RoleOrUser = "Admin", AccessLevel = AccessLevel.Read },
-                new UserAccess { RoleOrUser = "RoleB", AccessLevel = AccessLevel.Read }
+                new PageAccess { RoleOrUser = "Everyone", AccessLevel = AccessLevel.Read },
+                new PageAccess { RoleOrUser = "RoleA", AccessLevel = AccessLevel.Deny },
+                new PageAccess { RoleOrUser = "John Doe", AccessLevel = AccessLevel.ReadWrite },
+                new PageAccess { RoleOrUser = "Admin", AccessLevel = AccessLevel.Read },
+                new PageAccess { RoleOrUser = "RoleB", AccessLevel = AccessLevel.Read }
             };
 
             var service = CreateAccessControlService(objectId, accesses);
@@ -102,7 +102,7 @@ namespace BetterCms.Test.Module.AccessControl
 
             var principal = new GenericPrincipal(identity, new string[] { });
 
-            var accessLevel = service.GetAccessLevel(objectId, principal);
+            var accessLevel = service.GetAccessLevel<PageAccess>(objectId, principal);
 
             Assert.AreEqual(AccessLevel.Read, accessLevel);
         }
@@ -111,20 +111,20 @@ namespace BetterCms.Test.Module.AccessControl
         public void Should_Return_AccessLevel_Deny()
         {
             var objectId = Guid.NewGuid();
-            var accesses = new List<IUserAccess>
+            var accesses = new List<IAccess>
             {
-                new UserAccess { RoleOrUser = "Everyone", AccessLevel = AccessLevel.Deny },
-                new UserAccess { RoleOrUser = "RoleA", AccessLevel = AccessLevel.Deny },
-                new UserAccess { RoleOrUser = "John Doe", AccessLevel = AccessLevel.ReadWrite },
-                new UserAccess { RoleOrUser = "Admin", AccessLevel = AccessLevel.Read },
-                new UserAccess { RoleOrUser = "RoleB", AccessLevel = AccessLevel.Read }
+                new PageAccess { RoleOrUser = "Everyone", AccessLevel = AccessLevel.Deny },
+                new PageAccess { RoleOrUser = "RoleA", AccessLevel = AccessLevel.Deny },
+                new PageAccess { RoleOrUser = "John Doe", AccessLevel = AccessLevel.ReadWrite },
+                new PageAccess { RoleOrUser = "Admin", AccessLevel = AccessLevel.Read },
+                new PageAccess { RoleOrUser = "RoleB", AccessLevel = AccessLevel.Read }
             };
 
             var service = CreateAccessControlService(objectId, accesses);
 
             var principal = new GenericPrincipal(new GenericIdentity("Any Authenticated User"), new string[] { });
 
-            var accessLevel = service.GetAccessLevel(objectId, principal);
+            var accessLevel = service.GetAccessLevel<PageAccess>(objectId, principal);
 
             Assert.AreEqual(AccessLevel.Deny, accessLevel);
         }
@@ -133,19 +133,19 @@ namespace BetterCms.Test.Module.AccessControl
         public void Should_Return_AccessLevel_ReadWrite_For_Any_Authenticated_User()
         {
             var objectId = Guid.NewGuid();
-            var accesses = new List<IUserAccess>
+            var accesses = new List<IAccess>
             {
-                new UserAccess { RoleOrUser = "RoleA", AccessLevel = AccessLevel.Deny },
-                new UserAccess { RoleOrUser = "Authenticated Users", AccessLevel = AccessLevel.ReadWrite },
-                new UserAccess { RoleOrUser = "Admin", AccessLevel = AccessLevel.Read },
-                new UserAccess { RoleOrUser = "RoleB", AccessLevel = AccessLevel.Read }
+                new PageAccess { RoleOrUser = "RoleA", AccessLevel = AccessLevel.Deny },
+                new PageAccess { RoleOrUser = "Authenticated Users", AccessLevel = AccessLevel.ReadWrite },
+                new PageAccess { RoleOrUser = "Admin", AccessLevel = AccessLevel.Read },
+                new PageAccess { RoleOrUser = "RoleB", AccessLevel = AccessLevel.Read }
             };
 
             var service = CreateAccessControlService(objectId, accesses);
 
             var principal = new GenericPrincipal(new GenericIdentity("Any Authenticated User"), new string[] { });
 
-            var accessLevel = service.GetAccessLevel(objectId, principal);
+            var accessLevel = service.GetAccessLevel<PageAccess>(objectId, principal);
 
             Assert.AreEqual(AccessLevel.ReadWrite, accessLevel);
         }
@@ -154,13 +154,13 @@ namespace BetterCms.Test.Module.AccessControl
         public void Should_Return_ReadWrite_If_There_Are_No_UserAccess()
         {
             var objectId = Guid.NewGuid();
-            var accesses = new List<IUserAccess>();
+            var accesses = new List<IAccess>();
 
             var service = CreateAccessControlService(objectId, accesses);
 
             var principal = new GenericPrincipal(new GenericIdentity("Any Authenticated User"), new string[] { });
 
-            var accessLevel = service.GetAccessLevel(objectId, principal);
+            var accessLevel = service.GetAccessLevel<PageAccess>(objectId, principal);
 
             Assert.AreEqual(AccessLevel.ReadWrite, accessLevel);
         }
@@ -169,7 +169,7 @@ namespace BetterCms.Test.Module.AccessControl
         public void Should_Return_Empty_Default_List()
         {
             var objectId = Guid.NewGuid();
-            var accesses = new List<IUserAccess>();
+            var accesses = new List<IAccess>();
 
             var service = CreateAccessControlService(objectId, accesses);
 
@@ -182,7 +182,7 @@ namespace BetterCms.Test.Module.AccessControl
         public void Should_Return_Default_List_Without_Principal()
         {
             var objectId = Guid.NewGuid();
-            var accesses = new List<IUserAccess>();
+            var accesses = new List<IAccess>();
 
             var collection = new AccessControlCollection();
             collection.Add(new AccessControlElement { AccessLevel = AccessLevel.Deny.ToString(), RoleOrUser = SpecialIdentities.Everyone });
@@ -204,7 +204,7 @@ namespace BetterCms.Test.Module.AccessControl
         public void Should_Return_Default_List_Wit_Principal_Added()
         {
             var objectId = Guid.NewGuid();
-            var accesses = new List<IUserAccess>();
+            var accesses = new List<IAccess>();
 
             var collection = new AccessControlCollection();
             collection.Add(new AccessControlElement { AccessLevel = AccessLevel.Deny.ToString(), RoleOrUser = SpecialIdentities.Everyone });
@@ -228,7 +228,7 @@ namespace BetterCms.Test.Module.AccessControl
         public void Should_Return_Default_List_Wit_Principal_Added_And_Ignored()
         {
             var objectId = Guid.NewGuid();
-            var accesses = new List<IUserAccess>();
+            var accesses = new List<IAccess>();
 
             var collection = new AccessControlCollection();
             collection.Add(new AccessControlElement { AccessLevel = AccessLevel.Deny.ToString(), RoleOrUser = SpecialIdentities.Everyone });
@@ -244,7 +244,7 @@ namespace BetterCms.Test.Module.AccessControl
             Assert.AreEqual(accessLevels.First(a => a.RoleOrUser == collection[1].RoleOrUser).AccessLevel.ToString(), collection[1].AccessLevel);
         }
 
-        private static AccessControlService CreateAccessControlService(Guid objectId, IEnumerable<IUserAccess> accesses, AccessControlCollection defaults = null)
+        private static AccessControlService CreateAccessControlService(Guid objectId, IEnumerable<IAccess> accesses, AccessControlCollection defaults = null)
         {
             var repository = GetRepositoryMock(objectId, accesses);
             var cacheService = GetCacheServiceMock();
@@ -267,27 +267,30 @@ namespace BetterCms.Test.Module.AccessControl
         {
             var mock = new Mock<ICacheService>();
 
-            List<UserAccess> accessList = null;
+            List<PageAccess> accessList = null;
 
-            mock.Setup(x => x.Get(It.IsAny<string>(), It.IsAny<TimeSpan>(), It.IsAny<Func<List<UserAccess>>>()))
-                        .Callback((string cacheKey, TimeSpan timeSpan, Func<List<UserAccess>> callback) => accessList = callback())
+            mock.Setup(x => x.Get(It.IsAny<string>(), It.IsAny<TimeSpan>(), It.IsAny<Func<List<PageAccess>>>()))
+                        .Callback((string cacheKey, TimeSpan timeSpan, Func<List<PageAccess>> callback) => accessList = callback())
                         .Returns(() => accessList);
 
             return mock;
         }
 
-        private static Mock<IRepository> GetRepositoryMock(Guid objectId, IEnumerable<IUserAccess> accesses)
+        private static Mock<IRepository> GetRepositoryMock(Guid objectId, IEnumerable<IAccess> accesses)
         {
             var repository = new Mock<IRepository>();
 
-            var accessList = accesses.Select(x => new UserAccess
+            var accessList = accesses.Select(x => new PageAccess
                                                       {
-                                                          ObjectId = objectId,
+                                                          Page = new Page
+                                                                     {
+                                                                         Id = objectId
+                                                                     }, 
                                                           AccessLevel = x.AccessLevel,
                                                           RoleOrUser = x.RoleOrUser
                                                       }).ToList();
 
-            repository.Setup(x => x.AsQueryable<UserAccess>()).Returns(accessList.AsQueryable);
+            repository.Setup(x => x.AsQueryable<PageAccess>()).Returns(accessList.AsQueryable);
 
             return repository;
         }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
@@ -33,10 +34,11 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors.Author
                         LastModifiedOn = author.ModifiedOn,
 
                         Name = author.Name,
-                        ImageId = author.Image.Id,
-                        ImageUrl = author.Image.PublicUrl,
-                        ImageThumbnailUrl = author.Image.PublicThumbnailUrl,
-                        ImageCaption = author.Image.Caption
+
+                        ImageId = author.Image != null && !author.Image.IsDeleted ? author.Image.Id : (Guid?)null,
+                        ImageUrl = author.Image != null && !author.Image.IsDeleted ? author.Image.PublicUrl : (string)null,
+                        ImageThumbnailUrl = author.Image != null && !author.Image.IsDeleted ? author.Image.PublicThumbnailUrl : (string)null,
+                        ImageCaption = author.Image != null && !author.Image.IsDeleted ? author.Image.Caption : (string)null
                     })
                 .FirstOne();
 

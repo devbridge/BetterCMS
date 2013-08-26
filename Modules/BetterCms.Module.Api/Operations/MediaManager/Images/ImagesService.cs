@@ -24,7 +24,16 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
 
             var query = repository
                 .AsQueryable<Media>()
-                .Where(m => m.Original == null && m.Folder.Id == request.Data.FolderId && m.Type == MediaType.Image);
+                .Where(m => m.Original == null && m.Type == MediaType.Image);
+
+            if (request.Data.FolderId == null)
+            {
+                query = query.Where(m => m.Folder == null);
+            }
+            else
+            {
+                query = query.Where(m => m.Folder.Id == request.Data.FolderId && !m.Folder.IsDeleted);
+            }
 
             if (!request.Data.IncludeFolders)
             {
@@ -43,7 +52,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
 
             query = query.ApplyTagsFilter(
                 request.Data,
-                tagName => { return media => media.MediaTags.Any(tag => tag.Tag.Name == tagName); });
+                tagName => { return media => media.MediaTags.Any(mediaTag => mediaTag.Tag.Name == tagName && !mediaTag.Tag.IsDeleted); });
 
             var listResponse = query.Select(media =>
                     new MediaModel

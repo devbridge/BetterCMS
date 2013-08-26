@@ -10,6 +10,7 @@ using BetterCms.Core.Mvc.Attributes;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services.Caching;
 using BetterCms.Module.Root.Commands.GetPageToRender;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Cms;
 
@@ -126,7 +127,7 @@ namespace BetterCms.Module.Root.Controllers
             }
 
             var principal = SecurityService.GetCurrentPrincipal();
-            var accessLevel = accessControlService.GetAccessLevel(pageId, principal);
+            var accessLevel = accessControlService.GetAccessLevel<PageAccess>(pageId, principal);
 
             return accessLevel != AccessLevel.Deny;
         }

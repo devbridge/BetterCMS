@@ -653,13 +653,13 @@ namespace BetterCms.Tests.Helpers
             return entity;
         }
 
-        public UserAccess CreateNewUserAccess()
+        public PageAccess CreateNewPageAccess()
         {
-            var entity = new UserAccess();
+            var entity = new PageAccess();
 
             PopulateBaseFields(entity);
 
-            entity.ObjectId = Guid.NewGuid();
+            entity.Page = CreateNewPage();
             entity.RoleOrUser = ProvideRandomString(MaxLength.Name);
             entity.AccessLevel = ProvideRandomEnumValue<AccessLevel>();
             

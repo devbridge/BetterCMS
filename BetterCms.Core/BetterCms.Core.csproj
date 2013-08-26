@@ -175,7 +175,7 @@
     <Compile Include="Security\EncryptableString.cs" />
     <Compile Include="Security\IAccessControlService.cs" />
     <Compile Include="Security\ITextEncryptor.cs" />
-    <Compile Include="Security\IUserAccess.cs" />
+    <Compile Include="Security\IAccess.cs" />
     <Compile Include="Security\IUserRole.cs" />
     <Compile Include="Modules\Projections\EmptyContentAccessor.cs" />
     <Compile Include="Mvc\Attributes\IgnoreAutoRouteAttribute.cs" />

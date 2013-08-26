@@ -101,7 +101,7 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
             // Update access control if enabled:
             if (cmsConfiguration.AccessControlEnabled)
             {
-                accessControlService.UpdateAccessControl(request.UserAccessList, page.Id);
+                accessControlService.UpdateAccessControl<PageAccess>(request.UserAccessList, page.Id);
             }
 
             UnitOfWork.Commit();

@@ -64,7 +64,7 @@ namespace BetterCms.Module.MediaManager.Command.Files.SaveFile
             // Save user access if enabled:
             if (cmsConfiguration.AccessControlEnabled)
             {
-                accessControlService.UpdateAccessControl(request.UserAccessList, mediaFile.Id);
+                accessControlService.UpdateAccessControl<MediaFileAccess>(request.UserAccessList, mediaFile.Id);
             }
 
             UnitOfWork.Commit();

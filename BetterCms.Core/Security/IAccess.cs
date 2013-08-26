@@ -2,7 +2,7 @@
 
 namespace BetterCms.Core.Security
 {
-    public interface IUserAccess
+    public interface IAccess
     {
         Guid ObjectId { get; set; }
 

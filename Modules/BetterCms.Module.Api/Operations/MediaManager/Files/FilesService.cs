@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
@@ -27,7 +28,16 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
             request.Data.SetDefaultOrder("Title");
 
             var query = repository.AsQueryable<Media>()
-                .Where(m => m.Original == null && m.Folder.Id == request.Data.FolderId && m.Type == MediaType.File);
+                .Where(m => m.Original == null && m.Type == MediaType.File);
+
+            if (request.Data.FolderId == null)
+            {
+                query = query.Where(m => m.Folder == null);
+            }
+            else
+            {
+                query = query.Where(m => m.Folder.Id == request.Data.FolderId && !m.Folder.IsDeleted);
+            }
 
             if (!request.Data.IncludeFolders)
             {
@@ -46,7 +56,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
 
             query = query.ApplyTagsFilter(
                 request.Data,
-                tagName => { return media => media.MediaTags.Any(tag => tag.Tag.Name == tagName); });
+                tagName => { return media => media.MediaTags.Any(mediaTag => mediaTag.Tag.Name == tagName && !mediaTag.Tag.IsDeleted); });
 
             var listResponse = query.Select(media => new MediaModel
                         {
@@ -65,11 +75,11 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
                             FileSize = media is MediaFile ? ((MediaFile)media).Size : (long?)null,
                             FileUrl = media is MediaFile ? ((MediaFile)media).PublicUrl : null,
                             IsArchived = media.IsArchived,
-                            ThumbnailCaption = media.Image != null ? media.Image.Caption : null,
-                            ThumbnailUrl = media.Image != null ? media.Image.PublicThumbnailUrl : null,
-                            ThumbnailId = media.Image != null ? media.Image.Id : (System.Guid?)null
-
-                        }).ToDataListResponse(request);
+                            ThumbnailId = media.Image != null && !media.Image.IsDeleted ? media.Image.Id : (Guid?)null,
+                            ThumbnailCaption = media.Image != null && !media.Image.IsDeleted ? media.Image.Caption : null,
+                            ThumbnailUrl = media.Image != null && !media.Image.IsDeleted ? media.Image.PublicThumbnailUrl : null
+                        })
+                        .ToDataListResponse(request);
 
             listResponse.Items.ToList().ForEach(media =>
                 {
