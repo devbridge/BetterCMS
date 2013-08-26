@@ -227,17 +227,6 @@ namespace BetterCms.Module.Root
                 };
         }
 
-        public override IEnumerable<IUserRole> RegisterUserRoles(ContainerBuilder containerBuilder)
-        {
-            return new[]
-                {
-                    new UserRole(RootModuleConstants.UserRoles.EditContent, () => RootGlobalization.UserRole_EditContent),
-                    new UserRole(RootModuleConstants.UserRoles.PublishContent, () => RootGlobalization.UserRole_PublishContent), 
-                    new UserRole(RootModuleConstants.UserRoles.DeleteContent, () => RootGlobalization.UserRole_DeleteContent), 
-                    new UserRole(RootModuleConstants.UserRoles.Administration, () => RootGlobalization.UserRole_Administration) 
-                };
-        }
-
         public override IEnumerable<IPageActionProjection> RegisterSidebarHeaderProjections(ContainerBuilder containerBuilder)
         {
             return new IPageActionProjection[]

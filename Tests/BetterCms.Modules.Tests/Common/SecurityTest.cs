@@ -91,15 +91,5 @@ namespace BetterCms.Test.Module.Common
                 }
             }
         }
-
-        [Test]
-        public void All_Module_Descriptors_Should_Override_RegisterUserRoles()
-        {
-            foreach (var descriptor in moduleDescriptors)
-            {
-                var roles = descriptor.RegisterUserRoles(container);
-                Assert.IsNotNull(roles);
-            }
-        }
     }
 }

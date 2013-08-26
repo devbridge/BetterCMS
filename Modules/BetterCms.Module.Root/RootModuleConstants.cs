@@ -89,6 +89,11 @@
             public const string Administration = "BcmsAdministration";
 
             /// <summary>
+            /// All CMS roles
+            /// </summary>
+            public static string[] AllRoles = new[] {EditContent, PublishContent, DeleteContent, Administration};
+
+            /// <summary>
             /// Multiples the roles.
             /// </summary>
             /// <param name="roles">The roles.</param>
