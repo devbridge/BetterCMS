@@ -57,6 +57,9 @@
     <None Include="Packages\BetterCms.Module.Api\BetterCms.Module.Api.nuspec.template">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Packages\BetterCMS.Module.Users\BetterCms.Module.Users.nuspec.template">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Packages\BetterCMS\BetterCMS.nuspec.template">
       <SubType>Designer</SubType>
     </None>
@@ -95,6 +98,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Packages\BetterCms.Module.Root\web.config.transform">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Packages\BetterCMS.Module.Users.Api\BetterCms.Module.Users.Api.nuspec.template">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
@@ -146,6 +152,14 @@
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Installation\BetterCms.Module.Installation.csproj">
       <Project>{17bf5ca2-23b6-4796-8ef1-cddf6d41a4f7}</Project>
       <Name>BetterCms.Module.Installation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Users.Api\BetterCms.Module.Users.Api.csproj">
+      <Project>{fcc9127a-74d2-41b1-8dee-0415db7a6c76}</Project>
+      <Name>BetterCms.Module.Users.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Users\BetterCms.Module.Users.csproj">
+      <Project>{c530025b-8ab7-402d-b60c-000c9a5d0446}</Project>
+      <Name>BetterCms.Module.Users</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.WindowsAzureStorage\BetterCms.Module.WindowsAzureStorage.csproj">
       <Project>{6e8e91d9-aeb9-432f-9647-68fa2def2ca9}</Project>
@@ -363,6 +377,33 @@ xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.Api.Web.dll" "$(ProjectDir)$(OutDi
 "$(ProjectDir)$(OutDir)BetterCms.NugetPackage.exe" "$(ProjectDir)Packages\BetterCms.Module.Api.Web\BetterCms.Module.Api.Web.nuspec.template" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api.Web\BetterCms.Module.Api.Web.nuspec"
 "$(SolutionDir).nuget\nuget.exe" pack "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api.Web\BetterCms.Module.Api.Web.nuspec" -OutputDirectory "$(ProjectDir)$(OutDir)\" -NoPackageAnalysis
 
+rem --- Creating BetterCms.Module.Users package ------------------------------------------------------------------
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users"
+
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users\content"
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users\content\net40"
+copy "$(SolutionDir)license.txt" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users\content\net40\betterCms.license.txt" /Y
+
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users\lib"
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users\lib\net40"
+xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.Users.dll" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users\lib\net40\" /Y /Q
+
+"$(ProjectDir)$(OutDir)BetterCms.NugetPackage.exe" "$(ProjectDir)Packages\BetterCms.Module.Users\BetterCms.Module.Users.nuspec.template" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users\BetterCms.Module.Users.nuspec"
+"$(SolutionDir).nuget\nuget.exe" pack "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users\BetterCms.Module.Users.nuspec" -OutputDirectory "$(ProjectDir)$(OutDir)\" -NoPackageAnalysis
+
+rem --- Creating BetterCms.Module.Users.Api package ------------------------------------------------------------------
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users.Api"
+
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users.Api\content"
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users.Api\content\net40"
+copy "$(SolutionDir)license.txt" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users.Api\content\net40\betterCms.license.txt" /Y
+
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users.Api\lib"
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users.Api\lib\net40"
+xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.Users.Api.dll" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users.Api\lib\net40\" /Y /Q
+
+"$(ProjectDir)$(OutDir)BetterCms.NugetPackage.exe" "$(ProjectDir)Packages\BetterCms.Module.Users.Api\BetterCms.Module.Users.Api.nuspec.template" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users.Api\BetterCms.Module.Users.Api.nuspec"
+"$(SolutionDir).nuget\nuget.exe" pack "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users.Api\BetterCms.Module.Users.Api.nuspec" -OutputDirectory "$(ProjectDir)$(OutDir)\" -NoPackageAnalysis
 
 rem --- Creating BetterCMS package ------------------------------------------------------------------------------------
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCMS"
