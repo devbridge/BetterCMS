@@ -92,7 +92,14 @@ namespace BetterCms.Module.Users.Commands.User.SaveUser
                 Events.UserEvents.Instance.OnUserUpdated(user);
             }
 
-            return new SaveUserCommandResponse { Id = user.Id, UserName = user.UserName, Version = user.Version };
+            return new SaveUserCommandResponse
+                       {
+                           Id = user.Id, 
+                           UserName = user.UserName, 
+                           Version = user.Version,
+                           Email = user.Email,
+                           FullName = user.FirstName + " " + user.LastName
+                       };
         }
 
         private void SaveUserRoles(Models.User user, EditUserViewModel request)

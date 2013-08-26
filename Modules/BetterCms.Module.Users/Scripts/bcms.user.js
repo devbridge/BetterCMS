@@ -17,6 +17,8 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 userRowDeleteButton: '.bcms-grid-item-delete-button',
                 userParentRow: 'tr:first',
                 userNameCell: '.bcms-user-name',
+                userFullNameCell: '.bcms-user-fullName',
+                userEmailCell: '.bcms-user-email',
                 userRowTemplate: '#bcms-users-list-row-template',
                 userTableFirstRow: 'table.bcms-tables > tbody > tr:first',
                 userRowTemplateFirstRow: 'tr:first'
@@ -241,6 +243,8 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             row.find(selectors.userRowDeleteButton).data('id', json.Id);
             row.find(selectors.userRowDeleteButton).data('version', json.Version);
             row.find(selectors.userNameCell).html(json.UserName);
+            row.find(selectors.userFullNameCell).html(json.FullName);
+            row.find(selectors.userEmailCell).html(json.Email);
         }
 
         /**
