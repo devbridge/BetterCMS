@@ -105,12 +105,14 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
 
                 if (cmsConfiguration.AccessControlEnabled)
                 {
-                    foreach (var userAccess in files.SelectMany(x => request.UserAccessList.Select(model => new UserAccess
-                    {
-                        ObjectId = x.Id,
-                        AccessLevel = model.AccessLevel,
-                        RoleOrUser = model.RoleOrUser
-                    })))
+                    foreach (var userAccess in 
+                            files.SelectMany(x => request.UserAccessList.Select(
+                            model => new MediaFileAccess
+                                         {
+                                             MediaFile = Repository.AsProxy<MediaFile>(x.Id),
+                                             AccessLevel = model.AccessLevel,
+                                             RoleOrUser = model.RoleOrUser
+                                         })))
                     {
                         Repository.Save(userAccess);
                     }

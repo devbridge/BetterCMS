@@ -115,7 +115,15 @@ namespace BetterCms.Module.Root.Models
         /// <value>
         /// The options.
         /// </value>
-        public virtual IList<PageOption> Options { get; set; }      
+        public virtual IList<PageOption> Options { get; set; }
+
+        /// <summary>
+        /// Gets or sets the access rules.
+        /// </summary>
+        /// <value>
+        /// The access rules.
+        /// </value>
+        public virtual IList<PageAccess> AccessRules { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

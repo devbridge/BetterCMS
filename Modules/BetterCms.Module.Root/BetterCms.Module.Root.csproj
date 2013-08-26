@@ -157,7 +157,8 @@
     <Compile Include="Models\ContentOption.cs" />
     <Compile Include="Models\ComboWireJson.cs" />
     <Compile Include="Models\Maps\PageOptionMap.cs" />
-    <Compile Include="Models\Maps\UserAccessMap.cs" />
+    <Compile Include="Models\Maps\PageAccessMap.cs" />
+    <Compile Include="Models\Migrations\Migration201308252344.cs" />
     <Compile Include="Models\Migrations\Migration201308121549.cs" />
     <Compile Include="Models\Migrations\Migration201308060930.cs" />
     <Compile Include="Models\Migrations\Migration201308051530.cs" />
@@ -192,7 +193,7 @@
     <Compile Include="Models\PageContent.cs" />
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\Tag.cs" />
-    <Compile Include="Models\UserAccess.cs" />
+    <Compile Include="Models\PageAccess.cs" />
     <Compile Include="Models\Widget.cs" />
     <Compile Include="Mvc\CommandBase.cs" />
     <Compile Include="Mvc\CommandHandler.cs" />

@@ -11,6 +11,7 @@ using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
@@ -158,7 +159,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
 
             if (cmsConfiguration.AccessControlEnabled)
             {
-                accessControlService.UpdateAccessControl(request.UserAccessList, request.Id);
+                accessControlService.UpdateAccessControl<PageAccess>(request.UserAccessList, request.Id);
             }
 
             Repository.Save(page);

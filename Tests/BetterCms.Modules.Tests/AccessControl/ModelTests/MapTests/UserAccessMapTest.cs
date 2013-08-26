@@ -7,7 +7,7 @@ namespace BetterCms.Test.Module.AccessControl.ModelTests.MapTests
         [Test]
         public void Should_Insert_And_Retrieve_UserAccess_Successfully()
         {
-            var content = TestDataProvider.CreateNewUserAccess();
+            var content = TestDataProvider.CreateNewPageAccess();
             RunEntityMapTestsInTransaction(content);
         }
     }

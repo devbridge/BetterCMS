@@ -18,7 +18,7 @@ namespace BetterCms.Module.Root.Models.Migrations
         /// </summary>
         public InitialSetup()
             : base(RootModuleDescriptor.ModuleName)
-        {
+        {            
         }
 
         /// <summary>

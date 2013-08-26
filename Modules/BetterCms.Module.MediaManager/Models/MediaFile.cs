@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+
+using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.MediaManager.Models
 {
@@ -20,6 +23,8 @@ namespace BetterCms.Module.MediaManager.Models
         public virtual bool? IsUploaded { get; set; }
 
         public virtual bool IsCanceled { get; set; }
+
+        public virtual IList<MediaFileAccess> AccessRules { get; set; }
 
         public override Media Clone()
         {

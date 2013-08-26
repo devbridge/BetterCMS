@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
+using System.Threading;
 
 using BetterCms.Core.Modules.Registration;
 using BetterCms.Core.Services;
@@ -80,7 +81,7 @@ namespace BetterCms.Module.Root.Services
 
             return currentHttpContext != null
                 ? currentHttpContext.User
-                : null;
+                : Thread.CurrentPrincipal;
         }
 
         /// <summary>

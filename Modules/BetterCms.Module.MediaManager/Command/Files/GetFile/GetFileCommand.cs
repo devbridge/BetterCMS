@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Linq;
 
+using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services.Storage;
 
@@ -30,7 +31,7 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
         /// <summary>
         /// The CMS configuration
         /// </summary>
-        private readonly ICmsConfiguration cmsConfiguration;
+        private readonly ICmsConfiguration configuration;
 
         /// <summary>
         /// The storage service
@@ -46,13 +47,13 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
         /// Initializes a new instance of the <see cref="GetFileCommand" /> class.
         /// </summary>
         /// <param name="tagService">The tag service.</param>
-        /// <param name="cmsConfiguration">The CMS configuration.</param>
+        /// <param name="configuration">The CMS configuration.</param>
         /// <param name="storageService">The storage service.</param>
         /// <param name="fileService">The file service.</param>
-        public GetFileCommand(ITagService tagService, ICmsConfiguration cmsConfiguration, IStorageService storageService, IMediaFileService fileService)
+        public GetFileCommand(ITagService tagService, ICmsConfiguration configuration, IStorageService storageService, IMediaFileService fileService)
         {
             this.tagService = tagService;
-            this.cmsConfiguration = cmsConfiguration;
+            this.configuration = configuration;
             this.storageService = storageService;
             this.fileService = fileService;
         }
@@ -64,7 +65,14 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
         /// <returns>The view model.</returns>
         public virtual FileViewModel Execute(Guid fileId)
         {
-            var file = Repository.First<MediaFile>(fileId);
+            var fileQuery = Repository.AsQueryable<MediaFile>().Where(f => f.Id == fileId);
+
+            if (configuration.AccessControlEnabled)
+            {
+                fileQuery = fileQuery.FetchMany(f => f.AccessRules);
+            }
+
+            var file = fileQuery.ToList().First();
 
             var model = new FileViewModel
                 {
@@ -86,19 +94,17 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
                             ThumbnailUrl = file.Image.PublicThumbnailUrl,
                             ImageTooltip = file.Image.Caption
                         },
-                    AccessControlEnabled = cmsConfiguration.AccessControlEnabled
+                    AccessControlEnabled = configuration.AccessControlEnabled
                 };
 
-            if (cmsConfiguration.AccessControlEnabled)
+            if (configuration.AccessControlEnabled)
             {
-                model.UserAccessList = Repository.AsQueryable<UserAccess>()
-                                            .Where(x => x.ObjectId == fileId)
-                                            .OrderBy(x => x.RoleOrUser)
+                model.UserAccessList = file.AccessRules
                                             .Select(x => new UserAccessViewModel
                                             {
                                                 Id = x.Id,
                                                 AccessLevel = x.AccessLevel,
-                                                ObjectId = x.ObjectId,
+                                                ObjectId = fileId,
                                                 RoleOrUser = x.RoleOrUser
                                             }).ToList();
 

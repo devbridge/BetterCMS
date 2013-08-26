@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 
+using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
@@ -35,9 +36,13 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
         /// </param>
         public GetPagesListCommand(ICategoryService categoryService)
         {
-            this.categoryService = categoryService;
+            this.categoryService = categoryService;            
         }
 
+        private void Add(PagesFilter filter)
+        {
+            //var noAccessRoles = Repository.AsQueryable<Page>()
+        }
         /// <summary>
         /// Executes the specified request.
         /// </summary>

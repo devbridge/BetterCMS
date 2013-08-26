@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Security.Principal;
 
+using BetterCms.Core.Models;
+
 namespace BetterCms.Core.Security
 {
     /// <summary>
@@ -15,19 +17,19 @@ namespace BetterCms.Core.Security
         /// <param name="objectId">The object id.</param>
         /// <param name="principal">The principal.</param>
         /// <returns></returns>
-        AccessLevel GetAccessLevel(Guid objectId, IPrincipal principal);
+        AccessLevel GetAccessLevel<TAccess>(Guid objectId, IPrincipal principal) where TAccess : Entity, IAccess, new();
 
         /// <summary>
         /// Updates the access control.
         /// </summary>
         /// <param name="userAccessList">The user access list.</param>
         /// <param name="objectId">The object id.</param>
-        void UpdateAccessControl(IEnumerable<IUserAccess> userAccessList, Guid objectId);
+        void UpdateAccessControl<TAccess>(IEnumerable<IAccess> userAccessList, Guid objectId) where TAccess : Entity, IAccess, new();
 
         /// <summary>
         /// Gets the default access list.
         /// </summary>
         /// <returns></returns>
-        List<IUserAccess> GetDefaultAccessList(IPrincipal principal = null);
+        List<IAccess> GetDefaultAccessList(IPrincipal principal = null);
     }
 }

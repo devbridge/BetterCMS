@@ -80,7 +80,7 @@ namespace BetterCms.Module.MediaManager.Command.Files.DownloadFile
 
             // Get download URL with security token
             var principal = SecurityService.GetCurrentPrincipal();
-            var accessLevel = accessControlService.GetAccessLevel(id, principal);
+            var accessLevel = accessControlService.GetAccessLevel<MediaFileAccess>(id, principal);
 
             if (accessLevel == AccessLevel.Deny)
             {

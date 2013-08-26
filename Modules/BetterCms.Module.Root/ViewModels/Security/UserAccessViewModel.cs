@@ -5,7 +5,7 @@ using BetterCms.Core.Security;
 namespace BetterCms.Module.Root.ViewModels.Security
 {
     [Serializable]
-    public class UserAccessViewModel : IUserAccess
+    public class UserAccessViewModel : IAccess
     {
         public Guid Id { get; set; }
 

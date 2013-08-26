@@ -142,14 +142,14 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
 
                 if (cmsConfiguration.AccessControlEnabled)
                 {
-                    model.Model.UserAccessList = Repository.AsQueryable<UserAccess>()
-                                                .Where(x => x.ObjectId == id)
+                    model.Model.UserAccessList = Repository.AsQueryable<PageAccess>()
+                                                .Where(x => x.Page.Id == id)
                                                 .OrderBy(x => x.RoleOrUser)
                                                 .Select(x => new UserAccessViewModel
                                                 {
                                                     Id = x.Id,
                                                     AccessLevel = x.AccessLevel,
-                                                    ObjectId = x.ObjectId,
+                                                    ObjectId = x.Page.Id,
                                                     RoleOrUser = x.RoleOrUser
                                                 }).ToList();
                 }
