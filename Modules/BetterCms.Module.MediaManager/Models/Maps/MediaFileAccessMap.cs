@@ -1,9 +1,8 @@
 ﻿using BetterCms.Core.Models;
-using BetterCms.Module.Root;
 
 namespace BetterCms.Module.MediaManager.Models.Maps
 {
-    public class PageAccessMap : EntityMapBase<MediaManager.Models.MediaFileAccess>
+    public class PageAccessMap : EntityMapBase<MediaFileAccess>
     {
         public PageAccessMap()
             : base(MediaManagerModuleDescriptor.ModuleName)
@@ -14,6 +13,8 @@ namespace BetterCms.Module.MediaManager.Models.Maps
 
             Map(x => x.RoleOrUser).Length(MaxLength.Name).Not.Nullable();
             Map(x => x.AccessLevel).Not.Nullable();
+
+            Map(x => x.ObjectId).Column("MediaFileId").Not.Nullable().ReadOnly();
         }
     }
 }

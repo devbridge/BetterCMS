@@ -11,6 +11,8 @@ namespace BetterCms.Module.Root.Models
     [Serializable]
     public class PageAccess : EquatableEntity<PageAccess>, IAccess
     {
+        private Guid objectId;
+
         /// <summary>
         /// Gets or sets the object id.
         /// </summary>
@@ -41,14 +43,16 @@ namespace BetterCms.Module.Root.Models
         /// <value>
         /// The object id.
         /// </value>
-        Guid IAccess.ObjectId
+        public virtual Guid ObjectId
         {
             get
-            {                
-                return Page != null ? Page.Id : Guid.Empty;
+            {
+                return Page != null ? Page.Id : objectId;
             }
             set
             {
+                objectId = value;
+
                 Page = new Page {
                                     Id = value
                                 };

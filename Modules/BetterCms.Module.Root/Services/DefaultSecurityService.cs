@@ -60,7 +60,7 @@ namespace BetterCms.Module.Root.Services
             {
                 var principal = GetCurrentPrincipal();
 
-                if (principal != null)
+                if (principal != null && principal.Identity.IsAuthenticated)
                 {
                     return principal.Identity.Name;
                 }
@@ -79,9 +79,7 @@ namespace BetterCms.Module.Root.Services
         {
             var currentHttpContext = httpContextAccessor.GetCurrent();
 
-            return currentHttpContext != null
-                ? currentHttpContext.User
-                : Thread.CurrentPrincipal;
+            return currentHttpContext != null ? currentHttpContext.User : null;
         }
 
         /// <summary>

@@ -16,8 +16,10 @@ namespace BetterCms.Module.Root.Services
     /// <summary>
     /// Implements access control for objects.
     /// </summary>
-    public class AccessControlService : IAccessControlService
+    public class DefaultAccessControlService : IAccessControlService
     {
+        private const string AccessLevelCacheKeyPattern = "bcms-useraccess-{0}";
+
         private readonly IRepository repository;
 
         private readonly ICacheService cacheService;
@@ -25,12 +27,12 @@ namespace BetterCms.Module.Root.Services
         private readonly ICmsConfiguration cmsConfiguration;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AccessControlService" /> class.
+        /// Initializes a new instance of the <see cref="DefaultAccessControlService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="cacheService">The cache service.</param>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
-        public AccessControlService(IRepository repository, ICacheService cacheService, ICmsConfiguration cmsConfiguration)
+        public DefaultAccessControlService(IRepository repository, ICacheService cacheService, ICmsConfiguration cmsConfiguration)
         {
             this.repository = repository;
             this.cacheService = cacheService;
@@ -44,9 +46,8 @@ namespace BetterCms.Module.Root.Services
         /// <param name="principal">The principal.</param>
         /// <returns>Access level for current principal</returns>
         public AccessLevel GetAccessLevel<TAccess>(Guid objectId, IPrincipal principal) where TAccess : Entity, IAccess, new()
-        {
-            // TODO: Make cache length configurable value
-            var accessList = cacheService.Get("bcms-useraccess-" + objectId, TimeSpan.FromMinutes(2),
+        {            
+            var accessList = cacheService.Get(string.Format(AccessLevelCacheKeyPattern, objectId), TimeSpan.FromMinutes(2),
                 () => repository.AsQueryable<TAccess>().Where(x => x.ObjectId == objectId).ToList());
 
             return GetAccessLevel(accessList, principal);

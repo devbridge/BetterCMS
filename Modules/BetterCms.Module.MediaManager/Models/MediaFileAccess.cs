@@ -11,6 +11,8 @@ namespace BetterCms.Module.MediaManager.Models
     [Serializable]
     public class MediaFileAccess : EquatableEntity<MediaFileAccess>, IAccess
     {
+        private Guid objectId;
+
         /// <summary>
         /// Gets or sets the object id.
         /// </summary>
@@ -41,14 +43,16 @@ namespace BetterCms.Module.MediaManager.Models
         /// <value>
         /// The object id.
         /// </value>
-        Guid IAccess.ObjectId
+        public virtual Guid ObjectId
         {
             get
             {
-                return MediaFile != null ? MediaFile.Id : Guid.Empty;
+                return MediaFile != null ? MediaFile.Id : objectId;
             }
             set
             {
+                objectId = value;
+
                 MediaFile = new MediaFile {
                                               Id = value
                                           };

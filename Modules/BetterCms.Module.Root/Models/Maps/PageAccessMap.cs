@@ -13,6 +13,8 @@ namespace BetterCms.Module.Root.Models.Maps
 
             Map(x => x.RoleOrUser).Length(MaxLength.Name).Not.Nullable();
             Map(x => x.AccessLevel).Not.Nullable();
+
+            Map(x => x.ObjectId).Column("PageId").Not.Nullable().ReadOnly();
         }
     }
 }

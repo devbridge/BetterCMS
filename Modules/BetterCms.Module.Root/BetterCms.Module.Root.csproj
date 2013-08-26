@@ -256,7 +256,7 @@
     <Compile Include="Mvc\Helpers\MessagesHelper.cs" />
     <Compile Include="Registration\TabsJsModuleIncludeDescriptor.cs" />
     <Compile Include="RootModuleConstants.cs" />
-    <Compile Include="Services\AccessControlService.cs" />
+    <Compile Include="Services\DefaultAccessControlService.cs" />
     <Compile Include="Services\DefaultContentService.cs" />
     <Compile Include="Services\DefaultOptionService.cs" />
     <Compile Include="Services\DefaultRenderingService.cs" />

@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Principal;
 
+using Autofac;
+
 using BetterCms.Configuration;
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services.Caching;
+using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
 
@@ -17,8 +22,43 @@ using NUnit.Framework;
 namespace BetterCms.Test.Module.AccessControl
 {
     [TestFixture]
-    public class AccessControlServiceTests
+    public class AccessControlServiceTests : DatabaseTestBase
     {
+        [Test]
+        public void Should_Get_Page_Access_Control()
+        {
+            RunActionInTransaction(session =>
+                {                                        
+                    var pageAccess = TestDataProvider.CreateNewPageAccess();
+                    session.SaveOrUpdate(pageAccess);
+                    session.Flush();
+
+                    var accessControlService = new DefaultAccessControlService(
+                        new DefaultRepository(new DefaultUnitOfWork(session)), Container.Resolve<ICacheService>(), Container.Resolve<ICmsConfiguration>());
+
+                    var level = accessControlService.GetAccessLevel<PageAccess>(pageAccess.ObjectId, new GenericPrincipal(new GenericIdentity(pageAccess.RoleOrUser), null));
+
+                    Assert.AreEqual(pageAccess.AccessLevel, level);
+                });                       
+        }
+
+        [Test]
+        public void Should_Get_File_Access_Control()
+        {
+            RunActionInTransaction(session =>
+            {
+                var fileAccess = TestDataProvider.CreateNewMediaFileAccess();
+                session.SaveOrUpdate(fileAccess);
+                session.Flush();
+
+                var accessControlService = new DefaultAccessControlService(
+                        new DefaultRepository(new DefaultUnitOfWork(session)), Container.Resolve<ICacheService>(), Container.Resolve<ICmsConfiguration>());
+                var level = accessControlService.GetAccessLevel<MediaFileAccess>(fileAccess.ObjectId, new GenericPrincipal(new GenericIdentity(fileAccess.RoleOrUser), null));
+
+                Assert.AreEqual(fileAccess.AccessLevel, level);
+            }); 
+        }
+
         [Test]
         public void Should_Return_Highest_AccessLevel_Based_On_Role()
         {
@@ -244,13 +284,13 @@ namespace BetterCms.Test.Module.AccessControl
             Assert.AreEqual(accessLevels.First(a => a.RoleOrUser == collection[1].RoleOrUser).AccessLevel.ToString(), collection[1].AccessLevel);
         }
 
-        private static AccessControlService CreateAccessControlService(Guid objectId, IEnumerable<IAccess> accesses, AccessControlCollection defaults = null)
+        private static DefaultAccessControlService CreateAccessControlService(Guid objectId, IEnumerable<IAccess> accesses, AccessControlCollection defaults = null)
         {
             var repository = GetRepositoryMock(objectId, accesses);
             var cacheService = GetCacheServiceMock();
             var cmsConfiguration = GetCmsConfigurationMock(defaults);
 
-            var service = new AccessControlService(repository.Object, cacheService.Object, cmsConfiguration.Object);
+            var service = new DefaultAccessControlService(repository.Object, cacheService.Object, cmsConfiguration.Object);
 
             return service;
         }

@@ -665,5 +665,18 @@ namespace BetterCms.Tests.Helpers
             
             return entity;
         }
+        
+        public MediaFileAccess CreateNewMediaFileAccess()
+        {
+            var entity = new MediaFileAccess();
+
+            PopulateBaseFields(entity);
+
+            entity.MediaFile = CreateNewMediaFile();
+            entity.RoleOrUser = ProvideRandomString(MaxLength.Name);
+            entity.AccessLevel = ProvideRandomEnumValue<AccessLevel>();
+
+            return entity;
+        }
     }
 }

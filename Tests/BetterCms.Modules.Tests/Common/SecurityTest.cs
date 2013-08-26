@@ -1,16 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Security.Principal;
+using System.Web;
 using System.Web.Mvc;
 
 using Autofac;
 
-using BetterCms.Configuration;
+using BetterCms.Core.Modules.Registration;
+using BetterCms.Core.Services;
+using BetterCms.Core.Web;
 using BetterCms.Module.Blog;
 using BetterCms.Module.MediaManager;
 using BetterCms.Module.Pages;
 using BetterCms.Module.Root;
 using BetterCms.Module.Installation;
+using BetterCms.Module.Root.Services;
 using BetterCms.Module.Users;
 
 using Moq;
@@ -22,9 +28,28 @@ namespace BetterCms.Test.Module.Common
     [TestFixture]
     public class SecurityTest : TestBase
     {
-        private readonly RootModuleDescriptor[] moduleDescriptors = new[] { new RootModuleDescriptor(new CmsConfigurationSection()) };
-        private readonly ContainerBuilder container = new ContainerBuilder();
-        private readonly Mock<ICmsConfiguration> cmsConfigurationMock = new Mock<ICmsConfiguration>();
+        [Test]
+        public void SecurityService_Should_Get_An_Anonymous_If_There_Is_No_Web_Context()
+        {
+            var securityService = Container.Resolve<ISecurityService>();            
+            Assert.AreEqual("Anonymous", securityService.CurrentPrincipalName);
+        }
+
+        [Test]
+        public void SecurityService_Should_Get_An_UseName_If_There_Exists_Web_Context()
+        {
+            const string useName = "John Smith";
+
+            var mock = new Mock<IHttpContextAccessor>();
+            var httpContextWrapper = new HttpContextWrapper(new HttpContext(new HttpRequest("test", "http://www.bettercms.com/tests/", null), new HttpResponse(TextWriter.Null)));
+            httpContextWrapper.User = new GenericPrincipal(new GenericIdentity(useName), null);
+            mock.Setup(f => f.GetCurrent()).Returns(() => httpContextWrapper);
+
+
+            var securityService = new DefaultSecurityService(Container.Resolve<ICmsConfiguration>(), mock.Object, Container.Resolve<IModulesRegistration>());
+
+            Assert.AreEqual(useName, securityService.CurrentPrincipalName);
+        }
 
         /// <summary>
         /// Test checks if all controllers contains [BcmsAuthorize] attribute.
