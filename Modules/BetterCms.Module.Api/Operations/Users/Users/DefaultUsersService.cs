@@ -1,10 +1,8 @@
 ﻿using BetterCms.Core.Exceptions;
 
-using ServiceStack.ServiceInterface;
-
 namespace BetterCms.Module.Api.Operations.Users.Users
 {
-    public class DefaultUsersService : Service, IUsersService
+    public class DefaultUsersService : IUsersService
     {
         public GetUsersResponse Get(GetUsersRequest request)
         {
