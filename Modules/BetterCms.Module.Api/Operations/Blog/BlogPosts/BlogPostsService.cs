@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
@@ -37,7 +38,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
 
             query = query.ApplyTagsFilter(
                 request.Data,
-                tagName => { return b => b.PageTags.Any(tag => tag.Tag.Name == tagName); });
+                tagName => { return b => b.PageTags.Any(pageTag => pageTag.Tag.Name == tagName && !pageTag.IsDeleted && !pageTag.Tag.IsDeleted); });
 
             var listResponse = query
                 .Select(blogPost => new BlogPostModel
@@ -54,19 +55,20 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
                         IntroText = blogPost.Description,
                         IsPublished = blogPost.Status == PageStatus.Published,
                         PublishedOn = blogPost.PublishedOn,
-                        LayoutId = blogPost.Layout.Id,
-                        CategoryId = blogPost.Category.Id,
-                        CategoryName = blogPost.Category.Name,
-                        AuthorId = blogPost.Author.Id,
-                        AuthorName = blogPost.Author.Name,
-                        MainImageId = blogPost.Image.Id,
-                        MainImageUrl = blogPost.Image.PublicUrl,
-                        MainImageThumbnauilUrl = blogPost.Image.PublicThumbnailUrl,
-                        MainImageCaption = blogPost.Image.Caption,
+                        LayoutId = blogPost.Layout != null && !blogPost.Layout.IsDeleted ? blogPost.Layout.Id : Guid.Empty,
+                        CategoryId = blogPost.Category != null && !blogPost.Category.IsDeleted ? blogPost.Category.Id : (Guid?)null,
+                        CategoryName = blogPost.Category != null && !blogPost.Category.IsDeleted ? blogPost.Category.Name : null,
+                        AuthorId = blogPost.Author != null && !blogPost.Author.IsDeleted ? blogPost.Author.Id : (Guid?)null,
+                        AuthorName = blogPost.Author != null && !blogPost.Author.IsDeleted ? blogPost.Author.Name : null,
+                        MainImageId = blogPost.Image != null && !blogPost.Image.IsDeleted ? blogPost.Image.Id : (Guid?)null,
+                        MainImageUrl = blogPost.Image != null && !blogPost.Image.IsDeleted ? blogPost.Image.PublicUrl : null,
+                        MainImageThumbnauilUrl = blogPost.Image != null && !blogPost.Image.IsDeleted ? blogPost.Image.PublicThumbnailUrl : null,
+                        MainImageCaption = blogPost.Image != null && !blogPost.Image.IsDeleted ? blogPost.Image.Caption : null,
                         ActivationDate = blogPost.ActivationDate,
                         ExpirationDate = blogPost.ExpirationDate,
                         IsArchived = blogPost.IsArchived
-                    }).ToDataListResponse(request);
+                    })
+                    .ToDataListResponse(request);
 
             return new GetBlogPostsResponse
                        {

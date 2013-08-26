@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
@@ -34,8 +35,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
                         IsPublished = widget.Status == ContentStatus.Published,
                         PublishedOn = widget.Status == ContentStatus.Published ? widget.PublishedOn : null,
                         PublishedByUser = widget.Status == ContentStatus.Published ? widget.PublishedByUser : null,
-                        CategoryId = widget.Category.Id,
-                        CategoryName = widget.Category.Name,
+                        CategoryId = widget.Category != null && !widget.Category.IsDeleted ? widget.Category.Id : (Guid?)null,
+                        CategoryName = widget.Category != null && !widget.Category.IsDeleted ? widget.Category.Name : null,
                         CustomCss = widget.CustomCss,
                         UseCustomCss = widget.UseCustomCss,
                         Html = widget.Html,

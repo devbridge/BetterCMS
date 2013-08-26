@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
@@ -72,7 +73,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
                                      LastModifiedBy = media.ModifiedByUser,
                                      LastModifiedOn = media.ModifiedOn,
 
-                                     ParentFolderId = media.Folder.Id,
+                                     ParentFolderId = media.Folder != null && !media.Folder.IsDeleted ? media.Folder.Id : (Guid?)null,
                                      Title = media.Title,
                                      MediaContentType = media is MediaFolder 
                                                             ? (MediaContentType)((int)MediaContentType.Folder) 
@@ -92,7 +93,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
             return GetChildren(mediaItems, null);
         }
 
-        private List<MediaItemModel> GetChildren(List<MediaItemModel> allItems, System.Guid? parentId)
+        private List<MediaItemModel> GetChildren(List<MediaItemModel> allItems, Guid? parentId)
         {
             var childItems = allItems.Where(item => item.ParentFolderId == parentId && item.Id != parentId).ToList();
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
@@ -42,14 +43,14 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
                         FileSize = media.Size,
                         FileUrl = media.PublicUrl,
                         IsArchived = media.IsArchived,
-                        FolderId = media.Folder.Id,
-                        FolderName = media.Folder.Title,
+                        FolderId = media.Folder != null && !media.Folder.IsDeleted ? media.Folder.Id : (Guid?)null,
+                        FolderName = media.Folder != null && !media.Folder.IsDeleted ? media.Folder.Title : null,
                         PublishedOn = media.PublishedOn,
                         OriginalFileName = media.OriginalFileName,
                         OriginalFileExtension = media.OriginalFileExtension,
-                        ThumbnailCaption = media.Image != null ? media.Image.Caption : null,
-                        ThumbnailUrl = media.Image != null ? media.Image.PublicThumbnailUrl : null,
-                        ThumbnailId = media.Image != null ? media.Image.Id : (System.Guid?)null
+                        ThumbnailId = media.Image != null && !media.Image.IsDeleted ? media.Image.Id : (Guid?)null,
+                        ThumbnailCaption = media.Image != null && !media.Image.IsDeleted ? media.Image.Caption : null,
+                        ThumbnailUrl = media.Image != null && !media.Image.IsDeleted ?  media.Image.PublicThumbnailUrl : null
                     })
                 .FirstOne();
 
@@ -59,8 +60,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
             if (request.Data.IncludeTags)
             {
                 tags =
-                    repository.AsQueryable<MediaTag>(mediaTag => mediaTag.Media.Id == request.FileId)
-                              .OrderBy(mediaTag => mediaTag.Tag.Name)
+                    repository.AsQueryable<MediaTag>(mediaTag => mediaTag.Media.Id == request.FileId && !mediaTag.Tag.IsDeleted)                               
+                              .OrderBy(mediaTag => mediaTag.Tag.Name)                             
                               .Select(media => new TagModel
                                     {
                                         Id = media.Tag.Id,

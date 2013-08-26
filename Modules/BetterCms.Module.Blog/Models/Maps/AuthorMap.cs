@@ -11,7 +11,7 @@ namespace BetterCms.Module.Blog.Models.Maps
 
             Map(x => x.Name).Not.Nullable().Length(MaxLength.Name);
 
-            References(x => x.Image).Cascade.SaveUpdate().LazyLoad();
+            References(x => x.Image).Cascade.SaveUpdate().LazyLoad().Nullable();
         }
     }
 }

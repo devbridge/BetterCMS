@@ -22,7 +22,7 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout.Regions
             request.Data.SetDefaultOrder("RegionIdentifier");
 
             var listResponse = repository
-                .AsQueryable<Module.Root.Models.LayoutRegion>(lr => lr.Layout.Id == request.LayoutId)
+                .AsQueryable<Module.Root.Models.LayoutRegion>(lr => lr.Layout.Id == request.LayoutId && !lr.Layout.IsDeleted && lr.Region != null && !lr.Region.IsDeleted)
                 .Select(lr => new RegionModel
                     {
                         Id = lr.Region.Id,
