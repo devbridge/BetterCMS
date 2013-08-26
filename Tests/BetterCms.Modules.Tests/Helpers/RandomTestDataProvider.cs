@@ -470,11 +470,12 @@ namespace BetterCms.Tests.Helpers
             return entity;
         }
        
-        public HtmlContent CreateNewHtmlContent()
+        public HtmlContent CreateNewHtmlContent(int htmlContentLength = 2000)
         {
             var entity = new HtmlContent();
 
             PopulateHtmlContentProperties(entity);
+            entity.Html = ProvideRandomString(htmlContentLength);
 
             return entity;
         }

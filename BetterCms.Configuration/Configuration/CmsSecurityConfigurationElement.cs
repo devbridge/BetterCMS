@@ -10,14 +10,24 @@ namespace BetterCms.Configuration
     public class CmsSecurityConfigurationElement : ConfigurationElement, ICmsSecurityConfiguration
     {
         /// <summary>
-        /// The full access roles attribute.
+        /// The 'fullAccessRoles' attribute name.
         /// </summary>
         private const string FullAccessRolesAttribute = "fullAccessRoles";
 
         /// <summary>
-        /// The custom roles attribute.
+        /// The 'customRoles' attribute name.
         /// </summary>
         private const string CustomRolesAttribute = "customRoles";
+
+        /// <summary>
+        /// The 'enableContentEncryption' attribute name.
+        /// </summary>
+        private const string EnableContentEncryptionAttribute = "enableContentEncryption";
+
+        /// <summary>
+        /// The 'contentEncryptionKey' attribute name.
+        /// </summary>
+        private const string ContentEncryptionKeyAttribute = "contentEncryptionKey";
 
         /// <summary>
         /// Gets or sets the full access roles.
@@ -42,6 +52,32 @@ namespace BetterCms.Configuration
         public bool UseCustomRoles
         {
             get { return CustomRoles.Count > 0; }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether to a content encryption is enabled.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if a content encryption is enabled; otherwise, <c>false</c>.
+        /// </value>
+        [ConfigurationProperty(EnableContentEncryptionAttribute, IsRequired = false, DefaultValue = false)]
+        public bool EnableContentEncryption
+        {
+            get { return Convert.ToBoolean(this[EnableContentEncryptionAttribute]); }
+            set { this[EnableContentEncryptionAttribute] = value; }
+        }
+
+        /// <summary>
+        /// Gets the content encryption key.
+        /// </summary>
+        /// <value>
+        /// The content encryption key.
+        /// </value>
+        [ConfigurationProperty(ContentEncryptionKeyAttribute, IsRequired = false, DefaultValue = "")]
+        public string ContentEncryptionKey
+        {
+            get { return Convert.ToString(this[ContentEncryptionKeyAttribute]); }
+            set { this[ContentEncryptionKeyAttribute] = value; }
         }
 
         /// <summary>

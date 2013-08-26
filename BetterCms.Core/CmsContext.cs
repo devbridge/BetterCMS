@@ -20,6 +20,7 @@ using BetterCms.Core.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Mvc.Extensions;
 using BetterCms.Core.Mvc.Routes;
+using BetterCms.Core.Security;
 using BetterCms.Core.Services.Caching;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Core.Web;
@@ -102,6 +103,7 @@ namespace BetterCms.Core
             builder.RegisterType<DefaultAssemblyLoader>().As<IAssemblyLoader>().SingleInstance();
             builder.RegisterType<DefaultAssemblyManager>().As<IAssemblyManager>().SingleInstance();
             builder.RegisterType<DefaultUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
+            builder.RegisterType<DefaultTextEncryptor>().As<ITextEncryptor>().SingleInstance();
 
             builder.RegisterType<DefaultModulesRegistration>().As<IModulesRegistration>().SingleInstance();
             builder.RegisterType<DefaultMappingResolver>().As<IMappingResolver>().SingleInstance();

@@ -16,9 +16,9 @@ namespace BetterCms.Test.Module
 {
     public abstract class DatabaseTestBase : TestBase
     {
-        protected void RunEntityMapTestsInTransaction<TEntity>(TEntity testEntity, Action<TEntity> resultAssertions = null) where TEntity : Entity
+        protected void RunEntityMapTestsInTransaction<TEntity>(TEntity testEntity, Action<TEntity> resultAssertions = null, ILifetimeScope childScope = null) where TEntity : Entity
         {  
-            var sessionFactory = Container.Resolve<ISessionFactoryProvider>();
+            var sessionFactory = (childScope ?? Container).Resolve<ISessionFactoryProvider>();
             using (var session = sessionFactory.OpenSession())
             {
                 using (new TransactionScope())
@@ -36,7 +36,8 @@ namespace BetterCms.Test.Module
             TEntity entity, 
             Action<TEntity> resultAssertions = null, 
             Action<TEntity> assertionsBeforeSave = null, 
-            Action<TEntity> assertionsAfterSave = null) where TEntity : Entity
+            Action<TEntity> assertionsAfterSave = null,
+            ILifetimeScope childScope = null) where TEntity : Entity
         {
             RunDatabaseActionAndAssertionsInTransaction(entity, 
                 session => session.SaveOrUpdate(entity),
@@ -60,14 +61,16 @@ namespace BetterCms.Test.Module
                     {
                         assertionsAfterSave(result);
                     }
-                });
+                },
+                childScope);
         }
 
         protected void DeleteCreatedEntityAndRunAssertionsInTransaction<TEntity>(
             TEntity entity,
             Action<TEntity> resultAssertions = null,
             Action<TEntity> assertionsBeforeSave = null,
-            Action<TEntity> assertionsAfterSave = null) where TEntity : Entity
+            Action<TEntity> assertionsAfterSave = null,
+            ILifetimeScope childScope = null) where TEntity : Entity
         {
             RunDatabaseActionAndAssertionsInTransaction(entity, session =>
                 {
@@ -96,14 +99,16 @@ namespace BetterCms.Test.Module
                         {
                             assertionsAfterSave(result);
                         }
-                    });
+                    },
+                childScope);
         }
 
         protected void RunDatabaseActionAndAssertionsInTransaction<TEntity>(TEntity entity, 
             Action<ISession> databaseAction = null,
             Action<TEntity, ISession> resultAssertions = null, 
             Action<TEntity, ISession> assertionsBeforeSave = null, 
-            Action<TEntity, ISession> assertionsAfterSave = null) where TEntity : Entity
+            Action<TEntity, ISession> assertionsAfterSave = null,
+            ILifetimeScope childScope = null) where TEntity : Entity
         {
             if (databaseAction == null)
             {
@@ -115,7 +120,7 @@ namespace BetterCms.Test.Module
                 Assert.Fail("No assertion specified!");
             }
 
-            var sessionFactory = Container.Resolve<ISessionFactoryProvider>();
+            var sessionFactory = (childScope ?? Container).Resolve<ISessionFactoryProvider>();
 
             using (var session = sessionFactory.OpenSession())
             {
@@ -145,14 +150,14 @@ namespace BetterCms.Test.Module
             }
         }
 
-        protected void RunActionInTransaction(Action<ISession> actionInTransaction)
+        protected void RunActionInTransaction(Action<ISession> actionInTransaction, ILifetimeScope childScope = null)
         {
             if (actionInTransaction == null)
             {
                 Assert.Fail("No action specified.");
             }
 
-            var sessionFactory = Container.Resolve<ISessionFactoryProvider>();
+            var sessionFactory = (childScope ?? Container).Resolve<ISessionFactoryProvider>();
 
             using (var session = sessionFactory.OpenSession())
             {
