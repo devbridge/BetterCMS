@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Configuration;
-using System.Diagnostics;
 using System.Reflection;
 
 namespace BetterCms.Configuration
@@ -25,6 +24,8 @@ namespace BetterCms.Configuration
         private const string InstallationNode = "installation";
         private const string AccessControlEnabledAttribute = "accessControlEnabled";
         private const string DefaultAccessControlListNode = "accessControlList";
+        private const string RenderContentEndingDivAttribute = "renderContentEndingDiv";
+        private const string ContentEndingDivCssClassNameAttribute = "contentEndingDivCssClassName";
 
         /// <summary>
         /// The version backing field.
@@ -162,10 +163,10 @@ namespace BetterCms.Configuration
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether [access control enabled].
+        /// Gets or sets a value indicating whether access control is enabled.
         /// </summary>
         /// <value>
-        /// <c>true</c> if [access control enabled]; otherwise, <c>false</c>.
+        /// <c>true</c> if access control is enabled; otherwise, <c>false</c>.
         /// </value>
         [ConfigurationProperty(AccessControlEnabledAttribute, IsRequired = false, DefaultValue = false)]
         public bool AccessControlEnabled
@@ -184,6 +185,32 @@ namespace BetterCms.Configuration
         public string ArticleUrlPattern {
             get {return Convert.ToString(this[ArticleUrlPatternAttribute]); }
             set { this[ArticleUrlPatternAttribute] = value; }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether to render content ending div.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if to render content ending div; otherwise, <c>false</c>.
+        /// </value>
+        [ConfigurationProperty(RenderContentEndingDivAttribute, IsRequired = false, DefaultValue = true)]
+        public bool RenderContentEndingDiv
+        {
+            get { return (bool)this[RenderContentEndingDivAttribute]; }
+            set { this[RenderContentEndingDivAttribute] = value; }
+        }
+
+        /// <summary>
+        /// Gets the name of the content ending div CSS class.
+        /// </summary>
+        /// <value>
+        /// The name of the content ending div CSS class.
+        /// </value>
+        [ConfigurationProperty(ContentEndingDivCssClassNameAttribute, IsRequired = false)]
+        public string ContentEndingDivCssClassName
+        {
+            get { return Convert.ToString(this[ContentEndingDivCssClassNameAttribute]); }
+            set { this[ContentEndingDivCssClassNameAttribute] = value; }
         }
 
         /// <summary>

@@ -417,6 +417,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         self.contentStart = contentStart;
         self.contentEnd = contentEnd;
         self.overlay = null;
+        self.hideEndingDiv = contentEnd.data('hide') === true;
 
         self.contentId = contentStart.data('contentId');
         self.pageContentId = contentStart.data('pageContentId');
@@ -524,6 +525,9 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         $.each(pageViewModel.contents, function () {
             content.createContentOverlay(this);
             content.initOverlayEvents(this);
+            if (!bcms.editModeIsOn() && this.hideEndingDiv) {
+                this.contentEnd.hide();
+            }
         });
 
         content.refreshRegionsPosition();
@@ -559,6 +563,10 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         if (pageViewModel != null) {
             $.each(pageViewModel.contents, function () {
                 this.overlay.hide();
+                
+                if (this.hideEndingDiv) {
+                    this.contentEnd.hide();
+                }
             });
         }
     }
@@ -570,6 +578,10 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         if (pageViewModel != null) {
             $.each(pageViewModel.contents, function () {
                 this.overlay.show();
+                
+                if (this.hideEndingDiv) {
+                    this.contentEnd.show();
+                }
             });
         }
 

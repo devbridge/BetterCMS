@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 
+using BetterCms.Core;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Root.Projections;
 
@@ -13,11 +14,12 @@ namespace BetterCms.Module.Root.Mvc.Helpers
     {
         private const string ContentStartClassName = "bcms-content-start";
         private const string ContentEndClassName = "bcms-content-end";
-        private const string ClearFixClassName = "clearfix";
 
         private readonly StringBuilder sb;
         private readonly PageContentProjection content;
         private readonly bool allowContentManagement;
+        private readonly string clearFixClassName;
+        private readonly bool renderClearFixDiv;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RegionContentWrapper" /> class.
@@ -30,6 +32,9 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             this.sb = sb;
             this.content = content;
             this.allowContentManagement = allowContentManagement;
+
+            clearFixClassName = CmsContext.Config.ContentEndingDivCssClassName;
+            renderClearFixDiv = CmsContext.Config.RenderContentEndingDiv;
 
             RenderOpeningTags();
         }
@@ -70,11 +75,17 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         {
             if (allowContentManagement)
             {
-                sb.AppendFormat(@"<div class=""{0} {1}""></div>", ContentEndClassName, ClearFixClassName).AppendLine();
+                sb.AppendFormat(@"<div class=""{0} {1}"" data-hide=""{2}""></div>", 
+                    ContentEndClassName, 
+                    clearFixClassName,
+                    !renderClearFixDiv ? "true" : "false").AppendLine();
             }
             else
             {
-                sb.AppendFormat(@"<div class=""{0}""></div>", ClearFixClassName).AppendLine();
+                if (renderClearFixDiv)
+                {
+                    sb.AppendFormat(@"<div class=""{0}""></div>", clearFixClassName).AppendLine();
+                }
             }
         }
     }

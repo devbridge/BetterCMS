@@ -129,5 +129,21 @@ namespace BetterCms
         /// The default access control list.
         /// </value>
         AccessControlCollection DefaultAccessControlList { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether to render content ending div.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if to render content ending div; otherwise, <c>false</c>.
+        /// </value>
+        bool RenderContentEndingDiv { get; }
+
+        /// <summary>
+        /// Gets the name of the content ending div CSS class.
+        /// </summary>
+        /// <value>
+        /// The name of the content ending div CSS class.
+        /// </value>
+        string ContentEndingDivCssClassName { get; }
     }
 }
