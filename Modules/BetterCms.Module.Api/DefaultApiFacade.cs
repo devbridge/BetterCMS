@@ -4,6 +4,7 @@ using BetterCms.Module.Api.Operations.Blog;
 using BetterCms.Module.Api.Operations.MediaManager;
 using BetterCms.Module.Api.Operations.Pages;
 using BetterCms.Module.Api.Operations.Root;
+using BetterCms.Module.Api.Operations.Users;
 
 namespace BetterCms.Module.Api
 {
@@ -18,13 +19,16 @@ namespace BetterCms.Module.Api
         private readonly IMediaManagerApiOperations media;
 
         private readonly IBlogApiOperations blog;
+        
+        private readonly IUsersApiOperations users;
 
-        public DefaultApiFacade(IRootApiOperations root, IPagesApiOperations pages, IMediaManagerApiOperations media, IBlogApiOperations blog)
+        public DefaultApiFacade(IRootApiOperations root, IPagesApiOperations pages, IMediaManagerApiOperations media, IBlogApiOperations blog, IUsersApiOperations users)
         {
             this.root = root;
             this.pages = pages;
             this.media = media;
             this.blog = blog;
+            this.users = users;
         }
 
         public ILifetimeScope Scope
@@ -68,6 +72,14 @@ namespace BetterCms.Module.Api
             get
             {
                 return blog;
+            }
+        }
+        
+        public IUsersApiOperations Users
+        {
+            get
+            {
+                return users;
             }
         }
 

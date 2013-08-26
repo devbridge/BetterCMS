@@ -160,10 +160,10 @@
     <value>Select Image</value>
   </data>
   <data name="EditUser_UploadImage_Info" xml:space="preserve">
-    <value>Make sure to size this image to 200x125 pixels. It will be displayed as a thumbnail with your post.</value>
+    <value>Image will be displayed as a thumbnail with user.</value>
   </data>
   <data name="EditUser_UserImage_Tooltip_Description" xml:space="preserve">
-    <value />
+    <value>Select an image that will be shown as user thumbnail.</value>
   </data>
   <data name="EditUser_UserName_Title" xml:space="preserve">
     <value>User name</value>
@@ -171,17 +171,8 @@
   <data name="EditUser_UserName_Tooltip_Description" xml:space="preserve">
     <value>User name</value>
   </data>
-  <data name="EditUser_Window_Title" xml:space="preserve">
+  <data name="CreateUser_Window_Title" xml:space="preserve">
     <value>Add New User</value>
-  </data>
-  <data name="Role_AddNeww_Dialog_Title" xml:space="preserve">
-    <value>Set Role Permissions</value>
-  </data>
-  <data name="Role_AddNew_Dialog_RoleName_Title" xml:space="preserve">
-    <value>Role Name</value>
-  </data>
-  <data name="Role_AddNew_Dialog_Tooltip_Description" xml:space="preserve">
-    <value>Purpose of role name</value>
   </data>
   <data name="Role_Dialog_AddNew" xml:space="preserve">
     <value>Add New +</value>
@@ -190,7 +181,7 @@
     <value>Roles</value>
   </data>
   <data name="SiteSettings_Roles_RoleColumn" xml:space="preserve">
-    <value>Roles</value>
+    <value>Role Name</value>
   </data>
   <data name="SiteSettings_UserMenuItem" xml:space="preserve">
     <value>Users</value>
@@ -199,10 +190,7 @@
     <value>Users</value>
   </data>
   <data name="SiteSettings_Users_NameColumn" xml:space="preserve">
-    <value>Users</value>
-  </data>
-  <data name="SiteSettings_Users_RoleColumn" xml:space="preserve">
-    <value>Roles</value>
+    <value>User Name</value>
   </data>
   <data name="User_Dialog_AddNew" xml:space="preserve">
     <value>Add New +</value>
@@ -220,10 +208,10 @@
     <value>Role deleted successfully.</value>
   </data>
   <data name="DeleteRole_Confirmation_Message" xml:space="preserve">
-    <value>Are you sure you want to delete this role?</value>
+    <value>Are you sure you want to delete role {0}?</value>
   </data>
   <data name="DeleteUser_Confirmation_Message" xml:space="preserve">
-    <value>Are you sure you want to delete this user?</value>
+    <value>Are you sure you want to delete user {0}?</value>
   </data>
   <data name="DeleteUser_DeletedSuccessfully_Message" xml:space="preserve">
     <value>User deleted successfully.</value>
@@ -272,5 +260,47 @@
   </data>
   <data name="SaveUser_CreatedSuccessfully_Message" xml:space="preserve">
     <value>User created successfully.</value>
+  </data>
+  <data name="EditUser_Window_Title" xml:space="preserve">
+    <value>Edit user</value>
+  </data>
+  <data name="EditUser_Add_Role_Title" xml:space="preserve">
+    <value>Add user role</value>
+  </data>
+  <data name="DeleteRole_Cannot_Delete_Systematic_Role" xml:space="preserve">
+    <value>Failed to delete the role. Role {0} is CMS role and cannot be deleted.</value>
+  </data>
+  <data name="SaveRole_Cannot_Save_Systematic_Role" xml:space="preserve">
+    <value>Failed to save the role. Role {0} is CMS role and cannot be modified.</value>
+  </data>
+  <data name="SaveRole_RoleExists_Message" xml:space="preserve">
+    <value>Role {0} already exists. Please specify another role name.</value>
+  </data>
+  <data name="SaveUse_UserNameExists_Message" xml:space="preserve">
+    <value>User with name {0} already exists. Please specify another user name.</value>
+  </data>
+  <data name="User_Password_ShouldMatchMessage" xml:space="preserve">
+    <value>Password and retyped password should match.</value>
+  </data>
+  <data name="CreateUser_Password_IsRequired" xml:space="preserve">
+    <value>Password is required when creating new user.</value>
+  </data>
+  <data name="SaveUse_UserEmailExists_Message" xml:space="preserve">
+    <value>User with email {0} already exists. Please specify another user email.</value>
+  </data>
+  <data name="User_FirstName_RequiredMessage" xml:space="preserve">
+    <value>First name is requried.</value>
+  </data>
+  <data name="User_LastName_RequiredMessage" xml:space="preserve">
+    <value>Last name is requried.</value>
+  </data>
+  <data name="SiteSettings_Users_EmailColumn" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="SiteSettings_Users_FullNameColumn" xml:space="preserve">
+    <value>Full Name</value>
+  </data>
+  <data name="DeleteRole_Cannot_Delete_Populated_Role" xml:space="preserve">
+    <value>Cannot delete the role, because it's already assigned to users.</value>
   </data>
 </root>

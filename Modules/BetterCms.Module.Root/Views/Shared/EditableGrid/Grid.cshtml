@@ -44,7 +44,11 @@
             <!-- ko ifnot: saving() || deleting() -->
             @if (Model.CanEditItems)
             {
-                <td><a class="bcms-icn-edit" data-bind="click: onEdit">@RootGlobalization.Button_Edit</a></td>
+                <td>
+                    <!-- ko if: !editingIsDisabled -->
+                    <a class="bcms-icn-edit" data-bind="click: onEdit">@RootGlobalization.Button_Edit</a>
+                    <!-- /ko -->
+                </td>
             }
             else
             {

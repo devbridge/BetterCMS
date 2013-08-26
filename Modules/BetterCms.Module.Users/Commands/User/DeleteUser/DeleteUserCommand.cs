@@ -15,8 +15,12 @@ namespace BetterCms.Module.Users.Commands.User.DeleteUser
         /// <returns>Executed command result.</returns>
         public bool Execute(DeleteUserCommandRequest request)
         {
-            Repository.Delete<Models.Users>(request.UserId, request.Version);
+            var user = Repository.Delete<Models.User>(request.UserId, request.Version);
             UnitOfWork.Commit();
+
+            // Notify.
+            Events.UserEvents.Instance.OnUserDeleted(user);
+
             return true;
         }
     }

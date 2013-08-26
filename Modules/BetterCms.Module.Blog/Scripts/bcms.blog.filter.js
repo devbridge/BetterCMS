@@ -38,7 +38,7 @@ bettercms.define('bcms.blog.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders'
                 if (self.includeArchived()) {
                     return true;
                 }
-                if (self.tags != null && self.tags.tags() != null && self.tags.tags().length > 0) {
+                if (self.tags != null && self.tags.items() != null && self.tags.items().length > 0) {
                     return true;
                 }
                 if (self.dropDownValue() != 0) {
@@ -61,7 +61,7 @@ bettercms.define('bcms.blog.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders'
                 }
             };
             self.clearFilter = function () {
-                self.tags.tags([]);
+                self.tags.items([]);
                 self.includeArchived(false);
                 self.dropDownValue(0);
                 if (self.dropDown) {

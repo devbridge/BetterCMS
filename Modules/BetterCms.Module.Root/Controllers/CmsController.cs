@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 using BetterCms.Configuration;
 using BetterCms.Core.Mvc.Attributes;
@@ -147,9 +149,12 @@ namespace BetterCms.Module.Root.Controllers
             }
             var principal = SecurityService.GetCurrentPrincipal();
 
-            var canManageContent = SecurityService.IsAuthorized(
-                principal,
-                RootModuleConstants.UserRoles.MultipleRoles(SecurityService.GetAllRoles()));
+            var allRoles = new List<string>(RootModuleConstants.UserRoles.AllRoles);
+            if (!string.IsNullOrEmpty(cmsConfiguration.Security.FullAccessRoles))
+            {
+                allRoles.Add(cmsConfiguration.Security.FullAccessRoles);
+            }
+            var canManageContent = SecurityService.IsAuthorized(principal, RootModuleConstants.UserRoles.MultipleRoles(allRoles.ToArray()));
 
             var useCaching = cmsConfiguration.Cache.Enabled && !canManageContent;
             var request = new GetPageToRenderRequest

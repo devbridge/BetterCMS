@@ -3,7 +3,6 @@ using System.Diagnostics.CodeAnalysis;
 
 using Autofac;
 
-using BetterCms.Core.Models;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root;
@@ -149,8 +148,8 @@ namespace BetterCms.Module.Users
         /// <param name="containerBuilder">The container builder.</param>
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
+            containerBuilder.RegisterType<DefaultAuthenticationService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultRoleService>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            containerBuilder.RegisterType<DefaultAuthentictionService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
     }
 }

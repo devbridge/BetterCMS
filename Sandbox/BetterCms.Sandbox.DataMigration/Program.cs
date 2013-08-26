@@ -49,6 +49,7 @@ namespace BetterCms.Sandbox.DataMigration
                         new RootModuleDescriptor(configuration),
                         new UsersModuleDescriptor(configuration),
                         new NewsletterModuleDescriptor(configuration),
+                        new UsersModuleDescriptor(configuration)
                     })
                     .ToList();
         }

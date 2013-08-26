@@ -116,6 +116,7 @@
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
@@ -208,13 +209,12 @@
     <Compile Include="StorageTestBase.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="Common\ViewModelToStringTest.cs" />
-    <Compile Include="Users\ModelTests\MapTests\PermissionMapTest.cs" />
     <Compile Include="Users\ModelTests\MapTests\RoleMapTest.cs" />
-    <Compile Include="Users\ModelTests\MapTests\RolePermissionMapTest.cs" />
+    <Compile Include="Users\ProvidersTests\RoleProviderTests.cs" />
     <Compile Include="WindowsAzureStorage\MimeTypeUtilityTest.cs" />
     <Compile Include="WindowsAzureStorage\WindowsAzureStorageServiceTest.cs" />
     <Compile Include="Users\ModelTests\MapTests\UserRolesMapTest.cs" />
-    <Compile Include="Users\ModelTests\MapTests\UsersMapTest.cs" />
+    <Compile Include="Users\ModelTests\MapTests\UserMapTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Contents\Images\logo.png" />
@@ -282,6 +282,10 @@
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Installation\BetterCms.Module.Installation.csproj">
       <Project>{17BF5CA2-23B6-4796-8EF1-CDDF6D41A4F7}</Project>
       <Name>BetterCms.Module.Installation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Users.Api\BetterCms.Module.Users.Api.csproj">
+      <Project>{fcc9127a-74d2-41b1-8dee-0415db7a6c76}</Project>
+      <Name>BetterCms.Module.Users.Api</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Users\BetterCms.Module.Users.csproj">
       <Project>{C530025B-8AB7-402D-B60C-000C9A5D0446}</Project>

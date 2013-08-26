@@ -247,6 +247,27 @@
     <Compile Include="Operations\Root\Layouts\Layout\Options\OptionModel.cs" />
     <Compile Include="Operations\Root\OptionType.cs" />
     <Compile Include="Operations\Root\Tags\Tag\GetTagRequestValidator.cs" />
+    <Compile Include="Operations\Users\Roles\GetRolesRequest.cs" />
+    <Compile Include="Operations\Users\Roles\GetRolesResponse.cs" />
+    <Compile Include="Operations\Users\Roles\IRolesService.cs" />
+    <Compile Include="Operations\Users\Roles\RoleModel.cs" />
+    <Compile Include="Operations\Users\Roles\Role\GetRoleRequest.cs" />
+    <Compile Include="Operations\Users\Roles\Role\GetRoleRequestValidator.cs" />
+    <Compile Include="Operations\Users\Roles\Role\GetRoleResponse.cs" />
+    <Compile Include="Operations\Users\Roles\Role\IRoleService.cs" />
+    <Compile Include="Operations\Users\Roles\Role\RoleModel.cs" />
+    <Compile Include="Operations\Users\IUsersApiOperations.cs" />
+    <Compile Include="Operations\Users\Users\GetUsersRequest.cs" />
+    <Compile Include="Operations\Users\Users\GetUsersResponse.cs" />
+    <Compile Include="Operations\Users\Users\IUsersService.cs" />
+    <Compile Include="Operations\Users\Users\UserModel.cs" />
+    <Compile Include="Operations\Users\Users\User\GetUserModel.cs" />
+    <Compile Include="Operations\Users\Users\User\GetUserRequest.cs" />
+    <Compile Include="Operations\Users\Users\User\GetUserRequestValidator.cs" />
+    <Compile Include="Operations\Users\Users\User\GetUserResponse.cs" />
+    <Compile Include="Operations\Users\Users\User\IUserService.cs" />
+    <Compile Include="Operations\Users\Users\User\RoleModel.cs" />
+    <Compile Include="Operations\Users\Users\User\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Operations\Root\Categories\CategoryModel.cs" />
     <Compile Include="Operations\Root\Categories\Category\GetCategoryRequest.cs" />
@@ -285,6 +306,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

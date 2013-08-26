@@ -85,15 +85,6 @@ namespace BetterCms.Module.Root.Services
         }
 
         /// <summary>
-        /// Gets all roles.
-        /// </summary>
-        /// <returns>Role list.</returns>
-        public string[] GetAllRoles()
-        {
-            return modulesRegistration.GetUserAccessRoles().Select(m => m.Name).ToArray();
-        }
-
-        /// <summary>
         /// Gets the configuration.
         /// </summary>
         /// <returns>Better CMS security configuration.</returns>

@@ -319,6 +319,7 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             self.registeredFields = [];
             self.savePressed = false;
             self.deletingIsDisabled = false;
+            self.editingIsDisabled = false;
 
             // Indicates, if item is still in add new phase
             self.isNew = ko.observable(item.IsNew || false);
@@ -442,8 +443,10 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
         };
 
         grid.ItemViewModel.prototype.editItem = function () {
-            this.isActive(true);
-            this.hasFocus(true);
+            if (!this.editingIsDisabled) {
+                this.isActive(true);
+                this.hasFocus(true);
+            }
         };
 
         grid.ItemViewModel.prototype.cancelOrSaveItem = function () {

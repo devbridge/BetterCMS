@@ -204,10 +204,10 @@ namespace BetterCms.Module.Root
                     new JsIncludeDescriptor(this, "bcms.jquery.validate"),
                     new JsIncludeDescriptor(this, "bcms.jquery.validate.unobtrusive"),
                     new JsIncludeDescriptor(this, "bcms.jquery.autocomplete"),
+                    new JsIncludeDescriptor(this, "bcms.autocomplete"),
                     new JsIncludeDescriptor(this, "bcms"), 
                     new KnockoutExtendersJsModuleIncludeDescriptor(this), 
                     new JsIncludeDescriptor(this, "bcms.ko.grid"),                    
-
                     new SecurityJsModuleIncludeDescriptor(this), 
                     new MessagesJsModuleIncludeDescriptor(this), 
                     new ModalJsModuleIncludeDescriptor(this), 
@@ -224,17 +224,6 @@ namespace BetterCms.Module.Root
                     new JsIncludeDescriptor(this, "ckeditor", "ckeditor/ckeditor.js", "ckeditor/ckeditor.js"),
                     tagsJsModuleIncludeDescriptor,
                     new OptionsJsModuleIncludeDescriptor(this)
-                };
-        }
-
-        public override IEnumerable<IUserRole> RegisterUserRoles(ContainerBuilder containerBuilder)
-        {
-            return new[]
-                {
-                    new UserRole(RootModuleConstants.UserRoles.EditContent, () => RootGlobalization.UserRole_EditContent),
-                    new UserRole(RootModuleConstants.UserRoles.PublishContent, () => RootGlobalization.UserRole_PublishContent), 
-                    new UserRole(RootModuleConstants.UserRoles.DeleteContent, () => RootGlobalization.UserRole_DeleteContent), 
-                    new UserRole(RootModuleConstants.UserRoles.Administration, () => RootGlobalization.UserRole_Administration) 
                 };
         }
 

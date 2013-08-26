@@ -141,7 +141,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             if (self.includeArchived()) {
                 return true;
             }
-            if (self.tags != null && self.tags.tags() != null && self.tags.tags().length > 0) {
+            if (self.tags != null && self.tags.items() != null && self.tags.items().length > 0) {
                 return true;
             }
             return false;
@@ -175,7 +175,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
             self.paging.setPaging(options.GridOptions.PageSize, options.GridOptions.PageNumber, options.TotalCount);
 
-            self.tags.applyTagList(options.GridOptions.Tags);
+            self.tags.applyItemList(options.GridOptions.Tags);
         };
 
         self.isSearchEmpty = function() {
@@ -1385,12 +1385,12 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             params.PageNumber = folderViewModel.gridOptions().paging.pageNumber();
             params.IncludeArchivedItems = folderViewModel.gridOptions().includeArchived();
 
-            if (folderViewModel.gridOptions().tags.tags().length > 0) {
+            if (folderViewModel.gridOptions().tags.items().length > 0) {
                 params.Tags = [];
-                for (var i = 0; i < folderViewModel.gridOptions().tags.tags().length; i++) {
+                for (var i = 0; i < folderViewModel.gridOptions().tags.items().length; i++) {
                     params.Tags.push({
-                        Key: folderViewModel.gridOptions().tags.tags()[i].id(),
-                        Value: folderViewModel.gridOptions().tags.tags()[i].name()
+                        Key: folderViewModel.gridOptions().tags.items()[i].id(),
+                        Value: folderViewModel.gridOptions().tags.items()[i].name()
                     });
                 }
             }

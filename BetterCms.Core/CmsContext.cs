@@ -113,7 +113,7 @@ namespace BetterCms.Core
             builder.RegisterType<DefaultHttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
             builder.RegisterType<DefaultControllerExtensions>().As<IControllerExtensions>().SingleInstance();
             builder.RegisterType<DefaultCommandResolver>().As<ICommandResolver>().InstancePerLifetimeScope();
-            builder.RegisterType<DefaultFetchingProvider>().As<IFetchingProvider>().InstancePerLifetimeScope();
+            builder.RegisterType<DefaultFetchingProvider>().As<IFetchingProvider>().SingleInstance();
 
             builder.RegisterType<DefaultUnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
             builder.RegisterType<DefaultRepository>().As<IRepository>().InstancePerLifetimeScope();

@@ -19,8 +19,9 @@ namespace BetterCms.Module.Root.Commands.Tag.SearchTags
         /// <returns>A list of tags.</returns>
         public List<LookupKeyValue> Execute(string request)
         {
-            return Repository.AsQueryable<Root.Models.Tag>()
+            return Repository.AsQueryable<Models.Tag>()
                       .Where(tag => tag.Name.Contains(request))
+                      .OrderBy(tag => tag.Name)
                       .Select(tag => new LookupKeyValue() { Key = tag.Id.ToString(), Value = tag.Name })
                       .ToList();
         }

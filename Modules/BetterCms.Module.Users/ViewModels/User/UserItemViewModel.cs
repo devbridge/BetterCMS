@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 using BetterCms.Module.Root.Mvc.Grids;
 
@@ -12,8 +11,10 @@ namespace BetterCms.Module.Users.ViewModels.User
         public int Version { get; set; }
 
         public string UserName { get; set; }
-
-        public IList<Models.Role> Roles { get; set; }
+        
+        public string FullName { get; set; }
+        
+        public string Email { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

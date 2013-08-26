@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define, console */
+/*global bettercms, console */
 
-bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.grid', 'bcms.ko.extenders', 'bcms.jquery.autocomplete'],
+bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.grid', 'bcms.ko.extenders', 'bcms.autocomplete'],
     function ($, bcms, dynamicContent, siteSettings, editor, grid, ko, autocomplete) {
     'use strict';
 
@@ -220,135 +220,29 @@ bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bc
     };
 
     /**
-    * Tags list view model
+    * Tags autocomplete list view model
     */
-    tags.TagsListViewModel = function(tagsList) {
-        var self = this;
+    var TagsListViewModel = (function (_super) {
+        bcms.extendsClass(TagsListViewModel, _super);
 
-        self.isExpanded = ko.observable(true);
-        self.tags = ko.observableArray();
-        self.newTag = ko.observable().extend({ maxLength: { maxLength: ko.maxLength.name } });
+        function TagsListViewModel(tagsList) {
+            var options = {
+                serviceUrl: links.tagSuggestionSeviceUrl,
+                pattern: 'Tags[{0}]'
+            };
 
-        self.expandCollapse = function () {
-            self.isExpanded(!self.isExpanded());
-            self.clearTag();
-        };
+            _super.call(this, tagsList, options);
+        }
 
-        self.addTag = function() {
-            var newTag = $.trim(self.newTag());
-            if (newTag && !self.alreadyExists(newTag) && !self.newTag.hasError()) {
-                var tagViewModel = new tags.TagViewModel(self, newTag);
-                self.tags.push(tagViewModel);
-            }
-            self.clearTag();
-        };
+        return TagsListViewModel;
+    })(autocomplete.AutocompleteListViewModel);
 
-        self.addTagWithId = function (name, id) {
-            if (name && id && !self.alreadyExists(name)) {
-                var tagViewModel = new tags.TagViewModel(self, name, id);
-                self.tags.push(tagViewModel);
-            }
-            self.clearTag();
-        };
-
-        self.alreadyExists = function (newTag) {
-            for (var i = 0; i < self.tags().length; i++) {
-                var tag = self.tags()[i];
-                if (tag.name() == newTag) {
-                    tag.isActive(true);
-                    setTimeout(function () {
-                        tag.isActive(false);
-                    }, 4000);
-                    self.clearTag();
-                    return true;
-                }
-            }
-            return false;
-        };
-
-        self.clearTag = function() {
-            self.newTag('');
-        };
-
-        self.applyTagList = function (tagList) {
-            self.removeAll();
-            if (tagList) {
-                for (var i = 0; i < tagList.length; i++) {
-                    if (tagList[i].Value && tagList[i].Key) {
-                        self.tags.push(new tags.TagViewModel(self, tagList[i].Value, tagList[i].Key));
-                    } else {
-                        self.tags.push(new tags.TagViewModel(self, tagList[i]));
-                    }
-                }
-            }
-        };
-
-        self.removeAll = function () {
-            self.tags.removeAll();
-        };
-
-        self.applyTagList(tagsList);
-    };
-    
-    /**
-    * Tag view model
-    */
-    tags.TagViewModel = function (parent, tagName, tagId) {
-        var self = this;
-
-        self.parent = parent;
-        self.pattern = 'Tags[{0}]';
-
-        self.isActive = ko.observable(false);
-        self.name = ko.observable(tagName);
-        self.id = ko.observable(tagId);
-
-        self.remove = function () {
-            parent.tags.remove(self);
-        };
-        
-        self.getTagInputName = function (index) {
-            return $.format(self.pattern, index);
-        };
-    };
-
-    function addTagAutoCompleteBinding() {
-        ko.bindingHandlers.tagautocomplete = {
-            init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
-                var tagViewModel = viewModel,
-                    onlyExisting = valueAccessor() == "onlyExisting",
-                    complete = new autocomplete(element, {
-                        serviceUrl: links.tagSuggestionSeviceUrl,
-                        type: 'POST',
-                        appendTo: $(element).parent(),
-                        autoSelectFirst: onlyExisting,
-                        transformResult: function(response) {
-                            var result = typeof response === 'string' ? $.parseJSON(response) : response;
-                            return {
-                                suggestions: $.map(result.suggestions, function(dataItem) {
-                                    return { value: dataItem.Value, data: dataItem.Key };
-                                })
-                            };
-                        },
-                        onSelect: function(suggestion) {
-                            tagViewModel.newTag(suggestion.value);
-                            if (onlyExisting) {
-                                tagViewModel.addTagWithId(suggestion.value, suggestion.data);
-                            } else {
-                                tagViewModel.addTag();
-                            }
-                            tagViewModel.clearTag();
-                        }
-                    });
-            }
-        };
-    }
+    tags.TagsListViewModel = TagsListViewModel;
 
     /**
     * Initializes tags module.
     */
     tags.init = function () {
-        addTagAutoCompleteBinding();
         console.log('Initializing bcms.tags module.');
     };
     

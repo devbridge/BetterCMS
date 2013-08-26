@@ -3,8 +3,10 @@
 @using BetterCms.Module.Root.Mvc.Grids.TableRenderers
 @using BetterCms.Module.Users.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Users.Controllers
 @using BetterCms.Module.Users.ViewModels.User
 @using MvcContrib.UI.Grid
+@using Microsoft.Web.Mvc;
 
 @model BetterCms.Module.Root.ViewModels.SiteSettings.SearchableGridViewModel<UserItemViewModel>
 
@@ -13,43 +15,43 @@
     {
         column.EditButtonColumn();
 
-        column.For(m => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-user-name\" data-id=\"{0}\">{1}</a>", m.Id, m.UserName))
+        column.For(m => string.Format("<a class=\"bcms-tables-link bcms-grid-item-edit-button bcms-user-name\">{0}</a>", m.UserName))
             .Named(UsersGlobalization.SiteSettings_Users_NameColumn)
             .SortColumnName("UserName")
             .Encode(false);
 
-        column.For(m => m.Roles)
-           .Named(UsersGlobalization.SiteSettings_Users_RoleColumn)
-           .SortColumnName("Roles")
-           .Attributes(@class => "bcms-blog-CreatedOn");
+        column.For(m => m.FullName)
+           .Named(UsersGlobalization.SiteSettings_Users_FullNameColumn)
+           .SortColumnName("FullName")
+           .Attributes(@class => "bcms-user-fullName");
+        
+        column.For(m => m.Email)
+           .Named(UsersGlobalization.SiteSettings_Users_EmailColumn)
+           .SortColumnName("Email")
+           .Attributes(@class => "bcms-user-email");
       
 
         column.DeleteButtonColumn();
     };
 }
-
-@Html.HiddenGridOptions(Model.GridOptions)
-<div class="bcms-top-block-holder">
-    <div class="bcms-btn-links-main" id="bcms-create-user-button">@UsersGlobalization.User_Dialog_AddNew</div>
-    <div class="bcms-search-block">
-        @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box", @placeholder = RootGlobalization.WaterMark_Search })
-        <div class="bcms-btn-search" id="bcms-users-search-btn">@UsersGlobalization.User_Dialog_Search</div>
-    </div>  
-    <div class="bcms-featured-grid clearfix">
-        @Html.RenderPaging(Model)
+    
+@using (Html.BeginForm<UserController>(f => f.Index(null), FormMethod.Post, new { @id = "bcms-users-form", @class = "bcms-ajax-form" }))
+{
+    @Html.HiddenGridOptions(Model.GridOptions)
+    <div class="bcms-top-block-holder">
+        <div class="bcms-btn-links-main" id="bcms-create-user-button">@UsersGlobalization.User_Dialog_AddNew</div>
+        <div class="bcms-search-block">
+            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box", @placeholder = RootGlobalization.WaterMark_Search })
+            <div class="bcms-btn-search" id="bcms-users-search-btn">@UsersGlobalization.User_Dialog_Search</div>
+        </div>  
+        <div class="bcms-featured-grid clearfix">
+            @Html.RenderPaging(Model)
+        </div>
     </div>
-</div>
 
-@Html.SiteSettingsMessagesBox("bcms-users-messages")
-@Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables", @id => "bcms-users-grid").RowAttributes(delegate(GridRowViewData<UserItemViewModel> row)
-                  {
-                      return new Dictionary<string, object>
-                              {
-                                    {"data-id", row.Item.Id},
-                                    {"data-version", row.Item.Version}
-                              };
-              }).RenderUsing(new EditableHtmlTableGridRenderer<UserItemViewModel>())
-
+    @Html.SiteSettingsMessagesBox("bcms-users-messages")
+    @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<UserItemViewModel>())
+}
 
 <script type="text/html" id="bcms-users-list-row-template">
     @Html.Grid(new List<UserItemViewModel> {new UserItemViewModel()}).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<UserItemViewModel>())

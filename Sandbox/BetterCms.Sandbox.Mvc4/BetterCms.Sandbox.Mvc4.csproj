@@ -248,14 +248,14 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\bcms-media\Views\Files\" />
-    <Folder Include="Areas\bcms-media\Views\Upload\" />
-    <Folder Include="Areas\bcms-pages\Views\Page\" />
-    <Folder Include="file\bcms-blog\scripts\" />
+    <Folder Include="Areas\bcms-media\Views\" />
+    <Folder Include="Areas\bcms-root\Views\Shared\" />
+    <Folder Include="Areas\bcms-users\" />
     <Folder Include="file\bcms-media\Content\Css\Images\" />
     <Folder Include="file\bcms-media\scripts\" />
     <Folder Include="file\bcms-pages\scripts\" />
     <Folder Include="file\bcms-root\scripts\" />
+    <Folder Include="file\bcms-users\scripts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -293,9 +293,9 @@
       <Project>{66e7e4df-eeea-4b1e-8663-a1b430eb7375}</Project>
       <Name>BetterCms.Module.Root</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Modules\BetterCms.Module.WindowsAzureStorage\BetterCms.Module.WindowsAzureStorage.csproj">
-      <Project>{6e8e91d9-aeb9-432f-9647-68fa2def2ca9}</Project>
-      <Name>BetterCms.Module.WindowsAzureStorage</Name>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Users\BetterCms.Module.Users.csproj">
+      <Project>{c530025b-8ab7-402d-b60c-000c9a5d0446}</Project>
+      <Name>BetterCms.Module.Users</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -400,26 +400,34 @@
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <PropertyGroup>
-    <PostBuildEvent>REM copy "$(SolutionDir)Modules\BetterCms.Module.Blog\bin\BetterCms.Module.Blog.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
-REM copy "$(SolutionDir)Modules\BetterCms.Module.Blog\bin\BetterCms.Module.Blog.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+    <PostBuildEvent>
+      REM copy "$(SolutionDir)Modules\BetterCms.Module.Blog\bin\BetterCms.Module.Blog.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+      REM copy "$(SolutionDir)Modules\BetterCms.Module.Blog\bin\BetterCms.Module.Blog.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
 
-REM copy "$(SolutionDir)Modules\BetterCms.Module.Root\bin\BetterCms.Module.Root.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
-REM copy "$(SolutionDir)Modules\BetterCms.Module.Root\bin\BetterCms.Module.Root.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+      REM copy "$(SolutionDir)Modules\BetterCms.Module.Root\bin\BetterCms.Module.Root.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+      REM copy "$(SolutionDir)Modules\BetterCms.Module.Root\bin\BetterCms.Module.Root.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
 
-REM copy "$(SolutionDir)Modules\BetterCms.Module.Pages\bin\BetterCms.Module.Pages.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
-REM copy "$(SolutionDir)Modules\BetterCms.Module.Pages\bin\BetterCms.Module.Pages.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+      REM copy "$(SolutionDir)Modules\BetterCms.Module.Pages\bin\BetterCms.Module.Pages.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+      REM copy "$(SolutionDir)Modules\BetterCms.Module.Pages\bin\BetterCms.Module.Pages.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
 
-REM copy "$(SolutionDir)Modules\BetterCms.Module.Users\bin\BetterCms.Module.Users.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
-REM copy "$(SolutionDir)Modules\BetterCms.Module.Users\bin\BetterCms.Module.Users.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+      REM copy "$(SolutionDir)Modules\BetterCms.Module.Users\bin\BetterCms.Module.Users.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+      REM copy "$(SolutionDir)Modules\BetterCms.Module.Users\bin\BetterCms.Module.Users.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
 
-REM copy "$(SolutionDir)Modules\BetterCms.Module.MediaManager\bin\BetterCms.Module.MediaManager.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
-REM copy "$(SolutionDir)Modules\BetterCms.Module.MediaManager\bin\BetterCms.Module.MediaManager.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+      REM copy "$(SolutionDir)Modules\BetterCms.Module.MediaManager\bin\BetterCms.Module.MediaManager.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+      REM copy "$(SolutionDir)Modules\BetterCms.Module.MediaManager\bin\BetterCms.Module.MediaManager.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
 
-REM copy "$(SolutionDir)Modules\BetterCms.Module.Installation\bin\BetterCms.Module.Installation.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
-REM copy "$(SolutionDir)Modules\BetterCms.Module.Installation\bin\BetterCms.Module.Installation.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+      REM copy "$(SolutionDir)Modules\BetterCms.Module.Installation\bin\BetterCms.Module.Installation.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+      REM copy "$(SolutionDir)Modules\BetterCms.Module.Installation\bin\BetterCms.Module.Installation.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
 
-REM copy "$(SolutionDir)Modules\BetterCms.Module.Newsletter\bin\BetterCms.Module.Newsletter.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
-REM copy "$(SolutionDir)Modules\BetterCms.Module.Newsletter\bin\BetterCms.Module.Newsletter.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y</PostBuildEvent>
+      REM copy "$(SolutionDir)Modules\BetterCms.Module.Newsletter\bin\BetterCms.Module.Newsletter.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+      REM copy "$(SolutionDir)Modules\BetterCms.Module.Newsletter\bin\BetterCms.Module.Newsletter.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+
+      REM copy "$(SolutionDir)Modules\BetterCms.Module.WebApi\bin\BetterCms.Module.WebApi.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+      REM copy "$(SolutionDir)Modules\BetterCms.Module.WebApi\bin\BetterCms.Module.WebApi.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+
+      REM copy "$(SolutionDir)Modules\BetterCms.Module.Users\bin\BetterCms.Module.Users.dll" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+      REM copy "$(SolutionDir)Modules\BetterCms.Module.Users\bin\BetterCms.Module.Users.pdb" "$(ProjectDir)App_Data\BetterCms\Modules" /Y
+    </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <SlowCheetahTargets Condition=" '$(SlowCheetahTargets)'=='' ">$(SolutionDir)\Libs\SlowCheetah\v1\SlowCheetah.Transforms.targets</SlowCheetahTargets>

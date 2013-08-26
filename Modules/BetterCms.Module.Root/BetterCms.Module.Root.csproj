@@ -159,6 +159,7 @@
     <Compile Include="Models\Maps\PageOptionMap.cs" />
     <Compile Include="Models\Maps\PageAccessMap.cs" />
     <Compile Include="Models\Migrations\Migration201308252344.cs" />
+    <Compile Include="Models\Migrations\Migration201308211600.cs" />
     <Compile Include="Models\Migrations\Migration201308121549.cs" />
     <Compile Include="Models\Migrations\Migration201308060930.cs" />
     <Compile Include="Models\Migrations\Migration201308051530.cs" />
@@ -246,10 +247,8 @@
     <Compile Include="Registration\MessagesJsModuleIncludeDescriptor.cs" />
     <Compile Include="Models\LookupKeyValue.cs" />
     <Compile Include="Models\Maps\PageMap.cs" />
-    <Compile Include="Models\Maps\UserMap.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
     <Compile Include="Models\Page.cs" />
-    <Compile Include="Models\User.cs" />
     <Compile Include="Mvc\Helpers\SelectHelper.cs" />
     <Compile Include="Mvc\UI\DateBoxHelper.cs" />
     <Compile Include="Models\WireJson.cs" />
@@ -584,11 +583,12 @@
     <EmbeddedResource Include="Scripts\bcms.grid.js" />
     <EmbeddedResource Include="Scripts\bcms.jquery.autocomplete.js" />
     <EmbeddedResource Include="Scripts\bcms.ko.extenders.js" />
-    <EmbeddedResource Include="Scripts\bcms.tags.js" />
     <EmbeddedResource Include="Content\Styles\images\bcms-arrows-sprite.png" />
     <EmbeddedResource Include="Models\Migrations\Migration201307191431.sqlserver.sql" />
     <EmbeddedResource Include="Scripts\bcms.ko.grid.js" />
     <EmbeddedResource Include="Scripts\bcms.options.js" />
+    <EmbeddedResource Include="Scripts\bcms.autocomplete.js" />
+    <EmbeddedResource Include="Scripts\bcms.tags.js" />
     <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\es.js" />
     <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ja.js" />
     <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\km.js" />
@@ -769,6 +769,9 @@
     <EmbeddedResource Include="Views\Category\Categories.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Views\Security\AccessControlTemplate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Views\Shared\EditableGrid\Grid.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -782,9 +785,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\TopBlock.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Security\AccessControlTemplate.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

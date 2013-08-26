@@ -6,6 +6,7 @@ using BetterCms.Module.Api.Operations.Blog;
 using BetterCms.Module.Api.Operations.MediaManager;
 using BetterCms.Module.Api.Operations.Pages;
 using BetterCms.Module.Api.Operations.Root;
+using BetterCms.Module.Api.Operations.Users;
 
 namespace BetterCms.Module.Api
 {
@@ -20,5 +21,7 @@ namespace BetterCms.Module.Api
         IMediaManagerApiOperations Media { get; }
 
         IBlogApiOperations Blog { get; }    
+        
+        IUsersApiOperations Users { get; }
     }
 }

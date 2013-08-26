@@ -1,5 +1,6 @@
 ﻿using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Users.Services;
 
 namespace BetterCms.Module.Users.Commands.Role.DeleteRole
 {
@@ -9,14 +10,33 @@ namespace BetterCms.Module.Users.Commands.Role.DeleteRole
     public class DeleteRoleCommand : CommandBase, ICommand<DeleteRoleCommandRequest, bool>
     {
         /// <summary>
+        /// The role service
+        /// </summary>
+        private readonly IRoleService roleService;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeleteRoleCommand" /> class.
+        /// </summary>
+        /// <param name="roleService">The role service.</param>
+        public DeleteRoleCommand(IRoleService roleService)
+        {
+            this.roleService = roleService;
+        }
+
+        /// <summary>
         /// Executes this command.
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>Executed command result.</returns>
         public bool Execute(DeleteRoleCommandRequest request)
         {
-            Repository.Delete<Models.Role>(request.RoleId, request.Version);
+            UnitOfWork.BeginTransaction();
+            var role = roleService.DeleteRole(request.RoleId, request.Version, false);
             UnitOfWork.Commit();
+
+            // Notify.
+            Events.UserEvents.Instance.OnRoleDeleted(role);
+
             return true;
         }
     }

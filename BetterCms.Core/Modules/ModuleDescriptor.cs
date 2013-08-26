@@ -278,18 +278,6 @@ namespace BetterCms.Core.Modules
         }
 
         /// <summary>
-        /// Registers the permissions.
-        /// </summary>
-        /// <param name="containerBuilder">The container builder.</param>
-        /// <returns>
-        /// Enumerator of known module permissions.
-        /// </returns>
-        public virtual IEnumerable<IUserRole> RegisterUserRoles(ContainerBuilder containerBuilder)
-        {
-            return null;
-        }
-
-        /// <summary>
         /// Registers module controller types.
         /// </summary>
         /// <param name="registrationContext">The area registration context.</param>

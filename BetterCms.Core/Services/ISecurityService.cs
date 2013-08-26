@@ -22,12 +22,6 @@ namespace BetterCms.Core.Services
         IPrincipal GetCurrentPrincipal();
 
         /// <summary>
-        /// Gets all roles.
-        /// </summary>
-        /// <returns>Role list.</returns>
-        string[] GetAllRoles();
-
-        /// <summary>
         /// Gets the configuration.
         /// </summary>
         /// <returns>Better CMS security configuration.</returns>

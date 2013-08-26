@@ -1,111 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using BetterCms.Core.Mvc.Commands;
 
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Users.Models;
+using BetterCms.Module.Users.Services;
 using BetterCms.Module.Users.ViewModels.Role;
 
-using NHibernate.Linq;
-
-namespace BetterCms.Module.Users.Commands.Role.EditRole
+namespace BetterCms.Module.Users.Commands.Role.SaveRole
 {
     /// <summary>
     /// A command to save role item.
     /// </summary>
-    public class SaveRoleCommand : CommandBase, ICommand<EditRoleViewModel, SaveRoleResponse>
+    public class SaveRoleCommand : CommandBase, ICommand<RoleViewModel, SaveRoleCommandResponse>
     {
+        private readonly IRoleService roleService;
+
+        public SaveRoleCommand(IRoleService roleService)
+        {
+            this.roleService = roleService;
+        }
+
         /// <summary>
         /// Executes a command to save role.
         /// </summary>
-        /// <param name="roleItem">The role item.</param>
+        /// <param name="request">The request.</param>
         /// <returns>
-        /// true if role saved successfully; false otherwise.
+        /// Response with id and version
         /// </returns>
-        public SaveRoleResponse Execute(EditRoleViewModel roleItem)
+        public SaveRoleCommandResponse Execute(RoleViewModel request)
         {
-            UnitOfWork.BeginTransaction();
-
-            var role = !roleItem.Id.HasDefaultValue()
-                               ? Repository.AsQueryable<Models.Role>()
-                                           .Where(f => f.Id == roleItem.Id)
-                                           .ToList()
-                                           .FirstOrDefault()
-                               : new Models.Role();
-
-            if (role == null)
+            Models.Role role;
+            if (request.Id.HasDefaultValue())
             {
-                role = new Models.Role();
+                role = roleService.CreateRole(request.Name);
+                UnitOfWork.Commit();
+                Events.UserEvents.Instance.OnRoleCreated(role);
+            }
+            else
+            {
+                role = roleService.UpdateRole(request.Id, request.Version, request.Name);
+                UnitOfWork.Commit();
+                Events.UserEvents.Instance.OnRoleUpdated(role);
             }
 
-            role.Name = roleItem.RoleName;
-            role.Version = roleItem.Version;
-
-            //edits or remove permission
-            var rolePermissions = GetRolePermissions(roleItem.Id);
-            var requestPermissionList = roleItem.PermissionsList.Where(p => p.IsSelected).ToList(); 
-
-            if (rolePermissions != null && rolePermissions.Any())
-            {
-                foreach (var rolePermission in rolePermissions)
-                {
-                    var requestPermision = requestPermissionList.Count != 0
-                                               ? requestPermissionList.FirstOrDefault(f => f.Id == rolePermission.Permission.Id && f.IsSelected)
-                                               : null;
-
-                    if (requestPermision != null)
-                    {
-                        Repository.Save(rolePermission);
-                    }
-                    else
-                    {
-                        Repository.Delete(rolePermission);
-                    }
-                }
-                
-                foreach (var rolePermission in rolePermissions)
-                {
-                    requestPermissionList.RemoveAll(x => x.Id == rolePermission.Permission.Id);
-                }
-            }
-
-            var permissions = GetPermissions(requestPermissionList);
-            
-            //add new permission
-            foreach (var permission in permissions)
-            {
-                    var rolePermission = new RolePermissions(){Permission = permission, Role = role};
-                    Repository.Save(rolePermission);
-            }
-
-            Repository.Save(role);
-            UnitOfWork.Commit();
-
-            return new SaveRoleResponse() { Id = role.Id, RoleName = role.Name, Version = role.Version };
-
+            return new SaveRoleCommandResponse { Id = role.Id, Name = role.Name, Version = role.Version };
         }
-
-        private IList<RolePermissions> GetRolePermissions(Guid roleId)
-        {
-            var rolePermissions = UnitOfWork.Session
-                    .Query<RolePermissions>()
-                    .Where(r => !r.IsDeleted && r.Role.Id == roleId)
-                    .ToList(); 
-
-            return rolePermissions;
-        } 
-
-        private IList<Permission> GetPermissions(IList<PermissionViewModel> rolePermissions)
-        {
-            var identifiers = rolePermissions.Select(r => r.Id).ToArray();
-
-            var permission = UnitOfWork.Session
-                    .Query<Permission>()
-                    .Where(p => !p.IsDeleted && identifiers.Contains(p.Id))
-                    .ToList();
-
-            return permission;
-        } 
     }
 }
