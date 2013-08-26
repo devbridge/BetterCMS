@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
@@ -37,7 +38,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
 
             query = query.ApplyTagsFilter(
                 request.Data,
-                tagName => { return page => page.PageTags.Any(tag => tag.Tag.Name == tagName); });
+                tagName => { return page => page.PageTags.Any(pageTag => pageTag.Tag.Name == tagName && !pageTag.IsDeleted && !pageTag.Tag.IsDeleted); });
 
             var listResponse = query
                 .Select(page => new PageModel
@@ -54,13 +55,13 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
                         Description = page.Description,
                         IsPublished = page.Status == PageStatus.Published,
                         PublishedOn = page.PublishedOn,
-                        LayoutId = page.Layout.Id,
-                        CategoryId = page.Category.Id,
-                        CategoryName = page.Category.Name,
-                        MainImageId = page.Image.Id,
-                        MainImageUrl = page.Image.PublicUrl,
-                        MainImageThumbnauilUrl = page.Image.PublicThumbnailUrl,
-                        MainImageCaption = page.Image.Caption,
+                        LayoutId = page.Layout != null && !page.Layout.IsDeleted ? page.Layout.Id : Guid.Empty,
+                        CategoryId = page.Category != null && !page.Category.IsDeleted ? page.Category.Id : (Guid?)null,
+                        CategoryName = page.Category != null && !page.Category.IsDeleted ? page.Category.Name : null,
+                        MainImageId = page.Image != null && !page.Image.IsDeleted ? page.Image.Id : (Guid?)null,
+                        MainImageUrl = page.Image != null && !page.Image.IsDeleted ? page.Image.PublicUrl : null,
+                        MainImageThumbnauilUrl = page.Image != null && !page.Image.IsDeleted ? page.Image.PublicThumbnailUrl : null,
+                        MainImageCaption = page.Image != null && !page.Image.IsDeleted ? page.Image.Caption : null,
                         IsArchived = page.IsArchived
                     }).ToDataListResponse(request);
 

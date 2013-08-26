@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
@@ -53,25 +54,28 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                                 Description = page.Description,
                                 IsPublished = page.Status == PageStatus.Published,
                                 PublishedOn = page.PublishedOn,
-                                LayoutId = page.Layout.Id,
-                                CategoryId = page.Category.Id,
+                                LayoutId = page.Layout != null && !page.Layout.IsDeleted ? page.Layout.Id : Guid.Empty,
+                                CategoryId = page.Category != null && !page.Category.IsDeleted ? page.Category.Id : (Guid?)null,
                                 IsArchived = page.IsArchived,
-                                MainImageId = page.Image.Id,
-                                FeaturedImageId = page.FeaturedImage.Id,
-                                SecondaryImageId = page.SecondaryImage.Id,
+                                MainImageId = page.Image != null && !page.Image.IsDeleted ? page.Image.Id : (Guid?)null,
+                                FeaturedImageId = page.FeaturedImage != null && !page.FeaturedImage.IsDeleted ?  page.FeaturedImage.Id : (Guid?)null,
+                                SecondaryImageId = page.SecondaryImage != null && !page.SecondaryImage.IsDeleted ? page.SecondaryImage.Id : (Guid?)null,
                                 CustomCss = page.CustomCss,
                                 CustomJavaScript = page.CustomJS,
                                 UseCanonicalUrl = page.UseCanonicalUrl,
                                 UseNoFollow = page.UseNoFollow,
                                 UseNoIndex = page.UseNoIndex
                             },
-                        MetaData = request.Data.IncludeMetaData ? new MetadataModel
+                        MetaData = request.Data.IncludeMetaData 
+                            ? new MetadataModel
                             {
                                 MetaTitle = page.MetaTitle,
                                 MetaDescription = page.MetaDescription,
                                 MetaKeywords = page.MetaKeywords
-                            } : null,
-                        Category = page.Category != null && request.Data.IncludeCategory ? new CategoryModel
+                            } 
+                            : null,
+                        Category = page.Category != null && !page.Category.IsDeleted && request.Data.IncludeCategory 
+                            ? new CategoryModel
                             {
                                 Id = page.Category.Id,
                                 Version = page.Category.Version,
@@ -79,10 +83,10 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                                 CreatedOn = page.Category.CreatedOn,
                                 LastModifiedBy = page.Category.ModifiedByUser,
                                 LastModifiedOn = page.Category.ModifiedOn,
-
                                 Name = page.Category.Name
                             } : null,
-                        Layout = request.Data.IncludeLayout ? new LayoutModel
+                        Layout = request.Data.IncludeLayout && !page.Layout.IsDeleted 
+                            ? new LayoutModel
                             {
                                 Id = page.Layout.Id,
                                 Version = page.Layout.Version,
@@ -94,8 +98,10 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                                 Name = page.Layout.Name,
                                 LayoutPath = page.Layout.LayoutPath,
                                 PreviewUrl = page.Layout.PreviewUrl
-                            } : null,
-                        MainImage = page.Image != null && request.Data.IncludeImages ? new ImageModel
+                            } 
+                            : null,
+                        MainImage = page.Image != null && !page.Image.IsDeleted && request.Data.IncludeImages 
+                            ? new ImageModel
                             {
                                 Id = page.Image.Id,
                                 Version = page.Image.Version,
@@ -108,8 +114,10 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                                 Caption = page.Image.Caption,
                                 Url = page.Image.PublicUrl,
                                 ThumbnailUrl = page.Image.PublicThumbnailUrl
-                            } : null,
-                        FeaturedImage = page.FeaturedImage != null && request.Data.IncludeImages ? new ImageModel
+                            } 
+                            : null,
+                        FeaturedImage = page.FeaturedImage != null && !page.FeaturedImage.IsDeleted && request.Data.IncludeImages 
+                            ? new ImageModel
                             {
                                 Id = page.FeaturedImage.Id,
                                 Version = page.FeaturedImage.Version,
@@ -122,8 +130,10 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                                 Caption = page.FeaturedImage.Caption,
                                 Url = page.FeaturedImage.PublicUrl,
                                 ThumbnailUrl = page.FeaturedImage.PublicThumbnailUrl
-                            } : null,
-                        SecondaryImage = page.SecondaryImage != null && request.Data.IncludeImages ? new ImageModel
+                            } 
+                            : null,
+                        SecondaryImage = page.SecondaryImage != null && !page.SecondaryImage.IsDeleted && request.Data.IncludeImages 
+                            ? new ImageModel
                             {
                                 Id = page.SecondaryImage.Id,
                                 Version = page.SecondaryImage.Version,
@@ -136,7 +146,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                                 Caption = page.SecondaryImage.Caption,
                                 Url = page.SecondaryImage.PublicUrl,
                                 ThumbnailUrl = page.SecondaryImage.PublicThumbnailUrl
-                            } : null
+                            } 
+                            : null
                     })
                 .FirstOne();
 
@@ -153,10 +164,10 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
             return response;
         }
 
-        private System.Collections.Generic.List<TagModel> LoadTags(System.Guid blogPostId)
+        private System.Collections.Generic.List<TagModel> LoadTags(Guid blogPostId)
         {
             return repository
-                .AsQueryable<Module.Pages.Models.PageTag>(pageTag => pageTag.Page.Id == blogPostId)
+                .AsQueryable<Module.Pages.Models.PageTag>(pageTag => pageTag.Page.Id == blogPostId && !pageTag.Tag.IsDeleted)
                 .Select(media => new TagModel
                     {
                         Id = media.Tag.Id,
@@ -170,10 +181,10 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                     }).ToList();
         }
         
-        private System.Collections.Generic.List<PageContentModel> LoadPageContents(System.Guid blogPostId)
+        private System.Collections.Generic.List<PageContentModel> LoadPageContents(Guid blogPostId)
         {
             var results = repository
-                 .AsQueryable<Module.Root.Models.PageContent>(pageContent => pageContent.Page.Id == blogPostId)
+                 .AsQueryable<Module.Root.Models.PageContent>(pageContent => pageContent.Page.Id == blogPostId && !pageContent.Content.IsDeleted)
                  .OrderBy(pageContent => pageContent.Order)
                  .Select(pageContent => new
                     {

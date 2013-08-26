@@ -29,7 +29,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Nodes.Node
                         LastModifiedBy = node.ModifiedByUser,
                         LastModifiedOn = node.ModifiedOn,
 
-                        ParentId = node.ParentNode != null ? node.ParentNode.Id : (System.Guid?)null,
+                        ParentId = node.ParentNode != null && !node.ParentNode.IsDeleted ? node.ParentNode.Id : (System.Guid?)null,
                         Title = node.Title,
                         Url = node.Url,
                         DisplayOrder = node.DisplayOrder

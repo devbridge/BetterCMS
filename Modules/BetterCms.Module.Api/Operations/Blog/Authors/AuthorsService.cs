@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
@@ -33,10 +34,11 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors
                         LastModifiedOn = author.ModifiedOn,
 
                         Name = author.Name,
-                        ImageId = author.Image != null ? author.Image.Id : (System.Guid?)null,
-                        ImageUrl = author.Image != null ? author.Image.PublicUrl : null,
-                        ImageThumbnailUrl = author.Image != null ? author.Image.PublicThumbnailUrl : null,
-                        ImageCaption= author.Image != null ? author.Image.Caption : null
+
+                        ImageId = author.Image != null && !author.Image.IsDeleted ? author.Image.Id : (Guid?)null,
+                        ImageUrl = author.Image != null && !author.Image.IsDeleted ? author.Image.PublicUrl : (string)null,
+                        ImageThumbnailUrl = author.Image != null && !author.Image.IsDeleted ? author.Image.PublicThumbnailUrl : (string)null,
+                        ImageCaption = author.Image != null && !author.Image.IsDeleted ? author.Image.Caption : (string)null
                     })
                 .ToDataListResponse(request);
 
