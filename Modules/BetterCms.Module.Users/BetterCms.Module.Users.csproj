@@ -148,7 +148,9 @@
     <Compile Include="Provider\RoleProvider.cs" />
     <Compile Include="Registration\UserJsModuleIncludeDescriptor.cs" />
     <Compile Include="Services\DefaultAuthenticationService.cs" />
+    <Compile Include="Services\DefaultRoleService.cs" />
     <Compile Include="Services\IAuthenticationService.cs" />
+    <Compile Include="Services\IRoleService.cs" />
     <Compile Include="UsersModuleConstants.cs" />
     <Compile Include="UsersModuleDescriptor.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />

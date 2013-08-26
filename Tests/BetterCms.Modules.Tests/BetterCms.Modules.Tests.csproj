@@ -116,6 +116,7 @@
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
@@ -209,6 +210,7 @@
     <Compile Include="TestBase.cs" />
     <Compile Include="Common\ViewModelToStringTest.cs" />
     <Compile Include="Users\ModelTests\MapTests\RoleMapTest.cs" />
+    <Compile Include="Users\ProvidersTests\RoleProviderTests.cs" />
     <Compile Include="WindowsAzureStorage\MimeTypeUtilityTest.cs" />
     <Compile Include="WindowsAzureStorage\WindowsAzureStorageServiceTest.cs" />
     <Compile Include="Users\ModelTests\MapTests\UserRolesMapTest.cs" />
