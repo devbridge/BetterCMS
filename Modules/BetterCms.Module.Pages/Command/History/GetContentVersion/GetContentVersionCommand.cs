@@ -88,7 +88,7 @@ namespace BetterCms.Module.Pages.Command.History.GetContentVersion
                 }
             }
 
-            var options = OptionService.GetMergedOptionValues(pageContent.Options, pageContent.Content.ContentOptions);
+            var options = OptionService.GetMergedOptionValues(pageContent.Content.ContentOptions, pageContent.Options);
 
             var contentProjection = PageContentProjectionFactory.Create(pageContent, pageContent.Content, options);
 
