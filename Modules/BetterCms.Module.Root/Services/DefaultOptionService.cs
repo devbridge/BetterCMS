@@ -176,8 +176,14 @@ namespace BetterCms.Module.Root.Services
                     savedOptionValue = savedOptionValues.FirstOrDefault(f => f.Key.Trim().Equals(optionViewModel.OptionKey.Trim(), StringComparison.OrdinalIgnoreCase));
                 }
                 var parentOption = parentOptions.FirstOrDefault(f => f.Key.Trim().Equals(optionViewModel.OptionKey.Trim(), StringComparison.OrdinalIgnoreCase));
+
+                // Save item, if:
+                // - There is no parent (item created manually)
+                // - Value is not empty (value entered manually)
+                // - Parent type is not equal to option type (types are not equal - option was created manually)
                 var save = parentOption == null
-                    || !string.IsNullOrEmpty(optionViewModel.OptionValue);
+                    || !string.IsNullOrEmpty(optionViewModel.OptionValue)
+                    || parentOption.Type != optionViewModel.Type;
 
                 if (save)
                 {

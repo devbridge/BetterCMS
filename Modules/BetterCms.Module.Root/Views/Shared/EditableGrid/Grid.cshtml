@@ -45,7 +45,7 @@
             @if (Model.CanEditItems)
             {
                 <td>
-                    <!-- ko if: !editingIsDisabled -->
+                    <!-- ko if: !editingIsDisabled() -->
                     <a class="bcms-icn-edit" data-bind="click: onEdit">@RootGlobalization.Button_Edit</a>
                     <!-- /ko -->
                 </td>
@@ -61,7 +61,7 @@
             <td>
                 @if (Model.CanDeleteItems)
                 {
-                    <!-- ko if: !isActive() && !deletingIsDisabled -->
+                    <!-- ko if: !isActive() && !deletingIsDisabled() -->
                     <a class="bcms-icn-delete" data-bind="click: onDelete">@RootGlobalization.Button_Delete</a>
                     <!-- /ko -->
                 }

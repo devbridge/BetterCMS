@@ -171,7 +171,12 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                         itemExists = false;
                                 
                         for (j = 0; j < items().length; j++) {
-                            if (items()[j].key() == json.Data[i].OptionKey) {
+                            item = items()[j];
+                            if (item.key() == json.Data[i].OptionKey) {
+                                
+                                item.canEditOption = (item.type() != json.Data[i].Type);
+                                item.changeFieldsEditing();
+                                
                                 itemExists = true;
                                 break;
                             }

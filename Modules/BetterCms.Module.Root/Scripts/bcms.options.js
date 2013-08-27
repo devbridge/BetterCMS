@@ -231,7 +231,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.value(item.OptionValue);
                 self.type(item.Type);
                 self.canEditOption = item.CanEditOption;
-                self.disableFieldsEditing();
+                self.changeFieldsEditing();
             };
 
             OptionViewModel.prototype.getValueField = function() {
@@ -242,7 +242,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 return $.format(globalization.deleteOptionConfirmMessage, this.key());
             };
 
-            OptionViewModel.prototype.disableFieldsEditing = function () {
+            OptionViewModel.prototype.changeFieldsEditing = function () {
                 return;
             };
             
@@ -267,28 +267,25 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 _super.call(this, parent, item);
             }
 
-            function disableFieldEditing(field) {
+            function changeFieldEditing(field, disable) {
                 if (!field.editingIsDisabled) {
                     field.editingIsDisabled = ko.observable();
                 }
-
-                field.editingIsDisabled(true);
+                
+                field.editingIsDisabled(disable);
             }
 
             OptionValueViewModel.prototype.getValueField = function () {
                 return this.value;
             };
 
-            OptionValueViewModel.prototype.disableFieldsEditing = function () {
-                if (this.canEditOption === false) {
-                    disableFieldEditing(this.key);
-                    disableFieldEditing(this.type);
+            OptionValueViewModel.prototype.changeFieldsEditing = function () {
+                var disableEditing = this.canEditOption === false;
+                
+                changeFieldEditing(this.key, disableEditing);
+                changeFieldEditing(this.type, disableEditing);
 
-                    if (!this.deletingIsDisabled) {
-                        this.deletingIsDisabled = ko.observable();
-                    }
-                    this.deletingIsDisabled(true);
-                }
+                this.deletingIsDisabled(disableEditing);
             };
 
             return OptionValueViewModel;
