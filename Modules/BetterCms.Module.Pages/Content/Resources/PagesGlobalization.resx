@@ -960,9 +960,6 @@
   <data name="ClonePage_NewUrl_Tooltip_Description" xml:space="preserve">
     <value>Create a URL for your new page.</value>
   </data>
-  <data name="SaveWidget_DublicateOptionName_Message" xml:space="preserve">
-    <value>Duplicate widget options found.</value>
-  </data>
   <data name="DeleteTemplate_TemplateIsInUse_Message" xml:space="preserve">
     <value>Cannot delete template, because it is in use.</value>
   </data>

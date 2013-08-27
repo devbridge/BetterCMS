@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 
@@ -32,6 +33,11 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
             if (request.DesirableStatus == ContentStatus.Draft)
             {
                 throw new CmsException(string.Format("Server widget does not support Draft state."));
+            }
+
+            if (request.Options != null)
+            {
+                OptionService.ValidateOptionKeysUniqueness(request.Options);
             }
 
             UnitOfWork.BeginTransaction();

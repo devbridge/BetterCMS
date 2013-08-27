@@ -163,12 +163,6 @@ namespace BetterCms.Module.Pages.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (model.Options != null && model.Options.GroupBy(o => o.OptionKey).SelectMany(g => g.Skip(1)).Any())
-                {
-                    Messages.AddError(PagesGlobalization.SaveWidget_DublicateOptionName_Message);
-                    return Json(new WireJson { Success = false });
-                }
-
                 var response = GetCommand<SaveServerControlWidgetCommand>().ExecuteCommand(model);
                 if (response != null)
                 {

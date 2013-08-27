@@ -341,6 +341,12 @@
   <ItemGroup>
     <Content Include="Views\Shared\Layouts\TestLayout.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Layouts\OptionsLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Widgets\Options.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -26,6 +26,11 @@ namespace BetterCms.Module.Pages.Command.Layout.SaveTemplate
         /// <exception cref="System.NotImplementedException"></exception>
         public SaveTemplateResponse Execute(TemplateEditViewModel request)
         {
+            if (request.Options != null)
+            {
+                OptionService.ValidateOptionKeysUniqueness(request.Options);
+            }
+
             UnitOfWork.BeginTransaction();
 
             var template = !request.Id.HasDefaultValue()
