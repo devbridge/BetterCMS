@@ -43,14 +43,7 @@
                         }
                         else
                         {
-                            if (widget.WidgetType.HasValue && widget.WidgetType.Value == WidgetType.ServerControl)
-                            {
-                                @Html.PreviewContentBox(Html.BuildUrlFromExpression<WidgetsController>(f => f.PreviewWidget(widget.Id.ToString())), widget.Name)
-                            }
-                            else
-                            {
-                                @Html.PreviewContentBox(Html.BuildUrlFromExpression<WidgetsController>(f => f.PreviewHtmlContentWidget(widget.Id.ToString())), widget.Name)
-                            }
+                            @Html.PreviewContentBox(Html.BuildUrlFromExpression<WidgetsController>(f => f.PreviewWidget(widget.Id.ToString())), widget.Name)
                         }
 
                         <div class="bcms-controls-holder">
