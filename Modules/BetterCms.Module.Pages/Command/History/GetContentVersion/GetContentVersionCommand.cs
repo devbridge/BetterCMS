@@ -73,6 +73,7 @@ namespace BetterCms.Module.Pages.Command.History.GetContentVersion
             pageContent.Content = Repository
                 .AsQueryable<ContentEntity>(c => c.Id == request)
                 .FetchMany(f => f.ContentOptions)
+                .ToList()
                 .FirstOrDefault();
 
             if (pageContent.Content != null)
