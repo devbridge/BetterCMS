@@ -14,22 +14,22 @@ namespace BetterCms.Core.Security
         /// <summary>
         /// Gets the access level.
         /// </summary>
-        /// <param name="objectId">The object id.</param>
+        /// <param name="obj">The secured object.</param>
         /// <param name="principal">The principal.</param>
         /// <returns></returns>
-        AccessLevel GetAccessLevel<TAccess>(Guid objectId, IPrincipal principal) where TAccess : Entity, IAccess, new();
+        AccessLevel GetAccessLevel<TAccessSecuredObject>(TAccessSecuredObject obj, IPrincipal principal) where TAccessSecuredObject : IAccessSecuredObject;
 
         /// <summary>
         /// Updates the access control.
         /// </summary>
-        /// <param name="userAccessList">The user access list.</param>
-        /// <param name="objectId">The object id.</param>
-        void UpdateAccessControl<TAccess>(IEnumerable<IAccess> userAccessList, Guid objectId) where TAccess : Entity, IAccess, new();
+        /// <param name="obj">The secured object.</param>
+        /// <param name="accessRules">The user access list.</param>
+        void UpdateAccessControl<TAccessSecuredObject>(TAccessSecuredObject obj, IList<IAccessRule> accessRules) where TAccessSecuredObject : IAccessSecuredObject;
 
         /// <summary>
         /// Gets the default access list.
         /// </summary>
         /// <returns></returns>
-        List<IAccess> GetDefaultAccessList(IPrincipal principal = null);
+        IList<IAccessRule> GetDefaultAccessList(IPrincipal principal = null);
     }
 }

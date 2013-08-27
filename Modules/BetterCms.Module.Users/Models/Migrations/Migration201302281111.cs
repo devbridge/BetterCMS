@@ -32,7 +32,7 @@ namespace BetterCms.Module.Users.Models.Migrations
         /// Ups this instance.
         /// </summary>
         public override void Up()
-        {
+        {            
             // Add widget.
             Insert.IntoTable(contentsTableName).InSchema(rootSchemaName).Row(new
                 {

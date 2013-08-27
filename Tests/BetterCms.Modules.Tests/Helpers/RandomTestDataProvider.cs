@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 using BetterCms.Core.DataContracts.Enums;
@@ -236,51 +237,6 @@ namespace BetterCms.Tests.Helpers
 
             return entity;
         }
-
-        //public Approval CreateNewApproval(Content content = null, PageProperties page = null, User publisher = null)
-        //{
-        //    var entity = new Approval();
-
-        //    PopulateBaseFields(entity);
-
-        //    entity.ApprovalStatus = ProvideRandomEnumValue<ApprovalStatus>();
-        //    entity.ApprovedOn = ProvideRandomDateTime();
-        //    entity.EditorComments = ProvideRandomString(2000);
-        //    entity.PublisherComments = ProvideRandomString(2000);
-        //    entity.Content = content ?? CreateNewContent();
-        //    entity.Page = page ?? this.CreateNewPageProperties();
-        //    entity.Publisher = publisher ?? this.CreateNewUser();
-        //    entity.Editor = null;
-        //    entity.Draft = null;
-
-        //    return entity;
-        //}
-
-        //public ServerControlWidget CreateNewControl()
-        //{
-        //    var entity = new ServerControlWidget();
-
-        //    PopulateBaseFields(entity);
-
-        //    entity.Name = ProvideRandomString(50);
-        //    entity.Url = ProvideRandomString(300);
-
-        //    return entity;
-        //}
-
-        //public HtmlContentWidget CreateNewHtmlControl()
-        //{
-        //    var entity = new HtmlContentWidget();
-
-        //    PopulateBaseFields(entity);
-
-        //    entity.Name = ProvideRandomString(200);
-        //    entity.Text = ProvideRandomStringMaxLength();
-        //    entity.CustomCss = ProvideRandomString(2000);
-        //    entity.UseCustomCss = ProvideRandomBooleanValue();
-
-        //    return entity;
-        //}
 
         public Tag CreateNewTag()
         {
@@ -653,27 +609,11 @@ namespace BetterCms.Tests.Helpers
             return entity;
         }
 
-        public PageAccess CreateNewPageAccess()
+        public AccessRule CreateNewAccessRule()
         {
-            var entity = new PageAccess();
+            var entity = new AccessRule();
 
-            PopulateBaseFields(entity);
-
-            entity.Page = CreateNewPage();
-            entity.RoleOrUser = ProvideRandomString(MaxLength.Name);
-            entity.AccessLevel = ProvideRandomEnumValue<AccessLevel>();
-            
-            return entity;
-        }
-        
-        public MediaFileAccess CreateNewMediaFileAccess()
-        {
-            var entity = new MediaFileAccess();
-
-            PopulateBaseFields(entity);
-
-            entity.MediaFile = CreateNewMediaFile();
-            entity.RoleOrUser = ProvideRandomString(MaxLength.Name);
+            entity.Identity = ProvideRandomString(MaxLength.Name);
             entity.AccessLevel = ProvideRandomEnumValue<AccessLevel>();
 
             return entity;

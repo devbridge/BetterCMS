@@ -76,7 +76,7 @@ namespace BetterCms.Module.Root.Controllers
                 {
                     if (model.Redirect != null && !string.IsNullOrEmpty(model.Redirect.RedirectUrl))
                     {
-                        return new RedirectResult(model.Redirect.RedirectUrl, true);
+                        return RedirectPermanent(model.Redirect.RedirectUrl);
                     }
 
                     if (model.RenderPage != null)
@@ -88,10 +88,9 @@ namespace BetterCms.Module.Root.Controllers
 
                         ViewBag.pageId = model.RenderPage.Id;
 
-                        if (!HasAccess(model.RenderPage.Id))
+                        if (!HasCurrentPrincipalAccess(model.RenderPage))
                         {
-                            Response.StatusCode = 403;
-                            // throw new HttpException(403, "Access to the page forbidden.");
+                            Response.StatusCode = 403;                            
                             return Content("403 Access Forbidden", "text/plain");
                         }
 
@@ -114,7 +113,7 @@ namespace BetterCms.Module.Root.Controllers
             throw new HttpException(404, "Page Not Found");
         }
 
-        private bool HasAccess(Guid pageId)
+        private bool HasCurrentPrincipalAccess(IAccessSecuredObject page)
         {
             if (!cmsConfiguration.AccessControlEnabled)
             {
@@ -127,7 +126,7 @@ namespace BetterCms.Module.Root.Controllers
             }
 
             var principal = SecurityService.GetCurrentPrincipal();
-            var accessLevel = accessControlService.GetAccessLevel<PageAccess>(pageId, principal);
+            var accessLevel = accessControlService.GetAccessLevel(page, principal);
 
             return accessLevel != AccessLevel.Deny;
         }
@@ -147,6 +146,7 @@ namespace BetterCms.Module.Root.Controllers
                         break;
                 }
             }
+
             var principal = SecurityService.GetCurrentPrincipal();
 
             var allRoles = new List<string>(RootModuleConstants.UserRoles.AllRoles);
@@ -157,16 +157,15 @@ namespace BetterCms.Module.Root.Controllers
             var canManageContent = SecurityService.IsAuthorized(principal, RootModuleConstants.UserRoles.MultipleRoles(allRoles.ToArray()));
 
             var useCaching = cmsConfiguration.Cache.Enabled && !canManageContent;
-            var request = new GetPageToRenderRequest
-            {
-                PageUrl = virtualPath,
-                CanManageContent = canManageContent,
-                IsAuthenticated = principal != null && principal.Identity.IsAuthenticated
-            };
+            var request = new GetPageToRenderRequest {
+                                                         PageUrl = virtualPath,
+                                                         CanManageContent = canManageContent,
+                                                         IsAuthenticated = principal != null && principal.Identity.IsAuthenticated
+                                                     };
+
             if (useCaching)
             {
                 string cacheKey = "CMS_" + CalculateHash(virtualPath) + "_050cc001f75942648e57e58359140d1a";
-
                 model = cacheService.Get(cacheKey, cmsConfiguration.Cache.Timeout, () => GetCommand<GetPageToRenderCommand>().ExecuteCommand(request));
             }
             else

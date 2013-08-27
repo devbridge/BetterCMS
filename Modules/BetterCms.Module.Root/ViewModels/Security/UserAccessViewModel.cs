@@ -5,19 +5,41 @@ using BetterCms.Core.Security;
 namespace BetterCms.Module.Root.ViewModels.Security
 {
     [Serializable]
-    public class UserAccessViewModel : IAccess
+    public class UserAccessViewModel : IAccessRule
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; }        
 
-        public Guid ObjectId { get; set; }
-
-        public string RoleOrUser { get; set; }
+        public string Identity { get; set; }
 
         public AccessLevel AccessLevel { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserAccessViewModel" /> class.
+        /// </summary>
+        public UserAccessViewModel()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserAccessViewModel" /> class.
+        /// </summary>
+        /// <param name="accessRule">The access rule.</param>
+        public UserAccessViewModel(IAccessRule accessRule)
+        {
+            Id = accessRule.Id;
+            Identity = accessRule.Identity;
+            AccessLevel = accessRule.AccessLevel;
+        }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
         public override string ToString()
         {
-            return string.Format("Id: {0}, ObjectId: {1}, RoleOrUser: {2}, AccessLevel: {3}", Id, ObjectId, RoleOrUser, AccessLevel);
+            return string.Format("Id: {0}, Identity: {1}, AccessLevel: {2}", Id, Identity, AccessLevel);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
@@ -94,12 +95,18 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         {            
             UnitOfWork.BeginTransaction();
 
-            var page = Repository
+            var pageQuery = Repository
                 .AsQueryable<PageProperties>(p => p.Id == request.Id)
                 .FetchMany(p => p.Options)
                 .Fetch(p => p.Layout).ThenFetchMany(l => l.LayoutOptions)
-                .ToList()
-                .FirstOrDefault();
+                .AsQueryable();
+            
+            if (cmsConfiguration.AccessControlEnabled)
+            {
+                pageQuery = pageQuery.FetchMany(f => f.AccessRules);
+            }
+
+            var page = pageQuery.ToList().FirstOne();
 
             Models.Redirect redirectCreated = null;
             bool initialSeoStatus = page.HasSEO;
@@ -133,7 +140,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             page.CustomCss = request.PageCSS;
             page.CustomJS = request.PageJavascript;
 
-            if (request.IsVisibleToEveryone)
+            if (request.IsPagePublished)
             {
                 page.Status = PageStatus.Published;
                 page.PublishedOn = DateTime.Now;
@@ -159,13 +166,13 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
 
             if (cmsConfiguration.AccessControlEnabled)
             {
-                accessControlService.UpdateAccessControl<PageAccess>(request.UserAccessList, request.Id);
+                accessControlService.UpdateAccessControl(page, request.UserAccessList != null ? request.UserAccessList.Cast<IAccessRule>().ToList() : null);
             }
 
             Repository.Save(page);
 
             // Save tags
-            IList<Root.Models.Tag> newTags;
+            IList<Tag> newTags;
             tagService.SavePageTags(page, request.Tags, out newTags);
 
             UnitOfWork.Commit();

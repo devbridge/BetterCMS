@@ -18,7 +18,7 @@ namespace BetterCms.Module.MediaManager.Models.Maps
             Map(f => f.IsUploaded).Nullable();
             Map(f => f.IsCanceled).Not.Nullable().Default("0");
 
-            HasMany(x => x.AccessRules).KeyColumn("MediaFileId").Cascade.SaveUpdate().Inverse().LazyLoad().Where("IsDeleted = 0");
+            HasManyToMany(x => x.AccessRules).Table("MediaFileAccessRules").Schema(SchemaName).Cascade.AllDeleteOrphan().LazyLoad();
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Security.Principal;
 
 using BetterCms.Configuration;
 using BetterCms.Core.DataAccess;
-using BetterCms.Core.Models;
+using BetterCms.Core.DataContracts;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services.Caching;
 using BetterCms.Module.Root.Models;
@@ -42,15 +42,81 @@ namespace BetterCms.Module.Root.Services
         /// <summary>
         /// Gets the access level.
         /// </summary>
-        /// <param name="objectId">The object id.</param>
+        /// <param name="obj">The secured object.</param>
         /// <param name="principal">The principal.</param>
         /// <returns>Access level for current principal</returns>
-        public AccessLevel GetAccessLevel<TAccess>(Guid objectId, IPrincipal principal) where TAccess : Entity, IAccess, new()
-        {            
-            var accessList = cacheService.Get(string.Format(AccessLevelCacheKeyPattern, objectId), TimeSpan.FromMinutes(2),
-                () => repository.AsQueryable<TAccess>().Where(x => x.ObjectId == objectId).ToList());
+        public AccessLevel GetAccessLevel<TAccessSecuredObject>(TAccessSecuredObject obj, IPrincipal principal) where TAccessSecuredObject : IAccessSecuredObject
+        {
+            var key = string.Format(AccessLevelCacheKeyPattern, obj.Id);
 
-            return GetAccessLevel(accessList, principal);
+            object accessLevel = cacheService.Get(key, TimeSpan.FromMinutes(2), () => (object)GetAccessLevel(obj.AccessRules, principal));
+
+            return (AccessLevel)accessLevel;
+        }
+       
+        /// <summary>
+        /// Updates the access control.
+        /// </summary>
+        /// <param name="obj">The secured object.</param>
+        /// <param name="accessRules">The user access list.</param>
+        public void UpdateAccessControl<TAccessSecuredObject>(TAccessSecuredObject obj, IList<IAccessRule> accessRules) where TAccessSecuredObject : IAccessSecuredObject
+        {
+            var entitiesToDelete = obj.AccessRules != null
+                                       ? obj.AccessRules.Where(x => accessRules.All(model => model.Identity != x.Identity)).ToList()
+                                       : new List<IAccessRule>();
+
+            var entitesToAdd = accessRules
+                                  .Where(x => obj.AccessRules == null || obj.AccessRules.All(entity => entity.Identity != x.Identity))
+                                  .Select(f => new AccessRule
+                                                   {
+                                                       Identity = f.Identity,
+                                                       AccessLevel = f.AccessLevel
+                                                   })
+                                  .ToList();
+
+
+            //var entitiesToUpdate = GetEntitiesToUpdate(accessRules, obj.AccessRules);
+
+            entitiesToDelete.ForEach(obj.RemoveRule);
+
+            //entitiesToUpdate.ForEach(entity => repository.Save(entity));
+
+            entitesToAdd.ForEach(obj.AddRule);
+        }
+
+        /// <summary>
+        /// Gets the default access list.
+        /// </summary>
+        /// <returns></returns>
+        public IList<IAccessRule> GetDefaultAccessList(IPrincipal principal = null)
+        {
+            IList<IAccessRule> list = new List<IAccessRule>();
+
+            foreach (AccessControlElement userAccess in cmsConfiguration.DefaultAccessControlList)
+            {
+                list.Add(new UserAccessViewModel
+                             {
+                                 Identity = userAccess.Identity,
+                                 AccessLevel = (AccessLevel)Enum.Parse(typeof(AccessLevel), userAccess.AccessLevel)
+                             });
+            }
+
+            if (principal != null && principal.Identity.IsAuthenticated)
+            {
+                var identityName = principal.Identity.Name;
+                var accessLevel = GetAccessLevel(list, principal);
+
+                if (accessLevel != AccessLevel.ReadWrite && list.All(ua => ua.Identity != identityName))
+                {
+                    list.Add(new UserAccessViewModel
+                    {
+                        Identity = identityName,
+                        AccessLevel = AccessLevel.ReadWrite
+                    });
+                }
+            }
+
+            return list;
         }
 
         /// <summary>
@@ -58,8 +124,8 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <param name="accessList">The access list.</param>
         /// <param name="principal">The principal.</param>
-        /// <returns>Acces level for current principal</returns>
-        private AccessLevel GetAccessLevel(IEnumerable<IAccess> accessList, IPrincipal principal)
+        /// <returns>Access level for current principal</returns>
+        private AccessLevel GetAccessLevel(IList<IAccessRule> accessList, IPrincipal principal)
         {
             var accessLevel = AccessLevel.NoPermissions;
 
@@ -70,7 +136,7 @@ namespace BetterCms.Module.Root.Services
             }
 
             // If user is not authenticated, check access level for "Everyone":
-            var everyone = accessList.FirstOrDefault(x => string.Equals(x.RoleOrUser, SpecialIdentities.Everyone, StringComparison.OrdinalIgnoreCase));
+            var everyone = accessList.FirstOrDefault(x => string.Equals(x.Identity, SpecialIdentities.Everyone, StringComparison.OrdinalIgnoreCase));
 
             if (everyone != null)
             {
@@ -81,7 +147,7 @@ namespace BetterCms.Module.Root.Services
             if (principal.Identity.IsAuthenticated)
             {
                 var identityName = principal.Identity.Name;
-                var identityAccess = accessList.FirstOrDefault(x => string.Equals(x.RoleOrUser, identityName, StringComparison.OrdinalIgnoreCase));
+                var identityAccess = accessList.FirstOrDefault(x => string.Equals(x.Identity, identityName, StringComparison.OrdinalIgnoreCase));
 
                 if (identityAccess != null)
                 {
@@ -89,7 +155,7 @@ namespace BetterCms.Module.Root.Services
                 }
 
                 // Check access level for "Authenticated User":
-                var authenticated = accessList.FirstOrDefault(x => string.Equals(x.RoleOrUser, SpecialIdentities.AuthenticatedUsers, StringComparison.OrdinalIgnoreCase));
+                var authenticated = accessList.FirstOrDefault(x => string.Equals(x.Identity, SpecialIdentities.AuthenticatedUsers, StringComparison.OrdinalIgnoreCase));
 
                 if (authenticated != null && authenticated.AccessLevel > accessLevel)
                 {
@@ -98,8 +164,8 @@ namespace BetterCms.Module.Root.Services
 
                 // Check user or role access level:
                 foreach (var userAccess in accessList)
-                {                   
-                    if (principal.IsInRole(userAccess.RoleOrUser))
+                {
+                    if (principal.IsInRole(userAccess.Identity))
                     {
                         // Highest available privilege wins:
                         if (userAccess.AccessLevel > accessLevel)
@@ -113,110 +179,31 @@ namespace BetterCms.Module.Root.Services
             return accessLevel;
         }
 
-        /// <summary>
-        /// Updates the access control.
-        /// </summary>
-        /// <param name="userAccessList">The user access list.</param>
-        /// <param name="objectId">The object id.</param>
-        public void UpdateAccessControl<TAccess>(IEnumerable<IAccess> userAccessList, Guid objectId) where TAccess : Entity, IAccess, new()
-        {
-            var accessList = userAccessList.ToList();
+    
+        ///// <summary>
+        ///// Gets the entities to update.
+        ///// </summary>
+        ///// <param name="accessList">The access list.</param>
+        ///// <param name="entities">The entities.</param>
+        ///// <returns></returns>
+        //private static List<TAccess> GetEntitiesToUpdate<TAccess>(List<IAccess> accessList, List<TAccess> entities) where TAccess : Entity, IAccess, new()
+        //{
+        //    var entitiesToUpdate = new List<TAccess>();
 
-            // Ensure that each object has ObjectId:
-            accessList.ForEach(x => x.ObjectId = objectId);
+        //    foreach (var entity in entities)
+        //    {
+        //        // Find user access object with the same Role and different AccessLevel:
+        //        var userAccess = accessList.FirstOrDefault(x => x.RoleOrUser == entity.RoleOrUser && x.AccessLevel != entity.AccessLevel);
 
-            var entities = repository.AsQueryable<TAccess>()
-                                .Where(x => x.ObjectId == objectId)
-                                .ToList();
+        //        // If found, add to updatables list:
+        //        if (userAccess != null)
+        //        {
+        //            entity.AccessLevel = userAccess.AccessLevel;
+        //            entitiesToUpdate.Add(entity);
+        //        }
+        //    }
 
-            var entitiesToDelete = entities.Where(x => accessList.All(model => model.RoleOrUser != x.RoleOrUser)).ToList();
-
-            var entitesToAdd = accessList
-                                  .Where(x => entities.All(entity => entity.RoleOrUser != x.RoleOrUser))
-                                  .Select(ModelToEntity<TAccess>)
-                                  .ToList();
-
-            var entitiesToUpdate = GetEntitiesToUpdate(accessList, entities);
-
-            entitiesToDelete.ForEach(entity => repository.Delete(entity));
-            entitiesToUpdate.ForEach(entity => repository.Save(entity));
-            entitesToAdd.ForEach(entity => repository.Save(entity));
-        }
-
-        /// <summary>
-        /// Gets the default access list.
-        /// </summary>
-        /// <returns></returns>
-        public List<IAccess> GetDefaultAccessList(IPrincipal principal = null)
-        {
-            var list = new List<IAccess>();
-
-            foreach (AccessControlElement userAccess in cmsConfiguration.DefaultAccessControlList)
-            {
-                list.Add(new UserAccessViewModel
-                             {
-                                 RoleOrUser = userAccess.RoleOrUser,
-                                 AccessLevel = (AccessLevel)Enum.Parse(typeof(AccessLevel), userAccess.AccessLevel)
-                             });
-            }
-
-            if (principal != null && principal.Identity.IsAuthenticated)
-            {
-                var identityName = principal.Identity.Name;
-                var accessLevel = GetAccessLevel(list, principal);
-
-                if (accessLevel != AccessLevel.ReadWrite && list.All(ua => ua.RoleOrUser != identityName))
-                {
-                    list.Add(new UserAccessViewModel
-                    {
-                        RoleOrUser = identityName,
-                        AccessLevel = AccessLevel.ReadWrite
-                    });
-                }
-            }
-
-            return list;
-        }
-
-        /// <summary>
-        /// Models to entity.
-        /// </summary>
-        /// <param name="model">The model.</param>
-        /// <returns></returns>
-        private static TAccess ModelToEntity<TAccess>(IAccess model) where TAccess : Entity, IAccess, new()
-        {
-            return new TAccess
-            {
-                ObjectId = model.ObjectId,
-                RoleOrUser = model.RoleOrUser,
-                AccessLevel = model.AccessLevel
-            };
-        }
-
-        /// <summary>
-        /// Gets the entities to update.
-        /// </summary>
-        /// <param name="accessList">The access list.</param>
-        /// <param name="entities">The entities.</param>
-        /// <returns></returns>
-        private static List<TAccess> GetEntitiesToUpdate<TAccess>(List<IAccess> accessList, List<TAccess> entities) where TAccess : Entity, IAccess, new()
-        {
-            var entitiesToUpdate = new List<TAccess>();
-
-            foreach (var entity in entities)
-            {
-                // Find user access object with the same Role and different AccessLevel:
-                var userAccess = accessList.FirstOrDefault(x => x.RoleOrUser == entity.RoleOrUser && x.AccessLevel != entity.AccessLevel);
-
-                // If found, add to updatables list:
-                if (userAccess != null)
-                {
-                    entity.AccessLevel = userAccess.AccessLevel;
-                    entitiesToUpdate.Add(entity);
-                }
-            }
-
-            return entitiesToUpdate;
-        }
+        //    return entitiesToUpdate;
+        //}
     }
 }

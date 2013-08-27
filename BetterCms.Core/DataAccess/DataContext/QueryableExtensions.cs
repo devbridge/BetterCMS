@@ -44,7 +44,7 @@ namespace BetterCms.Core.DataAccess.DataContext
         }
 
         /// <summary>
-        /// Converts queryable to the future value.
+        /// Converts query to the future value.
         /// </summary>
         /// <typeparam name="TSource">The type of the source.</typeparam>
         /// <typeparam name="TResult">The type of the result.</typeparam>
@@ -63,7 +63,7 @@ namespace BetterCms.Core.DataAccess.DataContext
         }
 
         /// <summary>
-        /// Return the first one entity from list, or execption, if list is null.
+        /// Return the first one entity from list, or exception, if list is null.
         /// </summary>
         /// <typeparam name="TSource">The type of the source.</typeparam>
         /// <param name="source">The source.</param>
@@ -82,7 +82,7 @@ namespace BetterCms.Core.DataAccess.DataContext
         }
 
         /// <summary>
-        /// Return the first one entity from list, or execption, if list is null.
+        /// Return the first one entity from list, or exception, if list is null.
         /// </summary>
         /// <typeparam name="TSource">The type of the source.</typeparam>
         /// <param name="source">The source.</param>

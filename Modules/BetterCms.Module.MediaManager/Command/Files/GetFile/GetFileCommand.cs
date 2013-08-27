@@ -2,8 +2,10 @@
 using System.Globalization;
 using System.Linq;
 
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Security;
 using BetterCms.Core.Services.Storage;
 
 using BetterCms.Module.MediaManager.Models;
@@ -65,14 +67,14 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
         /// <returns>The view model.</returns>
         public virtual FileViewModel Execute(Guid fileId)
         {
-            var fileQuery = Repository.AsQueryable<MediaFile>().Where(f => f.Id == fileId);
+            var fileQuery = Repository.AsQueryable<MediaFile>().Where(f => f.Id == fileId && !f.IsDeleted);
 
             if (configuration.AccessControlEnabled)
             {
                 fileQuery = fileQuery.FetchMany(f => f.AccessRules);
             }
 
-            var file = fileQuery.ToList().First();
+            var file = fileQuery.ToList().FirstOne();
 
             var model = new FileViewModel
                 {
@@ -99,19 +101,10 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
 
             if (configuration.AccessControlEnabled)
             {
-                model.UserAccessList = file.AccessRules
-                                            .Select(x => new UserAccessViewModel
-                                            {
-                                                Id = x.Id,
-                                                AccessLevel = x.AccessLevel,
-                                                ObjectId = fileId,
-                                                RoleOrUser = x.RoleOrUser
-                                            }).ToList();
-
+                model.UserAccessList = file.AccessRules.Select(f => new UserAccessViewModel(f)).ToList();
                 model.Url = fileService.GetDownloadFileUrl(MediaType.File, model.Id.ToGuidOrDefault(), model.Url);
             }
-
-
+            
             return model;
         }
     }

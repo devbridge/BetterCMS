@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web;
 
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
@@ -58,17 +59,14 @@ namespace BetterCms.Module.MediaManager.Command.Files.DownloadFile
         public DownloadFileCommandResponse Execute(Guid id)
         {
             // Load file
-            var file = Repository
-                .AsQueryable<MediaFile>(f => f.Id == id && !f.IsDeleted)
-                .Select(f => new
-                        {
-                            FileUri = f.FileUri,
-                            Title = f.Title,
-                            OriginalFileExtension = f.OriginalFileExtension,
-                            Type = f.Type,
-                            PublicUrl = f.PublicUrl
-                        })
-                .FirstOne();
+            var fileQuery = Repository.AsQueryable<MediaFile>(f => f.Id == id && !f.IsDeleted);
+
+            if (cmsConfiguration.AccessControlEnabled)
+            {
+                fileQuery = fileQuery.FetchMany(f => f.AccessRules);
+            }
+
+            var file = fileQuery.ToList().FirstOne();            
 
             // Access control is ALWAYS disabled for images
             var accesControlEnabled = cmsConfiguration.AccessControlEnabled && file.Type != MediaType.Image;
@@ -80,7 +78,7 @@ namespace BetterCms.Module.MediaManager.Command.Files.DownloadFile
 
             // Get download URL with security token
             var principal = SecurityService.GetCurrentPrincipal();
-            var accessLevel = accessControlService.GetAccessLevel<MediaFileAccess>(id, principal);
+            var accessLevel = accessControlService.GetAccessLevel(file, principal);
 
             if (accessLevel == AccessLevel.Deny)
             {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
@@ -8,6 +9,7 @@ using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Mvc.Extensions;
+using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 
 using BetterCms.Module.Root.Models;
@@ -61,19 +63,16 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             var pageQuery = GetPageFutureQuery(request);
             var pageContentsQuery = GetPageContentFutureQuery(request);
             
-            var page = pageQuery.FirstOrDefault();
+            var page = pageQuery.ToList().FirstOrDefault();
+
             if (page == null)
             {
-                return Redirect(request.PageUrl);
+                return FindRedirect(request.PageUrl);
             }
 
-            // Redirect user to login page, if page is inaccessible for public users
-            // and user is not authenticated
-            if (request.PreviewPageContentId == null && !request.IsAuthenticated && page.Status != PageStatus.Published && !string.IsNullOrWhiteSpace(cmsConfiguration.LoginUrl))
+            if (request.PreviewPageContentId == null && !request.IsAuthenticated && page.Status != PageStatus.Published)
             {
-                // TODO: uncomment redirect to login form, when login form will be im
-                return null;
-                // return Redirect(cmsConfiguration.LoginUrl);
+                throw new HttpException(403, "403 Access Forbidden");
             }
 
             var pageContents = pageContentsQuery.ToList();
@@ -94,6 +93,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             renderPageViewModel.Contents = contentProjections;
             renderPageViewModel.Metadata = pageAccessor.GetPageMetaData(page).ToList();
             renderPageViewModel.Options = optionService.GetMergedOptionValues(page.Layout.LayoutOptions, page.Options).ToList();
+            renderPageViewModel.AccessRules = page.AccessRules != null ? page.AccessRules.Cast<IAccessRule>().ToList() : null;
 
             // Attach styles.
             var styles = new List<IStylesheetAccessor>();
@@ -195,17 +195,23 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 query = query.Where(f => f.Id == request.PageId);
             }
 
-            // If page is not published, page is not found
+            // If page is not published, page is not found.
             if (!request.IsAuthenticated && request.PreviewPageContentId == null)
             {
                 query = query.Where(f => f.Status == PageStatus.Published);
             }
 
-            // Add fetched entities
+            // Add fetched entities.
             query = query
                 .Fetch(f => f.Layout)
                 .ThenFetchMany(f => f.LayoutRegions)
                 .ThenFetch(f => f.Region);
+
+            // Add access rules if access control is enabled.
+            if (cmsConfiguration.AccessControlEnabled)
+            {
+                query = query.FetchMany(f => f.AccessRules);
+            }
 
             return query.ToFuture();
         }
@@ -252,8 +258,8 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             return pageContentsQuery.ToFuture();
         }
-
-        private CmsRequestViewModel Redirect(string redirectUrl)
+        
+        private CmsRequestViewModel FindRedirect(string redirectUrl)
         {
             var redirect = pageAccessor.GetRedirect(redirectUrl);
             if (!string.IsNullOrWhiteSpace(redirect))

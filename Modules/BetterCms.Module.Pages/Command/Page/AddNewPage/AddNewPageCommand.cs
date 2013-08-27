@@ -49,7 +49,7 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
                                 ParentPageUrl = request.ParentPageUrl,
                                 Templates = layoutService.GetLayouts(),
                                 AccessControlEnabled = cmsConfiguration.AccessControlEnabled,
-                                UserAccessList = accessControlService.GetDefaultAccessList(principal).Cast<UserAccessViewModel>().ToList()
+                                UserAccessList = accessControlService.GetDefaultAccessList(principal).Select(f => new UserAccessViewModel(f)).ToList()
                             };
 
             if (model.Templates.Count > 0)

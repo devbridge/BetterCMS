@@ -4,7 +4,7 @@ using System.Linq;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
-
+using BetterCms.Core.Security;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -88,7 +88,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                               UseNoFollow = page.UseNoFollow,
                               UseNoIndex = page.UseNoIndex,
                               UseCanonicalUrl = page.UseCanonicalUrl,
-                              IsVisibleToEveryone = page.Status == PageStatus.Published,
+                              IsPagePublished = page.Status == PageStatus.Published,
                               IsInSitemap = page.NodeCountInSitemap > 0,
                               IsArchived = page.IsArchived,
                               TemplateId = page.Layout.Id,
@@ -134,24 +134,18 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
 
                 // Get layout options, page options and merge them
                 var layoutOptions = Repository.AsQueryable<LayoutOption>(lo => lo.Layout.Id == model.Model.TemplateId).ToList();
-                var pageOptions = Repository
-                    .AsQueryable<PageOption>(p => p.Page.Id == id)
-                    .ToList();
+                var pageOptions = Repository.AsQueryable<PageOption>(p => p.Page.Id == id).ToList();
 
                 model.Model.OptionValues = optionService.GetMergedOptionValuesForEdit(layoutOptions, pageOptions);
 
                 if (cmsConfiguration.AccessControlEnabled)
                 {
-                    model.Model.UserAccessList = Repository.AsQueryable<PageAccess>()
-                                                .Where(x => x.Page.Id == id)
-                                                .OrderBy(x => x.RoleOrUser)
-                                                .Select(x => new UserAccessViewModel
-                                                {
-                                                    Id = x.Id,
-                                                    AccessLevel = x.AccessLevel,
-                                                    ObjectId = x.Page.Id,
-                                                    RoleOrUser = x.RoleOrUser
-                                                }).ToList();
+                    model.Model.UserAccessList = Repository.AsQueryable<Root.Models.Page>()
+                                                .Where(x => x.Id == id && !x.IsDeleted)                    
+                                                .SelectMany(x => x.AccessRules)
+                                                .OrderBy(x => x.Identity)
+                                                .ToList()
+                                                .Select(x => new UserAccessViewModel(x)).ToList();
                 }
 
                 // Get templates

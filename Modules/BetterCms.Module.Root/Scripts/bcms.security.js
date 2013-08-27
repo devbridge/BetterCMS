@@ -61,7 +61,7 @@ bettercms.define('bcms.security', ['bcms.jquery', 'bcms.ko.extenders'], function
     };
 
     function UserAccessViewModel(item) {
-        this.RoleOrUser = ko.observable(item.RoleOrUser);
+        this.Identity = ko.observable(item.Identity);
         this.AccessLevel = ko.observable(item.AccessLevel || 3);
     }
 
@@ -73,7 +73,7 @@ bettercms.define('bcms.security', ['bcms.jquery', 'bcms.ko.extenders'], function
                 if (!model.newUser()) {
                     return;
                 }
-                model.UserAccessList.push(new UserAccessViewModel({ RoleOrUser: model.newUser() }));
+                model.UserAccessList.push(new UserAccessViewModel({ Identity: model.newUser() }));
                 model.newUser('');
             },
             removeUser: function(userAccessViewModel) {

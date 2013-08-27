@@ -5,7 +5,7 @@ namespace BetterCms.Configuration
 {
     public class AccessControlElement : ConfigurationElement
     {
-        private const string RoleOrUserAttribute = "roleOrUser";
+        private const string IdentityAttribute = "identity";
 
         private const string AccessLevelAttribute = "accessLevel";
 
@@ -15,11 +15,11 @@ namespace BetterCms.Configuration
         /// <value>
         /// The role or user.
         /// </value>
-        [ConfigurationProperty(RoleOrUserAttribute, IsRequired = true)]
-        public string RoleOrUser
+        [ConfigurationProperty(IdentityAttribute, IsRequired = true)]
+        public string Identity
         {
-            get { return Convert.ToString(this[RoleOrUserAttribute]); }
-            set { this[RoleOrUserAttribute] = value; }
+            get { return Convert.ToString(this[IdentityAttribute]); }
+            set { this[IdentityAttribute] = value; }
         }
 
         /// <summary>
