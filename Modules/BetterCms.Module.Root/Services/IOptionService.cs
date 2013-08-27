@@ -46,5 +46,11 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <param name="option">The option.</param>
         void ValidateOptionValue(IOption option);
+
+        /// <summary>
+        /// Validates the uniqueness of the option keys.
+        /// </summary>
+        /// <param name="options">The options.</param>
+        void ValidateOptionKeysUniqueness(IEnumerable<OptionViewModelBase> options);
     }
 }

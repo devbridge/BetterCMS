@@ -176,7 +176,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 throw new CmsException(string.Format("A content version was not found to project on the page. PageContent={0}; Request={1};", pageContent, request));
             }
 
-            var options = optionService.GetMergedOptionValues(pageContent.Options, pageContent.Content.ContentOptions);
+            var options = optionService.GetMergedOptionValues(contentToProject.ContentOptions, pageContent.Options);
             
             return pageContentProjectionFactory.Create(pageContent, contentToProject, options);
         }

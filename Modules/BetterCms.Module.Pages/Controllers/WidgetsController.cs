@@ -2,10 +2,12 @@
 using System.Web.Mvc;
 
 using BetterCms.Core.Security;
+using BetterCms.Module.Pages.Command.History.GetContentVersion;
 using BetterCms.Module.Pages.Command.Widget.DeleteWidget;
 using BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit;
 using BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit;
 using BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets;
+using BetterCms.Module.Pages.Command.Widget.PreviewWidget;
 using BetterCms.Module.Pages.Command.Widget.SaveWidget;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.ViewModels.Widgets;
@@ -163,12 +165,6 @@ namespace BetterCms.Module.Pages.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (model.Options != null && model.Options.GroupBy(o => o.OptionKey).SelectMany(g => g.Skip(1)).Any())
-                {
-                    Messages.AddError(PagesGlobalization.SaveWidget_DublicateOptionName_Message);
-                    return Json(new WireJson { Success = false });
-                }
-
                 var response = GetCommand<SaveServerControlWidgetCommand>().ExecuteCommand(model);
                 if (response != null)
                 {
@@ -184,24 +180,17 @@ namespace BetterCms.Module.Pages.Controllers
             return Json(new WireJson { Success = false });
         }
 
-        // TODO: remote it. use previewUrl.
-        [HttpGet]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration, RootModuleConstants.UserRoles.EditContent)]
-        public ActionResult PreviewHtmlContentWidget(string contentId)
-        {
-            HtmlContentWidgetViewModel model = GetCommand<GetHtmlContentWidgetForEditCommand>().ExecuteCommand(contentId.ToGuidOrDefault());
-
-            return View(model);
-        }
-
-        // TODO: remote it. use previewUrl.
+        /// <summary>
+        /// Renders widget preview.
+        /// </summary>
+        /// <param name="widgetId">The widget id.</param>
+        /// <returns>View with widget preview</returns>
         [HttpGet]
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration, RootModuleConstants.UserRoles.EditContent)]
         public ActionResult PreviewWidget(string widgetId)
         {
-            ServerControlWidgetViewModel model = GetCommand<GetServerControlWidgetForEditCommand>().ExecuteCommand(widgetId.ToGuidOrDefault());
-
-            return View(model);
+            var model = GetCommand<PreviewWidgetCommand>().ExecuteCommand(widgetId.ToGuidOrDefault());
+            return View(PagesConstants.ContentVersionPreviewTemplate, model);
         }
 
         /// <summary>

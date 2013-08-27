@@ -11,7 +11,7 @@ namespace BetterCms.Module.Root.Models.Maps
 
             Map(x => x.Key, "[Key]").Length(MaxLength.Name).Not.Nullable();
             Map(x => x.Type).Not.Nullable();
-            Map(x => x.DefaultValue).Length(MaxLength.Max).Nullable().LazyLoad();
+            Map(x => x.DefaultValue).Length(MaxLength.Max).Nullable();
 
             References(x => x.Content).Cascade.SaveUpdate().LazyLoad();            
         }

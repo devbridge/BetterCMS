@@ -21,5 +21,10 @@
         /// The option values grid template.
         /// </summary>
         public const string OptionValuesGridTemplate = "~/Areas/bcms-pages/Views/Option/EditOptionValues.cshtml";
+
+        /// <summary>
+        /// The content version preview template
+        /// </summary>
+        public const string ContentVersionPreviewTemplate = "~/Areas/bcms-pages/Views/History/ContentVersion.cshtml";
     }
 }

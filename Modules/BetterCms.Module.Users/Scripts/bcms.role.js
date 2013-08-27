@@ -74,8 +74,8 @@ bettercms.define('bcms.role', ['bcms.jquery', 'bcms', 'bcms.autocomplete', 'bcms
                 self.name(item.Name);
                 
                 if (item.IsSystematic === true) {
-                    self.editingIsDisabled = true;
-                    self.deletingIsDisabled = true;
+                    self.editingIsDisabled(true);
+                    self.deletingIsDisabled(true);
                 }
             }
 

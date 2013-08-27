@@ -50,7 +50,8 @@ namespace BetterCms.Module.Root.Services
                     IOption option = null;
                     if (options != null)
                     {
-                        option = options.FirstOrDefault(f => f.Key.Trim().Equals(optionValue.Key.Trim(), StringComparison.OrdinalIgnoreCase));
+                        option = options.FirstOrDefault(f => f.Key.Trim().Equals(optionValue.Key.Trim(), StringComparison.OrdinalIgnoreCase) 
+                            && f.Type == optionValue.Type);
                     }
 
                     var optionViewModel = new OptionValueEditViewModel
@@ -157,6 +158,8 @@ namespace BetterCms.Module.Root.Services
                 return;
             }
 
+            ValidateOptionKeysUniqueness(optionViewModels);
+
             if (savedOptionValues != null)
             {
                 savedOptionValues.
@@ -173,8 +176,14 @@ namespace BetterCms.Module.Root.Services
                     savedOptionValue = savedOptionValues.FirstOrDefault(f => f.Key.Trim().Equals(optionViewModel.OptionKey.Trim(), StringComparison.OrdinalIgnoreCase));
                 }
                 var parentOption = parentOptions.FirstOrDefault(f => f.Key.Trim().Equals(optionViewModel.OptionKey.Trim(), StringComparison.OrdinalIgnoreCase));
+
+                // Save item, if:
+                // - There is no parent (item created manually)
+                // - Value is not empty (value entered manually)
+                // - Parent type is not equal to option type (types are not equal - option was created manually)
                 var save = parentOption == null
-                    || !string.IsNullOrEmpty(optionViewModel.OptionValue);
+                    || !string.IsNullOrEmpty(optionViewModel.OptionValue)
+                    || parentOption.Type != optionViewModel.Type;
 
                 if (save)
                 {
@@ -217,6 +226,24 @@ namespace BetterCms.Module.Root.Services
 
                     throw new ValidationException(() => message, message);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Validates the uniqueness of the option keys.
+        /// </summary>
+        /// <param name="options">The options.</param>
+        public void ValidateOptionKeysUniqueness(IEnumerable<OptionViewModelBase> options)
+        {
+            var duplicateKey = options
+                .GroupBy(option => option.OptionKey)
+                .Where(group => group.Count() > 1)
+                .Select(group => group.Key).FirstOrDefault();
+            
+            if (!string.IsNullOrWhiteSpace(duplicateKey))
+            {
+                var message = string.Format(RootGlobalization.Option_DuplicateKey_Message, duplicateKey);
+                throw new ValidationException(() => message, message);
             }
         }
 
