@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
+using BetterCms.Core.Security;
 
 namespace BetterCms.Module.Root.Models
 {
@@ -11,7 +13,7 @@ namespace BetterCms.Module.Root.Models
     /// A generic page entity.
     /// </summary>
     [Serializable]
-    public class Page : EquatableEntity<Page>, IPage
+    public class Page : EquatableEntity<Page>, IPage, IAccessSecuredObject
     {
         /// <summary>
         /// Gets or sets the page URL.
@@ -123,7 +125,41 @@ namespace BetterCms.Module.Root.Models
         /// <value>
         /// The access rules.
         /// </value>
-        public virtual IList<PageAccess> AccessRules { get; set; }
+        public virtual IList<AccessRule> AccessRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets the rules.
+        /// </summary>
+        /// <value>
+        /// The rules.
+        /// </value>
+        IList<IAccessRule> IAccessSecuredObject.AccessRules
+        {
+            get
+            {
+                if (AccessRules == null)
+                {
+                    return null;
+                }
+
+                return AccessRules.Cast<IAccessRule>().ToList();
+            }           
+        }
+
+        public virtual void AddRule(IAccessRule accessRule)
+        {
+            if (AccessRules == null)
+            {
+                AccessRules = new List<AccessRule>();
+            }
+
+            AccessRules.Add((AccessRule)accessRule);
+        }
+
+        public virtual void RemoveRule(IAccessRule accessRule)
+        {            
+            AccessRules.Remove((AccessRule)accessRule);
+        }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

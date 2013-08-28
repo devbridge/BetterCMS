@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
+using BetterCms.Core.Security;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.ViewModels.Option;
@@ -116,7 +117,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// <c>true</c> if page is visible to everyone; otherwise, <c>false</c>.
         /// </value>
-        public bool IsVisibleToEveryone { get; set; }
+        public bool IsPagePublished { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this page must not be scanned for links to follow.
@@ -229,7 +230,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// The user access list.
         /// </value>
-        public List<UserAccessViewModel> UserAccessList { get; set; }
+        public IList<UserAccessViewModel> UserAccessList { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

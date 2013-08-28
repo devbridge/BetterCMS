@@ -22,7 +22,8 @@ namespace BetterCms.Module.Root.Models.Maps
             
             HasMany(x => x.PageContents).Inverse().Cascade.SaveUpdate().LazyLoad().Where("IsDeleted = 0");
             HasMany(x => x.Options).KeyColumn("PageId").Cascade.SaveUpdate().Inverse().LazyLoad().Where("IsDeleted = 0");
-            HasMany(x => x.AccessRules).KeyColumn("PageId").Cascade.SaveUpdate().Inverse().LazyLoad().Where("IsDeleted = 0");
+
+            HasManyToMany(x => x.AccessRules).Table("PageAccessRules").Schema(SchemaName).Cascade.AllDeleteOrphan().LazyLoad();
         }
     }
 }

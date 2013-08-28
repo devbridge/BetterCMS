@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
+using BetterCms.Core.Security;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.ViewModels.Security;
 
@@ -104,7 +105,7 @@ namespace BetterCms.Module.MediaManager.ViewModels.File
         /// <value>
         /// The user access list.
         /// </value>
-        public List<UserAccessViewModel> UserAccessList { get; set; }
+        public IList<UserAccessViewModel> UserAccessList { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [access control enabled].

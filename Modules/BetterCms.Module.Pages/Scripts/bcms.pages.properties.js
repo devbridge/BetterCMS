@@ -26,7 +26,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 pagePropertiesTemplatePreviewLink: '.bcms-preview-template',
 
                 pagePropertiesForm: 'form:first',
-                pagePropertiesPageIsPublishedCheckbox: '#IsVisibleToEveryone',
+                pagePropertiesPageIsPublishedCheckbox: '#IsPagePublished',
 
                 optionsTab: '#bcms-tab-4'
             },

@@ -69,6 +69,7 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
             // Create / fix page url
             var pageUrl = request.PageUrl;
             var createPageUrl = (pageUrl == null);
+
             if (createPageUrl && !string.IsNullOrWhiteSpace(request.PageTitle))
             {
                 pageUrl = pageService.CreatePagePermalink(request.PageTitle, request.ParentPageUrl);
@@ -101,7 +102,7 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
             // Update access control if enabled:
             if (cmsConfiguration.AccessControlEnabled)
             {
-                accessControlService.UpdateAccessControl<PageAccess>(request.UserAccessList, page.Id);
+                accessControlService.UpdateAccessControl(page, request.UserAccessList != null ? request.UserAccessList.Cast<IAccessRule>().ToList() : null);
             }
 
             UnitOfWork.Commit();

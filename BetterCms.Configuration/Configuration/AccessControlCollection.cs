@@ -75,7 +75,7 @@ namespace BetterCms.Configuration
         /// </returns>
         protected override object GetElementKey(ConfigurationElement element)
         {
-            return ((AccessControlElement)element).RoleOrUser;
+            return ((AccessControlElement)element).Identity;
         }
 
         #endregion

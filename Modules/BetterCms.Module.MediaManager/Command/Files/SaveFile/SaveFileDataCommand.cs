@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
@@ -55,16 +56,17 @@ namespace BetterCms.Module.MediaManager.Command.Files.SaveFile
             mediaFile.Description = request.Description;
             mediaFile.Version = request.Version.ToIntOrDefault();
             mediaFile.Image = request.Image != null && request.Image.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.Image.ImageId.Value) : null;
+
             Repository.Save(mediaFile);
 
-            // Save tags
+            // Save tags.
             IList<Root.Models.Tag> newTags;
             tagService.SaveMediaTags(mediaFile, request.Tags, out newTags);
 
-            // Save user access if enabled:
+            // Save user access if enabled.
             if (cmsConfiguration.AccessControlEnabled)
             {
-                accessControlService.UpdateAccessControl<MediaFileAccess>(request.UserAccessList, mediaFile.Id);
+                accessControlService.UpdateAccessControl(mediaFile, request.UserAccessList != null ? request.UserAccessList.Cast<IAccessRule>().ToList() : null);
             }
 
             UnitOfWork.Commit();

@@ -175,7 +175,6 @@
     <Compile Include="Models\Extensions\MediaExtensions.cs" />
     <Compile Include="Models\Extensions\MediaFileExtensions.cs" />
     <Compile Include="Models\Maps\MediaTagMap.cs" />
-    <Compile Include="Models\Maps\MediaFileAccessMap.cs" />
     <Compile Include="Models\MediaImageAlign.cs" />
     <Compile Include="Models\MediaType.cs" />
     <Compile Include="Models\Maps\MediaMap.cs" />
@@ -204,9 +203,9 @@
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\Migration201303081430.cs" />
     <Compile Include="Models\Migrations\Migration201308252350.cs" />
+    <Compile Include="Models\Migrations\Migration201308272154.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
     <Compile Include="Models\MediaTag.cs" />
-    <Compile Include="Models\MediaFileAccess.cs" />
     <Compile Include="Registration\FileEditorJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\MediaHistoryJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\ImageEditorJsModuleIncludeDescriptor.cs" />

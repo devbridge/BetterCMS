@@ -126,14 +126,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccessControl\AccessControlServiceTests.cs" />
-    <Compile Include="AccessControl\ModelTests\MapTests\UserAccessMapTest.cs" />
+    <Compile Include="Pages\CommandTests\PageTests\CreatePageCommandTest.cs" />
+    <Compile Include="Root\AccessControl\AccessControlServiceTests.cs" />
+    <Compile Include="Root\ModelTests\MapTests\AccessRolesMapTest.cs" />
     <Compile Include="AmazonS3Storage\AmazonS3StorageServiceTest.cs" />
     <Compile Include="Api\ApiFacadeTests.cs" />
     <Compile Include="Blog\CommandTests\GetAuthorListCommandTest.cs" />
     <Compile Include="Blog\ModelTests\MapTests\BlogPostMapTest.cs" />
     <Compile Include="Blog\ModelTests\MapTests\BlogPostContentMapTest.cs" />
     <Compile Include="Blog\ModelTests\MapTests\OptionMapTest.cs" />
+    <Compile Include="Common\RepositoryTests.cs" />
     <Compile Include="Common\SecurityTest.cs" />
     <Compile Include="Common\SerializationTest.cs" />
     <Compile Include="Configuration\CmsTestConfigurationSection.cs" />

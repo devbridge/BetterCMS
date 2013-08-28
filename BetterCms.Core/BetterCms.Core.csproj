@@ -119,6 +119,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="DataContracts\IDeleteableEntity.cs" />
     <Compile Include="DataContracts\IOptionValue.cs" />
     <Compile Include="Events\EventBase.cs" />
     <Compile Include="Events\CoreEvents.cs" />
@@ -172,10 +173,11 @@
     <Compile Include="Mvc\Extensions\VirtualPath.cs" />
     <Compile Include="Security\AccessLevel.cs" />
     <Compile Include="Security\BcmsAuthorizeAttribute.cs" />
+    <Compile Include="Security\IAccessSecuredObject.cs" />
+    <Compile Include="Security\IAccessRule.cs" />
     <Compile Include="Security\EncryptableString.cs" />
     <Compile Include="Security\IAccessControlService.cs" />
     <Compile Include="Security\ITextEncryptor.cs" />
-    <Compile Include="Security\IAccess.cs" />
     <Compile Include="Security\IUserRole.cs" />
     <Compile Include="Modules\Projections\EmptyContentAccessor.cs" />
     <Compile Include="Mvc\Attributes\IgnoreAutoRouteAttribute.cs" />

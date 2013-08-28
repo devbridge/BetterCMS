@@ -4,15 +4,15 @@ using System.Collections.Generic;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Core.Security;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Projections;
-using BetterCms.Module.Root.ViewModels.Option;
 
 namespace BetterCms.Module.Root.ViewModels.Cms
 {
     [Serializable]
-    public class RenderPageViewModel : IPage
+    public class RenderPageViewModel : IPage, IAccessSecuredObject
     {
         public RenderPageViewModel(IPage page)
         {
@@ -42,22 +42,6 @@ namespace BetterCms.Module.Root.ViewModels.Cms
 
         public bool IsDeleted { get; private set; }
 
-        DateTime? IEntity.DeletedOn
-        {
-            get
-            {
-                throw new NotSupportedException();
-            }
-        }
-
-        string IEntity.DeletedByUser
-        {
-            get
-            {
-                throw new NotSupportedException();
-            }
-        }
-
         public int Version { get; private set; }
         
         public DateTime CreatedOn { get; private set; }
@@ -79,6 +63,74 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         public string MetaTitle { get; private set; }
 
         public string PageUrl { get; private set; }
+
+        /// <summary>
+        /// Gets the entity id.
+        /// </summary>
+        /// <value>
+        /// The entity id.
+        /// </value>
+        /// <exception cref="System.NotSupportedException"></exception>
+        Guid IAccessSecuredObject.Id
+        {
+            get
+            {
+                return Id;
+            }
+            set
+            {
+                throw new NotSupportedException(); 
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity version.
+        /// </summary>
+        /// <value>
+        /// The version.
+        /// </value>
+        /// <exception cref="System.NotSupportedException"></exception>
+        int IEntity.Version
+        {
+            get
+            {
+                return Version;
+            }
+            set
+            {
+                throw new NotSupportedException();                
+            }
+        }
+
+        /// <summary>
+        /// Gets the deleted on date.
+        /// </summary>
+        /// <value>
+        /// The deleted on.
+        /// </value>
+        /// <exception cref="System.NotSupportedException"></exception>
+        DateTime? IEntity.DeletedOn
+        {
+            get
+            {
+                throw new NotSupportedException();
+            }
+        }
+
+        /// <summary>
+        /// Gets the deleted by user.
+        /// </summary>
+        /// <value>
+        /// The deleted by user.
+        /// </value>
+        /// <exception cref="System.NotSupportedException"></exception>
+        string IEntity.DeletedByUser
+        {
+            get
+            {
+                throw new NotSupportedException();
+            }
+        }
 
         /// <summary>
         /// Gets or sets the layout path.
@@ -137,6 +189,14 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         public IList<IJavaScriptAccessor> JavaScripts { get; set; }
 
         /// <summary>
+        /// Gets or sets the access rules.
+        /// </summary>
+        /// <value>
+        /// The access rules.
+        /// </value>
+        public IList<IAccessRule> AccessRules { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether current user can manage page content.
         /// </summary>
         /// <value>
@@ -175,6 +235,16 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// The page.
         /// </value>
         public dynamic Bag { get; set; }
+
+        void IAccessSecuredObject.RemoveRule(IAccessRule accessRule)
+        {
+            throw new NotSupportedException();
+        }
+
+        void IAccessSecuredObject.AddRule(IAccessRule accessRule)
+        {
+            throw new NotSupportedException();
+        }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

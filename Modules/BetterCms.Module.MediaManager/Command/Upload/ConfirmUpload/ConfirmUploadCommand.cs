@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
-
+using BetterCms.Core.Security;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.MediaManager.ViewModels.Upload;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
@@ -21,13 +22,17 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
         
         private readonly IMediaFileService fileService;
 
+        private readonly IAccessControlService accessControlService;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfirmUploadCommand" /> class.
         /// </summary>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
         /// <param name="fileService">The file service.</param>
-        public ConfirmUploadCommand(ICmsConfiguration cmsConfiguration, IMediaFileService fileService)
+        /// <param name="accessControlService">The access control service.</param>
+        public ConfirmUploadCommand(ICmsConfiguration cmsConfiguration, IMediaFileService fileService, IAccessControlService accessControlService)
         {
+            this.accessControlService = accessControlService;
             this.cmsConfiguration = cmsConfiguration;
             this.fileService = fileService;
         }
@@ -70,6 +75,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                             file.IsTemporary = false;
                             file.PublishedOn = DateTime.Now;
                             Repository.Save(file);
+
                             files.Add(file);
                         }
                     }
@@ -99,23 +105,23 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
 
                         originalMedia.IsTemporary = false;
                         originalMedia.PublishedOn = DateTime.Now;
+
                         files.Add(originalMedia);
                     }
                 }
 
                 if (cmsConfiguration.AccessControlEnabled)
                 {
-                    foreach (var userAccess in 
-                            files.SelectMany(x => request.UserAccessList.Select(
-                            model => new MediaFileAccess
-                                         {
-                                             MediaFile = Repository.AsProxy<MediaFile>(x.Id),
-                                             AccessLevel = model.AccessLevel,
-                                             RoleOrUser = model.RoleOrUser
-                                         })))
+                    foreach (var file in files)
                     {
-                        Repository.Save(userAccess);
-                    }
+                        var currentFile = file;
+                        var fileEntity = Repository.AsQueryable<MediaFile>().Where(f => f.Id == currentFile.Id).FetchMany(f => f.AccessRules).ToList().FirstOne();
+
+                        accessControlService.UpdateAccessControl(fileEntity, 
+                            request.UserAccessList != null 
+                                ? request.UserAccessList.Cast<IAccessRule>().ToList()
+                                : Enumerable.Empty<IAccessRule>().ToList());
+                    }                    
                 }
 
                 UnitOfWork.Commit();
