@@ -8,7 +8,7 @@ namespace BetterCms.Module.Users.Models.Migrations
     /// <summary>
     /// Module initial database structure creation.
     /// </summary>
-    [Migration(20130181125)]
+    [Migration(201308200000)]
     public class InitialSetup : DefaultMigration
     {
         private readonly string mediaModuleSchemaName = (new MediaManager.Models.Migrations.MediaManagerVersionTableMetaData()).SchemaName;

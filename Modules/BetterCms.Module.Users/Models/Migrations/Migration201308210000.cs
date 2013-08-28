@@ -10,8 +10,8 @@ namespace BetterCms.Module.Users.Models.Migrations
     /// <summary>
     /// Module database structure update.
     /// </summary>
-    [Migration(201302281111)]
-    public class Migration201302281111 : DefaultMigration
+    [Migration(201308210000)]
+    public class Migration201308210000 : DefaultMigration
     {
         private readonly string rootSchemaName = (new Root.Models.Migrations.RootVersionTableMetaData()).SchemaName;
         private readonly string contentsTableName = "Contents";
@@ -22,9 +22,10 @@ namespace BetterCms.Module.Users.Models.Migrations
         private readonly string contentOptionsTableName = "ContentOptions";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Migration201302281111"/> class.
+        /// Initializes a new instance of the <see cref="Migration201308210000"/> class.
         /// </summary>
-        public Migration201302281111() : base(UsersModuleDescriptor.ModuleName)
+        public Migration201308210000()
+            : base(UsersModuleDescriptor.ModuleName)
         {
         }
 

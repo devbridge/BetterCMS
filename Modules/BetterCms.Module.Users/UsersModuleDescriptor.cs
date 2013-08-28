@@ -78,7 +78,7 @@ namespace BetterCms.Module.Users
         {
             get
             {
-                return int.MaxValue - 200;
+                return int.MaxValue - 300;
             }
         }
 
