@@ -121,13 +121,13 @@
     <value>Email</value>
   </data>
   <data name="EditUser_Email_Tooltip_Description" xml:space="preserve">
-    <value />
+    <value>Enter user email. It should be unique and will be used to identify user.</value>
   </data>
   <data name="EditUser_FirstName_Title" xml:space="preserve">
     <value>First name</value>
   </data>
   <data name="EditUser_FirstName_Tooltip_Description" xml:space="preserve">
-    <value />
+    <value>Enter user first name.</value>
   </data>
   <data name="EditUser_Image_Title" xml:space="preserve">
     <value>User Image</value>
@@ -136,25 +136,25 @@
     <value>Last name</value>
   </data>
   <data name="EditUser_LastName_Tooltip_Description" xml:space="preserve">
-    <value />
+    <value>Enter user last name.</value>
   </data>
   <data name="EditUser_Password_Title" xml:space="preserve">
     <value>Password</value>
   </data>
   <data name="EditUser_Password_Tooltip_Description" xml:space="preserve">
-    <value />
+    <value>Here you can change a password. It will be used to identify an user.</value>
   </data>
   <data name="EditUser_RetypePassword_Title" xml:space="preserve">
     <value>Retype password</value>
   </data>
   <data name="EditUser_RetypePassword_Tooltip_Description" xml:space="preserve">
-    <value />
+    <value>Retype password. It should be equal to entered password.</value>
   </data>
   <data name="EditUser_Role_Title" xml:space="preserve">
     <value>Role</value>
   </data>
   <data name="EditUser_Role_Tooltip_Description" xml:space="preserve">
-    <value />
+    <value>Manage user roles.</value>
   </data>
   <data name="EditUser_UploadImage_Button_Title" xml:space="preserve">
     <value>Select Image</value>
@@ -169,7 +169,7 @@
     <value>User name</value>
   </data>
   <data name="EditUser_UserName_Tooltip_Description" xml:space="preserve">
-    <value>User name</value>
+    <value>Enter user name. It should be unique and will be used to identify user.</value>
   </data>
   <data name="CreateUser_Window_Title" xml:space="preserve">
     <value>Add New User</value>

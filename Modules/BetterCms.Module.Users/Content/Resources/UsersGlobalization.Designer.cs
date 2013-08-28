@@ -151,7 +151,7 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Enter user email. It should be unique and will be used to identify user..
         /// </summary>
         public static string EditUser_Email_Tooltip_Description {
             get {
@@ -169,7 +169,7 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Enter user first name..
         /// </summary>
         public static string EditUser_FirstName_Tooltip_Description {
             get {
@@ -196,7 +196,7 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Enter user last name..
         /// </summary>
         public static string EditUser_LastName_Tooltip_Description {
             get {
@@ -214,7 +214,7 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Here you can change a password. It will be used to identify an user..
         /// </summary>
         public static string EditUser_Password_Tooltip_Description {
             get {
@@ -232,7 +232,7 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Retype password. It should be equal to entered password..
         /// </summary>
         public static string EditUser_RetypePassword_Tooltip_Description {
             get {
@@ -250,7 +250,7 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Manage user roles..
         /// </summary>
         public static string EditUser_Role_Tooltip_Description {
             get {
@@ -295,7 +295,7 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User name.
+        ///   Looks up a localized string similar to Enter user name. It should be unique and will be used to identify user..
         /// </summary>
         public static string EditUser_UserName_Tooltip_Description {
             get {
