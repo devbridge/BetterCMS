@@ -3,6 +3,8 @@ using System.Text;
 
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Helpers;
+using BetterCms.Module.Root;
+using BetterCms.Module.Root.Models.Extensions;
 
 namespace BetterCms.Module.MediaManager.Models.Extensions
 {

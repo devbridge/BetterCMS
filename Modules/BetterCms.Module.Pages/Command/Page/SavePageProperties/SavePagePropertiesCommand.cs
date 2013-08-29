@@ -12,7 +12,9 @@ using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
@@ -162,11 +164,13 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
 
             var optionValues = page.Options.Distinct();
             var parentOptions = page.Layout.LayoutOptions.Distinct();
-            optionService.SaveOptionValues(request.OptionValues, optionValues, parentOptions, () => new Root.Models.PageOption { Page = page });
+            optionService.SaveOptionValues(request.OptionValues, optionValues, parentOptions, () => new PageOption { Page = page });
 
             if (cmsConfiguration.AccessControlEnabled)
             {
-                accessControlService.UpdateAccessControl(page, request.UserAccessList != null ? request.UserAccessList.Cast<IAccessRule>().ToList() : null);
+                page.AccessRules.RemoveDuplicates((a, b) => a.Identity == b.Identity && a.AccessLevel == b.AccessLevel ? 0 : -1);
+                var accessRules = request.UserAccessList != null ? request.UserAccessList.Cast<IAccessRule>().ToList() : null;                
+                accessControlService.UpdateAccessControl(page, accessRules);
             }
 
             Repository.Save(page);
