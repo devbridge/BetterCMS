@@ -660,5 +660,20 @@ namespace BetterCms.Tests.Helpers
 
             return page;
         }
+
+        public MediaFile CreateNewMediaFileWithAccessRules(int accessRulesCount = 2)
+        {
+            var file = CreateNewMediaFile();
+
+            if (accessRulesCount > 0)
+            {
+                for (int i = 0; i < accessRulesCount; i++)
+                {
+                    file.AddRule(CreateNewAccessRule());
+                }
+            }
+
+            return file;
+        }
     }
 }

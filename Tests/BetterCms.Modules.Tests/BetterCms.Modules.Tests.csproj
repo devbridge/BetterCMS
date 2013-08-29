@@ -126,6 +126,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MediaManager\CommandTests\DeleteMediaCommandTest.cs" />
     <Compile Include="Pages\CommandTests\PageTests\ClonePageCommandTest.cs" />
     <Compile Include="Pages\CommandTests\PageTests\DeletePageCommandTest.cs" />
     <Compile Include="Pages\CommandTests\PageTests\CreatePageCommandTest.cs" />
