@@ -164,8 +164,10 @@
     <Compile Include="Services\IBlogService.cs" />
     <Compile Include="Services\IOptionService.cs" />
     <Compile Include="ViewModels\Author\AuthorViewModel.cs" />
+    <Compile Include="ViewModels\Author\RenderBlogPostAuthorViewModel.cs" />
     <Compile Include="ViewModels\Blog\BlogPostViewModel.cs" />
     <Compile Include="ViewModels\Blog\BlogTemplateViewModel.cs" />
+    <Compile Include="ViewModels\Blog\RenderBlogPostViewModel.cs" />
     <Compile Include="ViewModels\Blog\SiteSettingBlogPostViewModel.cs" />
     <Compile Include="ViewModels\Filter\BlogsFilter.cs" />
     <Compile Include="ViewModels\Filter\BlogsGridViewModel.cs" />
