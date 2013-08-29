@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace BetterCms.Test.Module.Common
 {
     [TestFixture]
-    public class RepositoryTests : DatabaseTestBase
+    public class RepositoryTests : IntegrationTestBase
     {
         [Test]        
         public void First_By_Id_Should_Throw_Exception_If_Entity_Not_Found()

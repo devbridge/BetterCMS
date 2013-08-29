@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace BetterCms.Test.Module.Users.ProvidersTests
 {
-    public class RoleProviderTests : DatabaseTestBase
+    public class RoleProviderTests : IntegrationTestBase
     {
         [Test]
         public void Should_Call_GetAllRoles_Successfully()

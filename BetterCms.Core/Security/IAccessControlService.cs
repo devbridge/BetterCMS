@@ -22,9 +22,9 @@ namespace BetterCms.Core.Security
         /// <summary>
         /// Updates the access control.
         /// </summary>
-        /// <param name="obj">The secured object.</param>
-        /// <param name="accessRules">The user access list.</param>
-        void UpdateAccessControl<TAccessSecuredObject>(TAccessSecuredObject obj, IList<IAccessRule> accessRules) where TAccessSecuredObject : IAccessSecuredObject;
+        /// <param name="securedObject">The secured object.</param>
+        /// <param name="updatedRules">The user access list.</param>
+        void UpdateAccessControl<TAccessSecuredObject>(TAccessSecuredObject securedObject, IList<IAccessRule> updatedRules) where TAccessSecuredObject : IAccessSecuredObject;
 
         /// <summary>
         /// Gets the default access list.

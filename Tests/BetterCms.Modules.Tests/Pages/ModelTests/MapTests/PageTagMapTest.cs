@@ -3,7 +3,7 @@
 namespace BetterCms.Test.Module.Pages.ModelTests.MapTests
 {
     [TestFixture]
-    public class PageTagMapTest : DatabaseTestBase
+    public class PageTagMapTest : IntegrationTestBase
     {
         [Test]
         public void Should_Insert_And_Retrieve_PageTag_Successfully()

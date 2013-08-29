@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
 
@@ -57,27 +58,37 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
                 PageService.ValidatePageUrl(pageUrl);
             }
 
-            var page = Repository.First<PageProperties>(request.PageId);
+            var pageQuery = Repository.AsQueryable<PageProperties>()
+                                      .Where(f => f.Id == request.PageId)
+                                      .FetchMany(f => f.AccessRules)
+                                      .FetchMany(f => f.Options)
+                                      .FetchMany(f => f.PageContents).ThenFetch(f => f.Region)
+                                      .FetchMany(f => f.PageContents).ThenFetch(f => f.Content)
+                                      .FetchMany(f => f.PageContents).ThenFetchMany(f => f.Options)
+                                      .FetchMany(f => f.PageTags).ThenFetch(f => f.Tag); 
 
             UnitOfWork.BeginTransaction();
 
-            var pageContents = Repository.AsQueryable<PageContent>()
-                .Where(x => x.Page.Id == page.Id)
-                .Fetch(x => x.Region)
-                .Fetch(x => x.Content)
-                .ToList();
+            var page = pageQuery.ToList().FirstOne();
 
-            var pageTags = Repository.AsQueryable<PageTag>()
-                .Where(x => x.Page.Id == page.Id)
-                .Fetch(x => x.Tag)
-                .ToList();
-
+            var pageContents = page.PageContents.Distinct().ToList();
+            var pageTags = page.PageTags.Distinct().ToList();
+            var pageOptions = page.Options.Distinct().ToList();
+            var pageAccessRules = page.AccessRules.Distinct().ToList();
             var newPage = ClonePageOnly(page, request.PageTitle, pageUrl);
 
-            // Clone HTML contents and Controls:
+            // Clone contents.
             pageContents.ForEach(pageContent => ClonePageContent(pageContent, newPage));
+
+            // Clone tags.
             pageTags.ForEach(pageTag => ClonePageTags(pageTag, newPage));
 
+            // Clone options.
+            pageOptions.ForEach(pageOption => ClonePageOption(pageOption, newPage));
+
+            // Clone security.
+            pageAccessRules.ForEach(pageAccessRule => CloneAccessRule(pageAccessRule, newPage));
+           
             UnitOfWork.Commit();
 
             Events.PageEvents.Instance.OnPageCloned(newPage);
@@ -166,7 +177,7 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
             }
 
             // Clone page content options.
-            foreach (var option in pageContent.Options)
+            foreach (var option in pageContent.Options.Distinct())
             {
                 if (newPageContent.Options == null)
                 {
@@ -185,6 +196,34 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
             }
 
             Repository.Save(newPageContent);
+        }
+
+        private void CloneAccessRule(AccessRule pageAccessRule, PageProperties newPage)
+        {
+            newPage.AddRule(new AccessRule
+                                {
+                                    Identity = pageAccessRule.Identity,
+                                    AccessLevel = pageAccessRule.AccessLevel
+                                });
+        }
+
+        private void ClonePageOption(PageOption pageOption, PageProperties newPage)
+        {
+            var newPageOption = new PageOption
+                                    {
+                                        Key = pageOption.Key,
+                                        Type = pageOption.Type,
+                                        Value = pageOption.Value,
+                                        Page = newPage                                        
+                                    };
+
+            if (newPage.Options == null)
+            {
+                newPage.Options = new List<PageOption>();
+            }
+
+            newPage.Options.Add(newPageOption);
+            Repository.Save(newPageOption);            
         }
     }
 }

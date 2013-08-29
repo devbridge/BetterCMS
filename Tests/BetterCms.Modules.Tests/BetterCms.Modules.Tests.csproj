@@ -126,6 +126,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pages\CommandTests\PageTests\ClonePageCommandTest.cs" />
+    <Compile Include="Pages\CommandTests\PageTests\DeletePageCommandTest.cs" />
     <Compile Include="Pages\CommandTests\PageTests\CreatePageCommandTest.cs" />
     <Compile Include="Root\AccessControl\AccessControlServiceTests.cs" />
     <Compile Include="Root\ModelTests\MapTests\AccessRolesMapTest.cs" />
@@ -165,7 +167,7 @@
     <Compile Include="Root\ModelTests\MapTests\LayoutOptionMapTest.cs" />
     <Compile Include="Root\ServiceTests\DefaultOptionServiceTests.cs" />
     <Compile Include="SerializationTestBase.cs" />
-    <Compile Include="DatabaseTestBase.cs" />
+    <Compile Include="IntegrationTestBase.cs" />
     <Compile Include="Helpers\HttpContextExtensionMethods.cs" />
     <Compile Include="Helpers\HttpContextMoq.cs" />
     <Compile Include="Helpers\RandomTestDataProvider.cs">

@@ -2,7 +2,7 @@
 
 namespace BetterCms.Test.Module.Root.ModelTests.MapTests
 {
-    public class AccessRolesMapTest : DatabaseTestBase
+    public class AccessRolesMapTest : IntegrationTestBase
     {
         [Test]
         public void Should_Insert_And_Retrieve_AccessRule_Successfully()

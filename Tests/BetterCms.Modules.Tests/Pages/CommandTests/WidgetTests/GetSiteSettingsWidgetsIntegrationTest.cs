@@ -13,7 +13,7 @@ using NUnit.Framework;
 namespace BetterCms.Test.Module.Pages.CommandTests.WidgetTests
 {
     [TestFixture]
-    public class GetSiteSettingsWidgetsIntegrationTest : DatabaseTestBase
+    public class GetSiteSettingsWidgetsIntegrationTest : IntegrationTestBase
     {
         [Test]
         public void Should_Retrieve_Widgets_From_Database_Paged_And_Sorted_By_CategoryName()

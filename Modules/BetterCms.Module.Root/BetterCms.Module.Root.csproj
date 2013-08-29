@@ -157,6 +157,7 @@
     <Compile Include="Models\ContentOption.cs" />
     <Compile Include="Models\ComboWireJson.cs" />
     <Compile Include="Models\AccessRule.cs" />
+    <Compile Include="Models\Extensions\ListExtensions.cs" />
     <Compile Include="Models\Maps\AccessRuleMap.cs" />
     <Compile Include="Models\Maps\PageOptionMap.cs" />
     <Compile Include="Models\Migrations\Migration201308272137.cs" />

@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
 {
     [TestFixture]
-    public class DeletePageContentCommandTest : DatabaseTestBase
+    public class DeletePageContentCommandTest : IntegrationTestBase
     {
         [Test]
         public void Should_Delete_Page_Content()

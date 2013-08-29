@@ -8,6 +8,8 @@ using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.File;
+using BetterCms.Module.Root;
+using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.MediaManager.Command.Files.SaveFile
@@ -66,7 +68,9 @@ namespace BetterCms.Module.MediaManager.Command.Files.SaveFile
             // Save user access if enabled.
             if (cmsConfiguration.AccessControlEnabled)
             {
-                accessControlService.UpdateAccessControl(mediaFile, request.UserAccessList != null ? request.UserAccessList.Cast<IAccessRule>().ToList() : null);
+                mediaFile.AccessRules.RemoveDuplicates((a, b) => a.Identity == b.Identity && a.AccessLevel == b.AccessLevel ? 0 : -1);
+                var accessRules = request.UserAccessList != null ? request.UserAccessList.Cast<IAccessRule>().Distinct().ToList() : null;
+                accessControlService.UpdateAccessControl(mediaFile, accessRules);
             }
 
             UnitOfWork.Commit();

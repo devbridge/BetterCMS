@@ -3,7 +3,7 @@
 namespace BetterCms.Test.Module.Pages.ModelTests.MapTests
 {
     [TestFixture]
-    public class ServerControlWidgetMapTest : DatabaseTestBase
+    public class ServerControlWidgetMapTest : IntegrationTestBase
     {
         [Test]
         public void Should_Insert_And_Retrieve_ServerControlWidget_Successfully()

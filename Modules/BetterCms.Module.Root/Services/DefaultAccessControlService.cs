@@ -57,16 +57,16 @@ namespace BetterCms.Module.Root.Services
         /// <summary>
         /// Updates the access control.
         /// </summary>
-        /// <param name="obj">The secured object.</param>
-        /// <param name="accessRules">The user access list.</param>
-        public void UpdateAccessControl<TAccessSecuredObject>(TAccessSecuredObject obj, IList<IAccessRule> accessRules) where TAccessSecuredObject : IAccessSecuredObject
+        /// <param name="securedObject">The secured object.</param>
+        /// <param name="updatedRules">The user access list.</param>
+        public void UpdateAccessControl<TAccessSecuredObject>(TAccessSecuredObject securedObject, IList<IAccessRule> updatedRules) where TAccessSecuredObject : IAccessSecuredObject
         {
-            var entitiesToDelete = obj.AccessRules != null
-                                       ? obj.AccessRules.Where(x => accessRules.All(model => model.Identity != x.Identity)).ToList()
+            var entitiesToDelete = securedObject.AccessRules != null
+                                       ? securedObject.AccessRules.Where(x => updatedRules.All(model => model.Identity != x.Identity)).ToList()
                                        : new List<IAccessRule>();
 
-            var entitesToAdd = accessRules
-                                  .Where(x => obj.AccessRules == null || obj.AccessRules.All(entity => entity.Identity != x.Identity))
+            var entitesToAdd = updatedRules
+                                  .Where(x => securedObject.AccessRules == null || securedObject.AccessRules.All(entity => entity.Identity != x.Identity))
                                   .Select(f => new AccessRule
                                                    {
                                                        Identity = f.Identity,
@@ -75,13 +75,11 @@ namespace BetterCms.Module.Root.Services
                                   .ToList();
 
 
-            //var entitiesToUpdate = GetEntitiesToUpdate(accessRules, obj.AccessRules);
+            entitiesToDelete.ForEach(securedObject.RemoveRule);
 
-            entitiesToDelete.ForEach(obj.RemoveRule);
+            entitesToAdd.ForEach(securedObject.AddRule);
 
-            //entitiesToUpdate.ForEach(entity => repository.Save(entity));
-
-            entitesToAdd.ForEach(obj.AddRule);
+            UpdateChangedRules(securedObject, updatedRules);
         }
 
         /// <summary>
@@ -130,7 +128,7 @@ namespace BetterCms.Module.Root.Services
             var accessLevel = AccessLevel.NoPermissions;
 
             // If there are no permissions, object is accessible to everyone:
-            if (!accessList.Any())
+            if (accessList == null || !accessList.Any())
             {
                 return AccessLevel.ReadWrite;
             }
@@ -179,31 +177,30 @@ namespace BetterCms.Module.Root.Services
             return accessLevel;
         }
 
-    
-        ///// <summary>
-        ///// Gets the entities to update.
-        ///// </summary>
-        ///// <param name="accessList">The access list.</param>
-        ///// <param name="entities">The entities.</param>
-        ///// <returns></returns>
-        //private static List<TAccess> GetEntitiesToUpdate<TAccess>(List<IAccess> accessList, List<TAccess> entities) where TAccess : Entity, IAccess, new()
-        //{
-        //    var entitiesToUpdate = new List<TAccess>();
 
-        //    foreach (var entity in entities)
-        //    {
-        //        // Find user access object with the same Role and different AccessLevel:
-        //        var userAccess = accessList.FirstOrDefault(x => x.RoleOrUser == entity.RoleOrUser && x.AccessLevel != entity.AccessLevel);
+        /// <summary>
+        /// Update the access rule entities.
+        /// </summary>
+        /// <param name="securedObject">The secured object.</param>
+        /// <param name="updatedRules">The access list.</param>        
+        private void UpdateChangedRules(IAccessSecuredObject securedObject, IList<IAccessRule> updatedRules)
+        {
+            if (updatedRules != null && updatedRules.Count > 0 && securedObject.AccessRules != null)
+            {
+                var existingAccessRules = securedObject.AccessRules.ToList();
 
-        //        // If found, add to updatables list:
-        //        if (userAccess != null)
-        //        {
-        //            entity.AccessLevel = userAccess.AccessLevel;
-        //            entitiesToUpdate.Add(entity);
-        //        }
-        //    }
+                foreach (var entity in existingAccessRules)
+                {
+                    // Find access rule object with the same Role and different AccessLevel.
+                    var rule = updatedRules.FirstOrDefault(x => x.Identity == entity.Identity && x.AccessLevel != entity.AccessLevel);
 
-        //    return entitiesToUpdate;
-        //}
+                    // If found, update.
+                    if (rule != null)
+                    {
+                        entity.AccessLevel = rule.AccessLevel;
+                    }
+                }
+            }
+        }
     }
 }
