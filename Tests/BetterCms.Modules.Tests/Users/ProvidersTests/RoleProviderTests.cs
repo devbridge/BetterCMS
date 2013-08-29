@@ -386,7 +386,7 @@ namespace BetterCms.Test.Module.Users.ProvidersTests
             });
         }
 
-        private RoleProvider GetRoleProvider(ISession session, IRepository repository = null, IUnitOfWork unitOfWork = null)
+        private CmsRoleProvider GetRoleProvider(ISession session, IRepository repository = null, IUnitOfWork unitOfWork = null)
         {
             if (repository == null || unitOfWork == null)
             {
@@ -395,7 +395,7 @@ namespace BetterCms.Test.Module.Users.ProvidersTests
             }
             var roleService = new DefaultRoleService(repository);
 
-            var roleProvider = new RoleProvider(repository, unitOfWork, roleService);
+            var roleProvider = new CmsRoleProvider(repository, unitOfWork, roleService);
 
             return roleProvider;
         }
