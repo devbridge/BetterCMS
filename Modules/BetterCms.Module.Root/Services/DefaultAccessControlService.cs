@@ -130,7 +130,7 @@ namespace BetterCms.Module.Root.Services
             var accessLevel = AccessLevel.NoPermissions;
 
             // If there are no permissions, object is accessible to everyone:
-            if (!accessList.Any())
+            if (accessList == null || !accessList.Any())
             {
                 return AccessLevel.ReadWrite;
             }
