@@ -13,7 +13,7 @@ using NHibernate.Linq;
 
 namespace BetterCms.Module.Users.Provider
 {
-    public class RoleProvider : System.Web.Security.RoleProvider
+    public class CmsRoleProvider : System.Web.Security.RoleProvider
     {
         /// <summary>
         /// The repository
@@ -31,12 +31,12 @@ namespace BetterCms.Module.Users.Provider
         private readonly IRoleService roleService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RoleProvider" /> class.
+        /// Initializes a new instance of the <see cref="CmsRoleProvider" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="unitOfWork">The unit of work.</param>
         /// <param name="roleService">The role service.</param>
-        internal RoleProvider(IRepository repository, IUnitOfWork unitOfWork = null, IRoleService roleService = null)
+        internal CmsRoleProvider(IRepository repository, IUnitOfWork unitOfWork = null, IRoleService roleService = null)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
@@ -44,9 +44,9 @@ namespace BetterCms.Module.Users.Provider
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RoleProvider" /> class.
+        /// Initializes a new instance of the <see cref="CmsRoleProvider" /> class.
         /// </summary>
-        public RoleProvider()
+        public CmsRoleProvider()
         {
         }
 

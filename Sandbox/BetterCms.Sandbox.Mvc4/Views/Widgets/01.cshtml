@@ -11,13 +11,27 @@ else
     <p>Widget Preview...</p>
 }
 
-@if (Model != null && Model.Options != null)
+@if (Model != null)
 {
-    foreach (var option in Model.Options)
+    if (Model.Options != null)
     {
-        <p>
-            <strong>Option "@option.Key" Type:</strong> @(option.Value != null ? option.Value.GetType().ToString() : string.Empty)
-            <strong>Value</strong>: @option.Value
-        </p>
+        foreach (var option in Model.Options)
+        {
+            <p>
+                <strong>Widget Option "@option.Key" Type:</strong> @(option.Value != null ? option.Value.GetType().ToString() : string.Empty)
+                <strong>Value</strong>: @option.Value
+            </p>
+        }
+    }
+    
+    if (Model.PageOptions != null)
+    {
+        foreach (var option in Model.PageOptions)
+        {
+            <p>
+                <strong>Page Option "@option.Key" Type:</strong> @(option.Value != null ? option.Value.GetType().ToString() : string.Empty)
+                <strong>Value</strong>: @option.Value
+            </p>
+        }
     }
 }

@@ -36,6 +36,14 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         public IList<IOptionValue> Options { get; set; }
 
         /// <summary>
+        /// Gets or sets the page options.
+        /// </summary>
+        /// <value>
+        /// The page options.
+        /// </value>
+        public IList<IOptionValue> PageOptions { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>
