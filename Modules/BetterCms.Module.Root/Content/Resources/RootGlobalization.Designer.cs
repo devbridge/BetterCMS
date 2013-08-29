@@ -61,6 +61,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Role.
+        /// </summary>
+        public static string AccessControl_UserAccess_AddNewRole {
+            get {
+                return ResourceManager.GetString("AccessControl_UserAccess_AddNewRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New User.
         /// </summary>
         public static string AccessControl_UserAccess_AddNewUser {

@@ -115,22 +115,6 @@ namespace BetterCms
         TrailingSlashBehaviorType UrlMode { get; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether [access control enabled].
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if [access control enabled]; otherwise, <c>false</c>.
-        /// </value>
-        bool AccessControlEnabled { get; set; }
-
-        /// <summary>
-        /// Gets the default access control list.
-        /// </summary>
-        /// <value>
-        /// The default access control list.
-        /// </value>
-        AccessControlCollection DefaultAccessControlList { get; }
-
-        /// <summary>
         /// Gets a value indicating whether to render content ending div.
         /// </summary>
         /// <value>

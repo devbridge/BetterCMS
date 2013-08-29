@@ -63,22 +63,51 @@ bettercms.define('bcms.security', ['bcms.jquery', 'bcms.ko.extenders'], function
     function UserAccessViewModel(item) {
         this.Identity = ko.observable(item.Identity);
         this.AccessLevel = ko.observable(item.AccessLevel || 3);
+        this.IsForRole = ko.observable(item.IsForRole);
     }
 
     security.createUserAccessViewModel = function(accessList) {
         var model = {
             UserAccessList: ko.observableArray(),
             newUser: ko.observable(''),
+            newRole: ko.observable(''),
+            isInAddUserMode: ko.observable(false),
+            isInAddRoleMode: ko.observable(false),
+            
+            gotoAddNewUser: function() {
+                model.isInAddRoleMode(false);
+                model.isInAddUserMode(!model.isInAddUserMode());
+                model.newUser('');
+            },
+            
+            gotoAddNewRole: function() {
+                model.isInAddUserMode(false);
+                model.isInAddRoleMode(!model.isInAddRoleMode());
+                model.newRole('');
+            },
+            
             addNewUser: function() {
                 if (!model.newUser()) {
                     return;
                 }
-                model.UserAccessList.push(new UserAccessViewModel({ Identity: model.newUser() }));
+                model.UserAccessList.push(new UserAccessViewModel({ Identity: model.newUser(), IsForRole: false }));
                 model.newUser('');
+                model.isInAddUserMode(false);
             },
+            
+            addNewRole: function() {
+                if (!model.newRole()) {
+                    return;
+                }
+                model.UserAccessList.push(new UserAccessViewModel({ Identity: model.newRole(), IsForRole: true }));
+                model.newRole('');
+                model.isInAddRoleMode(false);
+            },
+            
             removeUser: function(userAccessViewModel) {
                 model.UserAccessList.remove(userAccessViewModel);
             },
+            
             getPropertyIndexer: function(i, propName) {
                 return 'UserAccessList[' + i + '].' + propName;
             }

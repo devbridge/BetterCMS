@@ -38,7 +38,7 @@ namespace BetterCms.Module.WindowsAzureStorage
                 {
                     tokenExpiryTime = TimeSpan.FromMinutes(10);
                 }
-                accessControlEnabledGlobally = config.AccessControlEnabled;
+                accessControlEnabledGlobally = config.Security.AccessControlEnabled;
                 containerName = serviceSection.GetValue("AzureContainerName");
 
                 cloudStorageAccount = new CloudStorageAccount(new StorageCredentials(accountName, secretKey), useHttps);

@@ -25,7 +25,7 @@ namespace BetterCms.Core.Security
 
         public string Encrypt(string text)
         {
-            if (!configuration.Security.EnableContentEncryption)
+            if (!configuration.Security.EncryptionEnabled)
             {
                 return text;
             }
@@ -60,7 +60,7 @@ namespace BetterCms.Core.Security
 
         public string Decrypt(string encryptedText)
         {
-            if (!configuration.Security.EnableContentEncryption)
+            if (!configuration.Security.EncryptionEnabled)
             {
                 return encryptedText;
             }
@@ -83,6 +83,10 @@ namespace BetterCms.Core.Security
                     }
                 }
             }
+            catch (FormatException)
+            {
+                return encryptedText;
+            }
             catch (Exception ex)
             {
                 throw new CmsException("Decryption failed.", ex);
@@ -93,12 +97,12 @@ namespace BetterCms.Core.Security
         {            
             if (keyBytes == null)
             {
-                if (configuration.Security.EnableContentEncryption && string.IsNullOrWhiteSpace(configuration.Security.ContentEncryptionKey))
+                if (configuration.Security.EncryptionEnabled && string.IsNullOrWhiteSpace(configuration.Security.EncryptionKey))
                 {
                     throw new CmsException("A ContentEncryptionKey should be provided when an content encryption is enabled (<security enableContentEncryption=\"true\" contentEncryptionKey=\"any key to encrypt data\">)");
                 }
 
-                using (var rfc2898 = new Rfc2898DeriveBytes(configuration.Security.ContentEncryptionKey, Encoding.ASCII.GetBytes(Salt)))
+                using (var rfc2898 = new Rfc2898DeriveBytes(configuration.Security.EncryptionKey, Encoding.ASCII.GetBytes(Salt)))
                 {
                     keyBytes = rfc2898.GetBytes(cryptoProvider.KeySize / 8);
                 }

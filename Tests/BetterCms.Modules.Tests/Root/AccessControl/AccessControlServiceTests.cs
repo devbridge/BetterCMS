@@ -67,9 +67,9 @@ namespace BetterCms.Test.Module.Root.AccessControl
             RunActionInTransaction(session =>
                 {
                     var accessRules = new List<AccessRule>(new[] {
-                                                new AccessRule { Identity = "RoleA", AccessLevel = AccessLevel.Deny },
-                                                new AccessRule { Identity = "Admin", AccessLevel = AccessLevel.ReadWrite },
-                                                new AccessRule { Identity = "RoleB", AccessLevel = AccessLevel.Read }
+                                                new AccessRule { Identity = "RoleA", AccessLevel = AccessLevel.Deny, IsForRole = true},
+                                                new AccessRule { Identity = "Admin", AccessLevel = AccessLevel.ReadWrite, IsForRole = true},
+                                                new AccessRule { Identity = "RoleB", AccessLevel = AccessLevel.Read, IsForRole = true}
                                              });
 
                     var page = TestDataProvider.CreateNewPage();
@@ -94,11 +94,11 @@ namespace BetterCms.Test.Module.Root.AccessControl
             RunActionInTransaction(session =>
             {
                 var accessRules = new List<AccessRule>(new[] {
-                                                                new AccessRule { Identity = "Everyone", AccessLevel = AccessLevel.Read },
-                                                                new AccessRule { Identity = "RoleA", AccessLevel = AccessLevel.Deny },
-                                                                new AccessRule { Identity = "John Doe", AccessLevel = AccessLevel.ReadWrite },
-                                                                new AccessRule { Identity = "Admin", AccessLevel = AccessLevel.Read },
-                                                                new AccessRule { Identity = "RoleB", AccessLevel = AccessLevel.Read }
+                                                                new AccessRule { Identity = "Everyone", AccessLevel = AccessLevel.Read, IsForRole = true },
+                                                                new AccessRule { Identity = "RoleA", AccessLevel = AccessLevel.Deny, IsForRole = true },
+                                                                new AccessRule { Identity = "John Doe", AccessLevel = AccessLevel.ReadWrite, IsForRole = false },
+                                                                new AccessRule { Identity = "Admin", AccessLevel = AccessLevel.Read, IsForRole = true },
+                                                                new AccessRule { Identity = "RoleB", AccessLevel = AccessLevel.Read, IsForRole = true }
                                                              });
 
                 var page = TestDataProvider.CreateNewPage();
@@ -123,8 +123,8 @@ namespace BetterCms.Test.Module.Root.AccessControl
             RunActionInTransaction(session =>
             {
                 var accessRules = new List<AccessRule>(new[] {
-                                                                new AccessRule { Identity = "RoleA", AccessLevel = AccessLevel.Deny },
-                                                                new AccessRule { Identity = "RoleB", AccessLevel = AccessLevel.Read }
+                                                                new AccessRule { Identity = "RoleA", AccessLevel = AccessLevel.Deny, IsForRole = true },
+                                                                new AccessRule { Identity = "RoleB", AccessLevel = AccessLevel.Read, IsForRole = true }
                                                              });
 
                 var mediaFile = TestDataProvider.CreateNewMediaFile();
@@ -139,7 +139,7 @@ namespace BetterCms.Test.Module.Root.AccessControl
                 var principal = new GenericPrincipal(new GenericIdentity("John Doe"), new string[] { });
                 var accessLevel = service.GetAccessLevel(mediaFile, principal);
 
-                Assert.AreEqual(AccessLevel.NoPermissions, accessLevel);
+                Assert.AreEqual(AccessLevel.Deny, accessLevel);
             });                    
         }
 
@@ -149,11 +149,11 @@ namespace BetterCms.Test.Module.Root.AccessControl
             RunActionInTransaction(session =>
             {
                 var accessRules = new List<AccessRule>(new[] {
-                                                                new AccessRule { Identity = "Everyone", AccessLevel = AccessLevel.Read },
-                                                                new AccessRule { Identity = "RoleA", AccessLevel = AccessLevel.Deny },
-                                                                new AccessRule { Identity = "John Doe", AccessLevel = AccessLevel.ReadWrite },
-                                                                new AccessRule { Identity = "Admin", AccessLevel = AccessLevel.Read },
-                                                                new AccessRule { Identity = "RoleB", AccessLevel = AccessLevel.Read }
+                                                                new AccessRule { Identity = "Everyone", AccessLevel = AccessLevel.Read, IsForRole = true },
+                                                                new AccessRule { Identity = "RoleA", AccessLevel = AccessLevel.Deny, IsForRole = true },
+                                                                new AccessRule { Identity = "John Doe", AccessLevel = AccessLevel.ReadWrite, IsForRole = false },
+                                                                new AccessRule { Identity = "Admin", AccessLevel = AccessLevel.Read, IsForRole = true },
+                                                                new AccessRule { Identity = "RoleB", AccessLevel = AccessLevel.Read, IsForRole = true }
                                                              });
 
                 var mediaFile = TestDataProvider.CreateNewMediaFile();
@@ -184,11 +184,11 @@ namespace BetterCms.Test.Module.Root.AccessControl
             RunActionInTransaction(session =>
             {
                 var accessRules = new List<AccessRule>(new[] {
-                                                                new AccessRule  { Identity = "Everyone", AccessLevel = AccessLevel.Deny },
-                                                                new AccessRule { Identity = "RoleA", AccessLevel = AccessLevel.Deny },
-                                                                new AccessRule { Identity = "John Doe", AccessLevel = AccessLevel.ReadWrite },
-                                                                new AccessRule { Identity = "Admin", AccessLevel = AccessLevel.Read },
-                                                                new AccessRule { Identity = "RoleB", AccessLevel = AccessLevel.Read }
+                                                                new AccessRule  { Identity = "Everyone", AccessLevel = AccessLevel.Deny, IsForRole = true },
+                                                                new AccessRule { Identity = "RoleA", AccessLevel = AccessLevel.Deny, IsForRole = true },
+                                                                new AccessRule { Identity = "John Doe", AccessLevel = AccessLevel.ReadWrite, IsForRole = false },
+                                                                new AccessRule { Identity = "Admin", AccessLevel = AccessLevel.Read, IsForRole = true },
+                                                                new AccessRule { Identity = "RoleB", AccessLevel = AccessLevel.Read, IsForRole = true }
                                                              });
 
                 var mediaFile = TestDataProvider.CreateNewMediaFile();
@@ -214,10 +214,10 @@ namespace BetterCms.Test.Module.Root.AccessControl
             RunActionInTransaction(session =>
             {
                 var accessRules = new List<AccessRule>(new[] {
-                                                                new AccessRule { Identity = "RoleA", AccessLevel = AccessLevel.Deny },
-                                                                new AccessRule { Identity = "Authenticated Users", AccessLevel = AccessLevel.ReadWrite },
-                                                                new AccessRule { Identity = "Admin", AccessLevel = AccessLevel.Read },
-                                                                new AccessRule { Identity = "RoleB", AccessLevel = AccessLevel.Read }
+                                                                new AccessRule { Identity = "RoleA", AccessLevel = AccessLevel.Deny, IsForRole = true },
+                                                                new AccessRule { Identity = "Authenticated Users", AccessLevel = AccessLevel.ReadWrite, IsForRole = true },
+                                                                new AccessRule { Identity = "Admin", AccessLevel = AccessLevel.Read, IsForRole = true },
+                                                                new AccessRule { Identity = "RoleB", AccessLevel = AccessLevel.Read, IsForRole = true }
                                                              });
 
                 var mediaFile = TestDataProvider.CreateNewMediaFile();
@@ -355,9 +355,12 @@ namespace BetterCms.Test.Module.Root.AccessControl
 
         private Mock<ICmsConfiguration> GetCmsConfigurationMock(AccessControlCollection accessControlCollection)
         {
-            var cmsConfiguration = new Mock<ICmsConfiguration>();
+            var cmsSecuritySection = new Mock<ICmsSecurityConfiguration>();
+            cmsSecuritySection.Setup(x => x.DefaultAccessControlList).Returns(() => accessControlCollection ?? new AccessControlCollection());
 
-            cmsConfiguration.Setup(x => x.DefaultAccessControlList).Returns(() => accessControlCollection ?? new AccessControlCollection());
+            var cmsConfiguration = new Mock<ICmsConfiguration>();
+            cmsConfiguration.Setup(x => x.Security).Returns(cmsSecuritySection.Object);
+
             return cmsConfiguration;
         }     
     }

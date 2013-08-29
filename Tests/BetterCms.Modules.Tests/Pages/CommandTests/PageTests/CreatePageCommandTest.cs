@@ -41,7 +41,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
                         var uow = new DefaultUnitOfWork(session);
                         var repository = new DefaultRepository(uow);
                         var configMock = new Mock<ICmsConfiguration>();
-                        configMock.SetupAllProperties().Setup(f => f.AccessControlEnabled).Returns(true);
+                        configMock.SetupAllProperties().Setup(f => f.Security.AccessControlEnabled).Returns(true);
                         var config = configMock.Object;
 
                         var command = new CreatePageCommand(
@@ -72,7 +72,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
                                     new UserAccessViewModel
                                         {
                                             Identity = "test 2",
-                                            AccessLevel = AccessLevel.NoPermissions
+                                            AccessLevel = AccessLevel.Deny
                                         }
                                 });
 

@@ -69,7 +69,7 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
         {
             var fileQuery = Repository.AsQueryable<MediaFile>().Where(f => f.Id == fileId && !f.IsDeleted);
 
-            if (configuration.AccessControlEnabled)
+            if (configuration.Security.AccessControlEnabled)
             {
                 fileQuery = fileQuery.FetchMany(f => f.AccessRules);
             }
@@ -96,10 +96,10 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
                             ThumbnailUrl = file.Image.PublicThumbnailUrl,
                             ImageTooltip = file.Image.Caption
                         },
-                    AccessControlEnabled = configuration.AccessControlEnabled
+                    AccessControlEnabled = configuration.Security.AccessControlEnabled
                 };
 
-            if (configuration.AccessControlEnabled)
+            if (configuration.Security.AccessControlEnabled)
             {
                 model.UserAccessList = file.AccessRules.Select(f => new UserAccessViewModel(f)).ToList();
                 model.Url = fileService.GetDownloadFileUrl(MediaType.File, model.Id.ToGuidOrDefault(), model.Url);

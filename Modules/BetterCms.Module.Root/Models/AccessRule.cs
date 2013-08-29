@@ -29,6 +29,14 @@ namespace BetterCms.Module.Root.Models
         public virtual AccessLevel AccessLevel { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this rule applies for role.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance applies for role; otherwise, <c>false</c>.
+        /// </value>
+        public virtual bool IsForRole { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

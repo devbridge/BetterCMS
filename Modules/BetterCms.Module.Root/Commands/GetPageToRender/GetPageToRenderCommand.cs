@@ -19,7 +19,7 @@ using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Cms;
 using BetterCms.Module.Root.ViewModels.Option;
-
+using BetterCms.Module.Root.Models.Extensions;
 using NHibernate.Linq;
 
 namespace BetterCms.Module.Root.Commands.GetPageToRender
@@ -93,7 +93,14 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             renderPageViewModel.Contents = contentProjections;
             renderPageViewModel.Metadata = pageAccessor.GetPageMetaData(page).ToList();
             renderPageViewModel.Options = optionService.GetMergedOptionValues(page.Layout.LayoutOptions, page.Options).ToList();
-            renderPageViewModel.AccessRules = page.AccessRules != null ? page.AccessRules.Cast<IAccessRule>().ToList() : null;
+
+            if (page.AccessRules != null)
+            {
+                var list = page.AccessRules.Cast<IAccessRule>().ToList();
+                list.RemoveDuplicates((a, b) => a.Id == b.Id ? 0 : -1);
+
+                renderPageViewModel.AccessRules = list;
+            }
 
             // Attach styles.
             var styles = new List<IStylesheetAccessor>();
@@ -208,7 +215,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 .ThenFetch(f => f.Region);
 
             // Add access rules if access control is enabled.
-            if (cmsConfiguration.AccessControlEnabled)
+            if (cmsConfiguration.Security.AccessControlEnabled)
             {
                 query = query.FetchMany(f => f.AccessRules);
             }

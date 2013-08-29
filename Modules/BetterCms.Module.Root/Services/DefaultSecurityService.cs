@@ -26,11 +26,6 @@ namespace BetterCms.Module.Root.Services
         private readonly ICmsConfiguration configuration;
 
         /// <summary>
-        /// The modules registration.
-        /// </summary>
-        private readonly IModulesRegistration modulesRegistration;
-
-        /// <summary>
         /// The HTTP context accessor.
         /// </summary>
         private readonly IHttpContextAccessor httpContextAccessor;
@@ -41,11 +36,10 @@ namespace BetterCms.Module.Root.Services
         /// <param name="configuration">The configuration.</param>
         /// <param name="httpContextAccessor">The HTTP context accessor.</param>
         /// <param name="modulesRegistration">The modules registration.</param>
-        public DefaultSecurityService(ICmsConfiguration configuration, IHttpContextAccessor httpContextAccessor, IModulesRegistration modulesRegistration)
+        public DefaultSecurityService(ICmsConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             this.httpContextAccessor = httpContextAccessor;
             this.configuration = configuration;
-            this.modulesRegistration = modulesRegistration;
         }
 
         /// <summary>
@@ -80,15 +74,6 @@ namespace BetterCms.Module.Root.Services
             var currentHttpContext = httpContextAccessor.GetCurrent();
 
             return currentHttpContext != null ? currentHttpContext.User : null;
-        }
-
-        /// <summary>
-        /// Gets the configuration.
-        /// </summary>
-        /// <returns>Better CMS security configuration.</returns>
-        public ICmsSecurityConfiguration GetConfiguration()
-        {
-            return configuration.Security;
         }
 
         /// <summary>

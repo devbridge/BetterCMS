@@ -93,7 +93,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                               IsArchived = page.IsArchived,
                               TemplateId = page.Layout.Id,
                               CategoryId = page.Category.Id,
-                              AccessControlEnabled = cmsConfiguration.AccessControlEnabled,
+                              AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled,
                               Image = page.Image == null ? null :
                                   new ImageSelectorViewModel
                                           {
@@ -138,7 +138,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
 
                 model.Model.OptionValues = optionService.GetMergedOptionValuesForEdit(layoutOptions, pageOptions);
 
-                if (cmsConfiguration.AccessControlEnabled)
+                if (cmsConfiguration.Security.AccessControlEnabled)
                 {
                     model.Model.UserAccessList = Repository.AsQueryable<Root.Models.Page>()
                                                 .Where(x => x.Id == id && !x.IsDeleted)                    

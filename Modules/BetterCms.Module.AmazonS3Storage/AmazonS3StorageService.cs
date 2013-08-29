@@ -36,7 +36,7 @@ namespace BetterCms.Module.AmazonS3Storage
                 {
                     tokenExpiryTime = TimeSpan.FromMinutes(10);
                 }
-                accessControlEnabledGlobally = config.AccessControlEnabled;
+                accessControlEnabledGlobally = config.Security.AccessControlEnabled;
             }
             catch (Exception e)
             {

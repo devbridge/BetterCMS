@@ -109,12 +109,13 @@ namespace BetterCms.Module.Root.Services
         {
             IList<IAccessRule> list = new List<IAccessRule>();
 
-            foreach (AccessControlElement userAccess in cmsConfiguration.DefaultAccessControlList)
+            foreach (AccessControlElement userAccess in cmsConfiguration.Security.DefaultAccessControlList)
             {
                 list.Add(new UserAccessViewModel
                              {
                                  Identity = userAccess.Identity,
-                                 AccessLevel = (AccessLevel)Enum.Parse(typeof(AccessLevel), userAccess.AccessLevel)
+                                 AccessLevel = (AccessLevel)Enum.Parse(typeof(AccessLevel), userAccess.AccessLevel),
+                                 IsForRole = userAccess.IsRole
                              });
             }
 
@@ -128,7 +129,8 @@ namespace BetterCms.Module.Root.Services
                     list.Add(new UserAccessViewModel
                     {
                         Identity = identityName,
-                        AccessLevel = AccessLevel.ReadWrite
+                        AccessLevel = AccessLevel.ReadWrite,
+                        IsForRole = true
                     });
                 }
             }
@@ -139,21 +141,21 @@ namespace BetterCms.Module.Root.Services
         /// <summary>
         /// Gets the access level.
         /// </summary>
-        /// <param name="accessList">The access list.</param>
+        /// <param name="accessRules">The access list.</param>
         /// <param name="principal">The principal.</param>
         /// <returns>Access level for current principal</returns>
-        private AccessLevel GetAccessLevel(IList<IAccessRule> accessList, IPrincipal principal)
+        private AccessLevel GetAccessLevel(IList<IAccessRule> accessRules, IPrincipal principal)
         {
-            var accessLevel = AccessLevel.NoPermissions;
-
             // If there are no permissions, object is accessible to everyone:
-            if (accessList == null || !accessList.Any())
+            if (accessRules == null || !accessRules.Any())
             {
                 return AccessLevel.ReadWrite;
             }
-
-            // If user is not authenticated, check access level for "Everyone":
-            var everyone = accessList.FirstOrDefault(x => string.Equals(x.Identity, SpecialIdentities.Everyone, StringComparison.OrdinalIgnoreCase));
+            
+            var accessLevel = AccessLevel.Deny;
+            
+            // If user is not authenticated, check access level for "Everyone" role:
+            var everyone = accessRules.FirstOrDefault(rule => rule.IsForRole && string.Equals(rule.Identity, SpecialIdentities.Everyone, StringComparison.OrdinalIgnoreCase));
 
             if (everyone != null)
             {
@@ -164,30 +166,30 @@ namespace BetterCms.Module.Root.Services
             if (principal.Identity.IsAuthenticated)
             {
                 var identityName = principal.Identity.Name;
-                var identityAccess = accessList.FirstOrDefault(x => string.Equals(x.Identity, identityName, StringComparison.OrdinalIgnoreCase));
+                var identityAccess = accessRules.FirstOrDefault(rule => !rule.IsForRole && string.Equals(rule.Identity, identityName, StringComparison.OrdinalIgnoreCase));
 
                 if (identityAccess != null)
                 {
                     return identityAccess.AccessLevel;
                 }
 
-                // Check access level for "Authenticated User":
-                var authenticated = accessList.FirstOrDefault(x => string.Equals(x.Identity, SpecialIdentities.AuthenticatedUsers, StringComparison.OrdinalIgnoreCase));
+                // Check access level for "Authenticated User" role:
+                var authenticated = accessRules.FirstOrDefault(x => x.IsForRole && string.Equals(x.Identity, SpecialIdentities.AuthenticatedUsers, StringComparison.OrdinalIgnoreCase));
 
                 if (authenticated != null && authenticated.AccessLevel > accessLevel)
                 {
                     accessLevel = authenticated.AccessLevel;
                 }
 
-                // Check user or role access level:
-                foreach (var userAccess in accessList)
+                // Check principal access level by roles:
+                foreach (var rule in accessRules.Where(rule => rule.IsForRole))
                 {
-                    if (principal.IsInRole(userAccess.Identity))
+                    if (principal.IsInRole(rule.Identity))
                     {
                         // Highest available privilege wins:
-                        if (userAccess.AccessLevel > accessLevel)
+                        if (rule.AccessLevel > accessLevel)
                         {
-                            accessLevel = userAccess.AccessLevel;
+                            accessLevel = rule.AccessLevel;
                         }
                     }
                 }

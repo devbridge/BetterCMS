@@ -50,7 +50,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.DeleteContent)]
         public ActionResult Index()
         {
-            if (CmsConfiguration.AccessControlEnabled && !StorageService.SecuredUrlsEnabled)
+            if (CmsConfiguration.Security.AccessControlEnabled && !StorageService.SecuredUrlsEnabled)
             {
                 Messages.AddWarn(MediaGlobalization.TokenBasedSecurity_NotSupported_Message);
             }
