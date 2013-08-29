@@ -10,7 +10,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         private readonly Dictionary<string, dynamic> properties = new Dictionary<string, dynamic>(StringComparer.InvariantCultureIgnoreCase);
 
         /// <summary>
-        /// Tries to get dyniamic dictionary member.
+        /// Tries to get dynamic dictionary member.
         /// </summary>
         /// <param name="binder">The binder.</param>
         /// <param name="result">The result.</param>
@@ -23,7 +23,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         }
 
         /// <summary>
-        /// Tries to set dyniamic dictionary member.
+        /// Tries to set dynamic dictionary member.
         /// </summary>
         /// <param name="binder">The binder.</param>
         /// <param name="value">The value.</param>
