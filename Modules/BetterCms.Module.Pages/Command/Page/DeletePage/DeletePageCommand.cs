@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Exceptions.Mvc;
@@ -123,14 +124,32 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
                 }
             }
 
-            // Delete childs
-            foreach (var pageTag in page.PageTags)
+            // Delete child entities.            
+            if (page.PageTags != null)
             {
-                Repository.Delete(pageTag);
+                foreach (var pageTag in page.PageTags)
+                {
+                    Repository.Delete(pageTag);
+                }
             }
-            foreach (var pageContent in page.PageContents)
+            if (page.PageContents != null)
             {
-                Repository.Delete(pageContent);
+                foreach (var pageContent in page.PageContents)
+                {
+                    Repository.Delete(pageContent);
+                }
+            }
+            if (page.Options != null)
+            {
+                foreach (var option in page.Options)
+                {
+                    Repository.Delete(option);
+                }
+            }
+            if (page.AccessRules != null)
+            {
+                var rules = page.AccessRules.ToList();
+                rules.ForEach(page.RemoveRule);
             }
 
             // Delete sitemapNodes.

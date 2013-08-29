@@ -30,36 +30,8 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
                     var repository = new DefaultRepository(uow);
 
 
-                    var pageToClone = TestDataProvider.CreateNewPageProperties();
-
-                    var accessRules = new []
-                                          {
-                                              TestDataProvider.CreateNewAccessRule(),
-                                              TestDataProvider.CreateNewAccessRule()
-                                          };
-                    pageToClone.AddRule(accessRules[0]);
-                    pageToClone.AddRule(accessRules[1]);
-
-                    var options = new List<PageOption>(new[]
-                                      {
-                                          TestDataProvider.CreateNewPageOption(pageToClone)
-                                      });                    
-                    options.ForEach(repository.Save);
-
-                    var tags = new List<PageTag>(new[]
-                                   {
-                                       TestDataProvider.CreateNewPageTag(pageToClone),
-                                       TestDataProvider.CreateNewPageTag(pageToClone)  
-                                   });
-                    tags.ForEach(repository.Save);
+                    var pageToClone = TestDataProvider.CreateNewPageWithTagsContentsOptionsAndAccessRules(session, 2, 2, 2, 2);
                     
-                    var contents = new List<PageContent>(new []
-                                       {
-                                           TestDataProvider.CreateNewPageContent(null, pageToClone),
-                                           TestDataProvider.CreateNewPageContent(null, pageToClone)
-                                       });
-                    contents.ForEach(repository.Save);
-
                     session.SaveOrUpdate(pageToClone);
                     session.Flush();
                     session.Clear();
@@ -90,10 +62,10 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
                     var actual = repository.AsQueryable<PageProperties>().Where(f => f.Id == result.PageId).ToList().FirstOrDefault();
                     
                     Assert.IsNotNull(actual);
-                    Assert.AreEqual(accessRules.Count(), actual.AccessRules.Count(), "AccessRules");
-                    Assert.AreEqual(tags.Count(), actual.PageTags.Count(), "Tags");
-                    Assert.AreEqual(contents.Count(), actual.PageContents.Count(), "Contents");
-                    Assert.AreEqual(options.Count(), actual.Options.Count(), "Options");
+                    Assert.AreEqual(2, actual.AccessRules.Count(), "AccessRules");
+                    Assert.AreEqual(2, actual.PageTags.Count(), "Tags");
+                    Assert.AreEqual(2, actual.PageContents.Count(), "Contents");
+                    Assert.AreEqual(2, actual.Options.Count(), "Options");
                 });
         }
     }

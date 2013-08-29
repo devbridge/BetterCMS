@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
+using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 using BetterCms.Core.Security;
@@ -12,6 +13,8 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Users;
 using BetterCms.Module.Users.Models;
+
+using NHibernate;
 
 using BlogOption = BetterCms.Module.Blog.Models.Option;
 
@@ -617,6 +620,45 @@ namespace BetterCms.Tests.Helpers
             entity.AccessLevel = ProvideRandomEnumValue<AccessLevel>();
 
             return entity;
+        }
+
+        public PageProperties CreateNewPageWithTagsContentsOptionsAndAccessRules(ISession session, int tagsCount = 2, int contentsCount = 2, int optionsCount = 2, int accessRulesCount = 2)
+        {
+            var page = CreateNewPageProperties();
+
+            if (accessRulesCount > 0)
+            {
+                for (int i = 0; i < accessRulesCount; i++)
+                {
+                    page.AddRule(CreateNewAccessRule());
+                }
+            }
+
+            if (tagsCount > 0)
+            {
+                for (int i = 0; i < tagsCount; i++)
+                {
+                    session.SaveOrUpdate(CreateNewPageTag(page));
+                }
+            }
+
+            if (contentsCount > 0)
+            {
+                for (int i = 0; i < contentsCount; i++)
+                {
+                    session.SaveOrUpdate(CreateNewPageContent(null, page));
+                }
+            }
+
+            if (optionsCount > 0)
+            {
+                for (int i = 0; i < optionsCount; i++)
+                {
+                    session.SaveOrUpdate(CreateNewPageOption(page));
+                }
+            }
+
+            return page;
         }
     }
 }
