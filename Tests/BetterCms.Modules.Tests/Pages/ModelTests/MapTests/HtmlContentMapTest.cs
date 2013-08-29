@@ -3,7 +3,7 @@
 namespace BetterCms.Test.Module.Pages.ModelTests.MapTests
 {
     [TestFixture]
-    public class HtmlContentMapTest : DatabaseTestBase
+    public class HtmlContentMapTest : IntegrationTestBase
     {
         [Test]
         public void Should_Insert_And_Retrieve_HtmlContent()

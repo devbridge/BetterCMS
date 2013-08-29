@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace BetterCms.Test.Module.Pages.EventTests
 {
     [TestFixture]
-    public class PageEventTests : DatabaseTestBase
+    public class PageEventTests : IntegrationTestBase
     {
         private bool firedCreated;
         private bool firedDeleted;

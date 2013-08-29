@@ -46,7 +46,9 @@ namespace BetterCms.Module.Users.Provider
         /// <summary>
         /// Initializes a new instance of the <see cref="CmsRoleProvider" /> class.
         /// </summary>
+// ReSharper disable UnusedMember.Global
         public CmsRoleProvider()
+// ReSharper restore UnusedMember.Global
         {
         }
 

@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace BetterCms.Test.Module.Root.CommandTests
 {
     [TestFixture]
-    public class GetPageToRenderCommandTest : DatabaseTestBase
+    public class GetPageToRenderCommandTest : IntegrationTestBase
     {
         [Test]
         public void Should_Return_Page_With_PageContents_Successfully()

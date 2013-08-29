@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace BetterCms.Test.Module
 {
-    public abstract class DatabaseTestBase : TestBase
+    public abstract class IntegrationTestBase : TestBase
     {
         protected void RunEntityMapTestsInTransaction<TEntity>(TEntity testEntity, Action<TEntity> resultAssertions = null, ILifetimeScope childScope = null) where TEntity : Entity
         {  

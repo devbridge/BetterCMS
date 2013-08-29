@@ -19,7 +19,7 @@ using NUnit.Framework;
 namespace BetterCms.Test.Module.Root.AccessControl
 {
     [TestFixture]
-    public class AccessControlServiceTests : DatabaseTestBase
+    public class AccessControlServiceTests : IntegrationTestBase
     {
         [Test]
         public void Should_Get_Page_Access_Control()

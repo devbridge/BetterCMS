@@ -26,7 +26,7 @@ using NUnit.Framework;
 namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
 {
     [TestFixture]
-    public class CreatePageCommandTest : DatabaseTestBase
+    public class CreatePageCommandTest : IntegrationTestBase
     {
         [Test]
         public void Should_Create_New_Page_With_Access_Rules()

@@ -13,7 +13,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
 {
 
     [TestFixture]
-    public class SortPageContentCommandIntegrationTest : DatabaseTestBase
+    public class SortPageContentCommandIntegrationTest : IntegrationTestBase
     {
         [Test]
         public void Should_Sort_Page_Content_Successfully()

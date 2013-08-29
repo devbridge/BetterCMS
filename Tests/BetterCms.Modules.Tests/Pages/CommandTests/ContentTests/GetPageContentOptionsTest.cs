@@ -14,7 +14,7 @@ using NUnit.Framework;
 namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
 {
     [TestFixture]
-    public class GetPageContentOptionsTest : DatabaseTestBase
+    public class GetPageContentOptionsTest : IntegrationTestBase
     {
         [Test]
         public void Should_Return_Page_Content_Options_Successfully()

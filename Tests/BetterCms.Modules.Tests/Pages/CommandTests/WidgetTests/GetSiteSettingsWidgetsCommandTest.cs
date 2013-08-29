@@ -12,7 +12,7 @@ using NUnit.Framework;
 namespace BetterCms.Test.Module.Pages.CommandTests.WidgetTests
 {
     [TestFixture]
-    public class GetSiteSettingsWidgetsCommandTest : DatabaseTestBase
+    public class GetSiteSettingsWidgetsCommandTest : IntegrationTestBase
     {
         [Test]
         public void Should_Return_Widgets_List_Successfully()

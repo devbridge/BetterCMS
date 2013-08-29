@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace BetterCms.Test.Module.Root.ModelTests.MapTests
 {
     [TestFixture]
-    public class ContentMapTest : DatabaseTestBase
+    public class ContentMapTest : IntegrationTestBase
     {
         [Test]
         public void Should_Insert_And_Retrieve_Content_Successfully()

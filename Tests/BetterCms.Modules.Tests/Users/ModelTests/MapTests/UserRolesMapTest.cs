@@ -3,7 +3,7 @@
 namespace BetterCms.Test.Module.Users.ModelTests.MapTests
 {
     [TestFixture]
-    class UserRolesMapTest : DatabaseTestBase
+    class UserRolesMapTest : IntegrationTestBase
     {
         [Test]
         [Ignore]

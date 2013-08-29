@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace BetterCms.Test.Module.Users.ModelTests.MapTests
 {
     [TestFixture]
-    public class RoleMapTest : DatabaseTestBase
+    public class RoleMapTest : IntegrationTestBase
     {
         [Test]
         [Ignore]

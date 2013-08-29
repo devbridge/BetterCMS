@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace BetterCms.Test.Module.Root.ModelTests.MapTests
 {
     [TestFixture]
-    public class RegionMapTest : DatabaseTestBase
+    public class RegionMapTest : IntegrationTestBase
     {
         [Test]
         public void Should_Insert_And_Retrieve_Region_Successfully()

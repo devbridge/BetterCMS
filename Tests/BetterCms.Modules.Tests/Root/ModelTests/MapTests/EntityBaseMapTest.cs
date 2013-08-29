@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace BetterCms.Test.Module.Root.ModelTests.MapTests
 {
     [TestFixture]
-    public class EntityBaseFieldsTest : DatabaseTestBase
+    public class EntityBaseFieldsTest : IntegrationTestBase
     {
         /// <summary>
         /// Checks guid.comb

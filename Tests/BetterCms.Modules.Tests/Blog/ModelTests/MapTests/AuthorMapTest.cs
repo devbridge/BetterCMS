@@ -13,7 +13,7 @@ using NUnit.Framework;
 namespace BetterCms.Test.Module.Blog.ModelTests.MapTests
 {
     [TestFixture]
-    public class AuthorMapTest : DatabaseTestBase
+    public class AuthorMapTest : IntegrationTestBase
     {
         [Test]
         public void Should_Insert_And_Retrieve_Author_Successfully()

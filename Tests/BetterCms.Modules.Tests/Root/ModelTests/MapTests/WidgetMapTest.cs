@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace BetterCms.Test.Module.Root.ModelTests.MapTests
 {
     [TestFixture]
-    public class WidgetMapTest : DatabaseTestBase
+    public class WidgetMapTest : IntegrationTestBase
     {
         [Test]
         public void Should_Insert_And_Retrieve_Widget_Successfully()
