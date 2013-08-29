@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
+using System.Text;
 
 using BetterCms.Configuration;
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataContracts;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services.Caching;
 using BetterCms.Module.Root.Models;
@@ -18,9 +17,7 @@ namespace BetterCms.Module.Root.Services
     /// </summary>
     public class DefaultAccessControlService : IAccessControlService
     {
-        private const string AccessLevelCacheKeyPattern = "bcms-useraccess-{0}";
-
-        private readonly IRepository repository;
+        private const string AccessLevelCacheKeyPrefix = "bcms-useraccess-";
 
         private readonly ICacheService cacheService;
 
@@ -29,12 +26,10 @@ namespace BetterCms.Module.Root.Services
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultAccessControlService" /> class.
         /// </summary>
-        /// <param name="repository">The repository.</param>
         /// <param name="cacheService">The cache service.</param>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
-        public DefaultAccessControlService(IRepository repository, ICacheService cacheService, ICmsConfiguration cmsConfiguration)
+        public DefaultAccessControlService(ICacheService cacheService, ICmsConfiguration cmsConfiguration)
         {
-            this.repository = repository;
             this.cacheService = cacheService;
             this.cmsConfiguration = cmsConfiguration;
         }
@@ -47,9 +42,33 @@ namespace BetterCms.Module.Root.Services
         /// <returns>Access level for current principal</returns>
         public AccessLevel GetAccessLevel<TAccessSecuredObject>(TAccessSecuredObject obj, IPrincipal principal) where TAccessSecuredObject : IAccessSecuredObject
         {
-            var key = string.Format(AccessLevelCacheKeyPattern, obj.Id);
+            StringBuilder cacheKeyBuilder = new StringBuilder();
 
-            object accessLevel = cacheService.Get(key, TimeSpan.FromMinutes(2), () => (object)GetAccessLevel(obj.AccessRules, principal));
+            cacheKeyBuilder.Append(AccessLevelCacheKeyPrefix);
+            cacheKeyBuilder.Append("-");
+            cacheKeyBuilder.Append(principal.Identity.Name ?? "Anonymous");
+            cacheKeyBuilder.Append("-");
+            cacheKeyBuilder.Append(principal.Identity.IsAuthenticated);
+            cacheKeyBuilder.Append("-");
+
+            StringBuilder accessRulesHasher = new StringBuilder();
+            if (obj.AccessRules != null && obj.AccessRules.Count > 0)
+            {                
+                foreach (var rule in obj.AccessRules)
+                {
+                    accessRulesHasher.Append(rule.Identity);
+                    accessRulesHasher.Append("-");
+                    accessRulesHasher.Append((int)rule.AccessLevel);
+                    accessRulesHasher.Append("-");
+                }                 
+            }
+            else
+            {
+                accessRulesHasher.Append("NoAccessRoles");
+            }
+            cacheKeyBuilder.Append(accessRulesHasher.ToString().GetHashCode());
+
+            object accessLevel = cacheService.Get(cacheKeyBuilder.ToString(), TimeSpan.FromMinutes(2), () => (object)GetAccessLevel(obj.AccessRules, principal));
 
             return (AccessLevel)accessLevel;
         }

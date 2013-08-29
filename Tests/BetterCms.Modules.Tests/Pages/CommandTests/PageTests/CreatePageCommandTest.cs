@@ -48,7 +48,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
                             new Mock<IPageService>().SetupAllProperties().Object,
                             new DefaultUrlService(uow, config),
                             config,
-                            new DefaultAccessControlService(repository, new HttpRuntimeCacheService(), config),
+                            new DefaultAccessControlService(new HttpRuntimeCacheService(), config),
                             new Mock<IOptionService>().SetupAllProperties().Object);
 
                         command.UnitOfWork = uow;
