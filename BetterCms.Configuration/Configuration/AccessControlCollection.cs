@@ -1,3 +1,4 @@
+using System;
 using System.Configuration;
 
 namespace BetterCms.Configuration
@@ -7,6 +8,21 @@ namespace BetterCms.Configuration
     /// </summary>
     public class AccessControlCollection : ConfigurationElementCollection
     {
+        private const string DefaultAccessLevelAttribute = "defaultAccessLevel";
+
+        /// <summary>
+        /// Gets the content encryption key.
+        /// </summary>
+        /// <value>
+        /// The content encryption key.
+        /// </value>
+        [ConfigurationProperty(DefaultAccessLevelAttribute, IsRequired = false, DefaultValue = "ReadWrite")]
+        public string DefaultAccessLevel
+        {
+            get { return Convert.ToString(this[DefaultAccessLevelAttribute]); }
+            set { this[DefaultAccessLevelAttribute] = value; }
+        }
+
         #region Indexers
 
         /// <summary>

@@ -5,6 +5,7 @@ using System.Security.Principal;
 using System.Text;
 
 using BetterCms.Configuration;
+using BetterCms.Core.Exceptions;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services.Caching;
 using BetterCms.Module.Root.Models;
@@ -21,17 +22,17 @@ namespace BetterCms.Module.Root.Services
 
         private readonly ICacheService cacheService;
 
-        private readonly ICmsConfiguration cmsConfiguration;
+        private readonly ICmsConfiguration configuration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultAccessControlService" /> class.
         /// </summary>
         /// <param name="cacheService">The cache service.</param>
-        /// <param name="cmsConfiguration">The CMS configuration.</param>
-        public DefaultAccessControlService(ICacheService cacheService, ICmsConfiguration cmsConfiguration)
+        /// <param name="configuration">The CMS configuration.</param>
+        public DefaultAccessControlService(ICacheService cacheService, ICmsConfiguration configuration)
         {
             this.cacheService = cacheService;
-            this.cmsConfiguration = cmsConfiguration;
+            this.configuration = configuration;
         }
 
         /// <summary>
@@ -109,7 +110,7 @@ namespace BetterCms.Module.Root.Services
         {
             IList<IAccessRule> list = new List<IAccessRule>();
 
-            foreach (AccessControlElement userAccess in cmsConfiguration.Security.DefaultAccessControlList)
+            foreach (AccessControlElement userAccess in configuration.Security.DefaultAccessRules)
             {
                 list.Add(new UserAccessViewModel
                              {
@@ -149,9 +150,31 @@ namespace BetterCms.Module.Root.Services
             // If there are no permissions, object is accessible to everyone:
             if (accessRules == null || !accessRules.Any())
             {
-                return AccessLevel.ReadWrite;
+                string defaultAccessLevelConfig = configuration.Security.DefaultAccessRules.DefaultAccessLevel;
+
+                if (!string.IsNullOrWhiteSpace(defaultAccessLevelConfig))
+                {
+                    AccessLevel defaultAccessLevel;
+                    if (Enum.TryParse(defaultAccessLevelConfig, true, out defaultAccessLevel))
+                    {
+                        return defaultAccessLevel;
+                    }
+
+                    string formatErrorMessage =
+                        string.Format(
+                            "A defaultAccessLevel property '{0}' does not matches any possible value in the cms.config <security> section. Available values are ReadWrite|Read|Deny.",
+                            defaultAccessLevelConfig);
+
+                    throw new CmsException(formatErrorMessage);
+                }
+
+                StringBuilder notDefinedMessage = new StringBuilder();
+                notDefinedMessage.AppendLine("A defaultAccessLevel property is not defined in the cms.config <security> section. This access level is used for objects with no access rules.");
+                notDefinedMessage.AppendLine("<security><defaultAccessRules defaultAccessLevel=\"ReadWrite|Read|Deny\">...</defaultAccessRules></security>");
+
+                throw new CmsException(notDefinedMessage.ToString());
             }
-            
+
             var accessLevel = AccessLevel.Deny;
             
             // If user is not authenticated, check access level for "Everyone" role:
