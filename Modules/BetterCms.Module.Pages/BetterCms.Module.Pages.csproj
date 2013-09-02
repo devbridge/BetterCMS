@@ -497,6 +497,9 @@
     <EmbeddedResource Include="Views\Filter\PagesFilterTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Views\Page\Pages.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Views\Option\EditOptions.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -506,7 +509,7 @@
     <EmbeddedResource Include="Views\Option\Partial\OptionCell.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\Pages.cshtml" />
+    <EmbeddedResource Include="Views\Option\Partial\UseDefaultValueCell.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

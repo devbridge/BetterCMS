@@ -248,7 +248,7 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\bcms-media\Views\" />
+    <Folder Include="Areas\bcms-pages\Views\" />
     <Folder Include="Areas\bcms-root\Views\Shared\" />
     <Folder Include="Areas\bcms-users\" />
     <Folder Include="file\bcms-media\Content\Css\Images\" />
