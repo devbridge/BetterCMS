@@ -81,15 +81,16 @@ namespace BetterCms.Module.Root.Services
         public void UpdateAccessControl<TAccessSecuredObject>(TAccessSecuredObject securedObject, IList<IAccessRule> updatedRules) where TAccessSecuredObject : IAccessSecuredObject
         {
             var entitiesToDelete = securedObject.AccessRules != null
-                                       ? securedObject.AccessRules.Where(x => updatedRules.All(model => model.Identity != x.Identity)).ToList()
+                                       ? securedObject.AccessRules.Where(x => updatedRules.All(model => model.Identity != x.Identity && model.IsForRole == x.IsForRole)).ToList()
                                        : new List<IAccessRule>();
 
             var entitesToAdd = updatedRules
-                                  .Where(x => securedObject.AccessRules == null || securedObject.AccessRules.All(entity => entity.Identity != x.Identity))
+                                  .Where(x => securedObject.AccessRules == null || securedObject.AccessRules.All(entity => entity.Identity != x.Identity && entity.IsForRole == x.IsForRole))
                                   .Select(f => new AccessRule
                                                    {
                                                        Identity = f.Identity,
-                                                       AccessLevel = f.AccessLevel
+                                                       AccessLevel = f.AccessLevel,
+                                                       IsForRole = f.IsForRole
                                                    })
                                   .ToList();
 
