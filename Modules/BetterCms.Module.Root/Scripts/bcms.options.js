@@ -2,7 +2,7 @@
 /*global bettercms, console */
 
 bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.ko.grid', 'bcms.datepicker'],
-    function ($, bcms, ko, kogrid) {
+    function ($, bcms, ko, kogrid, datepicker) {
         'use strict';
 
         var options = {},
@@ -316,7 +316,10 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
                 var type = self.type(),
                     mustBeNumber = type == optionTypes.floatType || type == optionTypes.integerType,
-                    hasError = mustBeNumber && newValue && isNaN(Number(newValue.replace(',', '.'))),
+                    mustBeDate = type == optionTypes.dateTimeType,
+                    hasError = newValue &&
+                        ((mustBeNumber && isNaN(Number(newValue.replace(',', '.')))) 
+                            || (mustBeDate && !datepicker.isDateValid(newValue))),
                     showMessage,
                     regExp;
                 
