@@ -150,6 +150,7 @@ namespace BetterCms.Module.Users
         {
             containerBuilder.RegisterType<DefaultAuthenticationService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultRoleService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultUserService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
     }
 }

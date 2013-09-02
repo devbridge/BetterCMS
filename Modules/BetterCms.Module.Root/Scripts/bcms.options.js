@@ -2,7 +2,7 @@
 /*global bettercms, console */
 
 bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.ko.grid', 'bcms.datepicker'],
-    function ($, bcms, ko, kogrid) {
+    function ($, bcms, ko, kogrid, datepicker) {
         'use strict';
 
         var options = {},
@@ -97,24 +97,35 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             return OptionValuesListViewModel;
         })(OptionsListViewModel);
 
-        function attachDatePickers(self) {
+        function onDatePickerBoxFocused(self) {
             var i,
                 item,
-                len, 
-                datePickerBox = $(selectors.datePickerBox),
+                len;
+
+            for (i = 0, len = self.items().length; i < len; i++) {
+                item = self.items()[i];
+
+                if (item.isActive()) {
+                    item.isSelected = true;
+                }
+            }
+        }
+
+        function attachDatePickers(self) {
+            var datePickerBox = $(selectors.datePickerBox),
                 dataKey = 'bcmsEventsAttached';
 
             if (!datePickerBox.data(dataKey)) {
                 datePickerBox.data(dataKey, true);
 
                 $(selectors.datePickerBox).on('click', function () {
-                    for (i = 0, len = self.items().length; i < len; i++) {
-                        item = self.items()[i];
-                        
-                        if (item.isActive()) {
-                            item.isSelected = true;
-                        }
-                    }
+                    onDatePickerBoxFocused(self);
+                    return false;
+                });
+
+                $(selectors.datePickerBox).mousedown(function(event) {
+                    bcms.stopEventPropagation(event);
+                    return false;
                 });
             }
         }
@@ -220,8 +231,12 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                         datePickers.initializeDatepicker(globalization.datePickerTooltipTitle, datePickerOpts);
 
                         datePickerTrigger = row.find(selectors.datePickerTrigger);
-                        datePickerTrigger.on('click', self.onItemSelect);
-                        datePickerTrigger.on('focus', self.onItemSelect);
+                        datePickerTrigger.on('click', function (event) {
+                            self.onItemSelect(self, event);
+                        });
+                        datePickerTrigger.on('focus', function (event) {
+                            self.onItemSelect(self, event);
+                        });
                     }
                 };
                 
@@ -316,7 +331,10 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
                 var type = self.type(),
                     mustBeNumber = type == optionTypes.floatType || type == optionTypes.integerType,
-                    hasError = mustBeNumber && newValue && isNaN(Number(newValue.replace(',', '.'))),
+                    mustBeDate = type == optionTypes.dateTimeType,
+                    hasError = newValue &&
+                        ((mustBeNumber && isNaN(Number(newValue.replace(',', '.')))) 
+                            || (mustBeDate && !datepicker.isDateValid(newValue))),
                     showMessage,
                     regExp;
                 

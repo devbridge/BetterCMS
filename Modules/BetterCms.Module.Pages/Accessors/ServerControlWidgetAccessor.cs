@@ -55,7 +55,18 @@ namespace BetterCms.Module.Pages.Accessors
                                 Widget = Content,
                                 Options = Options
                             };
-                        
+
+                        // Adding to ViewBag (there are old widgets, thay use this)
+                        if (Options != null && Options.Count > 0)
+                        {
+                            foreach (var option in Options)
+                            {
+                                if (option.Value != null)
+                                {
+                                    viewData[option.Key] = option.Value;
+                                }
+                            }
+                        }
                         
                         var pageModel = html.ViewData.Model as RenderPageViewModel;
                         if (pageModel != null)

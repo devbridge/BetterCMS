@@ -184,12 +184,17 @@ namespace BetterCms.Module.Pages.Controllers
         /// Renders widget preview.
         /// </summary>
         /// <param name="widgetId">The widget id.</param>
-        /// <returns>View with widget preview</returns>
+        /// <param name="enableJavaScript">if set to <c>true</c> enable java script.</param>
+        /// <returns>
+        /// View with widget preview
+        /// </returns>
         [HttpGet]
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration, RootModuleConstants.UserRoles.EditContent)]
-        public ActionResult PreviewWidget(string widgetId)
+        public ActionResult PreviewWidget(string widgetId, bool enableJavaScript)
         {
-            var model = GetCommand<PreviewWidgetCommand>().ExecuteCommand(widgetId.ToGuidOrDefault());
+            var request = new PreviewWidgetCommandRequest { WidgetId = widgetId.ToGuidOrDefault(), IsJavaScriptEnabled = enableJavaScript };
+            var model = GetCommand<PreviewWidgetCommand>().ExecuteCommand(request);
+
             return View(PagesConstants.ContentVersionPreviewTemplate, model);
         }
 

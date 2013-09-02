@@ -1,10 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 using Autofac;
 
-using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Dependencies;
+
 using BetterCms.Module.Users.Services;
 
 namespace BetterCms.Module.Users.Provider
@@ -12,9 +13,9 @@ namespace BetterCms.Module.Users.Provider
     public class CmsMembershipProvider : System.Web.Security.MembershipProvider
     {
         /// <summary>
-        /// The repository
+        /// The user service
         /// </summary>
-        private readonly IRepository repository;
+        private readonly IUserService userService;
 
         /// <summary>
         /// The unit of work
@@ -33,6 +34,38 @@ namespace BetterCms.Module.Users.Provider
         public override string ApplicationName { get; set; }
 
         /// <summary>
+        /// Gets or sets the name of the member ship.
+        /// </summary>
+        /// <value>
+        /// The name of the member ship.
+        /// </value>
+        private readonly string membershipName;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CmsMembershipProvider" /> class.
+        /// </summary>
+        /// <param name="userService">The user service.</param>
+        /// <param name="authenticationService">The authentication service.</param>
+        /// <param name="unitOfWork">The unit of work.</param>
+        /// <param name="membershipName">Name of the membership.</param>
+        internal CmsMembershipProvider(IUserService userService, IAuthenticationService authenticationService, IUnitOfWork unitOfWork, string membershipName)
+        {
+            this.authenticationService = authenticationService;
+            this.userService = userService;
+            this.unitOfWork = unitOfWork;
+            this.membershipName = membershipName;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CmsMembershipProvider" /> class.
+        /// </summary>
+// ReSharper disable UnusedMember.Global
+        public CmsMembershipProvider()
+// ReSharper restore UnusedMember.Global
+        {
+        }
+
+        /// <summary>
         /// Verifies that the specified user name and password exist in the data source.
         /// </summary>
         /// <param name="username">The name of the user to validate.</param>
@@ -40,18 +73,17 @@ namespace BetterCms.Module.Users.Provider
         /// <returns>
         /// true if the specified username and password are valid; otherwise, false.
         /// </returns>
-        /// <exception cref="System.NotImplementedException"></exception>
         public override bool ValidateUser(string username, string password)
         {
-            if (repository == null || authenticationService == null)
+            if (authenticationService == null)
             {
                 using (var container = ContextScopeProvider.CreateChildContainer())
                 {
-                    return ValidateUser(container.Resolve<IRepository>(), container.Resolve<IAuthenticationService>(), username, password);
+                    return ValidateUser(container.Resolve<IAuthenticationService>(), username, password);
                 }
             }
 
-            return ValidateUser(repository, authenticationService, username, password);
+            return ValidateUser(authenticationService, username, password);
         }
 
         /// <summary>
@@ -63,8 +95,145 @@ namespace BetterCms.Module.Users.Provider
         /// <returns>
         /// true if the password was updated successfully; otherwise, false.
         /// </returns>
-        /// <exception cref="System.NotImplementedException"></exception>
         public override bool ChangePassword(string username, string oldPassword, string newPassword)
+        {
+            if (authenticationService == null || unitOfWork == null)
+            {
+                using (var container = ContextScopeProvider.CreateChildContainer())
+                {
+                    return ChangePassword(container.Resolve<IAuthenticationService>(), container.Resolve<IUnitOfWork>(), username, oldPassword, newPassword);
+                }
+            }
+
+            return ChangePassword(authenticationService, unitOfWork, username, oldPassword, newPassword);
+        }
+
+        /// <summary>
+        /// Gets the user name associated with the specified e-mail address.
+        /// </summary>
+        /// <param name="email">The e-mail address to search for.</param>
+        /// <returns>
+        /// The user name associated with the specified e-mail address. If no match is found, return null.
+        /// </returns>
+        public override string GetUserNameByEmail(string email)
+        {
+            if (userService == null)
+            {
+                using (var container = ContextScopeProvider.CreateChildContainer())
+                {
+                    return GetUserNameByEmail(container.Resolve<IUserService>(), email);
+                }
+            }
+
+            return GetUserNameByEmail(userService, email);
+        }
+
+        /// <summary>
+        /// Gets a collection of all the users in the data source in pages of data.
+        /// </summary>
+        /// <param name="pageIndex">The index of the page of results to return. <paramref name="pageIndex" /> is zero-based.</param>
+        /// <param name="pageSize">The size of the page of results to return.</param>
+        /// <param name="totalRecords">The total number of matched users.</param>
+        /// <returns>
+        /// A <see cref="T:System.Web.Security.MembershipUserCollection" /> collection that contains a page of <paramref name="pageSize" /><see cref="T:System.Web.Security.MembershipUser" /> objects beginning at the page specified by <paramref name="pageIndex" />.
+        /// </returns>
+        public override System.Web.Security.MembershipUserCollection GetAllUsers(int pageIndex, int pageSize, out int totalRecords)
+        {
+            if (userService == null)
+            {
+                using (var container = ContextScopeProvider.CreateChildContainer())
+                {
+                    return GetAllUsers(container.Resolve<IUserService>(), pageIndex, pageSize, out totalRecords);
+                }
+            }
+
+            return GetAllUsers(userService, pageIndex, pageSize, out totalRecords);
+        }
+
+
+        /// <summary>
+        /// Gets a collection of membership users where the user name contains the specified user name to match.
+        /// </summary>
+        /// <param name="usernameToMatch">The user name to search for.</param>
+        /// <param name="pageIndex">The index of the page of results to return. <paramref name="pageIndex" /> is zero-based.</param>
+        /// <param name="pageSize">The size of the page of results to return.</param>
+        /// <param name="totalRecords">The total number of matched users.</param>
+        /// <returns>
+        /// A <see cref="T:System.Web.Security.MembershipUserCollection" /> collection that contains a page of <paramref name="pageSize" /><see cref="T:System.Web.Security.MembershipUser" /> objects beginning at the page specified by <paramref name="pageIndex" />.
+        /// </returns>
+        public override System.Web.Security.MembershipUserCollection FindUsersByName(string usernameToMatch, int pageIndex, int pageSize, out int totalRecords)
+        {
+            if (userService == null)
+            {
+                using (var container = ContextScopeProvider.CreateChildContainer())
+                {
+                    return FindUsersByName(container.Resolve<IUserService>(), usernameToMatch, pageIndex, pageSize, out totalRecords);
+                }
+            }
+
+            return FindUsersByName(userService, usernameToMatch, pageIndex, pageSize, out totalRecords);
+        }
+
+        /// <summary>
+        /// Gets a collection of membership users where the e-mail address contains the specified e-mail address to match.
+        /// </summary>
+        /// <param name="emailToMatch">The e-mail address to search for.</param>
+        /// <param name="pageIndex">The index of the page of results to return. <paramref name="pageIndex" /> is zero-based.</param>
+        /// <param name="pageSize">The size of the page of results to return.</param>
+        /// <param name="totalRecords">The total number of matched users.</param>
+        /// <returns>
+        /// A <see cref="T:System.Web.Security.MembershipUserCollection" /> collection that contains a page of <paramref name="pageSize" /><see cref="T:System.Web.Security.MembershipUser" /> objects beginning at the page specified by <paramref name="pageIndex" />.
+        /// </returns>
+        public override System.Web.Security.MembershipUserCollection FindUsersByEmail(string emailToMatch, int pageIndex, int pageSize, out int totalRecords)
+        {
+            if (userService == null)
+            {
+                using (var container = ContextScopeProvider.CreateChildContainer())
+                {
+                    return FindUsersByEmail(container.Resolve<IUserService>(), emailToMatch, pageIndex, pageSize, out totalRecords);
+                }
+            }
+
+            return FindUsersByEmail(userService, emailToMatch, pageIndex, pageSize, out totalRecords);
+        }
+
+        /// <summary>
+        /// Gets the password for the specified user name from the data source.
+        /// </summary>
+        /// <param name="username">The user to retrieve the password for.</param>
+        /// <param name="answer">The password answer for the user.</param>
+        /// <returns>
+        /// The password for the specified user name.
+        /// </returns>
+        public override string GetPassword(string username, string answer)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        /// <summary>
+        /// Gets user information from the data source based on the unique identifier for the membership user. Provides an option to update the last-activity date/time stamp for the user.
+        /// </summary>
+        /// <param name="providerUserKey">The unique identifier for the membership user to get information for.</param>
+        /// <param name="userIsOnline">true to update the last-activity date/time stamp for the user; false to return user information without updating the last-activity date/time stamp for the user.</param>
+        /// <returns>
+        /// A <see cref="T:System.Web.Security.MembershipUser" /> object populated with the specified user's information from the data source.
+        /// </returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public override System.Web.Security.MembershipUser GetUser(object providerUserKey, bool userIsOnline)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        /// <summary>
+        /// Gets information from the data source for a user. Provides an option to update the last-activity date/time stamp for the user.
+        /// </summary>
+        /// <param name="username">The name of the user to get information for.</param>
+        /// <param name="userIsOnline">true to update the last-activity date/time stamp for the user; false to return user information without updating the last-activity date/time stamp for the user.</param>
+        /// <returns>
+        /// A <see cref="T:System.Web.Security.MembershipUser" /> object populated with the specified user's information from the data source.
+        /// </returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public override System.Web.Security.MembershipUser GetUser(string username, bool userIsOnline)
         {
             throw new System.NotImplementedException();
         }
@@ -154,53 +323,6 @@ namespace BetterCms.Module.Users.Provider
         }
 
         /// <summary>
-        /// Gets a collection of membership users where the e-mail address contains the specified e-mail address to match.
-        /// </summary>
-        /// <param name="emailToMatch">The e-mail address to search for.</param>
-        /// <param name="pageIndex">The index of the page of results to return. <paramref name="pageIndex" /> is zero-based.</param>
-        /// <param name="pageSize">The size of the page of results to return.</param>
-        /// <param name="totalRecords">The total number of matched users.</param>
-        /// <returns>
-        /// A <see cref="T:System.Web.Security.MembershipUserCollection" /> collection that contains a page of <paramref name="pageSize" /><see cref="T:System.Web.Security.MembershipUser" /> objects beginning at the page specified by <paramref name="pageIndex" />.
-        /// </returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public override System.Web.Security.MembershipUserCollection FindUsersByEmail(string emailToMatch, int pageIndex, int pageSize, out int totalRecords)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        /// <summary>
-        /// Gets a collection of membership users where the user name contains the specified user name to match.
-        /// </summary>
-        /// <param name="usernameToMatch">The user name to search for.</param>
-        /// <param name="pageIndex">The index of the page of results to return. <paramref name="pageIndex" /> is zero-based.</param>
-        /// <param name="pageSize">The size of the page of results to return.</param>
-        /// <param name="totalRecords">The total number of matched users.</param>
-        /// <returns>
-        /// A <see cref="T:System.Web.Security.MembershipUserCollection" /> collection that contains a page of <paramref name="pageSize" /><see cref="T:System.Web.Security.MembershipUser" /> objects beginning at the page specified by <paramref name="pageIndex" />.
-        /// </returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public override System.Web.Security.MembershipUserCollection FindUsersByName(string usernameToMatch, int pageIndex, int pageSize, out int totalRecords)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        /// <summary>
-        /// Gets a collection of all the users in the data source in pages of data.
-        /// </summary>
-        /// <param name="pageIndex">The index of the page of results to return. <paramref name="pageIndex" /> is zero-based.</param>
-        /// <param name="pageSize">The size of the page of results to return.</param>
-        /// <param name="totalRecords">The total number of matched users.</param>
-        /// <returns>
-        /// A <see cref="T:System.Web.Security.MembershipUserCollection" /> collection that contains a page of <paramref name="pageSize" /><see cref="T:System.Web.Security.MembershipUser" /> objects beginning at the page specified by <paramref name="pageIndex" />.
-        /// </returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public override System.Web.Security.MembershipUserCollection GetAllUsers(int pageIndex, int pageSize, out int totalRecords)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        /// <summary>
         /// Gets the number of users currently accessing the application.
         /// </summary>
         /// <returns>
@@ -208,61 +330,6 @@ namespace BetterCms.Module.Users.Provider
         /// </returns>
         /// <exception cref="System.NotImplementedException"></exception>
         public override int GetNumberOfUsersOnline()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        /// <summary>
-        /// Gets the password for the specified user name from the data source.
-        /// </summary>
-        /// <param name="username">The user to retrieve the password for.</param>
-        /// <param name="answer">The password answer for the user.</param>
-        /// <returns>
-        /// The password for the specified user name.
-        /// </returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public override string GetPassword(string username, string answer)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        /// <summary>
-        /// Gets information from the data source for a user. Provides an option to update the last-activity date/time stamp for the user.
-        /// </summary>
-        /// <param name="username">The name of the user to get information for.</param>
-        /// <param name="userIsOnline">true to update the last-activity date/time stamp for the user; false to return user information without updating the last-activity date/time stamp for the user.</param>
-        /// <returns>
-        /// A <see cref="T:System.Web.Security.MembershipUser" /> object populated with the specified user's information from the data source.
-        /// </returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public override System.Web.Security.MembershipUser GetUser(string username, bool userIsOnline)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        /// <summary>
-        /// Gets user information from the data source based on the unique identifier for the membership user. Provides an option to update the last-activity date/time stamp for the user.
-        /// </summary>
-        /// <param name="providerUserKey">The unique identifier for the membership user to get information for.</param>
-        /// <param name="userIsOnline">true to update the last-activity date/time stamp for the user; false to return user information without updating the last-activity date/time stamp for the user.</param>
-        /// <returns>
-        /// A <see cref="T:System.Web.Security.MembershipUser" /> object populated with the specified user's information from the data source.
-        /// </returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public override System.Web.Security.MembershipUser GetUser(object providerUserKey, bool userIsOnline)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        /// <summary>
-        /// Gets the user name associated with the specified e-mail address.
-        /// </summary>
-        /// <param name="email">The e-mail address to search for.</param>
-        /// <returns>
-        /// The user name associated with the specified e-mail address. If no match is found, return null.
-        /// </returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public override string GetUserNameByEmail(string email)
         {
             throw new System.NotImplementedException();
         }
@@ -408,54 +475,70 @@ namespace BetterCms.Module.Users.Provider
             throw new System.NotImplementedException();
         }
 
-        /// <summary>
-        /// Validates the user.
-        /// </summary>
-        /// <param name="repository">The repository.</param>
-        /// <param name="authenticationService">The authentication service.</param>
-        /// <param name="username">The username.</param>
-        /// <param name="password">The password.</param>
-        /// <returns><c>true</c>, if username and password are valid</returns>
-        private bool ValidateUser(IRepository repository, IAuthenticationService authenticationService, string username, string password)
+        private static bool ValidateUser(IAuthenticationService authenticationService, string username, string password)
         {
-            var user = repository
-                .AsQueryable<Models.User>(u => u.UserName == username)
-                .Select(u => new
-                    {
-                        Salt = u.Salt,
-                        Password = u.Password
-                    })
-                .FirstOrDefault();
-
-            if (user != null)
-            {
-                return CheckPassword(authenticationService, username, password, user.Salt);
-            }
-
-            return false;
+            return authenticationService.ValidateUser(username, password);
         }
 
-        /// <summary>
-        /// Checks the password.
-        /// </summary>
-        /// <param name="authenticationService">The authentication service.</param>
-        /// <param name="password">The password.</param>
-        /// <param name="dbpassword">The dbpassword.</param>
-        /// <param name="salt">The salt.</param>
-        /// <returns>
-        ///   <c>true</c>, if passwords are equal
-        /// </returns>
-        private bool CheckPassword(IAuthenticationService authenticationService, string password, string dbpassword, string salt)
+        private static bool ChangePassword(IAuthenticationService authenticationService, IUnitOfWork unitOfWork, string username, string oldPassword, string newPassword)
         {
-            string pass1 = authenticationService.CreatePasswordHash(password, salt);
-            string pass2 = dbpassword;
+            unitOfWork.BeginTransaction();
+            var success = authenticationService.ChangePassword(username, oldPassword, newPassword);
+            unitOfWork.Commit();
 
-            if (pass1 == pass2)
-            {
-                return true;
-            }
+            return success;
+        }
 
-            return false;
+        private System.Web.Security.MembershipUserCollection FindUsersByEmail(
+            IUserService service, string emailToMatch, int pageIndex, int pageSize, out int totalRecords)
+        {
+            var users = service.FindUsersByEmail(emailToMatch, pageIndex, pageSize, out totalRecords);
+
+            return ToMembershipUserCollection(users);
+        }
+
+        private System.Web.Security.MembershipUserCollection FindUsersByName(
+            IUserService service, string usernameToMatch, int pageIndex, int pageSize, out int totalRecords)
+        {
+            var users = service.FindUsersByName(usernameToMatch, pageIndex, pageSize, out totalRecords);
+
+            return ToMembershipUserCollection(users);
+        }
+
+        private System.Web.Security.MembershipUserCollection GetAllUsers(IUserService service, int pageIndex, int pageSize, out int totalRecords)
+        {
+            var users = service.GetAllUsers(pageIndex, pageSize, out totalRecords);
+
+            return ToMembershipUserCollection(users);
+        }
+
+        private static string GetUserNameByEmail(IUserService userService, string email)
+        {
+            return userService.GetUserNameByEmail(email);
+        }
+
+        private System.Web.Security.MembershipUserCollection ToMembershipUserCollection(IEnumerable<Models.User> users)
+        {
+            var mUsers = users.Select(user =>
+                new System.Web.Security.MembershipUser(
+                    membershipName ?? Name,
+                    user.UserName,
+                    user.Id,
+                    user.Email,
+                    null,
+                    null,
+                    true,
+                    false,
+                    user.CreatedOn,
+                    System.DateTime.MinValue,
+                    System.DateTime.MinValue,
+                    System.DateTime.MinValue,
+                    System.DateTime.MinValue)).ToList();
+
+            var collection = new System.Web.Security.MembershipUserCollection();
+            mUsers.ForEach(collection.Add);
+
+            return collection;
         }
     }
 }

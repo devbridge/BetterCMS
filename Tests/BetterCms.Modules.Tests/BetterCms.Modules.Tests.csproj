@@ -216,6 +216,7 @@
     <Compile Include="TestBase.cs" />
     <Compile Include="Common\ViewModelToStringTest.cs" />
     <Compile Include="Users\ModelTests\MapTests\RoleMapTest.cs" />
+    <Compile Include="Users\ProvidersTests\MembershipProviderTests.cs" />
     <Compile Include="Users\ProvidersTests\RoleProviderTests.cs" />
     <Compile Include="WindowsAzureStorage\MimeTypeUtilityTest.cs" />
     <Compile Include="WindowsAzureStorage\WindowsAzureStorageServiceTest.cs" />

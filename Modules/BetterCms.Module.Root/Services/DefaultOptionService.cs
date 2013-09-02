@@ -277,6 +277,12 @@ namespace BetterCms.Module.Root.Services
         {
             if (string.IsNullOrEmpty(value))
             {
+                if (type == OptionType.Boolean)
+                {
+                    // Return false for booleans, because cannot be null.
+                    return false;
+                }
+
                 return value;
             }
 
