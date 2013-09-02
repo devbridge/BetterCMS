@@ -106,7 +106,6 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 item = self.items()[i];
 
                 if (item.isActive()) {
-                    console.log('selecting an item');
                     item.isSelected = true;
                 }
             }
@@ -117,11 +116,9 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 dataKey = 'bcmsEventsAttached';
 
             if (!datePickerBox.data(dataKey)) {
-                console.log('has not yet datepicker');
                 datePickerBox.data(dataKey, true);
 
                 $(selectors.datePickerBox).on('click', function () {
-                    console.log('Picker DIV mouse downed');
                     onDatePickerBoxFocused(self);
                     return false;
                 });
@@ -231,16 +228,13 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                         datePickers = row.find(selectors.datePickers);
 
                     if (!datePickers.hasClass(classes.hasDatePicker)) {
-                        console.log('init element date picker');
                         datePickers.initializeDatepicker(globalization.datePickerTooltipTitle, datePickerOpts);
 
                         datePickerTrigger = row.find(selectors.datePickerTrigger);
                         datePickerTrigger.on('click', function (event) {
-                            console.log('Clicked element');
                             self.onItemSelect(self, event);
                         });
                         datePickerTrigger.on('focus', function (event) {
-                            console.log('Focused element');
                             self.onItemSelect(self, event);
                         });
                     }
