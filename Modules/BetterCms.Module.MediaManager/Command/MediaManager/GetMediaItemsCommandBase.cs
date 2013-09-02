@@ -27,6 +27,14 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
         public IMediaFileService FileService { get; set; }
 
         /// <summary>
+        /// Gets or sets the Better CMS configuration.
+        /// </summary>
+        /// <value>
+        /// The configuration.
+        /// </value>
+        public ICmsConfiguration Configuration { get; set; }
+
+        /// <summary>
         /// Gets the type of the current media items.
         /// </summary>
         /// <value>
@@ -96,6 +104,17 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
         }
 
         /// <summary>
+        /// Gets the denied medias for the current principal.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        protected virtual IEnumerable<Guid> GetDeniedMedias(MediaManagerViewModel request)
+        {
+            return null;
+        }
+
+
+        /// <summary>
         /// Gets all items list.
         /// </summary>
         /// <param name="request">The request.</param>
@@ -151,6 +170,16 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             else
             {
                 query = query.Where(m => m.Folder == null);
+            }
+
+            if (Configuration.Security.AccessControlEnabled)
+            {
+                IEnumerable<Guid> deniedMedias = GetDeniedMedias(request);
+                foreach (var deniedFileId in deniedMedias)
+                {
+                    var id = deniedFileId;
+                    query = query.Where(f => f.Id != id);
+                }
             }
 
             return removeEmptyFolders
