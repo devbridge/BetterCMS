@@ -154,11 +154,15 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 optionsContainer.hideLoading();
                 messages.refreshBox(mainContainer, json);
                 if (json.Success) {
-                    // Remove items with no value
+                    // Remove unchanged items
                     for (i = 0, length = items().length; i < length; i++) {
                         item = items()[i];
-                        if (!item.value() && item.canEditOption === false) {
+                        if (item.useDefaultValue() === true && item.canEditOption() === false) {
                             itemsToRemove.push(item);
+                        } else {
+                            item.defaultValue('');
+                            item.canEditOption(true);
+                            item.useDefaultValue(false);
                         }
                     }
                     for (i = 0, length = itemsToRemove.length; i < length; i++) {
@@ -173,10 +177,15 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                         for (j = 0; j < items().length; j++) {
                             item = items()[j];
                             if (item.key() == json.Data[i].OptionKey) {
-                                
-                                item.canEditOption = (item.type() != json.Data[i].Type);
+
+                                var canEditOption = item.type() != json.Data[i].Type;
+                                item.canEditOption(canEditOption);
                                 item.changeFieldsEditing();
-                                
+
+                                if (!canEditOption) {
+                                    item.defaultValue(json.Data[i].OptionDefaultValue);
+                                }
+
                                 itemExists = true;
                                 break;
                             }
@@ -189,6 +198,12 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
 
                         item = optionListViewModel.createItem(json.Data[i]);
                         optionListViewModel.items.push(item);
+                    }
+                    
+                    // Set fields editings
+                    for (i = 0, length = items().length; i < length; i++) {
+                        item = items()[i];
+                        item.changeFieldsEditing();
                     }
                 }
             };

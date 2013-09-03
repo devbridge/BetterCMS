@@ -89,7 +89,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             };
 
             OptionValuesListViewModel.prototype.onAfterNewItemAdded = function (item) {
-                if (item.canEditOption !== false && item.key.domElement) {
+                if (item.canEditOption() !== false && item.key.domElement) {
                     $(item.key.domElement).focus();
                 }
             };
@@ -147,6 +147,8 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.defaultValue = ko.observable().extend({ optionValue: { self: self } }).extend({ notify: 'always' });
                 self.value = ko.observable().extend({ optionValue: { self: self } }).extend({ notify: 'always' });
                 self.type = ko.observable();
+                self.useDefaultValue = ko.observable(false);
+                self.canEditOption = ko.observable(false);
 
                 // Additional values
                 self.typeName = ko.observable();
@@ -160,8 +162,8 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.optionTypes.push({ id: optionTypes.floatType, name: globalization.optionTypeFloat });
                 self.optionTypes.push({ id: optionTypes.dateTimeType, name: globalization.optionTypeDateTime });
                 self.optionTypes.push({ id: optionTypes.boolType, name: globalization.optionTypeBoolean });
-            
-                self.registerFields(self.key, self.defaultValue, self.value, self.type);
+
+                self.registerFields(self.key, self.defaultValue, self.value, self.type, self.useDefaultValue);
 
                 self.getOptionTypeName = function() {
                     var i,
@@ -239,13 +241,20 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                         });
                     }
                 };
-                
+
+                self.useDefaultValue.subscribe(function(newValue) {
+                    if (newValue) {
+                        self.value(self.defaultValue());
+                    }
+                });
+
                 // Set values
                 self.key(item.OptionKey);
                 self.defaultValue(item.OptionDefaultValue);
                 self.value(item.OptionValue);
                 self.type(item.Type);
-                self.canEditOption = item.CanEditOption;
+                self.canEditOption(item.CanEditOption !== false);
+                self.useDefaultValue(!self.canEditOption() && item.UseDefaultValue === true);
                 self.changeFieldsEditing();
             };
 
@@ -295,12 +304,20 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             };
 
             OptionValueViewModel.prototype.changeFieldsEditing = function () {
-                var disableEditing = this.canEditOption === false;
+                var disableEditing = this.canEditOption() === false;
                 
                 changeFieldEditing(this.key, disableEditing);
                 changeFieldEditing(this.type, disableEditing);
 
                 this.deletingIsDisabled(disableEditing);
+            };
+
+            OptionValueViewModel.prototype.editItem = function () {
+                _super.prototype.editItem.call(this);
+
+                if (!this.editingIsDisabled() && this.useDefaultValue() && this.useDefaultValue.domElement) {
+                    $(this.useDefaultValue.domElement).focus();
+                }
             };
 
             return OptionValueViewModel;

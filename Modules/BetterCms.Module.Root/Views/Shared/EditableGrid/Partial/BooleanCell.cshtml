@@ -1,0 +1,23 @@
+﻿@model BetterCms.Module.Root.Mvc.Grids.EditableGridColumn
+
+<td @Html.Raw(Model.Attributes)>
+    @if (Model.CanBeEdited)
+    {
+        <!-- ko if: isActive() -->
+        <input type="checkbox" class="bcms-checkbox-holder bcms-pointer" data-bind="
+            checked: @(Model.ValueBind),
+            click: onItemSelect,
+            event: {blur: onBlurField, focus: onItemSelect},
+            enterPress: onSave, 
+            afterRender: initInput($element, @Model.ValueBind),
+            escPress: onCancelEdit
+            @(Model.AutoFocus ? ", hasfocus: isActive() && hasFocus" : "") " />
+        <!-- /ko -->
+        <!-- ko ifnot: isActive() -->
+    }
+    <input type="checkbox" class="bcms-checkbox-holder" data-bind="checked: @(Model.ValueBind)(), click: onOpen" />
+    @if (Model.CanBeEdited)
+    {
+        <!-- /ko -->
+    }
+</td>

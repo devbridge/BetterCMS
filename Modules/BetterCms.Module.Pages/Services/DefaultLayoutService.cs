@@ -78,7 +78,8 @@ namespace BetterCms.Module.Pages.Services
                 {
                     OptionKey = o.Key,
                     Type = o.Type,
-                    OptionDefaultValue = o.DefaultValue
+                    OptionDefaultValue = o.DefaultValue,
+                    UseDefaultValue = true
                 })
                 .ToList();
 

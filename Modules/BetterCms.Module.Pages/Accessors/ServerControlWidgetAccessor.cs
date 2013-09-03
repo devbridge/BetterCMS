@@ -51,7 +51,7 @@ namespace BetterCms.Module.Pages.Accessors
                     {
                         var widgetModel = new RenderWidgetViewModel
                             {
-                                Page = (IPage)html.ViewData.Model,
+                                Page = (IRenderPage)html.ViewData.Model,
                                 Widget = Content,
                                 Options = Options
                             };
@@ -66,12 +66,6 @@ namespace BetterCms.Module.Pages.Accessors
                                     viewData[option.Key] = option.Value;
                                 }
                             }
-                        }
-                        
-                        var pageModel = html.ViewData.Model as RenderPageViewModel;
-                        if (pageModel != null)
-                        {
-                            widgetModel.PageOptions = pageModel.Options;
                         }
 
                         newViewContext.ViewData.Model = widgetModel;

@@ -697,13 +697,13 @@
     <value>Option Name</value>
   </data>
   <data name="EditOptionsValues_OptionDefaultValueColumn" xml:space="preserve">
-    <value>Default Option Value</value>
+    <value>Default Value</value>
   </data>
   <data name="EditOptionsValues_OptionKeyColumn" xml:space="preserve">
-    <value>Option Name</value>
+    <value>Name</value>
   </data>
   <data name="EditOptionsValues_OptionValueColumn" xml:space="preserve">
-    <value>Option Value</value>
+    <value>Value</value>
   </data>
   <data name="PageWidgetOptions_Dialog_Title" xml:space="preserve">
     <value>Edit page widget options</value>
@@ -1112,5 +1112,8 @@
   </data>
   <data name="AddNewPage_UserAccess_Tooltip_Description" xml:space="preserve">
     <value>Set users and/or roles, which can later read / modify created page.</value>
+  </data>
+  <data name="EditOptionsValues_UseDefaultValueColumn" xml:space="preserve">
+    <value>Use default</value>
   </data>
 </root>

@@ -29,6 +29,11 @@
         /// The editable grid drop down cell template.
         /// </summary>
         public const string EditableGridDropDownCellTemplate = "~/Areas/bcms-root/Views/Shared/EditableGrid/Partial/DropDownCell.cshtml";
+        
+        /// <summary>
+        /// The editable grid boolean cell template.
+        /// </summary>
+        public const string EditableGridBooleanCellTemplate = "~/Areas/bcms-root/Views/Shared/EditableGrid/Partial/BooleanCell.cshtml";
 
         /// <summary>
         /// The editable grid header template.

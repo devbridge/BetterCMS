@@ -19,6 +19,14 @@
         public bool CanEditOption { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to use default value.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if use default value; otherwise, <c>false</c>.
+        /// </value>
+        public bool UseDefaultValue { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

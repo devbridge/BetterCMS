@@ -203,6 +203,7 @@
     <Compile Include="Mvc\CommandBase.cs" />
     <Compile Include="Mvc\CommandHandler.cs" />
     <Compile Include="Mvc\Converters.cs" />
+    <Compile Include="Mvc\Grids\EditableGridBooleanColumn.cs" />
     <Compile Include="Mvc\Grids\EditableGridDropDownColumn.cs" />
     <Compile Include="Mvc\Grids\Extensions\PagingExtensions.cs" />
     <Compile Include="Mvc\Grids\Extensions\QueryableExtensions.cs" />
@@ -777,6 +778,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\EditableGrid\Grid.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\BooleanCell.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\Cell.cshtml" />
