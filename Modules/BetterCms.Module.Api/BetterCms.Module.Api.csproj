@@ -211,6 +211,7 @@
     <Compile Include="Operations\Users\UsersApiConstants.cs" />
     <Compile Include="Operations\Users\Users\DefaultUsersService.cs" />
     <Compile Include="Operations\Users\Users\User\DefaultUserService.cs" />
+    <Compile Include="Operations\Users\Users\User\Validate\DefaultValidateUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

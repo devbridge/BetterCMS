@@ -257,6 +257,7 @@
     <Compile Include="Operations\Users\Roles\Role\IRoleService.cs" />
     <Compile Include="Operations\Users\Roles\Role\RoleModel.cs" />
     <Compile Include="Operations\Users\IUsersApiOperations.cs" />
+    <Compile Include="Operations\Users\Users\GetUsersModel.cs" />
     <Compile Include="Operations\Users\Users\GetUsersRequest.cs" />
     <Compile Include="Operations\Users\Users\GetUsersResponse.cs" />
     <Compile Include="Operations\Users\Users\IUsersService.cs" />
@@ -268,6 +269,10 @@
     <Compile Include="Operations\Users\Users\User\IUserService.cs" />
     <Compile Include="Operations\Users\Users\User\RoleModel.cs" />
     <Compile Include="Operations\Users\Users\User\UserModel.cs" />
+    <Compile Include="Operations\Users\Users\User\ValidateUser\ValidateUserModel.cs" />
+    <Compile Include="Operations\Users\Users\User\ValidateUser\ValidateUserRequest.cs" />
+    <Compile Include="Operations\Users\Users\User\ValidateUser\ValidateUserResponse.cs" />
+    <Compile Include="Operations\Users\Users\User\ValidateUser\IValidateUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Operations\Root\Categories\CategoryModel.cs" />
     <Compile Include="Operations\Root\Categories\Category\GetCategoryRequest.cs" />

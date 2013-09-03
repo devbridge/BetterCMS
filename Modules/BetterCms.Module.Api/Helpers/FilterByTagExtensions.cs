@@ -4,7 +4,6 @@ using System.Linq.Expressions;
 
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Infrastructure.Enums;
-using BetterCms.Module.Api.Operations;
 
 using ServiceStack.OrmLite;
 

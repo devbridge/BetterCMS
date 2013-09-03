@@ -65,6 +65,7 @@ namespace BetterCms.Test.Module.Api
                 Assert.IsNotNull(api.Users.Users);
                 Assert.IsNotNull(api.Users.Role);
                 Assert.IsNotNull(api.Users.Roles);
+                Assert.IsNotNull(api.Users.User.Validate);
             }
 
             Assert.IsNull(apiContainer.Scope);

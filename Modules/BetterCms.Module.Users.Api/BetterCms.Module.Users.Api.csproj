@@ -108,6 +108,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\ServiceStack.Text.3.9.56\lib\net35\ServiceStack.Text.dll</HintPath>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System" />
@@ -125,6 +126,7 @@
     <Compile Include="Operations\Users\Roles\Role\RoleService.cs" />
     <Compile Include="Operations\Users\Users\UsersService.cs" />
     <Compile Include="Operations\Users\Users\User\UserService.cs" />
+    <Compile Include="Operations\Users\Users\User\Validate\ValidateUserService.cs" />
     <Compile Include="UsersApiModuleDescriptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
