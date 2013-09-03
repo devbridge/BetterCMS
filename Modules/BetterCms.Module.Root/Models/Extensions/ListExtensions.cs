@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+using BetterCms.Core.DataContracts;
+
 namespace BetterCms.Module.Root.Models.Extensions
 {
     public static class ListExtensions
@@ -22,6 +24,11 @@ namespace BetterCms.Module.Root.Models.Extensions
                     }
                 }
             }
-        }        
+        }  
+     
+        public static void RemoveDuplicateEntities<T>(this IList<T> list) where T : IEntity
+        {
+            list.RemoveDuplicates((a, b) => a.Id == b.Id ? 0 : -1);
+        }
     }
 }
