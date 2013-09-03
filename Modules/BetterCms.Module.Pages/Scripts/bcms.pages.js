@@ -472,7 +472,9 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
         container.find(selectors.siteSettingsRowCells).on('click', function () {
             var editButton = $(this).parents(selectors.siteSettingsPageParentRow).find(selectors.siteSettingsPageEditButton);
-            page.editSiteSettingsPage(editButton, container);
+            if (editButton.length > 0) {
+                page.editSiteSettingsPage(editButton, container);
+            }
         });
 
         container.find(selectors.siteSettingPageTitleCell).on('click', function (event) {

@@ -53,6 +53,8 @@ using BetterCms.Module.Api.Operations.Users.Roles;
 using BetterCms.Module.Api.Operations.Users.Roles.Role;
 using BetterCms.Module.Api.Operations.Users.Users;
 using BetterCms.Module.Api.Operations.Users.Users.User;
+using BetterCms.Module.Api.Operations.Users.Users.User.Validate;
+using BetterCms.Module.Api.Operations.Users.Users.User.ValidateUser;
 
 using ContentService = BetterCms.Module.Api.Operations.Pages.Contents.Content.ContentService;
 
@@ -176,6 +178,7 @@ namespace BetterCms.Module.Api
             containerBuilder.RegisterType<DefaultUsersApiOperations>().As<IUsersApiOperations>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<DefaultUsersService>().As<IUsersService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<DefaultUserService>().As<IUserService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterType<DefaultValidateUserService>().As<IValidateUserService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<DefaultRolesService>().As<IRolesService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<DefaultRoleService>().As<IRoleService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
         }

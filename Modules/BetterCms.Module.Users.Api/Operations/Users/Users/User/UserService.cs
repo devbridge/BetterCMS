@@ -3,6 +3,7 @@
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.Api.Operations.Users.Users.User;
+using BetterCms.Module.Api.Operations.Users.Users.User.ValidateUser;
 
 using ServiceStack.ServiceInterface;
 
@@ -11,10 +12,13 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users.User
     public class UserService : Service, IUserService
     {
         private readonly IRepository repository;
+        
+        private readonly IValidateUserService validateUserService;
 
-        public UserService(IRepository repository)
+        public UserService(IRepository repository, IValidateUserService validateUserService)
         {
             this.repository = repository;
+            this.validateUserService = validateUserService;
         }
 
         public GetUserResponse Get(GetUserRequest request)
@@ -75,6 +79,11 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users.User
             }
 
             return response;
+        }
+
+        ValidateUserResponse IUserService.Validate(ValidateUserRequest request)
+        {
+            return validateUserService.Get(request);
         }
     }
 }
