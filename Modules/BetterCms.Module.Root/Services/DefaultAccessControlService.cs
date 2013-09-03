@@ -73,7 +73,7 @@ namespace BetterCms.Module.Root.Services
 
             return (AccessLevel)accessLevel;
         }
-       
+
         /// <summary>
         /// Updates the access control.
         /// </summary>
@@ -81,12 +81,17 @@ namespace BetterCms.Module.Root.Services
         /// <param name="updatedRules">The user access list.</param>
         public void UpdateAccessControl<TAccessSecuredObject>(TAccessSecuredObject securedObject, IList<IAccessRule> updatedRules) where TAccessSecuredObject : IAccessSecuredObject
         {
+            var accessRulesEquals = new Func<IAccessRule, IAccessRule, bool>((a, b) =>
+                {
+                    return a.Identity.Equals(b.Identity, StringComparison.OrdinalIgnoreCase) && a.IsForRole == b.IsForRole;
+                });
+
             var entitiesToDelete = securedObject.AccessRules != null
-                                       ? securedObject.AccessRules.Where(x => updatedRules.All(model => model.Identity != x.Identity && model.IsForRole == x.IsForRole)).ToList()
+                                       ? securedObject.AccessRules.Where(storedRule => updatedRules.All(updatedRule => !accessRulesEquals(updatedRule, storedRule))).ToList()
                                        : new List<IAccessRule>();
 
             var entitesToAdd = updatedRules
-                                  .Where(x => securedObject.AccessRules == null || securedObject.AccessRules.All(entity => entity.Identity != x.Identity && entity.IsForRole == x.IsForRole))
+                                  .Where(updatedRule => securedObject.AccessRules == null || securedObject.AccessRules.All(storedRule => !accessRulesEquals(updatedRule, storedRule)))
                                   .Select(f => new AccessRule
                                                    {
                                                        Identity = f.Identity,
@@ -237,7 +242,7 @@ namespace BetterCms.Module.Root.Services
                 foreach (var entity in existingAccessRules)
                 {
                     // Find access rule object with the same Role and different AccessLevel.
-                    var rule = updatedRules.FirstOrDefault(x => x.Identity == entity.Identity && x.AccessLevel != entity.AccessLevel);
+                    var rule = updatedRules.FirstOrDefault(x => x.Identity == entity.Identity && x.IsForRole == entity.IsForRole && x.AccessLevel != entity.AccessLevel);
 
                     // If found, update.
                     if (rule != null)

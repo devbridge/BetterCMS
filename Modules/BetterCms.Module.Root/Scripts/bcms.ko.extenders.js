@@ -57,9 +57,9 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], funct
     };
 
     /**
-    * Extend knockout handlers: add value with bolean value fix
+    * Extend knockout handlers: add value with boolean value fix.
     */
-    ko.bindingHandlers.valueExt = {
+    ko.bindingHandlers.valueBinder = {
         update: function (element, valueAccessor) {
             if ($.isFunction(valueAccessor)) {
                 var observable = valueAccessor();

@@ -175,10 +175,13 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             if (Configuration.Security.AccessControlEnabled)
             {
                 IEnumerable<Guid> deniedMedias = GetDeniedMedias(request);
-                foreach (var deniedFileId in deniedMedias)
+                if (deniedMedias != null)
                 {
-                    var id = deniedFileId;
-                    query = query.Where(f => f.Id != id);
+                    foreach (var deniedFileId in deniedMedias)
+                    {
+                        var id = deniedFileId;
+                        query = query.Where(f => f.Id != id);
+                    }
                 }
             }
 
