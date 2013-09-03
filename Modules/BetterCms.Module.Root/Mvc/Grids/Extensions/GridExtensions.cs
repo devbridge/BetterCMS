@@ -17,26 +17,9 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
     {
         public static IGridColumn<T> EmptyColumn<T>(this ColumnBuilder<T> builder) where T : class
         {
-            return builder.For(f => string.Empty)
+            return builder.For(f => "&nbsp;")
                 .Named("&nbsp;")
                 .Sortable(false)
-                .Encode(false);
-        }
-
-        public static IGridColumn<T> ColumnHeaderForSortableList<T>(this ColumnBuilder<T> builder, string title, string sortColumnName) where T : class
-        {
-            return builder.For(f => string.Empty)
-                .Named(title)
-                .SortColumnName(sortColumnName)
-                .Encode(false);
-        }
-
-        public static IGridColumn<T> ColumnHeaderForSortableList<T>(this ColumnBuilder<T> builder, string title, string sortColumnName, IDictionary<string, object> attributes) where T : class
-        {
-            return builder.For(f => string.Empty)
-                .Named(title)
-                .SortColumnName(sortColumnName)
-                .HeaderAttributes(attributes)
                 .Encode(false);
         }
 
