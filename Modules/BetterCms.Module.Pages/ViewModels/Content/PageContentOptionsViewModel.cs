@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Module.Pages.ViewModels.Option;
 using BetterCms.Module.Root.ViewModels.Option;
 
 namespace BetterCms.Module.Pages.ViewModels.Content
@@ -10,7 +9,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
     /// <summary>
     /// Edit page content options view model.
     /// </summary>
-    public class PageContentOptionsViewModel : IOptionValuesContainer
+    public class PageContentOptionsViewModel
     {      
         /// <summary>
         /// Gets or sets the list of page content options.

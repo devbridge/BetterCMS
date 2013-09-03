@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
-using BetterCms.Core.Security;
+
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Mvc.Attributes;
-using BetterCms.Module.Pages.ViewModels.Option;
+
 using BetterCms.Module.Root.ViewModels.Option;
 using BetterCms.Module.Root.ViewModels.Security;
 
@@ -15,7 +15,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
     /// <summary>
     /// Add new page view model.
     /// </summary>
-    public class AddNewPageViewModel : IOptionValuesContainer
+    public class AddNewPageViewModel
     {
         /// <summary>
         /// Gets or sets the page title.

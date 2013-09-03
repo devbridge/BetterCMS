@@ -277,8 +277,6 @@
     <Compile Include="ViewModels\Filter\PagesFilter.cs" />
     <Compile Include="ViewModels\History\ContentHistoryItem.cs" />
     <Compile Include="ViewModels\History\ContentHistoryViewModel.cs" />
-    <Compile Include="ViewModels\Option\IOptionValuesContainer.cs" />
-    <Compile Include="ViewModels\Option\IOptionsContainer.cs" />
     <Compile Include="ViewModels\Page\RenderPageCategoryViewModel.cs" />
     <Compile Include="ViewModels\Page\RenderPageImageViewModel.cs" />
     <Compile Include="ViewModels\Page\RenderPagePropertiesViewModel.cs" />
