@@ -32,21 +32,21 @@
                         HeaderAttributes = "style=\"width: 130px;\"",
                         CellView = RootModuleConstants.EditableOptionValueCellTemplate
                     },
-                                        
-                new EditableGridColumn(PagesGlobalization.EditOptionsValues_OptionValueColumn, null, "value")
-                    {
-                        HeaderAttributes = "style=\"width: 200px;\"",
-                        HiddenFieldName = "OptionValues[{0}].OptionValue",
-                        CellView = RootModuleConstants.EditableOptionValueCellTemplate,
-                        AutoFocus = true,
-                    },
-                
+
                 new EditableGridDropDownColumn(PagesGlobalization.EditOptionsValues_OptionTypeColumn, null, "type")
                     {
                         OptionsBind = "optionTypes",
                         ValueTextBind = "typeName",
                         HiddenFieldName = "OptionValues[{0}].Type",
                         HeaderAttributes = "style=\"width: 130px;\"",
+                    },
+                                                            
+                new EditableGridColumn(PagesGlobalization.EditOptionsValues_OptionValueColumn, null, "value")
+                    {
+                        HeaderAttributes = "style=\"width: 200px;\"",
+                        HiddenFieldName = "OptionValues[{0}].OptionValue",
+                        CellView = RootModuleConstants.EditableOptionValueCellTemplate,
+                        AutoFocus = true,
                     },
             }
     };

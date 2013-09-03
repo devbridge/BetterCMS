@@ -3,11 +3,11 @@
 
 @model EditableGridColumn
 
-<!-- ko if: canEditOption -->
+<!-- ko if: canEditOption() -->
     <td>&nbsp;</td>
 <!-- /ko -->
 
-<!-- ko ifnot: canEditOption -->
+<!-- ko ifnot: canEditOption() -->
     @Html.Partial(RootModuleConstants.EditableGridBooleanCellTemplate, new EditableGridBooleanColumn(Model.HeaderTitle, Model.SortColumn, Model.ValueBind)
                                                                             {
                                                                                 HiddenFieldName = Model.HiddenFieldName,
