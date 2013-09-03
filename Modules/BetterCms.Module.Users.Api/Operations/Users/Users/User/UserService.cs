@@ -81,9 +81,9 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users.User
             return response;
         }
 
-        IValidateUserService IUserService.Validate
+        ValidateUserResponse IUserService.Validate(ValidateUserRequest request)
         {
-            get { return validateUserService; }
+            return validateUserService.Get(request);
         }
     }
 }

@@ -6,6 +6,6 @@ namespace BetterCms.Module.Api.Operations.Users.Users.User
     {
         GetUserResponse Get(GetUserRequest request);
 
-        IValidateUserService Validate { get; }
+        ValidateUserResponse Validate(ValidateUserRequest request);
     }
 }

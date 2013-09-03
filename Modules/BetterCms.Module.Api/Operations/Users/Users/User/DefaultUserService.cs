@@ -17,12 +17,9 @@ namespace BetterCms.Module.Api.Operations.Users.Users.User
             throw new CmsException(UsersApiConstants.UsersApiHasNoImplementationMessage);
         }
 
-        IValidateUserService IUserService.Validate
+        ValidateUserResponse IUserService.Validate(ValidateUserRequest request)
         {
-            get
-            {
-                return validateUserService;
-            }
+            return validateUserService.Get(request);
         }
     }
 }
