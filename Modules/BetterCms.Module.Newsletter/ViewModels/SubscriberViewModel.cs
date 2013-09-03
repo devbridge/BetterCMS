@@ -2,14 +2,16 @@
 using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
+
 using BetterCms.Module.Newsletter.Content.Resources;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc.Grids;
+using BetterCms.Module.Root.ViewModels.Cms;
 
 namespace BetterCms.Module.Newsletter.ViewModels
 {
-    public class SubscriberViewModel : IEditableGridItem
+    public class SubscriberViewModel : RenderWidgetViewModel, IEditableGridItem
     {
         /// <summary>
         /// Gets or sets the author id.
