@@ -121,6 +121,7 @@
     </Compile>
     <Compile Include="DataContracts\IDeleteableEntity.cs" />
     <Compile Include="DataContracts\IOptionValue.cs" />
+    <Compile Include="DataContracts\IRenderPage.cs" />
     <Compile Include="Events\EventBase.cs" />
     <Compile Include="Events\CoreEvents.cs" />
     <Compile Include="Events\SingleItemEventArgs.cs" />

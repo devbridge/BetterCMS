@@ -22,10 +22,10 @@ else
             </p>
         }
     }
-    
-    if (Model.PageOptions != null)
+
+    if (Model.Page != null && Model.Page.Options != null)
     {
-        foreach (var option in Model.PageOptions)
+        foreach (var option in Model.Page.Options)
         {
             <p>
                 <strong>Page Option "@option.Key" Type:</strong> @(option.Value != null ? option.Value.GetType().ToString() : string.Empty)
