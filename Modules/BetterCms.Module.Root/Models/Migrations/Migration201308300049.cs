@@ -5,20 +5,20 @@ using FluentMigrator;
 
 namespace BetterCms.Module.Root.Models.Migrations
 {
-    [Migration(2013082921250)]
-    public class Migration2013082921250 : DefaultMigration
+    [Migration(201308300049)]
+    public class Migration201308300049 : DefaultMigration
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Migration2013082921250"/> class.
+        /// Initializes a new instance of the <see cref="Migration201308300049"/> class.
         /// </summary>
-        public Migration2013082921250()
+        public Migration201308300049()
             : base(RootModuleDescriptor.ModuleName)
         {
         }
 
         public override void Up()
         {
-            Alter.Table("AccessRules").InSchema(SchemaName).AddColumn("IsForRole").AsBoolean().NotNullable().WithDefaultValue(true);
+            Alter.Table("AccessRules").InSchema(SchemaName).AlterColumn("Identity").AsString(MaxLength.Max).NotNullable();
         }       
     }
 }

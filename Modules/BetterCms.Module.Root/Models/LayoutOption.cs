@@ -9,6 +9,11 @@ namespace BetterCms.Module.Root.Models
     [Serializable]
     public class LayoutOption : EquatableEntity<LayoutOption>, IOption
     {
+        public LayoutOption()
+        {
+            IsDeletable = false;
+        }
+
         public virtual Layout Layout { get; set; }
 
         public virtual string Key { get; set; }
@@ -16,6 +21,8 @@ namespace BetterCms.Module.Root.Models
         public virtual OptionType Type { get; set; }
 
         public virtual string DefaultValue { get; set; }
+        
+        public virtual bool IsDeletable { get; set; }
 
         string IOption.Value
         {

@@ -127,6 +127,7 @@
     </Compile>
     <Compile Include="Controllers\SubscriberController.cs" />
     <Compile Include="Exceptions\UniqueSubscriberException.cs" />
+    <Compile Include="Models\Migrations\Migration201309040831.cs" />
     <Compile Include="Models\Migrations\Migration201308301600.cs" />
     <Compile Include="Models\Migrations\Migration201305231541.cs">
       <SubType>Code</SubType>
@@ -170,6 +171,7 @@
   <ItemGroup>
     <Content Include="BuildConfiguration.xml" />
     <EmbeddedResource Include="Models\Migrations\Migration201308301600.sqlserver.sql" />
+    <EmbeddedResource Include="Models\Migrations\Migration201309040831.sqlserver.sql" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>

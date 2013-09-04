@@ -160,8 +160,9 @@
     <Compile Include="Models\Extensions\ListExtensions.cs" />
     <Compile Include="Models\Maps\AccessRuleMap.cs" />
     <Compile Include="Models\Maps\PageOptionMap.cs" />
-    <Compile Include="Models\Migrations\Migration2013083000490.cs" />
-    <Compile Include="Models\Migrations\Migration2013082921250.cs" />
+    <Compile Include="Models\Migrations\Migration201309040830.cs" />
+    <Compile Include="Models\Migrations\Migration201308300049.cs" />
+    <Compile Include="Models\Migrations\Migration201308292125.cs" />
     <Compile Include="Models\Migrations\Migration201308272137.cs" />
     <Compile Include="Models\Migrations\Migration201308252344.cs" />
     <Compile Include="Models\Migrations\Migration201308211600.cs" />
