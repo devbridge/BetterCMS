@@ -1375,7 +1375,7 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Current storage sevice doesn&apos;t support token based security. Change storage configuration or all the files will be uploaded as unsecured..
+        ///   Looks up a localized string similar to Current storage service doesn&apos;t support token based security. Change storage configuration or all the files will be uploaded as unsecured..
         /// </summary>
         public static string TokenBasedSecurity_NotSupported_Message {
             get {

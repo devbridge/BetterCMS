@@ -12,7 +12,7 @@ bettercms.define('bcms.role', ['bcms.jquery', 'bcms', 'bcms.autocomplete', 'bcms
                 loadRolesUrl: null,
                 saveRoleUrl: null,
                 deleteRoleUrl: null,
-                roleSuggestionSeviceUrl: null
+                roleSuggestionServiceUrl: null
             },
             globalization = {
                 rolesListTabTitle: null,
@@ -102,7 +102,7 @@ bettercms.define('bcms.role', ['bcms.jquery', 'bcms', 'bcms.autocomplete', 'bcms
 
             function RolesAutocompleteListViewModel(tagsList) {
                 var options = {
-                    serviceUrl: links.roleSuggestionSeviceUrl,
+                    serviceUrl: links.roleSuggestionServiceUrl,
                     pattern: 'Roles[{0}]'
                 };
 

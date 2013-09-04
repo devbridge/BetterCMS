@@ -32,7 +32,7 @@ bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bc
             deleteTagUrl: null,
             saveCategoryUrl: null,
             deleteCategoryUrl: null,
-            tagSuggestionSeviceUrl: null
+            tagSuggestionServiceUrl: null
         },
         globalization = {
             confirmDeleteTagMessage: 'Delete tag?',
@@ -227,7 +227,7 @@ bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bc
 
         function TagsListViewModel(tagsList) {
             var options = {
-                serviceUrl: links.tagSuggestionSeviceUrl,
+                serviceUrl: links.tagSuggestionServiceUrl,
                 pattern: 'Tags[{0}]'
             };
 
