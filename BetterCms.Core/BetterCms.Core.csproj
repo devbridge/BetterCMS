@@ -119,6 +119,8 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="DataContracts\IDeletableOption.cs" />
+    <Compile Include="DataContracts\IOptionContainer.cs" />
     <Compile Include="DataContracts\IDeleteableEntity.cs" />
     <Compile Include="DataContracts\IOptionValue.cs" />
     <Compile Include="DataContracts\IRenderPage.cs" />

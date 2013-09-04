@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
@@ -8,7 +9,7 @@ using BetterCms.Core.Models;
 namespace BetterCms.Module.Root.Models
 {
     [Serializable]
-    public class Content : EquatableEntity<Content>, IContent
+    public class Content : EquatableEntity<Content>, IContent, IOptionContainer<Content>
     {
         public virtual string Name { get; set; }
 
@@ -26,14 +27,26 @@ namespace BetterCms.Module.Root.Models
 
         public virtual IList<PageContent> PageContents { get; set; }
 
-        public virtual IList<ContentOption> ContentOptions { get; set; }     
+        public virtual IList<ContentOption> ContentOptions { get; set; }
+
+        IEnumerable<IDeletableOption<Content>> IOptionContainer<Content>.Options
+        {
+            get
+            {
+                return ContentOptions;
+            }
+            set
+            {
+                ContentOptions = value.Cast<ContentOption>().ToList();
+            }
+        }
 
         public virtual Content Clone()
         {
             return CopyDataTo(new Content());
         }
 
-        public virtual Content CopyDataTo(Content content)
+        public virtual Content CopyDataTo(Content content, bool copyOptions = true)
         {
             content.Name = Name;
             content.PreviewUrl = PreviewUrl;
@@ -42,7 +55,7 @@ namespace BetterCms.Module.Root.Models
             content.Status = Status;
             content.Original = Original;
 
-            if (ContentOptions != null)
+            if (copyOptions && ContentOptions != null)
             {
                 if (content.ContentOptions == null)
                 {
@@ -51,14 +64,10 @@ namespace BetterCms.Module.Root.Models
 
                 foreach (var contentOption in ContentOptions)
                 {
-                    content.ContentOptions.Add(
-                        new ContentOption
-                            {
-                                Type = contentOption.Type,
-                                Key = contentOption.Key,
-                                DefaultValue = contentOption.DefaultValue,
-                                Content = content
-                            });
+                    var clonedOption = contentOption.Clone();
+                    clonedOption.Content = content;
+
+                    content.ContentOptions.Add(clonedOption);
                 }
             }
 

@@ -42,7 +42,8 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
 
             UnitOfWork.BeginTransaction();
 
-            var widget = (ServerControlWidget)ContentService.SaveContentWithStatusUpdate(GetServerControlWidgetFromRequest(request), request.DesirableStatus);
+            var requestWidget = GetServerControlWidgetFromRequest(request);
+            var widget = (ServerControlWidget)ContentService.SaveContentWithStatusUpdate(requestWidget, request.DesirableStatus);
             Repository.Save(widget);
 
             UnitOfWork.Commit();
