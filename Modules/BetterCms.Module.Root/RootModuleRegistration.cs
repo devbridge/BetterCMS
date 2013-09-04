@@ -15,10 +15,13 @@ using BetterCms.Core.Services;
 using BetterCms.Events;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Controllers;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.Registration;
 using BetterCms.Module.Root.Services;
+
+using NHibernate.Proxy.DynamicProxy;
 
 namespace BetterCms.Module.Root
 {
@@ -336,17 +339,47 @@ namespace BetterCms.Module.Root
         }
 
         private void OnEntityUpdate(SingleItemEventArgs<IEntity> args)
-        {
-            if (Configuration.Security.AccessControlEnabled && 
-                args.Item.Id != Guid.Empty && args.Item is IAccessSecuredObject)
+        {            
+            if (Configuration.Security.AccessControlEnabled)                
             {
-                try
+                if (args.Item is IAccessSecuredObject && args.Item.Id != Guid.Empty)
                 {
-                    using (var container = ContextScopeProvider.CreateChildContainer())
-                    {
-                        var unitOfWork = container.Resolve<IUnitOfWork>();
-                        var securedObject = unitOfWork.Session.Get(args.Item.GetType(), args.Item.Id);
+                    CheckSecurityObjectAccessibility((IAccessSecuredObject)args.Item);
+                }
 
+                if (args.Item is IAccessSecuredObjectDependency)
+                {
+                    var dependency = (IAccessSecuredObjectDependency)args.Item;
+                    if (dependency.SecuredObject.Id != Guid.Empty)
+                    {
+                        CheckSecurityObjectAccessibility(dependency.SecuredObject);
+                    }
+                }
+            }
+        }
+
+        private void CheckSecurityObjectAccessibility(IAccessSecuredObject item)
+        {
+            try
+            {
+                using (var container = ContextScopeProvider.CreateChildContainer())
+                {                    
+                    var unitOfWork = container.Resolve<IUnitOfWork>();
+                    Type itemType;
+
+                    if (item is IProxy)
+                    {
+                        itemType = item.GetType().BaseType;
+                    }
+                    else
+                    {
+                        itemType = item.GetType();
+                    }
+
+                    var securedObject = unitOfWork.Session.Get(itemType, item.Id);
+
+                    if (securedObject != null)
+                    {
                         var accessControlService = container.Resolve<IAccessControlService>();
                         var securityService = container.Resolve<ISecurityService>();
 
@@ -355,19 +388,19 @@ namespace BetterCms.Module.Root
                         if (accessControlService.GetAccessLevel((IAccessSecuredObject)securedObject, principal) != AccessLevel.ReadWrite)
                         {
                             throw new ValidationException(
-                                () => string.Format(RootGlobalization.Validation_CurrentUserHasNoRightsToUpdateOrDelete_Message, principal.Identity.Name),
-                                string.Format("Current user {0} has no rights to update or delete secured object {1}.", principal.Identity.Name, args.Item));
+                                () => string.Format(RootGlobalization.Validation_CurrentUserHasNoRightsToUpdateOrDelete_Message, principal.Identity.Name, item.Title),
+                                string.Format("Current user {0} has no rights to update or delete secured object {1}.", principal.Identity.Name, item));
                         }
                     }
                 }
-                catch (ValidationException)
-                {
-                    throw;
-                }
-                catch (Exception ex)
-                {                    
-                    throw new CmsException(string.Format("Failed to check an access level of current user for the record {0}.", args.Item), ex);
-                }
+            }
+            catch (ValidationException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new CmsException(string.Format("Failed to check an access level of current user for the record {0}.", item), ex);
             }
         }
     }

@@ -463,7 +463,7 @@
     <value>Publish / Unpublish Content, Restore Content from History</value>
   </data>
   <data name="Validation_CurrentUserHasNoRightsToUpdateOrDelete_Message" xml:space="preserve">
-    <value>Current user {0} has no access rights to update or delete this secured entry.</value>
+    <value>Current user {0} has no access rights to update or delete the '{1}' secured record.</value>
   </data>
   <data name="Validation_Email_Message" xml:space="preserve">
     <value>Invalid email address.</value>
@@ -487,7 +487,7 @@
     <value>Field is required.</value>
   </data>
   <data name="Validation_SecuredObjectShouldHaveAccess_Message" xml:space="preserve">
-    <value>User access can't be updated because of the complete access lose.</value>
+    <value>User access rules can't be updated because of the complete access lose.</value>
   </data>
   <data name="Validation_StringLengthAttribute_Message" xml:space="preserve">
     <value>The field must be the string with a maximum length of {1}.</value>

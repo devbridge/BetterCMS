@@ -31,6 +31,7 @@ namespace BetterCms.Module.MediaManager.Controllers
                 {
                     MediaId = mediaId.ToGuidOrDefault(),
                 });
+
             return View(model);
         }
 
@@ -44,6 +45,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         public ActionResult MediaHistory(GetMediaHistoryRequest request)
         {
             var model = GetCommand<GetMediaHistoryCommand>().ExecuteCommand(request);
+
             return View(model);
         }
 
@@ -57,6 +59,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         public ActionResult MediaVersion(string id)
         {
             var model = GetCommand<GetMediaVersionCommand>().ExecuteCommand(id.ToGuidOrDefault());
+           
             return View(model);
         }
 
@@ -70,6 +73,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         public ActionResult RestoreMediaVersion(string id)
         {
             var result = GetCommand<RestoreMediaVersionCommand>().ExecuteCommand(id.ToGuidOrDefault());
+            
             return WireJson(result);
         }
     }

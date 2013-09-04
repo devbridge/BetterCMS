@@ -1096,7 +1096,7 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Current user {0} has no access rights to update or delete this secured entry..
+        ///   Looks up a localized string similar to Current user {0} has no access rights to update or delete the &apos;{1}&apos; secured record..
         /// </summary>
         public static string Validation_CurrentUserHasNoRightsToUpdateOrDelete_Message {
             get {
@@ -1168,7 +1168,7 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User access can&apos;t be updated because of the complete access lose..
+        ///   Looks up a localized string similar to User access rules can&apos;t be updated because of the complete access lose..
         /// </summary>
         public static string Validation_SecuredObjectShouldHaveAccess_Message {
             get {

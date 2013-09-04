@@ -78,10 +78,6 @@ namespace BetterCms.Module.Root.ViewModels.Cms
             {
                 return Id;
             }
-            set
-            {
-                throw new NotSupportedException(); 
-            }
         }
 
         /// <summary>
