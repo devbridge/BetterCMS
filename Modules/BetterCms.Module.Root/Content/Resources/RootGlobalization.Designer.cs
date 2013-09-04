@@ -1096,6 +1096,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current user {0} has no access rights to update or delete this secured entry..
+        /// </summary>
+        public static string Validation_CurrentUserHasNoRightsToUpdateOrDelete_Message {
+            get {
+                return ResourceManager.GetString("Validation_CurrentUserHasNoRightsToUpdateOrDelete_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid email address..
         /// </summary>
         public static string Validation_Email_Message {
@@ -1155,6 +1164,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         public static string Validation_RequiredAttribute_Message {
             get {
                 return ResourceManager.GetString("Validation_RequiredAttribute_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User access can&apos;t be updated because of the complete access lose..
+        /// </summary>
+        public static string Validation_SecuredObjectShouldHaveAccess_Message {
+            get {
+                return ResourceManager.GetString("Validation_SecuredObjectShouldHaveAccess_Message", resourceCulture);
             }
         }
         

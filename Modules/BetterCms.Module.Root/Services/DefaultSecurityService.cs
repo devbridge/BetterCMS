@@ -35,7 +35,6 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <param name="configuration">The configuration.</param>
         /// <param name="httpContextAccessor">The HTTP context accessor.</param>
-        /// <param name="modulesRegistration">The modules registration.</param>
         public DefaultSecurityService(ICmsConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             this.httpContextAccessor = httpContextAccessor;

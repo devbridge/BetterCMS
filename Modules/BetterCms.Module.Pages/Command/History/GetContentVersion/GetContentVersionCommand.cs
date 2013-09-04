@@ -16,7 +16,7 @@ namespace BetterCms.Module.Pages.Command.History.GetContentVersion
         /// <summary>
         /// The preview service
         /// </summary>
-        private IPreviewService previewService;
+        private readonly IPreviewService previewService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetContentVersionCommand" /> class.

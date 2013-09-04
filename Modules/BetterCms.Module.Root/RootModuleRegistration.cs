@@ -1,10 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using Autofac;
 
+using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataContracts;
+using BetterCms.Core.Dependencies;
+using BetterCms.Core.Exceptions;
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Security;
+using BetterCms.Core.Services;
+using BetterCms.Events;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Controllers;
 using BetterCms.Module.Root.Mvc;
@@ -18,7 +26,7 @@ namespace BetterCms.Module.Root
     /// Root functionality module descriptor.
     /// </summary>
     public class RootModuleDescriptor : ModuleDescriptor
-    {
+    {        
         /// <summary>
         /// The module name.
         /// </summary>
@@ -46,7 +54,9 @@ namespace BetterCms.Module.Root
             authenticationJsModuleIncludeDescriptor = new AuthenticationJsModuleIncludeDescriptor(this);
             siteSettingsJsModuleIncludeDescriptor = new SiteSettingsJsModuleIncludeDescriptor(this);
             tagsJsModuleIncludeDescriptor = new TagsJsModuleIncludeDescriptor(this);
-        }
+
+            InitializeSecurity();            
+        }        
 
         /// <summary>
         /// Gets the name.
@@ -313,6 +323,51 @@ namespace BetterCms.Module.Root
                         resourceType = new MimeTypeRouteConstraint()
                     },
                     new[] { typeof(EmbeddedResourcesController).Namespace });
+            }
+        }
+
+        private void InitializeSecurity()
+        {
+            if (Configuration.Security.AccessControlEnabled)
+            {
+                CoreEvents.Instance.EntitySaving += OnEntityUpdate;
+                CoreEvents.Instance.EntityDeleting += OnEntityUpdate;
+            }
+        }
+
+        private void OnEntityUpdate(SingleItemEventArgs<IEntity> args)
+        {
+            if (Configuration.Security.AccessControlEnabled && 
+                args.Item.Id != Guid.Empty && args.Item is IAccessSecuredObject)
+            {
+                try
+                {
+                    using (var container = ContextScopeProvider.CreateChildContainer())
+                    {
+                        var unitOfWork = container.Resolve<IUnitOfWork>();
+                        var securedObject = unitOfWork.Session.Get(args.Item.GetType(), args.Item.Id);
+
+                        var accessControlService = container.Resolve<IAccessControlService>();
+                        var securityService = container.Resolve<ISecurityService>();
+
+                        var principal = securityService.GetCurrentPrincipal();
+
+                        if (accessControlService.GetAccessLevel((IAccessSecuredObject)securedObject, principal) != AccessLevel.ReadWrite)
+                        {
+                            throw new ValidationException(
+                                () => string.Format(RootGlobalization.Validation_CurrentUserHasNoRightsToUpdateOrDelete_Message, principal.Identity.Name),
+                                string.Format("Current user {0} has no rights to update or delete secured object {1}.", principal.Identity.Name, args.Item));
+                        }
+                    }
+                }
+                catch (ValidationException)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {                    
+                    throw new CmsException(string.Format("Failed to check an access level of current user for the record {0}.", args.Item), ex);
+                }
             }
         }
     }
