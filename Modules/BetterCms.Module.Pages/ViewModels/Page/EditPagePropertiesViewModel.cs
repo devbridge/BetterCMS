@@ -185,15 +185,6 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public ImageSelectorViewModel FeaturedImage { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EditPagePropertiesViewModel" /> class.
-        /// </summary>
-        public EditPagePropertiesViewModel()
-        {
-            Image = new ImageSelectorViewModel();
-            UserAccessList = new List<UserAccessViewModel>();
-        }
-
-        /// <summary>
         /// Gets or sets a value indicating whether this instance is in sitemap.
         /// </summary>
         /// <value>
@@ -232,6 +223,15 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// The user access list.
         /// </value>
         public IList<UserAccessViewModel> UserAccessList { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EditPagePropertiesViewModel" /> class.
+        /// </summary>
+        public EditPagePropertiesViewModel()
+        {
+            Image = new ImageSelectorViewModel();
+            UserAccessList = new List<UserAccessViewModel>();
+        }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

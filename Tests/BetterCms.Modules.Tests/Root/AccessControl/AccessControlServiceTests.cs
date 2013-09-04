@@ -356,7 +356,7 @@ namespace BetterCms.Test.Module.Root.AccessControl
         private Mock<ICmsConfiguration> GetCmsConfigurationMock(AccessControlCollection accessControlCollection)
         {
             var cmsSecuritySection = new Mock<ICmsSecurityConfiguration>();
-            cmsSecuritySection.Setup(x => x.DefaultAccessControlList).Returns(() => accessControlCollection ?? new AccessControlCollection());
+            cmsSecuritySection.Setup(x => x.DefaultAccessRules).Returns(() => accessControlCollection ?? new AccessControlCollection());
 
             var cmsConfiguration = new Mock<ICmsConfiguration>();
             cmsConfiguration.Setup(x => x.Security).Returns(cmsSecuritySection.Object);

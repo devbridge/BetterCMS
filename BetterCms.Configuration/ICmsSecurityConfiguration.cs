@@ -39,7 +39,7 @@ namespace BetterCms
         /// <value>
         /// The default access control list.
         /// </value>
-        AccessControlCollection DefaultAccessControlList { get; }
+        AccessControlCollection DefaultAccessRules { get; }
         
         /// <summary>
         /// Gets or sets the full access roles.

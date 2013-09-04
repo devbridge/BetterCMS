@@ -168,7 +168,8 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
 
             if (cmsConfiguration.Security.AccessControlEnabled)
             {
-                page.AccessRules.RemoveDuplicates((a, b) => a.Identity == b.Identity && a.AccessLevel == b.AccessLevel ? 0 : -1);
+                page.AccessRules.RemoveDuplicateEntities();
+
                 var accessRules = request.UserAccessList != null ? request.UserAccessList.Cast<IAccessRule>().ToList() : null;                
                 accessControlService.UpdateAccessControl(page, accessRules);
             }

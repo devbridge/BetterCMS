@@ -17,7 +17,7 @@ namespace BetterCms.Configuration
         /// <summary>
         /// The 'fullAaccessControlListccessRoles' attribute name.
         /// </summary>
-        private const string DefaultAccessControlListNode = "accessControlList";
+        private const string DefaultAccessRulesAttribute = "defaultAccessRules";
 
         /// <summary>
         /// The 'fullAccessRoles' attribute name.
@@ -103,13 +103,13 @@ namespace BetterCms.Configuration
             set { this[AccessControlEnabledAttribute] = value; }
         }
 
-        [ConfigurationProperty(DefaultAccessControlListNode, IsDefaultCollection = false)]
+        [ConfigurationProperty(DefaultAccessRulesAttribute, IsDefaultCollection = false)]
         [ConfigurationCollection(typeof(AccessControlCollection))]
-        public AccessControlCollection DefaultAccessControlList
+        public AccessControlCollection DefaultAccessRules
         {
             get
             {
-                return this[DefaultAccessControlListNode] as AccessControlCollection;
+                return this[DefaultAccessRulesAttribute] as AccessControlCollection;
             }
         }
 
