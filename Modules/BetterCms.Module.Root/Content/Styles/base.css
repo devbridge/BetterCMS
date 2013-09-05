@@ -9,6 +9,7 @@
 
 .bcms-modal form {
     width: auto !important;
+    max-width: none !important;
     height: auto !important;
     color: inherit !important;
     margin: auto !important;
@@ -1461,6 +1462,10 @@ a.bcms-btn-close {
         box-shadow: 0 0 3px 0 rgba(24,145,230,0.35);
         outline: none;
     }
+
+.bcms-code-field {
+    font-family: monospace !important;
+}
 
 /*Global Select*/
 .bcms-global-select {
