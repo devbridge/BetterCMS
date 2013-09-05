@@ -16,6 +16,14 @@ namespace BetterCms.Module.Root.ViewModels.Option
         public string OptionDefaultValue { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether option is deletable.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if option is deletable; otherwise, <c>false</c>.
+        /// </value>
+        public bool CanDeleteOption { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>
