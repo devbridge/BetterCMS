@@ -238,7 +238,7 @@
     <value>Last name should not be longer than 200 characters.</value>
   </data>
   <data name="User_Password_LengthMessage" xml:space="preserve">
-    <value>Password should not be shorter than 4 characters and not be longer than 255 characters.</value>
+    <value>Password should not be shorter than 4 characters and not be longer than 255 characters and cannot start or end with empty space.</value>
   </data>
   <data name="User_Password_RequiredMessage" xml:space="preserve">
     <value>Password is required.</value>

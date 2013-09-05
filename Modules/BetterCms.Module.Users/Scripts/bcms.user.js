@@ -293,16 +293,29 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         * Initialize custom jQuery validators
         */
         function initializeCustomValidation() {
-            $.validator.addMethod("jqpasswordrequired", function (value) {
-                
+            $.validator.addMethod("jqpasswordvalidation", function (value, element, params) {
+                if (value) {
+                    var match = new RegExp(params.pattern).exec(value);
+                    params.regex = true;
+                    
+                    var isMatch = (match && (match.index === 0) && (match[0].length === value.length));
+                    if (!isMatch) {
+                        return false;
+                    }
+                }
+
+                params.regex = false;
                 return !bcms.isEmptyGuid(userViewModel.id) || value;
             }, function (params) {
+                if (params.regex) {
+                    return params.patternmessage;
+                }
                 
                 return params.message;
             });
 
-            $.validator.unobtrusive.adapters.add("passwordrequired", ['pattern'], function (opts) {
-                opts.rules["jqpasswordrequired"] = { message: opts.message, pattern: opts.params.pattern };
+            $.validator.unobtrusive.adapters.add("passwordvalidation", ['pattern', 'patternmessage'], function (opts) {
+                opts.rules["jqpasswordvalidation"] = { message: opts.message, pattern: opts.params.pattern, patternmessage: opts.params.patternmessage };
             });
         }
 

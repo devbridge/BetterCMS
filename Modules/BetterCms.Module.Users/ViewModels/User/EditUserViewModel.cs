@@ -84,7 +84,6 @@ namespace BetterCms.Module.Users.ViewModels.User
         /// <value>
         /// The password.
         /// </value>
-        [RegularExpression(UsersModuleConstants.PasswordRegularExpression, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_LengthMessage")]
         [StringLength(MaxLength.Password, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_MaxLengthMessage")]
         [PasswordValidation]
         public string Password { get; set; }

@@ -547,7 +547,7 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password should not be shorter than 4 characters and not be longer than 255 characters..
+        ///   Looks up a localized string similar to Password should not be shorter than 4 characters and not be longer than 255 characters and cannot start or end with empty space..
         /// </summary>
         public static string User_Password_LengthMessage {
             get {
