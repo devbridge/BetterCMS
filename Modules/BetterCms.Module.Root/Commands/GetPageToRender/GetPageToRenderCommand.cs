@@ -89,6 +89,17 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             renderPageViewModel.Contents = contentProjections;
             renderPageViewModel.Metadata = pageAccessor.GetPageMetaData(page).ToList();
 
+            // Add <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> if current view is in an edit mode.
+            if (request.CanManageContent)
+            {
+                if (renderPageViewModel.Metadata == null)
+                {
+                    renderPageViewModel.Metadata = new List<IPageActionProjection>();
+                }
+
+                renderPageViewModel.Metadata.Insert(0, new MetaDataProjection("X-UA-Compatible", "IE=edge,chrome=1"));
+            }
+
             // Attach styles.
             var styles = new List<IStylesheetAccessor>();
             styles.Add(pageStylesheetProjectionFactory.Create(page));
