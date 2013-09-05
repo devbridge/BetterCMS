@@ -72,7 +72,12 @@ namespace BetterCms.Module.Root.Services
         {
             var currentHttpContext = httpContextAccessor.GetCurrent();
 
-            return currentHttpContext != null ? currentHttpContext.User : null;
+            if (currentHttpContext == null)
+            {
+                return Thread.CurrentPrincipal;
+            }
+
+            return currentHttpContext.User;
         }
 
         /// <summary>
