@@ -44,7 +44,7 @@
             @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box", @placeholder = RootGlobalization.WaterMark_Search })
             <div class="bcms-btn-search" id="bcms-users-search-btn">@UsersGlobalization.User_Dialog_Search</div>
         </div>  
-        <div class="bcms-featured-grid clearfix">
+        <div class="bcms-featured-grid bcms-clearfix">
             @Html.RenderPaging(Model)
         </div>
     </div>

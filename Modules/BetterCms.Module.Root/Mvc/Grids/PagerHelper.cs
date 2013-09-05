@@ -25,7 +25,7 @@ namespace BetterCms.Module.Root.Mvc.Grids
             var pagination = model.Items;
             var builder = new StringBuilder();
 
-            builder.AppendFormat("<div class='{0} clearfix'>", PagerDivClassName);
+            builder.AppendFormat("<div class='{0} bcms-clearfix'>", PagerDivClassName);
 
             // total pages
             var totalPages = pagination.TotalPages > 0 ? pagination.TotalPages : 1;

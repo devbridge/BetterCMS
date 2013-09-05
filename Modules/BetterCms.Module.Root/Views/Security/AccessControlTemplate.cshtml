@@ -14,14 +14,14 @@
             @Html.Tooltip(@viewModel.Tooltip)
             <div class="bcms-content-titles">@viewModel.Title</div>
             <div class="bcms-access-table">
-                <div class="bcms-access-title clearfix">
+                <div class="bcms-access-title bcms-clearfix">
                     <div class="bcms-access-title-text">@RootGlobalization.AccessControl_UserAccess_User</div>
                     <div class="bcms-access-title-text">@RootGlobalization.AccessControl_UserAccess_ReadAndEdit</div>
                     <div class="bcms-access-title-text">@RootGlobalization.AccessControl_UserAccess_Read</div>
                     <div class="bcms-access-title-text">@RootGlobalization.AccessControl_UserAccess_NoAccess</div>
                 </div>
                 <div data-bind="foreach: UserAccessList">
-                    <div class="bcms-access-line clearfix">
+                    <div class="bcms-access-line bcms-clearfix">
                         <div class="bcms-access-value">
                             <div class="btn-acces-minus" data-bind="click: $parent.removeUser">&nbsp;</div>
                             <span data-bind="visible: IsForRole()">Role:</span><span data-bind="visible: !IsForRole()">User:</span>&nbsp;<span data-bind="text: Identity"></span>
@@ -33,7 +33,7 @@
                     <input type="hidden" data-bind="attr: { name: $parent.getPropertyIndexer($index(), 'Identity') }, value: Identity" />
                     <input type="hidden" data-bind="attr: { name: $parent.getPropertyIndexer($index(), 'IsForRole') }, valueBinder: IsForRole" />
                 </div>
-                <div class="bcms-access-line clearfix">
+                <div class="bcms-access-line bcms-clearfix">
                     <div class="bcms-access-value-add">
                         <div class="btn-acces-plus" data-bind="click: gotoAddNewUser">&nbsp;</div>
                         <span data-bind="visible: !isInAddUserMode(), click: gotoAddNewUser">@RootGlobalization.AccessControl_UserAccess_AddNewUser</span>
@@ -47,7 +47,7 @@
                             escPress: clearNewUserInput" />
                     </div>                    
                 </div>
-                <div class="bcms-access-line clearfix">
+                <div class="bcms-access-line bcms-clearfix">
                     <div class="bcms-access-value-add">
                         <div class="btn-acces-plus" data-bind="click: gotoAddNewRole">&nbsp;</div>
                         <span data-bind="visible: !isInAddRoleMode(), click: gotoAddNewRole">@RootGlobalization.AccessControl_UserAccess_AddNewRole</span>

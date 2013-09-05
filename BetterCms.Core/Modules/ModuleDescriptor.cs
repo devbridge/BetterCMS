@@ -311,7 +311,7 @@ namespace BetterCms.Core.Modules
                         });
             }
         }
-
+        
         /// <summary>
         /// Registers the module command types.
         /// </summary>
