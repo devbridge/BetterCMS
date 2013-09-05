@@ -246,6 +246,8 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.useDefaultValue.subscribe(function(newValue) {
                     if (newValue) {
                         self.value(self.defaultValue());
+                    } else {
+                        self.value('');
                     }
                 });
 
@@ -353,7 +355,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 var type = self.type(),
                     mustBeNumber = type == optionTypes.floatType || type == optionTypes.integerType,
                     mustBeDate = type == optionTypes.dateTimeType,
-                    hasError = newValue &&
+                    hasError = !self.useDefaultValue() && newValue &&
                         ((mustBeNumber && isNaN(Number(newValue.replace(',', '.')))) 
                             || (mustBeDate && !datepicker.isDateValid(newValue))),
                     showMessage,
