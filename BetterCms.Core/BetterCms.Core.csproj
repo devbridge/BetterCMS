@@ -180,6 +180,7 @@
     <Compile Include="Security\IAccessRule.cs" />
     <Compile Include="Security\EncryptableString.cs" />
     <Compile Include="Security\IAccessControlService.cs" />
+    <Compile Include="Security\IAccessSecuredObjectDependency.cs" />
     <Compile Include="Security\ITextEncryptor.cs" />
     <Compile Include="Security\IUserRole.cs" />
     <Compile Include="Modules\Projections\EmptyContentAccessor.cs" />

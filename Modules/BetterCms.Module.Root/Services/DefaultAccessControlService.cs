@@ -6,8 +6,10 @@ using System.Text;
 
 using BetterCms.Configuration;
 using BetterCms.Core.Exceptions;
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services.Caching;
+using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Security;
 
@@ -106,6 +108,14 @@ namespace BetterCms.Module.Root.Services
             entitesToAdd.ForEach(securedObject.AddRule);
 
             UpdateChangedRules(securedObject, updatedRules);
+
+            if (securedObject.AccessRules == null || 
+                !securedObject.AccessRules.Any() && !string.Equals(configuration.Security.DefaultAccessRules.DefaultAccessLevel, AccessLevel.ReadWrite.ToString(), StringComparison.OrdinalIgnoreCase) ||
+                securedObject.AccessRules.Any() && !securedObject.AccessRules.Any(f => f.AccessLevel == AccessLevel.ReadWrite))
+            {
+                throw new ValidationException(() => RootGlobalization.Validation_SecuredObjectShouldHaveAccess_Message, 
+                    string.Format("An '{0}' secured object can't be saved because of the complete access lose.", securedObject));
+            }
         }
 
         /// <summary>

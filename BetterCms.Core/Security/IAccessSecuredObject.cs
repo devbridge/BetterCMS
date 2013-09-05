@@ -5,7 +5,9 @@ namespace BetterCms.Core.Security
 {
     public interface IAccessSecuredObject
     {
-        Guid Id { get; set; }
+        Guid Id { get; }
+
+        string Title { get; }
 
         IList<IAccessRule> AccessRules { get; }
 

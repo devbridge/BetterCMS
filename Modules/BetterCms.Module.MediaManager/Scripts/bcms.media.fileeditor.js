@@ -65,12 +65,6 @@ bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 
                                 callback(json.Data);
                             }
                             dialog.close();
-                        },
-                        postError: function () {
-                            modal.alert({
-                                title: globalization.fileEditorUpdateFailureMessageTitle,
-                                content: globalization.fileEditorUpdateFailureMessageMessage
-                            });
                         }
                     });
                 }

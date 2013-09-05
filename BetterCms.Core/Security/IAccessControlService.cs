@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Security.Principal;
-
-using BetterCms.Core.Models;
 
 namespace BetterCms.Core.Security
 {
