@@ -577,6 +577,6 @@
     <value>Tags</value>
   </data>
   <data name="TokenBasedSecurity_NotSupported_Message" xml:space="preserve">
-    <value>Current storage sevice doesn't support token based security. Change storage configuration or all the files will be uploaded as unsecured.</value>
+    <value>Current storage service doesn't support token based security. Change storage configuration or all the files will be uploaded as unsecured.</value>
   </data>
 </root>

@@ -248,7 +248,7 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\bcms-media\Views\" />
+    <Folder Include="Areas\bcms-pages\Views\" />
     <Folder Include="Areas\bcms-root\Views\Shared\" />
     <Folder Include="Areas\bcms-users\" />
     <Folder Include="file\bcms-media\Content\Css\Images\" />
@@ -349,6 +349,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\Layouts\ExtensionsLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Sandbox\Login.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

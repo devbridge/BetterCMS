@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 
+using BetterCms.Configuration;
+
 namespace BetterCms
 {
     /// <summary>
@@ -13,7 +15,7 @@ namespace BetterCms
         /// <value>
         /// <c>true</c> if a content encryption is enabled; otherwise, <c>false</c>.
         /// </value>
-        bool EnableContentEncryption { get; }
+        bool EncryptionEnabled { get; }
 
         /// <summary>
         /// Gets the content encryption key.
@@ -21,8 +23,24 @@ namespace BetterCms
         /// <value>
         /// The content encryption key.
         /// </value>
-        string ContentEncryptionKey { get; }
+        string EncryptionKey { get; }
+        
+        /// <summary>
+        /// Gets or sets a value indicating whether [access control enabled].
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if [access control enabled]; otherwise, <c>false</c>.
+        /// </value>
+        bool AccessControlEnabled { get; set; }
 
+        /// <summary>
+        /// Gets the default access control list.
+        /// </summary>
+        /// <value>
+        /// The default access control list.
+        /// </value>
+        AccessControlCollection DefaultAccessRules { get; }
+        
         /// <summary>
         /// Gets or sets the full access roles.
         /// </summary>

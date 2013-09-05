@@ -40,13 +40,13 @@ namespace BetterCms.Test.Module.Common
         {
             const string useName = "John Smith";
 
-            var mock = new Mock<IHttpContextAccessor>();
+            var httpContextMock = new Mock<IHttpContextAccessor>();
             var httpContextWrapper = new HttpContextWrapper(new HttpContext(new HttpRequest("test", "http://www.bettercms.com/tests/", null), new HttpResponse(TextWriter.Null)));
             httpContextWrapper.User = new GenericPrincipal(new GenericIdentity(useName), null);
-            mock.Setup(f => f.GetCurrent()).Returns(() => httpContextWrapper);
+            httpContextMock.Setup(f => f.GetCurrent()).Returns(() => httpContextWrapper);
 
 
-            var securityService = new DefaultSecurityService(Container.Resolve<ICmsConfiguration>(), mock.Object, Container.Resolve<IModulesRegistration>());
+            var securityService = new DefaultSecurityService(Container.Resolve<ICmsConfiguration>(), httpContextMock.Object);
 
             Assert.AreEqual(useName, securityService.CurrentPrincipalName);
         }

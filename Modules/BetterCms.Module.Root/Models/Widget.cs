@@ -1,7 +1,6 @@
 using System;
 
 using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
 
 namespace BetterCms.Module.Root.Models
 {
@@ -18,9 +17,9 @@ namespace BetterCms.Module.Root.Models
             }
         }
 
-        public override Content CopyDataTo(Content content)
+        public override Content CopyDataTo(Content content, bool copyOptions = true)
         {
-            var copy = (Widget)base.CopyDataTo(content);
+            var copy = (Widget)base.CopyDataTo(content, copyOptions);
             copy.Category = Category;
 
             return copy;

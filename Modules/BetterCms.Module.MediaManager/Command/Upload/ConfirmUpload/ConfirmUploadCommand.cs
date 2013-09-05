@@ -110,7 +110,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                     }
                 }
 
-                if (cmsConfiguration.AccessControlEnabled)
+                if (cmsConfiguration.Security.AccessControlEnabled)
                 {
                     foreach (var file in files)
                     {

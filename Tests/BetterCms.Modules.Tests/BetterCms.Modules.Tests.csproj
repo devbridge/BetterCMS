@@ -130,6 +130,7 @@
     <Compile Include="Pages\CommandTests\PageTests\ClonePageCommandTest.cs" />
     <Compile Include="Pages\CommandTests\PageTests\DeletePageCommandTest.cs" />
     <Compile Include="Pages\CommandTests\PageTests\CreatePageCommandTest.cs" />
+    <Compile Include="Pages\CommandTests\PageTests\GetPagesListCommandTest.cs" />
     <Compile Include="Root\AccessControl\AccessControlServiceTests.cs" />
     <Compile Include="Root\ModelTests\MapTests\AccessRolesMapTest.cs" />
     <Compile Include="AmazonS3Storage\AmazonS3StorageServiceTest.cs" />
@@ -215,6 +216,7 @@
     <Compile Include="TestBase.cs" />
     <Compile Include="Common\ViewModelToStringTest.cs" />
     <Compile Include="Users\ModelTests\MapTests\RoleMapTest.cs" />
+    <Compile Include="Users\ProvidersTests\MembershipProviderTests.cs" />
     <Compile Include="Users\ProvidersTests\RoleProviderTests.cs" />
     <Compile Include="WindowsAzureStorage\MimeTypeUtilityTest.cs" />
     <Compile Include="WindowsAzureStorage\WindowsAzureStorageServiceTest.cs" />

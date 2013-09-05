@@ -115,7 +115,7 @@ namespace BetterCms.Module.Root.Controllers
 
         private bool HasCurrentPrincipalAccess(IAccessSecuredObject page)
         {
-            if (!cmsConfiguration.AccessControlEnabled)
+            if (!cmsConfiguration.Security.AccessControlEnabled)
             {
                 return true;
             }

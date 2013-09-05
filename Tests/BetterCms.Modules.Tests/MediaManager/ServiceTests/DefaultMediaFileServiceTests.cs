@@ -56,8 +56,11 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
             var storageService = new Mock<IStorageService>();
             storageService.Setup(x => x.SecuredUrlsEnabled).Returns(secured);
 
+            var securityConfig = new Mock<ICmsSecurityConfiguration>();
+            securityConfig.Setup(f => f.AccessControlEnabled).Returns(secured);
+
             var cmsConfiguration = new Mock<ICmsConfiguration>();
-            cmsConfiguration.Setup(x => x.AccessControlEnabled).Returns(secured);
+            cmsConfiguration.Setup(x => x.Security).Returns(securityConfig.Object);
 
             var urlResolver = new Mock<IMediaFileUrlResolver>();
             urlResolver.Setup(x => x.GetMediaFileFullUrl(It.IsAny<Guid>(), It.IsAny<string>())).Returns(SecuredUrl1);

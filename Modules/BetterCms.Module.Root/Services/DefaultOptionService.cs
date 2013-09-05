@@ -50,8 +50,8 @@ namespace BetterCms.Module.Root.Services
                     IOption option = null;
                     if (options != null)
                     {
-                        option = options.FirstOrDefault(f => f.Key.Trim().Equals(optionValue.Key.Trim(), StringComparison.OrdinalIgnoreCase) 
-                            && f.Type == optionValue.Type);
+                        option = options.FirstOrDefault(
+                            f => f.Key.Trim().Equals(optionValue.Key.Trim(), StringComparison.OrdinalIgnoreCase) && f.Type == optionValue.Type);
                     }
 
                     var optionViewModel = new OptionValueEditViewModel
@@ -59,7 +59,8 @@ namespace BetterCms.Module.Root.Services
                                                   Type = optionValue.Type,
                                                   OptionKey = optionValue.Key.Trim(),
                                                   OptionValue = optionValue.Value,
-                                                  OptionDefaultValue = option != null ? option.Value : null
+                                                  OptionDefaultValue = option != null ? option.Value : null,
+                                                  UseDefaultValue = false
                                               };
 
                     if (option == null)
@@ -77,13 +78,15 @@ namespace BetterCms.Module.Root.Services
                 {
                     if (!optionModels.Any(f => f.OptionKey.Equals(option.Key.Trim(), StringComparison.OrdinalIgnoreCase)))
                     {
-                        optionModels.Add(new OptionValueEditViewModel
-                        {
-                            Type = option.Type,
-                            OptionKey = option.Key.Trim(),
-                            OptionValue = null,
-                            OptionDefaultValue = option.Value
-                        });
+                        optionModels.Add(
+                            new OptionValueEditViewModel
+                                {
+                                    Type = option.Type,
+                                    OptionKey = option.Key.Trim(),
+                                    OptionValue = null,
+                                    OptionDefaultValue = option.Value,
+                                    UseDefaultValue = true
+                                });
                     }
                 }
             }
@@ -109,12 +112,7 @@ namespace BetterCms.Module.Root.Services
                 {
                     var value = GetValueSafe(optionValue);
 
-                    var optionViewModel = new OptionValueViewModel
-                        {
-                            Type = optionValue.Type,
-                            OptionKey = optionValue.Key.Trim(),
-                            OptionValue = value
-                        };
+                    var optionViewModel = new OptionValueViewModel { Type = optionValue.Type, OptionKey = optionValue.Key.Trim(), OptionValue = value };
                     optionModels.Add(optionViewModel);
                 }
             }
@@ -127,12 +125,7 @@ namespace BetterCms.Module.Root.Services
                     {
                         var value = GetValueSafe(option);
 
-                        var optionViewModel = new OptionValueViewModel
-                            {
-                                Type = option.Type,
-                                OptionKey = option.Key.Trim(),
-                                OptionValue = value
-                            };
+                        var optionViewModel = new OptionValueViewModel { Type = option.Type, OptionKey = option.Key.Trim(), OptionValue = value };
                         optionModels.Add(optionViewModel);
                     }
                 }
@@ -149,23 +142,22 @@ namespace BetterCms.Module.Root.Services
         /// <param name="savedOptionValues">The saved options.</param>
         /// <param name="parentOptions">The parent options.</param>
         /// <param name="entityCreator">The entity creator.</param>
-        public void SaveOptionValues<TEntity>(IEnumerable<OptionValueEditViewModel> optionViewModels, IEnumerable<TEntity> savedOptionValues,
-            IEnumerable<IOption> parentOptions, Func<TEntity> entityCreator)
-            where TEntity : Entity, IOption
+        public void SaveOptionValues<TEntity>(
+            IEnumerable<OptionValueEditViewModel> optionViewModels,
+            IEnumerable<TEntity> savedOptionValues,
+            IEnumerable<IOption> parentOptions,
+            Func<TEntity> entityCreator) where TEntity : Entity, IOption
         {
             if (optionViewModels == null)
             {
-                return;
+                optionViewModels = new List<OptionValueEditViewModel>();
             }
 
             ValidateOptionKeysUniqueness(optionViewModels);
 
             if (savedOptionValues != null)
             {
-                savedOptionValues.
-                    Where(sov => optionViewModels.All(ovm => ovm.OptionKey != sov.Key)).
-                    ToList().
-                    ForEach(del => repository.Delete(del));
+                savedOptionValues.Where(sov => optionViewModels.All(ovm => ovm.OptionKey != sov.Key)).ToList().ForEach(del => repository.Delete(del));
             }
 
             foreach (var optionViewModel in optionViewModels)
@@ -175,17 +167,8 @@ namespace BetterCms.Module.Root.Services
                 {
                     savedOptionValue = savedOptionValues.FirstOrDefault(f => f.Key.Trim().Equals(optionViewModel.OptionKey.Trim(), StringComparison.OrdinalIgnoreCase));
                 }
-                var parentOption = parentOptions.FirstOrDefault(f => f.Key.Trim().Equals(optionViewModel.OptionKey.Trim(), StringComparison.OrdinalIgnoreCase));
 
-                // Save item, if:
-                // - There is no parent (item created manually)
-                // - Value is not empty (value entered manually)
-                // - Parent type is not equal to option type (types are not equal - option was created manually)
-                var save = parentOption == null
-                    || !string.IsNullOrEmpty(optionViewModel.OptionValue)
-                    || parentOption.Type != optionViewModel.Type;
-
-                if (save)
+                if (!optionViewModel.UseDefaultValue)
                 {
                     if (savedOptionValue == null)
                     {
@@ -207,6 +190,67 @@ namespace BetterCms.Module.Root.Services
         }
 
         /// <summary>
+        /// Saves the options - adds new ones and deleted the old ones..
+        /// </summary>
+        /// <typeparam name="TOption">The type of the option entity.</typeparam>
+        /// <typeparam name="TEntity">The type of the option parent entity.</typeparam>
+        /// <param name="optionContainer">The options container entity.</param>
+        /// <param name="options">The list of new options.</param>
+        public void SetOptions<TOption, TEntity>(IOptionContainer<TEntity> optionContainer, IEnumerable<IOption> options)
+            where TEntity : IEntity
+            where TOption : IDeletableOption<TEntity>, new()
+        {
+            // Delete old ones
+            if (optionContainer.Options != null)
+            {
+                foreach (var option in optionContainer.Options.Distinct())
+                {
+                    if (options == null || options.All(o => o.Key != option.Key))
+                    {
+                        if (!option.IsDeletable)
+                        {
+                            var message = string.Format(RootGlobalization.SaveOptions_CannotDeleteOption_Message, option.Key);
+                            var logMessage = string.Format("Cannot delete option {0}, because it's marked as non-deletable.", option.Id);
+                            throw new ValidationException(() => message, logMessage);
+                        }
+
+                        repository.Delete(option);
+                    }
+                }
+            }
+
+            // Add new / update existing
+            if (options != null)
+            {
+                var optionsList = new List<IDeletableOption<TEntity>>();
+                if (optionContainer.Options != null)
+                {
+                    optionsList.AddRange(optionContainer.Options);
+                }
+
+                foreach (var requestLayoutOption in options)
+                {
+                    TOption option = (TOption)optionsList.FirstOrDefault(o => o.Key == requestLayoutOption.Key);
+
+                    if (option == null)
+                    {
+                        option = new TOption();
+                        optionsList.Add(option);
+                    }
+
+                    option.Key = requestLayoutOption.Key;
+                    option.Value = requestLayoutOption.Value;
+                    option.Type = requestLayoutOption.Type;
+                    option.Entity = (TEntity)optionContainer;
+
+                    ValidateOptionValue(option);
+                }
+
+                optionContainer.Options = optionsList;
+            }
+        }
+
+        /// <summary>
         /// Validates the option value.
         /// </summary>
         /// <param name="option">The option.</param>
@@ -220,9 +264,7 @@ namespace BetterCms.Module.Root.Services
                 }
                 catch
                 {
-                    var message = string.Format(RootGlobalization.Option_Invalid_Message,
-                        option.Key,
-                        option.Type.ToGlobalizationString());
+                    var message = string.Format(RootGlobalization.Option_Invalid_Message, option.Key, option.Type.ToGlobalizationString());
 
                     throw new ValidationException(() => message, message);
                 }
@@ -235,11 +277,8 @@ namespace BetterCms.Module.Root.Services
         /// <param name="options">The options.</param>
         public void ValidateOptionKeysUniqueness(IEnumerable<OptionViewModelBase> options)
         {
-            var duplicateKey = options
-                .GroupBy(option => option.OptionKey)
-                .Where(group => group.Count() > 1)
-                .Select(group => group.Key).FirstOrDefault();
-            
+            var duplicateKey = options.GroupBy(option => option.OptionKey).Where(group => group.Count() > 1).Select(group => group.Key).FirstOrDefault();
+
             if (!string.IsNullOrWhiteSpace(duplicateKey))
             {
                 var message = string.Format(RootGlobalization.Option_DuplicateKey_Message, duplicateKey);
@@ -277,7 +316,7 @@ namespace BetterCms.Module.Root.Services
         {
             if (string.IsNullOrEmpty(value))
             {
-                return value;
+                return GetDefaultValueForType(type);
             }
 
             switch (type)
@@ -297,6 +336,29 @@ namespace BetterCms.Module.Root.Services
 
                 case OptionType.Boolean:
                     return Convert.ToBoolean(value);
+
+                default:
+                    throw new NotSupportedException(string.Format("Not supported option type: {0}", type));
+            }
+        }
+
+        /// <summary>
+        /// Gets the default value for specified option type.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>Default types value</returns>
+        private object GetDefaultValueForType(OptionType type)
+        {
+            switch (type)
+            {
+                case OptionType.Text:
+                case OptionType.DateTime:
+                case OptionType.Integer:
+                case OptionType.Float:
+                    return null;
+
+                case OptionType.Boolean:
+                    return false;
 
                 default:
                     throw new NotSupportedException(string.Format("Not supported option type: {0}", type));

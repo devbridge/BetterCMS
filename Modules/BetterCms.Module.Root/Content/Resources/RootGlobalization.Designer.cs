@@ -61,6 +61,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Role.
+        /// </summary>
+        public static string AccessControl_UserAccess_AddNewRole {
+            get {
+                return ResourceManager.GetString("AccessControl_UserAccess_AddNewRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New User.
         /// </summary>
         public static string AccessControl_UserAccess_AddNewUser {
@@ -826,6 +835,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot delete option {0}, because it&apos;s marked as non-deletable..
+        /// </summary>
+        public static string SaveOptions_CannotDeleteOption_Message {
+            get {
+                return ResourceManager.GetString("SaveOptions_CannotDeleteOption_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tag already exists..
         /// </summary>
         public static string SaveTag_TagExists_Message {
@@ -1087,6 +1105,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current user {0} has no access rights to update or delete the &apos;{1}&apos; secured record..
+        /// </summary>
+        public static string Validation_CurrentUserHasNoRightsToUpdateOrDelete_Message {
+            get {
+                return ResourceManager.GetString("Validation_CurrentUserHasNoRightsToUpdateOrDelete_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid email address..
         /// </summary>
         public static string Validation_Email_Message {
@@ -1146,6 +1173,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         public static string Validation_RequiredAttribute_Message {
             get {
                 return ResourceManager.GetString("Validation_RequiredAttribute_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User access rules can&apos;t be updated because of the complete access lose..
+        /// </summary>
+        public static string Validation_SecuredObjectShouldHaveAccess_Message {
+            get {
+                return ResourceManager.GetString("Validation_SecuredObjectShouldHaveAccess_Message", resourceCulture);
             }
         }
         

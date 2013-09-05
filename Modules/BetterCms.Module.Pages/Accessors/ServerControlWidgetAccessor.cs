@@ -45,22 +45,26 @@ namespace BetterCms.Module.Pages.Accessors
                 using (var sw = new StringWriter())
                 {
                     var viewData = new ViewDataDictionary();
-
                     var newViewContext = new ViewContext(html.ViewContext, view, viewData, html.ViewContext.TempData, sw);
+
                     try
                     {
-                        var widgetModel = new RenderWidgetViewModel
-                            {
-                                Page = (IPage)html.ViewData.Model,
-                                Widget = Content,
-                                Options = Options
-                            };
-                        
-                        
-                        var pageModel = html.ViewData.Model as RenderPageViewModel;
-                        if (pageModel != null)
+                        var widgetModel = CreateWidgetViewModel(view);
+
+                        widgetModel.Page = (IRenderPage)html.ViewData.Model;
+                        widgetModel.Widget = Content;
+                        widgetModel.Options = Options;
+
+                        // Adding to ViewBag (there are old widgets, thay use this)
+                        if (Options != null && Options.Count > 0)
                         {
-                            widgetModel.PageOptions = pageModel.Options;
+                            foreach (var option in Options)
+                            {
+                                if (option.Value != null)
+                                {
+                                    viewData[option.Key] = option.Value;
+                                }
+                            }
                         }
 
                         newViewContext.ViewData.Model = widgetModel;
@@ -118,6 +122,28 @@ namespace BetterCms.Module.Pages.Accessors
         private static string GetErrorString(string view, string message)
         {
             return string.Format(@"<div class=""bcms-error"">Error rendering view ""{0}"": {1}</div>", view, message);
+        }
+
+        private RenderWidgetViewModel CreateWidgetViewModel(IView view)
+        {
+            var razor = view as RazorView;
+            if (razor != null)
+            {
+                var compiledType = System.Web.Compilation.BuildManager.GetCompiledType(razor.ViewPath);
+                var baseType = compiledType.BaseType;
+                if (baseType != null && baseType.IsGenericType)
+                {
+                    var generics = baseType.GetGenericArguments();
+                    if (generics.Length > 0 && generics[0].IsSubclassOf(typeof(RenderWidgetViewModel)))
+                    {
+                        var model = Activator.CreateInstance(generics[0]) as RenderWidgetViewModel;
+
+                        return model;
+                    }
+                }
+            }
+
+            return new RenderWidgetViewModel();
         }
     }
 }

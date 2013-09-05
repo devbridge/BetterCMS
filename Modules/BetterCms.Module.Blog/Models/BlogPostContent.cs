@@ -7,9 +7,9 @@ namespace BetterCms.Module.Blog.Models
     [Serializable]
     public class BlogPostContent : HtmlContent
     {
-        public override Root.Models.Content CopyDataTo(Root.Models.Content content)
+        public override Root.Models.Content CopyDataTo(Root.Models.Content content, bool copyOptions = true)
         {
-            var copy = (BlogPostContent)base.CopyDataTo(content);
+            var copy = (BlogPostContent)base.CopyDataTo(content, copyOptions);
             
             return copy;
         }

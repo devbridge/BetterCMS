@@ -5,6 +5,7 @@ using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Security;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Projections;
@@ -12,7 +13,7 @@ using BetterCms.Module.Root.Projections;
 namespace BetterCms.Module.Root.ViewModels.Cms
 {
     [Serializable]
-    public class RenderPageViewModel : IPage, IAccessSecuredObject
+    public class RenderPageViewModel : IRenderPage, IAccessSecuredObject
     {
         public RenderPageViewModel(IPage page)
         {
@@ -76,10 +77,6 @@ namespace BetterCms.Module.Root.ViewModels.Cms
             get
             {
                 return Id;
-            }
-            set
-            {
-                throw new NotSupportedException(); 
             }
         }
 
@@ -162,7 +159,7 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// <value>
         /// The page options.
         /// </value>
-        public List<IOptionValue> Options { get; set; }
+        public IList<IOptionValue> Options { get; set; }
 
         /// <summary>
         /// Gets or sets the list of meta data projections.

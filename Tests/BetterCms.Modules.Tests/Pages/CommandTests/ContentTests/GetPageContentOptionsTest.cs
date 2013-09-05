@@ -45,19 +45,30 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                 // Should return 4 options: 2 with assigned values, 1 without parent option and 1 unassigned
                 Assert.IsNotNull(result);
                 Assert.IsNotNull(result.OptionValues);
-                Assert.AreEqual(result.OptionValues.Count, 4);
+                Assert.AreEqual(result.OptionValues.Count, 5);
                 Assert.IsNotNull(result.OptionValues.FirstOrDefault(o => o.OptionKey == content.ContentOptions[0].Key 
                     && o.OptionValue == pageContent.Options[0].Value
-                    && o.OptionDefaultValue == content.ContentOptions[0].DefaultValue));
+                    && o.OptionDefaultValue == content.ContentOptions[0].DefaultValue
+                    && !o.UseDefaultValue
+                    && !o.CanEditOption));
                 Assert.IsNotNull(result.OptionValues.FirstOrDefault(o => o.OptionKey == content.ContentOptions[1].Key
                     && o.OptionValue == pageContent.Options[1].Value
-                    && o.OptionDefaultValue == content.ContentOptions[1].DefaultValue));
+                    && o.OptionDefaultValue == content.ContentOptions[1].DefaultValue
+                    && !o.UseDefaultValue
+                    && !o.CanEditOption));
                 Assert.IsNotNull(result.OptionValues.FirstOrDefault(o => o.OptionKey == content.ContentOptions[2].Key
                     && o.OptionValue == null
-                    && o.OptionDefaultValue == content.ContentOptions[2].DefaultValue));
+                    && o.OptionDefaultValue == content.ContentOptions[2].DefaultValue
+                    && o.UseDefaultValue
+                    && !o.CanEditOption));
                 Assert.IsNotNull(result.OptionValues.FirstOrDefault(o => o.OptionKey == pageContent.Options[2].Key
                     && o.OptionValue == pageContent.Options[2].Value
-                    && o.OptionDefaultValue == null));
+                    && o.OptionDefaultValue == null
+                    && o.CanEditOption));
+                Assert.IsNotNull(result.OptionValues.FirstOrDefault(o => o.OptionKey == pageContent.Options[3].Key
+                    && o.OptionValue == pageContent.Options[3].Value
+                    && o.OptionDefaultValue == null
+                    && o.CanEditOption));
             });
         }
 
@@ -88,11 +99,15 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
             var po3 = TestDataProvider.CreateNewPageContentOption(pageContent);
             po3.Key = Guid.NewGuid().ToString();
             po3.Type = OptionType.Text;
+            var po4 = TestDataProvider.CreateNewPageContentOption(pageContent);
+            po4.Key = Guid.NewGuid().ToString();
+            po4.Type = OptionType.Text;
 
             pageContent.Options = new List<PageContentOption>();
             pageContent.Options.Add(po1);
             pageContent.Options.Add(po2);
             pageContent.Options.Add(po3);
+            pageContent.Options.Add(po4);
         }
     }
 }

@@ -30,6 +30,17 @@ namespace BetterCms.Module.Root.Services
         List<IOptionValue> GetMergedOptionValues(IEnumerable<IOption> options, IEnumerable<IOption> optionValues);
 
         /// <summary>
+        /// Saves the options - adds new ones and deleted the old ones..
+        /// </summary>
+        /// <typeparam name="TOption">The type of the option entity.</typeparam>
+        /// <typeparam name="TEntity">The type of the option parent entity.</typeparam>
+        /// <param name="optionContainer">The options container entity.</param>
+        /// <param name="options">The list of new options.</param>
+        void SetOptions<TOption, TEntity>(IOptionContainer<TEntity> optionContainer, IEnumerable<IOption> options)
+            where TEntity : IEntity
+            where TOption : IDeletableOption<TEntity>, new();
+
+        /// <summary>
         /// Saves the option values: adds new option values and empty values.
         /// </summary>
         /// <typeparam name="TEntity">The type of the entity.</typeparam>

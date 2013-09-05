@@ -13,6 +13,8 @@ namespace BetterCms.Module.Root.ViewModels.Security
 
         public AccessLevel AccessLevel { get; set; }
 
+        public bool IsForRole { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="UserAccessViewModel" /> class.
         /// </summary>
@@ -29,6 +31,7 @@ namespace BetterCms.Module.Root.ViewModels.Security
             Id = accessRule.Id;
             Identity = accessRule.Identity;
             AccessLevel = accessRule.AccessLevel;
+            IsForRole = accessRule.IsForRole;
         }
 
         /// <summary>

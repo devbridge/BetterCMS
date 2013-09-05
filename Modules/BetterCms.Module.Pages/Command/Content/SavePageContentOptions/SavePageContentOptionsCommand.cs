@@ -30,7 +30,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageContentOptions
         /// <returns></returns>
         public bool Execute(PageContentOptionsViewModel model)
         {
-            if (model != null && !model.PageContentId.HasDefaultValue() && model.OptionValues != null)
+            if (model != null && !model.PageContentId.HasDefaultValue())
             {
                 var pageContent = Repository.AsQueryable<PageContent>()
                               .Where(f => f.Id == model.PageContentId && !f.IsDeleted && !f.Content.IsDeleted)

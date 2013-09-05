@@ -103,7 +103,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                 .Fetch(p => p.Layout).ThenFetchMany(l => l.LayoutOptions)
                 .AsQueryable();
             
-            if (cmsConfiguration.AccessControlEnabled)
+            if (cmsConfiguration.Security.AccessControlEnabled)
             {
                 pageQuery = pageQuery.FetchMany(f => f.AccessRules);
             }
@@ -166,9 +166,10 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             var parentOptions = page.Layout.LayoutOptions.Distinct();
             optionService.SaveOptionValues(request.OptionValues, optionValues, parentOptions, () => new PageOption { Page = page });
 
-            if (cmsConfiguration.AccessControlEnabled)
+            if (cmsConfiguration.Security.AccessControlEnabled)
             {
-                page.AccessRules.RemoveDuplicates((a, b) => a.Identity == b.Identity && a.AccessLevel == b.AccessLevel ? 0 : -1);
+                page.AccessRules.RemoveDuplicateEntities();
+
                 var accessRules = request.UserAccessList != null ? request.UserAccessList.Cast<IAccessRule>().ToList() : null;                
                 accessControlService.UpdateAccessControl(page, accessRules);
             }

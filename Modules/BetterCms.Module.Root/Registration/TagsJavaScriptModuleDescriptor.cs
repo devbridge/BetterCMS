@@ -26,7 +26,7 @@ namespace BetterCms.Module.Root.Registration
                     new JavaScriptModuleLinkTo<TagsController>(this, "deleteTagUrl", c => c.DeleteTag(null)),
                     new JavaScriptModuleLinkTo<CategoryController>(this, "saveCategoryUrl", c => c.SaveCategory(null)),
                     new JavaScriptModuleLinkTo<CategoryController>(this, "deleteCategoryUrl", c => c.DeleteCategory(null)),
-                    new JavaScriptModuleLinkTo<TagsController>(this, "tagSuggestionSeviceUrl", c => c.SuggestTags(null))
+                    new JavaScriptModuleLinkTo<TagsController>(this, "tagSuggestionServiceUrl", c => c.SuggestTags(null))
                 };
 
             Globalization = new IActionProjection[]

@@ -278,7 +278,7 @@ namespace BetterCms.Module.MediaManager.Services
 
         public string GetDownloadFileUrl(MediaType type, Guid id, string fileUrl)
         {
-            if (type == MediaType.Image || !configuration.AccessControlEnabled || !storageService.SecuredUrlsEnabled)
+            if (type == MediaType.Image || !configuration.Security.AccessControlEnabled || !storageService.SecuredUrlsEnabled)
             {
                 return fileUrl;
             }

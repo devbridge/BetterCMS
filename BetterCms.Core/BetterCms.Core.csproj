@@ -119,8 +119,11 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="DataContracts\IDeletableOption.cs" />
+    <Compile Include="DataContracts\IOptionContainer.cs" />
     <Compile Include="DataContracts\IDeleteableEntity.cs" />
     <Compile Include="DataContracts\IOptionValue.cs" />
+    <Compile Include="DataContracts\IRenderPage.cs" />
     <Compile Include="Events\EventBase.cs" />
     <Compile Include="Events\CoreEvents.cs" />
     <Compile Include="Events\SingleItemEventArgs.cs" />
@@ -177,6 +180,7 @@
     <Compile Include="Security\IAccessRule.cs" />
     <Compile Include="Security\EncryptableString.cs" />
     <Compile Include="Security\IAccessControlService.cs" />
+    <Compile Include="Security\IAccessSecuredObjectDependency.cs" />
     <Compile Include="Security\ITextEncryptor.cs" />
     <Compile Include="Security\IUserRole.cs" />
     <Compile Include="Modules\Projections\EmptyContentAccessor.cs" />

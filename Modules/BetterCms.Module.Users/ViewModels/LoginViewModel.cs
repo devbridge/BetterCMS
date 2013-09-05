@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+using BetterCms.Module.Root.ViewModels.Cms;
+
 namespace BetterCms.Module.Users.ViewModels
 {
-    public class LoginViewModel
+    public class LoginViewModel : RenderWidgetViewModel
     {
         [Required]
         public string UserName { get; set; }

@@ -21,9 +21,7 @@ namespace BetterCms.Configuration
         private const string WorkingDirectoryRootPathAttribute = "workingDirectoryRootPath";
         private const string ArticleUrlPatternAttribute = "articleUrlPattern";
         private const string UrlPatternsNode = "urlPatterns";
-        private const string InstallationNode = "installation";
-        private const string AccessControlEnabledAttribute = "accessControlEnabled";
-        private const string DefaultAccessControlListNode = "accessControlList";
+        private const string InstallationNode = "installation";        
         private const string RenderContentEndingDivAttribute = "renderContentEndingDiv";
         private const string ContentEndingDivCssClassNameAttribute = "contentEndingDivCssClassName";
 
@@ -163,19 +161,6 @@ namespace BetterCms.Configuration
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether access control is enabled.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if access control is enabled; otherwise, <c>false</c>.
-        /// </value>
-        [ConfigurationProperty(AccessControlEnabledAttribute, IsRequired = false, DefaultValue = false)]
-        public bool AccessControlEnabled
-        {
-            get { return (bool)this[AccessControlEnabledAttribute]; }
-            set { this[AccessControlEnabledAttribute] = value; }
-        }
-
-        /// <summary>
         /// Gets or sets the article url prefix.
         /// </summary>
         /// <value>
@@ -262,17 +247,7 @@ namespace BetterCms.Configuration
         {
             get { return (CmsSecurityConfigurationElement)this[SecurityNode]; }
             set { this[SecurityNode] = value; }
-        }
-
-        [ConfigurationProperty(DefaultAccessControlListNode, IsDefaultCollection = false)]
-        [ConfigurationCollection(typeof(AccessControlCollection))]
-        public AccessControlCollection DefaultAccessControlList
-        {
-            get
-            {
-                return this[DefaultAccessControlListNode] as AccessControlCollection;
-            }
-        }
+        }        
 
         [ConfigurationProperty(ModuleGalleryNode, IsRequired = true)]
         public CmsModuleGalleryConfigurationElement ModuleGallery

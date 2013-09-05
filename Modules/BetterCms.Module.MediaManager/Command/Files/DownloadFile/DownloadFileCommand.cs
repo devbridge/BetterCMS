@@ -61,7 +61,7 @@ namespace BetterCms.Module.MediaManager.Command.Files.DownloadFile
             // Load file
             var fileQuery = Repository.AsQueryable<MediaFile>(f => f.Id == id && !f.IsDeleted);
 
-            if (cmsConfiguration.AccessControlEnabled)
+            if (cmsConfiguration.Security.AccessControlEnabled)
             {
                 fileQuery = fileQuery.FetchMany(f => f.AccessRules);
             }
@@ -69,7 +69,7 @@ namespace BetterCms.Module.MediaManager.Command.Files.DownloadFile
             var file = fileQuery.ToList().FirstOne();            
 
             // Access control is ALWAYS disabled for images
-            var accesControlEnabled = cmsConfiguration.AccessControlEnabled && file.Type != MediaType.Image;
+            var accesControlEnabled = cmsConfiguration.Security.AccessControlEnabled && file.Type != MediaType.Image;
 
             if (!accesControlEnabled || !storageService.SecuredUrlsEnabled)
             {

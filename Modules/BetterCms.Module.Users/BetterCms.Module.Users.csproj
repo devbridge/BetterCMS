@@ -138,6 +138,7 @@
     <Compile Include="Models\Maps\UserMap.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\Migration201308210000.cs" />
+    <Compile Include="Models\Migrations\Migration201309040900.cs" />
     <Compile Include="Models\Migrations\UsersVersionTableMetaData.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\UserRole.cs" />
@@ -150,8 +151,10 @@
     <Compile Include="Registration\UserJsModuleIncludeDescriptor.cs" />
     <Compile Include="Services\DefaultAuthenticationService.cs" />
     <Compile Include="Services\DefaultRoleService.cs" />
+    <Compile Include="Services\DefaultUserService.cs" />
     <Compile Include="Services\IAuthenticationService.cs" />
     <Compile Include="Services\IRoleService.cs" />
+    <Compile Include="Services\IUserService.cs" />
     <Compile Include="UsersModuleConstants.cs" />
     <Compile Include="UsersModuleDescriptor.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
@@ -194,6 +197,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Models\Migrations\Migration201309040900.sqlserver.sql" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>

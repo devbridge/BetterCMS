@@ -1,5 +1,6 @@
 ﻿using BetterCms.Core.DataContracts;
 using BetterCms.Core.Models;
+using BetterCms.Core.Security;
 
 using Iesi.Collections;
 
@@ -43,6 +44,11 @@ namespace BetterCms.Core.DataAccess.DataContext.EventListeners
         protected override void DeleteEntity(IEventSource session, object entity, EntityEntry entityEntry, 
             bool isCascadeDeleteEnabled, IEntityPersister persister, ISet transientEntities)
         {
+            if (entity is IEntity)
+            {                
+                Events.CoreEvents.Instance.OnEntitySaving((IEntity)entity);
+            }
+
             if (entity is Entity && !(entity is IDeleteableEntity))
             {
                 eventListenerHelper.OnDelete(entity);

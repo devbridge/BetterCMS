@@ -223,4 +223,134 @@ describe('users.users.api.behavior', function () {
             expect(result.roles[1].isSystematic).toBe(true, 'Correctly filtered roles[1].isSystematic should be retrieved.');
         });
     });
+    
+    it('04005: Should get users list, filtered by roles using AND connector', function () {
+        var url = '/bcms-api/users/',
+            result,
+            ready = false;
+
+        var data = {
+            filterByRolesConnector: 'and',
+            filterByRoles: ['04005_1', '04005_2'],
+            order: {
+                by: [
+                    { field: 'UserName' }
+                ]
+            }
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(2, 'Total count should be 3.');
+            expect(result.data.items.length).toBe(2, 'Returned array length should be 2.');
+
+            expect(result.data.items[0].userName).toBe('04005_1', 'Correctly filtered items[0].userName should be retrieved.');
+            expect(result.data.items[1].userName).toBe('04005_2', 'Correctly filtered items[1].userName should be retrieved.');
+        });
+    });
+    
+    it('04006: Should get users list, filtered by roles using OR connector', function () {
+        var url = '/bcms-api/users/',
+            result,
+            ready = false;
+
+        var data = {
+            filterByRolesConnector: 'or',
+            filterByRoles: ['04006_1', '04006_2'],
+            order: {
+                by: [
+                    { field: 'UserName' }
+                ]
+            },
+            skip: 1,
+            take: 2
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(3, 'Total count should be 3.');
+            expect(result.data.items.length).toBe(2, 'Returned array length should be 2.');
+
+            expect(result.data.items[0].userName).toBe('04006_2', 'Correctly filtered items[0].userName should be retrieved.');
+            expect(result.data.items[1].userName).toBe('04006_3', 'Correctly filtered items[1].userName should be retrieved.');
+        });
+    });
+    
+    it('04007: Should validate username  and password', function () {
+        var url = '/bcms-api/users/validate/',
+            result,
+            ready = false;
+
+        var data = {
+            userName: '04007',
+            password: '04007'
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeTruthy('JSON data should be boolean true.');
+        });
+    });
+
+    it('04008: Should invalidate user name and password', function () {
+        var url = '/bcms-api/users/validate/',
+            result,
+            ready = false;
+
+        var data = {
+            userName: '04008',
+            password: '04008_wrong_password'
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeFalsy('JSON data should be boolean false.');
+        });
+    });
 });

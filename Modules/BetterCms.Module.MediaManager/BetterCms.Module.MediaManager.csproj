@@ -230,6 +230,7 @@
     <Compile Include="ViewModels\ImageSelectorViewModel.cs" />
     <Compile Include="ViewModels\Images\ImageViewModel.cs" />
     <Compile Include="ViewModels\MediaManager\MediaAudioViewModel.cs" />
+    <Compile Include="ViewModels\MediaManager\MediaManagerIndexViewModel.cs" />
     <Compile Include="ViewModels\MediaManager\MediaManagerItemsViewModel.cs" />
     <Compile Include="ViewModels\MediaManager\MediaPathViewModel.cs" />
     <Compile Include="ViewModels\MediaManager\MediaViewModel.cs" />

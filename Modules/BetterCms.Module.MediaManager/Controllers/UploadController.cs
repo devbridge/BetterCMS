@@ -61,7 +61,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         {
             var type = (MediaType)Enum.Parse(typeof(MediaType), folderType);
 
-            if (type != MediaType.Image && CmsConfiguration.AccessControlEnabled && !StorageService.SecuredUrlsEnabled)
+            if (type != MediaType.Image && CmsConfiguration.Security.AccessControlEnabled && !StorageService.SecuredUrlsEnabled)
             {
                 Messages.AddWarn(MediaGlobalization.TokenBasedSecurity_NotSupported_Message);
             }
@@ -95,7 +95,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         {
             var type = (MediaType)Enum.Parse(typeof(MediaType), folderType);
 
-            if (type != MediaType.Image && CmsConfiguration.AccessControlEnabled && !StorageService.SecuredUrlsEnabled)
+            if (type != MediaType.Image && CmsConfiguration.Security.AccessControlEnabled && !StorageService.SecuredUrlsEnabled)
             {
                 Messages.AddWarn(MediaGlobalization.TokenBasedSecurity_NotSupported_Message);
             }

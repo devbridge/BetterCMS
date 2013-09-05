@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Core.DataContracts;
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
-
+using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.ViewModels.Templates;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -123,7 +125,7 @@ namespace BetterCms.Module.Pages.Command.Layout.SaveTemplate
                 }
             }
 
-            SetOptions(template, request.Options);
+            OptionService.SetOptions<LayoutOption, Root.Models.Layout>(template, request.Options);
 
             Repository.Save(template);
             UnitOfWork.Commit();
@@ -145,50 +147,6 @@ namespace BetterCms.Module.Pages.Command.Layout.SaveTemplate
                                     .ToList(); 
 
             return regions;
-        }
-
-        private void SetOptions(Root.Models.Layout template, IList<OptionViewModel> options)
-        {
-            // Delete old ones
-            if (template.LayoutOptions != null)
-            {
-                foreach (var option in template.LayoutOptions.Distinct())
-                {
-                    if (options == null || options.All(o => o.OptionKey != option.Key))
-                    {
-                        Repository.Delete(option);
-                    }
-                }
-            }
-
-            // Add new ones
-            if (options != null)
-            {
-                foreach (var requestLayoutOption in options)
-                {
-                    LayoutOption option = null;
-                    if (template.LayoutOptions != null)
-                    {
-                        option = template.LayoutOptions.FirstOrDefault(o => o.Key == requestLayoutOption.OptionKey);
-                    }
-                    if (option == null)
-                    {
-                        option = new LayoutOption();
-                        if (template.LayoutOptions == null)
-                        {
-                            template.LayoutOptions = new List<LayoutOption>();
-                        }
-                        template.LayoutOptions.Add(option);
-                    }
-
-                    option.Key = requestLayoutOption.OptionKey;
-                    option.DefaultValue = requestLayoutOption.OptionDefaultValue;
-                    option.Type = requestLayoutOption.Type;
-                    option.Layout = template;
-
-                    OptionService.ValidateOptionValue(option);
-                }
-            }
         }
     }
 }

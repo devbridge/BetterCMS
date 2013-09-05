@@ -68,7 +68,7 @@ namespace BetterCms.Module.Pages.Services
         /// <returns>
         /// View model for rendering widget preview
         /// </returns>
-        public RenderPageViewModel GetContentPreviewViewModel(Guid contentId, IPrincipal user)
+        public RenderPageViewModel GetContentPreviewViewModel(Guid contentId, IPrincipal user, bool allowJavaScript)
         {
             // Creating fake region.
             var regionGuid = new Guid(regionId);
@@ -105,13 +105,18 @@ namespace BetterCms.Module.Pages.Services
 
             var contentProjection = pageContentProjectionFactory.Create(pageContent, pageContent.Content, options);
 
-            return new RenderPageViewModel
+            var pageViewModel = new RenderPageViewModel
+                                    {
+                                        Contents = new List<PageContentProjection> { contentProjection },
+                                        Stylesheets = new List<IStylesheetAccessor> { contentProjection },
+                                        Regions = new List<PageRegionViewModel> { regionViewModel }
+                                    };
+            if (allowJavaScript)
             {
-                Contents = new List<PageContentProjection> { contentProjection },
-                Stylesheets = new List<IStylesheetAccessor> { contentProjection },
-                JavaScripts = new List<IJavaScriptAccessor> { contentProjection },
-                Regions = new List<PageRegionViewModel> { regionViewModel }
-            };
+                pageViewModel.JavaScripts = new List<IJavaScriptAccessor> { contentProjection };
+            }
+
+            return pageViewModel;
         }
 
         /// <summary>

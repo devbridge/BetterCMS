@@ -1,6 +1,12 @@
-﻿using NHibernate.Event;
+﻿using System.Web;
+
+using BetterCms.Core.DataContracts;
+using BetterCms.Core.Dependencies;
+using BetterCms.Core.Security;
+using BetterCms.Core.Services;
+
+using NHibernate.Event;
 using NHibernate.Event.Default;
-using NHibernate.Proxy.DynamicProxy;
 
 namespace BetterCms.Core.DataAccess.DataContext.EventListeners
 {
@@ -12,7 +18,7 @@ namespace BetterCms.Core.DataAccess.DataContext.EventListeners
         /// <summary>
         /// Event listener helper
         /// </summary>
-        private EventListenerHelper eventListenerHelper;
+        private readonly EventListenerHelper eventListenerHelper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SaveOrUpdateEventListener" /> class.
@@ -26,13 +32,18 @@ namespace BetterCms.Core.DataAccess.DataContext.EventListeners
         /// <summary>
         /// Performs the save or update.
         /// </summary>
-        /// <param name="evt">The evt.</param>
+        /// <param name="evt">The save or update event.</param>
         /// <returns>
         /// The id used to save the entity; may be null depending on the
         /// type of id generator used and the requiresImmediateIdAccess value
         /// </returns>
         protected override object PerformSaveOrUpdate(SaveOrUpdateEvent evt)
         {
+            if (evt.Entity is IEntity)
+            {
+                Events.CoreEvents.Instance.OnEntitySaving((IEntity)evt.Entity);
+            }
+
             if (evt.Session.IsDirtyEntity(evt.Entity))
             {
                 eventListenerHelper.OnModify(evt.Entity);
@@ -61,6 +72,11 @@ namespace BetterCms.Core.DataAccess.DataContext.EventListeners
         /// </returns>
         protected override object PerformSave(object entity, object id, NHibernate.Persister.Entity.IEntityPersister persister, bool useIdentityColumn, object anything, IEventSource source, bool requiresImmediateIdAccess)
         {
+            if (entity is IEntity)
+            {
+                Events.CoreEvents.Instance.OnEntitySaving((IEntity)entity);
+            }
+
             eventListenerHelper.OnCreate(entity);
 
             return base.PerformSave(entity, id, persister, useIdentityColumn, anything, source, requiresImmediateIdAccess);
@@ -71,14 +87,19 @@ namespace BetterCms.Core.DataAccess.DataContext.EventListeners
         /// </summary>
         /// <param name="evt">The event.</param>
         /// <param name="entity">The entity.</param>
-        /// <param name="persister">The persister.</param>
+        /// <param name="persister">The entity's persister.</param>
         protected override void PerformUpdate(SaveOrUpdateEvent evt, object entity, NHibernate.Persister.Entity.IEntityPersister persister)
         {
+            if (entity is IEntity)
+            {
+                Events.CoreEvents.Instance.OnEntitySaving((IEntity)entity);
+            }
+
             if (evt.Session.IsDirtyEntity(entity))
             {
                 eventListenerHelper.OnModify(entity);
             }
-
+            
             base.PerformUpdate(evt, entity, persister);
         }
     }

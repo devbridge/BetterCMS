@@ -42,27 +42,31 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                             {
                                   new OptionValueEditViewModel
                                       {
-                                          OptionValue = content.ContentOptions[0].DefaultValue,
+                                          // Must be updated
                                           OptionKey = pageContent.Options[0].Key,
-                                          OptionDefaultValue = content.ContentOptions[0].DefaultValue
+                                          OptionValue = content.ContentOptions[0].DefaultValue,
+                                          UseDefaultValue = false
                                       },
                                   new OptionValueEditViewModel
                                       {
-                                          // Will be deleted because of null value
+                                          // Must be deleted
+                                          OptionKey = pageContent.Options[1].Key,
                                           OptionValue = null,
-                                          OptionKey = pageContent.Options[1].Key
+                                          UseDefaultValue = true
                                       },
                                   new OptionValueEditViewModel
                                       {
-                                          OptionValue = pageContent.Options[2].Value,
-                                          OptionKey = pageContent.Options[2].Key
+                                          // Must be updated
+                                          OptionKey = pageContent.Options[2].Key,
+                                          OptionValue = null,
+                                          UseDefaultValue = false
                                       },
                                   new OptionValueEditViewModel
                                       {
-                                          // Random value
+                                          // Must be created
                                           OptionValue = randomOptionValue.Value,
                                           OptionKey = randomOptionValue.Key,
-                                          Type = OptionType.Text,
+                                          Type = OptionType.Text
                                       }
 
                             },
@@ -87,8 +91,12 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                         && !pco.PageContent.IsDeleted)
                     .ToList();
                 Assert.AreEqual(results.Count, 3);
-                Assert.IsNotNull(results.FirstOrDefault(pco => pco.Key == pageContent.Options[2].Key
-                    && pco.Value == pageContent.Options[2].Value));
+                Assert.IsNotNull(results.FirstOrDefault(pco => {
+                    return pco.Key == pageContent.Options[0].Key && pco.Value == content.ContentOptions[0].DefaultValue;
+                }));
+                Assert.IsNotNull(results.FirstOrDefault(pco => {
+                    return pco.Key == pageContent.Options[2].Key && pco.Value == null;
+                }));
                 Assert.IsNotNull(results.FirstOrDefault(pco => pco.Key == randomOptionValue.Key
                     && pco.Value == randomOptionValue.Value));
             });

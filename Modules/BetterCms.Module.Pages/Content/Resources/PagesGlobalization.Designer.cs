@@ -1033,7 +1033,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Default Option Value.
+        ///   Looks up a localized string similar to Default Value.
         /// </summary>
         public static string EditOptionsValues_OptionDefaultValueColumn {
             get {
@@ -1042,7 +1042,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Option Name.
+        ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string EditOptionsValues_OptionKeyColumn {
             get {
@@ -1060,11 +1060,20 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Option Value.
+        ///   Looks up a localized string similar to Value.
         /// </summary>
         public static string EditOptionsValues_OptionValueColumn {
             get {
                 return ResourceManager.GetString("EditOptionsValues_OptionValueColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use default.
+        /// </summary>
+        public static string EditOptionsValues_UseDefaultValueColumn {
+            get {
+                return ResourceManager.GetString("EditOptionsValues_UseDefaultValueColumn", resourceCulture);
             }
         }
         

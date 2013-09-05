@@ -66,9 +66,10 @@ namespace BetterCms.Module.MediaManager.Command.Files.SaveFile
             tagService.SaveMediaTags(mediaFile, request.Tags, out newTags);
 
             // Save user access if enabled.
-            if (cmsConfiguration.AccessControlEnabled)
+            if (cmsConfiguration.Security.AccessControlEnabled)
             {
-                mediaFile.AccessRules.RemoveDuplicates((a, b) => a.Identity == b.Identity && a.AccessLevel == b.AccessLevel ? 0 : -1);
+                mediaFile.AccessRules.RemoveDuplicateEntities();
+
                 var accessRules = request.UserAccessList != null ? request.UserAccessList.Cast<IAccessRule>().Distinct().ToList() : null;
                 accessControlService.UpdateAccessControl(mediaFile, accessRules);
             }

@@ -125,6 +125,7 @@
     <Compile Include="Command\Page\AddNewPage\AddNewPageCommand.cs" />
     <Compile Include="Command\Page\AddNewPage\AddNewPageCommandRequest.cs" />
     <Compile Include="Command\Widget\PreviewWidget\PreviewWidgetCommand.cs" />
+    <Compile Include="Command\Widget\PreviewWidget\PreviewWidgetCommandRequest.cs" />
     <Compile Include="Events\CategoryEvents.cs" />
     <Compile Include="Events\TagEvents.cs" />
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
@@ -276,8 +277,6 @@
     <Compile Include="ViewModels\Filter\PagesFilter.cs" />
     <Compile Include="ViewModels\History\ContentHistoryItem.cs" />
     <Compile Include="ViewModels\History\ContentHistoryViewModel.cs" />
-    <Compile Include="ViewModels\Option\IOptionValuesContainer.cs" />
-    <Compile Include="ViewModels\Option\IOptionsContainer.cs" />
     <Compile Include="ViewModels\Page\RenderPageCategoryViewModel.cs" />
     <Compile Include="ViewModels\Page\RenderPageImageViewModel.cs" />
     <Compile Include="ViewModels\Page\RenderPagePropertiesViewModel.cs" />
@@ -466,9 +465,6 @@
     <EmbeddedResource Include="Views\Widgets\EditServerControlWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Widgets\Partial\Widget.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Widgets\Widgets.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -499,6 +495,9 @@
     <EmbeddedResource Include="Views\Filter\PagesFilterTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Views\Page\Pages.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Views\Option\EditOptions.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -508,7 +507,7 @@
     <EmbeddedResource Include="Views\Option\Partial\OptionCell.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\Pages.cshtml" />
+    <EmbeddedResource Include="Views\Option\Partial\UseDefaultValueCell.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

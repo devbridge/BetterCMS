@@ -35,7 +35,11 @@ namespace BetterCms.Test.Module
 
             Mock<ICmsConfiguration> cmsConfigurationMock = new Mock<ICmsConfiguration>();
             cmsConfigurationMock.Setup(f => f.Storage).Returns(storageConfiguration);
-            cmsConfigurationMock.Setup(f => f.AccessControlEnabled).Returns(accessControlEnabled);
+
+            var securityConfiguration = new Mock<ICmsSecurityConfiguration>();
+            securityConfiguration.Setup(f => f.AccessControlEnabled).Returns(accessControlEnabled);
+
+            cmsConfigurationMock.Setup(f => f.Security).Returns(securityConfiguration.Object);
 
             return cmsConfigurationMock.Object;
         }

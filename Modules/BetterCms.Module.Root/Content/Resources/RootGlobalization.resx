@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AccessControl_UserAccess_AddNewRole" xml:space="preserve">
+    <value>Add Role</value>
+  </data>
   <data name="AccessControl_UserAccess_AddNewUser" xml:space="preserve">
     <value>Add New User</value>
   </data>
@@ -372,6 +375,9 @@
   <data name="SaveCategory_CategoryExists_Message" xml:space="preserve">
     <value>Category already exists. </value>
   </data>
+  <data name="SaveOptions_CannotDeleteOption_Message" xml:space="preserve">
+    <value>Cannot delete option {0}, because it's marked as non-deletable.</value>
+  </data>
   <data name="SaveTag_TagExists_Message" xml:space="preserve">
     <value>Tag already exists.</value>
   </data>
@@ -459,6 +465,9 @@
   <data name="UserRole_PublishContent" xml:space="preserve">
     <value>Publish / Unpublish Content, Restore Content from History</value>
   </data>
+  <data name="Validation_CurrentUserHasNoRightsToUpdateOrDelete_Message" xml:space="preserve">
+    <value>Current user {0} has no access rights to update or delete the '{1}' secured record.</value>
+  </data>
   <data name="Validation_Email_Message" xml:space="preserve">
     <value>Invalid email address.</value>
   </data>
@@ -479,6 +488,9 @@
   </data>
   <data name="Validation_RequiredAttribute_Message" xml:space="preserve">
     <value>Field is required.</value>
+  </data>
+  <data name="Validation_SecuredObjectShouldHaveAccess_Message" xml:space="preserve">
+    <value>User access rules can't be updated because of the complete access lose.</value>
   </data>
   <data name="Validation_StringLengthAttribute_Message" xml:space="preserve">
     <value>The field must be the string with a maximum length of {1}.</value>

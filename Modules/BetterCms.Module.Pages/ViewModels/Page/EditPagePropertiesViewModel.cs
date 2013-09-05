@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
-using BetterCms.Core.Security;
+
 using BetterCms.Module.MediaManager.ViewModels;
+
 using BetterCms.Module.Pages.Content.Resources;
-using BetterCms.Module.Pages.ViewModels.Option;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Option;
 using BetterCms.Module.Root.ViewModels.Security;
@@ -16,7 +17,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
     /// <summary>
     /// Edit basic page properties view model.
     /// </summary>
-    public class EditPagePropertiesViewModel : IOptionValuesContainer
+    public class EditPagePropertiesViewModel
     {
         /// <summary>
         /// Gets or sets the page id.
@@ -184,15 +185,6 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public ImageSelectorViewModel FeaturedImage { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EditPagePropertiesViewModel" /> class.
-        /// </summary>
-        public EditPagePropertiesViewModel()
-        {
-            Image = new ImageSelectorViewModel();
-            UserAccessList = new List<UserAccessViewModel>();
-        }
-
-        /// <summary>
         /// Gets or sets a value indicating whether this instance is in sitemap.
         /// </summary>
         /// <value>
@@ -231,6 +223,15 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// The user access list.
         /// </value>
         public IList<UserAccessViewModel> UserAccessList { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EditPagePropertiesViewModel" /> class.
+        /// </summary>
+        public EditPagePropertiesViewModel()
+        {
+            Image = new ImageSelectorViewModel();
+            UserAccessList = new List<UserAccessViewModel>();
+        }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.security', ['bcms.jquery', 'bcms.ko.extenders'], function ($, ko) {
+bettercms.define('bcms.security', ['bcms.jquery', 'bcms.ko.extenders', 'bcms.messages'], function ($, ko, messages) {
     'use strict';
 
     var security = {},
@@ -60,28 +60,126 @@ bettercms.define('bcms.security', ['bcms.jquery', 'bcms.ko.extenders'], function
         return false;
     };
 
+    /**
+    * Extend knockout: add maximum length validation
+    */
+    ko.extenders.uniqueAccessRuleIdentity = function (target, options) {
+        var ruleName = 'uniqueAccessRuleIdentity',
+            message = options.message || 'Identity {0} exits!';
+        
+        return ko.extenders.koValidationExtender(ruleName, target, function (newValue) {
+            var hasError = existIdentity(options.identities(), newValue, options.isRole),
+                showMessage = hasError ? $.format(message, newValue) : '';
+
+            target.validator.setError(ruleName, hasError, showMessage);
+        });
+    };
+    
+    function existIdentity(identityList, identityName, isRole) {
+        var i,
+            len = identityList.length,
+            identityNameTrimmedUpper = $.trim(identityName).toUpperCase();
+                
+        for (i = 0; i < len; i++) {
+            var item = identityList[i];
+            if (item.IsForRole() === isRole && $.trim(item.Identity()).toUpperCase() == identityNameTrimmedUpper) {
+                return true;
+            }
+        }
+
+        return false;
+    }            
+    
     function UserAccessViewModel(item) {
         this.Identity = ko.observable(item.Identity);
         this.AccessLevel = ko.observable(item.AccessLevel || 3);
+        this.IsForRole = ko.observable(item.IsForRole);
     }
 
-    security.createUserAccessViewModel = function(accessList) {
-        var model = {
-            UserAccessList: ko.observableArray(),
-            newUser: ko.observable(''),
-            addNewUser: function() {
-                if (!model.newUser()) {
-                    return;
-                }
-                model.UserAccessList.push(new UserAccessViewModel({ Identity: model.newUser() }));
-                model.newUser('');
-            },
-            removeUser: function(userAccessViewModel) {
-                model.UserAccessList.remove(userAccessViewModel);
-            },
-            getPropertyIndexer: function(i, propName) {
-                return 'UserAccessList[' + i + '].' + propName;
-            }
+    security.createUserAccessViewModel = function (accessList) {
+        var messageBox =
+                messages.box({
+                container: $(".bcms-modal")
+                }),
+            identities = ko.observableArray(),
+            model = {
+                UserAccessList: identities,
+                newUserName: ko.observable('').extend({ uniqueAccessRuleIdentity: { identities: identities, isRole: false } }),
+                newRoleName: ko.observable('').extend({ uniqueAccessRuleIdentity: { identities: identities, isRole: true } }),
+                isInAddUserMode: ko.observable(false),
+                isInAddRoleMode: ko.observable(false),
+                hasAddNameFocus: ko.observable('none'),
+
+                clearNewUserInput: function () {
+                    model.isInAddUserMode(false);
+                },
+                
+                clearNewRoleInput : function() {
+                    model.isInAddRoleMode(false);
+                },
+                
+                gotoAddNewUser: function () {
+                    if (model.isInAddUserMode() && !!model.newUserName()) {
+                        model.addNewUser();
+                    } else {
+                        model.hasAddNameFocus('none');
+                        model.isInAddRoleMode(false);
+                        model.isInAddUserMode(!model.isInAddUserMode());
+                        model.newUserName('');
+                    
+                        setTimeout(function () {
+                            model.hasAddNameFocus('user');
+                        }, 50);
+                    }
+                },
+            
+                gotoAddNewRole: function () {
+                    if (model.isInAddRoleMode() && !!model.newRoleName()) {
+                        model.addNewRole();
+                    } else {
+                        model.hasAddNameFocus('none');
+                        model.isInAddUserMode(false);
+                        model.isInAddRoleMode(!model.isInAddRoleMode());
+                        model.newRoleName('');
+                    
+                        setTimeout(function() {
+                            model.hasAddNameFocus('role');
+                        }, 50);
+                    }
+                },
+            
+                addNewUser: function() {
+                    var name = model.newUserName();
+                    if (!name || model.newUserName.hasError()) {
+                        return;
+                    }
+                
+                    model.UserAccessList.push(new UserAccessViewModel({ Identity: name, IsForRole: false }));
+                    model.newUserName('');
+                    model.isInAddUserMode(false);
+                    model.hasAddNameFocus('none');
+                },
+            
+                addNewRole: function () {
+                    var name = model.newRoleName();
+                    
+                    if (!name || model.newRoleName.hasError()) {
+                        return;
+                    }
+                    
+                    model.UserAccessList.push(new UserAccessViewModel({ Identity: name, IsForRole: true }));
+                    model.newRoleName('');
+                    model.isInAddRoleMode(false);
+                    model.hasAddNameFocus('none');
+                },
+            
+                removeUser: function(userAccessViewModel) {
+                    model.UserAccessList.remove(userAccessViewModel);
+                },
+            
+                getPropertyIndexer: function(i, propName) {
+                    return 'UserAccessList[' + i + '].' + propName;
+                }                         
         };
 
         $.each(accessList, function(i, item) {

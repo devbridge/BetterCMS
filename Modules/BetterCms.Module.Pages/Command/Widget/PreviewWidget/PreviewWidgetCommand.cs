@@ -1,6 +1,4 @@
-﻿using System;
-
-using BetterCms.Core.Mvc.Commands;
+﻿using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Mvc;
@@ -11,12 +9,12 @@ namespace BetterCms.Module.Pages.Command.Widget.PreviewWidget
     /// <summary>
     /// Command for previewing widget
     /// </summary>
-    public class PreviewWidgetCommand : CommandBase, ICommand<Guid, RenderPageViewModel>
+    public class PreviewWidgetCommand : CommandBase, ICommand<PreviewWidgetCommandRequest, RenderPageViewModel>
     {
         /// <summary>
         /// The preview service
         /// </summary>
-        private IPreviewService previewService;
+        private readonly IPreviewService previewService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PreviewWidgetCommand" /> class.
@@ -30,11 +28,11 @@ namespace BetterCms.Module.Pages.Command.Widget.PreviewWidget
         /// <summary>
         /// Executes the specified widget id.
         /// </summary>
-        /// <param name="widgetId">The widget id.</param>
-        /// <returns></returns>
-        public RenderPageViewModel Execute(Guid widgetId)
+        /// <param name="request">The request.</param>
+        /// <returns>Rendered page view model</returns>
+        public RenderPageViewModel Execute(PreviewWidgetCommandRequest request)
         {
-            return previewService.GetContentPreviewViewModel(widgetId, Context.User);
+            return previewService.GetContentPreviewViewModel(request.WidgetId, Context.User, request.IsJavaScriptEnabled);
         }
     }
 }

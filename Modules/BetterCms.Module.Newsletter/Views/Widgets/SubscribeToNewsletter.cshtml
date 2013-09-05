@@ -15,7 +15,14 @@
     bool submitDisabled = false;
     if (ViewData["Submit is disabled"] != null)
     {
-        Boolean.TryParse(ViewData["Submit is disabled"].ToString(), out submitDisabled);
+        if (ViewData["Submit is disabled"] is bool)
+        {
+            submitDisabled = (bool)ViewData["Submit is disabled"];
+        }
+        else
+        {
+            Boolean.TryParse(ViewData["Submit is disabled"].ToString(), out submitDisabled);
+        }
     }
 }
 

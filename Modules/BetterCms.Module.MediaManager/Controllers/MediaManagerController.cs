@@ -50,14 +50,16 @@ namespace BetterCms.Module.MediaManager.Controllers
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.DeleteContent)]
         public ActionResult Index()
         {
-            if (CmsConfiguration.AccessControlEnabled && !StorageService.SecuredUrlsEnabled)
+            var viewModel = new MediaManagerIndexViewModel();
+            if (CmsConfiguration.Security.AccessControlEnabled && !StorageService.SecuredUrlsEnabled)
             {
-                Messages.AddWarn(MediaGlobalization.TokenBasedSecurity_NotSupported_Message);
+                viewModel.CustomFilesMessages = new UserMessages();
+                viewModel.CustomFilesMessages.AddWarn(MediaGlobalization.TokenBasedSecurity_NotSupported_Message);
             }
 
             var images = GetCommand<GetImagesCommand>().ExecuteCommand(new MediaManagerViewModel());
             var success = images != null;
-            var view = RenderView("Index", new MediaImageViewModel());
+            var view = RenderView("Index", viewModel);
             
             return ComboWireJson(success, view, images, JsonRequestBehavior.AllowGet);
         }

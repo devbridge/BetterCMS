@@ -107,6 +107,11 @@ namespace BetterCms.Module.MediaManager.Controllers
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult FileInsert()
         {
+            if (CmsConfiguration.Security.AccessControlEnabled && !StorageService.SecuredUrlsEnabled)
+            {
+                Messages.AddWarn(MediaGlobalization.TokenBasedSecurity_NotSupported_Message);
+            }
+
             var files = GetCommand<GetFilesCommand>().ExecuteCommand(new MediaManagerViewModel());
             var success = files != null;
             var view = RenderView("FileInsert", new MediaImageViewModel());

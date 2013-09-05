@@ -24,21 +24,42 @@
                     <div class="bcms-access-line clearfix">
                         <div class="bcms-access-value">
                             <div class="btn-acces-minus" data-bind="click: $parent.removeUser">&nbsp;</div>
-                            <span data-bind="text: Identity"></span>
+                            <span data-bind="visible: IsForRole()">Role:</span><span data-bind="visible: !IsForRole()">User:</span>&nbsp;<span data-bind="text: Identity"></span>
                         </div>
                         <div class="bcms-access-value"><input type="radio" value="3" data-bind="checked: AccessLevel, attr: { name: $parent.getPropertyIndexer($index(), 'AccessLevel') }" /></div>
                         <div class="bcms-access-value"><input type="radio" value="2" data-bind="checked: AccessLevel, attr: { name: $parent.getPropertyIndexer($index(), 'AccessLevel') }" /></div>
                         <div class="bcms-access-value"><input type="radio" value="1" data-bind="checked: AccessLevel, attr: { name: $parent.getPropertyIndexer($index(), 'AccessLevel') }" /></div>
-                    </div>
-                    <input type="hidden" data-bind="attr: { name: $parent.getPropertyIndexer($index(), 'Identity'), value: Identity }" />
+                    </div>                    
+                    <input type="hidden" data-bind="attr: { name: $parent.getPropertyIndexer($index(), 'Identity') }, value: Identity" />
+                    <input type="hidden" data-bind="attr: { name: $parent.getPropertyIndexer($index(), 'IsForRole') }, valueBinder: IsForRole" />
                 </div>
-
                 <div class="bcms-access-line clearfix">
                     <div class="bcms-access-value-add">
-                        <div class="btn-acces-plus" data-bind="click: addNewUser">&nbsp;</div>
-                        @RootGlobalization.AccessControl_UserAccess_AddNewUser
-                        <input type="text" value="" data-bind="value: newUser, valueUpdate: 'afterkeydown', enterPress: addNewUser" />
-                    </div>
+                        <div class="btn-acces-plus" data-bind="click: gotoAddNewUser">&nbsp;</div>
+                        <span data-bind="visible: !isInAddUserMode(), click: gotoAddNewUser">@RootGlobalization.AccessControl_UserAccess_AddNewUser</span>
+                        <input type="text" data-bind="
+                            css: { 'bcms-tag-validation-error': newUserName.hasError() },
+                            hasfocus: hasAddNameFocus() == 'user', 
+                            value: newUserName, 
+                            visible: isInAddUserMode, 
+                            valueUpdate: 'afterkeydown', 
+                            enterPress: addNewUser,
+                            escPress: clearNewUserInput" />
+                    </div>                    
+                </div>
+                <div class="bcms-access-line clearfix">
+                    <div class="bcms-access-value-add">
+                        <div class="btn-acces-plus" data-bind="click: gotoAddNewRole">&nbsp;</div>
+                        <span data-bind="visible: !isInAddRoleMode(), click: gotoAddNewRole">@RootGlobalization.AccessControl_UserAccess_AddNewRole</span>
+                        <input type="text" data-bind="
+                            css: { 'bcms-tag-validation-error': newRoleName.hasError() },
+                            hasfocus: hasAddNameFocus() == 'role', 
+                            value: newRoleName, 
+                            visible: isInAddRoleMode, 
+                            valueUpdate: 'afterkeydown', 
+                            enterPress: addNewRole,
+                            escPress: clearNewRoleInput" />
+                    </div>                     
                 </div>
             </div>
         </div>

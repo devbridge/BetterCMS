@@ -29,6 +29,11 @@
         /// The editable grid drop down cell template.
         /// </summary>
         public const string EditableGridDropDownCellTemplate = "~/Areas/bcms-root/Views/Shared/EditableGrid/Partial/DropDownCell.cshtml";
+        
+        /// <summary>
+        /// The editable grid boolean cell template.
+        /// </summary>
+        public const string EditableGridBooleanCellTemplate = "~/Areas/bcms-root/Views/Shared/EditableGrid/Partial/BooleanCell.cshtml";
 
         /// <summary>
         /// The editable grid header template.
@@ -86,12 +91,12 @@
             /// <summary>
             /// Administration permission for Widgets, Templates, Users, etc.
             /// </summary>
-            public const string Administration = "BcmsAdministration";
+            public const string Administration = "BcmsAdministration";            
 
             /// <summary>
             /// All CMS roles
             /// </summary>
-            public static string[] AllRoles = new[] {EditContent, PublishContent, DeleteContent, Administration};
+            public static string[] AllRoles = new[] { EditContent, PublishContent, DeleteContent, Administration };
 
             /// <summary>
             /// Multiples the roles.
