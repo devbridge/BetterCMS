@@ -1380,7 +1380,8 @@ a.bcms-btn-close {
         }
 
 .bcms-checkbox-holder {
-    padding: 5px 0;
+    display: inline-block;
+    padding: 5px 10px 5px 0;
     color: #595959;
     font-size: 12px;
 }
