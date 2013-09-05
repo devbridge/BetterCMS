@@ -1921,12 +1921,12 @@ th.bcms-tables-nohover:hover {
     background-position: right -970px;
 }
 
-.bcms-table-row-active .bcms-editor-field-box {
+/*.bcms-table-row-active .bcms-editor-field-box {
     background: #fff;
     border-color: #1894e4;
     box-shadow: 0 0 3px 0 rgba(24,145,230,0.35);
     outline: none;
-}
+}*/
 
 .bcms-table-row-active .bcms-editor-field-area {
     background: #fff;

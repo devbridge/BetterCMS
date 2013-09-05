@@ -1487,6 +1487,10 @@ input.bcms-grid-input:focus {
     -moz-box-sizing: border-box;
 }
 
+    .bcms-media-history-holder .bcms-messages-type-1 {
+        margin: -10px -10px 10px;
+    }
+
 .bcms-media-history-image-holder img {
     max-width: 100%;
 }
