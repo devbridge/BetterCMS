@@ -7,11 +7,11 @@ using BetterCms.Core.Models;
 namespace BetterCms.Module.Root.Models
 {
     [Serializable]
-    public class ContentOption : EquatableEntity<ContentOption>, IOption
+    public class ContentOption : EquatableEntity<ContentOption>, IDeletableOption<Content>
     {
         public ContentOption()
         {
-            IsDeletable = false;
+            IsDeletable = true;
         }
 
         public virtual Content Content { get; set; }
@@ -34,6 +34,34 @@ namespace BetterCms.Module.Root.Models
             {
                 DefaultValue = value;
             }
+        }
+
+        Content IDeletableOption<Content>.Entity
+        {
+            get
+            {
+                return Content;
+            }
+            set
+            {
+                Content = value;
+            }
+        }
+
+        public virtual ContentOption Clone()
+        {
+            return CopyDataTo(new ContentOption());
+        }
+
+        public virtual ContentOption CopyDataTo(ContentOption contentOption)
+        {
+            contentOption.Key = Key;
+            contentOption.Type = Type;
+            contentOption.DefaultValue = DefaultValue;
+            contentOption.IsDeletable = IsDeletable;
+            contentOption.Content = Content;
+
+            return contentOption;
         }
     }
 }

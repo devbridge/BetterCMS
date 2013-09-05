@@ -7,11 +7,11 @@ using BetterCms.Core.Models;
 namespace BetterCms.Module.Root.Models
 {
     [Serializable]
-    public class LayoutOption : EquatableEntity<LayoutOption>, IOption
+    public class LayoutOption : EquatableEntity<LayoutOption>, IDeletableOption<Layout>
     {
         public LayoutOption()
         {
-            IsDeletable = false;
+            IsDeletable = true;
         }
 
         public virtual Layout Layout { get; set; }
@@ -33,6 +33,18 @@ namespace BetterCms.Module.Root.Models
             set
             {
                 DefaultValue = value;
+            }
+        }
+        
+        Layout IDeletableOption<Layout>.Entity
+        {
+            get
+            {
+                return Layout;
+            }
+            set
+            {
+                Layout = value;
             }
         }
     }

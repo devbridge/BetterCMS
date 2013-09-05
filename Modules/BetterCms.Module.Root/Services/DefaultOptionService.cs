@@ -190,6 +190,67 @@ namespace BetterCms.Module.Root.Services
         }
 
         /// <summary>
+        /// Saves the options - adds new ones and deleted the old ones..
+        /// </summary>
+        /// <typeparam name="TOption">The type of the option entity.</typeparam>
+        /// <typeparam name="TEntity">The type of the option parent entity.</typeparam>
+        /// <param name="optionContainer">The options container entity.</param>
+        /// <param name="options">The list of new options.</param>
+        public void SetOptions<TOption, TEntity>(IOptionContainer<TEntity> optionContainer, IEnumerable<IOption> options)
+            where TEntity : IEntity
+            where TOption : IDeletableOption<TEntity>, new()
+        {
+            // Delete old ones
+            if (optionContainer.Options != null)
+            {
+                foreach (var option in optionContainer.Options.Distinct())
+                {
+                    if (options == null || options.All(o => o.Key != option.Key))
+                    {
+                        if (!option.IsDeletable)
+                        {
+                            var message = string.Format(RootGlobalization.SaveOptions_CannotDeleteOption_Message, option.Key);
+                            var logMessage = string.Format("Cannot delete option {0}, because it's marked as non-deletable.", option.Id);
+                            throw new ValidationException(() => message, logMessage);
+                        }
+
+                        repository.Delete(option);
+                    }
+                }
+            }
+
+            // Add new / update existing
+            if (options != null)
+            {
+                var optionsList = new List<IDeletableOption<TEntity>>();
+                if (optionContainer.Options != null)
+                {
+                    optionsList.AddRange(optionContainer.Options);
+                }
+
+                foreach (var requestLayoutOption in options)
+                {
+                    TOption option = (TOption)optionsList.FirstOrDefault(o => o.Key == requestLayoutOption.Key);
+
+                    if (option == null)
+                    {
+                        option = new TOption();
+                        optionsList.Add(option);
+                    }
+
+                    option.Key = requestLayoutOption.Key;
+                    option.Value = requestLayoutOption.Value;
+                    option.Type = requestLayoutOption.Type;
+                    option.Entity = (TEntity)optionContainer;
+
+                    ValidateOptionValue(option);
+                }
+
+                optionContainer.Options = optionsList;
+            }
+        }
+
+        /// <summary>
         /// Validates the option value.
         /// </summary>
         /// <param name="option">The option.</param>

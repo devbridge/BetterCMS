@@ -375,6 +375,9 @@
   <data name="SaveCategory_CategoryExists_Message" xml:space="preserve">
     <value>Category already exists. </value>
   </data>
+  <data name="SaveOptions_CannotDeleteOption_Message" xml:space="preserve">
+    <value>Cannot delete option {0}, because it's marked as non-deletable.</value>
+  </data>
   <data name="SaveTag_TagExists_Message" xml:space="preserve">
     <value>Tag already exists.</value>
   </data>

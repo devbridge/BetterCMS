@@ -149,6 +149,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.type = ko.observable();
                 self.useDefaultValue = ko.observable(false);
                 self.canEditOption = ko.observable(false);
+                self.canDeleteOption = true;
 
                 // Additional values
                 self.typeName = ko.observable();
@@ -245,6 +246,8 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.useDefaultValue.subscribe(function(newValue) {
                     if (newValue) {
                         self.value(self.defaultValue());
+                    } else {
+                        self.value('');
                     }
                 });
 
@@ -255,6 +258,9 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.type(item.Type);
                 self.canEditOption(item.CanEditOption !== false);
                 self.useDefaultValue(!self.canEditOption() && item.UseDefaultValue === true);
+                self.canDeleteOption = item.CanDeleteOption !== false;
+                
+                // Disable editing and deletion
                 self.changeFieldsEditing();
             };
 
@@ -267,7 +273,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             };
 
             OptionViewModel.prototype.changeFieldsEditing = function () {
-                return;
+                this.deletingIsDisabled(!this.canDeleteOption);
             };
             
             OptionViewModel.prototype.getRowId = function () {
@@ -349,7 +355,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 var type = self.type(),
                     mustBeNumber = type == optionTypes.floatType || type == optionTypes.integerType,
                     mustBeDate = type == optionTypes.dateTimeType,
-                    hasError = newValue &&
+                    hasError = !self.useDefaultValue() && newValue &&
                         ((mustBeNumber && isNaN(Number(newValue.replace(',', '.')))) 
                             || (mustBeDate && !datepicker.isDateValid(newValue))),
                     showMessage,

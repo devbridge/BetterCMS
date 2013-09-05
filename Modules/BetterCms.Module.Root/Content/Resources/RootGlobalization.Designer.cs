@@ -835,6 +835,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot delete option {0}, because it&apos;s marked as non-deletable..
+        /// </summary>
+        public static string SaveOptions_CannotDeleteOption_Message {
+            get {
+                return ResourceManager.GetString("SaveOptions_CannotDeleteOption_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tag already exists..
         /// </summary>
         public static string SaveTag_TagExists_Message {
