@@ -1,5 +1,4 @@
-﻿@using BetterCms.Module.Root
-@using BetterCms.Module.Root.Mvc.Grids
+﻿@using BetterCms.Module.Root.Mvc.Grids
 
 @model EditableGridColumn
 
@@ -8,10 +7,27 @@
 <!-- /ko -->
 
 <!-- ko ifnot: canEditOption() -->
-    @Html.Partial(RootModuleConstants.EditableGridBooleanCellTemplate, new EditableGridBooleanColumn(Model.HeaderTitle, Model.SortColumn, Model.ValueBind)
-                                                                            {
-                                                                                HiddenFieldName = Model.HiddenFieldName,
-                                                                                HeaderAttributes = Model.HeaderAttributes,
-                                                                                AutoFocus = Model.AutoFocus
-                                                                            })
+<td>
+    @if (Model.CanBeEdited)
+    {
+        <!-- ko if: isActive() -->
+        <input type="checkbox" class="bcms-checkbox-holder bcms-pointer" style="position: absolute;" data-bind="
+            checked: @(Model.ValueBind),
+            click: onItemSelect,
+            event: {blur: onBlurField, focus: onItemSelect},
+            enterPress: onSave, 
+            afterRender: initInput($element, @Model.ValueBind),
+            escPress: onCancelEdit
+            @(Model.AutoFocus ? ", hasfocus: isActive() && hasFocus" : "") " />
+        
+        <div style="width: 100%; margin: 0; padding: 0;" data-bind="click: changeUseDefaultValue">&nbsp;</div>
+        <!-- /ko -->
+        <!-- ko ifnot: isActive() -->
+    }
+    <input type="checkbox" class="bcms-checkbox-holder" data-bind="checked: @(Model.ValueBind)(), click: onOpen" />
+    @if (Model.CanBeEdited)
+    {
+        <!-- /ko -->
+    }
+</td>
 <!-- /ko -->

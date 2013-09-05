@@ -295,6 +295,22 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
             function OptionValueViewModel(parent, item) {
                 _super.call(this, parent, item);
+
+                var self = this;
+
+                self.changeUseDefaultValue = function (data, event) {
+                    if (self.isActive()) {
+                        self.useDefaultValue(!self.useDefaultValue());
+                        bcms.stopEventPropagation(event);
+                        if (self.useDefaultValue.domElement) {
+                            $(self.useDefaultValue.domElement).focus();
+                        }
+                        
+                        return false;
+                    }
+
+                    return true;
+                };
             }
 
             function changeFieldEditing(field, disable) {
