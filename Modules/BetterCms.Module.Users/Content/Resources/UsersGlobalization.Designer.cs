@@ -313,6 +313,15 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit user profile.
+        /// </summary>
+        public static string EditUserProfile_Window_Title {
+            get {
+                return ResourceManager.GetString("EditUserProfile_Window_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New +.
         /// </summary>
         public static string Role_Dialog_AddNew {

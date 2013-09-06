@@ -9,8 +9,10 @@ using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
 using BetterCms.Module.Users.Commands.User.DeleteUser;
 using BetterCms.Module.Users.Commands.User.GetUser;
+using BetterCms.Module.Users.Commands.User.GetUserProfile;
 using BetterCms.Module.Users.Commands.User.GetUsers;
 using BetterCms.Module.Users.Commands.User.SaveUser;
+using BetterCms.Module.Users.Commands.User.SaveUserProfile;
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.ViewModels.User;
 
@@ -124,7 +126,30 @@ namespace BetterCms.Module.Users.Controllers
         [HttpGet]
         public ActionResult EditProfile()
         {
-            return null;
+            var model = GetCommand<GetUserProfileCommand>().ExecuteCommand(User.Identity.Name);
+            var view = RenderView("EditUserProfile", model);
+
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Saves the user profile.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>
+        /// Json status result
+        /// </returns>
+        [HttpPost]
+        public ActionResult SaveUserProfile(EditUserProfileViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var success = GetCommand<SaveUserProfileCommand>().ExecuteCommand(model);
+
+                return WireJson(success);
+            }
+
+            return WireJson(false);
         }
     }
 }

@@ -120,8 +120,10 @@
     <Compile Include="Commands\Role\SearchRoles\SearchRolesCommand.cs" />
     <Compile Include="Commands\User\DeleteUser\DeleteUserCommand.cs" />
     <Compile Include="Commands\User\DeleteUser\DeleteUserCommandRequest.cs" />
+    <Compile Include="Commands\User\GetUserProfile\GetUserProfileCommand.cs" />
     <Compile Include="Commands\User\GetUsers\GetUsersCommand.cs" />
     <Compile Include="Commands\User\GetUser\GetUserCommand.cs" />
+    <Compile Include="Commands\User\SaveUserProfile\SaveUserProfileCommand.cs" />
     <Compile Include="Commands\User\SaveUser\SaveUserCommand.cs" />
     <Compile Include="Commands\User\SaveUser\SaveUserCommandResponse.cs" />
     <Compile Include="Content\Resources\UsersGlobalization.Designer.cs">
@@ -160,6 +162,7 @@
     <Compile Include="UsersModuleConstants.cs" />
     <Compile Include="UsersModuleDescriptor.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\User\EditUserProfileViewModel.cs" />
     <Compile Include="ViewModels\User\EditUserViewModel.cs" />
     <Compile Include="ViewModels\Role\RoleViewModel.cs" />
     <Compile Include="ViewModels\User\UserItemViewModel.cs" />
@@ -216,19 +219,28 @@
     <EmbeddedResource Include="Views\Role\Partial\ListTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Widgets\Login.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Views\User\EditUser.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\User\EditUserProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\User\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Views\User\Partial\EditUserImage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\User\Partial\EditUserMainFields.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Views\User\Partial\EditUserRoles.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Web.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Widgets\Login.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
