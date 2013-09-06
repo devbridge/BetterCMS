@@ -200,7 +200,7 @@ namespace BetterCms.Module.Root.Services
                     {
                         Identity = identityName,
                         AccessLevel = AccessLevel.ReadWrite,
-                        IsForRole = true
+                        IsForRole = false
                     });
                 }
             }
