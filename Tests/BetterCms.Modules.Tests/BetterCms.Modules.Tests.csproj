@@ -167,6 +167,7 @@
     <Compile Include="Root\CommandTests\GetStyleSheetsToRenderCommandTest.cs" />
     <Compile Include="Root\ModelTests\MapTests\PageOptionMapTest.cs" />
     <Compile Include="Root\ModelTests\MapTests\LayoutOptionMapTest.cs" />
+    <Compile Include="Root\ServiceTests\DefaultOptionServiceIntegrationTests.cs" />
     <Compile Include="Root\ServiceTests\DefaultOptionServiceTests.cs" />
     <Compile Include="SerializationTestBase.cs" />
     <Compile Include="IntegrationTestBase.cs" />
