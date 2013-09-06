@@ -1546,6 +1546,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Page opened in read-only mode..
+        /// </summary>
+        public static string EditPageProperties_ReadOnlyModeMessage {
+            get {
+                return ResourceManager.GetString("EditPageProperties_ReadOnlyModeMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Page Properties.
         /// </summary>
         public static string EditPageProperties_Title {

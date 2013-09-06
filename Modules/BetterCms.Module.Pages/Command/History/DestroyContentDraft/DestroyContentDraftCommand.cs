@@ -67,11 +67,11 @@ namespace BetterCms.Module.Pages.Command.History.DestroyContentDraft
             var contentType = content.GetType();
             if (contentType == typeof(HtmlContentWidget) || contentType == typeof(ServerControlWidget))
             {
-                DemandAccess(RootModuleConstants.UserRoles.Administration);
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.Administration);
             }
             else
             {
-                DemandAccess(RootModuleConstants.UserRoles.PublishContent);
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.PublishContent);
             }
 
             Repository.Delete(content);

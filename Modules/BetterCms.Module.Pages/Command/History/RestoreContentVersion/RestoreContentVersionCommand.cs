@@ -39,11 +39,11 @@ namespace BetterCms.Module.Pages.Command.History.RestoreContentVersion
             var contentType = content.GetType();
             if (contentType == typeof(HtmlContentWidget) || contentType == typeof(ServerControlWidget))
             {
-                DemandAccess(RootModuleConstants.UserRoles.Administration);
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.Administration);
             }
             else
             {
-                DemandAccess(RootModuleConstants.UserRoles.PublishContent);
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.PublishContent);
             }
 
             contentService.RestoreContentFromArchive(content);

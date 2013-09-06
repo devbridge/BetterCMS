@@ -29,7 +29,8 @@
 
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
-    @using (Html.BeginForm<PageController>(f => f.EditPageProperties((EditPagePropertiesViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
+    @using (Html.BeginForm<PageController>(f => f.EditPageProperties((EditPagePropertiesViewModel)null), FormMethod.Post, 
+            new { @class = "bcms-ajax-form" + (Model.IsReadOnly ? " bcms-inactive" : string.Empty) }))
     {
         <div id="bcms-tab-1" class="bcms-tab-single">
             <div class="bcms-padded-content">
@@ -105,7 +106,7 @@
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_Properties_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_Properties_Title</div>
                     <div class="bcms-checkbox-holder">
-                        @Html.CheckBoxFor(model => model.IsPagePublished)
+                         @Html.CheckBoxFor(model => model.IsPagePublished)
                         <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone</div>
                     </div>
                     <div class="bcms-checkbox-holder">

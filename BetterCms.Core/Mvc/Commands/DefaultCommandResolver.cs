@@ -19,8 +19,8 @@ namespace BetterCms.Core.Mvc.Commands
             if (containerProvider.CurrentScope.IsRegistered<TCommand>() && containerProvider.CurrentScope.IsRegistered<ISecurityService>())
             {
                 var command = containerProvider.CurrentScope.Resolve<TCommand>();
-                command.Context = context;
-                command.SecurityService = containerProvider.CurrentScope.Resolve<ISecurityService>();
+                command.Context = context;                
+
                 return command;
             }
 

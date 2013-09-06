@@ -101,7 +101,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         {
             if (request.DesirableStatus == ContentStatus.Published)
             {
-                DemandAccess(RootModuleConstants.UserRoles.PublishContent);
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.PublishContent);
             }
 
             var layout = LoadLayout();
@@ -111,7 +111,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
 
             if (isNew || request.DesirableStatus != ContentStatus.Published)
             {
-                DemandAccess(RootModuleConstants.UserRoles.EditContent);
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent);
                 userCanEdit = true;
             }
             else

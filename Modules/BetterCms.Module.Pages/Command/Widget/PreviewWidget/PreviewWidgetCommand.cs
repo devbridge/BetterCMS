@@ -32,7 +32,7 @@ namespace BetterCms.Module.Pages.Command.Widget.PreviewWidget
         /// <returns>Rendered page view model</returns>
         public RenderPageViewModel Execute(PreviewWidgetCommandRequest request)
         {
-            return previewService.GetContentPreviewViewModel(request.WidgetId, Context.User, request.IsJavaScriptEnabled);
+            return previewService.GetContentPreviewViewModel(request.WidgetId, Context.Principal, request.IsJavaScriptEnabled);
         }
     }
 }

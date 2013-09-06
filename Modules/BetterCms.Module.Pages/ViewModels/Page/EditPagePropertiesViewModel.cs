@@ -225,6 +225,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public IList<UserAccessViewModel> UserAccessList { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether dialog should be opened in the read only mode.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if dialog should be opened in the read only mode; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsReadOnly { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="EditPagePropertiesViewModel" /> class.
         /// </summary>
         public EditPagePropertiesViewModel()

@@ -36,7 +36,7 @@ namespace BetterCms.Module.Pages.Command.History.GetContentVersion
         /// </returns>
         public RenderPageViewModel Execute(Guid contentId)
         {
-            return previewService.GetContentPreviewViewModel(contentId, Context.User, true);
+            return previewService.GetContentPreviewViewModel(contentId, Context.Principal, true);
         }
     }
 }

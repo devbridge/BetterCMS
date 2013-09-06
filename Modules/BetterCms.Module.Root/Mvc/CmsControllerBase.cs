@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Principal;
 using System.Web.Mvc;
 
 using Autofac;
@@ -12,8 +12,6 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services;
 using BetterCms.Core.Web;
 using BetterCms.Module.Root.Models;
-
-using Microsoft.Web.Mvc;
 
 namespace BetterCms.Module.Root.Mvc
 {    
@@ -29,6 +27,12 @@ namespace BetterCms.Module.Root.Mvc
 
         private HttpContextTool httpContextTool;
 
+        /// <summary>
+        /// Gets the security service.
+        /// </summary>
+        /// <value>
+        /// The security service.
+        /// </value>
         public ISecurityService SecurityService
         {
             get
@@ -44,37 +48,17 @@ namespace BetterCms.Module.Root.Mvc
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CmsControllerBase" /> class.
+        /// Gets the principal of current command context.
         /// </summary>
-        protected CmsControllerBase()
-        {     
-            HtmlHelper.ClientValidationEnabled = true;
-            HtmlHelper.UnobtrusiveJavaScriptEnabled = true;            
-
-            RenderViewDelegate = (viewName, model, enableFormContext) =>
-                {
-                    if (string.IsNullOrEmpty(viewName))
-                    {
-                        viewName = ControllerContext.RouteData.GetRequiredString("action");
-                    }
-
-                    ViewData.Model = model;
-
-                    using (var sw = new StringWriter())
-                    {
-                        var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
-                        var viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
-                        if (enableFormContext && viewContext.FormContext == null)
-                        {
-                            viewContext.FormContext = new FormContext();
-                        }
-
-                        viewResult.View.Render(viewContext, sw);
-                        viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
-
-                        return sw.GetStringBuilder().ToString();
-                    }
-                };
+        /// <value>
+        /// The current command principal.
+        /// </value>
+        IPrincipal ICommandContext.Principal
+        {
+            get
+            {
+                return User;
+            }
         }
 
         public virtual ICommandResolver CommandResolver { get; set; }
@@ -126,7 +110,7 @@ namespace BetterCms.Module.Root.Mvc
             get
             {
                 var userMessages = ViewData[UserMessagesViewDataKey] as UserMessages;
-               
+
                 if (userMessages == null)
                 {
                     userMessages = new UserMessages();
@@ -135,6 +119,40 @@ namespace BetterCms.Module.Root.Mvc
 
                 return userMessages;
             }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CmsControllerBase" /> class.
+        /// </summary>
+        protected CmsControllerBase()
+        {     
+            HtmlHelper.ClientValidationEnabled = true;
+            HtmlHelper.UnobtrusiveJavaScriptEnabled = true;            
+
+            RenderViewDelegate = (viewName, model, enableFormContext) =>
+                {
+                    if (string.IsNullOrEmpty(viewName))
+                    {
+                        viewName = ControllerContext.RouteData.GetRequiredString("action");
+                    }
+
+                    ViewData.Model = model;
+
+                    using (var sw = new StringWriter())
+                    {
+                        var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
+                        var viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
+                        if (enableFormContext && viewContext.FormContext == null)
+                        {
+                            viewContext.FormContext = new FormContext();
+                        }
+
+                        viewResult.View.Render(viewContext, sw);
+                        viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
+
+                        return sw.GetStringBuilder().ToString();
+                    }
+                };
         }
 
         /// <summary>

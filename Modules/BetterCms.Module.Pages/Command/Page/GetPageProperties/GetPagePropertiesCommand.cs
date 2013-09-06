@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
@@ -6,6 +7,7 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 using BetterCms.Module.MediaManager.ViewModels;
+using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
@@ -46,6 +48,8 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         /// </summary>
         private readonly ILayoutService layoutService;
 
+        private IAccessControlService accessControlService;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GetPagePropertiesCommand" /> class.
         /// </summary>
@@ -54,9 +58,12 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         /// <param name="optionService">The option service.</param>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
         /// <param name="layoutService">The layout service.</param>
+        /// <param name="accessControlService">The access control service.</param>
         public GetPagePropertiesCommand(ITagService tagService, ICategoryService categoryService, IOptionService optionService,
-            ICmsConfiguration cmsConfiguration, ILayoutService layoutService)
+            ICmsConfiguration cmsConfiguration, ILayoutService layoutService,
+            IAccessControlService accessControlService)
         {
+            this.accessControlService = accessControlService;
             this.tagService = tagService;
             this.categoryService = categoryService;
             this.optionService = optionService;
@@ -70,7 +77,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         /// <param name="id">The page id.</param>
         /// <returns></returns>
         public EditPagePropertiesViewModel Execute(Guid id)
-        {
+        {           
             var model = Repository
                 .AsQueryable<PageProperties>()
                 .Where(p => p.Id == id)
@@ -146,6 +153,17 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                                                 .OrderBy(x => x.Identity)
                                                 .ToList()
                                                 .Select(x => new UserAccessViewModel(x)).ToList();
+
+                    var rules = model.Model.UserAccessList.Cast<IAccessRule>().ToList();
+                    var principal = SecurityService.GetCurrentPrincipal();
+                    var accessLevel = accessControlService.GetAccessLevel((IList<IAccessRule>)rules, principal);
+
+                    model.Model.IsReadOnly = accessLevel != AccessLevel.ReadWrite;
+
+                    if (accessLevel == AccessLevel.Read)
+                    {
+                        Context.Messages.AddInfo(PagesGlobalization.EditPageProperties_ReadOnlyModeMessage);
+                    }
                 }
 
                 // Get templates
@@ -153,7 +171,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 if (!model.Model.TemplateId.HasDefaultValue())
                 {
                     model.Model.Templates.Where(x => x.TemplateId == model.Model.TemplateId).ToList().ForEach(x => x.IsActive = true);
-                }
+                }                
             }
 
             return model != null ? model.Model : null;

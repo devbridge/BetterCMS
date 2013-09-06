@@ -9,6 +9,7 @@ using BetterCms.Core;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Security;
+using BetterCms.Core.Services;
 using BetterCms.Core.Services.Caching;
 using BetterCms.Module.Pages.Command.Page.CreatePage;
 using BetterCms.Module.Pages.Services;
@@ -48,7 +49,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
                             new Mock<IPageService>().SetupAllProperties().Object,
                             new DefaultUrlService(uow, config),
                             config,
-                            new DefaultAccessControlService(new HttpRuntimeCacheService(), config),
+                            new DefaultAccessControlService(Container.Resolve<ISecurityService>(), new HttpRuntimeCacheService(), config),
                             new Mock<IOptionService>().SetupAllProperties().Object);
 
                         command.UnitOfWork = uow;

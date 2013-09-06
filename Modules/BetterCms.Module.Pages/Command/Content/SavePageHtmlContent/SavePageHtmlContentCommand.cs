@@ -27,12 +27,12 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
         {
             if (request.DesirableStatus == ContentStatus.Published)
             {
-                DemandAccess(RootModuleConstants.UserRoles.PublishContent);
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.PublishContent);
             }
 
             if (request.Id == default(Guid) || request.DesirableStatus != ContentStatus.Published)
             {
-                DemandAccess(RootModuleConstants.UserRoles.EditContent);
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent);
             }
 
             UnitOfWork.BeginTransaction();
