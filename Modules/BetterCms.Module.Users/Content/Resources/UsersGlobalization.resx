@@ -288,12 +288,6 @@
   <data name="SaveUse_UserEmailExists_Message" xml:space="preserve">
     <value>User with email {0} already exists. Please specify another user email.</value>
   </data>
-  <data name="User_FirstName_RequiredMessage" xml:space="preserve">
-    <value>First name is requried.</value>
-  </data>
-  <data name="User_LastName_RequiredMessage" xml:space="preserve">
-    <value>Last name is requried.</value>
-  </data>
   <data name="SiteSettings_Users_EmailColumn" xml:space="preserve">
     <value>Email</value>
   </data>

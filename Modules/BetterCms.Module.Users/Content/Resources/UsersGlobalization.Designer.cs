@@ -520,29 +520,11 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to First name is requried..
-        /// </summary>
-        public static string User_FirstName_RequiredMessage {
-            get {
-                return ResourceManager.GetString("User_FirstName_RequiredMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Last name should not be longer than 200 characters..
         /// </summary>
         public static string User_LastName_MaxLengthMessage {
             get {
                 return ResourceManager.GetString("User_LastName_MaxLengthMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Last name is requried..
-        /// </summary>
-        public static string User_LastName_RequiredMessage {
-            get {
-                return ResourceManager.GetString("User_LastName_RequiredMessage", resourceCulture);
             }
         }
         

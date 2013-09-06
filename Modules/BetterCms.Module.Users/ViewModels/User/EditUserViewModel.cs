@@ -54,7 +54,6 @@ namespace BetterCms.Module.Users.ViewModels.User
         /// <value>
         /// The first name.
         /// </value>
-        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_FirstName_RequiredMessage")]
         [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_FirstName_MaxLengthMessage")]
         public string FirstName { get; set; }
 
@@ -64,7 +63,6 @@ namespace BetterCms.Module.Users.ViewModels.User
         /// <value>
         /// The last name.
         /// </value>
-        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_LastName_RequiredMessage")]
         [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_LastName_MaxLengthMessage")]
         public string LastName { get; set; }
 
