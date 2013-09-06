@@ -21,7 +21,26 @@ namespace BetterCms.Module.Pages.Command.Layout.DeleteTemplate
                     string.Format("Failed to delete template {0}. Template is in use.", request.TemplateId));
             }
 
-            Repository.Delete<Root.Models.Layout>(request.TemplateId, request.Version);
+            var layout = Repository.First<Root.Models.Layout>(request.TemplateId);
+            layout.Version = request.Version;
+            Repository.Delete(layout);
+
+            if (layout.LayoutOptions != null)
+            {
+                foreach (var option in layout.LayoutOptions)
+                {
+                    Repository.Delete(option);
+                }
+            }
+            
+            if (layout.LayoutRegions != null)
+            {
+                foreach (var region in layout.LayoutRegions)
+                {
+                    Repository.Delete(region);
+                }
+            }
+
             UnitOfWork.Commit();
             return true;
         }
