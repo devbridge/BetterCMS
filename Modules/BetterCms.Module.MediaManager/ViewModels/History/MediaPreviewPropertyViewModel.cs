@@ -36,5 +36,16 @@
         ///   <c>true</c> if property is image URL; otherwise, <c>false</c>.
         /// </value>
         public bool IsImageUrl { get; set; }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("{0}, Title: {1}, Value: {2}, IsUrl: {3}, IsImageUrl: {4}", Title, Value, IsUrl, IsImageUrl);
+        }
     }
 }
