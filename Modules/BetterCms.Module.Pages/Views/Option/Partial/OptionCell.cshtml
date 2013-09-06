@@ -15,7 +15,8 @@
                                                                                HiddenFieldName = Model.HiddenFieldName,
                                                                                HeaderAttributes = Model.HeaderAttributes,
                                                                                AutoFocus = Model.AutoFocus,
-                                                                               CanBeEdited = Model.CanBeEdited
+                                                                               CanBeEdited = Model.CanBeEdited,
+                                                                               ShowValueAsText = true
                                                                            })
 <!-- /ko -->
 
@@ -60,7 +61,8 @@
 <!-- ko if: useDefaultValue() && type() == 5  -->
     @Html.Partial(RootModuleConstants.EditableGridBooleanCellTemplate, new EditableGridBooleanColumn(null, null, Model.ValueBind)
                                                                            {
-                                                                               CanBeEdited = false
+                                                                               CanBeEdited = false,
+                                                                               ShowValueAsText = true
                                                                            })
 <!-- /ko -->
 

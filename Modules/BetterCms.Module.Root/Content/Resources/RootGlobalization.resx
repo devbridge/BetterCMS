@@ -204,6 +204,9 @@
   <data name="Button_Insert" xml:space="preserve">
     <value>Insert</value>
   </data>
+  <data name="Button_No" xml:space="preserve">
+    <value>No</value>
+  </data>
   <data name="Button_Ok" xml:space="preserve">
     <value>OK</value>
   </data>
@@ -239,6 +242,9 @@
   </data>
   <data name="Button_Search" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="Button_Yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
   <data name="Confirm_DefaultTitle" xml:space="preserve">
     <value>Attention!</value>

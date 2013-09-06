@@ -33,7 +33,16 @@ namespace BetterCms.Module.Pages.Command.Widget.DeleteWidget
                                               string.Format("A widget {0}(id={1}) can't be deleted because it is in use.", widget.Name, request.WidgetId));
             }
 
-            Repository.Delete(widget);            
+            Repository.Delete(widget);
+
+            if (widget.ContentOptions != null)
+            {
+                foreach (var option in widget.ContentOptions)
+                {
+                    Repository.Delete(option);
+                }
+            }
+
             UnitOfWork.Commit();
 
             // Notify.

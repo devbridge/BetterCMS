@@ -27,7 +27,9 @@ namespace BetterCms.Module.Users.Commands.User.GetUsers
                         Id = user.Id,
                         Version = user.Version,
                         UserName = user.UserName,
-                        FullName = user.FirstName + " " + user.LastName,
+                        FullName = (user.FirstName ?? string.Empty) 
+                            + (user.FirstName != null && user.LastName != null ? " " : string.Empty) 
+                            + (user.LastName ?? string.Empty),
                         Email = user.Email
                     });
 
