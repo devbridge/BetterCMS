@@ -250,7 +250,7 @@
     <value>Retype password is required.</value>
   </data>
   <data name="User_UserName_MaxLengthMessage" xml:space="preserve">
-    <value>User name should not be longer than 200 characters.</value>
+    <value>User name should not be longer than 401 character.</value>
   </data>
   <data name="User_UserName_RequiredMessage" xml:space="preserve">
     <value>User name is required.</value>

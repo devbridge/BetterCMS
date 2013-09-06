@@ -601,7 +601,7 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User name should not be longer than 200 characters..
+        ///   Looks up a localized string similar to User name should not be longer than 401 character..
         /// </summary>
         public static string User_UserName_MaxLengthMessage {
             get {
