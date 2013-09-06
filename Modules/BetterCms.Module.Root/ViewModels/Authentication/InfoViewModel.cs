@@ -22,6 +22,14 @@
         public string UserName { get; set; }
 
         /// <summary>
+        /// Gets or sets the edit user profile URL.
+        /// </summary>
+        /// <value>
+        /// The edit user profile URL.
+        /// </value>
+        public string EditUserProfileUrl { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

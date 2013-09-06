@@ -114,5 +114,17 @@ namespace BetterCms.Module.Users.Controllers
 
             return Json(new WireJson(success));
         }
+
+        /// <summary>
+        /// Edit the user profile.
+        /// </summary>
+        /// <returns>
+        /// Edit user profile view.
+        /// </returns>
+        [HttpGet]
+        public ActionResult EditProfile()
+        {
+            return null;
+        }
     }
 }

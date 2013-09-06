@@ -117,6 +117,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Commands\Authentication\GetAuthenticationInfo\GetAuthenticationInfoCommand.cs" />
     <Compile Include="Events\CategoryEvents.cs" />
     <Compile Include="Events\PageRetrievedEventArgs.cs" />
     <Compile Include="Events\RootEvents.cs" />
@@ -267,9 +268,11 @@
     <Compile Include="Services\DefaultOptionService.cs" />
     <Compile Include="Services\DefaultRenderingService.cs" />
     <Compile Include="Services\DefaultSecurityService.cs" />
+    <Compile Include="Services\EmptyUserProfileUrlResolver.cs" />
     <Compile Include="Services\IContentService.cs" />
     <Compile Include="Services\IOptionService.cs" />
     <Compile Include="Services\IRenderingService.cs" />
+    <Compile Include="Services\IUserProfileUrlResolver.cs" />
     <Compile Include="ViewModels\Authentication\InfoViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryItemViewModel.cs" />
     <Compile Include="ViewModels\Cms\CmsRequestViewModel.cs" />

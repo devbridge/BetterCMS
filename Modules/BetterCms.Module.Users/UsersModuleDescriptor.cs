@@ -6,6 +6,7 @@ using Autofac;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root;
+using BetterCms.Module.Root.Services;
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.Registration;
 using BetterCms.Module.Users.Services;
@@ -78,7 +79,7 @@ namespace BetterCms.Module.Users
         {
             get
             {
-                return int.MaxValue - 300;
+                return int.MaxValue - 250;
             }
         }
 
@@ -151,6 +152,7 @@ namespace BetterCms.Module.Users
             containerBuilder.RegisterType<DefaultAuthenticationService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultRoleService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultUserService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultUserProfileUrlResolver>().As<IUserProfileUrlResolver>().InstancePerLifetimeScope();
         }
     }
 }

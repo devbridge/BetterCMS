@@ -2,5 +2,12 @@
 @model BetterCms.Module.Root.Models.Authentication.InfoViewModel
 <div class="bcms-sidemenu-credentials">
     <div>@RootGlobalization.Sidebar_LoggedInAsTitle</div>
-    <div class="bcms-sidemenu-username">@Html.Encode(Model.UserName)</div>
+    @if (!string.IsNullOrEmpty(Model.EditUserProfileUrl))
+    {
+        <div class="bcms-sidemenu-username"><a href="#" data-url="@Model.EditUserProfileUrl">@Html.Encode(Model.UserName)</a></div>
+    }
+    else
+    {
+        <div class="bcms-sidemenu-username">@Html.Encode(Model.UserName)</div>
+    }
 </div>
