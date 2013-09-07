@@ -46,7 +46,7 @@ namespace BetterCms.Core.DataAccess.DataContext.EventListeners
         {
             if (entity is IEntity)
             {                
-                Events.CoreEvents.Instance.OnEntitySaving((IEntity)entity);
+                Events.CoreEvents.Instance.OnEntityDelete((IEntity)entity);
             }
 
             if (entity is Entity && !(entity is IDeleteableEntity))

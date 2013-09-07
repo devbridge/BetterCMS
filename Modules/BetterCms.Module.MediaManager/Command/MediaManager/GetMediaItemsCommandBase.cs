@@ -149,6 +149,20 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                 var searchQuery = string.Format("%{0}%", request.SearchQuery);
                 query = query.Where(m => m.Title.Contains(searchQuery) || m.Description.Contains(searchQuery) || m.MediaTags.Any(mt => mt.Tag.Name.Contains(searchQuery)));
                 query = query.Fetch(f => f.Folder);
+
+                if (Configuration.Security.AccessControlEnabled)
+                {
+                    IEnumerable<Guid> deniedMedias = GetDeniedMedias(request);
+                    if (deniedMedias != null)
+                    {
+                        foreach (var deniedFileId in deniedMedias)
+                        {
+                            var id = deniedFileId;
+                            query = query.Where(f => f.Id != id);
+                        }
+                    }
+                }
+
                 var mediaList = query.ToList();
 
                 var result = new List<Media>();

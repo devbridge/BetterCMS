@@ -263,6 +263,8 @@ namespace BetterCms.Sandbox.Mvc4
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
             var authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            var roleCokie = Request.Cookies[Roles.CookieName];
+
             if (authCookie != null)
             {
                 try
@@ -270,9 +272,8 @@ namespace BetterCms.Sandbox.Mvc4
                     var authTicket = FormsAuthentication.Decrypt(authCookie.Value);
                     if (authTicket != null)
                     {
-                        var identity = new GenericIdentity(authTicket.Name, "Forms");
-                        var roles = authTicket.UserData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToArray();
-                        var principal = new GenericPrincipal(identity, roles);
+                        var identity = new FormsIdentity(authTicket);                        
+                        var principal = new RolePrincipal(identity, roleCokie.Value);
                         Context.User = principal;
                     }
                 }

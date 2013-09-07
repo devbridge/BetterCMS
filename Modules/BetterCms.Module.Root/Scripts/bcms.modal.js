@@ -342,7 +342,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
             
             forms.bindCheckboxes(this.container);
 
-            if (this.options.autoFocus) {
+            if (this.options.autoFocus) {                
                 this.setFocus();
             }
         },
@@ -351,6 +351,10 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         * Sets focus on the first visible input element or on the dialog close element.
         */
         setFocus: function () {
+            if (this.container.find('form').data('readonly') === true) {
+                return;
+            }
+            
             var focustElement = this.container.find('input:visible:first');
 
             if (focustElement.length === 0) {

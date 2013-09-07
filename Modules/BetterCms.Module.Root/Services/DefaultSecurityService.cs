@@ -4,7 +4,6 @@ using System.Linq;
 using System.Security.Principal;
 using System.Threading;
 
-using BetterCms.Core.Modules.Registration;
 using BetterCms.Core.Services;
 using BetterCms.Core.Web;
 

@@ -342,7 +342,7 @@ namespace BetterCms.Module.Root
         {            
             if (Configuration.Security.AccessControlEnabled)                
             {
-                if (args.Item is IAccessSecuredObject && args.Item.Id != Guid.Empty)
+                if (args.Item is IAccessSecuredObject && !(args.Item is IAccessControlDisabled) && args.Item.Id != Guid.Empty)
                 {
                     CheckSecurityObjectAccessibility((IAccessSecuredObject)args.Item);
                 }
@@ -350,7 +350,7 @@ namespace BetterCms.Module.Root
                 if (args.Item is IAccessSecuredObjectDependency)
                 {
                     var dependency = (IAccessSecuredObjectDependency)args.Item;
-                    if (dependency.SecuredObject.Id != Guid.Empty)
+                    if (dependency.SecuredObject.Id != Guid.Empty && !(dependency.SecuredObject is IAccessControlDisabled))
                     {
                         CheckSecurityObjectAccessibility(dependency.SecuredObject);
                     }

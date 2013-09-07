@@ -135,6 +135,10 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 }
             });
 
+            if (dialog.container.find('form').data('readonly') === true) {
+                dialog.disableAcceptButton();
+            }
+            
             return pageViewModel;
         };
 

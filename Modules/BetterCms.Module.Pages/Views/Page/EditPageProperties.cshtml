@@ -30,7 +30,11 @@
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
     @using (Html.BeginForm<PageController>(f => f.EditPageProperties((EditPagePropertiesViewModel)null), FormMethod.Post, 
-            new { @class = "bcms-ajax-form" + (Model.IsReadOnly ? " bcms-inactive" : string.Empty) }))
+            new
+                {
+                    @class = "bcms-ajax-form" + (Model.IsReadOnly ? " bcms-inactive" : string.Empty), 
+                    data_readonly=Model.IsReadOnly.ToString().ToLower()
+                }))
     {
         <div id="bcms-tab-1" class="bcms-tab-single">
             <div class="bcms-padded-content">
