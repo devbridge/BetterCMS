@@ -203,7 +203,8 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
             newPage.AddRule(new AccessRule
                                 {
                                     Identity = pageAccessRule.Identity,
-                                    AccessLevel = pageAccessRule.AccessLevel
+                                    AccessLevel = pageAccessRule.AccessLevel,
+                                    IsForRole = pageAccessRule.IsForRole
                                 });
         }
 

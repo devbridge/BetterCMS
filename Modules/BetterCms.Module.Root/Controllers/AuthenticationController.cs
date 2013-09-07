@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 
 using BetterCms.Core.Security;
+using BetterCms.Module.Root.Commands.Authentication.GetAuthenticationInfo;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.Authentication;
 using BetterCms.Module.Root.Mvc;
@@ -31,10 +32,8 @@ namespace BetterCms.Module.Root.Controllers
         /// <returns>Rendered view with user information.</returns>
         public ActionResult Info()
         {
-            InfoViewModel model = new InfoViewModel();
-            model.IsUserAuthenticated = User.Identity.IsAuthenticated;
-            model.UserName = User.Identity.Name;
-
+            var model = GetCommand<GetAuthenticationInfoCommand>().Execute();
+            
             return View(model);
         }
 

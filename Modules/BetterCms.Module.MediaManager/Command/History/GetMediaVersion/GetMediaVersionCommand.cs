@@ -5,6 +5,7 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Models.Extensions;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.History;
 using BetterCms.Module.Root.Mvc;
 
@@ -16,6 +17,20 @@ namespace BetterCms.Module.MediaManager.Command.History.GetMediaVersion
     public class GetMediaVersionCommand : CommandBase, ICommand<Guid, MediaPreviewViewModel>
     {
         /// <summary>
+        /// The file service
+        /// </summary>
+        private readonly IMediaFileService fileService;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetMediaVersionCommand" /> class.
+        /// </summary>
+        /// <param name="fileService">The file service.</param>
+        public GetMediaVersionCommand(IMediaFileService fileService)
+        {
+            this.fileService = fileService;
+        }
+
+        /// <summary>
         /// Executes the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
@@ -26,7 +41,6 @@ namespace BetterCms.Module.MediaManager.Command.History.GetMediaVersion
 
             var media = Repository
                 .First<Media>(m => m.Id == request);
-
 
             var image = media as MediaImage;
             if (image != null)
@@ -45,10 +59,12 @@ namespace BetterCms.Module.MediaManager.Command.History.GetMediaVersion
             var file = media as MediaFile;
             if (file != null)
             {
+                var publicUrl = fileService.GetDownloadFileUrl(MediaType.File, file.Id, file.PublicUrl);
+
                 response.AddProperty(MediaGlobalization.MediaHistory_Preview_Properties_Title, file.Title);
                 response.AddProperty(MediaGlobalization.MediaHistory_Preview_Properties_Description, file.Description);
                 response.AddProperty(MediaGlobalization.MediaHistory_Preview_Properties_FileSize, file.SizeAsText());
-                response.AddProperty(MediaGlobalization.MediaHistory_Preview_Properties_PublicUrl, file.PublicUrl, true);
+                response.AddProperty(MediaGlobalization.MediaHistory_Preview_Properties_PublicUrl, publicUrl, true);
 
                 if (media.Image != null)
                 {

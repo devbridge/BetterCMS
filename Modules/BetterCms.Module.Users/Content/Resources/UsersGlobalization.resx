@@ -297,4 +297,7 @@
   <data name="DeleteRole_Cannot_Delete_Populated_Role" xml:space="preserve">
     <value>Cannot delete the role, because it's already assigned to users.</value>
   </data>
+  <data name="EditUserProfile_Window_Title" xml:space="preserve">
+    <value>Edit user profile</value>
+  </data>
 </root>

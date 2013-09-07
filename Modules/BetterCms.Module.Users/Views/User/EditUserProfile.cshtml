@@ -3,11 +3,11 @@
 @using BetterCms.Module.Users.ViewModels.User
 @using Microsoft.Web.Mvc
 
-@model EditUserViewModel
+@model EditUserProfileViewModel
 <div class="bcms-scroll-window" style="height: 527px;">
     @Html.TabbedContentMessagesBox()
     <div class="bcms-new-blog-content">
-        @using (Html.BeginForm<UserController>(c => c.SaveUser(null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
+        @using (Html.BeginForm<UserController>(c => c.SaveUserProfile(null), FormMethod.Post, new { @id = "bcms-user-profile-form", @class = "bcms-ajax-form" }))
         {
             @Html.HiddenFor(m => m.Id)
             @Html.HiddenFor(m => m.Version)
@@ -19,10 +19,6 @@
              
             <div class="bcms-blog-right">
                 @Html.Partial("Partial/EditUserImage")
-
-                <div class="bcms-blog-tags-holder">
-                    @Html.Partial("Partial/EditUserRoles")
-                </div>
             </div>
         }
     </div>

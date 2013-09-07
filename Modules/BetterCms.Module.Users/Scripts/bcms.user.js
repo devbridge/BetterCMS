@@ -21,7 +21,8 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 userEmailCell: '.bcms-user-email',
                 userRowTemplate: '#bcms-users-list-row-template',
                 userTableFirstRow: 'table.bcms-tables > tbody > tr:first',
-                userRowTemplateFirstRow: 'tr:first'
+                userRowTemplateFirstRow: 'tr:first',
+                openEditUserProfile: '.bcms-sidemenu-username a'
             },
             links = {
                 loadSiteSettingsUsersUrl: null,
@@ -320,12 +321,33 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         }
 
         /**
+        * Initialize edit user profile form url
+        */
+        function initializeUserEditProfileFormUrl() {
+            $(selectors.openEditUserProfile).on('click', function () {
+                var self = $(this),
+                    url = self.data('url'),
+                    onSaveCallback = function (json) {
+                        messages.refreshBox(usersContainer, json);
+                        if (json.Success) {
+
+                        }
+                    };
+
+                if (url) {
+                    openUserEditForm(globalization.editUserProfileTitle, url, onSaveCallback);
+                }
+            });
+        }
+
+        /**
         * Initializes user module
         */
         user.init = function () {
             console.log('Initializing bcms.user module.');
 
             initializeCustomValidation();
+            initializeUserEditProfileFormUrl();
         };
 
         bcms.registerInit(user.init);
