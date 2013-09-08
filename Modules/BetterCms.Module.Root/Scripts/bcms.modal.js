@@ -31,13 +31,15 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
             elemHeader: '.bcms-modal-header',
             elemFooter: '.bcms-modal-footer',
             elemTabsHeader: '.bcms-tab-header',
-            elemContent: '.bcms-scroll-window'
+            elemContent: '.bcms-scroll-window',
+            readonly: '[data-readonly=true]'
         },
         
         classes = {
             saveButton: 'bcms-btn-small bcms-modal-accept',
             cancelButton: 'bcms-btn-links-small bcms-modal-cancel',
-            grayButton: 'bcms-btn-small bcms-btn-gray'
+            grayButton: 'bcms-btn-small bcms-btn-gray',
+            inactive: 'bcms-inactive'
         },
 
         links = {},
@@ -332,6 +334,15 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
 
             this.container.find(selectors.loader).remove();
 
+            // Check for readonly mode.
+            this.container.find(selectors.readonly).addClass(classes.inactive);
+            var form = this.container.find('form');
+            if (form.data('readonly') === true) {
+                form.find('input[type=text]').attr('disabled', 'disabled').parent('div').css('z-index', 100);
+                form.find('textarea').attr('disabled', 'disabled').parent('div').css('z-index', 100);
+                this.disableAcceptButton();
+            }
+            
             if ($.validator && $.validator.unobtrusive) {
                 $.validator.unobtrusive.parse(this.container);
             }

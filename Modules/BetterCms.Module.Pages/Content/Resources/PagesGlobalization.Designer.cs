@@ -1744,6 +1744,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Page opened in read-only mode..
+        /// </summary>
+        public static string EditSeo_ReadOnlyModeMessage {
+            get {
+                return ResourceManager.GetString("EditSeo_ReadOnlyModeMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Meta Description.
         /// </summary>
         public static string EditSeo_Tooltip_MetaDescription_Title {

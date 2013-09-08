@@ -48,8 +48,6 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         /// </summary>
         private readonly ILayoutService layoutService;
 
-        private IAccessControlService accessControlService;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="GetPagePropertiesCommand" /> class.
         /// </summary>
@@ -60,10 +58,8 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         /// <param name="layoutService">The layout service.</param>
         /// <param name="accessControlService">The access control service.</param>
         public GetPagePropertiesCommand(ITagService tagService, ICategoryService categoryService, IOptionService optionService,
-            ICmsConfiguration cmsConfiguration, ILayoutService layoutService,
-            IAccessControlService accessControlService)
+            ICmsConfiguration cmsConfiguration, ILayoutService layoutService)
         {
-            this.accessControlService = accessControlService;
             this.tagService = tagService;
             this.categoryService = categoryService;
             this.optionService = optionService;
@@ -156,7 +152,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
 
                     var rules = model.Model.UserAccessList.Cast<IAccessRule>().ToList();
                     var principal = SecurityService.GetCurrentPrincipal();
-                    var accessLevel = accessControlService.GetAccessLevel((IList<IAccessRule>)rules, principal);
+                    var accessLevel = AccessControlService.GetAccessLevel((IList<IAccessRule>)rules, principal);
 
                     model.Model.IsReadOnly = accessLevel != AccessLevel.ReadWrite;
 

@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Security;
+using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Seo;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.Pages.Command.Page.GetPageSeo
 {
@@ -14,6 +18,13 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageSeo
     /// </summary>
     public class GetPageSeoCommand : CommandBase, ICommand<Guid, EditSeoViewModel>
     {
+        private readonly ICmsConfiguration cmsConfiguration;
+
+        public GetPageSeoCommand(ICmsConfiguration cmsConfiguration)
+        {
+            this.cmsConfiguration = cmsConfiguration;
+        }
+
         /// <summary>
         /// Executes the specified request.
         /// </summary>
@@ -59,6 +70,25 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageSeo
                 model.UseCanonicalUrl = page.UseCanonicalUrl;
                 model.IsInSitemap = page.IsInSitemap;
                 model.UpdateSitemap = true;
+
+                if (cmsConfiguration.Security.AccessControlEnabled)
+                {
+                    var accessRules = Repository.AsQueryable<Root.Models.Page>()
+                                                .Where(x => x.Id == pageId && !x.IsDeleted)
+                                                .SelectMany(x => x.AccessRules)
+                                                .OrderBy(x => x.Identity).ToList()
+                                                .Select(x => new UserAccessViewModel(x)).Cast<IAccessRule>().ToList();
+                    
+                    var principal = SecurityService.GetCurrentPrincipal();
+                    var accessLevel = AccessControlService.GetAccessLevel((IList<IAccessRule>)accessRules, principal);
+
+                    model.IsReadOnly = accessLevel != AccessLevel.ReadWrite;
+
+                    if (accessLevel == AccessLevel.Read)
+                    {
+                        Context.Messages.AddInfo(PagesGlobalization.EditSeo_ReadOnlyModeMessage);
+                    }
+                }
             }
 
             return model;

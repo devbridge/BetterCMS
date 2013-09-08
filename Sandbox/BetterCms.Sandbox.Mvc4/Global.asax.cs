@@ -272,8 +272,8 @@ namespace BetterCms.Sandbox.Mvc4
                     var authTicket = FormsAuthentication.Decrypt(authCookie.Value);
                     if (authTicket != null)
                     {
-                        var identity = new FormsIdentity(authTicket);                        
-                        var principal = new RolePrincipal(identity, roleCokie.Value);
+                        var identity = new FormsIdentity(authTicket);
+                        var principal = roleCokie == null ? new RolePrincipal("BetterCmsRoleProvider", identity) : new RolePrincipal(identity, roleCokie.Value);
                         Context.User = principal;
                     }
                 }

@@ -1119,4 +1119,7 @@
   <data name="EditPageProperties_ReadOnlyModeMessage" xml:space="preserve">
     <value>Page opened in read-only mode.</value>
   </data>
+  <data name="EditSeo_ReadOnlyModeMessage" xml:space="preserve">
+    <value>Page opened in read-only mode.</value>
+  </data>
 </root>

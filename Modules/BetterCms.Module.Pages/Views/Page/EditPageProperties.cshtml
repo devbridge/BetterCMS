@@ -32,7 +32,7 @@
     @using (Html.BeginForm<PageController>(f => f.EditPageProperties((EditPagePropertiesViewModel)null), FormMethod.Post, 
             new
                 {
-                    @class = "bcms-ajax-form" + (Model.IsReadOnly ? " bcms-inactive" : string.Empty), 
+                    @class = "bcms-ajax-form", 
                     data_readonly=Model.IsReadOnly.ToString().ToLower()
                 }))
     {
