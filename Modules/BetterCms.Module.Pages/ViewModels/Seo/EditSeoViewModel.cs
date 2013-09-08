@@ -4,13 +4,14 @@ using System.ComponentModel.DataAnnotations;
 using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Root.Content.Resources;
+using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.Pages.ViewModels.Seo
 {
     /// <summary>
     /// View model 
     /// </summary>
-    public class EditSeoViewModel
+    public class EditSeoViewModel : IAccessSecuredViewModel
     {
         /// <summary>
         /// Gets or sets the page id.

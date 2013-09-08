@@ -1116,10 +1116,4 @@
   <data name="EditOptionsValues_UseDefaultValueColumn" xml:space="preserve">
     <value>Use default</value>
   </data>
-  <data name="EditPageProperties_ReadOnlyModeMessage" xml:space="preserve">
-    <value>Page opened in read-only mode.</value>
-  </data>
-  <data name="EditSeo_ReadOnlyModeMessage" xml:space="preserve">
-    <value>Page opened in read-only mode.</value>
-  </data>
 </root>

@@ -143,7 +143,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 model.Model.OptionValues = optionService.GetMergedOptionValuesForEdit(layoutOptions, pageOptions);
 
                 if (cmsConfiguration.Security.AccessControlEnabled)
-                {
+                {                    
                     model.Model.UserAccessList = Repository.AsQueryable<Root.Models.Page>()
                                                 .Where(x => x.Id == id && !x.IsDeleted)                    
                                                 .SelectMany(x => x.AccessRules)
@@ -152,15 +152,8 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                                                 .Select(x => new UserAccessViewModel(x)).ToList();
 
                     var rules = model.Model.UserAccessList.Cast<IAccessRule>().ToList();
-                    var principal = SecurityService.GetCurrentPrincipal();
-                    var accessLevel = AccessControlService.GetAccessLevel((IList<IAccessRule>)rules, principal);
 
-                    model.Model.IsReadOnly = accessLevel != AccessLevel.ReadWrite;
-
-                    if (accessLevel == AccessLevel.Read)
-                    {
-                        Context.Messages.AddInfo(PagesGlobalization.EditPageProperties_ReadOnlyModeMessage);
-                    }
+                    SetIsReadOnly(model.Model, rules);
                 }
 
                 model.Model.CanPublishPage = SecurityService.IsAuthorized(Context.Principal, RootModuleConstants.UserRoles.PublishContent);

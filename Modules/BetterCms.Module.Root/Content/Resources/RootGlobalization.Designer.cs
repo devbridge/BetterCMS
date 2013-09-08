@@ -718,6 +718,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dialog opened in read-only mode..
+        /// </summary>
+        public static string Message_ReadOnlyMode {
+            get {
+                return ResourceManager.GetString("Message_ReadOnlyMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Saving ....
         /// </summary>
         public static string Message_Saving {

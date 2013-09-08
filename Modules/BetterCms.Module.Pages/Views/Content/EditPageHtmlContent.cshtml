@@ -19,7 +19,13 @@
     @Html.Partial("Partial/WarnMessageAboutDraft", Model)
     <div class="bcms-padded-content">
         <div id="bcms-tab-1" class="bcms-tab-single">
-            @using (Html.BeginForm<ContentController>(c => c.SavePageHtmlContent(null), FormMethod.Post, new { @id = "bcms-content-form", @class = "bcms-ajax-form" }))
+            @using (Html.BeginForm<ContentController>(c => c.SavePageHtmlContent(null), FormMethod.Post, 
+                new
+                    {
+                        @id = "bcms-content-form", 
+                        @class = "bcms-ajax-form",
+                        data_readonly = Model.IsReadOnly.ToString().ToLowerInvariant()
+                    }))
             {  
                 @Html.Partial("Partial/EditHtmlContent", Model)
                 @Html.HiddenFor(model => model.Id, new { @id = "bcmsPageContentId"})

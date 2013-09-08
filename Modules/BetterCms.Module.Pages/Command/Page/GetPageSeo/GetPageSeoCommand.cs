@@ -78,16 +78,8 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageSeo
                                                 .SelectMany(x => x.AccessRules)
                                                 .OrderBy(x => x.Identity).ToList()
                                                 .Select(x => new UserAccessViewModel(x)).Cast<IAccessRule>().ToList();
-                    
-                    var principal = SecurityService.GetCurrentPrincipal();
-                    var accessLevel = AccessControlService.GetAccessLevel((IList<IAccessRule>)accessRules, principal);
-
-                    model.IsReadOnly = accessLevel != AccessLevel.ReadWrite;
-
-                    if (accessLevel == AccessLevel.Read)
-                    {
-                        Context.Messages.AddInfo(PagesGlobalization.EditSeo_ReadOnlyModeMessage);
-                    }
+                 
+                    SetIsReadOnly(model, accessRules);                      
                 }
             }
 

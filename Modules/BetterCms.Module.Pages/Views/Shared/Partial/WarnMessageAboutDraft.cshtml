@@ -1,7 +1,7 @@
 ﻿@using BetterCms.Core.DataContracts.Enums
 @using BetterCms.Module.Pages.Content.Resources
 @{ var showDraftDestroy = !ViewData.ContainsKey("CanEdit") || (bool)ViewData["CanEdit"]; }
-@if (Model.CurrentStatus == ContentStatus.Draft)
+@if (Model.CurrentStatus == ContentStatus.Draft && Model.IsReadOnly != true)
 {
     <div class="bcms-messages-type-1">
         <ul class="bcms-success-messages" style="display: none">

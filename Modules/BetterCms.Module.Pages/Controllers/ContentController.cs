@@ -165,7 +165,9 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult EditPageHtmlContent(string pageContentId)
         {
             var model = GetCommand<GetPageHtmlContentCommand>().ExecuteCommand(pageContentId.ToGuidOrDefault());
+
             var view = RenderView("EditPageHtmlContent", model);
+
             return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 

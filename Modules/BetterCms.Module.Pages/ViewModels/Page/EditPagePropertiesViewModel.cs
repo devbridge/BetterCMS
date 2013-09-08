@@ -17,7 +17,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
     /// <summary>
     /// Edit basic page properties view model.
     /// </summary>
-    public class EditPagePropertiesViewModel
+    public class EditPagePropertiesViewModel : IAccessSecuredViewModel
     {
         /// <summary>
         /// Gets or sets the page id.

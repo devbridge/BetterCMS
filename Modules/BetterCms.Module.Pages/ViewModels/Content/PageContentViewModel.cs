@@ -9,13 +9,14 @@ using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Mvc.Attributes;
 using BetterCms.Module.Pages.ViewModels.Widgets;
+using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.Pages.ViewModels.Content
 {
     /// <summary>
     /// Add/Edit page content view model
     /// </summary>
-    public class PageContentViewModel
+    public class PageContentViewModel : IAccessSecuredViewModel
     {
         /// <summary>
         /// Gets or sets the page content id.
@@ -151,6 +152,14 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// The list of the widget categories.
         /// </value>
         public IList<WidgetCategoryViewModel> WidgetCategories { get; set; }
+        
+        /// <summary>
+        /// Gets or sets a value indicating whether dialog should be opened in the read only mode.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if dialog should be opened in the read only mode; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsReadOnly { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
