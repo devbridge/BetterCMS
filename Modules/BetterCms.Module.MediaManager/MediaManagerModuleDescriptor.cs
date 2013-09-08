@@ -178,7 +178,7 @@ namespace BetterCms.Module.MediaManager
                             Order = 2400,
                             Title = () => MediaGlobalization.SiteSettings_MediaManagerMenuItem,
                             CssClass = page => "bcms-sidebar-link",
-                            AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.DeleteContent)
+                            AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.Administration, RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.DeleteContent)
                         }                                      
                 };
         }

@@ -11,6 +11,7 @@ using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
@@ -73,7 +74,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         /// <param name="id">The page id.</param>
         /// <returns></returns>
         public EditPagePropertiesViewModel Execute(Guid id)
-        {           
+        {            
             var model = Repository
                 .AsQueryable<PageProperties>()
                 .Where(p => p.Id == id)
@@ -161,6 +162,8 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                         Context.Messages.AddInfo(PagesGlobalization.EditPageProperties_ReadOnlyModeMessage);
                     }
                 }
+
+                model.Model.CanPublishPage = SecurityService.IsAuthorized(Context.Principal, RootModuleConstants.UserRoles.PublishContent);
 
                 // Get templates
                 model.Model.Templates = layoutService.GetLayouts();

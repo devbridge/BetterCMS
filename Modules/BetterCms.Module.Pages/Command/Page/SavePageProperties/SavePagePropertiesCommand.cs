@@ -95,6 +95,8 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         /// <exception cref="CmsException">Failed to save page properties.</exception>
         public SavePageResponse Execute(EditPagePropertiesViewModel request)
         {            
+            AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent);
+            
             UnitOfWork.BeginTransaction();
 
             var pageQuery = Repository
@@ -142,14 +144,19 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             page.CustomCss = request.PageCSS;
             page.CustomJS = request.PageJavascript;
 
-            if (request.IsPagePublished)
+            if (request.CanPublishPage)
             {
-                page.Status = PageStatus.Published;
-                page.PublishedOn = DateTime.Now;
-            }
-            else
-            {
-                page.Status = PageStatus.Unpublished;
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.PublishContent);
+
+                if (request.IsPagePublished)
+                {
+                    page.Status = PageStatus.Published;
+                    page.PublishedOn = DateTime.Now;
+                }
+                else
+                {
+                    page.Status = PageStatus.Unpublished;
+                }
             }
 
             page.UseNoFollow = request.UseNoFollow;

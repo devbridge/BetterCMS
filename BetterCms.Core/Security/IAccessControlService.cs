@@ -24,7 +24,7 @@ namespace BetterCms.Core.Security
         /// <param name="principal">The principal.</param>
         /// <param name="roles">The roles.</param>
         void DemandAccess(IPrincipal principal, params string[] roles);
-
+        
         /// <summary>
         /// Gets the access level for specific principal.
         /// </summary>

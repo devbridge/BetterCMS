@@ -233,6 +233,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public bool IsReadOnly { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether current user can publish page.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if current user can publish page; otherwise, <c>false</c>.
+        /// </value>
+        public bool CanPublishPage { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="EditPagePropertiesViewModel" /> class.
         /// </summary>
         public EditPagePropertiesViewModel()
