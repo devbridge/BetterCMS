@@ -162,9 +162,11 @@ namespace BetterCms.Module.Root.Services
 
             UpdateChangedRules(securedObject, updatedRules);
 
-            if (securedObject.AccessRules == null || 
-                !securedObject.AccessRules.Any() && !string.Equals(configuration.Security.DefaultAccessRules.DefaultAccessLevel, AccessLevel.ReadWrite.ToString(), StringComparison.OrdinalIgnoreCase) ||
-                securedObject.AccessRules.Any() && !securedObject.AccessRules.Any(f => f.AccessLevel == AccessLevel.ReadWrite))
+            var readWriteIsDefault = string.Equals(configuration.Security.DefaultAccessRules.DefaultAccessLevel, AccessLevel.ReadWrite.ToString(), StringComparison.OrdinalIgnoreCase);
+
+            if (securedObject.AccessRules == null && !readWriteIsDefault  || 
+                securedObject.AccessRules != null && !securedObject.AccessRules.Any() && !readWriteIsDefault ||
+                securedObject.AccessRules != null && securedObject.AccessRules.Any() && securedObject.AccessRules.All(f => f.AccessLevel != AccessLevel.ReadWrite))
             {
                 throw new ValidationException(() => RootGlobalization.Validation_SecuredObjectShouldHaveAccess_Message, 
                     string.Format("An '{0}' secured object can't be saved because of the complete access lose.", securedObject));
