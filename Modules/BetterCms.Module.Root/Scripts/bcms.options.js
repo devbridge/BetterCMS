@@ -262,6 +262,14 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 
                 // Disable editing and deletion
                 self.changeFieldsEditing();
+                
+                self.getValueField().subscribe(function () {
+                    // Closes expanded calendar, when user manually enters the value
+                    var focusedElement = $(selectors.focusedElements);
+                    if (focusedElement.length > 0 && $.isFunction(focusedElement.datepicker)) {
+                        focusedElement.datepicker("hide");
+                    }
+                });
             };
 
             OptionViewModel.prototype.getValueField = function() {
