@@ -5,13 +5,12 @@ using Autofac;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Pages.Command.Content.GetPageHtmlContent;
 
 using Moq;
-
-using NHibernate;
 
 using NUnit.Framework;
 
@@ -32,6 +31,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
             var command = new GetPageHtmlContentCommand();
             command.UnitOfWork = new Mock<IUnitOfWork>().Object;
             command.Repository = new Mock<IRepository>().Object;
+            command.Configuration = Container.Resolve<ICmsConfiguration>();
                 
             // Mock content service
             var serviceMock = new Mock<IContentService>();
