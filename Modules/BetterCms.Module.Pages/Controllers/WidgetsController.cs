@@ -189,7 +189,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// View with widget preview
         /// </returns>
         [HttpGet]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration, RootModuleConstants.UserRoles.EditContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration, RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)]
         public ActionResult PreviewWidget(string widgetId, bool enableJavaScript)
         {
             var request = new PreviewWidgetCommandRequest { WidgetId = widgetId.ToGuidOrDefault(), IsJavaScriptEnabled = enableJavaScript };
