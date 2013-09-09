@@ -31,9 +31,12 @@
 <div class="bcms-media-history-holder">
     @Html.TabbedContentMessagesBox()
 
-    @foreach (var property in Model.Properties)
+    @if (Model != null)
     {
-        @RenderProperty(property)
+        foreach (var property in Model.Properties)
+        {
+            @RenderProperty(property)
+        }
     }
 </div>
 

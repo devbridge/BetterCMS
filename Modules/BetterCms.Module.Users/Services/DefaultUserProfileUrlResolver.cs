@@ -28,7 +28,7 @@ namespace BetterCms.Module.Users.Services
         /// </summary>
         public string GetEditUserProfileUrl()
         {
-            if (!(Roles.Provider is CmsRoleProvider) || !(Membership.Provider is CmsMembershipProvider))
+            if (!Roles.Enabled || !(Roles.Provider is CmsRoleProvider) || !(Membership.Provider is CmsMembershipProvider))
             {
                 return null;
             }

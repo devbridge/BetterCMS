@@ -61,6 +61,8 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                 UnitOfWork.BeginTransaction();
 
                 List<MediaFile> files = new List<MediaFile>();
+                var updateAccessControl = true;
+
                 if (request.ReuploadMediaId.HasDefaultValue())
                 {
                     foreach (var fileId in request.UploadedFiles)
@@ -87,8 +89,13 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                     if (!fileId.HasDefaultValue())
                     {
                         var originalMedia = Repository.First<MediaFile>(request.ReuploadMediaId);
+                        AccessControlService.DemandAccess(originalMedia, Context.Principal, AccessLevel.ReadWrite);
+
                         var historyItem = originalMedia.CreateHistoryItem();
                         Repository.Save(historyItem);
+
+                        // Do not update access control, if reuploading
+                        updateAccessControl = false;
 
                         var file = Repository.FirstOrDefault<MediaFile>(fileId);
                         file.CopyDataTo(originalMedia);
@@ -110,17 +117,16 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                     }
                 }
 
-                if (cmsConfiguration.Security.AccessControlEnabled)
+                if (updateAccessControl && cmsConfiguration.Security.AccessControlEnabled)
                 {
                     foreach (var file in files)
                     {
                         var currentFile = file;
                         var fileEntity = Repository.AsQueryable<MediaFile>().Where(f => f.Id == currentFile.Id).FetchMany(f => f.AccessRules).ToList().FirstOne();
 
-                        accessControlService.UpdateAccessControl(fileEntity, 
-                            request.UserAccessList != null 
-                                ? request.UserAccessList.Cast<IAccessRule>().ToList()
-                                : Enumerable.Empty<IAccessRule>().ToList());
+                        accessControlService.UpdateAccessControl(fileEntity, request.UserAccessList != null 
+                            ? request.UserAccessList.Cast<IAccessRule>().ToList() 
+                            : new List<IAccessRule>());
                     }                    
                 }
 

@@ -147,8 +147,8 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.defaultValue = ko.observable().extend({ optionValue: { self: self } }).extend({ notify: 'always' });
                 self.value = ko.observable().extend({ optionValue: { self: self } }).extend({ notify: 'always' });
                 self.type = ko.observable();
-                self.useDefaultValue = ko.observable(false);
-                self.canEditOption = ko.observable(false);
+                self.useDefaultValue = ko.observable(-1);
+                self.canEditOption = ko.observable(-1);
                 self.canDeleteOption = true;
 
                 // Additional values
@@ -164,7 +164,9 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.optionTypes.push({ id: optionTypes.dateTimeType, name: globalization.optionTypeDateTime });
                 self.optionTypes.push({ id: optionTypes.boolType, name: globalization.optionTypeBoolean });
 
-                self.registerFields(self.key, self.defaultValue, self.value, self.type, self.useDefaultValue);
+                // NOTE: useDefaultValue should be registered before defaultValue and type
+                // because in othercase, when cancelling edit mode, ir sets wrong values
+                self.registerFields(self.useDefaultValue, self.key, self.value, self.defaultValue, self.type);
 
                 self.getOptionTypeName = function() {
                     var i,
@@ -243,14 +245,6 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     }
                 };
 
-                self.useDefaultValue.subscribe(function(newValue) {
-                    if (newValue) {
-                        self.value(self.defaultValue());
-                    } else {
-                        self.value('');
-                    }
-                });
-
                 // Set values
                 self.key(item.OptionKey);
                 self.defaultValue(item.OptionDefaultValue);
@@ -259,10 +253,20 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.canEditOption(item.CanEditOption !== false);
                 self.useDefaultValue(!self.canEditOption() && item.UseDefaultValue === true);
                 self.canDeleteOption = item.CanDeleteOption !== false;
-                
+
                 // Disable editing and deletion
                 self.changeFieldsEditing();
                 
+                self.useDefaultValue.subscribe(function (newValue) {
+                    if (self.isActive()) {
+                        if (newValue) {
+                            self.value(self.defaultValue());
+                        } else {
+                            self.value('');
+                        }
+                    }
+                });
+
                 self.getValueField().subscribe(function () {
                     // Closes expanded calendar, when user manually enters the value
                     var focusedElement = $(selectors.focusedElements);
@@ -390,7 +394,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     hasError = !regExp.test(newValue);
                 }
 
-                showMessage = hasError ? $.format(globalization.optionValidationMessage, self.key(), self.getOptionTypeName()) : '';
+                showMessage = hasError ? $.format(globalization.optionValidationMessage, self.key() || '', self.getOptionTypeName() || '') : '';
 
                 target.validator.setError(ruleName, hasError, showMessage);
             });

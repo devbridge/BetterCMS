@@ -9,7 +9,6 @@ using BetterCms.Core.Exceptions.Service;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Services;
 
-using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Projections;
@@ -90,15 +89,7 @@ namespace BetterCms.Module.Pages.Services
 
             if (pageContent.Content != null)
             {
-                var contentType = pageContent.Content.GetType();
-                if (contentType == typeof(HtmlContentWidget) || contentType == typeof(ServerControlWidget))
-                {
-                    DemandAccess(user, RootModuleConstants.UserRoles.Administration);
-                }
-                else
-                {
-                    DemandAccess(user, RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent);
-                }
+                DemandAccess(user, RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent);
             }
 
             var options = optionService.GetMergedOptionValues(pageContent.Content.ContentOptions, pageContent.Options);

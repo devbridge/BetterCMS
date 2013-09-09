@@ -2,6 +2,7 @@
 using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Security;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Models.Enum;
@@ -71,7 +72,11 @@ namespace BetterCms.Module.MediaManager.Command.History.GetMediaHistory
         /// <returns>Converts media entity to view model.</returns>
         private MediaHistoryItem Convert(Media media)
         {
-            var canRestore = media.Original != null && UserHasEditRole && UserHasAdministrationRole;
+            var file = media.Original as MediaFile;
+
+            var canRestore = media.Original != null 
+                && (SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent) || SecurityService.IsAuthorized(RootModuleConstants.UserRoles.Administration))
+                && (file == null || AccessControlService.GetAccessLevel(file, Context.Principal) >= AccessLevel.ReadWrite);
 
             return new MediaHistoryItem
                        {
