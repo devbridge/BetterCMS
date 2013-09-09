@@ -140,6 +140,7 @@
     <Compile Include="Models\Maps\RoleMap.cs" />
     <Compile Include="Models\Maps\UserRoleMap.cs" />
     <Compile Include="Models\Maps\UserMap.cs" />
+    <Compile Include="Models\Migrations\Migration201309090915.cs" />
     <Compile Include="Models\Migrations\Migration201309060825.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\Migration201308210000.cs" />
