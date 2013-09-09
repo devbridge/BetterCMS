@@ -57,7 +57,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                     && !o.UseDefaultValue
                     && !o.CanEditOption));
                 Assert.IsNotNull(result.OptionValues.FirstOrDefault(o => o.OptionKey == content.ContentOptions[2].Key
-                    && o.OptionValue == null
+                    && o.OptionValue == content.ContentOptions[2].DefaultValue
                     && o.OptionDefaultValue == content.ContentOptions[2].DefaultValue
                     && o.UseDefaultValue
                     && !o.CanEditOption));

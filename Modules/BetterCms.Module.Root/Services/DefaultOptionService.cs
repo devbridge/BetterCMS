@@ -83,7 +83,7 @@ namespace BetterCms.Module.Root.Services
                                 {
                                     Type = option.Type,
                                     OptionKey = option.Key.Trim(),
-                                    OptionValue = null,
+                                    OptionValue = option.Value,
                                     OptionDefaultValue = option.Value,
                                     UseDefaultValue = true
                                 });

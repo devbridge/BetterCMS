@@ -330,8 +330,8 @@ namespace BetterCms.Test.Module.Root.ServiceTests
             Assert.AreEqual(result.Count(o => o.CanEditOption), 3);
             // 4 of 5 options has default values
             Assert.AreEqual(result.Count(o => o.OptionDefaultValue == null), 4);
-            // 4 of 5 option values has values
-            Assert.AreEqual(result.Count(o => o.OptionValue == null), 4);
+            // 4 of 5 option values has default values
+            Assert.AreEqual(result.Count(o => o.OptionValue == o.OptionDefaultValue), 4);
             // 1 option and option value are equal
             Assert.AreEqual(result.Count(o => o.OptionKey == option1.Key 
                 && o.OptionDefaultValue == option1.DefaultValue

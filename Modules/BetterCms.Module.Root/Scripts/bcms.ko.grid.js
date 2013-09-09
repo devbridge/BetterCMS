@@ -259,22 +259,25 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
         self.parent = parent;
 
         self.field.subscribe(function () {
-            var oldValue = self.field() ? self.field() : '';
-            if (!self.parent.isActive() && oldValue != self.oldValue) {
+            var fieldValue = self.field(),
+                oldValue = fieldValue || typeof fieldValue == "boolean" ? fieldValue : '';
+
+            if (!self.parent.isActive() && oldValue !== self.oldValue) {
                 self.oldValue = oldValue;
             }
         });
 
         self.hasChanges = function() {
-            var oldValue = self.oldValue || '',
-                newValue = self.field() || '';
+            var oldValue = self.oldValue || typeof self.oldValue == "boolean" ? self.oldValue : '',
+                fieldValue = self.field(),
+                newValue = fieldValue || typeof fieldValue == "boolean" ? fieldValue : '';
 
             return oldValue != newValue;
         };
 
         self.restoreOldValue = function () {
-            var oldValue = self.oldValue || '';
-            
+            var oldValue = self.oldValue || typeof self.oldValue == "boolean" ? self.oldValue : '';
+
             self.field(oldValue);
         };
 
@@ -629,9 +632,10 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.loseFocus();
                 
                 for (var i = 0; i < this.registeredFields.length; i++) {
-                    var field = this.registeredFields[i];
+                    var field = this.registeredFields[i],
+                        fieldValue = field.field();
 
-                    field.oldValue = field.field() || '';
+                    field.oldValue = fieldValue || typeof fieldValue == "boolean" ? fieldValue : '';
                 }
             } else {
                 self.hasFocus(true);
