@@ -73,6 +73,14 @@ namespace BetterCms
         ICmsSecurityConfiguration Security { get;  }
 
         /// <summary>
+        /// Gets the configuration of CMS users.
+        /// </summary>
+        /// <value>
+        /// The users.
+        /// </value>
+        ICmsUsersConfiguration Users { get; }
+
+        /// <summary>
         /// Gets or sets the page not found url.
         /// </summary>
         /// <value>

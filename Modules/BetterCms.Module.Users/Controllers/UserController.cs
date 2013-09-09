@@ -103,10 +103,10 @@ namespace BetterCms.Module.Users.Controllers
         {
             var success = GetCommand<DeleteUserCommand>().ExecuteCommand(
                 new DeleteUserCommandRequest
-                {
-                    UserId = id.ToGuidOrDefault(),
-                    Version = version.ToIntOrDefault()
-                });
+                    {
+                        UserId = id.ToGuidOrDefault(),
+                        Version = version.ToIntOrDefault()
+                    });
 
             if (success)
             {
@@ -115,5 +115,5 @@ namespace BetterCms.Module.Users.Controllers
 
             return Json(new WireJson(success));
         }
-}
+    }
 }

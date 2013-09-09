@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Permissions;
 using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
@@ -280,27 +281,29 @@ namespace BetterCms.Sandbox.Mvc4
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
-            var authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
-            var roleCokie = Request.Cookies[Roles.CookieName];
+            // Users module covers it:
 
-            if (authCookie != null)
-            {
-                try
-                {
-                    var authTicket = FormsAuthentication.Decrypt(authCookie.Value);
-                    if (authTicket != null)
-                    {
-                        var identity = new FormsIdentity(authTicket);
-                        var principal = roleCokie == null ? new RolePrincipal("BetterCmsRoleProvider", identity) : new RolePrincipal(identity, roleCokie.Value);
-                        Context.User = principal;
-                    }
-                }
-                catch
-                {
-                    Session.Clear();
-                    FormsAuthentication.SignOut();
-                }
-            }
+            //var authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            //var roleCokie = Request.Cookies[Roles.CookieName];
+
+            //if (authCookie != null)
+            //{
+            //    try
+            //    {
+            //        var authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+            //        if (authTicket != null)
+            //        {
+            //            var identity = new FormsIdentity(authTicket);
+            //            var principal = roleCokie == null ? new RolePrincipal("BetterCmsRoleProvider", identity) : new RolePrincipal(identity, roleCokie.Value);
+            //            Context.User = principal;
+            //        }
+            //    }
+            //    catch
+            //    {
+            //        Session.Clear();
+            //        FormsAuthentication.SignOut();
+            //    }
+            //}
 
             cmsHost.OnAuthenticateRequest(this);
         }

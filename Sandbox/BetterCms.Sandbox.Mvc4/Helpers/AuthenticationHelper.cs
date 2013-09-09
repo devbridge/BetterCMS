@@ -25,5 +25,21 @@ namespace BetterCms.Sandbox.Mvc4.Helpers
             HttpContext.Current.Session.Clear();
             FormsAuthentication.SignOut();
         }
+
+        public static void Auth(HttpApplication http)
+        {
+            //var authCookie = http.Request.Cookies[FormsAuthentication.FormsCookieName];
+
+            //if (authCookie != null)
+            //{
+            //    var authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+            //    if (authTicket != null)
+            //    {
+            //        var identity = new FormsIdentity(authTicket);
+            //        var principal = Roles.Enabled ? new RolePrincipal("BetterCmsRoleProvider", identity) : new RolePrincipal(identity, roleCokie.Value);
+            //        http.Context.User = principal;
+            //    }
+            //}
+        }
     }
 }

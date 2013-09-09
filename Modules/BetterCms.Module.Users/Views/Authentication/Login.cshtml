@@ -1,0 +1,38 @@
+﻿@using BetterCms.Module.Users.Content.Resources
+@using Microsoft.Web.Mvc
+@model BetterCms.Module.Users.ViewModels.Authentication.LoginViewModel
+@{
+    Layout = "~/Areas/bcms-users/Views/Shared/PublicActionLayout.cshtml";
+    ViewBag.Title = "Better CMS - Login";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="validation-summary-valid" data-valmsg-summary="true">
+        @Html.ValidationSummary()
+    </div>
+    <div>
+        <span class="bcms-title">@UsersGlobalization.Login_UserName</span>
+        <p>
+            @Html.TextBoxFor(m => m.UserName)
+            @Html.ValidationMessageFor(m => m.UserName)
+        </p>
+    </div>
+
+    <div>
+        <span class="bcms-title">@UsersGlobalization.Login_Password</span>
+        <p>
+            @Html.PasswordFor(m => m.Password)
+            @Html.ValidationMessageFor(m => m.Password)
+        </p>
+    </div>
+    <div>
+        <span class="bcms-title">&nbsp;</span>
+        <p>
+            @Html.CheckBoxFor(m => m.RememberMe)
+            @Html.LabelFor(m => m.RememberMe)
+        </p>
+    </div>
+    @Html.SubmitButton("submit", "Login", new { @class = "bcms-btn-small" })
+    @Html.HiddenFor(m => m.ReturnUrl)
+}

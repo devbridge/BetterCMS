@@ -309,4 +309,22 @@
   <data name="SaveProfile_SecurityHashasAreNotEqual_Message" xml:space="preserve">
     <value>Canot save profile. Profile was updated by another transaction. Please reload profile form and try again.</value>
   </data>
+  <data name="Login_Failed_Message" xml:space="preserve">
+    <value>User name or password is incorect.</value>
+  </data>
+  <data name="Login_Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Login_Password_RequireMessage" xml:space="preserve">
+    <value>Password is required.</value>
+  </data>
+  <data name="Login_RememberMe" xml:space="preserve">
+    <value>Remember Me</value>
+  </data>
+  <data name="Login_UserName" xml:space="preserve">
+    <value>User Name</value>
+  </data>
+  <data name="Login_UserName_RequiredMessage" xml:space="preserve">
+    <value>User name is required.</value>
+  </data>
 </root>

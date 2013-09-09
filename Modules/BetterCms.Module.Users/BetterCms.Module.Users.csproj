@@ -112,6 +112,9 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Commands\Authentication\LogoutCommand.cs" />
+    <Compile Include="Commands\Authentication\LoginCommand.cs" />
+    <Compile Include="Commands\Registration\CreateFirstUserCommand.cs" />
     <Compile Include="Commands\Role\DeleteRole\DeleteRoleCommand.cs" />
     <Compile Include="Commands\Role\DeleteRole\DeleteRoleCommandRequest.cs" />
     <Compile Include="Commands\Role\GetRoles\GetRolesCommand.cs" />
@@ -131,6 +134,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UsersGlobalization.resx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AuthenticationController.cs" />
+    <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserProfileController.cs" />
@@ -140,11 +145,10 @@
     <Compile Include="Models\Maps\RoleMap.cs" />
     <Compile Include="Models\Maps\UserRoleMap.cs" />
     <Compile Include="Models\Maps\UserMap.cs" />
+    <Compile Include="Models\Migrations\Migration201309091554.cs" />
     <Compile Include="Models\Migrations\Migration201309090915.cs" />
     <Compile Include="Models\Migrations\Migration201309060825.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
-    <Compile Include="Models\Migrations\Migration201308210000.cs" />
-    <Compile Include="Models\Migrations\Migration201309040900.cs" />
     <Compile Include="Models\Migrations\UsersVersionTableMetaData.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\UserRole.cs" />
@@ -155,16 +159,19 @@
     <Compile Include="Registration\RoleJsModuleIncludeDescriptor.cs" />
     <Compile Include="Provider\CmsRoleProvider.cs" />
     <Compile Include="Registration\UserJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Services\DefaultRegistrationService.cs" />
     <Compile Include="Services\DefaultAuthenticationService.cs" />
     <Compile Include="Services\DefaultRoleService.cs" />
     <Compile Include="Services\DefaultUserProfileUrlResolver.cs" />
     <Compile Include="Services\DefaultUserService.cs" />
     <Compile Include="Services\IAuthenticationService.cs" />
+    <Compile Include="Services\IRegistrationService.cs" />
     <Compile Include="Services\IRoleService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="UsersModuleConstants.cs" />
     <Compile Include="UsersModuleDescriptor.cs" />
-    <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\Authentication\LoginViewModel.cs" />
+    <Compile Include="ViewModels\Registration\CreateFirstUserViewModel.cs" />
     <Compile Include="ViewModels\User\EditUserProfileViewModel.cs" />
     <Compile Include="ViewModels\User\EditUserViewModel.cs" />
     <Compile Include="ViewModels\Role\RoleViewModel.cs" />
@@ -205,7 +212,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Models\Migrations\Migration201309040900.sqlserver.sql" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
@@ -225,9 +231,6 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Widgets\Login.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\User\EditUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +241,15 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\User\Partial\EditUserRoles.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Registration\CreateFirstUser.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Authentication\Login.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\PublicActionLayout.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

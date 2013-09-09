@@ -1,4 +1,6 @@
-﻿namespace BetterCms.Module.Users.Services
+﻿using System.Web;
+
+namespace BetterCms.Module.Users.Services
 {
     public interface IAuthenticationService
     {
@@ -36,5 +38,11 @@
         /// true if the password was updated successfully; otherwise, false.
         /// </returns>
         bool ChangePassword(string username, string oldPassword, string newPassword);
+
+        /// <summary>
+        /// Authenticates the request.
+        /// </summary>
+        /// <param name="httpApplication">The HTTP application.</param>
+        void AuthenticateRequest(HttpApplication httpApplication);
     }
 }

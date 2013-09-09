@@ -204,7 +204,7 @@ namespace BetterCms.Module.Root.Controllers
 
         private void LogPageNotFound(string virtualPath)
         {
-            log.WarnFormat("Failed to load page by URL: {0}. Page not found.", virtualPath);
+            log.InfoFormat("Failed to load page by URL: {0}. Page not found.", virtualPath);
 
             // Notifying, that page was not found.
             Events.RootEvents.Instance.OnPageNotFound(virtualPath);
