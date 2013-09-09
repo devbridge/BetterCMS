@@ -133,8 +133,10 @@
     </Compile>
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UserProfileController.cs" />
     <Compile Include="Events\RoleEvents.cs" />
     <Compile Include="Events\UserEvents.cs" />
+    <Compile Include="Events\UserProfileUpdatedEventArgs.cs" />
     <Compile Include="Models\Maps\RoleMap.cs" />
     <Compile Include="Models\Maps\UserRoleMap.cs" />
     <Compile Include="Models\Maps\UserMap.cs" />
@@ -228,16 +230,10 @@
     <EmbeddedResource Include="Views\User\EditUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\User\EditUserProfile.cshtml" />
+    <EmbeddedResource Include="Views\UserProfile\EditUserProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\User\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\User\Partial\EditUserImage.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\User\Partial\EditUserMainFields.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\User\Partial\EditUserRoles.cshtml" />

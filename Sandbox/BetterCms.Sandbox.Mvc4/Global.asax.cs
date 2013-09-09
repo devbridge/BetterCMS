@@ -10,6 +10,7 @@ using BetterCms.Core;
 using BetterCms.Core.Environment.Host;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Events;
+using BetterCms.Sandbox.Mvc4.Helpers;
 
 using Common.Logging;
 
@@ -47,6 +48,7 @@ namespace BetterCms.Sandbox.Mvc4
             AddBlogPostEvents();
             AddBlogAuthorEvents();
             AddMediaManagerEvents();
+            AddUsersEvents();
         }
 
         private void AddMediaManagerEvents()
@@ -229,6 +231,22 @@ namespace BetterCms.Sandbox.Mvc4
                 Log.Info("PageSeoStatusChanged: " + args.Item.ToString());
             };
         }
+        private void AddUsersEvents()
+        {
+            BetterCms.Events.UserEvents.Instance.UserProfileUpdated += args =>
+            {
+                Log.Info("UserProfileUpdated: " + args.AfterUpdate.ToString());
+
+                if (args.BeforeUpdate != null && args.AfterUpdate != null && args.AfterUpdate.UserName != args.BeforeUpdate.UserName)
+                {
+                    AuthenticationHelper.Logout();
+
+                    var roles = Roles.GetRolesForUser(args.AfterUpdate.UserName);
+                    AuthenticationHelper.CreateTicket(roles, args.AfterUpdate.UserName);
+                }
+            };
+        }
+
 
         void Events_PageRendering(PageRenderingEventArgs args)
         {                        

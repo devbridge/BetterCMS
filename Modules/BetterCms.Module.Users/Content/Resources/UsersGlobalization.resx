@@ -300,4 +300,13 @@
   <data name="EditUserProfile_Window_Title" xml:space="preserve">
     <value>Edit user profile</value>
   </data>
+  <data name="SaveProfile_UserEmailExists_Message" xml:space="preserve">
+    <value>User email {0} already exists in the database.</value>
+  </data>
+  <data name="SaveProfile_UserNameExists_Message" xml:space="preserve">
+    <value>User name {0} already exists. Please specify another user name.</value>
+  </data>
+  <data name="SaveProfile_SecurityHashasAreNotEqual_Message" xml:space="preserve">
+    <value>Canot save profile. Profile was updated by another transaction. Please reload profile form and try again.</value>
+  </data>
 </root>

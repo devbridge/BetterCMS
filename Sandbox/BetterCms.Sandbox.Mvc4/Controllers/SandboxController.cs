@@ -5,7 +5,10 @@ using System.Web.Mvc;
 using System.Web.Security;
 
 using BetterCms.Module.Users.Provider;
+using BetterCms.Sandbox.Mvc4.Helpers;
 using BetterCms.Sandbox.Mvc4.Models;
+
+using httpContext = System.Web.HttpContext;
 
 namespace BetterCms.Sandbox.Mvc4.Controllers
 {
@@ -40,7 +43,7 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
                 return View(model);
             }
 
-            CreateTicket(!string.IsNullOrWhiteSpace(roles) ? roles.Split(',') : new[] { "Owner" });
+            AuthenticationHelper.CreateTicket(!string.IsNullOrWhiteSpace(roles) ? roles.Split(',') : new[] { "Owner" });
 
             return Redirect("/");
         }
@@ -52,7 +55,7 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
             if (Membership.ValidateUser(login.UserName, login.Password))
             {
                 var roles = Roles.GetRolesForUser(login.UserName);
-                CreateTicket(roles, login.UserName);
+                AuthenticationHelper.CreateTicket(roles, login.UserName);
 
                 return Redirect("/");
             }
@@ -60,26 +63,11 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
             return Login((string)null);
         }
 
-        private void CreateTicket(string[] roles, string userName = "Better CMS test user")
-        {
-            var authTicket = new FormsAuthenticationTicket(1, userName, DateTime.Now, DateTime.Now.AddMonths(1), true, string.Join(",", roles));
-
-            var cookieContents = FormsAuthentication.Encrypt(authTicket);
-            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, cookieContents)
-            {
-                Expires = authTicket.Expiration,
-                Path = FormsAuthentication.FormsCookiePath
-            };
-
-            HttpContext.Response.Cookies.Add(cookie);
-        }
-
         [AllowAnonymous]
         public ActionResult Logout()
         {
-            Session.Clear();
-            FormsAuthentication.SignOut();
-
+            AuthenticationHelper.Logout();
+            
             return Redirect("/");
         }
 

@@ -20,12 +20,20 @@ namespace BetterCms.Module.Users.Commands.User.SaveUser
     /// </summary>
     public class SaveUserCommand : CommandBase, ICommand<EditUserViewModel, SaveUserCommandResponse>
     {
+        /// <summary>
+        /// The authentication service
+        /// </summary>
         private IAuthenticationService authenticationService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SaveUserCommand" /> class.
+        /// </summary>
+        /// <param name="authenticationService">The authentication service.</param>
         public SaveUserCommand(IAuthenticationService authenticationService)
         {
             this.authenticationService = authenticationService;
         }
+
         /// <summary>
         /// Executes a command to save user.
         /// </summary>
@@ -107,10 +115,6 @@ namespace BetterCms.Module.Users.Commands.User.SaveUser
             var dbRoles = user.UserRoles ?? new List<UserRole>();
             var requestRoles = request.Roles ?? new List<string>();
 
-            var test = dbRoles.Where(
-                dbRole => !requestRoles.Any(requestRole => (dbRole.Role.DisplayName == null && requestRole == dbRole.Role.Name) || requestRole == dbRole.Role.DisplayName))
-                   .ToList();
-
             // Delete removed roles
             dbRoles
                 .Where(dbRole => !requestRoles.Any(requestRole => (dbRole.Role.DisplayName == null && requestRole == dbRole.Role.Name)
@@ -145,32 +149,31 @@ namespace BetterCms.Module.Users.Commands.User.SaveUser
         /// <summary>
         /// Validates the user.
         /// </summary>
-        /// <param name="request">The request.</param>
-        /// <exception cref="System.ComponentModel.DataAnnotations.ValidationException"></exception>
-        private void ValidateUser(EditUserViewModel request)
+        /// <param name="model">The model.</param>
+        private void ValidateUser(EditUserViewModel model)
         {
             var existIngId = Repository
-                .AsQueryable<Models.User>(c => c.UserName == request.UserName.Trim() && c.Id != request.Id)
+                .AsQueryable<Models.User>(c => c.UserName == model.UserName.Trim() && c.Id != model.Id)
                 .Select(r => r.Id)
                 .FirstOrDefault();
 
             if (!existIngId.HasDefaultValue())
             {
-                var message = string.Format(UsersGlobalization.SaveUse_UserNameExists_Message, request.UserName);
-                var logMessage = string.Format("User Name already exists. User Name: {0}, User Email: {1}, Id: {2}", request.UserName, request.Email, request.Id);
+                var message = string.Format(UsersGlobalization.SaveUse_UserNameExists_Message, model.UserName);
+                var logMessage = string.Format("Failed to update user profile. User Name already exists. User Name: {0}, User Email: {1}, Id: {2}", model.UserName, model.Email, model.Id);
 
                 throw new ValidationException(() => message, logMessage);
             }
             
             existIngId = Repository
-                .AsQueryable<Models.User>(c => c.Email == request.Email.Trim() && c.Id != request.Id)
+                .AsQueryable<Models.User>(c => c.Email == model.Email.Trim() && c.Id != model.Id)
                 .Select(r => r.Id)
                 .FirstOrDefault();
 
             if (!existIngId.HasDefaultValue())
             {
-                var message = string.Format(UsersGlobalization.SaveUse_UserEmailExists_Message, request.Email);
-                var logMessage = string.Format("User Email already exists. User Name: {0}, User Email: {1}, Id: {2}", request.UserName, request.Email, request.Id);
+                var message = string.Format(UsersGlobalization.SaveUse_UserEmailExists_Message, model.Email);
+                var logMessage = string.Format("Failed to update user profile. User Email already exists. User Name: {0}, User Email: {1}, Id: {2}", model.UserName, model.Email, model.Id);
 
                 throw new ValidationException(() => message, logMessage);
             }

@@ -349,6 +349,33 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Canot save profile. Profile was updated by another transaction. Please reload profile form and try again..
+        /// </summary>
+        public static string SaveProfile_SecurityHashasAreNotEqual_Message {
+            get {
+                return ResourceManager.GetString("SaveProfile_SecurityHashasAreNotEqual_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User email {0} already exists in the database..
+        /// </summary>
+        public static string SaveProfile_UserEmailExists_Message {
+            get {
+                return ResourceManager.GetString("SaveProfile_UserEmailExists_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User name {0} already exists. Please specify another user name..
+        /// </summary>
+        public static string SaveProfile_UserNameExists_Message {
+            get {
+                return ResourceManager.GetString("SaveProfile_UserNameExists_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to save the role. Role {0} is CMS role and cannot be modified..
         /// </summary>
         public static string SaveRole_Cannot_Save_Systematic_Role {

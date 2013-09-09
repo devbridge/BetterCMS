@@ -24,6 +24,11 @@ namespace BetterCms.Events
         /// </summary>
         public event DefaultEventHandler<SingleItemEventArgs<User>> UserDeleted;
 
+        /// <summary>
+        /// Occurs when user profile was updated.
+        /// </summary>
+        public event DefaultEventHandler<UserProfileUpdatedEventArgs> UserProfileUpdated;
+
         public void OnUserCreated(User user)
         {
             if (UserCreated != null)
@@ -45,6 +50,14 @@ namespace BetterCms.Events
             if (UserDeleted != null)
             {
                 UserDeleted(new SingleItemEventArgs<User>(user));
+            }
+        }
+
+        public void OnUserProfileUpdated(User beforeUpdate, User afterUpdate)
+        {
+            if (UserProfileUpdated != null)
+            {
+                UserProfileUpdated(new UserProfileUpdatedEventArgs(beforeUpdate, afterUpdate));
             }
         }
     }

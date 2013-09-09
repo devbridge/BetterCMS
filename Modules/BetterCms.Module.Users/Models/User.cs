@@ -24,5 +24,28 @@ namespace BetterCms.Module.Users.Models
         public virtual MediaImage Image { get; set; }
 
         public virtual IList<UserRole> UserRoles { get; set; }
+
+        public virtual User CopyDataTo(User user)
+        {
+            user.UserName = UserName;
+            user.FirstName = FirstName;
+            user.LastName = LastName;
+            user.Email = Email;
+            user.Password = Password;
+            user.Salt = Salt;
+            user.Image = Image;
+
+            foreach (var userRole in UserRoles)
+            {
+                if (user.UserRoles == null)
+                {
+                    user.UserRoles = new List<UserRole>();
+                }
+
+                user.UserRoles.Add(new UserRole { User = user, Role = userRole.Role });
+            }
+
+            return user;
+        }
     }
 }

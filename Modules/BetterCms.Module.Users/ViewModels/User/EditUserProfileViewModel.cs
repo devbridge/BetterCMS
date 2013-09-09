@@ -1,11 +1,12 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 using BetterCms.Core.Models;
 
 using BetterCms.Module.MediaManager.ViewModels;
+
 using BetterCms.Module.Root;
+
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.Mvc.Attributes;
 
@@ -20,14 +21,6 @@ namespace BetterCms.Module.Users.ViewModels.User
         {
             Image = new ImageSelectorViewModel();    
         }
-
-        /// <summary>
-        /// Gets or sets the id.
-        /// </summary>
-        /// <value>
-        /// The id.
-        /// </value>
-        public Guid Id { get; set; }
 
         /// <summary>
         /// Gets or sets the version.
@@ -104,6 +97,14 @@ namespace BetterCms.Module.Users.ViewModels.User
         public ImageSelectorViewModel Image { get; set; }
 
         /// <summary>
+        /// Gets or sets the security hash.
+        /// </summary>
+        /// <value>
+        /// The security hash.
+        /// </value>
+        public string SecurityHash { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>
@@ -111,7 +112,7 @@ namespace BetterCms.Module.Users.ViewModels.User
         /// </returns>
         public override string ToString()
         {
-            return string.Format("Id: {0}, Version: {1}, UserName: {2}", Id, Version, UserName);
+            return string.Format("Version: {0}, UserName: {1}, {2}", Version, UserName, base.ToString());
         }
     }
 }

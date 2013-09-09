@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.role', 'bcms.media', 'bcms.messages', 'bcms.grid', 'bcms.ko.extenders'],
-    function($, bcms, modal, siteSettings, dynamicContent, role, media, messages, grid, ko) {
+bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.role', 'bcms.media', 'bcms.messages', 'bcms.grid', 'bcms.ko.extenders', 'bcms.redirect'],
+    function($, bcms, modal, siteSettings, dynamicContent, role, media, messages, grid, ko, redirect) {
         'use strict';
 
         var user = {},
@@ -330,12 +330,21 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                     onSaveCallback = function (json) {
                         messages.refreshBox(usersContainer, json);
                         if (json.Success) {
-
+                            redirect.ReloadWithAlert();
                         }
                     };
 
                 if (url) {
-                    openUserEditForm(globalization.editUserProfileTitle, url, onSaveCallback);
+                    modal.open({
+                        title: globalization.editUserProfileTitle,
+                        onLoad: function (dialog) {
+                            dynamicContent.bindDialog(dialog, url, {
+                                contentAvailable: initializeEditUserForm,
+
+                                postSuccess: onSaveCallback
+                            });
+                        }
+                    });
                 }
             });
         }

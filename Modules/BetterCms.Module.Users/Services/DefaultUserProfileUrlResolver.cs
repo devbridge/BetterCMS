@@ -1,6 +1,4 @@
-﻿using System.Web;
-using System.Web.Mvc;
-using System.Web.Security;
+﻿using System.Web.Security;
 
 using BetterCms.Core.Web;
 using BetterCms.Module.Root.Services;
@@ -35,7 +33,7 @@ namespace BetterCms.Module.Users.Services
                 return null;
             }
 
-            return contextAccessor.ResolveActionUrl<UserController>(f => f.EditProfile());
+            return contextAccessor.ResolveActionUrl<UserProfileController>(f => f.EditProfile());
         }
     }
 }
