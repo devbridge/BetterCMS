@@ -394,7 +394,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     hasError = !regExp.test(newValue);
                 }
 
-                showMessage = hasError ? $.format(globalization.optionValidationMessage, self.key(), self.getOptionTypeName()) : '';
+                showMessage = hasError ? $.format(globalization.optionValidationMessage, self.key() || '', self.getOptionTypeName() || '') : '';
 
                 target.validator.setError(ruleName, hasError, showMessage);
             });
