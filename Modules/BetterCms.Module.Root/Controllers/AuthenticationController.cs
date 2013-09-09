@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -45,7 +46,28 @@ namespace BetterCms.Module.Root.Controllers
         {
             try
             {
-                FormsAuthentication.SignOut();         
+                FormsAuthentication.SignOut(); 
+                
+                HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+                HttpCookie roleCokie = Roles.Enabled ? Request.Cookies[Roles.CookieName] : null;
+
+                if (authCookie != null)
+                {
+                    Response.Cookies.Add(
+                        new HttpCookie(authCookie.Name)
+                        {
+                            Expires = DateTime.Now.AddDays(-10)
+                        });
+                }
+
+                if (roleCokie != null)
+                {
+                    Response.Cookies.Add(
+                        new HttpCookie(roleCokie.Name)
+                        {
+                            Expires = DateTime.Now.AddDays(-10)
+                        });
+                }
             }
             catch (Exception ex)
             {

@@ -40,6 +40,11 @@ namespace BetterCms.Module.Users.Controllers
                 ModelState.AddModelError(null, "Forms authentication is disabled in web.config.");
             }
 
+            if (User.Identity.IsAuthenticated)
+            {
+                return Redirect(FormsAuthentication.DefaultUrl ?? "/");
+            }
+
             return View(new LoginViewModel
                             {
                                 ReturnUrl = returnUrl
@@ -66,43 +71,6 @@ namespace BetterCms.Module.Users.Controllers
             }
 
             return View(model);
-        }
-
-        [HttpGet]
-        public ActionResult Logout()
-        {
-            if (GetCommand<LogoutCommand>().ExecuteCommand())
-            {
-                try
-                {
-                    HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
-                    HttpCookie roleCokie = Roles.Enabled ? Request.Cookies[Roles.CookieName] : null;
-
-                    if (authCookie != null)
-                    {
-                        Response.Cookies.Add(
-                            new HttpCookie(authCookie.Name)
-                                {
-                                    Expires = DateTime.Now.AddDays(-10)
-                                });
-                    }
-
-                    if (roleCokie != null)
-                    {
-                        Response.Cookies.Add(
-                            new HttpCookie(roleCokie.Name)
-                                {
-                                    Expires = DateTime.Now.AddDays(-10)
-                                });
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Log.Warn("Failed to clear auth and roles cookies.", ex);
-                }
-            }
-
-            return Redirect(Request.RawUrl);
         }        
     }
 }

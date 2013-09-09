@@ -112,7 +112,6 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Commands\Authentication\LogoutCommand.cs" />
     <Compile Include="Commands\Authentication\LoginCommand.cs" />
     <Compile Include="Commands\Registration\CreateFirstUserCommand.cs" />
     <Compile Include="Commands\Role\DeleteRole\DeleteRoleCommand.cs" />

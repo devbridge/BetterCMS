@@ -16,7 +16,7 @@ namespace BetterCms.Core.Mvc.Commands
 
         public TCommand ResolveCommand<TCommand>(ICommandContext context) where TCommand : ICommandBase
         {
-            if (containerProvider.CurrentScope.IsRegistered<TCommand>() && containerProvider.CurrentScope.IsRegistered<ISecurityService>())
+            if (containerProvider.CurrentScope.IsRegistered<TCommand>())
             {
                 var command = containerProvider.CurrentScope.Resolve<TCommand>();
                 command.Context = context;                

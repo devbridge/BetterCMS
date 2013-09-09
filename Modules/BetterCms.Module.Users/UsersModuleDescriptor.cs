@@ -196,17 +196,7 @@ namespace BetterCms.Module.Users
                             area = AreaName,
                             controller = "Authentication",
                             action = "Login"
-                        });
-
-                    context.MapRoute(
-                        "bcms-users-logout",
-                        "logout",
-                        new
-                        {
-                            area = AreaName,
-                            controller = "Authentication",
-                            action = "Logout"
-                        });
+                        });                  
                 }
             }
         }
