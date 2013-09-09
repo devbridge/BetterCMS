@@ -89,6 +89,8 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                     if (!fileId.HasDefaultValue())
                     {
                         var originalMedia = Repository.First<MediaFile>(request.ReuploadMediaId);
+                        AccessControlService.DemandAccess(originalMedia, Context.Principal, AccessLevel.ReadWrite);
+
                         var historyItem = originalMedia.CreateHistoryItem();
                         Repository.Save(historyItem);
 

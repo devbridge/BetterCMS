@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
@@ -16,15 +17,9 @@ namespace BetterCms.Module.MediaManager.Command.Upload.GetMultiFileUpload
     {
         private readonly ICmsConfiguration cmsConfiguration;
 
-        private readonly IAccessControlService accessControlService;
-
-        private readonly ISecurityService securityService;
-
-        public GetMultiFileUploadCommand(ICmsConfiguration cmsConfiguration, IAccessControlService accessControlService, ISecurityService securityService)
+        public GetMultiFileUploadCommand(ICmsConfiguration cmsConfiguration)
         {
             this.cmsConfiguration = cmsConfiguration;
-            this.accessControlService = accessControlService;
-            this.securityService = securityService;
         }
 
         public MultiFileUploadViewModel Execute(GetMultiFileUploadRequest request)
@@ -53,14 +48,25 @@ namespace BetterCms.Module.MediaManager.Command.Upload.GetMultiFileUpload
 
             model.Folders.Insert(0, new Tuple<Guid, string>(Guid.Empty, ".."));
 
-            if (request.Type != MediaType.Image && cmsConfiguration.Security.AccessControlEnabled && request.ReuploadMediaId.HasDefaultValue())
+            if (request.Type != MediaType.Image && cmsConfiguration.Security.AccessControlEnabled)
             {
-                var principal = securityService.GetCurrentPrincipal();
-                model.UserAccessList = accessControlService.GetDefaultAccessList(principal).Cast<UserAccessViewModel>().ToList();
+                if (!request.ReuploadMediaId.HasDefaultValue())
+                {
+                    var media = Repository.AsQueryable<Media>(m => m.Id == request.ReuploadMediaId).FirstOne();
+                    var file = media as MediaFile;
+                    if (file != null)
+                    {
+                        AccessControlService.DemandAccess(file, Context.Principal, AccessLevel.ReadWrite);
+                    }
+                }
+                else
+                {
+                    var principal = SecurityService.GetCurrentPrincipal();
+                    model.UserAccessList = AccessControlService.GetDefaultAccessList(principal).Cast<UserAccessViewModel>().ToList();
+                    model.AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled;                    
+                }
 
-                model.AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled;
             }
-
             return model;
         }
     }
