@@ -234,7 +234,7 @@ namespace BetterCms.Test.Module.Users.ProvidersTests
 
         private CmsMembershipProvider GetMembershipProvider(ISession session)
         {
-            var userService = new DefaultUserService(GetRepository(session), GetAuthenticationService(session));
+            var userService = new DefaultUserService(GetRepository(session));
             var roleProvider = new CmsMembershipProvider(userService, GetAuthenticationService(session), GetUnitOfWork(session), "CmsMembershipProvider");
 
             return roleProvider;
