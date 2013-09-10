@@ -61,7 +61,7 @@ namespace BetterCms.Module.Root.Mvc
         /// <param name="model">The model.</param>
         /// <param name="rules">The rules.</param>
         protected void SetIsReadOnly(IAccessSecuredViewModel model, IList<IAccessRule> rules)
-        {
+                {
             var principal = SecurityService.GetCurrentPrincipal();
             var accessLevel = AccessControlService.GetAccessLevel(rules, principal);
 

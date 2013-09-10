@@ -466,6 +466,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
             self.tooltip = ko.observable(item.Tooltip);
             self.thumbnailUrl = ko.observable(item.ThumbnailUrl);
+            self.isReadOnly = ko.observable(item.IsReadOnly);
 
             self.getImageUrl = function () {
                 if (!self.thumbnailUrl()) {

@@ -5,10 +5,11 @@ using BetterCms.Core.Models;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc.Grids;
+using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
 {
-    public class MediaViewModel : IEditableGridItem
+    public class MediaViewModel : IEditableGridItem, IAccessSecuredViewModel
     {
         public virtual Guid Id { get; set; }
 
@@ -33,6 +34,8 @@ namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
         public virtual string Tooltip { get; set; }
 
         public virtual string ThumbnailUrl { get; set; }
+
+        public virtual bool IsReadOnly { get; set; }
 
         public MediaViewModel()
         {
