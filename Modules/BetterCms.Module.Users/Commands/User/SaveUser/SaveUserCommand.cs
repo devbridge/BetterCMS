@@ -117,22 +117,19 @@ namespace BetterCms.Module.Users.Commands.User.SaveUser
 
             // Delete removed roles
             dbRoles
-                .Where(dbRole => !requestRoles.Any(requestRole => (dbRole.Role.DisplayName == null && requestRole == dbRole.Role.Name)
-                    || requestRole == dbRole.Role.DisplayName))
+                .Where(dbRole => !requestRoles.Any(requestRole => requestRole == dbRole.Role.Name))
                 .ToList()
                 .ForEach(del => Repository.Delete(del));
 
             // Insert new roles
             var rolesToInsert = requestRoles
-                .Where(requestRole => !dbRoles.Any(dbRole => (dbRole.Role.DisplayName == null && requestRole == dbRole.Role.Name)
-                    || requestRole == dbRole.Role.DisplayName))
+                .Where(requestRole => !dbRoles.Any(dbRole => requestRole == dbRole.Role.Name))
                 .ToList();
 
             if (rolesToInsert.Count > 0)
             {
                 var roles = Repository
-                    .AsQueryable<Models.Role>(role => (role.DisplayName == null && rolesToInsert.Contains(role.Name))
-                        || rolesToInsert.Contains(role.DisplayName))
+                    .AsQueryable<Models.Role>(role => rolesToInsert.Contains(role.Name))
                     .ToList();
 
                 rolesToInsert
@@ -140,8 +137,7 @@ namespace BetterCms.Module.Users.Commands.User.SaveUser
                         Repository.Save(new UserRole
                             {
                                 User = user,
-                                Role = roles.Where(role => (role.DisplayName == null && role.Name == roleName)
-                                    || role.DisplayName == roleName).FirstOne()
+                                Role = roles.Where(role => role.Name == roleName).FirstOne()
                             }));
             }
         }

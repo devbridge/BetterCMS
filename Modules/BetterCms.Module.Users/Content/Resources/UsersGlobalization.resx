@@ -327,4 +327,7 @@
   <data name="Login_UserName_RequiredMessage" xml:space="preserve">
     <value>User name is required.</value>
   </data>
+  <data name="SiteSettings_Roles_DescriptionColumn" xml:space="preserve">
+    <value>Description</value>
+  </data>
 </root>

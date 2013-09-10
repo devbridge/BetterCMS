@@ -484,6 +484,15 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string SiteSettings_Roles_DescriptionColumn {
+            get {
+                return ResourceManager.GetString("SiteSettings_Roles_DescriptionColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Roles.
         /// </summary>
         public static string SiteSettings_Roles_ListTab_Title {

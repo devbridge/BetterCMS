@@ -2702,6 +2702,7 @@ a.ui-state-default:hover {
     border: 1px solid #D1D1D1;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
+    font-size: 12px;
 }
 
 .autocomplete-suggestion {

@@ -29,6 +29,14 @@ namespace BetterCms.Module.Users.ViewModels.Role
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets the description.
+        /// </summary>
+        /// <value>
+        /// The description.
+        /// </value>
+        public string Description { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether role is systematic CMS role.
         /// </summary>
         /// <value>

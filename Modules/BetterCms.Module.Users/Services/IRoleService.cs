@@ -6,8 +6,11 @@
         /// Creates the role.
         /// </summary>
         /// <param name="name">The name.</param>
-        /// <returns>Created role entity</returns>
-        Models.Role CreateRole(string name);
+        /// <param name="description">The description.</param>
+        /// <returns>
+        /// Created role entity
+        /// </returns>
+        Models.Role CreateRole(string name, string description = null);
 
         /// <summary>
         /// Updates the role.
@@ -15,8 +18,11 @@
         /// <param name="id">The id.</param>
         /// <param name="version">The version.</param>
         /// <param name="name">The name.</param>
-        /// <returns>Updated role entity</returns>
-        Models.Role UpdateRole(System.Guid id, int version, string name);
+        /// <param name="description">The description.</param>
+        /// <returns>
+        /// Updated role entity
+        /// </returns>
+        Models.Role UpdateRole(System.Guid id, int version, string name, string description = null);
 
         /// <summary>
         /// Deletes the role by specified role id and version.
