@@ -279,9 +279,13 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         * Executes accept button click logic.
         */
         acceptClick: function () {
-            if (this.onAction(this.options.onAcceptClick) === true) {
-                return this.accept();
+            if (this.container.find('form').data('readonly') !== true) {
+                if (this.onAction(this.options.onAcceptClick) === true) {
+                    return this.accept();
+                }
+                return false;
             }
+
             return false;
         },
 

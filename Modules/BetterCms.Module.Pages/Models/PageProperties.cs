@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using BetterCms.Core.Security;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Models;
 
