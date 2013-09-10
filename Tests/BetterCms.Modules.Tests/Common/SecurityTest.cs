@@ -64,6 +64,8 @@ namespace BetterCms.Test.Module.Common
                     { "EmbeddedResourcesController",    new[] { "Index" } },
                     { "RenderingController",            new[] { "*" } },
                     { "FilesController",                new[] { "Download" } },
+                    { "AuthenticationController",       new[] { "Login", "Logout", "IsAuthorized" } },
+                    { "RegistrationController",         new[] { "*" } },
                 };
 
             var testItems = new List<Type>

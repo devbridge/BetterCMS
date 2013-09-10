@@ -31,6 +31,7 @@ namespace BetterCms.Module.Root.Controllers
         /// Returns view with user information.
         /// </summary>
         /// <returns>Rendered view with user information.</returns>
+        [BcmsAuthorize]
         public ActionResult Info()
         {
             var model = GetCommand<GetAuthenticationInfoCommand>().Execute();
