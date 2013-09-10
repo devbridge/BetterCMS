@@ -338,7 +338,9 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
             this.container.find(selectors.readonly).addClass(classes.inactive);
             var form = this.container.find('form');
             if (form.data('readonly') === true) {
-                form.find('input[type=text]:visible:not([data-bind])').attr('readonly', 'readonly').parent('div').css('z-index', 100);
+                form.find('input:visible').attr('readonly', 'readonly');
+                form.find('textarea:visible').attr('readonly', 'readonly');                
+                form.find('input[type=text]:visible:not([data-bind])').parent('div').css('z-index', 100);
                 form.find('textarea:visible:not([data-bind])').attr('readonly', 'readonly').parent('div').css('z-index', 100);
                 this.disableAcceptButton();
                 this.disableExtraButtons();
