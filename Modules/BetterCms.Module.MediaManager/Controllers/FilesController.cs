@@ -132,6 +132,11 @@ namespace BetterCms.Module.MediaManager.Controllers
             var model = GetCommand<DownloadFileCommand>().ExecuteCommand(id.ToGuidOrDefault());
             if (model != null)
             {
+                if (model.HasNoAccess)
+                {
+                    throw new HttpException(403, "403 Access Forbidden");
+                }
+
                 if (!string.IsNullOrWhiteSpace(model.RedirectUrl))
                 {
                     return Redirect(model.RedirectUrl);
