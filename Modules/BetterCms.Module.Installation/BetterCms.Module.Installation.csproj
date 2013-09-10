@@ -115,6 +115,7 @@
     <EmbeddedResource Include="Content\Resources\UsersGlobalization.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>UsersGlobalization.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

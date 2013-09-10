@@ -49,6 +49,7 @@ namespace BetterCms.Module.Users.ViewModels.Registration
         /// <value>
         /// The password.
         /// </value>
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_RequiredMessage")]
         [StringLength(MaxLength.Password, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_MaxLengthMessage")]
         [PasswordValidation]
         public string Password { get; set; }
