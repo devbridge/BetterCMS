@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using Autofac;
+
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
@@ -38,6 +40,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                 command.UnitOfWork = unitOfWork;
                 command.Repository = repository;
                 command.OptionService = new DefaultOptionService(repository);
+                command.CmsConfiguration = Container.Resolve<ICmsConfiguration>();
 
                 // Execute command
                 var result = command.Execute(pageContent.Id);
