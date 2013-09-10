@@ -1,13 +1,22 @@
-﻿using System.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Security.Principal;
 
-using NUnit.Framework;
+using Autofac;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Security;
+using BetterCms.Core.Services;
+
 using BetterCms.Module.Pages.Command.Content.SortPageContent;
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
+
+using Moq;
+
+using NUnit.Framework;
 
 namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
 {
@@ -42,10 +51,16 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
 
                 IUnitOfWork unitOfWork = new DefaultUnitOfWork(session);
 
-                SortPageContentCommand command = new SortPageContentCommand();
+                var configuration = Container.Resolve<ICmsConfiguration>();
+                SortPageContentCommand command = new SortPageContentCommand(configuration);
                 command.UnitOfWork = unitOfWork;
                 command.Repository = new DefaultRepository(unitOfWork);
+                command.Context = new Mock<ICommandContext>().Object;
 
+                var accessControlService = new Mock<IAccessControlService>();
+                accessControlService.Setup(s => s.DemandAccess(It.IsAny<IPrincipal>(), It.IsAny<string>()));
+                command.AccessControlService = accessControlService.Object;
+                
                 var request = new PageContentSortViewModel
                     {
                         PageId = page.Id,
