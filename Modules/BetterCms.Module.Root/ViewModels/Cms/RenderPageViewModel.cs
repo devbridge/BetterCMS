@@ -9,11 +9,12 @@ using BetterCms.Core.Security;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Projections;
+using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.Root.ViewModels.Cms
 {
     [Serializable]
-    public class RenderPageViewModel : IRenderPage, IAccessSecuredObject
+    public class RenderPageViewModel : IRenderPage, IAccessSecuredObject, IAccessSecuredViewModel
     {
         public RenderPageViewModel(IPage page)
         {
@@ -71,7 +72,6 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// <value>
         /// The entity id.
         /// </value>
-        /// <exception cref="System.NotSupportedException"></exception>
         Guid IAccessSecuredObject.Id
         {
             get
@@ -233,11 +233,21 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// </value>
         public dynamic Bag { get; set; }
 
+        /// <summary>
+        /// Removes the rule.
+        /// </summary>
+        /// <param name="accessRule">The access rule.</param>
+        /// <exception cref="System.NotSupportedException"></exception>
         void IAccessSecuredObject.RemoveRule(IAccessRule accessRule)
         {
             throw new NotSupportedException();
         }
 
+        /// <summary>
+        /// Adds the rule.
+        /// </summary>
+        /// <param name="accessRule">The access rule.</param>
+        /// <exception cref="System.NotSupportedException"></exception>
         void IAccessSecuredObject.AddRule(IAccessRule accessRule)
         {
             throw new NotSupportedException();
@@ -253,5 +263,15 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         {
             return string.Format("Id: {0}, Title: {1}, PageUrl: {2}, LayoutPath: {3}", Id, Title, PageUrl, LayoutPath);
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether page should be opened in the read only mode.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if page should be opened in the read only mode; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsReadOnly { get; set; }
+
+        public bool HasEditRole { get; set; }
     }
 }

@@ -102,6 +102,12 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 renderPageViewModel.AccessRules = list;
             }
 
+            if (cmsConfiguration.Security.AccessControlEnabled)
+            {
+                SetIsReadOnly(renderPageViewModel, renderPageViewModel.AccessRules);
+            }
+            renderPageViewModel.HasEditRole = SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);
+
             // Add <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> if current view is in an edit mode.
             if (request.CanManageContent)
             {
