@@ -20,7 +20,7 @@ namespace BetterCms.Module.Users.Models.Migrations
         
         public override void Up()
         {
-            Update.Table("Widgets").InSchema(rootSchemaName)
+            Update.Table("Contents").InSchema(rootSchemaName)
                 .Set(new { IsDeleted = true })
                 .Where(new { Id = loginWidgetId });
         }
