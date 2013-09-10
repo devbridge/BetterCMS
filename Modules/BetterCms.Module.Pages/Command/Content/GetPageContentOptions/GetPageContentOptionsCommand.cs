@@ -2,6 +2,7 @@
 using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Security;
 
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
@@ -23,6 +24,14 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageContentOptions
         public IOptionService OptionService { get; set; }
 
         /// <summary>
+        /// Gets or sets the CMS configuration.
+        /// </summary>
+        /// <value>
+        /// The CMS configuration.
+        /// </value>
+        public ICmsConfiguration CmsConfiguration { get; set; }
+
+        /// <summary>
         /// Executes the specified request.
         /// </summary>
         /// <param name="pageContentId">The page content id.</param>
@@ -36,16 +45,27 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageContentOptions
 
             if (!pageContentId.HasDefaultValue())
             {
-                var pageContent = Repository.AsQueryable<PageContent>()
-                                        .Where(f => f.Id == pageContentId && !f.IsDeleted && !f.Content.IsDeleted)
-                                        .Fetch(f => f.Content).ThenFetchMany(f => f.ContentOptions)
-                                        .FetchMany(f => f.Options)
-                                        .ToList()
-                                        .FirstOrDefault();
+                var contentQuery = Repository.AsQueryable<PageContent>()
+                    .Where(f => f.Id == pageContentId && !f.IsDeleted && !f.Content.IsDeleted)
+                    .Fetch(f => f.Content).ThenFetchMany(f => f.ContentOptions)
+                    .FetchMany(f => f.Options)
+                    .AsQueryable();
+
+                if (CmsConfiguration.Security.AccessControlEnabled)
+                {
+                    contentQuery = contentQuery.Fetch(f => f.Page).ThenFetchMany(f => f.AccessRules);
+                }
+                
+                var pageContent = contentQuery.ToList().FirstOrDefault();
 
                 if (pageContent != null)
                 {
                     model.OptionValues = OptionService.GetMergedOptionValuesForEdit(pageContent.Content.ContentOptions, pageContent.Options);
+
+                    if (CmsConfiguration.Security.AccessControlEnabled)
+                    {
+                        SetIsReadOnly(model, pageContent.Page.AccessRules.Cast<IAccessRule>().ToList());
+                    }
                 }
             }
 

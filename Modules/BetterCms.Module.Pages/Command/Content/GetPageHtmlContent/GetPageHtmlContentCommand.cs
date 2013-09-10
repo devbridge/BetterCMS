@@ -77,7 +77,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageHtmlContent
             {
                 model.IsReadOnly = true;
             }
-            model.CanDestroyDraft = !model.IsReadOnly && hasEditContentRole;
+            model.CanDestroyDraft = !model.IsReadOnly;
 
             return model;
         }
