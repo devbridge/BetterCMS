@@ -71,6 +71,6 @@ namespace BetterCms.Module.Root.Mvc
             {
                 Context.Messages.AddInfo(RootGlobalization.Message_ReadOnlyMode);
             }
-        }
+        }        
     }
 }

@@ -160,6 +160,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         {
             var model = GetCommand<GetFileCommand>().ExecuteCommand(fileId.ToGuidOrDefault());
             var view = RenderView("FileEditor", model ?? new FileViewModel());
+
             return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 

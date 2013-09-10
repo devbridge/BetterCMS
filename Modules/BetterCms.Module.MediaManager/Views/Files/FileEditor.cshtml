@@ -17,7 +17,13 @@
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
     <div class="bcms-padded-content" id="bcms-file-manager-inner" style="margin-top: 30px;">
-        @using (Html.BeginForm<FilesController>(f => f.FileEditor((FileViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form", @enctype = "multipart/form-data" }))
+        @using (Html.BeginForm<FilesController>(f => f.FileEditor((FileViewModel)null), FormMethod.Post, 
+            new
+                {
+                    @class = "bcms-ajax-form", 
+                    @enctype = "multipart/form-data",
+                    data_readonly = @Model.IsReadOnly.ToString().ToLower()
+                }))
         {
             @Html.HiddenFor(model => model.Id)
             @Html.HiddenFor(model => model.Version, new { @id = "image-version-field" })

@@ -11,7 +11,7 @@ namespace BetterCms.Module.MediaManager.ViewModels.File
     /// <summary>
     /// View model for file media data.
     /// </summary>
-    public class FileViewModel
+    public class FileViewModel : IAccessSecuredViewModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FileViewModel"/> class.
@@ -114,6 +114,14 @@ namespace BetterCms.Module.MediaManager.ViewModels.File
         /// <c>true</c> if [access control enabled]; otherwise, <c>false</c>.
         /// </value>
         public bool AccessControlEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether dialog should be opened in the read only mode.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if dialog should be opened in the read only mode; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsReadOnly { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
