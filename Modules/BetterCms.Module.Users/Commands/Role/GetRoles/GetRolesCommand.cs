@@ -24,7 +24,8 @@ namespace BetterCms.Module.Users.Commands.Role.GetRoles
                    {
                        Id = role.Id,
                        Version = role.Version,
-                       Name = role.DisplayName ?? role.Name,
+                       Name = role.Name,
+                       Description = role.Description,
                        IsSystematic = role.IsSystematic
                    });
 

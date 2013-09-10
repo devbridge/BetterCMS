@@ -54,7 +54,7 @@ namespace BetterCms.Module.Users.Commands.User.GetUser
                 var roles = Repository
                     .AsQueryable<Models.UserRole>()
                     .Where(ur => ur.User.Id == userId)
-                    .Select(ur => ur.Role.DisplayName ?? ur.Role.Name)
+                    .Select(ur => ur.Role.Name)
                     .ToFuture();
 
                 model = listFuture.FirstOne();

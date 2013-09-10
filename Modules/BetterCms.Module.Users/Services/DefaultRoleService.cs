@@ -35,12 +35,13 @@ namespace BetterCms.Module.Users.Services
         /// Creates the role.
         /// </summary>
         /// <param name="name">The name.</param>
+        /// <param name="description">The description.</param>
         /// <returns>
         /// Created role entity
         /// </returns>
-        public Role CreateRole(string name)
+        public Role CreateRole(string name, string description = null)
         {
-            return SaveRole(Guid.Empty, 1, name);
+            return SaveRole(Guid.Empty, 1, name, description);
         }
 
         /// <summary>
@@ -49,12 +50,13 @@ namespace BetterCms.Module.Users.Services
         /// <param name="id">The id.</param>
         /// <param name="version">The version.</param>
         /// <param name="name">The name.</param>
+        /// <param name="description">The description.</param>
         /// <returns>
         /// Updated role entity
         /// </returns>
-        public Role UpdateRole(Guid id, int version, string name)
+        public Role UpdateRole(Guid id, int version, string name, string description = null)
         {
-            return SaveRole(id, version, name);
+            return SaveRole(id, version, name, description);
         }
 
         /// <summary>
@@ -107,8 +109,11 @@ namespace BetterCms.Module.Users.Services
         /// <param name="id">The id.</param>
         /// <param name="version">The version.</param>
         /// <param name="name">The name.</param>
-        /// <returns>Saved role entity</returns>
-        private Role SaveRole(Guid id, int version, string name)
+        /// <param name="description">The description.</param>
+        /// <returns>
+        /// Saved role entity
+        /// </returns>
+        private Role SaveRole(Guid id, int version, string name, string description)
         {
             // Check if such role doesn't exist
             ValidateRoleName(id, name);
@@ -120,8 +125,8 @@ namespace BetterCms.Module.Users.Services
 
                 if (role.IsSystematic)
                 {
-                    var logMessage = string.Format("Cannot save systematic role: {0} {1}", role.Name, role.DisplayName);
-                    var message = string.Format(UsersGlobalization.SaveRole_Cannot_Save_Systematic_Role, role.DisplayName ?? role.Name);
+                    var logMessage = string.Format("Cannot save systematic role: {0} {1}", role.Name, role.Description);
+                    var message = string.Format(UsersGlobalization.SaveRole_Cannot_Save_Systematic_Role, role.Description ?? role.Name);
 
                     throw new ValidationException(() => message, logMessage);
                 }
@@ -134,6 +139,7 @@ namespace BetterCms.Module.Users.Services
             }
 
             role.Name = name;
+            role.Description = description;
 
             repository.Save(role);
 
@@ -177,16 +183,16 @@ namespace BetterCms.Module.Users.Services
         {
             if (throwOnPopulatedRole && role.UserRoles.Any())
             {
-                var logMessage = string.Format("Cannot delete populated role: {0} {1}", role.Name, role.DisplayName);
-                var message = string.Format(UsersGlobalization.DeleteRole_Cannot_Delete_Populated_Role, role.DisplayName ?? role.Name);
+                var logMessage = string.Format("Cannot delete populated role: {0} {1}", role.Name, role.Description);
+                var message = string.Format(UsersGlobalization.DeleteRole_Cannot_Delete_Populated_Role, role.Description ?? role.Name);
 
                 throw new ValidationException(() => message, logMessage);
             }
 
             if (role.IsSystematic)
             {
-                var logMessage = string.Format("Cannot delete systematic role: {0} {1}", role.Name, role.DisplayName);
-                var message = string.Format(UsersGlobalization.DeleteRole_Cannot_Delete_Systematic_Role, role.DisplayName ?? role.Name);
+                var logMessage = string.Format("Cannot delete systematic role: {0} {1}", role.Name, role.Description);
+                var message = string.Format(UsersGlobalization.DeleteRole_Cannot_Delete_Systematic_Role, role.Description ?? role.Name);
 
                 throw new ValidationException(() => message, logMessage);
             }

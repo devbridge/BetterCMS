@@ -72,7 +72,7 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users.User
                             LastModifiedBy = role.Role.ModifiedByUser,
                             LastModifiedOn = role.Role.ModifiedOn,
 
-                            Name = role.Role.DisplayName ?? role.Role.Name,
+                            Name = role.Role.Description ?? role.Role.Name,
                             IsSystematic = role.Role.IsSystematic
                         })
                     .ToList();

@@ -30,13 +30,13 @@ namespace BetterCms.Module.Users.Commands.Role.SaveRole
             Models.Role role;
             if (request.Id.HasDefaultValue())
             {
-                role = roleService.CreateRole(request.Name);
+                role = roleService.CreateRole(request.Name, request.Description);
                 UnitOfWork.Commit();
                 Events.UserEvents.Instance.OnRoleCreated(role);
             }
             else
             {
-                role = roleService.UpdateRole(request.Id, request.Version, request.Name);
+                role = roleService.UpdateRole(request.Id, request.Version, request.Name, request.Description);
                 UnitOfWork.Commit();
                 Events.UserEvents.Instance.OnRoleUpdated(role);
             }
