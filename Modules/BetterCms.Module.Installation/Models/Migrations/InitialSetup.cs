@@ -37,6 +37,17 @@ namespace BetterCms.Module.Installation.Models.Migrations
         /// </summary>
         public override void Up()
         {
+            if (Schema.Schema("dbo").Exists() && Schema.Schema("dbo").Table("VersionInfo").Exists())
+            {
+                // Initial setup for the Installation module already executed.
+                return;                
+            }
+
+            CreateTables();
+        }
+
+        private void CreateTables()
+        {
             ChangeTemplatesPaths();
 
             #region Default Layout, Regions and Widgets
