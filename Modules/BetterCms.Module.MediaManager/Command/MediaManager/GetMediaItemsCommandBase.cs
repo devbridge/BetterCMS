@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Mvc.Commands;
-
+using BetterCms.Core.Security;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
@@ -420,6 +420,11 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             model.Size = media.Size;
             model.IsProcessing = media.IsUploaded == null;
             model.IsFailed = media.IsUploaded == false;
-        }
+
+            if (Configuration.Security.AccessControlEnabled && !(media is IAccessControlDisabled))
+            {
+                SetIsReadOnly(model, ((IAccessSecuredObject)media).AccessRules);
+            }
+        }    
     }
 }

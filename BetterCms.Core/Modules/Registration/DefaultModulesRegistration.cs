@@ -298,7 +298,7 @@ namespace BetterCms.Core.Modules.Registration
                 ContainerBuilder containerBuilder = new ContainerBuilder();
                 foreach (var moduleDescriptorType in knownModuleDescriptorTypes.Values)
                 {
-                    containerBuilder.RegisterType(moduleDescriptorType).AsSelf().InstancePerDependency();
+                    containerBuilder.RegisterType(moduleDescriptorType).AsSelf().SingleInstance();
                 }
 
                 ContextScopeProvider.RegisterTypes(containerBuilder);

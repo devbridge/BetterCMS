@@ -3,25 +3,17 @@ using System.Collections.Generic;
 
 using Autofac;
 
-using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Dependencies;
-using BetterCms.Core.Exceptions;
-using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Core.Security;
-using BetterCms.Core.Services;
 using BetterCms.Events;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Controllers;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.Registration;
 using BetterCms.Module.Root.Services;
-
-using NHibernate.Proxy.DynamicProxy;
 
 namespace BetterCms.Module.Root
 {
@@ -132,6 +124,7 @@ namespace BetterCms.Module.Root
             containerBuilder.RegisterType<PageJavaScriptProjectionFactory>().AsSelf().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultOptionService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultAccessControlService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultEntityTrackingService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 
         /// <summary>
@@ -329,77 +322,29 @@ namespace BetterCms.Module.Root
         }
 
         private void InitializeSecurity()
-        {
+        {            
             if (Configuration.Security.AccessControlEnabled)
             {
-                CoreEvents.Instance.EntitySaving += OnEntityUpdate;
-                CoreEvents.Instance.EntityDeleting += OnEntityUpdate;
+                CoreEvents.Instance.EntitySaving += OnEntitySave;
+                CoreEvents.Instance.EntityDeleting += OnEntityDelete;
             }
         }
 
-        private void OnEntityUpdate(SingleItemEventArgs<IEntity> args)
-        {            
-            if (Configuration.Security.AccessControlEnabled)                
-            {
-                if (args.Item is IAccessSecuredObject && !(args.Item is IAccessControlDisabled) && args.Item.Id != Guid.Empty)
-                {
-                    CheckSecurityObjectAccessibility((IAccessSecuredObject)args.Item);
-                }
-
-                if (args.Item is IAccessSecuredObjectDependency)
-                {
-                    var dependency = (IAccessSecuredObjectDependency)args.Item;
-                    if (dependency.SecuredObject.Id != Guid.Empty && !(dependency.SecuredObject is IAccessControlDisabled))
-                    {
-                        CheckSecurityObjectAccessibility(dependency.SecuredObject);
-                    }
-                }
-            }
-        }
-
-        private void CheckSecurityObjectAccessibility(IAccessSecuredObject item)
+        private void OnEntitySave(SingleItemEventArgs<IEntity> args)
         {
-            try
+            using (var container = ContextScopeProvider.CreateChildContainer())
             {
-                using (var container = ContextScopeProvider.CreateChildContainer())
-                {                    
-                    var unitOfWork = container.Resolve<IUnitOfWork>();
-                    Type itemType;
-
-                    if (item is IProxy)
-                    {
-                        itemType = item.GetType().BaseType;
-                    }
-                    else
-                    {
-                        itemType = item.GetType();
-                    }
-
-                    var securedObject = unitOfWork.Session.Get(itemType, item.Id);
-
-                    if (securedObject != null)
-                    {
-                        var accessControlService = container.Resolve<IAccessControlService>();
-                        var securityService = container.Resolve<ISecurityService>();
-
-                        var principal = securityService.GetCurrentPrincipal();
-
-                        if (accessControlService.GetAccessLevel((IAccessSecuredObject)securedObject, principal) != AccessLevel.ReadWrite)
-                        {
-                            throw new ValidationException(
-                                () => string.Format(RootGlobalization.Validation_CurrentUserHasNoRightsToUpdateOrDelete_Message, principal.Identity.Name, item.Title),
-                                string.Format("Current user {0} has no rights to update or delete secured object {1}.", principal.Identity.Name, item));
-                        }
-                    }
-                }
+                var tracker = container.Resolve<IEntityTrackingService>();
+                tracker.OnEntityUpdate(args.Item);
             }
-            catch (ValidationException)
+        }
+
+        private void OnEntityDelete(SingleItemEventArgs<IEntity> args)
+        {
+            using (var container = ContextScopeProvider.CreateChildContainer())
             {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                throw new CmsException(string.Format("Failed to check an access level of current user for the record {0}.", item), ex);
+                var tracker = container.Resolve<IEntityTrackingService>();
+                tracker.OnEntityDelete(args.Item);
             }
         }
     }
