@@ -265,11 +265,13 @@
     <Compile Include="RootModuleConstants.cs" />
     <Compile Include="Services\DefaultAccessControlService.cs" />
     <Compile Include="Services\DefaultContentService.cs" />
+    <Compile Include="Services\DefaultEntityTrackingService.cs" />
     <Compile Include="Services\DefaultOptionService.cs" />
     <Compile Include="Services\DefaultRenderingService.cs" />
     <Compile Include="Services\DefaultSecurityService.cs" />
     <Compile Include="Services\EmptyUserProfileUrlResolver.cs" />
     <Compile Include="Services\IContentService.cs" />
+    <Compile Include="Services\IEntityTrackingService.cs" />
     <Compile Include="Services\IOptionService.cs" />
     <Compile Include="Services\IRenderingService.cs" />
     <Compile Include="Services\IUserProfileUrlResolver.cs" />
