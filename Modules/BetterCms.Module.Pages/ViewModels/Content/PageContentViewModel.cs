@@ -16,7 +16,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
     /// <summary>
     /// Add/Edit page content view model
     /// </summary>
-    public class PageContentViewModel : IAccessSecuredViewModel
+    public class PageContentViewModel : IAccessSecuredViewModel, IDraftDestroy
     {
         /// <summary>
         /// Gets or sets the page content id.
@@ -129,8 +129,20 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         [AllowHtml]
         public string PageContent { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to eanble custom javascript.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if custom javascript is enabled; otherwise, <c>false</c>.
+        /// </value>
         public bool EanbledCustomJs { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to enable custom CSS.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if custom CSS is enabled; otherwise, <c>false</c>.
+        /// </value>
         public bool EnabledCustomCss { get; set; }
 
         /// <summary>
@@ -141,8 +153,20 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// </value>
         public bool EditInSourceMode { get; set; }
 
+        /// <summary>
+        /// Gets or sets the custom JavaSctript.
+        /// </summary>
+        /// <value>
+        /// The custom JavaSctript.
+        /// </value>
         public string CustomJs { get; set; }
 
+        /// <summary>
+        /// Gets or sets the custom CSS.
+        /// </summary>
+        /// <value>
+        /// The custom CSS.
+        /// </value>
         public string CustomCss { get; set; }
 
         /// <summary>
@@ -160,6 +184,14 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// <c>true</c> if dialog should be opened in the read only mode; otherwise, <c>false</c>.
         /// </value>
         public bool IsReadOnly { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether user can destroy draft.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if user can destroy draft; otherwise, <c>false</c>.
+        /// </value>
+        public bool CanDestroyDraft { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Linq;
 
-using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
+
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Content;
+
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
@@ -69,6 +71,13 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageHtmlContent
 
                 SetIsReadOnly(model, accessRules);
             }
+
+            var hasEditContentRole = SecurityService.IsAuthorized(Context.Principal, RootModuleConstants.UserRoles.EditContent);
+            if (!hasEditContentRole)
+            {
+                model.IsReadOnly = true;
+            }
+            model.CanDestroyDraft = !model.IsReadOnly && hasEditContentRole;
 
             return model;
         }

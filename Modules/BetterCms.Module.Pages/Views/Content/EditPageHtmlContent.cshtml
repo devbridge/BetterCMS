@@ -1,7 +1,5 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
-@using BetterCms.Module.Root
-@using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
 
@@ -13,7 +11,7 @@
 <div class="bcms-tab-header">
     <a class="bcms-tab bcms-tab-active" data-name="#bcms-tab-1">@PagesGlobalization.EditPageContent_RegularContentTab_Title</a>
 </div>
-@{ ViewBag.CanEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent); }
+
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
     @Html.Partial("Partial/WarnMessageAboutDraft", Model)

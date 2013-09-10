@@ -41,7 +41,7 @@ namespace BetterCms.Module.Pages.Command.History.DestroyContentDraft
                 contentQuery = contentQuery.FetchMany(f => f.PageContents).ThenFetch(f => f.Page).ThenFetchMany(f => f.AccessRules).AsQueryable();
             }
 
-            var content = contentQuery.FirstOrDefault();
+            var content = contentQuery.ToList().FirstOrDefault();
 
             // Throw concurrent data exception (user needs to reload page):
             // - content may be null, if looking for already deleted draft
@@ -50,6 +50,8 @@ namespace BetterCms.Module.Pages.Command.History.DestroyContentDraft
             {
                 throw new ConcurrentDataException(content ?? new Root.Models.Content());
             }
+
+            var pageContents = content.PageContents;
 
             // If content is published, try to get it's active draft
             if (content.Status == ContentStatus.Published)
@@ -88,17 +90,17 @@ namespace BetterCms.Module.Pages.Command.History.DestroyContentDraft
                 bool checkedAccess = false;
                 if (content is HtmlContent)
                 {
-                    var pageContent = content.PageContents.FirstOrDefault();
+                    var pageContent = pageContents.FirstOrDefault();
                     if (pageContent != null && pageContent.Page != null)
                     {
                         checkedAccess = true;
-                        AccessControlService.DemandAccess(pageContent.Page, Context.Principal, AccessLevel.ReadWrite, RootModuleConstants.UserRoles.PublishContent);
+                        AccessControlService.DemandAccess(pageContent.Page, Context.Principal, AccessLevel.ReadWrite, RootModuleConstants.UserRoles.EditContent);
                     }
                 }
 
                 if (!checkedAccess)
                 {
-                    AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.PublishContent);
+                    AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent);
                 }
             }
 

@@ -4,7 +4,7 @@
 @using BetterCms.Module.Root.Mvc.UI
 
 @model BetterCms.Module.Pages.ViewModels.Content.PageContentViewModel
-@{ var canEdit = ViewData.ContainsKey("CanEdit") && (bool)ViewData["CanEdit"]; }
+@{ var canEdit = !Model.IsReadOnly; }
 
 @functions
 {
