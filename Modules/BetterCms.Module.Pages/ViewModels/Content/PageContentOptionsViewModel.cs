@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Module.Root.ViewModels.Option;
+using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.Pages.ViewModels.Content
 {
     /// <summary>
     /// Edit page content options view model.
     /// </summary>
-    public class PageContentOptionsViewModel
+    public class PageContentOptionsViewModel : IAccessSecuredViewModel
     {      
         /// <summary>
         /// Gets or sets the list of page content options.
@@ -26,6 +27,14 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// The page content id.
         /// </value>
         public Guid PageContentId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether dialog should be opened in the read only mode.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if dialog should be opened in the read only mode; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsReadOnly { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
