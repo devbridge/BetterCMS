@@ -1,9 +1,4 @@
-﻿using System.Web;
-
-using BetterCms.Core.DataContracts;
-using BetterCms.Core.Dependencies;
-using BetterCms.Core.Security;
-using BetterCms.Core.Services;
+﻿using BetterCms.Core.DataContracts;
 
 using NHibernate.Event;
 using NHibernate.Event.Default;
@@ -39,13 +34,13 @@ namespace BetterCms.Core.DataAccess.DataContext.EventListeners
         /// </returns>
         protected override object PerformSaveOrUpdate(SaveOrUpdateEvent evt)
         {
-            if (evt.Entity is IEntity)
-            {
-                Events.CoreEvents.Instance.OnEntitySaving((IEntity)evt.Entity);
-            }
-
             if (evt.Session.IsDirtyEntity(evt.Entity))
             {
+                if (evt.Entity is IEntity)
+                {
+                    Events.CoreEvents.Instance.OnEntitySaving((IEntity)evt.Entity);
+                }
+
                 eventListenerHelper.OnModify(evt.Entity);
             }
 
@@ -90,13 +85,13 @@ namespace BetterCms.Core.DataAccess.DataContext.EventListeners
         /// <param name="persister">The entity's persister.</param>
         protected override void PerformUpdate(SaveOrUpdateEvent evt, object entity, NHibernate.Persister.Entity.IEntityPersister persister)
         {
-            if (entity is IEntity)
-            {
-                Events.CoreEvents.Instance.OnEntitySaving((IEntity)entity);
-            }
-
             if (evt.Session.IsDirtyEntity(entity))
             {
+                if (entity is IEntity)
+                {
+                    Events.CoreEvents.Instance.OnEntitySaving((IEntity)entity);
+                }
+
                 eventListenerHelper.OnModify(entity);
             }
             
