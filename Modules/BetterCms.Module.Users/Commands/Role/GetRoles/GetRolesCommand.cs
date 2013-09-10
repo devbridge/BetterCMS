@@ -31,7 +31,10 @@ namespace BetterCms.Module.Users.Commands.Role.GetRoles
 
             if (!string.IsNullOrWhiteSpace(request.SearchQuery))
             {
-                roles = roles.Where(a => a.Name.Contains(request.SearchQuery));
+
+                roles = roles
+                            .Where(a => a.Name.Contains(request.SearchQuery.ToLower().ToLowerInvariant()) || 
+                                        a.Description != null && a.Description.ToLower().Contains(request.SearchQuery.ToLowerInvariant()));
             }
 
             request.SetDefaultSortingOptions("Name");
