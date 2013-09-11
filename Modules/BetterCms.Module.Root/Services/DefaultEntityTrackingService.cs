@@ -56,6 +56,12 @@ namespace BetterCms.Module.Root.Services
 
         private void DemandReadWriteRule(IAccessSecuredObject item)
         {
+            // Do not demand access, if user set SaveUnsecured to true explicilty
+            if (item.SaveUnsecured)
+            {
+                return;
+            }
+
             try
             {
                 using (var container = ContextScopeProvider.CreateChildContainer())

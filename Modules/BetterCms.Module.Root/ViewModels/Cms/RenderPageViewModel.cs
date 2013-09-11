@@ -273,5 +273,7 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         public bool IsReadOnly { get; set; }
 
         public bool HasEditRole { get; set; }
+
+        public bool SaveUnsecured { get; set; }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using Autofac;
 
@@ -7,7 +6,9 @@ using BetterCms.Core.DataContracts;
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
+
 using BetterCms.Events;
+
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Controllers;
 using BetterCms.Module.Root.Mvc;

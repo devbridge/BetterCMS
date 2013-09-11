@@ -146,6 +146,8 @@ namespace BetterCms.Module.Root.Models
             }           
         }
 
+        public virtual bool SaveUnsecured { get; set; }
+
         public virtual void AddRule(IAccessRule accessRule)
         {
             if (AccessRules == null)

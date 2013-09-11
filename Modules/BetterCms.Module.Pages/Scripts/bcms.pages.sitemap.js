@@ -103,12 +103,16 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             }
                         });
                     },
-                    onAccept: function() {
+                    onAccept: function (dialog) {
                         addPageController.save(function() {
                             if (data.Callback && $.isFunction(data.Callback)) {
                                 data.Callback(data);
                             }
+                            
+                            dialog.close();
                         });
+
+                        return false;
                     },
                     onClose: function() {
                         if (data.Callback && $.isFunction(data.Callback)) {
@@ -598,8 +602,10 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     onSaveCompleted = function (json) {
                         messages.refreshBox(sitemap.activeMessageContainer, json);
                         sitemap.showLoading(false);
-                        if (onDoneCallback && $.isFunction(onDoneCallback)) {
-                            onDoneCallback(json);
+                        if (json.Success) {
+                            if (onDoneCallback && $.isFunction(onDoneCallback)) {
+                                onDoneCallback(json);
+                            }
                         }
                         self.savingInProgress = false;
                     };
