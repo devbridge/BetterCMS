@@ -5,18 +5,18 @@
 @using BetterCms.Module.Users.ViewModels.User
 @using Microsoft.Web.Mvc
 
-@model BetterCms.Module.Users.ViewModels.User.EditUserViewModel
+@model EditUserViewModel
+           
 <div class="bcms-scroll-window" style="height: 527px;">
     @Html.TabbedContentMessagesBox()
     <div class="bcms-new-blog-content">
-        @using (Html.BeginForm<UserController>(c => c.SaveUser((EditUserViewModel)null), FormMethod.Post, new { @id = "bcms-role-form", @class = "bcms-ajax-form" }))
+        @using (Html.BeginForm<UserController>(c => c.SaveUser(null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
         {
             @Html.HiddenFor(m => m.Id)
             @Html.HiddenFor(m => m.Version)
             @Html.HiddenFor(model => model.Image.ImageId, new { data_bind = "value: image().id()" })
             
             <div class="bcms-blog-left">
-              
                 <div class="bcms-input-list-holder">
                     <div class="bcms-tooltip-mark" data-message="@UsersGlobalization.EditUser_FirstName_Tooltip_Description"></div>
                     <div class="bcms-content-titles">@UsersGlobalization.EditUser_FirstName_Title</div>
@@ -65,8 +65,6 @@
                         @Html.BcmsValidationMessageFor(m => m.RetypedPassword)
                     </div>
                 </div>
-                
-                @Html.Partial("Partial/EditUserRoles")
             </div>
              
             <div class="bcms-blog-right">
@@ -85,6 +83,10 @@
                         <div class="bcms-upload-info-text">@UsersGlobalization.EditUser_UploadImage_Info</div>
                         <div class="bcms-btn-small" data-bind="click: image().select.bind(image())">@UsersGlobalization.EditUser_UploadImage_Button_Title</div>
                     </div>
+                </div>
+
+                <div class="bcms-blog-tags-holder">
+                    @Html.Partial("Partial/EditUserRoles")
                 </div>
             </div>
         }

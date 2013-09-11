@@ -12,7 +12,7 @@
     </div>
     <div class="bcms-tags-block" style="display: none;" data-bind="visible: isVisible()">
         <div class="bcms-featured-tags">
-            <div class="clearfix">
+            <div class="bcms-clearfix">
 
                 <div class="bcms-filter-options" data-bind="with: tags">
                     <div class="bcms-filter-text">@PagesGlobalization.SiteSettings_Pages_FilterByTags</div>
@@ -48,7 +48,7 @@
 
         </div>
 
-        <div class="clearfix">
+        <div class="bcms-clearfix">
             <div class="bcms-check-field-holder">
                 @Html.CheckBoxFor(model => model.IncludeArchived, new { data_bind = "checked: includeArchived" })
                 <span class="bcms-pointer" data-bind="click: changeIncludeArchived">@PagesGlobalization.SiteSettings_Pages_FilterIncludeArchived</span>

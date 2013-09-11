@@ -22,10 +22,9 @@ namespace BetterCms.Module.Users.Commands.Role.SearchRoles
         public List<LookupKeyValue> Execute(string roleName)
         {
             return Repository.AsQueryable<Models.Role>()
-                    .Where(role => (role.DisplayName == null && role.Name.Contains(roleName)) 
-                        || role.DisplayName.Contains(roleName))
+                    .Where(role => role.Name.Contains(roleName) || role.Description.Contains(roleName))
                     .OrderBy(role => role.Name)
-                    .Select(role => new LookupKeyValue { Key = role.Id.ToString(), Value = role.DisplayName ?? role.Name })
+                    .Select(role => new LookupKeyValue { Key = role.Id.ToString(), Value = role.Name })
                     .ToList();
         }
     }

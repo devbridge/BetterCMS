@@ -17,7 +17,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
     /// <summary>
     /// Edit basic page properties view model.
     /// </summary>
-    public class EditPagePropertiesViewModel
+    public class EditPagePropertiesViewModel : IAccessSecuredViewModel
     {
         /// <summary>
         /// Gets or sets the page id.
@@ -223,6 +223,22 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// The user access list.
         /// </value>
         public IList<UserAccessViewModel> UserAccessList { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether dialog should be opened in the read only mode.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if dialog should be opened in the read only mode; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsReadOnly { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether current user can publish page.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if current user can publish page; otherwise, <c>false</c>.
+        /// </value>
+        public bool CanPublishPage { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EditPagePropertiesViewModel" /> class.

@@ -101,7 +101,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         {
             if (request.DesirableStatus == ContentStatus.Published)
             {
-                DemandAccess(RootModuleConstants.UserRoles.PublishContent);
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.PublishContent);
             }
 
             var layout = LoadLayout();
@@ -111,7 +111,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
 
             if (isNew || request.DesirableStatus != ContentStatus.Published)
             {
-                DemandAccess(RootModuleConstants.UserRoles.EditContent);
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent);
                 userCanEdit = true;
             }
             else
@@ -156,6 +156,8 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             else
             {
                 blogPost = new BlogPost();
+
+                AddDefaultAccessRules(blogPost);
             }
 
             if (pageContent == null)
@@ -375,6 +377,27 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Adds the default access rules to blog post entity.
+        /// </summary>
+        /// <param name="blogPost">The blog post.</param>
+        private void AddDefaultAccessRules(BlogPost blogPost)
+        {
+            // Set default access rules
+            blogPost.AccessRules = new List<AccessRule>();
+
+            var list = AccessControlService.GetDefaultAccessList(Context.Principal);
+            foreach (var rule in list)
+            {
+                blogPost.AccessRules.Add(new AccessRule
+                                             {
+                                                 Identity = rule.Identity,
+                                                 AccessLevel = rule.AccessLevel,
+                                                 IsForRole = rule.IsForRole
+                                             });
+            }
         }
     }
 }

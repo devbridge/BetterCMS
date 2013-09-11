@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Permissions;
 using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
@@ -10,6 +11,7 @@ using BetterCms.Core;
 using BetterCms.Core.Environment.Host;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Events;
+using BetterCms.Sandbox.Mvc4.Helpers;
 
 using Common.Logging;
 
@@ -47,6 +49,7 @@ namespace BetterCms.Sandbox.Mvc4
             AddBlogPostEvents();
             AddBlogAuthorEvents();
             AddMediaManagerEvents();
+            AddUsersEvents();
         }
 
         private void AddMediaManagerEvents()
@@ -229,6 +232,22 @@ namespace BetterCms.Sandbox.Mvc4
                 Log.Info("PageSeoStatusChanged: " + args.Item.ToString());
             };
         }
+        private void AddUsersEvents()
+        {
+            BetterCms.Events.UserEvents.Instance.UserProfileUpdated += args =>
+            {
+                Log.Info("UserProfileUpdated: " + args.AfterUpdate.ToString());
+
+                if (args.BeforeUpdate != null && args.AfterUpdate != null && args.AfterUpdate.UserName != args.BeforeUpdate.UserName)
+                {
+                    AuthenticationHelper.Logout();
+
+                    var roles = Roles.GetRolesForUser(args.AfterUpdate.UserName);
+                    AuthenticationHelper.CreateTicket(roles, args.AfterUpdate.UserName);
+                }
+            };
+        }
+
 
         void Events_PageRendering(PageRenderingEventArgs args)
         {                        
@@ -262,26 +281,29 @@ namespace BetterCms.Sandbox.Mvc4
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
-            var authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
-            if (authCookie != null)
-            {
-                try
-                {
-                    var authTicket = FormsAuthentication.Decrypt(authCookie.Value);
-                    if (authTicket != null)
-                    {
-                        var identity = new GenericIdentity(authTicket.Name, "Forms");
-                        var roles = authTicket.UserData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToArray();
-                        var principal = new GenericPrincipal(identity, roles);
-                        Context.User = principal;
-                    }
-                }
-                catch
-                {
-                    Session.Clear();
-                    FormsAuthentication.SignOut();
-                }
-            }
+            // Users module covers it:
+
+            //var authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            //var roleCokie = Request.Cookies[Roles.CookieName];
+
+            //if (authCookie != null)
+            //{
+            //    try
+            //    {
+            //        var authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+            //        if (authTicket != null)
+            //        {
+            //            var identity = new FormsIdentity(authTicket);
+            //            var principal = roleCokie == null ? new RolePrincipal("BetterCmsRoleProvider", identity) : new RolePrincipal(identity, roleCokie.Value);
+            //            Context.User = principal;
+            //        }
+            //    }
+            //    catch
+            //    {
+            //        Session.Clear();
+            //        FormsAuthentication.SignOut();
+            //    }
+            //}
 
             cmsHost.OnAuthenticateRequest(this);
         }

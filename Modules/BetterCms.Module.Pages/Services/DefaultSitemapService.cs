@@ -256,6 +256,8 @@ namespace BetterCms.Module.Pages.Services
                     if (page != null)
                     {
                         page.NodeCountInSitemap += 1;
+                        page.SaveUnsecured = true;
+
                         repository.Save(page);
                     }
                 }
@@ -272,6 +274,8 @@ namespace BetterCms.Module.Pages.Services
                 if (page != null && page.NodeCountInSitemap > 0)
                 {
                     page.NodeCountInSitemap -= 1;
+                    page.SaveUnsecured = true;
+
                     repository.Save(page);
                 }
             }
@@ -284,11 +288,15 @@ namespace BetterCms.Module.Pages.Services
                     if (page.PageUrl.ToLower() == oldUrl && page.NodeCountInSitemap > 0)
                     {
                         page.NodeCountInSitemap -= 1;
+                        page.SaveUnsecured = true;
+
                         repository.Save(page);
                     }
                     else if (page.PageUrl.ToLower() == newUrl)
                     {
                         page.NodeCountInSitemap += 1;
+                        page.SaveUnsecured = true;
+
                         repository.Save(page);
                     }
                 }

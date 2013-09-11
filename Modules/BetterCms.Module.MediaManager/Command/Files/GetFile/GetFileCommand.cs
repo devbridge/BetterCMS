@@ -103,6 +103,8 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
             {
                 model.UserAccessList = file.AccessRules.Select(f => new UserAccessViewModel(f)).ToList();
                 model.Url = fileService.GetDownloadFileUrl(MediaType.File, model.Id.ToGuidOrDefault(), model.Url);
+
+                SetIsReadOnly(model, ((IAccessSecuredObject)file).AccessRules);
             }
             
             return model;

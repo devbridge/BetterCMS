@@ -24,7 +24,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <param name="mediaId">The content id.</param>
         /// <returns>Media history view.</returns>
         [HttpGet]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration, RootModuleConstants.UserRoles.EditContent)]
         public ActionResult MediaHistory(string mediaId)
         {
             var model = GetCommand<GetMediaHistoryCommand>().ExecuteCommand(new GetMediaHistoryRequest
@@ -55,7 +55,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <param name="id">The id.</param>
         /// <returns>Media preview.</returns>
         [HttpGet]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration, RootModuleConstants.UserRoles.EditContent)]
         public ActionResult MediaVersion(string id)
         {
             var model = GetCommand<GetMediaVersionCommand>().ExecuteCommand(id.ToGuidOrDefault());

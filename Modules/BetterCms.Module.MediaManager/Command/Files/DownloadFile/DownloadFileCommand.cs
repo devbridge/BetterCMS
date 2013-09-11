@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Linq;
-using System.Web;
 
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
-using BetterCms.Core.Exceptions.Mvc;
+using BetterCms.Core.Exceptions.Service;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services.Storage;
 
-using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -31,21 +29,14 @@ namespace BetterCms.Module.MediaManager.Command.Files.DownloadFile
         private readonly ICmsConfiguration cmsConfiguration;
 
         /// <summary>
-        /// The access control service
-        /// </summary>
-        private readonly IAccessControlService accessControlService;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="DownloadFileCommand" /> class.
         /// </summary>
         /// <param name="storageService">The storage service.</param>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
-        /// <param name="accessControlService">The access control service.</param>
-        public DownloadFileCommand(IStorageService storageService, ICmsConfiguration cmsConfiguration, IAccessControlService accessControlService)
+        public DownloadFileCommand(IStorageService storageService, ICmsConfiguration cmsConfiguration)
         {
             this.storageService = storageService;
             this.cmsConfiguration = cmsConfiguration;
-            this.accessControlService = accessControlService;
         }
 
         /// <summary>
@@ -77,12 +68,13 @@ namespace BetterCms.Module.MediaManager.Command.Files.DownloadFile
             }
 
             // Get download URL with security token
-            var principal = SecurityService.GetCurrentPrincipal();
-            var accessLevel = accessControlService.GetAccessLevel(file, principal);
-
-            if (accessLevel == AccessLevel.Deny)
+            try
             {
-                throw new HttpException(403, "Access Forbidden");
+                AccessControlService.DemandAccess(file, Context.Principal, AccessLevel.Read);
+            }
+            catch (SecurityException)
+            {
+                return new DownloadFileCommandResponse { HasNoAccess = true };
             }
 
             var url = storageService.GetSecuredUrl(file.FileUri);

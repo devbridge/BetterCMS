@@ -322,6 +322,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string Button_No {
+            get {
+                return ResourceManager.GetString("Button_No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OK.
         /// </summary>
         public static string Button_Ok {
@@ -426,6 +435,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         public static string Button_Search {
             get {
                 return ResourceManager.GetString("Button_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string Button_Yes {
+            get {
+                return ResourceManager.GetString("Button_Yes", resourceCulture);
             }
         }
         
@@ -696,6 +714,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         public static string Message_Loading {
             get {
                 return ResourceManager.GetString("Message_Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dialog opened in read-only mode..
+        /// </summary>
+        public static string Message_ReadOnlyMode {
+            get {
+                return ResourceManager.GetString("Message_ReadOnlyMode", resourceCulture);
             }
         }
         

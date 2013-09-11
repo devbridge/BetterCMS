@@ -1,12 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text;
-
-using BetterCms.Module.MediaManager.Content.Resources;
-using BetterCms.Module.MediaManager.Helpers;
-using BetterCms.Module.Root;
-using BetterCms.Module.Root.Models.Extensions;
-
-using NHibernate;
+﻿using NHibernate;
 using NHibernate.Criterion;
 
 namespace BetterCms.Module.MediaManager.Models.Extensions
@@ -143,30 +135,6 @@ namespace BetterCms.Module.MediaManager.Models.Extensions
             }
 
             return string.Format("{0:0.##} {1}", fileSize, sizes[order]);
-        }
-
-        internal static string GetFilePreviewHtml(this MediaFile media)
-        {
-            var html = new StringBuilder();
-
-            // Wrapping div start.
-            html.Append("<div class=\"bcms-media-history-holder\">");
-
-            var properties = new List<KeyValuePair<string, string>>();
-            properties.Add(MediaGlobalization.MediaHistory_Preview_Properties_Title, media.Title);
-            properties.Add(MediaGlobalization.MediaHistory_Preview_Properties_Description, media.Description);
-            properties.Add(MediaGlobalization.MediaHistory_Preview_Properties_FileSize, media.SizeAsText());
-            properties.Add(MediaGlobalization.MediaHistory_Preview_Properties_PublicUrl, string.Format("<a href=\"{0}\" target=\"_blank\">{0}</a>", media.PublicUrl));
-            if (media.Image != null)
-            {
-                properties.Add(MediaGlobalization.MediaHistory_Preview_Properties_Thumbnail, string.Format("<img src=\"{0}\" alt=\"{1}\"/>", media.Image.PublicThumbnailUrl, media.Image.Caption));
-            }
-            MediaPreviewHelper.RenderProperties(html, properties);
-
-            // Wrapping div end.
-            html.Append("</div>");
-
-            return html.ToString();
         }
     }
 }

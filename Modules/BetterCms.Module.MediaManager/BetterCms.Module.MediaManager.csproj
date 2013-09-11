@@ -165,12 +165,10 @@
     <Compile Include="Controllers\VideosController.cs" />
     <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\MediaManagerController.cs" />
-    <Compile Include="Helpers\MediaPreviewHelper.cs" />
     <Compile Include="Helpers\MediaImageHelper.cs" />
     <Compile Include="Helpers\WrappedJsonResult.cs" />
     <Compile Include="MediaManagerModuleDescriptor.cs" />
     <Compile Include="Models\Enum\MediaHistoryStatus.cs" />
-    <Compile Include="Models\Extensions\MediaImageExtensions.cs" />
     <Compile Include="Models\Extensions\MediaExtensions.cs" />
     <Compile Include="Models\Extensions\MediaFileExtensions.cs" />
     <Compile Include="Models\Maps\MediaTagMap.cs" />
@@ -226,6 +224,7 @@
     <Compile Include="ViewModels\File\FileViewModel.cs" />
     <Compile Include="ViewModels\History\MediaHistoryItem.cs" />
     <Compile Include="ViewModels\History\MediaHistoryViewModel.cs" />
+    <Compile Include="ViewModels\History\MediaPreviewPropertyViewModel.cs" />
     <Compile Include="ViewModels\History\MediaPreviewViewModel.cs" />
     <Compile Include="ViewModels\ImageSelectorViewModel.cs" />
     <Compile Include="ViewModels\Images\ImageViewModel.cs" />
@@ -294,9 +293,7 @@
     <EmbeddedResource Include="Scripts\bcms.media.fileeditor.js" />
     <Content Include="web.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Mvc\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Views\Images\ImageInsert.cshtml" />
   </ItemGroup>

@@ -47,7 +47,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <returns>
         /// Rendered media manager tabs container.
         /// </returns>
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.DeleteContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration, RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.DeleteContent)]
         public ActionResult Index()
         {
             var viewModel = new MediaManagerIndexViewModel();

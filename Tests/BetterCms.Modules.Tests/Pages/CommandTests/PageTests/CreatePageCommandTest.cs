@@ -5,10 +5,12 @@ using System.Text;
 
 using Autofac;
 
+using BetterCms.Configuration;
 using BetterCms.Core;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Security;
+using BetterCms.Core.Services;
 using BetterCms.Core.Services.Caching;
 using BetterCms.Module.Pages.Command.Page.CreatePage;
 using BetterCms.Module.Pages.Services;
@@ -42,13 +44,17 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
                         var repository = new DefaultRepository(uow);
                         var configMock = new Mock<ICmsConfiguration>();
                         configMock.SetupAllProperties().Setup(f => f.Security.AccessControlEnabled).Returns(true);
-                        var config = configMock.Object;
+                        configMock.Setup(f => f.Security.DefaultAccessRules).Returns(new AccessControlCollection
+                                                                                         {
+                                                                                             DefaultAccessLevel = "readwrite"
+                                                                                         });
+                        var config = configMock.Object; 
 
                         var command = new CreatePageCommand(
                             new Mock<IPageService>().SetupAllProperties().Object,
                             new DefaultUrlService(uow, config),
                             config,
-                            new DefaultAccessControlService(new HttpRuntimeCacheService(), config),
+                            new DefaultAccessControlService(Container.Resolve<ISecurityService>(), new HttpRuntimeCacheService(), config),
                             new Mock<IOptionService>().SetupAllProperties().Object);
 
                         command.UnitOfWork = uow;

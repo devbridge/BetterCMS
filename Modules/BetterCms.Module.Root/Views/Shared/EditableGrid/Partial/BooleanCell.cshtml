@@ -1,4 +1,5 @@
-﻿@model BetterCms.Module.Root.Mvc.Grids.EditableGridColumn
+﻿@using BetterCms.Module.Root.Content.Resources
+@model BetterCms.Module.Root.Mvc.Grids.EditableGridBooleanColumn
 
 <td @Html.Raw(Model.Attributes)>
     @if (Model.CanBeEdited)
@@ -15,7 +16,16 @@
         <!-- /ko -->
         <!-- ko ifnot: isActive() -->
     }
-    <input type="checkbox" class="bcms-checkbox-holder" data-bind="checked: @(Model.ValueBind)(), click: onOpen" />
+    @if (Model.ShowValueAsText)
+    {
+        <a class="bcms-tables-link" data-bind="text: @(Model.ValueBind)() === true || @(Model.ValueBind)() === 'true'
+            ? '@RootGlobalization.Button_Yes' 
+            : (@(Model.ValueBind)() === false || @(Model.ValueBind)() === 'false' ? '@RootGlobalization.Button_No' : '&nbsp;')"></a>
+    }
+    else
+    {
+        <input type="checkbox" class="bcms-checkbox-holder" data-bind="checked: @(Model.ValueBind)(), click: onOpen" />
+    }
     @if (Model.CanBeEdited)
     {
         <!-- /ko -->

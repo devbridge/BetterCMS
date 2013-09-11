@@ -9,6 +9,7 @@
 
 .bcms-modal form {
     width: auto !important;
+    max-width: none !important;
     height: auto !important;
     color: inherit !important;
     margin: auto !important;
@@ -1113,6 +1114,7 @@ a.bcms-error-close {
     height: 12px;
     background: url('images/sprite-base-1.png') no-repeat -3px -777px;
     cursor: pointer;
+    z-index: 100;
 }
 
     .bcms-tooltip-mark:hover {
@@ -1380,7 +1382,8 @@ a.bcms-btn-close {
         }
 
 .bcms-checkbox-holder {
-    padding: 5px 0;
+    display: inline-block;
+    padding: 5px 10px 5px 0;
     color: #595959;
     font-size: 12px;
 }
@@ -1460,6 +1463,10 @@ a.bcms-btn-close {
         box-shadow: 0 0 3px 0 rgba(24,145,230,0.35);
         outline: none;
     }
+
+.bcms-code-field {
+    font-family: monospace !important;
+}
 
 /*Global Select*/
 .bcms-global-select {
@@ -1915,12 +1922,12 @@ th.bcms-tables-nohover:hover {
     background-position: right -970px;
 }
 
-.bcms-table-row-active .bcms-editor-field-box {
+/*.bcms-table-row-active .bcms-editor-field-box {
     background: #fff;
     border-color: #1894e4;
     box-shadow: 0 0 3px 0 rgba(24,145,230,0.35);
     outline: none;
-}
+}*/
 
 .bcms-table-row-active .bcms-editor-field-area {
     background: #fff;
@@ -2695,6 +2702,7 @@ a.ui-state-default:hover {
     border: 1px solid #D1D1D1;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
+    font-size: 12px;
 }
 
 .autocomplete-suggestion {
@@ -2704,7 +2712,25 @@ a.ui-state-default:hover {
     font-weight: 400;
 }
 
-    .autocomplete-suggestion:hover, .autocomplete-selected {
-        color: #000;
-        background-color: #f5f5f5;
-    }
+.autocomplete-suggestion:hover, .autocomplete-selected {
+    color: #000;
+    background-color: #f5f5f5;
+}
+
+.bcms-inactive {
+    position:relative;
+}
+
+.bcms-inactive:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    cursor: default;
+    z-index: 99;
+    background-color: #FFF;
+    opacity: 0.3;
+    -moz-opacity: 0.3;
+}

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
 using BetterCms.Core.Security;
+using BetterCms.Module.Root.Commands.Authentication.GetAuthenticationInfo;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.Authentication;
 using BetterCms.Module.Root.Mvc;
@@ -29,12 +31,11 @@ namespace BetterCms.Module.Root.Controllers
         /// Returns view with user information.
         /// </summary>
         /// <returns>Rendered view with user information.</returns>
+        [BcmsAuthorize]
         public ActionResult Info()
         {
-            InfoViewModel model = new InfoViewModel();
-            model.IsUserAuthenticated = User.Identity.IsAuthenticated;
-            model.UserName = User.Identity.Name;
-
+            var model = GetCommand<GetAuthenticationInfoCommand>().Execute();
+            
             return View(model);
         }
 
@@ -46,14 +47,14 @@ namespace BetterCms.Module.Root.Controllers
         {
             try
             {
-                FormsAuthentication.SignOut();         
+                return SignOutUserIfAuthenticated();
             }
             catch (Exception ex)
             {
                 Log.ErrorFormat("Failed to logout user {0}.", ex, User.Identity);
-            }            
+            }
 
-            return Redirect(FormsAuthentication.DefaultUrl);
+            return Redirect(FormsAuthentication.LoginUrl);
         }
 
         public ActionResult IsAuthorized(string roles)

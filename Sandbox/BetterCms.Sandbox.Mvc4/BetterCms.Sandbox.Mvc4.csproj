@@ -228,6 +228,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AuthenticationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
   </ItemGroup>
@@ -250,7 +251,7 @@
   <ItemGroup>
     <Folder Include="Areas\bcms-pages\Views\" />
     <Folder Include="Areas\bcms-root\Views\Shared\" />
-    <Folder Include="Areas\bcms-users\" />
+    <Folder Include="Areas\bcms-users\Views\" />
     <Folder Include="file\bcms-media\Content\Css\Images\" />
     <Folder Include="file\bcms-media\scripts\" />
     <Folder Include="file\bcms-pages\scripts\" />

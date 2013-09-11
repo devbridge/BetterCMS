@@ -28,6 +28,8 @@ namespace BetterCms.Module.MediaManager.Models
 
         public virtual IList<AccessRule> AccessRules { get; set; }
 
+        public virtual bool SaveUnsecured { get; set; }
+
         /// <summary>
         /// Gets or sets the rules.
         /// </summary>

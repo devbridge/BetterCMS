@@ -8,6 +8,7 @@ using BetterCms.Configuration;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Security;
+using BetterCms.Core.Services;
 using BetterCms.Core.Services.Caching;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
@@ -21,6 +22,11 @@ namespace BetterCms.Test.Module.Root.AccessControl
     [TestFixture]
     public class AccessControlServiceTests : IntegrationTestBase
     {
+        private IAccessControlService CreateAccessControlService()
+        {
+            return new DefaultAccessControlService(Container.Resolve<ISecurityService>() , Container.Resolve<ICacheService>(), Container.Resolve<ICmsConfiguration>());
+        }
+
         [Test]
         public void Should_Get_Page_Access_Control()
         {
@@ -33,7 +39,7 @@ namespace BetterCms.Test.Module.Root.AccessControl
                     session.SaveOrUpdate(page);
                     session.Flush();
 
-                    var accessControlService = new DefaultAccessControlService(Container.Resolve<ICacheService>(), Container.Resolve<ICmsConfiguration>());
+                    var accessControlService = CreateAccessControlService();
 
                     var level = accessControlService.GetAccessLevel(page, new GenericPrincipal(new GenericIdentity(accessRule.Identity), null));
 
@@ -53,7 +59,7 @@ namespace BetterCms.Test.Module.Root.AccessControl
                 session.SaveOrUpdate(file);
                 session.Flush();
 
-                var accessControlService = new DefaultAccessControlService(Container.Resolve<ICacheService>(), Container.Resolve<ICmsConfiguration>());
+                var accessControlService = CreateAccessControlService();
 
                 var level = accessControlService.GetAccessLevel(file, new GenericPrincipal(new GenericIdentity(accessRule.Identity), null));
 
@@ -79,7 +85,7 @@ namespace BetterCms.Test.Module.Root.AccessControl
                     session.Flush();
                     session.Clear();
 
-                    var service = new DefaultAccessControlService(Container.Resolve<ICacheService>(), Container.Resolve<ICmsConfiguration>());
+                    var service = CreateAccessControlService();
 
                     var principal = new GenericPrincipal(new GenericIdentity("John"), new[] { "Admin" });
                     var accessLevel = service.GetAccessLevel(page, principal);
@@ -108,7 +114,7 @@ namespace BetterCms.Test.Module.Root.AccessControl
                 session.Flush();
                 session.Clear();
 
-                var service = new DefaultAccessControlService(Container.Resolve<ICacheService>(), Container.Resolve<ICmsConfiguration>());
+                var service = CreateAccessControlService();
 
                 var principal = new GenericPrincipal(new GenericIdentity("John Doe"), new string[] { });
                 var accessLevel = service.GetAccessLevel(page, principal);
@@ -134,7 +140,7 @@ namespace BetterCms.Test.Module.Root.AccessControl
                 session.Flush();
                 session.Clear();
 
-                var service = new DefaultAccessControlService(Container.Resolve<ICacheService>(), Container.Resolve<ICmsConfiguration>());
+                var service = CreateAccessControlService();
 
                 var principal = new GenericPrincipal(new GenericIdentity("John Doe"), new string[] { });
                 var accessLevel = service.GetAccessLevel(mediaFile, principal);
@@ -163,7 +169,7 @@ namespace BetterCms.Test.Module.Root.AccessControl
                 session.Flush();
                 session.Clear();
 
-                var service = new DefaultAccessControlService(Container.Resolve<ICacheService>(), Container.Resolve<ICmsConfiguration>());
+                var service = CreateAccessControlService();
 
                 var identity = new GenericIdentity("");
 
@@ -198,7 +204,7 @@ namespace BetterCms.Test.Module.Root.AccessControl
                 session.Flush();
                 session.Clear();
 
-                var service = new DefaultAccessControlService(Container.Resolve<ICacheService>(), Container.Resolve<ICmsConfiguration>());
+                var service = CreateAccessControlService();
 
                 var principal = new GenericPrincipal(new GenericIdentity("Any Authenticated User"), new string[] { });
 
@@ -227,7 +233,7 @@ namespace BetterCms.Test.Module.Root.AccessControl
                 session.Flush();
                 session.Clear();
 
-                var service = new DefaultAccessControlService(Container.Resolve<ICacheService>(), Container.Resolve<ICmsConfiguration>());
+                var service = CreateAccessControlService();
 
                 var identity = new GenericIdentity("");
 
@@ -253,7 +259,7 @@ namespace BetterCms.Test.Module.Root.AccessControl
                 session.Flush();
                 session.Clear();
 
-                var service = new DefaultAccessControlService(Container.Resolve<ICacheService>(), Container.Resolve<ICmsConfiguration>());
+                var service = CreateAccessControlService();
 
                 var identity = new GenericIdentity("");
 
@@ -274,7 +280,7 @@ namespace BetterCms.Test.Module.Root.AccessControl
             RunActionInTransaction(
                 session =>
                     {
-                        var service = new DefaultAccessControlService(Container.Resolve<ICacheService>(), Container.Resolve<ICmsConfiguration>());
+                        var service = CreateAccessControlService();
                         var accessLevel = service.GetDefaultAccessList();
 
                         Assert.AreEqual(0, accessLevel.Count);
@@ -292,7 +298,7 @@ namespace BetterCms.Test.Module.Root.AccessControl
 
                     var cmsConfig = GetCmsConfigurationMock(collection);
 
-                    var service = new DefaultAccessControlService(Container.Resolve<ICacheService>(), cmsConfig.Object);
+                    var service = new DefaultAccessControlService(Container.Resolve<ISecurityService>(), Container.Resolve<ICacheService>(), cmsConfig.Object);
 
                     var accessLevels = service.GetDefaultAccessList();
 
@@ -316,7 +322,7 @@ namespace BetterCms.Test.Module.Root.AccessControl
 
                 var cmsConfig = GetCmsConfigurationMock(collection);
 
-                var service = new DefaultAccessControlService(Container.Resolve<ICacheService>(), cmsConfig.Object);
+                var service = new DefaultAccessControlService(Container.Resolve<ISecurityService>(), Container.Resolve<ICacheService>(), cmsConfig.Object);
 
                 var principal = new GenericPrincipal(new GenericIdentity("John Doe"), new string[] { });
                 var accessLevels = service.GetDefaultAccessList(principal);
@@ -342,7 +348,7 @@ namespace BetterCms.Test.Module.Root.AccessControl
 
                 var cmsConfig = GetCmsConfigurationMock(collection);
 
-                var service = new DefaultAccessControlService(Container.Resolve<ICacheService>(), cmsConfig.Object);
+                var service = new DefaultAccessControlService(Container.Resolve<ISecurityService>(), Container.Resolve<ICacheService>(), cmsConfig.Object);
 
                 var principal = new GenericPrincipal(new GenericIdentity("John Doe"), new string[] { });
                 var accessLevels = service.GetDefaultAccessList(principal);

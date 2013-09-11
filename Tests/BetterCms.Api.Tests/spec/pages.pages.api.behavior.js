@@ -511,7 +511,7 @@ describe('pages.pages.api.behavior', function () {
             expect(result.data.items[0].options.length).toBe(3, 'Correctly filtered items[0].options.length should be 3.');
             
             expect(result.data.items[0].options[0].key).toBe('Option 1 With Default Value', 'Correctly filtered items[0].options[0].key should be retrieved.');
-            expect(result.data.items[0].options[0].value).toBeNull('Correctly filtered items[0].options[0].value should be retrieved.');
+            expect(result.data.items[0].options[0].value).toBe('Default Value', 'Correctly filtered items[0].options[0].value should be retrieved.');
             expect(result.data.items[0].options[0].defaultValue).toBe('Default Value', 'Correctly filtered items[0].options[0].defaultValue should be retrieved.');
             expect(result.data.items[0].options[0].type).toBe('Text', 'Correctly filtered items[0].options[0].type should be retrieved.');
             

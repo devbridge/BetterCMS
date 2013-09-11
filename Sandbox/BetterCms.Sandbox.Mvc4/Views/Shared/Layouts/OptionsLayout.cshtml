@@ -19,7 +19,7 @@
 <div class="page">
 
     <header class="page-header">
-        <div class="page-frame clearfix">
+        <div class="page-frame bcms-clearfix">
             <div>
                 @{
                 if (Model != null && Model.Options != null)
@@ -38,7 +38,7 @@
     </header>
 
     <div class="page-block">
-        <div class="page-frame clearfix">
+        <div class="page-frame bcms-clearfix">
             @RenderSection("CMSMainContent", false)
             @RenderBody()
         </div>
@@ -47,7 +47,7 @@
 </div>
 
 <footer class="page-footer">
-    <div class="page-frame clearfix">
+    <div class="page-frame bcms-clearfix">
         @RenderSection("CMSFooter", false)
     </div>
 </footer>

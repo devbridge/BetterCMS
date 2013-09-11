@@ -4,7 +4,6 @@ using System.Linq;
 using System.Security.Principal;
 using System.Threading;
 
-using BetterCms.Core.Modules.Registration;
 using BetterCms.Core.Services;
 using BetterCms.Core.Web;
 
@@ -72,7 +71,12 @@ namespace BetterCms.Module.Root.Services
         {
             var currentHttpContext = httpContextAccessor.GetCurrent();
 
-            return currentHttpContext != null ? currentHttpContext.User : null;
+            if (currentHttpContext == null)
+            {
+                return Thread.CurrentPrincipal;
+            }
+
+            return currentHttpContext.User;
         }
 
         /// <summary>
@@ -101,18 +105,22 @@ namespace BetterCms.Module.Root.Services
 
                 var roleList = ParseRoles(roles);
 
-                if (!configuration.Security.UseCustomRoles)
-                {
-                    return roleList.Any(principal.IsInRole);
-                }
-
                 // Check for configuration defined user roles.
+                bool useCustomRoles = configuration.Security.UseCustomRoles;
                 foreach (var role in roleList)
                 {
-                    var translatedRoles = ParseRoles(configuration.Security.Translate(role));
-                    if (translatedRoles.Any(principal.IsInRole))
+                    if (principal.IsInRole(role))
                     {
                         return true;
+                    }
+
+                    if (useCustomRoles)
+                    {
+                        var translatedRoles = ParseRoles(configuration.Security.Translate(role));
+                        if (translatedRoles.Any(principal.IsInRole))
+                        {
+                            return true;
+                        }                        
                     }
                 }
             }

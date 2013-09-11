@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 using BetterCms.Core.Models;
+
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Root;
 using BetterCms.Module.Users.Content.Resources;
@@ -27,7 +27,7 @@ namespace BetterCms.Module.Users.ViewModels.User
         /// <value>
         /// The id.
         /// </value>
-        public Guid Id { get; set; }
+        public System.Guid Id { get; set; }
 
         /// <summary>
         /// Gets or sets the version.
@@ -53,7 +53,6 @@ namespace BetterCms.Module.Users.ViewModels.User
         /// <value>
         /// The first name.
         /// </value>
-        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_FirstName_RequiredMessage")]
         [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_FirstName_MaxLengthMessage")]
         public string FirstName { get; set; }
 
@@ -63,7 +62,6 @@ namespace BetterCms.Module.Users.ViewModels.User
         /// <value>
         /// The last name.
         /// </value>
-        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_LastName_RequiredMessage")]
         [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_LastName_MaxLengthMessage")]
         public string LastName { get; set; }
 
@@ -84,7 +82,6 @@ namespace BetterCms.Module.Users.ViewModels.User
         /// <value>
         /// The password.
         /// </value>
-        [RegularExpression(UsersModuleConstants.PasswordRegularExpression, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_LengthMessage")]
         [StringLength(MaxLength.Password, ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_MaxLengthMessage")]
         [PasswordValidation]
         public string Password { get; set; }
@@ -122,7 +119,7 @@ namespace BetterCms.Module.Users.ViewModels.User
         /// </returns>
         public override string ToString()
         {
-            return string.Format("Id: {0}, Version: {1}, UserName: {2}", Id, Version, UserName);
+            return string.Format("Id: {0}, Version: {1}, UserName: {2}, {3}", Id, Version, UserName, base.ToString());
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 
+using Autofac;
+
 using BetterCms.Core.DataAccess;
 using BetterCms.Module.Pages.Command.Page.GetPageSeo;
 using BetterCms.Module.Pages.Models;
@@ -25,7 +27,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
                 .Setup(f => f.AsQueryable<PageProperties>())
                 .Returns(new[] { page1, page2 }.AsQueryable());
 
-            GetPageSeoCommand command = new GetPageSeoCommand();
+            GetPageSeoCommand command = new GetPageSeoCommand(Container.Resolve<ICmsConfiguration>());
             command.Repository = repositoryMock.Object;
 
             var model = command.Execute(page1.Id);
@@ -51,7 +53,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
                 .Setup(f => f.AsQueryable<PageProperties>())
                 .Returns(new PageProperties[] { }.AsQueryable());
 
-            GetPageSeoCommand command = new GetPageSeoCommand();
+            GetPageSeoCommand command = new GetPageSeoCommand(Container.Resolve<ICmsConfiguration>());
             command.Repository = repositoryMock.Object;
 
             var model = command.Execute(Guid.Empty);

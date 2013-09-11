@@ -5,6 +5,7 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
@@ -15,6 +16,13 @@ namespace BetterCms.Module.Pages.Command.History.DestroyContentDraft
 {
     public class DestroyContentDraftCommand : CommandBase, ICommand<DestroyContentDraftCommandRequest, DestroyContentDraftCommandResponse>
     {
+        private ICmsConfiguration cmsConfiguration;
+
+        public DestroyContentDraftCommand(ICmsConfiguration cmsConfiguration)
+        {
+            this.cmsConfiguration = cmsConfiguration;
+        }
+
         /// <summary>
         /// Executes the specified request.
         /// </summary>
@@ -24,10 +32,16 @@ namespace BetterCms.Module.Pages.Command.History.DestroyContentDraft
         /// <exception cref="CmsException"></exception>
         public DestroyContentDraftCommandResponse Execute(DestroyContentDraftCommandRequest request)
         {
-            var content = Repository
+            var contentQuery = Repository
                 .AsQueryable<Root.Models.Content>(p => p.Id == request.Id)
-                .Fetch(f => f.Original)
-                .FirstOrDefault();
+                .Fetch(f => f.Original).AsQueryable();
+
+            if (cmsConfiguration.Security.AccessControlEnabled)
+            {
+                contentQuery = contentQuery.FetchMany(f => f.PageContents).ThenFetch(f => f.Page).ThenFetchMany(f => f.AccessRules).AsQueryable();
+            }
+
+            var content = contentQuery.ToList().FirstOrDefault();
 
             // Throw concurrent data exception (user needs to reload page):
             // - content may be null, if looking for already deleted draft
@@ -36,6 +50,8 @@ namespace BetterCms.Module.Pages.Command.History.DestroyContentDraft
             {
                 throw new ConcurrentDataException(content ?? new Root.Models.Content());
             }
+
+            var pageContents = content.PageContents;
 
             // If content is published, try to get it's active draft
             if (content.Status == ContentStatus.Published)
@@ -67,11 +83,25 @@ namespace BetterCms.Module.Pages.Command.History.DestroyContentDraft
             var contentType = content.GetType();
             if (contentType == typeof(HtmlContentWidget) || contentType == typeof(ServerControlWidget))
             {
-                DemandAccess(RootModuleConstants.UserRoles.Administration);
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.Administration);
             }
             else
             {
-                DemandAccess(RootModuleConstants.UserRoles.PublishContent);
+                bool checkedAccess = false;
+                if (content is HtmlContent)
+                {
+                    var pageContent = pageContents.FirstOrDefault();
+                    if (pageContent != null && pageContent.Page != null)
+                    {
+                        checkedAccess = true;
+                        AccessControlService.DemandAccess(pageContent.Page, Context.Principal, AccessLevel.ReadWrite, RootModuleConstants.UserRoles.EditContent);
+                    }
+                }
+
+                if (!checkedAccess)
+                {
+                    AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent);
+                }
             }
 
             Repository.Delete(content);

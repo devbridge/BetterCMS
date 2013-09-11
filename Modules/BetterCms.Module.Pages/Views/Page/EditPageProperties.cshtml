@@ -29,7 +29,12 @@
 
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
-    @using (Html.BeginForm<PageController>(f => f.EditPageProperties((EditPagePropertiesViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
+    @using (Html.BeginForm<PageController>(f => f.EditPageProperties((EditPagePropertiesViewModel)null), FormMethod.Post, 
+            new
+                {
+                    @class = "bcms-ajax-form", 
+                    data_readonly=Model.IsReadOnly.ToString().ToLower()
+                }))
     {
         <div id="bcms-tab-1" class="bcms-tab-single">
             <div class="bcms-padded-content">
@@ -105,7 +110,17 @@
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_Properties_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_Properties_Title</div>
                     <div class="bcms-checkbox-holder">
-                        @Html.CheckBoxFor(model => model.IsPagePublished)
+                        @{
+                            object options = null;
+                            if (!Model.CanPublishPage)
+                            {
+                                options = new {
+                                                  disabled = "disabled"
+                                              };
+                            }
+                        }
+                        @Html.CheckBoxFor(model => model.IsPagePublished, options)
+                        @Html.HiddenFor(model => model.CanPublishPage)
                         <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone</div>
                     </div>
                     <div class="bcms-checkbox-holder">
@@ -135,13 +150,13 @@
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Title</div>
-                    @Html.TextAreaFor(model => model.PageCSS, new { @class = "bcms-editor-field-area" })
+                    @Html.TextAreaFor(model => model.PageCSS, new { @class = "bcms-editor-field-area bcms-code-field" })
                 </div>
 
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageJavascript_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageJavascript_Title</div>
-                    @Html.TextAreaFor(model => model.PageJavascript, new { @class = "bcms-editor-field-area" })
+                    @Html.TextAreaFor(model => model.PageJavascript, new { @class = "bcms-editor-field-area bcms-code-field" })
                 </div>
             </div>
         </div>

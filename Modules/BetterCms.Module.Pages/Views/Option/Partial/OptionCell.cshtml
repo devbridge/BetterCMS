@@ -15,7 +15,8 @@
                                                                                HiddenFieldName = Model.HiddenFieldName,
                                                                                HeaderAttributes = Model.HeaderAttributes,
                                                                                AutoFocus = Model.AutoFocus,
-                                                                               CanBeEdited = Model.CanBeEdited
+                                                                               CanBeEdited = Model.CanBeEdited,
+                                                                               ShowValueAsText = true
                                                                            })
 <!-- /ko -->
 
@@ -26,7 +27,7 @@
     {
         <!-- ko if: isActive() -->
         <div class="bcms-input-field-holder">
-            <div class="bcms-date-input-box">
+            <div class="bcms-date-input-box bcms-options-date">
                 <input class="bcms-editor-field-box bcms-datepicker" data-bind="
                     css: { 'bcms-input-validation-error': !isNew() && @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() },
                     value: @(Model.ValueBind),
@@ -37,12 +38,13 @@
                     escPress: onCancelEdit,
                     afterRender: initDatePickers()
                     @(Model.AutoFocus ? ", hasfocus: isActive() && hasFocus" : "") " />
+            
+                <!-- ko if: !isNew() &&  @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() -->
+                <span class="bcms-field-validation-error">
+                    <span data-bind="html: @(Model.ValueBind).validationMessage()"></span>
+                </span>
+                <!-- /ko -->
             </div>
-            <!-- ko if: !isNew() &&  @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() -->
-            <span class="bcms-field-validation-error">
-                <span data-bind="html: @(Model.ValueBind).validationMessage()"></span>
-            </span>
-            <!-- /ko -->
         </div>
         <!-- /ko -->
         <!-- ko ifnot: isActive() -->
@@ -59,7 +61,8 @@
 <!-- ko if: useDefaultValue() && type() == 5  -->
     @Html.Partial(RootModuleConstants.EditableGridBooleanCellTemplate, new EditableGridBooleanColumn(null, null, Model.ValueBind)
                                                                            {
-                                                                               CanBeEdited = false
+                                                                               CanBeEdited = false,
+                                                                               ShowValueAsText = true
                                                                            })
 <!-- /ko -->
 

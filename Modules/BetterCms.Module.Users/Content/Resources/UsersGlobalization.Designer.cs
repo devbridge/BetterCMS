@@ -313,6 +313,78 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit user profile.
+        /// </summary>
+        public static string EditUserProfile_Window_Title {
+            get {
+                return ResourceManager.GetString("EditUserProfile_Window_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User name or password is incorect..
+        /// </summary>
+        public static string Login_Failed_Message {
+            get {
+                return ResourceManager.GetString("Login_Failed_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string Login_Password {
+            get {
+                return ResourceManager.GetString("Login_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password is required..
+        /// </summary>
+        public static string Login_Password_RequireMessage {
+            get {
+                return ResourceManager.GetString("Login_Password_RequireMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remember Me.
+        /// </summary>
+        public static string Login_RememberMe {
+            get {
+                return ResourceManager.GetString("Login_RememberMe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Name.
+        /// </summary>
+        public static string Login_UserName {
+            get {
+                return ResourceManager.GetString("Login_UserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User name is required..
+        /// </summary>
+        public static string Login_UserName_RequiredMessage {
+            get {
+                return ResourceManager.GetString("Login_UserName_RequiredMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User name or password is invalid..
+        /// </summary>
+        public static string Login_UserNameOrPassword_Invalid {
+            get {
+                return ResourceManager.GetString("Login_UserNameOrPassword_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New +.
         /// </summary>
         public static string Role_Dialog_AddNew {
@@ -336,6 +408,33 @@ namespace BetterCms.Module.Users.Content.Resources {
         public static string Role_RoleName_RequiredMessage {
             get {
                 return ResourceManager.GetString("Role_RoleName_RequiredMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Canot save profile. Profile was updated by another transaction. Please reload profile form and try again..
+        /// </summary>
+        public static string SaveProfile_SecurityHashasAreNotEqual_Message {
+            get {
+                return ResourceManager.GetString("SaveProfile_SecurityHashasAreNotEqual_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User email {0} already exists in the database..
+        /// </summary>
+        public static string SaveProfile_UserEmailExists_Message {
+            get {
+                return ResourceManager.GetString("SaveProfile_UserEmailExists_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User name {0} already exists. Please specify another user name..
+        /// </summary>
+        public static string SaveProfile_UserNameExists_Message {
+            get {
+                return ResourceManager.GetString("SaveProfile_UserNameExists_Message", resourceCulture);
             }
         }
         
@@ -390,6 +489,15 @@ namespace BetterCms.Module.Users.Content.Resources {
         public static string SaveUser_CreatedSuccessfully_Message {
             get {
                 return ResourceManager.GetString("SaveUser_CreatedSuccessfully_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string SiteSettings_Roles_DescriptionColumn {
+            get {
+                return ResourceManager.GetString("SiteSettings_Roles_DescriptionColumn", resourceCulture);
             }
         }
         
@@ -520,15 +628,6 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to First name is requried..
-        /// </summary>
-        public static string User_FirstName_RequiredMessage {
-            get {
-                return ResourceManager.GetString("User_FirstName_RequiredMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Last name should not be longer than 200 characters..
         /// </summary>
         public static string User_LastName_MaxLengthMessage {
@@ -538,16 +637,7 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Last name is requried..
-        /// </summary>
-        public static string User_LastName_RequiredMessage {
-            get {
-                return ResourceManager.GetString("User_LastName_RequiredMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Password should not be shorter than 4 characters and not be longer than 255 characters..
+        ///   Looks up a localized string similar to Password should not be shorter than 4 characters and not be longer than 255 characters and cannot start or end with empty space..
         /// </summary>
         public static string User_Password_LengthMessage {
             get {
@@ -601,7 +691,7 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User name should not be longer than 200 characters..
+        ///   Looks up a localized string similar to User name should not be longer than 401 character..
         /// </summary>
         public static string User_UserName_MaxLengthMessage {
             get {

@@ -1,11 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Web;
 
 using Autofac;
 
+using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Events;
 using BetterCms.Module.Root;
+using BetterCms.Module.Root.Services;
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.Registration;
 using BetterCms.Module.Users.Services;
@@ -32,13 +36,19 @@ namespace BetterCms.Module.Users
         /// </summary>
         private readonly UserJsModuleIncludeDescriptor userJsModuleIncludeDescriptor;
 
-         /// <summary>
+        private bool isFirstUserRegistered;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="UsersModuleDescriptor" /> class.
         /// </summary>
-        public UsersModuleDescriptor(ICmsConfiguration configuration) : base(configuration)
+        public UsersModuleDescriptor(ICmsConfiguration configuration)
+            : base(configuration)
         {
             userJsModuleIncludeDescriptor = new UserJsModuleIncludeDescriptor(this);
-        }
+
+            CoreEvents.Instance.HostStart += OnHostStart;
+            CoreEvents.Instance.HostAuthenticateRequest += HostAuthenticateRequest;            
+        }            
 
         /// <summary>
         /// Gets the name of module.
@@ -78,7 +88,7 @@ namespace BetterCms.Module.Users
         {
             get
             {
-                return int.MaxValue - 300;
+                return int.MaxValue - 250;
             }
         }
 
@@ -94,7 +104,7 @@ namespace BetterCms.Module.Users
             {
                 return UsersAreaName;
             }
-        }
+        }        
 
         /// <summary>
         /// Registers the style sheet files.
@@ -151,6 +161,113 @@ namespace BetterCms.Module.Users
             containerBuilder.RegisterType<DefaultAuthenticationService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultRoleService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultUserService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultUserProfileUrlResolver>().As<IUserProfileUrlResolver>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultRegistrationService>().As<IRegistrationService>().InstancePerLifetimeScope();
+        }
+
+        public override void RegisterCustomRoutes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
+        {
+            if (Configuration.Users != null)
+            {
+                if (Configuration.Users.CreateDefaultUserOnStart)
+                {
+                    context.MapRoute(
+                        "bcms-users-register-first-user",
+                        AreaName + "/register",
+                        new
+                            {
+                                area = AreaName,
+                                controller = "Registration",
+                                action = "CreateFirstUser"
+                            });
+                }
+
+                if (Configuration.Users.EnableCmsFormsAuthentication)
+                {
+                    context.MapRoute(
+                        "bcms-users-login",
+                        "login",
+                        new
+                        {
+                            area = AreaName,
+                            controller = "Authentication",
+                            action = "Login"
+                        });
+
+                    context.MapRoute(
+                        "bcms-users-logout",
+                        "logout",
+                        new
+                        {
+                            area = AreaName,
+                            controller = "Authentication",
+                            action = "Logout"
+                        });                 
+                }
+            }
+        }
+
+        private void OnHostStart(SingleItemEventArgs<HttpApplication> args)
+        {
+            if (Configuration.Users != null && Configuration.Users.CreateDefaultUserOnStart)
+            {
+                CheckIfIsFirstUserRegistered();
+            }
+        }
+
+        private void HostAuthenticateRequest(SingleItemEventArgs<HttpApplication> args)
+        {
+            if (Configuration.Users != null)
+            {
+                if (Configuration.Users.CreateDefaultUserOnStart)
+                {
+                    CheckIfIsFirstUserRegistered();
+
+                    if (!isFirstUserRegistered)
+                    {
+                        using (var container = ContextScopeProvider.CreateChildContainer())
+                        {
+                            var registrationService = container.Resolve<IRegistrationService>();
+                            registrationService.NavigateToRegisterFirstUserPage();
+                        }
+                    }
+                }
+
+                if (Configuration.Users.EnableCmsFormsAuthentication)
+                {
+                    using (var container = ContextScopeProvider.CreateChildContainer())
+                    {
+                        var registrationService = container.Resolve<IAuthenticationService>();
+                        registrationService.AuthenticateRequest(args.Item);
+                    }
+                }
+            }
+        }        
+        
+        private void CheckIfIsFirstUserRegistered()
+        {
+            if (!isFirstUserRegistered)
+            {
+                lock (this)
+                {
+                    if (!isFirstUserRegistered )
+                    {
+                        using (var container = ContextScopeProvider.CreateChildContainer())
+                        {
+                            var registrationService = container.Resolve<IRegistrationService>();
+                            isFirstUserRegistered = registrationService.IsFirstUserRegistered();
+                        }
+                    }
+                }
+            }
+        }
+
+        internal void SetAsFirstUserRegistered()
+        {
+            lock (this)
+            {
+                isFirstUserRegistered = true;
+            }
         }
     }
 }

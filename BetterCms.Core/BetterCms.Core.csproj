@@ -101,6 +101,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
@@ -176,6 +177,7 @@
     <Compile Include="Mvc\Extensions\VirtualPath.cs" />
     <Compile Include="Security\AccessLevel.cs" />
     <Compile Include="Security\BcmsAuthorizeAttribute.cs" />
+    <Compile Include="Security\IAccessControlDisabled.cs" />
     <Compile Include="Security\IAccessSecuredObject.cs" />
     <Compile Include="Security\IAccessRule.cs" />
     <Compile Include="Security\EncryptableString.cs" />

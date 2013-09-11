@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Security.Principal;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Command.Page.ClonePage;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -21,7 +23,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
     public class ClonePageCommandTest : IntegrationTestBase
     {
         [Test]
-        public void Sould_Clone_Page_With_Tags_Options_Contents_AccessRules()
+        public void Should_Clone_Page_With_Tags_Options_Contents_AccessRules()
         {
             RunActionInTransaction(session =>
                 {
@@ -43,11 +45,24 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
                     var urlService = new Mock<IUrlService>();
                     urlService.Setup(f => f.FixUrl(It.IsAny<string>())).Returns(url);
 
+                    var rules = new List<IAccessRule>();
+                    var rule1 = TestDataProvider.CreateNewAccessRule();
+                    rules.Add(rule1);
+                    var rule2 = TestDataProvider.CreateNewAccessRule();
+                    rules.Add(rule2);
+
+                    var accessControlService = new Mock<IAccessControlService>();
+                    accessControlService
+                        .Setup(a => a.GetDefaultAccessList(It.IsAny<IPrincipal>()))
+                        .Returns(rules);
+
                     var command = new ClonePageCommand();
                     command.Repository = repository;
                     command.UnitOfWork = uow;
                     command.PageService = pageService.Object;
                     command.UrlService = urlService.Object;
+                    command.AccessControlService = accessControlService.Object;
+                    command.Context = new Mock<ICommandContext>().Object;
 
                     var result = command.Execute(new ClonePageViewModel
                                         {

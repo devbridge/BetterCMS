@@ -8,6 +8,7 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
+
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -110,6 +111,15 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
 
             var page = pageQuery.ToList().FirstOne();
 
+            if (cmsConfiguration.Security.AccessControlEnabled)
+            {
+                AccessControlService.DemandAccess(page, Context.Principal, AccessLevel.ReadWrite, RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent);
+            }
+            else
+            {
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent);
+            }
+
             Models.Redirect redirectCreated = null;
             bool initialSeoStatus = page.HasSEO;
 
@@ -142,14 +152,19 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             page.CustomCss = request.PageCSS;
             page.CustomJS = request.PageJavascript;
 
-            if (request.IsPagePublished)
+            if (request.CanPublishPage)
             {
-                page.Status = PageStatus.Published;
-                page.PublishedOn = DateTime.Now;
-            }
-            else
-            {
-                page.Status = PageStatus.Unpublished;
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.PublishContent);
+
+                if (request.IsPagePublished)
+                {
+                    page.Status = PageStatus.Published;
+                    page.PublishedOn = DateTime.Now;
+                }
+                else
+                {
+                    page.Status = PageStatus.Unpublished;
+                }
             }
 
             page.UseNoFollow = request.UseNoFollow;

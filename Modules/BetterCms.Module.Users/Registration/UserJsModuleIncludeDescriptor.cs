@@ -30,7 +30,8 @@ namespace BetterCms.Module.Users.Registration
                             new JavaScriptModuleGlobalization(this, "usersListTabTitle", () => UsersGlobalization.SiteSettings_Users_ListTab_Title), 
                             new JavaScriptModuleGlobalization(this, "usersAddNewTitle", () => UsersGlobalization.CreateUser_Window_Title),
                             new JavaScriptModuleGlobalization(this, "deleteUserConfirmMessage", () => UsersGlobalization.DeleteUser_Confirmation_Message),
-                            new JavaScriptModuleGlobalization(this, "editUserTitle", () => UsersGlobalization.EditUser_Window_Title)
+                            new JavaScriptModuleGlobalization(this, "editUserTitle", () => UsersGlobalization.EditUser_Window_Title),
+                            new JavaScriptModuleGlobalization(this, "editUserProfileTitle", () => UsersGlobalization.EditUserProfile_Window_Title)
                         };
         }
     }

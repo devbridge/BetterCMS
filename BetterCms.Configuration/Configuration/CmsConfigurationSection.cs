@@ -21,7 +21,8 @@ namespace BetterCms.Configuration
         private const string WorkingDirectoryRootPathAttribute = "workingDirectoryRootPath";
         private const string ArticleUrlPatternAttribute = "articleUrlPattern";
         private const string UrlPatternsNode = "urlPatterns";
-        private const string InstallationNode = "installation";        
+        private const string InstallationNode = "installation";
+        private const string UsersNode = "users";
         private const string RenderContentEndingDivAttribute = "renderContentEndingDiv";
         private const string ContentEndingDivCssClassNameAttribute = "contentEndingDivCssClassName";
 
@@ -261,6 +262,18 @@ namespace BetterCms.Configuration
         {
             get { return (CmsInstallationConfigurationElement)this[InstallationNode]; }
             set { this[InstallationNode] = value; }
+        }
+
+        [ConfigurationProperty(UsersNode, IsRequired = false)]
+        public CmsUsersConfigurationElement Users
+        {
+            get { return this[UsersNode] as CmsUsersConfigurationElement; }
+            set { this[UsersNode] = value; }
+        }
+
+        ICmsUsersConfiguration ICmsConfiguration.Users
+        {
+            get { return Users; }
         }
 
         ICmsStorageConfiguration ICmsConfiguration.Storage

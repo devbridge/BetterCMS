@@ -4,13 +4,14 @@ using System.ComponentModel.DataAnnotations;
 using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Root.Content.Resources;
+using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.Pages.ViewModels.Seo
 {
     /// <summary>
     /// View model 
     /// </summary>
-    public class EditSeoViewModel
+    public class EditSeoViewModel : IAccessSecuredViewModel
     {
         /// <summary>
         /// Gets or sets the page id.
@@ -114,6 +115,14 @@ namespace BetterCms.Module.Pages.ViewModels.Seo
         /// The is in sitemap.
         /// </value>
         public bool IsInSitemap { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the Edit SEO dialog should be opened in the read only mode.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if the Edit SEO dialog should be opened in the read only mode; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsReadOnly { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EditSeoViewModel"/> class.

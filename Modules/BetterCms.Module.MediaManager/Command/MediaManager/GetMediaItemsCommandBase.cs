@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Mvc.Commands;
-
+using BetterCms.Core.Security;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
@@ -144,11 +144,14 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                 }
             }
 
+            query = AttachDeniedMediasFilterIfEnabled(query, request);
+
             if (!string.IsNullOrWhiteSpace(request.SearchQuery))
-            {
+            {               
                 var searchQuery = string.Format("%{0}%", request.SearchQuery);
                 query = query.Where(m => m.Title.Contains(searchQuery) || m.Description.Contains(searchQuery) || m.MediaTags.Any(mt => mt.Tag.Name.Contains(searchQuery)));
                 query = query.Fetch(f => f.Folder);
+
                 var mediaList = query.ToList();
 
                 var result = new List<Media>();
@@ -171,7 +174,15 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             {
                 query = query.Where(m => m.Folder == null);
             }
+          
 
+            return removeEmptyFolders
+                ? RemoveEmptyFolders(query, request)
+                : ToResponse(request, query, true);
+        }
+
+        private IQueryable<Media> AttachDeniedMediasFilterIfEnabled(IQueryable<Media> query, MediaManagerViewModel request)
+        {
             if (Configuration.Security.AccessControlEnabled)
             {
                 IEnumerable<Guid> deniedMedias = GetDeniedMedias(request);
@@ -185,9 +196,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
                 }
             }
 
-            return removeEmptyFolders
-                ? RemoveEmptyFolders(query, request)
-                : ToResponse(request, query, true);
+            return query;
         }
 
         private Tuple<IEnumerable<MediaViewModel>, int> RemoveEmptyFolders(IQueryable<Media> query, MediaManagerViewModel request)
@@ -411,6 +420,11 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             model.Size = media.Size;
             model.IsProcessing = media.IsUploaded == null;
             model.IsFailed = media.IsUploaded == false;
-        }
+
+            if (Configuration.Security.AccessControlEnabled && !(media is IAccessControlDisabled))
+            {
+                SetIsReadOnly(model, ((IAccessSecuredObject)media).AccessRules);
+            }
+        }    
     }
 }

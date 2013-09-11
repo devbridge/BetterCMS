@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 
 using BetterCms.Module.Root.Mvc;
@@ -13,15 +14,25 @@ namespace BetterCms.Module.Users.Mvc.Attributes
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
     public class PasswordValidationAttribute : ValidationAttribute, IClientValidatable
     {
-        private readonly string Message = UsersGlobalization.CreateUser_Password_IsRequired;
-        private const string ClientValidationRule = "passwordrequired";
+        private readonly string RequiredMessage = UsersGlobalization.CreateUser_Password_IsRequired;
+        private readonly string RegexMessage = UsersGlobalization.User_Password_LengthMessage;
+        private const string RegExp = UsersModuleConstants.PasswordRegularExpression;
+        private const string ClientValidationRule = "passwordvalidation";
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var userViewModel = validationContext.ObjectInstance as EditUserViewModel;
             if (userViewModel != null && userViewModel.Id.HasDefaultValue() && value == null)
             {
-                return new ValidationResult(Message);
+                return new ValidationResult(RequiredMessage);
+            }
+            if (value != null)
+            {
+                var regEx = new Regex(RegExp);
+                if (!regEx.IsMatch(value.ToString()))
+                {
+                    return new ValidationResult(RegexMessage);
+                }
             }
 
             return ValidationResult.Success;
@@ -31,9 +42,11 @@ namespace BetterCms.Module.Users.Mvc.Attributes
         {
             var rule = new ModelClientValidationRule
             {
-                ErrorMessage = Message,
+                ErrorMessage = RequiredMessage,
                 ValidationType = ClientValidationRule,
             };
+            rule.ValidationParameters.Add("pattern", RegExp);
+            rule.ValidationParameters.Add("patternmessage", RegexMessage);
 
             yield return rule;
         }

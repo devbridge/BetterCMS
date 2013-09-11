@@ -1,11 +1,12 @@
 ﻿using System;
 
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
 {
     [Serializable]
-    public class MediaFileViewModel : MediaViewModel
+    public class MediaFileViewModel : MediaViewModel, IAccessSecuredViewModel
     {
         public virtual long Size { get; set; }
 

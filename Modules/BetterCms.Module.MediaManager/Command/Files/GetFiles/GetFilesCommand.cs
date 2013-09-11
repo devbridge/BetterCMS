@@ -10,14 +10,6 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFiles
     public class GetFilesCommand : GetMediaItemsCommandBase<MediaFile>
     {
         /// <summary>
-        /// Gets or sets the access control service.
-        /// </summary>
-        /// <value>
-        /// The access control service.
-        /// </value>
-        public IAccessControlService AccessControlService { get; set; }
-
-        /// <summary>
         /// Gets the type of the current media items.
         /// </summary>
         /// <value>

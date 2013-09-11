@@ -134,7 +134,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                     page.closePagePropertiesEditPermalinkBox(dialog);
                 }
             });
-
+            
             return pageViewModel;
         };
 

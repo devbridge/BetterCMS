@@ -68,7 +68,7 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
 
             if (request.UpdateSitemap)
             {
-                DemandAccess(RootModuleConstants.UserRoles.EditContent);
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent);
             }
 
             if (request.UpdateSitemap && page.NodeCountInSitemap > 0)

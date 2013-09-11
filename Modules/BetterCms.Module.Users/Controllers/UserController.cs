@@ -12,6 +12,7 @@ using BetterCms.Module.Users.Commands.User.GetUser;
 using BetterCms.Module.Users.Commands.User.GetUsers;
 using BetterCms.Module.Users.Commands.User.SaveUser;
 using BetterCms.Module.Users.Content.Resources;
+
 using BetterCms.Module.Users.ViewModels.User;
 
 using Microsoft.Web.Mvc;
@@ -102,10 +103,10 @@ namespace BetterCms.Module.Users.Controllers
         {
             var success = GetCommand<DeleteUserCommand>().ExecuteCommand(
                 new DeleteUserCommandRequest
-                {
-                    UserId = id.ToGuidOrDefault(),
-                    Version = version.ToIntOrDefault()
-                });
+                    {
+                        UserId = id.ToGuidOrDefault(),
+                        Version = version.ToIntOrDefault()
+                    });
 
             if (success)
             {

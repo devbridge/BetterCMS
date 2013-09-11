@@ -21,6 +21,16 @@ namespace BetterCms.Events
         public event DefaultEventHandler<PageRetrievedEventArgs> PageRetrieved;
 
         /// <summary>
+        /// Occurs when page was not found by virtual path.
+        /// </summary>
+        public event DefaultEventHandler<SingleItemEventArgs<string>> PageNotFound;
+
+        /// <summary>
+        /// Occurs when page access was forbidden.
+        /// </summary>
+        public event DefaultEventHandler<SingleItemEventArgs<RenderPageViewModel>> PageAccessForbidden;
+
+        /// <summary>
         /// Called when page is rendering.
         /// </summary>
         /// <param name="renderPageData">The rendering page data.</param>
@@ -47,6 +57,30 @@ namespace BetterCms.Events
             }
 
             return PageRetrievedEventResult.None;
+        }
+
+        /// <summary>
+        /// Called when page was not found.
+        /// </summary>
+        /// <param name="virtualPath">The virtual path.</param>
+        public void OnPageNotFound(string virtualPath)
+        {
+            if (PageNotFound != null)
+            {
+                PageNotFound(new SingleItemEventArgs<string>(virtualPath));
+            }
+        }
+
+        /// <summary>
+        /// Called when page access is forbidden.
+        /// </summary>
+        /// <param name="pageModel">The page model.</param>
+        public void OnPageAccessForbidden(RenderPageViewModel pageModel)
+        {
+            if (PageAccessForbidden != null)
+            {
+                PageAccessForbidden(new SingleItemEventArgs<RenderPageViewModel>(pageModel));
+            }
         }
     }
 }

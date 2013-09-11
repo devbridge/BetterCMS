@@ -8,10 +8,11 @@
 <!-- /ko -->
 
 <!-- ko ifnot: canEditOption() -->
-    @Html.Partial(RootModuleConstants.EditableGridBooleanCellTemplate, new EditableGridBooleanColumn(Model.HeaderTitle, Model.SortColumn, Model.ValueBind)
-                                                                            {
-                                                                                HiddenFieldName = Model.HiddenFieldName,
-                                                                                HeaderAttributes = Model.HeaderAttributes,
-                                                                                AutoFocus = Model.AutoFocus
-                                                                            })
+@Html.Partial(RootModuleConstants.EditableGridBooleanCellTemplate, new EditableGridBooleanColumn(Model.HeaderTitle, Model.SortColumn, Model.ValueBind)
+                                                                        {
+                                                                            HiddenFieldName = Model.HiddenFieldName,
+                                                                            HeaderAttributes = Model.HeaderAttributes,
+                                                                            AutoFocus = Model.AutoFocus,
+                                                                            ShowValueAsText = true
+                                                                        })
 <!-- /ko -->

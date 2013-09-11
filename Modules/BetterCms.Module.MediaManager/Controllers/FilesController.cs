@@ -132,6 +132,11 @@ namespace BetterCms.Module.MediaManager.Controllers
             var model = GetCommand<DownloadFileCommand>().ExecuteCommand(id.ToGuidOrDefault());
             if (model != null)
             {
+                if (model.HasNoAccess)
+                {
+                    throw new HttpException(403, "403 Access Forbidden");
+                }
+
                 if (!string.IsNullOrWhiteSpace(model.RedirectUrl))
                 {
                     return Redirect(model.RedirectUrl);
@@ -155,6 +160,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         {
             var model = GetCommand<GetFileCommand>().ExecuteCommand(fileId.ToGuidOrDefault());
             var view = RenderView("FileEditor", model ?? new FileViewModel());
+
             return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 

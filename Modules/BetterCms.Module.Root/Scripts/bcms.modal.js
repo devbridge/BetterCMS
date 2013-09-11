@@ -31,13 +31,15 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
             elemHeader: '.bcms-modal-header',
             elemFooter: '.bcms-modal-footer',
             elemTabsHeader: '.bcms-tab-header',
-            elemContent: '.bcms-scroll-window'
+            elemContent: '.bcms-scroll-window',
+            readonly: '[data-readonly=true]'
         },
         
         classes = {
             saveButton: 'bcms-btn-small bcms-modal-accept',
             cancelButton: 'bcms-btn-links-small bcms-modal-cancel',
-            grayButton: 'bcms-btn-small bcms-btn-gray'
+            grayButton: 'bcms-btn-small bcms-btn-gray',
+            inactive: 'bcms-inactive'
         },
 
         links = {},
@@ -277,9 +279,13 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         * Executes accept button click logic.
         */
         acceptClick: function () {
-            if (this.onAction(this.options.onAcceptClick) === true) {
-                return this.accept();
+            if (this.container.find('form').data('readonly') !== true) {
+                if (this.onAction(this.options.onAcceptClick) === true) {
+                    return this.accept();
+                }
+                return false;
             }
+
             return false;
         },
 
@@ -332,6 +338,18 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
 
             this.container.find(selectors.loader).remove();
 
+            // Check for readonly mode.
+            this.container.find(selectors.readonly).addClass(classes.inactive);
+            var form = this.container.find('form');
+            if (form.data('readonly') === true) {
+                form.find('input:visible').attr('readonly', 'readonly');
+                form.find('textarea:visible').attr('readonly', 'readonly');                
+                form.find('input[type=text]:visible:not([data-bind])').parent('div').css('z-index', 100);
+                form.find('textarea:visible:not([data-bind])').attr('readonly', 'readonly').parent('div').css('z-index', 100);
+                this.disableAcceptButton();
+                this.disableExtraButtons();
+            }
+            
             if ($.validator && $.validator.unobtrusive) {
                 $.validator.unobtrusive.parse(this.container);
             }
@@ -342,7 +360,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
             
             forms.bindCheckboxes(this.container);
 
-            if (this.options.autoFocus) {
+            if (this.options.autoFocus) {                
                 this.setFocus();
             }
         },
@@ -351,6 +369,10 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         * Sets focus on the first visible input element or on the dialog close element.
         */
         setFocus: function () {
+            if (this.container.find('form').data('readonly') === true) {
+                return;
+            }
+            
             var focustElement = this.container.find('input:visible:first');
 
             if (focustElement.length === 0) {

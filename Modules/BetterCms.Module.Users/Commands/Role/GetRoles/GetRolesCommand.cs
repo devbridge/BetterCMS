@@ -24,13 +24,17 @@ namespace BetterCms.Module.Users.Commands.Role.GetRoles
                    {
                        Id = role.Id,
                        Version = role.Version,
-                       Name = role.DisplayName ?? role.Name,
+                       Name = role.Name,
+                       Description = role.Description,
                        IsSystematic = role.IsSystematic
                    });
 
             if (!string.IsNullOrWhiteSpace(request.SearchQuery))
             {
-                roles = roles.Where(a => a.Name.Contains(request.SearchQuery));
+
+                roles = roles
+                            .Where(a => a.Name.Contains(request.SearchQuery.ToLower().ToLowerInvariant()) || 
+                                        a.Description != null && a.Description.ToLower().Contains(request.SearchQuery.ToLowerInvariant()));
             }
 
             request.SetDefaultSortingOptions("Name");

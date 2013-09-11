@@ -30,6 +30,7 @@ namespace BetterCms.Module.Users.Controllers
         /// </summary>
         /// <returns>Json result.</returns>
         [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult ListTemplate()
         {
             var request = new SearchableGridOptions();
@@ -46,6 +47,7 @@ namespace BetterCms.Module.Users.Controllers
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>Json result.</returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult RolesList(SearchableGridOptions request)
         {
             request.SetDefaultPaging();
@@ -61,6 +63,7 @@ namespace BetterCms.Module.Users.Controllers
         /// <param name="version">The version.</param>
         /// <returns>Json with status.</returns>
         [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult DeleteRole(string id, string version)
         {
             bool success = GetCommand<DeleteRoleCommand>().ExecuteCommand(
@@ -84,6 +87,7 @@ namespace BetterCms.Module.Users.Controllers
         /// <param name="model">The model.</param>
         /// <returns></returns>
         [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult SaveRole(RoleViewModel model)
         {
             if (ModelState.IsValid)
@@ -108,6 +112,7 @@ namespace BetterCms.Module.Users.Controllers
         /// </summary>
         /// <param name="query">The query.</param>
         /// <returns></returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult SuggestRoles(string query)
         {
             var suggestedRoles = GetCommand<SearchRolesCommand>().ExecuteCommand(query);

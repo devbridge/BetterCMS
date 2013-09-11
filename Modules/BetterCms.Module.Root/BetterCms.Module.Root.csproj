@@ -117,6 +117,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Commands\Authentication\GetAuthenticationInfo\GetAuthenticationInfoCommand.cs" />
     <Compile Include="Events\CategoryEvents.cs" />
     <Compile Include="Events\PageRetrievedEventArgs.cs" />
     <Compile Include="Events\RootEvents.cs" />
@@ -264,12 +265,16 @@
     <Compile Include="RootModuleConstants.cs" />
     <Compile Include="Services\DefaultAccessControlService.cs" />
     <Compile Include="Services\DefaultContentService.cs" />
+    <Compile Include="Services\DefaultEntityTrackingService.cs" />
     <Compile Include="Services\DefaultOptionService.cs" />
     <Compile Include="Services\DefaultRenderingService.cs" />
     <Compile Include="Services\DefaultSecurityService.cs" />
+    <Compile Include="Services\EmptyUserProfileUrlResolver.cs" />
     <Compile Include="Services\IContentService.cs" />
+    <Compile Include="Services\IEntityTrackingService.cs" />
     <Compile Include="Services\IOptionService.cs" />
     <Compile Include="Services\IRenderingService.cs" />
+    <Compile Include="Services\IUserProfileUrlResolver.cs" />
     <Compile Include="ViewModels\Authentication\InfoViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryItemViewModel.cs" />
     <Compile Include="ViewModels\Cms\CmsRequestViewModel.cs" />
@@ -291,6 +296,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Mvc\Grids\EditableGridColumn.cs" />
+    <Compile Include="ViewModels\Security\IAccessSecuredViewModel.cs" />
     <Compile Include="ViewModels\Security\UserAccessTemplateViewModel.cs" />
     <Compile Include="ViewModels\Security\UserAccessViewModel.cs" />
     <Compile Include="ViewModels\Shared\EditableGridViewModel.cs" />

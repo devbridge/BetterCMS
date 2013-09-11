@@ -16,6 +16,7 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Registration;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root;
+using BetterCms.Module.Root.Services;
 
 namespace BetterCms.Module.Pages
 {
@@ -174,6 +175,9 @@ namespace BetterCms.Module.Pages
             containerBuilder.RegisterType<DefaultUrlService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultLayoutService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultPreviewService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
+            // Registering root module, because root module register the last one, and this one should be before users module
+            containerBuilder.RegisterType<EmptyUserProfileUrlResolver>().As<IUserProfileUrlResolver>().InstancePerLifetimeScope();
         }
 
         /// <summary>

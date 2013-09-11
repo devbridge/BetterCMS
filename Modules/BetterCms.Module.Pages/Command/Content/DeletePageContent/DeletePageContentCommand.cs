@@ -44,6 +44,14 @@ namespace BetterCms.Module.Pages.Command.Content.DeletePageContent
                 }
             }
 
+            if (pageContent.Options != null)
+            {
+                foreach (var option in pageContent.Options)
+                {
+                    Repository.Delete(option);
+                }
+            }
+
             Repository.Delete<PageContent>(pageContent.Id, request.PageContentVersion);
             UnitOfWork.Commit();
 

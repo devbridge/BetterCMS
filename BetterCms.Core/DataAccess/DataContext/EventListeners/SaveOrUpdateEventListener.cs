@@ -1,9 +1,4 @@
-﻿using System.Web;
-
-using BetterCms.Core.DataContracts;
-using BetterCms.Core.Dependencies;
-using BetterCms.Core.Security;
-using BetterCms.Core.Services;
+﻿using BetterCms.Core.DataContracts;
 
 using NHibernate.Event;
 using NHibernate.Event.Default;
@@ -42,7 +37,7 @@ namespace BetterCms.Core.DataAccess.DataContext.EventListeners
             if (evt.Entity is IEntity)
             {
                 Events.CoreEvents.Instance.OnEntitySaving((IEntity)evt.Entity);
-            }
+            } 
 
             if (evt.Session.IsDirtyEntity(evt.Entity))
             {

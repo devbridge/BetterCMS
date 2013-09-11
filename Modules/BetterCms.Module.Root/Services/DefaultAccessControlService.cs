@@ -7,7 +7,9 @@ using System.Text;
 using BetterCms.Configuration;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
+using BetterCms.Core.Exceptions.Service;
 using BetterCms.Core.Security;
+using BetterCms.Core.Services;
 using BetterCms.Core.Services.Caching;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
@@ -26,15 +28,55 @@ namespace BetterCms.Module.Root.Services
 
         private readonly ICmsConfiguration configuration;
 
+        private readonly ISecurityService securityService;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultAccessControlService" /> class.
         /// </summary>
+        /// <param name="securityService">The security service.</param>
         /// <param name="cacheService">The cache service.</param>
         /// <param name="configuration">The CMS configuration.</param>
-        public DefaultAccessControlService(ICacheService cacheService, ICmsConfiguration configuration)
+        public DefaultAccessControlService(ISecurityService securityService, ICacheService cacheService, ICmsConfiguration configuration)
         {
+            this.securityService = securityService;
             this.cacheService = cacheService;
             this.configuration = configuration;
+        }
+
+        /// <summary>
+        /// Demands the access.
+        /// </summary>
+        /// <typeparam name="TAccessSecuredObject">The type of the access secured object.</typeparam>
+        /// <param name="obj">The obj.</param>
+        /// <param name="principal">The principal.</param>
+        /// <param name="accessLevel">The access level.</param>
+        /// <param name="roles">The roles.</param>
+        /// <exception cref="SecurityException"></exception>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public void DemandAccess<TAccessSecuredObject>(TAccessSecuredObject obj, IPrincipal principal, AccessLevel accessLevel, params string[] roles)
+            where TAccessSecuredObject : IAccessSecuredObject
+        {
+            DemandAccess(principal, roles);
+
+            var principalAccessLevel = GetAccessLevel(obj, principal);
+            if (principalAccessLevel < accessLevel || principalAccessLevel == AccessLevel.Deny)
+            {
+                throw new SecurityException(string.Format("Forbidden: Access is denied for the object {0}.", obj));
+            }
+        }
+
+        /// <summary>
+        /// Demands the access level by roles only.
+        /// </summary>
+        /// <param name="principal">The principal.</param>
+        /// <param name="roles">The roles.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public void DemandAccess(IPrincipal principal, params string[] roles)
+        {          
+            if (roles != null && roles.Any() && !securityService.IsAuthorized(principal, string.Join(",", roles)))
+            {
+                throw new SecurityException("Forbidden: Access is denied.");
+            }
         }
 
         /// <summary>
@@ -44,6 +86,17 @@ namespace BetterCms.Module.Root.Services
         /// <param name="principal">The principal.</param>
         /// <returns>Access level for current principal</returns>
         public AccessLevel GetAccessLevel<TAccessSecuredObject>(TAccessSecuredObject obj, IPrincipal principal) where TAccessSecuredObject : IAccessSecuredObject
+        {
+            return GetAccessLevel(obj.AccessRules, principal);
+        }
+
+        /// <summary>
+        /// Gets the access level.
+        /// </summary>
+        /// <param name="accessRules">The access list.</param>
+        /// <param name="principal">The principal.</param>
+        /// <returns>Access level for current principal</returns>
+        public AccessLevel GetAccessLevel(IList<IAccessRule> accessRules, IPrincipal principal)
         {
             StringBuilder cacheKeyBuilder = new StringBuilder();
 
@@ -55,15 +108,15 @@ namespace BetterCms.Module.Root.Services
             cacheKeyBuilder.Append("-");
 
             StringBuilder accessRulesHasher = new StringBuilder();
-            if (obj.AccessRules != null && obj.AccessRules.Count > 0)
-            {                
-                foreach (var rule in obj.AccessRules)
+            if (accessRules != null && accessRules.Count > 0)
+            {
+                foreach (var rule in accessRules)
                 {
                     accessRulesHasher.Append(rule.Identity);
                     accessRulesHasher.Append("-");
                     accessRulesHasher.Append((int)rule.AccessLevel);
                     accessRulesHasher.Append("-");
-                }                 
+                }
             }
             else
             {
@@ -71,7 +124,7 @@ namespace BetterCms.Module.Root.Services
             }
             cacheKeyBuilder.Append(accessRulesHasher.ToString().GetHashCode());
 
-            object accessLevel = cacheService.Get(cacheKeyBuilder.ToString(), TimeSpan.FromMinutes(2), () => (object)GetAccessLevel(obj.AccessRules, principal));
+            object accessLevel = cacheService.Get(cacheKeyBuilder.ToString(), TimeSpan.FromMinutes(2), () => (object)GetAccessLevelInternal(accessRules, principal));
 
             return (AccessLevel)accessLevel;
         }
@@ -109,9 +162,11 @@ namespace BetterCms.Module.Root.Services
 
             UpdateChangedRules(securedObject, updatedRules);
 
-            if (securedObject.AccessRules == null || 
-                !securedObject.AccessRules.Any() && !string.Equals(configuration.Security.DefaultAccessRules.DefaultAccessLevel, AccessLevel.ReadWrite.ToString(), StringComparison.OrdinalIgnoreCase) ||
-                securedObject.AccessRules.Any() && !securedObject.AccessRules.Any(f => f.AccessLevel == AccessLevel.ReadWrite))
+            var readWriteIsDefault = string.Equals(configuration.Security.DefaultAccessRules.DefaultAccessLevel, AccessLevel.ReadWrite.ToString(), StringComparison.OrdinalIgnoreCase);
+
+            if (securedObject.AccessRules == null && !readWriteIsDefault  || 
+                securedObject.AccessRules != null && !securedObject.AccessRules.Any() && !readWriteIsDefault ||
+                securedObject.AccessRules != null && securedObject.AccessRules.Any() && securedObject.AccessRules.All(f => f.AccessLevel != AccessLevel.ReadWrite))
             {
                 throw new ValidationException(() => RootGlobalization.Validation_SecuredObjectShouldHaveAccess_Message, 
                     string.Format("An '{0}' secured object can't be saved because of the complete access lose.", securedObject));
@@ -147,21 +202,40 @@ namespace BetterCms.Module.Root.Services
                     {
                         Identity = identityName,
                         AccessLevel = AccessLevel.ReadWrite,
-                        IsForRole = true
+                        IsForRole = false
                     });
                 }
             }
 
             return list;
-        }
+        }       
 
         /// <summary>
-        /// Gets the access level.
+        /// Update the access rule entities.
         /// </summary>
-        /// <param name="accessRules">The access list.</param>
-        /// <param name="principal">The principal.</param>
-        /// <returns>Access level for current principal</returns>
-        private AccessLevel GetAccessLevel(IList<IAccessRule> accessRules, IPrincipal principal)
+        /// <param name="securedObject">The secured object.</param>
+        /// <param name="updatedRules">The access list.</param>        
+        private void UpdateChangedRules(IAccessSecuredObject securedObject, IList<IAccessRule> updatedRules)
+        {
+            if (updatedRules != null && updatedRules.Count > 0 && securedObject.AccessRules != null)
+            {
+                var existingAccessRules = securedObject.AccessRules.ToList();
+
+                foreach (var entity in existingAccessRules)
+                {
+                    // Find access rule object with the same Role and different AccessLevel.
+                    var rule = updatedRules.FirstOrDefault(x => x.Identity == entity.Identity && x.IsForRole == entity.IsForRole && x.AccessLevel != entity.AccessLevel);
+
+                    // If found, update.
+                    if (rule != null)
+                    {
+                        entity.AccessLevel = rule.AccessLevel;
+                    }
+                }
+            }
+        }
+
+        private AccessLevel GetAccessLevelInternal(IList<IAccessRule> accessRules, IPrincipal principal)
         {
             // If there are no permissions, object is accessible to everyone:
             if (accessRules == null || !accessRules.Any())
@@ -192,7 +266,7 @@ namespace BetterCms.Module.Root.Services
             }
 
             var accessLevel = AccessLevel.Deny;
-            
+
             // If user is not authenticated, check access level for "Everyone" role:
             var everyone = accessRules.FirstOrDefault(rule => rule.IsForRole && string.Equals(rule.Identity, SpecialIdentities.Everyone, StringComparison.OrdinalIgnoreCase));
 
@@ -235,32 +309,6 @@ namespace BetterCms.Module.Root.Services
             }
 
             return accessLevel;
-        }
-
-
-        /// <summary>
-        /// Update the access rule entities.
-        /// </summary>
-        /// <param name="securedObject">The secured object.</param>
-        /// <param name="updatedRules">The access list.</param>        
-        private void UpdateChangedRules(IAccessSecuredObject securedObject, IList<IAccessRule> updatedRules)
-        {
-            if (updatedRules != null && updatedRules.Count > 0 && securedObject.AccessRules != null)
-            {
-                var existingAccessRules = securedObject.AccessRules.ToList();
-
-                foreach (var entity in existingAccessRules)
-                {
-                    // Find access rule object with the same Role and different AccessLevel.
-                    var rule = updatedRules.FirstOrDefault(x => x.Identity == entity.Identity && x.IsForRole == entity.IsForRole && x.AccessLevel != entity.AccessLevel);
-
-                    // If found, update.
-                    if (rule != null)
-                    {
-                        entity.AccessLevel = rule.AccessLevel;
-                    }
-                }
-            }
         }
     }
 }

@@ -1,15 +1,15 @@
 ﻿using FluentMigrator.VersionTableInfo;
 
-namespace BetterCms.Module.AccessControl.Models.Migrations
+namespace BetterCms.Module.Installation.Models.Migrations
 {
     [VersionTableMetaData]
-    public class BlogVersionTableMetaData : IVersionTableMetaData
+    public class InstallationVersionTableMetaData : IVersionTableMetaData
     {
         public string SchemaName
         {
             get
             {
-                return "bcms_" + UserAccessModuleDescriptor.ModuleName.ToLowerInvariant();
+                return "bcms_" + InstallationModuleDescriptor.ModuleName;
             }
         }
 
@@ -33,7 +33,7 @@ namespace BetterCms.Module.AccessControl.Models.Migrations
         {
             get
             {
-                return "uc_VersionInfo_Verion_" + UserAccessModuleDescriptor.ModuleName;
+                return "uc_VersionInfo_Verion_" + InstallationModuleDescriptor.ModuleName;
             }
         }
     }

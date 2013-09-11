@@ -14,14 +14,6 @@ namespace BetterCms.Core.Mvc.Commands
         /// The context.
         /// </value>
         ICommandContext Context { get; set; }
-
-        /// <summary>
-        /// Gets or sets the security service.
-        /// </summary>
-        /// <value>
-        /// The security service.
-        /// </value>
-        ISecurityService SecurityService { get; set; }
     }
 
     /// <summary>

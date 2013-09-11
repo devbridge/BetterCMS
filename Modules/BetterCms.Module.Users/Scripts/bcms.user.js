@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global define */
 
-bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.role', 'bcms.media', 'bcms.messages', 'bcms.grid', 'bcms.ko.extenders'],
-    function($, bcms, modal, siteSettings, dynamicContent, role, media, messages, grid, ko) {
+bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.role', 'bcms.media', 'bcms.messages', 'bcms.grid', 'bcms.ko.extenders', 'bcms.redirect'],
+    function($, bcms, modal, siteSettings, dynamicContent, role, media, messages, grid, ko, redirect) {
         'use strict';
 
         var user = {},
@@ -21,7 +21,8 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 userEmailCell: '.bcms-user-email',
                 userRowTemplate: '#bcms-users-list-row-template',
                 userTableFirstRow: 'table.bcms-tables > tbody > tr:first',
-                userRowTemplateFirstRow: 'tr:first'
+                userRowTemplateFirstRow: 'tr:first',
+                openEditUserProfile: '.bcms-sidemenu-username a'
             },
             links = {
                 loadSiteSettingsUsersUrl: null,
@@ -293,16 +294,58 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         * Initialize custom jQuery validators
         */
         function initializeCustomValidation() {
-            $.validator.addMethod("jqpasswordrequired", function (value) {
-                
+            $.validator.addMethod("jqpasswordvalidation", function (value, element, params) {
+                if (value) {
+                    var match = new RegExp(params.pattern).exec(value);
+                    params.regex = true;
+                    
+                    var isMatch = (match && (match.index === 0) && (match[0].length === value.length));
+                    if (!isMatch) {
+                        return false;
+                    }
+                }
+
+                params.regex = false;
                 return !bcms.isEmptyGuid(userViewModel.id) || value;
             }, function (params) {
+                if (params.regex) {
+                    return params.patternmessage;
+                }
                 
                 return params.message;
             });
 
-            $.validator.unobtrusive.adapters.add("passwordrequired", ['pattern'], function (opts) {
-                opts.rules["jqpasswordrequired"] = { message: opts.message, pattern: opts.params.pattern };
+            $.validator.unobtrusive.adapters.add("passwordvalidation", ['pattern', 'patternmessage'], function (opts) {
+                opts.rules["jqpasswordvalidation"] = { message: opts.message, pattern: opts.params.pattern, patternmessage: opts.params.patternmessage };
+            });
+        }
+
+        /**
+        * Initialize edit user profile form url
+        */
+        function initializeUserEditProfileFormUrl() {
+            $(selectors.openEditUserProfile).on('click', function () {
+                var self = $(this),
+                    url = self.data('url'),
+                    onSaveCallback = function (json) {
+                        messages.refreshBox(usersContainer, json);
+                        if (json.Success) {
+                            redirect.ReloadWithAlert();
+                        }
+                    };
+
+                if (url) {
+                    modal.open({
+                        title: globalization.editUserProfileTitle,
+                        onLoad: function (dialog) {
+                            dynamicContent.bindDialog(dialog, url, {
+                                contentAvailable: initializeEditUserForm,
+
+                                postSuccess: onSaveCallback
+                            });
+                        }
+                    });
+                }
             });
         }
 
@@ -313,6 +356,7 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             console.log('Initializing bcms.user module.');
 
             initializeCustomValidation();
+            initializeUserEditProfileFormUrl();
         };
 
         bcms.registerInit(user.init);

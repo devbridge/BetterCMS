@@ -12,13 +12,13 @@
 @using MvcContrib.UI.Grid
 
 @model MediaHistoryViewModel
-
 @helper PreviewLink(MediaHistoryItem item)
 {
     <a class="bcms-icn-preview" data-id="@item.Id">@RootGlobalization.Button_Preview</a>
 }
 
-@helper DownloadLink(MediaHistoryItem item){
+@helper DownloadLink(MediaHistoryItem item)
+{
     <a class="bcms-icn-download" data-id="@item.Id" data-version="@item.Version">@MediaGlobalization.MediaManager_ButtonDownload</a>
 }
 
@@ -26,11 +26,11 @@
 {
     if (item.CanCurrentUserRestoreIt)
     {
-        <a class="bcms-icn-restore" data-id="@item.Id" data-version="@item.Version">@RootGlobalization.Button_Restore</a>
+    <a class="bcms-icn-restore" data-id="@item.Id" data-version="@item.Version">@RootGlobalization.Button_Restore</a>
     }
     else
     {
-        @:&nbsp;
+    @:&nbsp;
     }
 }
 
@@ -39,17 +39,17 @@
     switch (status)
     {
         case MediaHistoryStatus.Archived:
-            @:<div class="bcms-archived-state">@statusName</div>
+    @:<div class="bcms-archived-state">@statusName</div>
 
             break;
 
         case MediaHistoryStatus.Active:
-            @:<div class="bcms-published-state">@statusName</div>
+    @:<div class="bcms-published-state">@statusName</div>
         
             break;
 
         default:
-            @:statusName
+    @:statusName
             break;
     }
 }
@@ -100,7 +100,7 @@
                .Sortable(false)
                .HeaderAttributes(@style => "width: 57px;", @class => "bcms-tables-nohover")
                .Attributes(@style => "width: 57px;");
-        
+
         column.For(f => RestoreLink(f))
                .Encode(false)
                .Named("&nbsp;")
@@ -111,10 +111,11 @@
 }
 
 <div class="bcms-scroll-window">
-    @Html.TabbedContentMessagesBox()
+
     <div class="bcms-history-preview-holder">
         <div class="bcms-history-preview">
             <div id="bcms-history-preview" style="height: 100%">
+                @Html.TabbedContentMessagesBox()
                 <div class="bcms-history-info" style="display: block;">@MediaGlobalization.MediaHistory_SelectVersionToPreviewMessage</div>
                 <div class="bcms-history-content"></div>
             </div>

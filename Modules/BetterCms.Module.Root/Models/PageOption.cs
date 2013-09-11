@@ -3,11 +3,12 @@ using System;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
+using BetterCms.Core.Security;
 
 namespace BetterCms.Module.Root.Models
 {
     [Serializable]
-    public class PageOption : EquatableEntity<PageOption>, IOption
+    public class PageOption : EquatableEntity<PageOption>, IOption, IAccessSecuredObjectDependency
     {
         public virtual Page Page { get; set; }
 
@@ -16,5 +17,13 @@ namespace BetterCms.Module.Root.Models
         public virtual string Key { get; set; }
 
         public virtual OptionType Type { get; set; }
+
+        IAccessSecuredObject IAccessSecuredObjectDependency.SecuredObject
+        {
+            get
+            {
+                return Page;
+            }
+        }
     }
 }

@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
 
 using BetterCms.Configuration;
 using BetterCms.Core.Mvc.Attributes;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services.Caching;
+
 using BetterCms.Module.Root.Commands.GetPageToRender;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Cms;
+
+using Common.Logging;
 
 using Microsoft.Web.Mvc;
 
@@ -35,6 +36,11 @@ namespace BetterCms.Module.Root.Controllers
         /// The cache service
         /// </summary>
         private readonly IAccessControlService accessControlService;
+
+        /// <summary>
+        /// Current class logger.
+        /// </summary>
+        private static readonly ILog log = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CmsController" /> class.
@@ -84,13 +90,15 @@ namespace BetterCms.Module.Root.Controllers
                         if (pageNotFound)
                         {
                             Response.StatusCode = 404;
+                            LogPageNotFound(virtualPath);
                         }
 
                         ViewBag.pageId = model.RenderPage.Id;
 
                         if (!HasCurrentPrincipalAccess(model.RenderPage))
                         {
-                            Response.StatusCode = 403;                            
+                            Response.StatusCode = 403;
+                            LogAccessForbidden(model.RenderPage);
                             return Content("403 Access Forbidden", "text/plain");
                         }
 
@@ -110,6 +118,7 @@ namespace BetterCms.Module.Root.Controllers
                 throw new HttpException(500, "Failed to load a CMS page.", ex);
             }
 
+            LogPageNotFound(virtualPath);
             throw new HttpException(404, "Page Not Found");
         }
 
@@ -191,6 +200,22 @@ namespace BetterCms.Module.Root.Controllers
                 sb.Append(hash[i].ToString("X2"));
             }
             return sb.ToString();
+        }
+
+        private void LogPageNotFound(string virtualPath)
+        {
+            log.InfoFormat("Failed to load page by URL: {0}. Page not found.", virtualPath);
+
+            // Notifying, that page was not found.
+            Events.RootEvents.Instance.OnPageNotFound(virtualPath);
+        }
+        
+        private void LogAccessForbidden(RenderPageViewModel model)
+        {
+            log.WarnFormat("Failed to load page by URL: {0}. Access is forbidden.", model.PageUrl);
+
+            // Notifying, that page access was forbidden.
+            Events.RootEvents.Instance.OnPageAccessForbidden(model);
         }
     }
 }
