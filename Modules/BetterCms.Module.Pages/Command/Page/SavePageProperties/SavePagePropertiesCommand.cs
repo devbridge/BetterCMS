@@ -8,6 +8,7 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
+
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -95,8 +96,6 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         /// <exception cref="CmsException">Failed to save page properties.</exception>
         public SavePageResponse Execute(EditPagePropertiesViewModel request)
         {            
-            AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent);
-            
             UnitOfWork.BeginTransaction();
 
             var pageQuery = Repository
@@ -111,6 +110,15 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             }
 
             var page = pageQuery.ToList().FirstOne();
+
+            if (cmsConfiguration.Security.AccessControlEnabled)
+            {
+                AccessControlService.DemandAccess(page, Context.Principal, AccessLevel.ReadWrite, RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent);
+            }
+            else
+            {
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent);
+            }
 
             Models.Redirect redirectCreated = null;
             bool initialSeoStatus = page.HasSEO;
