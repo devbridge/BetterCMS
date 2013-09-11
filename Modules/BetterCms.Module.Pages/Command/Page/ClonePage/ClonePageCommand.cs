@@ -8,6 +8,7 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
@@ -58,23 +59,22 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
                 PageService.ValidatePageUrl(pageUrl);
             }
 
-            var pageQuery = Repository.AsQueryable<PageProperties>()
+            var page = Repository.AsQueryable<PageProperties>()
                                       .Where(f => f.Id == request.PageId)
-                                      .FetchMany(f => f.AccessRules)
                                       .FetchMany(f => f.Options)
                                       .FetchMany(f => f.PageContents).ThenFetch(f => f.Region)
                                       .FetchMany(f => f.PageContents).ThenFetch(f => f.Content)
                                       .FetchMany(f => f.PageContents).ThenFetchMany(f => f.Options)
-                                      .FetchMany(f => f.PageTags).ThenFetch(f => f.Tag); 
+                                      .FetchMany(f => f.PageTags).ThenFetch(f => f.Tag)
+                                      .ToList().FirstOne();
 
             UnitOfWork.BeginTransaction();
-
-            var page = pageQuery.ToList().FirstOne();
 
             var pageContents = page.PageContents.Distinct().ToList();
             var pageTags = page.PageTags.Distinct().ToList();
             var pageOptions = page.Options.Distinct().ToList();
-            var pageAccessRules = page.AccessRules.Distinct().ToList();
+
+            // Clone page with security
             var newPage = ClonePageOnly(page, request.PageTitle, pageUrl);
 
             // Clone contents.
@@ -85,9 +85,6 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
 
             // Clone options.
             pageOptions.ForEach(pageOption => ClonePageOption(pageOption, newPage));
-
-            // Clone security.
-            pageAccessRules.ForEach(pageAccessRule => CloneAccessRule(pageAccessRule, newPage));
            
             UnitOfWork.Commit();
 
@@ -134,6 +131,9 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
             newPage.PageUrl = newPageUrl;
             newPage.PageUrlLowerTrimmed = newPageUrl.LowerTrimmedUrl();
             newPage.Status = PageStatus.Unpublished;
+
+            // Add security.
+            AddAccessRules(newPage);
 
             Repository.Save(newPage);
 
@@ -198,14 +198,10 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
             Repository.Save(newPageContent);
         }
 
-        private void CloneAccessRule(AccessRule pageAccessRule, PageProperties newPage)
+        private void AddAccessRules(PageProperties newPage)
         {
-            newPage.AddRule(new AccessRule
-                                {
-                                    Identity = pageAccessRule.Identity,
-                                    AccessLevel = pageAccessRule.AccessLevel,
-                                    IsForRole = pageAccessRule.IsForRole
-                                });
+            var defaultAccessRules = AccessControlService.GetDefaultAccessList(Context.Principal);
+            AccessControlService.UpdateAccessControl(newPage, defaultAccessRules);
         }
 
         private void ClonePageOption(PageOption pageOption, PageProperties newPage)
