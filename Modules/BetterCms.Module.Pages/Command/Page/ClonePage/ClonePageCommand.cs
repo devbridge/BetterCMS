@@ -201,7 +201,16 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
         private void AddAccessRules(PageProperties newPage)
         {
             var defaultAccessRules = AccessControlService.GetDefaultAccessList(Context.Principal);
-            AccessControlService.UpdateAccessControl(newPage, defaultAccessRules);
+            newPage.AccessRules = new List<AccessRule>();
+            foreach (var rule in defaultAccessRules)
+            {
+                newPage.AccessRules.Add(new AccessRule
+                                            {
+                                                Identity = rule.Identity,
+                                                AccessLevel = rule.AccessLevel,
+                                                IsForRole = rule.IsForRole
+                                            });
+            }
         }
 
         private void ClonePageOption(PageOption pageOption, PageProperties newPage)
