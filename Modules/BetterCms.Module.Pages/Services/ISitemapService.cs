@@ -11,13 +11,6 @@ namespace BetterCms.Module.Pages.Services
     public interface ISitemapService
     {
         /// <summary>
-        /// Gets the root nodes.
-        /// </summary>
-        /// <param name="search">The search.</param>
-        /// <returns>Sitemap node list.</returns>
-        IList<SitemapNode> GetRootNodes(string search);
-
-        /// <summary>
         /// Gets the node count.
         /// </summary>
         /// <param name="url">The URL.</param>
