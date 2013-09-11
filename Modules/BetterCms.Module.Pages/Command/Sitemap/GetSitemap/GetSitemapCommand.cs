@@ -56,7 +56,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemap
                         Title = node.Title,
                         Url = node.Url,
                         DisplayOrder = node.DisplayOrder,
-                        ChildNodes = GetSitemapNodesInHierarchy(sitemapNodes.Where(f => f.ParentNode == node).ToList())
+                        ChildNodes = GetSitemapNodesInHierarchy(node.ChildNodes)
                     });
             }
 
