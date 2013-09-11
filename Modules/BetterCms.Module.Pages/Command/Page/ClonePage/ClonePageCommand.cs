@@ -69,12 +69,13 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
                                       .ToList().FirstOne();
 
             UnitOfWork.BeginTransaction();
-
+            
             // Detach page to avoid duplicate saving.            
             Repository.Detach(page);            
             page.PageContents.ForEach(Repository.Detach);
             page.PageTags.ForEach(Repository.Detach);
             page.Options.ForEach(Repository.Detach);
+            page.SaveUnsecured = true;
 
             var pageContents = page.PageContents.Distinct().ToList();
             var pageTags = page.PageTags.Distinct().ToList();
