@@ -105,18 +105,22 @@ namespace BetterCms.Module.Root.Services
 
                 var roleList = ParseRoles(roles);
 
-                if (!configuration.Security.UseCustomRoles)
-                {
-                    return roleList.Any(principal.IsInRole);
-                }
-
                 // Check for configuration defined user roles.
+                bool useCustomRoles = configuration.Security.UseCustomRoles;
                 foreach (var role in roleList)
                 {
-                    var translatedRoles = ParseRoles(configuration.Security.Translate(role));
-                    if (translatedRoles.Any(principal.IsInRole))
+                    if (principal.IsInRole(role))
                     {
                         return true;
+                    }
+
+                    if (useCustomRoles)
+                    {
+                        var translatedRoles = ParseRoles(configuration.Security.Translate(role));
+                        if (translatedRoles.Any(principal.IsInRole))
+                        {
+                            return true;
+                        }                        
                     }
                 }
             }

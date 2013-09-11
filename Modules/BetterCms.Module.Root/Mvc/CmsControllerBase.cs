@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Principal;
+using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 using Autofac;
 
@@ -248,6 +251,41 @@ namespace BetterCms.Module.Root.Mvc
         public virtual string RenderView(string viewName, object model, bool enableFormContext = false)
         {
             return RenderViewDelegate(viewName, model, enableFormContext);
+        }
+
+        /// <summary>
+        /// Signs out user.
+        /// </summary>
+        [NonAction]
+        protected virtual ActionResult SignOutUserIfAuthenticated()
+        {
+            if (User.Identity.IsAuthenticated && FormsAuthentication.IsEnabled)
+            {
+                FormsAuthentication.SignOut();
+
+                HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+                HttpCookie roleCokie = Roles.Enabled ? Request.Cookies[Roles.CookieName] : null;
+
+                if (authCookie != null)
+                {
+                    Response.Cookies.Add(
+                        new HttpCookie(authCookie.Name)
+                            {
+                                Expires = DateTime.Now.AddDays(-10)
+                            });
+                }
+
+                if (roleCokie != null)
+                {
+                    Response.Cookies.Add(
+                        new HttpCookie(roleCokie.Name)
+                            {
+                                Expires = DateTime.Now.AddDays(-10)
+                            });
+                }                
+            }
+
+            return Redirect(FormsAuthentication.LoginUrl);
         }
 
         /// <summary>

@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Web;
-using System.Web.Mvc;
 
 using Autofac;
 
-using BetterCms.Core.DataAccess;
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Core.Web;
 using BetterCms.Events;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Services;
@@ -196,7 +192,17 @@ namespace BetterCms.Module.Users
                             area = AreaName,
                             controller = "Authentication",
                             action = "Login"
-                        });                  
+                        });
+
+                    context.MapRoute(
+                        "bcms-users-logout",
+                        "logout",
+                        new
+                        {
+                            area = AreaName,
+                            controller = "Authentication",
+                            action = "Logout"
+                        });                 
                 }
             }
         }

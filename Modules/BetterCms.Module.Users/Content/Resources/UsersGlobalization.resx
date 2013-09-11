@@ -330,4 +330,7 @@
   <data name="SiteSettings_Roles_DescriptionColumn" xml:space="preserve">
     <value>Description</value>
   </data>
+  <data name="Login_UserNameOrPassword_Invalid" xml:space="preserve">
+    <value>User name or password is invalid.</value>
+  </data>
 </root>

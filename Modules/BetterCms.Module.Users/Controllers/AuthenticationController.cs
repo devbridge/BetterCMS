@@ -71,6 +71,21 @@ namespace BetterCms.Module.Users.Controllers
             }
 
             return View(model);
-        }        
+        }
+
+        [HttpGet]
+        public ActionResult Logout()
+        {
+            try
+            {
+                return SignOutUserIfAuthenticated();
+            }
+            catch (Exception ex)
+            {
+                Log.ErrorFormat("Failed to logout user {0}.", ex, User.Identity);
+            }
+
+            return Redirect(FormsAuthentication.LoginUrl);
+        }
     }
 }
