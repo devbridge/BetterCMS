@@ -47,35 +47,14 @@ namespace BetterCms.Module.Root.Controllers
         {
             try
             {
-                FormsAuthentication.SignOut(); 
-                
-                HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
-                HttpCookie roleCokie = Roles.Enabled ? Request.Cookies[Roles.CookieName] : null;
-
-                if (authCookie != null)
-                {
-                    Response.Cookies.Add(
-                        new HttpCookie(authCookie.Name)
-                        {
-                            Expires = DateTime.Now.AddDays(-10)
-                        });
-                }
-
-                if (roleCokie != null)
-                {
-                    Response.Cookies.Add(
-                        new HttpCookie(roleCokie.Name)
-                        {
-                            Expires = DateTime.Now.AddDays(-10)
-                        });
-                }
+                return SignOutUserIfAuthenticated();
             }
             catch (Exception ex)
             {
                 Log.ErrorFormat("Failed to logout user {0}.", ex, User.Identity);
-            }            
+            }
 
-            return Redirect(FormsAuthentication.DefaultUrl);
+            return Redirect(FormsAuthentication.LoginUrl);
         }
 
         public ActionResult IsAuthorized(string roles)

@@ -376,6 +376,15 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User name or password is invalid..
+        /// </summary>
+        public static string Login_UserNameOrPassword_Invalid {
+            get {
+                return ResourceManager.GetString("Login_UserNameOrPassword_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New +.
         /// </summary>
         public static string Role_Dialog_AddNew {

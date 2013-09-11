@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Web;
 using System.Web.Security;
 
@@ -7,10 +6,9 @@ using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Users.Models;
+using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.Services;
 using BetterCms.Module.Users.ViewModels.Authentication;
-using BetterCms.Module.Users.ViewModels.Registration;
 
 namespace BetterCms.Module.Users.Commands.Authentication
 {
@@ -54,7 +52,7 @@ namespace BetterCms.Module.Users.Commands.Authentication
                 return cookie;
             }
 
-            return null;
+            throw new ValidationException(() => UsersGlobalization.Login_UserNameOrPassword_Invalid, "User name or password is invalid.");
         }
     }
 }
