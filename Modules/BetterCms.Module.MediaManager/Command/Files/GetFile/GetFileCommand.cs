@@ -14,7 +14,6 @@ using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.MediaManager.ViewModels.File;
 
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Security;
 
@@ -101,6 +100,8 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
 
             if (configuration.Security.AccessControlEnabled)
             {
+                AccessControlService.DemandAccess(file, Context.Principal, AccessLevel.Read);
+
                 model.UserAccessList = file.AccessRules.Select(f => new UserAccessViewModel(f)).ToList();
                 model.Url = fileService.GetDownloadFileUrl(MediaType.File, model.Id.ToGuidOrDefault(), model.Url);
 

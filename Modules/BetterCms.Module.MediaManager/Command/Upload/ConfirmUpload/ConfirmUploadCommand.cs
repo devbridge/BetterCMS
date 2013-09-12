@@ -153,6 +153,11 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
             if (file.Type == MediaType.File)
             {
                 model = new MediaFileViewModel();
+
+                if (cmsConfiguration.Security.AccessControlEnabled)
+                {
+                    SetIsReadOnly(model, ((IAccessSecuredObject)file).AccessRules);
+                }
             }
             else if (file.Type == MediaType.Audio)
             {
