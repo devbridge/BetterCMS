@@ -211,6 +211,11 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
 
         private void AddAccessRules(PageProperties newPage, IList<UserAccessViewModel> userAccess)
         {
+            if (userAccess == null)
+            {
+                return;
+            }
+
             newPage.AccessRules = new List<AccessRule>();
             foreach (var rule in userAccess)
             {

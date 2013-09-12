@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Principal;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
@@ -11,7 +10,7 @@ using BetterCms.Module.Pages.Command.Page.ClonePage;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
-using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.ViewModels.Security;
 
 using Moq;
 
@@ -51,24 +50,20 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
                     var rule2 = TestDataProvider.CreateNewAccessRule();
                     rules.Add(rule2);
 
-                    var accessControlService = new Mock<IAccessControlService>();
-                    accessControlService
-                        .Setup(a => a.GetDefaultAccessList(It.IsAny<IPrincipal>()))
-                        .Returns(rules);
-
                     var command = new ClonePageCommand();
                     command.Repository = repository;
                     command.UnitOfWork = uow;
                     command.PageService = pageService.Object;
                     command.UrlService = urlService.Object;
-                    command.AccessControlService = accessControlService.Object;
+                    command.AccessControlService = new Mock<IAccessControlService>().Object;
                     command.Context = new Mock<ICommandContext>().Object;
 
                     var result = command.Execute(new ClonePageViewModel
                                         {
                                             PageId = pageToClone.Id,
                                             PageTitle = "new cloned page",
-                                            PageUrl = url
+                                            PageUrl = url,
+                                            UserAccessList = pageToClone.AccessRules.Select(u => new UserAccessViewModel(u)).ToList()
                                         });
 
                     Assert.IsNotNull(result);
