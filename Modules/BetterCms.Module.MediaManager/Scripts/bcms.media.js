@@ -928,6 +928,9 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Function is called, when editable item losts focus
     */
     function cancelOrSaveMedia(folderViewModel, item) {
+        if (!item.isActive()) {
+            return;
+        }
         blurTimer = setTimeout(function () {
             if (!item.name() && !item.id()) {
                 cancelEditMedia(folderViewModel, item);
@@ -981,10 +984,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                             item.version(json.Data.Version);
                             item.id(json.Data.Id);
                             item.oldName = item.name();
+                            item.isActive(false);
                         } else {
                             item.isActive(true);
                         }
-                        item.isActive(false);
                     };
                 loaderContainer.showLoading();
                 item.isActive(false);
