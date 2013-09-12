@@ -12,6 +12,7 @@ using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
+using BetterCms.Module.Root.ViewModels.Security;
 
 using NHibernate.Linq;
 
@@ -82,7 +83,7 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
             var pageOptions = page.Options.Distinct().ToList();
 
             // Clone page with security
-            var newPage = ClonePageOnly(page, request.PageTitle, pageUrl);
+            var newPage = ClonePageOnly(page, request.UserAccessList, request.PageTitle, pageUrl);
 
             // Clone contents.
             pageContents.ForEach(pageContent => ClonePageContent(pageContent, newPage));
@@ -126,10 +127,13 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
         /// Clones the page only.
         /// </summary>
         /// <param name="page">The page.</param>
+        /// <param name="userAccess">The user access.</param>
         /// <param name="newPageTitle">The new page title.</param>
         /// <param name="newPageUrl">The new page URL.</param>
-        /// <returns>Copy for <see cref="PageProperties"/>.</returns>
-        private PageProperties ClonePageOnly(PageProperties page, string newPageTitle, string newPageUrl)
+        /// <returns>
+        /// Copy for <see cref="PageProperties" />.
+        /// </returns>
+        private PageProperties ClonePageOnly(PageProperties page, IList<UserAccessViewModel> userAccess, string newPageTitle, string newPageUrl)
         {
             var newPage = page.Duplicate();
 
@@ -140,7 +144,7 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
             newPage.Status = PageStatus.Unpublished;
 
             // Add security.
-            AddAccessRules(newPage);
+            AddAccessRules(newPage, userAccess);
 
             Repository.Save(newPage);
 
@@ -205,11 +209,10 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
             Repository.Save(newPageContent);
         }
 
-        private void AddAccessRules(PageProperties newPage)
+        private void AddAccessRules(PageProperties newPage, IList<UserAccessViewModel> userAccess)
         {
-            var defaultAccessRules = AccessControlService.GetDefaultAccessList(Context.Principal);
             newPage.AccessRules = new List<AccessRule>();
-            foreach (var rule in defaultAccessRules)
+            foreach (var rule in userAccess)
             {
                 newPage.AccessRules.Add(new AccessRule
                                             {

@@ -51,7 +51,9 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 siteSettingPageCreatedCell: '.bcms-page-created',
                 siteSettingPageModifiedCell: '.bcms-page-modified',
                 siteSettingPageStatusCell: '.bcms-page-ispublished',
-                siteSettingPageHasSeoCell: '.bcms-page-hasseo'
+                siteSettingPageHasSeoCell: '.bcms-page-hasseo',
+                
+                clonePageForm: 'form:first',
             },        
             links = {
                 loadEditPropertiesUrl: null,
@@ -72,7 +74,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 cloneButtonTitle: null,
                 deleteButtonTitle: null,
                 pageStatusChangeConfirmationMessagePublish: null,
-                pageStatusChangeConfirmationMessageUnPublish: null,
+                pageStatusChangeConfirmationMessageUnPublish: null
             },        
             keys = {
                 addNewPageInfoMessageClosed: 'bcms.addNewPageInfoBoxClosed'
@@ -612,8 +614,13 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             onLoad: function (dialog) {
                 var url = $.format(links.clonePageDialogUrl, bcms.pageId);
                 dynamicContent.bindDialog(dialog, url, {
-                    contentAvailable: function () {
+                    contentAvailable: function (childDialog, content) {
                         page.initializePermalinkBox(dialog, false, links.convertStringToSlugUrl, selectors.addNewPageTitleInput, true);
+
+                        var viewModel = {
+                            accessControl: security.createUserAccessViewModel(content.Data.UserAccessList)
+                        };
+                        ko.applyBindings(viewModel, dialog.container.find(selectors.clonePageForm).get(0));
                     },
 
                     beforePost: function () {

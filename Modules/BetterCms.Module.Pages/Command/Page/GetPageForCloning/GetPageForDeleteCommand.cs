@@ -1,16 +1,35 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
+
+using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.ViewModels.Security;
 
-using NHibernate.Transform;
+using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Command.Page.GetPageForCloning
 {   
     public class GetPageForCloningCommand : CommandBase, ICommand<Guid, ClonePageViewModel>
     {
+        /// <summary>
+        /// The CMS configuration
+        /// </summary>
+        private readonly ICmsConfiguration cmsConfiguration;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetPageForCloningCommand" /> class.
+        /// </summary>
+        /// <param name="cmsConfiguration">The CMS configuration.</param>
+        public GetPageForCloningCommand(ICmsConfiguration cmsConfiguration)
+        {
+            this.cmsConfiguration = cmsConfiguration;
+        }
+
         /// <summary>
         /// Executes the specified request.
         /// </summary>
@@ -19,16 +38,40 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageForCloning
         /// <exception cref="System.NotImplementedException"></exception>
         public ClonePageViewModel Execute(Guid request)
         {
-            Root.Models.Page alias = null;
-            ClonePageViewModel modelAlias = null;
+            var pageQuery = Repository
+                .AsQueryable<PageProperties>()
+                .Where(p => p.Id == request && !p.IsDeleted)
+                .Select(p => new ClonePageViewModel
+                        {
+                            PageId = p.Id,
+                            Version = p.Version
+                        })
+                .ToFuture();
 
-            return UnitOfWork.Session.QueryOver(() => alias)
-                    .Where(p => p.Id == request && !p.IsDeleted)
-                    .SelectList(select => select
-                        .Select(() => alias.Id).WithAlias(() => modelAlias.PageId)
-                        .Select(() => alias.Version).WithAlias(() => modelAlias.Version))
-                    .TransformUsing(Transformers.AliasToBean<ClonePageViewModel>())
-                    .First<ClonePageViewModel, Root.Models.Page>();
+            ClonePageViewModel model;
+            IList<UserAccessViewModel> accessRules;
+            if (cmsConfiguration.Security.AccessControlEnabled)
+            {
+                accessRules = Repository
+                    .AsQueryable<Root.Models.Page>()
+                    .Where(x => x.Id == request && !x.IsDeleted)
+                    .SelectMany(x => x.AccessRules)
+                    .OrderBy(x => x.Identity)
+                    .ToFuture()
+                    .ToList()
+                    .Select(x => new UserAccessViewModel(x))
+                    .ToList();
+            }
+            else
+            {
+                accessRules = null;
+            }
+
+            model = pageQuery.FirstOne();
+            model.AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled;
+            model.UserAccessList = accessRules;
+
+            return model;
         }
     }
 }
