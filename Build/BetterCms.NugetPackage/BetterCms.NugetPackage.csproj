@@ -60,6 +60,9 @@
     <None Include="Packages\BetterCMS.Module.Users\BetterCms.Module.Users.nuspec.template">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Packages\BetterCMS.Module.Users\cms.config.transform">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Packages\BetterCMS\BetterCMS.nuspec.template">
       <SubType>Designer</SubType>
     </None>
@@ -195,7 +198,6 @@ mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Root"
 
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Root\content"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Root\content\net40"
-copy "$(SolutionDir)license.txt" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Root\content\net40\betterCms.license.txt" /Y
 copy "$(ProjectDir)Packages\BetterCms.Module.Root\web.config.transform" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Root\content\net40\web.config.transform" /Y
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Root\content\net40\Config"
 copy "$(ProjectDir)Packages\BetterCms.Module.Root\cms.config" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Root\content\net40\Config\cms.config" /Y
@@ -214,10 +216,6 @@ copy "$(ProjectDir)Packages\BetterCms.Module.Root\install.ps1" "$(ProjectDir)$(O
 rem --- Creating BetterCms.Module.MediaManager package ----------------------------------------------------------------
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.MediaManager"
 
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.MediaManager\content"
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.MediaManager\content\net40"
-copy "$(SolutionDir)license.txt" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.MediaManager\content\net40\betterCms.license.txt" /Y
-
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.MediaManager\lib"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.MediaManager\lib\net40"
 xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.MediaManager.dll" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.MediaManager\lib\net40\" /Y /Q
@@ -228,10 +226,6 @@ xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.MediaManager.dll" "$(ProjectDir)$(
 
 rem --- Creating BetterCms.Module.Pages package -----------------------------------------------------------------------
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Pages"
-
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Pages\content"
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Pages\content\net40"
-copy "$(SolutionDir)license.txt" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Pages\content\net40\betterCms.license.txt" /Y
 
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Pages\lib"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Pages\lib\net40"
@@ -244,10 +238,6 @@ xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.Pages.dll" "$(ProjectDir)$(OutDir)
 rem --- Creating BetterCms.Module.Blog package ------------------------------------------------------------------------
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Blog"
 
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Blog\content"
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Blog\content\net40"
-copy "$(SolutionDir)license.txt" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Blog\content\net40\betterCms.license.txt" /Y
-
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Blog\lib"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Blog\lib\net40"
 xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.Blog.dll" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Blog\lib\net40\" /Y /Q
@@ -258,10 +248,6 @@ xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.Blog.dll" "$(ProjectDir)$(OutDir)p
 
 rem --- Creating BetterCms.Module.Installation package ----------------------------------------------------------------
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Installation"
-
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Installation\content"
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Installation\content\net40"
-copy "$(SolutionDir)license.txt" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Installation\content\net40\betterCms.license.txt" /Y
 
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Installation\lib"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Installation\lib\net40"
@@ -274,10 +260,6 @@ xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.Installation.dll" "$(ProjectDir)$(
 rem --- Creating BetterCms.Module.AppFabricCache package --------------------------------------------------------------
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.AppFabricCache"
 
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.AppFabricCache\content"
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.AppFabricCache\content\net40"
-copy "$(SolutionDir)license.txt" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.AppFabricCache\content\net40\betterCms.license.txt" /Y
-
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.AppFabricCache\lib"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.AppFabricCache\lib\net40"
 xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.AppFabricCache.dll" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.AppFabricCache\lib\net40\" /Y /Q
@@ -288,10 +270,6 @@ xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.AppFabricCache.dll" "$(ProjectDir)
 
 rem --- Creating BetterCms.Module.AmazonS3Storage package -------------------------------------------------------------
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.AmazonS3Storage"
-
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.AmazonS3Storage\content"
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.AmazonS3Storage\content\net40"
-copy "$(SolutionDir)license.txt" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.AmazonS3Storage\content\net40\betterCms.license.txt" /Y
 
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.AmazonS3Storage\lib"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.AmazonS3Storage\lib\net40"
@@ -304,10 +282,6 @@ xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.AmazonS3Storage.dll" "$(ProjectDir
 rem --- Creating BetterCms.Module.WindowsAzureStorage package ---------------------------------------------------------
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.WindowsAzureStorage"
 
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.WindowsAzureStorage\content"
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.WindowsAzureStorage\content\net40"
-copy "$(SolutionDir)license.txt" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.WindowsAzureStorage\content\net40\betterCms.license.txt" /Y
-
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.WindowsAzureStorage\lib"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.WindowsAzureStorage\lib\net40"
 xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.WindowsAzureStorage.dll" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.WindowsAzureStorage\lib\net40\" /Y /Q
@@ -318,10 +292,6 @@ xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.WindowsAzureStorage.dll" "$(Projec
 
 rem --- Creating BetterCms.Module.Newsletter package ------------------------------------------------------------------
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Newsletter"
-
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Newsletter\content"
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Newsletter\content\net40"
-copy "$(SolutionDir)license.txt" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Newsletter\content\net40\betterCms.license.txt" /Y
 
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Newsletter\lib"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Newsletter\lib\net40"
@@ -334,10 +304,6 @@ xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.Newsletter.dll" "$(ProjectDir)$(Ou
 rem --- Creating BetterCms.Module.Api.Abstractions package ------------------------------------------------------------------
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api.Abstractions"
 
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api.Abstractions\content"
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api.Abstractions\content\net40"
-copy "$(SolutionDir)license.txt" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api.Abstractions\content\net40\betterCms.license.txt" /Y
-
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api.Abstractions\lib"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api.Abstractions\lib\net40"
 xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.Api.Abstractions.dll" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api.Abstractions\lib\net40\" /Y /Q
@@ -348,10 +314,6 @@ xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.Api.Abstractions.dll" "$(ProjectDi
 
 rem --- Creating BetterCms.Module.Api package ------------------------------------------------------------------
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api"
-
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api\content"
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api\content\net40"
-copy "$(SolutionDir)license.txt" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api\content\net40\betterCms.license.txt" /Y
 
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api\lib"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api\lib\net40"
@@ -366,7 +328,6 @@ mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api.Web"
 
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api.Web\content"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api.Web\content\net40"
-copy "$(SolutionDir)license.txt" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api.Web\content\net40\betterCms.license.txt" /Y
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api.Web\content\net40\Config"
 copy "$(ProjectDir)Packages\BetterCms.Module.Api.Web\web.config.transform" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api.Web\content\net40\web.config.transform" /Y
 
@@ -382,7 +343,8 @@ mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users"
 
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users\content"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users\content\net40"
-copy "$(SolutionDir)license.txt" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users\content\net40\betterCms.license.txt" /Y
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users\content\net40\Config"
+copy "$(ProjectDir)Packages\BetterCms.Module.Users\cms.config.transform" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users\content\net40\Config\cms.config.transform" /Y
 
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users\lib"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users\lib\net40"
@@ -394,10 +356,6 @@ xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.Users.dll" "$(ProjectDir)$(OutDir)
 rem --- Creating BetterCms.Module.Users.Api package ------------------------------------------------------------------
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users.Api"
 
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users.Api\content"
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users.Api\content\net40"
-copy "$(SolutionDir)license.txt" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users.Api\content\net40\betterCms.license.txt" /Y
-
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users.Api\lib"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users.Api\lib\net40"
 xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.Users.Api.dll" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Users.Api\lib\net40\" /Y /Q
@@ -407,10 +365,6 @@ xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.Users.Api.dll" "$(ProjectDir)$(Out
 
 rem --- Creating BetterCMS package ------------------------------------------------------------------------------------
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCMS"
-
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCMS\content"
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCMS\content\net40"
-copy "$(SolutionDir)license.txt" "$(ProjectDir)$(OutDir)packages\BetterCMS\content\net40\betterCms.license.txt" /Y
 
 "$(ProjectDir)$(OutDir)BetterCms.NugetPackage.exe" "$(ProjectDir)Packages\BetterCMS\BetterCMS.nuspec.template" "$(ProjectDir)$(OutDir)packages\BetterCMS\BetterCMS.nuspec"
 "$(SolutionDir).nuget\nuget.exe" pack "$(ProjectDir)$(OutDir)packages\BetterCMS\BetterCMS.nuspec" -OutputDirectory "$(ProjectDir)$(OutDir)\" -NoPackageAnalysis
