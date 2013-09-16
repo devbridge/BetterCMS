@@ -5,6 +5,7 @@ using System.Web.Security;
 
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Users.Commands.Authentication;
+using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.Services;
 using BetterCms.Module.Users.ViewModels.Authentication;
 
@@ -37,7 +38,7 @@ namespace BetterCms.Module.Users.Controllers
         {
             if (!FormsAuthentication.IsEnabled)
             {
-                ModelState.AddModelError(null, "Forms authentication is disabled in web.config.");
+                Messages.AddError(UsersGlobalization.Login_FormsAuthentication_DisabledMessage);
             }
 
             if (User.Identity.IsAuthenticated)
@@ -47,7 +48,8 @@ namespace BetterCms.Module.Users.Controllers
 
             return View(new LoginViewModel
                             {
-                                ReturnUrl = returnUrl
+                                ReturnUrl = returnUrl,
+                                IsFormsAuthenticationEnabled = FormsAuthentication.IsEnabled
                             });
         }
 
@@ -56,17 +58,19 @@ namespace BetterCms.Module.Users.Controllers
         {
             if (!FormsAuthentication.IsEnabled)
             {
-                ModelState.AddModelError(null, "Forms authentication is disabled in web.config.");
+                Messages.AddError(string.Empty, UsersGlobalization.Login_FormsAuthentication_DisabledMessage);
             }
-
-            if (ModelState.IsValid)
+            else
             {
-                HttpCookie authCookie = GetCommand<LoginCommand>().ExecuteCommand(model);
-                if (authCookie != null)
+                if (ModelState.IsValid)
                 {
-                    Response.Cookies.Add(authCookie);
+                    HttpCookie authCookie = GetCommand<LoginCommand>().ExecuteCommand(model);
+                    if (authCookie != null)
+                    {
+                        Response.Cookies.Add(authCookie);
 
-                    return Redirect(model.ReturnUrl ?? (FormsAuthentication.DefaultUrl ?? "/"));
+                        return Redirect(model.ReturnUrl ?? (FormsAuthentication.DefaultUrl ?? "/"));
+                    }
                 }
             }
 

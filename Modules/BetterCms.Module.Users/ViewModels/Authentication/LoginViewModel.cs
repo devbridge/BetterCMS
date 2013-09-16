@@ -16,6 +16,8 @@ namespace BetterCms.Module.Users.ViewModels.Authentication
 
         public string ReturnUrl { get; set; }
 
+        public bool IsFormsAuthenticationEnabled { get; set; }
+
         public override string ToString()
         {
             return string.Format("UserName: {0}", UserName);

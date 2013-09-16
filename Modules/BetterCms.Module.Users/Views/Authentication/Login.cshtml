@@ -34,7 +34,15 @@
             @Html.LabelFor(m => m.RememberMe)
         </p>
     </div>
-    @Html.SubmitButton("submit", "Login", new { @class = "bcms-btn-small" })
+
+    Dictionary<string, object> submitProperties = new Dictionary<string, object>();
+    submitProperties.Add("class", "bcms-btn-small");
+    if (!Model.IsFormsAuthenticationEnabled)
+    {
+        submitProperties.Add("disabled", "disabled");
+    }
+    
+    Html.SubmitButton("submit", "Login", submitProperties);    
     @Html.HiddenFor(m => m.ReturnUrl)
 }
 <script type="text/javascript">

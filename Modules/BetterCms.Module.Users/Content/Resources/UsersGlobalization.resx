@@ -333,4 +333,7 @@
   <data name="Login_UserNameOrPassword_Invalid" xml:space="preserve">
     <value>User name or password is invalid.</value>
   </data>
+  <data name="Login_FormsAuthentication_DisabledMessage" xml:space="preserve">
+    <value>Forms authentication is disabled in the web.config system.web configuration section.</value>
+  </data>
 </root>
