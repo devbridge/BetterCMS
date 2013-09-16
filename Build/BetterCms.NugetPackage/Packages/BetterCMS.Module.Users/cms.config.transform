@@ -1,4 +1,4 @@
 ﻿<?xml version="1.0"?>
-<cms xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
-  <users createDefaultUserOnStart="true" enableCmsFormsAuthentication="true" xdt:Transform="InsertIfMissing" />
+<cms>
+  <users createDefaultUserOnStart="true" enableCmsFormsAuthentication="true" />
 </cms>
