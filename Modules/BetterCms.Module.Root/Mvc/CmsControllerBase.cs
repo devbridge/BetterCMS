@@ -259,9 +259,12 @@ namespace BetterCms.Module.Root.Mvc
         [NonAction]
         protected virtual ActionResult SignOutUserIfAuthenticated()
         {
-            if (User.Identity.IsAuthenticated && FormsAuthentication.IsEnabled)
+            if (User.Identity.IsAuthenticated)
             {
-                FormsAuthentication.SignOut();
+                if (FormsAuthentication.IsEnabled)
+                {
+                    FormsAuthentication.SignOut();
+                }
 
                 HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
                 HttpCookie roleCokie = Roles.Enabled ? Request.Cookies[Roles.CookieName] : null;
@@ -282,7 +285,7 @@ namespace BetterCms.Module.Root.Mvc
                             {
                                 Expires = DateTime.Now.AddDays(-10)
                             });
-                }                
+                }
             }
 
             return Redirect(FormsAuthentication.LoginUrl);

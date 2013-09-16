@@ -331,6 +331,15 @@ namespace BetterCms.Module.Users.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Forms authentication is disabled in the web.config system.web configuration section..
+        /// </summary>
+        public static string Login_FormsAuthentication_DisabledMessage {
+            get {
+                return ResourceManager.GetString("Login_FormsAuthentication_DisabledMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
         public static string Login_Password {
