@@ -74,6 +74,7 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
         /// <value>
         /// The custom CSS.
         /// </value>
+        [AllowHtml]
         public string CustomCSS { get; set; }
 
         public bool EnableCustomJS { get; set; }
