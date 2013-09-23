@@ -42,6 +42,11 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
     * Exposes reference to events:
     */
     app.events = events;
+    
+    /**
+    * Exposes reference to globalization:
+    */
+    app.globalization = globalization;
 
     /**
     * Current page id.
