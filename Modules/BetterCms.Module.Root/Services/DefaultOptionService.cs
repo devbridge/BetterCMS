@@ -10,8 +10,11 @@ using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Models;
 
 using BetterCms.Module.Root.Content.Resources;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.ViewModels.Option;
+
+using NHibernate.Proxy.DynamicProxy;
 
 namespace BetterCms.Module.Root.Services
 {
@@ -57,6 +60,11 @@ namespace BetterCms.Module.Root.Services
                     var optionViewModel = new OptionValueEditViewModel
                                               {
                                                   Type = optionValue.Type,
+                                                  CustomOption = optionValue.CustomOption != null ? new CustomOptionViewModel
+                                                        {
+                                                            Identifier = optionValue.CustomOption.Identifier,
+                                                            Title = optionValue.CustomOption.Title
+                                                        } : null,
                                                   OptionKey = optionValue.Key.Trim(),
                                                   OptionValue = optionValue.Value,
                                                   OptionDefaultValue = option != null ? option.Value : null,
@@ -82,6 +90,11 @@ namespace BetterCms.Module.Root.Services
                             new OptionValueEditViewModel
                                 {
                                     Type = option.Type,
+                                    CustomOption = option.CustomOption != null ? new CustomOptionViewModel
+                                            {
+                                                Identifier = option.CustomOption.Identifier,
+                                                Title = option.CustomOption.Title
+                                            } : null,
                                     OptionKey = option.Key.Trim(),
                                     OptionValue = option.Value,
                                     OptionDefaultValue = option.Value,
@@ -200,6 +213,8 @@ namespace BetterCms.Module.Root.Services
             where TEntity : IEntity
             where TOption : IDeletableOption<TEntity>, new()
         {
+            var customOptions = LoadAndValidateCustomOptions(options);
+
             // Delete old ones
             if (optionContainer.Options != null)
             {
@@ -242,6 +257,15 @@ namespace BetterCms.Module.Root.Services
                     option.Value = requestLayoutOption.Value;
                     option.Type = requestLayoutOption.Type;
                     option.Entity = (TEntity)optionContainer;
+
+                    if (requestLayoutOption.Type == OptionType.Custom)
+                    {
+                        option.CustomOption = customOptions.First(co => co.Identifier == requestLayoutOption.CustomOption.Identifier);
+                    }
+                    else
+                    {
+                        option.CustomOption = null;
+                    }
 
                     ValidateOptionValue(option);
                 }
@@ -322,6 +346,7 @@ namespace BetterCms.Module.Root.Services
             switch (type)
             {
                 case OptionType.Text:
+                case OptionType.Custom:
                     return value;
 
                 case OptionType.Integer:
@@ -363,6 +388,72 @@ namespace BetterCms.Module.Root.Services
                 default:
                     throw new NotSupportedException(string.Format("Not supported option type: {0}", type));
             }
+        }
+
+        /// <summary>
+        /// Loads and validate custom options.
+        /// </summary>
+        /// <returns>The list of custom option entities</returns>
+        private IList<CustomOption> LoadAndValidateCustomOptions(IEnumerable<IOption> options)
+        {
+            // Check if options are valid
+            var invalidOption = options.FirstOrDefault(o => o.Type == OptionType.Custom && string.IsNullOrWhiteSpace(o.CustomOption.Identifier));
+            if (invalidOption != null)
+            {
+                throw new InvalidOperationException(string.Format("Custom option type provider must be set for custom type! Option Key: {0}", invalidOption.Key));
+            }
+
+            // Get already loaded custom options or option types
+            List<CustomOption> customOptions = options
+                .Where(o => o.Type == OptionType.Custom && o.CustomOption is CustomOption && !(o.CustomOption is IProxy))
+                .Select(o => (CustomOption)o.CustomOption)
+                .ToList();
+
+            // Load missing custom options
+            var customOptionsIdentifiers = options
+                .Where(o => o.Type == OptionType.Custom 
+                    && !(o.CustomOption is CustomOption) 
+                    && customOptions.All(co => co.Identifier != o.CustomOption.Identifier))
+                .Select(o => o.CustomOption.Identifier)
+                .Distinct().ToArray();
+
+            if (customOptionsIdentifiers.Length == 0)
+            {
+                return customOptions;
+            }
+
+            customOptions.AddRange(GetCustomOptionsById(customOptionsIdentifiers));
+
+            return customOptions;
+        }
+
+        /// <summary>
+        /// Loads the custom option entities by specified ids.
+        /// </summary>
+        /// <param name="ids">The ids.</param>
+        /// <returns>
+        /// List of custom option entities
+        /// </returns>
+        public List<CustomOption> GetCustomOptionsById(string[] ids)
+        {
+            if (ids == null || ids.Length == 0)
+            {
+                return new List<CustomOption>();
+            }
+
+            var customOptions = repository
+                .AsQueryable<CustomOption>()
+                .Where(co => ids.Contains(co.Identifier))
+                .ToList();
+
+            // Validate if there are any missing custom options
+            var notExisting = ids.FirstOrDefault(i => customOptions.All(co => co.Identifier != i));
+            if (notExisting != null)
+            {
+                throw new InvalidOperationException(string.Format("Custom option provider not found for custom type {0}!", notExisting));
+            }
+
+            return customOptions;
         }
     }
 }

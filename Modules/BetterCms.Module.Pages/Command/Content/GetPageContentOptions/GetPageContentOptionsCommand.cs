@@ -47,8 +47,8 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageContentOptions
             {
                 var contentQuery = Repository.AsQueryable<PageContent>()
                     .Where(f => f.Id == pageContentId && !f.IsDeleted && !f.Content.IsDeleted)
-                    .Fetch(f => f.Content).ThenFetchMany(f => f.ContentOptions)
-                    .FetchMany(f => f.Options)
+                    .Fetch(f => f.Content).ThenFetchMany(f => f.ContentOptions).ThenFetch(f => f.CustomOption)
+                    .FetchMany(f => f.Options).ThenFetch(f => f.CustomOption)
                     .AsQueryable();
 
                 if (CmsConfiguration.Security.AccessControlEnabled)

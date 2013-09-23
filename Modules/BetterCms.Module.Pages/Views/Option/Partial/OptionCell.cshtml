@@ -4,7 +4,7 @@
 @model EditableGridColumn
 
 @* Text type *@
-<!-- ko if: !useDefaultValue() && type() != 5 && type() != 4  -->
+<!-- ko if: !useDefaultValue() && type() != 5 && type() != 4 && type() != 99 -->
     @Html.Partial(RootModuleConstants.EditableGridCellTemplate)
 <!-- /ko -->
 
@@ -46,6 +46,24 @@
                 <!-- /ko -->
             </div>
         </div>
+        <!-- /ko -->
+        <!-- ko ifnot: isActive() -->
+    }
+    <a class="bcms-tables-link" data-bind="text: @(Model.ValueBind)()"></a>    
+    @if (Model.CanBeEdited)
+    {
+        <!-- /ko -->
+    }
+</td>
+<!-- /ko -->
+
+@* Custom *@
+<!-- ko if: !useDefaultValue() && type() == 99  -->
+<td @Html.Raw(Model.Attributes)>
+    @if (Model.CanBeEdited)
+    {
+        <!-- ko if: isActive() -->
+        <a class="bcms-tables-link" data-bind="text: @(Model.ValueBind)() ? @(Model.ValueBind)() : '...', click: onCustomOptionExecute"></a>
         <!-- /ko -->
         <!-- ko ifnot: isActive() -->
     }

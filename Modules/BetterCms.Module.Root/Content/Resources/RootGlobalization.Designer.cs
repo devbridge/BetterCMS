@@ -772,6 +772,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Custom.
+        /// </summary>
+        public static string OptionTypes_Custom_Title {
+            get {
+                return ResourceManager.GetString("OptionTypes_Custom_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date.
         /// </summary>
         public static string OptionTypes_DateTime_Title {

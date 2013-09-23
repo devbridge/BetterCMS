@@ -348,6 +348,9 @@
   <data name="OptionTypes_Boolean_Title" xml:space="preserve">
     <value>Boolean</value>
   </data>
+  <data name="OptionTypes_Custom_Title" xml:space="preserve">
+    <value>Custom</value>
+  </data>
   <data name="OptionTypes_DateTime_Title" xml:space="preserve">
     <value>Date</value>
   </data>

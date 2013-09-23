@@ -5,12 +5,21 @@ using System.ComponentModel.DataAnnotations;
 using BetterCms.Core.Models;
 
 using BetterCms.Module.Root.Content.Resources;
+using BetterCms.Module.Root.Helpers;
 using BetterCms.Module.Root.ViewModels.Option;
 
 namespace BetterCms.Module.Pages.ViewModels.Content
 {
     public class ContentViewModel
-    {        
+    {      
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContentViewModel" /> class.
+        /// </summary>
+        public ContentViewModel()
+        {
+            CustomOptions = CustomOptionsProvider.CustomOptions;
+        }
+
         /// <summary>
         /// Gets or sets the widget id.
         /// </summary>
@@ -71,6 +80,20 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// </value>
         public IList<OptionViewModel> Options { get; set; }
 
+        /// <summary>
+        /// Gets or sets the custom options.
+        /// </summary>
+        /// <value>
+        /// The custom options.
+        /// </value>
+        public List<CustomOptionViewModel> CustomOptions { get; set; }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
         public override string ToString()
         {
             return string.Format("Id: {0}, Version: {1}, Name: {2} Status: {3}", Id, Version, Name, Status);

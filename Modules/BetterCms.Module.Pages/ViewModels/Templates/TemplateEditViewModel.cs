@@ -8,6 +8,7 @@ using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Mvc.Attributes;
 
 using BetterCms.Module.Root.Content.Resources;
+using BetterCms.Module.Root.Helpers;
 using BetterCms.Module.Root.Mvc.Grids;
 using BetterCms.Module.Root.ViewModels.Option;
 
@@ -15,6 +16,14 @@ namespace BetterCms.Module.Pages.ViewModels.Templates
 {
     public class TemplateEditViewModel :  IEditableGridItem
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TemplateEditViewModel" /> class.
+        /// </summary>
+        public TemplateEditViewModel()
+        {
+            CustomOptions = CustomOptionsProvider.CustomOptions;
+        }
+
         /// <summary>
         /// Gets or sets the id.
         /// </summary>
@@ -76,6 +85,14 @@ namespace BetterCms.Module.Pages.ViewModels.Templates
         /// The list of template options.
         /// </value>
         public IList<OptionViewModel> Options { get; set; }
+
+        /// <summary>
+        /// Gets or sets the custom options.
+        /// </summary>
+        /// <value>
+        /// The custom options.
+        /// </value>
+        public List<CustomOptionViewModel> CustomOptions { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

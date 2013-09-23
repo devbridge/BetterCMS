@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Models;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Option;
 
 namespace BetterCms.Module.Root.Services
@@ -63,5 +64,12 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <param name="options">The options.</param>
         void ValidateOptionKeysUniqueness(IEnumerable<OptionViewModelBase> options);
+
+        /// <summary>
+        /// Loads the custom option entities by specified ids.
+        /// </summary>
+        /// <param name="ids">The ids.</param>
+        /// <returns>List of custom option entities</returns>
+        List<CustomOption> GetCustomOptionsById(string[] ids);
     }
 }

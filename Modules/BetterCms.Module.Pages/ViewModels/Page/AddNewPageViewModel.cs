@@ -6,7 +6,7 @@ using BetterCms.Core.Models;
 
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Mvc.Attributes;
-
+using BetterCms.Module.Root.Helpers;
 using BetterCms.Module.Root.ViewModels.Option;
 using BetterCms.Module.Root.ViewModels.Security;
 
@@ -71,6 +71,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public IList<OptionValueEditViewModel> OptionValues { get; set; }
 
         /// <summary>
+        /// Gets or sets the custom options.
+        /// </summary>
+        /// <value>
+        /// The custom options.
+        /// </value>
+        public List<CustomOptionViewModel> CustomOptions { get; set; }
+
+        /// <summary>
         /// Gets or sets the user access list.
         /// </summary>
         /// <value>
@@ -92,6 +100,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public AddNewPageViewModel()
         {
             UserAccessList = new List<UserAccessViewModel>();
+            CustomOptions = CustomOptionsProvider.CustomOptions;
         }
 
         /// <summary>

@@ -132,8 +132,9 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult CreateServerControlWidget()
         {
             var model = GetCommand<GetServerControlWidgetForEditCommand>().ExecuteCommand(null);
+            var view = RenderView("EditServerControlWidget", model);
 
-            return PartialView("EditServerControlWidget", model);
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

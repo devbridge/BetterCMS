@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Module.Root.Helpers;
 using BetterCms.Module.Root.ViewModels.Option;
 using BetterCms.Module.Root.ViewModels.Security;
 
@@ -11,7 +12,15 @@ namespace BetterCms.Module.Pages.ViewModels.Content
     /// Edit page content options view model.
     /// </summary>
     public class PageContentOptionsViewModel : IAccessSecuredViewModel
-    {      
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PageContentOptionsViewModel" /> class.
+        /// </summary>
+        public PageContentOptionsViewModel()
+        {
+            CustomOptions = CustomOptionsProvider.CustomOptions;
+        }
+
         /// <summary>
         /// Gets or sets the list of page content options.
         /// </summary>
@@ -19,6 +28,14 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// The list of page content options.
         /// </value>
         public IList<OptionValueEditViewModel> OptionValues { get; set; }
+
+        /// <summary>
+        /// Gets or sets the custom options.
+        /// </summary>
+        /// <value>
+        /// The custom options.
+        /// </value>
+        public List<CustomOptionViewModel> CustomOptions { get; set; }
 
         /// <summary>
         /// Gets or sets the page content id.

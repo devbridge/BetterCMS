@@ -18,11 +18,25 @@ namespace BetterCms.Module.Root.Models
 
         public virtual OptionType Type { get; set; }
 
+        public virtual CustomOption CustomOption { get; set; }
+
         IAccessSecuredObject IAccessSecuredObjectDependency.SecuredObject
         {
             get
             {
                 return Page;
+            }
+        }
+
+        ICustomOption IOption.CustomOption
+        {
+            get
+            {
+                return CustomOption;
+            }
+            set
+            {
+                CustomOption = (CustomOption)value;
             }
         }
     }

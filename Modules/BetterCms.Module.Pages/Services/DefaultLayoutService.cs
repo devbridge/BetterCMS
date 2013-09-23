@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Option;
@@ -50,14 +51,15 @@ namespace BetterCms.Module.Pages.Services
         {
             var options = repository
                 .AsQueryable<LayoutOption>(lo => lo.Layout.Id == id)
-                .OrderBy(o => o.Key)
                 .Select(o => new OptionViewModel
                     {
                         OptionKey = o.Key,
                         Type = o.Type,
                         OptionDefaultValue = o.DefaultValue,
-                        CanDeleteOption = o.IsDeletable
+                        CanDeleteOption = o.IsDeletable,
+                        CustomOption = new CustomOptionViewModel { Identifier = o.CustomOption.Identifier, Title = o.CustomOption.Title }
                     })
+                .OrderBy(o => o.OptionKey)
                 .ToList();
 
             return options;

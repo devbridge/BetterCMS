@@ -21,11 +21,10 @@
                         HiddenFieldName = "Options[{0}].OptionKey"
                     },
 
-                new EditableGridDropDownColumn(PagesGlobalization.Options_OptionTypeColumn, null, "type")
+                new EditableGridDropDownColumn(PagesGlobalization.Options_OptionTypeColumn, null, "calcType")
                     {
                         OptionsBind = "optionTypes",
-                        ValueTextBind = "typeName",
-                        HiddenFieldName = "Options[{0}].Type"
+                        ValueTextBind = "typeName"
                     },
                                         
                 new EditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, null, "defaultValue")
@@ -34,6 +33,9 @@
                         HiddenFieldName = "Options[{0}].OptionDefaultValue",
                         CellView = RootModuleConstants.EditableOptionValueCellTemplate
                     },
+                    
+                new EditableGridHiddenField("type", "Options[{0}].Type"),
+                new EditableGridHiddenField("customType", "Options[{0}].CustomType")
             }
     };
 }
