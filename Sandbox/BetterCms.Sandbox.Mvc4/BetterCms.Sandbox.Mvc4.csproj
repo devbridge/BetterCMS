@@ -249,7 +249,7 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\bcms-pages\Views\" />
+    <Folder Include="Areas\bcms-images-gallery\Views\" />
     <Folder Include="Areas\bcms-root\Views\Shared\" />
     <Folder Include="Areas\bcms-users\Views\" />
     <Folder Include="file\bcms-images-gallery\scripts\" />

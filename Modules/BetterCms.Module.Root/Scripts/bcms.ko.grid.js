@@ -226,6 +226,20 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 
                 return true;
             };
+            
+            self.getSelectedItem = function () {
+                var i, l, listItem;
+
+                for (i = 0, l = self.items().length; i < l; i++) {
+                    listItem = self.items()[i];
+
+                    if (listItem.isSelectedForInsert()) {
+                        return listItem;
+                    }
+                }
+
+                return null;
+            };
 
             // Set items
             if (items && $.isArray(items)) {
@@ -323,6 +337,7 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             self.savePressed = false;
             self.deletingIsDisabled = ko.observable(false);
             self.editingIsDisabled = ko.observable(false);
+            self.isSelectedForInsert = ko.observable(false);
 
             // Indicates, if item is still in add new phase
             self.isNew = ko.observable(item.IsNew || false);
@@ -422,6 +437,20 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             self.initInput = function (element, field) {
                 if (element && field && $.isFunction(field)) {
                     field.domElement = element;
+                }
+            };
+
+            self.selectForInsert = function () {
+                var i, l, listItem;
+
+                for (i = 0, l = self.parent.items().length; i < l; i++) {
+                    listItem = self.parent.items()[i];
+                    
+                    if (listItem == self) {
+                        self.isSelectedForInsert(true);
+                    } else if (listItem.isSelectedForInsert()) {
+                        listItem.isSelectedForInsert(false);
+                    }
                 }
             };
         };

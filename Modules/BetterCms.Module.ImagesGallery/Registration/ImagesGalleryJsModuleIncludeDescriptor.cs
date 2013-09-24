@@ -23,12 +23,16 @@ namespace BetterCms.Module.ImagesGallery.Registration
                     new JavaScriptModuleLinkTo<AlbumController>(this, "loadSiteSettingsAlbumsUrl", c => c.ListTemplate()),
                     new JavaScriptModuleLinkTo<AlbumController>(this, "loadAlbumsUrl", c => c.AlbumsList(null)),
                     new JavaScriptModuleLinkTo<AlbumController>(this, "saveAlbumUrl", c => c.SaveAlbum(null)),
+                    new JavaScriptModuleLinkTo<AlbumController>(this, "selectAlbumUrl", c => c.SelectAlbum()),
                     new JavaScriptModuleLinkTo<AlbumController>(this, "deleteAlbumUrl", c => c.DeleteAlbum(null, null))
                 };
 
             Globalization = new IActionProjection[]
                 {
-                    new JavaScriptModuleGlobalization(this, "deleteAlbumDialogTitle", () => ImagesGalleryGlobalization.DeleteAlbum_Confirmation_Message)
+                    new JavaScriptModuleGlobalization(this, "deleteAlbumDialogTitle", () => ImagesGalleryGlobalization.DeleteAlbum_Confirmation_Message),
+                    new JavaScriptModuleGlobalization(this, "selectAlbumDialogTitle", () => ImagesGalleryGlobalization.SelectAlbum_Dialog_Title),
+                    new JavaScriptModuleGlobalization(this, "selectAlbumDialogAcceptButton", () => ImagesGalleryGlobalization.SelectAlbum_Dialog_AcceptButton),
+                    new JavaScriptModuleGlobalization(this, "albumNotSelectedMessage", () => ImagesGalleryGlobalization.SelectAlbum_NotSelected_Message),
                 };
         }
     }

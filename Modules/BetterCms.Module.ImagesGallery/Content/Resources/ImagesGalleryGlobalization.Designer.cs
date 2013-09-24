@@ -61,7 +61,7 @@ namespace BetterCms.Module.ImagesGallery.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Newsletter subscriber created successfully..
+        ///   Looks up a localized string similar to Album created successfully..
         /// </summary>
         public static string CreateAlbum_CreatedSuccessfully_Message {
             get {
@@ -70,7 +70,7 @@ namespace BetterCms.Module.ImagesGallery.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to delete newsletter subscriber {0}?.
+        ///   Looks up a localized string similar to Are you sure you want to delete album {0}?.
         /// </summary>
         public static string DeleteAlbum_Confirmation_Message {
             get {
@@ -79,7 +79,7 @@ namespace BetterCms.Module.ImagesGallery.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Newsletter subscriber deleted successfully..
+        ///   Looks up a localized string similar to Album deleted successfully..
         /// </summary>
         public static string DeleteAlbum_DeletedSuccessfully_Message {
             get {
@@ -102,6 +102,33 @@ namespace BetterCms.Module.ImagesGallery.Content.Resources {
         public static string EditAlbum_Title_RequiredMessage {
             get {
                 return ResourceManager.GetString("EditAlbum_Title_RequiredMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        public static string SelectAlbum_Dialog_AcceptButton {
+            get {
+                return ResourceManager.GetString("SelectAlbum_Dialog_AcceptButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select album.
+        /// </summary>
+        public static string SelectAlbum_Dialog_Title {
+            get {
+                return ResourceManager.GetString("SelectAlbum_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select an album..
+        /// </summary>
+        public static string SelectAlbum_NotSelected_Message {
+            get {
+                return ResourceManager.GetString("SelectAlbum_NotSelected_Message", resourceCulture);
             }
         }
         

@@ -64,7 +64,7 @@ namespace BetterCms.Module.ImagesGallery.Command.SaveAlbum
             }
             else
             {
-                Events.ImageGalleryEvents.Instance.OnAlbumCreated(album);
+                Events.ImageGalleryEvents.Instance.OnAlbumUpdated(album);
             }
 
             return new AlbumViewModel

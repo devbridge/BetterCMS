@@ -52,6 +52,22 @@ namespace BetterCms.Module.ImagesGallery.Controllers
         }
 
         /// <summary>
+        /// Lists the albums list for selecting one.
+        /// </summary>
+        /// <returns>Json result.</returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
+        public ActionResult SelectAlbum()
+        {
+            var view = RenderView("Select", null);
+            var request = new SearchableGridOptions();
+            request.SetDefaultPaging();
+
+            var albums = GetCommand<GetAlbumListCommand>().ExecuteCommand(request);
+
+            return ComboWireJson(albums != null, view, albums, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
         /// Saves the image gallery album.
         /// </summary>
         /// <param name="model">The model.</param>

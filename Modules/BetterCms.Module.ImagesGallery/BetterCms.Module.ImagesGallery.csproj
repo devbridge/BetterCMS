@@ -177,12 +177,14 @@
     <EmbeddedResource Include="Scripts\bcms.images.gallery.js" />
     <Content Include="web.config" />
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <Content Include="Views\Web.config" />
-  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Album\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Album\Select.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Web.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

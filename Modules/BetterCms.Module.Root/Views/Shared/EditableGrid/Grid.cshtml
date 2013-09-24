@@ -28,7 +28,7 @@
     </thead>
     <tbody>
         <!-- ko foreach: items -->
-        <tr data-bind="click: onOpen, css: {'bcms-table-row-active' : isActive()}, attr: {id: getRowId()}">
+        <tr data-bind="click: onOpen, css: {'bcms-table-row-active' : isActive() || isSelectedForInsert()}, attr: {id: getRowId()}">
             <!-- ko if: saving() || deleting() -->
             @if (Model.CanEditItems)
             {
