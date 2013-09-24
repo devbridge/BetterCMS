@@ -519,14 +519,6 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
         */
         options.init = function () {
             console.log('Initializing bcms.options module.');
-            
-            // TODO: remove after tests
-            options.registerCustomOption('images-gallery-album', function (editableValue) {
-                editableValue('AAALLLBBUUUMM');
-            });
-            options.registerCustomOption('users-user', function (editableValue) {
-                editableValue('UUUSSSEEERRR');
-            });
         };
 
         /**

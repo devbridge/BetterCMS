@@ -7,6 +7,7 @@ using BetterCms.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.Environment.Assemblies;
 using BetterCms.Core.Modules;
 using BetterCms.Module.Blog;
+using BetterCms.Module.ImagesGallery;
 using BetterCms.Module.MediaManager;
 using BetterCms.Module.Newsletter;
 using BetterCms.Module.Pages;
@@ -49,7 +50,8 @@ namespace BetterCms.Sandbox.DataMigration
                         new RootModuleDescriptor(configuration),
                         new UsersModuleDescriptor(configuration),
                         new NewsletterModuleDescriptor(configuration),
-                        new UsersModuleDescriptor(configuration)
+                        new UsersModuleDescriptor(configuration),
+                        new ImagesGalleryModuleDescriptor(configuration)
                     })
                     .ToList();
         }

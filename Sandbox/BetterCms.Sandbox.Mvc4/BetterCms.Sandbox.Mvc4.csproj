@@ -252,6 +252,7 @@
     <Folder Include="Areas\bcms-pages\Views\" />
     <Folder Include="Areas\bcms-root\Views\Shared\" />
     <Folder Include="Areas\bcms-users\Views\" />
+    <Folder Include="file\bcms-images-gallery\scripts\" />
     <Folder Include="file\bcms-media\Content\Css\Images\" />
     <Folder Include="file\bcms-media\scripts\" />
     <Folder Include="file\bcms-pages\scripts\" />
@@ -273,6 +274,10 @@
     <ProjectReference Include="..\..\Modules\BetterCMS.Module.Blog\BetterCms.Module.Blog.csproj">
       <Project>{a66a3046-ef60-4c51-ada7-eb055763419b}</Project>
       <Name>BetterCms.Module.Blog</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.ImagesGallery\BetterCms.Module.ImagesGallery.csproj">
+      <Project>{0bb64452-9b66-403e-94c6-e66c6071d12b}</Project>
+      <Name>BetterCms.Module.ImagesGallery</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Installation\BetterCms.Module.Installation.csproj">
       <Project>{17bf5ca2-23b6-4796-8ef1-cddf6d41a4f7}</Project>

@@ -168,6 +168,8 @@ namespace BetterCms.Module.Root.Services
 
             ValidateOptionKeysUniqueness(optionViewModels);
 
+            var customOptions = LoadAndValidateCustomOptions(optionViewModels);
+
             if (savedOptionValues != null)
             {
                 savedOptionValues.Where(sov => optionViewModels.All(ovm => ovm.OptionKey != sov.Key)).ToList().ForEach(del => repository.Delete(del));
@@ -192,6 +194,15 @@ namespace BetterCms.Module.Root.Services
                     savedOptionValue.Type = optionViewModel.Type;
 
                     ValidateOptionValue(savedOptionValue);
+
+                    if (optionViewModel.Type == OptionType.Custom)
+                    {
+                        savedOptionValue.CustomOption = customOptions.First(co => co.Identifier == optionViewModel.CustomOption.Identifier);
+                    }
+                    else
+                    {
+                        savedOptionValue.CustomOption = null;
+                    }
 
                     repository.Save(savedOptionValue);
                 }
@@ -380,6 +391,7 @@ namespace BetterCms.Module.Root.Services
                 case OptionType.DateTime:
                 case OptionType.Integer:
                 case OptionType.Float:
+                case OptionType.Custom:
                     return null;
 
                 case OptionType.Boolean:
