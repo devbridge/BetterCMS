@@ -132,6 +132,7 @@
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\ImageGalleryAlbumOptionProvider.cs" />
     <Compile Include="Registration\ImagesGalleryJsModuleIncludeDescriptor.cs" />
     <Compile Include="ViewModels\AlbumViewModel.cs" />
   </ItemGroup>

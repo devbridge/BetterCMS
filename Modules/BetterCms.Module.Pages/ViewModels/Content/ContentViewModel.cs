@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using BetterCms.Core.Models;
 
 using BetterCms.Module.Root.Content.Resources;
-using BetterCms.Module.Root.Helpers;
+using BetterCms.Module.Root.Providers;
 using BetterCms.Module.Root.ViewModels.Option;
 
 namespace BetterCms.Module.Pages.ViewModels.Content

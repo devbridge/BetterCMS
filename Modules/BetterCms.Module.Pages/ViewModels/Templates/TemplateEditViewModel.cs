@@ -8,8 +8,8 @@ using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Mvc.Attributes;
 
 using BetterCms.Module.Root.Content.Resources;
-using BetterCms.Module.Root.Helpers;
 using BetterCms.Module.Root.Mvc.Grids;
+using BetterCms.Module.Root.Providers;
 using BetterCms.Module.Root.ViewModels.Option;
 
 namespace BetterCms.Module.Pages.ViewModels.Templates

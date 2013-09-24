@@ -7,8 +7,10 @@ using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 
 using BetterCms.Module.ImagesGallery.Content.Resources;
+using BetterCms.Module.ImagesGallery.Providers;
 using BetterCms.Module.ImagesGallery.Registration;
 using BetterCms.Module.Root;
+using BetterCms.Module.Root.Providers;
 
 namespace BetterCms.Module.ImagesGallery
 {
@@ -39,6 +41,9 @@ namespace BetterCms.Module.ImagesGallery
             : base(cmsConfiguration)
         {
             imagesGalleryJsModuleIncludeDescriptor = new ImagesGalleryJsModuleIncludeDescriptor(this);
+
+            // Register images gallery custom option: album
+            CustomOptionsProvider.RegisterProvider(ImageGalleryAlbumOptionProvider.Identifier, new ImageGalleryAlbumOptionProvider());
         }
 
         /// <summary>

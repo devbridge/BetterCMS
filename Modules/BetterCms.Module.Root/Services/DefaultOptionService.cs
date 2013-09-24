@@ -12,6 +12,7 @@ using BetterCms.Core.Models;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.Extensions;
+using BetterCms.Module.Root.Providers;
 using BetterCms.Module.Root.ViewModels.Option;
 
 using NHibernate.Proxy.DynamicProxy;
@@ -295,7 +296,7 @@ namespace BetterCms.Module.Root.Services
             {
                 try
                 {
-                    ConvertValueToCorrectType(option.Value, option.Type);
+                    ConvertValueToCorrectType(option.Value, option.Type, option.CustomOption);
                 }
                 catch
                 {
@@ -333,7 +334,7 @@ namespace BetterCms.Module.Root.Services
 
             try
             {
-                return ConvertValueToCorrectType(value, type);
+                return ConvertValueToCorrectType(value, type, option.CustomOption);
             }
             catch
             {
@@ -346,18 +347,21 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <param name="value">The value.</param>
         /// <param name="type">The type.</param>
-        /// <returns>Value, converted to correct type</returns>
-        private object ConvertValueToCorrectType(string value, OptionType type)
+        /// <param name="customOption">The custom option.</param>
+        /// <returns>
+        /// Value, converted to correct type
+        /// </returns>
+        /// <exception cref="System.NotSupportedException"></exception>
+        private object ConvertValueToCorrectType(string value, OptionType type, ICustomOption customOption)
         {
             if (string.IsNullOrEmpty(value))
             {
-                return GetDefaultValueForType(type);
+                return GetDefaultValueForType(type, customOption);
             }
 
             switch (type)
             {
                 case OptionType.Text:
-                case OptionType.Custom:
                     return value;
 
                 case OptionType.Integer:
@@ -373,6 +377,16 @@ namespace BetterCms.Module.Root.Services
                 case OptionType.Boolean:
                     return Convert.ToBoolean(value);
 
+                case OptionType.Custom:
+                    ICustomOptionProvider provider = GetCustomOptionsProvider(customOption);
+
+                    if (provider != null)
+                    {
+                        return provider.ConvertValueToCorrectType(value);
+                    }
+
+                    return value;
+
                 default:
                     throw new NotSupportedException(string.Format("Not supported option type: {0}", type));
             }
@@ -382,8 +396,11 @@ namespace BetterCms.Module.Root.Services
         /// Gets the default value for specified option type.
         /// </summary>
         /// <param name="type">The type.</param>
-        /// <returns>Default types value</returns>
-        private object GetDefaultValueForType(OptionType type)
+        /// <param name="customOption">The custom option.</param>
+        /// <returns>
+        /// Default types value
+        /// </returns>
+        private object GetDefaultValueForType(OptionType type, ICustomOption customOption)
         {
             switch (type)
             {
@@ -391,11 +408,20 @@ namespace BetterCms.Module.Root.Services
                 case OptionType.DateTime:
                 case OptionType.Integer:
                 case OptionType.Float:
-                case OptionType.Custom:
                     return null;
 
                 case OptionType.Boolean:
                     return false;
+
+                case OptionType.Custom:
+                    ICustomOptionProvider provider = GetCustomOptionsProvider(customOption);
+
+                    if (provider != null)
+                    {
+                        return provider.GetDefaultValueForType();
+                    }
+
+                    return null;
 
                 default:
                     throw new NotSupportedException(string.Format("Not supported option type: {0}", type));
@@ -466,6 +492,20 @@ namespace BetterCms.Module.Root.Services
             }
 
             return customOptions;
+        }
+
+        /// <summary>
+        /// Gets the custom options provider.
+        /// </summary>
+        /// <returns>Custom options provider</returns>
+        private ICustomOptionProvider GetCustomOptionsProvider(ICustomOption customOption)
+        {
+            if (customOption == null)
+            {
+                return null;
+            }
+
+            return CustomOptionsProvider.GetProvider(customOption.Identifier);
         }
     }
 }

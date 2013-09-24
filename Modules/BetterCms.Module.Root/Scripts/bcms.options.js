@@ -211,7 +211,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
                 // NOTE: useDefaultValue should be registered before defaultValue and type
                 // because in othercase, when cancelling edit mode, ir sets wrong values
-                self.registerFields(self.useDefaultValue, self.key, self.value, self.defaultValue, self.type, self.customType);
+                self.registerFields(self.useDefaultValue, self.key, self.value, self.defaultValue, self.type, self.customType, self.calcType);
 
                 self.getOptionTypeName = function() {
                     var i,

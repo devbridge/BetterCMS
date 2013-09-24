@@ -8,8 +8,8 @@ using BetterCms.Module.MediaManager.ViewModels;
 
 using BetterCms.Module.Pages.Content.Resources;
 
-using BetterCms.Module.Root.Helpers;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Providers;
 using BetterCms.Module.Root.ViewModels.Option;
 using BetterCms.Module.Root.ViewModels.Security;
 
