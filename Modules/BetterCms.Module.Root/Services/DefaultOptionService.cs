@@ -227,8 +227,6 @@ namespace BetterCms.Module.Root.Services
             where TEntity : IEntity
             where TOption : IDeletableOption<TEntity>, new()
         {
-            var customOptions = LoadAndValidateCustomOptions(options);
-
             // Delete old ones
             if (optionContainer.Options != null)
             {
@@ -251,6 +249,8 @@ namespace BetterCms.Module.Root.Services
             // Add new / update existing
             if (options != null)
             {
+                var customOptions = LoadAndValidateCustomOptions(options);
+
                 var optionsList = new List<IDeletableOption<TEntity>>();
                 if (optionContainer.Options != null)
                 {

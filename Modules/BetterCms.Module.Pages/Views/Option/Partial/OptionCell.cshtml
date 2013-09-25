@@ -63,7 +63,7 @@
     @if (Model.CanBeEdited)
     {
         <!-- ko if: isActive() -->
-        <a class="bcms-tables-link" data-bind="text: @(Model.CustomValueBind)() || @(Model.ValueBind)() || '...', click: onCustomOptionExecute"></a>
+        <a class="bcms-tables-link" data-bind="text: @(Model.CustomValueBind)() || @(Model.ValueBind)() || '...', click: function(data, event) { onCustomOptionExecute(data, event, @(Model.CustomValueBind), @(Model.ValueBind)); }"></a>
         <!-- /ko -->
         <!-- ko ifnot: isActive() -->
     }

@@ -355,8 +355,10 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     if (self.isActive()) {
                         if (newValue) {
                             self.value(self.defaultValue());
+                            self.customOptionTitle(self.customOptionDefaultTitle());
                         } else {
                             self.value('');
+                            self.customOptionTitle('');
                         }
                     }
                 });
@@ -369,7 +371,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     }
                 });
 
-                self.onCustomOptionExecute = function (data, event) {
+                self.onCustomOptionExecute = function (data, event, titleObservable, valueObservable) {
                     var customType = self.customType();
 
                     self.onItemSelect(data, event);
@@ -380,7 +382,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     
                     for (ci = 0, cl = registeredCustomOptions.length; ci < cl; ci++) {
                         if (registeredCustomOptions[ci].identifier == customType) {
-                            registeredCustomOptions[ci].onExecute(self.editableValue, self.customOptionTitle);
+                            registeredCustomOptions[ci].onExecute(valueObservable, titleObservable);
                             
                             return;
                         }
