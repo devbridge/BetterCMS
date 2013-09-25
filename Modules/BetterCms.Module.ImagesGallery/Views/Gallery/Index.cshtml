@@ -1,6 +1,13 @@
 ﻿@model BetterCms.Module.ImagesGallery.ViewModels.GalleryViewModel
  
 <style>
+    .back-link {
+        cursor: pointer;
+        float: right;
+        font-size: 15px;
+        font-weight: 400;
+    }
+
     .album-holder {
         -moz-box-sizing: border-box;
         border: 1px solid #ECECEC;
@@ -143,69 +150,128 @@
         }
 </style>
 
-@{
-    // TODO: remove hardcode
-    var image = "http://bettercmstemplates.devbproto.com/Content/images/gallery-1.jpg";
-    var caption = "Image caption";
-    var imagesCount = 17;
-    var date = DateTime.Now;
-}
-
-<div class="image-gallery-albums-holder">
-          
-@{
-    var i = 0;
-    var l = Model.Albums.Count;
+<div class="image-gallery-widget">
+    <div class="image-gallery-albums-container">
+        @{
+            var i = 0;
+            var l = Model.Albums.Count;
     
-    foreach (var album in Model.Albums)
-    {
-        if (i % 3 == 0)
-        {
-            @:<section>
-        }
+            foreach (var album in Model.Albums)
+            {
+                if (i % 3 == 0)
+                {
+                    @:<section>
+                }
         
-        <div class="album-holder">
-            <img src="@image" alt="@caption" />
-            <div class="album-name">
-                <h4><a data-id="@album.Id">@album.Title</a></h4>
-                <span>@imagesCount Pictures,</span><time datetime="@date.Date">@date.Date</time>
-            </div>
-        </div>
+                <div class="album-holder">
+                    <img src="@album.CoverImageUrl" alt="@album.Title" />
+                    <div class="album-name">
+                        <h4><a data-id="@album.Id">@album.Title</a></h4>
+                        <span>@album.ImagesCount Pictures,</span><time datetime="@album.LastUpdateDate">@album.LastUpdateDate</time>
+                    </div>
+                </div>
 
-        i++;
+                i++;
     
-        if (i % 3 == 0 || i == l)
-        {
-            @:</section>
+                if (i % 3 == 0 || i == l)
+                {
+                    @:</section>
+                }
+            }
         }
-    }
-}
-    
+    </div>
+
+    <div class="image-gallery-album-container" style="display: none;">
+        <h1 class="gallery-title">
+            Album Title <a class="back-link">< Back</a>
+            <time datetime="2012-01-01">Jan. 01, 2012</time>
+        </h1>
+
+        <div class="gallery-view" id="gallery-@Guid.NewGuid().ToString()">
+        </div>
+    </div>    
 </div>
 
 <script>
-    window.initializeGalleryWidget = function() {
-        $('.album-holder h4 > a').on('click', function() {
-            var container = $(this).parents('.image-gallery-albums-holder'),
-                id = $(this).data('id'),
+    window.initializeGalleryWidget = function () {
+        var selectors = {
+            widgetContainer: '.image-gallery-widget',
+            albumsContainer: '.image-gallery-albums-container',
+            albumContainer: '.image-gallery-album-container',
+            backUrls: '.image-gallery-album-container .back-link',
+            albumUrls: '.image-gallery-widget .album-holder h4 > a',
+            galleryView: '.gallery-view'
+        };
+
+        // On close album
+        $(selectors.backUrls).on('click', function() {
+            var self = $(this),
+                widgetContainer = self.parents(selectors.widgetContainer),
+                albumsContainer = widgetContainer.find(selectors.albumsContainer),
+                albumContainer = widgetContainer.find(selectors.albumContainer);
+
+            albumContainer.hide();
+            albumsContainer.show();
+        });
+
+        // On open album
+        $(selectors.albumUrls).on('click', function () {
+            var self = $(this),
+                widgetContainer = self.parents(selectors.widgetContainer),
+                albumsContainer = widgetContainer.find(selectors.albumsContainer),
+                albumContainer = widgetContainer.find(selectors.albumContainer),
+                id = self.data('id'),
                 url = '@Model.AlbumUrl';
            
             $.ajax({
-                type: 'GET',
-                url: url.replace('{0}', id)
+                type: 'POST',
+                url: url.replace('{0}', id),
+                dataType: 'json'
             })
-                    .done(function (result) {
-                        var resultContainer = $(result);
-                        
-                        container.hide();
-                        resultContainer.insertAfter(container);
-                        resultContainer.find('.back-link').on('click', function() {
-                            resultContainer.remove();
-                            container.show();
+                .done(function (json) {
+                    if (json && json.Success && json.Data && $.isArray(json.Data)) {
+                        var gallery = albumContainer.find(selectors.galleryView),
+                            galleryId = gallery.attr('id'),
+                            playlist = [],
+                            i, 
+                            l;
+
+                        albumsContainer.hide();
+                        albumContainer.show();
+
+                        for (i = 0, l = json.Data.length; i < l; i++) {
+                            playlist.push({
+                                title: json.Data[i],
+                                description: json.Data[i],
+                                image: json.Data[i]
+                            });
+                        }
+
+                        window.coverflow(galleryId).setup({
+                            playlist: playlist,
+                            backgroundcolor: 'fff',
+                            mode: 'html5',
+                            item: 1,
+                            width: 940,
+                            height: 445,
+                            x: 0,
+                            y: 0,
+                            coverwidth: 525,
+                            coverheight: 355,
+                            coverangle: 45,
+                            covergap: 80,
+                            coverdepth: 185,
+                            opacitydecrease: 0.5,
+                            reflectionratio: 5,
+                            fixedsize: true,
+                            textoffset: 37
                         });
-                    });
+                    }
+                });
 
             return false;
         });
     }
 </script>
+
+<script src="http://bettercmstemplates.devbproto.com/Scripts/BetterCmsLightJs/coverflow.js"></script>

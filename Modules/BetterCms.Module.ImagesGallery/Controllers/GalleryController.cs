@@ -22,8 +22,7 @@ namespace BetterCms.Module.ImagesGallery.Controllers
         public ActionResult Album(string id)
         {
             var response = GetCommand<GetAlbumImagesCommand>().ExecuteCommand(id.ToGuidOrDefault());
-
-            return View(response);
+            return WireJson(response != null, response);
         }
     }
 }

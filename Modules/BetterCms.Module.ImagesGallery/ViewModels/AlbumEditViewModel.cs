@@ -12,10 +12,10 @@ namespace BetterCms.Module.ImagesGallery.ViewModels
     public class AlbumEditViewModel : IEditableGridItem
     {
         /// <summary>
-        /// Gets or sets the author id.
+        /// Gets or sets the album id.
         /// </summary>
         /// <value>
-        /// The author id.
+        /// The album id.
         /// </value>
         [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
         public virtual Guid Id { get; set; }

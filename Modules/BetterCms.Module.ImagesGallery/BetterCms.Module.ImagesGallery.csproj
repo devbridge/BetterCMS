@@ -138,6 +138,7 @@
     <Compile Include="Providers\ImageGalleryAlbumOptionProvider.cs" />
     <Compile Include="Registration\ImagesGalleryJsModuleIncludeDescriptor.cs" />
     <Compile Include="ViewModels\AlbumEditViewModel.cs" />
+    <Compile Include="ViewModels\AlbumViewModel.cs" />
     <Compile Include="ViewModels\GalleryViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -187,9 +188,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Album\Select.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Gallery\Album.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Gallery\Index.cshtml" />

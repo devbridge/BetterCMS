@@ -47,7 +47,7 @@ namespace BetterCms.Module.ImagesGallery.Command.GetGalleryAlbums
         /// <exception cref="System.NotImplementedException"></exception>
         public GalleryViewModel Execute(RenderWidgetViewModel request)
         {
-            IList<AlbumEditViewModel> albums;
+            IList<AlbumViewModel> albums;
             var ids = request.Options
                 .Where(o => o.Type == OptionType.Custom
                     && o.CustomOption != null
@@ -62,17 +62,19 @@ namespace BetterCms.Module.ImagesGallery.Command.GetGalleryAlbums
                 albums = repository
                     .AsQueryable<Models.Album>()
                     .Where(a => ids.Contains(a.Id))
-                    .Select(a => new AlbumEditViewModel
+                    .Select(a => new AlbumViewModel
                                      {
                                          Id = a.Id,
-                                         Version = a.Version,
-                                         Title = a.Title
+                                         Title = a.Title,
+                                         ImagesCount = 17, // TODO: remove hardcode
+                                         LastUpdateDate = DateTime.Now, // TODO: remove hardcode
+                                         CoverImageUrl = "http://bettercmstemplates.devbproto.com/Content/images/gallery-1.jpg"
                                      })
                     .ToList();
             }
             else
             {
-                albums = new List<AlbumEditViewModel>();
+                albums = new List<AlbumViewModel>();
             }
 
             return new GalleryViewModel
