@@ -26,6 +26,14 @@ namespace BetterCms.Module.Root.ViewModels.Option
         public bool CanDeleteOption { get; set; }
 
         /// <summary>
+        /// Gets or sets the custom option default value title.
+        /// </summary>
+        /// <value>
+        /// The custom option default value title.
+        /// </value>
+        public string CustomOptionDefaultValueTitle { get; set; }
+
+        /// <summary>
         /// Gets or sets the type of the custom.
         /// </summary>
         /// <value>

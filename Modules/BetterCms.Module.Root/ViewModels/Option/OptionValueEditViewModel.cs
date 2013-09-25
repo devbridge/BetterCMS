@@ -27,6 +27,14 @@
         public bool UseDefaultValue { get; set; }
 
         /// <summary>
+        /// Gets or sets the custom option value title.
+        /// </summary>
+        /// <value>
+        /// The custom option value title.
+        /// </value>
+        public string CustomOptionValueTitle { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

@@ -105,6 +105,8 @@ namespace BetterCms.Module.Root.Services
                 }
             }
 
+            SetCustomOptionValueTitles(optionModels, optionModels);
+
             return optionModels.OrderBy(o => o.OptionKey).ToList();
         }
 
@@ -255,9 +257,9 @@ namespace BetterCms.Module.Root.Services
                     optionsList.AddRange(optionContainer.Options);
                 }
 
-                foreach (var requestLayoutOption in options)
+                foreach (var requestOption in options)
                 {
-                    TOption option = (TOption)optionsList.FirstOrDefault(o => o.Key == requestLayoutOption.Key);
+                    TOption option = (TOption)optionsList.FirstOrDefault(o => o.Key == requestOption.Key);
 
                     if (option == null)
                     {
@@ -265,14 +267,14 @@ namespace BetterCms.Module.Root.Services
                         optionsList.Add(option);
                     }
 
-                    option.Key = requestLayoutOption.Key;
-                    option.Value = requestLayoutOption.Value;
-                    option.Type = requestLayoutOption.Type;
+                    option.Key = requestOption.Key;
+                    option.Value = requestOption.Value;
+                    option.Type = requestOption.Type;
                     option.Entity = (TEntity)optionContainer;
 
-                    if (requestLayoutOption.Type == OptionType.Custom)
+                    if (requestOption.Type == OptionType.Custom)
                     {
-                        option.CustomOption = customOptions.First(co => co.Identifier == requestLayoutOption.CustomOption.Identifier);
+                        option.CustomOption = customOptions.First(co => co.Identifier == requestOption.CustomOption.Identifier);
                     }
                     else
                     {
@@ -506,6 +508,57 @@ namespace BetterCms.Module.Root.Services
             }
 
             return CustomOptionsProvider.GetProvider(customOption.Identifier);
+        }
+
+        /// <summary>
+        /// Sets the custom option value titles.
+        /// </summary>
+        /// <param name="optionModels">The option models.</param>
+        /// <param name="valueModels">The value models.</param>
+        public void SetCustomOptionValueTitles(IEnumerable<OptionViewModel> optionModels, IEnumerable<OptionValueEditViewModel> valueModels = null)
+        {
+            var values = optionModels
+                    .Where(m => m.Type == OptionType.Custom && !string.IsNullOrEmpty(m.OptionDefaultValue))
+                    .Select(m => new { m.CustomOption.Identifier, Value = m.OptionDefaultValue });
+
+            if (valueModels != null)
+            {
+                values = values.Concat(valueModels
+                    .Where(m => m.Type == OptionType.Custom && !string.IsNullOrEmpty(m.OptionValue))
+                    .Select(m => new { m.CustomOption.Identifier, Value = m.OptionValue }));
+            }
+
+            var groupped = values.Distinct().GroupBy(g => g.Identifier);
+
+            foreach (var group in groupped)
+            {
+                var provider = CustomOptionsProvider.GetProvider(group.Key);
+
+                if (provider != null)
+                {
+                    var ids = group.Select(g => g.Value).Distinct().ToArray();
+                    var titles = provider.GetTitlesForValues(ids, repository);
+
+                    if (titles != null)
+                    {
+                        foreach (var pair in titles)
+                        {
+                            optionModels
+                                .Where(g => g.Type == OptionType.Custom && g.OptionDefaultValue == pair.Key)
+                                .ToList()
+                                .ForEach(g => g.CustomOptionDefaultValueTitle = pair.Value);
+
+                            if (valueModels != null)
+                            {
+                                valueModels
+                                   .Where(g => g.Type == OptionType.Custom && g.OptionValue == pair.Key)
+                                   .ToList()
+                                   .ForEach(g => g.OptionValue = pair.Value);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

@@ -2,20 +2,36 @@
 using System.Collections.Generic;
 
 using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext.Fetching;
+
 using BetterCms.Module.Pages.ViewModels.Page;
+
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
 
 namespace BetterCms.Module.Pages.Services
 {
     public class DefaultLayoutService : ILayoutService
     {
-        private IRepository repository;
+        /// <summary>
+        /// The repository
+        /// </summary>
+        private readonly IRepository repository;
 
-        public DefaultLayoutService(IRepository repository)
+        /// <summary>
+        /// The option service
+        /// </summary>
+        private readonly IOptionService optionService;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DefaultLayoutService" /> class.
+        /// </summary>
+        /// <param name="repository">The repository.</param>
+        /// <param name="optionService">The option service.</param>
+        public DefaultLayoutService(IRepository repository, IOptionService optionService)
         {
             this.repository = repository;
+            this.optionService = optionService;
         }
 
         /// <summary>
@@ -62,6 +78,8 @@ namespace BetterCms.Module.Pages.Services
                 .OrderBy(o => o.OptionKey)
                 .ToList();
 
+            optionService.SetCustomOptionValueTitles(options);
+
             return options;
         }
 
@@ -82,9 +100,12 @@ namespace BetterCms.Module.Pages.Services
                     OptionKey = o.Key,
                     Type = o.Type,
                     OptionDefaultValue = o.DefaultValue,
-                    UseDefaultValue = true
+                    UseDefaultValue = true,
+                    CustomOption = new CustomOptionViewModel { Identifier = o.CustomOption.Identifier, Title = o.CustomOption.Title }
                 })
                 .ToList();
+
+            optionService.SetCustomOptionValueTitles(options, options);
 
             return options;
         }

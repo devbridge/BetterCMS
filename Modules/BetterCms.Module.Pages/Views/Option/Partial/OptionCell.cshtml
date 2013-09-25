@@ -1,7 +1,7 @@
 ﻿@using BetterCms.Module.Root
 @using BetterCms.Module.Root.Mvc.Grids
 
-@model EditableGridColumn
+@model BetterCms.Module.Pages.Mvc.EditableGrid.OptionValueEditableGridColumn
 
 @* Text type *@
 <!-- ko if: !useDefaultValue() && type() != 5 && type() != 4 && type() != 99 -->
@@ -63,11 +63,11 @@
     @if (Model.CanBeEdited)
     {
         <!-- ko if: isActive() -->
-        <a class="bcms-tables-link" data-bind="text: @(Model.ValueBind)() ? @(Model.ValueBind)() : '...', click: onCustomOptionExecute"></a>
+        <a class="bcms-tables-link" data-bind="text: @(Model.CustomValueBind)() || @(Model.ValueBind)() || '...', click: onCustomOptionExecute"></a>
         <!-- /ko -->
         <!-- ko ifnot: isActive() -->
     }
-    <a class="bcms-tables-link" data-bind="text: @(Model.ValueBind)()"></a>    
+    <a class="bcms-tables-link" data-bind="text: @(Model.CustomValueBind)() || @(Model.ValueBind)()"></a>    
     @if (Model.CanBeEdited)
     {
         <!-- /ko -->
@@ -86,6 +86,6 @@
 
 <!-- ko if: useDefaultValue() && type() != 5  -->
 <td @Html.Raw(Model.Attributes)>
-    <a class="bcms-tables-link" data-bind="text: @(Model.ValueBind)()"></a>
+    <a class="bcms-tables-link" data-bind="text: @(Model.CustomValueBind)() || @(Model.ValueBind)()"></a>
 </td>
 <!-- /ko -->

@@ -1,4 +1,10 @@
-﻿using BetterCms.Module.Root.Providers;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+using BetterCms.Core.DataAccess;
+using BetterCms.Module.ImagesGallery.Models;
+using BetterCms.Module.Root.Providers;
 
 namespace BetterCms.Module.ImagesGallery.Providers
 {
@@ -16,8 +22,8 @@ namespace BetterCms.Module.ImagesGallery.Providers
         /// <exception cref="System.NotImplementedException"></exception>
         public object ConvertValueToCorrectType(string value)
         {
-            System.Guid guid;
-            if (System.Guid.TryParse(value, out guid))
+            Guid guid;
+            if (Guid.TryParse(value, out guid))
             {
                 return guid;
             }
@@ -34,6 +40,39 @@ namespace BetterCms.Module.ImagesGallery.Providers
         public object GetDefaultValueForType()
         {
             return null;
+        }
+
+        /// <summary>
+        /// Gets the titles for values.
+        /// </summary>
+        /// <param name="values">The values.</param>
+        /// <param name="repository">The repository.</param>
+        /// <returns>
+        /// The dictionary with value - title pairs
+        /// </returns>
+        public Dictionary<string, string> GetTitlesForValues(string[] values, IRepository repository)
+        {
+            if (values == null || values.Length == 0)
+            {
+                return null;
+            }
+
+            var guids = new List<Guid>(values.Length);
+
+            foreach (var value in values)
+            {
+                var guid = ConvertValueToCorrectType(value);
+                if (guid != null)
+                {
+                    guids.Add((Guid)guid);
+                }
+            }
+
+            return repository
+                .AsQueryable<Album>()
+                .Where(a => guids.Contains(a.Id))
+                .Select(a => new { a.Id, a.Title })
+                .ToDictionary(a => a.Id.ToString(), a => a.Title);
         }
     }
 }

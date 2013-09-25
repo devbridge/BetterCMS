@@ -191,6 +191,8 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.editableValue = self.getValueField();
                 self.rowId = null;
                 self.customType = ko.observable();
+                self.customOptionTitle = ko.observable();
+                self.customOptionDefaultTitle = ko.observable();
                 self.calcType = ko.observable();
 
                 self.optionTypes = [];
@@ -211,7 +213,8 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
                 // NOTE: useDefaultValue should be registered before defaultValue and type
                 // because in othercase, when cancelling edit mode, ir sets wrong values
-                self.registerFields(self.useDefaultValue, self.key, self.value, self.defaultValue, self.type, self.customType, self.calcType);
+                self.registerFields(self.useDefaultValue, self.key, self.value, self.defaultValue,
+                    self.type, self.customType, self.calcType, self.customOptionTitle, self.customOptionDefaultTitle);
 
                 self.getOptionTypeName = function() {
                     var i,
@@ -256,6 +259,9 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                         typeValue = newType.substr(0, split);
                         customType = newType.substr(split + 1, newType.length - split);
                     } else {
+                        self.customOptionTitle('');
+                        self.customOptionDefaultTitle('');
+
                         // Entering boolean mode
                         if (oldType == optionTypes.boolType) {
                             self.editableValue('');
@@ -334,6 +340,8 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.type(item.Type);
                 if (item.Type == optionTypes.customType) {
                     self.customType(item.CustomType);
+                    self.customOptionDefaultTitle(item.CustomOptionDefaultValueTitle);
+                    self.customOptionTitle(item.CustomOptionValueTitle);
                 }
                 self.calcType(self.getCalcType(self));
                 self.canEditOption(item.CanEditOption !== false);
@@ -372,7 +380,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     
                     for (ci = 0, cl = registeredCustomOptions.length; ci < cl; ci++) {
                         if (registeredCustomOptions[ci].identifier == customType) {
-                            registeredCustomOptions[ci].onExecute(self.editableValue);
+                            registeredCustomOptions[ci].onExecute(self.editableValue, self.customOptionTitle);
                             
                             return;
                         }
