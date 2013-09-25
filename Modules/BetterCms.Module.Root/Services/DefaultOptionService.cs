@@ -128,7 +128,17 @@ namespace BetterCms.Module.Root.Services
                 {
                     var value = GetValueSafe(optionValue);
 
-                    var optionViewModel = new OptionValueViewModel { Type = optionValue.Type, OptionKey = optionValue.Key.Trim(), OptionValue = value };
+                    var optionViewModel = new OptionValueViewModel
+                                              {
+                                                  Type = optionValue.Type, 
+                                                  OptionKey = optionValue.Key.Trim(), 
+                                                  OptionValue = value,
+                                                  CustomOption = optionValue.CustomOption != null ? new CustomOptionViewModel
+                                                  {
+                                                      Identifier = optionValue.CustomOption.Identifier,
+                                                      Title = optionValue.CustomOption.Title
+                                                  } : null
+                                              };
                     optionModels.Add(optionViewModel);
                 }
             }
@@ -141,7 +151,17 @@ namespace BetterCms.Module.Root.Services
                     {
                         var value = GetValueSafe(option);
 
-                        var optionViewModel = new OptionValueViewModel { Type = option.Type, OptionKey = option.Key.Trim(), OptionValue = value };
+                        var optionViewModel = new OptionValueViewModel
+                                                  {
+                                                      Type = option.Type, 
+                                                      OptionKey = option.Key.Trim(),
+                                                      OptionValue = value,
+                                                      CustomOption = option.CustomOption != null ? new CustomOptionViewModel
+                                                      {
+                                                          Identifier = option.CustomOption.Identifier,
+                                                          Title = option.CustomOption.Title
+                                                      } : null,
+                                                  };
                         optionModels.Add(optionViewModel);
                     }
                 }

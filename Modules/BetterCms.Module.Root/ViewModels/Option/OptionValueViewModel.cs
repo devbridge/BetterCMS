@@ -41,6 +41,24 @@ namespace BetterCms.Module.Root.ViewModels.Option
         }
 
         /// <summary>
+        /// Gets or sets the custom option.
+        /// </summary>
+        /// <value>
+        /// The custom option.
+        /// </value>
+        ICustomOption IOptionValue.CustomOption
+        {
+            get
+            {
+                return CustomOption;
+            }
+            set
+            {
+                throw new NotSupportedException("IOptionValue.CustomOption has no setter. Use view model");
+            }
+        }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

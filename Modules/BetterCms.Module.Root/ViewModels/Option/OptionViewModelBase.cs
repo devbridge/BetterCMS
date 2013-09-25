@@ -38,5 +38,13 @@ namespace BetterCms.Module.Root.ViewModels.Option
         /// The type.
         /// </value>
         public OptionType Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets the custom option.
+        /// </summary>
+        /// <value>
+        /// The custom option.
+        /// </value>
+        public CustomOptionViewModel CustomOption { get; set; }
     }
 }

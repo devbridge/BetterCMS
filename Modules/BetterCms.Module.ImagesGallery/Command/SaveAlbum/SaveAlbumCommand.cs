@@ -8,7 +8,7 @@ using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.ImagesGallery.Command.SaveAlbum
 {
-    public class SaveAlbumCommand : CommandBase, ICommand<AlbumViewModel, AlbumViewModel>
+    public class SaveAlbumCommand : CommandBase, ICommand<AlbumEditViewModel, AlbumEditViewModel>
     {
         /// <summary>
         /// The repository
@@ -36,7 +36,7 @@ namespace BetterCms.Module.ImagesGallery.Command.SaveAlbum
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        public AlbumViewModel Execute(AlbumViewModel request)
+        public AlbumEditViewModel Execute(AlbumEditViewModel request)
         {
             unitOfWork.BeginTransaction();
 
@@ -67,7 +67,7 @@ namespace BetterCms.Module.ImagesGallery.Command.SaveAlbum
                 Events.ImageGalleryEvents.Instance.OnAlbumUpdated(album);
             }
 
-            return new AlbumViewModel
+            return new AlbumEditViewModel
                 {
                     Id = album.Id,
                     Version = album.Version,

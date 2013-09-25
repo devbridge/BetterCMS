@@ -9,20 +9,21 @@ using BetterCms.Module.ImagesGallery.ViewModels;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
+
 using BetterCms.Module.Root.ViewModels.SiteSettings;
 
 namespace BetterCms.Module.ImagesGallery.Command.GetAlbumList
 {
-    public class GetAlbumListCommand : CommandBase, ICommand<SearchableGridOptions, SearchableGridViewModel<AlbumViewModel>>
+    public class GetAlbumListCommand : CommandBase, ICommand<SearchableGridOptions, SearchableGridViewModel<AlbumEditViewModel>>
     {
         /// <summary>
         /// Executes the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>List with blog post view models</returns>
-        public SearchableGridViewModel<AlbumViewModel> Execute(SearchableGridOptions request)
+        public SearchableGridViewModel<AlbumEditViewModel> Execute(SearchableGridOptions request)
         {
-            SearchableGridViewModel<AlbumViewModel> model;
+            SearchableGridViewModel<AlbumEditViewModel> model;
 
             request.SetDefaultSortingOptions("Title");
 
@@ -36,7 +37,7 @@ namespace BetterCms.Module.ImagesGallery.Command.GetAlbumList
 
             var albums = query
                 .Select(album =>
-                    new AlbumViewModel
+                    new AlbumEditViewModel
                         {
                             Id = album.Id,
                             Version = album.Version,
@@ -46,7 +47,7 @@ namespace BetterCms.Module.ImagesGallery.Command.GetAlbumList
             var count = query.ToRowCountFutureValue();
             albums = albums.AddSortingAndPaging(request);
 
-            model = new SearchableGridViewModel<AlbumViewModel>(albums.ToList(), request, count.Value);
+            model = new SearchableGridViewModel<AlbumEditViewModel>(albums.ToList(), request, count.Value);
 
             return model;
         }

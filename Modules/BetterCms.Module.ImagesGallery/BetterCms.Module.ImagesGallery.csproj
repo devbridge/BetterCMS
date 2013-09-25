@@ -116,6 +116,9 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Command\GetAlbumImages\GetAlbumImagesCommand.cs" />
+    <Compile Include="Command\GetGalleryAlbums\GetGalleryAlbumsCommand.cs" />
+    <Compile Include="Controllers\GalleryController.cs" />
     <Compile Include="Events\ImageGalleryEvents.cs" />
     <Compile Include="Command\DeleteAlbum\DeleteAlbumCommand.cs" />
     <Compile Include="Command\GetAlbumList\GetAlbumListCommand.cs" />
@@ -134,7 +137,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ImageGalleryAlbumOptionProvider.cs" />
     <Compile Include="Registration\ImagesGalleryJsModuleIncludeDescriptor.cs" />
-    <Compile Include="ViewModels\AlbumViewModel.cs" />
+    <Compile Include="ViewModels\AlbumEditViewModel.cs" />
+    <Compile Include="ViewModels\GalleryViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\Resources\ImagesGalleryGlobalization.resx">
@@ -185,7 +189,16 @@
     <EmbeddedResource Include="Views\Album\Select.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Views\Gallery\Album.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Gallery\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Widgets\ImagesGalleryWidget.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

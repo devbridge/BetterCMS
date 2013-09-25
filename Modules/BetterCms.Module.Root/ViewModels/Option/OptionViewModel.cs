@@ -63,14 +63,6 @@ namespace BetterCms.Module.Root.ViewModels.Option
         /// <value>
         /// The custom option.
         /// </value>
-        public CustomOptionViewModel CustomOption { get; set; }
-
-        /// <summary>
-        /// Gets or sets the custom option.
-        /// </summary>
-        /// <value>
-        /// The custom option.
-        /// </value>
         /// <exception cref="System.NotSupportedException"></exception>
         ICustomOption IOption.CustomOption
         {

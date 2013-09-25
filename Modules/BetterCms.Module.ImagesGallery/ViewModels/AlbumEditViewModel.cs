@@ -2,14 +2,14 @@
 using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
+
 using BetterCms.Module.ImagesGallery.Content.Resources;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc.Grids;
-using BetterCms.Module.Root.ViewModels.Cms;
 
 namespace BetterCms.Module.ImagesGallery.ViewModels
 {
-    public class AlbumViewModel : RenderWidgetViewModel, IEditableGridItem
+    public class AlbumEditViewModel : IEditableGridItem
     {
         /// <summary>
         /// Gets or sets the author id.

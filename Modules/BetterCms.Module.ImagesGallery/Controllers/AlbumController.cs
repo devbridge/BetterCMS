@@ -74,10 +74,10 @@ namespace BetterCms.Module.ImagesGallery.Controllers
         /// <returns>Json result.</returns>
         [HttpPost]
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
-        public ActionResult SaveAlbum(AlbumViewModel model)
+        public ActionResult SaveAlbum(AlbumEditViewModel model)
         {
             var success = false;
-            AlbumViewModel response = null;
+            AlbumEditViewModel response = null;
             if (ModelState.IsValid)
             {
                 response = GetCommand<SaveAlbumCommand>().ExecuteCommand(model);
@@ -105,7 +105,7 @@ namespace BetterCms.Module.ImagesGallery.Controllers
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult DeleteAlbum(string id, string version)
         {
-            var request = new AlbumViewModel { Id = id.ToGuidOrDefault(), Version = version.ToIntOrDefault() };
+            var request = new AlbumEditViewModel { Id = id.ToGuidOrDefault(), Version = version.ToIntOrDefault() };
             var success = GetCommand<DeleteAlbumCommand>().ExecuteCommand(request);
             if (success)
             {
