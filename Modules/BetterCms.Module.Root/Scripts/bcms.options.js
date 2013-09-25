@@ -382,7 +382,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     
                     for (ci = 0, cl = registeredCustomOptions.length; ci < cl; ci++) {
                         if (registeredCustomOptions[ci].identifier == customType) {
-                            registeredCustomOptions[ci].onExecute(valueObservable, titleObservable);
+                            registeredCustomOptions[ci].onExecute(valueObservable, titleObservable, self);
                             
                             return;
                         }

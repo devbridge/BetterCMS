@@ -126,7 +126,7 @@ bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettin
         /**
         * Called when user press browse button in the options grid with type = "Images gallery album".
         */
-        function onExecuteImageGalleryAlbumOption(valueObservable, titleObservable) {
+        function onExecuteImageGalleryAlbumOption(valueObservable, titleObservable, optionModel) {
             var viewModel;
 
             modal.open({
@@ -155,6 +155,10 @@ bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettin
                         } else {
                             valueObservable(selectedItem.id());
                             titleObservable(selectedItem.title());
+                            
+                            if (optionModel.key && !optionModel.key()) {
+                                optionModel.key(selectedItem.title());
+                            }
                         }
                     }
 

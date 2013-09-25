@@ -573,7 +573,7 @@ namespace BetterCms.Module.Root.Services
                                 valueModels
                                    .Where(g => g.Type == OptionType.Custom && g.OptionValue == pair.Key)
                                    .ToList()
-                                   .ForEach(g => g.OptionValue = pair.Value);
+                                   .ForEach(g => g.CustomOptionValueTitle = pair.Value);
                             }
                         }
                     }
