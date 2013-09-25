@@ -686,7 +686,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
     * Initializes blog module.
     */
     blog.init = function () {
-        console.log('Initializing blog module');
+        console.log('Initializing bcms.blog module.');
     };
 
     /**

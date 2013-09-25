@@ -118,6 +118,8 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Commands\Authentication\GetAuthenticationInfo\GetAuthenticationInfoCommand.cs" />
+    <Compile Include="Commands\Authentication\SearchUsers\SearchUsersCommand.cs" />
+    <Compile Include="Commands\Authentication\SearchRoles\SearchRolesCommand.cs" />
     <Compile Include="Events\CategoryEvents.cs" />
     <Compile Include="Events\PageRetrievedEventArgs.cs" />
     <Compile Include="Events\RootEvents.cs" />
