@@ -121,7 +121,7 @@
     <value>Add Role</value>
   </data>
   <data name="AccessControl_UserAccess_AddNewUser" xml:space="preserve">
-    <value>Add New User</value>
+    <value>Add User</value>
   </data>
   <data name="AccessControl_UserAccess_NoAccess" xml:space="preserve">
     <value>No Access</value>
