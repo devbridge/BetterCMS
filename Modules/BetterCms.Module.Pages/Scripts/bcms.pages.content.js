@@ -30,8 +30,8 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 widgetContainerBlock: '.bcms-preview-block',
                 widgetCategory: '.bcms-category',
                 widgetName: '.bcms-title-holder > .bcms-content-titles',
-                widgetIFramePreview: '.bcms-preview-box:has(iframe) .bcms-zoom-overlay',
-                widgetImagePreview: '.bcms-preview-box:not(:has(iframe)) .bcms-zoom-overlay',
+                widgetIFramePreview: ".bcms-preview-box[data-as-image='False'] .bcms-zoom-overlay",
+                widgetImagePreview: ".bcms-preview-box[data-as-image='True'] .bcms-zoom-overlay",
 
                 widgetsContent: '.bcms-widgets',
 
