@@ -20,15 +20,14 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.AppendLine("<div class=\"bcms-preview-box\">");
-            if (asImage)
-            {
-                sb.AppendFormat("<img src=\"{0}\" alt=\"{1}\" />", html.Encode(previewUrl), html.Encode(title));
-            }
-            else
-            {
-                sb.AppendFormat("<iframe class=\"{0}\" width=\"{1}\" height=\"{2}\" scrolling=\"no\" border=\"0\" frameborder=\"0\" src=\"{3}\" style=\"background-color:white;\"/>", frameCssClass, width, height, html.Encode(previewUrl));
-            }
+            sb.AppendFormat(
+                "<div class=\"bcms-preview-box\" data-as-image=\"{0}\", data-preview-url=\"{1}\", data-title=\"{2}\", data-frame-css-class=\"{3}\", data-width=\"{4}\", data-height=\"{5}\">",
+                asImage,
+                html.Encode(previewUrl),
+                html.Encode(title),
+                frameCssClass,
+                width,
+                height);
             sb.AppendLine();
             sb.AppendFormat("<div class=\"bcms-zoom-overlay\" data-preview-title=\"{0}\" data-preview-url=\"{1}\"> </div>", html.Encode(title), html.Encode(openUrl));
             sb.AppendLine();

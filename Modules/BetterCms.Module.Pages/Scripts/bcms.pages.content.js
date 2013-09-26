@@ -393,13 +393,39 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Initializes a content sliders.
         */
         pagesContent.initializeSliders = function (container) {
+            var updateSlide = function (slideBox, currentSlideNumber) {
+                var currentSlide = slideBox.find(".bcms-slides-single-slide").get([currentSlideNumber - 1]);
+                $(currentSlide).find('.bcms-preview-box').each(function () {
+                    var previewBox = $(this),
+                        data = previewBox.data();
+                    if (!data.isLoaded) {
+                        if (data.asImage === "True") {
+                            previewBox.prepend($.format("<img src=\"{0}\" alt=\"{1}\" />",
+                                data.previewUrl, data.title));
+                        } else {
+                            previewBox.prepend($.format("<iframe class=\"{0}\" width=\"{1}\" height=\"{2}\" scrolling=\"no\" border=\"0\" frameborder=\"0\" src=\"{3}\" style=\"background-color:white;\"/>",
+                                data.frameCssClass, data.width, data.height, data.previewUrl));
+                        }
+                        previewBox.data("isLoaded", true);
+                    }
+                });
+            };
             container.find(selectors.sliderBoxes).each(function () {
-                $(this).slides({
+                var slideBox = $(this);
+                slideBox.slides({
                     container: selectors.sliderContainer,
                     generateNextPrev: true,
                     generatePagination: false,
                     prev: classes.sliderPrev,
-                    next: classes.sliderNext
+                    next: classes.sliderNext,
+                    slidesLoaded: function () {
+                        updateSlide(slideBox, 1);
+                    },
+                    animationStart: function (currentSlideNumber) {
+                    },
+                    animationComplete: function (currentSlideNumber) {
+                        updateSlide(slideBox, currentSlideNumber);
+                    }
                 });
             });
         };
