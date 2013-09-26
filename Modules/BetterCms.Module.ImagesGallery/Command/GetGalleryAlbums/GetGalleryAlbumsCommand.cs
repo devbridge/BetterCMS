@@ -68,7 +68,7 @@ namespace BetterCms.Module.ImagesGallery.Command.GetGalleryAlbums
                                          Title = a.Title,
                                          ImagesCount = 17, // TODO: remove hardcode
                                          LastUpdateDate = DateTime.Now, // TODO: remove hardcode
-                                         CoverImageUrl = "http://bettercmstemplates.devbproto.com/Content/images/gallery-1.jpg"
+                                         CoverImageUrl = a.CoverImage != null ? a.CoverImage.PublicUrl : null
                                      })
                     .ToList();
             }

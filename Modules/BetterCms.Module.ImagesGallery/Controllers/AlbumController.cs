@@ -1,8 +1,10 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 
 using BetterCms.Core.Security;
 
 using BetterCms.Module.ImagesGallery.Command.DeleteAlbum;
+using BetterCms.Module.ImagesGallery.Command.GetAlbum;
 using BetterCms.Module.ImagesGallery.Command.GetAlbumList;
 using BetterCms.Module.ImagesGallery.Command.SaveAlbum;
 using BetterCms.Module.ImagesGallery.Content.Resources;
@@ -48,6 +50,7 @@ namespace BetterCms.Module.ImagesGallery.Controllers
         {
             request.SetDefaultPaging();
             var model = GetCommand<GetAlbumListCommand>().ExecuteCommand(request);
+
             return WireJson(model != null, model);
         }
 
@@ -116,6 +119,35 @@ namespace BetterCms.Module.ImagesGallery.Controllers
             }
 
             return WireJson(success);
+        }
+
+        /// <summary>
+        /// Edit the album.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>View for editing an album</returns>
+        [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
+        public ActionResult EditAlbum(string id)
+        {
+            var model = GetCommand<GetAlbumCommand>().ExecuteCommand(id.ToGuidOrDefault());
+            var view = RenderView("Edit", model);
+
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Create the album.
+        /// </summary>
+        /// <returns>View for creating new album</returns>
+        [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
+        public ActionResult CreateAlbum()
+        {
+            var model = GetCommand<GetAlbumCommand>().ExecuteCommand(new Guid());
+            var view = RenderView("Edit", model);
+
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
     }
 }

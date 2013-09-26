@@ -70,6 +70,15 @@ namespace BetterCms.Module.ImagesGallery.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create album.
+        /// </summary>
+        public static string CreateAlbum_Dialog_Title {
+            get {
+                return ResourceManager.GetString("CreateAlbum_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to delete album {0}?.
         /// </summary>
         public static string DeleteAlbum_Confirmation_Message {
@@ -88,6 +97,42 @@ namespace BetterCms.Module.ImagesGallery.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change cover image.
+        /// </summary>
+        public static string EditAlbum_CoverImage_SelectImage_ButtonTitle {
+            get {
+                return ResourceManager.GetString("EditAlbum_CoverImage_SelectImage_ButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Album cover image..
+        /// </summary>
+        public static string EditAlbum_CoverImage_Title {
+            get {
+                return ResourceManager.GetString("EditAlbum_CoverImage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cover image will be displayed in the list of albums as the album cover image. If not set, the first one image from the album will be displayed..
+        /// </summary>
+        public static string EditAlbum_CoverImage_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("EditAlbum_CoverImage_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit album.
+        /// </summary>
+        public static string EditAlbum_Dialog_Title {
+            get {
+                return ResourceManager.GetString("EditAlbum_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Album title maximum length exceeded..
         /// </summary>
         public static string EditAlbum_Title_MaxLengthMessage {
@@ -102,6 +147,24 @@ namespace BetterCms.Module.ImagesGallery.Content.Resources {
         public static string EditAlbum_Title_RequiredMessage {
             get {
                 return ResourceManager.GetString("EditAlbum_Title_RequiredMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Album title.
+        /// </summary>
+        public static string EditAlbum_Title_Title {
+            get {
+                return ResourceManager.GetString("EditAlbum_Title_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Album title will be displayed in the list of albums.
+        /// </summary>
+        public static string EditAlbum_Title_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("EditAlbum_Title_Tooltip_Description", resourceCulture);
             }
         }
         

@@ -103,21 +103,6 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
                 self.items.push(itemViewModel);
             };
-
-            self.addNewItem = function () {
-                if (!self.rowAdded) {
-                    self.rowAdded = true;
-
-                    var newItem = self.createItem({
-                        IsActive: true,
-                        IsNew: true
-                    });
-                    self.items.unshift(newItem);
-                    self.isSelected = true;
-
-                    self.onAfterNewItemAdded(newItem);
-                }
-            };
             
             self.searchItems = function () {
                 self.options().paging.pageNumber(1);
@@ -248,6 +233,21 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
             // Set options
             self.setOptions(gridOptions, totalItemsCount);
+        };
+
+        grid.ListViewModel.prototype.addNewItem = function () {
+            if (!self.rowAdded) {
+                self.rowAdded = true;
+
+                var newItem = self.createItem({
+                    IsActive: true,
+                    IsNew: true
+                });
+                self.items.unshift(newItem);
+                self.isSelected = true;
+
+                self.onAfterNewItemAdded(newItem);
+            }
         };
 
         grid.ListViewModel.prototype.createItem = function(item) {

@@ -117,6 +117,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Command\GetAlbumImages\GetAlbumImagesCommand.cs" />
+    <Compile Include="Command\GetAlbum\GetAlbumCommand.cs" />
     <Compile Include="Command\GetGalleryAlbums\GetGalleryAlbumsCommand.cs" />
     <Compile Include="Controllers\GalleryController.cs" />
     <Compile Include="Events\ImageGalleryEvents.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="Providers\ImageGalleryAlbumOptionProvider.cs" />
     <Compile Include="Registration\ImagesGalleryJsModuleIncludeDescriptor.cs" />
     <Compile Include="ViewModels\AlbumEditViewModel.cs" />
+    <Compile Include="ViewModels\AlbumSiteSettingsViewModel.cs" />
     <Compile Include="ViewModels\AlbumViewModel.cs" />
     <Compile Include="ViewModels\GalleryViewModel.cs" />
   </ItemGroup>
@@ -182,6 +184,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Scripts\bcms.images.gallery.js" />
     <Content Include="web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Album\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Album\List.cshtml" />

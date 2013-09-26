@@ -4,6 +4,7 @@ using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.ImagesGallery.Models;
 using BetterCms.Module.ImagesGallery.ViewModels;
+using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.ImagesGallery.Command.SaveAlbum
@@ -54,6 +55,10 @@ namespace BetterCms.Module.ImagesGallery.Command.SaveAlbum
 
             album.Title = request.Title;
             album.Version = request.Version;
+            album.CoverImage =
+                request.CoverImage != null && request.CoverImage.ImageId.HasValue
+                    ? Repository.AsProxy<MediaImage>(request.CoverImage.ImageId.Value)
+                    : null;
 
             repository.Save(album);
             unitOfWork.Commit();

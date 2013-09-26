@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using BetterCms.Core.Models;
 
 using BetterCms.Module.ImagesGallery.Content.Resources;
+using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc.Grids;
 
@@ -38,6 +39,14 @@ namespace BetterCms.Module.ImagesGallery.ViewModels
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(ImagesGalleryGlobalization), ErrorMessageResourceName = "EditAlbum_Title_RequiredMessage")]
         [StringLength(MaxLength.Name, MinimumLength = 1, ErrorMessageResourceType = typeof(ImagesGalleryGlobalization), ErrorMessageResourceName = "EditAlbum_Title_MaxLengthMessage")]
         public virtual string Title { get; set; }
+
+        /// <summary>
+        /// Gets or sets the cover image view model.
+        /// </summary>
+        /// <value>
+        /// The cover image view model.
+        /// </value>
+        public ImageSelectorViewModel CoverImage { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

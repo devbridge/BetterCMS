@@ -1,17 +1,19 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms, console */
-bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.ko.extenders', 'bcms.ko.grid', 'bcms.options', 'bcms.modal'],
-    function ($, bcms, siteSettings, dynamicContent, ko, kogrid, options, modal) {
+bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.ko.extenders', 'bcms.ko.grid', 'bcms.options', 'bcms.modal', 'bcms.media'],
+    function ($, bcms, siteSettings, dynamicContent, ko, kogrid, options, modal, media) {
         'use strict';
 
         var gallery = {},
             selectors = {
-                insertAlbumContainer: '.bcms-scroll-window'
+                insertAlbumContainer: '.bcms-scroll-window',
+                albumEditForm: 'form:first'
             },
             links = {
                 loadSiteSettingsAlbumsUrl: null,
                 loadAlbumsUrl: null,
-                saveAlbumUrl: null,
+                editAlbumUrl: null,
+                createAlbumUrl: null,
                 deleteAlbumUrl: null,
                 selectAlbumUrl: null
             },
@@ -28,6 +30,50 @@ bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettin
         gallery.links = links;
         gallery.globalization = globalization;
         gallery.selectors = selectors;
+
+        /**
+        * Called after album edit form was loaded
+        */
+        function initializeEditAlbumForm(dialog, content) {
+            var form = dialog.container.find(selectors.albumEditForm),
+                data = content.Data || {},
+                coverImageViewModel = ko.observable(new media.ImageSelectorViewModel(data.CoverImage)),
+                viewModel = {
+                    coverImage: coverImageViewModel,
+                    title: ko.observable(data.Title),
+                    version: ko.observable(data.Version),
+                    id: ko.observable(data.Id),
+                };
+            
+            ko.applyBindings(viewModel, form.get(0));
+
+            return viewModel;
+        }
+
+        /**
+        * Opens album edit modal window
+        */
+        function openAlbumEditForm(url, title, onAlbumSaved) {
+            var viewModel;
+
+            modal.open({
+                title: title,
+                onLoad: function (dialog) {
+                    dynamicContent.bindDialog(dialog, url, {
+                        contentAvailable: function(childDialog, content) {
+                            viewModel = initializeEditAlbumForm(childDialog, content);
+                        },
+
+                        postSuccess: function (json) {
+                            viewModel.id(json.Data.Id);
+                            viewModel.version(json.Data.Version);
+                            
+                            onAlbumSaved.call(this, viewModel);
+                        }
+                    });
+                }
+            });
+        }
 
         /**
         * Albums list view model
@@ -48,6 +94,21 @@ bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettin
                 var newItem = new AlbumViewModel(this, item);
                 
                 return newItem;
+            };
+
+            AlbumsListViewModel.prototype.addNewItem = function () {
+                var self = this,
+                    onAlbumSaved = function (albumViewModel) {
+                        var item = self.createItem({
+                            Title: albumViewModel.title(),
+                            Version: albumViewModel.version(),
+                            Id: albumViewModel.id(),
+                        });
+
+                        self.items.unshift(item);
+                    };
+
+                openAlbumEditForm(links.createAlbumUrl, globalization.createAlbumDialogTitle, onAlbumSaved);
             };
 
             return AlbumsListViewModel;
@@ -93,6 +154,17 @@ bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettin
                 this.selectForInsert();
             };
 
+            AlbumViewModel.prototype.editItem = function () {
+                var self = this,
+                    url = $.format(links.editAlbumUrl, self.id()),
+                    onAlbumSaved = function (albumViewModel) {
+                        self.version(albumViewModel.version());
+                        self.title(albumViewModel.title());
+                    };
+
+                openAlbumEditForm(url, globalization.editAlbumDialogTitle, onAlbumSaved);
+            };
+
             return AlbumViewModel;
 
         })(kogrid.ItemViewModel);
@@ -105,7 +177,6 @@ bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettin
 
             var viewModel = new AlbumsListViewModel(container, data.Items, data.GridOptions, isSelectable);
             viewModel.deleteUrl = links.deleteAlbumUrl;
-            viewModel.saveUrl = links.saveAlbumUrl;
 
             ko.applyBindings(viewModel, container.get(0));
 
