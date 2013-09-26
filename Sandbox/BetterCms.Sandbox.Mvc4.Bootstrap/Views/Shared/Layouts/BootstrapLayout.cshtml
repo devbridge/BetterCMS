@@ -1,0 +1,49 @@
+﻿@using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Installation
+
+@model BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel
+
+@{
+    Layout = "~/Areas/bcms-Root/Views/Shared/BaseLayout.cshtml";
+}
+
+@section Styles {    
+    @RenderSection("Styles", false)
+    @(Html.RenderStyleSheets<InstallationModuleDescriptor>())
+    <link href="/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+}
+
+@section HeadScripts {
+    @RenderSection("HeadScripts", false)
+}
+
+@section Scripts {
+    @RenderSection("Scripts", false)
+
+     <script src="http://code.jquery.com/jquery.js"></script>
+     <script src="/Content/bootstrap/js/bootstrap.min.js"></script>
+}
+
+
+<div class="page">
+
+    <header class="page-header">
+        <div class="page-frame bcms-clearfix">
+            @RenderSection("CMSHeader", false)
+        </div>
+    </header>
+
+    <div class="page-block">
+        <div class="page-frame bcms-clearfix">
+            @RenderSection("CMSMainContent", false)
+            @RenderBody()
+        </div>
+    </div>
+
+</div>
+
+<footer class="page-footer">
+    <div class="page-frame bcms-clearfix">
+        @RenderSection("CMSFooter", false)
+    </div>
+</footer>
