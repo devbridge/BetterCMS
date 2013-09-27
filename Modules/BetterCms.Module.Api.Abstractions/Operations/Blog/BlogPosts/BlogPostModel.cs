@@ -159,5 +159,14 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
         /// </value>
         [DataMember]
         public bool IsArchived { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tags.
+        /// </summary>
+        /// <value>
+        /// The tags.
+        /// </value>
+        [DataMember]
+        public System.Collections.Generic.List<string> Tags { get; set; }
     }
 }
