@@ -331,7 +331,8 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(result.data.items[0].id).toBe('c1efcb1107ed4901abb3a206012b0b87', 'Correctly filtered ____ should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
+            // data.filter.where.length + 1 <-- Because field Tags cannnot be filtered by
+            expect(data.filter.where.length + 1).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
         });
     });
 
@@ -363,6 +364,82 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(content.isPublished).toBe(true, 'Correctly filtered isPubslihed should be retrieved.');
             expect(new Date(content.publishedOn).getTime()).toBe(new Date('2013-07-24T08:17:11').getTime(), 'Correctly filtered publishedOn should be retrieved.');
             expect(content.publishedByUser).toContain('Better CMS test user', 'Correctly filtered publishedByUser should be retrieved.');
+        });
+    });
+
+    it('02110: Should get list of blog pots with tags', function () {
+        var url = '/bcms-api/blog-posts/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [{ field: 'Title', operation: 'StartsWith', value: '02110:' }]
+            },
+            order: {
+                by: [{ field: 'Title' }]
+            },
+            includeUnpublished: true,
+            includeArchived: true,
+            includeTags: true
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(2, 'Total count should be 3.');
+            expect(result.data.items.length).toBe(2, 'Returned array length should be 3.');
+
+            expect(result.data.items[0].title).toBe('02110:1', 'Correctly filtered items[0].title should be retrieved.');
+            expect(result.data.items[1].title).toBe('02110:2', 'Correctly filtered items[1].title should be retrieved.');
+
+            expect(result.data.items[0].tags).toBeDefinedAndNotNull('Correctly filtered items[0].tags should be retrieved.');
+            expect(result.data.items[0].tags.length).toBe(2, 'items[0].tags should contain 2 items.');
+            expect(result.data.items[0].tags[0]).toBe('02110_1', 'Correctly filtered result.data.items[0].tags[0] should be retrieved.');
+            expect(result.data.items[0].tags[1]).toBe('02110_2', 'Correctly filtered result.data.items[0].tags[1] should be retrieved.');
+
+            expect(result.data.items[1].tags).toBeDefinedAndNotNull('Correctly filtered items[1].tags should be retrieved.');
+            expect(result.data.items[1].tags.length).toBe(3, 'items[1].tags should contain 3 items.');
+            expect(result.data.items[1].tags[0]).toBe('02110_1', 'Correctly filtered result.data.items[1].tags[0] should be retrieved.');
+            expect(result.data.items[1].tags[1]).toBe('02110_2', 'Correctly filtered result.data.items[1].tags[1] should be retrieved.');
+            expect(result.data.items[1].tags[2]).toBe('02110_3', 'Correctly filtered result.data.items[1].tags[2] should be retrieved.');
+        });
+    });
+
+    it('02111: Should throw validation exception for filtering by Tags, when getting blog posts.', function () {
+        var url = '/bcms-api/blog-posts/',
+            result,
+            ready = false,
+            data = {
+                filter: {
+                    where: [{ field: 'Tags', value: 'test' }]
+                }
+            };
+
+        runs(function () {
+            api.get(url, data, null, function (response) {
+                result = response.responseJSON;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            api.expectValidationExceptionIsThrown(result, 'Data');
         });
     });
 

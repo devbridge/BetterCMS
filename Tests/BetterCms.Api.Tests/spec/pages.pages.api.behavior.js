@@ -363,8 +363,8 @@ describe('pages.pages.api.behavior', function () {
             expect(result.data.items[0].id).toBe('e81a87022bf4419688b4a2070081a57e', 'Correctly filtered id should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            // data.filter.where.length + 1 <-- Because field options cannnot be filtered by
-            expect(data.filter.where.length + 1).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
+            // data.filter.where.length + 1 <-- Because field options and tags cannnot be filtered by
+            expect(data.filter.where.length + 2).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
         });
     });
     
@@ -534,6 +534,82 @@ describe('pages.pages.api.behavior', function () {
             data = {
                 filter: {
                     where: [{ field: 'Options', value: 'test' }]
+                }
+            };
+
+        runs(function () {
+            api.get(url, data, null, function (response) {
+                result = response.responseJSON;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            api.expectValidationExceptionIsThrown(result, 'Data');
+        });
+    });
+
+    it('01017: Should get list of pages with tags', function () {
+        var url = '/bcms-api/pages/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [{ field: 'Title', operation: 'StartsWith', value: '01017:' }]
+            },
+            order: {
+                by: [{ field: 'Title' }]
+            },
+            includeUnpublished: true,
+            includeArchived: true,
+            includeTags: true
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(2, 'Total count should be 3.');
+            expect(result.data.items.length).toBe(2, 'Returned array length should be 3.');
+
+            expect(result.data.items[0].title).toBe('01017:1', 'Correctly filtered items[0].title should be retrieved.');
+            expect(result.data.items[1].title).toBe('01017:2', 'Correctly filtered items[1].title should be retrieved.');
+            
+            expect(result.data.items[0].tags).toBeDefinedAndNotNull('Correctly filtered items[0].tags should be retrieved.');
+            expect(result.data.items[0].tags.length).toBe(2, 'items[0].tags should contain 2 items.');
+            expect(result.data.items[0].tags[0]).toBe('01017_1', 'Correctly filtered result.data.items[0].tags[0] should be retrieved.');
+            expect(result.data.items[0].tags[1]).toBe('01017_2', 'Correctly filtered result.data.items[0].tags[1] should be retrieved.');
+            
+            expect(result.data.items[1].tags).toBeDefinedAndNotNull('Correctly filtered items[1].tags should be retrieved.');
+            expect(result.data.items[1].tags.length).toBe(3, 'items[1].tags should contain 3 items.');
+            expect(result.data.items[1].tags[0]).toBe('01017_1', 'Correctly filtered result.data.items[1].tags[0] should be retrieved.');
+            expect(result.data.items[1].tags[1]).toBe('01017_2', 'Correctly filtered result.data.items[1].tags[1] should be retrieved.');
+            expect(result.data.items[1].tags[2]).toBe('01017_3', 'Correctly filtered result.data.items[1].tags[2] should be retrieved.');
+        });
+    });
+    
+    it('01018: Should throw validation exception for filtering by Tags, when getting pages.', function () {
+        var url = '/bcms-api/pages/',
+            result,
+            ready = false,
+            data = {
+                filter: {
+                    where: [{ field: 'Tags', value: 'test' }]
                 }
             };
 

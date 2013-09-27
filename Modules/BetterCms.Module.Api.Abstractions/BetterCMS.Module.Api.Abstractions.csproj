@@ -108,6 +108,7 @@
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\TagModel.cs" />
     <Compile Include="Operations\Blog\BlogPosts\GetBlogPostsModel.cs" />
     <Compile Include="Operations\Blog\BlogPosts\GetBlogPostsRequest.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\GetBlogPostsRequestValidator.cs" />
     <Compile Include="Operations\Blog\BlogPosts\GetBlogPostsResponse.cs" />
     <Compile Include="Operations\Blog\BlogPosts\IBlogPostsService.cs" />
     <Compile Include="Operations\Blog\IBlogApiOperations.cs" />

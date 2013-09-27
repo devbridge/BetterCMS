@@ -53,5 +53,14 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
         /// </value>
         [DataMember]
         public FilterConnector FilterByTagsConnector { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to include tags collections to results.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if  to include tags collections to results; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool IncludeTags { get; set; }
     }
 }
