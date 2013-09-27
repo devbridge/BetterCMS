@@ -10,6 +10,7 @@ using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules.Registration;
 using BetterCms.Module.Api;
 using BetterCms.Module.Blog;
+using BetterCms.Module.ImagesGallery;
 using BetterCms.Module.MediaManager;
 using BetterCms.Module.Newsletter;
 using BetterCms.Module.Pages;
@@ -40,7 +41,8 @@ namespace BetterCms.Test.Module
                                                          typeof(MediaManagerModuleDescriptor).Assembly,
                                                          typeof(UsersModuleDescriptor).Assembly,
                                                          typeof(ApiModuleDescriptor).Assembly,
-                                                         typeof(UsersApiModuleDescriptor).Assembly
+                                                         typeof(UsersApiModuleDescriptor).Assembly,
+                                                         typeof(ImagesGalleryModuleDescriptor).Assembly
                                                      });
             CreateContainer();
         }

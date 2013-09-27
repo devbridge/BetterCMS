@@ -60,5 +60,16 @@ namespace BetterCms.Module.ImagesGallery.ViewModels
         ///   <c>true</c> if to load CMS styles; otherwise, <c>false</c>.
         /// </value>
         public bool LoadCmsStyles { get; set; }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("Title: {0}, Url: {1}, ImagesCount: {2}", Title, Url, ImagesCount);
+        }
     }
 }

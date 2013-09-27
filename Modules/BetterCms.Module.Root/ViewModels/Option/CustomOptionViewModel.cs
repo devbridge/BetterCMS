@@ -1,7 +1,10 @@
-﻿using BetterCms.Core.DataContracts;
+﻿using System;
+
+using BetterCms.Core.DataContracts;
 
 namespace BetterCms.Module.Root.ViewModels.Option
 {
+    [Serializable]
     public class CustomOptionViewModel : ICustomOption
     {
         /// <summary>

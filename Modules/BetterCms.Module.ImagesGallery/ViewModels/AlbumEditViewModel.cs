@@ -72,7 +72,7 @@ namespace BetterCms.Module.ImagesGallery.ViewModels
         /// </returns>
         public override string ToString()
         {
-            return string.Format("Id: {0}, Version: {1}", Id, Version);
+            return string.Format("Id: {0}, Version: {1}, Title: {2}", Id, Version, Title);
         }
     }
 }

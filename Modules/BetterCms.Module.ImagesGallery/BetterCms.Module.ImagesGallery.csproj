@@ -141,7 +141,6 @@
     <Compile Include="Providers\ImageGalleryAlbumOptionProvider.cs" />
     <Compile Include="Registration\ImagesGalleryJsModuleIncludeDescriptor.cs" />
     <Compile Include="ViewModels\AlbumEditViewModel.cs" />
-    <Compile Include="ViewModels\AlbumSiteSettingsViewModel.cs" />
     <Compile Include="ViewModels\AlbumViewModel.cs" />
     <Compile Include="ViewModels\GalleryViewModel.cs" />
     <Compile Include="ViewModels\ImageViewModel.cs" />

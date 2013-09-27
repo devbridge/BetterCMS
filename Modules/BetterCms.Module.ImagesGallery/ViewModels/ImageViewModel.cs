@@ -17,5 +17,16 @@
         /// The caption.
         /// </value>
         public string Caption { get; set; }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("Caption: {0}, Url: {1}", Caption, Url);
+        }
     }
 }
