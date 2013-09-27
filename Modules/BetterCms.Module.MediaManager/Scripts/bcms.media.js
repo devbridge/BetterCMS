@@ -1098,7 +1098,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             acceptTitle: globalization.selectFolderSelectButtonTitle,
             onClose: onClose,
             onLoad: function (dialog) {
-                dynamicContent.setContentFromUrl(dialog, links.insertImageDialogUrl, {
+                dynamicContent.setContentFromUrl(dialog, $.format(links.insertImageDialogUrl, ''), {
                     done: function (content) {
                         imagesViewModel = new MediaItemsViewModel(dialog.container, links.loadImagesUrl, dialog.container);
                         imagesViewModel.spinContainer = dialog.container.find(selectors.insertContentContainer);
@@ -1148,22 +1148,31 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     /**
     * Shows image selection window.
     */
-    media.openImageInsertDialog = function (onAccept, canInsertWithOptions, folderViewModelOptions, onClose) {
+    media.openImageInsertDialog = function (opts) {
+        
+        var options = $.extend({
+            onAccept: function () { },
+            canInsertWithOptions: false,
+            folderViewModelOptions: null,
+            onClose: null,
+            currentFolder: ''
+        }, opts);
+
         modal.open({
             title: globalization.insertImageDialogTitle,
             acceptTitle: globalization.insertImageInsertButtonTitle,
-            onClose: onClose,
+            onClose: options.onClose,
             onLoad: function (dialog) {
                 imageInsertDialog = dialog;
-                dynamicContent.setContentFromUrl(dialog, links.insertImageDialogUrl, {
+                dynamicContent.setContentFromUrl(dialog, $.format(links.insertImageDialogUrl, options.currentFolder || ''), {
                     done: function (content) {
                         imagesViewModel = new MediaItemsViewModel(dialog.container, links.loadImagesUrl, dialog.container);
                         imagesViewModel.canSelectMedia(true);
                         imagesViewModel.canInsertMedia(true);
-                        imagesViewModel.canInsertMediaWithOptions(canInsertWithOptions);
+                        imagesViewModel.canInsertMediaWithOptions(options.canInsertWithOptions);
                         imagesViewModel.spinContainer = dialog.container.find(selectors.insertContentContainer);
-                        if (folderViewModelOptions) {
-                            imagesViewModel = $.extend(imagesViewModel, folderViewModelOptions);
+                        if (options.folderViewModelOptions) {
+                            imagesViewModel = $.extend(imagesViewModel, options.folderViewModelOptions);
                         }
                         initializeTab(content, imagesViewModel);
                     }
@@ -1190,8 +1199,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
                     return false;
                 } else {
-                    if ($.isFunction(onAccept)) {
-                        onAccept(selectedItem);
+                    if ($.isFunction(options.onAccept)) {
+                        options.onAccept(selectedItem);
                     }
                 }
 
@@ -1205,9 +1214,15 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     */
     function onOpenImageInsertDialog(htmlContentEditor) {
         contentEditor = htmlContentEditor;
-        media.openImageInsertDialog(function (imageViewModel) {
-            insertImage(imageViewModel, false);
-        }, true);
+
+        var options = {
+            onAccept: function (imageViewModel) {
+                insertImage(imageViewModel, false);
+            },
+            canInsertWithOptions: true
+        };
+        
+        media.openImageInsertDialog(options);
     }
 
     /**
@@ -1707,6 +1722,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.thumbnailUrl = ko.observable();
             self.tooltip = ko.observable();
             self.version = ko.observable();
+            self.currentFolder = ko.observable();
 
             self.setImage = function (imageData) {
                 self.thumbnailUrl(imageData.ThumbnailUrl);
@@ -1747,7 +1763,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         media.ImageSelectorViewModel.prototype.select = function (data, event) {
             var self = this,
-                onMediaSelect = function (insertedImage) {
+                onMediaSelect = function(insertedImage) {
                     self.thumbnailUrl(insertedImage.thumbnailUrl());
                     self.url(insertedImage.publicUrl());
                     self.tooltip(insertedImage.tooltip);
@@ -1757,16 +1773,22 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     self.onAfterSelect();
                 },
                 mediasViewModelExtender = {
-                    onMediaSelect: function (image) {
+                    onMediaSelect: function(image) {
                         onMediaSelect(image);
                     }
                 },
-                onMediaSelectClose = function () {
+                onMediaSelectClose = function() {
                     self.onSelectClose();
+                }, options = {
+                    onAccept: onMediaSelect,
+                    canInsertWithOptions: false,
+                    folderViewModelOptions: mediasViewModelExtender,
+                    onClose: onMediaSelectClose,
+                    currentFolder: self.currentFolder()
                 };
 
             bcms.stopEventPropagation(event);
-            media.openImageInsertDialog(onMediaSelect, false, mediasViewModelExtender, onMediaSelectClose);
+            media.openImageInsertDialog(options);
         };
 
         media.ImageSelectorViewModel.prototype.onAfterSelect = function () { };

@@ -24,7 +24,7 @@ namespace BetterCms.Module.MediaManager.Registration
                     new JavaScriptModuleLinkTo<FilesController>(this, "loadFilesUrl", c => c.GetFilesList(null)),
                     new JavaScriptModuleLinkTo<AudiosController>(this, "loadAudiosUrl", c => c.GetAudiosList(null)),
                     new JavaScriptModuleLinkTo<VideosController>(this, "loadVideosUrl", c => c.GetVideosList(null)),
-                    new JavaScriptModuleLinkTo<ImagesController>(this, "insertImageDialogUrl", c => c.ImageInsert()),
+                    new JavaScriptModuleLinkTo<ImagesController>(this, "insertImageDialogUrl", c => c.ImageInsert("{0}")),
                     new JavaScriptModuleLinkTo<FilesController>(this, "insertFileDialogUrl", c => c.FileInsert()),
                     new JavaScriptModuleLinkTo<ImagesController>(this, "deleteImageUrl", c => c.ImageDelete("{0}", "{1}")),
                     new JavaScriptModuleLinkTo<AudiosController>(this, "deleteAudioUrl", c => c.AudioDelete("{0}", "{1}")),
