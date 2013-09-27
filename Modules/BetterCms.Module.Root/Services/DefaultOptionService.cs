@@ -8,7 +8,7 @@ using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Models;
-
+using BetterCms.Core.Services.Caching;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.Extensions;
@@ -24,15 +24,27 @@ namespace BetterCms.Module.Root.Services
         /// <summary>
         /// The repository
         /// </summary>
-        private IRepository repository;
+        private readonly IRepository repository;
+
+        /// <summary>
+        /// The cache service.
+        /// </summary>
+        private readonly ICacheService cacheService;
+
+        /// <summary>
+        /// The cache key.
+        /// </summary>
+        private const string CacheKey = "bcms-custom-options-list";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultOptionService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
-        public DefaultOptionService(IRepository repository)
+        /// <param name="cacheService">The cache service.</param>
+        public DefaultOptionService(IRepository repository, ICacheService cacheService)
         {
             this.repository = repository;
+            this.cacheService = cacheService;
         }
 
         /// <summary>
@@ -579,6 +591,32 @@ namespace BetterCms.Module.Root.Services
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets the custom options.
+        /// </summary>
+        /// <returns>
+        /// List of custom option view models
+        /// </returns>
+        public List<CustomOptionViewModel> GetCustomOptions()
+        {
+            return cacheService.Get(CacheKey, TimeSpan.FromSeconds(30), LoadCustomOptions);
+        }
+
+        /// <summary>
+        /// Loads the custom options.
+        /// </summary>
+        /// <returns>
+        /// List of custom option view models
+        /// </returns>
+        private List<CustomOptionViewModel> LoadCustomOptions()
+        {
+            return
+                repository.AsQueryable<CustomOption>()
+                          .OrderBy(o => o.Title)
+                          .Select(o => new CustomOptionViewModel { Identifier = o.Identifier, Title = o.Title })
+                          .ToList();
         }
     }
 }

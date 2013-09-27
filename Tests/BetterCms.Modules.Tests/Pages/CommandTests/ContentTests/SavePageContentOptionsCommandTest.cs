@@ -4,6 +4,8 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Services.Caching;
+
 using BetterCms.Module.Pages.Command.Content.SavePageContentOptions;
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
@@ -79,7 +81,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                 var command = new SavePageContentOptionsCommand();
                 command.UnitOfWork = unitOfWork;
                 command.Repository = repository;
-                command.OptionService = new DefaultOptionService(repository);
+                command.OptionService = new DefaultOptionService(repository, new HttpRuntimeCacheService());
                 var result = command.Execute(request);
 
                 Assert.IsTrue(result);

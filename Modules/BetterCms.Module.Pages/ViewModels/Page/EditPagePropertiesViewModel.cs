@@ -256,7 +256,6 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         {
             Image = new ImageSelectorViewModel();
             UserAccessList = new List<UserAccessViewModel>();
-            CustomOptions = CustomOptionsProvider.CustomOptions;
         }
 
         /// <summary>

@@ -5,21 +5,12 @@ using System.ComponentModel.DataAnnotations;
 using BetterCms.Core.Models;
 
 using BetterCms.Module.Root.Content.Resources;
-using BetterCms.Module.Root.Providers;
 using BetterCms.Module.Root.ViewModels.Option;
 
 namespace BetterCms.Module.Pages.ViewModels.Content
 {
     public class ContentViewModel
     {      
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ContentViewModel" /> class.
-        /// </summary>
-        public ContentViewModel()
-        {
-            CustomOptions = CustomOptionsProvider.CustomOptions;
-        }
-
         /// <summary>
         /// Gets or sets the widget id.
         /// </summary>

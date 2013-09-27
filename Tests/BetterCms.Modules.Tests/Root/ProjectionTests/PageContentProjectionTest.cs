@@ -1,4 +1,5 @@
-﻿using BetterCms.Module.Pages.Accessors;
+﻿using BetterCms.Core.Services.Caching;
+using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.Services;
@@ -22,7 +23,7 @@ namespace BetterCms.Test.Module.Root.ProjectionTests
                                                      TestDataProvider.CreateNewPageContentOption(pageContent)
                                                  };
 
-            var optionService = new DefaultOptionService(null);
+            var optionService = new DefaultOptionService(null, new HttpRuntimeCacheService());
             var optionValues = optionService.GetMergedOptionValues(pageContent.Options, null);
 
             PageContentProjection original = new PageContentProjection(

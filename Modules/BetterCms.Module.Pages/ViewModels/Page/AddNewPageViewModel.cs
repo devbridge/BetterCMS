@@ -101,7 +101,6 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public AddNewPageViewModel()
         {
             UserAccessList = new List<UserAccessViewModel>();
-            CustomOptions = CustomOptionsProvider.CustomOptions;
         }
 
         /// <summary>

@@ -142,6 +142,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 var pageOptions = Repository.AsQueryable<PageOption>(p => p.Page.Id == id).Fetch(o => o.CustomOption).ToList();
 
                 model.Model.OptionValues = optionService.GetMergedOptionValuesForEdit(layoutOptions, pageOptions);
+                model.Model.CustomOptions = optionService.GetCustomOptions();
 
                 if (cmsConfiguration.Security.AccessControlEnabled)
                 {                    

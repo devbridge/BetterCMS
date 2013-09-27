@@ -7,6 +7,7 @@ using Autofac;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Services.Caching;
 using BetterCms.Module.Pages.Command.Content.GetPageContentOptions;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
@@ -39,7 +40,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                 var repository = new DefaultRepository(unitOfWork);
                 command.UnitOfWork = unitOfWork;
                 command.Repository = repository;
-                command.OptionService = new DefaultOptionService(repository);
+                command.OptionService = new DefaultOptionService(repository, new HttpRuntimeCacheService());
                 command.CmsConfiguration = Container.Resolve<ICmsConfiguration>();
 
                 // Execute command

@@ -93,6 +93,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
                         .OrderBy(o => o.OptionKey)
                         .ToList();
                     optionService.SetCustomOptionValueTitles(model.Options);
+                    model.CustomOptions = optionService.GetCustomOptions();
                 }
 
                 if (model == null)

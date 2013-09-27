@@ -9,21 +9,12 @@ using BetterCms.Module.Pages.Mvc.Attributes;
 
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc.Grids;
-using BetterCms.Module.Root.Providers;
 using BetterCms.Module.Root.ViewModels.Option;
 
 namespace BetterCms.Module.Pages.ViewModels.Templates
 {
     public class TemplateEditViewModel :  IEditableGridItem
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TemplateEditViewModel" /> class.
-        /// </summary>
-        public TemplateEditViewModel()
-        {
-            CustomOptions = CustomOptionsProvider.CustomOptions;
-        }
-
         /// <summary>
         /// Gets or sets the id.
         /// </summary>

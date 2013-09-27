@@ -8,6 +8,7 @@ using BetterCms.Module.Pages.ViewModels.Templates;
 
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Services;
 
 using NHibernate.Transform;
 
@@ -15,11 +16,25 @@ namespace BetterCms.Module.Pages.Command.Layout.GetTemplateForEdit
 {
     public class GetTemplateForEditCommand : CommandBase, ICommand<Guid?, TemplateEditViewModel>
     {
+        /// <summary>
+        /// The layout service
+        /// </summary>
         private ILayoutService layoutService;
 
-        public GetTemplateForEditCommand(ILayoutService layoutService)
+        /// <summary>
+        /// The option service
+        /// </summary>
+        private IOptionService optionService;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetTemplateForEditCommand" /> class.
+        /// </summary>
+        /// <param name="layoutService">The layout service.</param>
+        /// <param name="optionService">The option service.</param>
+        public GetTemplateForEditCommand(ILayoutService layoutService, IOptionService optionService)
         {
             this.layoutService = layoutService;
+            this.optionService = optionService;
         }
 
         public TemplateEditViewModel Execute(Guid? templateId)
@@ -71,6 +86,7 @@ namespace BetterCms.Module.Pages.Command.Layout.GetTemplateForEdit
 
                 templateModel.Regions = regions.ToList();
                 templateModel.Options = layoutService.GetLayoutOptions(templateId.Value);
+                templateModel.CustomOptions = optionService.GetCustomOptions();
             }
 
             return templateModel;

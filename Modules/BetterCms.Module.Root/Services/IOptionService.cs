@@ -78,5 +78,11 @@ namespace BetterCms.Module.Root.Services
         /// <param name="optionModels">The option models.</param>
         /// <param name="valueModels">The value models.</param>
         void SetCustomOptionValueTitles(IEnumerable<OptionViewModel> optionModels, IEnumerable<OptionValueEditViewModel> valueModels = null);
+
+        /// <summary>
+        /// Gets the custom options.
+        /// </summary>
+        /// <returns>List of custom option view models</returns>
+        List<CustomOptionViewModel> GetCustomOptions();
     }
 }

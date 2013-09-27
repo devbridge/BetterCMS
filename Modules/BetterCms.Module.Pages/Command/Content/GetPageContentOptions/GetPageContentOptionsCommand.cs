@@ -61,6 +61,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageContentOptions
                 if (pageContent != null)
                 {
                     model.OptionValues = OptionService.GetMergedOptionValuesForEdit(pageContent.Content.ContentOptions, pageContent.Options);
+                    model.CustomOptions = OptionService.GetCustomOptions();
 
                     if (CmsConfiguration.Security.AccessControlEnabled)
                     {

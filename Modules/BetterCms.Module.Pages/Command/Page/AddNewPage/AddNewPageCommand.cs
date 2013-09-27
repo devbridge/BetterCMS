@@ -6,7 +6,9 @@ using BetterCms.Core.Services;
 
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
+
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.Pages.Command.Page.AddNewPage
@@ -20,6 +22,8 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
         private readonly IAccessControlService accessControlService;
 
         private readonly ISecurityService securityService;
+        
+        private readonly IOptionService optionService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AddNewPageCommand" /> class.
@@ -28,12 +32,15 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
         /// <param name="cmsConfiguration">The CMS configuration.</param>
         /// <param name="accessControlService">The access control service.</param>
         /// <param name="securityService">The security service.</param>
-        public AddNewPageCommand(ILayoutService LayoutService, ICmsConfiguration cmsConfiguration, IAccessControlService accessControlService, ISecurityService securityService)
+        /// <param name="optionService">The option service.</param>
+        public AddNewPageCommand(ILayoutService LayoutService, ICmsConfiguration cmsConfiguration,
+            IAccessControlService accessControlService, ISecurityService securityService, IOptionService optionService)
         {
             layoutService = LayoutService;
             this.cmsConfiguration = cmsConfiguration;
             this.accessControlService = accessControlService;
             this.securityService = securityService;
+            this.optionService = optionService;
         }
 
         /// <summary>
@@ -59,6 +66,7 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
                 model.TemplateId = model.Templates.First(t => t.IsActive).TemplateId;
 
                 model.OptionValues = layoutService.GetLayoutOptionValues(model.TemplateId);
+                model.CustomOptions = optionService.GetCustomOptions();
             }
 
             return model;
