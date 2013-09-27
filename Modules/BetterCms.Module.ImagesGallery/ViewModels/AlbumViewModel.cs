@@ -52,5 +52,13 @@ namespace BetterCms.Module.ImagesGallery.ViewModels
         /// The list of image view models.
         /// </value>
         public List<ImageViewModel> Images { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to load CMS styles.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to load CMS styles; otherwise, <c>false</c>.
+        /// </value>
+        public bool LoadCmsStyles { get; set; }
     }
 }

@@ -23,7 +23,8 @@ namespace BetterCms.Module.ImagesGallery.Controllers
                 Guid albumId;
                 if (Guid.TryParse(albumIdString, out albumId))
                 {
-                    var albumViewModel = GetCommand<GetAlbumCommand>().ExecuteCommand(albumId);
+                    var albumRequest = new GetAlbumCommandRequest { AlbumId = albumId, WidgetViewModel = request };
+                    var albumViewModel = GetCommand<GetAlbumCommand>().ExecuteCommand(albumRequest);
                     return View("Album", albumViewModel);
                 }
             }

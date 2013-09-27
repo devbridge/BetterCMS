@@ -3,14 +3,16 @@ using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Web;
+
 using BetterCms.Module.ImagesGallery.Models;
 using BetterCms.Module.ImagesGallery.ViewModels;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Grids.Extensions;
 
 namespace BetterCms.Module.ImagesGallery.Command.GetAlbum
 {
-    public class GetAlbumCommand : CommandBase, ICommand<Guid, AlbumViewModel>
+    public class GetAlbumCommand : CommandBase, ICommand<GetAlbumCommandRequest, AlbumViewModel>
     {
         /// <summary>
         /// The context accessor
@@ -30,12 +32,12 @@ namespace BetterCms.Module.ImagesGallery.Command.GetAlbum
         /// Executes the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
-        public AlbumViewModel Execute(Guid request)
+        public AlbumViewModel Execute(GetAlbumCommandRequest request)
         {
             AlbumViewModel album = null;
             var result = Repository
                 .AsQueryable<Album>()
-                .Where(a => a.Id == request && !a.Folder.IsDeleted)
+                .Where(a => a.Id == request.AlbumId && !a.Folder.IsDeleted)
                 .Select(a => new
                     {
                         FolderId = a.Folder.Id,
@@ -51,7 +53,7 @@ namespace BetterCms.Module.ImagesGallery.Command.GetAlbum
             if (result != null)
             {
                 album = result.Album;
-                album.Url = ConstructBackUrl(request);
+                album.Url = ConstructBackUrl(request.AlbumId);
 
                 if (!result.FolderId.HasDefaultValue())
                 {
@@ -68,6 +70,8 @@ namespace BetterCms.Module.ImagesGallery.Command.GetAlbum
                     album.ImagesCount = album.Images.Count;
                 }
             }
+
+            album.LoadCmsStyles = request.WidgetViewModel.GetOptionValue<bool>(ImageGallerModuleConstants.LoadCmsStylesWidgetOptionKey);
 
             return album;
         }
@@ -92,7 +96,7 @@ namespace BetterCms.Module.ImagesGallery.Command.GetAlbum
                 return url;
             }
 
-            return "javascript: back";
+            return "javascript:history.back()";
         }
     }
 }

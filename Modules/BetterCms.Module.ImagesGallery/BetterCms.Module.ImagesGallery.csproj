@@ -118,6 +118,7 @@
     </Compile>
     <Compile Include="Command\GetAlbum\GetAlbumCommand.cs" />
     <Compile Include="Command\GetAlbumForEdit\GetAlbumForEditCommand.cs" />
+    <Compile Include="Command\GetAlbum\GetAlbumCommandRequest.cs" />
     <Compile Include="Command\GetGalleryAlbums\GetGalleryAlbumsCommand.cs" />
     <Compile Include="Controllers\GalleryWidgetController.cs" />
     <Compile Include="Events\ImageGalleryEvents.cs" />
@@ -201,6 +202,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\GalleryWidget\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\GalleryWidget\Partial\AlbumStyles.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\GalleryWidget\Partial\ListStyles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
