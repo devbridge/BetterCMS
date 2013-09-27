@@ -7,12 +7,24 @@
 @model BetterCms.Module.ImagesGallery.ViewModels.AlbumEditViewModel
            
 <div class="bcms-scroll-window">
+    @Html.TabbedContentMessagesBox()
     <div class="bcms-padded-content">
-        @Html.TabbedContentMessagesBox()
-    
         @using (Html.BeginForm<AlbumController>(f => f.SaveAlbum(null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
         {
-        
+            <div class="bcms-input-list-holder">
+                @Html.Tooltip(ImagesGalleryGlobalization.EditAlbum_Folder_Tooltip_Description)
+                <div class="bcms-content-titles">@ImagesGalleryGlobalization.EditAlbum_Folder_Title</div>
+                
+                @Html.TextBoxFor(model => model.Folder.FolderTitle, new
+                                                                        {
+                                                                            @class = "bcms-editor-field-box", 
+                                                                            @readonly = "readonly",
+                                                                            data_bind="value: folder().title()",
+                                                                            style = "width: 400px;"
+                                                                        })
+                <div class="bcms-btn-small" data-bind="click: folder().select.bind(folder())">@ImagesGalleryGlobalization.EditAlbum_Fodler_SelectFolder_ButtonTitle</div>
+            </div>
+            
             <div class="bcms-input-list-holder">
                 @Html.Tooltip(ImagesGalleryGlobalization.EditAlbum_Title_Tooltip_Description)
                 <div class="bcms-content-titles">@ImagesGalleryGlobalization.EditAlbum_Title_Title</div>
@@ -44,7 +56,8 @@
         
             @Html.HiddenFor(m => m.Id, new { data_bind = "value: id()" })
             @Html.HiddenFor(m => m.Version, new { data_bind = "value: version()" })
-            @Html.HiddenFor(model => model.CoverImage.ImageId, new { data_bind = "value: coverImage().id()" })
+            @Html.HiddenFor(m => m.CoverImage.ImageId, new { data_bind = "value: coverImage().id()" })
+            @Html.HiddenFor(m => m.Folder.FolderId, new { data_bind = "value: folder().id()" })
 
             @Html.HiddenSubmit()
         }

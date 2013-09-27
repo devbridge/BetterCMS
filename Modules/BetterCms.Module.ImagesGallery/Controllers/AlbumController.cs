@@ -4,7 +4,7 @@ using System.Web.Mvc;
 using BetterCms.Core.Security;
 
 using BetterCms.Module.ImagesGallery.Command.DeleteAlbum;
-using BetterCms.Module.ImagesGallery.Command.GetAlbum;
+using BetterCms.Module.ImagesGallery.Command.GetAlbumForEdit;
 using BetterCms.Module.ImagesGallery.Command.GetAlbumList;
 using BetterCms.Module.ImagesGallery.Command.SaveAlbum;
 using BetterCms.Module.ImagesGallery.Content.Resources;
@@ -130,7 +130,7 @@ namespace BetterCms.Module.ImagesGallery.Controllers
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult EditAlbum(string id)
         {
-            var model = GetCommand<GetAlbumCommand>().ExecuteCommand(id.ToGuidOrDefault());
+            var model = GetCommand<GetAlbumForEditCommand>().ExecuteCommand(id.ToGuidOrDefault());
             var view = RenderView("Edit", model);
 
             return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
@@ -144,7 +144,7 @@ namespace BetterCms.Module.ImagesGallery.Controllers
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult CreateAlbum()
         {
-            var model = GetCommand<GetAlbumCommand>().ExecuteCommand(new Guid());
+            var model = GetCommand<GetAlbumForEditCommand>().ExecuteCommand(new Guid());
             var view = RenderView("Edit", model);
 
             return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);

@@ -403,6 +403,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Click on folder to select it..
+        /// </summary>
+        public static string FolderNotSelected_MessageMessage {
+            get {
+                return ResourceManager.GetString("FolderNotSelected_MessageMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select area to crop..
         /// </summary>
         public static string ImageEditor_CroppingDialog_SubTitle {
@@ -817,6 +826,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Insert.
+        /// </summary>
+        public static string InsertImage_InsertButton_Title {
+            get {
+                return ResourceManager.GetString("InsertImage_InsertButton_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Archived On.
         /// </summary>
         public static string MediaHistory_Column_ArchivedOn {
@@ -1114,6 +1132,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select folder.
+        /// </summary>
+        public static string MediaManager_ButtonSelectFolder {
+            get {
+                return ResourceManager.GetString("MediaManager_ButtonSelectFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unarchive.
         /// </summary>
         public static string MediaManager_ButtonUnarchive {
@@ -1335,6 +1362,42 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string MultiFileUpload_Uploading {
             get {
                 return ResourceManager.GetString("MultiFileUpload_Uploading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Folder.
+        /// </summary>
+        public static string SelectFolder_Dialog_Title {
+            get {
+                return ResourceManager.GetString("SelectFolder_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to get folders list..
+        /// </summary>
+        public static string SelectFolder_FailureMessage_Message {
+            get {
+                return ResourceManager.GetString("SelectFolder_FailureMessage_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failure.
+        /// </summary>
+        public static string SelectFolder_FailureMessage_Title {
+            get {
+                return ResourceManager.GetString("SelectFolder_FailureMessage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        public static string SelectFolder_SelectButton_Title {
+            get {
+                return ResourceManager.GetString("SelectFolder_SelectButton_Title", resourceCulture);
             }
         }
         

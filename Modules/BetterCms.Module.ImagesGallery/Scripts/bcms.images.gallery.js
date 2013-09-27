@@ -32,6 +32,27 @@ bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettin
         gallery.selectors = selectors;
 
         /**
+        * Album folder selector view model
+        */
+        var AlbumFolderSelectorViewModel = (function (_super) {
+            bcms.extendsClass(AlbumFolderSelectorViewModel, _super);
+            
+            function AlbumFolderSelectorViewModel(folder, parent) {
+                _super.call(this, folder);
+
+                this.parent = parent;
+            }
+            
+            AlbumFolderSelectorViewModel.prototype.onAfterSelect = function () {
+                if (!this.parent.title()) {
+                    this.parent.title(this.title());
+                }
+            };
+
+            return AlbumFolderSelectorViewModel;
+        })(media.ImageFolderSelectorViewModel);
+
+        /**
         * Called after album edit form was loaded
         */
         function initializeEditAlbumForm(dialog, content) {
@@ -40,10 +61,13 @@ bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettin
                 coverImageViewModel = ko.observable(new media.ImageSelectorViewModel(data.CoverImage)),
                 viewModel = {
                     coverImage: coverImageViewModel,
+                    
                     title: ko.observable(data.Title),
                     version: ko.observable(data.Version),
                     id: ko.observable(data.Id),
                 };
+
+            viewModel.folder = ko.observable(new AlbumFolderSelectorViewModel(data.Folder, viewModel)),
             
             ko.applyBindings(viewModel, form.get(0));
 

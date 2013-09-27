@@ -13,6 +13,14 @@ namespace BetterCms.Module.ImagesGallery.ViewModels
     public class AlbumEditViewModel : IEditableGridItem
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="AlbumEditViewModel" /> class.
+        /// </summary>
+        public AlbumEditViewModel()
+        {
+            Folder = new FolderSelectorViewModel();
+        }
+
+        /// <summary>
         /// Gets or sets the album id.
         /// </summary>
         /// <value>
@@ -47,6 +55,14 @@ namespace BetterCms.Module.ImagesGallery.ViewModels
         /// The cover image view model.
         /// </value>
         public ImageSelectorViewModel CoverImage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the folder.
+        /// </summary>
+        /// <value>
+        /// The folder.
+        /// </value>
+        public FolderSelectorViewModel Folder { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

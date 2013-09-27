@@ -7,12 +7,13 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Web;
 
-using BetterCms.Module.ImagesGallery.Controllers;
 using BetterCms.Module.ImagesGallery.Providers;
 using BetterCms.Module.ImagesGallery.ViewModels;
-
+using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Cms;
+
+using NHibernate.Linq;
 
 namespace BetterCms.Module.ImagesGallery.Command.GetGalleryAlbums
 {
@@ -43,11 +44,9 @@ namespace BetterCms.Module.ImagesGallery.Command.GetGalleryAlbums
         /// Executes the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
         public GalleryViewModel Execute(RenderWidgetViewModel request)
         {
-            IList<AlbumViewModel> albums;
+            List<AlbumViewModel> albums;
             var ids = request.Options
                 .Where(o => o.Type == OptionType.Custom
                     && o.CustomOption != null
@@ -59,29 +58,58 @@ namespace BetterCms.Module.ImagesGallery.Command.GetGalleryAlbums
 
             if (ids.Length > 0)
             {
+                // Load list of albums
                 albums = repository
                     .AsQueryable<Models.Album>()
                     .Where(a => ids.Contains(a.Id))
                     .Select(a => new AlbumViewModel
                                      {
-                                         Id = a.Id,
+                                         Url = a.Id.ToString(),
                                          Title = a.Title,
-                                         ImagesCount = 17, // TODO: remove hardcode
-                                         LastUpdateDate = DateTime.Now, // TODO: remove hardcode
+                                         ImagesCount = a.Folder.Medias.Count(m => m is MediaImage),
+                                         LastUpdateDate = a.Folder.Medias.Max(m => m.ModifiedOn),
                                          CoverImageUrl = a.CoverImage != null ? a.CoverImage.PublicUrl : null
                                      })
+                    .ToFuture()
                     .ToList();
+
+                var urlPattern = GetAlbumUrlPattern(); string.Format("/?{0}={1}",
+                    ImageGallerModuleConstants.GalleryAlbumIdQueryParameterName,
+                    "{0}");
+                albums.ForEach(a => a.Url = string.Format(urlPattern, a.Url));
             }
             else
             {
                 albums = new List<AlbumViewModel>();
             }
 
-            return new GalleryViewModel
-                       {
-                           Albums = albums,
-                           AlbumUrl = contextAccessor.ResolveActionUrl<GalleryController>(gc => gc.Album("{0}"))
-                       };
+            return new GalleryViewModel { Albums = albums };
+        }
+
+        /// <summary>
+        /// Gets the album URL pattern.
+        /// </summary>
+        /// <returns>Album URL pattern</returns>
+        private string GetAlbumUrlPattern()
+        {
+            var context = contextAccessor.GetCurrent();
+            if (context != null && context.Request.Url != null)
+            {
+                var url = context.Request.Url.ToString();
+                if (!url.Contains("?"))
+                {
+                    url = string.Concat(url, "?");
+                }
+                else
+                {
+                    url = string.Concat(url, "&");
+                }
+                url = string.Format("{0}{1}={2}", url, ImageGallerModuleConstants.GalleryAlbumIdQueryParameterName, "{0}");
+
+                return url;
+            }
+
+            return null;
         }
     }
 }

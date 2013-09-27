@@ -141,6 +141,15 @@
   <data name="EditAlbum_Dialog_Title" xml:space="preserve">
     <value>Edit album</value>
   </data>
+  <data name="EditAlbum_Fodler_SelectFolder_ButtonTitle" xml:space="preserve">
+    <value>Browse ...</value>
+  </data>
+  <data name="EditAlbum_Folder_Title" xml:space="preserve">
+    <value>Album folder</value>
+  </data>
+  <data name="EditAlbum_Folder_Tooltip_Description" xml:space="preserve">
+    <value>Selected folder's images will be displayed in the gallery.</value>
+  </data>
   <data name="EditAlbum_Title_MaxLengthMessage" xml:space="preserve">
     <value>Album title maximum length exceeded.</value>
   </data>
@@ -170,5 +179,8 @@
   </data>
   <data name="SiteSettings_Albums_Title_Title" xml:space="preserve">
     <value>Title</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
   </data>
 </root>

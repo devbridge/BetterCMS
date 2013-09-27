@@ -133,6 +133,33 @@ namespace BetterCms.Module.ImagesGallery.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Browse ....
+        /// </summary>
+        public static string EditAlbum_Fodler_SelectFolder_ButtonTitle {
+            get {
+                return ResourceManager.GetString("EditAlbum_Fodler_SelectFolder_ButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Album folder.
+        /// </summary>
+        public static string EditAlbum_Folder_Title {
+            get {
+                return ResourceManager.GetString("EditAlbum_Folder_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected folder&apos;s images will be displayed in the gallery..
+        /// </summary>
+        public static string EditAlbum_Folder_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("EditAlbum_Folder_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Album title maximum length exceeded..
         /// </summary>
         public static string EditAlbum_Title_MaxLengthMessage {
@@ -219,6 +246,15 @@ namespace BetterCms.Module.ImagesGallery.Content.Resources {
         public static string SiteSettings_AlbumsMenuItem {
             get {
                 return ResourceManager.GetString("SiteSettings_AlbumsMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
     }

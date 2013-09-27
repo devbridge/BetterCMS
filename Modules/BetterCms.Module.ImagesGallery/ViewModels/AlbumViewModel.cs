@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BetterCms.Module.ImagesGallery.ViewModels
 {
@@ -10,7 +11,7 @@ namespace BetterCms.Module.ImagesGallery.ViewModels
         /// <value>
         /// The id.
         /// </value>
-        public Guid Id { get; set; }
+        public string Url { get; set; }
 
         /// <summary>
         /// Gets or sets the title.
@@ -43,5 +44,13 @@ namespace BetterCms.Module.ImagesGallery.ViewModels
         /// The cover image URL.
         /// </value>
         public string CoverImageUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of image view models.
+        /// </summary>
+        /// <value>
+        /// The list of image view models.
+        /// </value>
+        public List<ImageViewModel> Images { get; set; }
     }
 }

@@ -236,17 +236,17 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
         };
 
         grid.ListViewModel.prototype.addNewItem = function () {
-            if (!self.rowAdded) {
-                self.rowAdded = true;
+            if (!this.rowAdded) {
+                this.rowAdded = true;
 
-                var newItem = self.createItem({
+                var newItem = this.createItem({
                     IsActive: true,
                     IsNew: true
                 });
-                self.items.unshift(newItem);
-                self.isSelected = true;
+                this.items.unshift(newItem);
+                this.isSelected = true;
 
-                self.onAfterNewItemAdded(newItem);
+                this.onAfterNewItemAdded(newItem);
             }
         };
 

@@ -5,7 +5,5 @@ namespace BetterCms.Module.ImagesGallery.ViewModels
     public class GalleryViewModel
     {
         public IList<AlbumViewModel> Albums { get; set; }
-
-        public string AlbumUrl { get; set; }
     }
 }

@@ -5,7 +5,7 @@ bettercms.define('bcms.media', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUpload, imageEditor, htmlEditor, ko, menu, security, history, fileEditor, tags) {
     'use strict';
 
-    var media = { },
+    var media = {},
         selectors = {
             tabImagesContainer: '#bcms-tab-1',
             tabVideosContainer: '#bcms-tab-2',
@@ -65,12 +65,19 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             insertImageFailureMessageTitle: null,
             insertImageFailureMessageMessage: null,
             imageNotSelectedMessageMessage: null,
+            insertImageInsertButtonTitle: null,
+
+            selectFolderDialogTitle: null,
+            folderNotSelectedMessageMessage: null,
+            selectFolderFailureMessageTitle: null,
+            selectFolderFailureMessageMessage: null,
+            selectFolderSelectButtonTitle: null,
 
             insertFileFailureMessageTitle: null,
             insertFileFailureMessageMessage: null,
             insertFileDialogTitle: null,
             fileNotSelectedMessageMessage: null,
-            
+
             searchedInPathPrefix: null,
 
             imagesTabTitle: null,
@@ -151,7 +158,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.paging = new ko.PagingViewModel(0, 1, 0, onOpenPage);
         }
 
-        self.clearFilter = function() {
+        self.clearFilter = function () {
             self.includeArchived(false);
             self.tags.removeAll();
         };
@@ -163,7 +170,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         self.closeFilter = function () {
             self.isFilterVisible(false);
         };
-        
+
         self.changeIncludeArchived = function () {
             self.includeArchived(!(self.includeArchived()));
         };
@@ -178,7 +185,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.tags.applyItemList(options.GridOptions.Tags);
         };
 
-        self.isSearchEmpty = function() {
+        self.isSearchEmpty = function () {
             return self.searchQuery() == null || self.searchQuery() == '';
         };
     }
@@ -188,7 +195,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     */
     function MediaItemsViewModel(container, url, messagesContainer) {
         var self = this,
-            onUploadFiles = function(newFilesData) {
+            onUploadFiles = function (newFilesData) {
                 if (newFilesData && newFilesData.Data) {
 
                     // Do not add files, uploaded to different folder
@@ -219,6 +226,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         self.canSelectMedia = ko.observable(false);
         self.canInsertMedia = ko.observable(false);
         self.canInsertMediaWithOptions = ko.observable(false);
+        self.canSelectFolders = ko.observable(false);
 
         self.rowAdded = false;
 
@@ -263,7 +271,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             if (item.isProcessing() || item.isDeleting()) {
                 return;
             }
-            
+
             mediaUpload.openReuploadFilesDialog(item.id(), self.path().currentFolder().id(), self.path().currentFolder().type, function (filesData) {
                 if (filesData && filesData.Data && filesData.Data.Medias && filesData.Data.Medias.length > 0) {
                     var mediaItem = convertToMediaModel(filesData.Data.Medias[0]);
@@ -286,7 +294,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.loadMedia();
         };
 
-        self.searchWithFilter = function() {
+        self.searchWithFilter = function () {
             self.searchMedia();
         };
 
@@ -318,16 +326,16 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         self.switchViewStyle = function () {
             var isGrid = !self.isGrid();
             localStorage.setItem(keys.folderViewMode, isGrid ? 1 : 0);
-            
+
             // Loop through all media view models
-            $.each([imagesViewModel, audiosViewModel, videosViewModel, filesViewModel], function(index, viewModel) {
+            $.each([imagesViewModel, audiosViewModel, videosViewModel, filesViewModel], function (index, viewModel) {
                 if (viewModel && viewModel.isGrid) {
                     viewModel.isGrid(isGrid);
                 }
             });
         };
 
-        self.isSortedAscending = function(column) {
+        self.isSortedAscending = function (column) {
             if (column == self.gridOptions().column() && !self.gridOptions().isDescending()) {
                 return true;
             }
@@ -355,7 +363,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             return null;
         };
 
-        self.openRoot = function() {
+        self.openRoot = function () {
             changeFolder(null, self);
         };
 
@@ -363,17 +371,27 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             changeFolder(self.path().currentFolder().parentFolderId(), self);
         };
 
-        self.domId = function() {
+        self.domId = function () {
             return 'bcms-site-settings-media-messages-' + self.path().type;
         };
 
-        self.loadMedia = function() {
+        self.loadMedia = function () {
             var params = createFolderParams(self.path().currentFolder().id(), self),
-                onComplete = function(json) {
+                onComplete = function (json) {
                     parseJsonResults(json, self);
                     $(selectors.searchBox).focus();
                 };
             loadTabData(self, params, onComplete);
+        };
+
+        self.unselectAllMedias = function (keepSelected) {
+            var item, i, l;
+
+            for (i = 0, l = self.medias().length; i < l; i++) {
+                item = self.medias()[i];
+                
+                item.isSelected(item == keepSelected);
+            }
         };
     }
 
@@ -485,7 +503,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 return !!self.publicUrl();
             };
 
-            self.stopEvent = function(data, event) {
+            self.stopEvent = function (data, event) {
                 bcms.stopEventPropagation(event);
             };
 
@@ -522,7 +540,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
             self.iconClassNames = ko.computed(function () {
                 var classes = '';
-                    
+
                 if (self.isFolder()) {
                     classes += ' bcms-system-folder';
                 }
@@ -538,7 +556,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
                 return $.trim(classes);
             });
-            
+
             self.archiveMedia = function (folderViewModel, data, event) {
                 bcms.stopEventPropagation(event);
 
@@ -597,7 +615,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             }
             this.renameMedia(folderViewModel, data, event);
         };
-            
+
         MediaItemBaseViewModel.prototype.renameMedia = function (folderViewModel, data, event) {
             bcms.stopEventPropagation(event);
             if (this.isDeleting()) {
@@ -605,7 +623,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             }
             this.isActive(true);
         };
-            
+
         MediaItemBaseViewModel.prototype.reuploadMedia = function (folderViewModel, data, event) {
             bcms.stopEventPropagation(event);
             if (this.isDeleting()) {
@@ -613,11 +631,15 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             }
             folderViewModel.reuploadMedia(this);
         };
-            
+
         MediaItemBaseViewModel.prototype.openMedia = function (folderViewModel, data, event) {
             bcms.stopEventPropagation(event);
             editOrSelectMedia(folderViewModel, this, data, event);
             messages.refreshBox($(selectors.fileListMessageBox + this.type), {});
+        };
+
+        MediaItemBaseViewModel.prototype.onIconClicked = function (folderViewModel, data, event) {
+            this.openMedia(folderViewModel, data, event);
         };
 
         MediaItemBaseViewModel.prototype.saveMedia = function (folderViewModel, data, event) {
@@ -658,7 +680,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             if (this.isDeleting()) {
                 return;
             }
-            history.openMediaHistoryDialog(this.id(), function() {
+            history.openMediaHistoryDialog(this.id(), function () {
                 folderViewModel.searchMedia();
             });
         };
@@ -669,7 +691,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     /**
     * Media image view model
     */
-    var MediaImageViewModel = (function(_super) {
+    var MediaImageViewModel = (function (_super) {
         bcms.extendsClass(MediaImageViewModel, _super);
 
         function MediaImageViewModel(item) {
@@ -697,7 +719,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
             deleteMediaItem(url, message, folderViewModel, this);
         };
-        
+
         MediaImageViewModel.prototype.getArchiveMediaConfirmationMessage = function () {
             return globalization.archiveImageConfirmMessage;
         };
@@ -743,7 +765,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     /**
     * Media audio view model
     */
-    var MediaAudioViewModel = (function(_super) {
+    var MediaAudioViewModel = (function (_super) {
         bcms.extendsClass(MediaAudioViewModel, _super);
 
         function MediaAudioViewModel(item) {
@@ -765,7 +787,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     /**
     * Media video view model
     */
-    var MediaVideoViewModel = (function(_super) {
+    var MediaVideoViewModel = (function (_super) {
         bcms.extendsClass(MediaVideoViewModel, _super);
 
         function MediaVideoViewModel(item) {
@@ -795,7 +817,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     /**
     * File view model
     */
-    var MediaFileViewModel = (function(_super) {
+    var MediaFileViewModel = (function (_super) {
         bcms.extendsClass(MediaFileViewModel, _super);
 
         function MediaFileViewModel(item) {
@@ -853,7 +875,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     /**
     * Media folder view model
     */
-    var MediaFolderViewModel = (function(_super) {
+    var MediaFolderViewModel = (function (_super) {
         bcms.extendsClass(MediaFolderViewModel, _super);
 
         function MediaFolderViewModel(item) {
@@ -880,13 +902,28 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             deleteMediaItem(url, message, folderViewModel, this);
         };
 
+        MediaFolderViewModel.prototype.onIconClicked = function (folderViewModel, data, event) {
+            bcms.stopEventPropagation(event);
+            if (this.isDeleting()) {
+                return;
+            }
+            
+            changeFolder(this.id(), folderViewModel);
+        };
+
         MediaFolderViewModel.prototype.openMedia = function (folderViewModel, data, event) {
             bcms.stopEventPropagation(event);
             if (this.isDeleting()) {
                 return;
             }
 
-            changeFolder(this.id(), folderViewModel);
+            // Call open, if view model is not in selectable mode
+            if (!folderViewModel.canSelectFolders()) {
+                changeFolder(this.id(), folderViewModel);
+                return;
+            }
+
+            folderViewModel.unselectAllMedias(this);
         };
 
         MediaFolderViewModel.prototype.toJson = function () {
@@ -917,11 +954,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             return;
         }
 
-        // Select item, if view model is in selectable mode
-        for (var i = 0; i < folderViewModel.medias().length; i++) {
-            folderViewModel.medias()[i].isSelected(false);
-        }
-        item.isSelected(true);
+        folderViewModel.unselectAllMedias(item);
     }
 
     /**
@@ -998,10 +1031,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     cache: false,
                     data: params
                 })
-                    .done(function(json) {
+                    .done(function (json) {
                         onSaveCompleted(json);
                     })
-                    .fail(function(response) {
+                    .fail(function (response) {
                         onSaveCompleted(bcms.parseFailedResponse(response));
                     });
             } else {
@@ -1050,9 +1083,65 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     /**
     * Loads a media manager view to the site settings container.
     */
-    media.loadSiteSettingsMediaManager = function() {
+    media.loadSiteSettingsMediaManager = function () {
         dynamicContent.bindSiteSettings(siteSettings, links.loadSiteSettingsMediaManagerUrl, {
             contentAvailable: initializeSiteSettingsMediaManager
+        });
+    };
+
+    /**
+    * Show folder selection window
+    */
+    media.openFolderSelectDialog = function (onAccept, folderViewModelOptions, onClose) {
+        modal.open({
+            title: globalization.selectFolderDialogTitle,
+            acceptTitle: globalization.selectFolderSelectButtonTitle,
+            onClose: onClose,
+            onLoad: function (dialog) {
+                dynamicContent.setContentFromUrl(dialog, links.insertImageDialogUrl, {
+                    done: function (content) {
+                        imagesViewModel = new MediaItemsViewModel(dialog.container, links.loadImagesUrl, dialog.container);
+                        imagesViewModel.spinContainer = dialog.container.find(selectors.insertContentContainer);
+                        imagesViewModel.canSelectFolders(true);
+                        if (folderViewModelOptions) {
+                            imagesViewModel = $.extend(imagesViewModel, folderViewModelOptions);
+                        }
+                        imagesViewModel.selectFolder = function (selectedFolder) {
+                            dialog.close();
+                            onAccept(selectedFolder);
+                        };
+                        initializeTab(content, imagesViewModel);
+                    }
+                });
+            },
+            onAcceptClick: function () {
+                var i,
+                    item,
+                    selectedFolder = null;
+
+                for (i = 0; i < imagesViewModel.medias().length; i++) {
+                    item = imagesViewModel.medias()[i];
+                    if (item.isSelected() && item.isFolder()) {
+                        selectedFolder = item;
+                        break;
+                    }
+                }
+
+                if (selectedFolder == null) {
+                    modal.info({
+                        content: globalization.folderNotSelectedMessageMessage,
+                        disableCancel: true
+                    });
+
+                    return false;
+                } else {
+                    if ($.isFunction(onAccept)) {
+                        onAccept(selectedFolder);
+                    }
+                }
+
+                return true;
+            }
         });
     };
 
@@ -1062,7 +1151,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     media.openImageInsertDialog = function (onAccept, canInsertWithOptions, folderViewModelOptions, onClose) {
         modal.open({
             title: globalization.insertImageDialogTitle,
-            acceptTitle: 'Insert',
+            acceptTitle: globalization.insertImageInsertButtonTitle,
             onClose: onClose,
             onLoad: function (dialog) {
                 imageInsertDialog = dialog;
@@ -1085,8 +1174,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     item,
                     selectedItem = null;
 
-                for (i = 0; i < imagesViewModel.medias().length; i++)
-                {
+                for (i = 0; i < imagesViewModel.medias().length; i++) {
                     item = imagesViewModel.medias()[i];
                     if (item.isSelected() && item.type == mediaTypes.image) {
                         selectedItem = item;
@@ -1099,14 +1187,14 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                         content: globalization.imageNotSelectedMessageMessage,
                         disableCancel: true
                     });
-                        
+
                     return false;
                 } else {
                     if ($.isFunction(onAccept)) {
                         onAccept(selectedItem);
                     }
                 }
-                    
+
                 return true;
             }
         });
@@ -1114,10 +1202,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
     /**
     * Function is called, when insert image event is trigerred
-    */ 
+    */
     function onOpenImageInsertDialog(htmlContentEditor) {
         contentEditor = htmlContentEditor;
-        media.openImageInsertDialog(function(imageViewModel) {
+        media.openImageInsertDialog(function (imageViewModel) {
             insertImage(imageViewModel, false);
         }, true);
     }
@@ -1131,13 +1219,13 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         }
 
         var mediaId = selectedMedia.id(),
-            alertOnError = function() {
+            alertOnError = function () {
                 modal.alert({
                     title: globalization.insertImageFailureMessageTitle,
                     content: globalization.insertImageFailureMessageMessage
                 });
             },
-            imageInsert = function(selectedMedia, url, caption, align) {
+            imageInsert = function (selectedMedia, url, caption, align) {
 
                 if ($.isFunction(onImageInsert)) {
                     onImageInsert(selectedMedia, url, caption, align);
@@ -1150,7 +1238,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     imageInsertDialog = null;
                 }
             };
-            
+
         if (withOptions === true) {
             imageEditor.onInsertImage(selectedMedia, imageInsert);
         } else {
@@ -1170,7 +1258,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             });
         }
     };
-        
+
     /**
     * Insert image to html content editor.
     */
@@ -1187,7 +1275,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             if (imageAlign == 2) {
                 img = '<img src="' + imageUrl + '" alt="' + caption + '"/>';
             } else {
-                img = '<img src="' + imageUrl + '" alt="' + caption + '" style="float:' + align + '"/>';  
+                img = '<img src="' + imageUrl + '" alt="' + caption + '" style="float:' + align + '"/>';
             }
             if (contentEditor.mode == 'source') {
                 var oldData = contentEditor.getData();
@@ -1296,14 +1384,14 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         }
 
         var onDeleteCompleted = function (json) {
-                messages.refreshBox(folderViewModel.container, json);
-                if (json.Success) {
-                    folderViewModel.medias.remove(item);
-                } else {
-                    item.isDeleting(false);
-                }
-                confirmDialog.close();
-            },
+            messages.refreshBox(folderViewModel.container, json);
+            if (json.Success) {
+                folderViewModel.medias.remove(item);
+            } else {
+                item.isDeleting(false);
+            }
+            confirmDialog.close();
+        },
             confirmDialog = modal.confirm({
                 content: message,
                 onAccept: function () {
@@ -1334,19 +1422,19 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         }
 
         var onArchivingCompleted = function (json) {
-                messages.refreshBox(folderViewModel.container, json);
-                if (json.Success) {
-                    item.isArchived(isArchiving);
-                    if (json.Data && json.Data.Version) {
-                        item.version(json.Data.Version);
-                    }
-                    if (isArchiving && !folderViewModel.gridOptions().includeArchived()) {
-                        folderViewModel.medias.remove(item);
-                    }
+            messages.refreshBox(folderViewModel.container, json);
+            if (json.Success) {
+                item.isArchived(isArchiving);
+                if (json.Data && json.Data.Version) {
+                    item.version(json.Data.Version);
                 }
+                if (isArchiving && !folderViewModel.gridOptions().includeArchived()) {
+                    folderViewModel.medias.remove(item);
+                }
+            }
 
-                confirmDialog.close();
-            },
+            confirmDialog.close();
+        },
             confirmDialog = modal.confirm({
                 content: message,
                 onAccept: function () {
@@ -1454,7 +1542,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 if (json.Data.Items && json.Data.Items && $.isArray(json.Data.Items)) {
                     for (i = 0; i < json.Data.Items.length; i++) {
                         var item = json.Data.Items[i],
-                            model = convertToMediaModel(item);                            
+                            model = convertToMediaModel(item);
 
                         if (model != null) {
                             folderViewModel.medias.push(model);
@@ -1481,7 +1569,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     }
 
     function convertToMediaModel(item) {
-        var model;            
+        var model;
         if (item.ContentType == contentTypes.folder) {
             model = new MediaFolderViewModel(item);
         } else {
@@ -1506,21 +1594,21 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         return model;
     }
-        
+
     /**
     * Load tab data
     */
     function loadTabData(folderViewModel, params, complete) {
         var indicatorId = 'mediatab',
             spinContainer = folderViewModel.spinContainer,
-            onComplete = function(result) {
+            onComplete = function (result) {
                 spinContainer.hideLoading(indicatorId);
                 if ($.isFunction(complete)) {
                     complete(result);
                 }
             };
         spinContainer.showLoading(indicatorId);
-            
+
         $.ajax({
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
@@ -1649,14 +1737,14 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 modal.imagePreview(previewUrl, this.tooltip(), options);
             }
         };
-        
+
         media.ImageSelectorViewModel.prototype.remove = function (data, event) {
             bcms.stopEventPropagation(event);
-            
+
             this.setImage({});
             this.onAfterRemove();
         };
-        
+
         media.ImageSelectorViewModel.prototype.select = function (data, event) {
             var self = this,
                 onMediaSelect = function (insertedImage) {
@@ -1676,7 +1764,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 onMediaSelectClose = function () {
                     self.onSelectClose();
                 };
-            
+
             bcms.stopEventPropagation(event);
             media.openImageInsertDialog(onMediaSelect, false, mediasViewModelExtender, onMediaSelectClose);
         };
@@ -1686,10 +1774,60 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         media.ImageSelectorViewModel.prototype.onAfterRemove = function () { };
 
         media.ImageSelectorViewModel.prototype.onAfterPreview = function () { };
-        
+
         media.ImageSelectorViewModel.prototype.onSelectClose = function () { };
 
         return media.ImageSelectorViewModel;
+    })();
+
+    /**
+    * Image folder selector view model
+    */
+    media.ImageFolderSelectorViewModel = (function () {
+
+        media.ImageFolderSelectorViewModel = function (folder) {
+
+            var self = this;
+
+            self.id = ko.observable();
+            self.title = ko.observable();
+
+            self.setFolder = function (folderData) {
+                self.id(folderData.FolderId);
+                self.title(folderData.FolderTitle);
+            };
+
+            if (folder) {
+                self.setFolder(folder);
+            }
+        };
+
+        media.ImageFolderSelectorViewModel.prototype.select = function (data, event) {
+            var self = this,
+                onMediaSelect = function (insertedFolder) {
+                    self.id(insertedFolder.id());
+                    self.title(insertedFolder.name());
+
+                    self.onAfterSelect();
+                },
+                mediasViewModelExtender = {
+                    onMediaSelect: function (folder) {
+                        onMediaSelect(folder);
+                    }
+                },
+                onMediaSelectClose = function () {
+                    self.onSelectClose();
+                };
+
+            bcms.stopEventPropagation(event);
+            media.openFolderSelectDialog(onMediaSelect, mediasViewModelExtender, onMediaSelectClose);
+        };
+
+        media.ImageFolderSelectorViewModel.prototype.onAfterSelect = function () { };
+        
+        media.ImageFolderSelectorViewModel.prototype.onSelectClose = function () { };
+
+        return media.ImageFolderSelectorViewModel;
     })();
 
     /**

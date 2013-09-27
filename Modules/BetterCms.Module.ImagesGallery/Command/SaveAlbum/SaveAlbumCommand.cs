@@ -59,6 +59,10 @@ namespace BetterCms.Module.ImagesGallery.Command.SaveAlbum
                 request.CoverImage != null && request.CoverImage.ImageId.HasValue
                     ? Repository.AsProxy<MediaImage>(request.CoverImage.ImageId.Value)
                     : null;
+            album.Folder =
+                request.Folder != null && request.Folder.FolderId.HasValue
+                    ? Repository.AsProxy<MediaFolder>(request.Folder.FolderId.Value)
+                    : null;
 
             repository.Save(album);
             unitOfWork.Commit();

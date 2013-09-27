@@ -116,10 +116,10 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Command\GetAlbumImages\GetAlbumImagesCommand.cs" />
     <Compile Include="Command\GetAlbum\GetAlbumCommand.cs" />
+    <Compile Include="Command\GetAlbumForEdit\GetAlbumForEditCommand.cs" />
     <Compile Include="Command\GetGalleryAlbums\GetGalleryAlbumsCommand.cs" />
-    <Compile Include="Controllers\GalleryController.cs" />
+    <Compile Include="Controllers\GalleryWidgetController.cs" />
     <Compile Include="Events\ImageGalleryEvents.cs" />
     <Compile Include="Command\DeleteAlbum\DeleteAlbumCommand.cs" />
     <Compile Include="Command\GetAlbumList\GetAlbumListCommand.cs" />
@@ -130,6 +130,7 @@
       <DependentUpon>ImagesGalleryGlobalization.resx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AlbumController.cs" />
+    <Compile Include="ImageGallerModuleConstants.cs" />
     <Compile Include="ImagesGalleryModuleDescriptor.cs" />
     <Compile Include="Models\Maps\AlbumMap.cs" />
     <Compile Include="Models\Album.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="ViewModels\AlbumSiteSettingsViewModel.cs" />
     <Compile Include="ViewModels\AlbumViewModel.cs" />
     <Compile Include="ViewModels\GalleryViewModel.cs" />
+    <Compile Include="ViewModels\ImageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\Resources\ImagesGalleryGlobalization.resx">
@@ -195,7 +197,10 @@
     <EmbeddedResource Include="Views\Album\Select.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Gallery\Index.cshtml" />
+    <EmbeddedResource Include="Views\GalleryWidget\Album.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\GalleryWidget\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
