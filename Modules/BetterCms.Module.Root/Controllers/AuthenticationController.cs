@@ -5,6 +5,8 @@ using System.Web.Security;
 
 using BetterCms.Core.Security;
 using BetterCms.Module.Root.Commands.Authentication.GetAuthenticationInfo;
+using BetterCms.Module.Root.Commands.Authentication.SearchRoles;
+using BetterCms.Module.Root.Commands.Authentication.SearchUsers;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.Authentication;
 using BetterCms.Module.Root.Mvc;
@@ -60,6 +62,22 @@ namespace BetterCms.Module.Root.Controllers
         public ActionResult IsAuthorized(string roles)
         {
             return Json(new WireJson { Success = SecurityService.IsAuthorized(roles) });
+        }
+
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
+        public ActionResult SuggestRoles(string query)
+        {
+            var suggestedRoles = GetCommand<SearchRolesCommand>().ExecuteCommand(query);
+
+            return Json(new { suggestions = suggestedRoles });
+        }
+
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
+        public ActionResult SuggestUsers(string query)
+        {
+            var suggestedRoles = GetCommand<SearchUsersCommand>().ExecuteCommand(query);
+
+            return Json(new { suggestions = suggestedRoles });
         }
     }
 }

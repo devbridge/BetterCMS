@@ -33,32 +33,34 @@
                     <input type="hidden" data-bind="attr: { name: $parent.getPropertyIndexer($index(), 'Identity') }, value: Identity" />
                     <input type="hidden" data-bind="attr: { name: $parent.getPropertyIndexer($index(), 'IsForRole') }, valueBinder: IsForRole" />
                 </div>
-                <div class="bcms-access-line bcms-clearfix">
+                <div class="bcms-access-line bcms-clearfix" data-bind="with: userAccessControl">
                     <div class="bcms-access-value-add">
-                        <div class="btn-acces-plus" data-bind="click: gotoAddNewUser">&nbsp;</div>
-                        <span data-bind="visible: !isInAddUserMode(), click: gotoAddNewUser">@RootGlobalization.AccessControl_UserAccess_AddNewUser</span>
+                        <div class="btn-acces-plus" data-bind="click: clickPlus">&nbsp;</div>
+                        <span data-bind="visible: isInAddMode() !== 'user', click: clickPlus">@RootGlobalization.AccessControl_UserAccess_AddNewUser</span>
                         <input type="text" data-bind="
-                            css: { 'bcms-tag-validation-error': newUserName.hasError() },
-                            hasfocus: hasAddNameFocus() == 'user', 
-                            value: newUserName, 
-                            visible: isInAddUserMode, 
-                            valueUpdate: 'afterkeydown', 
-                            enterPress: addNewUser,
-                            escPress: clearNewUserInput" />
+                            css: { 'bcms-tag-validation-error': newItem.hasError() },
+                            hasfocus: isExpanded(),
+                            value: newItem,
+                            visible: isInAddMode() === 'user',
+                            valueUpdate: 'afterkeydown',
+                            enterPress: clickPlus,
+                            autocomplete: '',
+                            escPress: clearItem" />
                     </div>                    
                 </div>
-                <div class="bcms-access-line bcms-clearfix">
+                <div class="bcms-access-line bcms-clearfix" data-bind="with: roleAccessControl">
                     <div class="bcms-access-value-add">
-                        <div class="btn-acces-plus" data-bind="click: gotoAddNewRole">&nbsp;</div>
-                        <span data-bind="visible: !isInAddRoleMode(), click: gotoAddNewRole">@RootGlobalization.AccessControl_UserAccess_AddNewRole</span>
+                        <div class="btn-acces-plus" data-bind="click: clickPlus">&nbsp;</div>
+                        <span data-bind="visible: isInAddMode() !== 'role', click: clickPlus">@RootGlobalization.AccessControl_UserAccess_AddNewRole</span>
                         <input type="text" data-bind="
-                            css: { 'bcms-tag-validation-error': newRoleName.hasError() },
-                            hasfocus: hasAddNameFocus() == 'role', 
-                            value: newRoleName, 
-                            visible: isInAddRoleMode, 
-                            valueUpdate: 'afterkeydown', 
-                            enterPress: addNewRole,
-                            escPress: clearNewRoleInput" />
+                            css: { 'bcms-tag-validation-error': newItem.hasError() },
+                            hasfocus: isExpanded(),
+                            value: newItem,
+                            visible: isInAddMode() === 'role', 
+                            valueUpdate: 'afterkeydown',
+                            enterPress: clickPlus,
+                            autocomplete: '',
+                            escPress: clearItem" />
                     </div>                     
                 </div>
             </div>

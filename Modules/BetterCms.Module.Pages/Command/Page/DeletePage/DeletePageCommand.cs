@@ -170,6 +170,15 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
             // Commit
             UnitOfWork.Commit();
 
+            if (sitemapNodes != null && sitemapNodes.Count > 0)
+            {
+                foreach (var node in sitemapNodes)
+                {
+                    Events.SitemapEvents.Instance.OnSitemapNodeUpdated(node);
+                }
+                Events.SitemapEvents.Instance.OnSitemapUpdated();
+            }
+
             // Notifying, that page is deleted.
             Events.PageEvents.Instance.OnPageDeleted(page);
 

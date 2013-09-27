@@ -42,6 +42,7 @@ namespace BetterCms.Sandbox.Mvc4
             cmsHost.OnApplicationStart(this);
             
             AddPageEvents();
+            AddSitemapEvents();
             AddRedirectEvents();
             AddTagEvents();
             AddCategoryEvents();
@@ -232,6 +233,30 @@ namespace BetterCms.Sandbox.Mvc4
                 Log.Info("PageSeoStatusChanged: " + args.Item.ToString());
             };
         }
+
+        private void AddSitemapEvents()
+        {
+            BetterCms.Events.SitemapEvents.Instance.SitemapNodeCreated += args =>
+            {
+                Log.Info("SitemapNodeCreated: " + args.Item.ToString());
+            };
+
+            BetterCms.Events.SitemapEvents.Instance.SitemapNodeUpdated += args =>
+            {
+                Log.Info("SitemapNodeUpdated: " + args.Item.ToString());
+            };
+
+            BetterCms.Events.SitemapEvents.Instance.SitemapNodeDeleted += args =>
+            {
+                Log.Info("SitemapNodeDeleted: " + args.Item.ToString());
+            };
+
+            BetterCms.Events.SitemapEvents.Instance.SitemapUpdated += args =>
+            {
+                Log.Info("SitemapUpdated.");
+            };
+        }
+
         private void AddUsersEvents()
         {
             BetterCms.Events.UserEvents.Instance.UserProfileUpdated += args =>

@@ -79,11 +79,14 @@ namespace BetterCms.Module.Pages.Services
         /// </summary>
         /// <param name="id">The id.</param>
         /// <param name="version">The version.</param>
-        public void DeleteNode(Guid id, int version)
+        /// <param name="deletedNodes"></param>
+        public void DeleteNode(Guid id, int version, out IList<SitemapNode> deletedNodes)
         {
+            deletedNodes = new List<SitemapNode>();
+
             var node = repository.First<SitemapNode>(id);
             node.Version = version;
-            DeleteNode(node);
+            DeleteNode(node, ref deletedNodes);
         }
 
         /// <summary>
@@ -170,14 +173,16 @@ namespace BetterCms.Module.Pages.Services
         /// Deletes the node.
         /// </summary>
         /// <param name="node">The node.</param>
-        private void DeleteNode(SitemapNode node)
+        /// <param name="deletedNodes">The deleted nodes.</param>
+        private void DeleteNode(SitemapNode node, ref IList<SitemapNode> deletedNodes)
         {
             foreach (var childNode in node.ChildNodes)
             {
-                DeleteNode(childNode);
+                DeleteNode(childNode, ref deletedNodes);
             }
 
             repository.Delete(node);
+            deletedNodes.Add(node);
 
             UpdatedPageProperties(false, true, node.Url, string.Empty);
         }
