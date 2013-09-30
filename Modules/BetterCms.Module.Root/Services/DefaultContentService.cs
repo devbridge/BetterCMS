@@ -155,9 +155,9 @@ namespace BetterCms.Module.Root.Services
             
             if (requestedStatus == ContentStatus.Published)
             {
-                // Originala nuklonina su optionais ir issaugo
-                // Removina originalo optionus
-                // Uzclonina naujus is view modelio
+                // Original is copied with options and saved.
+                // Removes options from original.
+                // Locks new stuff from view model.
 
                 var originalToArchive = originalContent.Clone();
                 originalToArchive.Status = ContentStatus.Archived;
