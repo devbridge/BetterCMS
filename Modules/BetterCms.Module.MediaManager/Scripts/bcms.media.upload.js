@@ -492,7 +492,7 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
                 dropContainer: document.getElementById('bcms-files-dropzone'),
                 inputField: document.getElementById('bcms-files-upload-input'),
                 key: 'File',
-                data: { rootFolderId: options.rootFolderId, rootFolderType: options.rootFolderType },
+                data: { rootFolderId: options.rootFolderId, rootFolderType: options.rootFolderType, reuploadMediaId: options.reuploadMediaId },
                 maxSimultaneousUploads: 4,
                 onFileAdded: function (file) {
                     if (options.reuploadMediaId && options.reuploadMediaId != constants.defaultReuploadMediaId && uploadsModel.uploads().length > 0) {

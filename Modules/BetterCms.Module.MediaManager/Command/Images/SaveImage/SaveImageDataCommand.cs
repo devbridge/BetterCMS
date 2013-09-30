@@ -187,11 +187,11 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
 
                 // Change image file names depending on file version
                 var newVersion = mediaImage.Version + 1;
-                mediaImage.FileUri = ApplyVersionToFileUri(mediaImage.FileUri, mediaImage.OriginalUri, newVersion);
-                mediaImage.PublicUrl = ApplyVersionToFileUrl(mediaImage.PublicUrl, mediaImage.PublicOriginallUrl, newVersion);
+                mediaImage.FileUri = ApplyVersionToFileUri(mediaImage.FileUri, mediaImage.OriginalFileName, newVersion);
+                mediaImage.PublicUrl = ApplyVersionToFileUrl(mediaImage.PublicUrl, mediaImage.OriginalFileName, newVersion);
 
-                mediaImage.ThumbnailUri = ApplyVersionToFileUri(mediaImage.ThumbnailUri, mediaImage.OriginalUri, newVersion);
-                mediaImage.PublicThumbnailUrl = ApplyVersionToFileUrl(mediaImage.PublicThumbnailUrl, mediaImage.PublicOriginallUrl, newVersion);
+                mediaImage.ThumbnailUri = ApplyVersionToFileUri(mediaImage.ThumbnailUri, mediaImage.OriginalFileName, newVersion);
+                mediaImage.PublicThumbnailUrl = ApplyVersionToFileUrl(mediaImage.PublicThumbnailUrl, mediaImage.OriginalFileName, newVersion);
 
                 // Upload image to storage
                 bytes = image.GetBytes();
@@ -217,14 +217,14 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
         /// Extracts the name of the real file.
         /// </summary>
         /// <param name="fileUri">The file URI.</param>
-        /// <param name="originalFileUri">The original file URI.</param>
+        /// <param name="origFileName">Name of the original file.</param>
         /// <param name="version">The version.</param>
         /// <returns>
         /// File name with new applied version
         /// </returns>
-        private static Uri ApplyVersionToFileUri(Uri fileUri, Uri originalFileUri, int version)
+        private static Uri ApplyVersionToFileUri(Uri fileUri, string origFileName, int version)
         {
-            return new Uri(ApplyVersionToFileUrl(fileUri.OriginalString, originalFileUri.OriginalString, version));
+            return new Uri(ApplyVersionToFileUrl(fileUri.OriginalString, origFileName, version));
         }
 
         /// <summary>
@@ -236,12 +236,9 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
         /// <returns>
         /// File name with new applied version
         /// </returns>
-        private static string ApplyVersionToFileUrl(string fileUrl, string originalFileUrl, int version)
+        private static string ApplyVersionToFileUrl(string fileUrl, string origFileName, int version)
         {
-            var start = MediaImageHelper.OriginalImageFilePrefix.Length;
-            var origFileName = Path.GetFileNameWithoutExtension(originalFileUrl);
-            origFileName = origFileName.Substring(start, origFileName.Length - start);
-
+            origFileName = Path.GetFileNameWithoutExtension(origFileName);
             var realOldFileName = Path.GetFileNameWithoutExtension(fileUrl);
             var realFileNamePath = fileUrl.Substring(0, fileUrl.LastIndexOf(Path.GetFileName(fileUrl)));
             var realFileName = Path.Combine(realFileNamePath, string.Concat(realOldFileName.Substring(0, realOldFileName.IndexOf(origFileName)), origFileName, Path.GetExtension(fileUrl)));
