@@ -1,4 +1,4 @@
-﻿<project>
+<project>
 
   <parameters>
     <textParameter>
@@ -195,6 +195,12 @@
     <exec description="Publish BetterCms.Module.Users.Api to NuGet.org">
       <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
       <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.Users.Api.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
+      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+    </exec>
+
+    <exec description="Publish BetterCms.Module.ImagesGallery to NuGet.org">
+      <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
+      <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.ImagesGallery.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
       <buildTimeoutSeconds>300</buildTimeoutSeconds>
     </exec>
 
