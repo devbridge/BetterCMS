@@ -192,7 +192,7 @@ namespace BetterCms.Configuration
         /// <value>
         /// The name of the content ending div CSS class.
         /// </value>
-        [ConfigurationProperty(ContentEndingDivCssClassNameAttribute, IsRequired = false)]
+        [ConfigurationProperty(ContentEndingDivCssClassNameAttribute, IsRequired = false, DefaultValue = "custom-clearfix")]
         public string ContentEndingDivCssClassName
         {
             get { return Convert.ToString(this[ContentEndingDivCssClassNameAttribute]); }

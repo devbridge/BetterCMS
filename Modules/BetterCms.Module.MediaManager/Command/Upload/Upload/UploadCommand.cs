@@ -29,7 +29,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.Upload
 
             if (request.Type == MediaType.Image)
             {
-                var media = MediaImageService.UploadImage(request.RootFolderId, request.FileName, request.FileLength, request.FileStream);
+                var media = MediaImageService.UploadImage(request.RootFolderId, request.FileName, request.FileLength, request.FileStream, request.ReuploadMediaId);
                 
                 Events.MediaManagerEvents.Instance.OnMediaFileUploaded(media);
 

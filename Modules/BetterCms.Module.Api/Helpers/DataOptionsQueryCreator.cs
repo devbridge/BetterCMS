@@ -289,8 +289,13 @@ namespace BetterCms.Module.Api.Helpers
             var property = modelType.GetProperty(propertyName);
 
             if (property == null)
-            {                
-                throw new InvalidOperationException(string.Format("Property {0} doesn't exist in object {1}", propertyName, modelType));
+            {
+                property = modelType.GetProperty(System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(propertyName));
+
+                if (property == null)
+                {
+                    throw new InvalidOperationException(string.Format("Property {0} doesn't exist in object {1}", propertyName, modelType));
+                }
             }
 
             return property;

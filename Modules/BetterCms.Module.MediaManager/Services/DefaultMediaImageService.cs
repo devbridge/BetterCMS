@@ -169,11 +169,24 @@ namespace BetterCms.Module.MediaManager.Services
         /// <param name="fileLength">Length of the file.</param>
         /// <param name="fileStream">The file stream.</param>
         /// <returns>Image entity.</returns>
-        public MediaImage UploadImage(Guid rootFolderId, string fileName, long fileLength, Stream fileStream)
+        public MediaImage UploadImage(Guid rootFolderId, string fileName, long fileLength, Stream fileStream, Guid reuploadMediaId)
         {
-            string folderName = mediaFileService.CreateRandomFolderName();
-            string versionedFileName = MediaImageHelper.CreateVersionedFileName(fileName, 1);
+            MediaImage originalMedia;
+            string folderName;
+            string versionedFileName;
             Size size;
+            if (!reuploadMediaId.HasDefaultValue())
+            {
+                originalMedia = repository.First<MediaImage>(image => image.Id == reuploadMediaId);
+                fileName = string.Concat(Path.GetFileNameWithoutExtension(originalMedia.OriginalFileName), Path.GetExtension(fileName));
+                folderName = Path.GetFileName(Path.GetDirectoryName(originalMedia.FileUri.OriginalString));
+                versionedFileName = MediaImageHelper.CreateVersionedFileName(fileName, originalMedia.Version + 1);
+            }
+            else
+            {
+                folderName = mediaFileService.CreateRandomFolderName();
+                versionedFileName = MediaImageHelper.CreateVersionedFileName(fileName, 1);
+            }
 
             try
             {
@@ -216,8 +229,8 @@ namespace BetterCms.Module.MediaManager.Services
                 image.OriginalWidth = size.Width;
                 image.OriginalHeight = size.Height;
                 image.OriginalSize = fileLength;
-                image.OriginalUri = mediaFileService.GetFileUri(MediaType.Image, folderName, MediaImageHelper.OriginalImageFilePrefix + fileName);
-                image.PublicOriginallUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, MediaImageHelper.OriginalImageFilePrefix + fileName);
+                image.OriginalUri = mediaFileService.GetFileUri(MediaType.Image, folderName, MediaImageHelper.OriginalImageFilePrefix + versionedFileName);
+                image.PublicOriginallUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, MediaImageHelper.OriginalImageFilePrefix + versionedFileName);
                     
 
                 image.ThumbnailWidth = ThumbnailSize.Width;
