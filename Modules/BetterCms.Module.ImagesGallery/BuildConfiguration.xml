@@ -12,7 +12,7 @@
 
     <JavaScriptCompressorTask
           SourceFiles="@(JavaScriptFiles)"
-          OutputFile="$(ProjectDir)Scripts\bcms.images.gallery.min.js"
+          OutputFile="$(ProjectDir)Scripts\bcms.images_gallery.min.js"
           CompressionType="Standard"
           ObfuscateJavaScript="True"
           PreserveAllSemicolons="True"
