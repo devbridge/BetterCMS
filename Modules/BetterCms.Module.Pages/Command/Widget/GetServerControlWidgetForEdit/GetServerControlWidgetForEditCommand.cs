@@ -3,9 +3,11 @@ using System.Linq;
 
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Widgets;
+
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
@@ -22,16 +24,27 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
         /// </summary>
         private readonly ICategoryService categoryService;
 
+        /// <summary>
+        /// The content service
+        /// </summary>
         private readonly IContentService contentService;
+
+        /// <summary>
+        /// The options service
+        /// </summary>
+        private readonly IOptionService optionService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetServerControlWidgetForEditCommand" /> class.
         /// </summary>
         /// <param name="categoryService">The category service.</param>
-        public GetServerControlWidgetForEditCommand(ICategoryService categoryService, IContentService contentService)
+        /// <param name="contentService">The content service.</param>
+        /// <param name="optionService">The option service.</param>
+        public GetServerControlWidgetForEditCommand(ICategoryService categoryService, IContentService contentService, IOptionService optionService)
         {
             this.contentService = contentService;
             this.categoryService = categoryService;
+            this.optionService = optionService;
         }
 
         /// <summary>
@@ -72,10 +85,15 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
                                      Type = f.Type,
                                      OptionDefaultValue = f.DefaultValue,
                                      OptionKey = f.Key,
-                                     CanDeleteOption = f.IsDeletable
+                                     CanDeleteOption = f.IsDeletable,
+                                     CustomOption = f.CustomOption != null
+                                        ? new CustomOptionViewModel { Identifier = f.CustomOption.Identifier, Title = f.CustomOption.Title }
+                                        : null
                                  })
                         .OrderBy(o => o.OptionKey)
                         .ToList();
+                    optionService.SetCustomOptionValueTitles(model.Options);
+                    model.CustomOptions = optionService.GetCustomOptions();
                 }
 
                 if (model == null)

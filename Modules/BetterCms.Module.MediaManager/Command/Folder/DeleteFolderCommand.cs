@@ -38,6 +38,12 @@ namespace BetterCms.Module.MediaManager.Command.Folder
             var subItems = Repository.AsQueryable<Media>().Where(m => !m.IsDeleted && m.Folder != null && m.Folder.Id == media.Id).ToList();
             foreach (var subItem in subItems)
             {
+                var file = subItem as MediaFile;
+                if (file != null)
+                {
+                    file.AccessRules.Clear();
+                }
+
                 Repository.Delete(subItem);
                 DeleteSubMedias(subItem);
             }

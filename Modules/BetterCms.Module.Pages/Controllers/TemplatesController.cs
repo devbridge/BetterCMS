@@ -2,12 +2,14 @@
 using System.Web.Mvc;
 
 using BetterCms.Core.Security;
+
 using BetterCms.Module.Pages.Command.Layout.DeleteTemplate;
 using BetterCms.Module.Pages.Command.Layout.GetSiteSettingsTemplates;
 using BetterCms.Module.Pages.Command.Layout.GetTemplateForEdit;
 using BetterCms.Module.Pages.Command.Layout.SaveTemplate;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.ViewModels.Templates;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -62,7 +64,9 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult RegisterTemplate()
         {
             var model = GetCommand<GetTemplateForEditCommand>().ExecuteCommand(null);
-            return PartialView("EditTemplate", model);
+            var view = RenderView("EditTemplate", model);
+
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

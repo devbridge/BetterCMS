@@ -166,7 +166,7 @@ namespace BetterCms.Module.MediaManager.Services
         public virtual string GetPublicFileUrl(MediaType type, string folderName, string fileName)
         {
             string fullPath = Path.Combine(
-                GetContentRoot(configuration.Storage.PublicContentUrlRoot),
+                GetContentPublicRoot(configuration.Storage.PublicContentUrlRoot),
                 Path.Combine(type.ToString().ToLower(), folderName, fileName));
 
             string absoluteUri = new Uri(fullPath).AbsoluteUri;
@@ -271,6 +271,16 @@ namespace BetterCms.Module.MediaManager.Services
             if (configuration.Storage.ServiceType == StorageServiceType.FileSystem && VirtualPathUtility.IsAppRelative(rootPath))
             {
                 return httpContextAccessor.MapPath(rootPath);
+            }
+
+            return rootPath;
+        }
+
+        private string GetContentPublicRoot(string rootPath)
+        {
+            if (configuration.Storage.ServiceType == StorageServiceType.FileSystem && VirtualPathUtility.IsAppRelative(rootPath))
+            {
+                return httpContextAccessor.MapPublicPath(rootPath);
             }
 
             return rootPath;

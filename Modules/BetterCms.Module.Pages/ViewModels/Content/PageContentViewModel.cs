@@ -159,6 +159,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// <value>
         /// The custom JavaSctript.
         /// </value>
+        [AllowHtml]
         public string CustomJs { get; set; }
 
         /// <summary>
@@ -167,6 +168,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// <value>
         /// The custom CSS.
         /// </value>
+        [AllowHtml]
         public string CustomCss { get; set; }
 
         /// <summary>

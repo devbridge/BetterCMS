@@ -11,7 +11,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
     /// Edit page content options view model.
     /// </summary>
     public class PageContentOptionsViewModel : IAccessSecuredViewModel
-    {      
+    {
         /// <summary>
         /// Gets or sets the list of page content options.
         /// </summary>
@@ -19,6 +19,14 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// The list of page content options.
         /// </value>
         public IList<OptionValueEditViewModel> OptionValues { get; set; }
+
+        /// <summary>
+        /// Gets or sets the custom options.
+        /// </summary>
+        /// <value>
+        /// The custom options.
+        /// </value>
+        public List<CustomOptionViewModel> CustomOptions { get; set; }
 
         /// <summary>
         /// Gets or sets the page content id.

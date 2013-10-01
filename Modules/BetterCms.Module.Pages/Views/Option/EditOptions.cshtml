@@ -1,4 +1,5 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Pages.Mvc.EditableGrid
 @using BetterCms.Module.Root;
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Grids;
@@ -21,19 +22,20 @@
                         HiddenFieldName = "Options[{0}].OptionKey"
                     },
 
-                new EditableGridDropDownColumn(PagesGlobalization.Options_OptionTypeColumn, null, "type")
+                new EditableGridDropDownColumn(PagesGlobalization.Options_OptionTypeColumn, null, "calcType")
                     {
                         OptionsBind = "optionTypes",
-                        ValueTextBind = "typeName",
-                        HiddenFieldName = "Options[{0}].Type"
+                        ValueTextBind = "typeName"
                     },
                                         
-                new EditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, null, "defaultValue")
+                new OptionValueEditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, "defaultValue", "customOptionDefaultTitle")
                     {
                         HeaderAttributes = "style=\"width: 250px;\"",
-                        HiddenFieldName = "Options[{0}].OptionDefaultValue",
-                        CellView = RootModuleConstants.EditableOptionValueCellTemplate
+                        HiddenFieldName = "Options[{0}].OptionDefaultValue"
                     },
+                    
+                new EditableGridHiddenField("type", "Options[{0}].Type"),
+                new EditableGridHiddenField("customType", "Options[{0}].CustomType")
             }
     };
 }

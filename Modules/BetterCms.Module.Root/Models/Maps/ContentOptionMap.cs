@@ -15,6 +15,7 @@ namespace BetterCms.Module.Root.Models.Maps
             Map(x => x.IsDeletable).Not.Nullable();
 
             References(x => x.Content).Cascade.SaveUpdate().LazyLoad();            
+            References(x => x.CustomOption).Cascade.SaveUpdate().LazyLoad();
         }
     }
 }

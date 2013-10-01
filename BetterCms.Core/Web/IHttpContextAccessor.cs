@@ -24,6 +24,13 @@ namespace BetterCms.Core.Web
         string MapPath(string path);
 
         /// <summary>
+        /// Returns the absolute path that corresponds to the virtual path on the Web server.
+        /// </summary>
+        /// <param name="path">The virtual path of the Web server.</param>
+        /// <returns>The absolute path that corresponds to path.</returns>
+        string MapPublicPath(string path);
+
+        /// <summary>
         /// Resolves the action URL.
         /// </summary>
         /// <typeparam name="TController">The type of the controller.</typeparam>

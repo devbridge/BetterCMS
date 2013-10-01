@@ -52,6 +52,16 @@ namespace BetterCms.Core.Web
         }
 
         /// <summary>
+        /// Returns the absolute path that corresponds to the virtual path on the Web server.
+        /// </summary>
+        /// <param name="path">The virtual path of the Web server.</param>
+        /// <returns>The absolute path that corresponds to path.</returns>
+        public string MapPublicPath(string path)
+        {
+            return string.Concat(GetServerUrl(new HttpRequestWrapper(HttpContext.Current.Request)).TrimEnd('/'), VirtualPathUtility.ToAbsolute(path));
+        }
+
+        /// <summary>
         /// Resolves the action URL.
         /// </summary>
         /// <typeparam name="TController">The type of the controller.</typeparam>

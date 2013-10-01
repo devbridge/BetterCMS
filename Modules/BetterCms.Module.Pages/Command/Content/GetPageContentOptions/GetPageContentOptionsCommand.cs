@@ -47,8 +47,8 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageContentOptions
             {
                 var contentQuery = Repository.AsQueryable<PageContent>()
                     .Where(f => f.Id == pageContentId && !f.IsDeleted && !f.Content.IsDeleted)
-                    .Fetch(f => f.Content).ThenFetchMany(f => f.ContentOptions)
-                    .FetchMany(f => f.Options)
+                    .Fetch(f => f.Content).ThenFetchMany(f => f.ContentOptions).ThenFetch(f => f.CustomOption)
+                    .FetchMany(f => f.Options).ThenFetch(f => f.CustomOption)
                     .AsQueryable();
 
                 if (CmsConfiguration.Security.AccessControlEnabled)
@@ -61,6 +61,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageContentOptions
                 if (pageContent != null)
                 {
                     model.OptionValues = OptionService.GetMergedOptionValuesForEdit(pageContent.Content.ContentOptions, pageContent.Options);
+                    model.CustomOptions = OptionService.GetCustomOptions();
 
                     if (CmsConfiguration.Security.AccessControlEnabled)
                     {

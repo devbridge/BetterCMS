@@ -78,6 +78,14 @@ namespace BetterCms.Module.Pages.ViewModels.Templates
         public IList<OptionViewModel> Options { get; set; }
 
         /// <summary>
+        /// Gets or sets the custom options.
+        /// </summary>
+        /// <value>
+        /// The custom options.
+        /// </value>
+        public List<CustomOptionViewModel> CustomOptions { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

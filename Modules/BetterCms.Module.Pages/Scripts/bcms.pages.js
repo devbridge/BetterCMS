@@ -2,8 +2,8 @@
 /*global bettercms, console */
 
 bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent',
-        'bcms.pages.properties', 'bcms.grid', 'bcms.redirect', 'bcms.messages', 'bcms.pages.filter', 'bcms.options', 'bcms.ko.extenders', 'bcms.security'],
-    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, grid, redirect, messages, filter, options, ko, security) {
+        'bcms.pages.properties', 'bcms.grid', 'bcms.redirect', 'bcms.messages', 'bcms.pages.filter', 'bcms.options', 'bcms.ko.extenders', 'bcms.security', 'bcms.sidemenu'],
+    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, grid, redirect, messages, filter, options, ko, security, sidemenu) {
     'use strict';
 
         var page = { },            
@@ -145,7 +145,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             optionsContainer = dialog.container.find(selectors.addNewPageOptionsTab),
             viewModel = {
                 accessControl: security.createUserAccessViewModel(content.Data.UserAccessList),
-                options: options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues)
+                options: options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues, content.Data.CustomOptions)
             };
 
         page.initializePermalinkBox(dialog, true, links.convertStringToSlugUrl, selectors.addNewPageTitleInput, true);
@@ -339,6 +339,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
     page.addNewPage = function() {
         page.openCreatePageDialog(function (data) {
             if (data.Data && data.Data.PageUrl) {
+                sidemenu.turnEditModeOn();
                 redirect.RedirectWithAlert(data.Data.PageUrl);
             }
         });

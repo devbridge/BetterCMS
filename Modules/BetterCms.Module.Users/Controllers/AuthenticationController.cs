@@ -73,7 +73,7 @@ namespace BetterCms.Module.Users.Controllers
                     }
                 }
             }
-
+            model.IsFormsAuthenticationEnabled = FormsAuthentication.IsEnabled;
             return View(model);
         }
 

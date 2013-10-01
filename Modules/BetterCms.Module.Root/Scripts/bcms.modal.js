@@ -383,7 +383,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
                 if (focustElement.is('input')) {
                     setTimeout(function () {
                         focustElement.focus();
-                    }, 750);
+                    }, 100);
                 } else {
                     focustElement.focus();
                 }

@@ -1,0 +1,8 @@
+﻿@using Microsoft.Web.Mvc
+@using BetterCms.Module.ImagesGallery.Controllers
+
+@model BetterCms.Module.Root.ViewModels.Cms.RenderWidgetViewModel
+
+@{
+    Html.RenderAction<GalleryWidgetController>(c => c.Gallery(Model));
+}

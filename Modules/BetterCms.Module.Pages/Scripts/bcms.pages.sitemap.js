@@ -105,13 +105,8 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     },
                     onAccept: function (dialog) {
                         addPageController.save(function() {
-                            if (data.Callback && $.isFunction(data.Callback)) {
-                                data.Callback(data);
-                            }
-                            
                             dialog.close();
                         });
-
                         return false;
                     },
                     onClose: function() {

@@ -11,6 +11,8 @@ namespace BetterCms.Core.DataContracts
 
         OptionType Type { get; }
 
-        object Value { get; }    
+        object Value { get; }
+
+        ICustomOption CustomOption { get; set; }
     }
 }

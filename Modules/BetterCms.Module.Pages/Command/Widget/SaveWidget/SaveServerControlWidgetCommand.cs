@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
@@ -100,13 +101,25 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
             {
                 widget.ContentOptions = new List<ContentOption>();
 
+                // NOTE: Loading custom options before saving.
+                // In other case, when loading custom options from option service, nHibernate updates version number (nHibernate bug)
+                var customOptionsIdentifiers = request.Options
+                    .Where(o => o.Type == OptionType.Custom)
+                    .Select(o => o.CustomOption.Identifier)
+                    .Distinct()
+                    .ToArray();
+                var customOptions = OptionService.GetCustomOptionsById(customOptionsIdentifiers);
+
                 foreach (var requestContentOption in request.Options)
                 {
                     var contentOption = new ContentOption {
                                                               Content = widget,
                                                               Key = requestContentOption.OptionKey,
                                                               DefaultValue = requestContentOption.OptionDefaultValue,
-                                                              Type = requestContentOption.Type
+                                                              Type = requestContentOption.Type,
+                                                              CustomOption = requestContentOption.Type == OptionType.Custom 
+                                                                ? customOptions.First(o => o.Identifier == requestContentOption.CustomOption.Identifier)
+                                                                : null
                                                           };
 
                     OptionService.ValidateOptionValue(contentOption);

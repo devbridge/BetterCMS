@@ -8,10 +8,14 @@ using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Models;
-
+using BetterCms.Core.Services.Caching;
 using BetterCms.Module.Root.Content.Resources;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.Extensions;
+using BetterCms.Module.Root.Providers;
 using BetterCms.Module.Root.ViewModels.Option;
+
+using NHibernate.Proxy.DynamicProxy;
 
 namespace BetterCms.Module.Root.Services
 {
@@ -20,15 +24,27 @@ namespace BetterCms.Module.Root.Services
         /// <summary>
         /// The repository
         /// </summary>
-        private IRepository repository;
+        private readonly IRepository repository;
+
+        /// <summary>
+        /// The cache service.
+        /// </summary>
+        private readonly ICacheService cacheService;
+
+        /// <summary>
+        /// The cache key.
+        /// </summary>
+        private const string CacheKey = "bcms-custom-options-list";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultOptionService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
-        public DefaultOptionService(IRepository repository)
+        /// <param name="cacheService">The cache service.</param>
+        public DefaultOptionService(IRepository repository, ICacheService cacheService)
         {
             this.repository = repository;
+            this.cacheService = cacheService;
         }
 
         /// <summary>
@@ -57,6 +73,11 @@ namespace BetterCms.Module.Root.Services
                     var optionViewModel = new OptionValueEditViewModel
                                               {
                                                   Type = optionValue.Type,
+                                                  CustomOption = optionValue.CustomOption != null ? new CustomOptionViewModel
+                                                        {
+                                                            Identifier = optionValue.CustomOption.Identifier,
+                                                            Title = optionValue.CustomOption.Title
+                                                        } : null,
                                                   OptionKey = optionValue.Key.Trim(),
                                                   OptionValue = optionValue.Value,
                                                   OptionDefaultValue = option != null ? option.Value : null,
@@ -82,6 +103,11 @@ namespace BetterCms.Module.Root.Services
                             new OptionValueEditViewModel
                                 {
                                     Type = option.Type,
+                                    CustomOption = option.CustomOption != null ? new CustomOptionViewModel
+                                            {
+                                                Identifier = option.CustomOption.Identifier,
+                                                Title = option.CustomOption.Title
+                                            } : null,
                                     OptionKey = option.Key.Trim(),
                                     OptionValue = option.Value,
                                     OptionDefaultValue = option.Value,
@@ -90,6 +116,8 @@ namespace BetterCms.Module.Root.Services
                     }
                 }
             }
+
+            SetCustomOptionValueTitles(optionModels, optionModels);
 
             return optionModels.OrderBy(o => o.OptionKey).ToList();
         }
@@ -112,7 +140,17 @@ namespace BetterCms.Module.Root.Services
                 {
                     var value = GetValueSafe(optionValue);
 
-                    var optionViewModel = new OptionValueViewModel { Type = optionValue.Type, OptionKey = optionValue.Key.Trim(), OptionValue = value };
+                    var optionViewModel = new OptionValueViewModel
+                                              {
+                                                  Type = optionValue.Type, 
+                                                  OptionKey = optionValue.Key.Trim(), 
+                                                  OptionValue = value,
+                                                  CustomOption = optionValue.CustomOption != null ? new CustomOptionViewModel
+                                                  {
+                                                      Identifier = optionValue.CustomOption.Identifier,
+                                                      Title = optionValue.CustomOption.Title
+                                                  } : null
+                                              };
                     optionModels.Add(optionViewModel);
                 }
             }
@@ -125,7 +163,17 @@ namespace BetterCms.Module.Root.Services
                     {
                         var value = GetValueSafe(option);
 
-                        var optionViewModel = new OptionValueViewModel { Type = option.Type, OptionKey = option.Key.Trim(), OptionValue = value };
+                        var optionViewModel = new OptionValueViewModel
+                                                  {
+                                                      Type = option.Type, 
+                                                      OptionKey = option.Key.Trim(),
+                                                      OptionValue = value,
+                                                      CustomOption = option.CustomOption != null ? new CustomOptionViewModel
+                                                      {
+                                                          Identifier = option.CustomOption.Identifier,
+                                                          Title = option.CustomOption.Title
+                                                      } : null,
+                                                  };
                         optionModels.Add(optionViewModel);
                     }
                 }
@@ -155,6 +203,8 @@ namespace BetterCms.Module.Root.Services
 
             ValidateOptionKeysUniqueness(optionViewModels);
 
+            var customOptions = LoadAndValidateCustomOptions(optionViewModels);
+
             if (savedOptionValues != null)
             {
                 savedOptionValues.Where(sov => optionViewModels.All(ovm => ovm.OptionKey != sov.Key)).ToList().ForEach(del => repository.Delete(del));
@@ -179,6 +229,15 @@ namespace BetterCms.Module.Root.Services
                     savedOptionValue.Type = optionViewModel.Type;
 
                     ValidateOptionValue(savedOptionValue);
+
+                    if (optionViewModel.Type == OptionType.Custom)
+                    {
+                        savedOptionValue.CustomOption = customOptions.First(co => co.Identifier == optionViewModel.CustomOption.Identifier);
+                    }
+                    else
+                    {
+                        savedOptionValue.CustomOption = null;
+                    }
 
                     repository.Save(savedOptionValue);
                 }
@@ -222,15 +281,17 @@ namespace BetterCms.Module.Root.Services
             // Add new / update existing
             if (options != null)
             {
+                var customOptions = LoadAndValidateCustomOptions(options);
+
                 var optionsList = new List<IDeletableOption<TEntity>>();
                 if (optionContainer.Options != null)
                 {
                     optionsList.AddRange(optionContainer.Options);
                 }
 
-                foreach (var requestLayoutOption in options)
+                foreach (var requestOption in options)
                 {
-                    TOption option = (TOption)optionsList.FirstOrDefault(o => o.Key == requestLayoutOption.Key);
+                    TOption option = (TOption)optionsList.FirstOrDefault(o => o.Key == requestOption.Key);
 
                     if (option == null)
                     {
@@ -238,10 +299,19 @@ namespace BetterCms.Module.Root.Services
                         optionsList.Add(option);
                     }
 
-                    option.Key = requestLayoutOption.Key;
-                    option.Value = requestLayoutOption.Value;
-                    option.Type = requestLayoutOption.Type;
+                    option.Key = requestOption.Key;
+                    option.Value = requestOption.Value;
+                    option.Type = requestOption.Type;
                     option.Entity = (TEntity)optionContainer;
+
+                    if (requestOption.Type == OptionType.Custom)
+                    {
+                        option.CustomOption = customOptions.First(co => co.Identifier == requestOption.CustomOption.Identifier);
+                    }
+                    else
+                    {
+                        option.CustomOption = null;
+                    }
 
                     ValidateOptionValue(option);
                 }
@@ -260,7 +330,7 @@ namespace BetterCms.Module.Root.Services
             {
                 try
                 {
-                    ConvertValueToCorrectType(option.Value, option.Type);
+                    ConvertValueToCorrectType(option.Value, option.Type, option.CustomOption);
                 }
                 catch
                 {
@@ -298,7 +368,7 @@ namespace BetterCms.Module.Root.Services
 
             try
             {
-                return ConvertValueToCorrectType(value, type);
+                return ConvertValueToCorrectType(value, type, option.CustomOption);
             }
             catch
             {
@@ -311,12 +381,16 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <param name="value">The value.</param>
         /// <param name="type">The type.</param>
-        /// <returns>Value, converted to correct type</returns>
-        private object ConvertValueToCorrectType(string value, OptionType type)
+        /// <param name="customOption">The custom option.</param>
+        /// <returns>
+        /// Value, converted to correct type
+        /// </returns>
+        /// <exception cref="System.NotSupportedException"></exception>
+        private object ConvertValueToCorrectType(string value, OptionType type, ICustomOption customOption)
         {
             if (string.IsNullOrEmpty(value))
             {
-                return GetDefaultValueForType(type);
+                return GetDefaultValueForType(type, customOption);
             }
 
             switch (type)
@@ -337,6 +411,16 @@ namespace BetterCms.Module.Root.Services
                 case OptionType.Boolean:
                     return Convert.ToBoolean(value);
 
+                case OptionType.Custom:
+                    ICustomOptionProvider provider = GetCustomOptionsProvider(customOption);
+
+                    if (provider != null)
+                    {
+                        return provider.ConvertValueToCorrectType(value);
+                    }
+
+                    return value;
+
                 default:
                     throw new NotSupportedException(string.Format("Not supported option type: {0}", type));
             }
@@ -346,8 +430,11 @@ namespace BetterCms.Module.Root.Services
         /// Gets the default value for specified option type.
         /// </summary>
         /// <param name="type">The type.</param>
-        /// <returns>Default types value</returns>
-        private object GetDefaultValueForType(OptionType type)
+        /// <param name="customOption">The custom option.</param>
+        /// <returns>
+        /// Default types value
+        /// </returns>
+        private object GetDefaultValueForType(OptionType type, ICustomOption customOption)
         {
             switch (type)
             {
@@ -360,9 +447,176 @@ namespace BetterCms.Module.Root.Services
                 case OptionType.Boolean:
                     return false;
 
+                case OptionType.Custom:
+                    ICustomOptionProvider provider = GetCustomOptionsProvider(customOption);
+
+                    if (provider != null)
+                    {
+                        return provider.GetDefaultValueForType();
+                    }
+
+                    return null;
+
                 default:
                     throw new NotSupportedException(string.Format("Not supported option type: {0}", type));
             }
+        }
+
+        /// <summary>
+        /// Loads and validate custom options.
+        /// </summary>
+        /// <returns>The list of custom option entities</returns>
+        private IList<CustomOption> LoadAndValidateCustomOptions(IEnumerable<IOption> options)
+        {
+            // Check if options are valid
+            var invalidOption = options.FirstOrDefault(o => o.Type == OptionType.Custom && string.IsNullOrWhiteSpace(o.CustomOption.Identifier));
+            if (invalidOption != null)
+            {
+                throw new InvalidOperationException(string.Format("Custom option type provider must be set for custom type! Option Key: {0}", invalidOption.Key));
+            }
+
+            // Get already loaded custom options or option types
+            List<CustomOption> customOptions = options
+                .Where(o => o.Type == OptionType.Custom && o.CustomOption is CustomOption && !(o.CustomOption is IProxy))
+                .Select(o => (CustomOption)o.CustomOption)
+                .ToList();
+
+            // Load missing custom options
+            var customOptionsIdentifiers = options
+                .Where(o => o.Type == OptionType.Custom 
+                    && !(o.CustomOption is CustomOption) 
+                    && customOptions.All(co => co.Identifier != o.CustomOption.Identifier))
+                .Select(o => o.CustomOption.Identifier)
+                .Distinct().ToArray();
+
+            if (customOptionsIdentifiers.Length == 0)
+            {
+                return customOptions;
+            }
+
+            customOptions.AddRange(GetCustomOptionsById(customOptionsIdentifiers));
+
+            return customOptions;
+        }
+
+        /// <summary>
+        /// Loads the custom option entities by specified ids.
+        /// </summary>
+        /// <param name="ids">The ids.</param>
+        /// <returns>
+        /// List of custom option entities
+        /// </returns>
+        public List<CustomOption> GetCustomOptionsById(string[] ids)
+        {
+            if (ids == null || ids.Length == 0)
+            {
+                return new List<CustomOption>();
+            }
+
+            var customOptions = repository
+                .AsQueryable<CustomOption>()
+                .Where(co => ids.Contains(co.Identifier))
+                .ToList();
+
+            // Validate if there are any missing custom options
+            var notExisting = ids.FirstOrDefault(i => customOptions.All(co => co.Identifier != i));
+            if (notExisting != null)
+            {
+                throw new InvalidOperationException(string.Format("Custom option provider not found for custom type {0}!", notExisting));
+            }
+
+            return customOptions;
+        }
+
+        /// <summary>
+        /// Gets the custom options provider.
+        /// </summary>
+        /// <returns>Custom options provider</returns>
+        private ICustomOptionProvider GetCustomOptionsProvider(ICustomOption customOption)
+        {
+            if (customOption == null)
+            {
+                return null;
+            }
+
+            return CustomOptionsProvider.GetProvider(customOption.Identifier);
+        }
+
+        /// <summary>
+        /// Sets the custom option value titles.
+        /// </summary>
+        /// <param name="optionModels">The option models.</param>
+        /// <param name="valueModels">The value models.</param>
+        public void SetCustomOptionValueTitles(IEnumerable<OptionViewModel> optionModels, IEnumerable<OptionValueEditViewModel> valueModels = null)
+        {
+            var values = optionModels
+                    .Where(m => m.Type == OptionType.Custom && !string.IsNullOrEmpty(m.OptionDefaultValue))
+                    .Select(m => new { m.CustomOption.Identifier, Value = m.OptionDefaultValue });
+
+            if (valueModels != null)
+            {
+                values = values.Concat(valueModels
+                    .Where(m => m.Type == OptionType.Custom && !string.IsNullOrEmpty(m.OptionValue))
+                    .Select(m => new { m.CustomOption.Identifier, Value = m.OptionValue }));
+            }
+
+            var groupped = values.Distinct().GroupBy(g => g.Identifier);
+
+            foreach (var group in groupped)
+            {
+                var provider = CustomOptionsProvider.GetProvider(group.Key);
+
+                if (provider != null)
+                {
+                    var ids = group.Select(g => g.Value).Distinct().ToArray();
+                    var titles = provider.GetTitlesForValues(ids, repository);
+
+                    if (titles != null)
+                    {
+                        foreach (var pair in titles)
+                        {
+                            optionModels
+                                .Where(g => g.Type == OptionType.Custom && g.OptionDefaultValue == pair.Key)
+                                .ToList()
+                                .ForEach(g => g.CustomOptionDefaultValueTitle = pair.Value);
+
+                            if (valueModels != null)
+                            {
+                                valueModels
+                                   .Where(g => g.Type == OptionType.Custom && g.OptionValue == pair.Key)
+                                   .ToList()
+                                   .ForEach(g => g.CustomOptionValueTitle = pair.Value);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the custom options.
+        /// </summary>
+        /// <returns>
+        /// List of custom option view models
+        /// </returns>
+        public List<CustomOptionViewModel> GetCustomOptions()
+        {
+            return cacheService.Get(CacheKey, TimeSpan.FromSeconds(30), LoadCustomOptions);
+        }
+
+        /// <summary>
+        /// Loads the custom options.
+        /// </summary>
+        /// <returns>
+        /// List of custom option view models
+        /// </returns>
+        private List<CustomOptionViewModel> LoadCustomOptions()
+        {
+            return
+                repository.AsQueryable<CustomOption>()
+                          .OrderBy(o => o.Title)
+                          .Select(o => new CustomOptionViewModel { Identifier = o.Identifier, Title = o.Title })
+                          .ToList();
         }
     }
 }

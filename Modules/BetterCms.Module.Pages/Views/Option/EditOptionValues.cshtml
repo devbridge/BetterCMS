@@ -1,4 +1,5 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Pages.Mvc.EditableGrid
 @using BetterCms.Module.Root;
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Grids;
@@ -26,28 +27,28 @@
                         CellView = "~/Areas/bcms-pages/Views/Option/Partial/UseDefaultValueCell.cshtml"
                     },
                     
-                new EditableGridColumn(PagesGlobalization.EditOptionsValues_OptionDefaultValueColumn, null, "defaultValue")
+                new OptionValueEditableGridColumn(PagesGlobalization.EditOptionsValues_OptionDefaultValueColumn, "defaultValue", "customOptionDefaultTitle")
                     {
                         CanBeEdited = false,
-                        HeaderAttributes = "style=\"width: 130px;\"",
-                        CellView = RootModuleConstants.EditableOptionValueCellTemplate
+                        HeaderAttributes = "style=\"width: 130px;\""
                     },
 
-                new EditableGridDropDownColumn(PagesGlobalization.EditOptionsValues_OptionTypeColumn, null, "type")
+                new EditableGridDropDownColumn(PagesGlobalization.EditOptionsValues_OptionTypeColumn, null, "calcType")
                     {
                         OptionsBind = "optionTypes",
                         ValueTextBind = "typeName",
-                        HiddenFieldName = "OptionValues[{0}].Type",
                         HeaderAttributes = "style=\"width: 130px;\"",
                     },
                                                             
-                new EditableGridColumn(PagesGlobalization.EditOptionsValues_OptionValueColumn, null, "value")
+                new OptionValueEditableGridColumn(PagesGlobalization.EditOptionsValues_OptionValueColumn, "value", "customOptionTitle")
                     {
                         HeaderAttributes = "style=\"width: 200px;\"",
                         HiddenFieldName = "OptionValues[{0}].OptionValue",
-                        CellView = RootModuleConstants.EditableOptionValueCellTemplate,
                         AutoFocus = true,
                     },
+                    
+                new EditableGridHiddenField("type", "OptionValues[{0}].Type"),
+                new EditableGridHiddenField("customType", "OptionValues[{0}].CustomType")
             }
     };
 }

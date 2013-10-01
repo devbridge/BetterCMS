@@ -9,6 +9,7 @@ using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Content.Resources;
 
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Providers;
 using BetterCms.Module.Root.ViewModels.Option;
 using BetterCms.Module.Root.ViewModels.Security;
 
@@ -207,6 +208,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// The page option values.
         /// </value>
         public IList<OptionValueEditViewModel> OptionValues { get; set; }
+
+        /// <summary>
+        /// Gets or sets the custom options.
+        /// </summary>
+        /// <value>
+        /// The custom options.
+        /// </value>
+        public List<CustomOptionViewModel> CustomOptions { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [access control enabled].

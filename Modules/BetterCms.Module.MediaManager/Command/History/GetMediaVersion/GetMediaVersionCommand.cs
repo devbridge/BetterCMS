@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Web;
+using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
@@ -60,11 +60,7 @@ namespace BetterCms.Module.MediaManager.Command.History.GetMediaVersion
             if (image != null)
             {
                 response.AddProperty(MediaGlobalization.MediaHistory_Preview_Properties_Caption, image.Caption);
-                response.AddProperty(MediaGlobalization.MediaHistory_Preview_Properties_Title, image.Title);
-                response.AddProperty(MediaGlobalization.MediaHistory_Preview_Properties_Description, image.Description);
-                response.AddProperty(MediaGlobalization.MediaHistory_Preview_Properties_FileSize, image.SizeAsText());
                 response.AddProperty(MediaGlobalization.MediaHistory_Preview_Properties_ImageDimensions, string.Format("{0} x {1}", image.Width, image.Height));
-                response.AddProperty(MediaGlobalization.MediaHistory_Preview_Properties_PublicUrl, image.PublicUrl, true);
                 response.AddProperty(MediaGlobalization.MediaHistory_Preview_Properties_PublicThumbnailUrl, image.PublicThumbnailUrl, true);
 
                 response.AddProperty(image.Caption, image.PublicUrl, isImageUrl: true);
@@ -90,6 +86,8 @@ namespace BetterCms.Module.MediaManager.Command.History.GetMediaVersion
                     response.AddProperty(media.Image.Caption, media.Image.PublicUrl, isImageUrl: true);
                 }
             }
+
+            response.Properties = response.Properties.OrderByDescending(o => o.Title).ToList();
 
             return response;
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
@@ -137,10 +138,11 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 model.Model.UpdateSitemap = true;
 
                 // Get layout options, page options and merge them
-                var layoutOptions = Repository.AsQueryable<LayoutOption>(lo => lo.Layout.Id == model.Model.TemplateId).ToList();
-                var pageOptions = Repository.AsQueryable<PageOption>(p => p.Page.Id == id).ToList();
+                var layoutOptions = Repository.AsQueryable<LayoutOption>(lo => lo.Layout.Id == model.Model.TemplateId).Fetch(o => o.CustomOption).ToList();
+                var pageOptions = Repository.AsQueryable<PageOption>(p => p.Page.Id == id).Fetch(o => o.CustomOption).ToList();
 
                 model.Model.OptionValues = optionService.GetMergedOptionValuesForEdit(layoutOptions, pageOptions);
+                model.Model.CustomOptions = optionService.GetCustomOptions();
 
                 if (cmsConfiguration.Security.AccessControlEnabled)
                 {                    

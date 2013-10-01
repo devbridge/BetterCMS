@@ -33,7 +33,8 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
     * Sets dialog content from Url.
     */
     dynamicConent.setContentFromUrl = function (dialog, url, options) {
-        var contentId = dialog.contentId || 0;
+        var contentId = dialog.contentId || 0,
+            currentDialogId = (new Date).getTime();
 
         options = $.extend({
             done: null,
@@ -63,6 +64,7 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             }
         }, options);
 
+        dialog["currentDialogId"] = currentDialogId;
         dynamicConent.showLoading(dialog);
 
         $.ajax({
@@ -71,6 +73,10 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             cache: false
         })
         .done(function (content, status, response) {
+            if (dialog["currentDialogId"] !== currentDialogId) {
+                return;
+            }
+            
             if (response.getResponseHeader('Content-Type').indexOf('application/json') === 0 && content.Html) {
                 if (content.Success) {
                     dialog.setContent(content.Html, contentId);

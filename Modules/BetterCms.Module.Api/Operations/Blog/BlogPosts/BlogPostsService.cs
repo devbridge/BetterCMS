@@ -3,8 +3,10 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
+
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Pages.Models;
 
 using ServiceStack.ServiceInterface;
 
@@ -70,10 +72,28 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
                     })
                     .ToDataListResponse(request);
 
+            if (request.Data.IncludeTags)
+            {
+                LoadTags(listResponse);
+            }
+
             return new GetBlogPostsResponse
                        {
                            Data = listResponse
                        };
+        }
+
+        private void LoadTags(DataListResponse<BlogPostModel> response)
+        {
+            var pageIds = response.Items.Select(i => i.Id).Distinct().ToArray();
+
+            var tags = repository
+                    .AsQueryable<PageTag>(pt => pageIds.Contains(pt.Page.Id))
+                    .Select(pt => new { PageId = pt.Page.Id, TagName = pt.Tag.Name })
+                    .OrderBy(o => o.TagName)
+                    .ToList();
+
+            response.Items.ToList().ForEach(page => { page.Tags = tags.Where(tag => tag.PageId == page.Id).Select(tag => tag.TagName).ToList(); });
         }
     }
 }

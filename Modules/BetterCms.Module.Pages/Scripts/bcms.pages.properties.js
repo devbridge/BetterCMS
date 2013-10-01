@@ -72,7 +72,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         */
         page.initEditPagePropertiesDialogEvents = function (dialog, content) {
             var optionsContainer = dialog.container.find(selectors.optionsTab),
-                optionListViewModel = options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues),
+                optionListViewModel = options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues, content.Data.CustomOptions),
                 tagsViewModel = new tags.TagsListViewModel(content.Data.Tags),
                 accessControlViewModel = security.createUserAccessViewModel(content.Data.UserAccessList),
                 pageViewModel = new PageViewModel(content.Data.Image, content.Data.SecondaryImage, content.Data.FeaturedImage, tagsViewModel, optionListViewModel, accessControlViewModel),
@@ -178,7 +178,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                             item = items()[j];
                             if (item.key() == json.Data[i].OptionKey) {
 
-                                var canEditOption = item.type() != json.Data[i].Type;
+                                var canEditOption = item.type() != json.Data[i].Type && item.customType() != json.Data[i].CustomType;
                                 item.canEditOption(canEditOption);
                                 item.changeFieldsEditing();
 

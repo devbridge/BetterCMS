@@ -30,7 +30,8 @@ namespace BetterCms.Module.Pages.Services
         /// </summary>
         /// <param name="id">The id.</param>
         /// <param name="version">The version.</param>
-        void DeleteNode(Guid id, int version);
+        /// <param name="deletedNodes">The deleted nodes.</param>
+        void DeleteNode(Guid id, int version, out IList<SitemapNode> deletedNodes);
 
         /// <summary>
         /// Deletes the node without page update.

@@ -1,10 +1,10 @@
 ﻿@using BetterCms.Module.Root
 @using BetterCms.Module.Root.Mvc.Grids
 
-@model EditableGridColumn
+@model BetterCms.Module.Pages.Mvc.EditableGrid.OptionValueEditableGridColumn
 
 @* Text type *@
-<!-- ko if: !useDefaultValue() && type() != 5 && type() != 4  -->
+<!-- ko if: !useDefaultValue() && type() != 5 && type() != 4 && type() != 99 -->
     @Html.Partial(RootModuleConstants.EditableGridCellTemplate)
 <!-- /ko -->
 
@@ -57,6 +57,24 @@
 </td>
 <!-- /ko -->
 
+@* Custom *@
+<!-- ko if: !useDefaultValue() && type() == 99  -->
+<td @Html.Raw(Model.Attributes)>
+    @if (Model.CanBeEdited)
+    {
+        <!-- ko if: isActive() -->
+        <a class="bcms-tables-link" data-bind="text: @(Model.CustomValueBind)() || @(Model.ValueBind)() || '...', click: function(data, event) { onCustomOptionExecute(data, event, @(Model.CustomValueBind), @(Model.ValueBind)); }"></a>
+        <!-- /ko -->
+        <!-- ko ifnot: isActive() -->
+    }
+    <a class="bcms-tables-link" data-bind="text: @(Model.CustomValueBind)() || @(Model.ValueBind)()"></a>    
+    @if (Model.CanBeEdited)
+    {
+        <!-- /ko -->
+    }
+</td>
+<!-- /ko -->
+
 @* Using default value *@
 <!-- ko if: useDefaultValue() && type() == 5  -->
     @Html.Partial(RootModuleConstants.EditableGridBooleanCellTemplate, new EditableGridBooleanColumn(null, null, Model.ValueBind)
@@ -68,6 +86,6 @@
 
 <!-- ko if: useDefaultValue() && type() != 5  -->
 <td @Html.Raw(Model.Attributes)>
-    <a class="bcms-tables-link" data-bind="text: @(Model.ValueBind)()"></a>
+    <a class="bcms-tables-link" data-bind="text: @(Model.CustomValueBind)() || @(Model.ValueBind)()"></a>
 </td>
 <!-- /ko -->

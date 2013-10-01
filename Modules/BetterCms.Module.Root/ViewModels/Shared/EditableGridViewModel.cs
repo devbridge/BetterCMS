@@ -33,7 +33,7 @@ namespace BetterCms.Module.Root.ViewModels.Shared
         
         public virtual bool ShowMessages { get; set; }
 
-        public virtual IList<EditableGridColumn> Columns { get; set; }
+        public virtual List<EditableGridColumn> Columns { get; set; }
 
         public EditableGridViewModel()
         {
@@ -52,6 +52,12 @@ namespace BetterCms.Module.Root.ViewModels.Shared
             AddHiddenFields = false;
         }
 
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
         public override string ToString()
         {
             return string.Format("Columns count: {0}", Columns.Count);

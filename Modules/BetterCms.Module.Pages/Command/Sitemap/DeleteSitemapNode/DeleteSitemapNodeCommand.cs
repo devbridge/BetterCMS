@@ -1,4 +1,7 @@
-﻿using BetterCms.Core.Mvc.Commands;
+﻿using System.Collections.Generic;
+
+using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Sitemap;
 using BetterCms.Module.Root.Mvc;
@@ -27,9 +30,17 @@ namespace BetterCms.Module.Pages.Command.Sitemap.DeleteSitemapNode
         {
             UnitOfWork.BeginTransaction();
 
-            SitemapService.DeleteNode(request.Id, request.Version);
+            IList<SitemapNode> deletedNodes;
+            SitemapService.DeleteNode(request.Id, request.Version, out deletedNodes);
 
             UnitOfWork.Commit();
+
+            foreach (var node in deletedNodes)
+            {
+                Events.SitemapEvents.Instance.OnSitemapNodeDeleted(node);
+            }
+
+            Events.SitemapEvents.Instance.OnSitemapUpdated();
 
             return true;
         }

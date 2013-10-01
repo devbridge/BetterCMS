@@ -57,6 +57,9 @@
     <None Include="Packages\BetterCms.Module.Api\BetterCms.Module.Api.nuspec.template">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Packages\BetterCms.Module.ImagesGallery\BetterCms.Module.ImagesGallery.nuspec.template">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Packages\BetterCMS.Module.Users\BetterCms.Module.Users.nuspec.template">
       <SubType>Designer</SubType>
     </None>
@@ -139,6 +142,10 @@
     <ProjectReference Include="..\..\Modules\BetterCMS.Module.Blog\BetterCms.Module.Blog.csproj">
       <Project>{a66a3046-ef60-4c51-ada7-eb055763419b}</Project>
       <Name>BetterCms.Module.Blog</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.ImagesGallery\BetterCms.Module.ImagesGallery.csproj">
+      <Project>{0bb64452-9b66-403e-94c6-e66c6071d12b}</Project>
+      <Name>BetterCms.Module.ImagesGallery</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.MediaManager\BetterCms.Module.MediaManager.csproj">
       <Project>{f3e41793-e8ed-4ba8-a1ab-cba1e47b0786}</Project>
@@ -311,6 +318,15 @@ xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.Api.Abstractions.dll" "$(ProjectDi
 "$(ProjectDir)$(OutDir)BetterCms.NugetPackage.exe" "$(ProjectDir)Packages\BetterCms.Module.Api.Abstractions\BetterCms.Module.Api.Abstractions.nuspec.template" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api.Abstractions\BetterCms.Module.Api.Abstractions.nuspec"
 "$(SolutionDir).nuget\nuget.exe" pack "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api.Abstractions\BetterCms.Module.Api.Abstractions.nuspec" -OutputDirectory "$(ProjectDir)$(OutDir)\" -NoPackageAnalysis
 
+rem --- Creating BetterCms.Module.ImagesGallery package ------------------------------------------------------------------
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.ImagesGallery"
+
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.ImagesGallery\lib"
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.ImagesGallery\lib\net40"
+xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.ImagesGallery.dll" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.ImagesGallery\lib\net40\" /Y /Q
+
+"$(ProjectDir)$(OutDir)BetterCms.NugetPackage.exe" "$(ProjectDir)Packages\BetterCms.Module.ImagesGallery\BetterCms.Module.ImagesGallery.nuspec.template" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.ImagesGallery\BetterCms.Module.ImagesGallery.nuspec"
+"$(SolutionDir).nuget\nuget.exe" pack "$(ProjectDir)$(OutDir)packages\BetterCms.Module.ImagesGallery\BetterCms.Module.ImagesGallery.nuspec" -OutputDirectory "$(ProjectDir)$(OutDir)\" -NoPackageAnalysis
 
 rem --- Creating BetterCms.Module.Api package ------------------------------------------------------------------
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Api"

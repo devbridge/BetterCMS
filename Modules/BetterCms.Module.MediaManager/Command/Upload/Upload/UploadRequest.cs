@@ -17,5 +17,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload
         public long FileLength { get; set; }
 
         public Stream FileStream { get; set; }
+
+        public Guid ReuploadMediaId { get; set; }
     }
 }

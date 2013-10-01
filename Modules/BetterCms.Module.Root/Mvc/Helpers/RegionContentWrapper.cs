@@ -75,7 +75,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         {
             if (allowContentManagement)
             {
-                sb.AppendFormat(@"<div class=""{0} {1}"" data-hide=""{2}""></div>", 
+                sb.AppendFormat(@"<div class=""{0} bcms-clearfix {1}"" data-hide=""{2}""></div>", 
                     ContentEndClassName, 
                     clearFixClassName,
                     !renderClearFixDiv ? "true" : "false").AppendLine();
@@ -84,7 +84,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             {
                 if (renderClearFixDiv)
                 {
-                    sb.AppendFormat(@"<div class=""{0}""></div>", clearFixClassName).AppendLine();
+                    sb.AppendFormat(@"<div class=""bcms-clearfix {0}""></div>", clearFixClassName).AppendLine();
                 }
             }
         }

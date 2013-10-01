@@ -13,6 +13,10 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
     /// </summary>
     public class SaveSitemapCommand : CommandBase, ICommandIn<IList<SitemapNodeViewModel>>
     {
+        private IList<SitemapNode> createdNodes = new List<SitemapNode>();
+        private IList<SitemapNode> updatedNodes = new List<SitemapNode>();
+        private IList<SitemapNode> deletedNodes = new List<SitemapNode>();
+
         /// <summary>
         /// Gets or sets the sitemap service.
         /// </summary>
@@ -27,9 +31,35 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
         /// <param name="request">The request.</param>
         public void Execute(IList<SitemapNodeViewModel> request)
         {
+            createdNodes.Clear();
+            updatedNodes.Clear();
+            deletedNodes.Clear();
+
             UnitOfWork.BeginTransaction();
             SaveNodeList(request, null);
             UnitOfWork.Commit();
+
+            if (createdNodes.Count <= 0 && updatedNodes.Count <= 0 && deletedNodes.Count <= 0)
+            {
+                return;
+            }
+
+            foreach (var node in createdNodes)
+            {
+                Events.SitemapEvents.Instance.OnSitemapNodeCreated(node);
+            }
+
+            foreach (var node in updatedNodes)
+            {
+                Events.SitemapEvents.Instance.OnSitemapNodeUpdated(node);
+            }
+
+            foreach (var node in deletedNodes)
+            {
+                Events.SitemapEvents.Instance.OnSitemapNodeDeleted(node);
+            }
+
+            Events.SitemapEvents.Instance.OnSitemapUpdated();
         }
 
         /// <summary>
@@ -46,7 +76,25 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
 
             foreach (var node in nodes)
             {
-                var sitemapNode = SitemapService.SaveNode(node.Id, node.Version, node.Url, node.Title, node.DisplayOrder, node.ParentId, node.IsDeleted || (parentNode != null && parentNode.IsDeleted), parentNode);
+                var isDeleted = node.IsDeleted || (parentNode != null && parentNode.IsDeleted);
+                var create = node.Id.HasDefaultValue() && !isDeleted;
+                var update = !node.Id.HasDefaultValue() && !isDeleted;
+                var delete = !node.Id.HasDefaultValue() && isDeleted;
+
+                var sitemapNode = SitemapService.SaveNode(node.Id, node.Version, node.Url, node.Title, node.DisplayOrder, node.ParentId, isDeleted, parentNode);
+
+                if (create)
+                {
+                    createdNodes.Add(sitemapNode);
+                }
+                else if (update)
+                {
+                    updatedNodes.Add(sitemapNode);
+                }
+                else if (delete)
+                {
+                    deletedNodes.Add(sitemapNode);
+                }
 
                 SaveNodeList(node.ChildNodes, sitemapNode);
             }

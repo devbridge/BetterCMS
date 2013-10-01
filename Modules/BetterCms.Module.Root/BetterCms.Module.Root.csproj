@@ -118,6 +118,8 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Commands\Authentication\GetAuthenticationInfo\GetAuthenticationInfoCommand.cs" />
+    <Compile Include="Commands\Authentication\SearchUsers\SearchUsersCommand.cs" />
+    <Compile Include="Commands\Authentication\SearchRoles\SearchRolesCommand.cs" />
     <Compile Include="Events\CategoryEvents.cs" />
     <Compile Include="Events\PageRetrievedEventArgs.cs" />
     <Compile Include="Events\RootEvents.cs" />
@@ -153,14 +155,19 @@
     <Compile Include="Controllers\SidebarController.cs" />
     <Compile Include="Controllers\SiteSettingsController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
+    <Compile Include="Mvc\Grids\Extensions\OptionsExtentions.cs" />
+    <Compile Include="Providers\CustomOptionsProvider.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Content.cs" />
     <Compile Include="Models\ContentOption.cs" />
     <Compile Include="Models\ComboWireJson.cs" />
     <Compile Include="Models\AccessRule.cs" />
+    <Compile Include="Models\CustomOption.cs" />
     <Compile Include="Models\Extensions\ListExtensions.cs" />
     <Compile Include="Models\Maps\AccessRuleMap.cs" />
+    <Compile Include="Models\Maps\CustomOptionMap.cs" />
     <Compile Include="Models\Maps\PageOptionMap.cs" />
+    <Compile Include="Models\Migrations\Migration201309221100.cs" />
     <Compile Include="Models\Migrations\Migration201309040830.cs" />
     <Compile Include="Models\Migrations\Migration201308300049.cs" />
     <Compile Include="Models\Migrations\Migration201308292125.cs" />
@@ -207,6 +214,7 @@
     <Compile Include="Mvc\Converters.cs" />
     <Compile Include="Mvc\Grids\EditableGridBooleanColumn.cs" />
     <Compile Include="Mvc\Grids\EditableGridDropDownColumn.cs" />
+    <Compile Include="Mvc\Grids\EditableGridHiddenField.cs" />
     <Compile Include="Mvc\Grids\Extensions\PagingExtensions.cs" />
     <Compile Include="Mvc\Grids\Extensions\QueryableExtensions.cs" />
     <Compile Include="Mvc\Grids\Extensions\QueryOverExtensions.cs" />
@@ -233,6 +241,7 @@
     <Compile Include="Projections\PageContentProjection.cs" />
     <Compile Include="Projections\PageContentProjectionFactory.cs" />
     <Compile Include="Projections\PageJavaScriptProjection.cs" />
+    <Compile Include="Providers\ICustomOptionProvider.cs" />
     <Compile Include="Registration\AuthenticationJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\ContentJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\BcmsJsModuleIncludeDescriptor.cs" />
@@ -283,6 +292,7 @@
     <Compile Include="ViewModels\Cms\RedirectViewModel.cs" />
     <Compile Include="ViewModels\Cms\RenderPageViewModel.cs" />
     <Compile Include="ViewModels\Cms\RenderWidgetViewModel.cs" />
+    <Compile Include="ViewModels\Option\CustomOptionViewModel.cs" />
     <Compile Include="ViewModels\Option\OptionValueEditViewModel.cs" />
     <Compile Include="ViewModels\Option\OptionValueViewModel.cs" />
     <Compile Include="ViewModels\Option\OptionViewModel.cs" />
