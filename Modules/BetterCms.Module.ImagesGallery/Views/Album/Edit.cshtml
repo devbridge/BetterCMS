@@ -1,0 +1,65 @@
+﻿@using BetterCms.Module.ImagesGallery.Content.Resources
+@using BetterCms.Module.ImagesGallery.Controllers
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc.Helpers
+@using Microsoft.Web.Mvc
+
+@model BetterCms.Module.ImagesGallery.ViewModels.AlbumEditViewModel
+           
+<div class="bcms-scroll-window">
+    @Html.TabbedContentMessagesBox()
+    <div class="bcms-padded-content">
+        @using (Html.BeginForm<AlbumController>(f => f.SaveAlbum(null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
+        {
+            <div class="bcms-input-list-holder">
+                @Html.Tooltip(ImagesGalleryGlobalization.EditAlbum_Folder_Tooltip_Description)
+                <div class="bcms-content-titles">@ImagesGalleryGlobalization.EditAlbum_Folder_Title</div>
+                
+                @Html.TextBoxFor(model => model.Folder.FolderTitle, new
+                                                                        {
+                                                                            @class = "bcms-editor-field-box", 
+                                                                            @readonly = "readonly",
+                                                                            data_bind="value: folder().title()",
+                                                                            style = "width: 400px;"
+                                                                        })
+                <div class="bcms-btn-small" data-bind="click: folder().select.bind(folder())">@ImagesGalleryGlobalization.EditAlbum_Fodler_SelectFolder_ButtonTitle</div>
+            </div>
+            
+            <div class="bcms-input-list-holder">
+                @Html.Tooltip(ImagesGalleryGlobalization.EditAlbum_Title_Tooltip_Description)
+                <div class="bcms-content-titles">@ImagesGalleryGlobalization.EditAlbum_Title_Title</div>
+                
+                <div class="bcms-input-box">
+                    @Html.TextBoxFor(model => model.Title, new
+                                                               {
+                                                                   @class = "bcms-editor-field-box", 
+                                                                   data_bind="value: title, valueUpdate: 'afterkeydown'"
+                                                               })
+                    @Html.BcmsValidationMessageFor(f => f.Title)
+                </div>
+            </div>
+        
+            <div class="bcms-input-list-holder">
+                @Html.Tooltip(ImagesGalleryGlobalization.EditAlbum_CoverImage_Tooltip_Description)
+                <div class="bcms-content-titles">@ImagesGalleryGlobalization.EditAlbum_CoverImage_Title</div>
+                <div class="bcms-uploaded-image">
+                    <!-- ko if: coverImage().url() -->
+                    <a class="bcms-remove-image" data-bind="click: coverImage().remove.bind(coverImage())">@RootGlobalization.Button_Remove</a>
+                    <a data-bind="click: coverImage().preview.bind(coverImage())">
+                        <img data-bind="attr: { src: coverImage().thumbnailUrl(), alt: coverImage().tooltip() }" /></a>
+                    <!-- /ko -->
+                </div>
+                <div class="bcms-upload-info">
+                    <div class="bcms-btn-small" data-bind="click: coverImage().select.bind(coverImage())">@ImagesGalleryGlobalization.EditAlbum_CoverImage_SelectImage_ButtonTitle</div>
+                </div>
+            </div>
+        
+            @Html.HiddenFor(m => m.Id, new { data_bind = "value: id()" })
+            @Html.HiddenFor(m => m.Version, new { data_bind = "value: version()" })
+            @Html.HiddenFor(m => m.CoverImage.ImageId, new { data_bind = "value: coverImage().id()" })
+            @Html.HiddenFor(m => m.Folder.FolderId, new { data_bind = "value: folder().id()" })
+
+            @Html.HiddenSubmit()
+        }
+    </div>
+</div>

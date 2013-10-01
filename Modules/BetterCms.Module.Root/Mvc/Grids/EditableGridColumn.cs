@@ -19,6 +19,8 @@
         public virtual bool AutoFocus { get; set; }
         
         public virtual bool CanBeEdited { get; set; }
+        
+        public virtual bool IsRendered { get; set; }
 
         public virtual string HiddenFieldName { get; set; }
 
@@ -36,6 +38,7 @@
             HeaderView = RootModuleConstants.EditableGridHeaderTemplate;
             CellView = RootModuleConstants.EditableGridCellTemplate;
             CanBeEdited = true;
+            IsRendered = true;
         }
     }
 }

@@ -24,6 +24,8 @@ namespace BetterCms.Module.Root.Models
 
         public virtual bool IsDeletable { get; set; }
 
+        public virtual CustomOption CustomOption { get; set; }
+
         string IOption.Value
         {
             get
@@ -45,6 +47,18 @@ namespace BetterCms.Module.Root.Models
             set
             {
                 Content = value;
+            }
+        }
+
+        ICustomOption IOption.CustomOption
+        {
+            get
+            {
+                return CustomOption;
+            }
+            set
+            {
+                CustomOption = (CustomOption)value;
             }
         }
 

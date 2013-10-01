@@ -60,13 +60,15 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <summary>
         /// Gets images list to insert to content.
         /// </summary>
+        /// <param name="folderId">The folder id.</param>
         /// <returns>
         /// The view.
         /// </returns>
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
-        public ActionResult ImageInsert()
+        public ActionResult ImageInsert(string folderId)
         {
-            var images = GetCommand<GetImagesCommand>().ExecuteCommand(new MediaManagerViewModel());
+            var request = new MediaManagerViewModel { CurrentFolderId = folderId.ToGuidOrDefault() };
+            var images = GetCommand<GetImagesCommand>().ExecuteCommand(request);
             var success = images != null;
             var view = RenderView("ImageInsert", new MediaImageViewModel());
 

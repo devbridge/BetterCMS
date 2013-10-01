@@ -10,11 +10,16 @@
     @Html.SiteSettingsMessagesBox(null, new Dictionary<string, string> { { "data-bind", "attr: { id: messagesDomId() }" } })
 }
 
+@{
+    var visibleColumns = Model.Columns.Where(c => c.IsRendered).ToList();
+    var visibleColumnsCount = visibleColumns.Count;
+}
+
 <table class="bcms-tables">
     <thead>
         <tr>
             <th class="bcms-tables-nohover">&nbsp;</th>
-            @foreach (var column in Model.Columns)
+            @foreach (var column in visibleColumns)
             {
                 @Html.Partial(column.HeaderView, column)
             }
@@ -23,20 +28,20 @@
     </thead>
     <tbody>
         <!-- ko foreach: items -->
-        <tr data-bind="click: onOpen, css: {'bcms-table-row-active' : isActive()}, attr: {id: getRowId()}">
+        <tr data-bind="click: onOpen, css: {'bcms-table-row-active' : isActive() || isSelectedForInsert()}, attr: {id: getRowId()}">
             <!-- ko if: saving() || deleting() -->
             @if (Model.CanEditItems)
             {
                 <td class="bcms-tables-nohover">&nbsp;</td>
                 <!-- ko if: saving() -->
-                <td class="bcms-tables-nohover" colspan="@Model.Columns.Count">@RootGlobalization.Message_Saving</td>
+                <td class="bcms-tables-nohover" colspan="@visibleColumnsCount">@RootGlobalization.Message_Saving</td>
                 <!-- /ko -->
             }
             @if (Model.CanEditItems)
             {
                 <td class="bcms-tables-nohover" style="width: 145px;">&nbsp;</td>
                 <!-- ko if: deleting() -->
-                <td class="bcms-tables-nohover" colspan="@Model.Columns.Count">@RootGlobalization.Message_Deleting</td>
+                <td class="bcms-tables-nohover" colspan="@visibleColumnsCount">@RootGlobalization.Message_Deleting</td>
                 <!-- /ko -->
             }
             <!-- /ko -->
@@ -54,7 +59,7 @@
             {
                 <td>&nbsp;</td>
             }
-            @foreach (var column in Model.Columns)
+            @foreach (var column in visibleColumns)
             {
                 @Html.Partial(column.CellView, column)
             }
@@ -83,7 +88,7 @@
         <!-- /ko -->
         <!-- ko if: items().length == 0 -->
         <tr>
-            <td colspan="@(Model.Columns.Count + 2)">@RootGlobalization.Grid_NoDataAvailable_Message</td>
+            <td colspan="@(visibleColumnsCount + 2)">@RootGlobalization.Grid_NoDataAvailable_Message</td>
         </tr>
         <!-- /ko -->
     </tbody>

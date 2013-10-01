@@ -137,6 +137,7 @@ namespace BetterCms.Module.Pages.Controllers
                                SecondaryImage = success ? model.SecondaryImage : new ImageSelectorViewModel(),
                                FeaturedImage = success ? model.FeaturedImage : new ImageSelectorViewModel(),
                                OptionValues = success ? model.OptionValues : null,
+                               CustomOptions = success ? model.CustomOptions : null,
                                UserAccessList = success ? model.UserAccessList : new List<UserAccessViewModel>()
                            };
 

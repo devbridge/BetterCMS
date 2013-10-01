@@ -1,10 +1,8 @@
 ﻿@using BetterCms.Module.MediaManager.Content.Resources
-@using BetterCms.Module.MediaManager.Models
 @using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
-@using BetterCms.Module.Root.ViewModels.Security
 @model BetterCms.Module.MediaManager.ViewModels.MediaManager.MediaViewModel
 @{
     var canEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);    
@@ -130,6 +128,10 @@
                     <!-- /ko -->
 
                     <!--  ko if: !isProcessing() && !isDeleting() -->
+                    
+                    <!-- ko if: isFolder() && $root.canSelectFolders() -->
+                    <a class="bcms-media-content-link" data-bind="click: $root.selectFolder.bind($root, $data), clickBubble: false">@MediaGlobalization.MediaManager_ButtonSelectFolder</a>
+                    <!-- /ko -->
 
                     <!-- ko if: !isFailed() && !isFolder() && !isImage() && $root.canInsertMedia() -->
                     <a class="bcms-media-content-link" data-bind="click: insertMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonInsertFile</a>
@@ -207,7 +209,7 @@
                 </div>
 
                 <div class="bcms-media-items-block">
-                    <div data-bind="css: iconClassNames()">
+                    <div data-bind="css: iconClassNames(), click: onIconClicked.bind($data, $root)">
                         <!-- ko if: getImageUrl() && !isProcessing() -->
                         <img data-bind="attr: { alt: tooltip(), src: getImageUrl() }" />
                         <!-- /ko -->

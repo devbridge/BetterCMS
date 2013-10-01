@@ -1,0 +1,34 @@
+﻿@model BetterCms.Module.ImagesGallery.ViewModels.GalleryViewModel
+
+@if (Model.LoadCmsStyles)
+{
+    @Html.Partial("Partial/ListStyles")
+}
+
+@{
+    var i = 0;
+    var l = Model.Albums.Count;
+    
+    foreach (var album in Model.Albums)
+    {
+        if (i % 3 == 0)
+        {
+            @:<section>
+        }
+        
+        <div class="bcms-album-holder">
+            <img src="@album.CoverImageUrl" alt="@album.Title" />
+            <div class="bcms-album-name">
+                <h4><a href="@album.Url">@album.Title</a></h4>
+                <span>@album.ImagesCount Pictures,</span><time datetime="@album.LastUpdateDate">@album.LastUpdateDate</time>
+            </div>
+        </div>
+
+        i++;
+    
+        if (i % 3 == 0 || i == l)
+        {
+            @:</section>
+        }
+    }
+}

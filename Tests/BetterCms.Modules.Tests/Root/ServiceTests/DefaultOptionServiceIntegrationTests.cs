@@ -6,6 +6,8 @@ using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
+using BetterCms.Core.Services.Caching;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
 
@@ -24,7 +26,7 @@ namespace BetterCms.Test.Module.Root.ServiceTests
                 var unitOfWork = new DefaultUnitOfWork(session);
                 var repository = new DefaultRepository(unitOfWork);
 
-                var optionService = new DefaultOptionService(repository);
+                var optionService = new DefaultOptionService(repository, new HttpRuntimeCacheService());
 
                 // Create layout with options
                 var layout = TestDataProvider.CreateNewLayout();
@@ -78,7 +80,7 @@ namespace BetterCms.Test.Module.Root.ServiceTests
                 var unitOfWork = new DefaultUnitOfWork(session);
                 var repository = new DefaultRepository(unitOfWork);
 
-                var optionService = new DefaultOptionService(repository);
+                var optionService = new DefaultOptionService(repository, new HttpRuntimeCacheService());
 
                 // Create layout with options
                 var layout = TestDataProvider.CreateNewLayout();

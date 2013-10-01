@@ -20,6 +20,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 optionTypeBoolean: null,
                 optionTypeDateTime: null,
                 optionTypeFloat: null,
+                optionTypeCustom: null,
                 datePickerTooltipTitle: null,
                 optionValidationMessage: null
             },
@@ -28,8 +29,10 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 integerType: 2,
                 floatType: 3,
                 dateTimeType: 4,
-                boolType: 5
+                boolType: 5,
+                customType: 99
             },
+            registeredCustomOptions = [],
             classes = {
                 hasDatePicker: 'hasDatepicker'
             },
@@ -41,6 +44,35 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
         options.links = links;
         options.globalization = globalization;
         options.selectors = selectors;
+        options.registerCustomOptions = registeredCustomOptions;
+
+        function CustomOptionViewModel(title, identifier) {
+            var self = this;
+
+            self.title = title;
+            self.identifier = identifier;
+
+            return self;
+        };
+        
+        function addCustomOptions(customOptions) {
+            var list = [],
+                i,
+                l,
+                option;
+
+            if (!customOptions || !$.isArray(customOptions)) {
+                return list;
+            }
+
+            for (i = 0, l = customOptions.length; i < l; i++) {
+                option = customOptions[i];
+
+                list.push(new CustomOptionViewModel(option.Title, option.Identifier));
+            }
+
+            return list;
+        }
 
         /**
         * Options list view model
@@ -49,10 +81,11 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
             bcms.extendsClass(OptionsListViewModel, _super);
 
-            function OptionsListViewModel(container, items) {
-                _super.call(this, container, null, items, null);
-
+            function OptionsListViewModel(container, items, customOptions) {
                 var self = this;
+                self.customOptions = addCustomOptions(customOptions);
+
+                _super.call(self, container, null, items, null);
 
                 self.attachDatePickers = function() {
                     attachDatePickers(self);
@@ -72,11 +105,11 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
         var OptionValuesListViewModel = (function (_super) {
             bcms.extendsClass(OptionValuesListViewModel, _super);
             
-            function OptionValuesListViewModel(container, items) {
-                _super.call(this, container, items);
-                
+            function OptionValuesListViewModel(container, items, customOptions) {
+                _super.call(this, container, items, customOptions);
+
                 var self = this;
-                
+
                 self.attachDatePickers = function () {
                     attachDatePickers(self);
                 };
@@ -140,7 +173,8 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             function OptionViewModel(parent, item) {
                 _super.call(this, parent, item);
 
-                var self = this;
+                var self = this,
+                    ci, cl, cOption;
 
                 // Main values
                 self.key = ko.observable().extend({ required: "", maxLength: { maxLength: ko.maxLength.name } });
@@ -156,6 +190,10 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.lastType = null;
                 self.editableValue = self.getValueField();
                 self.rowId = null;
+                self.customType = ko.observable();
+                self.customOptionTitle = ko.observable();
+                self.customOptionDefaultTitle = ko.observable();
+                self.calcType = ko.observable();
 
                 self.optionTypes = [];
                 self.optionTypes.push({ id: optionTypes.textType, name: globalization.optionTypeText });
@@ -163,14 +201,24 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.optionTypes.push({ id: optionTypes.floatType, name: globalization.optionTypeFloat });
                 self.optionTypes.push({ id: optionTypes.dateTimeType, name: globalization.optionTypeDateTime });
                 self.optionTypes.push({ id: optionTypes.boolType, name: globalization.optionTypeBoolean });
+                
+                // Add custom options to types list
+                for (ci = 0, cl = parent.customOptions.length; ci < cl; ci++) {
+                    cOption = {
+                        id: optionTypes.customType + ':' + parent.customOptions[ci].identifier,
+                        name: parent.customOptions[ci].title
+                    };
+                    self.optionTypes.push(cOption);
+                }
 
                 // NOTE: useDefaultValue should be registered before defaultValue and type
                 // because in othercase, when cancelling edit mode, ir sets wrong values
-                self.registerFields(self.useDefaultValue, self.key, self.value, self.defaultValue, self.type);
+                self.registerFields(self.useDefaultValue, self.key, self.value, self.defaultValue,
+                    self.type, self.customType, self.calcType, self.customOptionTitle, self.customOptionDefaultTitle);
 
                 self.getOptionTypeName = function() {
                     var i,
-                        type = self.type();
+                        type = self.calcType();
 
                     for (i = 0; i < self.optionTypes.length; i++) {
                         if (self.optionTypes[i].id == type) {
@@ -181,29 +229,69 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     return '';
                 };
 
-                self.type.subscribe(function (newType) {
-                    var oldType = self.lastType;
+                self.getCalcType = function () {
+                    var type = self.type(),
+                        customType = self.customType(),
+                        customOptionIdentifier = '';
 
-                    // Entering boolean mode
-                    if (oldType == optionTypes.boolType) {
-                        self.editableValue('');
+                    if (type != optionTypes.customType) {
+                        return type;
+                    } else {
+                        for (ci = 0, cl = self.parent.customOptions.length; ci < cl; ci++) {
+                            if (self.parent.customOptions[ci].identifier == customType) {
+                                customOptionIdentifier = self.parent.customOptions[ci].identifier;
+                            }
+                        }
+
+                        return type + ':' + customOptionIdentifier;
                     }
-                    
-                    // Leaving boolean mode
-                    if (newType == optionTypes.boolType) {
-                        if (self.editableValue() !== 'true' && self.editableValue() !== true) {
-                            self.editableValue(false);
+                };
+
+                self.calcType.subscribe(function (newType) {
+                    var oldType = self.lastType,
+                        typeValue = newType,
+                        customType = '',
+                        split;
+
+                    if (newType && newType.indexOf && newType.indexOf(optionTypes.customType) === 0) {
+                        // Entering custom mode
+                        split = newType.indexOf(':');
+                        typeValue = newType.substr(0, split);
+                        customType = newType.substr(split + 1, newType.length - split);
+                    } else {
+                        self.customOptionTitle('');
+                        self.customOptionDefaultTitle('');
+
+                        // Entering boolean mode
+                        if (oldType == optionTypes.boolType) {
+                            self.editableValue('');
+                        }
+
+                        // Leaving boolean mode
+                        if (newType == optionTypes.boolType) {
+                            if (self.editableValue() !== 'true' && self.editableValue() !== true) {
+                                self.editableValue(false);
+                            }
                         }
                     }
-
+                    
                     // Save new value
                     self.lastType = newType;
 
                     // Set type name
+                    self.type(typeValue);
+                    self.customType(customType);
                     self.typeName(self.getOptionTypeName());
                     
                     // Notify value to be re-validated
                     self.editableValue(self.editableValue());
+                });
+
+                self.type.subscribe(function(newValue) {
+                    console.log("Type: " + newValue);
+                });
+                self.customType.subscribe(function (newValue) {
+                    console.log("Custom type: " + newValue);
                 });
 
                 self.initDatePickers = function() {
@@ -244,12 +332,18 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                         });
                     }
                 };
-
+                
                 // Set values
                 self.key(item.OptionKey);
                 self.defaultValue(item.OptionDefaultValue);
                 self.value(item.OptionValue);
                 self.type(item.Type);
+                if (item.Type == optionTypes.customType) {
+                    self.customType(item.CustomType);
+                    self.customOptionDefaultTitle(item.CustomOptionDefaultValueTitle);
+                    self.customOptionTitle(item.CustomOptionValueTitle);
+                }
+                self.calcType(self.getCalcType(self));
                 self.canEditOption(item.CanEditOption !== false);
                 self.useDefaultValue(!self.canEditOption() && item.UseDefaultValue === true);
                 self.canDeleteOption = item.CanDeleteOption !== false;
@@ -261,8 +355,10 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     if (self.isActive()) {
                         if (newValue) {
                             self.value(self.defaultValue());
+                            self.customOptionTitle(self.customOptionDefaultTitle());
                         } else {
                             self.value('');
+                            self.customOptionTitle('');
                         }
                     }
                 });
@@ -274,6 +370,24 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                         focusedElement.datepicker("hide");
                     }
                 });
+
+                self.onCustomOptionExecute = function (data, event, titleObservable, valueObservable) {
+                    var customType = self.customType();
+
+                    self.onItemSelect(data, event);
+                    
+                    if (!customType) {
+                        return;
+                    }
+                    
+                    for (ci = 0, cl = registeredCustomOptions.length; ci < cl; ci++) {
+                        if (registeredCustomOptions[ci].identifier == customType) {
+                            registeredCustomOptions[ci].onExecute(valueObservable, titleObservable, self);
+                            
+                            return;
+                        }
+                    }
+                };
             };
 
             OptionViewModel.prototype.getValueField = function() {
@@ -341,7 +455,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 var disableEditing = this.canEditOption() === false;
                 
                 changeFieldEditing(this.key, disableEditing);
-                changeFieldEditing(this.type, disableEditing);
+                changeFieldEditing(this.calcType, disableEditing);
 
                 this.deletingIsDisabled(disableEditing);
             };
@@ -360,15 +474,15 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
         /**
         * Creates options list view model
         */
-        options.createOptionsViewModel = function(container, items) {
-            return new OptionsListViewModel(container, items);
+        options.createOptionsViewModel = function(container, items, customOptions) {
+            return new OptionsListViewModel(container, items, customOptions);
         };
 
         /**
         * Creates option values list view model
         */
-        options.createOptionValuesViewModel = function (container, items) {
-            return new OptionValuesListViewModel(container, items);
+        options.createOptionValuesViewModel = function (container, items, customOptions) {
+            return new OptionValuesListViewModel(container, items, customOptions);
         };
 
         ko.extenders.optionValue = function (target, opts) {
@@ -397,6 +511,16 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 showMessage = hasError ? $.format(globalization.optionValidationMessage, self.key() || '', self.getOptionTypeName() || '') : '';
 
                 target.validator.setError(ruleName, hasError, showMessage);
+            });
+        };
+
+        /**
+        * Registers custom option
+        */
+        options.registerCustomOption = function (identifier, onExecute) {
+            registeredCustomOptions.push({
+                identifier: identifier,
+                onExecute: onExecute
             });
         };
 

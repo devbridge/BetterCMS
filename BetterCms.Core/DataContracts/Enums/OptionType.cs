@@ -13,6 +13,8 @@ namespace BetterCms.Core.DataContracts.Enums
 
         DateTime = 4,
 
-        Boolean = 5
+        Boolean = 5,
+
+        Custom = 99
     }
 }

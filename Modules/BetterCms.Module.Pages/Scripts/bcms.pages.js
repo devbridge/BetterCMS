@@ -145,7 +145,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             optionsContainer = dialog.container.find(selectors.addNewPageOptionsTab),
             viewModel = {
                 accessControl: security.createUserAccessViewModel(content.Data.UserAccessList),
-                options: options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues)
+                options: options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues, content.Data.CustomOptions)
             };
 
         page.initializePermalinkBox(dialog, true, links.convertStringToSlugUrl, selectors.addNewPageTitleInput, true);

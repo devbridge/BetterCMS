@@ -271,6 +271,10 @@
       <Project>{a66a3046-ef60-4c51-ada7-eb055763419b}</Project>
       <Name>BetterCms.Module.Blog</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.ImagesGallery\BetterCms.Module.ImagesGallery.csproj">
+      <Project>{0bb64452-9b66-403e-94c6-e66c6071d12b}</Project>
+      <Name>BetterCms.Module.ImagesGallery</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.MediaManager\BetterCms.Module.MediaManager.csproj">
       <Project>{f3e41793-e8ed-4ba8-a1ab-cba1e47b0786}</Project>
       <Name>BetterCms.Module.MediaManager</Name>

@@ -284,7 +284,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             var optionsContainer = dialog.container.find(selectors.optionsTab),
                 widgetOptions = data != null ? data.Options : null,
-                optionListViewModel = options.createOptionsViewModel(optionsContainer, widgetOptions);
+                customOptions = data != null ? data.CustomOptions : null,
+                optionListViewModel = options.createOptionsViewModel(optionsContainer, widgetOptions, customOptions);
             ko.applyBindings(optionListViewModel, optionsContainer.get(0));
 
             dialog.container.find(selectors.widgetPreviewImage).error(function() {
@@ -397,7 +398,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         contentAvailable: function (contentDialog, content) {
                             var optionsContainer = contentDialog.container.find(selectors.pageContentOptionsForm);
 
-                            optionListViewModel = options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues);
+                            optionListViewModel = options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues, content.Data.CustomOptions);
                             ko.applyBindings(optionListViewModel, optionsContainer.get(0));
                         },
 

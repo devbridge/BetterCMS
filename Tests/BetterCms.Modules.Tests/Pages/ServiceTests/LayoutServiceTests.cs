@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Module.Pages.Services;
+using BetterCms.Module.Root.Services;
+
 using Moq;
 using NUnit.Framework;
 
@@ -20,7 +22,7 @@ namespace BetterCms.Test.Module.Pages.ServiceTests
                 .Setup(f => f.AsQueryable<BetterCms.Module.Root.Models.Layout>())
                 .Returns(new[] { layout1, layout2 }.AsQueryable());
 
-            var service = new DefaultLayoutService(repositoryMock.Object);
+            var service = new DefaultLayoutService(repositoryMock.Object, new Mock<IOptionService>().Object);
             var response = service.GetLayouts();
 
             Assert.IsNotNull(response);
@@ -41,7 +43,7 @@ namespace BetterCms.Test.Module.Pages.ServiceTests
                 .Setup(f => f.AsQueryable<BetterCms.Module.Root.Models.Layout>())
                 .Returns(new BetterCms.Module.Root.Models.Layout[] { }.AsQueryable());
 
-            var service = new DefaultLayoutService(repositoryMock.Object);
+            var service = new DefaultLayoutService(repositoryMock.Object, new Mock<IOptionService>().Object);
             var response = service.GetLayouts();
 
             Assert.IsNotNull(response);

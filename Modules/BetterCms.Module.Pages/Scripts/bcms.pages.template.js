@@ -126,7 +126,8 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                 optionsContainer = dialog.container.find(selectors.optionsTab),
                 form = dialog.container.find(selectors.templateEditForm),
                 templateOptions = content && content.Data ? content.Data.Options : null,
-                optionListViewModel = options.createOptionsViewModel(optionsContainer, templateOptions);
+                customOptions = content && content.Data ? content.Data.CustomOptions : null,
+                optionListViewModel = options.createOptionsViewModel(optionsContainer, templateOptions, customOptions);
 
             // Initialize regions tab
             editor.initialize(regionsContainer, {
