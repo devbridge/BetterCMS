@@ -260,6 +260,8 @@ bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettin
                             if (optionModel.key && !optionModel.key()) {
                                 optionModel.key(selectedItem.title());
                             }
+
+                            optionModel.hasFocus(true);
                         }
                     }
 
