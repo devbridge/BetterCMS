@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define, console */
+/*global bettercms */
 
 bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.modal', 'bcms.grid'], function ($, bcms, messages, modal, grid) {
     'use strict';
@@ -586,7 +586,7 @@ bettercms.define('bcms.inlineEdit', ['bcms.jquery', 'bcms', 'bcms.messages', 'bc
     * Initializes inline edit module.
     */
     editor.init = function () {
-        console.log('Initializing bcms.inlineEdit module.');
+        bcms.logger.debug('Initializing bcms.inlineEdit module.');
     };
     
     /**

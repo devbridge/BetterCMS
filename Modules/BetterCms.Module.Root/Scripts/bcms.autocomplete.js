@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global bettercms, console */
+/*global bettercms */
 
 bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autocomplete', 'bcms.ko.extenders'],
     function($, bcms, jqAutoComplete, ko) {
@@ -175,7 +175,7 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
         * Initializes autocomplete module.
         */
         autocomplete.init = function() {
-            console.log('Initializing bcms.autocomplete module.');
+            bcms.logger.debug('Initializing bcms.autocomplete module.');
 
             addAutoCompleteBinding();
         };

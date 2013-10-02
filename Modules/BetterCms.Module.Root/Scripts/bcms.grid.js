@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define, console */
+/*global bettercms */
 
 bettercms.define('bcms.grid', ['bcms.jquery', 'bcms'], function ($, bcms) {
     'use strict';
@@ -126,7 +126,7 @@ bettercms.define('bcms.grid', ['bcms.jquery', 'bcms'], function ($, bcms) {
     * Initializes grid module.
     */
     grid.init = function () {
-        console.log('Initializing bcms.grid module.');
+        bcms.logger.debug('Initializing bcms.grid module.');
     };
     
     /**

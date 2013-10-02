@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global bettercms, console */
+/*global bettercms */
 bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.ko.extenders', 'bcms.ko.grid', 'bcms.options', 'bcms.modal', 'bcms.media'],
     function ($, bcms, siteSettings, dynamicContent, ko, kogrid, options, modal, media) {
         'use strict';
@@ -274,7 +274,7 @@ bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettin
         * Initializes images gallery module.
         */
         gallery.init = function () {
-            console.log('Initializing bcms.images.gallery module.');
+            bcms.logger.debug('Initializing bcms.images.gallery module.');
 
             options.registerCustomOption('images-gallery-album', onExecuteImageGalleryAlbumOption);
         };

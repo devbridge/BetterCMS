@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true, vars: true */
-/*global bettercms, console */
+/*global bettercms */
 
 bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.dynamicContent', 'bcms.tags', 'bcms.ko.extenders',
         'bcms.media', 'bcms.redirect', 'bcms.options', 'bcms.security', 'bcms.messages'],
@@ -353,7 +353,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         * Initializes page module.
         */
         page.init = function () {
-            console.log('Initializing bcms.pages.properties module.');
+            bcms.logger.debug('Initializing bcms.pages.properties module.');
         };
 
         /**

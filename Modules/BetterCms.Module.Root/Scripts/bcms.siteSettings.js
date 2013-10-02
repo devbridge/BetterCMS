@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define */
+/*global bettercms */
 
 bettercms.define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.dynamicContent', 'bcms.tabs', 'bcms.ko.extenders', 'bcms.messages', 'bcms.forms'],
     function ($, bcms, modal, dynamicContent, tabs, ko, messages, forms) {

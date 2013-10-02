@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global bettercms, console */
+/*global bettercms */
 
 bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 'bcms.modal', 'bcms.tabs'],
     function ($, bcms, ko, messages, modal, tabs) {
@@ -701,7 +701,7 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
     * Initializes knockout grid module.
     */
     grid.init = function () {
-        console.log('Initializing bcms.ko.grid module.');
+        bcms.logger.debug('Initializing bcms.ko.grid module.');
     };
     
     /**

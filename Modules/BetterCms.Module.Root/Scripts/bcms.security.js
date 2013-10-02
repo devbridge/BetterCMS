@@ -39,7 +39,7 @@ bettercms.define('bcms.security', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', '
                 }
             }
         } catch (e) {
-            console.log('Error occurred while checking if role(s) is authorized.');
+            bcms.logger.error('Error occurred while checking if role(s) is authorized.');
         }
 
         return false;

@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define, console, document */
+/*global bettercms, document */
 
 bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', 'bcms.forms'], function ($, bcms, tabs, ko, forms) {
     'use strict';
@@ -413,7 +413,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
                     return actionDelegate(this) !== false;
                 }
             } catch (ex) {
-                console.log('Failed to execute action delegate. ' + ex.message);
+                bcms.logger.error('Failed to execute action delegate. ' + ex.message);
                 return false;
             }
 

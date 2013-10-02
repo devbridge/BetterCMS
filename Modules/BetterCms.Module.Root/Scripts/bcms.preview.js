@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define */
+/*global bettercms */
 
 bettercms.define('bcms.preview', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.dynamicContent'], function ($, bcms, modal, dynamicContent) {
     'use strict';

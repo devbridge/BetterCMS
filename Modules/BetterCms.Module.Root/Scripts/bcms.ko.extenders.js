@@ -1,4 +1,4 @@
-﻿/*global define, console */
+﻿/*global bettercms */
 
 bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], function ($, bcms, ko) {
     'use strict';

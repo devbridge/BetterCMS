@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define, console, document */
+/*global bettercms, document */
 
 bettercms.define('bcms.tooltip', ['bcms.jquery', 'bcms'], function ($, bcms) {
     'use strict';

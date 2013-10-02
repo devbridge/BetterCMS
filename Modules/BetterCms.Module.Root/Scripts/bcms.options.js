@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global bettercms, console */
+/*global bettercms */
 
 bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.ko.grid', 'bcms.datepicker'],
     function ($, bcms, ko, kogrid, datepicker) {
@@ -287,13 +287,6 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     self.editableValue(self.editableValue());
                 });
 
-                self.type.subscribe(function(newValue) {
-                    console.log("Type: " + newValue);
-                });
-                self.customType.subscribe(function (newValue) {
-                    console.log("Custom type: " + newValue);
-                });
-
                 self.initDatePickers = function() {
                     self.parent.attachDatePickers();
 
@@ -528,7 +521,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
         * Initializes bcms options module.
         */
         options.init = function () {
-            console.log('Initializing bcms.options module.');
+            bcms.logger.debug('Initializing bcms.options module.');
         };
 
         /**

@@ -8,7 +8,7 @@
 */
 
 /*jslint browser: true, white: true, plusplus: true, unparam: true, devel: true */
-/*global define, window, document */
+/*global bettercms, window, document */
 
 bettercms.define('bcms.jquery.autocomplete', ['bcms.jquery'], function ($) {
     'use strict';

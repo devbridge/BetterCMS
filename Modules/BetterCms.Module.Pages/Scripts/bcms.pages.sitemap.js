@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define, console */
+/*global bettercms */
 
 bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'bcms.ko.extenders'],
     function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, ko) {
@@ -970,7 +970,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Initializes module.
         */
         sitemap.init = function() {
-            console.log('Initializing bcms.pages.sitemap module.');
+            bcms.logger.debug('Initializing bcms.pages.sitemap module.');
             
             // Bindings for sitemap nodes Drag'n'Drop.
             addDraggableBinding();

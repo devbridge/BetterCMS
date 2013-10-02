@@ -1,4 +1,4 @@
-﻿/*global define, console */
+﻿/*global bettercms */
 
 bettercms.define('bcms.datepicker', ['bcms.jquery', 'bcms', 'bcms.jquery.validate.unobtrusive'], function ($, bcms) {
     'use strict';
@@ -29,7 +29,7 @@ bettercms.define('bcms.datepicker', ['bcms.jquery', 'bcms', 'bcms.jquery.validat
     };
 
     datepicker.init = function () {
-        console.log('Initializing bcms.datepicker module');
+        bcms.logger.debug('Initializing bcms.datepicker module');
         $.validator.addMethod("jqdatevalidation", function(value, element, params) {
             if (element.value) {
                 return datepicker.isDateValid(element.value);

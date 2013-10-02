@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define */
+/*global bettercms */
 
 bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.role', 'bcms.media', 'bcms.messages', 'bcms.grid', 'bcms.ko.extenders', 'bcms.redirect'],
     function($, bcms, modal, siteSettings, dynamicContent, role, media, messages, grid, ko, redirect) {
@@ -353,7 +353,7 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         * Initializes user module
         */
         user.init = function () {
-            console.log('Initializing bcms.user module.');
+            bcms.logger.debug('Initializing bcms.user module.');
 
             initializeCustomValidation();
             initializeUserEditProfileFormUrl();

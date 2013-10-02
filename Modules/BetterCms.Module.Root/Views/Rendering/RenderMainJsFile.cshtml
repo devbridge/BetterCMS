@@ -8,7 +8,8 @@
 
 var console = window.console || {
     log: function() { },
-    error: function() { }
+    error: function() { },
+    warn: function() { }
 };
 
 bettercms.requirejs.config({
@@ -28,7 +29,7 @@ bettercms.requirejs(['bcms.jquery', 'bcms', 'bcms.processor'],
     
     function ($, bcms, processor) {
         'use strict';
-        console.log('Better CMS entry point.');
+        bcms.logger.info('Initializing Better CMS.');
 
         $(function () {
             bcms.pageId = $('body').data("pageId");

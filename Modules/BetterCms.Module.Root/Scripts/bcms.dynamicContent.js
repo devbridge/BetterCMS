@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define */
+/*global bettercms */
 
 bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.messages'], function ($, bcms, modal, forms) {
     'use strict';
@@ -106,7 +106,7 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             }
         })
         .fail(function (request, status, error) {
-            console.log('Failed to load dialog content from ' + url + ' (' + error + ').');
+            bcms.logger.error('Failed to load dialog content from ' + url + ' (' + error + ').');
 
             dynamicConent.hideLoading(dialog);
 

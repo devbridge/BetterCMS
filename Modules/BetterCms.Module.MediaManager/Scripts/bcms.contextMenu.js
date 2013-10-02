@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define, console */
+/*global bettercms */
 
 /**
 * Source taken from http://luke.breuer.com/tutorial/javascript-context-menu-tutorial.htm#firefox_option and modified by the DevBridge Better CMS team.
@@ -211,7 +211,7 @@ bettercms.define('bcms.contextMenu', ['bcms.jquery', 'bcms'],
         * Initializes context menu module.
         */
         menu.init = function () {
-            console.log('Initializing bcms.contextMenu module.');
+            bcms.logger.debug('Initializing bcms.contextMenu module.');
             
             $(document).on('mousedown', menu.contextMouseDown);
         };

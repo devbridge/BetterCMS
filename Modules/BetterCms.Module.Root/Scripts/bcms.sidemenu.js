@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define */
+/*global bettercms */
 
 bettercms.define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security'], function ($, bcms, security) {
     'use strict';
@@ -146,7 +146,7 @@ bettercms.define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security'], func
     */
     sidemenu.init = function() {
 
-        console.log('Initialize sidebar');
+        bcms.logger.debug('Initialize sidebar');
         $(selectors.container).hide();
         sidemenuContainer = $(selectors.container);
 
@@ -243,8 +243,6 @@ bettercms.define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security'], func
         });
 
         sidemenuContainer.show();
-
-        console.log('Initialize sidebar done');
     };
 
     bcms.registerInit(sidemenu.init);
