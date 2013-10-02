@@ -1,7 +1,6 @@
 ﻿using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
 
 namespace BetterCms.Core.Modules.Projections
 {
@@ -19,7 +18,7 @@ namespace BetterCms.Core.Modules.Projections
         /// <param name="name">The name.</param>
         /// <param name="content">The content.</param>
         public MetaDataProjection(string name, string content)
-            : base("meta")
+            : base("meta", true)
         {
             this.name = name;
             this.content = content;
