@@ -11,11 +11,12 @@ using BetterCms.Module.ImagesGallery.Providers;
 using BetterCms.Module.ImagesGallery.ViewModels;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.ViewModels.Cms;
 
-using NHibernate.Linq;
+using NHibernate;
+using NHibernate.Criterion;
+using NHibernate.Transform;
 
 namespace BetterCms.Module.ImagesGallery.Command.GetGalleryAlbums
 {
@@ -61,23 +62,37 @@ namespace BetterCms.Module.ImagesGallery.Command.GetGalleryAlbums
             if (ids.Length > 0)
             {
                 // Load list of albums
-                albums = repository
-                    .AsQueryable<Models.Album>()
-                    .Where(a => ids.Contains(a.Id))
-                    .Select(a => new AlbumViewModel
-                                     {
-                                         Url = a.Id.ToString(),
-                                         Title = a.Title,
-                                         ImagesCount = a.Folder.Medias.Count(m => m is MediaImage),
-                                         LastUpdateDate = a.Folder.Medias.Max(m => m.ModifiedOn),
-                                         CoverImageUrl = a.CoverImage != null ? a.CoverImage.PublicUrl : null
-                                     })
-                    .ToFuture()
-                    .ToList();
+                Models.Album albumAlias = null;
+                MediaFolder folderAlias = null;
+                MediaImage coverAlias = null;
+                AlbumViewModel albumViewModel = null;
 
-                var urlPattern = GetAlbumUrlPattern(); string.Format("/?{0}={1}",
-                    ImageGallerModuleConstants.GalleryAlbumIdQueryParameterName,
-                    "{0}");
+                albums = UnitOfWork.Session
+                    .QueryOver(() => albumAlias)
+                    .Left.JoinAlias(c => c.Folder, () => folderAlias)
+                    .Left.JoinAlias(c => c.CoverImage, () => coverAlias)
+                    .Where(() => !albumAlias.IsDeleted && !folderAlias.IsDeleted)
+                    .SelectList(select => select
+                        .Select(Projections.Cast(NHibernateUtil.String, Projections.Property<Models.Album>(c => c.Id))).WithAlias(() => albumViewModel.Url)
+                        .Select(() => albumAlias.Title).WithAlias(() => albumViewModel.Title)
+                        .Select(() => coverAlias.PublicUrl).WithAlias(() => albumViewModel.CoverImageUrl)
+                        .SelectSubQuery(
+                            QueryOver.Of<Media>()
+                                .Where(c => !c.IsDeleted)
+                                .And(c => c.Folder.Id == folderAlias.Id)
+                                .ToRowCountQuery()
+                        ).WithAlias(() => albumViewModel.ImagesCount)
+                        .SelectSubQuery(
+                            QueryOver.Of<Media>()
+                                .Where(c => !c.IsDeleted)
+                                .And(c => c.Folder.Id == folderAlias.Id)
+                                .Select(Projections.Max<Media>(c => c.ModifiedOn))
+                        ).WithAlias(() => albumViewModel.LastUpdateDate)
+                    )
+                .TransformUsing(Transformers.AliasToBean<AlbumViewModel>())
+                .List<AlbumViewModel>().ToList();
+
+                var urlPattern = GetAlbumUrlPattern();
                 albums.ForEach(a => a.Url = string.Format(urlPattern, a.Url));
             }
             else

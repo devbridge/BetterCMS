@@ -8,8 +8,11 @@ using BetterCms.Module.ImagesGallery.Models;
 using BetterCms.Module.ImagesGallery.ViewModels;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Mvc.Helpers;
+
+using NHibernate;
+using NHibernate.Criterion;
+using NHibernate.Transform;
 
 namespace BetterCms.Module.ImagesGallery.Command.GetAlbum
 {
@@ -35,41 +38,48 @@ namespace BetterCms.Module.ImagesGallery.Command.GetAlbum
         /// <param name="request">The request.</param>
         public AlbumViewModel Execute(GetAlbumCommandRequest request)
         {
-            AlbumViewModel album = null;
-            var result = Repository
-                .AsQueryable<Album>()
-                .Where(a => a.Id == request.AlbumId && !a.Folder.IsDeleted)
-                .Select(a => new
-                    {
-                        FolderId = a.Folder.Id,
-                        Album = new AlbumViewModel
-                            {
-                                Title = a.Title,
-                                LastUpdateDate = a.Folder.Medias.Max(m => m.ModifiedOn),
-                                CoverImageUrl = a.CoverImage != null ? a.CoverImage.PublicUrl : null
-                            }
-                    })
-                .FirstOrDefault();
+            Album albumAlias = null;
+            MediaFolder folderAlias = null;
+            MediaImage coverAlias = null;
+            AlbumViewModel albumViewModel = null;
 
-            if (result != null)
+            var album = UnitOfWork.Session
+                   .QueryOver(() => albumAlias)
+                   .Left.JoinAlias(c => c.Folder, () => folderAlias)
+                   .Left.JoinAlias(c => c.CoverImage, () => coverAlias)
+                   .Where(() => !albumAlias.IsDeleted && !folderAlias.IsDeleted && albumAlias.Id == request.AlbumId)
+                   .SelectList(select => select
+                       .Select(() => albumAlias.Title).WithAlias(() => albumViewModel.Title)
+                       .Select(() => folderAlias.Id).WithAlias(() => albumViewModel.FolderId)
+                       .SelectSubQuery(
+                           QueryOver.Of<Media>()
+                               .Where(c => !c.IsDeleted)
+                               .And(c => c.Folder.Id == folderAlias.Id)
+                               .Select(Projections.Max<Media>(c => c.ModifiedOn))
+                       ).WithAlias(() => albumViewModel.LastUpdateDate)
+                   )
+               .TransformUsing(Transformers.AliasToBean<AlbumViewModel>())
+               .SingleOrDefault<AlbumViewModel>();
+
+
+            if (album != null)
             {
-                album = result.Album;
                 album.Url = ConstructBackUrl(request.AlbumId);
 
-                if (!result.FolderId.HasDefaultValue())
+                if (!album.FolderId.HasDefaultValue())
                 {
-                    album.Images = Repository
-                        .AsQueryable<MediaImage>()
-                        .Where(i => i.Folder.Id == result.FolderId)
-                        .Select(i => new ImageViewModel
-                            {
-                                Url = i.PublicUrl,
-                                Caption = i.Caption ?? i.Title
-                            })
-                        .OrderBy(i => i.Caption)
-                        .ToList();
+                    album.Images =
+                        Repository.AsQueryable<MediaImage>()
+                                  .Where(i => i.Folder.Id == album.FolderId)
+                                  .Select(i => new ImageViewModel { Url = i.PublicUrl, Caption = i.Caption ?? i.Title })
+                                  .OrderBy(i => i.Caption)
+                                  .ToList();
                     album.ImagesCount = album.Images.Count;
                 }
+            }
+            else
+            {
+                album = new AlbumViewModel();
             }
 
             album.LoadCmsStyles = request.WidgetViewModel.GetOptionValue<bool>(ImageGallerModuleConstants.LoadCmsStylesWidgetOptionKey);

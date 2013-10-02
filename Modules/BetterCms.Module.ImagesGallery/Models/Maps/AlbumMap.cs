@@ -11,7 +11,7 @@ namespace BetterCms.Module.ImagesGallery.Models.Maps
 
             Map(f => f.Title).Not.Nullable().Length(MaxLength.Name);
             
-            References(f => f.Folder).Cascade.SaveUpdate().LazyLoad().Nullable();
+            References(f => f.Folder).Cascade.SaveUpdate().LazyLoad().Not.Nullable();
             References(f => f.CoverImage).Cascade.SaveUpdate().LazyLoad().Nullable();
         }
     }

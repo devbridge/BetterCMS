@@ -22,6 +22,14 @@ namespace BetterCms.Module.ImagesGallery.ViewModels
         public string Title { get; set; }
 
         /// <summary>
+        /// Gets or sets the folder id.
+        /// </summary>
+        /// <value>
+        /// The folder id.
+        /// </value>
+        public Guid FolderId { get; set; }
+
+        /// <summary>
         /// Gets or sets the images count.
         /// </summary>
         /// <value>
@@ -35,7 +43,7 @@ namespace BetterCms.Module.ImagesGallery.ViewModels
         /// <value>
         /// The last update date.
         /// </value>
-        public DateTime LastUpdateDate { get; set; }
+        public DateTime? LastUpdateDate { get; set; }
 
         /// <summary>
         /// Gets or sets the cover image URL.
