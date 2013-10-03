@@ -1,4 +1,5 @@
-﻿@model BetterCms.Module.ImagesGallery.ViewModels.AlbumViewModel
+﻿@using BetterCms.Module.ImagesGallery
+@model BetterCms.Module.ImagesGallery.ViewModels.AlbumViewModel
 
 @if (Model.LoadCmsStyles)
 {
@@ -7,7 +8,10 @@
 
 <h1 class="bcms-gallery-title">
     @Model.Title <a class="bcms-gallery-back-link" href="@Model.Url">< Back</a>
-    <time datetime="@Model.LastUpdateDate">@Model.LastUpdateDate</time>
+    @if (Model.LastUpdateDate.HasValue)
+    {
+        <time datetime="@Model.LastUpdateDate.Value.ToString(ImageGalleryModuleConstants.GalleryWidgetUpdateDateTagFormat)">@Model.LastUpdateDate.Value.ToString(ImageGalleryModuleConstants.GalleryWidgetUpdateDateDisplayFormat)</time>
+    }
 </h1>
 
 @{
@@ -22,7 +26,7 @@
         }
         
         <div class="bcms-gallery-image-holder">
-            <img src="@image.Url" alt="@image.Caption" />
+            <img src="@image.Url" alt="@image.Caption" data-title="@image.Title" />
             <div class="bcms-gallery-image-name">
                 <h4><a href="@image.Url" target="blank">@image.Caption</a></h4>
             </div>

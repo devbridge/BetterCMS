@@ -131,7 +131,7 @@
       <DependentUpon>ImagesGalleryGlobalization.resx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AlbumController.cs" />
-    <Compile Include="ImageGallerModuleConstants.cs" />
+    <Compile Include="ImageGalleryModuleConstants.cs" />
     <Compile Include="ImagesGalleryModuleDescriptor.cs" />
     <Compile Include="Models\Maps\AlbumMap.cs" />
     <Compile Include="Models\Album.cs" />

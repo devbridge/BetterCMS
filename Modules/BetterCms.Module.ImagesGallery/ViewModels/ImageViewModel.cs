@@ -16,6 +16,14 @@
         /// <value>
         /// The caption.
         /// </value>
+        public string Title { get; set; }
+
+        /// <summary>
+        /// Gets or sets the caption.
+        /// </summary>
+        /// <value>
+        /// The caption.
+        /// </value>
         public string Caption { get; set; }
 
         /// <summary>
@@ -26,7 +34,7 @@
         /// </returns>
         public override string ToString()
         {
-            return string.Format("Caption: {0}, Url: {1}", Caption, Url);
+            return string.Format("Title: {0}, Caption: {1}, Url: {2}", Title, Caption, Url);
         }
     }
 }

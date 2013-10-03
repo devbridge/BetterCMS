@@ -1,4 +1,6 @@
-﻿@model BetterCms.Module.ImagesGallery.ViewModels.GalleryViewModel
+﻿@using BetterCms.Module.ImagesGallery
+@using BetterCms.Module.ImagesGallery.Content.Resources
+@model BetterCms.Module.ImagesGallery.ViewModels.GalleryViewModel
 
 @if (Model.LoadCmsStyles)
 {
@@ -20,7 +22,11 @@
             <img src="@album.CoverImageUrl" alt="@album.Title" />
             <div class="bcms-album-name">
                 <h4><a href="@album.Url">@album.Title</a></h4>
-                <span>@album.ImagesCount Pictures,</span><time datetime="@album.LastUpdateDate">@album.LastUpdateDate</time>
+                <span>@album.ImagesCount @ImagesGalleryGlobalization.GalleryWidget_Pictures,</span>
+                @if (album.LastUpdateDate.HasValue)
+                {
+                    <time datetime="@album.LastUpdateDate.Value.ToString(ImageGalleryModuleConstants.GalleryWidgetUpdateDateTagFormat)">@album.LastUpdateDate.Value.ToString(ImageGalleryModuleConstants.GalleryWidgetUpdateDateDisplayFormat)</time>
+                }
             </div>
         </div>
 

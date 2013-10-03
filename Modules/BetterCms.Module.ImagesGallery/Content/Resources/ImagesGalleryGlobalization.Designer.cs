@@ -196,6 +196,15 @@ namespace BetterCms.Module.ImagesGallery.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pictures.
+        /// </summary>
+        public static string GalleryWidget_Pictures {
+            get {
+                return ResourceManager.GetString("GalleryWidget_Pictures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select.
         /// </summary>
         public static string SelectAlbum_Dialog_AcceptButton {
@@ -246,15 +255,6 @@ namespace BetterCms.Module.ImagesGallery.Content.Resources {
         public static string SiteSettings_AlbumsMenuItem {
             get {
                 return ResourceManager.GetString("SiteSettings_AlbumsMenuItem", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
     }
