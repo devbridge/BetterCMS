@@ -49,7 +49,7 @@ namespace BetterCms.Module.ImagesGallery.Command.GetGalleryAlbums
         /// <param name="request">The request.</param>
         public GalleryViewModel Execute(RenderWidgetViewModel request)
         {
-            List<AlbumViewModel> albums;
+            List<AlbumViewModelEx> albums;
             var ids = request.Options
                 .Where(o => o.Type == OptionType.Custom
                     && o.CustomOption != null
@@ -65,7 +65,7 @@ namespace BetterCms.Module.ImagesGallery.Command.GetGalleryAlbums
                 Models.Album albumAlias = null;
                 MediaFolder folderAlias = null;
                 MediaImage coverAlias = null;
-                AlbumViewModel albumViewModel = null;
+                AlbumViewModelEx albumViewModel = null;
 
                 albums = UnitOfWork.Session
                     .QueryOver(() => albumAlias)
@@ -76,34 +76,45 @@ namespace BetterCms.Module.ImagesGallery.Command.GetGalleryAlbums
                         .Select(Projections.Cast(NHibernateUtil.String, Projections.Property<Models.Album>(c => c.Id))).WithAlias(() => albumViewModel.Url)
                         .Select(() => albumAlias.Title).WithAlias(() => albumViewModel.Title)
                         .Select(() => coverAlias.PublicUrl).WithAlias(() => albumViewModel.CoverImageUrl)
+                        .Select(() => coverAlias.IsDeleted).WithAlias(() => albumViewModel.IsCoverImageDeleted)
                         .SelectSubQuery(
                             QueryOver.Of<Media>()
                                 .Where(c => !c.IsDeleted)
-                                .And(c => c.Folder.Id == folderAlias.Id)
+                                .And(c => c.Folder.Id == folderAlias.Id && c.Original == null)
                                 .ToRowCountQuery()
                         ).WithAlias(() => albumViewModel.ImagesCount)
                         .SelectSubQuery(
                             QueryOver.Of<Media>()
                                 .Where(c => !c.IsDeleted)
-                                .And(c => c.Folder.Id == folderAlias.Id)
+                                .And(c => c.Folder.Id == folderAlias.Id && c.Original == null)
                                 .Select(Projections.Max<Media>(c => c.ModifiedOn))
                         ).WithAlias(() => albumViewModel.LastUpdateDate)
                     )
-                .TransformUsing(Transformers.AliasToBean<AlbumViewModel>())
-                .List<AlbumViewModel>().ToList();
+                .TransformUsing(Transformers.AliasToBean<AlbumViewModelEx>())
+                .List<AlbumViewModelEx>()
+                .ToList();
+
+                albums.ForEach(
+                    a =>
+                        {
+                            if (a.IsCoverImageDeleted)
+                            {
+                                a.CoverImageUrl = null;
+                            }
+                        });
 
                 var urlPattern = GetAlbumUrlPattern();
                 albums.ForEach(a => a.Url = string.Format(urlPattern, a.Url));
             }
             else
             {
-                albums = new List<AlbumViewModel>();
+                albums = new List<AlbumViewModelEx>();
             }
 
             return new GalleryViewModel
                        {
-                           Albums = albums,
-                           LoadCmsStyles = request.GetOptionValue<bool>(ImageGallerModuleConstants.LoadCmsStylesWidgetOptionKey)
+                           Albums = albums.Cast<AlbumViewModel>().ToList(),
+                           LoadCmsStyles = request.GetOptionValue<bool>(ImageGalleryModuleConstants.LoadCmsStylesWidgetOptionKey)
                        };
         }
 
@@ -125,12 +136,20 @@ namespace BetterCms.Module.ImagesGallery.Command.GetGalleryAlbums
                 {
                     url = string.Concat(url, "&");
                 }
-                url = string.Format("{0}{1}={2}", url, ImageGallerModuleConstants.GalleryAlbumIdQueryParameterName, "{0}");
+                url = string.Format("{0}{1}={2}", url, ImageGalleryModuleConstants.GalleryAlbumIdQueryParameterName, "{0}");
 
                 return url;
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Album view model, extended with additional properties for filtering using QueryOver
+        /// </summary>
+        private class AlbumViewModelEx : AlbumViewModel
+        {
+            public bool IsCoverImageDeleted { get; set; }
         }
     }
 }

@@ -13,6 +13,14 @@ namespace BetterCms.Module.MediaManager.ViewModels
         public virtual Guid? FolderId { get; set; }
 
         /// <summary>
+        /// Gets or sets the parent folder id.
+        /// </summary>
+        /// <value>
+        /// The parent folder id.
+        /// </value>
+        public virtual Guid? ParentFolderId { get; set; }
+
+        /// <summary>
         /// Gets or sets the folder title.
         /// </summary>
         /// <value>

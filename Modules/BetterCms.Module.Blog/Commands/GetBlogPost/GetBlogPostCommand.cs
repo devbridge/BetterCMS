@@ -90,7 +90,8 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                                         ImageVersion = bp.Image.Version,
                                         ImageUrl = bp.Image.PublicUrl,
                                         ThumbnailUrl = bp.Image.PublicThumbnailUrl,
-                                        ImageTooltip = bp.Image.Caption
+                                        ImageTooltip = bp.Image.Caption,
+                                        FolderId = bp.Image.Folder != null ? bp.Image.Folder.Id : (Guid?)null
                                     }
                             })
                     .FirstOne();

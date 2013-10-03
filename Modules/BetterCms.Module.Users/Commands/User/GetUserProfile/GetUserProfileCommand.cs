@@ -53,7 +53,8 @@ namespace BetterCms.Module.Users.Commands.User.GetUserProfile
                                             ImageId = user.Image.Id,
                                             ImageUrl = user.Image.PublicUrl,
                                             ThumbnailUrl = user.Image.PublicThumbnailUrl,
-                                            ImageTooltip = user.Image.Caption
+                                            ImageTooltip = user.Image.Caption,
+                                            FolderId = user.Image.Folder != null ? user.Image.Folder.Id : (System.Guid?)null
                                         }
                                 }
                             }

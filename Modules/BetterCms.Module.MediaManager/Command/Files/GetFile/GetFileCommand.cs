@@ -93,7 +93,8 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
                             ImageVersion = file.Image.Version,
                             ImageUrl = file.Image.PublicUrl,
                             ThumbnailUrl = file.Image.PublicThumbnailUrl,
-                            ImageTooltip = file.Image.Caption
+                            ImageTooltip = file.Image.Caption,
+                            FolderId = file.Image.Folder != null ? file.Image.Folder.Id : (Guid?)null
                         },
                     AccessControlEnabled = configuration.Security.AccessControlEnabled
                 };

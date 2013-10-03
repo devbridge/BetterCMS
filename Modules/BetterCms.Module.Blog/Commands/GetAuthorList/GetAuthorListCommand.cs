@@ -47,7 +47,8 @@ namespace BetterCms.Module.Blog.Commands.GetAuthorList
                                         ImageVersion = author.Image.Version,
                                         ImageUrl = author.Image.PublicUrl,
                                         ThumbnailUrl = author.Image.PublicThumbnailUrl,
-                                        ImageTooltip = author.Image.Caption                                    
+                                        ImageTooltip = author.Image.Caption,
+                                        FolderId = author.Image.Folder != null ? author.Image.Folder.Id : (System.Guid?)null
                                     }
                                     : null
                         });

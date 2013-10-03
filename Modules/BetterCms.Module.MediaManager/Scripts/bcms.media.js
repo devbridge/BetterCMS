@@ -941,6 +941,25 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     })(MediaItemBaseViewModel);
 
     /**
+    * Selects an item by id
+    */
+    function selectItemById(folderViewModel, selectedId) {
+        var i, l, item;
+
+        if (!selectedId || bcms.isEmptyGuid(selectedId)) {
+            return;
+        }
+
+        for (i = 0, l = folderViewModel.medias().length; i < l; i++) {
+            item = folderViewModel.medias()[i];
+
+            if (item.id() == selectedId) {
+                item.isSelected(true);
+            }
+        }
+    }
+
+    /**
     * Opens media for selecting or editing.
     */
     function editOrSelectMedia(folderViewModel, item, data, event) {
@@ -1092,25 +1111,35 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     /**
     * Show folder selection window
     */
-    media.openFolderSelectDialog = function (onAccept, folderViewModelOptions, onClose) {
+    media.openFolderSelectDialog = function (opts) {
+        
+        var options = $.extend({
+            onAccept: function () { },
+            folderViewModelOptions: null,
+            onClose: null,
+            parentFolderId: '',
+            selectedId: ''
+        }, opts);
+
         modal.open({
             title: globalization.selectFolderDialogTitle,
             acceptTitle: globalization.selectFolderSelectButtonTitle,
-            onClose: onClose,
+            onClose: options.onClose,
             onLoad: function (dialog) {
-                dynamicContent.setContentFromUrl(dialog, $.format(links.insertImageDialogUrl, ''), {
+                dynamicContent.setContentFromUrl(dialog, $.format(links.insertImageDialogUrl, options.parentFolderId), {
                     done: function (content) {
                         imagesViewModel = new MediaItemsViewModel(dialog.container, links.loadImagesUrl, dialog.container);
                         imagesViewModel.spinContainer = dialog.container.find(selectors.insertContentContainer);
                         imagesViewModel.canSelectFolders(true);
-                        if (folderViewModelOptions) {
-                            imagesViewModel = $.extend(imagesViewModel, folderViewModelOptions);
+                        if (options.folderViewModelOptions) {
+                            imagesViewModel = $.extend(imagesViewModel, options.folderViewModelOptions);
                         }
                         imagesViewModel.selectFolder = function (selectedFolder) {
                             dialog.close();
-                            onAccept(selectedFolder);
+                            options.onAccept(selectedFolder);
                         };
                         initializeTab(content, imagesViewModel);
+                        selectItemById(imagesViewModel, options.selectedId);
                     }
                 });
             },
@@ -1135,8 +1164,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
                     return false;
                 } else {
-                    if ($.isFunction(onAccept)) {
-                        onAccept(selectedFolder);
+                    if ($.isFunction(options.onAccept)) {
+                        options.onAccept(selectedFolder);
                     }
                 }
 
@@ -1155,7 +1184,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             canInsertWithOptions: false,
             folderViewModelOptions: null,
             onClose: null,
-            currentFolder: ''
+            currentFolder: '',
+            selectedId: ''
         }, opts);
 
         modal.open({
@@ -1175,6 +1205,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                             imagesViewModel = $.extend(imagesViewModel, options.folderViewModelOptions);
                         }
                         initializeTab(content, imagesViewModel);
+                        selectItemById(imagesViewModel, options.selectedId);
                     }
                 });
             },
@@ -1318,7 +1349,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                         filesViewModel.canInsertMedia(true);
                         filesViewModel.spinContainer = dialog.container.find(selectors.insertContentContainer);
                         initializeTab(content, filesViewModel);
-                    }
+}
                 });
             },
             onAcceptClick: function () {
@@ -1730,6 +1761,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 self.tooltip(imageData.ImageTooltip);
                 self.id(imageData.ImageId);
                 self.version(imageData.ImageVersion);
+                self.currentFolder(imageData.FolderId);
             };
 
             if (image) {
@@ -1769,6 +1801,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     self.tooltip(insertedImage.tooltip);
                     self.id(insertedImage.id());
                     self.version(insertedImage.version());
+                    self.currentFolder(insertedImage.parentFolderId());
 
                     self.onAfterSelect();
                 },
@@ -1784,7 +1817,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     canInsertWithOptions: false,
                     folderViewModelOptions: mediasViewModelExtender,
                     onClose: onMediaSelectClose,
-                    currentFolder: self.currentFolder()
+                    currentFolder: self.currentFolder(),
+                    selectedId: self.id()
                 };
 
             bcms.stopEventPropagation(event);
@@ -1813,10 +1847,12 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
             self.id = ko.observable();
             self.title = ko.observable();
+            self.parentFolderId = ko.observable();
 
             self.setFolder = function (folderData) {
                 self.id(folderData.FolderId);
                 self.title(folderData.FolderTitle);
+                self.parentFolderId(folderData.ParentFolderId);
             };
 
             if (folder) {
@@ -1829,6 +1865,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 onMediaSelect = function (insertedFolder) {
                     self.id(insertedFolder.id());
                     self.title(insertedFolder.name());
+                    self.parentFolderId(insertedFolder.parentFolderId());
 
                     self.onAfterSelect();
                 },
@@ -1839,10 +1876,18 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 },
                 onMediaSelectClose = function () {
                     self.onSelectClose();
+                },
+                parentFolderId = self.parentFolderId(),
+                options = {
+                    onAccept: onMediaSelect,
+                    folderViewModelOptions: mediasViewModelExtender, 
+                    onClose: onMediaSelectClose,
+                    parentFolderId: !parentFolderId || bcms.isEmptyGuid(parentFolderId) ? '' : parentFolderId,
+                    selectedId: self.id()
                 };
 
             bcms.stopEventPropagation(event);
-            media.openFolderSelectDialog(onMediaSelect, mediasViewModelExtender, onMediaSelectClose);
+            media.openFolderSelectDialog(options);
         };
 
         media.ImageFolderSelectorViewModel.prototype.onAfterSelect = function () { };

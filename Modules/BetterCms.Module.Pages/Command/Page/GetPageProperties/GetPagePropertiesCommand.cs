@@ -106,7 +106,8 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                                               ImageVersion = page.Image.Version,
                                               ImageUrl = page.Image.PublicUrl,
                                               ThumbnailUrl = page.Image.PublicThumbnailUrl,
-                                              ImageTooltip = page.Image.Caption
+                                              ImageTooltip = page.Image.Caption,
+                                              FolderId = page.Image.Folder != null ? page.Image.Folder.Id : (Guid?)null
                                           },
                               SecondaryImage = page.SecondaryImage == null ? null :
                                   new ImageSelectorViewModel
@@ -115,7 +116,8 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                                               ImageVersion = page.SecondaryImage.Version,
                                               ImageUrl = page.SecondaryImage.PublicUrl,
                                               ThumbnailUrl = page.SecondaryImage.PublicThumbnailUrl,
-                                              ImageTooltip = page.SecondaryImage.Caption
+                                              ImageTooltip = page.SecondaryImage.Caption,
+                                              FolderId = page.SecondaryImage.Folder != null ? page.SecondaryImage.Folder.Id : (Guid?)null
                                           },
                               FeaturedImage = page.FeaturedImage == null ? null :
                                   new ImageSelectorViewModel
@@ -124,7 +126,8 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                                               ImageVersion = page.FeaturedImage.Version,
                                               ImageUrl = page.FeaturedImage.PublicUrl,
                                               ThumbnailUrl = page.FeaturedImage.PublicThumbnailUrl,
-                                              ImageTooltip = page.FeaturedImage.Caption
+                                              ImageTooltip = page.FeaturedImage.Caption,
+                                              FolderId = page.FeaturedImage.Folder != null ? page.FeaturedImage.Folder.Id : (System.Guid?)null
                                           }
                           }
                     })

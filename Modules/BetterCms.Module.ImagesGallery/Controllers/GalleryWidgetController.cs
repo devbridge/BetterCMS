@@ -16,7 +16,7 @@ namespace BetterCms.Module.ImagesGallery.Controllers
     {
         public ActionResult Gallery(RenderWidgetViewModel request)
         {
-            var albumIdString = Request.QueryString[ImageGallerModuleConstants.GalleryAlbumIdQueryParameterName];
+            var albumIdString = Request.QueryString[ImageGalleryModuleConstants.GalleryAlbumIdQueryParameterName];
 
             if (!string.IsNullOrEmpty(albumIdString))
             {

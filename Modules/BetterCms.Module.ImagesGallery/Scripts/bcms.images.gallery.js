@@ -70,9 +70,20 @@ bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettin
             viewModel.folder = ko.observable(new AlbumFolderSelectorViewModel(data.Folder, viewModel));
 
             // Change image selector's default folder, when changing album folder
-            viewModel.coverImage().currentFolder(data.Folder.FolderId);
-            viewModel.folder().id.subscribe(function(newFolderId) {
-                viewModel.coverImage().currentFolder(newFolderId);
+            viewModel.folder().id.subscribe(function (newFolderId) {
+                var id = viewModel.coverImage().id();
+
+                if (!id || bcms.isEmptyGuid(id)) {
+                    viewModel.coverImage().currentFolder(newFolderId);
+                }
+            });
+            // Set current folder, whn cleatring an image
+            viewModel.coverImage().id.subscribe(function (newImageId) {
+                setTimeout(function() {
+                    if (!newImageId || bcms.isEmptyGuid(newImageId)) {
+                        viewModel.coverImage().currentFolder(viewModel.folder().id());
+                    }
+                }, 50);
             });
 
             ko.applyBindings(viewModel, form.get(0));

@@ -162,6 +162,9 @@
   <data name="EditAlbum_Title_Tooltip_Description" xml:space="preserve">
     <value>Album title will be displayed in the list of albums</value>
   </data>
+  <data name="GalleryWidget_Pictures" xml:space="preserve">
+    <value>Pictures</value>
+  </data>
   <data name="SelectAlbum_Dialog_AcceptButton" xml:space="preserve">
     <value>Select</value>
   </data>
@@ -179,8 +182,5 @@
   </data>
   <data name="SiteSettings_Albums_Title_Title" xml:space="preserve">
     <value>Title</value>
-  </data>
-  <data name="String1" xml:space="preserve">
-    <value />
   </data>
 </root>

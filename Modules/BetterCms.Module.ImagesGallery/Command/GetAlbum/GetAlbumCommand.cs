@@ -10,7 +10,6 @@ using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 
-using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Transform;
 
@@ -54,7 +53,7 @@ namespace BetterCms.Module.ImagesGallery.Command.GetAlbum
                        .SelectSubQuery(
                            QueryOver.Of<Media>()
                                .Where(c => !c.IsDeleted)
-                               .And(c => c.Folder.Id == folderAlias.Id)
+                               .And(c => c.Folder.Id == folderAlias.Id && c.Original == null)
                                .Select(Projections.Max<Media>(c => c.ModifiedOn))
                        ).WithAlias(() => albumViewModel.LastUpdateDate)
                    )
@@ -70,9 +69,9 @@ namespace BetterCms.Module.ImagesGallery.Command.GetAlbum
                 {
                     album.Images =
                         Repository.AsQueryable<MediaImage>()
-                                  .Where(i => i.Folder.Id == album.FolderId)
-                                  .Select(i => new ImageViewModel { Url = i.PublicUrl, Caption = i.Caption ?? i.Title })
-                                  .OrderBy(i => i.Caption)
+                                  .Where(i => i.Folder.Id == album.FolderId && i.Original == null)
+                                  .Select(i => new ImageViewModel { Url = i.PublicUrl, Caption = i.Caption ?? i.Title, Title = i.Title })
+                                  .OrderBy(i => i.Title)
                                   .ToList();
                     album.ImagesCount = album.Images.Count;
                 }
@@ -82,7 +81,7 @@ namespace BetterCms.Module.ImagesGallery.Command.GetAlbum
                 album = new AlbumViewModel();
             }
 
-            album.LoadCmsStyles = request.WidgetViewModel.GetOptionValue<bool>(ImageGallerModuleConstants.LoadCmsStylesWidgetOptionKey);
+            album.LoadCmsStyles = request.WidgetViewModel.GetOptionValue<bool>(ImageGalleryModuleConstants.LoadCmsStylesWidgetOptionKey);
 
             return album;
         }
@@ -97,7 +96,7 @@ namespace BetterCms.Module.ImagesGallery.Command.GetAlbum
             if (context != null && context.Request.Url != null)
             {
                 var url = context.Request.Url.ToString();
-                var parameter = string.Format("{0}={1}", ImageGallerModuleConstants.GalleryAlbumIdQueryParameterName, id.ToString()).ToLower();
+                var parameter = string.Format("{0}={1}", ImageGalleryModuleConstants.GalleryAlbumIdQueryParameterName, id.ToString()).ToLower();
                 var index = url.ToLower().IndexOf(parameter, StringComparison.InvariantCulture);
                 if (index >= 0)
                 {
