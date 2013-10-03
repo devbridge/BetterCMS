@@ -276,6 +276,9 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             });
 
             initializeTemplateListEvents(container);
+
+            // Select search.
+            dialog.setFocus();
         };
 
         /**

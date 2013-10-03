@@ -468,6 +468,9 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             });
             
             initializeSiteSettingsWidgetListEvents(container);
+
+            // Select search.
+            dialog.setFocus();
         };
 
         /**
