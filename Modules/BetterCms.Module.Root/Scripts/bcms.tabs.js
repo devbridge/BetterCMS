@@ -39,6 +39,7 @@ bettercms.define('bcms.tabs', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
     function TabPanel(container, options) {
         options = $.extend({
+            skipInit: false
         }, options);
 
         this.container = container;
@@ -47,6 +48,9 @@ bettercms.define('bcms.tabs', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
     TabPanel.prototype = {
         init: function () {
+            if (this.options.skipInit) {
+                return;
+            }
             var instance = this,
                 container = this.container;
 
