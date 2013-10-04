@@ -65,6 +65,15 @@ namespace BetterCms.Module.ImagesGallery.ViewModels
         public FolderSelectorViewModel Folder { get; set; }
 
         /// <summary>
+        /// Gets or sets the folder id.
+        /// </summary>
+        /// <value>
+        /// The folder id.
+        /// </value>
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(ImagesGalleryGlobalization), ErrorMessageResourceName = "EditAlbum_Folder_RequiredMessage")]
+        public string FolderTitle { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

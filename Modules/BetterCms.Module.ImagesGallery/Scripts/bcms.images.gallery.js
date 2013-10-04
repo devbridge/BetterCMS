@@ -7,7 +7,9 @@ bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettin
         var gallery = {},
             selectors = {
                 insertAlbumContainer: '.bcms-scroll-window',
-                albumEditForm: 'form:first'
+                albumEditForm: 'form:first',
+                albumFolder: '#bcms-edit-album-folder',
+                albumTitle: '#bcms-edit-album-title'
             },
             links = {
                 loadSiteSettingsAlbumsUrl: null,
@@ -22,6 +24,9 @@ bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettin
                 selectAlbumDialogTitle: null,
                 selectAlbumDialogAcceptButton: null,
                 albumNotSelectedMessage: null
+            },
+            classes = {
+                validationError: 'bcms-input-validation-error'
             };
 
         /**
@@ -60,11 +65,12 @@ bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettin
                 data = content.Data || {},
                 coverImageViewModel = ko.observable(new media.ImageSelectorViewModel(data.CoverImage)),
                 viewModel = {
+                    form: form,
                     coverImage: coverImageViewModel,
                     
                     title: ko.observable(data.Title),
                     version: ko.observable(data.Version),
-                    id: ko.observable(data.Id),
+                    id: ko.observable(data.Id)
                 };
             
             viewModel.folder = ko.observable(new AlbumFolderSelectorViewModel(data.Folder, viewModel));
@@ -75,6 +81,13 @@ bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettin
 
                 if (!id || bcms.isEmptyGuid(id)) {
                     viewModel.coverImage().currentFolder(newFolderId);
+                    
+                    if (viewModel.form.find(selectors.albumTitle).hasClass(classes.validationError)
+                        || viewModel.form.find(selectors.albumFolder).hasClass(classes.validationError)) {
+                        setTimeout(function() {
+                            viewModel.form.valid();
+                        }, 50);
+                    }
                 }
             });
             // Set current folder, whn cleatring an image

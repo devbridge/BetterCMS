@@ -46,7 +46,8 @@ namespace BetterCms.Module.ImagesGallery.Command.GetAlbumForEdit
                                       FolderId = a.Folder.Id,
                                       FolderTitle = a.Folder.Title,
                                       ParentFolderId = a.Folder.Folder != null ? a.Folder.Folder.Id : (Guid?)null
-                                  }
+                                  },
+                            FolderTitle = a.Folder == null || a.Folder.IsDeleted ? null : a.Folder.Title
                         })
                     .FirstOne();
             }

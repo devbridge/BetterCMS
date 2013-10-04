@@ -142,6 +142,15 @@ namespace BetterCms.Module.ImagesGallery.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Folder is required..
+        /// </summary>
+        public static string EditAlbum_Folder_RequiredMessage {
+            get {
+                return ResourceManager.GetString("EditAlbum_Folder_RequiredMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Album folder.
         /// </summary>
         public static string EditAlbum_Folder_Title {
