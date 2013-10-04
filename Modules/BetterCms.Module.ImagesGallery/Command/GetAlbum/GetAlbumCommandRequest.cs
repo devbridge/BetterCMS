@@ -7,5 +7,7 @@ namespace BetterCms.Module.ImagesGallery.Command.GetAlbum
         public System.Guid AlbumId { get; set; }
 
         public RenderWidgetViewModel WidgetViewModel { get; set; }
+
+        public bool RenderBackUrl { get; set; }
     }
 }

@@ -6,13 +6,20 @@
     @Html.Partial("Partial/AlbumStyles")
 }
 
-<h1 class="bcms-gallery-title">
-    @Model.Title <a class="bcms-gallery-back-link" href="@Model.Url">< Back</a>
-    @if (Model.LastUpdateDate.HasValue)
-    {
-        <time datetime="@Model.LastUpdateDate.Value.ToString(ImageGalleryModuleConstants.GalleryWidgetUpdateDateTagFormat)">@Model.LastUpdateDate.Value.ToString(ImageGalleryModuleConstants.GalleryWidgetUpdateDateDisplayFormat)</time>
-    }
-</h1>
+@if (Model.RenderHeader)
+{
+    <h1 class="bcms-gallery-title">
+        @Model.Title
+        @if (Model.RenderBackUrl)
+        {
+            <a class="bcms-gallery-back-link" href="@Model.Url">< Back</a>
+        }
+        @if (Model.LastUpdateDate.HasValue)
+        {
+            <time datetime="@Model.LastUpdateDate.Value.ToString(ImagesGalleryModuleConstants.GalleryWidgetUpdateDateTagFormat)">@Model.LastUpdateDate.Value.ToString(ImagesGalleryModuleConstants.GalleryWidgetUpdateDateDisplayFormat)</time>
+        }
+    </h1>
+}
 
 @{
     var i = 0;

@@ -114,7 +114,7 @@ namespace BetterCms.Module.ImagesGallery.Command.GetGalleryAlbums
             return new GalleryViewModel
                        {
                            Albums = albums.Cast<AlbumViewModel>().ToList(),
-                           LoadCmsStyles = request.GetOptionValue<bool>(ImageGalleryModuleConstants.LoadCmsStylesWidgetOptionKey)
+                           LoadCmsStyles = request.GetOptionValue<bool>(ImagesGalleryModuleConstants.LoadCmsStylesWidgetOptionKey)
                        };
         }
 
@@ -136,7 +136,7 @@ namespace BetterCms.Module.ImagesGallery.Command.GetGalleryAlbums
                 {
                     url = string.Concat(url, "&");
                 }
-                url = string.Format("{0}{1}={2}", url, ImageGalleryModuleConstants.GalleryAlbumIdQueryParameterName, "{0}");
+                url = string.Format("{0}{1}={2}", url, ImagesGalleryModuleConstants.GalleryAlbumIdQueryParameterName, "{0}");
 
                 return url;
             }

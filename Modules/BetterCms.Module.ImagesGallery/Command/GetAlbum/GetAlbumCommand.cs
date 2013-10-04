@@ -39,13 +39,11 @@ namespace BetterCms.Module.ImagesGallery.Command.GetAlbum
         {
             Album albumAlias = null;
             MediaFolder folderAlias = null;
-            MediaImage coverAlias = null;
             AlbumViewModel albumViewModel = null;
 
             var album = UnitOfWork.Session
                    .QueryOver(() => albumAlias)
                    .Left.JoinAlias(c => c.Folder, () => folderAlias)
-                   .Left.JoinAlias(c => c.CoverImage, () => coverAlias)
                    .Where(() => !albumAlias.IsDeleted && !folderAlias.IsDeleted && albumAlias.Id == request.AlbumId)
                    .SelectList(select => select
                        .Select(() => albumAlias.Title).WithAlias(() => albumViewModel.Title)
@@ -63,7 +61,10 @@ namespace BetterCms.Module.ImagesGallery.Command.GetAlbum
 
             if (album != null)
             {
-                album.Url = ConstructBackUrl(request.AlbumId);
+                if (request.RenderBackUrl)
+                {
+                    album.Url = ConstructBackUrl(request.AlbumId);
+                }
 
                 if (!album.FolderId.HasDefaultValue())
                 {
@@ -81,7 +82,9 @@ namespace BetterCms.Module.ImagesGallery.Command.GetAlbum
                 album = new AlbumViewModel();
             }
 
-            album.LoadCmsStyles = request.WidgetViewModel.GetOptionValue<bool>(ImageGalleryModuleConstants.LoadCmsStylesWidgetOptionKey);
+            album.LoadCmsStyles = request.WidgetViewModel.GetOptionValue<bool>(ImagesGalleryModuleConstants.LoadCmsStylesWidgetOptionKey);
+            album.RenderHeader = request.RenderBackUrl || request.WidgetViewModel.GetOptionValue<bool>(ImagesGalleryModuleConstants.RenderAlbumHeaderWidgetOptionKey);
+            album.RenderBackUrl = request.RenderBackUrl;
 
             return album;
         }
@@ -96,7 +99,7 @@ namespace BetterCms.Module.ImagesGallery.Command.GetAlbum
             if (context != null && context.Request.Url != null)
             {
                 var url = context.Request.Url.ToString();
-                var parameter = string.Format("{0}={1}", ImageGalleryModuleConstants.GalleryAlbumIdQueryParameterName, id.ToString()).ToLower();
+                var parameter = string.Format("{0}={1}", ImagesGalleryModuleConstants.GalleryAlbumIdQueryParameterName, id.ToString()).ToLower();
                 var index = url.ToLower().IndexOf(parameter, StringComparison.InvariantCulture);
                 if (index >= 0)
                 {

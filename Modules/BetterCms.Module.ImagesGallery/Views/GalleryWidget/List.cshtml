@@ -25,7 +25,7 @@
                 <span>@album.ImagesCount @ImagesGalleryGlobalization.GalleryWidget_Pictures,</span>
                 @if (album.LastUpdateDate.HasValue)
                 {
-                    <time datetime="@album.LastUpdateDate.Value.ToString(ImageGalleryModuleConstants.GalleryWidgetUpdateDateTagFormat)">@album.LastUpdateDate.Value.ToString(ImageGalleryModuleConstants.GalleryWidgetUpdateDateDisplayFormat)</time>
+                    <time datetime="@album.LastUpdateDate.Value.ToString(ImagesGalleryModuleConstants.GalleryWidgetUpdateDateTagFormat)">@album.LastUpdateDate.Value.ToString(ImagesGalleryModuleConstants.GalleryWidgetUpdateDateDisplayFormat)</time>
                 }
             </div>
         </div>

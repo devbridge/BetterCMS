@@ -131,11 +131,12 @@
       <DependentUpon>ImagesGalleryGlobalization.resx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AlbumController.cs" />
-    <Compile Include="ImageGalleryModuleConstants.cs" />
+    <Compile Include="ImagesGalleryModuleConstants.cs" />
     <Compile Include="ImagesGalleryModuleDescriptor.cs" />
     <Compile Include="Models\Maps\AlbumMap.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
+    <Compile Include="Models\Migrations\Migration201310040830.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ImageGalleryAlbumOptionProvider.cs" />
@@ -213,6 +214,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Widgets\ImagesGalleryWidget.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Widgets\AlbumWidget.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
