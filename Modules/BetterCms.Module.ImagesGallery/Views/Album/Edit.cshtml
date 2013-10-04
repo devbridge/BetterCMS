@@ -15,15 +15,17 @@
                 @Html.Tooltip(ImagesGalleryGlobalization.EditAlbum_Folder_Tooltip_Description)
                 <div class="bcms-content-titles">@ImagesGalleryGlobalization.EditAlbum_Folder_Title</div>
                 
-                @Html.TextBoxFor(model => model.FolderTitle, new
-                                                                        {
-                                                                            @class = "bcms-editor-field-box", 
-                                                                            id = "bcms-edit-album-folder",
-                                                                            @readonly = "readonly",
-                                                                            data_bind="value: folder().title()",
-                                                                            style = "width: 400px;"
-                                                                        })
-                @Html.BcmsValidationMessageFor(f => f.FolderTitle)
+                <div class="bcms-custom-input-box">
+                    @Html.TextBoxFor(model => model.FolderTitle, new
+                                                                     {
+                                                                         @class = "bcms-editor-field-box", 
+                                                                         id = "bcms-edit-album-folder",
+                                                                         @readonly = "readonly",
+                                                                         data_bind="value: folder().title()",
+                                                                         style = "width: 400px;"
+                                                                     })
+                    @Html.BcmsValidationMessageFor(f => f.FolderTitle)
+                </div>
                 <div class="bcms-btn-small" data-bind="click: folder().select.bind(folder())">@ImagesGalleryGlobalization.EditAlbum_Fodler_SelectFolder_ButtonTitle</div>
             </div>
             
