@@ -234,6 +234,12 @@ bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettin
 
             ko.applyBindings(viewModel, container.get(0));
 
+            // Select search.
+            var firstVisibleInputField = container.find('input[type=text],textarea,select').filter(':visible:first');
+            if (firstVisibleInputField) {
+                firstVisibleInputField.focus();
+            }
+
             return viewModel;
         }
 

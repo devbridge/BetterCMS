@@ -89,6 +89,12 @@ bettercms.define('bcms.newsletter', ['bcms.jquery', 'bcms', 'bcms.siteSettings',
             viewModel.saveUrl = links.saveSubscriberUrl;
             
             ko.applyBindings(viewModel, container.get(0));
+            
+            // Select search.
+            var firstVisibleInputField = container.find('input[type=text],textarea,select').filter(':visible:first');
+            if (firstVisibleInputField) {
+                firstVisibleInputField.focus();
+            }
         }
 
         /**

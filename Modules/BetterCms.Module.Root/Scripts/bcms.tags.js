@@ -108,6 +108,9 @@ bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bc
                 return $.format(globalization.confirmDeleteTagMessage, rowData.Name);
             }
         });
+
+        // Select search.
+        dialog.setFocus();
     };
 
     /**
@@ -184,6 +187,9 @@ bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bc
                 return $.format(globalization.confirmDeleteCategoryMessage, rowData.Name);
             }
         });
+        
+        // Select search.
+        dialog.setFocus();
     };
 
     /**

@@ -78,6 +78,9 @@ bettercms.define('bcms.pages.redirects', ['bcms.jquery', 'bcms', 'bcms.dynamicCo
                 return globalization.deleteRedirectMessage;
             }
         });
+
+        // Select search.
+        dialog.setFocus();
     };
 
     /**

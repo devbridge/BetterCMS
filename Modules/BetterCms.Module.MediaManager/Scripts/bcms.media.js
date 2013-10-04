@@ -1692,7 +1692,13 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         audiosViewModel = null;
         videosViewModel = null;
 
-        var dialogContainer = siteSettings.getModalDialog().container;
+        var dialogContainer = siteSettings.getModalDialog().container,
+            selectSearch = function() {
+                var firstVisibleInputField = dialogContainer.find('input[type=text],textarea,select').filter(':visible:first');
+                if (firstVisibleInputField) {
+                    firstVisibleInputField.focus();
+                }
+            };
 
         // Attach to audios tab selector
         dialogContainer.find(selectors.tabAudiosSelector).on('click', function () {
@@ -1703,7 +1709,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
                 loadTabData(audiosViewModel, null, function (json) {
                     initializeTab(json, audiosViewModel);
+                    selectSearch();
                 });
+            } else {
+                selectSearch();
             }
         });
 
@@ -1714,9 +1723,12 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 videosViewModel = new MediaItemsViewModel(tabContainer, links.loadVideosUrl, dialogContainer);
                 videosViewModel.spinContainer = tabContainer.parents(selectors.spinContainer);
 
-                loadTabData(videosViewModel, null, function (json) {
+                loadTabData(videosViewModel, null, function(json) {
                     initializeTab(json, videosViewModel);
+                    selectSearch();
                 });
+            } else {
+                selectSearch();
             }
         });
 
@@ -1727,16 +1739,25 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 filesViewModel = new MediaItemsViewModel(tabContainer, links.loadFilesUrl, dialogContainer);
                 filesViewModel.spinContainer = tabContainer.parents(selectors.spinContainer);
 
-                loadTabData(filesViewModel, null, function (json) {
+                loadTabData(filesViewModel, null, function(json) {
                     initializeTab(json, filesViewModel);
+                    selectSearch();
                 });
+            } else {
+                selectSearch();
             }
         });
-
+        
+        // Attach to images tab selector
+        dialogContainer.find(selectors.tabImagesSelector).on('click', function () {
+            selectSearch();
+        });
+        
         var imagesTabContainer = dialogContainer.find(selectors.tabImagesContainer);
         imagesViewModel = new MediaItemsViewModel(imagesTabContainer, links.loadImagesUrl, dialogContainer);
         imagesViewModel.spinContainer = imagesTabContainer.parents(selectors.spinContainer);
         initializeTab(content, imagesViewModel);
+        selectSearch();
     };
 
     /**

@@ -129,7 +129,8 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.sitemapSearchModel = null;
 
             self.initialize = function(content) {
-                self.container = siteSettings.getModalDialog().container;
+                var dialog = siteSettings.getModalDialog();
+                self.container = dialog.container;
                 sitemap.activeMessageContainer = self.container.find(selectors.sitemapMessagesContainer);
                 sitemap.activeLoadingContainer = self.container.find(selectors.sitemapSearchDataBind);
                     
@@ -156,6 +157,9 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         updateValidation();
                     }
                 }
+
+                // Select search.
+                dialog.setFocus();
             };
         }
         

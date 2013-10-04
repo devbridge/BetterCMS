@@ -463,6 +463,9 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         filter.bind(container, ((content.Data) ? content.Data : jsonData), function() {
             page.searchSiteSettingsPages(form, container);
         });
+        
+        // Select search.
+        dialog.setFocus();
     };
 
     /**
