@@ -86,8 +86,9 @@ namespace BetterCms.Module.Pages.Command.Layout.GetTemplateForEdit
 
                 templateModel.Regions = regions.ToList();
                 templateModel.Options = layoutService.GetLayoutOptions(templateId.Value);
-                templateModel.CustomOptions = optionService.GetCustomOptions();
             }
+
+            templateModel.CustomOptions = optionService.GetCustomOptions();
 
             return templateModel;
         }
