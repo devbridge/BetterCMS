@@ -41,13 +41,13 @@ bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettin
         */
         var AlbumFolderSelectorViewModel = (function (_super) {
             bcms.extendsClass(AlbumFolderSelectorViewModel, _super);
-            
+
             function AlbumFolderSelectorViewModel(folder, parent) {
                 _super.call(this, folder);
 
                 this.parent = parent;
             }
-            
+
             AlbumFolderSelectorViewModel.prototype.onAfterSelect = function () {
                 if (!this.parent.title()) {
                     this.parent.title(this.title());
@@ -67,12 +67,12 @@ bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettin
                 viewModel = {
                     form: form,
                     coverImage: coverImageViewModel,
-                    
+
                     title: ko.observable(data.Title),
                     version: ko.observable(data.Version),
                     id: ko.observable(data.Id)
                 };
-            
+
             viewModel.folder = ko.observable(new AlbumFolderSelectorViewModel(data.Folder, viewModel));
 
             // Change image selector's default folder, when changing album folder
@@ -81,10 +81,10 @@ bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettin
 
                 if (!id || bcms.isEmptyGuid(id)) {
                     viewModel.coverImage().currentFolder(newFolderId);
-                    
+
                     if (viewModel.form.find(selectors.albumTitle).hasClass(classes.validationError)
                         || viewModel.form.find(selectors.albumFolder).hasClass(classes.validationError)) {
-                        setTimeout(function() {
+                        setTimeout(function () {
                             viewModel.form.valid();
                         }, 50);
                     }
@@ -92,7 +92,7 @@ bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettin
             });
             // Set current folder, whn cleatring an image
             viewModel.coverImage().id.subscribe(function (newImageId) {
-                setTimeout(function() {
+                setTimeout(function () {
                     if (!newImageId || bcms.isEmptyGuid(newImageId)) {
                         viewModel.coverImage().currentFolder(viewModel.folder().id());
                     }
@@ -114,14 +114,14 @@ bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettin
                 title: title,
                 onLoad: function (dialog) {
                     dynamicContent.bindDialog(dialog, url, {
-                        contentAvailable: function(childDialog, content) {
+                        contentAvailable: function (childDialog, content) {
                             viewModel = initializeEditAlbumForm(childDialog, content);
                         },
 
                         postSuccess: function (json) {
                             viewModel.id(json.Data.Id);
                             viewModel.version(json.Data.Version);
-                            
+
                             onAlbumSaved.call(this, viewModel);
                         }
                     });
@@ -142,11 +142,25 @@ bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettin
                 var self = this;
 
                 self.isSelectable = isSelectable;
+
+                self.selectItemById = function (id) {
+                    var allItems = self.items(),
+                        i, l;
+
+                    if (id && !bcms.isEmptyGuid(id)) {
+                        for (i = 0, l = allItems.length; i < l; i++) {
+                            if (allItems[i].id() == id) {
+                                allItems[i].selectForInsert();
+                                break;
+                            }
+                        }
+                    }
+                };
             }
 
             AlbumsListViewModel.prototype.createItem = function (item) {
                 var newItem = new AlbumViewModel(this, item);
-                
+
                 return newItem;
             };
 
@@ -198,7 +212,7 @@ bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettin
 
                 return params;
             };
-            
+
             AlbumViewModel.prototype.openItem = function () {
                 if (!this.parent.isSelectable) {
                     this.editItem();
@@ -248,7 +262,7 @@ bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettin
         */
         gallery.loadSiteSettingsAlbums = function () {
             dynamicContent.bindSiteSettings(siteSettings, links.loadSiteSettingsAlbumsUrl, {
-                contentAvailable: function(content) {
+                contentAvailable: function (content) {
                     initializeSiteSettingsAlbums(content, siteSettings.getMainContainer(), false);
                 }
             });
@@ -269,6 +283,7 @@ bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettin
                             var container = dialog.container.find(selectors.insertAlbumContainer);
 
                             viewModel = initializeSiteSettingsAlbums(content, container, true);
+                            viewModel.selectItemById(optionModel.value());
                         }
                     });
                 },
@@ -286,7 +301,7 @@ bettercms.define('bcms.images.gallery', ['bcms.jquery', 'bcms', 'bcms.siteSettin
                         } else {
                             valueObservable(selectedItem.id());
                             titleObservable(selectedItem.title());
-                            
+
                             if (optionModel.key && !optionModel.key()) {
                                 optionModel.key(selectedItem.title());
                             }
