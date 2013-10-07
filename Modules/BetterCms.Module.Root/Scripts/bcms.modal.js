@@ -25,6 +25,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
             desirableStatus: '.bcms-content-desirable-status',
             popinfoFrame: '.bcms-popinfo-frame',
             errorFrame: '.bcms-error-frame',
+            loaderContainer: '.bcms-modal-content',
             
             // selectors for calculation of modal window size
             elemOuter: '.bcms-modal-body',
@@ -226,6 +227,10 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         if ($.isFunction(this.options.onLoad)) {
             this.options.onLoad(this);
         }
+
+        this.getLoaderContainer = function() {
+            return this.container.find(selectors.loaderContainer);
+        };
     }
 
     /**
