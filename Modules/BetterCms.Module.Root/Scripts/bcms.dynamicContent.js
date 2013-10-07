@@ -134,8 +134,13 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             forms.ajaxForm(form, {
                 beforeSubmit: function () {
                     if ($.isFunction(options.beforeSubmit)) {
-                        return options.beforeSubmit(form);
+                        var result = options.beforeSubmit(form);
+                        if (result !== false) {
+                            dynamicConent.showLoading(dialog);
+                        }
+                        return result;
                     }
+                    dynamicConent.showLoading(dialog);
                     return true;
                 },
                 
@@ -156,6 +161,7 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                 },
 
                 complete: function (json) {
+                    dynamicConent.hideLoading(dialog);
                     if ($.isFunction(options.complete)) {
                         options.complete(json, dialog);
                     }
