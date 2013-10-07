@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
@@ -6,7 +7,12 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
+using BetterCms.Module.Root.Services;
+
+using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Command.Page.SavePagePublishStatus
 {
@@ -15,6 +21,20 @@ namespace BetterCms.Module.Pages.Command.Page.SavePagePublishStatus
     /// </summary>
     public class SavePagePublishStatusCommand : CommandBase, ICommand<SavePagePublishStatusRequest, bool>
     {
+        /// <summary>
+        /// The content service.
+        /// </summary>
+        private readonly IContentService contentService;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SavePagePublishStatusCommand"/> class.
+        /// </summary>
+        /// <param name="contentService">The content service.</param>
+        public SavePagePublishStatusCommand(IContentService contentService)
+        {
+            this.contentService = contentService;
+        }
+
         /// <summary>
         /// Executes the specified request.
         /// </summary>
@@ -50,7 +70,32 @@ namespace BetterCms.Module.Pages.Command.Page.SavePagePublishStatus
                     page.Status = PageStatus.Unpublished;
                 }
 
-                Repository.Save(page);                
+                // NOTE: When transaction is enabled exception is raised from DefaultEntityTrackingService.DemandReadWriteRule() saying that DB timeouted...
+                // UnitOfWork.BeginTransaction();
+
+                Repository.Save(page);
+
+                if (request.IsPublished)
+                {
+                    var pageContents =
+                        Repository.AsQueryable<PageContent>().Where(content => content.Page.Id == page.Id).Fetch(f => f.Content).ThenFetchMany(f => f.History).ToList();
+
+                    var draftContents = pageContents
+                        .Where(
+                            content =>
+                            (content.Content.Status == ContentStatus.Draft
+                             && (content.Content.History == null || content.Content.History.All(content1 => content1.Status != ContentStatus.Published)))
+                            || (content.Content.Status != ContentStatus.Published && content.Content.History.All(content1 => content1.Status != ContentStatus.Published)))
+                        .ToList();
+
+                    foreach (var pageContent in draftContents)
+                    {
+                        pageContent.Content = contentService.SaveContentWithStatusUpdate(pageContent.Content.FindEditableContentVersion(), ContentStatus.Published);
+
+                        Repository.Save(pageContent);
+                    }
+                }
+
                 UnitOfWork.Commit();
 
                 if (page.Status != initialStatus)
