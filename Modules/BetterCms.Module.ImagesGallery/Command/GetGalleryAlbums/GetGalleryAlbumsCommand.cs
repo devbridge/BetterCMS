@@ -69,30 +69,39 @@ namespace BetterCms.Module.ImagesGallery.Command.GetGalleryAlbums
 
                 albums = UnitOfWork.Session
                     .QueryOver(() => albumAlias)
-                    .Left.JoinAlias(c => c.Folder, () => folderAlias)
-                    .Left.JoinAlias(c => c.CoverImage, () => coverAlias)
-                    .Where(() => !albumAlias.IsDeleted && !folderAlias.IsDeleted)
-                    .SelectList(select => select
-                        .Select(Projections.Cast(NHibernateUtil.String, Projections.Property<Models.Album>(c => c.Id))).WithAlias(() => albumViewModel.Url)
-                        .Select(() => albumAlias.Title).WithAlias(() => albumViewModel.Title)
-                        .Select(() => coverAlias.PublicUrl).WithAlias(() => albumViewModel.CoverImageUrl)
-                        .Select(() => coverAlias.IsDeleted).WithAlias(() => albumViewModel.IsCoverImageDeleted)
-                        .SelectSubQuery(
-                            QueryOver.Of<Media>()
-                                .Where(c => !c.IsDeleted)
-                                .And(c => c.Folder.Id == folderAlias.Id && c.Original == null)
-                                .ToRowCountQuery()
-                        ).WithAlias(() => albumViewModel.ImagesCount)
-                        .SelectSubQuery(
-                            QueryOver.Of<Media>()
-                                .Where(c => !c.IsDeleted)
-                                .And(c => c.Folder.Id == folderAlias.Id && c.Original == null)
-                                .Select(Projections.Max<Media>(c => c.ModifiedOn))
-                        ).WithAlias(() => albumViewModel.LastUpdateDate)
-                    )
-                .TransformUsing(Transformers.AliasToBean<AlbumViewModelEx>())
-                .List<AlbumViewModelEx>()
-                .ToList();
+                            .Left.JoinAlias(c => c.Folder, () => folderAlias)
+                            .Left.JoinAlias(c => c.CoverImage, () => coverAlias)
+                            .Where(() => !albumAlias.IsDeleted && !folderAlias.IsDeleted)
+                            .Where(Restrictions.In(Projections.Property(() => albumAlias.Id), ids))
+                            .SelectList(select => select
+                                .Select(Projections.Cast(NHibernateUtil.String, Projections.Property<Models.Album>(c => c.Id))).WithAlias(() => albumViewModel.Url)
+                                .Select(() => albumAlias.Title).WithAlias(() => albumViewModel.Title)
+                                .Select(() => coverAlias.PublicUrl).WithAlias(() => albumViewModel.CoverImageUrl)
+                                .Select(() => coverAlias.IsDeleted).WithAlias(() => albumViewModel.IsCoverImageDeleted)
+                                .SelectSubQuery(
+                                    QueryOver.Of<Media>()
+                                        .Where(c => !c.IsDeleted)
+                                        .And(c => c.Folder.Id == folderAlias.Id && c.Original == null)
+                                        .ToRowCountQuery()
+                                ).WithAlias(() => albumViewModel.ImagesCount)
+                                .SelectSubQuery(
+                                    QueryOver.Of<Media>()
+                                        .Where(c => !c.IsDeleted)
+                                        .And(c => c.Folder.Id == folderAlias.Id && c.Original == null)
+                                        .Select(Projections.Max<Media>(c => c.ModifiedOn))
+                                ).WithAlias(() => albumViewModel.LastUpdateDate)
+                                .SelectSubQuery(
+                                    QueryOver.Of<MediaImage>()
+                                        .Where(c => !c.IsDeleted)
+                                        .And(c => c.Folder.Id == folderAlias.Id && c.Original == null)
+                                        .OrderBy(c => c.Title).Asc()
+                                        .SelectList(media => media.Select(m => m.PublicUrl))
+                                        .Take(1)
+                                ).WithAlias(() => albumViewModel.FirstImageUrl)
+                            )
+                        .TransformUsing(Transformers.AliasToBean<AlbumViewModelEx>())
+                        .List<AlbumViewModelEx>()
+                        .ToList();
 
                 albums.ForEach(
                     a =>
@@ -100,6 +109,10 @@ namespace BetterCms.Module.ImagesGallery.Command.GetGalleryAlbums
                             if (a.IsCoverImageDeleted)
                             {
                                 a.CoverImageUrl = null;
+                            }
+                            if (string.IsNullOrEmpty(a.CoverImageUrl))
+                            {
+                                a.CoverImageUrl = a.FirstImageUrl;
                             }
                         });
 
@@ -150,6 +163,8 @@ namespace BetterCms.Module.ImagesGallery.Command.GetGalleryAlbums
         private class AlbumViewModelEx : AlbumViewModel
         {
             public bool IsCoverImageDeleted { get; set; }
+
+            public string FirstImageUrl { get; set; }
         }
     }
 }
