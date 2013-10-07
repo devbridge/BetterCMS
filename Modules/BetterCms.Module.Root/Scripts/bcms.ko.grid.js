@@ -342,7 +342,7 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             // Indicates, if item is still in add new phase
             self.isNew = ko.observable(item.IsNew || false);
             
-            // Indicates, if item was added as new and has changed witout saving to DB
+            // Indicates, if item was added as new and has changed without saving to DB.
             self.wasSaved = !self.isNew();
 
             self.hasFocus.subscribe(function(value) {
@@ -375,6 +375,7 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
             self.onSave = function (data, event) {
                 bcms.stopEventPropagation(event);
+                self.hasFocus(!self.hasFocus(!self.hasFocus())); // Hack for IE.
                 self.savePressed = true;
                 self.saveItem();
             };
