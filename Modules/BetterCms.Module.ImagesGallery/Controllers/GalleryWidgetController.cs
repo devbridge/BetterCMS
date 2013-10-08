@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.ImagesGallery.Command.GetAlbum;
 using BetterCms.Module.ImagesGallery.Command.GetGalleryAlbums;
-
+using BetterCms.Module.ImagesGallery.Providers;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Cms;
 using BetterCms.Module.Root.Mvc.Helpers;
@@ -19,7 +21,11 @@ namespace BetterCms.Module.ImagesGallery.Controllers
         {
             var albumIdString = Request.QueryString[ImagesGalleryModuleConstants.GalleryAlbumIdQueryParameterName];
 
-            if (!string.IsNullOrEmpty(albumIdString))
+            if (!string.IsNullOrEmpty(albumIdString) 
+                && request.Options != null 
+                && request.Options.Any(o => o.Type == OptionType.Custom
+                    && o.CustomOption != null && o.CustomOption.Identifier == ImageGalleryAlbumOptionProvider.Identifier
+                    && o.Value is Guid && o.Value.ToString().ToLower() == albumIdString.ToLower()))
             {
                 Guid albumId;
                 if (Guid.TryParse(albumIdString, out albumId))

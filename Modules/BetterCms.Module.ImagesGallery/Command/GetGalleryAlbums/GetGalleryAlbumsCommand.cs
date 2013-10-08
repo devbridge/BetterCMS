@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
@@ -141,15 +142,18 @@ namespace BetterCms.Module.ImagesGallery.Command.GetGalleryAlbums
             if (context != null && context.Request.Url != null)
             {
                 var url = context.Request.Url.ToString();
-                if (!url.Contains("?"))
+                var pattern = string.Format("{0}=[\\d\\w\\-]{{36}}", ImagesGalleryModuleConstants.GalleryAlbumIdQueryParameterName);
+                var regex = new Regex(pattern);
+                var matches = regex.Matches(url);
+                if (matches.Count > 0 && matches[0].Groups.Count > 0)
                 {
-                    url = string.Concat(url, "?");
+                    url = url.Replace(matches[0].Groups[0].Value, string.Format("{0}={1}", ImagesGalleryModuleConstants.GalleryAlbumIdQueryParameterName, "{0}"));
                 }
                 else
                 {
-                    url = string.Concat(url, "&");
+                    url = string.Concat(url, !url.Contains("?") ? "?" : "&");
+                    url = string.Format("{0}{1}={2}", url, ImagesGalleryModuleConstants.GalleryAlbumIdQueryParameterName, "{0}");
                 }
-                url = string.Format("{0}{1}={2}", url, ImagesGalleryModuleConstants.GalleryAlbumIdQueryParameterName, "{0}");
 
                 return url;
             }
