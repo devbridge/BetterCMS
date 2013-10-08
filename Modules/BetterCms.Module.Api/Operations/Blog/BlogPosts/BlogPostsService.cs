@@ -6,6 +6,7 @@ using BetterCms.Core.DataContracts.Enums;
 
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Pages.Models;
 
 using ServiceStack.ServiceInterface;
@@ -16,9 +17,12 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
     {
         private readonly IRepository repository;
 
-        public BlogPostsService(IRepository repository)
+        private readonly IMediaFileUrlResolver fileUrlResolver;
+
+        public BlogPostsService(IRepository repository, IMediaFileUrlResolver fileUrlResolver)
         {
             this.repository = repository;
+            this.fileUrlResolver = fileUrlResolver;
         }
 
         public GetBlogPostsResponse Get(GetBlogPostsRequest request)
@@ -63,8 +67,8 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
                         AuthorId = blogPost.Author != null && !blogPost.Author.IsDeleted ? blogPost.Author.Id : (Guid?)null,
                         AuthorName = blogPost.Author != null && !blogPost.Author.IsDeleted ? blogPost.Author.Name : null,
                         MainImageId = blogPost.Image != null && !blogPost.Image.IsDeleted ? blogPost.Image.Id : (Guid?)null,
-                        MainImageUrl = blogPost.Image != null && !blogPost.Image.IsDeleted ? blogPost.Image.PublicUrl : null,
-                        MainImageThumbnauilUrl = blogPost.Image != null && !blogPost.Image.IsDeleted ? blogPost.Image.PublicThumbnailUrl : null,
+                        MainImageUrl = blogPost.Image != null && !blogPost.Image.IsDeleted ? fileUrlResolver.EnsureFullPathUrl(blogPost.Image.PublicUrl) : null,
+                        MainImageThumbnauilUrl = blogPost.Image != null && !blogPost.Image.IsDeleted ? fileUrlResolver.EnsureFullPathUrl(blogPost.Image.PublicThumbnailUrl) : null,
                         MainImageCaption = blogPost.Image != null && !blogPost.Image.IsDeleted ? blogPost.Image.Caption : null,
                         ActivationDate = blogPost.ActivationDate,
                         ExpirationDate = blogPost.ExpirationDate,

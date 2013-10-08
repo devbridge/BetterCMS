@@ -4,6 +4,7 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.MediaManager.Services;
 
 using ServiceStack.ServiceInterface;
 
@@ -13,9 +14,12 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors
     {
         private readonly IRepository repository;
 
-        public AuthorsService(IRepository repository)
+        private readonly IMediaFileUrlResolver fileUrlResolver;
+
+        public AuthorsService(IRepository repository, IMediaFileUrlResolver fileUrlResolver)
         {
             this.repository = repository;
+            this.fileUrlResolver = fileUrlResolver;
         }
 
         public GetAuthorsResponse Get(GetAuthorsRequest request)
@@ -36,8 +40,8 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors
                         Name = author.Name,
 
                         ImageId = author.Image != null && !author.Image.IsDeleted ? author.Image.Id : (Guid?)null,
-                        ImageUrl = author.Image != null && !author.Image.IsDeleted ? author.Image.PublicUrl : (string)null,
-                        ImageThumbnailUrl = author.Image != null && !author.Image.IsDeleted ? author.Image.PublicThumbnailUrl : (string)null,
+                        ImageUrl = author.Image != null && !author.Image.IsDeleted ? fileUrlResolver.EnsureFullPathUrl(author.Image.PublicUrl) : (string)null,
+                        ImageThumbnailUrl = author.Image != null && !author.Image.IsDeleted ? fileUrlResolver.EnsureFullPathUrl(author.Image.PublicThumbnailUrl) : (string)null,
                         ImageCaption = author.Image != null && !author.Image.IsDeleted ? author.Image.Caption : (string)null
                     })
                 .ToDataListResponse(request);

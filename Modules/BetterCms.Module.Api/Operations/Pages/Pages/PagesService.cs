@@ -7,6 +7,7 @@ using BetterCms.Core.DataContracts.Enums;
 
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
@@ -23,10 +24,13 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         
         private readonly IOptionService optionService;
 
-        public PagesService(IRepository repository, IOptionService optionService)
+        private readonly IMediaFileUrlResolver fileUrlResolver;
+
+        public PagesService(IRepository repository, IOptionService optionService, IMediaFileUrlResolver fileUrlResolver)
         {
             this.repository = repository;
             this.optionService = optionService;
+            this.fileUrlResolver = fileUrlResolver;
         }
 
         public GetPagesResponse Get(GetPagesRequest request)
@@ -69,8 +73,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
                         CategoryId = page.Category != null && !page.Category.IsDeleted ? page.Category.Id : (Guid?)null,
                         CategoryName = page.Category != null && !page.Category.IsDeleted ? page.Category.Name : null,
                         MainImageId = page.Image != null && !page.Image.IsDeleted ? page.Image.Id : (Guid?)null,
-                        MainImageUrl = page.Image != null && !page.Image.IsDeleted ? page.Image.PublicUrl : null,
-                        MainImageThumbnauilUrl = page.Image != null && !page.Image.IsDeleted ? page.Image.PublicThumbnailUrl : null,
+                        MainImageUrl = page.Image != null && !page.Image.IsDeleted ? fileUrlResolver.EnsureFullPathUrl(page.Image.PublicUrl) : null,
+                        MainImageThumbnauilUrl = page.Image != null && !page.Image.IsDeleted ? fileUrlResolver.EnsureFullPathUrl(page.Image.PublicThumbnailUrl) : null,
                         MainImageCaption = page.Image != null && !page.Image.IsDeleted ? page.Image.Caption : null,
                         IsArchived = page.IsArchived
                     }).ToDataListResponse(request);

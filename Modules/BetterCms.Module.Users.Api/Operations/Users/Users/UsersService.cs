@@ -8,6 +8,7 @@ using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Infrastructure.Enums;
 using BetterCms.Module.Api.Operations.Users.Users;
+using BetterCms.Module.MediaManager.Services;
 
 using ServiceStack.OrmLite;
 using ServiceStack.ServiceInterface;
@@ -18,9 +19,12 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users
     {
         private readonly IRepository repository;
 
-        public UsersService(IRepository repository)
+        private readonly IMediaFileUrlResolver fileUrlResolver;
+
+        public UsersService(IRepository repository, IMediaFileUrlResolver fileUrlResolver)
         {
             this.repository = repository;
+            this.fileUrlResolver = fileUrlResolver;
         }
 
         public GetUsersResponse Get(GetUsersRequest request)
@@ -46,8 +50,8 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users
                         Email = user.Email,
                         ImageId = user.Image != null && !user.Image.IsDeleted ? user.Image.Id : (System.Guid?) null,
                         ImageCaption = user.Image != null && !user.Image.IsDeleted ? user.Image.Caption : null,
-                        ImageThumbnailUrl = user.Image != null && !user.Image.IsDeleted ? user.Image.PublicThumbnailUrl : null,
-                        ImageUrl = user.Image != null && !user.Image.IsDeleted ? user.Image.PublicUrl : null
+                        ImageThumbnailUrl = user.Image != null && !user.Image.IsDeleted ? fileUrlResolver.EnsureFullPathUrl(user.Image.PublicThumbnailUrl) : null,
+                        ImageUrl = user.Image != null && !user.Image.IsDeleted ? fileUrlResolver.EnsureFullPathUrl(user.Image.PublicUrl) : null
                     })
                 .ToDataListResponse(request);
 

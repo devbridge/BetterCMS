@@ -17,10 +17,13 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
 
         private readonly IMediaFileService fileService;
 
-        public FileService(IRepository repository, IMediaFileService fileService)
+        private readonly IMediaFileUrlResolver fileUrlResolver;
+
+        public FileService(IRepository repository, IMediaFileService fileService, IMediaFileUrlResolver fileUrlResolver)
         {
             this.repository = repository;
             this.fileService = fileService;
+            this.fileUrlResolver = fileUrlResolver;
         }
 
         public GetFileResponse Get(GetFileRequest request)
@@ -41,7 +44,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
                         Description = media.Description,
                         FileExtension = media.OriginalFileExtension,
                         FileSize = media.Size,
-                        FileUrl = media.PublicUrl,
+                        FileUrl = fileUrlResolver.EnsureFullPathUrl(media.PublicUrl),
                         IsArchived = media.IsArchived,
                         FolderId = media.Folder != null && !media.Folder.IsDeleted ? media.Folder.Id : (Guid?)null,
                         FolderName = media.Folder != null && !media.Folder.IsDeleted ? media.Folder.Title : null,
@@ -50,7 +53,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
                         OriginalFileExtension = media.OriginalFileExtension,
                         ThumbnailId = media.Image != null && !media.Image.IsDeleted ? media.Image.Id : (Guid?)null,
                         ThumbnailCaption = media.Image != null && !media.Image.IsDeleted ? media.Image.Caption : null,
-                        ThumbnailUrl = media.Image != null && !media.Image.IsDeleted ?  media.Image.PublicThumbnailUrl : null
+                        ThumbnailUrl = media.Image != null && !media.Image.IsDeleted ? fileUrlResolver.EnsureFullPathUrl(media.Image.PublicThumbnailUrl) : null
                     })
                 .FirstOne();
 

@@ -17,10 +17,13 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
 
         private readonly IMediaFileService fileService;
 
-        public FilesService(IRepository repository, IMediaFileService fileService)
+        private readonly IMediaFileUrlResolver fileUrlResolver;
+
+        public FilesService(IRepository repository, IMediaFileService fileService, IMediaFileUrlResolver fileUrlResolver)
         {
             this.repository = repository;
             this.fileService = fileService;
+            this.fileUrlResolver = fileUrlResolver;
         }
 
         public GetFilesResponse Get(GetFilesRequest request)
@@ -73,11 +76,11 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
                                                     : (MediaContentType)((int)MediaContentType.File),
                             FileExtension = media is MediaFile ? ((MediaFile)media).OriginalFileExtension : null,
                             FileSize = media is MediaFile ? ((MediaFile)media).Size : (long?)null,
-                            FileUrl = media is MediaFile ? ((MediaFile)media).PublicUrl : null,
+                            FileUrl = media is MediaFile ? fileUrlResolver.EnsureFullPathUrl(((MediaFile)media).PublicUrl) : null,
                             IsArchived = media.IsArchived,
                             ThumbnailId = media.Image != null && !media.Image.IsDeleted ? media.Image.Id : (Guid?)null,
                             ThumbnailCaption = media.Image != null && !media.Image.IsDeleted ? media.Image.Caption : null,
-                            ThumbnailUrl = media.Image != null && !media.Image.IsDeleted ? media.Image.PublicThumbnailUrl : null
+                            ThumbnailUrl = media.Image != null && !media.Image.IsDeleted ? fileUrlResolver.EnsureFullPathUrl(media.Image.PublicThumbnailUrl) : null
                         })
                         .ToDataListResponse(request);
 

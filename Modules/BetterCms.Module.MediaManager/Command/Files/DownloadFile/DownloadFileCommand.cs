@@ -9,6 +9,7 @@ using BetterCms.Core.Security;
 using BetterCms.Core.Services.Storage;
 
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.MediaManager.Command.Files.DownloadFile
@@ -29,14 +30,20 @@ namespace BetterCms.Module.MediaManager.Command.Files.DownloadFile
         private readonly ICmsConfiguration cmsConfiguration;
 
         /// <summary>
+        /// The file URL resolver
+        /// </summary>
+        private readonly IMediaFileUrlResolver fileUrlResolver;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DownloadFileCommand" /> class.
         /// </summary>
         /// <param name="storageService">The storage service.</param>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
-        public DownloadFileCommand(IStorageService storageService, ICmsConfiguration cmsConfiguration)
+        public DownloadFileCommand(IStorageService storageService, ICmsConfiguration cmsConfiguration, IMediaFileUrlResolver fileUrlResolver)
         {
             this.storageService = storageService;
             this.cmsConfiguration = cmsConfiguration;
+            this.fileUrlResolver = fileUrlResolver;
         }
 
         /// <summary>
@@ -64,7 +71,7 @@ namespace BetterCms.Module.MediaManager.Command.Files.DownloadFile
 
             if (!accesControlEnabled || !storageService.SecuredUrlsEnabled)
             {
-                return new DownloadFileCommandResponse { RedirectUrl = file.PublicUrl };
+                return new DownloadFileCommandResponse { RedirectUrl = fileUrlResolver.EnsureFullPathUrl(file.PublicUrl) };
             }
 
             // Get download URL with security token

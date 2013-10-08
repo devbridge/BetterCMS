@@ -7,6 +7,7 @@ using BetterCms.Core.Web;
 using BetterCms.Module.ImagesGallery.Models;
 using BetterCms.Module.ImagesGallery.ViewModels;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 
@@ -23,12 +24,18 @@ namespace BetterCms.Module.ImagesGallery.Command.GetAlbum
         private readonly IHttpContextAccessor contextAccessor;
 
         /// <summary>
+        /// The file URL resolver
+        /// </summary>
+        private readonly IMediaFileUrlResolver fileUrlResolver;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GetAlbumCommand" /> class.
         /// </summary>
         /// <param name="contextAccessor">The context accessor.</param>
-        public GetAlbumCommand(IHttpContextAccessor contextAccessor)
+        public GetAlbumCommand(IHttpContextAccessor contextAccessor, IMediaFileUrlResolver fileUrlResolver)
         {
             this.contextAccessor = contextAccessor;
+            this.fileUrlResolver = fileUrlResolver;
         }
 
         /// <summary>
@@ -71,7 +78,7 @@ namespace BetterCms.Module.ImagesGallery.Command.GetAlbum
                     album.Images =
                         Repository.AsQueryable<MediaImage>()
                                   .Where(i => i.Folder.Id == album.FolderId && i.Original == null)
-                                  .Select(i => new ImageViewModel { Url = i.PublicUrl, Caption = i.Caption ?? i.Title, Title = i.Title })
+                                  .Select(i => new ImageViewModel { Url = fileUrlResolver.EnsureFullPathUrl(i.PublicUrl), Caption = i.Caption ?? i.Title, Title = i.Title })
                                   .OrderBy(i => i.Title)
                                   .ToList();
                     album.ImagesCount = album.Images.Count;

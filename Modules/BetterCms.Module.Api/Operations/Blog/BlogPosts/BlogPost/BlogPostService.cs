@@ -6,6 +6,7 @@ using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
 using BetterCms.Module.Api.Operations.Pages.Contents.Content.BlogPostContent;
+using BetterCms.Module.MediaManager.Services;
 
 using ServiceStack.ServiceInterface;
 
@@ -15,15 +16,18 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
     {
         private readonly IRepository repository;
 
+        private readonly IMediaFileUrlResolver fileUrlResolver;
+
         private readonly IBlogPostPropertiesService propertiesService;
         
         private readonly IBlogPostContentService contentService;
 
-        public BlogPostService(IBlogPostPropertiesService propertiesService, IBlogPostContentService contentService, IRepository repository)
+        public BlogPostService(IBlogPostPropertiesService propertiesService, IBlogPostContentService contentService, IRepository repository, IMediaFileUrlResolver fileUrlResolver)
         {
             this.propertiesService = propertiesService;
             this.contentService = contentService;
             this.repository = repository;
+            this.fileUrlResolver = fileUrlResolver;
         }
 
         public GetBlogPostResponse Get(GetBlogPostRequest request)
@@ -47,11 +51,11 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
                         LayoutId = blogPost.Layout != null && !blogPost.Layout.IsDeleted ? blogPost.Layout.Id : Guid.Empty,
                         CategoryId = blogPost.Category != null && !blogPost.Category.IsDeleted ? blogPost.Category.Id : (Guid?)null,
                         CategoryName = blogPost.Category != null && !blogPost.Category.IsDeleted ? blogPost.Category.Name : null,
-                        AuthorId = blogPost.Author != null && !blogPost.Author.IsDeleted ?  blogPost.Author.Id : (Guid?)null,
+                        AuthorId = blogPost.Author != null && !blogPost.Author.IsDeleted ? blogPost.Author.Id : (Guid?)null,
                         AuthorName = blogPost.Author != null && !blogPost.Author.IsDeleted ? blogPost.Author.Name : null,
                         MainImageId = blogPost.Image != null && !blogPost.Image.IsDeleted ? blogPost.Image.Id : (Guid?)null,
-                        MainImageUrl = blogPost.Image != null && !blogPost.Image.IsDeleted ? blogPost.Image.PublicUrl : null,
-                        MainImageThumbnauilUrl = blogPost.Image != null && !blogPost.Image.IsDeleted ? blogPost.Image.PublicThumbnailUrl : null,
+                        MainImageUrl = blogPost.Image != null && !blogPost.Image.IsDeleted ? fileUrlResolver.EnsureFullPathUrl(blogPost.Image.PublicUrl) : null,
+                        MainImageThumbnauilUrl = blogPost.Image != null && !blogPost.Image.IsDeleted ? fileUrlResolver.EnsureFullPathUrl(blogPost.Image.PublicThumbnailUrl) : null,
                         MainImageCaption = blogPost.Image != null && !blogPost.Image.IsDeleted ? blogPost.Image.Caption : null,
                         ActivationDate = blogPost.ActivationDate,
                         ExpirationDate = blogPost.ExpirationDate,

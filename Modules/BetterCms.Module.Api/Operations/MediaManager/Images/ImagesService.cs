@@ -4,6 +4,7 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Services;
 
 using ServiceStack.ServiceInterface;
 
@@ -13,9 +14,12 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
     {
         private readonly IRepository repository;
 
-        public ImagesService(IRepository repository)
+        private readonly IMediaFileUrlResolver fileUrlResolver;
+
+        public ImagesService(IRepository repository, IMediaFileUrlResolver fileUrlResolver)
         {
             this.repository = repository;
+            this.fileUrlResolver = fileUrlResolver;
         }
 
         public GetImagesResponse Get(GetImagesRequest request)
@@ -71,8 +75,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
                                                     : (MediaContentType)((int)MediaContentType.File),
                             FileExtension = media is MediaImage ? ((MediaImage)media).OriginalFileExtension : null,
                             FileSize = media is MediaImage ? ((MediaImage)media).Size : (long?)null,
-                            ImageUrl = media is MediaImage ? ((MediaImage)media).PublicUrl : null,
-                            ThumbnailUrl = media is MediaImage ? ((MediaImage)media).PublicThumbnailUrl : null,
+                            ImageUrl = media is MediaImage ? fileUrlResolver.EnsureFullPathUrl(((MediaImage)media).PublicUrl) : null,
+                            ThumbnailUrl = media is MediaImage ? fileUrlResolver.EnsureFullPathUrl(((MediaImage)media).PublicThumbnailUrl) : null,
                             IsArchived = media.IsArchived
 
                         }).ToDataListResponse(request);

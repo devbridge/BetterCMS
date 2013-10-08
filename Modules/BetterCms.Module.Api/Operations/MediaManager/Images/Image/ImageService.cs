@@ -5,6 +5,7 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Services;
 
 using ServiceStack.ServiceInterface;
 
@@ -14,9 +15,12 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
     {
         private readonly IRepository repository;
 
-        public ImageService(IRepository repository)
+        private readonly IMediaFileUrlResolver fileUrlResolver;
+
+        public ImageService(IRepository repository, IMediaFileUrlResolver fileUrlResolver)
         {
             this.repository = repository;
+            this.fileUrlResolver = fileUrlResolver;
         }
 
         public GetImageResponse Get(GetImageRequest request)
@@ -37,10 +41,10 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
                                          Caption = media.Caption,
                                          FileExtension = media.OriginalFileExtension,
                                          FileSize = media.Size,
-                                         ImageUrl = media.PublicUrl,
+                                         ImageUrl = fileUrlResolver.EnsureFullPathUrl(media.PublicUrl),
                                          Width = media.Width,
                                          Height = media.Height,
-                                         ThumbnailUrl = media.PublicThumbnailUrl,
+                                         ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(media.PublicThumbnailUrl),
                                          ThumbnailWidth = media.ThumbnailWidth,
                                          ThumbnailHeight = media.ThumbnailHeight,
                                          ThumbnailSize = media.ThumbnailSize,
@@ -53,7 +57,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
                                          OriginalWidth = media.OriginalWidth,
                                          OriginalHeight = media.OriginalHeight,
                                          OriginalSize = media.OriginalSize,
-                                         OriginalUrl = media.PublicOriginallUrl
+                                         OriginalUrl = fileUrlResolver.EnsureFullPathUrl(media.PublicOriginallUrl)
                                      })
                 .FirstOne();
 
