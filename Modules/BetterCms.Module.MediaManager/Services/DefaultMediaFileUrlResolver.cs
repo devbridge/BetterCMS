@@ -34,7 +34,7 @@ namespace BetterCms.Module.MediaManager.Services
 
         public string EnsureFullPathUrl(string url)
         {
-            if (url.StartsWith("/"))
+            if (!string.IsNullOrEmpty(url) && url.StartsWith("/"))
             {
                 return contextAccessor.MapPublicPath(url);
             }

@@ -76,11 +76,11 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
                                                     : (MediaContentType)((int)MediaContentType.File),
                             FileExtension = media is MediaFile ? ((MediaFile)media).OriginalFileExtension : null,
                             FileSize = media is MediaFile ? ((MediaFile)media).Size : (long?)null,
-                            FileUrl = media is MediaFile ? fileUrlResolver.EnsureFullPathUrl(((MediaFile)media).PublicUrl) : null,
+                            FileUrl = media is MediaFile ? ((MediaFile)media).PublicUrl : null,
                             IsArchived = media.IsArchived,
                             ThumbnailId = media.Image != null && !media.Image.IsDeleted ? media.Image.Id : (Guid?)null,
                             ThumbnailCaption = media.Image != null && !media.Image.IsDeleted ? media.Image.Caption : null,
-                            ThumbnailUrl = media.Image != null && !media.Image.IsDeleted ? fileUrlResolver.EnsureFullPathUrl(media.Image.PublicThumbnailUrl) : null
+                            ThumbnailUrl = media.Image != null && !media.Image.IsDeleted ? media.Image.PublicThumbnailUrl : null
                         })
                         .ToDataListResponse(request);
 
@@ -90,6 +90,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
                     {
                         media.FileUrl = fileService.GetDownloadFileUrl(MediaType.File, media.Id, media.FileUrl);
                     }
+                    media.FileUrl = fileUrlResolver.EnsureFullPathUrl(media.FileUrl);
+                    media.ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(media.ThumbnailUrl);
                 });
 
             return new GetFilesResponse

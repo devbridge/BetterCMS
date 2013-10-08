@@ -53,11 +53,12 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
                         OriginalFileExtension = media.OriginalFileExtension,
                         ThumbnailId = media.Image != null && !media.Image.IsDeleted ? media.Image.Id : (Guid?)null,
                         ThumbnailCaption = media.Image != null && !media.Image.IsDeleted ? media.Image.Caption : null,
-                        ThumbnailUrl = media.Image != null && !media.Image.IsDeleted ? fileUrlResolver.EnsureFullPathUrl(media.Image.PublicThumbnailUrl) : null
+                        ThumbnailUrl = media.Image != null && !media.Image.IsDeleted ? media.Image.PublicThumbnailUrl : null
                     })
                 .FirstOne();
 
             model.FileUrl = fileService.GetDownloadFileUrl(MediaType.File, model.Id, model.FileUrl);
+            model.ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(model.ThumbnailUrl);
 
             IList<TagModel> tags;
             if (request.Data.IncludeTags)

@@ -41,10 +41,10 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
                                          Caption = media.Caption,
                                          FileExtension = media.OriginalFileExtension,
                                          FileSize = media.Size,
-                                         ImageUrl = fileUrlResolver.EnsureFullPathUrl(media.PublicUrl),
+                                         ImageUrl = media.PublicUrl,
                                          Width = media.Width,
                                          Height = media.Height,
-                                         ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(media.PublicThumbnailUrl),
+                                         ThumbnailUrl = media.PublicThumbnailUrl,
                                          ThumbnailWidth = media.ThumbnailWidth,
                                          ThumbnailHeight = media.ThumbnailHeight,
                                          ThumbnailSize = media.ThumbnailSize,
@@ -57,9 +57,13 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
                                          OriginalWidth = media.OriginalWidth,
                                          OriginalHeight = media.OriginalHeight,
                                          OriginalSize = media.OriginalSize,
-                                         OriginalUrl = fileUrlResolver.EnsureFullPathUrl(media.PublicOriginallUrl)
+                                         OriginalUrl = media.PublicOriginallUrl
                                      })
                 .FirstOne();
+
+            model.ImageUrl = fileUrlResolver.EnsureFullPathUrl(model.ImageUrl);
+            model.ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(model.ThumbnailUrl);
+            model.OriginalUrl = fileUrlResolver.EnsureFullPathUrl(model.OriginalUrl);
 
             IList<TagModel> tags;
             if (request.Data.IncludeTags)

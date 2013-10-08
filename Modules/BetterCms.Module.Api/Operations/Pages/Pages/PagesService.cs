@@ -73,11 +73,17 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
                         CategoryId = page.Category != null && !page.Category.IsDeleted ? page.Category.Id : (Guid?)null,
                         CategoryName = page.Category != null && !page.Category.IsDeleted ? page.Category.Name : null,
                         MainImageId = page.Image != null && !page.Image.IsDeleted ? page.Image.Id : (Guid?)null,
-                        MainImageUrl = page.Image != null && !page.Image.IsDeleted ? fileUrlResolver.EnsureFullPathUrl(page.Image.PublicUrl) : null,
-                        MainImageThumbnauilUrl = page.Image != null && !page.Image.IsDeleted ? fileUrlResolver.EnsureFullPathUrl(page.Image.PublicThumbnailUrl) : null,
+                        MainImageUrl = page.Image != null && !page.Image.IsDeleted ? page.Image.PublicUrl : null,
+                        MainImageThumbnauilUrl = page.Image != null && !page.Image.IsDeleted ? page.Image.PublicThumbnailUrl : null,
                         MainImageCaption = page.Image != null && !page.Image.IsDeleted ? page.Image.Caption : null,
                         IsArchived = page.IsArchived
                     }).ToDataListResponse(request);
+
+            foreach (var model in listResponse.Items)
+            {
+                model.MainImageUrl = fileUrlResolver.EnsureFullPathUrl(model.MainImageUrl);
+                model.MainImageThumbnauilUrl = fileUrlResolver.EnsureFullPathUrl(model.MainImageThumbnauilUrl);
+            }
 
             if (listResponse.Items.Count > 0 && (request.Data.IncludePageOptions || request.Data.IncludeTags))
             {

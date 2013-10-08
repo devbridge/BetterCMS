@@ -50,10 +50,16 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users
                         Email = user.Email,
                         ImageId = user.Image != null && !user.Image.IsDeleted ? user.Image.Id : (System.Guid?) null,
                         ImageCaption = user.Image != null && !user.Image.IsDeleted ? user.Image.Caption : null,
-                        ImageThumbnailUrl = user.Image != null && !user.Image.IsDeleted ? fileUrlResolver.EnsureFullPathUrl(user.Image.PublicThumbnailUrl) : null,
-                        ImageUrl = user.Image != null && !user.Image.IsDeleted ? fileUrlResolver.EnsureFullPathUrl(user.Image.PublicUrl) : null
+                        ImageThumbnailUrl = user.Image != null && !user.Image.IsDeleted ? user.Image.PublicThumbnailUrl : null,
+                        ImageUrl = user.Image != null && !user.Image.IsDeleted ? user.Image.PublicUrl : null
                     })
                 .ToDataListResponse(request);
+
+            foreach (var model in listResponse.Items)
+            {
+                model.ImageThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(model.ImageThumbnailUrl);
+                model.ImageUrl = fileUrlResolver.EnsureFullPathUrl(model.ImageUrl);
+            }
 
             return new GetUsersResponse
                        {

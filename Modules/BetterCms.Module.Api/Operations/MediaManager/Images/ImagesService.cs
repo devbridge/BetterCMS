@@ -75,11 +75,17 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
                                                     : (MediaContentType)((int)MediaContentType.File),
                             FileExtension = media is MediaImage ? ((MediaImage)media).OriginalFileExtension : null,
                             FileSize = media is MediaImage ? ((MediaImage)media).Size : (long?)null,
-                            ImageUrl = media is MediaImage ? fileUrlResolver.EnsureFullPathUrl(((MediaImage)media).PublicUrl) : null,
-                            ThumbnailUrl = media is MediaImage ? fileUrlResolver.EnsureFullPathUrl(((MediaImage)media).PublicThumbnailUrl) : null,
+                            ImageUrl = media is MediaImage ? ((MediaImage)media).PublicUrl : null,
+                            ThumbnailUrl = media is MediaImage ? ((MediaImage)media).PublicThumbnailUrl : null,
                             IsArchived = media.IsArchived
+                        })
+                        .ToDataListResponse(request);
 
-                        }).ToDataListResponse(request);
+            foreach (var model in listResponse.Items)
+            {
+                model.ImageUrl = fileUrlResolver.EnsureFullPathUrl(model.ImageUrl);
+                model.ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(model.ThumbnailUrl);
+            }
 
             return new GetImagesResponse
                        {

@@ -40,11 +40,17 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors
                         Name = author.Name,
 
                         ImageId = author.Image != null && !author.Image.IsDeleted ? author.Image.Id : (Guid?)null,
-                        ImageUrl = author.Image != null && !author.Image.IsDeleted ? fileUrlResolver.EnsureFullPathUrl(author.Image.PublicUrl) : (string)null,
-                        ImageThumbnailUrl = author.Image != null && !author.Image.IsDeleted ? fileUrlResolver.EnsureFullPathUrl(author.Image.PublicThumbnailUrl) : (string)null,
+                        ImageUrl = author.Image != null && !author.Image.IsDeleted ? author.Image.PublicUrl : (string)null,
+                        ImageThumbnailUrl = author.Image != null && !author.Image.IsDeleted ? author.Image.PublicThumbnailUrl : (string)null,
                         ImageCaption = author.Image != null && !author.Image.IsDeleted ? author.Image.Caption : (string)null
                     })
                 .ToDataListResponse(request);
+
+            foreach (var model in listResponse.Items)
+            {
+                model.ImageUrl = fileUrlResolver.EnsureFullPathUrl(model.ImageUrl);
+                model.ImageThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(model.ImageThumbnailUrl);
+            }
 
             return new GetAuthorsResponse
                        {

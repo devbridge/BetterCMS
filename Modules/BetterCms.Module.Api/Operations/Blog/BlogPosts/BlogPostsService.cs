@@ -67,14 +67,20 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
                         AuthorId = blogPost.Author != null && !blogPost.Author.IsDeleted ? blogPost.Author.Id : (Guid?)null,
                         AuthorName = blogPost.Author != null && !blogPost.Author.IsDeleted ? blogPost.Author.Name : null,
                         MainImageId = blogPost.Image != null && !blogPost.Image.IsDeleted ? blogPost.Image.Id : (Guid?)null,
-                        MainImageUrl = blogPost.Image != null && !blogPost.Image.IsDeleted ? fileUrlResolver.EnsureFullPathUrl(blogPost.Image.PublicUrl) : null,
-                        MainImageThumbnauilUrl = blogPost.Image != null && !blogPost.Image.IsDeleted ? fileUrlResolver.EnsureFullPathUrl(blogPost.Image.PublicThumbnailUrl) : null,
+                        MainImageUrl = blogPost.Image != null && !blogPost.Image.IsDeleted ? blogPost.Image.PublicUrl : null,
+                        MainImageThumbnauilUrl = blogPost.Image != null && !blogPost.Image.IsDeleted ? blogPost.Image.PublicThumbnailUrl : null,
                         MainImageCaption = blogPost.Image != null && !blogPost.Image.IsDeleted ? blogPost.Image.Caption : null,
                         ActivationDate = blogPost.ActivationDate,
                         ExpirationDate = blogPost.ExpirationDate,
                         IsArchived = blogPost.IsArchived
                     })
                     .ToDataListResponse(request);
+
+            foreach (var model in listResponse.Items)
+            {
+                model.MainImageUrl = fileUrlResolver.EnsureFullPathUrl(model.MainImageUrl);
+                model.MainImageThumbnauilUrl = fileUrlResolver.EnsureFullPathUrl(model.MainImageThumbnauilUrl);
+            }
 
             if (request.Data.IncludeTags)
             {
