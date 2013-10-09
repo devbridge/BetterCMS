@@ -416,9 +416,7 @@ xcopy "$(SolutionDir)Modules\BetterCms.Module.Users\Content\Styles\*.*" "$(Proje
 xcopy "$(SolutionDir)Modules\BetterCms.Module.Users\Scripts\*.*" "$(ProjectDir)Resources\bcms-users\Scripts\" /Y /Q /S
 
 xcopy "$(SolutionDir)Modules\BetterCms.Module.Newsletter\Content\Styles\*.*" "$(ProjectDir)Resources\bcms-newsletter\Content\Styles\" /Y /Q /S
-xcopy "$(SolutionDir)Modules\BetterCms.Module.Newsletter\Scripts\*.*" "$(ProjectDir)Resources\bcms-newsletter\Scripts\" /Y /Q /S
-
-xcopy "$(SolutionDir)Modules\BetterCms.Module.ImagesGallery\Scripts\*.*" "$(ProjectDir)Resources\bcms-images-gallery\Scripts\" /Y /Q /S</PostBuildEvent>
+xcopy "$(SolutionDir)Modules\BetterCms.Module.Newsletter\Scripts\*.*" "$(ProjectDir)Resources\bcms-newsletter\Scripts\" /Y /Q /S</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
