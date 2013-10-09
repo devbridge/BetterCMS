@@ -1,16 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-
-using Autofac;
-
-using BetterCms.Core.Modules;
-using BetterCms.Core.Modules.Projections;
-
-using BetterCms.Module.ImagesGallery.Content.Resources;
-using BetterCms.Module.ImagesGallery.Providers;
-using BetterCms.Module.ImagesGallery.Registration;
-using BetterCms.Module.Root;
-using BetterCms.Module.Root.Providers;
+﻿using BetterCms.Core.Modules;
 
 namespace BetterCms.Module.ImagesGallery
 {
@@ -30,20 +18,11 @@ namespace BetterCms.Module.ImagesGallery
         internal const string ImagesGalleryAreaName = "bcms-images-gallery";
 
         /// <summary>
-        /// The images gallery java script module descriptor.
-        /// </summary>
-        private readonly ImagesGalleryJsModuleIncludeDescriptor imagesGalleryJsModuleIncludeDescriptor;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ImagesGalleryModuleDescriptor" /> class.
         /// </summary>
         public ImagesGalleryModuleDescriptor(ICmsConfiguration cmsConfiguration)
             : base(cmsConfiguration)
         {
-            imagesGalleryJsModuleIncludeDescriptor = new ImagesGalleryJsModuleIncludeDescriptor(this);
-
-            // Register images gallery custom option: album
-            CustomOptionsProvider.RegisterProvider(ImageGalleryAlbumOptionProvider.Identifier, new ImageGalleryAlbumOptionProvider());
         }
 
         /// <summary>
@@ -86,36 +65,6 @@ namespace BetterCms.Module.ImagesGallery
             {
                 return ImagesGalleryAreaName;
             }
-        }
-
-        /// <summary>
-        /// Gets known client side modules in page module.
-        /// </summary>        
-        /// <returns>List of known client side modules in page module.</returns>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
-        public override IEnumerable<JsIncludeDescriptor> RegisterJsIncludes()
-        {
-            return new[] { imagesGalleryJsModuleIncludeDescriptor };
-        }
-
-        /// <summary>
-        /// Registers the site settings projections.
-        /// </summary>
-        /// <param name="containerBuilder">The container builder.</param>
-        /// <returns>List of page action projections.</returns>
-        public override IEnumerable<IPageActionProjection> RegisterSiteSettingsProjections(ContainerBuilder containerBuilder)
-        {
-            return new IPageActionProjection[]
-                {
-                    new SeparatorProjection(9999),
-                    new LinkActionProjection(imagesGalleryJsModuleIncludeDescriptor, page => "loadSiteSettingsAlbums")
-                        {
-                            Order = 9999,
-                            Title = () => ImagesGalleryGlobalization.SiteSettings_AlbumsMenuItem,
-                            CssClass = page => "bcms-sidebar-link",
-                            AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.Administration)
-                        }
-                };
         }
     }
 }

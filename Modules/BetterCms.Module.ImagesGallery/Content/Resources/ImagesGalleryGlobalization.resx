@@ -117,73 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CreateAlbum_CreatedSuccessfully_Message" xml:space="preserve">
-    <value>Album created successfully.</value>
-  </data>
-  <data name="CreateAlbum_Dialog_Title" xml:space="preserve">
-    <value>Create album</value>
-  </data>
-  <data name="DeleteAlbum_Confirmation_Message" xml:space="preserve">
-    <value>Are you sure you want to delete album {0}?</value>
-  </data>
-  <data name="DeleteAlbum_DeletedSuccessfully_Message" xml:space="preserve">
-    <value>Album deleted successfully.</value>
-  </data>
-  <data name="EditAlbum_CoverImage_SelectImage_ButtonTitle" xml:space="preserve">
-    <value>Change cover image</value>
-  </data>
-  <data name="EditAlbum_CoverImage_Title" xml:space="preserve">
-    <value>Album cover image.</value>
-  </data>
-  <data name="EditAlbum_CoverImage_Tooltip_Description" xml:space="preserve">
-    <value>Cover image will be displayed in the list of albums as the album cover image. If not set, the first one image from the album will be displayed.</value>
-  </data>
-  <data name="EditAlbum_Dialog_Title" xml:space="preserve">
-    <value>Edit album</value>
-  </data>
-  <data name="EditAlbum_Fodler_SelectFolder_ButtonTitle" xml:space="preserve">
-    <value>Browse ...</value>
-  </data>
-  <data name="EditAlbum_Folder_RequiredMessage" xml:space="preserve">
-    <value>Folder is required.</value>
-  </data>
-  <data name="EditAlbum_Folder_Title" xml:space="preserve">
-    <value>Album folder</value>
-  </data>
-  <data name="EditAlbum_Folder_Tooltip_Description" xml:space="preserve">
-    <value>Selected folder's images will be displayed in the gallery.</value>
-  </data>
-  <data name="EditAlbum_Title_MaxLengthMessage" xml:space="preserve">
-    <value>Album title maximum length exceeded.</value>
-  </data>
-  <data name="EditAlbum_Title_RequiredMessage" xml:space="preserve">
-    <value>Album title is required.</value>
-  </data>
-  <data name="EditAlbum_Title_Title" xml:space="preserve">
-    <value>Album title</value>
-  </data>
-  <data name="EditAlbum_Title_Tooltip_Description" xml:space="preserve">
-    <value>Album title will be displayed in the list of albums</value>
-  </data>
   <data name="GalleryWidget_Pictures" xml:space="preserve">
     <value>Pictures</value>
-  </data>
-  <data name="SelectAlbum_Dialog_AcceptButton" xml:space="preserve">
-    <value>Select</value>
-  </data>
-  <data name="SelectAlbum_Dialog_Title" xml:space="preserve">
-    <value>Select album</value>
-  </data>
-  <data name="SelectAlbum_NotSelected_Message" xml:space="preserve">
-    <value>Please select an album.</value>
-  </data>
-  <data name="SiteSettings_AlbumsMenuItem" xml:space="preserve">
-    <value>Image gallery albums</value>
-  </data>
-  <data name="SiteSettings_Albums_Title" xml:space="preserve">
-    <value>Image gallery albums</value>
-  </data>
-  <data name="SiteSettings_Albums_Title_Title" xml:space="preserve">
-    <value>Title</value>
   </data>
 </root>

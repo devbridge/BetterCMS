@@ -117,31 +117,22 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Command\GetAlbum\GetAlbumCommand.cs" />
-    <Compile Include="Command\GetAlbumForEdit\GetAlbumForEditCommand.cs" />
     <Compile Include="Command\GetAlbum\GetAlbumCommandRequest.cs" />
     <Compile Include="Command\GetGalleryAlbums\GetGalleryAlbumsCommand.cs" />
     <Compile Include="Controllers\GalleryWidgetController.cs" />
-    <Compile Include="Events\ImageGalleryEvents.cs" />
-    <Compile Include="Command\DeleteAlbum\DeleteAlbumCommand.cs" />
-    <Compile Include="Command\GetAlbumList\GetAlbumListCommand.cs" />
-    <Compile Include="Command\SaveAlbum\SaveAlbumCommand.cs" />
     <Compile Include="Content\Resources\ImagesGalleryGlobalization.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ImagesGalleryGlobalization.resx</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\AlbumController.cs" />
     <Compile Include="ImagesGalleryModuleConstants.cs" />
     <Compile Include="ImagesGalleryModuleDescriptor.cs" />
-    <Compile Include="Models\Maps\AlbumMap.cs" />
-    <Compile Include="Models\Album.cs" />
+    <Compile Include="Models\Migrations\Migration201310081540.cs" />
+    <Compile Include="Models\Migrations\Migration201310081330.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\Migration201310040830.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\ImageGalleryAlbumOptionProvider.cs" />
-    <Compile Include="Registration\ImagesGalleryJsModuleIncludeDescriptor.cs" />
-    <Compile Include="ViewModels\AlbumEditViewModel.cs" />
     <Compile Include="ViewModels\AlbumViewModel.cs" />
     <Compile Include="ViewModels\GalleryViewModel.cs" />
     <Compile Include="ViewModels\ImageViewModel.cs" />
@@ -176,7 +167,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BuildConfiguration.xml" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
@@ -185,17 +175,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\bcms.images.gallery.js" />
     <Content Include="web.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Album\Edit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Album\List.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Album\Select.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\GalleryWidget\Album.cshtml" />
@@ -261,6 +241,7 @@
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />
   <PropertyGroup>
-    <PostBuildEvent>$(MSBuildBinPath)\msbuild.exe /p:Configuration=$(ConfigurationName) /p:SolutionDir="$(SolutionDir)\" /p:ProjectDir="$(ProjectDir)\" "$(ProjectDir)BuildConfiguration.xml"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.media', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'bcms.media.upload', 'bcms.media.imageeditor', 'bcms.htmlEditor', 'bcms.ko.extenders', 'bcms.contextMenu', 'bcms.security', 'bcms.media.history', 'bcms.media.fileeditor', 'bcms.tags'],
-function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUpload, imageEditor, htmlEditor, ko, menu, security, history, fileEditor, tags) {
+bettercms.define('bcms.media', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'bcms.media.upload', 'bcms.media.imageeditor', 'bcms.htmlEditor', 'bcms.ko.extenders', 'bcms.contextMenu', 'bcms.security', 'bcms.media.history', 'bcms.media.fileeditor', 'bcms.tags', 'bcms.options'],
+function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUpload, imageEditor, htmlEditor, ko, menu, security, history, fileEditor, tags, optionsModule) {
     'use strict';
 
     var media = {},
@@ -68,10 +68,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             insertImageInsertButtonTitle: null,
 
             selectFolderDialogTitle: null,
-            folderNotSelectedMessageMessage: null,
             selectFolderFailureMessageTitle: null,
             selectFolderFailureMessageMessage: null,
             selectFolderSelectButtonTitle: null,
+            rootFolderTitle: null,
 
             insertFileFailureMessageTitle: null,
             insertFileFailureMessageMessage: null,
@@ -1126,7 +1126,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             acceptTitle: globalization.selectFolderSelectButtonTitle,
             onClose: options.onClose,
             onLoad: function (dialog) {
-                dynamicContent.setContentFromUrl(dialog, $.format(links.insertImageDialogUrl, options.parentFolderId), {
+                dynamicContent.setContentFromUrl(dialog, $.format(links.insertImageDialogUrl, options.parentFolderId || ''), {
                     done: function (content) {
                         imagesViewModel = new MediaItemsViewModel(dialog.container, links.loadImagesUrl, dialog.container);
                         imagesViewModel.spinContainer = dialog.container.find(selectors.insertContentContainer);
@@ -1157,16 +1157,11 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 }
 
                 if (selectedFolder == null) {
-                    modal.info({
-                        content: globalization.folderNotSelectedMessageMessage,
-                        disableCancel: true
-                    });
+                    selectedFolder = imagesViewModel.path().currentFolder();
+                }
 
-                    return false;
-                } else {
-                    if ($.isFunction(options.onAccept)) {
-                        options.onAccept(selectedFolder);
-                    }
+                if ($.isFunction(options.onAccept)) {
+                    options.onAccept(selectedFolder);
                 }
 
                 return true;
@@ -1919,6 +1914,40 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     })();
 
     /**
+    * Called when user press browse button in the options grid with type = "Media Manager Folder".
+    */
+    function onExecuteMediaManagerFolderOption(valueObservable, titleObservable, optionModel) {
+        var onMediaSelect = function (selectedFolder) {
+            var id = selectedFolder.id(),
+                name = selectedFolder.name();
+            
+            if (!id || bcms.isEmptyGuid(id)) {
+                id = '';
+                name = globalization.rootFolderTitle;
+            }
+
+            valueObservable(id);
+            titleObservable(name);
+            
+            if (optionModel.key && !optionModel.key()) {
+                optionModel.key(name);
+            }
+        },
+            mediasViewModelExtender = {
+                onMediaSelect: function (selectedFolder) {
+                    onMediaSelect(selectedFolder);
+                }
+            },
+            options = {
+                onAccept: onMediaSelect,
+                folderViewModelOptions: mediasViewModelExtender,
+                parentFolderId: optionModel.value()
+            };
+
+        media.openFolderSelectDialog(options);
+    }
+
+    /**
     * Initializes media module.
     */
     media.init = function () {
@@ -1931,6 +1960,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         bcms.on(htmlEditor.events.insertFile, onOpenFileInsertDialog);
 
         fileEditor.SetMedia(media);
+        
+        optionsModule.registerCustomOption('media-images-folder', onExecuteMediaManagerFolderOption);
     };
 
     /**

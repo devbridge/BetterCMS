@@ -1,7 +1,6 @@
 ﻿using System;
 
 using BetterCms.Core.DataAccess.DataContext.Migrations;
-using BetterCms.Core.Models;
 
 using FluentMigrator;
 
@@ -13,11 +12,6 @@ namespace BetterCms.Module.ImagesGallery.Models.Migrations
     [Migration(201309271415)]
     public class InitialSetup : DefaultMigration
     {
-        /// <summary>
-        /// The root module schema name.
-        /// </summary>
-        private readonly string mediaManagerSchemaName;
-
         /// <summary>
         /// The root schema name
         /// </summary>
@@ -34,7 +28,6 @@ namespace BetterCms.Module.ImagesGallery.Models.Migrations
         public InitialSetup()
             : base(ImagesGalleryModuleDescriptor.ModuleName)
         {
-            mediaManagerSchemaName = (new MediaManager.Models.Migrations.MediaManagerVersionTableMetaData()).SchemaName;
             rootSchemaName = (new Root.Models.Migrations.RootVersionTableMetaData()).SchemaName;
             pagesSchemaName = (new Pages.Models.Migrations.PagesVersionTableMetaData()).SchemaName;
         }
@@ -44,8 +37,6 @@ namespace BetterCms.Module.ImagesGallery.Models.Migrations
         /// </summary>
         public override void Up()
         {
-            CreateAlbums();
-            CreateCustomOption();
             CreateWidget();
         }
 
@@ -56,49 +47,7 @@ namespace BetterCms.Module.ImagesGallery.Models.Migrations
         {
             throw new NotImplementedException();
         }
-
-        /// <summary>
-        /// Creates the albums table.
-        /// </summary>
-        private void CreateAlbums()
-        {
-            Create
-                .Table("Albums").InSchema(SchemaName)
-                .WithCmsBaseColumns()
-                .WithColumn("Title").AsString(MaxLength.Name).NotNullable()
-                .WithColumn("FolderId").AsGuid().NotNullable()
-                .WithColumn("CoverImageId").AsGuid().Nullable();
-
-            Create.ForeignKey("FK_ImagesGallery_Albums_FolderId_MediaFolders_Id")
-                .FromTable("Albums").InSchema(SchemaName).ForeignColumn("FolderId")
-                .ToTable("MediaFolders").InSchema(mediaManagerSchemaName).PrimaryColumn("Id");
-
-            Create.ForeignKey("FK_ImagesGallery_Albums_CoverImageId_MediaImages_Id")
-                .FromTable("Albums").InSchema(SchemaName).ForeignColumn("CoverImageId")
-                .ToTable("MediaImages").InSchema(mediaManagerSchemaName).PrimaryColumn("Id");
-        }
-
-        /// <summary>
-        /// Creates the custom option.
-        /// </summary>
-        private void CreateCustomOption()
-        {
-            Insert
-                .IntoTable("CustomOptions").InSchema(rootSchemaName)
-                .Row(new
-                         {
-                             Id = new Guid("9BCDA77D-C900-4AED-96D9-4FE8AD1F4138"),
-                             Version = 1,
-                             CreatedOn = DateTime.Now,
-                             ModifiedOn = DateTime.Now,
-                             CreatedByUser = "Admin",
-                             ModifiedByUser = "Admin",
-                             IsDeleted = 0,
-                             Identifier = "images-gallery-album",
-                             Title = "Images Gallery Album"
-                         });
-        }
-
+        
         /// <summary>
         /// Creates the widget.
         /// </summary>

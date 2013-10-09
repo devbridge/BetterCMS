@@ -30,14 +30,6 @@ namespace BetterCms.Module.ImagesGallery.ViewModels
         public string Title { get; set; }
 
         /// <summary>
-        /// Gets or sets the folder id.
-        /// </summary>
-        /// <value>
-        /// The folder id.
-        /// </value>
-        public Guid FolderId { get; set; }
-
-        /// <summary>
         /// Gets or sets the images count.
         /// </summary>
         /// <value>
@@ -92,6 +84,14 @@ namespace BetterCms.Module.ImagesGallery.ViewModels
         ///   <c>true</c> if to render back URL; otherwise, <c>false</c>.
         /// </value>
         public bool RenderBackUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the count of images per section.
+        /// </summary>
+        /// <value>
+        /// The count of images per section.
+        /// </value>
+        public int ImagesPerSection { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

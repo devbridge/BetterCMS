@@ -88,22 +88,6 @@ namespace BetterCms.Module.ImagesGallery.Models.Migrations
 
                 Option2 = new
                 {
-                    Id = "CD7CAD6B-1005-4E6F-B53A-A24D008C5C01",
-                    Version = 1,
-                    IsDeleted = false,
-                    CreatedOn = DateTime.Now,
-                    CreatedByUser = "Better CMS",
-                    ModifiedOn = DateTime.Now,
-                    ModifiedByUser = "Better CMS",
-                    ContentId = widget.ForRootSchemaContentTable.Id,
-                    Key = "Album",
-                    Type = 99, // Boolean
-                    IsDeletable = false,
-                    CustomOptionId = "9BCDA77D-C900-4AED-96D9-4FE8AD1F4138"
-                },
-
-                Option3 = new
-                {
                     Id = "7DB0A523-98E6-49EE-977E-A24D008E2125",
                     Version = 1,
                     IsDeleted = false,
@@ -127,8 +111,7 @@ namespace BetterCms.Module.ImagesGallery.Models.Migrations
             // Add widget options.
             Insert.IntoTable("ContentOptions").InSchema(rootSchemaName)
                 .Row(options.Option1)
-                .Row(options.Option2)
-                .Row(options.Option3);
+                .Row(options.Option2);
         }
     }
 }

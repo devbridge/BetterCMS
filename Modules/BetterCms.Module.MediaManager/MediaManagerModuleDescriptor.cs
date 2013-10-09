@@ -6,9 +6,11 @@ using Autofac;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.MediaManager.Content.Resources;
+using BetterCms.Module.MediaManager.Provider;
 using BetterCms.Module.MediaManager.Registration;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root;
+using BetterCms.Module.Root.Providers;
 
 namespace BetterCms.Module.MediaManager
 {
@@ -59,6 +61,9 @@ namespace BetterCms.Module.MediaManager
             imageEditorModuleIncludeDescriptor = new ImageEditorJsModuleIncludeDescriptor(this);
             fileEditorModuleIncludeDescriptor = new FileEditorJsModuleIncludeDescriptor(this);
             mediaHistoryJsModuleIncludeDescriptor = new MediaHistoryJsModuleIncludeDescriptor(this);
+
+            // Register images gallery custom option: album
+            CustomOptionsProvider.RegisterProvider(MediaManagerFolderOptionProvider.Identifier, new MediaManagerFolderOptionProvider());
         }
 
         /// <summary>

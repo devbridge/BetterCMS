@@ -100,9 +100,17 @@ namespace BetterCms.Core.Web
         /// <returns></returns>
         private string GetServerUrl(HttpRequestBase request)
         {
-            if (request != null && string.IsNullOrWhiteSpace(cmsConfiguration.WebSiteUrl) || cmsConfiguration.WebSiteUrl.Equals("auto", StringComparison.InvariantCultureIgnoreCase))
+            if (request != null 
+                && string.IsNullOrWhiteSpace(cmsConfiguration.WebSiteUrl) || cmsConfiguration.WebSiteUrl.Equals("auto", StringComparison.InvariantCultureIgnoreCase))
             {
-                return request.Url.AbsoluteUri.Replace(HttpContext.Current.Request.Url.PathAndQuery, null);
+                var url = request.Url.AbsoluteUri;
+                var query = HttpContext.Current.Request.Url.PathAndQuery;
+                if (!string.IsNullOrEmpty(query) && query != "/")
+                {
+                    url = url.Replace(query, null);
+                }
+
+                return url;
             }
 
             return cmsConfiguration.WebSiteUrl;
