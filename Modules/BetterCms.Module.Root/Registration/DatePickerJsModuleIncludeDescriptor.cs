@@ -1,4 +1,6 @@
-﻿using BetterCms.Core.Modules;
+﻿using System.Threading;
+
+using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Mvc.Extensions;
 
@@ -17,6 +19,8 @@ namespace BetterCms.Module.Root.Registration
 
             Globalization = new IActionProjection[]
                 {                    
+                    new JavaScriptModuleGlobalization(this, "dateFormat", () => Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern.ToLower().Replace("yy", "y")),
+                    new JavaScriptModuleGlobalization(this, "currentCulture", () => Thread.CurrentThread.CurrentCulture.Name),
                 };
         }
     }
