@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global bettercms, console */
+/*global bettercms */
 
 bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.grid', 'bcms.ko.extenders', 'bcms.autocomplete'],
     function ($, bcms, dynamicContent, siteSettings, editor, grid, ko, autocomplete) {
@@ -108,6 +108,9 @@ bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bc
                 return $.format(globalization.confirmDeleteTagMessage, rowData.Name);
             }
         });
+
+        // Select search.
+        dialog.setFocus();
     };
 
     /**
@@ -184,6 +187,9 @@ bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bc
                 return $.format(globalization.confirmDeleteCategoryMessage, rowData.Name);
             }
         });
+        
+        // Select search.
+        dialog.setFocus();
     };
 
     /**
@@ -243,7 +249,7 @@ bettercms.define('bcms.tags', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bc
     * Initializes tags module.
     */
     tags.init = function () {
-        console.log('Initializing bcms.tags module.');
+        bcms.logger.debug('Initializing bcms.tags module.');
     };
     
     /**

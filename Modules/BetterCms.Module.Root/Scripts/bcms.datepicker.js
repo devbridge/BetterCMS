@@ -1,4 +1,4 @@
-﻿/*global define, console */
+﻿/*global bettercms */
 
 bettercms.define('bcms.datepicker', ['bcms.jquery', 'bcms', 'bcms.jquery.validate.unobtrusive'], function ($, bcms) {
     'use strict';
@@ -7,29 +7,40 @@ bettercms.define('bcms.datepicker', ['bcms.jquery', 'bcms', 'bcms.jquery.validat
         links = {
             calendarImageUrl: null
         },
-        globalization = {};
+        globalization = {
+            dateFormat: "mm/dd/yy",
+            currentCulture: null
+        };
 
     // Assign objects to module.
     datepicker.links = links;
     datepicker.globalization = globalization;
 
-    datepicker.isDateValid = function (s) {
-        if (s.search(/^\d{1,2}[\/|\-|\.|_]\d{1,2}[\/|\-|\.|_]\d{4}/g) != 0) {
-            return false;
+    datepicker.isDateValid = function (value) {
+        var ok = true;
+        try {
+            $.datepicker.parseDate(globalization.dateFormat, value);
+        } catch (err) {
+            ok = false;
         }
-        s = s.replace(/[\-|\.|_]/g, "/");
-
-        var dt = new Date(Date.parse(s));
-        var arrDateParts = s.split("/");
-        return (
-            dt.getMonth() == arrDateParts[0] - 1 &&
-                dt.getDate() == arrDateParts[1] &&
-                    dt.getFullYear() == arrDateParts[2]
-        );
+        return ok;
+    };
+    
+    datepicker.parseDate = function (value)
+    {
+        try {
+            return $.datepicker.parseDate(globalization.dateFormat, value);
+        } catch (err) {
+            // Ignore errors.
+        }
+        return null;
     };
 
     datepicker.init = function () {
-        console.log('Initializing bcms.datepicker module');
+        bcms.logger.debug('Initializing bcms.datepicker module');
+        bcms.logger.trace('    globalization.dateFormat = "' + globalization.dateFormat + '".');
+        bcms.logger.trace('    globalization.currentCulture = "' + globalization.currentCulture + '".');
+        
         $.validator.addMethod("jqdatevalidation", function(value, element, params) {
             if (element.value) {
                 return datepicker.isDateValid(element.value);
@@ -44,12 +55,21 @@ bettercms.define('bcms.datepicker', ['bcms.jquery', 'bcms', 'bcms.jquery.validat
         $.validator.unobtrusive.adapters.add("datevalidation", [], function (options) {
             options.rules["jqdatevalidation"] = { message: options.message };
         });
+        
+        $.validator.addMethod('date',
+            function(value, element) {
+                if (this.optional(element)) {
+                    return true;
+                }
+                return datepicker.isDateValid(value);
+            });
 
         $.fn.initializeDatepicker = function (tooltipTitle, opts) {
             var options = $.extend({
                 showOn: 'button',
                 buttonImage: links.calendarImageUrl,
-                buttonImageOnly: true
+                buttonImageOnly: true,
+                dateFormat: globalization.dateFormat
             }, opts);
 
             $(this).datepicker(options);

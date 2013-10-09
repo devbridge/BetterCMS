@@ -1,6 +1,5 @@
 ﻿using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.Blog.Models.Maps;
-using BetterCms.Module.ImagesGallery.Models.Maps;
 using BetterCms.Module.MediaManager.Models.Maps;
 using BetterCms.Module.Newsletter.Models.Maps;
 using BetterCms.Module.Pages.Models.Maps;
@@ -21,7 +20,6 @@ namespace BetterCms.Test.Module.Helpers
             fluentConfiguration.Mappings(mc => mc.FluentMappings.AddFromAssemblyOf<BlogPostMap>());
             fluentConfiguration.Mappings(mc => mc.FluentMappings.AddFromAssemblyOf<RoleMap>());
             fluentConfiguration.Mappings(mc => mc.FluentMappings.AddFromAssemblyOf<SubscriberMap>());
-            fluentConfiguration.Mappings(mc => mc.FluentMappings.AddFromAssemblyOf<AlbumMap>());
         }
     }
 }

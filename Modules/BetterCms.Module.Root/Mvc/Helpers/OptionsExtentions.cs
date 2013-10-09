@@ -4,7 +4,7 @@ using System.Linq;
 using BetterCms.Core.DataContracts;
 using BetterCms.Module.Root.ViewModels.Cms;
 
-namespace BetterCms.Module.Root.Mvc.Grids.Extensions
+namespace BetterCms.Module.Root.Mvc.Helpers
 {
     public static class OptionsExtentions
     {
@@ -44,7 +44,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
         {
             var optionValue = optionValues.FirstOrDefault(o => o.Key == optionKey);
 
-            if (optionValue != null)
+            if (optionValue != null && optionValue.Value != null)
             {
                 try
                 {

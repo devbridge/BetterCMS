@@ -29,7 +29,7 @@ namespace BetterCms.Core.Modules.Projections
         /// <param name="link">The link.</param>
         /// <param name="type">The type.</param>
         public RelationProjection(string relation, string link, string type)
-            : base("link")
+            : base("link", true)
         {
             this.relation = relation;
             this.type = type;

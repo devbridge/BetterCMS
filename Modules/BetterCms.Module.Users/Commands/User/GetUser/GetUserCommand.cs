@@ -3,7 +3,7 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
-
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Users.ViewModels.User;
@@ -18,6 +18,20 @@ namespace BetterCms.Module.Users.Commands.User.GetUser
     public class GetUserCommand : CommandBase, ICommand<Guid, EditUserViewModel>
     {
         /// <summary>
+        /// The file URL resolver
+        /// </summary>
+        private readonly IMediaFileUrlResolver fileUrlResolver;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetUserCommand"/> class.
+        /// </summary>
+        /// <param name="fileUrlResolver">The file URL resolver.</param>
+        public GetUserCommand(IMediaFileUrlResolver fileUrlResolver)
+        {
+            this.fileUrlResolver = fileUrlResolver;
+        }
+
+        /// <summary>
         /// Executes the specified request.
         /// </summary>
         /// <param name="userId">The user id.</param>
@@ -31,22 +45,23 @@ namespace BetterCms.Module.Users.Commands.User.GetUser
                 var listFuture = Repository.AsQueryable<Models.User>()
                     .Where(bp => bp.Id == userId)
                     .Select(
-                        bp =>
+                        user =>
                         new EditUserViewModel
                             {
-                                Id = bp.Id,
-                                Version = bp.Version,
-                                FirstName = bp.FirstName,
-                                Email = bp.Email,
-                                LastName = bp.LastName,
-                                UserName = bp.UserName,
+                                Id = user.Id,
+                                Version = user.Version,
+                                FirstName = user.FirstName,
+                                Email = user.Email,
+                                LastName = user.LastName,
+                                UserName = user.UserName,
                                 Image =
                                     new ImageSelectorViewModel
                                         {
-                                            ImageId = bp.Image.Id,
-                                            ImageUrl = bp.Image.PublicUrl,
-                                            ThumbnailUrl = bp.Image.PublicThumbnailUrl,
-                                            ImageTooltip = bp.Image.Caption
+                                            ImageId = user.Image.Id,
+                                            ImageUrl = fileUrlResolver.EnsureFullPathUrl(user.Image.PublicUrl),
+                                            ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(user.Image.PublicThumbnailUrl),
+                                            ImageTooltip = user.Image.Caption,
+                                            FolderId = user.Image.Folder != null ? user.Image.Folder.Id : (Guid?)null
                                         }
                             })
                     .ToFuture();

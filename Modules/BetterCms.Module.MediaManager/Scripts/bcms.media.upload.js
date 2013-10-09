@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true, vars: true */
-/*global bettercms, define, console */
+/*global bettercms */
 
 bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.modal', 'bcms.html5Upload', 'bcms.ko.extenders', 'bcms.messages', 'bcms.security'],
     function ($, bcms, dynamicContent, modal, html5Upload, ko, messages, security) {
@@ -362,7 +362,7 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
         self.checkStatus = function () {
             var ids = self.getProcessingIds(),
                 onFail = function() {
-                    console.log('Failed to check uploaded files statuses');
+                    bcms.logger.error('Failed to check uploaded files statuses');
                     self.startStatusChecking();
                 },
                 hasProcessing = false;

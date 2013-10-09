@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global bettercms, console */
+/*global bettercms */
 
 bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.ko.grid', 'bcms.datepicker'],
     function ($, bcms, ko, kogrid, datepicker) {
@@ -212,7 +212,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 }
 
                 // NOTE: useDefaultValue should be registered before defaultValue and type
-                // because in othercase, when cancelling edit mode, ir sets wrong values
+                // because in other case, when cancelling edit mode, it sets wrong values.
                 self.registerFields(self.useDefaultValue, self.key, self.value, self.defaultValue,
                     self.type, self.customType, self.calcType, self.customOptionTitle, self.customOptionDefaultTitle);
 
@@ -285,13 +285,6 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     
                     // Notify value to be re-validated
                     self.editableValue(self.editableValue());
-                });
-
-                self.type.subscribe(function(newValue) {
-                    console.log("Type: " + newValue);
-                });
-                self.customType.subscribe(function (newValue) {
-                    console.log("Custom type: " + newValue);
                 });
 
                 self.initDatePickers = function() {
@@ -528,7 +521,7 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
         * Initializes bcms options module.
         */
         options.init = function () {
-            console.log('Initializing bcms.options module.');
+            bcms.logger.debug('Initializing bcms.options module.');
         };
 
         /**

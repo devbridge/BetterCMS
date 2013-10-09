@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define, console, document */
+/*global bettercms, document */
 
 bettercms.define('bcms.redirect', ['bcms.jquery', 'bcms', 'bcms.modal'], function ($, bcms, modal) {
     'use strict';

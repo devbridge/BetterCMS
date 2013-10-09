@@ -16,10 +16,13 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
         
         private readonly IMediaFileService fileService;
 
-        public MediaTreeService(IRepository repository, IMediaFileService fileService)
+        private readonly IMediaFileUrlResolver fileUrlResolver;
+
+        public MediaTreeService(IRepository repository, IMediaFileService fileService, IMediaFileUrlResolver fileUrlResolver)
         {
             this.repository = repository;
             this.fileService = fileService;
+            this.fileUrlResolver = fileUrlResolver;
         }
 
         public GetMediaTreeResponse Get(GetMediaTreeRequest request)
@@ -78,7 +81,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
                                      MediaContentType = media is MediaFolder 
                                                             ? (MediaContentType)((int)MediaContentType.Folder) 
                                                             : (MediaContentType)((int)MediaContentType.File),
-                                     Url = (media is MediaFile || media is MediaImage) ? ((MediaFile)media).PublicUrl : null,
+                                     Url = (media is MediaFile || media is MediaImage) ? fileUrlResolver.EnsureFullPathUrl(((MediaFile)media).PublicUrl) : null,
                                      IsArchived = media.IsArchived
                                  }).ToList();
 

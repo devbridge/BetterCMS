@@ -579,9 +579,6 @@
   <data name="TokenBasedSecurity_NotSupported_Message" xml:space="preserve">
     <value>Current storage service doesn't support token based security. Change storage configuration or all the files will be uploaded as unsecured.</value>
   </data>
-  <data name="FolderNotSelected_MessageMessage" xml:space="preserve">
-    <value>Click on folder to select it.</value>
-  </data>
   <data name="InsertImage_InsertButton_Title" xml:space="preserve">
     <value>Insert</value>
   </data>
@@ -599,5 +596,8 @@
   </data>
   <data name="SelectFolder_SelectButton_Title" xml:space="preserve">
     <value>Select</value>
+  </data>
+  <data name="RootFolder_Title" xml:space="preserve">
+    <value>Root folder</value>
   </data>
 </root>

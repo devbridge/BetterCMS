@@ -6,6 +6,7 @@ using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 
 using BetterCms.Module.Api.Helpers;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
@@ -22,11 +23,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         
         private readonly IOptionService optionService;
 
-        public PagePropertiesService(IRepository repository, IUrlService urlService, IOptionService optionService)
+        private readonly IMediaFileUrlResolver fileUrlResolver;
+
+        public PagePropertiesService(IRepository repository, IUrlService urlService, IOptionService optionService, IMediaFileUrlResolver fileUrlResolver)
         {
             this.repository = repository;
             this.urlService = urlService;
             this.optionService = optionService;
+            this.fileUrlResolver = fileUrlResolver;
         }
 
         public GetPagePropertiesResponse Get(GetPagePropertiesRequest request)
@@ -118,8 +122,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
 
                                 Title = page.Image.Title,
                                 Caption = page.Image.Caption,
-                                Url = page.Image.PublicUrl,
-                                ThumbnailUrl = page.Image.PublicThumbnailUrl
+                                Url = fileUrlResolver.EnsureFullPathUrl(page.Image.PublicUrl),
+                                ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(page.Image.PublicThumbnailUrl)
                             } 
                             : null,
                         FeaturedImage = page.FeaturedImage != null && !page.FeaturedImage.IsDeleted && request.Data.IncludeImages 
@@ -134,8 +138,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
 
                                 Title = page.FeaturedImage.Title,
                                 Caption = page.FeaturedImage.Caption,
-                                Url = page.FeaturedImage.PublicUrl,
-                                ThumbnailUrl = page.FeaturedImage.PublicThumbnailUrl
+                                Url = fileUrlResolver.EnsureFullPathUrl(page.FeaturedImage.PublicUrl),
+                                ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(page.FeaturedImage.PublicThumbnailUrl)
                             } 
                             : null,
                         SecondaryImage = page.SecondaryImage != null && !page.SecondaryImage.IsDeleted && request.Data.IncludeImages 
@@ -150,8 +154,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
 
                                 Title = page.SecondaryImage.Title,
                                 Caption = page.SecondaryImage.Caption,
-                                Url = page.SecondaryImage.PublicUrl,
-                                ThumbnailUrl = page.SecondaryImage.PublicThumbnailUrl
+                                Url = fileUrlResolver.EnsureFullPathUrl(page.SecondaryImage.PublicUrl),
+                                ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(page.SecondaryImage.PublicThumbnailUrl)
                             } 
                             : null
                     })

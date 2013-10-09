@@ -1,8 +1,8 @@
-﻿bettercms.define('bcms.spinner.jquery', ['bcms.jquery'], function(jquery) {
+﻿bettercms.define('bcms.spinner.jquery', ['bcms.jquery', 'bcms'], function(jquery, bcmsjs) {
 
-/*global define, console */
+/*global bettercms */
 
-(function ($) {
+(function ($, bcms) {
     'use strict';
 
     var spinner = { },
@@ -190,7 +190,7 @@
     * Initializes spinners when CMS loads for the first time
     */
     spinner.init = function () {
-        console.log('Initializing spinner CMS');
+        bcms.logger.debug('Initializing spinner CMS');
 
         $.fn.showLoading = spinner.showLoading;
         $.fn.hideLoading = spinner.hideLoading;
@@ -203,6 +203,6 @@
 
     spinner.init();
     
-})(jquery);
+})(jquery, bcmsjs);
     
 });

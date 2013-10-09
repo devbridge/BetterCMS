@@ -51,8 +51,8 @@ namespace BetterCms.Module.MediaManager.Registration
                     new JavaScriptModuleGlobalization(this, "selectFolderDialogTitle", () => MediaGlobalization.SelectFolder_Dialog_Title),
                     new JavaScriptModuleGlobalization(this, "selectFolderFailureMessageTitle", () => MediaGlobalization.SelectFolder_FailureMessage_Title),
                     new JavaScriptModuleGlobalization(this, "selectFolderFailureMessageMessage", () => MediaGlobalization.SelectFolder_FailureMessage_Message),
-                    new JavaScriptModuleGlobalization(this, "folderNotSelectedMessageMessage", () => MediaGlobalization.FolderNotSelected_MessageMessage),
                     new JavaScriptModuleGlobalization(this, "selectFolderSelectButtonTitle", () => MediaGlobalization.SelectFolder_SelectButton_Title),
+                    new JavaScriptModuleGlobalization(this, "rootFolderTitle", () => MediaGlobalization.RootFolder_Title),
 
                     new JavaScriptModuleGlobalization(this, "insertFileDialogTitle", () => MediaGlobalization.InsertFile_Dialog_Title),
                     new JavaScriptModuleGlobalization(this, "insertFileFailureMessageTitle", () => MediaGlobalization.InsertFile_FailureMessage_Title),

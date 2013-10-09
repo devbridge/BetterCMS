@@ -35,6 +35,14 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
         public ICmsConfiguration Configuration { get; set; }
 
         /// <summary>
+        /// Gets or sets the file URL resolver.
+        /// </summary>
+        /// <value>
+        /// The file URL resolver.
+        /// </value>
+        public IMediaFileUrlResolver FileUrlResolver { get; set; }
+
+        /// <summary>
         /// Gets the type of the current media items.
         /// </summary>
         /// <value>
@@ -403,7 +411,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             model.ParentFolderId = media.Folder != null ? media.Folder.Id : Guid.Empty;
             model.ParentFolderName = media.Folder != null ? media.Folder.Title : MediaGlobalization.MediaList_RootFolderName;
             model.Tooltip = media.Image != null ? media.Image.Caption : null;
-            model.ThumbnailUrl = media.Image != null ? media.Image.PublicThumbnailUrl : null;
+            model.ThumbnailUrl = media.Image != null ? FileUrlResolver.EnsureFullPathUrl(media.Image.PublicThumbnailUrl) : null;
         }
 
         /// <summary>
@@ -415,7 +423,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
         {
             FillMediaViewModel(model, media);
 
-            model.PublicUrl = FileService.GetDownloadFileUrl(MediaType.File, media.Id, media.PublicUrl);
+            model.PublicUrl = FileService.GetDownloadFileUrl(MediaType.File, media.Id, FileUrlResolver.EnsureFullPathUrl(media.PublicUrl));
             model.FileExtension = media.OriginalFileExtension;
             model.Size = media.Size;
             model.IsProcessing = media.IsUploaded == null;

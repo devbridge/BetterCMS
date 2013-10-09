@@ -1,31 +1,30 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
-using BetterCms.Core.Web;
 
-using BetterCms.Module.ImagesGallery.Models;
 using BetterCms.Module.ImagesGallery.ViewModels;
+using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.Mvc.Grids.Extensions;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 namespace BetterCms.Module.ImagesGallery.Command.GetAlbum
 {
     public class GetAlbumCommand : CommandBase, ICommand<GetAlbumCommandRequest, AlbumViewModel>
     {
         /// <summary>
-        /// The context accessor
+        /// The file URL resolver
         /// </summary>
-        private readonly IHttpContextAccessor contextAccessor;
+        private readonly IMediaFileUrlResolver fileUrlResolver;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetAlbumCommand" /> class.
         /// </summary>
-        /// <param name="contextAccessor">The context accessor.</param>
-        public GetAlbumCommand(IHttpContextAccessor contextAccessor)
+        /// <param name="fileUrlResolver">The file URL resolver.</param>
+        public GetAlbumCommand(IMediaFileUrlResolver fileUrlResolver)
         {
-            this.contextAccessor = contextAccessor;
+            this.fileUrlResolver = fileUrlResolver;
         }
 
         /// <summary>
@@ -34,69 +33,75 @@ namespace BetterCms.Module.ImagesGallery.Command.GetAlbum
         /// <param name="request">The request.</param>
         public AlbumViewModel Execute(GetAlbumCommandRequest request)
         {
-            AlbumViewModel album = null;
-            var result = Repository
-                .AsQueryable<Album>()
-                .Where(a => a.Id == request.AlbumId && !a.Folder.IsDeleted)
-                .Select(a => new
-                    {
-                        FolderId = a.Folder.Id,
-                        Album = new AlbumViewModel
-                            {
-                                Title = a.Title,
-                                LastUpdateDate = a.Folder.Medias.Max(m => m.ModifiedOn),
-                                CoverImageUrl = a.CoverImage != null ? a.CoverImage.PublicUrl : null
-                            }
-                    })
-                .FirstOrDefault();
+            var imagesQuery = Repository.AsQueryable<MediaImage>();
+            var isRoot = !request.FolderId.HasValue || request.FolderId.Value.HasDefaultValue();
 
-            if (result != null)
+            if (!isRoot)
             {
-                album = result.Album;
-                album.Url = ConstructBackUrl(request.AlbumId);
+                var folderProxy = Repository.AsProxy<MediaFolder>(request.FolderId.Value);
+                imagesQuery = imagesQuery.Where(f => f.Folder == folderProxy);
+            }
+            else
+            {
+                imagesQuery = imagesQuery.Where(f => f.Folder == null);
+            }
 
-                if (!result.FolderId.HasDefaultValue())
-                {
-                    album.Images = Repository
-                        .AsQueryable<MediaImage>()
-                        .Where(i => i.Folder.Id == result.FolderId)
-                        .Select(i => new ImageViewModel
+            var result = imagesQuery
+                .Where(i => i.Original == null && !i.IsDeleted)
+                .OrderBy(i => i.Title)
+                .Select(i => new
+                                 {
+                                     Image = new ImageViewModel
+                                                 {
+                                                     Url = i.PublicUrl,
+                                                     Caption = i.Caption ?? i.Title,
+                                                     Title = i.Title
+                                                 },
+                                     ModifiedOn = i.ModifiedOn,
+                                     FolderTitle = i.Folder != null ? i.Folder.Title : null
+                                 })
+                .ToList();
+
+            AlbumViewModel album;
+            if (result.Count > 0)
+            {
+                album = new AlbumViewModel
                             {
-                                Url = i.PublicUrl,
-                                Caption = i.Caption ?? i.Title
-                            })
-                        .OrderBy(i => i.Caption)
-                        .ToList();
-                    album.ImagesCount = album.Images.Count;
+                                Title = result[0].FolderTitle ?? MediaGlobalization.RootFolder_Title,
+                                LastUpdateDate = result.Max(i => i.ModifiedOn),
+                                Images =  result.Select(i => i.Image).ToList(),
+                                ImagesCount = result.Count
+                            };
+            }
+            else
+            {
+                if (isRoot)
+                {
+                    album = new AlbumViewModel { Title = MediaGlobalization.RootFolder_Title };
+                }
+                else
+                {
+                    album = new AlbumViewModel
+                                {
+                                    Title = Repository
+                                        .AsQueryable<MediaFolder>(f => f.Id == request.FolderId.Value)
+                                        .Select(f => f.Title)
+                                        .FirstOrDefault()
+                                };
                 }
             }
 
-            album.LoadCmsStyles = request.WidgetViewModel.GetOptionValue<bool>(ImageGallerModuleConstants.LoadCmsStylesWidgetOptionKey);
+            album.LoadCmsStyles = request.WidgetViewModel.GetOptionValue<bool>(ImagesGalleryModuleConstants.OptionKeys.LoadCmsStyles);
+            album.ImagesPerSection = request.WidgetViewModel.GetOptionValue<int>(ImagesGalleryModuleConstants.OptionKeys.ImagesPerSection);
+            album.RenderHeader = request.RenderBackUrl || request.WidgetViewModel.GetOptionValue<bool>(ImagesGalleryModuleConstants.OptionKeys.RenderAlbumHeader);
+            album.RenderBackUrl = request.RenderBackUrl;
 
+            if (album.Images != null)
+            {
+                album.Images.ForEach(i => i.Url = fileUrlResolver.EnsureFullPathUrl(i.Url));
+            }
+            
             return album;
-        }
-
-        /// <summary>
-        /// Constructs the back url.
-        /// </summary>
-        /// <returns>Back URL</returns>
-        private string ConstructBackUrl(Guid id)
-        {
-            var context = contextAccessor.GetCurrent();
-            if (context != null && context.Request.Url != null)
-            {
-                var url = context.Request.Url.ToString();
-                var parameter = string.Format("{0}={1}", ImageGallerModuleConstants.GalleryAlbumIdQueryParameterName, id.ToString()).ToLower();
-                var index = url.ToLower().IndexOf(parameter, StringComparison.InvariantCulture);
-                if (index >= 0)
-                {
-                    url = url.Replace(url.Substring(index, parameter.Length), string.Empty).TrimEnd('?').TrimEnd('&');
-                }
-
-                return url;
-            }
-
-            return "javascript:history.back()";
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Services;
 
 using ServiceStack.ServiceInterface;
 
@@ -14,9 +15,12 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
     {
         private readonly IRepository repository;
 
-        public ImageService(IRepository repository)
+        private readonly IMediaFileUrlResolver fileUrlResolver;
+
+        public ImageService(IRepository repository, IMediaFileUrlResolver fileUrlResolver)
         {
             this.repository = repository;
+            this.fileUrlResolver = fileUrlResolver;
         }
 
         public GetImageResponse Get(GetImageRequest request)
@@ -56,6 +60,10 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
                                          OriginalUrl = media.PublicOriginallUrl
                                      })
                 .FirstOne();
+
+            model.ImageUrl = fileUrlResolver.EnsureFullPathUrl(model.ImageUrl);
+            model.ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(model.ThumbnailUrl);
+            model.OriginalUrl = fileUrlResolver.EnsureFullPathUrl(model.OriginalUrl);
 
             IList<TagModel> tags;
             if (request.Data.IncludeTags)

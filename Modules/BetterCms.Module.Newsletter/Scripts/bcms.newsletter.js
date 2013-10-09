@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define, console */
+/*global bettercms */
 bettercms.define('bcms.newsletter', ['bcms.jquery', 'bcms', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.ko.extenders', 'bcms.ko.grid'],
     function ($, bcms, siteSettings, dynamicContent, ko, kogrid) {
         'use strict';
@@ -89,6 +89,12 @@ bettercms.define('bcms.newsletter', ['bcms.jquery', 'bcms', 'bcms.siteSettings',
             viewModel.saveUrl = links.saveSubscriberUrl;
             
             ko.applyBindings(viewModel, container.get(0));
+            
+            // Select search.
+            var firstVisibleInputField = container.find('input[type=text],textarea,select').filter(':visible:first');
+            if (firstVisibleInputField) {
+                firstVisibleInputField.focus();
+            }
         }
 
         /**
@@ -104,7 +110,7 @@ bettercms.define('bcms.newsletter', ['bcms.jquery', 'bcms', 'bcms.siteSettings',
         * Initializes newsletter module.
         */
         newsletter.init = function () {
-            console.log('Initializing bcms.newsletter module.');
+            bcms.logger.debug('Initializing bcms.newsletter module.');
         };
 
         /**

@@ -9,6 +9,7 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Models;
 using BetterCms.Core.Services.Caching;
+
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.Extensions;
@@ -399,6 +400,11 @@ namespace BetterCms.Module.Root.Services
                     return value;
 
                 case OptionType.Integer:
+                    int castedInt;
+                    if (Int32.TryParse(value, out castedInt))
+                    {
+                        return castedInt;
+                    }
                     return Convert.ToInt64(value, CultureInfo.InvariantCulture);
 
                 case OptionType.Float:
@@ -550,13 +556,13 @@ namespace BetterCms.Module.Root.Services
         public void SetCustomOptionValueTitles(IEnumerable<OptionViewModel> optionModels, IEnumerable<OptionValueEditViewModel> valueModels = null)
         {
             var values = optionModels
-                    .Where(m => m.Type == OptionType.Custom && !string.IsNullOrEmpty(m.OptionDefaultValue))
+                    .Where(m => m.Type == OptionType.Custom)
                     .Select(m => new { m.CustomOption.Identifier, Value = m.OptionDefaultValue });
 
             if (valueModels != null)
             {
                 values = values.Concat(valueModels
-                    .Where(m => m.Type == OptionType.Custom && !string.IsNullOrEmpty(m.OptionValue))
+                    .Where(m => m.Type == OptionType.Custom)
                     .Select(m => new { m.CustomOption.Identifier, Value = m.OptionValue }));
             }
 
@@ -576,14 +582,14 @@ namespace BetterCms.Module.Root.Services
                         foreach (var pair in titles)
                         {
                             optionModels
-                                .Where(g => g.Type == OptionType.Custom && g.OptionDefaultValue == pair.Key)
+                                .Where(g => g.Type == OptionType.Custom && (g.OptionDefaultValue == pair.Key || (pair.Key == string.Empty && string.IsNullOrEmpty(g.OptionDefaultValue))))
                                 .ToList()
                                 .ForEach(g => g.CustomOptionDefaultValueTitle = pair.Value);
 
                             if (valueModels != null)
                             {
                                 valueModels
-                                   .Where(g => g.Type == OptionType.Custom && g.OptionValue == pair.Key)
+                                   .Where(g => g.Type == OptionType.Custom && (g.OptionValue == pair.Key || (pair.Key == string.Empty && string.IsNullOrEmpty(g.OptionValue))))
                                    .ToList()
                                    .ForEach(g => g.CustomOptionValueTitle = pair.Value);
                             }

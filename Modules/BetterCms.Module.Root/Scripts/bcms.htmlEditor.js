@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define */
+/*global bettercms */
 
 bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], function ($, bcms) {
     'use strict';
@@ -102,7 +102,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
     * Initializes sidebar module.
     */
     htmlEditor.init = function () {
-        console.log('Initializing bcms.htmlEditor module');
+        bcms.logger.debug('Initializing bcms.htmlEditor module');
     };
 
     /**

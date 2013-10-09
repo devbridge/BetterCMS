@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define */
+/*global bettercms */
 
 bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.role', 'bcms.media', 'bcms.messages', 'bcms.grid', 'bcms.ko.extenders', 'bcms.redirect'],
     function($, bcms, modal, siteSettings, dynamicContent, role, media, messages, grid, ko, redirect) {
@@ -113,12 +113,18 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         */
         user.loadSiteSettingsUsers = function() {
             var tabs = [],
-                users = new siteSettings.TabViewModel(globalization.usersListTabTitle, links.loadSiteSettingsUsersUrl, function(container) {
+                onShow = function (container) {
+                    var firstVisibleInputField = container.find('input[type=text],textarea,select').filter(':visible:first');
+                    if (firstVisibleInputField) {
+                        firstVisibleInputField.focus();
+                    }
+                },
+                users = new siteSettings.TabViewModel(globalization.usersListTabTitle, links.loadSiteSettingsUsersUrl, function (container) {
                     usersContainer = container;
 
                     initializeSiteSettingsUsersList();
-                }),
-                roles = new siteSettings.TabViewModel(role.globalization.rolesListTabTitle, role.links.loadSiteSettingsRoleUrl, role.initializeRolesList);
+                }, onShow),
+                roles = new siteSettings.TabViewModel(role.globalization.rolesListTabTitle, role.links.loadSiteSettingsRoleUrl, role.initializeRolesList, onShow);
 
             tabs.push(users);
             tabs.push(roles);
@@ -353,7 +359,7 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         * Initializes user module
         */
         user.init = function () {
-            console.log('Initializing bcms.user module.');
+            bcms.logger.debug('Initializing bcms.user module.');
 
             initializeCustomValidation();
             initializeUserEditProfileFormUrl();

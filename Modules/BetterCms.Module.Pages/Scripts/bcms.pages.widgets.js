@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define, console */
+/*global bettercms */
 
 bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.htmlEditor',
         'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid',
@@ -468,6 +468,9 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             });
             
             initializeSiteSettingsWidgetListEvents(container);
+
+            // Select search.
+            dialog.setFocus();
         };
 
         /**
@@ -690,7 +693,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Initializes widgets module.
         */
         widgets.init = function () {
-            console.log('Initializing bcms.pages.widgets module.');
+            bcms.logger.debug('Initializing bcms.pages.widgets module.');
         };
         
         /**

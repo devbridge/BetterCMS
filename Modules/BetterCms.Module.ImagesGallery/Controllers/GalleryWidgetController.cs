@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
+
+using BetterCms.Core.DataContracts.Enums;
 
 using BetterCms.Module.ImagesGallery.Command.GetAlbum;
 using BetterCms.Module.ImagesGallery.Command.GetGalleryAlbums;
-
+using BetterCms.Module.MediaManager.Provider;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Cms;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 using Microsoft.Web.Mvc;
 
@@ -16,14 +20,22 @@ namespace BetterCms.Module.ImagesGallery.Controllers
     {
         public ActionResult Gallery(RenderWidgetViewModel request)
         {
-            var albumIdString = Request.QueryString[ImageGallerModuleConstants.GalleryAlbumIdQueryParameterName];
+            var folderIdString = Request.QueryString[ImagesGalleryModuleConstants.GalleryFolderIdQueryParameterName];
 
-            if (!string.IsNullOrEmpty(albumIdString))
+            if (!string.IsNullOrWhiteSpace(folderIdString) && request.Options != null 
+                && request.Options.Any(o => o.Type == OptionType.Custom
+                    && o.CustomOption != null && o.CustomOption.Identifier == MediaManagerFolderOptionProvider.Identifier
+                    && o.Key == ImagesGalleryModuleConstants.OptionKeys.GalleryFolder))
             {
-                Guid albumId;
-                if (Guid.TryParse(albumIdString, out albumId))
+                Guid folderId;
+                if (Guid.TryParse(folderIdString, out folderId))
                 {
-                    var albumRequest = new GetAlbumCommandRequest { AlbumId = albumId, WidgetViewModel = request };
+                    var albumRequest = new GetAlbumCommandRequest
+                    {
+                        FolderId = folderId,
+                        WidgetViewModel = request,
+                        RenderBackUrl = true
+                    };
                     var albumViewModel = GetCommand<GetAlbumCommand>().ExecuteCommand(albumRequest);
                     return View("Album", albumViewModel);
                 }
@@ -31,6 +43,18 @@ namespace BetterCms.Module.ImagesGallery.Controllers
 
             var listViewModel = GetCommand<GetGalleryAlbumsCommand>().ExecuteCommand(request);
             return View("List", listViewModel);
+        }
+        
+        public ActionResult Album(RenderWidgetViewModel request)
+        {
+            var albumRequest = new GetAlbumCommandRequest
+                                   {
+                                       FolderId = request.GetOptionValue<Guid?>(ImagesGalleryModuleConstants.OptionKeys.AlbumFolder), 
+                                       WidgetViewModel = request, 
+                                       RenderBackUrl = false
+                                   };
+            var albumViewModel = GetCommand<GetAlbumCommand>().ExecuteCommand(albumRequest);
+            return View("Album", albumViewModel);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
     {
         private readonly string FolderPath = HostingEnvironment.MapPath(@"~/App_Data/BetterCMS/");
 
-        private const string Filename = @"versions.info";
+        private const string Filename = @"versions.info.cache";
 
         private string FilePath
         {

@@ -45,18 +45,25 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
         private readonly IMediaFileService fileService;
 
         /// <summary>
+        /// The file URL resolver
+        /// </summary>
+        private readonly IMediaFileUrlResolver fileUrlResolver;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GetFileCommand" /> class.
         /// </summary>
         /// <param name="tagService">The tag service.</param>
         /// <param name="configuration">The CMS configuration.</param>
         /// <param name="storageService">The storage service.</param>
         /// <param name="fileService">The file service.</param>
-        public GetFileCommand(ITagService tagService, ICmsConfiguration configuration, IStorageService storageService, IMediaFileService fileService)
+        /// <param name="fileUrlResolver">The file URL resolver.</param>
+        public GetFileCommand(ITagService tagService, ICmsConfiguration configuration, IStorageService storageService, IMediaFileService fileService, IMediaFileUrlResolver fileUrlResolver)
         {
             this.tagService = tagService;
             this.configuration = configuration;
             this.storageService = storageService;
             this.fileService = fileService;
+            this.fileUrlResolver = fileUrlResolver;
         }
 
         /// <summary>
@@ -80,7 +87,7 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
                     Id = file.Id.ToString(),
                     Title = file.Title,
                     Description = file.Description,
-                    Url = file.PublicUrl,
+                    Url = fileUrlResolver.EnsureFullPathUrl(file.PublicUrl),
                     Version = file.Version.ToString(CultureInfo.InvariantCulture),
                     FileName = file.OriginalFileName,
                     FileExtension = file.OriginalFileExtension,
@@ -91,9 +98,10 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
                         {
                             ImageId = file.Image.Id,
                             ImageVersion = file.Image.Version,
-                            ImageUrl = file.Image.PublicUrl,
-                            ThumbnailUrl = file.Image.PublicThumbnailUrl,
-                            ImageTooltip = file.Image.Caption
+                            ImageUrl = fileUrlResolver.EnsureFullPathUrl(file.Image.PublicUrl),
+                            ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(file.Image.PublicThumbnailUrl),
+                            ImageTooltip = file.Image.Caption,
+                            FolderId = file.Image.Folder != null ? file.Image.Folder.Id : (Guid?)null
                         },
                     AccessControlEnabled = configuration.Security.AccessControlEnabled
                 };

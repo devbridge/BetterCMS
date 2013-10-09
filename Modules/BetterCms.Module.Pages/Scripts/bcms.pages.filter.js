@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define, console */
+/*global bettercms */
 
 bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.tags'],
     function($, bcms, ko, tags) {
@@ -84,7 +84,7 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         * Initializes page module.
         */
         filter.init = function() {
-            console.log('Initializing bcms.pages.filter module.');
+            bcms.logger.debug('Initializing bcms.pages.filter module.');
         };
 
         /**

@@ -7,6 +7,7 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
@@ -14,6 +15,7 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 
 using BlogContent = BetterCms.Module.Root.Models.Content;
+using ITagService = BetterCms.Module.Pages.Services.ITagService;
 
 namespace BetterCms.Module.Blog.Commands.GetBlogPost
 {
@@ -43,6 +45,11 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
         private readonly IContentService contentService;
 
         /// <summary>
+        /// The file URL resolver
+        /// </summary>
+        private readonly IMediaFileUrlResolver fileUrlResolver;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GetBlogPostCommand" /> class.
         /// </summary>
         /// <param name="categoryService">The category service.</param>
@@ -50,12 +57,13 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
         /// <param name="tagService">The tag service.</param>
         /// <param name="contentService">The content service.</param>
         public GetBlogPostCommand(ICategoryService categoryService, IAuthorService authorService,
-            ITagService tagService, IContentService contentService)
+            ITagService tagService, IContentService contentService, IMediaFileUrlResolver fileUrlResolver)
         {
             this.categoryService = categoryService;
             this.authorService = authorService;
             this.tagService = tagService;
             this.contentService = contentService;
+            this.fileUrlResolver = fileUrlResolver;
         }
 
         /// <summary>
@@ -88,9 +96,10 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                                     {
                                         ImageId = bp.Image.Id,
                                         ImageVersion = bp.Image.Version,
-                                        ImageUrl = bp.Image.PublicUrl,
-                                        ThumbnailUrl = bp.Image.PublicThumbnailUrl,
-                                        ImageTooltip = bp.Image.Caption
+                                        ImageUrl = fileUrlResolver.EnsureFullPathUrl(bp.Image.PublicUrl),
+                                        ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(bp.Image.PublicThumbnailUrl),
+                                        ImageTooltip = bp.Image.Caption,
+                                        FolderId = bp.Image.Folder != null ? bp.Image.Folder.Id : (Guid?)null
                                     }
                             })
                     .FirstOne();

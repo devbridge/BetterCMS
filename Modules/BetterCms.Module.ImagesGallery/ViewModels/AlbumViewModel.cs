@@ -6,6 +6,14 @@ namespace BetterCms.Module.ImagesGallery.ViewModels
     public class AlbumViewModel
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="AlbumViewModel" /> class.
+        /// </summary>
+        public AlbumViewModel()
+        {
+            Images = new List<ImageViewModel>();
+        }
+
+        /// <summary>
         /// Gets or sets the id.
         /// </summary>
         /// <value>
@@ -35,7 +43,7 @@ namespace BetterCms.Module.ImagesGallery.ViewModels
         /// <value>
         /// The last update date.
         /// </value>
-        public DateTime LastUpdateDate { get; set; }
+        public DateTime? LastUpdateDate { get; set; }
 
         /// <summary>
         /// Gets or sets the cover image URL.
@@ -60,6 +68,30 @@ namespace BetterCms.Module.ImagesGallery.ViewModels
         ///   <c>true</c> if to load CMS styles; otherwise, <c>false</c>.
         /// </value>
         public bool LoadCmsStyles { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether header should be rendered.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if header should be rendered; otherwise, <c>false</c>.
+        /// </value>
+        public bool RenderHeader { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to render back URL.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to render back URL; otherwise, <c>false</c>.
+        /// </value>
+        public bool RenderBackUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the count of images per section.
+        /// </summary>
+        /// <value>
+        /// The count of images per section.
+        /// </value>
+        public int ImagesPerSection { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

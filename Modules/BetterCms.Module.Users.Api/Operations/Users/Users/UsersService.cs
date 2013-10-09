@@ -8,6 +8,7 @@ using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Infrastructure.Enums;
 using BetterCms.Module.Api.Operations.Users.Users;
+using BetterCms.Module.MediaManager.Services;
 
 using ServiceStack.OrmLite;
 using ServiceStack.ServiceInterface;
@@ -18,9 +19,12 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users
     {
         private readonly IRepository repository;
 
-        public UsersService(IRepository repository)
+        private readonly IMediaFileUrlResolver fileUrlResolver;
+
+        public UsersService(IRepository repository, IMediaFileUrlResolver fileUrlResolver)
         {
             this.repository = repository;
+            this.fileUrlResolver = fileUrlResolver;
         }
 
         public GetUsersResponse Get(GetUsersRequest request)
@@ -50,6 +54,12 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users
                         ImageUrl = user.Image != null && !user.Image.IsDeleted ? user.Image.PublicUrl : null
                     })
                 .ToDataListResponse(request);
+
+            foreach (var model in listResponse.Items)
+            {
+                model.ImageThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(model.ImageThumbnailUrl);
+                model.ImageUrl = fileUrlResolver.EnsureFullPathUrl(model.ImageUrl);
+            }
 
             return new GetUsersResponse
                        {

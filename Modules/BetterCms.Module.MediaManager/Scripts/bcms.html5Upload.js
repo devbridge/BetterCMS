@@ -1,12 +1,11 @@
 ﻿/*jslint unparam: true, browser: true, devel: true */
-/*global define*/
+/*global bettercms*/
 
-bettercms.define('bcms.html5Upload', ['bcms.jquery'], function ($) {
+bettercms.define('bcms.html5Upload', ['bcms.jquery', 'bcms'], function ($, bcms) {
     'use strict';
 
     var module = {},
         noop = function () { },
-        console = window.console || { log: noop },
         supportsFileApi;
 
     // Upload manager constructor:
@@ -22,7 +21,7 @@ bettercms.define('bcms.html5Upload', ['bcms.jquery'], function ($) {
         self.onFileAdded = options.onFileAdded || noop;
         self.uploadUrl = options.uploadUrl;
         self.onFileAddedProxy = function (upload) {
-            console.log('Event: onFileAdded, file: ' + upload.fileName);
+            bcms.logger.trace('Event: onFileAdded, file: ' + upload.fileName);
             self.onFileAdded(upload);
         };
 
@@ -40,25 +39,25 @@ bettercms.define('bcms.html5Upload', ['bcms.jquery'], function ($) {
         self.uploadedBytes = 0;
         self.eventHandlers = {};
         self.abort = function () {
-            console.log('Abort impossible. File upload not initialized for file ' + self.fileName);
+            bcms.logger.warn('Abort impossible. File upload not initialized for file ' + self.fileName);
         };
         self.events = {
             onProgress: function (fileSize, uploadedBytes) {
                 var progress = uploadedBytes / fileSize * 100;
-                console.log('Event: upload onProgress, progress = ' + progress + ', fileSize = ' + fileSize + ', uploadedBytes = ' + uploadedBytes);
+                bcms.logger.trace('Event: upload onProgress, progress = ' + progress + ', fileSize = ' + fileSize + ', uploadedBytes = ' + uploadedBytes);
                 (self.eventHandlers.onProgress || noop)(progress, fileSize, uploadedBytes);
             },
             onStart: function () {
-                console.log('Event: upload onStart');
+                bcms.logger.trace('Event: upload onStart');
                 (self.eventHandlers.onStart || noop)();
             },
             onCompleted: function (data) {
-                console.log('Event: upload onCompleted, data = ' + data);
+                bcms.logger.trace('Event: upload onCompleted, data = ' + data);
                 file = null;
                 (self.eventHandlers.onCompleted || noop)(data);
             },
             onError: function (status, response) {
-                console.log('Event: upload onError (status code ' + status + ')');
+                bcms.logger.trace('Event: upload onError (status code ' + status + ')');
                 file = null;
                 (self.eventHandlers.onError || noop)();
             },
@@ -82,7 +81,7 @@ bettercms.define('bcms.html5Upload', ['bcms.jquery'], function ($) {
     UploadManager.prototype = {
 
         initialize: function () {
-            console.log('Initializing upload manager');
+            bcms.logger.debug('Initializing upload manager');
             var manager = this,
                 dropContainer = manager.dropContainer,
                 inputField = manager.inputField,
@@ -109,7 +108,7 @@ bettercms.define('bcms.html5Upload', ['bcms.jquery'], function ($) {
         },
 
         processFiles: function (files) {
-            console.log('Processing files: ' + files.length);
+            bcms.logger.trace('Processing files: ' + files.length);
             var manager = this,
                 len = files.length,
                 file,
@@ -135,7 +134,7 @@ bettercms.define('bcms.html5Upload', ['bcms.jquery'], function ($) {
 
             // Queue upload if maximum simultaneous uploads reached:
             if (manager.activeUploads === manager.maxSimultaneousUploads) {
-                console.log('Queue upload: ' + upload.fileName);
+                bcms.logger.trace('Queue upload: ' + upload.fileName);
                 manager.uploadsQueue.push(upload);
                 return;
             }
@@ -153,7 +152,7 @@ bettercms.define('bcms.html5Upload', ['bcms.jquery'], function ($) {
                 data = manager.data,
                 key = manager.key || 'file';
 
-            console.log('Begin upload: ' + upload.fileName);
+            bcms.logger.trace('Begin upload: ' + upload.fileName);
             manager.activeUploads += 1;
 
             xhr = new window.XMLHttpRequest();
@@ -165,7 +164,7 @@ bettercms.define('bcms.html5Upload', ['bcms.jquery'], function ($) {
             // Triggered when upload starts:
             xhr.upload.onloadstart = function () {
                 // File size is not reported during start!
-                console.log('Upload started: ' + fileName);
+                bcms.logger.trace('Upload started: ' + fileName);
                 upload.events.onStart();
             };
 
@@ -184,7 +183,7 @@ bettercms.define('bcms.html5Upload', ['bcms.jquery'], function ($) {
 
             // Triggered when upload is completed:
             xhr.onload = function (event) {
-                console.log('Upload completed: ' + fileName);
+                bcms.logger.trace('Upload completed: ' + fileName);
 
                 // Reduce number of active uploads:
                 manager.activeUploads -= 1;
@@ -202,7 +201,7 @@ bettercms.define('bcms.html5Upload', ['bcms.jquery'], function ($) {
 
             // Triggered when upload fails:
             xhr.onerror = function (event) {
-                console.log('Upload failed: ', upload.fileName);
+                bcms.logger.error('Upload failed: ', upload.fileName);
                 upload.events.onError(event.target.status, event.target.responseText);
             };
 
@@ -210,7 +209,7 @@ bettercms.define('bcms.html5Upload', ['bcms.jquery'], function ($) {
             if (data) {
                 for (prop in data) {
                     if (data.hasOwnProperty(prop)) {
-                        console.log('Adding data: ' + prop + ' = ' + data[prop]);
+                        bcms.logger.trace('Adding data: ' + prop + ' = ' + data[prop]);
                         formData.append(prop, data[prop]);
                     }
                 }
@@ -223,7 +222,7 @@ bettercms.define('bcms.html5Upload', ['bcms.jquery'], function ($) {
             xhr.send(formData);
 
             upload.abort = function () {
-                console.log('Upload aborted for ' + upload.fileName);
+                bcms.logger.trace('Upload aborted for ' + upload.fileName);
                 xhr.abort();
                 manager.activeUploads -= 1;
                 if (manager.uploadsQueue.length) {

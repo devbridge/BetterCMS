@@ -21,6 +21,14 @@ namespace BetterCms.Module.ImagesGallery.ViewModels
         public bool LoadCmsStyles { get; set; }
 
         /// <summary>
+        /// Gets or sets the count of images per section.
+        /// </summary>
+        /// <value>
+        /// The count of images per section.
+        /// </value>
+        public int ImagesPerSection { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define */
+/*global bettercms */
 
 bettercms.define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.dynamicContent', 'bcms.tabs', 'bcms.ko.extenders', 'bcms.messages', 'bcms.forms'],
     function ($, bcms, modal, dynamicContent, tabs, ko, messages, forms) {
@@ -127,7 +127,7 @@ bettercms.define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcm
     /**
     * Site settings tab list view model
     */
-    siteSettings.TabListViewModel = function (tabViewModels) {
+    siteSettings.TabListViewModel = function (tabViewModels, tabsPanel) {
         var self = this;
 
         self.tabs = [];
@@ -136,6 +136,7 @@ bettercms.define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcm
             var tab = tabViewModels[i];
             tab.tabId = 'bcms-tab-' + (i+1);
             tab.href = '#' + tab.tabId;
+            tab.parent = tabsPanel;
             
             self.tabs.push(tab);
         }
@@ -144,7 +145,7 @@ bettercms.define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcm
     /**
     * Site settings tab view model
     */
-    siteSettings.TabViewModel = function (title, url, onContentAvailable) {
+    siteSettings.TabViewModel = function (title, url, onContentAvailable, onShow) {
         var self = this;
 
         self.title = title;
@@ -164,10 +165,13 @@ bettercms.define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcm
                 if (onContentAvailable && $.isFunction(onContentAvailable)) {
                     onContentAvailable(self.container, content);
                 }
+
+                self.onContentShow();
             }
         };
 
-        self.load = function () {
+        self.tabClick = function () {
+            self.parent.selectTab(self.tabId);
             messages.refreshBox(siteSettingsModalWindow.container.find(selectors.modalMessages), {});
 
             if (!self.isInitialized) {
@@ -178,6 +182,8 @@ bettercms.define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcm
                 dynamicContent.setContentFromUrl(self, self.url, {
                     done: self.onContentAvailable
                 });
+            } else {
+                self.onContentShow();
             }
 
             return true;
@@ -192,6 +198,12 @@ bettercms.define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcm
                 self.container.html(content);
             }
         };
+
+        self.onContentShow = function() {
+            if ($.isFunction(onShow)) {
+                onShow(self.container);
+            }
+        };
     };
 
     /**
@@ -200,17 +212,18 @@ bettercms.define('bcms.siteSettings', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcm
     siteSettings.initContentTabs = function (tabViewModels) {
         siteSettings.contentId++;
 
-        var tabsViewModel = new siteSettings.TabListViewModel(tabViewModels),
+        var panel = tabs.initTabPanel(siteSettingsModalWindow.container, {
+            skipInit: true
+        }),
+            tabsViewModel = new siteSettings.TabListViewModel(tabViewModels, panel),
             content = $($(selectors.tabsTemplate).html());
 
         siteSettings.setContent(content, null, true);
         
         ko.applyBindings(tabsViewModel, siteSettingsModalWindow.container.find(selectors.placeHolder).get(0));
 
-        tabs.initTabPanel(siteSettingsModalWindow.container);
-        
         if (tabViewModels.length > 0) {
-            tabViewModels[0].load();
+            tabViewModels[0].tabClick();
         }
     };
 

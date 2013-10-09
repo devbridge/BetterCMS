@@ -136,7 +136,7 @@
     <value>Layout template is required.</value>
   </data>
   <data name="AddNewPage_DefaultTemplate_Title" xml:space="preserve">
-    <value>Default Template</value>
+    <value>Selected Template</value>
   </data>
   <data name="AddNewPage_Dialog_Title" xml:space="preserve">
     <value>Add New Page</value>

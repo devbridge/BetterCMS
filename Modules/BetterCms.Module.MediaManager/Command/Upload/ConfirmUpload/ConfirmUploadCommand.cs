@@ -100,6 +100,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                         var file = Repository.FirstOrDefault<MediaFile>(fileId);
                         file.CopyDataTo(originalMedia);
 
+                        originalMedia.Title = historyItem.Title;
                         originalMedia.Description = historyItem.Description;
                         originalMedia.IsArchived = historyItem.IsArchived;
                         originalMedia.Folder = historyItem.Folder;

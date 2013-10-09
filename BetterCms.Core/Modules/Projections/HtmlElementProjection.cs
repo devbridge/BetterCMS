@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Security.Principal;
 using System.Web.Mvc;
 using System.Web.UI;
 
 using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
 using BetterCms.Core.Services;
 
 namespace BetterCms.Core.Modules.Projections
@@ -15,12 +13,20 @@ namespace BetterCms.Core.Modules.Projections
     public class HtmlElementProjection : IPageActionProjection
     {
         /// <summary>
+        /// Determines, if html tag is self closing
+        /// </summary>
+        private readonly bool isSelfClosing;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="HtmlElementProjection" /> class.
         /// </summary>
         /// <param name="tag">The tag key.</param>
-        public HtmlElementProjection(string tag)
+        /// <param name="isSelfClosing">if set to <c>true</c> if html tag is self closing.</param>
+        public HtmlElementProjection(string tag, bool isSelfClosing = false)
         {
             Tag = tag;
+
+            this.isSelfClosing = isSelfClosing;
         }
 
         /// <summary>
@@ -82,7 +88,7 @@ namespace BetterCms.Core.Modules.Projections
                 return false;
             }
 
-            using (HtmlControlRenderer control = new HtmlControlRenderer(Tag))
+            using (HtmlControlRenderer control = new HtmlControlRenderer(Tag, isSelfClosing))
             {
                 OnPreRender(control, page, html);
 

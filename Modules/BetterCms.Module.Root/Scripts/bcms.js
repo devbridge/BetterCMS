@@ -1,19 +1,19 @@
-﻿/*global define, console */
+﻿/*global bettercms */
 
 bettercms.define('bcms', ['bcms.jquery'], function ($) {
     'use strict';
 
-    var app = {},
+    var app = {
+        logger: null
+    },
         callbacks = [],
         initialized = false,
-
-    // Selectors used in the module to locate DOM elements:
+        // Selectors used in the module to locate DOM elements:
         selectors = {
             zIndexLayers: '.bcms-layer',
             browserInfo: '#bcms-browser-info',
             browserInfoClose: '.bcms-msg-message-close'
         },
-
         events = {
             editModeOff: 'editModeOff',
             editModeOn: 'editModeOn',
@@ -22,27 +22,26 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
             createContentOverlay: 'createContentOverlay',
             pageCreated: 'pageCreated'
         },
-
         eventListeners = {},
-
         contentStatus = {
             published: 3,
             draft: 2,
             preview: 1
         },
-
-         globalization = {
-             sessionHasExpired: null,
-             failedToProcessRequest: null
-         },
-
-         errorTrace = !!true;
+        globalization = {
+            sessionHasExpired: null,
+            failedToProcessRequest: null
+        },
+        keys = {
+            loggerLevel: 'bcms.loggerLevel',
+        },
+        errorTrace = !!true;
 
     /**
     * Exposes reference to events:
     */
     app.events = events;
-    
+
     /**
     * Exposes reference to globalization:
     */
@@ -66,6 +65,75 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
     /**
     */
     app.previewWindow = '__bcmsPreview';
+
+    /**
+    * Model for logging messages to console
+    */
+    function loggerModel() {
+        var self = this;
+
+        self.levels = {
+            off: -1,
+            fatal: 10,
+            error: 20,
+            warn: 30,
+            info: 40,
+            debug: 50,
+            trace: 60
+        };
+
+        self.info = function (message) {
+            self.log(message, self.levels.info);
+        };
+
+        self.warn = function (message) {
+            self.log(message, self.levels.warn);
+        };
+
+        self.debug = function (message) {
+            self.log(message, self.levels.debug);
+        };
+
+        self.trace = function (message) {
+            self.log(message, self.levels.trace);
+        };
+
+        self.fatal = function (message) {
+            self.log(message, self.levels.fatal);
+        };
+
+        self.error = function (message) {
+            self.log(message, self.levels.error);
+        };
+
+        self.log = function (message, level) {
+            var maxLevel = self.getMaxLevel();
+            if (level <= maxLevel) {
+                if (level <= self.levels.error && $.isFunction(console.error)) {
+                    console.error(message);
+                } else if (level > self.levels.error && level <= self.levels.warn && $.isFunction(console.warn)) {
+                    console.warn(message);
+                } else if (level > self.levels.warn && level <= self.levels.info && $.isFunction(console.info)) {
+                    console.info(message);
+                } else {
+                    console.log(message);
+                }
+            }
+        };
+
+        self.getMaxLevel = function () {
+            var level = localStorage.getItem(keys.loggerLevel);
+
+            if (!level) {
+                level = self.levels.info;
+                localStorage.setItem(keys.loggerLevel, level);
+            }
+
+            return level;
+        };
+
+        return self;
+    }
 
     /**
     * Indicates if edit mode is ON:
@@ -92,7 +160,7 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
 
         initialized = true;
 
-        console.log('Initializing better CMS');
+        app.logger.debug('Initializing bcms.js');
 
         $.each(callbacks, function (i, fn) {
             fn();
@@ -106,12 +174,12 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
     */
     app.on = function (event, fn) {
         if (typeof event !== 'string') {
-            console.error('Event must be type of string');
+            app.logger.error('Event must be type of string');
             return;
         }
 
         if (!$.isFunction(fn)) {
-            console.error('Event callback must be type of function');
+            app.logger.error('Event callback must be type of function');
             return;
         }
 
@@ -293,6 +361,9 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
             browserInfo.css('display', 'block');
         }
     }
+
+    // Init logger
+    app.logger = new loggerModel();
 
     /**
     * Register initialization

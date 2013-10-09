@@ -7,10 +7,10 @@ using FluentMigrator;
 namespace BetterCms.Module.ImagesGallery.Models.Migrations
 {
     /// <summary>
-    /// Module initial database structure creation.
+    /// Creates servercontrol widget "Images Gallery Album Widget" with options
     /// </summary>
-    [Migration(201309271415)]
-    public class InitialSetup : DefaultMigration
+    [Migration(201310040830)]
+    public class Migration201310040830 : DefaultMigration
     {
         /// <summary>
         /// The root schema name
@@ -23,9 +23,9 @@ namespace BetterCms.Module.ImagesGallery.Models.Migrations
         private readonly string pagesSchemaName;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InitialSetup"/> class.
+        /// Initializes a new instance of the <see cref="Migration201310040830" /> class.
         /// </summary>
-        public InitialSetup()
+        public Migration201310040830()
             : base(ImagesGalleryModuleDescriptor.ModuleName)
         {
             rootSchemaName = (new Root.Models.Migrations.RootVersionTableMetaData()).SchemaName;
@@ -33,39 +33,23 @@ namespace BetterCms.Module.ImagesGallery.Models.Migrations
         }
 
         /// <summary>
-        /// Ups this instance.
+        /// Migrates UP.
         /// </summary>
         public override void Up()
-        {
-            CreateWidget();
-        }
-
-        /// <summary>
-        /// Downs this instance.
-        /// </summary>
-        public override void Down()
-        {
-            throw new NotImplementedException();
-        }
-        
-        /// <summary>
-        /// Creates the widget.
-        /// </summary>
-        private void CreateWidget()
         {
             var widget = new
             {
 
                 ForRootSchemaContentTable = new
                 {
-                    Id = "8BD1E830-6C2D-4AF1-BD5C-A24400A83DBC",
+                    Id = "F67BC85F-83A7-427E-85C5-A24D008B32E1",
                     Version = 1,
                     IsDeleted = false,
                     CreatedOn = DateTime.Now,
                     CreatedByUser = "Better CMS",
                     ModifiedOn = DateTime.Now,
                     ModifiedByUser = "Better CMS",
-                    Name = "Images Gallery Widget",
+                    Name = "Images Gallery Album Widget",
                     Status = 3,
                     PublishedOn = DateTime.Now,
                     PublishedByUser = "Better CMS"
@@ -73,13 +57,13 @@ namespace BetterCms.Module.ImagesGallery.Models.Migrations
 
                 ForRootScemaWidgetsTable = new
                 {
-                    Id = "8BD1E830-6C2D-4AF1-BD5C-A24400A83DBC",
+                    Id = "F67BC85F-83A7-427E-85C5-A24D008B32E1",
                 },
 
                 ForPagesSchemaServerControlWidgetsTable = new
                 {
-                    Id = "8BD1E830-6C2D-4AF1-BD5C-A24400A83DBC",
-                    Url = "~/Areas/bcms-images-gallery/Views/Widgets/ImagesGalleryWidget.cshtml"
+                    Id = "F67BC85F-83A7-427E-85C5-A24D008B32E1",
+                    Url = "~/Areas/bcms-images-gallery/Views/Widgets/AlbumWidget.cshtml"
                 }
 
             };
@@ -88,7 +72,7 @@ namespace BetterCms.Module.ImagesGallery.Models.Migrations
             {
                 Option1 = new
                 {
-                    Id = "309EDA84-6307-4619-8602-A2460080DE27",
+                    Id = "F1787DD0-249F-4842-8A86-A24D008B32EB",
                     Version = 1,
                     IsDeleted = false,
                     CreatedOn = DateTime.Now,
@@ -100,6 +84,22 @@ namespace BetterCms.Module.ImagesGallery.Models.Migrations
                     Type = 5, // Boolean
                     DefaultValue = "true",
                     IsDeletable = false
+                },
+
+                Option2 = new
+                {
+                    Id = "7DB0A523-98E6-49EE-977E-A24D008E2125",
+                    Version = 1,
+                    IsDeleted = false,
+                    CreatedOn = DateTime.Now,
+                    CreatedByUser = "Better CMS",
+                    ModifiedOn = DateTime.Now,
+                    ModifiedByUser = "Better CMS",
+                    ContentId = widget.ForRootSchemaContentTable.Id,
+                    Key = "RenderAlbumHeader",
+                    Type = 5, // Boolean
+                    DefaultValue = "false",
+                    IsDeletable = false
                 }
             };
 
@@ -110,7 +110,8 @@ namespace BetterCms.Module.ImagesGallery.Models.Migrations
 
             // Add widget options.
             Insert.IntoTable("ContentOptions").InSchema(rootSchemaName)
-                .Row(options.Option1);
+                .Row(options.Option1)
+                .Row(options.Option2);
         }
     }
 }
