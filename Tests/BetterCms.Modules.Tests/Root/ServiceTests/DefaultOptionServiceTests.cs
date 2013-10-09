@@ -116,8 +116,27 @@ namespace BetterCms.Test.Module.Root.ServiceTests
             var result = service.GetMergedOptionValues(options, optionValues);
             Assert.NotNull(result);
             Assert.AreEqual(result.Count, 1);
-            Assert.AreEqual(result[0].Value is long, true);
+            Assert.AreEqual(result[0].Value is int, true);
             Assert.AreEqual(result[0].Value, 580);
+        }
+        
+        [Test]
+        public void Should_Return_ValuesConvertedToLongInteger()
+        {
+            var service = new DefaultOptionService(null, new HttpRuntimeCacheService());
+            var optionValues = new List<IOption>();
+            var options = new List<IOption>();
+            
+            var option = TestDataProvider.CreateNewLayoutOption();
+            option.DefaultValue = "4294967296";
+            option.Type = OptionType.Integer;
+            options.Add(option);
+
+            var result = service.GetMergedOptionValues(options, optionValues);
+            Assert.NotNull(result);
+            Assert.AreEqual(result.Count, 1);
+            Assert.AreEqual(result[0].Value is long, true);
+            Assert.AreEqual(result[0].Value, 4294967296);
         }
         
         [Test]
