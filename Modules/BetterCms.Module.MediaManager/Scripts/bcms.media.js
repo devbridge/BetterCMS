@@ -1917,10 +1917,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Called when user press browse button in the options grid with type = "Media Manager Folder".
     */
     function onExecuteMediaManagerFolderOption(valueObservable, titleObservable, optionModel) {
-        var onMediaSelect = function (selectedFolder) {
+        var onMediaSelect = function(selectedFolder) {
             var id = selectedFolder.id(),
                 name = selectedFolder.name();
-            
+
             if (!id || bcms.isEmptyGuid(id)) {
                 id = '';
                 name = globalization.rootFolderTitle;
@@ -1928,18 +1928,24 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
             valueObservable(id);
             titleObservable(name);
-            
+
             if (optionModel.key && !optionModel.key()) {
                 optionModel.key(name);
             }
+
+            optionModel.hasFocus(true);
         },
+            onMediaClose = function() {
+                optionModel.hasFocus(true);
+            },
             mediasViewModelExtender = {
-                onMediaSelect: function (selectedFolder) {
+                onMediaSelect: function(selectedFolder) {
                     onMediaSelect(selectedFolder);
                 }
             },
             options = {
                 onAccept: onMediaSelect,
+                onClose: onMediaClose,
                 folderViewModelOptions: mediasViewModelExtender,
                 parentFolderId: optionModel.value()
             };
