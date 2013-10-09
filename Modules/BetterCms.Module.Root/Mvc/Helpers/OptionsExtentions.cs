@@ -40,7 +40,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// <returns>
         /// Option value converted to expected value type
         /// </returns>
-        private static TType GetOptionValue<TType>(IList<IOptionValue> optionValues, string optionKey)
+        private static TType GetOptionValue<TType>(IEnumerable<IOptionValue> optionValues, string optionKey)
         {
             var optionValue = optionValues.FirstOrDefault(o => o.Key == optionKey);
 
