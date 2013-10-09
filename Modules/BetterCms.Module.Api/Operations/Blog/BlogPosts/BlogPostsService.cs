@@ -6,6 +6,7 @@ using BetterCms.Core.DataContracts.Enums;
 
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Pages.Models;
 
 using ServiceStack.ServiceInterface;
@@ -16,9 +17,12 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
     {
         private readonly IRepository repository;
 
-        public BlogPostsService(IRepository repository)
+        private readonly IMediaFileUrlResolver fileUrlResolver;
+
+        public BlogPostsService(IRepository repository, IMediaFileUrlResolver fileUrlResolver)
         {
             this.repository = repository;
+            this.fileUrlResolver = fileUrlResolver;
         }
 
         public GetBlogPostsResponse Get(GetBlogPostsRequest request)
@@ -71,6 +75,12 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
                         IsArchived = blogPost.IsArchived
                     })
                     .ToDataListResponse(request);
+
+            foreach (var model in listResponse.Items)
+            {
+                model.MainImageUrl = fileUrlResolver.EnsureFullPathUrl(model.MainImageUrl);
+                model.MainImageThumbnauilUrl = fileUrlResolver.EnsureFullPathUrl(model.MainImageThumbnauilUrl);
+            }
 
             if (request.Data.IncludeTags)
             {

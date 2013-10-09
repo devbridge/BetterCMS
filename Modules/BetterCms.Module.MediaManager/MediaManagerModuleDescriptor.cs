@@ -129,12 +129,12 @@ namespace BetterCms.Module.MediaManager
         /// <param name="containerBuilder">The container builder.</param>        
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
-            
+
+            containerBuilder.RegisterType<DefaultMediaFileUrlResolver>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultMediaFileService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultMediaImageService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
             containerBuilder.RegisterType<DefaultMediaHistoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
             containerBuilder.RegisterType<DefaultTagService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
-            containerBuilder.RegisterType<DefaultMediaFileUrlResolver>().AsImplementedInterfaces().InstancePerLifetimeScope();            
         }
 
         /// <summary>

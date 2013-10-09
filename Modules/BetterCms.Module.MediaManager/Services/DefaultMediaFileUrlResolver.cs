@@ -31,5 +31,15 @@ namespace BetterCms.Module.MediaManager.Services
         {
             return contextAccessor.ResolveActionUrl<FilesController>(f => f.Download(id.ToString()), true);
         }
+
+        public string EnsureFullPathUrl(string url)
+        {
+            if (!string.IsNullOrEmpty(url) && url.StartsWith("/"))
+            {
+                return contextAccessor.MapPublicPath(url);
+            }
+
+            return url;
+        }
     }
 }

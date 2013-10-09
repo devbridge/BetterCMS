@@ -4,6 +4,7 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.MediaManager.Services;
 
 using ServiceStack.ServiceInterface;
 
@@ -13,9 +14,12 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors
     {
         private readonly IRepository repository;
 
-        public AuthorsService(IRepository repository)
+        private readonly IMediaFileUrlResolver fileUrlResolver;
+
+        public AuthorsService(IRepository repository, IMediaFileUrlResolver fileUrlResolver)
         {
             this.repository = repository;
+            this.fileUrlResolver = fileUrlResolver;
         }
 
         public GetAuthorsResponse Get(GetAuthorsRequest request)
@@ -41,6 +45,12 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors
                         ImageCaption = author.Image != null && !author.Image.IsDeleted ? author.Image.Caption : (string)null
                     })
                 .ToDataListResponse(request);
+
+            foreach (var model in listResponse.Items)
+            {
+                model.ImageUrl = fileUrlResolver.EnsureFullPathUrl(model.ImageUrl);
+                model.ImageThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(model.ImageThumbnailUrl);
+            }
 
             return new GetAuthorsResponse
                        {

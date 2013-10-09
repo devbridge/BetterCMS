@@ -8,6 +8,7 @@ using BetterCms.Core.Web;
 
 using BetterCms.Module.ImagesGallery.ViewModels;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.ViewModels.Cms;
@@ -22,12 +23,19 @@ namespace BetterCms.Module.ImagesGallery.Command.GetGalleryAlbums
         private readonly IHttpContextAccessor contextAccessor;
 
         /// <summary>
+        /// The file URL resolver
+        /// </summary>
+        private readonly IMediaFileUrlResolver fileUrlResolver;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GetGalleryAlbumsCommand" /> class.
         /// </summary>
         /// <param name="contextAccessor">The context accessor.</param>
-        public GetGalleryAlbumsCommand(IHttpContextAccessor contextAccessor)
+        /// <param name="fileUrlResolver">The file URL resolver.</param>
+        public GetGalleryAlbumsCommand(IHttpContextAccessor contextAccessor, IMediaFileUrlResolver fileUrlResolver)
         {
             this.contextAccessor = contextAccessor;
+            this.fileUrlResolver = fileUrlResolver;
         }
 
         /// <summary>
@@ -63,7 +71,11 @@ namespace BetterCms.Module.ImagesGallery.Command.GetGalleryAlbums
                 .ToList();
             
             var urlPattern = GetAlbumUrlPattern(request);
-            albums.ForEach(a => a.Url = string.Format(urlPattern, a.Url));
+            albums.ForEach(a =>
+                               {
+                                   a.Url = string.Format(urlPattern, a.Url);
+                                   a.CoverImageUrl = fileUrlResolver.EnsureFullPathUrl(a.CoverImageUrl);
+                               });
 
             return new GalleryViewModel
                        {

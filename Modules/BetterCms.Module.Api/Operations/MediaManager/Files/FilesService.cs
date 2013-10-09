@@ -17,10 +17,13 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
 
         private readonly IMediaFileService fileService;
 
-        public FilesService(IRepository repository, IMediaFileService fileService)
+        private readonly IMediaFileUrlResolver fileUrlResolver;
+
+        public FilesService(IRepository repository, IMediaFileService fileService, IMediaFileUrlResolver fileUrlResolver)
         {
             this.repository = repository;
             this.fileService = fileService;
+            this.fileUrlResolver = fileUrlResolver;
         }
 
         public GetFilesResponse Get(GetFilesRequest request)
@@ -87,6 +90,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
                     {
                         media.FileUrl = fileService.GetDownloadFileUrl(MediaType.File, media.Id, media.FileUrl);
                     }
+                    media.FileUrl = fileUrlResolver.EnsureFullPathUrl(media.FileUrl);
+                    media.ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(media.ThumbnailUrl);
                 });
 
             return new GetFilesResponse

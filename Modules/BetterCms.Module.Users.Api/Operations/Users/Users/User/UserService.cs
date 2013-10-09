@@ -4,6 +4,7 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.Api.Operations.Users.Users.User;
 using BetterCms.Module.Api.Operations.Users.Users.User.ValidateUser;
+using BetterCms.Module.MediaManager.Services;
 
 using ServiceStack.ServiceInterface;
 
@@ -15,10 +16,13 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users.User
         
         private readonly IValidateUserService validateUserService;
 
-        public UserService(IRepository repository, IValidateUserService validateUserService)
+        private readonly IMediaFileUrlResolver fileUrlResolver;
+
+        public UserService(IRepository repository, IValidateUserService validateUserService, IMediaFileUrlResolver fileUrlResolver)
         {
             this.repository = repository;
             this.validateUserService = validateUserService;
+            this.fileUrlResolver = fileUrlResolver;
         }
 
         public GetUserResponse Get(GetUserRequest request)
@@ -51,8 +55,8 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users.User
                         Email = user.Email,
                         ImageId = user.Image != null && !user.Image.IsDeleted ? user.Image.Id : (System.Guid?)null,
                         ImageCaption = user.Image != null && !user.Image.IsDeleted ? user.Image.Caption : null,
-                        ImageThumbnailUrl = user.Image != null && !user.Image.IsDeleted ? user.Image.PublicThumbnailUrl : null,
-                        ImageUrl = user.Image != null && !user.Image.IsDeleted ? user.Image.PublicUrl : null
+                        ImageThumbnailUrl = user.Image != null && !user.Image.IsDeleted ? fileUrlResolver.EnsureFullPathUrl(user.Image.PublicThumbnailUrl) : null,
+                        ImageUrl = user.Image != null && !user.Image.IsDeleted ? fileUrlResolver.EnsureFullPathUrl(user.Image.PublicUrl) : null
                     })
                 .FirstOne();
 

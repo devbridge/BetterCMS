@@ -2,6 +2,7 @@
 
 using BetterCms.Module.MediaManager.Command.MediaManager;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 
 namespace BetterCms.Module.MediaManager.Command.Images.GetImages
@@ -33,7 +34,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImages
                 FillMediaFileViewModel(model, image);
 
                 model.Tooltip = image.Caption;
-                model.ThumbnailUrl = image.PublicThumbnailUrl;
+                model.ThumbnailUrl = FileUrlResolver.EnsureFullPathUrl(image.PublicThumbnailUrl);
                 model.IsProcessing = image.IsUploaded == null || image.IsThumbnailUploaded == null || image.IsOriginalUploaded == null;
                 model.IsFailed = image.IsUploaded == false || image.IsThumbnailUploaded == false || image.IsOriginalUploaded == false;
 

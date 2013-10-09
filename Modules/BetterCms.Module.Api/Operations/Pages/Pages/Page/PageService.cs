@@ -9,6 +9,7 @@ using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Exists;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Pages.Services;
 
 using ServiceStack.ServiceInterface;
@@ -29,8 +30,10 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
 
         private readonly IUrlService urlService;
 
+        private readonly IMediaFileUrlResolver fileUrlResolver;
+
         public PageService(IRepository repository, IPagePropertiesService pagePropertiesService, IPageExistsService pageExistsService, 
-            IPageContentsService pageContentsService, IPageContentService pageContentService, IUrlService urlService)
+            IPageContentsService pageContentsService, IPageContentService pageContentService, IUrlService urlService, IMediaFileUrlResolver fileUrlResolver)
         {
             this.pageContentsService = pageContentsService;
             this.pageContentService = pageContentService;
@@ -38,6 +41,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
             this.pageExistsService = pageExistsService;
             this.repository = repository;
             this.urlService = urlService;
+            this.fileUrlResolver = fileUrlResolver;
         }
 
         public GetPageResponse Get(GetPageRequest request)
@@ -79,6 +83,9 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
                         IsArchived = page.IsArchived
                     })
                 .FirstOne();
+
+            model.MainImageUrl = fileUrlResolver.EnsureFullPathUrl(model.MainImageUrl);
+            model.MainImageThumbnauilUrl = fileUrlResolver.EnsureFullPathUrl(model.MainImageThumbnauilUrl);
 
             return new GetPageResponse { Data = model };
         }

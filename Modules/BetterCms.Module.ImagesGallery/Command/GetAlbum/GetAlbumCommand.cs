@@ -5,6 +5,7 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.ImagesGallery.ViewModels;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 
@@ -12,6 +13,20 @@ namespace BetterCms.Module.ImagesGallery.Command.GetAlbum
 {
     public class GetAlbumCommand : CommandBase, ICommand<GetAlbumCommandRequest, AlbumViewModel>
     {
+        /// <summary>
+        /// The file URL resolver
+        /// </summary>
+        private readonly IMediaFileUrlResolver fileUrlResolver;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetAlbumCommand" /> class.
+        /// </summary>
+        /// <param name="fileUrlResolver">The file URL resolver.</param>
+        public GetAlbumCommand(IMediaFileUrlResolver fileUrlResolver)
+        {
+            this.fileUrlResolver = fileUrlResolver;
+        }
+
         /// <summary>
         /// Executes the specified request.
         /// </summary>
@@ -80,6 +95,11 @@ namespace BetterCms.Module.ImagesGallery.Command.GetAlbum
             album.ImagesPerSection = request.WidgetViewModel.GetOptionValue<int>(ImagesGalleryModuleConstants.OptionKeys.ImagesPerSection);
             album.RenderHeader = request.RenderBackUrl || request.WidgetViewModel.GetOptionValue<bool>(ImagesGalleryModuleConstants.OptionKeys.RenderAlbumHeader);
             album.RenderBackUrl = request.RenderBackUrl;
+
+            if (album.Images != null)
+            {
+                album.Images.ForEach(i => i.Url = fileUrlResolver.EnsureFullPathUrl(i.Url));
+            }
             
             return album;
         }

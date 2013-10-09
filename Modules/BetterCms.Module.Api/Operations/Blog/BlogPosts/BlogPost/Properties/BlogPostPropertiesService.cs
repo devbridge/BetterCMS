@@ -6,6 +6,7 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Blog.Models;
+using BetterCms.Module.MediaManager.Services;
 
 using ServiceStack.ServiceInterface;
 
@@ -15,9 +16,12 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
     {
         private readonly IRepository repository;
 
-        public BlogPostPropertiesService(IRepository repository)
+        private readonly IMediaFileUrlResolver fileUrlResolver;
+
+        public BlogPostPropertiesService(IRepository repository, IMediaFileUrlResolver fileUrlResolver)
         {
             this.repository = repository;
+            this.fileUrlResolver = fileUrlResolver;
         }
 
         public GetBlogPostPropertiesResponse Get(GetBlogPostPropertiesRequest request)
@@ -116,8 +120,8 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
 
                                     Title = blogPost.Image.Title,
                                     Caption = blogPost.Image.Caption,
-                                    Url = blogPost.Image.PublicUrl,
-                                    ThumbnailUrl = blogPost.Image.PublicThumbnailUrl
+                                    Url = fileUrlResolver.EnsureFullPathUrl(blogPost.Image.PublicUrl),
+                                    ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(blogPost.Image.PublicThumbnailUrl)
                                 } 
                                 : null,
                         FeaturedImage = blogPost.FeaturedImage != null && !blogPost.FeaturedImage.IsDeleted && request.Data.IncludeImages 
@@ -132,8 +136,8 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
 
                                     Title = blogPost.FeaturedImage.Title,
                                     Caption = blogPost.FeaturedImage.Caption,
-                                    Url = blogPost.FeaturedImage.PublicUrl,
-                                    ThumbnailUrl = blogPost.FeaturedImage.PublicThumbnailUrl
+                                    Url = fileUrlResolver.EnsureFullPathUrl(blogPost.FeaturedImage.PublicUrl),
+                                    ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(blogPost.FeaturedImage.PublicThumbnailUrl)
                                 }
                                 : null,
                         SecondaryImage = blogPost.SecondaryImage != null && !blogPost.SecondaryImage.IsDeleted && request.Data.IncludeImages 
@@ -148,8 +152,8 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
 
                                     Title = blogPost.SecondaryImage.Title,
                                     Caption = blogPost.SecondaryImage.Caption,
-                                    Url = blogPost.SecondaryImage.PublicUrl,
-                                    ThumbnailUrl = blogPost.SecondaryImage.PublicThumbnailUrl
+                                    Url = fileUrlResolver.EnsureFullPathUrl(blogPost.SecondaryImage.PublicUrl),
+                                    ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(blogPost.SecondaryImage.PublicThumbnailUrl)
                                 } 
                                 : null
                     })
