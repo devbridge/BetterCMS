@@ -10,10 +10,11 @@
 @{
     var i = 0;
     var l = Model.Albums.Count;
+    var perSection = Model.ImagesPerSection <= 0 ? l : Model.ImagesPerSection;
     
     foreach (var album in Model.Albums)
     {
-        if (i % 3 == 0)
+        if (i % perSection == 0)
         {
             @:<section>
         }
@@ -31,8 +32,8 @@
         </div>
 
         i++;
-    
-        if (i % 3 == 0 || i == l)
+
+        if (i % perSection == 0 || i == l)
         {
             @:</section>
         }

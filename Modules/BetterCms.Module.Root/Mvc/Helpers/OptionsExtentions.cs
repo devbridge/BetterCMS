@@ -44,7 +44,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         {
             var optionValue = optionValues.FirstOrDefault(o => o.Key == optionKey);
 
-            if (optionValue != null)
+            if (optionValue != null && optionValue.Value != null)
             {
                 try
                 {

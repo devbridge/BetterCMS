@@ -2,13 +2,22 @@
 {
     public static class ImagesGalleryModuleConstants
     {
-        public const string GalleryAlbumIdQueryParameterName = "image-gallery-album-id";
+        public static class OptionKeys
+        {
+            public const string LoadCmsStyles = "LoadCmsStyles";
 
-        public const string LoadCmsStylesWidgetOptionKey = "LoadCmsStyles";
-        
-        public const string RenderAlbumHeaderWidgetOptionKey = "RenderAlbumHeader";
-        
-        public const string AlbumWidgetAlbumOptionKey = "Album";
+            public const string RenderAlbumHeader = "RenderAlbumHeader";
+
+            public const string AlbumFolder = "Album folder";
+
+            public const string GalleryFolder = "Albums folder";
+
+            public const string AlbumUrl = "Album Images Url";
+            
+            public const string ImagesPerSection = "Images per section";
+        }
+
+        public const string GalleryFolderIdQueryParameterName = "image-gallery-folder-id";
 
         public const string GalleryWidgetUpdateDateDisplayFormat = "MMM dd, yyyy";
 

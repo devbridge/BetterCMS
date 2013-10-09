@@ -12,7 +12,7 @@
         @Model.Title
         @if (Model.RenderBackUrl)
         {
-            <a class="bcms-gallery-back-link" href="@Model.Url">< Back</a>
+            <a class="bcms-gallery-back-link" href="javascript:history.back()">< Back</a>
         }
         @if (Model.LastUpdateDate.HasValue)
         {
@@ -24,10 +24,11 @@
 @{
     var i = 0;
     var l = Model.Images.Count;
+    var perSection = Model.ImagesPerSection <= 0 ? (Model.ImagesCount >= 0 ? Model.ImagesCount : int.MaxValue) : Model.ImagesPerSection;
     
     foreach (var image in Model.Images)
     {
-        if (i % 3 == 0)
+        if (i % perSection == 0)
         {
             @:<section>
         }
@@ -40,8 +41,8 @@
         </div>
 
         i++;
-    
-        if (i % 3 == 0 || i == l)
+
+        if (i % perSection == 0 || i == l)
         {
             @:</section>
         }

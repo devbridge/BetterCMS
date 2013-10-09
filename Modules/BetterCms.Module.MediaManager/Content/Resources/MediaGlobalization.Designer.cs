@@ -403,15 +403,6 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click on folder to select it..
-        /// </summary>
-        public static string FolderNotSelected_MessageMessage {
-            get {
-                return ResourceManager.GetString("FolderNotSelected_MessageMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Select area to crop..
         /// </summary>
         public static string ImageEditor_CroppingDialog_SubTitle {
@@ -1362,6 +1353,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string MultiFileUpload_Uploading {
             get {
                 return ResourceManager.GetString("MultiFileUpload_Uploading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Root folder.
+        /// </summary>
+        public static string RootFolder_Title {
+            get {
+                return ResourceManager.GetString("RootFolder_Title", resourceCulture);
             }
         }
         

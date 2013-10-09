@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
-using BetterCms.Module.ImagesGallery.Models;
+using BetterCms.Module.MediaManager.Content.Resources;
+using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Providers;
 
-namespace BetterCms.Module.ImagesGallery.Providers
+namespace BetterCms.Module.MediaManager.Provider
 {
-    public class ImageGalleryAlbumOptionProvider : ICustomOptionProvider
+    public class MediaManagerFolderOptionProvider : ICustomOptionProvider
     {
-        public const string Identifier = "images-gallery-album";
+        public const string Identifier = "media-images-folder";
 
         /// <summary>
         /// Converts the value to correct type.
@@ -68,11 +69,26 @@ namespace BetterCms.Module.ImagesGallery.Providers
                 }
             }
 
-            return repository
-                .AsQueryable<Album>()
-                .Where(a => guids.Contains(a.Id))
-                .Select(a => new { a.Id, a.Title })
-                .ToDictionary(a => a.Id.ToString(), a => a.Title);
+            Dictionary<string, string> result;
+            if (guids.Count > 0)
+            {
+                result = repository
+                    .AsQueryable<MediaFolder>()
+                    .Where(a => guids.Contains(a.Id))
+                    .Select(a => new { a.Id, a.Title })
+                    .ToDictionary(a => a.Id.ToString(), a => a.Title);
+            }
+            else
+            {
+                result = new Dictionary<string, string>();
+            }
+
+            if (values.Any(string.IsNullOrEmpty))
+            {
+                result.Add(string.Empty, MediaGlobalization.RootFolder_Title);
+            }
+
+            return result;
         }
     }
 }
