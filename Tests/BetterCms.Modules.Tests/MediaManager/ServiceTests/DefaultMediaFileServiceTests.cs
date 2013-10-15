@@ -1,5 +1,6 @@
 ﻿using System;
 
+using BetterCms.Core.Services;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
@@ -65,7 +66,10 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
             var urlResolver = new Mock<IMediaFileUrlResolver>();
             urlResolver.Setup(x => x.GetMediaFileFullUrl(It.IsAny<Guid>(), It.IsAny<string>())).Returns(SecuredUrl1);
 
-            return new DefaultMediaFileService(storageService.Object, null, null, cmsConfiguration.Object, null, null, urlResolver.Object);
+            var securityService = new Mock<ISecurityService>();
+            securityService.Setup(x => x.CurrentPrincipalName).Returns("Test User");
+
+            return new DefaultMediaFileService(storageService.Object, null, null, cmsConfiguration.Object, null, null, urlResolver.Object, securityService.Object);
         }
     }
 }

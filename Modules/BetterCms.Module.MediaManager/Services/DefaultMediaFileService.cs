@@ -10,10 +10,13 @@ using BetterCms.Core;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions;
+using BetterCms.Core.Security;
+using BetterCms.Core.Services;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Core.Web;
 using BetterCms.Module.MediaManager.Controllers;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
 using Common.Logging;
@@ -38,6 +41,8 @@ namespace BetterCms.Module.MediaManager.Services
 
         private readonly IMediaFileUrlResolver mediaFileUrlResolver;
 
+        private readonly ISecurityService securityService;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultMediaFileService" /> class.
         /// </summary>
@@ -50,7 +55,7 @@ namespace BetterCms.Module.MediaManager.Services
         /// <param name="mediaFileUrlResolver">The media file URL resolver.</param>
         public DefaultMediaFileService(IStorageService storageService, IRepository repository, IUnitOfWork unitOfWork,
             ICmsConfiguration configuration, IHttpContextAccessor httpContextAccessor, ISessionFactoryProvider sessionFactoryProvider,
-            IMediaFileUrlResolver mediaFileUrlResolver)
+            IMediaFileUrlResolver mediaFileUrlResolver, ISecurityService securityService)
         {
             this.sessionFactoryProvider = sessionFactoryProvider;
             this.httpContextAccessor = httpContextAccessor;
@@ -59,6 +64,7 @@ namespace BetterCms.Module.MediaManager.Services
             this.storageService = storageService;
             this.repository = repository;
             this.mediaFileUrlResolver = mediaFileUrlResolver;
+            this.securityService = securityService;
         }
 
         public virtual void RemoveFile(Guid fileId, int version, bool doNotCheckVersion = false)
@@ -127,6 +133,10 @@ namespace BetterCms.Module.MediaManager.Services
             file.IsTemporary = true;
             file.IsCanceled = false;
             file.IsUploaded = null;
+            if (configuration.Security.AccessControlEnabled)
+            {
+                file.AddRule(new AccessRule() { AccessLevel = AccessLevel.ReadWrite, Identity = securityService.CurrentPrincipalName });
+            }
 
             unitOfWork.BeginTransaction();
             repository.Save(file);
