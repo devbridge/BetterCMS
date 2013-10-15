@@ -36,7 +36,24 @@ namespace BetterCms.Module.Users
         /// </summary>
         private readonly UserJsModuleIncludeDescriptor userJsModuleIncludeDescriptor;
 
+        /// <summary>
+        /// Determines, if first user is registered
+        /// </summary>
         private bool isFirstUserRegistered;
+
+        /// <summary>
+        /// Gets a value indicating whether first user is already registered.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if first user is already registered; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsFirstUserRegistered
+        {
+            get
+            {
+                return isFirstUserRegistered;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UsersModuleDescriptor" /> class.
