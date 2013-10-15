@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
@@ -152,14 +153,37 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// The layout regions.
         /// </value>
         public List<PageRegionViewModel> Regions { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the page options.
         /// </summary>
         /// <value>
         /// The page options.
         /// </value>
-        public IList<IOptionValue> Options { get; set; }
+        public IEnumerable<IOptionValue> Options
+        {
+            get
+            {
+                return OptionsAsDictionary.Values;
+            }
+
+            set
+            {
+                OptionsAsDictionary = new Dictionary<string, IOptionValue>();
+                foreach (var optionValue in value.Distinct())
+                {
+                    OptionsAsDictionary.Add(optionValue.Key, optionValue);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the options as dictionary.
+        /// </summary>
+        /// <value>
+        /// The options as dictionary.
+        /// </value>
+        public IDictionary<string, IOptionValue> OptionsAsDictionary { get; set; }
 
         /// <summary>
         /// Gets or sets the list of meta data projections.

@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Web;
+using System.Web.Mvc;
 using System.Web.Security;
 
 using BetterCms.Module.Root.Mvc;
@@ -28,6 +29,11 @@ namespace BetterCms.Module.Users.Controllers
         [HttpGet]
         public ActionResult CreateFirstUser()
         {
+            if (usersModuleDescriptor.IsFirstUserRegistered)
+            {
+                throw new HttpException(403, "First user is already registered!");
+            }
+
             return View(new CreateFirstUserViewModel());
         }
 
@@ -38,6 +44,11 @@ namespace BetterCms.Module.Users.Controllers
         [HttpPost]
         public ActionResult CreateFirstUser(CreateFirstUserViewModel model)
         {
+            if (usersModuleDescriptor.IsFirstUserRegistered)
+            {
+                throw new HttpException(403, "First user is already registered!");
+            }
+
             if (ModelState.IsValid)
             {
                 if (GetCommand<CreateFirstUserCommand>().ExecuteCommand(model))

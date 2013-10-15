@@ -25,7 +25,7 @@ namespace BetterCms.Module.Users.Services
 
         public void NavigateToRegisterFirstUserPage()
         {
-            const string url = UsersModuleDescriptor.UsersAreaName + "/register";
+            const string url = "/" + UsersModuleDescriptor.UsersAreaName + "/register";
 
             var http = httpContextAccessor.GetCurrent();
 

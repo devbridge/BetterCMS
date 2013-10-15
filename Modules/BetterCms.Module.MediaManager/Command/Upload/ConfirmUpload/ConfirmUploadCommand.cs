@@ -122,12 +122,14 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                 {
                     foreach (var file in files)
                     {
-                        var currentFile = file;
-                        var fileEntity = Repository.AsQueryable<MediaFile>().Where(f => f.Id == currentFile.Id).FetchMany(f => f.AccessRules).ToList().FirstOne();
+                        if (!(file is MediaImage))
+                        {
+                            var currentFile = file;
+                            var fileEntity = Repository.AsQueryable<MediaFile>().Where(f => f.Id == currentFile.Id).FetchMany(f => f.AccessRules).ToList().FirstOne();
 
-                        accessControlService.UpdateAccessControl(fileEntity, request.UserAccessList != null 
-                            ? request.UserAccessList.Cast<IAccessRule>().ToList() 
-                            : new List<IAccessRule>());
+                            accessControlService.UpdateAccessControl(
+                                fileEntity, request.UserAccessList != null ? request.UserAccessList.Cast<IAccessRule>().ToList() : new List<IAccessRule>());
+                        }
                     }                    
                 }
 
