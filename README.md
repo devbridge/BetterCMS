@@ -14,7 +14,7 @@ Better CMS is licensed under [BETTER CMS LICENSE AGREEMENT](http://www.bettercms
 Copyright notice and permission notice shall be included in all copies or substantial portions of the Software.
 
 ##Contacts##
-DevBridge Group LLC<br/>
+Devbridge Group LLC<br/>
 1659 W. Hubbard St.<br/>
 Chicago, IL 60622<br/>
 United States<br/>
