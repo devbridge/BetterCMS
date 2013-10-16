@@ -147,5 +147,23 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         {
             return htmlHelper.Action("RenderModuleStyleSheetIncludes", "Rendering", new { moduleDescriptorType = typeof(T) });
         }
+
+        /// <summary>
+        /// Renders the body attributes.
+        /// </summary>
+        /// <param name="htmlHelper">The HTML helper.</param>
+        /// <returns>Rendered body attributes, required for page work with CMS panel</returns>
+        public static IHtmlString RenderBodyAttributes(this HtmlHelper htmlHelper)
+        {
+            var attributes = string.Empty;
+            var model = htmlHelper.ViewContext.ViewData.Model as RenderPageViewModel;
+
+            if (model != null && model.CanManageContent)
+            {
+                attributes = string.Format(@" data-page-id = ""{0}""", model.Id);
+            }
+
+            return new MvcHtmlString(attributes);
+        }
     }
 }
