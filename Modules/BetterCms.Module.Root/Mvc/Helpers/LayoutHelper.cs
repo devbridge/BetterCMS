@@ -121,14 +121,16 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     var contentJs = content.GetCustomJavaScript(htmlHelper);
                     if (!string.IsNullOrWhiteSpace(contentJs))
                     {
+                        jsBuilder.Append(@"<script type=""text/javascript"" language=""javascript"">");
                         jsBuilder.Append(contentJs);
+                        jsBuilder.AppendLine(@"</script>");
                     }
                 }
 
                 var js = jsBuilder.ToString();
                 if (!string.IsNullOrWhiteSpace(js))
                 {
-                    return new HtmlString(string.Format(@"<script type=""text/javascript"" language=""javascript"">{0}</script>", js));
+                    return new HtmlString(js);
                 }
             }
 
