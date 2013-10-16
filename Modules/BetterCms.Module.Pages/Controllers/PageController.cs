@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Web;
 using System.Web.Mvc;
 
 using BetterCms.Core.Security;
@@ -106,7 +107,7 @@ namespace BetterCms.Module.Pages.Controllers
                 var response = GetCommand<CreatePageCommand>().ExecuteCommand(model);
                 if (response != null)
                 {
-                    response.PageUrl = Http.GetAbsolutePath(response.PageUrl);
+                    response.PageUrl = HttpUtility.UrlDecode(Http.GetAbsolutePath(response.PageUrl));
                     Messages.AddSuccess(PagesGlobalization.SavePage_CreatedSuccessfully_Message);
                     return Json(new WireJson { Success = true, Data = response });
                 }
@@ -158,7 +159,7 @@ namespace BetterCms.Module.Pages.Controllers
                 var response = GetCommand<SavePagePropertiesCommand>().ExecuteCommand(model);
                 if (response != null)
                 {
-                    response.PageUrl = Http.GetAbsolutePath(response.PageUrl);
+                    response.PageUrl = HttpUtility.UrlDecode(Http.GetAbsolutePath(response.PageUrl));
                     return Json(new WireJson { Success = true, Data = response });
                 }
             }
@@ -280,7 +281,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// </returns>
         public ActionResult ConvertStringToSlug(string text, string senderId, string parentPageUrl)
         {
-            var slug = pageService.CreatePagePermalink(text, parentPageUrl);
+            var slug = pageService.CreatePagePermalink(text, HttpUtility.UrlDecode(parentPageUrl));
 
             return Json(new { Text = text, Url = slug, SenderId = senderId }, JsonRequestBehavior.AllowGet);
         }

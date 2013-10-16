@@ -169,7 +169,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid &lt;,&gt;,*,%,&amp;,:,\,? symbols..
+        ///   Looks up a localized string similar to Invalid &lt;,&gt;,*,&amp;,? symbols..
         /// </summary>
         public static string Sitemap_Dialog_NodeUrl_InvalidSymbol {
             get {

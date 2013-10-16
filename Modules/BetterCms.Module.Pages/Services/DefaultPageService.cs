@@ -156,7 +156,7 @@ namespace BetterCms.Module.Pages.Services
                 ? "{0}"
                 : string.Concat(parentPageUrl.Trim('/'), "/{0}");
 
-            url = url.Transliterate();
+            url = url.Transliterate(true);
             url = urlService.AddPageUrlPostfix(url, prefixPattern);
 
             return url;
