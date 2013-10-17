@@ -3,6 +3,7 @@
 using BetterCms.Core.DataAccess;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 using ServiceStack.ServiceInterface;
 
@@ -28,7 +29,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Exists
             var url = urlService.FixUrl(request.PageUrl);
 
             var id = repository
-                .AsQueryable<Module.Root.Models.Page>(p => p.PageUrl == url)
+                .AsQueryable<Module.Root.Models.Page>(p => p.PageUrlHash == url.UrlHash())
                 .Select(p => p.Id)
                 .FirstOrDefault();
 

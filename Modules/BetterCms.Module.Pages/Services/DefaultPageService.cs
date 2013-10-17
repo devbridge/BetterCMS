@@ -129,7 +129,7 @@ namespace BetterCms.Module.Pages.Services
             }
 
             // Is Url unique
-            var query = repository.AsQueryable<PageProperties>(page => page.PageUrl == url);
+            var query = repository.AsQueryable<PageProperties>(page => page.PageUrlHash == url.UrlHash());
             if (pageId.HasValue && pageId != default(Guid))
             {
                 query = query.Where(page => page.Id != pageId.Value);

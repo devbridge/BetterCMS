@@ -5,6 +5,7 @@ using BetterCms.Configuration;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 using NHibernate.Criterion;
 
@@ -144,7 +145,7 @@ namespace BetterCms.Module.Pages.Services
         {
             var exists = unitOfWork.Session
                 .QueryOver<Page>()
-                .Where(p => !p.IsDeleted && p.PageUrl == url)
+                .Where(p => !p.IsDeleted && p.PageUrlHash == url.UrlHash())
                 .Select(p => p.Id)
                 .RowCount();
             return exists > 0;
