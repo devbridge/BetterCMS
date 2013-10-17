@@ -234,7 +234,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             content = (BlogPostContent)contentService.SaveContentWithStatusUpdate(newContent, request.DesirableStatus);
             pageContent.Content = content;
 
-            blogPost.PageUrlLowerTrimmed = blogPost.PageUrl.LowerTrimmedUrl();
+            blogPost.PageUrlHash = blogPost.PageUrl.UrlHash();
             blogPost.UseCanonicalUrl = request.UseCanonicalUrl;
             Repository.Save(blogPost);
             Repository.Save(content);

@@ -155,6 +155,7 @@
     <Compile Include="Controllers\SidebarController.cs" />
     <Compile Include="Controllers\SiteSettingsController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
+    <Compile Include="Models\Migrations\Migration201310170919.cs" />
     <Compile Include="Models\Migrations\Migration201310160818.cs" />
     <Compile Include="Mvc\Helpers\OptionsExtentions.cs" />
     <Compile Include="Providers\CustomOptionsProvider.cs" />
@@ -612,6 +613,7 @@
     <EmbeddedResource Include="Scripts\bcms.options.js" />
     <EmbeddedResource Include="Scripts\bcms.autocomplete.js" />
     <EmbeddedResource Include="Scripts\bcms.tags.js" />
+    <EmbeddedResource Include="Models\Migrations\Migration201310170919.sqlserver.sql" />
     <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\es.js" />
     <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ja.js" />
     <Content Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\km.js" />

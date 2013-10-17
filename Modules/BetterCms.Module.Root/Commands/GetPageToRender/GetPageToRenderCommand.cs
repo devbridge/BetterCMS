@@ -211,8 +211,8 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             if (request.PageId == null)
             {
-                var requestUrl = request.PageUrl.LowerTrimmedUrl();
-                query = query.Where(f => f.PageUrlLowerTrimmed == requestUrl);
+                var requestUrl = request.PageUrl.UrlHash();
+                query = query.Where(f => f.PageUrlHash == requestUrl);
             }
             else
             {
@@ -247,8 +247,8 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             if (request.PageId == null)
             {
-                var requestUrl = request.PageUrl.LowerTrimmedUrl();
-                pageContentsQuery = pageContentsQuery.Where(f => f.Page.PageUrlLowerTrimmed == requestUrl);
+                var requestUrl = request.PageUrl.UrlHash();
+                pageContentsQuery = pageContentsQuery.Where(f => f.Page.PageUrlHash == requestUrl);
             }
             else
             {
