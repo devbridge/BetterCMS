@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -16,7 +17,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             EnsureLatinSybmols();
         }
 
-        public static string LowerTrimmedUrl(this string url)
+        public static string UrlHash(this string url)
         {
             url = url.Trim();
 
@@ -27,7 +28,18 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             }
 
             url = url.ToLowerInvariant();
-            return url;
+
+            var md5 = MD5.Create();
+            var inputBytes = Encoding.Unicode.GetBytes(url);
+            var hash = md5.ComputeHash(inputBytes);
+
+            var result = new StringBuilder();
+            foreach (var b in hash)
+            {
+                result.Append(b.ToString("x2").ToLower());
+            }
+
+            return result.ToString();
         }
 
         public static string Transliterate(this string text, bool allowunicodeCharacters = false)

@@ -88,8 +88,6 @@
     }
 }
 
-@section CmsBodyAttributes {@(Html.Raw(Model.CanManageContent ? string.Format(@" data-page-id = ""{0}""", @ViewBag.pageId) : string.Empty))}
-
 @section CmsScripts {
     @if (Model.CanManageContent)
     {
@@ -125,7 +123,6 @@
 @section Scripts {
     @RenderSection("Scripts", false)
 }
-
 @section DoctypeTag { 
     @if (IsSectionDefined("DoctypeTag"))
     {
@@ -137,7 +134,7 @@
     }
 }
 @section HtmlTag { 
-    @if (IsSectionDefined("DoctypeTag"))
+    @if (IsSectionDefined("HtmlTag"))
     {
         @RenderSection("HtmlTag", false)
     } 
@@ -146,5 +143,13 @@
         @:<html>
     }
 }
-@section BodyAttributes {@RenderSection("BodyAttributes", false)}
-
+@section BodyTag { 
+    @if (IsSectionDefined("BodyTag"))
+    {
+        @RenderSection("BodyTag", false)
+    }
+    else
+    {
+        @:<body @Html.RenderBodyAttributes()@RenderSection("BodyAttributes", false)>
+    }
+}

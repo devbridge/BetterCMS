@@ -9,6 +9,7 @@ using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
 
 using ServiceStack.ServiceInterface;
@@ -44,7 +45,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
             else
             {
                 var url = urlService.FixUrl(request.PageUrl);
-                query = query.Where(page => page.PageUrl == url);
+                query = query.Where(page => page.PageUrlHash == url.UrlHash());
             }
 
             var response = query

@@ -5,11 +5,10 @@ using System.Web.Security;
 
 using BetterCms.Configuration;
 using BetterCms.Core.Mvc.Commands;
-using BetterCms.Core.Security;
 using BetterCms.Core.Services.Caching;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.ViewModels.Security;
 
 using Common.Logging;
 
@@ -74,26 +73,11 @@ namespace BetterCms.Module.Root.Commands.Authentication.SearchUsers
         /// <returns>Distinct ordered username list.</returns>
         private IList<string> GetAllUserNames()
         {
-            IList<IAccessRule> list = new List<IAccessRule>();
-            foreach (AccessControlElement userAccess in configuration.Security.DefaultAccessRules)
-            {
-                list.Add(
-                    new UserAccessViewModel
-                    {
-                        Identity = userAccess.Identity,
-                        AccessLevel = (AccessLevel)Enum.Parse(typeof(AccessLevel), userAccess.AccessLevel),
-                        IsForRole = userAccess.IsRole
-                    });
-            }
-
-            var result = list
-                .Where(accessRule => !accessRule.IsForRole)
-                .Select(accessRule => accessRule.Identity)
-                .Distinct()
-                .ToList();
+            var result = new List<string>();
 
             try
             {
+                // Add users from membership provider
                 result.AddRange(
                     Membership.GetAllUsers()
                         .Cast<MembershipUser>()
@@ -106,12 +90,26 @@ namespace BetterCms.Module.Root.Commands.Authentication.SearchUsers
                 Log.Error("Error occurred while retrieving users.", ex);
             }
 
-            result.AddRange(
-                Repository.AsQueryable<AccessRule>()
-                    .Where(a => !a.IsForRole)
-                    .Select(a => a.Identity)
-                    .Distinct()
-                    .ToList());
+            if (!result.Any())
+            {
+                // Add users from access rules table
+                result.AddRange(
+                    Repository.AsQueryable<AccessRule>()
+                        .Where(a => !a.IsForRole)
+                        .Select(a => a.Identity)
+                        .Distinct()
+                        .ToList());
+            }
+
+            // Add default users from configuration
+            foreach (AccessControlElement userAccess in configuration.Security.DefaultAccessRules)
+            {
+                if (!userAccess.IsRole)
+                {
+                    result.Add(userAccess.Identity);
+                }
+                
+            }
 
             return result
                 .Distinct()

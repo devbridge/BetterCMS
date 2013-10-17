@@ -60,14 +60,14 @@ namespace BetterCms.Module.Pages.Services
         /// </returns>
         public IPage GetPageByVirtualPath(string virtualPath)
         {
-            var trimmed = virtualPath.LowerTrimmedUrl();
+            var trimmed = virtualPath.UrlHash();
             if (temporaryPageCache.ContainsKey(trimmed))
             {
                 return temporaryPageCache[trimmed];
             }
 
             var page = repository
-                .AsQueryable<PageProperties>(p => p.PageUrlLowerTrimmed == trimmed)
+                .AsQueryable<PageProperties>(p => p.PageUrlHash == trimmed)
                 .Fetch(p => p.Layout)
                 .FirstOrDefault();
 
@@ -129,7 +129,7 @@ namespace BetterCms.Module.Pages.Services
             }
 
             // Is Url unique
-            var query = repository.AsQueryable<PageProperties>(page => page.PageUrl == url);
+            var query = repository.AsQueryable<PageProperties>(page => page.PageUrlHash == url.UrlHash());
             if (pageId.HasValue && pageId != default(Guid))
             {
                 query = query.Where(page => page.Id != pageId.Value);
@@ -156,7 +156,7 @@ namespace BetterCms.Module.Pages.Services
                 ? "{0}"
                 : string.Concat(parentPageUrl.Trim('/'), "/{0}");
 
-            url = url.Transliterate();
+            url = url.Transliterate(true);
             url = urlService.AddPageUrlPostfix(url, prefixPattern);
 
             return url;

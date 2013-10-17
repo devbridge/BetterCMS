@@ -145,7 +145,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                 page.PageUrl = request.PageUrl;
             }
 
-            page.PageUrlLowerTrimmed = page.PageUrl.LowerTrimmedUrl();
+            page.PageUrlHash = page.PageUrl.UrlHash();
             page.Layout = Repository.AsProxy<Root.Models.Layout>(request.TemplateId);
             page.Category = request.CategoryId.HasValue ? Repository.AsProxy<CategoryEntity>(request.CategoryId.Value) : null;
             page.Title = request.PageName;

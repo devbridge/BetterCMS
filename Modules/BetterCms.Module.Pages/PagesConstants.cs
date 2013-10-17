@@ -5,12 +5,12 @@
         /// <summary>
         /// The page URL regular expression
         /// </summary>
-        public const string PageUrlRegularExpression = @"(^/$)|((?!.*//)(^((/{1}|)[\w\-]{0,260})+(/{1}$|)))";
+        public const string PageUrlRegularExpression = @"^([^:?#[\]@!$&'()*+,;= /%]{0,260}/)*[^:?#[\]@!$&'()*+,;= /%]{0,260}$";
 
         /// <summary>
         /// The site map URL regular expression
         /// </summary>
-        public const string SiteMapUrlRegularExpression = @"^/?[\w\-/].*/?";
+        public const string SiteMapUrlRegularExpression = @"^[^<>*&?]*((\?|#).*)?$";
 
         /// <summary>
         /// The options grid template.

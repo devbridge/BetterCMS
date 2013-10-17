@@ -85,7 +85,7 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
             var page = new PageProperties
                 {
                     PageUrl = pageUrl,
-                    PageUrlLowerTrimmed = pageUrl.LowerTrimmedUrl(),
+                    PageUrlHash = pageUrl.UrlHash(),
                     Title = request.PageTitle,
                     MetaTitle = request.PageTitle,
                     Layout = Repository.First<Root.Models.Layout>(request.TemplateId),

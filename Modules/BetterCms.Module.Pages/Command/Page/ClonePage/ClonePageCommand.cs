@@ -140,7 +140,7 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
             newPage.Title = newPageTitle;
             newPage.MetaTitle = newPageTitle;
             newPage.PageUrl = newPageUrl;
-            newPage.PageUrlLowerTrimmed = newPageUrl.LowerTrimmedUrl();
+            newPage.PageUrlHash = newPageUrl.UrlHash();
             newPage.Status = PageStatus.Unpublished;
 
             // Add security.

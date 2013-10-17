@@ -14,6 +14,8 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Users;
 using BetterCms.Module.Users.Models;
 
+using BetterCms.Module.Root.Mvc.Helpers;
+
 using NHibernate;
 
 using BlogOption = BetterCms.Module.Blog.Models.Option;
@@ -110,7 +112,7 @@ namespace BetterCms.Tests.Helpers
 
             entity.Title = ProvideRandomString(MaxLength.Name);
             entity.PageUrl = ProvideRandomString(MaxLength.Url);
-            entity.PageUrlLowerTrimmed = ProvideRandomString(MaxLength.Url);
+            entity.PageUrlHash = ProvideRandomString(MaxLength.Url).UrlHash();
             entity.Status = PageStatus.Published;
             entity.PublishedOn = ProvideRandomDateTime();
             entity.Layout = layout ?? CreateNewLayout();
@@ -166,7 +168,7 @@ namespace BetterCms.Tests.Helpers
 
             entity.Status = ProvideRandomEnumValue<PageStatus>();
             entity.PageUrl = ProvideRandomString(MaxLength.Url);
-            entity.PageUrlLowerTrimmed = ProvideRandomString(MaxLength.Url);
+            entity.PageUrlHash = ProvideRandomString(MaxLength.Url).UrlHash();
             entity.Title = ProvideRandomString(MaxLength.Name);
             entity.Description = ProvideRandomString(2000);
             entity.CustomCss = ProvideRandomString(2000);

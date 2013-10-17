@@ -121,14 +121,16 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     var contentJs = content.GetCustomJavaScript(htmlHelper);
                     if (!string.IsNullOrWhiteSpace(contentJs))
                     {
+                        jsBuilder.Append(@"<script type=""text/javascript"" language=""javascript"">");
                         jsBuilder.Append(contentJs);
+                        jsBuilder.AppendLine(@"</script>");
                     }
                 }
 
                 var js = jsBuilder.ToString();
                 if (!string.IsNullOrWhiteSpace(js))
                 {
-                    return new HtmlString(string.Format(@"<script type=""text/javascript"" language=""javascript"">{0}</script>", js));
+                    return new HtmlString(js);
                 }
             }
 
@@ -144,6 +146,24 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         public static IHtmlString RenderStyleSheets<T>(this HtmlHelper htmlHelper) where T : ModuleDescriptor
         {
             return htmlHelper.Action("RenderModuleStyleSheetIncludes", "Rendering", new { moduleDescriptorType = typeof(T) });
+        }
+
+        /// <summary>
+        /// Renders the body attributes.
+        /// </summary>
+        /// <param name="htmlHelper">The HTML helper.</param>
+        /// <returns>Rendered body attributes, required for page work with CMS panel</returns>
+        public static IHtmlString RenderBodyAttributes(this HtmlHelper htmlHelper)
+        {
+            var attributes = string.Empty;
+            var model = htmlHelper.ViewContext.ViewData.Model as RenderPageViewModel;
+
+            if (model != null && model.CanManageContent)
+            {
+                attributes = string.Format(@" data-page-id = ""{0}""", model.Id);
+            }
+
+            return new MvcHtmlString(attributes);
         }
     }
 }

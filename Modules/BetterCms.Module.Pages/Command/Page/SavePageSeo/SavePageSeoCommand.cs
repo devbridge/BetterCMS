@@ -90,7 +90,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
                 page.PageUrl = model.ChangedUrlPath;
             }
 
-            page.PageUrlLowerTrimmed = page.PageUrl.LowerTrimmedUrl();
+            page.PageUrlHash = page.PageUrl.UrlHash();
             page.MetaTitle = model.MetaTitle;
             page.MetaKeywords = model.MetaKeywords;
             page.MetaDescription = model.MetaDescription;

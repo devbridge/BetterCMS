@@ -42,3 +42,11 @@
 @section Scripts {
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.min.js" type="text/javascript"></script>
 }
+@section BodyTag {
+    <!--[if lte IE 8]>
+    <body class="ie8 fixed-nav faded"@Html.RenderBodyAttributes()><![endif]-->
+    <!--[if IE 9]>
+    <body class="ie9 fixed-nav faded"@Html.RenderBodyAttributes()><![endif]-->
+    <!--[if !IE]><!-->
+    <body class="fixed-nav faded"@Html.RenderBodyAttributes()><!--<![endif]-->
+}

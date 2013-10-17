@@ -29,7 +29,7 @@ namespace BetterCms.Module.Root.Models
         /// <value>
         /// The lower trimmed page URL.
         /// </value>
-        public virtual string PageUrlLowerTrimmed { get; set; }
+        public virtual string PageUrlHash { get; set; }
 
         /// <summary>
         /// Gets or sets the title.

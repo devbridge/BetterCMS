@@ -5,11 +5,10 @@ using System.Web.Security;
 
 using BetterCms.Configuration;
 using BetterCms.Core.Mvc.Commands;
-using BetterCms.Core.Security;
 using BetterCms.Core.Services.Caching;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.Root.Commands.Authentication.SearchRoles
 {
@@ -67,37 +66,34 @@ namespace BetterCms.Module.Root.Commands.Authentication.SearchRoles
         /// <returns>Distinct ordered role list.</returns>
         private IList<string> GetAllRoleNames()
         {
-            IList<IAccessRule> list = new List<IAccessRule>();
-            foreach (AccessControlElement userAccess in configuration.Security.DefaultAccessRules)
-            {
-                list.Add(
-                    new UserAccessViewModel
-                        {
-                            Identity = userAccess.Identity,
-                            AccessLevel = (AccessLevel)Enum.Parse(typeof(AccessLevel), userAccess.AccessLevel),
-                            IsForRole = userAccess.IsRole
-                        });
-            }
-
-            var result = list
-                .Where(accessRule => accessRule.IsForRole)
-                .Select(accessRule => accessRule.Identity)
-                .Distinct()
-                .ToList();
+            var result = new List<string>();
 
             if (Roles.Enabled)
             {
+                // Add roles from roles provider
                 result.AddRange(Roles.Provider.GetAllRoles()
                     .Distinct()
                     .ToList());
             }
+            else
+            {
+                // Add roles from access rules table
+                result.AddRange(
+                    Repository.AsQueryable<AccessRule>()
+                        .Where(a => a.IsForRole)
+                        .Select(a => a.Identity)
+                        .Distinct()
+                        .ToList());
+            }
 
-            result.AddRange(
-                Repository.AsQueryable<AccessRule>()
-                    .Where(a => a.IsForRole)
-                    .Select(a => a.Identity)
-                    .Distinct()
-                    .ToList());
+            // Add default roles from configuration
+            foreach (AccessControlElement userAccess in configuration.Security.DefaultAccessRules)
+            {
+                if (userAccess.IsRole)
+                {
+                    result.Add(userAccess.Identity);
+                }
+            }
 
             return result
                 .Distinct()
