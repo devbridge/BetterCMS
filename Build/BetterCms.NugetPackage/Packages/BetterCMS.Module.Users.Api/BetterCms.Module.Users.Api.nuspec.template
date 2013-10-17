@@ -3,8 +3,8 @@
   <metadata>
     <id>BetterCms.Module.Users.Api</id>
     <version>@BetterCMSVersion@</version>
-    <authors>DevBridge</authors>
-    <owners>DevBridge</owners>
+    <authors>Devbridge</authors>
+    <owners>Devbridge</owners>
     <licenseUrl>http://www.bettercms.com/license.txt</licenseUrl>
     <projectUrl>http://www.bettercms.com</projectUrl>
     <iconUrl>http://www.bettercms.com/nuget-logo.png</iconUrl>
