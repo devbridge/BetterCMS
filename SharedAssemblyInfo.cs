@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-[assembly: AssemblyCompany("DevBridge")]
+[assembly: AssemblyCompany("Devbridge")]
 [assembly: AssemblyProduct("Better CMS")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]

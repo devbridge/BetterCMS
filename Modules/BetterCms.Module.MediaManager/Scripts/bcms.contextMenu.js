@@ -2,7 +2,7 @@
 /*global bettercms */
 
 /**
-* Source taken from http://luke.breuer.com/tutorial/javascript-context-menu-tutorial.htm#firefox_option and modified by the DevBridge Better CMS team.
+* Source taken from http://luke.breuer.com/tutorial/javascript-context-menu-tutorial.htm#firefox_option and modified by the Devbridge Better CMS team.
 */
 
 bettercms.define('bcms.contextMenu', ['bcms.jquery', 'bcms'],
