@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using Autofac;
 using Autofac.Core;
@@ -21,7 +22,7 @@ namespace BetterCms.Module.Root.Projections
             this.containerProvider = containerProvider;
         }
 
-        public PageStylesheetProjection Create(IPage page)
+        public PageStylesheetProjection Create(IPage page, IEnumerable<IOptionValue> options)
         {
             IStylesheetAccessor jsAccessor = null;            
             Type pageType;
@@ -41,7 +42,8 @@ namespace BetterCms.Module.Root.Projections
                 jsAccessor = containerProvider.CurrentScope
                     .ResolveKeyed<IStylesheetAccessor>(key, new Parameter[]
                                                              {
-                                                                 new PositionalParameter(0, page)
+                                                                 new PositionalParameter(0, page),
+                                                                 new PositionalParameter(1, options)
                                                              });
             }
 

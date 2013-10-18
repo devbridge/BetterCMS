@@ -25,7 +25,9 @@ namespace BetterCms.Module.Root.Registration
                     new JavaScriptModuleGlobalization(this, "optionTypeBoolean", () => RootGlobalization.OptionTypes_Boolean_Title),
                     new JavaScriptModuleGlobalization(this, "optionTypeDateTime", () => RootGlobalization.OptionTypes_DateTime_Title),
                     new JavaScriptModuleGlobalization(this, "optionTypeFloat", () => RootGlobalization.OptionTypes_Float_Title),
-                    new JavaScriptModuleGlobalization(this, "optionTypeCustom", () => RootGlobalization.OptionTypes_Custom_Title)
+                    new JavaScriptModuleGlobalization(this, "optionTypeCustom", () => RootGlobalization.OptionTypes_Custom_Title),
+                    new JavaScriptModuleGlobalization(this, "optionTypeJavaScriptUrl", () => RootGlobalization.OptionTypes_JavaScriptUrl_Title),
+                    new JavaScriptModuleGlobalization(this, "optionTypeCssUrl", () => RootGlobalization.OptionTypes_CssUrl_Title)
                 };
         }
     }

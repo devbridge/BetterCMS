@@ -1,7 +1,6 @@
 ﻿using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
 
 namespace BetterCms.Core.Modules.Projections
 {
@@ -36,6 +35,16 @@ namespace BetterCms.Core.Modules.Projections
         }
 
         public override string GetCustomJavaScript(HtmlHelper html)
+        {
+            return null;
+        }
+
+        public override string[] GetStylesResources(HtmlHelper html)
+        {
+            return null;
+        }
+
+        public override string[] GetJavaScriptResources(HtmlHelper html)
         {
             return null;
         }

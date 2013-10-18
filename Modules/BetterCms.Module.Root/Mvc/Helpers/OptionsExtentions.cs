@@ -2,6 +2,8 @@
 using System.Linq;
 
 using BetterCms.Core.DataContracts;
+using BetterCms.Core.DataContracts.Enums;
+
 using BetterCms.Module.Root.ViewModels.Cms;
 
 namespace BetterCms.Module.Root.Mvc.Helpers
@@ -57,6 +59,32 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             }
 
             return default(TType);
+        }
+
+        /// <summary>
+        /// Converts a list of option values to the array of java script resources.
+        /// </summary>
+        /// <param name="optionValues">The list of options values.</param>
+        /// <returns>An array of java script resources</returns>
+        public static string[] ToJavaScriptResources(this IEnumerable<IOptionValue> optionValues)
+        {
+            return optionValues
+                .Where(o => o.Type == OptionType.JavaScriptUrl && o.Value != null)
+                .Select(o => o.Value.ToString())
+                .ToArray();
+        }
+        
+        /// <summary>
+        /// Converts a list of option values to the array of CSS resources.
+        /// </summary>
+        /// <param name="optionValues">The list of option values.</param>
+        /// <returns>An array of CSS resources</returns>
+        public static string[] ToStyleResources(this IEnumerable<IOptionValue> optionValues)
+        {
+            return optionValues
+                .Where(o => o.Type == OptionType.CssUrl && o.Value != null)
+                .Select(o => o.Value.ToString())
+                .ToArray();
         }
     }
 }

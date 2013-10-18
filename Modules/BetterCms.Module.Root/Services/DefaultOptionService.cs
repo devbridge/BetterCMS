@@ -397,6 +397,8 @@ namespace BetterCms.Module.Root.Services
             switch (type)
             {
                 case OptionType.Text:
+                case OptionType.JavaScriptUrl:
+                case OptionType.CssUrl:
                     return value;
 
                 case OptionType.Integer:
@@ -448,6 +450,8 @@ namespace BetterCms.Module.Root.Services
                 case OptionType.DateTime:
                 case OptionType.Integer:
                 case OptionType.Float:
+                case OptionType.JavaScriptUrl:
+                case OptionType.CssUrl:
                     return null;
 
                 case OptionType.Boolean:

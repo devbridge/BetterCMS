@@ -46,6 +46,10 @@ namespace BetterCms.Api.Tests.UnitTests
             Assert.AreEqual((int)CoreOptionType.Integer, (int)ApiOptionType.Integer);
             Assert.AreEqual((int)CoreOptionType.DateTime, (int)ApiOptionType.DateTime);
             Assert.AreEqual((int)CoreOptionType.Boolean, (int)ApiOptionType.Boolean);
+            
+            Assert.AreEqual((int)CoreOptionType.Custom, (int)ApiOptionType.Custom);
+            Assert.AreEqual((int)CoreOptionType.CssUrl, (int)ApiOptionType.JavaScriptUrl);
+            Assert.AreEqual((int)CoreOptionType.JavaScriptUrl, (int)ApiOptionType.CssUrl);
 
             Assert.AreEqual(Enum.GetValues(typeof(MediaManagerMediaContentType)).Length, 2, "Not all MediaManager.MediaContentType values are mapped.");
             Assert.AreEqual(Enum.GetValues(typeof(ApiMediaContentType)).Length, 2, "Not all Api.MediaContentTypevalues are mapped.");
