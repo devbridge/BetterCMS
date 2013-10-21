@@ -77,7 +77,10 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             if (page.Status != PageStatus.Published && !request.CanManageContent)
             {
-                return null; // Force 404.
+                if (!cmsConfiguration.Security.AccessControlEnabled)
+                {
+                    return null; // Force 404.
+                }
             }
 
             var pageContents = pageContentsQuery.ToList();
