@@ -349,7 +349,7 @@
     <value>Boolean</value>
   </data>
   <data name="OptionTypes_CssUrl_Title" xml:space="preserve">
-    <value>CSS URL</value>
+    <value>CSS Include URL</value>
   </data>
   <data name="OptionTypes_Custom_Title" xml:space="preserve">
     <value>Custom</value>
@@ -364,7 +364,7 @@
     <value>Integer</value>
   </data>
   <data name="OptionTypes_JavaScriptUrl_Title" xml:space="preserve">
-    <value>JavaScript URL</value>
+    <value>JS Include URL</value>
   </data>
   <data name="OptionTypes_Text_Title" xml:space="preserve">
     <value>Text</value>

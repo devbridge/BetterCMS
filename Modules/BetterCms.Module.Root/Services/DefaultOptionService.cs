@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Web;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts;
@@ -397,9 +398,11 @@ namespace BetterCms.Module.Root.Services
             switch (type)
             {
                 case OptionType.Text:
+                    return value;
+
                 case OptionType.JavaScriptUrl:
                 case OptionType.CssUrl:
-                    return value;
+                    return HttpUtility.UrlPathEncode(value);
 
                 case OptionType.Integer:
                     int castedInt;

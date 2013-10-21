@@ -772,7 +772,7 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CSS URL.
+        ///   Looks up a localized string similar to CSS Include URL.
         /// </summary>
         public static string OptionTypes_CssUrl_Title {
             get {
@@ -817,7 +817,7 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to JavaScript URL.
+        ///   Looks up a localized string similar to JS Include URL.
         /// </summary>
         public static string OptionTypes_JavaScriptUrl_Title {
             get {

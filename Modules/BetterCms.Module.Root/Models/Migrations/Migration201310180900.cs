@@ -23,7 +23,7 @@ namespace BetterCms.Module.Root.Models.Migrations
                .Row(new
                {
                    Id = 51,
-                   Name = "JavaScript URL"
+                   Name = "JS Include URL"
                });
 
             Insert
@@ -31,7 +31,7 @@ namespace BetterCms.Module.Root.Models.Migrations
                .Row(new
                {
                    Id = 52,
-                   Name = "CSS URL"
+                   Name = "CSS Include URL"
                });
         }       
     }
