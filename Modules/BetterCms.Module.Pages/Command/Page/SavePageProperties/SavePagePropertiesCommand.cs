@@ -63,6 +63,8 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
 
         private readonly IAccessControlService accessControlService;
 
+        private readonly IContentService contentService;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SavePagePropertiesCommand" /> class.
         /// </summary>
@@ -76,7 +78,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         /// <param name="accessControlService">The access control service.</param>
         public SavePagePropertiesCommand(IPageService pageService, IRedirectService redirectService, ITagService tagService,
             ISitemapService sitemapService, IUrlService urlService, IOptionService optionService,
-            ICmsConfiguration cmsConfiguration, IAccessControlService accessControlService)
+            ICmsConfiguration cmsConfiguration, IAccessControlService accessControlService, IContentService contentService)
         {
             this.pageService = pageService;
             this.redirectService = redirectService;
@@ -86,6 +88,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             this.optionService = optionService;
             this.cmsConfiguration = cmsConfiguration;
             this.accessControlService = accessControlService;
+            this.contentService = contentService;
         }
 
         /// <summary>
@@ -152,14 +155,19 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             page.CustomCss = request.PageCSS;
             page.CustomJS = request.PageJavascript;
 
+            var publishDraftContent = false;
             if (request.CanPublishPage)
             {
                 AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.PublishContent);
 
                 if (request.IsPagePublished)
                 {
-                    page.Status = PageStatus.Published;
-                    page.PublishedOn = DateTime.Now;
+                    if (page.Status != PageStatus.Published)
+                    {
+                        page.Status = PageStatus.Published;
+                        page.PublishedOn = DateTime.Now;
+                        publishDraftContent = true;
+                    }
                 }
                 else
                 {
@@ -194,6 +202,11 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             // Save tags
             IList<Tag> newTags;
             tagService.SavePageTags(page, request.Tags, out newTags);
+
+            if (publishDraftContent)
+            {
+                contentService.PublishDraftContent(page.Id);
+            }
 
             UnitOfWork.Commit();
 
