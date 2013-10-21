@@ -77,23 +77,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePagePublishStatus
 
                 if (request.IsPublished)
                 {
-                    var pageContents =
-                        Repository.AsQueryable<PageContent>().Where(content => content.Page.Id == page.Id).Fetch(f => f.Content).ThenFetchMany(f => f.History).ToList();
-
-                    var draftContents = pageContents
-                        .Where(
-                            content =>
-                            (content.Content.Status == ContentStatus.Draft
-                             && (content.Content.History == null || content.Content.History.All(content1 => content1.Status != ContentStatus.Published)))
-                            || (content.Content.Status != ContentStatus.Published && content.Content.History.All(content1 => content1.Status != ContentStatus.Published)))
-                        .ToList();
-
-                    foreach (var pageContent in draftContents)
-                    {
-                        pageContent.Content = contentService.SaveContentWithStatusUpdate(pageContent.Content.FindEditableContentVersion(), ContentStatus.Published);
-
-                        Repository.Save(pageContent);
-                    }
+                    contentService.PublishDraftContent(page.Id);
                 }
 
                 UnitOfWork.Commit();
