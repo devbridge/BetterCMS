@@ -127,5 +127,15 @@ namespace BetterCms.Module.Root.Projections
         {
             return contentAccessor.GetCustomJavaScript(html);
         }
+
+        public string[] GetStylesResources(HtmlHelper html)
+        {
+            return contentAccessor.GetStylesResources(html);
+        }
+
+        public string[] GetJavaScriptResources(HtmlHelper html)
+        {
+            return contentAccessor.GetJavaScriptResources(html);
+        }
     }
 }

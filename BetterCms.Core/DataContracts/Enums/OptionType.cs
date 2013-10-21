@@ -15,6 +15,10 @@ namespace BetterCms.Core.DataContracts.Enums
 
         Boolean = 5,
 
+        JavaScriptUrl = 51,
+        
+        CssUrl = 52,
+
         Custom = 99
     }
 }

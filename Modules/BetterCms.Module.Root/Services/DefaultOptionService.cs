@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Web;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts;
@@ -399,6 +400,10 @@ namespace BetterCms.Module.Root.Services
                 case OptionType.Text:
                     return value;
 
+                case OptionType.JavaScriptUrl:
+                case OptionType.CssUrl:
+                    return HttpUtility.UrlPathEncode(value);
+
                 case OptionType.Integer:
                     int castedInt;
                     if (Int32.TryParse(value, out castedInt))
@@ -448,6 +453,8 @@ namespace BetterCms.Module.Root.Services
                 case OptionType.DateTime:
                 case OptionType.Integer:
                 case OptionType.Float:
+                case OptionType.JavaScriptUrl:
+                case OptionType.CssUrl:
                     return null;
 
                 case OptionType.Boolean:

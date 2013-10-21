@@ -21,6 +21,8 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 optionTypeDateTime: null,
                 optionTypeFloat: null,
                 optionTypeCustom: null,
+                optionTypeJavaScriptUrl: null,
+                optionTypeCssUrl: null,
                 datePickerTooltipTitle: null,
                 optionValidationMessage: null
             },
@@ -30,6 +32,8 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 floatType: 3,
                 dateTimeType: 4,
                 boolType: 5,
+                javaScriptUrlType: 51,
+                cssUrlType: 52,
                 customType: 99
             },
             registeredCustomOptions = [],
@@ -201,6 +205,8 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.optionTypes.push({ id: optionTypes.floatType, name: globalization.optionTypeFloat });
                 self.optionTypes.push({ id: optionTypes.dateTimeType, name: globalization.optionTypeDateTime });
                 self.optionTypes.push({ id: optionTypes.boolType, name: globalization.optionTypeBoolean });
+                self.optionTypes.push({ id: optionTypes.javaScriptUrlType, name: globalization.optionTypeJavaScriptUrl });
+                self.optionTypes.push({ id: optionTypes.cssUrlType, name: globalization.optionTypeCssUrl });
                 
                 // Add custom options to types list
                 for (ci = 0, cl = parent.customOptions.length; ci < cl; ci++) {

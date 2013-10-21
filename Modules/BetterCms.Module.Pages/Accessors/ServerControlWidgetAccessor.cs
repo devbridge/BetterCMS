@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.ViewModels.Cms;
 
 using Common.Logging;
@@ -113,6 +114,26 @@ namespace BetterCms.Module.Pages.Accessors
 
         public override string GetCustomJavaScript(HtmlHelper html)
         {
+            return null;
+        }
+
+        public override string[] GetStylesResources(HtmlHelper html)
+        {
+            if (Options != null)
+            {
+                return Options.ToStyleResources();
+            }
+
+            return null;
+        }
+
+        public override string[] GetJavaScriptResources(HtmlHelper html)
+        {
+            if (Options != null)
+            {
+                return Options.ToJavaScriptResources();
+            }
+
             return null;
         }
 

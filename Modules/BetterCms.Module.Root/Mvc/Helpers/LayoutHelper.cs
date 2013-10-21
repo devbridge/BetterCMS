@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
 using System.Web.WebPages;
 
 using BetterCms.Core.Modules;
@@ -83,21 +82,37 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         {
             if (styles != null)
             {
-                var cssBuilder = new StringBuilder();
+                var inlineCssBuilder = new StringBuilder();
+                var cssIncludesBuilder = new StringBuilder();
 
                 foreach (var content in styles)
                 {
-                    var contentCss = content.GetCustomStyles(htmlHelper);
-                    if (!string.IsNullOrWhiteSpace(contentCss))
+                    var css = content.GetCustomStyles(htmlHelper);
+                    if (!string.IsNullOrWhiteSpace(css))
                     {
-                        cssBuilder.Append(contentCss);
+                        inlineCssBuilder.AppendLine(css);
+                    }
+
+                    var includes = content.GetStylesResources(htmlHelper);
+                    if (includes != null)
+                    {
+                        foreach (var include in includes)
+                        {
+                            cssIncludesBuilder.AppendLine(string.Format(@"<link rel=""stylesheet"" type=""text/css"" href=""{0}"" />", include));
+                        }
                     }
                 }
 
-                var css = cssBuilder.ToString();
-                if (!string.IsNullOrWhiteSpace(css))
+                var inlineCss = inlineCssBuilder.ToString();
+                var includedCss = cssIncludesBuilder.ToString();
+                if (!string.IsNullOrWhiteSpace(inlineCss) || !string.IsNullOrWhiteSpace(includedCss))
                 {
-                    return new HtmlString(string.Format(@"<style type=""text/css"">{0}</style>", css));
+                    if (!string.IsNullOrWhiteSpace(inlineCss))
+                    {
+                        inlineCss = string.Format(@"<style type=""text/css"">{0}</style>", inlineCss);
+                    }
+
+                    return new HtmlString(string.Concat(includedCss, inlineCss));
                 }
             }
 
@@ -114,23 +129,34 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         {
             if (scripts != null)
             {
-                var jsBuilder = new StringBuilder();
+                var inlineJsBuilder = new StringBuilder();
+                var jsIncludesBuilder = new StringBuilder();
 
                 foreach (var content in scripts)
                 {
-                    var contentJs = content.GetCustomJavaScript(htmlHelper);
-                    if (!string.IsNullOrWhiteSpace(contentJs))
+                    var jScript = content.GetCustomJavaScript(htmlHelper);
+                    if (!string.IsNullOrWhiteSpace(jScript))
                     {
-                        jsBuilder.Append(@"<script type=""text/javascript"" language=""javascript"">");
-                        jsBuilder.Append(contentJs);
-                        jsBuilder.AppendLine(@"</script>");
+                        inlineJsBuilder.Append(@"<script type=""text/javascript"" language=""javascript"">");
+                        inlineJsBuilder.Append(jScript);
+                        inlineJsBuilder.AppendLine(@"</script>");
+                    }
+
+                    var includes = content.GetJavaScriptResources(htmlHelper);
+                    if (includes != null)
+                    {
+                        foreach (var include in includes)
+                        {
+                            jsIncludesBuilder.AppendLine(string.Format(@"<script src=""{0}"" type=""text/javascript""></script>", include));
+                        }
                     }
                 }
 
-                var js = jsBuilder.ToString();
-                if (!string.IsNullOrWhiteSpace(js))
+                var inlineJs = inlineJsBuilder.ToString();
+                var includedJs = jsIncludesBuilder.ToString();
+                if (!string.IsNullOrWhiteSpace(inlineJs) || !string.IsNullOrWhiteSpace(includedJs))
                 {
-                    return new HtmlString(js);
+                    return new HtmlString(string.Concat(includedJs, inlineJs));
                 }
             }
 
