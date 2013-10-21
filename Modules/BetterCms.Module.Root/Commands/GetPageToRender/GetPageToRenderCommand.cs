@@ -75,6 +75,14 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 throw new HttpException(403, "403 Access Forbidden");
             }
 
+            if (page.Status != PageStatus.Published && !request.CanManageContent)
+            {
+                if (!cmsConfiguration.Security.AccessControlEnabled)
+                {
+                    return null; // Force 404.
+                }
+            }
+
             var pageContents = pageContentsQuery.ToList();
             var contentProjections = pageContents.Distinct().Select(f => CreatePageContentProjection(request, f)).Where(c => c != null).ToList();
 
