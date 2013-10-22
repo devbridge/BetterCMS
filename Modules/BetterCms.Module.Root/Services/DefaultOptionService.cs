@@ -286,8 +286,18 @@ namespace BetterCms.Module.Root.Services
                     switch (type)
                     {
                         case OptionType.DateTime:
-                            return DateTime.ParseExact(value, "yyyy-MM-dd", null) // ISO 8601
-                                            .ToString(Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern);
+                            try
+                            {
+                                return DateTime.ParseExact(value, "yyyy-MM-dd", null) // ISO 8601
+                                               .ToString(Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern);
+                            }
+                            catch
+                            {
+                                // NOTE: for backward compatibility.
+                                return Convert.ToDateTime(value, CultureInfo.InvariantCulture)
+                                              .ToString(Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern);
+                            }
+
                         default:
                             return value;
                     }
