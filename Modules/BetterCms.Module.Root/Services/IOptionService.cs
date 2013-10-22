@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using BetterCms.Core.DataContracts;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Option;
@@ -84,5 +85,9 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <returns>List of custom option view models</returns>
         List<CustomOptionViewModel> GetCustomOptions();
+
+        string ClearFixValueForSave(string title, OptionType type, string value);
+
+        string ClearFixValueForEdit(OptionType type, string value);
     }
 }

@@ -115,7 +115,7 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
                     var contentOption = new ContentOption {
                                                               Content = widget,
                                                               Key = requestContentOption.OptionKey,
-                                                              DefaultValue = requestContentOption.OptionDefaultValue,
+                                                              DefaultValue = OptionService.ClearFixValueForSave(requestContentOption.OptionKey, requestContentOption.Type, requestContentOption.OptionDefaultValue),
                                                               Type = requestContentOption.Type,
                                                               CustomOption = requestContentOption.Type == OptionType.Custom 
                                                                 ? customOptions.First(o => o.Identifier == requestContentOption.CustomOption.Identifier)
