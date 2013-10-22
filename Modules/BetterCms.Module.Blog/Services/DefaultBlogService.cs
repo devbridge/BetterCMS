@@ -41,7 +41,7 @@ namespace BetterCms.Module.Blog.Services
         /// <returns>Created blog URL</returns>
         public string CreateBlogPermalink(string title)
         {
-            var url = title.Transliterate();
+            var url = title.Transliterate(true);
             url = urlService.AddPageUrlPostfix(url, configuration.ArticleUrlPattern);
 
             return url;
