@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Web;
 
 using BetterCms.Core.DataAccess;
@@ -81,8 +82,8 @@ namespace BetterCms.Module.Root.Services
                                                             Title = optionValue.CustomOption.Title
                                                         } : null,
                                                   OptionKey = optionValue.Key.Trim(),
-                                                  OptionValue = optionValue.Value,
-                                                  OptionDefaultValue = option != null ? option.Value : null,
+                                                  OptionValue = ClearFixValueForEdit(optionValue.Type, optionValue.Value),
+                                                  OptionDefaultValue = option != null ? ClearFixValueForEdit(option.Type, option.Value) : null,
                                                   UseDefaultValue = false
                                               };
 
@@ -111,8 +112,8 @@ namespace BetterCms.Module.Root.Services
                                                 Title = option.CustomOption.Title
                                             } : null,
                                     OptionKey = option.Key.Trim(),
-                                    OptionValue = option.Value,
-                                    OptionDefaultValue = option.Value,
+                                    OptionValue = ClearFixValueForEdit(option.Type, option.Value),
+                                    OptionDefaultValue = ClearFixValueForEdit(option.Type, option.Value),
                                     UseDefaultValue = true
                                 });
                     }
@@ -227,7 +228,7 @@ namespace BetterCms.Module.Root.Services
                         savedOptionValue = entityCreator();
                         savedOptionValue.Key = optionViewModel.OptionKey;
                     }
-                    savedOptionValue.Value = optionViewModel.OptionValue;
+                    savedOptionValue.Value = ClearFixValueForSave(optionViewModel.OptionKey, optionViewModel.Type, optionViewModel.OptionValue);
                     savedOptionValue.Type = optionViewModel.Type;
 
                     ValidateOptionValue(savedOptionValue);
@@ -248,6 +249,56 @@ namespace BetterCms.Module.Root.Services
                     repository.Delete(savedOptionValue);
                 }
             }
+        }
+
+        public string ClearFixValueForSave(string title, OptionType type, string value)
+        {
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                try
+                {
+                    switch (type)
+                    {
+                        case OptionType.DateTime:
+                            return Convert.ToDateTime(value, Thread.CurrentThread.CurrentCulture.DateTimeFormat)
+                                          .ToString("yyyy-MM-dd"); // ISO 8601
+                        default:
+                            return value;
+                    }
+                }
+                catch
+                {
+                    var message = string.Format(RootGlobalization.Option_Invalid_Message, title, type.ToGlobalizationString());
+
+                    throw new ValidationException(() => message, message);
+                }
+            }
+
+            return null;
+        }
+
+        public string ClearFixValueForEdit(OptionType type, string value)
+        {
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                try
+                {
+                    switch (type)
+                    {
+                        case OptionType.DateTime:
+                            return DateTime.ParseExact(value, "yyyy-MM-dd", null) // ISO 8601
+                                            .ToString(Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern);
+                        default:
+                            return value;
+                    }
+                }
+                catch
+                {
+                    return value;
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -302,7 +353,7 @@ namespace BetterCms.Module.Root.Services
                     }
 
                     option.Key = requestOption.Key;
-                    option.Value = requestOption.Value;
+                    option.Value = ClearFixValueForSave(requestOption.Key, requestOption.Type, requestOption.Value);
                     option.Type = requestOption.Type;
                     option.Entity = (TEntity)optionContainer;
 
@@ -417,7 +468,15 @@ namespace BetterCms.Module.Root.Services
                     return Convert.ToDecimal(value, CultureInfo.InvariantCulture);
 
                 case OptionType.DateTime:
-                    return Convert.ToDateTime(value);
+                    try
+                    {
+                        return DateTime.ParseExact(value, "yyyy-MM-dd", null); // ISO 8601
+                    }
+                    catch
+                    {
+                        // NOTE: for backward compatibility.
+                        return Convert.ToDateTime(value, CultureInfo.InvariantCulture);
+                    }
 
                 case OptionType.Boolean:
                     return Convert.ToBoolean(value);
