@@ -324,6 +324,27 @@ namespace BetterCms.Module.Root.Services
             return order;
         }
 
+        public void PublishDraftContent(Guid pageId)
+        {
+            var pageContents =
+                repository.AsQueryable<PageContent>().Where(content => content.Page.Id == pageId).Fetch(f => f.Content).ThenFetchMany(f => f.History).ToList();
+
+            var draftContents = pageContents
+                .Where(
+                    content =>
+                    (content.Content.Status == ContentStatus.Draft
+                     && (content.Content.History == null || content.Content.History.All(content1 => content1.Status != ContentStatus.Published)))
+                    || (content.Content.Status != ContentStatus.Published && content.Content.History.All(content1 => content1.Status != ContentStatus.Published)))
+                .ToList();
+
+            foreach (var pageContent in draftContents.Where(pageContent => !(pageContent.Content is Root.Models.Widget)))
+            {
+                pageContent.Content = SaveContentWithStatusUpdate(pageContent.Content.FindEditableContentVersion(), ContentStatus.Published);
+
+                repository.Save(pageContent);
+            }
+        }
+
         private void SetContentOptions(IOptionContainer<Models.Content> destination, IOptionContainer<Models.Content> source)
         {
             optionService.SetOptions<ContentOption, Models.Content>(destination, source.Options);

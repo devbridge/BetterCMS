@@ -70,7 +70,7 @@
             escPress: onCancelEdit
             @(Model.AutoFocus ? ", hasfocus: isActive() && hasFocus" : "")" />
         <div class="bcms-btn-small" data-bind="
-                    click: function(data, event) { onCustomOptionExecute(data, event, @(Model.CustomValueBind), @(Model.ValueBind)); },
+                    click: onCustomOptionExecute.bind($data, @(Model.CustomValueBind), @(Model.ValueBind)),
                     event: {blur: onBlurField, focus: onItemSelect},
                     enterPress: onSave, 
                     escPress: onCancelEdit">...</div>

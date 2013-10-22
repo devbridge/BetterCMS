@@ -21,6 +21,8 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 optionTypeDateTime: null,
                 optionTypeFloat: null,
                 optionTypeCustom: null,
+                optionTypeJavaScriptUrl: null,
+                optionTypeCssUrl: null,
                 datePickerTooltipTitle: null,
                 optionValidationMessage: null
             },
@@ -30,6 +32,8 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 floatType: 3,
                 dateTimeType: 4,
                 boolType: 5,
+                javaScriptUrlType: 51,
+                cssUrlType: 52,
                 customType: 99
             },
             registeredCustomOptions = [],
@@ -201,6 +205,8 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.optionTypes.push({ id: optionTypes.floatType, name: globalization.optionTypeFloat });
                 self.optionTypes.push({ id: optionTypes.dateTimeType, name: globalization.optionTypeDateTime });
                 self.optionTypes.push({ id: optionTypes.boolType, name: globalization.optionTypeBoolean });
+                self.optionTypes.push({ id: optionTypes.javaScriptUrlType, name: globalization.optionTypeJavaScriptUrl });
+                self.optionTypes.push({ id: optionTypes.cssUrlType, name: globalization.optionTypeCssUrl });
                 
                 // Add custom options to types list
                 for (ci = 0, cl = parent.customOptions.length; ci < cl; ci++) {
@@ -258,16 +264,24 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                         split = newType.indexOf(':');
                         typeValue = newType.substr(0, split);
                         customType = newType.substr(split + 1, newType.length - split);
+                        
+                        // Clearing old value
+                        self.editableValue('');
                     } else {
                         self.customOptionTitle('');
                         self.customOptionDefaultTitle('');
 
-                        // Entering boolean mode
+                        // Leaving boolean mode
                         if (oldType == optionTypes.boolType) {
                             self.editableValue('');
                         }
 
-                        // Leaving boolean mode
+                        // Leaving custom mode
+                        if (oldType == optionTypes.customType) {
+                            self.editableValue('');
+                        }
+
+                        // Entering boolean mode
                         if (newType == optionTypes.boolType) {
                             if (self.editableValue() !== 'true' && self.editableValue() !== true) {
                                 self.editableValue(false);
@@ -364,11 +378,10 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     }
                 });
 
-                self.onCustomOptionExecute = function (data, event, titleObservable, valueObservable) {
-                    var customType = self.customType();
+                self.onCustomOptionExecute = function (data, titleObservable, valueObservable) {
+                    self.onItemSelect(data, null);
 
-                    self.onItemSelect(data, event);
-                    
+                    var customType = self.customType();
                     if (!customType) {
                         return;
                     }

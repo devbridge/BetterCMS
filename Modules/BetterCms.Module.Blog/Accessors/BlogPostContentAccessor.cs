@@ -43,5 +43,15 @@ namespace BetterCms.Module.Blog.Accessors
         {
             return null;
         }
+
+        public override string[] GetStylesResources(HtmlHelper html)
+        {
+            return null;
+        }
+
+        public override string[] GetJavaScriptResources(HtmlHelper html)
+        {
+            return null;
+        }
     }
 }

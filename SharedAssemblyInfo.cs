@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-[assembly: AssemblyCompany("Devbridge")]
+[assembly: AssemblyCompany("Devbridge Group")]
 [assembly: AssemblyProduct("Better CMS")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
@@ -8,4 +8,4 @@
 
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: AssemblyInformationalVersion("1.3.0-dev")]
+[assembly: AssemblyInformationalVersion("1.3.5-dev")]

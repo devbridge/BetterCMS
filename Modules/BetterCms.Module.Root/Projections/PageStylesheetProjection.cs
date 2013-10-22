@@ -2,7 +2,6 @@
 using System.Runtime.Serialization;
 
 using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 
 namespace BetterCms.Module.Root.Projections
@@ -40,6 +39,16 @@ namespace BetterCms.Module.Root.Projections
         public string GetCustomStyles(System.Web.Mvc.HtmlHelper html)
         {
             return styleAccessor.GetCustomStyles(html);
+        }
+
+        /// <summary>
+        /// Gets the styles resources.
+        /// </summary>
+        /// <param name="html">The HTML.</param>
+        /// <returns>Array of style resources</returns>
+        public string[] GetStylesResources(System.Web.Mvc.HtmlHelper html)
+        {
+            return styleAccessor.GetStylesResources(html);
         }
     }
 }

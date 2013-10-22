@@ -33,6 +33,11 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
     * Sets dialog content from Url.
     */
     dynamicConent.setContentFromUrl = function (dialog, url, options) {
+        
+        function logError(error) {
+            bcms.logger.error('Failed to load dialog content from ' + url + ' (' + error + ').');
+        }
+
         var contentId = dialog.contentId || 0,
             currentDialogId = (new Date).getTime();
 
@@ -79,7 +84,13 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             
             if (response.getResponseHeader('Content-Type').indexOf('application/json') === 0 && content.Html) {
                 if (content.Success) {
-                    dialog.setContent(content.Html, contentId);
+                    try {
+                        dialog.setContent(content.Html, contentId);
+                    } catch (exc) {
+                        logError(exc.message);
+                    } finally {
+                        dynamicConent.hideLoading(dialog);
+                    }
                 } else {
                     if (dialog.close) {
                         dialog.close();
@@ -96,17 +107,22 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                     return;
                 }
             } else {
-                dialog.setContent(content, contentId);
+                try {
+                    dialog.setContent(content, contentId);
+                } catch (exc) {
+                    logError(exc.message);
+                } finally {
+                    dynamicConent.hideLoading(dialog);
+                } 
             }
-
-            dynamicConent.hideLoading(dialog);
+           
 
             if ($.isFunction(options.done)) {
                 options.done(content);
             }
         })
         .fail(function (request, status, error) {
-            bcms.logger.error('Failed to load dialog content from ' + url + ' (' + error + ').');
+            logError(error);
 
             dynamicConent.hideLoading(dialog);
 

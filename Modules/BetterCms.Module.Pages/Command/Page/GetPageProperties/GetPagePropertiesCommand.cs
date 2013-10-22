@@ -108,7 +108,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                               TemplateId = page.Layout.Id,
                               CategoryId = page.Category.Id,
                               AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled,
-                              Image = page.Image == null ? null :
+                              Image = page.Image == null || page.Image.IsDeleted ? null :
                                   new ImageSelectorViewModel
                                           {
                                               ImageId = page.Image.Id,
@@ -118,7 +118,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                                               ImageTooltip = page.Image.Caption,
                                               FolderId = page.Image.Folder != null ? page.Image.Folder.Id : (Guid?)null
                                           },
-                              SecondaryImage = page.SecondaryImage == null ? null :
+                              SecondaryImage = page.SecondaryImage == null || page.SecondaryImage.IsDeleted ? null :
                                   new ImageSelectorViewModel
                                           {
                                               ImageId = page.SecondaryImage.Id,
@@ -128,7 +128,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                                               ImageTooltip = page.SecondaryImage.Caption,
                                               FolderId = page.SecondaryImage.Folder != null ? page.SecondaryImage.Folder.Id : (Guid?)null
                                           },
-                              FeaturedImage = page.FeaturedImage == null ? null :
+                              FeaturedImage = page.FeaturedImage == null || page.FeaturedImage.IsDeleted ? null :
                                   new ImageSelectorViewModel
                                           {
                                               ImageId = page.FeaturedImage.Id,

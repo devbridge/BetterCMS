@@ -214,7 +214,7 @@
                         <img data-bind="attr: { alt: tooltip(), src: getImageUrl() }" />
                         <!-- /ko -->
                     </div>
-                    <div class="bcms-media-name">
+                    <div class="bcms-media-name" data-bind="click: onTitleClicked.bind($data, $root)">
                         <!-- ko text: name() -->
                         <!-- /ko -->
                         <!--  ko if: isProcessing() -->

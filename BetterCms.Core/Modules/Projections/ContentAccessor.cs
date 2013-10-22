@@ -9,11 +9,15 @@ namespace BetterCms.Core.Modules.Projections
     public interface IJavaScriptAccessor
     {
         string GetCustomJavaScript(HtmlHelper html);
+
+        string[] GetJavaScriptResources(HtmlHelper html);
     }
 
     public interface IStylesheetAccessor
     {
         string GetCustomStyles(HtmlHelper html);
+
+        string[] GetStylesResources(HtmlHelper html);
     }
 
     public interface IHtmlAccessor
@@ -55,5 +59,9 @@ namespace BetterCms.Core.Modules.Projections
         public abstract string GetCustomStyles(HtmlHelper html);
 
         public abstract string GetCustomJavaScript(HtmlHelper html);
+
+        public abstract string[] GetStylesResources(HtmlHelper html);
+
+        public abstract string[] GetJavaScriptResources(HtmlHelper html);
     }
 }

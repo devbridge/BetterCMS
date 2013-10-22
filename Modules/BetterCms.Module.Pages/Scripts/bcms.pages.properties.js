@@ -111,7 +111,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             }
 
             dialog.container.find(selectors.pagePropertiesTemplateSelect).on('click', function () {
-                page.highlightPagePropertiesActiveTemplate(dialog, this, function(id) {
+                page.highlightPagePropertiesActiveTemplate(dialog, this, function (id) {
                     page.loadLayoutOptions(id, dialog.container, content.Data.TemplateId, optionsContainer, optionListViewModel);
                 });
             });
@@ -134,7 +134,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                     page.closePagePropertiesEditPermalinkBox(dialog);
                 }
             });
-            
+
             return pageViewModel;
         };
 
@@ -142,7 +142,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         * Loads layout options: when user changes layout, options are reloaded
         */
         page.loadLayoutOptions = function (id, mainContainer, layoutId, optionsContainer, optionListViewModel) {
-            var onComplete = function(json) {
+            var onComplete = function (json) {
                 var i,
                     j,
                     items = optionListViewModel.items,
@@ -150,7 +150,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                     itemExists,
                     itemsToRemove = [],
                     length;
-                        
+
                 optionsContainer.hideLoading();
                 messages.refreshBox(mainContainer, json);
                 if (json.Success) {
@@ -169,11 +169,11 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                         item = itemsToRemove[i];
                         items.remove(item);
                     }
-                            
+
                     // Add new items
                     for (i = 0, length = json.Data.length; i < length; i++) {
                         itemExists = false;
-                                
+
                         for (j = 0; j < items().length; j++) {
                             item = items()[j];
                             if (item.key() == json.Data[i].OptionKey) {
@@ -190,7 +190,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                                 break;
                             }
                         }
-                                
+
                         // Do not add option if such already exists
                         if (itemExists) {
                             continue;
@@ -199,7 +199,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                         item = optionListViewModel.createItem(json.Data[i]);
                         optionListViewModel.items.push(item);
                     }
-                    
+
                     // Set fields editings
                     for (i = 0, length = items().length; i < length; i++) {
                         item = items()[i];
@@ -228,6 +228,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         page.showPagePropertiesEditPermalinkBox = function (dialog) {
             dialog.container.find(selectors.editPermalinkBox).show();
             dialog.container.find(selectors.editPermalink).hide();
+            dialog.container.find(selectors.permalinkInfoField).hide();
             dialog.container.find(selectors.permalinkEditField).focus();
         };
 
@@ -262,6 +263,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         page.hidePagePropertiesEditPermalinkBox = function (dialog) {
             dialog.container.find(selectors.editPermalinkBox).hide();
             dialog.container.find(selectors.editPermalink).show();
+            dialog.container.find(selectors.permalinkInfoField).show();
         };
 
         /**

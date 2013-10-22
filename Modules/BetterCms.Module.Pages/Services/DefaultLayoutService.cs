@@ -71,7 +71,7 @@ namespace BetterCms.Module.Pages.Services
                     {
                         OptionKey = o.Key,
                         Type = o.Type,
-                        OptionDefaultValue = o.DefaultValue,
+                        OptionDefaultValue = optionService.ClearFixValueForEdit(o.Type, o.DefaultValue),
                         CanDeleteOption = o.IsDeletable,
                         CustomOption = new CustomOptionViewModel { Identifier = o.CustomOption.Identifier, Title = o.CustomOption.Title }
                     })
@@ -99,7 +99,7 @@ namespace BetterCms.Module.Pages.Services
                 {
                     OptionKey = o.Key,
                     Type = o.Type,
-                    OptionDefaultValue = o.DefaultValue,
+                    OptionDefaultValue = optionService.ClearFixValueForEdit(o.Type, o.DefaultValue),
                     UseDefaultValue = true,
                     CustomOption = new CustomOptionViewModel { Identifier = o.CustomOption.Identifier, Title = o.CustomOption.Title }
                 })

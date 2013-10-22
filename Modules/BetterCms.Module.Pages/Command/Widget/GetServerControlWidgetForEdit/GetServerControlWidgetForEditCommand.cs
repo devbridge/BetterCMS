@@ -83,7 +83,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
                                 new OptionViewModel
                                  {
                                      Type = f.Type,
-                                     OptionDefaultValue = f.DefaultValue,
+                                     OptionDefaultValue = optionService.ClearFixValueForEdit(f.Type, f.DefaultValue),
                                      OptionKey = f.Key,
                                      CanDeleteOption = f.IsDeletable,
                                      CustomOption = f.CustomOption != null

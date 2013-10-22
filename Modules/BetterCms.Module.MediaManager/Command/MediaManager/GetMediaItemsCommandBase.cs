@@ -410,8 +410,8 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             model.IsArchived = media.IsArchived;
             model.ParentFolderId = media.Folder != null ? media.Folder.Id : Guid.Empty;
             model.ParentFolderName = media.Folder != null ? media.Folder.Title : MediaGlobalization.MediaList_RootFolderName;
-            model.Tooltip = media.Image != null ? media.Image.Caption : null;
-            model.ThumbnailUrl = media.Image != null ? FileUrlResolver.EnsureFullPathUrl(media.Image.PublicThumbnailUrl) : null;
+            model.Tooltip = media.Image != null && !media.Image.IsDeleted ? media.Image.Caption : null;
+            model.ThumbnailUrl = media.Image != null && !media.Image.IsDeleted ? FileUrlResolver.EnsureFullPathUrl(media.Image.PublicThumbnailUrl) : null;
         }
 
         /// <summary>

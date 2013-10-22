@@ -58,5 +58,15 @@ namespace BetterCms.Module.Pages.Accessors
 
             return null;
         }
+
+        public override string[] GetStylesResources(HtmlHelper html)
+        {
+            return null;
+        }
+
+        public override string[] GetJavaScriptResources(HtmlHelper html)
+        {
+            return null;
+        }
     }
 }

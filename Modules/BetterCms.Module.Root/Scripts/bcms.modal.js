@@ -335,38 +335,42 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         /**
         * Updates modal window content.
         */
-        setContent: function (content) {            
-            this.container
-                .find(selectors.content)
-                .empty()
-                .append(content);
+        setContent: function (content) {
+            try {
+                this.container
+                    .find(selectors.content)
+                    .empty()
+                    .append(content);
+            } catch(exc) {
+                throw exc;
+            } finally {
+                this.container.find(selectors.loader).remove();
+                
+                // Check for readonly mode.
+                this.container.find(selectors.readonly).addClass(classes.inactive);
+                var form = this.container.find('form');
+                if (form.data('readonly') === true) {
+                    form.find('input:visible').attr('readonly', 'readonly');
+                    form.find('textarea:visible').attr('readonly', 'readonly');
+                    form.find('input[type=text]:visible:not([data-bind])').parent('div').css('z-index', 100);
+                    form.find('textarea:visible:not([data-bind])').attr('readonly', 'readonly').parent('div').css('z-index', 100);
+                    this.disableAcceptButton();
+                    this.disableExtraButtons();
+                }
 
-            this.container.find(selectors.loader).remove();
+                if ($.validator && $.validator.unobtrusive) {
+                    $.validator.unobtrusive.parse(this.container);
+                }
 
-            // Check for readonly mode.
-            this.container.find(selectors.readonly).addClass(classes.inactive);
-            var form = this.container.find('form');
-            if (form.data('readonly') === true) {
-                form.find('input:visible').attr('readonly', 'readonly');
-                form.find('textarea:visible').attr('readonly', 'readonly');                
-                form.find('input[type=text]:visible:not([data-bind])').parent('div').css('z-index', 100);
-                form.find('textarea:visible:not([data-bind])').attr('readonly', 'readonly').parent('div').css('z-index', 100);
-                this.disableAcceptButton();
-                this.disableExtraButtons();
-            }
-            
-            if ($.validator && $.validator.unobtrusive) {
-                $.validator.unobtrusive.parse(this.container);
-            }
+                this.maximizeHeight();
 
-            this.maximizeHeight();
+                tabs.initTabPanel(this.container);
 
-            tabs.initTabPanel(this.container);
-            
-            forms.bindCheckboxes(this.container);
+                forms.bindCheckboxes(this.container);
 
-            if (this.options.autoFocus) {                
-                this.setFocus();
+                if (this.options.autoFocus) {
+                    this.setFocus();
+                }
             }
         },
 

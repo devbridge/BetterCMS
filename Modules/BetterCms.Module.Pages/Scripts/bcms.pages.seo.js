@@ -38,11 +38,13 @@ bettercms.define('bcms.pages.seo', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.m
         if (visible) {
             dialog.container.find(selectors.editUrlPathBox).show();
             dialog.container.find(selectors.editPageUrlLink).hide();
+            dialog.container.find(selectors.pageUrlPath).hide();
             dialog.container.find(selectors.editUrlTextBox).focus();
         } else {
             dialog.container.find(selectors.editUrlTextBox).blur();
             dialog.container.find(selectors.editUrlPathBox).hide();
             dialog.container.find(selectors.editPageUrlLink).show();
+            dialog.container.find(selectors.pageUrlPath).show();
         }
     }
     
