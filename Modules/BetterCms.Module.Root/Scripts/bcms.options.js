@@ -264,16 +264,24 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                         split = newType.indexOf(':');
                         typeValue = newType.substr(0, split);
                         customType = newType.substr(split + 1, newType.length - split);
+                        
+                        // Clearing old value
+                        self.editableValue('');
                     } else {
                         self.customOptionTitle('');
                         self.customOptionDefaultTitle('');
 
-                        // Entering boolean mode
+                        // Leaving boolean mode
                         if (oldType == optionTypes.boolType) {
                             self.editableValue('');
                         }
 
-                        // Leaving boolean mode
+                        // Leaving custom mode
+                        if (oldType == optionTypes.customType) {
+                            self.editableValue('');
+                        }
+
+                        // Entering boolean mode
                         if (newType == optionTypes.boolType) {
                             if (self.editableValue() !== 'true' && self.editableValue() !== true) {
                                 self.editableValue(false);
@@ -370,11 +378,10 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     }
                 });
 
-                self.onCustomOptionExecute = function (data, event, titleObservable, valueObservable) {
-                    var customType = self.customType();
+                self.onCustomOptionExecute = function (data, titleObservable, valueObservable) {
+                    self.onItemSelect(data, null);
 
-                    self.onItemSelect(data, event);
-                    
+                    var customType = self.customType();
                     if (!customType) {
                         return;
                     }

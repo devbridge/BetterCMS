@@ -43,7 +43,7 @@ namespace BetterCms.Module.Blog.Commands.GetAuthorList
                             Id = author.Id,
                             Version = author.Version,
                             Name = author.Name,
-                            Image = author.Image != null
+                            Image = author.Image != null && !author.Image.IsDeleted
                                     ?
                                     new ImageSelectorViewModel
                                     {

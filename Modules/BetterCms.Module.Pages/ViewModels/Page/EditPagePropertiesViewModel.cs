@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 using BetterCms.Core.Models;
 
@@ -87,6 +88,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// The page custom CSS.
         /// </value>
+        [AllowHtml]
         public string PageCSS { get; set; }
         
         /// <summary>
@@ -95,6 +97,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// The page custom JavaScript.
         /// </value>
+        [AllowHtml]
         public string PageJavascript { get; set; }
 
         /// <summary>

@@ -183,6 +183,7 @@
     <Compile Include="Models\MediaFolder.cs" />
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaImage.cs" />
+    <Compile Include="Models\Migrations\Migration201310211500.cs" />
     <Compile Include="Models\Migrations\Migration201310081420.cs" />
     <Compile Include="Models\Migrations\Migration201306071105.cs">
       <SubType>Code</SubType>

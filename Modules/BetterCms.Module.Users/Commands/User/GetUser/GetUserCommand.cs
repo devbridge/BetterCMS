@@ -54,7 +54,7 @@ namespace BetterCms.Module.Users.Commands.User.GetUser
                                 Email = user.Email,
                                 LastName = user.LastName,
                                 UserName = user.UserName,
-                                Image =
+                                Image = user.Image != null && !user.Image.IsDeleted ?
                                     new ImageSelectorViewModel
                                         {
                                             ImageId = user.Image.Id,
@@ -62,7 +62,7 @@ namespace BetterCms.Module.Users.Commands.User.GetUser
                                             ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(user.Image.PublicThumbnailUrl),
                                             ImageTooltip = user.Image.Caption,
                                             FolderId = user.Image.Folder != null ? user.Image.Folder.Id : (Guid?)null
-                                        }
+                                        } : null
                             })
                     .ToFuture();
 
