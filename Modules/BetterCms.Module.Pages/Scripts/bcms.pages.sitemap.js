@@ -873,6 +873,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.searchQuery = ko.observable("");
             self.pageLinks = ko.observableArray([]);
             self.sitemap = sitemapViewModel;
+            self.hasfocus = ko.observable(true);
 
             self.searchForPageLinks = function () {
                 var showAll = $.trim(self.searchQuery()).length === 0;
@@ -888,6 +889,8 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         link.isVisible(title.indexOf(searchQuery) !== -1 || url.indexOf(searchQuery) !== -1);
                     }
                 }
+                
+                self.hasfocus(true);
             };
             
             // Parse.
