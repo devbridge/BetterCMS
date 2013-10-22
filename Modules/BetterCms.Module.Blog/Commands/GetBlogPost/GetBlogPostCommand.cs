@@ -91,7 +91,7 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                                 IntroText = bp.Description,
                                 AuthorId = bp.Author.Id,
                                 CategoryId = bp.Category.Id,
-                                Image = bp.Image == null ? null :
+                                Image = bp.Image == null || bp.Image.IsDeleted ? null :
                                     new ImageSelectorViewModel
                                     {
                                         ImageId = bp.Image.Id,

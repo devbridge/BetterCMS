@@ -93,7 +93,7 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
                     FileExtension = file.OriginalFileExtension,
                     FileSize = file.SizeAsText(),
                     Tags = tagService.GetMediaTagNames(fileId),
-                    Image = file.Image == null ? null :
+                    Image = file.Image == null || file.Image.IsDeleted ? null :
                         new ImageSelectorViewModel
                         {
                             ImageId = file.Image.Id,
