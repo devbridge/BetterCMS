@@ -147,7 +147,7 @@ namespace BetterCms.Test.Module.Root.ServiceTests
             var options = new List<IOption>();
 
             var option = TestDataProvider.CreateNewLayoutOption();
-            option.DefaultValue = "10/10/2010";
+            option.DefaultValue = "2010-10-10";
             option.Type = OptionType.DateTime;
             options.Add(option);
 
