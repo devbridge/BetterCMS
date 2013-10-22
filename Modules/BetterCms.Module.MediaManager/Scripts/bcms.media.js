@@ -642,6 +642,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             this.openMedia(folderViewModel, data, event);
         };
 
+        MediaItemBaseViewModel.prototype.onTitleClicked = function (folderViewModel, data, event) {
+            this.openMedia(folderViewModel, data, event);
+        };
+
         MediaItemBaseViewModel.prototype.saveMedia = function (folderViewModel, data, event) {
             bcms.stopEventPropagation(event);
             this.savePressed = true;
@@ -909,6 +913,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             }
             
             changeFolder(this.id(), folderViewModel);
+        };
+
+        MediaFolderViewModel.prototype.onTitleClicked = function (folderViewModel, data, event) {
+            this.onIconClicked(folderViewModel, data, event);
         };
 
         MediaFolderViewModel.prototype.openMedia = function (folderViewModel, data, event) {

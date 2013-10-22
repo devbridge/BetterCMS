@@ -593,10 +593,6 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
             self.savePressed = false;
 
-            // Mark item as no new anymore, if trying to save
-            self.isNew(false);
-            self.parent.rowAdded = false;
-
             if (canSave) {
                 var params = self.getSaveParams();
                 if (url) {
@@ -609,7 +605,13 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                         cache: false,
                         data: JSON.stringify(params)
                     })
-                        .done(function(json) {
+                        .done(function (json) {
+                            if (json.Success) {
+                                // Mark item as no new anymore, if trying to save
+                                self.isNew(false);
+                                self.parent.rowAdded = false;
+                            }
+
                             self.onAfterItemSaved(json);
                             self.saving(false);
                             self.wasSaved = true;
@@ -619,6 +621,10 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                             self.saving(false);
                         });
                 } else {
+                    // Mark item as no new anymore, if trying to save
+                    self.isNew(false);
+                    self.parent.rowAdded = false;
+
                     // Save locally if URL is NOT specified
                     var result = {
                         Success: true
@@ -628,6 +634,10 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     self.wasSaved = true;
                 }
             } else {
+                // Mark item as no new anymore, if trying to save
+                self.isNew(false);
+                self.parent.rowAdded = false;
+
                 if (!keepActive) {
                     this.isActive(false);
                     this.loseFocus();
