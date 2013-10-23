@@ -721,7 +721,7 @@ a.bcms-remove-image {
     margin: -1px;
     min-height: 35px;
     border: 1px dashed #009AEB;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 .bcms-on .bcms-region-overlay {
@@ -781,7 +781,7 @@ a.bcms-remove-image {
 /* Content sorting */
 .bcms-sort-wrapper {
     position: relative;
-    height: 80px;
+    height: 20px;
     margin-top: 10px;
     padding: 5px 10px;
     background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAAEFsT2yAAAAEElEQVQI12NgYGDgZUAmeAEBpgA16fkHewAAAABJRU5ErkJggg==');
@@ -794,6 +794,10 @@ a.bcms-remove-image {
     color: #505050;
     font-weight: 700;
     text-transform: capitalize;
+}
+
+.bcms-sorting-block {
+    min-height: 20px;
 }
 
 .bcms-content-overlay {

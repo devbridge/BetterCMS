@@ -6,15 +6,24 @@ using BetterCms.Module.Root.Content.Resources;
 namespace BetterCms.Module.Pages.ViewModels.Content
 {
     public class ContentSortViewModel
-    {        
+    {
         /// <summary>
-        /// Gets or sets the widget id.
+        /// Gets or sets the region id.
         /// </summary>
         /// <value>
-        /// The content id.
+        /// The region id.
         /// </value>
         [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
-        public virtual Guid Id { get; set; }
+        public virtual Guid RegionId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page content id.
+        /// </summary>
+        /// <value>
+        /// The page content id.
+        /// </value>
+        [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
+        public virtual Guid PageContentId { get; set; }
 
         /// <summary>
         /// Gets or sets the entity version.
@@ -33,7 +42,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// </returns>
         public override string ToString()
         {
-            return string.Format("ContentId: {0}", Id);
+            return string.Format("RegionId: {0}, PageContentId: {1}", RegionId, PageContentId);
         }
     }
 }
