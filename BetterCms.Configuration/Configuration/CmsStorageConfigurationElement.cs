@@ -17,7 +17,7 @@ namespace BetterCms.Configuration
         [ConfigurationProperty(ContentRootAttribute, IsRequired = true)]
         public string ContentRoot
         {
-            get { return Convert.ToString(this[ContentRootAttribute]); }
+            get { return ParseEnvironmentValue(Convert.ToString(this[ContentRootAttribute])); }
             set { this[ContentRootAttribute] = value; }
         }
 
@@ -32,7 +32,7 @@ namespace BetterCms.Configuration
                     return ContentRoot;
                 }
 
-                return urlRoot;
+                return ParseEnvironmentValue(urlRoot);
             }
             set
             {
@@ -83,12 +83,24 @@ namespace BetterCms.Configuration
         public string GetValue(string key)
         {
             var element = (KeyValueElement)BaseGet(key);
-            return element == null ? null : element.Value;
+            return element == null ? null : ParseEnvironmentValue(element.Value);
         }
 
         public void Add(KeyValueElement element)
         {
             BaseAdd(element);
+        }
+
+        private string ParseEnvironmentValue(string value)
+        {
+            if (value != null && value.StartsWith("[") && value.EndsWith("]") && value.Length > 2)
+            {
+                var envKey = value.Substring(1, value.Length - 2);
+
+                return Environment.GetEnvironmentVariable(envKey, EnvironmentVariableTarget.Machine);
+            }
+
+            return value;
         }
     }
 }
