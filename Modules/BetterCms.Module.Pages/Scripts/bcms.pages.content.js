@@ -138,9 +138,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Save content order after sorting.
         */
         pagesContent.onSortPageContent = function (model) {
-            if (model.data.pageContents.length < 2) {
-                return; // Sorting is needed for more than one item.
-            }
+            console.log(model);
 
             var info = modal.info({
                 content: globalization.sortingPageContentMessage,
@@ -149,14 +147,17 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             });
 
             var url = links.sortPageContentUrl,
-                alertOnError = function() {
-                    modal.alert({
-                        title: globalization.sortPageContentFailureMessageTitle,
-                        content: globalization.sortPageContentFailureMessageMessage
-                    });
-                },
-                dataToSend = JSON.stringify(model.data);
-            
+               alertOnError = function () {
+                   modal.alert({
+                       title: globalization.sortPageContentFailureMessageTitle,
+                       content: globalization.sortPageContentFailureMessageMessage
+                   });
+               },
+               dataToSend = JSON.stringify({
+                   PageId: bcms.pageId,
+                   PageContents: model
+               });
+
             $.ajax({
                 type: 'POST',
                 url: url,

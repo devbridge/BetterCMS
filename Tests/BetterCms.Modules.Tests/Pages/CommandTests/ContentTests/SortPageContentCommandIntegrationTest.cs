@@ -8,7 +8,6 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
-using BetterCms.Core.Services;
 
 using BetterCms.Module.Pages.Command.Content.SortPageContent;
 using BetterCms.Module.Pages.ViewModels.Content;
@@ -64,18 +63,17 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                 var request = new PageContentSortViewModel
                     {
                         PageId = page.Id,
-                        RegionId = region.Id,
                         PageContents =
                             new List<ContentSortViewModel>
                                 {
-                                    new ContentSortViewModel { Id = page.PageContents[2].Id, Version = page.PageContents[2].Version },
-                                    new ContentSortViewModel { Id = page.PageContents[1].Id, Version = page.PageContents[1].Version },
-                                    new ContentSortViewModel { Id = page.PageContents[0].Id, Version = page.PageContents[0].Version },
+                                    new ContentSortViewModel { RegionId = region.Id, PageContentId = page.PageContents[2].Id, Version = page.PageContents[2].Version },
+                                    new ContentSortViewModel { RegionId = region.Id, PageContentId = page.PageContents[1].Id, Version = page.PageContents[1].Version },
+                                    new ContentSortViewModel { RegionId = region.Id, PageContentId = page.PageContents[0].Id, Version = page.PageContents[0].Version },
                                 }
                     };
                 var response = command.Execute(request);
 
-                Assert.AreEqual(2, response.UpdatedPageContents.Count);
+                Assert.IsTrue(response);
 
                 session.Flush();
                 session.Clear();

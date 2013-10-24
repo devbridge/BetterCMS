@@ -243,7 +243,7 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult SortPageContent(PageContentSortViewModel model)
         {
             var response = GetCommand<SortPageContentCommand>().ExecuteCommand(model);
-            return Json(new WireJson { Success = response != null, Data = response });
+            return Json(new WireJson { Success = response });
         }
     }
 }
