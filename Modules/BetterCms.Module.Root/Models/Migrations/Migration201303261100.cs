@@ -76,13 +76,5 @@ namespace BetterCms.Module.Root.Models.Migrations
                 .FromTable("Pages").InSchema(SchemaName).ForeignColumn("Status")
                 .ToTable("PageStatuses").InSchema(SchemaName).PrimaryColumn("Id");
         }
-
-        /// <summary>
-        /// Migrate down.
-        /// </summary>
-        public override void Down()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

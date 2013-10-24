@@ -10,14 +10,34 @@ namespace BetterCms.Configuration
     public class CmsSecurityConfigurationElement : ConfigurationElement, ICmsSecurityConfiguration
     {
         /// <summary>
-        /// The full access roles attribute.
+        /// The 'accessControlEnabled' attribute name.
+        /// </summary>
+        private const string AccessControlEnabledAttribute = "accessControlEnabled";
+
+        /// <summary>
+        /// The 'fullAaccessControlListccessRoles' attribute name.
+        /// </summary>
+        private const string DefaultAccessRulesAttribute = "defaultAccessRules";
+
+        /// <summary>
+        /// The 'fullAccessRoles' attribute name.
         /// </summary>
         private const string FullAccessRolesAttribute = "fullAccessRoles";
 
         /// <summary>
-        /// The custom roles attribute.
+        /// The 'customRoles' attribute name.
         /// </summary>
         private const string CustomRolesAttribute = "customRoles";
+
+        /// <summary>
+        /// The 'enableContentEncryption' attribute name.
+        /// </summary>
+        private const string EnableContentEncryptionAttribute = "encryptionEnabled";
+
+        /// <summary>
+        /// The 'contentEncryptionKey' attribute name.
+        /// </summary>
+        private const string ContentEncryptionKeyAttribute = "encryptionKey";
 
         /// <summary>
         /// Gets or sets the full access roles.
@@ -42,6 +62,55 @@ namespace BetterCms.Configuration
         public bool UseCustomRoles
         {
             get { return CustomRoles.Count > 0; }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether to a content encryption is enabled.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if a content encryption is enabled; otherwise, <c>false</c>.
+        /// </value>
+        [ConfigurationProperty(EnableContentEncryptionAttribute, IsRequired = false, DefaultValue = false)]
+        public bool EncryptionEnabled
+        {
+            get { return Convert.ToBoolean(this[EnableContentEncryptionAttribute]); }
+            set { this[EnableContentEncryptionAttribute] = value; }
+        }
+
+        /// <summary>
+        /// Gets the content encryption key.
+        /// </summary>
+        /// <value>
+        /// The content encryption key.
+        /// </value>
+        [ConfigurationProperty(ContentEncryptionKeyAttribute, IsRequired = false, DefaultValue = "")]
+        public string EncryptionKey
+        {
+            get { return Convert.ToString(this[ContentEncryptionKeyAttribute]); }
+            set { this[ContentEncryptionKeyAttribute] = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether access control is enabled.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if access control is enabled; otherwise, <c>false</c>.
+        /// </value>
+        [ConfigurationProperty(AccessControlEnabledAttribute, IsRequired = false, DefaultValue = false)]
+        public bool AccessControlEnabled
+        {
+            get { return (bool)this[AccessControlEnabledAttribute]; }
+            set { this[AccessControlEnabledAttribute] = value; }
+        }
+
+        [ConfigurationProperty(DefaultAccessRulesAttribute, IsDefaultCollection = false)]
+        [ConfigurationCollection(typeof(AccessControlCollection))]
+        public AccessControlCollection DefaultAccessRules
+        {
+            get
+            {
+                return this[DefaultAccessRulesAttribute] as AccessControlCollection;
+            }
         }
 
         /// <summary>

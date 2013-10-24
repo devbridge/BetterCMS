@@ -16,9 +16,24 @@
         public const string EditableGridTemplate = "~/Areas/bcms-root/Views/Shared/EditableGrid/Grid.cshtml";
 
         /// <summary>
+        /// The editable grid template.
+        /// </summary>
+        public const string AccessControlTemplate = "~/Areas/bcms-root/Views/Security/AccessControlTemplate.cshtml";
+
+        /// <summary>
         /// The editable grid cell template.
         /// </summary>
         public const string EditableGridCellTemplate = "~/Areas/bcms-root/Views/Shared/EditableGrid/Partial/Cell.cshtml";
+        
+        /// <summary>
+        /// The editable grid drop down cell template.
+        /// </summary>
+        public const string EditableGridDropDownCellTemplate = "~/Areas/bcms-root/Views/Shared/EditableGrid/Partial/DropDownCell.cshtml";
+        
+        /// <summary>
+        /// The editable grid boolean cell template.
+        /// </summary>
+        public const string EditableGridBooleanCellTemplate = "~/Areas/bcms-root/Views/Shared/EditableGrid/Partial/BooleanCell.cshtml";
 
         /// <summary>
         /// The editable grid header template.
@@ -29,6 +44,11 @@
         /// The editable grid top block template.
         /// </summary>
         public const string EditableGridTopBlockTemplate = "~/Areas/bcms-root/Views/Shared/EditableGrid/Partial/TopBlock.cshtml";
+        
+        /// <summary>
+        /// The editable grid paging template.
+        /// </summary>
+        public const string EditableGridPagingTemplate = "~/Areas/bcms-root/Views/Shared/Partial/Paging.cshtml";
 
         /// <summary>
         /// The editable grid top block class name
@@ -39,6 +59,11 @@
         /// The email regular expression
         /// </summary>
         public const string EmailRegularExpression = @"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$";
+
+        /// <summary>
+        /// The editable grid option cell template.
+        /// </summary>
+        public const string EditableOptionValueCellTemplate = "~/Areas/bcms-pages/Views/Option/Partial/OptionCell.cshtml";
 
         /// <summary>
         /// Module permissions.
@@ -66,7 +91,12 @@
             /// <summary>
             /// Administration permission for Widgets, Templates, Users, etc.
             /// </summary>
-            public const string Administration = "BcmsAdministration";
+            public const string Administration = "BcmsAdministration";            
+
+            /// <summary>
+            /// All CMS roles
+            /// </summary>
+            public static string[] AllRoles = new[] { EditContent, PublishContent, DeleteContent, Administration };
 
             /// <summary>
             /// Multiples the roles.

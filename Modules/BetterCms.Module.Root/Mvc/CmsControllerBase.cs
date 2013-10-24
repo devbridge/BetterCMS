@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Principal;
+using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 using Autofac;
 
@@ -12,8 +15,6 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services;
 using BetterCms.Core.Web;
 using BetterCms.Module.Root.Models;
-
-using Microsoft.Web.Mvc;
 
 namespace BetterCms.Module.Root.Mvc
 {    
@@ -29,6 +30,12 @@ namespace BetterCms.Module.Root.Mvc
 
         private HttpContextTool httpContextTool;
 
+        /// <summary>
+        /// Gets the security service.
+        /// </summary>
+        /// <value>
+        /// The security service.
+        /// </value>
         public ISecurityService SecurityService
         {
             get
@@ -44,37 +51,17 @@ namespace BetterCms.Module.Root.Mvc
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CmsControllerBase" /> class.
+        /// Gets the principal of current command context.
         /// </summary>
-        protected CmsControllerBase()
-        {     
-            HtmlHelper.ClientValidationEnabled = true;
-            HtmlHelper.UnobtrusiveJavaScriptEnabled = true;            
-
-            RenderViewDelegate = (viewName, model, enableFormContext) =>
-                {
-                    if (string.IsNullOrEmpty(viewName))
-                    {
-                        viewName = ControllerContext.RouteData.GetRequiredString("action");
-                    }
-
-                    ViewData.Model = model;
-
-                    using (var sw = new StringWriter())
-                    {
-                        var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
-                        var viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
-                        if (enableFormContext && viewContext.FormContext == null)
-                        {
-                            viewContext.FormContext = new FormContext();
-                        }
-
-                        viewResult.View.Render(viewContext, sw);
-                        viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
-
-                        return sw.GetStringBuilder().ToString();
-                    }
-                };
+        /// <value>
+        /// The current command principal.
+        /// </value>
+        IPrincipal ICommandContext.Principal
+        {
+            get
+            {
+                return User;
+            }
         }
 
         public virtual ICommandResolver CommandResolver { get; set; }
@@ -126,7 +113,7 @@ namespace BetterCms.Module.Root.Mvc
             get
             {
                 var userMessages = ViewData[UserMessagesViewDataKey] as UserMessages;
-               
+
                 if (userMessages == null)
                 {
                     userMessages = new UserMessages();
@@ -135,6 +122,40 @@ namespace BetterCms.Module.Root.Mvc
 
                 return userMessages;
             }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CmsControllerBase" /> class.
+        /// </summary>
+        protected CmsControllerBase()
+        {     
+            HtmlHelper.ClientValidationEnabled = true;
+            HtmlHelper.UnobtrusiveJavaScriptEnabled = true;            
+
+            RenderViewDelegate = (viewName, model, enableFormContext) =>
+                {
+                    if (string.IsNullOrEmpty(viewName))
+                    {
+                        viewName = ControllerContext.RouteData.GetRequiredString("action");
+                    }
+
+                    ViewData.Model = model;
+
+                    using (var sw = new StringWriter())
+                    {
+                        var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
+                        var viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
+                        if (enableFormContext && viewContext.FormContext == null)
+                        {
+                            viewContext.FormContext = new FormContext();
+                        }
+
+                        viewResult.View.Render(viewContext, sw);
+                        viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
+
+                        return sw.GetStringBuilder().ToString();
+                    }
+                };
         }
 
         /// <summary>
@@ -163,8 +184,7 @@ namespace BetterCms.Module.Root.Mvc
         /// </returns>
         [NonAction]
         public virtual JsonResult Json(WireJson data, JsonRequestBehavior behavior = JsonRequestBehavior.DenyGet)
-        {
-            // TODO: create wirejson result.
+        {            
             List<string> messages = data.Messages != null
                                         ? data.Messages.ToList()
                                         : new List<string>();
@@ -231,6 +251,44 @@ namespace BetterCms.Module.Root.Mvc
         public virtual string RenderView(string viewName, object model, bool enableFormContext = false)
         {
             return RenderViewDelegate(viewName, model, enableFormContext);
+        }
+
+        /// <summary>
+        /// Signs out user.
+        /// </summary>
+        [NonAction]
+        protected virtual ActionResult SignOutUserIfAuthenticated()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                if (FormsAuthentication.IsEnabled)
+                {
+                    FormsAuthentication.SignOut();
+                }
+
+                HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+                HttpCookie roleCokie = Roles.Enabled ? Request.Cookies[Roles.CookieName] : null;
+
+                if (authCookie != null)
+                {
+                    Response.Cookies.Add(
+                        new HttpCookie(authCookie.Name)
+                            {
+                                Expires = DateTime.Now.AddDays(-10)
+                            });
+                }
+
+                if (roleCokie != null)
+                {
+                    Response.Cookies.Add(
+                        new HttpCookie(roleCokie.Name)
+                            {
+                                Expires = DateTime.Now.AddDays(-10)
+                            });
+                }
+            }
+
+            return Redirect(FormsAuthentication.LoginUrl);
         }
 
         /// <summary>

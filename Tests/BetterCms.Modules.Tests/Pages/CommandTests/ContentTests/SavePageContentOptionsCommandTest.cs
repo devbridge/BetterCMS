@@ -3,9 +3,14 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Services.Caching;
+
 using BetterCms.Module.Pages.Command.Content.SavePageContentOptions;
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Services;
+using BetterCms.Module.Root.ViewModels.Option;
 
 using NUnit.Framework;
 
@@ -35,31 +40,35 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                 // Create request
                 var request = new PageContentOptionsViewModel
                     {
-                        WidgetOptions = new List<PageContentOptionViewModel>
+                        OptionValues = new List<OptionValueEditViewModel>
                             {
-                                  new PageContentOptionViewModel
+                                  new OptionValueEditViewModel
                                       {
-                                          // Will be deleted because of default value
-                                          OptionValue = content.ContentOptions[0].DefaultValue,
+                                          // Must be updated
                                           OptionKey = pageContent.Options[0].Key,
-                                          OptionDefaultValue = content.ContentOptions[0].DefaultValue
+                                          OptionValue = content.ContentOptions[0].DefaultValue,
+                                          UseDefaultValue = false
                                       },
-                                  new PageContentOptionViewModel
+                                  new OptionValueEditViewModel
                                       {
-                                          // Will be deleted because of null value
+                                          // Must be deleted
+                                          OptionKey = pageContent.Options[1].Key,
                                           OptionValue = null,
-                                          OptionKey = pageContent.Options[1].Key
+                                          UseDefaultValue = true
                                       },
-                                  new PageContentOptionViewModel
+                                  new OptionValueEditViewModel
                                       {
-                                          OptionValue = pageContent.Options[2].Value,
-                                          OptionKey = pageContent.Options[2].Key
+                                          // Must be updated
+                                          OptionKey = pageContent.Options[2].Key,
+                                          OptionValue = null,
+                                          UseDefaultValue = false
                                       },
-                                  new PageContentOptionViewModel
+                                  new OptionValueEditViewModel
                                       {
-                                          // Random value
+                                          // Must be created
                                           OptionValue = randomOptionValue.Value,
-                                          OptionKey = randomOptionValue.Key
+                                          OptionKey = randomOptionValue.Key,
+                                          Type = OptionType.Text
                                       }
 
                             },
@@ -72,6 +81,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                 var command = new SavePageContentOptionsCommand();
                 command.UnitOfWork = unitOfWork;
                 command.Repository = repository;
+                command.OptionService = new DefaultOptionService(repository, new HttpRuntimeCacheService());
                 var result = command.Execute(request);
 
                 Assert.IsTrue(result);
@@ -82,9 +92,13 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                         && !pco.IsDeleted
                         && !pco.PageContent.IsDeleted)
                     .ToList();
-                Assert.AreEqual(results.Count, 2);
-                Assert.IsNotNull(results.FirstOrDefault(pco => pco.Key == pageContent.Options[2].Key
-                    && pco.Value == pageContent.Options[2].Value));
+                Assert.AreEqual(results.Count, 3);
+                Assert.IsNotNull(results.FirstOrDefault(pco => {
+                    return pco.Key == pageContent.Options[0].Key && pco.Value == content.ContentOptions[0].DefaultValue;
+                }));
+                Assert.IsNotNull(results.FirstOrDefault(pco => {
+                    return pco.Key == pageContent.Options[2].Key && pco.Value == null;
+                }));
                 Assert.IsNotNull(results.FirstOrDefault(pco => pco.Key == randomOptionValue.Key
                     && pco.Value == randomOptionValue.Value));
             });

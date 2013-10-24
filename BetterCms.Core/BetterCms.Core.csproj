@@ -56,8 +56,9 @@
     <Reference Include="Autofac.Integration.Mvc">
       <HintPath>..\packages\Autofac.Mvc4.2.6.2.859\lib\NET40\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="Common.Logging">
-      <HintPath>..\packages\Common.Logging.2.1.1\lib\net40\Common.Logging.dll</HintPath>
+    <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="FluentMigrator, Version=1.0.6.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -100,9 +101,12 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Web.WebPages.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -116,24 +120,21 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Api\DataApiContext.cs" />
-    <Compile Include="Api\DataContracts\DataListResponse.cs" />
-    <Compile Include="Api\DataContracts\GetDataRequest.cs" />
-    <Compile Include="Api\DataContracts\GetFilteredDataRequest.cs" />
-    <Compile Include="Api\Events\EventBase.cs" />
-    <Compile Include="Api\Events\CoreEvents.cs" />
-    <Compile Include="Api\Events\SingleItemEventArgs.cs" />
-    <Compile Include="Api\Extensions\ApiQueryableExtensions.cs" />
+    <Compile Include="DataContracts\ICustomOption.cs" />
+    <Compile Include="DataContracts\IDeletableOption.cs" />
+    <Compile Include="DataContracts\IOptionContainer.cs" />
+    <Compile Include="DataContracts\IDeleteableEntity.cs" />
+    <Compile Include="DataContracts\IOptionValue.cs" />
+    <Compile Include="DataContracts\IRenderPage.cs" />
+    <Compile Include="Events\EventBase.cs" />
+    <Compile Include="Events\CoreEvents.cs" />
+    <Compile Include="Events\SingleItemEventArgs.cs" />
     <Compile Include="CmsContext.cs" />
-    <Compile Include="Api\ApiContext.cs" />
     <Compile Include="DataAccess\DataContext\Fetching\EagerFetch.cs" />
     <Compile Include="DataAccess\DataContext\Fetching\FetchRequest.cs" />
     <Compile Include="DataAccess\DataContext\Fetching\IFetchingProvider.cs" />
     <Compile Include="DataAccess\DataContext\Fetching\IFetchRequest.cs" />
     <Compile Include="DataAccess\DataContext\Fetching\DefaultFetchingProvider.cs" />
-    <Compile Include="DataAccess\DataContext\Migrations\ContentMigration.cs" />
-    <Compile Include="DataAccess\DataContext\Migrations\IContentMigration.cs" />
-    <Compile Include="DataAccess\DataContext\Migrations\ContentMigrationAttribute.cs" />
     <Compile Include="DataAccess\DataContext\Migrations\DefaultVersionChecker.cs" />
     <Compile Include="DataAccess\DataContext\Migrations\IVersionChecker.cs" />
     <Compile Include="DataAccess\DataContext\QueryableExtensions.cs" />
@@ -147,7 +148,6 @@
     <Compile Include="DataAccess\DataContext\Migrations\DefaultMigrationRunner.cs" />
     <Compile Include="DataAccess\DataContext\Migrations\IMigrationRunner.cs" />
     <Compile Include="DataAccess\DataContext\Migrations\MigrationExtensions.cs" />
-    <Compile Include="Api\Extensions\ApiRepositoryExtensions.cs" />
     <Compile Include="DataAccess\DataContext\RestrictionsExtensions.cs" />
     <Compile Include="DataAccess\DataContext\SessionExtensions.cs" />
     <Compile Include="DataContracts\IDynamicHtmlLayoutContent.cs" />
@@ -158,7 +158,6 @@
     <Compile Include="DataContracts\Enums\OptionType.cs" />
     <Compile Include="DataContracts\ICategory.cs" />
     <Compile Include="DataContracts\IContent.cs" />
-    <Compile Include="DataContracts\IContentOption.cs" />
     <Compile Include="DataContracts\IEntity.cs" />
     <Compile Include="DataContracts\IHistorical.cs" />
     <Compile Include="DataContracts\IHtmlContent.cs" />
@@ -166,7 +165,6 @@
     <Compile Include="DataContracts\IOption.cs" />
     <Compile Include="DataContracts\IPage.cs" />
     <Compile Include="DataContracts\IPageContent.cs" />
-    <Compile Include="DataContracts\IPageContentOption.cs" />
     <Compile Include="DataContracts\IRegion.cs" />
     <Compile Include="DataContracts\IWidget.cs" />
     <Compile Include="Dependencies\ContextScopeProvider.cs" />
@@ -182,10 +180,20 @@
     <Compile Include="Modules\Projections\JavaScriptModuleLink.cs" />
     <Compile Include="Mvc\Attributes\NoCacheAttribute.cs" />
     <Compile Include="Mvc\Extensions\VirtualPath.cs" />
+    <Compile Include="Security\AccessLevel.cs" />
     <Compile Include="Security\BcmsAuthorizeAttribute.cs" />
+    <Compile Include="Security\IAccessControlDisabled.cs" />
+    <Compile Include="Security\IAccessSecuredObject.cs" />
+    <Compile Include="Security\IAccessRule.cs" />
+    <Compile Include="Security\EncryptableString.cs" />
+    <Compile Include="Security\IAccessControlService.cs" />
+    <Compile Include="Security\IAccessSecuredObjectDependency.cs" />
+    <Compile Include="Security\ITextEncryptor.cs" />
     <Compile Include="Security\IUserRole.cs" />
     <Compile Include="Modules\Projections\EmptyContentAccessor.cs" />
     <Compile Include="Mvc\Attributes\IgnoreAutoRouteAttribute.cs" />
+    <Compile Include="Security\DefaultTextEncryptor.cs" />
+    <Compile Include="Security\SpecialIdentities.cs" />
     <Compile Include="Security\UserRole.cs" />
     <Compile Include="Services\Storage\FtpStorageService.cs" />
     <Compile Include="Services\Storage\DownloadResponse.cs" />

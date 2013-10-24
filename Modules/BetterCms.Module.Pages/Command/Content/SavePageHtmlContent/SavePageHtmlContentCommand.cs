@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Linq;
 
-using BetterCms.Api;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Content;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -18,22 +20,25 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
     public class SavePageHtmlContentCommand : CommandBase, ICommand<PageContentViewModel, SavePageHtmlContentResponse>
     {
         private readonly IContentService contentService;
+        
+        private readonly ICmsConfiguration configuration;
 
-        public SavePageHtmlContentCommand(IContentService contentService)
+        public SavePageHtmlContentCommand(IContentService contentService, ICmsConfiguration configuration)
         {
             this.contentService = contentService;
+            this.configuration = configuration;
         }
 
         public SavePageHtmlContentResponse Execute(PageContentViewModel request)
         {
             if (request.DesirableStatus == ContentStatus.Published)
             {
-                DemandAccess(RootModuleConstants.UserRoles.PublishContent);
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.PublishContent);
             }
 
             if (request.Id == default(Guid) || request.DesirableStatus != ContentStatus.Published)
             {
-                DemandAccess(RootModuleConstants.UserRoles.EditContent);
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent);
             }
 
             UnitOfWork.BeginTransaction();
@@ -41,15 +46,44 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
             PageContent pageContent;            
             if (!request.Id.HasDefaultValue())
             {
-                pageContent = Repository.AsQueryable<PageContent>().Where(f => f.Id == request.Id && !f.IsDeleted).FirstOne();
+                var query = Repository
+                    .AsQueryable<PageContent>()
+                    .Where(f => f.Id == request.Id && !f.IsDeleted)
+                    .AsQueryable();
+
+                if (configuration.Security.AccessControlEnabled)
+                {
+                    query = query.Fetch(f => f.Page).ThenFetchMany(f => f.AccessRules);
+                }
+
+                pageContent = query.ToList().FirstOne();
             }
             else
             {              
                 pageContent = new PageContent();
                 pageContent.Order = contentService.GetPageContentNextOrderNumber(request.PageId);
+
+                if (configuration.Security.AccessControlEnabled)
+                {
+                    pageContent.Page = Repository
+                        .AsQueryable<Root.Models.Page>(p => p.Id == request.PageId)
+                        .FetchMany(p => p.AccessRules)
+                        .ToList()
+                        .FirstOne();
+                }
             }
 
-            pageContent.Page = Repository.AsProxy<Root.Models.Page>(request.PageId);
+            // Deman access
+            if (configuration.Security.AccessControlEnabled)
+            {
+                AccessControlService.DemandAccess(pageContent.Page, Context.Principal, AccessLevel.ReadWrite);
+            }
+
+            // Get page as proxy, if page is not retrieved yet
+            if (!configuration.Security.AccessControlEnabled)
+            {
+                pageContent.Page = Repository.AsProxy<Root.Models.Page>(request.PageId);
+            }
             pageContent.Region = Repository.AsProxy<Region>(request.RegionId);
 
             var contentToSave = new HtmlContent
@@ -93,7 +127,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
             // Notify.
             if (request.DesirableStatus != ContentStatus.Preview)
             {
-                PagesApiContext.Events.OnPageContentInserted(pageContent);
+                Events.PageEvents.Instance.OnPageContentInserted(pageContent);
             }
 
             return new SavePageHtmlContentResponse {

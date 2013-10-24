@@ -15,7 +15,12 @@
     <div class="bcms-padded-content">
         <div class="bcms-editseo-window">
 
-            @using (Html.BeginForm<SeoController>(f => f.EditSeo((EditSeoViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
+            @using (Html.BeginForm<SeoController>(f => f.EditSeo((EditSeoViewModel)null), FormMethod.Post, 
+                new
+                    {
+                        @class = "bcms-ajax-form",
+                        data_readonly = Model.IsReadOnly.ToString().ToLower()
+                    }))
             {
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditSeo_PageTitle_Tooltip_Description)

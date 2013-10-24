@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
-using BetterCms.Api;
-using BetterCms.Core;
-using BetterCms.Core.Api.DataContracts;
-using BetterCms.Module.Blog.Api.DataContracts;
-using BetterCms.Module.Blog.Models;
-using BetterCms.Module.Pages.Api.DataContracts;
-using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Users.Provider;
+using BetterCms.Sandbox.Mvc4.Helpers;
 using BetterCms.Sandbox.Mvc4.Models;
+
+using httpContext = System.Web.HttpContext;
 
 namespace BetterCms.Sandbox.Mvc4.Controllers
 {
@@ -34,113 +30,45 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet]
         public ActionResult Login(string roles)
         {
-            //            var roles = string.Join(",", Roles.GetRolesForUser(string.Empty));
-            if (string.IsNullOrEmpty(roles))
+            if (Roles.Enabled && Roles.Provider is CmsRoleProvider)
             {
-                roles = "Owner";
+                var model = new LoginViewModel
+                                {
+                                    Identity =  User.Identity
+                                };
+
+                return View(model);
             }
 
-            var authTicket = new FormsAuthenticationTicket(1, "Better CMS test user", DateTime.Now, DateTime.Now.AddMonths(1), true, roles);
-
-            var cookieContents = FormsAuthentication.Encrypt(authTicket);
-            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, cookieContents)
-            {
-                Expires = authTicket.Expiration,
-                Path = FormsAuthentication.FormsCookiePath
-            };
-
-            HttpContext.Response.Cookies.Add(cookie);
+            AuthenticationHelper.CreateTicket(!string.IsNullOrWhiteSpace(roles) ? roles.Split(',') : new[] { "Owner" });
 
             return Redirect("/");
         }
 
         [AllowAnonymous]
-        public ActionResult Logout()
+        [HttpPost]
+        public ActionResult Login(LoginViewModel login)
         {
-            Session.Clear();
-            FormsAuthentication.SignOut();
-
-            return Redirect("/");
-        }
-
-        public ActionResult TestApi()
-        {
-            /*PagesApiContext.Events.PageCreated += EventsOnPageCreated;
-
-            PagesApiContext.Events.OnPageCreated(new PageProperties());
-
-            ApiContext.Events.HostStart += Core_HostStart;*/
-
-            var message = string.Empty;
-
-            DataListResponse<BlogPost> results;
-            using (var api = CmsContext.CreateApiContextOf<BlogsApiContext>())
+            if (Membership.ValidateUser(login.UserName, login.Password))
             {
-                using (var papi = CmsContext.CreateApiContextOf<PagesApiContext>())
-                {
-                    var request = new GetLayoutsRequest();
-                    var result = papi.GetLayouts(request);
+                var roles = Roles.GetRolesForUser(login.UserName);
+                AuthenticationHelper.CreateTicket(roles, login.UserName);
 
-                    /*var aRequest = new GetContentHistoryRequest(new Guid("AE04E233-4E88-4A9F-87BC-A1CC00F2C173"));
-                    var aresults = papi.GetContentHistory(aRequest);
-
-                    if (aresults.Items.Count > 0)
-                    {
-                        message = string.Format("{0}<br />Total count:{2},  Item titles: {1}", message, string.Join("; ", aresults.Items.Select(t => t.Name)), aresults.TotalCount);
-                    }
-
-                    aRequest = new GetContentHistoryRequest(new Guid("AE04E233-4E88-4A9F-87BC-A1CC00F2C173"), a => a.Name.ToLower().Contains("poop"), o => o.Name, orderDescending: true);
-                    aresults = papi.GetContentHistory(aRequest);
-
-                    if (aresults.Items.Count > 0)
-                    {
-                        message = string.Format("{0}<br />Total count:{2},  Item titles: {1}", message, string.Join("; ", aresults.Items.Select(t => t.Name)), aresults.TotalCount);
-                    }*/
-
-                    /*var request = new GetDataRequest<Layout>(3, 2, orderDescending:true, order:t =>t.Name);
-                    results = pagesApi.GetLayouts(request);*/
-
-                    /*var request = new GetDataRequest<LayoutRegion>(orderDescending: true, order: t => t.Region.RegionIdentifier);
-                    request.AddPaging(2, 2);*/
-
-                    /*var request = new GetBlogPostsRequest(b => b.ExpirationDate.HasValue, includePrivate: true, includeUnpublished: true, itemsCount: 3);
-                    results = api.GetBlogPosts(request);
-
-                    if (results.Items.Count > 0)
-                    {
-                        message = string.Format(
-                            "{0}<br />Total count:{2},  Item titles: {1}", message, string.Join("; ", results.Items.Select(t => t.Title)), results.TotalCount);
-                    }
-
-                    request = new GetBlogPostsRequest(order: b => b.Title, orderDescending: true, includePrivate: true, includeUnpublished: true);
-                    request.AddPaging(3, 3);
-                    results = api.GetBlogPosts(request);
-
-                    if (results.Items.Count > 0)
-                    {
-                        message = string.Format(
-                            "{0}<br />Total count:{2}, Item titles: {1}", message, string.Join("; ", results.Items.Select(t => t.Title)), results.TotalCount);
-                    }
-
-                    request = new GetBlogPostsRequest(
-                        order: b => b.Title, orderDescending: true, itemsCount: 5, startItemNumber: 3, includeUnpublished: true, includePrivate: true);
-                    results = api.GetBlogPosts(request);*/
-                }
+                return Redirect("/");
             }
 
-            return Content(message);
+            return Login((string)null);
         }
 
-        void Core_HostStart(SingleItemEventArgs<HttpApplication> args)
+        [AllowAnonymous]
+        public ActionResult Logout()
         {
-            throw new NotImplementedException();
-        }
-
-        private void EventsOnPageCreated(SingleItemEventArgs<PageProperties> args)
-        {
-
+            AuthenticationHelper.Logout();
+            
+            return Redirect("/");
         }
 
         public ActionResult TestNavigationApi()
@@ -149,22 +77,6 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
             var message = new StringBuilder("No sitemap data found!");
 
             return Content(message.ToString());
-        }
-
-        [AllowAnonymous]
-        public ActionResult LoginJson(LoginViewModel login)
-        {
-            Login(string.Empty);
-
-            return Json(new { Success = true });
-        }
-
-        [AllowAnonymous]
-        public ActionResult LogoutJson(LoginViewModel login)
-        {
-            Logout();
-
-            return Json(new { Success = true });
         }
 
         public ActionResult NotFound()

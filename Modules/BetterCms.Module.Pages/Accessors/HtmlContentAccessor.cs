@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
@@ -13,14 +12,16 @@ namespace BetterCms.Module.Pages.Accessors
     [Serializable]
     public class HtmlContentAccessor : ContentAccessor<HtmlContent>
     {
-        public HtmlContentAccessor(HtmlContent content, IList<IOption> options)
+        public const string ContentWrapperType = "html-content";
+
+        public HtmlContentAccessor(HtmlContent content, IList<IOptionValue> options)
             : base(content, options)
         {
         }
 
         public override string GetContentWrapperType()
         {
-            return "html-content";
+            return ContentWrapperType;
         }
 
         public override string GetHtml(HtmlHelper html)
@@ -54,6 +55,16 @@ namespace BetterCms.Module.Pages.Accessors
                 return Content.CustomJs;
             }
 
+            return null;
+        }
+
+        public override string[] GetStylesResources(HtmlHelper html)
+        {
+            return null;
+        }
+
+        public override string[] GetJavaScriptResources(HtmlHelper html)
+        {
             return null;
         }
     }

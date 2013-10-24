@@ -10,7 +10,7 @@
         /// </summary>
         /// <param name="order">Projection order.</param>
         public SeparatorProjection(int order)
-            : base("hr")
+            : base("hr", true)
         {
             Order = order;
         }

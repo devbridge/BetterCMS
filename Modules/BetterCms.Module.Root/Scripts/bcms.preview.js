@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define */
+/*global bettercms */
 
 bettercms.define('bcms.preview', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.dynamicContent'], function ($, bcms, modal, dynamicContent) {
     'use strict';
@@ -20,7 +20,9 @@ bettercms.define('bcms.preview', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.dyn
             previewPageUrl: null
         },
         
-        globalization = {};
+        globalization = {
+            closeButtonTitle: null
+        };
 
     // Assign objects to module
     preview.classes = classes;
@@ -37,6 +39,7 @@ bettercms.define('bcms.preview', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.dyn
             
             modal.open({
                 title: title,
+                cancelTitle: globalization.closeButtonTitle,
                 disableAccept: true,
                 onLoad: function(previewDialog) {
                     dynamicContent.bindDialog(previewDialog, url, {

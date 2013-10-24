@@ -23,14 +23,17 @@ namespace BetterCms.Module.Newsletter.Controllers
     public class SubscriberController : CmsControllerBase
     {
         /// <summary>
-        /// Lists the template for dispaying subscribers list.
+        /// Lists the template for displaying subscribers list.
         /// </summary>
         /// <returns>Json result.</returns>
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult ListTemplate()
         {
             var view = RenderView("List", null);
-            var subscribers = GetCommand<GetSubscriberListCommand>().ExecuteCommand(new SearchableGridOptions());
+            var request = new SearchableGridOptions();
+            request.SetDefaultPaging();
+
+            var subscribers = GetCommand<GetSubscriberListCommand>().ExecuteCommand(request);
 
             return ComboWireJson(subscribers != null, view, subscribers, JsonRequestBehavior.AllowGet);
         }
@@ -40,9 +43,10 @@ namespace BetterCms.Module.Newsletter.Controllers
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>Json result.</returns>
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult SubscribersList(SearchableGridOptions request)
         {
+            request.SetDefaultPaging();
             var model = GetCommand<GetSubscriberListCommand>().ExecuteCommand(request);
             return WireJson(model != null, model);
         }
@@ -53,7 +57,7 @@ namespace BetterCms.Module.Newsletter.Controllers
         /// <param name="model">The model.</param>
         /// <returns>Json result.</returns>
         [HttpPost]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult SaveSubscriber(SubscriberViewModel model)
         {
             var success = false;
@@ -94,7 +98,7 @@ namespace BetterCms.Module.Newsletter.Controllers
         /// <param name="version">The version.</param>
         /// <returns>Json result.</returns>
         [HttpPost]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult DeleteSubscriber(string id, string version)
         {
             var request = new SubscriberViewModel { Id = id.ToGuidOrDefault(), Version = version.ToIntOrDefault() };

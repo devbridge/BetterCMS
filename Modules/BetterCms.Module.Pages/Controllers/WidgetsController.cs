@@ -2,10 +2,12 @@
 using System.Web.Mvc;
 
 using BetterCms.Core.Security;
+using BetterCms.Module.Pages.Command.History.GetContentVersion;
 using BetterCms.Module.Pages.Command.Widget.DeleteWidget;
 using BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit;
 using BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit;
 using BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets;
+using BetterCms.Module.Pages.Command.Widget.PreviewWidget;
 using BetterCms.Module.Pages.Command.Widget.SaveWidget;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.ViewModels.Widgets;
@@ -130,8 +132,9 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult CreateServerControlWidget()
         {
             var model = GetCommand<GetServerControlWidgetForEditCommand>().ExecuteCommand(null);
+            var view = RenderView("EditServerControlWidget", model);
 
-            return PartialView("EditServerControlWidget", model);
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -163,12 +166,6 @@ namespace BetterCms.Module.Pages.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (model.ContentOptions != null && model.ContentOptions.GroupBy(o => o.OptionKey).SelectMany(g => g.Skip(1)).Any())
-                {
-                    Messages.AddError(PagesGlobalization.SaveWidget_DublicateOptionName_Message);
-                    return Json(new WireJson { Success = false });
-                }
-
                 var response = GetCommand<SaveServerControlWidgetCommand>().ExecuteCommand(model);
                 if (response != null)
                 {
@@ -184,24 +181,22 @@ namespace BetterCms.Module.Pages.Controllers
             return Json(new WireJson { Success = false });
         }
 
-        // TODO: remote it. use previewUrl.
+        /// <summary>
+        /// Renders widget preview.
+        /// </summary>
+        /// <param name="widgetId">The widget id.</param>
+        /// <param name="enableJavaScript">if set to <c>true</c> enable java script.</param>
+        /// <returns>
+        /// View with widget preview
+        /// </returns>
         [HttpGet]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration, RootModuleConstants.UserRoles.EditContent)]
-        public ActionResult PreviewHtmlContentWidget(string contentId)
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration, RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)]
+        public ActionResult PreviewWidget(string widgetId, bool enableJavaScript)
         {
-            HtmlContentWidgetViewModel model = GetCommand<GetHtmlContentWidgetForEditCommand>().ExecuteCommand(contentId.ToGuidOrDefault());
+            var request = new PreviewWidgetCommandRequest { WidgetId = widgetId.ToGuidOrDefault(), IsJavaScriptEnabled = enableJavaScript };
+            var model = GetCommand<PreviewWidgetCommand>().ExecuteCommand(request);
 
-            return View(model);
-        }
-
-        // TODO: remote it. use previewUrl.
-        [HttpGet]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration, RootModuleConstants.UserRoles.EditContent)]
-        public ActionResult PreviewWidget(string widgetId)
-        {
-            ServerControlWidgetViewModel model = GetCommand<GetServerControlWidgetForEditCommand>().ExecuteCommand(widgetId.ToGuidOrDefault());
-
-            return View(model);
+            return View(PagesConstants.ContentVersionPreviewTemplate, model);
         }
 
         /// <summary>
@@ -214,10 +209,10 @@ namespace BetterCms.Module.Pages.Controllers
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult Widgets(SearchableGridOptions request)
         {
+            request.SetDefaultPaging();
             var model = GetCommand<GetSiteSettingsWidgetsCommand>().ExecuteCommand(request);
 
             // TODO: add servercontrolwidgetvalidation command and check if server controls exists in the server.
-
             /*if (model.ValidationMessages != null && model.ValidationMessages.Count > 0)
             {
                 Messages.AddWarn(model.ValidationMessages.ToArray());

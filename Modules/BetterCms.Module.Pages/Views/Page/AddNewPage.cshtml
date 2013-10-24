@@ -1,41 +1,67 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
+﻿@using BetterCms.Module.Pages
+@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Page
+@using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Root.ViewModels.Security
 @using Microsoft.Web.Mvc
 
 @model AddNewPageViewModel
+           
+<div class="bcms-tab-header">
+    <a class="bcms-tab bcms-tab-active" data-name="#bcms-tab-1">@PagesGlobalization.AddNewPage_Title</a>
+    <a class="bcms-tab" data-name="#bcms-tab-2">@PagesGlobalization.AddNewPage_Options</a>
+</div>
+
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
-    <div class="bcms-padded-content">
-        @using (Html.BeginForm<PageController>(f => f.AddNewPage((string)null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
-        {
-            <div class="bcms-input-list-holder">
-                @Html.Tooltip(PagesGlobalization.AddNewPage_PageTitle_Tooltip_Description)
-                <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_PageTitle</div>
-                <div class="bcms-input-box">
-                    @Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-editor-field-box", @id = "PageTitle" })
-                    @Html.BcmsValidationMessageFor(f => f.PageTitle)
+
+    @using (Html.BeginForm<PageController>(f => f.AddNewPage((string)null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
+    {
+        <div id="bcms-tab-1" class="bcms-tab-single">
+            <div class="bcms-padded-content">
+                <div class="bcms-input-list-holder">
+                    @Html.Tooltip(PagesGlobalization.AddNewPage_PageTitle_Tooltip_Description)
+                    <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_PageTitle</div>
+                    <div class="bcms-input-box">
+                        @Html.TextBoxFor(f => f.PageTitle, new { @class = "bcms-editor-field-box", @id = "PageTitle" })
+                        @Html.BcmsValidationMessageFor(f => f.PageTitle)
+                    </div>
                 </div>
-            </div>
             
-            @Html.Partial("Partial/AddNewPageEditPermalink")
+                @Html.Partial("Partial/AddNewPageEditPermalink")
             
-            <div class="bcms-addpage-title">
-                @Html.Tooltip(PagesGlobalization.AddNewPage_Template_Tooltip_Description)
-                <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_Template</div>
-            </div>
+                <div class="bcms-addpage-title">
+                    @Html.Tooltip(PagesGlobalization.AddNewPage_Template_Tooltip_Description)
+                    <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_Template</div>
+                </div>
 
-            <div class="bcms-info-message-box">
-                <a class="bcms-btn-close" id="bcms-addnewpage-closeinfomessage">@RootGlobalization.Button_Close</a>
-                @Html.Raw(PagesGlobalization.AddNewPage_Template_InfoMessage_Text)
-            </div>
+                <div class="bcms-info-message-box">
+                    <a class="bcms-btn-close" id="bcms-addnewpage-closeinfomessage">@RootGlobalization.Button_Close</a>
+                    @Html.Raw(PagesGlobalization.AddNewPage_Template_InfoMessage_Text)
+                </div>
 
-            @Html.Partial("Partial/TemplatesList", Model.Templates)
-            @Html.HiddenFor(f => f.TemplateId, new { @id = "TemplateId" })
-            @Html.HiddenFor(f => f.ParentPageUrl)
-            @Html.HiddenSubmit()
-        }
-    </div>
+                @Html.Partial("Partial/TemplatesList", Model.Templates)
+                @Html.HiddenFor(f => f.TemplateId, new { @id = "TemplateId" })
+                @Html.HiddenFor(f => f.ParentPageUrl)
+                @Html.HiddenSubmit()
+                
+                @if (Model.AccessControlEnabled)
+                {
+                    var viewModel = new UserAccessTemplateViewModel
+                                        {
+                                            Title = PagesGlobalization.AddNewPage_UserAccess,
+                                            Tooltip = PagesGlobalization.AddNewPage_UserAccess_Tooltip_Description
+                                        };
+                    @Html.Partial(RootModuleConstants.AccessControlTemplate, viewModel)
+                }
+            </div>
+        </div>
+            
+        <div id="bcms-tab-2" class="bcms-tab-single" data-bind="with: options">
+            @Html.Partial(PagesConstants.OptionValuesGridTemplate)
+        </div>
+    }
 </div>

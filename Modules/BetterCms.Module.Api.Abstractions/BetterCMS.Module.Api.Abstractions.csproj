@@ -1,0 +1,325 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{073E257B-A6A0-42FC-9102-8E920BF54E50}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BetterCms.Module.Api</RootNamespace>
+    <AssemblyName>BetterCms.Module.Api.Abstractions</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ServiceStack, Version=3.9.56.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\ServiceStack.3.9.56\lib\net35\ServiceStack.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Common, Version=3.9.56.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\ServiceStack.Common.3.9.56\lib\net35\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces, Version=3.9.56.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\ServiceStack.Common.3.9.56\lib\net35\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.ServiceInterface, Version=3.9.56.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\ServiceStack.3.9.56\lib\net35\ServiceStack.ServiceInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text, Version=3.9.56.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\ServiceStack.Text.3.9.56\lib\net35\ServiceStack.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Infrastructure\DataFilter.cs" />
+    <Compile Include="Infrastructure\DataListResponse.cs" />
+    <Compile Include="Infrastructure\DataOptions.cs" />
+    <Compile Include="Infrastructure\DataOptionsExtensions.cs" />
+    <Compile Include="Infrastructure\DataOrder.cs" />
+    <Compile Include="Infrastructure\FilterItem.cs" />
+    <Compile Include="Infrastructure\IFilterByTags.cs" />
+    <Compile Include="Infrastructure\ListResponseBase.cs" />
+    <Compile Include="Infrastructure\ModelBase.cs" />
+    <Compile Include="Infrastructure\OrderItem.cs" />
+    <Compile Include="Infrastructure\RequestBase.cs" />
+    <Compile Include="Infrastructure\ResponseBase.cs" />
+    <Compile Include="Operations\Blog\Authors\AuthorModel.cs" />
+    <Compile Include="Operations\Blog\Authors\Author\GetAuthorRequest.cs" />
+    <Compile Include="Operations\Blog\Authors\Author\GetAuthorResponse.cs" />
+    <Compile Include="Operations\Blog\Authors\Author\IAuthorService.cs" />
+    <Compile Include="Operations\Blog\Authors\GetAuthorsRequest.cs" />
+    <Compile Include="Operations\Blog\Authors\GetAuthorsResponse.cs" />
+    <Compile Include="Operations\Blog\Authors\IAuthorsService.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\BlogPostModel.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\BlogPost\BlogPostModel.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\BlogPost\GetBlogPostModel.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\BlogPost\GetBlogPostRequest.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\BlogPost\GetBlogPostResponse.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\BlogPost\IBlogPostService.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\AuthorModel.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\BlogPostPropertiesModel.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\CategoryModel.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\GetBlogPostPropertiesModel.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\GetBlogPostPropertiesRequest.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\GetBlogPostPropertiesResponse.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\IBlogPostPropertiesService.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\ImageModel.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\LayoutModel.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\MetadataModel.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\TagModel.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\GetBlogPostsModel.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\GetBlogPostsRequest.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\GetBlogPostsRequestValidator.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\GetBlogPostsResponse.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\IBlogPostsService.cs" />
+    <Compile Include="Operations\Blog\IBlogApiOperations.cs" />
+    <Compile Include="Infrastructure\Enums\FilterConnector.cs" />
+    <Compile Include="Infrastructure\Enums\FilterOperation.cs" />
+    <Compile Include="Infrastructure\Enums\OrderDirection.cs" />
+    <Compile Include="Operations\MediaManager\Files\File\FileModel.cs" />
+    <Compile Include="Operations\MediaManager\Files\File\GetFileModel.cs" />
+    <Compile Include="Operations\MediaManager\Files\File\GetFileRequest.cs" />
+    <Compile Include="Operations\MediaManager\Files\File\GetFileResponse.cs" />
+    <Compile Include="Operations\MediaManager\Files\File\IFileService.cs" />
+    <Compile Include="Operations\MediaManager\Files\File\TagModel.cs" />
+    <Compile Include="Operations\MediaManager\Files\GetFilesModel.cs" />
+    <Compile Include="Operations\MediaManager\Files\GetFilesRequest.cs" />
+    <Compile Include="Operations\MediaManager\Files\GetFilesRequestValidator.cs" />
+    <Compile Include="Operations\MediaManager\Files\GetFilesResponse.cs" />
+    <Compile Include="Operations\MediaManager\Files\IFilesService.cs" />
+    <Compile Include="Operations\MediaManager\Files\MediaModel.cs" />
+    <Compile Include="Operations\MediaManager\Images\GetImagesModel.cs" />
+    <Compile Include="Operations\MediaManager\Images\GetImagesRequest.cs" />
+    <Compile Include="Operations\MediaManager\Images\GetImagesRequestValidator.cs" />
+    <Compile Include="Operations\MediaManager\Images\GetImagesResponse.cs" />
+    <Compile Include="Operations\MediaManager\Images\IImagesService.cs" />
+    <Compile Include="Operations\MediaManager\Images\Image\GetImageModel.cs" />
+    <Compile Include="Operations\MediaManager\Images\Image\GetImageRequest.cs" />
+    <Compile Include="Operations\MediaManager\Images\Image\GetImageResponse.cs" />
+    <Compile Include="Operations\MediaManager\Images\Image\IImageService.cs" />
+    <Compile Include="Operations\MediaManager\Images\Image\ImageModel.cs" />
+    <Compile Include="Operations\MediaManager\Images\Image\TagModel.cs" />
+    <Compile Include="Operations\MediaManager\Images\MediaModel.cs" />
+    <Compile Include="Operations\MediaManager\IMediaManagerApiOperations.cs" />
+    <Compile Include="Operations\MediaManager\MediaContentType.cs" />
+    <Compile Include="Operations\MediaManager\MediaTree\GetMediaTreeModel.cs" />
+    <Compile Include="Operations\MediaManager\MediaTree\GetMediaTreeRequest.cs" />
+    <Compile Include="Operations\MediaManager\MediaTree\GetMediaTreeResponse.cs" />
+    <Compile Include="Operations\MediaManager\MediaTree\IMediaTreeService.cs" />
+    <Compile Include="Operations\MediaManager\MediaTree\MediaItemModel.cs" />
+    <Compile Include="Operations\MediaManager\MediaTree\MediaTreeModel.cs" />
+    <Compile Include="Operations\Pages\Contents\Content\BlogPostContent\BlogPostContentModel.cs" />
+    <Compile Include="Operations\Pages\Contents\Content\BlogPostContent\GetBlogPostContentRequest.cs" />
+    <Compile Include="Operations\Pages\Contents\Content\BlogPostContent\GetBlogPostContentResponse.cs" />
+    <Compile Include="Operations\Pages\Contents\Content\BlogPostContent\IBlogPostContentService.cs" />
+    <Compile Include="Operations\Pages\Contents\Content\History\ContentStatus.cs" />
+    <Compile Include="Operations\Pages\Contents\Content\History\GetContentHistoryRequest.cs" />
+    <Compile Include="Operations\Pages\Contents\Content\History\GetContentHistoryResponse.cs" />
+    <Compile Include="Operations\Pages\Contents\Content\History\HistoryContentModel.cs" />
+    <Compile Include="Operations\Pages\Contents\Content\History\IContentHistoryService.cs" />
+    <Compile Include="Operations\Pages\Contents\Content\HtmlContent\GetHtmlContentRequest.cs" />
+    <Compile Include="Operations\Pages\Contents\Content\HtmlContent\GetHtmlContentResponse.cs" />
+    <Compile Include="Operations\Pages\Contents\Content\HtmlContent\HtmlContentModel.cs" />
+    <Compile Include="Operations\Pages\Contents\Content\HtmlContent\IHtmlContentService.cs" />
+    <Compile Include="Operations\Pages\Contents\Content\IContentService.cs" />
+    <Compile Include="Operations\Pages\IPagesApiOperations.cs" />
+    <Compile Include="Operations\Pages\Pages\GetPagesModel.cs" />
+    <Compile Include="Operations\Pages\Pages\GetPagesRequest.cs" />
+    <Compile Include="Operations\Pages\Pages\GetPagesRequestValidator.cs" />
+    <Compile Include="Operations\Pages\Pages\GetPagesResponse.cs" />
+    <Compile Include="Operations\Pages\Pages\IPagesService.cs" />
+    <Compile Include="Operations\Pages\Pages\OptionModel.cs" />
+    <Compile Include="Operations\Pages\Pages\PageModel.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Contents\Content\IPageContentService.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Contents\Content\Options\GetPageContentOptionsRequest.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Contents\Content\Options\GetPageContentOptionsResponse.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Contents\Content\Options\IGetPageContentOptionsService.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Contents\Content\Options\OptionModel.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Contents\GetPageContentsModel.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Contents\GetPageContentsRequest.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Contents\GetPageContentsRequestValidator.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Contents\GetPageContentsResponse.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Contents\IPageContentsService.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Contents\PageContentModel.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Exists\IPageExistsService.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Exists\PageExistsRequest.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Exists\PageExistsResponse.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Exists\PageModel.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\GetPageRequest.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\GetPageRequestValidator.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\GetPageResponse.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\IPageService.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\PageModel.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Properties\CategoryModel.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Properties\GetPagePropertiesModel.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Properties\GetPagePropertiesRequest.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Properties\GetPagePropertiesRequestValidator.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Properties\GetPagePropertiesResponse.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Properties\ImageModel.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Properties\IPagePropertiesService.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Properties\LayoutModel.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Properties\MetadataModel.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Properties\OptionModel.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Properties\PageContentModel.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Properties\PagePropertiesModel.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Properties\TagModel.cs" />
+    <Compile Include="Operations\Pages\Redirects\GetRedirectsRequest.cs" />
+    <Compile Include="Operations\Pages\Redirects\GetRedirectsResponse.cs" />
+    <Compile Include="Operations\Pages\Redirects\IRedirectsService.cs" />
+    <Compile Include="Operations\Pages\Redirects\RedirectModel.cs" />
+    <Compile Include="Operations\Pages\Redirects\Redirect\GetRedirectRequest.cs" />
+    <Compile Include="Operations\Pages\Redirects\Redirect\GetRedirectResponse.cs" />
+    <Compile Include="Operations\Pages\Redirects\Redirect\IRedirectService.cs" />
+    <Compile Include="Operations\Pages\Sitemap\ISitemapService.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Nodes\GetSitemapNodesRequest.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Nodes\GetSitemapNodesResponse.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Nodes\INodesService.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Nodes\Node\GetSitemapNodeRequest.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Nodes\Node\GetSitemapNodeResponse.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Nodes\Node\INodeService.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Nodes\SitemapNodeModel.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Tree\GetSitemapTreeModel.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Tree\GetSitemapTreeRequest.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Tree\GetSitemapTreeResponse.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Tree\ISitemapTreeService.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Tree\SitemapTreeNodeModel.cs" />
+    <Compile Include="Operations\Pages\Widgets\GetWidgetsModel.cs" />
+    <Compile Include="Operations\Pages\Widgets\GetWidgetsRequest.cs" />
+    <Compile Include="Operations\Pages\Widgets\GetWidgetsRequestValidator.cs" />
+    <Compile Include="Operations\Pages\Widgets\GetWidgetsResponse.cs" />
+    <Compile Include="Operations\Pages\Widgets\IWidgetsService.cs" />
+    <Compile Include="Operations\Pages\Widgets\WidgetModel.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\GetHtmlContentWidgetRequest.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\GetHtmlContentWidgetResponse.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\HtmlContentWidgetModel.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\IHtmlContentWidgetService.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\IWidgetService.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\GetServerControlWidgetRequest.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\GetServerControlWidgetResponse.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\IServerControlWidgetService.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\Options\GetServerControlWidgetOptionsRequest.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\Options\GetServerControlWidgetOptionsResponse.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\Options\IServerControlWidgetOptionsService.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\Options\OptionModel.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\ServerControlWidgetModel.cs" />
+    <Compile Include="Operations\Root\Categories\Category\GetCategoryRequestValidator.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\Options\GetLayoutOptionsRequest.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\Options\GetLayoutOptionsResponse.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\Options\ILayoutOptionsService.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\Options\OptionModel.cs" />
+    <Compile Include="Operations\Root\OptionType.cs" />
+    <Compile Include="Operations\Root\Tags\Tag\GetTagRequestValidator.cs" />
+    <Compile Include="Operations\Users\Roles\GetRolesRequest.cs" />
+    <Compile Include="Operations\Users\Roles\GetRolesResponse.cs" />
+    <Compile Include="Operations\Users\Roles\IRolesService.cs" />
+    <Compile Include="Operations\Users\Roles\RoleModel.cs" />
+    <Compile Include="Operations\Users\Roles\Role\GetRoleRequest.cs" />
+    <Compile Include="Operations\Users\Roles\Role\GetRoleRequestValidator.cs" />
+    <Compile Include="Operations\Users\Roles\Role\GetRoleResponse.cs" />
+    <Compile Include="Operations\Users\Roles\Role\IRoleService.cs" />
+    <Compile Include="Operations\Users\Roles\Role\RoleModel.cs" />
+    <Compile Include="Operations\Users\IUsersApiOperations.cs" />
+    <Compile Include="Operations\Users\Users\GetUsersModel.cs" />
+    <Compile Include="Operations\Users\Users\GetUsersRequest.cs" />
+    <Compile Include="Operations\Users\Users\GetUsersResponse.cs" />
+    <Compile Include="Operations\Users\Users\IUsersService.cs" />
+    <Compile Include="Operations\Users\Users\UserModel.cs" />
+    <Compile Include="Operations\Users\Users\User\GetUserModel.cs" />
+    <Compile Include="Operations\Users\Users\User\GetUserRequest.cs" />
+    <Compile Include="Operations\Users\Users\User\GetUserRequestValidator.cs" />
+    <Compile Include="Operations\Users\Users\User\GetUserResponse.cs" />
+    <Compile Include="Operations\Users\Users\User\IUserService.cs" />
+    <Compile Include="Operations\Users\Users\User\RoleModel.cs" />
+    <Compile Include="Operations\Users\Users\User\UserModel.cs" />
+    <Compile Include="Operations\Users\Users\User\ValidateUser\ValidateUserModel.cs" />
+    <Compile Include="Operations\Users\Users\User\ValidateUser\ValidateUserRequest.cs" />
+    <Compile Include="Operations\Users\Users\User\ValidateUser\ValidateUserResponse.cs" />
+    <Compile Include="Operations\Users\Users\User\ValidateUser\IValidateUserService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Operations\Root\Categories\CategoryModel.cs" />
+    <Compile Include="Operations\Root\Categories\Category\GetCategoryRequest.cs" />
+    <Compile Include="Operations\Root\Categories\Category\GetCategoryResponse.cs" />
+    <Compile Include="Operations\Root\Categories\Category\ICategoryService.cs" />
+    <Compile Include="Operations\Root\Categories\GetCategoriesRequest.cs" />
+    <Compile Include="Operations\Root\Categories\GetCategoriesResponse.cs" />
+    <Compile Include="Operations\Root\Categories\ICategoriesService.cs" />
+    <Compile Include="Operations\Root\IRootApiOperations.cs" />
+    <Compile Include="Operations\Root\Layouts\GetLayoutsRequest.cs" />
+    <Compile Include="Operations\Root\Layouts\GetLayoutsResponse.cs" />
+    <Compile Include="Operations\Root\Layouts\ILayoutsService.cs" />
+    <Compile Include="Operations\Root\Layouts\LayoutModel.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\GetLayoutRequest.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\GetLayoutResponse.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\ILayoutService.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\Regions\GetLayoutRegionsRequest.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\Regions\GetLayoutRegionsResponse.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\Regions\ILayoutRegionsService.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\Regions\RegionModel.cs" />
+    <Compile Include="Operations\Root\Tags\GetTagsRequest.cs" />
+    <Compile Include="Operations\Root\Tags\GetTagsResponse.cs" />
+    <Compile Include="Operations\Root\Tags\ITagsService.cs" />
+    <Compile Include="Operations\Root\Tags\TagModel.cs" />
+    <Compile Include="Operations\Root\Tags\Tag\GetTagRequest.cs" />
+    <Compile Include="Operations\Root\Tags\Tag\GetTagResponse.cs" />
+    <Compile Include="Operations\Root\Tags\Tag\ITagService.cs" />
+    <Compile Include="Operations\Root\Tags\Tag\PostTagRequest.cs" />
+    <Compile Include="Operations\Root\Tags\Tag\PostTagResponse.cs" />
+    <Compile Include="Operations\Root\Version\GetVersionModel.cs" />
+    <Compile Include="Operations\Root\Version\GetVersionRequest.cs" />
+    <Compile Include="Operations\Root\Version\GetVersionResponse.cs" />
+    <Compile Include="Operations\Root\Version\IVersionService.cs" />
+    <Compile Include="Operations\Root\Version\VersionModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

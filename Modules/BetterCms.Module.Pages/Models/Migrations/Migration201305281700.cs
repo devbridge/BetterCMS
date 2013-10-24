@@ -27,13 +27,5 @@ namespace BetterCms.Module.Pages.Models.Migrations
         {
             Delete.Column("PublishedOn").FromTable("Pages").InSchema(SchemaName);
         }
-
-        /// <summary>
-        /// Migrate down.
-        /// </summary>
-        public override void Down()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

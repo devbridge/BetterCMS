@@ -1,6 +1,7 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Page
+@using BetterCms.Module.Root
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
 
@@ -22,14 +23,13 @@
                     @Html.BcmsValidationMessageFor(f => f.PageTitle)
                 </div>
             </div>
-
-            @*<div class="bcms-input-list-holder">
-                @Html.Tooltip(PagesGlobalization.ClonePage_Dialog_PageUrl_Tooltip_Description)
-                <div class="bcms-content-titles">@PagesGlobalization.ClonePage_Dialog_PageUrl</div>
-                @Html.TextBoxFor(m => m.PageUrl, new { @class = "bcms-editor-field-box" })
-            </div>*@
             
             @Html.Partial("Partial/ClonePageEditUrl")
+
+            if (Model.AccessControlEnabled)
+            {
+                @Html.Partial(RootModuleConstants.AccessControlTemplate)
+            }
             
             @Html.HiddenFor(m => m.PageId)
             @Html.HiddenFor(m => m.Version)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 
+using BetterCms.Core;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Root.Projections;
 
@@ -13,11 +14,12 @@ namespace BetterCms.Module.Root.Mvc.Helpers
     {
         private const string ContentStartClassName = "bcms-content-start";
         private const string ContentEndClassName = "bcms-content-end";
-        private const string ClearFixClassName = "clearfix";
 
         private readonly StringBuilder sb;
         private readonly PageContentProjection content;
         private readonly bool allowContentManagement;
+        private readonly string clearFixClassName;
+        private readonly bool renderClearFixDiv;
 
         private static int staticWrapperId;
         private readonly int currentWrapperId;
@@ -35,6 +37,9 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             this.allowContentManagement = allowContentManagement;
 
             currentWrapperId = staticWrapperId++;
+            clearFixClassName = CmsContext.Config.ContentEndingDivCssClassName;
+            renderClearFixDiv = CmsContext.Config.RenderContentEndingDiv;
+
 
             RenderOpeningTags();
         }
@@ -77,14 +82,18 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         {
             if (allowContentManagement)
             {
-                sb.AppendFormat(@"<div class=""{0} {1}"" data-end-id=""{2}""></div>", 
+                sb.AppendFormat(@"<div class=""{0} bcms-clearfix {1}"" data-hide=""{2}"" data-end-id=""{3}""></div>", 
                     ContentEndClassName, 
-                    ClearFixClassName,
+                    clearFixClassName,
+                    !renderClearFixDiv ? "true" : "false",
                     currentWrapperId).AppendLine();
             }
             else
             {
-                sb.AppendFormat(@"<div class=""{0}""></div>", ClearFixClassName).AppendLine();
+                if (renderClearFixDiv)
+                {
+                    sb.AppendFormat(@"<div class=""bcms-clearfix {0}""></div>", clearFixClassName).AppendLine();
+                }
             }
         }
     }

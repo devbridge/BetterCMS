@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define, console */
+/*global bettercms */
 
 bettercms.define('bcms.pages.redirects', ['bcms.jquery', 'bcms', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.inlineEdit', 'bcms.grid'], function ($, bcms, dynamicContent, siteSettings, editor, grid) {
     'use strict';
@@ -78,6 +78,9 @@ bettercms.define('bcms.pages.redirects', ['bcms.jquery', 'bcms', 'bcms.dynamicCo
                 return globalization.deleteRedirectMessage;
             }
         });
+
+        // Select search.
+        dialog.setFocus();
     };
 
     /**
@@ -128,7 +131,7 @@ bettercms.define('bcms.pages.redirects', ['bcms.jquery', 'bcms', 'bcms.dynamicCo
     * Initializes redirects module.
     */
     redirect.init = function () {
-        console.log('Initializing bcms.pages.redirects module.');
+        bcms.logger.debug('Initializing bcms.pages.redirects module.');
     };
     
     /**

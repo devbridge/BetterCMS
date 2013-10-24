@@ -1,6 +1,4 @@
-﻿using System;
-
-using BetterCms.Core.DataAccess.DataContext.Migrations;
+﻿using BetterCms.Core.DataAccess.DataContext.Migrations;
 using BetterCms.Core.Models;
 
 using FluentMigrator;
@@ -10,9 +8,11 @@ namespace BetterCms.Module.Users.Models.Migrations
     /// <summary>
     /// Module initial database structure creation.
     /// </summary>
-    [Migration(20130181125)]
+    [Migration(201308200000)]
     public class InitialSetup : DefaultMigration
     {
+        private readonly string mediaModuleSchemaName = (new MediaManager.Models.Migrations.MediaManagerVersionTableMetaData()).SchemaName;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="InitialSetup"/> class.
         /// </summary>
@@ -28,16 +28,9 @@ namespace BetterCms.Module.Users.Models.Migrations
         {          
             CreateUsersTable();
             CreateRolesTable();
-            CreatePermissionsTable();
-            CreateRolePermissions();
-        }
+            CreateUserRolesTable();
 
-        /// <summary>
-        /// Downs this instance.
-        /// </summary>
-        public override void Down()
-        {
-            throw new NotImplementedException();
+            PopulateDefaultRoles();
         }
 
         /// <summary>
@@ -46,12 +39,30 @@ namespace BetterCms.Module.Users.Models.Migrations
         private void CreateUsersTable()
         {
             Create.Table("Users").InSchema(SchemaName).WithCmsBaseColumns()
-                   .WithColumn("UserName").AsAnsiString(MaxLength.Name).NotNullable()
-                   .WithColumn("FirstName").AsAnsiString(MaxLength.Name).Nullable()
-                   .WithColumn("LastName").AsAnsiString(MaxLength.Name).Nullable()
-                   .WithColumn("Email").AsAnsiString(MaxLength.Email).NotNullable()
-                   .WithColumn("Password").AsAnsiString(MaxLength.Name).NotNullable()
-                   .WithColumn("ImageId").AsGuid().Nullable();
+                .WithColumn("UserName").AsAnsiString(UsersModuleConstants.UserNameMaxLength).NotNullable()
+                .WithColumn("FirstName").AsAnsiString(MaxLength.Name).NotNullable()
+                .WithColumn("LastName").AsAnsiString(MaxLength.Name).NotNullable()
+                .WithColumn("Email").AsAnsiString(MaxLength.Email).NotNullable()
+                .WithColumn("Password").AsAnsiString(MaxLength.Password).NotNullable()
+                .WithColumn("Salt").AsAnsiString(MaxLength.Password).NotNullable()
+                .WithColumn("ImageId").AsGuid().Nullable();
+
+            Create
+                .ForeignKey("FK_Cms_Users_ImageId_Cms_MediaFiles_Id")
+                .FromTable("Users").InSchema(SchemaName)
+                .ForeignColumn("ImageId")
+                .ToTable("MediaFiles").InSchema(mediaModuleSchemaName)
+                .PrimaryColumn("Id");
+
+            Create
+                .UniqueConstraint("UX_Cms_Users_UserName")
+                .OnTable("Users").WithSchema(SchemaName)
+                .Columns(new[] { "UserName", "DeletedOn" });
+
+            Create
+                .UniqueConstraint("UX_Cms_Users_Email")
+                .OnTable("Users").WithSchema(SchemaName)
+                .Columns(new[] { "Email", "DeletedOn" });
         }
 
         /// <summary>
@@ -59,45 +70,93 @@ namespace BetterCms.Module.Users.Models.Migrations
         /// </summary>
         private void CreateRolesTable()
         {
-            Create.Table("Roles").InSchema(SchemaName).WithCmsBaseColumns().WithColumn("Name").AsAnsiString(MaxLength.Name).NotNullable();
-        }
-
-        /// <summary>
-        /// Creates the permissions table.
-        /// </summary>
-        private void CreatePermissionsTable()
-        {
             Create
-                .Table("Permissions").InSchema(SchemaName)
+                .Table("Roles").InSchema(SchemaName)
                 .WithCmsBaseColumns()
-                .WithColumn("Name").AsAnsiString(MaxLength.Name).NotNullable().Unique()
-                .WithColumn("Description").AsAnsiString(MaxLength.Name).NotNullable();            
+                .WithColumn("Name").AsAnsiString(MaxLength.Name).NotNullable()
+                .WithColumn("DisplayName").AsAnsiString(MaxLength.Name).Nullable()
+                .WithColumn("IsSystematic").AsBoolean().NotNullable().WithDefaultValue(false);
+
+            Create
+                .UniqueConstraint("UX_Cms_Roles_Name")
+                .OnTable("Roles").WithSchema(SchemaName)
+                .Columns(new[] { "Name", "DeletedOn" });
         }
 
         /// <summary>
-        /// Creates the role permissions.
+        /// Creates the user roles table.
         /// </summary>
-        private void CreateRolePermissions()
+        private void CreateUserRolesTable()
         {
-            Create.Table("RolePermissions").InSchema(SchemaName)
+            Create.Table("UserRoles").InSchema(SchemaName)
                 .WithCmsBaseColumns()
                 .WithColumn("RoleId").AsGuid().NotNullable()
-                .WithColumn("PermissionId").AsGuid().NotNullable();
+                .WithColumn("UserId").AsGuid().NotNullable();
 
-            Create
-                .UniqueConstraint("UX_Cms_RolePermissions_RoleId_PermissionId")
-                .OnTable("RolePermissions").WithSchema(SchemaName)
-                .Columns(new[] { "RoleId", "PermissionId", "DeletedOn" });
+            Create.ForeignKey("FK_Cms_UserRoles_Role_Cms_Role_Id")
+                .FromTable("UserRoles").InSchema(SchemaName)
+                .ForeignColumn("RoleId")
+                .ToTable("Roles").InSchema(SchemaName)
+                .PrimaryColumn("Id");
 
-            Create
-                .ForeignKey("FK_Cms_RolePermissions_Cms_Roles")
-                .FromTable("RolePermissions").InSchema(SchemaName).ForeignColumn("RoleId")
-                .ToTable("Roles").InSchema(SchemaName).PrimaryColumn("Id");
+            Create.ForeignKey("FK_Cms_UserRoles_User_Cms_Users_Id")
+                .FromTable("UserRoles").InSchema(SchemaName)
+                .ForeignColumn("UserId")
+                .ToTable("Users").InSchema(SchemaName)
+                .PrimaryColumn("Id");
+        }
 
-            Create
-                .ForeignKey("FK_Cms_RolePermissions_Cms_Permissions")
-                .FromTable("RolePermissions").InSchema(SchemaName).ForeignColumn("PermissionId")
-                .ToTable("Permissions").InSchema(SchemaName).PrimaryColumn("Id");
+        /// <summary>
+        /// Populates the default roles.
+        /// </summary>
+        private void PopulateDefaultRoles()
+        {
+            Insert.IntoTable("Roles")
+                  .InSchema(SchemaName)
+                  .Row(new {
+                              Version = 1,
+                              IsDeleted = false,
+                              CreatedOn = System.DateTime.Now,
+                              CreatedByUser = "Better CMS",
+                              ModifiedOn = System.DateTime.Now,
+                              ModifiedByUser = "Better CMS",
+                              Name = "BcmsEditContent",
+                              DisplayName = "Better CMS: edit content",
+                              IsSystematic = true
+                          })
+                  .Row(new {
+                              Version = 1,
+                              IsDeleted = false,
+                              CreatedOn = System.DateTime.Now,
+                              CreatedByUser = "Better CMS",
+                              ModifiedOn = System.DateTime.Now,
+                              ModifiedByUser = "Better CMS",
+                              Name = "BcmsPublishContent",
+                              DisplayName = "Better CMS: publish content",
+                              IsSystematic = true
+                          })
+                  .Row(new {
+                              Version = 1,
+                              IsDeleted = false,
+                              CreatedOn = System.DateTime.Now,
+                              CreatedByUser = "Better CMS",
+                              ModifiedOn = System.DateTime.Now,
+                              ModifiedByUser = "Better CMS",
+                              Name = "BcmsDeleteContent",
+                              DisplayName = "Better CMS: delete content",
+                              IsSystematic = true
+                          })
+                  .Row(new {
+                              Version = 1,
+                              IsDeleted = false,
+                              CreatedOn = System.DateTime.Now,
+                              CreatedByUser = "Better CMS",
+                              ModifiedOn = System.DateTime.Now,
+                              ModifiedByUser = "Better CMS",
+                              Name = "BcmsAdministration",
+                              DisplayName = "Better CMS: administrator",
+                              IsSystematic = true
+                          });
         }
     }
 }

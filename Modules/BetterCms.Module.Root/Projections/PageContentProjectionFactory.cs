@@ -9,6 +9,7 @@ using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.ViewModels.Cms;
+using BetterCms.Module.Root.ViewModels.Option;
 
 using Common.Logging;
 
@@ -27,7 +28,7 @@ namespace BetterCms.Module.Root.Projections
             this.containerProvider = containerProvider;
         }
 
-        public PageContentProjection Create(IPageContent pageContent, IContent content, IList<IOption> options, RenderPageViewModel childViewModel = null)
+        public PageContentProjection Create(IPageContent pageContent, IContent content, IList<IOptionValue> options, RenderPageViewModel childViewModel = null)
         {
             IContentAccessor contentAccessor = null;            
             Type contentType;
@@ -50,7 +51,7 @@ namespace BetterCms.Module.Root.Projections
                                                              {
                                                                  new PositionalParameter(0, content),
                                                                  new PositionalParameter(1, options),
-                                                                 new PositionalParameter(2, childViewModel),
+                                                                 new PositionalParameter(2, childViewModel)
                                                              });
             }
 

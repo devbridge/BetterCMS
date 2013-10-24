@@ -12,7 +12,9 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.contextMenu.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.html5Upload.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.jcrop.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.media.history.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.media.imageeditor.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.media.fileeditor.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.media.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.media.upload.js" />
 

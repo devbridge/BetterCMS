@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Permissions;
 using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 
-using BetterCms.Api;
 using BetterCms.Core;
 using BetterCms.Core.Environment.Host;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Events;
+using BetterCms.Sandbox.Mvc4.Helpers;
 
 using Common.Logging;
 
@@ -40,6 +42,7 @@ namespace BetterCms.Sandbox.Mvc4
             cmsHost.OnApplicationStart(this);
             
             AddPageEvents();
+            AddSitemapEvents();
             AddRedirectEvents();
             AddTagEvents();
             AddCategoryEvents();
@@ -47,36 +50,37 @@ namespace BetterCms.Sandbox.Mvc4
             AddBlogPostEvents();
             AddBlogAuthorEvents();
             AddMediaManagerEvents();
+            AddUsersEvents();
         }
 
         private void AddMediaManagerEvents()
         {
-            MediaManagerApiContext.Events.MediaFileUploaded += args =>
+            BetterCms.Events.MediaManagerEvents.Instance.MediaFileUploaded += args =>
             {
                 Log.Info("MediaFileUploaded:" + args.Item.ToString());
             };
 
-            MediaManagerApiContext.Events.MediaFileUpdated += args =>
+            BetterCms.Events.MediaManagerEvents.Instance.MediaFileUpdated += args =>
             {
                 Log.Info("MediaFileUpdated:" + args.Item.ToString());
             };
 
-            MediaManagerApiContext.Events.MediaFileDeleted += args =>
+            BetterCms.Events.MediaManagerEvents.Instance.MediaFileDeleted += args =>
             {
                 Log.Info("MediaFileDeleted:" + args.Item.ToString());
             };
 
-            MediaManagerApiContext.Events.MediaFolderCreated += args =>
+            BetterCms.Events.MediaManagerEvents.Instance.MediaFolderCreated += args =>
             {
                 Log.Info("MediaFolderCreated:" + args.Item.ToString());
             };
 
-            MediaManagerApiContext.Events.MediaFolderUpdated += args =>
+            BetterCms.Events.MediaManagerEvents.Instance.MediaFolderUpdated += args =>
             {
                 Log.Info("MediaFolderUpdated:" + args.Item.ToString());
             };
 
-            MediaManagerApiContext.Events.MediaFolderDeleted += args =>
+            BetterCms.Events.MediaManagerEvents.Instance.MediaFolderDeleted += args =>
             {
                 Log.Info("MediaFolderDeleted:" + args.Item.ToString());
             };
@@ -84,17 +88,17 @@ namespace BetterCms.Sandbox.Mvc4
 
         private void AddBlogPostEvents()
         {
-            BlogsApiContext.Events.BlogCreated += args =>
+            BetterCms.Events.BlogEvents.Instance.BlogCreated += args =>
             {
                 Log.Info("BlogCreated:" + args.Item.ToString());
             };
 
-            BlogsApiContext.Events.BlogUpdated += args =>
+            BetterCms.Events.BlogEvents.Instance.BlogUpdated += args =>
             {
                 Log.Info("BlogUpdated:" + args.Item.ToString());
             };
 
-            BlogsApiContext.Events.BlogDeleted += args =>
+            BetterCms.Events.BlogEvents.Instance.BlogDeleted += args =>
             {
                 Log.Info("BlogDeleted:" + args.Item.ToString());
             };
@@ -102,17 +106,17 @@ namespace BetterCms.Sandbox.Mvc4
 
         private void AddBlogAuthorEvents()
         {
-            BlogsApiContext.Events.AuthorCreated += args =>
+            BetterCms.Events.BlogEvents.Instance.AuthorCreated += args =>
             {
                 Log.Info("AuthorCreated:" + args.Item.ToString());
             };
 
-            BlogsApiContext.Events.AuthorUpdated += args =>
+            BetterCms.Events.BlogEvents.Instance.AuthorUpdated += args =>
             {
                 Log.Info("AuthorUpdated:" + args.Item.ToString());
             };
 
-            BlogsApiContext.Events.AuthorDeleted += args =>
+            BetterCms.Events.BlogEvents.Instance.AuthorDeleted += args =>
             {
                 Log.Info("AuthorDeleted:" + args.Item.ToString());
             };    
@@ -120,17 +124,17 @@ namespace BetterCms.Sandbox.Mvc4
 
         private void AddWidgetEvents()
         {
-            PagesApiContext.Events.WidgetCreated += args =>
+            BetterCms.Events.PageEvents.Instance.WidgetCreated += args =>
             {
                 Log.Info("WidgetCreated:" + args.Item.ToString());
             };
 
-            PagesApiContext.Events.WidgetUpdated += args =>
+            BetterCms.Events.PageEvents.Instance.WidgetUpdated += args =>
             {
                 Log.Info("WidgetUpdated:" + args.Item.ToString());
             };
 
-            PagesApiContext.Events.WidgetDeleted += args =>
+            BetterCms.Events.PageEvents.Instance.WidgetDeleted += args =>
             {
                 Log.Info("WidgetDeleted:" + args.Item.ToString());
             };
@@ -138,17 +142,17 @@ namespace BetterCms.Sandbox.Mvc4
         
         private void AddCategoryEvents()
         {
-            PagesApiContext.Events.CategoryCreated += args =>
+            BetterCms.Events.PageEvents.Instance.CategoryCreated += args =>
             {
                 Log.Info("CategoryCreated:" + args.Item.ToString());
             };
 
-            PagesApiContext.Events.CategoryUpdated += args =>
+            BetterCms.Events.PageEvents.Instance.CategoryUpdated += args =>
             {
                 Log.Info("CategoryUpdated:" + args.Item.ToString());
             };
 
-            PagesApiContext.Events.CategoryDeleted += args =>
+            BetterCms.Events.PageEvents.Instance.CategoryDeleted += args =>
             {
                 Log.Info("CategoryDeleted:" + args.Item.ToString());
             };
@@ -156,17 +160,17 @@ namespace BetterCms.Sandbox.Mvc4
 
         private void AddTagEvents()
         {
-            PagesApiContext.Events.TagCreated += args =>
+            BetterCms.Events.PageEvents.Instance.TagCreated += args =>
                 {
                     Log.Info("TagCreated:" + args.Item.ToString());
                 };
 
-            PagesApiContext.Events.TagUpdated += args =>
+            BetterCms.Events.PageEvents.Instance.TagUpdated += args =>
             {
                 Log.Info("TagUpdated:" + args.Item.ToString());
             };
 
-            PagesApiContext.Events.TagDeleted += args =>
+            BetterCms.Events.PageEvents.Instance.TagDeleted += args =>
             {
                 Log.Info("TagDeleted:" + args.Item.ToString());
             };
@@ -174,17 +178,17 @@ namespace BetterCms.Sandbox.Mvc4
 
         private void AddRedirectEvents()
         {
-            PagesApiContext.Events.RedirectCreated += args =>
+            BetterCms.Events.PageEvents.Instance.RedirectCreated += args =>
                 {
                     Log.Info("RedirectCreated:" + args.Item.ToString());
                 };
 
-            PagesApiContext.Events.RedirectUpdated += args =>
+            BetterCms.Events.PageEvents.Instance.RedirectUpdated += args =>
                 {
                     Log.Info("RedirectUpdated:" + args.Item.ToString());
                 };
 
-            PagesApiContext.Events.RedirectDeleted += args =>
+            BetterCms.Events.PageEvents.Instance.RedirectDeleted += args =>
                 {
                     Log.Info("RedirectDeleted:" + args.Item.ToString());
                 };
@@ -192,45 +196,85 @@ namespace BetterCms.Sandbox.Mvc4
 
         private void AddPageEvents()
         {
-            RootApiContext.Events.PageRendering += Events_PageRendering;
+            BetterCms.Events.RootEvents.Instance.PageRendering += Events_PageRendering;
 
-            PagesApiContext.Events.PageCreated += args =>
+            BetterCms.Events.PageEvents.Instance.PageCreated += args =>
                 {
                     Log.Info("PageCreated: " + args.Item.ToString());
                 };
 
-            PagesApiContext.Events.PageCloned += args =>
+            BetterCms.Events.PageEvents.Instance.PageCloned += args =>
             {
                 Log.Info("PageCloned: " + args.Item.ToString());
             };
 
-            PagesApiContext.Events.PageDeleted += args =>
+            BetterCms.Events.PageEvents.Instance.PageDeleted += args =>
             {
                 Log.Info("PageDeleted: " + args.Item.ToString());
             };
 
-            PagesApiContext.Events.PageContentInserted += args =>
+            BetterCms.Events.PageEvents.Instance.PageContentInserted += args =>
             {
                 Log.Info("PageContentInserted: " + args.Item.ToString());
             };
 
-            PagesApiContext.Events.PagePropertiesChanged += args =>
+            BetterCms.Events.PageEvents.Instance.PagePropertiesChanged += args =>
             {
                 Log.Info("PagePropertiesChanged: " + args.Item.ToString());
             };
 
-            PagesApiContext.Events.PagePublishStatusChanged += args =>
+            BetterCms.Events.PageEvents.Instance.PagePublishStatusChanged += args =>
             {
                 Log.Info("PagePublishStatusChanged: " + args.Item.ToString());
             };
 
-            PagesApiContext.Events.PageSeoStatusChanged += args =>
+            BetterCms.Events.PageEvents.Instance.PageSeoStatusChanged += args =>
             {
                 Log.Info("PageSeoStatusChanged: " + args.Item.ToString());
             };
         }
 
-        void Events_PageRendering(Module.Root.Api.Events.PageRenderingEventArgs args)
+        private void AddSitemapEvents()
+        {
+            BetterCms.Events.SitemapEvents.Instance.SitemapNodeCreated += args =>
+            {
+                Log.Info("SitemapNodeCreated: " + args.Item.ToString());
+            };
+
+            BetterCms.Events.SitemapEvents.Instance.SitemapNodeUpdated += args =>
+            {
+                Log.Info("SitemapNodeUpdated: " + args.Item.ToString());
+            };
+
+            BetterCms.Events.SitemapEvents.Instance.SitemapNodeDeleted += args =>
+            {
+                Log.Info("SitemapNodeDeleted: " + args.Item.ToString());
+            };
+
+            BetterCms.Events.SitemapEvents.Instance.SitemapUpdated += args =>
+            {
+                Log.Info("SitemapUpdated.");
+            };
+        }
+
+        private void AddUsersEvents()
+        {
+            BetterCms.Events.UserEvents.Instance.UserProfileUpdated += args =>
+            {
+                Log.Info("UserProfileUpdated: " + args.AfterUpdate.ToString());
+
+                if (args.BeforeUpdate != null && args.AfterUpdate != null && args.AfterUpdate.UserName != args.BeforeUpdate.UserName)
+                {
+                    AuthenticationHelper.Logout();
+
+                    var roles = Roles.GetRolesForUser(args.AfterUpdate.UserName);
+                    AuthenticationHelper.CreateTicket(roles, args.AfterUpdate.UserName);
+                }
+            };
+        }
+
+
+        void Events_PageRendering(PageRenderingEventArgs args)
         {                        
             args.RenderPageData.Metadata.Add(new MetaDataProjection("test-metadata", "hello world!"));
         }
@@ -262,26 +306,29 @@ namespace BetterCms.Sandbox.Mvc4
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
-            var authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
-            if (authCookie != null)
-            {
-                try
-                {
-                    var authTicket = FormsAuthentication.Decrypt(authCookie.Value);
-                    if (authTicket != null)
-                    {
-                        var identity = new GenericIdentity(authTicket.Name, "Forms");
-                        var roles = authTicket.UserData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToArray();
-                        var principal = new GenericPrincipal(identity, roles);
-                        Context.User = principal;
-                    }
-                }
-                catch
-                {
-                    Session.Clear();
-                    FormsAuthentication.SignOut();
-                }
-            }
+            // Users module covers it:
+
+            //var authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+            //var roleCokie = Request.Cookies[Roles.CookieName];
+
+            //if (authCookie != null)
+            //{
+            //    try
+            //    {
+            //        var authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+            //        if (authTicket != null)
+            //        {
+            //            var identity = new FormsIdentity(authTicket);
+            //            var principal = roleCokie == null ? new RolePrincipal("BetterCmsRoleProvider", identity) : new RolePrincipal(identity, roleCokie.Value);
+            //            Context.User = principal;
+            //        }
+            //    }
+            //    catch
+            //    {
+            //        Session.Clear();
+            //        FormsAuthentication.SignOut();
+            //    }
+            //}
 
             cmsHost.OnAuthenticateRequest(this);
         }

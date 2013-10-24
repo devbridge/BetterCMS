@@ -1,0 +1,50 @@
+﻿@using BetterCms.Module.ImagesGallery
+@model BetterCms.Module.ImagesGallery.ViewModels.AlbumViewModel
+
+@if (Model.LoadCmsStyles)
+{
+    @Html.Partial("Partial/AlbumStyles")
+}
+
+@if (Model.RenderHeader)
+{
+    <h1 class="bcms-gallery-title">
+        @Model.Title
+        @if (Model.RenderBackUrl)
+        {
+            <a class="bcms-gallery-back-link" href="javascript:history.back()">< Back</a>
+        }
+        @if (Model.LastUpdateDate.HasValue)
+        {
+            <time datetime="@Model.LastUpdateDate.Value.ToString(ImagesGalleryModuleConstants.GalleryWidgetUpdateDateTagFormat)">@Model.LastUpdateDate.Value.ToString(ImagesGalleryModuleConstants.GalleryWidgetUpdateDateDisplayFormat)</time>
+        }
+    </h1>
+}
+
+@{
+    var i = 0;
+    var l = Model.Images.Count;
+    var perSection = Model.ImagesPerSection <= 0 ? (Model.ImagesCount >= 0 ? Model.ImagesCount : int.MaxValue) : Model.ImagesPerSection;
+    
+    foreach (var image in Model.Images)
+    {
+        if (i % perSection == 0)
+        {
+            @:<section>
+        }
+        
+        <div class="bcms-gallery-image-holder">
+            <img src="@image.Url" alt="@image.Caption" data-title="@image.Title" />
+            <div class="bcms-gallery-image-name">
+                <h4><a href="@image.Url" target="blank">@image.Caption</a></h4>
+            </div>
+        </div>
+
+        i++;
+
+        if (i % perSection == 0 || i == l)
+        {
+            @:</section>
+        }
+    }
+}

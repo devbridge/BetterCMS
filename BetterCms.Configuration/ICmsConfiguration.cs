@@ -1,5 +1,3 @@
-using System;
-
 using BetterCms.Configuration;
 
 namespace BetterCms
@@ -41,6 +39,14 @@ namespace BetterCms
         string LoginUrl { get; set; }
 
         /// <summary>
+        /// Gets or sets the web site URL.
+        /// </summary>
+        /// <value>
+        /// The web site URL.
+        /// </value>
+        string WebSiteUrl { get; set; }
+
+        /// <summary>
         /// Gets the virtual root path (like "~/App_Data") of BetterCMS working directory. 
         /// </summary>
         /// <value>
@@ -65,6 +71,14 @@ namespace BetterCms
         /// Gets the configuration of CMS permissions service.
         /// </summary>
         ICmsSecurityConfiguration Security { get;  }
+
+        /// <summary>
+        /// Gets the configuration of CMS users.
+        /// </summary>
+        /// <value>
+        /// The users.
+        /// </value>
+        ICmsUsersConfiguration Users { get; }
 
         /// <summary>
         /// Gets or sets the page not found url.
@@ -102,5 +116,26 @@ namespace BetterCms
         /// Gets the cache configuration.
         /// </summary>
         ICmsCacheConfiguration Cache { get; }
+
+        /// <summary>
+        /// Gets the URL mode.
+        /// </summary>
+        TrailingSlashBehaviorType UrlMode { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether to render content ending div.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if to render content ending div; otherwise, <c>false</c>.
+        /// </value>
+        bool RenderContentEndingDiv { get; }
+
+        /// <summary>
+        /// Gets the name of the content ending div CSS class.
+        /// </summary>
+        /// <value>
+        /// The name of the content ending div CSS class.
+        /// </value>
+        string ContentEndingDivCssClassName { get; }
     }
 }

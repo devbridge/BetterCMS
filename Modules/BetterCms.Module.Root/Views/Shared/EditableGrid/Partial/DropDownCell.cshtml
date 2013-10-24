@@ -1,0 +1,20 @@
+﻿@model BetterCms.Module.Root.Mvc.Grids.EditableGridDropDownColumn
+
+<td @Html.Raw(Model.Attributes)>
+    @if (Model.CanBeEdited)
+    {
+        <!-- ko if: !isActive() || (@(Model.ValueBind).editingIsDisabled && @(Model.ValueBind).editingIsDisabled()) -->
+    }
+    <a class="bcms-tables-link" data-bind="text: @(Model.ValueTextBind)()"></a>
+    @if (Model.CanBeEdited)
+    {
+        <!-- /ko -->
+        <!-- ko if: isActive() && (!@(Model.ValueBind).editingIsDisabled || !@(Model.ValueBind).editingIsDisabled()) -->
+        <select class="bcms-global-select" style="width: 125px;" data-bind="options: @(Model.OptionsBind),
+            optionsText: '@(Model.OptionsText)',
+            optionsValue: '@(Model.OptionsValue)',
+            value: @Model.ValueBind, 
+            event: {blur: onBlurField, focus: onStopEvent, click: onStopEvent}"></select>
+        <!-- /ko -->
+    }
+</td>

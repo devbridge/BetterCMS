@@ -1,4 +1,5 @@
-﻿using BetterCms.Module.Pages.Services;
+﻿using BetterCms.Core.DataAccess;
+using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Mvc.Helpers;
 
 namespace BetterCms.Module.Blog.Services
@@ -16,14 +17,21 @@ namespace BetterCms.Module.Blog.Services
         private readonly IUrlService urlService;
 
         /// <summary>
+        /// The repository
+        /// </summary>
+        private readonly IRepository repository;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DefaultBlogService" /> class.
         /// </summary>
         /// <param name="configuration">The configuration.</param>
         /// <param name="urlService">The URL service.</param>
-        public DefaultBlogService(ICmsConfiguration configuration, IUrlService urlService)
+        /// <param name="repository">The repository.</param>
+        public DefaultBlogService(ICmsConfiguration configuration, IUrlService urlService, IRepository repository)
         {
             this.configuration = configuration;
             this.urlService = urlService;
+            this.repository = repository;
         }
 
         /// <summary>
@@ -33,10 +41,10 @@ namespace BetterCms.Module.Blog.Services
         /// <returns>Created blog URL</returns>
         public string CreateBlogPermalink(string title)
         {
-            var url = title.Transliterate();
+            var url = title.Transliterate(true);
             url = urlService.AddPageUrlPostfix(url, configuration.ArticleUrlPattern);
 
             return url;
-        }
+        }       
     }
 }

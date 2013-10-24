@@ -1,0 +1,25 @@
+﻿@using BetterCms.Module.Root;
+@using BetterCms.Module.Root.Mvc.Grids;
+@using BetterCms.Module.Root.ViewModels.Shared;
+@using BetterCms.Module.Users.Content.Resources
+
+@{
+    var gridViewModel = new EditableGridViewModel
+    {
+        TopBlockClass = "bcms-top-block-holder",
+        AddNewTitle = UsersGlobalization.Role_Dialog_AddNew,
+        ShowMessages = true,
+        Columns = new List<EditableGridColumn>
+            {
+                new EditableGridColumn(UsersGlobalization.SiteSettings_Roles_RoleColumn, "Name", "name")
+                    {
+                        AutoFocus = true,
+                        HeaderAttributes = "style=\"width: 130px;\"",
+                    },
+                    
+                new EditableGridColumn(UsersGlobalization.SiteSettings_Roles_DescriptionColumn, "Description", "description")
+            }
+    };
+}
+
+@Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel)

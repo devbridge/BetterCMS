@@ -2,23 +2,30 @@
 
 <td @Html.Raw(Model.Attributes)>
     <div class="bcms-input-box">
-        <!-- ko ifnot: isActive() -->
+        @if (Model.CanBeEdited)
+        {
+            <!-- ko if: !isActive() || (@(Model.ValueBind).editingIsDisabled && @(Model.ValueBind).editingIsDisabled()) -->
+        }
         <a class="bcms-tables-link" data-bind="text: @(Model.ValueBind)()"></a>
-        <!-- /ko -->
-        <!-- ko if: isActive() -->
-        <input type="text" class="bcms-editor-field-box" data-bind="
-            css: { 'bcms-input-validation-error': !isNew() && @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() },
-            value: @Model.ValueBind, 
-            valueUpdate: 'afterkeydown', 
-            enterPress: onSave, 
-            escPress: onCancelEdit, 
-            event: {blur: onBlurField}, 
-            click: onStopEvent @(Model.AutoFocus ? ", hasfocus: isActive() && hasFocus" : "") " />
+        @if (Model.CanBeEdited)
+        {
+            <!-- /ko -->
+            <!-- ko if: isActive() && (!@(Model.ValueBind).editingIsDisabled || !@(Model.ValueBind).editingIsDisabled()) -->
+            <input type="text" class="bcms-editor-field-box" data-bind="
+                css: { 'bcms-input-validation-error': !isNew() && @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() },
+                value: @Model.ValueBind, 
+                valueUpdate: 'afterkeydown', 
+                enterPress: onSave, 
+                escPress: onCancelEdit, 
+                afterRender: initInput($element, @Model.ValueBind),
+                event: {blur: onBlurField, focus: onStopEvent, click: onStopEvent}
+                @(Model.AutoFocus ? ", hasfocus: isActive() && hasFocus" : "") " />
             <!-- ko if: !isNew() &&  @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() -->
             <span class="bcms-field-validation-error">
                 <span data-bind="html: @(Model.ValueBind).validationMessage()"></span>
             </span>
             <!-- /ko -->
-        <!-- /ko -->
+            <!-- /ko -->
+        }
     </div>
 </td>

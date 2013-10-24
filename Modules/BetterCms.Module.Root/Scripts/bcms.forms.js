@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define */
+/*global bettercms */
 
 bettercms.define('bcms.forms', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.tabs'], function ($, bcms, messages, tabs) {
     'use strict';
@@ -59,7 +59,7 @@ bettercms.define('bcms.forms', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.ta
                         tabPanel.selectTabOfElement(firstInvalidField);
                     }
                 } catch (ex) {
-                    console.log('Failed to select not valid' + ex.message);
+                    bcms.logger.error('Failed to select not valid' + ex.message);
                 }
                 return false;
             }
@@ -120,7 +120,10 @@ bettercms.define('bcms.forms', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.ta
             form.data(submitting, true);
 
             if ($.isFunction(options.beforeSubmit)) {
-                options.beforeSubmit();
+                if (options.beforeSubmit() === false) {
+                    form.data(submitting, false);
+                    return false;
+                };
             }
 
             ajaxLoadingHide.hide();

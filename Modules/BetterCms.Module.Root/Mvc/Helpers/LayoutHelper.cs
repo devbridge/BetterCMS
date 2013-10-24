@@ -86,21 +86,37 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         {
             if (styles != null)
             {
-                var cssBuilder = new StringBuilder();
+                var inlineCssBuilder = new StringBuilder();
+                var cssIncludesBuilder = new StringBuilder();
 
                 foreach (var content in styles)
                 {
-                    var contentCss = content.GetCustomStyles(htmlHelper);
-                    if (!string.IsNullOrWhiteSpace(contentCss))
+                    var css = content.GetCustomStyles(htmlHelper);
+                    if (!string.IsNullOrWhiteSpace(css))
                     {
-                        cssBuilder.Append(contentCss);
+                        inlineCssBuilder.AppendLine(css);
+                    }
+
+                    var includes = content.GetStylesResources(htmlHelper);
+                    if (includes != null)
+                    {
+                        foreach (var include in includes)
+                        {
+                            cssIncludesBuilder.AppendLine(string.Format(@"<link rel=""stylesheet"" type=""text/css"" href=""{0}"" />", include));
+                        }
                     }
                 }
 
-                var css = cssBuilder.ToString();
-                if (!string.IsNullOrWhiteSpace(css))
+                var inlineCss = inlineCssBuilder.ToString();
+                var includedCss = cssIncludesBuilder.ToString();
+                if (!string.IsNullOrWhiteSpace(inlineCss) || !string.IsNullOrWhiteSpace(includedCss))
                 {
-                    return new HtmlString(string.Format(@"<style type=""text/css"">{0}</style>", css));
+                    if (!string.IsNullOrWhiteSpace(inlineCss))
+                    {
+                        inlineCss = string.Format(@"<style type=""text/css"">{0}</style>", inlineCss);
+                    }
+
+                    return new HtmlString(string.Concat(includedCss, inlineCss));
                 }
             }
 
@@ -117,21 +133,34 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         {
             if (scripts != null)
             {
-                var jsBuilder = new StringBuilder();
+                var inlineJsBuilder = new StringBuilder();
+                var jsIncludesBuilder = new StringBuilder();
 
                 foreach (var content in scripts)
                 {
-                    var contentJs = content.GetCustomJavaScript(htmlHelper);
-                    if (!string.IsNullOrWhiteSpace(contentJs))
+                    var jScript = content.GetCustomJavaScript(htmlHelper);
+                    if (!string.IsNullOrWhiteSpace(jScript))
                     {
-                        jsBuilder.Append(contentJs);
+                        inlineJsBuilder.Append(@"<script type=""text/javascript"" language=""javascript"">");
+                        inlineJsBuilder.Append(jScript);
+                        inlineJsBuilder.AppendLine(@"</script>");
+                    }
+
+                    var includes = content.GetJavaScriptResources(htmlHelper);
+                    if (includes != null)
+                    {
+                        foreach (var include in includes)
+                        {
+                            jsIncludesBuilder.AppendLine(string.Format(@"<script src=""{0}"" type=""text/javascript""></script>", include));
+                        }
                     }
                 }
 
-                var js = jsBuilder.ToString();
-                if (!string.IsNullOrWhiteSpace(js))
+                var inlineJs = inlineJsBuilder.ToString();
+                var includedJs = jsIncludesBuilder.ToString();
+                if (!string.IsNullOrWhiteSpace(inlineJs) || !string.IsNullOrWhiteSpace(includedJs))
                 {
-                    return new HtmlString(string.Format(@"<script type=""text/javascript"" language=""javascript"">{0}</script>", js));
+                    return new HtmlString(string.Concat(includedJs, inlineJs));
                 }
             }
 
@@ -147,6 +176,24 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         public static IHtmlString RenderStyleSheets<T>(this HtmlHelper htmlHelper) where T : ModuleDescriptor
         {
             return htmlHelper.Action("RenderModuleStyleSheetIncludes", "Rendering", new { moduleDescriptorType = typeof(T) });
+        }
+
+        /// <summary>
+        /// Renders the body attributes.
+        /// </summary>
+        /// <param name="htmlHelper">The HTML helper.</param>
+        /// <returns>Rendered body attributes, required for page work with CMS panel</returns>
+        public static IHtmlString RenderBodyAttributes(this HtmlHelper htmlHelper)
+        {
+            var attributes = string.Empty;
+            var model = htmlHelper.ViewContext.ViewData.Model as RenderPageViewModel;
+
+            if (model != null && model.CanManageContent)
+            {
+                attributes = string.Format(@" data-page-id = ""{0}""", model.Id);
+            }
+
+            return new MvcHtmlString(attributes);
         }
     }
 }

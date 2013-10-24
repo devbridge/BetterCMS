@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define */
+/*global bettercms */
 
 bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.messages'], function ($, bcms, modal, forms) {
     'use strict';
@@ -33,7 +33,13 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
     * Sets dialog content from Url.
     */
     dynamicConent.setContentFromUrl = function (dialog, url, options) {
-        var contentId = dialog.contentId || 0;
+        
+        function logError(error) {
+            bcms.logger.error('Failed to load dialog content from ' + url + ' (' + error + ').');
+        }
+
+        var contentId = dialog.contentId || 0,
+            currentDialogId = (new Date).getTime();
 
         options = $.extend({
             done: null,
@@ -63,6 +69,7 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             }
         }, options);
 
+        dialog["currentDialogId"] = currentDialogId;
         dynamicConent.showLoading(dialog);
 
         $.ajax({
@@ -71,9 +78,19 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             cache: false
         })
         .done(function (content, status, response) {
+            if (dialog["currentDialogId"] !== currentDialogId) {
+                return;
+            }
+            
             if (response.getResponseHeader('Content-Type').indexOf('application/json') === 0 && content.Html) {
                 if (content.Success) {
-                    dialog.setContent(content.Html, contentId);
+                    try {
+                        dialog.setContent(content.Html, contentId);
+                    } catch (exc) {
+                        logError(exc.message);
+                    } finally {
+                        dynamicConent.hideLoading(dialog);
+                    }
                 } else {
                     if (dialog.close) {
                         dialog.close();
@@ -90,17 +107,22 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                     return;
                 }
             } else {
-                dialog.setContent(content, contentId);
+                try {
+                    dialog.setContent(content, contentId);
+                } catch (exc) {
+                    logError(exc.message);
+                } finally {
+                    dynamicConent.hideLoading(dialog);
+                } 
             }
-
-            dynamicConent.hideLoading(dialog);
+           
 
             if ($.isFunction(options.done)) {
                 options.done(content);
             }
         })
         .fail(function (request, status, error) {
-            console.log('Failed to load dialog content from ' + url + ' (' + error + ').');
+            logError(error);
 
             dynamicConent.hideLoading(dialog);
 
@@ -128,8 +150,14 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             forms.ajaxForm(form, {
                 beforeSubmit: function () {
                     if ($.isFunction(options.beforeSubmit)) {
-                        options.beforeSubmit(form);
+                        var result = options.beforeSubmit(form);
+                        if (result !== false) {
+                            dynamicConent.showLoading(dialog);
+                        }
+                        return result;
                     }
+                    dynamicConent.showLoading(dialog);
+                    return true;
                 },
                 
                 success: function (json) {
@@ -149,6 +177,7 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                 },
 
                 complete: function (json) {
+                    dynamicConent.hideLoading(dialog);
                     if ($.isFunction(options.complete)) {
                         options.complete(json, dialog);
                     }

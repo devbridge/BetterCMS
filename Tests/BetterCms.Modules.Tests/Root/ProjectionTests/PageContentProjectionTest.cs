@@ -1,10 +1,8 @@
-﻿using System.Linq;
-
-using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
+﻿using BetterCms.Core.Services.Caching;
 using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Projections;
+using BetterCms.Module.Root.Services;
 
 using NUnit.Framework;
 
@@ -25,8 +23,11 @@ namespace BetterCms.Test.Module.Root.ProjectionTests
                                                      TestDataProvider.CreateNewPageContentOption(pageContent)
                                                  };
 
+            var optionService = new DefaultOptionService(null, new HttpRuntimeCacheService());
+            var optionValues = optionService.GetMergedOptionValues(pageContent.Options, null);
+
             PageContentProjection original = new PageContentProjection(
-                pageContent, pageContent.Content, new HtmlContentAccessor((HtmlContent)pageContent.Content, pageContent.Options.Cast<IOption>().ToList()));
+                pageContent, pageContent.Content, new HtmlContentAccessor((HtmlContent)pageContent.Content, optionValues));
 
             RunSerializationAndDeserialization(original,
                 projection =>

@@ -1,0 +1,50 @@
+﻿@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Controllers
+@using BetterCms.Module.Root.ViewModels.Category
+@using BetterCms.Module.Root.Mvc.Grids.Extensions
+@using BetterCms.Module.Root.Mvc.Grids.TableRenderers
+@using BetterCms.Module.Root.Mvc.Helpers
+@using Microsoft.Web.Mvc
+@using MvcContrib.UI.Grid
+
+@model BetterCms.Module.Root.ViewModels.SiteSettings.SearchableGridViewModel<BetterCms.Module.Root.ViewModels.Category.CategoryItemViewModel>
+@{
+    Action<ColumnBuilder<CategoryItemViewModel>> columns;
+}
+
+@using (Html.BeginForm<CategoryController>(f => f.Categories(null), FormMethod.Post, new { @id = "bcms-categories-form", @class = "bcms-ajax-form" }))
+{
+    columns = column =>
+    {
+        column.EditButtonColumn();
+
+        column.For(model => Html.InlineEditColumnWithNamePattern(m => model.Name, "bcms-category-name", "bcms-category-old-name", "CategoryName_{0}"))
+            .Named(RootGlobalization.SiteSettings_Categories_NameColumn)
+            .SortColumnName("Name")
+            .Encode(false);
+
+        column.InlineEditControlsColumn();
+    };
+    
+    @Html.HiddenGridOptions(Model.GridOptions)
+
+    <div class="bcms-twocols-title-block">
+        <div class="bcms-large-titles">@RootGlobalization.SiteSettings_Categories_Title</div>
+        <div class="bcms-btn-links-main" id="bcms-site-settings-add-category">@RootGlobalization.SiteSettings_Categories_AddNewCategory</div>
+        <div class="bcms-search-block">
+            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
+            <div class="bcms-btn-search" id="bcms-categories-search-btn">@RootGlobalization.SiteSettings_Categories_Search</div>
+        </div>
+        
+        <div class="bcms-featured-grid bcms-clearfix">
+            @Html.RenderPaging(Model)
+        </div>
+    </div>
+    @Html.SiteSettingsMessagesBox()
+    @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<CategoryItemViewModel>())
+    @Html.HiddenSubmit()
+}
+
+<script type="text/html" id="bcms-editable-row-template">
+    @Html.Grid(new List<CategoryItemViewModel> { new CategoryItemViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<CategoryItemViewModel>())
+</script>

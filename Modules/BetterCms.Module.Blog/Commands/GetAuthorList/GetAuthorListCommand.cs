@@ -1,9 +1,12 @@
 ﻿using System.Linq;
 
+using BetterCms.Core;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Author;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels;
 
 using BetterCms.Module.Root.Mvc;
@@ -15,6 +18,16 @@ namespace BetterCms.Module.Blog.Commands.GetAuthorList
 {
     public class GetAuthorListCommand : CommandBase, ICommand<SearchableGridOptions, SearchableGridViewModel<AuthorViewModel>>
     {
+        private IAuthorService authorService;
+
+        private readonly IMediaFileUrlResolver fileUrlResolver;
+
+        public GetAuthorListCommand(IAuthorService authorService, IMediaFileUrlResolver fileUrlResolver)
+        {
+            this.authorService = authorService;
+            this.fileUrlResolver = fileUrlResolver;
+        }
+
         /// <summary>
         /// Executes the specified request.
         /// </summary>
@@ -22,42 +35,38 @@ namespace BetterCms.Module.Blog.Commands.GetAuthorList
         /// <returns>List with blog post view models</returns>
         public SearchableGridViewModel<AuthorViewModel> Execute(SearchableGridOptions request)
         {
-            SearchableGridViewModel<AuthorViewModel> model;
-
-            request.SetDefaultSortingOptions("Name");
-
-            var query = Repository
-                .AsQueryable<Author>();
-
-            if (!string.IsNullOrWhiteSpace(request.SearchQuery))
-            {
-                query = query.Where(a => a.Name.Contains(request.SearchQuery));
-            }
-
-            var authors = query
-                .Select(author =>
-                    new AuthorViewModel
+                var query = Repository.AsQueryable<Author>();
+                var authors = query.Select(
+                        author =>
+                        new AuthorViewModel
                         {
                             Id = author.Id,
                             Version = author.Version,
                             Name = author.Name,
-                            Image = author.Image == null ? null :
+                            Image = author.Image != null && !author.Image.IsDeleted
+                                    ?
                                     new ImageSelectorViewModel
-                                        {
-                                            ImageId = author.Image.Id,
-                                            ImageVersion = author.Image.Version,
-                                            ImageUrl = author.Image.PublicUrl,
-                                            ThumbnailUrl = author.Image.PublicThumbnailUrl,
-                                            ImageTooltip = author.Image.Caption
-                                        }
+                                    {
+                                        ImageId = author.Image.Id,
+                                        ImageVersion = author.Image.Version,
+                                        ImageUrl = fileUrlResolver.EnsureFullPathUrl(author.Image.PublicUrl),
+                                        ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(author.Image.PublicThumbnailUrl),
+                                        ImageTooltip = author.Image.Caption,
+                                        FolderId = author.Image.Folder != null ? author.Image.Folder.Id : (System.Guid?)null
+                                    }
+                                    : null
                         });
 
-            var count = query.ToRowCountFutureValue();
-            authors = authors.AddSortingAndPaging(request);
+                if (!string.IsNullOrWhiteSpace(request.SearchQuery))
+                {
+                    authors = authors.Where(a => a.Name.Contains(request.SearchQuery));
+                }
 
-            model = new SearchableGridViewModel<AuthorViewModel>(authors.ToList(), request, count.Value);
+                request.SetDefaultSortingOptions("Name");
+                var count = authors.ToRowCountFutureValue();
+                authors = authors.AddSortingAndPaging(request);
 
-            return model;
+                return new SearchableGridViewModel<AuthorViewModel>(authors.ToList(), request, count.Value);
         }
     }
 }

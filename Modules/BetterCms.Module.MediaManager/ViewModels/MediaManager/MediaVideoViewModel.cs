@@ -11,5 +11,10 @@ namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
         {
             Type = MediaType.Video;            
         }
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
     }
 }

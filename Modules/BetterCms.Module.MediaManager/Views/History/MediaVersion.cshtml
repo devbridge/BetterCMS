@@ -1,0 +1,42 @@
+﻿@using BetterCms.Module.MediaManager.ViewModels.History
+@using BetterCms.Module.Root.Mvc.Helpers
+
+@model MediaPreviewViewModel
+           
+@helper RenderProperty(MediaPreviewPropertyViewModel property) {
+    var value = property.Value;
+    if (!string.IsNullOrEmpty(value) && value.Length > 500)
+    {
+        value = value.Substring(0, 497) + "...";
+    }
+    
+    <div class="bcms-file-info-text">
+        @if (property.IsImageUrl)
+        {
+            <div class="bcms-media-history-image-holder">
+                <img src="@property.Value" alt="@property.Title" />
+            </div>
+        }
+        else if (property.IsUrl)
+        {
+            <a href="@property.Value" target="_blank">@property.Title</a>
+        }
+        else
+        {
+            <b>@property.Title: </b>@value
+        }
+    </div>
+}
+
+<div class="bcms-media-history-holder">
+    @Html.TabbedContentMessagesBox()
+
+    @if (Model != null)
+    {
+        foreach (var property in Model.Properties)
+        {
+            @RenderProperty(property)
+        }
+    }
+</div>
+

@@ -31,6 +31,11 @@ namespace BetterCms.Core.Models
         public const int Url = 850;
 
         /// <summary>
+        /// A max length for URL hash fields.
+        /// </summary>
+        public const int UrlHash = 32;
+
+        /// <summary>
         /// TA max length for URI fields.
         /// </summary>
         public const int Uri = 2000;

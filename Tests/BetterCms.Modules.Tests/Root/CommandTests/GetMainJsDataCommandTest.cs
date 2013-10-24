@@ -38,11 +38,12 @@ namespace BetterCms.Test.Module.Root.CommandTests
                                          "bcms.pages", 
                                          "bcms.pages.content",
                                      };
+
             foreach (var jsFile in jsFiles)
             {
                 var jsModel = jsModules.FirstOrDefault(js => js.Name == jsFile);
 
-                Assert.IsNotNull(jsModel);
+                Assert.IsNotNull(jsModel, "A {0} JS module is not found.", jsFile);
             }
         }
     }

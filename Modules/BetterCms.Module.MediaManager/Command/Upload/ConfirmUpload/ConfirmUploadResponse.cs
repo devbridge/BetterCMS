@@ -17,5 +17,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
         }
 
         public bool FolderIsDeleted { get; set; }
+
+        public Guid ReuploadMediaId { get; set; }
     }
 }

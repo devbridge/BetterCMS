@@ -2,6 +2,8 @@
 using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Security;
+
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
@@ -39,11 +41,25 @@ namespace BetterCms.Module.Pages.Command.History.RestoreContentVersion
             var contentType = content.GetType();
             if (contentType == typeof(HtmlContentWidget) || contentType == typeof(ServerControlWidget))
             {
-                DemandAccess(RootModuleConstants.UserRoles.Administration);
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.Administration);
             }
             else
             {
-                DemandAccess(RootModuleConstants.UserRoles.PublishContent);
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.PublishContent);
+                if (content.Original != null)
+                {
+                    var pageContent = Repository.AsQueryable<Root.Models.PageContent>()
+                            .Where(x => x.Content.Id == content.Original.Id && !x.IsDeleted)
+                            .Fetch(x => x.Page)
+                            .ThenFetchMany(x => x.AccessRules)
+                            .ToList()
+                            .FirstOrDefault();
+
+                    if (pageContent != null)
+                    {
+                        AccessControlService.DemandAccess(pageContent.Page, Context.Principal, AccessLevel.ReadWrite);
+                    }
+                }
             }
 
             contentService.RestoreContentFromArchive(content);

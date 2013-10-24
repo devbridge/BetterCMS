@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace BetterCms.Module.MediaManager.Command.MediaManager.DownloadMedia
+namespace BetterCms.Module.MediaManager.Command.Files.DownloadFile
 {
     /// <summary>
     /// Response data for download command.
@@ -30,5 +30,21 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager.DownloadMedia
         /// The name of the file download.
         /// </value>
         public string FileDownloadName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the redirect URL.
+        /// </summary>
+        /// <value>
+        /// The redirect URL.
+        /// </value>
+        public string RedirectUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance has no access.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance has no access; otherwise, <c>false</c>.
+        /// </value>
+        public bool HasNoAccess { get; set; }
     }
 }

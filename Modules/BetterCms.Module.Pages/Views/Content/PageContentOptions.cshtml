@@ -1,46 +1,25 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
+﻿@using BetterCms.Module.Pages
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Content
-@using BetterCms.Module.Root.Mvc.Grids.Extensions
-@using BetterCms.Module.Root.Mvc.Grids.TableRenderers
 @using BetterCms.Module.Root.Mvc.Helpers
-@using MvcContrib.UI.Grid
 @using Microsoft.Web.Mvc
 
 @model PageContentOptionsViewModel
            
-@{
-    Action<ColumnBuilder<PageContentOptionViewModel>> columns = column =>
-    {
-        column.EditButtonColumn();
-
-        column.For(model => Html.ColumnWithHiddenField(m => model.OptionKey, "WidgetOptions[{0}].OptionKey"))
-            .Named(PagesGlobalization.PageWidgetOptions_OptionKeyColumn)
-            .Sortable(false)
-            .HeaderAttributes(@style => "width: 160px;")
-            .Attributes(@class => "bcms-option-key");
-
-        column.For(model => Html.InlineEditColumnWithNamePattern(m => model.OptionValue, "bcms-option-value", "bcms-old-option-value", "WidgetOptions[{0}].OptionValue"))
-            .Named(PagesGlobalization.PageWidgetOptions_OptionValueColumn)
-            .Sortable(false)
-            .Attributes(@class => "bcms-option-value");
-
-        column.For(model => model.OptionDefaultValue)
-            .Named(PagesGlobalization.PageWidgetOptions_OptionDefaultValueColumn)
-            .Sortable(false)
-            .HeaderAttributes(@style => "width: 160px; text-align: left")
-            .Attributes(@class => "bcms-option-key", @style => "text-align: left");
-    };
-}
-
 <div class="bcms-scroll-window">
     
     @Html.TabbedContentMessagesBox()
 
     <div class="bcms-input-list-holder">
-        @using (Html.BeginForm<ContentController>(c => c.PageContentOptions((PageContentOptionsViewModel)null), FormMethod.Post, new { @id = "bcms-options-form", @class = "bcms-ajax-form" }))
+        @using (Html.BeginForm<ContentController>(c => c.PageContentOptions((PageContentOptionsViewModel)null), FormMethod.Post, new
+                                                                                                                                     {
+                                                                                                                                         @id = "bcms-options-form", 
+                                                                                                                                         @class = "bcms-ajax-form",
+                                                                                                                                         data_readonly = Model.IsReadOnly.ToString().ToLower()
+                                                                                                                                     }))
         {              
-            @Html.Grid(Model.WidgetOptions).Columns(columns).Attributes(@class => "bcms-tables", @id => "bcms-options-grid").RenderUsing(new EditableHtmlTableGridRenderer<PageContentOptionViewModel>())
+            @Html.Partial(PagesConstants.OptionValuesGridTemplate)
+            
             @Html.HiddenFor(model => model.PageContentId)
         }
     </div>

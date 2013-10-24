@@ -1,0 +1,12 @@
+﻿@model BetterCms.Module.Root.ViewModels.Cms.RenderWidgetViewModel
+@if (Model != null)
+{
+    <h2>Widget Name: @Model.Widget.Name</h2>
+    <h3>Current Page: @Model.Page.PageUrl</h3>
+    
+    <p>Some widget content...</p>
+}
+else
+{
+    <p>Widget Preview...</p>
+}

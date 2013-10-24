@@ -1,0 +1,52 @@
+﻿@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Controllers
+@using BetterCms.Module.Root.ViewModels.Tags
+@using BetterCms.Module.Root.Mvc.Grids.Extensions
+@using BetterCms.Module.Root.Mvc.Grids.TableRenderers
+@using BetterCms.Module.Root.Mvc.Helpers
+@using Microsoft.Web.Mvc
+@using MvcContrib.UI.Grid
+
+@model BetterCms.Module.Root.ViewModels.SiteSettings.SearchableGridViewModel<BetterCms.Module.Root.ViewModels.Tags.TagItemViewModel>
+
+@{
+    Action<ColumnBuilder<TagItemViewModel>> columns;
+}
+
+@using (Html.BeginForm<TagsController>(f => f.ListTags(null), FormMethod.Post, new { @id = "bcms-tags-form", @class = "bcms-ajax-form" }))
+{
+    columns = column =>
+    {
+        column.EditButtonColumn();
+
+        column.For(model => Html.InlineEditColumnWithNamePattern(m => model.Name, "bcms-tag-name", "bcms-tag-old-name", "TagName_{0}"))
+            .Named(RootGlobalization.SiteSettings_Tags_TagColumn)
+            .SortColumnName("Name")
+            .Encode(false);
+
+        column.InlineEditControlsColumn();
+    };
+    
+    @Html.HiddenGridOptions(Model.GridOptions)
+
+    <div class="bcms-twocols-title-block">
+        <div class="bcms-large-titles">@RootGlobalization.SiteSettings_Tags_Title</div>
+        <div class="bcms-btn-links-main" id="bcms-site-settings-add-tag">@RootGlobalization.SiteSettings_Tags_AddNewTag</div>
+        <div class="bcms-search-block">
+            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
+            <div class="bcms-btn-search" id="bcms-tags-search-btn">@RootGlobalization.SiteSettings_Tags_Search</div>
+        </div>
+        
+        <div class="bcms-featured-grid bcms-clearfix">
+            @Html.RenderPaging(Model)
+        </div>
+    </div>
+    
+    @Html.SiteSettingsMessagesBox()
+    @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<TagItemViewModel>())
+    @Html.HiddenSubmit()
+}
+
+<script type="text/html" id="bcms-editable-row-template">
+    @Html.Grid(new List<TagItemViewModel> {new TagItemViewModel()}).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<TagItemViewModel>())
+</script>

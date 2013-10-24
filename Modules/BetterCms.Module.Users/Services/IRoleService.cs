@@ -1,18 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using BetterCms.Module.Root.Models;
-using BetterCms.Module.Users.Models;
-
-namespace BetterCms.Module.Users.Services
+﻿namespace BetterCms.Module.Users.Services
 {
     public interface IRoleService
     {
         /// <summary>
-        /// Gets the list of user roles lookup values.
+        /// Creates the role.
         /// </summary>
-        /// <returns>List of user roles lookup values.</returns>
-        IEnumerable<LookupKeyValue> GetUserRoles();
+        /// <param name="name">The name.</param>
+        /// <param name="description">The description.</param>
+        /// <returns>
+        /// Created role entity
+        /// </returns>
+        Models.Role CreateRole(string name, string description = null);
 
-        Role GetRole(Guid? id);
+        /// <summary>
+        /// Updates the role.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="version">The version.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="description">The description.</param>
+        /// <returns>
+        /// Updated role entity
+        /// </returns>
+        Models.Role UpdateRole(System.Guid id, int version, string name, string description = null);
+
+        /// <summary>
+        /// Deletes the role by specified role id and version.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="version">The version.</param>
+        /// <param name="throwOnPopulatedRole">If true, throw an exception if role has one or more members and do not delete role.</param>
+        /// <returns>
+        /// Deleted role entity
+        /// </returns>
+        Models.Role DeleteRole(System.Guid id, int version, bool throwOnPopulatedRole);
+
+        /// <summary>
+        /// Deletes the role by specified role name.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="throwOnPopulatedRole">If true, throw an exception if role has one or more members and do not delete role.</param>
+        /// <returns></returns>
+        Models.Role DeleteRole(string name, bool throwOnPopulatedRole);
     }
 }

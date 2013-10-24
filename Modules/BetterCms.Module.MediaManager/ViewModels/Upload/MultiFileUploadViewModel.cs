@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.MediaManager.ViewModels.Upload
 {
@@ -18,5 +18,27 @@ namespace BetterCms.Module.MediaManager.ViewModels.Upload
         public IList<Tuple<Guid, string>> Folders { get; set; }
 
         public IList<Guid> UploadedFiles { get; set; }
+
+        public Guid ReuploadMediaId { get; set; }
+
+        public List<UserAccessViewModel> UserAccessList { get; set; }
+
+        public bool AccessControlEnabled { get; set; }
+
+        public MultiFileUploadViewModel()
+        {
+            UserAccessList = new List<UserAccessViewModel>();
+        }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("RootFolderId: {0}, RootFolderType: {1}, SelectedFolderId: {2}, ReuploadMediaId: {3}", RootFolderId, RootFolderType, SelectedFolderId, ReuploadMediaId);
+        }
     }
 }

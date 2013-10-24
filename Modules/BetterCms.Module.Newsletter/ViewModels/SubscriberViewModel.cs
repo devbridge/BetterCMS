@@ -2,14 +2,16 @@
 using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
+
 using BetterCms.Module.Newsletter.Content.Resources;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc.Grids;
+using BetterCms.Module.Root.ViewModels.Cms;
 
 namespace BetterCms.Module.Newsletter.ViewModels
 {
-    public class SubscriberViewModel : IEditableGridItem
+    public class SubscriberViewModel : RenderWidgetViewModel, IEditableGridItem
     {
         /// <summary>
         /// Gets or sets the author id.
@@ -47,5 +49,16 @@ namespace BetterCms.Module.Newsletter.ViewModels
         /// <c>true</c> if to ignore unique subscriber exception; otherwise, <c>false</c>.
         /// </value>
         public bool IgnoreUniqueSubscriberException { get; set; }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("Id: {0}, Version: {1}, Email: {2}, IgnoreUniqueSubscriberException: {3}", Id, Version, Email, IgnoreUniqueSubscriberException);
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 using Autofac;
@@ -7,9 +6,11 @@ using Autofac;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.MediaManager.Content.Resources;
+using BetterCms.Module.MediaManager.Provider;
 using BetterCms.Module.MediaManager.Registration;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root;
+using BetterCms.Module.Root.Providers;
 
 namespace BetterCms.Module.MediaManager
 {
@@ -31,6 +32,11 @@ namespace BetterCms.Module.MediaManager
         private readonly MediaManagerJsModuleIncludeDescriptor mediaJsModuleIncludeDescriptor;
 
         /// <summary>
+        /// The media history java script module descriptor.
+        /// </summary>
+        private readonly MediaHistoryJsModuleIncludeDescriptor mediaHistoryJsModuleIncludeDescriptor;
+
+        /// <summary>
         /// The media upload module descriptor.
         /// </summary>
         private readonly MediaUploadJsModuleIncludeDescriptor mediaUploadModuleIncludeDescriptor;
@@ -41,6 +47,11 @@ namespace BetterCms.Module.MediaManager
         private readonly ImageEditorJsModuleIncludeDescriptor imageEditorModuleIncludeDescriptor;
 
         /// <summary>
+        /// The file editor module include descriptor.
+        /// </summary>
+        private readonly FileEditorJsModuleIncludeDescriptor fileEditorModuleIncludeDescriptor;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MediaManagerModuleDescriptor" /> class.
         /// </summary>
         public MediaManagerModuleDescriptor(ICmsConfiguration cmsConfiguration) : base(cmsConfiguration)
@@ -48,6 +59,11 @@ namespace BetterCms.Module.MediaManager
             mediaJsModuleIncludeDescriptor = new MediaManagerJsModuleIncludeDescriptor(this);
             mediaUploadModuleIncludeDescriptor = new MediaUploadJsModuleIncludeDescriptor(this);
             imageEditorModuleIncludeDescriptor = new ImageEditorJsModuleIncludeDescriptor(this);
+            fileEditorModuleIncludeDescriptor = new FileEditorJsModuleIncludeDescriptor(this);
+            mediaHistoryJsModuleIncludeDescriptor = new MediaHistoryJsModuleIncludeDescriptor(this);
+
+            // Register images gallery custom option: album
+            CustomOptionsProvider.RegisterProvider(MediaManagerFolderOptionProvider.Identifier, new MediaManagerFolderOptionProvider());
         }
 
         /// <summary>
@@ -113,9 +129,12 @@ namespace BetterCms.Module.MediaManager
         /// <param name="containerBuilder">The container builder.</param>        
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
-            
+
+            containerBuilder.RegisterType<DefaultMediaFileUrlResolver>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultMediaFileService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultMediaImageService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
+            containerBuilder.RegisterType<DefaultMediaHistoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
+            containerBuilder.RegisterType<DefaultTagService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
         }
 
         /// <summary>
@@ -142,6 +161,8 @@ namespace BetterCms.Module.MediaManager
                     mediaJsModuleIncludeDescriptor,
                     mediaUploadModuleIncludeDescriptor,
                     imageEditorModuleIncludeDescriptor,
+                    fileEditorModuleIncludeDescriptor,
+                    mediaHistoryJsModuleIncludeDescriptor,
                     new JsIncludeDescriptor(this, "bcms.html5Upload"),
                     new JsIncludeDescriptor(this, "bcms.jquery.jcrop"),
                     new JsIncludeDescriptor(this, "bcms.contextMenu")
@@ -162,7 +183,7 @@ namespace BetterCms.Module.MediaManager
                             Order = 2400,
                             Title = () => MediaGlobalization.SiteSettings_MediaManagerMenuItem,
                             CssClass = page => "bcms-sidebar-link",
-                            AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.DeleteContent)
+                            AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.Administration, RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.DeleteContent)
                         }                                      
                 };
         }

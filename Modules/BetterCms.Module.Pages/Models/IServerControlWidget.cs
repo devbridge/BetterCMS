@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BetterCms.Module.Pages.Models
+﻿namespace BetterCms.Module.Pages.Models
 {
     public interface IServerControlWidget
     {

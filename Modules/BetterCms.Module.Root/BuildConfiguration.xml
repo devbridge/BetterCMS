@@ -15,6 +15,8 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.unobtrusive-ajax.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.validate.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.validate.unobtrusive.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.jquery.autocomplete.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.autocomplete.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.slides.jquery.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.spinner.jquery.js" />      
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.authentication.js" />
@@ -30,6 +32,7 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.ko.grid.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.messages.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.modal.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.options.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.preview.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.redirect.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.sidemenu.js" />
@@ -37,6 +40,7 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.security.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.tabs.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.tooltip.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.tags.js" />
     </ItemGroup>
 
     <CssCompressorTask

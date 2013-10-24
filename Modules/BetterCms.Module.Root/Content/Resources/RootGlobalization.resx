@@ -117,6 +117,30 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AccessControl_UserAccess_AddNewRole" xml:space="preserve">
+    <value>Add Role</value>
+  </data>
+  <data name="AccessControl_UserAccess_AddNewUser" xml:space="preserve">
+    <value>Add User</value>
+  </data>
+  <data name="AccessControl_UserAccess_NoAccess" xml:space="preserve">
+    <value>No Access</value>
+  </data>
+  <data name="AccessControl_UserAccess_Read" xml:space="preserve">
+    <value>Only Read</value>
+  </data>
+  <data name="AccessControl_UserAccess_ReadAndEdit" xml:space="preserve">
+    <value>Read &amp; Edit</value>
+  </data>
+  <data name="AccessControl_UserAccess_Title" xml:space="preserve">
+    <value>Users Access</value>
+  </data>
+  <data name="AccessControl_UserAccess_Tooltip_Description" xml:space="preserve">
+    <value>Set user access</value>
+  </data>
+  <data name="AccessControl_UserAccess_User" xml:space="preserve">
+    <value>User</value>
+  </data>
   <data name="Alert_DefaultTitle" xml:space="preserve">
     <value>Attention!</value>
   </data>
@@ -165,17 +189,35 @@
   <data name="Button_Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="Button_Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="Button_Filter_Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="Button_Filter_Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
   <data name="Button_History" xml:space="preserve">
     <value>History</value>
   </data>
   <data name="Button_Insert" xml:space="preserve">
     <value>Insert</value>
   </data>
+  <data name="Button_No" xml:space="preserve">
+    <value>No</value>
+  </data>
   <data name="Button_Ok" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="Button_Open" xml:space="preserve">
     <value>Open</value>
+  </data>
+  <data name="Button_Paging_Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="Button_Paging_Previous" xml:space="preserve">
+    <value>Previous</value>
   </data>
   <data name="Button_Preview" xml:space="preserve">
     <value>Preview</value>
@@ -201,6 +243,9 @@
   <data name="Button_Search" xml:space="preserve">
     <value>Search</value>
   </data>
+  <data name="Button_Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
   <data name="Confirm_DefaultTitle" xml:space="preserve">
     <value>Attention!</value>
   </data>
@@ -221,6 +266,24 @@
   </data>
   <data name="CookieSupport_MustBeEnabled_Message_SecondLine" xml:space="preserve">
     <value>Cookies must be enabled.</value>
+  </data>
+  <data name="CreateCategory_CreatedSuccessfully_Message" xml:space="preserve">
+    <value>Category created successfully.</value>
+  </data>
+  <data name="CreateTag_CreatedSuccessfully_Message" xml:space="preserve">
+    <value>Tag created successfully.</value>
+  </data>
+  <data name="Date_Picker_Tooltip_Title" xml:space="preserve">
+    <value>Calendar</value>
+  </data>
+  <data name="DeleteCategory_DeletedSuccessfully_Message" xml:space="preserve">
+    <value>Category deleted successfully.</value>
+  </data>
+  <data name="DeleteOption_Confirmation_Message" xml:space="preserve">
+    <value>Are you sure you want to delete option {0}?</value>
+  </data>
+  <data name="DeleteTag_DeletedSuccessfully_Message" xml:space="preserve">
+    <value>Tag removed successfully.</value>
   </data>
   <data name="DynamicContent_DialogForbidden_Message" xml:space="preserve">
     <value>Forbidden: Access is denied.</value>
@@ -273,11 +336,47 @@
   <data name="Message_Loading" xml:space="preserve">
     <value>Loading...</value>
   </data>
+  <data name="Message_ReadOnlyMode" xml:space="preserve">
+    <value>Dialog opened in read-only mode.</value>
+  </data>
   <data name="Message_Saving" xml:space="preserve">
     <value>Saving ...</value>
   </data>
   <data name="Message_SessionExpiredLoginToContinue_Message" xml:space="preserve">
     <value>Your session has expired. Please login to continue.</value>
+  </data>
+  <data name="OptionTypes_Boolean_Title" xml:space="preserve">
+    <value>Boolean</value>
+  </data>
+  <data name="OptionTypes_CssUrl_Title" xml:space="preserve">
+    <value>CSS Include URL</value>
+  </data>
+  <data name="OptionTypes_Custom_Title" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="OptionTypes_DateTime_Title" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="OptionTypes_Float_Title" xml:space="preserve">
+    <value>Float</value>
+  </data>
+  <data name="OptionTypes_Integer_Title" xml:space="preserve">
+    <value>Integer</value>
+  </data>
+  <data name="OptionTypes_JavaScriptUrl_Title" xml:space="preserve">
+    <value>JS Include URL</value>
+  </data>
+  <data name="OptionTypes_Text_Title" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="Option_DuplicateKey_Message" xml:space="preserve">
+    <value>Option "{0}" specified more than once. Option names should be unique.</value>
+  </data>
+  <data name="Option_Invalid_Message" xml:space="preserve">
+    <value>Option {0} value is invalid. Should be of type: {1}.</value>
+  </data>
+  <data name="Paging_Page_Title" xml:space="preserve">
+    <value>Page</value>
   </data>
   <data name="Redirect_Message" xml:space="preserve">
     <value>Please wait while page is redirecting.</value>
@@ -290,6 +389,15 @@
   </data>
   <data name="Reload_Title" xml:space="preserve">
     <value>Reloading page</value>
+  </data>
+  <data name="SaveCategory_CategoryExists_Message" xml:space="preserve">
+    <value>Category already exists. </value>
+  </data>
+  <data name="SaveOptions_CannotDeleteOption_Message" xml:space="preserve">
+    <value>Cannot delete option {0}, because it's marked as non-deletable.</value>
+  </data>
+  <data name="SaveTag_TagExists_Message" xml:space="preserve">
+    <value>Tag already exists.</value>
   </data>
   <data name="Sidebar_DragTitle" xml:space="preserve">
     <value>Drag to adjust sidebar position</value>
@@ -324,6 +432,42 @@
   <data name="Sidebar_SiteSettingsButtonTitle" xml:space="preserve">
     <value>Site settings</value>
   </data>
+  <data name="SiteSettings_CategoriesMenuItem" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="SiteSettings_Categories_AddNewCategory" xml:space="preserve">
+    <value>Add New +</value>
+  </data>
+  <data name="SiteSettings_Categories_DeleteCategoryMessage" xml:space="preserve">
+    <value>Are you sure you want to delete the {0} category?</value>
+  </data>
+  <data name="SiteSettings_Categories_NameColumn" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="SiteSettings_Categories_Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SiteSettings_Categories_Title" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="SiteSettings_TagsMenuItem" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="SiteSettings_Tags_AddNewTag" xml:space="preserve">
+    <value>Add New +</value>
+  </data>
+  <data name="SiteSettings_Tags_DeleteTagMessage" xml:space="preserve">
+    <value>Are you sure you want to delete the {0} tag?</value>
+  </data>
+  <data name="SiteSettings_Tags_Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SiteSettings_Tags_TagColumn" xml:space="preserve">
+    <value>Tag</value>
+  </data>
+  <data name="SiteSettings_Tags_Title" xml:space="preserve">
+    <value>Tags</value>
+  </data>
   <data name="SiteSettings_Title" xml:space="preserve">
     <value>Site Settings</value>
   </data>
@@ -338,6 +482,9 @@
   </data>
   <data name="UserRole_PublishContent" xml:space="preserve">
     <value>Publish / Unpublish Content, Restore Content from History</value>
+  </data>
+  <data name="Validation_CurrentUserHasNoRightsToUpdateOrDelete_Message" xml:space="preserve">
+    <value>Current user {0} has no access rights to update or delete the '{1}' secured record.</value>
   </data>
   <data name="Validation_Email_Message" xml:space="preserve">
     <value>Invalid email address.</value>
@@ -359,6 +506,9 @@
   </data>
   <data name="Validation_RequiredAttribute_Message" xml:space="preserve">
     <value>Field is required.</value>
+  </data>
+  <data name="Validation_SecuredObjectShouldHaveAccess_Message" xml:space="preserve">
+    <value>User access rules can't be updated because of the complete access lose.</value>
   </data>
   <data name="Validation_StringLengthAttribute_Message" xml:space="preserve">
     <value>The field must be the string with a maximum length of {1}.</value>

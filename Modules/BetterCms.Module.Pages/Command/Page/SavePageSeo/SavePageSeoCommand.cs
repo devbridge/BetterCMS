@@ -1,11 +1,11 @@
 ﻿using System;
 
-using BetterCms.Api;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Seo;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
 {
@@ -69,7 +69,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
 
             model.ChangedUrlPath = urlService.FixUrl(model.ChangedUrlPath);
 
-            if (!string.Equals(model.PageUrlPath, model.ChangedUrlPath, StringComparison.OrdinalIgnoreCase))
+            if (!string.Equals(model.PageUrlPath, model.ChangedUrlPath))
             {
                 pageService.ValidatePageUrl(model.ChangedUrlPath, model.PageId);
 
@@ -90,9 +90,11 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
                 page.PageUrl = model.ChangedUrlPath;
             }
 
+            page.PageUrlHash = page.PageUrl.UrlHash();
             page.MetaTitle = model.MetaTitle;
             page.MetaKeywords = model.MetaKeywords;
             page.MetaDescription = model.MetaDescription;
+            page.UseCanonicalUrl = model.UseCanonicalUrl;
 
             Repository.Save(page);
             UnitOfWork.Commit();
@@ -100,13 +102,13 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
             // Notify about SEO change.
             if (page.HasSEO != initialHasSeo)
             {
-                PagesApiContext.Events.OnPageSeoStatusChanged(page);
+                Events.PageEvents.Instance.OnPageSeoStatusChanged(page);
             }
 
             // Notify about new redirect creation.
             if (newRedirect != null)
             {
-                PagesApiContext.Events.OnRedirectCreated(newRedirect);
+                Events.PageEvents.Instance.OnRedirectCreated(newRedirect);
             }
 
             return new EditSeoViewModel { PageUrlPath = page.PageUrl };

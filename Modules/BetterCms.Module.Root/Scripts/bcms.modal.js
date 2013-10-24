@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define, console, document */
+/*global bettercms, document */
 
 bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.extenders', 'bcms.forms'], function ($, bcms, tabs, ko, forms) {
     'use strict';
@@ -25,19 +25,22 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
             desirableStatus: '.bcms-content-desirable-status',
             popinfoFrame: '.bcms-popinfo-frame',
             errorFrame: '.bcms-error-frame',
+            loaderContainer: '.bcms-modal-content',
             
             // selectors for calculation of modal window size
             elemOuter: '.bcms-modal-body',
             elemHeader: '.bcms-modal-header',
             elemFooter: '.bcms-modal-footer',
             elemTabsHeader: '.bcms-tab-header',
-            elemContent: '.bcms-scroll-window'
+            elemContent: '.bcms-scroll-window',
+            readonly: '[data-readonly=true]'
         },
         
         classes = {
             saveButton: 'bcms-btn-small bcms-modal-accept',
             cancelButton: 'bcms-btn-links-small bcms-modal-cancel',
-            grayButton: 'bcms-btn-small bcms-btn-gray'
+            grayButton: 'bcms-btn-small bcms-btn-gray',
+            inactive: 'bcms-inactive'
         },
 
         links = {},
@@ -224,6 +227,10 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         if ($.isFunction(this.options.onLoad)) {
             this.options.onLoad(this);
         }
+
+        this.getLoaderContainer = function() {
+            return this.container.find(selectors.loaderContainer);
+        };
     }
 
     /**
@@ -277,9 +284,13 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         * Executes accept button click logic.
         */
         acceptClick: function () {
-            if (this.onAction(this.options.onAcceptClick) === true) {
-                return this.accept();
+            if (this.container.find('form').data('readonly') !== true) {
+                if (this.onAction(this.options.onAcceptClick) === true) {
+                    return this.accept();
+                }
+                return false;
             }
+
             return false;
         },
 
@@ -324,26 +335,42 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         /**
         * Updates modal window content.
         */
-        setContent: function (content) {            
-            this.container
-                .find(selectors.content)
-                .empty()
-                .append(content);
+        setContent: function (content) {
+            try {
+                this.container
+                    .find(selectors.content)
+                    .empty()
+                    .append(content);
+            } catch(exc) {
+                throw exc;
+            } finally {
+                this.container.find(selectors.loader).remove();
+                
+                // Check for readonly mode.
+                this.container.find(selectors.readonly).addClass(classes.inactive);
+                var form = this.container.find('form');
+                if (form.data('readonly') === true) {
+                    form.find('input:visible').attr('readonly', 'readonly');
+                    form.find('textarea:visible').attr('readonly', 'readonly');
+                    form.find('input[type=text]:visible:not([data-bind])').parent('div').css('z-index', 100);
+                    form.find('textarea:visible:not([data-bind])').attr('readonly', 'readonly').parent('div').css('z-index', 100);
+                    this.disableAcceptButton();
+                    this.disableExtraButtons();
+                }
 
-            this.container.find(selectors.loader).remove();
+                if ($.validator && $.validator.unobtrusive) {
+                    $.validator.unobtrusive.parse(this.container);
+                }
 
-            if ($.validator && $.validator.unobtrusive) {
-                $.validator.unobtrusive.parse(this.container);
-            }
+                this.maximizeHeight();
 
-            this.maximizeHeight();
+                tabs.initTabPanel(this.container);
 
-            tabs.initTabPanel(this.container);
-            
-            forms.bindCheckboxes(this.container);
+                forms.bindCheckboxes(this.container);
 
-            if (this.options.autoFocus) {
-                this.setFocus();
+                if (this.options.autoFocus) {
+                    this.setFocus();
+                }
             }
         },
 
@@ -351,6 +378,10 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
         * Sets focus on the first visible input element or on the dialog close element.
         */
         setFocus: function () {
+            if (this.container.find('form').data('readonly') === true) {
+                return;
+            }
+            
             var focustElement = this.container.find('input:visible:first');
 
             if (focustElement.length === 0) {
@@ -361,7 +392,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
                 if (focustElement.is('input')) {
                     setTimeout(function () {
                         focustElement.focus();
-                    }, 750);
+                    }, 100);
                 } else {
                     focustElement.focus();
                 }
@@ -391,7 +422,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
                     return actionDelegate(this) !== false;
                 }
             } catch (ex) {
-                console.log('Failed to execute action delegate. ' + ex.message);
+                bcms.logger.error('Failed to execute action delegate. ' + ex.message);
                 return false;
             }
 
@@ -682,7 +713,10 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
             var imgContainer = dialog.container.find(selectors.previewImageContainer),
                 width = img.width(),
                 visibleWidth = $(window).width() - 150,
-                margin;
+                margin,
+                previewFailure = imgContainer.find(selectors.previewFailure);
+            
+            previewFailure.hide();
 
             if (width > visibleWidth) {
                 width = visibleWidth;

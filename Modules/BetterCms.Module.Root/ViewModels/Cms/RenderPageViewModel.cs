@@ -1,25 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web.Mvc;
+using System.Linq;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Core.Security;
+
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Projections;
+using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.Root.ViewModels.Cms
 {
     [Serializable]
-    public class RenderPageViewModel : IPage
+    public class RenderPageViewModel : IRenderPage, IAccessSecuredObject, IAccessSecuredViewModel
     {
         public RenderPageViewModel(IPage page)
         {
+            var rootPage = page as Page;
+
             Id = page.Id;
             IsDeleted = page.IsDeleted;
             Version = page.Version;
             HasSEO = page.HasSEO;
             Title = page.Title;
+            MetaTitle = rootPage != null && !string.IsNullOrEmpty(rootPage.MetaTitle) ? rootPage.MetaTitle : Title;
             PageUrl = page.PageUrl;
             Status = page.Status;
             CreatedOn = page.CreatedOn;
@@ -37,22 +44,6 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         public Guid Id { get; private set; }
 
         public bool IsDeleted { get; private set; }
-
-        DateTime? IEntity.DeletedOn
-        {
-            get
-            {
-                throw new NotSupportedException();
-            }
-        }
-
-        string IEntity.DeletedByUser
-        {
-            get
-            {
-                throw new NotSupportedException();
-            }
-        }
 
         public int Version { get; private set; }
         
@@ -72,7 +63,72 @@ namespace BetterCms.Module.Root.ViewModels.Cms
 
         public string Title { get; private set; }
 
+        public string MetaTitle { get; private set; }
+
         public string PageUrl { get; private set; }
+
+        /// <summary>
+        /// Gets the entity id.
+        /// </summary>
+        /// <value>
+        /// The entity id.
+        /// </value>
+        Guid IAccessSecuredObject.Id
+        {
+            get
+            {
+                return Id;
+            }
+        }
+
+        /// <summary>
+        /// Gets the entity version.
+        /// </summary>
+        /// <value>
+        /// The version.
+        /// </value>
+        /// <exception cref="System.NotSupportedException"></exception>
+        int IEntity.Version
+        {
+            get
+            {
+                return Version;
+            }
+            set
+            {
+                throw new NotSupportedException();                
+            }
+        }
+
+        /// <summary>
+        /// Gets the deleted on date.
+        /// </summary>
+        /// <value>
+        /// The deleted on.
+        /// </value>
+        /// <exception cref="System.NotSupportedException"></exception>
+        DateTime? IEntity.DeletedOn
+        {
+            get
+            {
+                throw new NotSupportedException();
+            }
+        }
+
+        /// <summary>
+        /// Gets the deleted by user.
+        /// </summary>
+        /// <value>
+        /// The deleted by user.
+        /// </value>
+        /// <exception cref="System.NotSupportedException"></exception>
+        string IEntity.DeletedByUser
+        {
+            get
+            {
+                throw new NotSupportedException();
+            }
+        }
 
         /// <summary>
         /// Gets or sets the layout path.
@@ -99,6 +155,37 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         public List<PageRegionViewModel> Regions { get; set; }
 
         /// <summary>
+        /// Gets or sets the page options.
+        /// </summary>
+        /// <value>
+        /// The page options.
+        /// </value>
+        public IEnumerable<IOptionValue> Options
+        {
+            get
+            {
+                return OptionsAsDictionary.Values;
+            }
+
+            set
+            {
+                OptionsAsDictionary = new Dictionary<string, IOptionValue>();
+                foreach (var optionValue in value.Distinct())
+                {
+                    OptionsAsDictionary.Add(optionValue.Key, optionValue);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the options as dictionary.
+        /// </summary>
+        /// <value>
+        /// The options as dictionary.
+        /// </value>
+        public IDictionary<string, IOptionValue> OptionsAsDictionary { get; set; }
+
+        /// <summary>
         /// Gets or sets the list of meta data projections.
         /// </summary>
         /// <value>
@@ -121,6 +208,14 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// The java scripts.
         /// </value>
         public IList<IJavaScriptAccessor> JavaScripts { get; set; }
+
+        /// <summary>
+        /// Gets or sets the access rules.
+        /// </summary>
+        /// <value>
+        /// The access rules.
+        /// </value>
+        public IList<IAccessRule> AccessRules { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether current user can manage page content.
@@ -163,6 +258,26 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         public dynamic Bag { get; set; }
 
         /// <summary>
+        /// Removes the rule.
+        /// </summary>
+        /// <param name="accessRule">The access rule.</param>
+        /// <exception cref="System.NotSupportedException"></exception>
+        void IAccessSecuredObject.RemoveRule(IAccessRule accessRule)
+        {
+            throw new NotSupportedException();
+        }
+
+        /// <summary>
+        /// Adds the rule.
+        /// </summary>
+        /// <param name="accessRule">The access rule.</param>
+        /// <exception cref="System.NotSupportedException"></exception>
+        void IAccessSecuredObject.AddRule(IAccessRule accessRule)
+        {
+            throw new NotSupportedException();
+        }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>
@@ -172,5 +287,17 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         {
             return string.Format("Id: {0}, Title: {1}, PageUrl: {2}, LayoutPath: {3}", Id, Title, PageUrl, LayoutPath);
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether page should be opened in the read only mode.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if page should be opened in the read only mode; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsReadOnly { get; set; }
+
+        public bool HasEditRole { get; set; }
+
+        public bool SaveUnsecured { get; set; }
     }
 }

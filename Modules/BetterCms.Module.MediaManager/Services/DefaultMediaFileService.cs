@@ -3,15 +3,20 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Mvc;
 
 using BetterCms.Configuration;
+using BetterCms.Core;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
+using BetterCms.Core.Security;
+using BetterCms.Core.Services;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Core.Web;
+using BetterCms.Module.MediaManager.Controllers;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
 using Common.Logging;
@@ -32,7 +37,11 @@ namespace BetterCms.Module.MediaManager.Services
 
         private readonly IHttpContextAccessor httpContextAccessor;
 
-        private ISessionFactoryProvider sessionFactoryProvider;
+        private readonly ISessionFactoryProvider sessionFactoryProvider;
+
+        private readonly IMediaFileUrlResolver mediaFileUrlResolver;
+
+        private readonly ISecurityService securityService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultMediaFileService" /> class.
@@ -43,8 +52,10 @@ namespace BetterCms.Module.MediaManager.Services
         /// <param name="configuration">The configuration.</param>
         /// <param name="httpContextAccessor">The HTTP context accessor.</param>
         /// <param name="sessionFactoryProvider">The session factory provider.</param>
+        /// <param name="mediaFileUrlResolver">The media file URL resolver.</param>
         public DefaultMediaFileService(IStorageService storageService, IRepository repository, IUnitOfWork unitOfWork,
-            ICmsConfiguration configuration, IHttpContextAccessor httpContextAccessor, ISessionFactoryProvider sessionFactoryProvider)
+            ICmsConfiguration configuration, IHttpContextAccessor httpContextAccessor, ISessionFactoryProvider sessionFactoryProvider,
+            IMediaFileUrlResolver mediaFileUrlResolver, ISecurityService securityService)
         {
             this.sessionFactoryProvider = sessionFactoryProvider;
             this.httpContextAccessor = httpContextAccessor;
@@ -52,9 +63,11 @@ namespace BetterCms.Module.MediaManager.Services
             this.unitOfWork = unitOfWork;
             this.storageService = storageService;
             this.repository = repository;
+            this.mediaFileUrlResolver = mediaFileUrlResolver;
+            this.securityService = securityService;
         }
 
-        public virtual void RemoveFile(Guid fileId, int version)
+        public virtual void RemoveFile(Guid fileId, int version, bool doNotCheckVersion = false)
         {
             var file = repository.AsQueryable<MediaFile>()
                           .Where(f => f.Id == fileId)
@@ -89,23 +102,17 @@ namespace BetterCms.Module.MediaManager.Services
             }
             finally
             {
-                repository.Delete<MediaFile>(fileId, version);
+                if (doNotCheckVersion)
+                {
+                    var media = repository.AsQueryable<MediaFile>().FirstOrDefault(f => f.Id == fileId);
+                    repository.Delete(media);
+                }
+                else
+                {
+                    repository.Delete<MediaFile>(fileId, version);
+                }
                 unitOfWork.Commit();   
             }
-        }
-
-        public virtual string GetFileSizeText(long sizeInBytes)
-        {
-            string[] sizes = { "bytes", "KB", "MB", "GB" };
-            double fileSize = sizeInBytes;
-            int order = 0;
-            while (fileSize >= 1024 && order + 1 < sizes.Length)
-            {
-                order++;
-                fileSize = fileSize / 1024;
-            }
-
-            return string.Format("{0:0.##} {1}", fileSize, sizes[order]);
         }
 
         public virtual MediaFile UploadFile(MediaType type, Guid rootFolderId, string fileName, long fileLength, Stream fileStream)
@@ -126,12 +133,16 @@ namespace BetterCms.Module.MediaManager.Services
             file.IsTemporary = true;
             file.IsCanceled = false;
             file.IsUploaded = null;
+            if (configuration.Security.AccessControlEnabled)
+            {
+                file.AddRule(new AccessRule() { AccessLevel = AccessLevel.ReadWrite, Identity = securityService.CurrentPrincipalName });
+            }
 
             unitOfWork.BeginTransaction();
             repository.Save(file);
             unitOfWork.Commit();
 
-            Task fileUploadTask = UploadMediaFileToStorage<MediaFile>(fileStream, file.FileUri, file.Id, media => { media.IsUploaded = true; }, media => { media.IsUploaded = false; });
+            Task fileUploadTask = UploadMediaFileToStorage<MediaFile>(fileStream, file.FileUri, file.Id, media => { media.IsUploaded = true; }, media => { media.IsUploaded = false; }, false);
             fileUploadTask.ContinueWith(
                 task =>
                     {
@@ -165,7 +176,7 @@ namespace BetterCms.Module.MediaManager.Services
         public virtual string GetPublicFileUrl(MediaType type, string folderName, string fileName)
         {
             string fullPath = Path.Combine(
-                GetContentRoot(configuration.Storage.PublicContentUrlRoot),
+                GetContentPublicRoot(configuration.Storage.PublicContentUrlRoot),
                 Path.Combine(type.ToString().ToLower(), folderName, fileName));
 
             string absoluteUri = new Uri(fullPath).AbsoluteUri;
@@ -182,10 +193,11 @@ namespace BetterCms.Module.MediaManager.Services
         /// <param name="mediaId">The media id.</param>
         /// <param name="updateMediaAfterUpload">An action to update a specific field for the media after file upload.</param>
         /// <param name="updateMediaAfterFail">An action to update a specific field for the media after file upload fails.</param>
+        /// <param name="ignoreAccessControl">if set to <c>true</c> ignore access control.</param>
         /// <returns>
         /// Upload file task.
         /// </returns>
-        public Task UploadMediaFileToStorage<TMedia>(Stream sourceStream, Uri fileUri, Guid mediaId, Action<TMedia> updateMediaAfterUpload, Action<TMedia> updateMediaAfterFail) where TMedia : MediaFile
+        public Task UploadMediaFileToStorage<TMedia>(Stream sourceStream, Uri fileUri, Guid mediaId, Action<TMedia> updateMediaAfterUpload, Action<TMedia> updateMediaAfterFail, bool ignoreAccessControl) where TMedia : MediaFile
         {
             var stream = new MemoryStream();
 
@@ -199,6 +211,7 @@ namespace BetterCms.Module.MediaManager.Services
                     upload.CreateDirectory = true;
                     upload.Uri = fileUri;
                     upload.InputStream = stream;
+                    upload.IgnoreAccessControl = ignoreAccessControl;
 
                     storageService.UploadObject(upload);
                 });
@@ -271,6 +284,26 @@ namespace BetterCms.Module.MediaManager.Services
             }
 
             return rootPath;
+        }
+
+        private string GetContentPublicRoot(string rootPath)
+        {
+            if (configuration.Storage.ServiceType == StorageServiceType.FileSystem && VirtualPathUtility.IsAppRelative(rootPath))
+            {
+                return httpContextAccessor.MapPublicPath(rootPath);
+            }
+
+            return rootPath;
+        }
+
+        public string GetDownloadFileUrl(MediaType type, Guid id, string fileUrl)
+        {
+            if (type == MediaType.Image || !configuration.Security.AccessControlEnabled || !storageService.SecuredUrlsEnabled)
+            {
+                return fileUrl;
+            }
+
+            return mediaFileUrlResolver.GetMediaFileFullUrl(id, fileUrl);
         }
     }
 }

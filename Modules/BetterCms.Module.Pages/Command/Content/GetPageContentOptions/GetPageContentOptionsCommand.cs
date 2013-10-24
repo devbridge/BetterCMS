@@ -1,18 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Security;
+
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Services;
 
 using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Command.Content.GetPageContentOptions
 {
     public class GetPageContentOptionsCommand : CommandBase, ICommand<Guid, PageContentOptionsViewModel>
-    {        
+    {
+        /// <summary>
+        /// Gets or sets the option service.
+        /// </summary>
+        /// <value>
+        /// The option service.
+        /// </value>
+        public IOptionService OptionService { get; set; }
+
+        /// <summary>
+        /// Gets or sets the CMS configuration.
+        /// </summary>
+        /// <value>
+        /// The CMS configuration.
+        /// </value>
+        public ICmsConfiguration CmsConfiguration { get; set; }
+
         /// <summary>
         /// Executes the specified request.
         /// </summary>
@@ -20,70 +38,39 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageContentOptions
         /// <returns></returns>        
         public PageContentOptionsViewModel Execute(Guid pageContentId)
         {
-            IList<PageContentOptionViewModel> options = null;
+            var model = new PageContentOptionsViewModel
+            {
+                PageContentId = pageContentId
+            };
 
             if (!pageContentId.HasDefaultValue())
             {
-                var pageContent = Repository.AsQueryable<PageContent>()
-                                        .Where(f => f.Id == pageContentId && !f.IsDeleted && !f.Content.IsDeleted)
-                                        .Fetch(f => f.Content).ThenFetchMany(f => f.ContentOptions)
-                                        .FetchMany(f => f.Options)
-                                        .ToList()
-                                        .FirstOrDefault();
+                var contentQuery = Repository.AsQueryable<PageContent>()
+                    .Where(f => f.Id == pageContentId && !f.IsDeleted && !f.Content.IsDeleted)
+                    .Fetch(f => f.Content).ThenFetchMany(f => f.ContentOptions).ThenFetch(f => f.CustomOption)
+                    .FetchMany(f => f.Options).ThenFetch(f => f.CustomOption)
+                    .AsQueryable();
+
+                if (CmsConfiguration.Security.AccessControlEnabled)
+                {
+                    contentQuery = contentQuery.Fetch(f => f.Page).ThenFetchMany(f => f.AccessRules);
+                }
+                
+                var pageContent = contentQuery.ToList().FirstOrDefault();
 
                 if (pageContent != null)
                 {
-                    options = new List<PageContentOptionViewModel>();
+                    model.OptionValues = OptionService.GetMergedOptionValuesForEdit(pageContent.Content.ContentOptions, pageContent.Options);
+                    model.CustomOptions = OptionService.GetCustomOptions();
 
-                    if (pageContent.Options != null)
+                    if (CmsConfiguration.Security.AccessControlEnabled)
                     {
-                        foreach (var pageContentOption in pageContent.Options.Distinct())
-                        {
-                            ContentOption contentOption = null;
-                            if (pageContent.Content.ContentOptions != null)
-                            {
-                                contentOption = pageContent.Content.ContentOptions.FirstOrDefault(f => f.Key.Trim().Equals(pageContentOption.Key.Trim(), StringComparison.OrdinalIgnoreCase));
-                            }
-                            
-                            options.Add(new PageContentOptionViewModel
-                                            {                                                
-                                                Type = pageContentOption.Type,
-                                                OptionKey = pageContentOption.Key.Trim(),
-                                                OptionValue = pageContentOption.Value,
-                                                OptionDefaultValue = contentOption != null ? contentOption.DefaultValue : null
-                                            });
-                        }
-                    }
-
-                    if (pageContent.Content.ContentOptions != null)
-                    {
-                        foreach (var contentOption in pageContent.Content.ContentOptions.Distinct())
-                        {
-                            if (!options.Any(f => f.OptionKey.Equals(contentOption.Key.Trim(), StringComparison.OrdinalIgnoreCase)))
-                            {
-                                options.Add(new PageContentOptionViewModel
-                                                {
-                                                    Type = contentOption.Type,                                                    
-                                                    OptionKey = contentOption.Key.Trim(),
-                                                    OptionValue = null,
-                                                    OptionDefaultValue = contentOption.DefaultValue
-                                                });
-                            }
-                        }
+                        SetIsReadOnly(model, pageContent.Page.AccessRules.Cast<IAccessRule>().ToList());
                     }
                 }
             }
-            
-            if (options == null)
-            {
-                options = new List<PageContentOptionViewModel>();
-            }
 
-            return new PageContentOptionsViewModel
-                       {
-                           WidgetOptions = options.OrderBy(o => o.OptionKey).ToList(),
-                           PageContentId = pageContentId
-                       };
+            return model;
         }        
     }
 }

@@ -59,9 +59,9 @@
     <Reference Include="Autofac.Configuration">
       <HintPath>..\..\packages\Autofac.3.0.0\lib\net40\Autofac.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="Common.Logging, Version=2.1.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+    <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Common.Logging.2.1.1\lib\net40\Common.Logging.dll</HintPath>
+      <HintPath>..\..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="FluentMigrator, Version=1.0.6.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
       <HintPath>..\..\packages\FluentMigrator.1.0.6.0\lib\40\FluentMigrator.dll</HintPath>
@@ -112,73 +112,78 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Commands\Authentication\LoginCommand.cs" />
+    <Compile Include="Commands\Registration\CreateFirstUserCommand.cs" />
     <Compile Include="Commands\Role\DeleteRole\DeleteRoleCommand.cs" />
     <Compile Include="Commands\Role\DeleteRole\DeleteRoleCommandRequest.cs" />
-    <Compile Include="Commands\Role\GetRoleForEdit\GetRoleForEditCommand.cs" />
     <Compile Include="Commands\Role\GetRoles\GetRolesCommand.cs" />
     <Compile Include="Commands\Role\SaveRole\SaveRoleCommand.cs" />
-    <Compile Include="Commands\Role\SaveRole\SaveRoleResponse.cs" />
+    <Compile Include="Commands\Role\SaveRole\SaveRoleCommandResponse.cs" />
+    <Compile Include="Commands\Role\SearchRoles\SearchRolesCommand.cs" />
     <Compile Include="Commands\User\DeleteUser\DeleteUserCommand.cs" />
     <Compile Include="Commands\User\DeleteUser\DeleteUserCommandRequest.cs" />
-    <Compile Include="Commands\User\GetUsersList\GetUsersCommand.cs" />
+    <Compile Include="Commands\User\GetUserProfile\GetUserProfileCommand.cs" />
+    <Compile Include="Commands\User\GetUsers\GetUsersCommand.cs" />
     <Compile Include="Commands\User\GetUser\GetUserCommand.cs" />
-    <Compile Include="Commands\User\SaveUserCommand.cs" />
-    <Compile Include="Commands\User\SaveUserResponse.cs" />
+    <Compile Include="Commands\User\SaveUserProfile\SaveUserProfileCommand.cs" />
+    <Compile Include="Commands\User\SaveUser\SaveUserCommand.cs" />
+    <Compile Include="Commands\User\SaveUser\SaveUserCommandResponse.cs" />
     <Compile Include="Content\Resources\UsersGlobalization.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>UsersGlobalization.resx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AuthenticationController.cs" />
+    <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Models\Maps\PermissionMap.cs" />
+    <Compile Include="Controllers\UserProfileController.cs" />
+    <Compile Include="Events\RoleEvents.cs" />
+    <Compile Include="Events\UserEvents.cs" />
+    <Compile Include="Events\UserProfileUpdatedEventArgs.cs" />
     <Compile Include="Models\Maps\RoleMap.cs" />
-    <Compile Include="Models\Maps\RolePermissionMap.cs" />
-    <Compile Include="Models\Maps\UserRolesMap.cs" />
-    <Compile Include="Models\Maps\UsersMap.cs" />
-    <Compile Include="Models\Migrations\Migration201302211715.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Models\Maps\UserRoleMap.cs" />
+    <Compile Include="Models\Maps\UserMap.cs" />
+    <Compile Include="Models\Migrations\Migration201309101400.cs" />
+    <Compile Include="Models\Migrations\Migration201309091554.cs" />
+    <Compile Include="Models\Migrations\Migration201309060825.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
-    <Compile Include="Models\Migrations\Migration201302011135.cs" />
-    <Compile Include="Models\Migrations\Migration201302061720.cs" />
-    <Compile Include="Models\Migrations\Migration201302281111.cs" />
     <Compile Include="Models\Migrations\UsersVersionTableMetaData.cs" />
-    <Compile Include="Models\Permission.cs" />
     <Compile Include="Models\Role.cs" />
-    <Compile Include="Models\RolePermissions.cs" />
-    <Compile Include="Models\UserRoles.cs" />
-    <Compile Include="Models\Users.cs" />
+    <Compile Include="Models\UserRole.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Mvc\Attributes\PasswordValidationAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Provider\CmsMembershipProvider.cs" />
     <Compile Include="Registration\RoleJsModuleIncludeDescriptor.cs" />
-    <Compile Include="Provider\RoleProvider.cs" />
+    <Compile Include="Provider\CmsRoleProvider.cs" />
     <Compile Include="Registration\UserJsModuleIncludeDescriptor.cs" />
-    <Compile Include="Services\DefaultAuthentictionService.cs" />
+    <Compile Include="Services\DefaultRegistrationService.cs" />
+    <Compile Include="Services\DefaultAuthenticationService.cs" />
     <Compile Include="Services\DefaultRoleService.cs" />
+    <Compile Include="Services\DefaultUserProfileUrlResolver.cs" />
+    <Compile Include="Services\DefaultUserService.cs" />
     <Compile Include="Services\IAuthenticationService.cs" />
+    <Compile Include="Services\IRegistrationService.cs" />
     <Compile Include="Services\IRoleService.cs" />
+    <Compile Include="Services\IUserService.cs" />
     <Compile Include="UsersModuleConstants.cs" />
     <Compile Include="UsersModuleDescriptor.cs" />
-    <Compile Include="ViewModels\LoginViewModel.cs" />
-    <Compile Include="ViewModels\EditUserViewModel.cs" />
-    <Compile Include="ViewModels\Role\EditRoleViewModel.cs" />
-    <Compile Include="ViewModels\Role\PermissionViewModel.cs" />
-    <Compile Include="ViewModels\Role\RoleItemViewModel.cs" />
-    <Compile Include="ViewModels\Role\SiteSettingRoleListViewModel.cs" />
-    <Compile Include="ViewModels\SearchableUserViewModel.cs" />
-    <Compile Include="ViewModels\UserViewModel.cs" />
+    <Compile Include="ViewModels\Authentication\LoginViewModel.cs" />
+    <Compile Include="ViewModels\Registration\CreateFirstUserViewModel.cs" />
+    <Compile Include="ViewModels\User\EditUserProfileViewModel.cs" />
+    <Compile Include="ViewModels\User\EditUserViewModel.cs" />
+    <Compile Include="ViewModels\Role\RoleViewModel.cs" />
     <Compile Include="ViewModels\User\UserItemViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\Resources\UsersGlobalization.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>UsersGlobalization.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Content\Styles\bcms.users.css" />
-    <EmbeddedResource Include="Scripts\bcms.user.js" />
-    <EmbeddedResource Include="Scripts\bcms.role.js" />
     <Content Include="BuildConfiguration.xml" />
-    <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Styles\Images\" />
@@ -214,28 +219,36 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Scripts\bcms.role.js" />
+    <EmbeddedResource Include="Scripts\bcms.user.js" />
     <Content Include="web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Role\Partial\ListTemplate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\User\EditUser.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\UserProfile\EditUserProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\User\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\User\EditUserView.cshtml" />
+    <EmbeddedResource Include="Views\User\Partial\EditUserRoles.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Role\RolesListView.cshtml" />
+    <EmbeddedResource Include="Views\Registration\CreateFirstUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Role\EditRoleView.cshtml" />
+    <EmbeddedResource Include="Views\Authentication\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Role\Partial\PermissionsView.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Shared\EditorTemplates\PermissionViewModel.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Widgets\Login.cshtml" />
+    <EmbeddedResource Include="Views\Shared\PublicActionLayout.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

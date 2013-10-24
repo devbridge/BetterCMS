@@ -12,7 +12,7 @@ using NUnit.Framework;
 namespace BetterCms.Test.Module.Pages.CommandTests.WidgetTests
 {
     [TestFixture]
-    public class DeleteWidgetCommandTest : DatabaseTestBase
+    public class DeleteWidgetCommandTest : IntegrationTestBase
     {
         [Test]
         public void Should_Delete_ServerControlWidget_Successfully()

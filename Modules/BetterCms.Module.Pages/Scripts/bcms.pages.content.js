@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define, console */
+/*global bettercms */
 
 bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content', 'bcms.pages.widgets', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery', 'bcms.redirect', 'bcms.pages.history', 'bcms.security'],
     function($, bcms, modal, content, widgets, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, editor, slides, redirect, history, security) {
@@ -30,8 +30,8 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 widgetContainerBlock: '.bcms-preview-block',
                 widgetCategory: '.bcms-category',
                 widgetName: '.bcms-title-holder > .bcms-content-titles',
-                widgetIFramePreview: '.bcms-preview-box:has(iframe) .bcms-zoom-overlay',
-                widgetImagePreview: '.bcms-preview-box:not(:has(iframe)) .bcms-zoom-overlay',
+                widgetIFramePreview: ".bcms-preview-box[data-as-image='False'] .bcms-zoom-overlay",
+                widgetImagePreview: ".bcms-preview-box[data-as-image='True'] .bcms-zoom-overlay",
 
                 widgetsContent: '.bcms-widgets',
 
@@ -393,13 +393,39 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Initializes a content sliders.
         */
         pagesContent.initializeSliders = function (container) {
+            var updateSlide = function (slideBox, currentSlideNumber) {
+                var currentSlide = slideBox.find(".bcms-slides-single-slide").get([currentSlideNumber - 1]);
+                $(currentSlide).find('.bcms-preview-box').each(function () {
+                    var previewBox = $(this),
+                        data = previewBox.data();
+                    if (!data.isLoaded) {
+                        if (data.asImage === "True") {
+                            previewBox.prepend($.format("<img src=\"{0}\" alt=\"{1}\" />",
+                                data.previewUrl, data.title));
+                        } else {
+                            previewBox.prepend($.format("<iframe class=\"{0}\" width=\"{1}\" height=\"{2}\" scrolling=\"no\" border=\"0\" frameborder=\"0\" src=\"{3}\" style=\"background-color:white;\"/>",
+                                data.frameCssClass, data.width, data.height, data.previewUrl));
+                        }
+                        previewBox.data("isLoaded", true);
+                    }
+                });
+            };
             container.find(selectors.sliderBoxes).each(function () {
-                $(this).slides({
+                var slideBox = $(this);
+                slideBox.slides({
                     container: selectors.sliderContainer,
                     generateNextPrev: true,
                     generatePagination: false,
                     prev: classes.sliderPrev,
-                    next: classes.sliderNext
+                    next: classes.sliderNext,
+                    slidesLoaded: function () {
+                        updateSlide(slideBox, 1);
+                    },
+                    animationStart: function (currentSlideNumber) {
+                    },
+                    animationComplete: function (currentSlideNumber) {
+                        updateSlide(slideBox, currentSlideNumber);
+                    }
                 });
             });
         };
@@ -571,7 +597,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Initializes page module.
         */
         pagesContent.init = function() {
-            console.log('Initializing bcms.pages.content module.');
+            bcms.logger.debug('Initializing bcms.pages.content module.');
         };
 
         /**

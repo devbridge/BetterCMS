@@ -89,7 +89,7 @@ namespace BetterCms.Module.MediaManager.Services
         /// </summary>
         /// <param name="mediaImageId">The media image id.</param>
         /// <param name="version">The version.</param>
-        public void RemoveImageWithFiles(Guid mediaImageId, int version)
+        public void RemoveImageWithFiles(Guid mediaImageId, int version, bool doNotCheckVersion = false)
         {   
             var removeImageFileTasks = new List<Task>();
             var image = repository.AsQueryable<MediaImage>()
@@ -148,7 +148,15 @@ namespace BetterCms.Module.MediaManager.Services
             }
             finally
             {
-                repository.Delete<MediaImage>(mediaImageId, version);
+                if (doNotCheckVersion)
+                {
+                    var media = repository.AsQueryable<MediaImage>().FirstOrDefault(f => f.Id == mediaImageId);
+                    repository.Delete(media);
+                }
+                else
+                {
+                    repository.Delete<MediaImage>(mediaImageId, version);
+                }
                 unitOfWork.Commit();                
             }
         }
@@ -161,11 +169,24 @@ namespace BetterCms.Module.MediaManager.Services
         /// <param name="fileLength">Length of the file.</param>
         /// <param name="fileStream">The file stream.</param>
         /// <returns>Image entity.</returns>
-        public MediaImage UploadImage(Guid rootFolderId, string fileName, long fileLength, Stream fileStream)
+        public MediaImage UploadImage(Guid rootFolderId, string fileName, long fileLength, Stream fileStream, Guid reuploadMediaId)
         {
-            string folderName = mediaFileService.CreateRandomFolderName();
-            string versionedFileName = MediaImageHelper.CreateVersionedFileName(fileName, 1);
+            MediaImage originalMedia;
+            string folderName;
+            string versionedFileName;
             Size size;
+            if (!reuploadMediaId.HasDefaultValue())
+            {
+                originalMedia = repository.First<MediaImage>(image => image.Id == reuploadMediaId);
+                fileName = string.Concat(Path.GetFileNameWithoutExtension(originalMedia.OriginalFileName), Path.GetExtension(fileName));
+                folderName = Path.GetFileName(Path.GetDirectoryName(originalMedia.FileUri.OriginalString));
+                versionedFileName = MediaImageHelper.CreateVersionedFileName(fileName, originalMedia.Version + 1);
+            }
+            else
+            {
+                folderName = mediaFileService.CreateRandomFolderName();
+                versionedFileName = MediaImageHelper.CreateVersionedFileName(fileName, 1);
+            }
 
             try
             {
@@ -208,8 +229,8 @@ namespace BetterCms.Module.MediaManager.Services
                 image.OriginalWidth = size.Width;
                 image.OriginalHeight = size.Height;
                 image.OriginalSize = fileLength;
-                image.OriginalUri = mediaFileService.GetFileUri(MediaType.Image, folderName, MediaImageHelper.OriginalImageFilePrefix + fileName);
-                image.PublicOriginallUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, MediaImageHelper.OriginalImageFilePrefix + fileName);
+                image.OriginalUri = mediaFileService.GetFileUri(MediaType.Image, folderName, MediaImageHelper.OriginalImageFilePrefix + versionedFileName);
+                image.PublicOriginallUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, MediaImageHelper.OriginalImageFilePrefix + versionedFileName);
                     
 
                 image.ThumbnailWidth = ThumbnailSize.Width;
@@ -228,9 +249,9 @@ namespace BetterCms.Module.MediaManager.Services
                 repository.Save(image);
                 unitOfWork.Commit();
 
-                Task imageUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(fileStream, image.FileUri, image.Id, img => { img.IsUploaded = true; }, img => { img.IsUploaded = false; });
-                Task originalUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(fileStream, image.OriginalUri, image.Id, img => { img.IsOriginalUploaded = true; }, img => { img.IsOriginalUploaded = false; });
-                Task thumbnailUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(thumbnailImage, image.ThumbnailUri, image.Id, img => { img.IsThumbnailUploaded = true; }, img => { img.IsThumbnailUploaded = false; });
+                Task imageUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(fileStream, image.FileUri, image.Id, img => { img.IsUploaded = true; }, img => { img.IsUploaded = false; }, true);
+                Task originalUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(fileStream, image.OriginalUri, image.Id, img => { img.IsOriginalUploaded = true; }, img => { img.IsOriginalUploaded = false; }, true);
+                Task thumbnailUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(thumbnailImage, image.ThumbnailUri, image.Id, img => { img.IsThumbnailUploaded = true; }, img => { img.IsThumbnailUploaded = false; }, true);
 
                 Task.Factory.ContinueWhenAll(
                     new[]
@@ -300,55 +321,51 @@ namespace BetterCms.Module.MediaManager.Services
 
                 var image = new WebImage(tempStream);
                
-                // Make image rectangular.
-                WebImage croppedImage;
-
-                ImageFormat format = null;
-                if (transparencyFormats.TryGetValue(image.ImageFormat, out format))
+                using (Image resizedBitmap = new Bitmap(size.Width, size.Height))
                 {
-                    using (Image resizedBitmap = new Bitmap(size.Width, size.Height))
+                    using (Bitmap source = new Bitmap(new MemoryStream(image.GetBytes())))
                     {
-                        using (Bitmap source = new Bitmap(new MemoryStream(image.GetBytes())))
+                        using (Graphics g = Graphics.FromImage(resizedBitmap))
                         {
-                            using (Graphics g = Graphics.FromImage(resizedBitmap))
+                            var destination = source;
+
+                            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+
+                            var diff = (image.Width - image.Height) / 2.0;
+                            if (diff > 0)
                             {
-                                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-                                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                                g.DrawImage(source, 0, 0, size.Width, size.Height);
+                                var x1 = Convert.ToInt32(Math.Floor(diff));
+                                var y1 = 0;
+                                var x2 = image.Height;
+                                var y2 = image.Height;
+                                var rect = new Rectangle(x1, y1, x2, y2);
+                                destination = CropImage(destination, rect);
                             }
+                            else if (diff < 0)
+                            {
+                                diff = Math.Abs(diff);
+
+                                var x1 = 0;
+                                var y1 = Convert.ToInt32(Math.Floor(diff));
+                                var x2 = image.Width;
+                                var y2 = image.Width;
+                                var rect = new Rectangle(x1, y1, x2, y2);
+                                destination = CropImage(destination, rect);
+                            }
+
+                            g.DrawImage(destination, 0, 0, size.Width, size.Height);
                         }
-                        using (MemoryStream ms = new MemoryStream())
-                        {
-                            resizedBitmap.Save(ms, ImageFormat.Png);
-                            croppedImage = new WebImage(ms);
-                        }
+                    }
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        resizedBitmap.Save(ms, ImageFormat.Png);
+
+                        var resizedImage = new WebImage(ms);
+                        var bytes = resizedImage.GetBytes();
+                        destinationStream.Write(bytes, 0, bytes.Length);      
                     }
                 }
-                else
-                {
-
-                    var diff = (image.Width - image.Height) / 2.0;
-                    if (diff > 0)
-                    {
-                        croppedImage = image.Crop(0, Convert.ToInt32(Math.Floor(diff)), 0, Convert.ToInt32(Math.Ceiling(diff)));
-                    }
-                    else if (diff < 0)
-                    {
-                        diff = Math.Abs(diff);
-                        croppedImage = image.Crop(Convert.ToInt32(Math.Floor(diff)), 0, Convert.ToInt32(Math.Ceiling(diff)));
-                    }
-                    else
-                    {
-                        croppedImage = image;
-                    }
-                    croppedImage = croppedImage.Resize(size.Width, size.Height);
-                }
-
-
-                var resizedImage = croppedImage;
-
-                var bytes = resizedImage.GetBytes();
-                destinationStream.Write(bytes, 0, bytes.Length);                
             }
         }
 
@@ -374,7 +391,7 @@ namespace BetterCms.Module.MediaManager.Services
                 mediaImage.ThumbnailHeight = size.Height;
                 mediaImage.ThumbnailSize = memoryStream.Length;
 
-                storageService.UploadObject(new UploadRequest { InputStream = memoryStream, Uri = mediaImage.ThumbnailUri });
+                storageService.UploadObject(new UploadRequest { InputStream = memoryStream, Uri = mediaImage.ThumbnailUri, IgnoreAccessControl = true});
             }
         }
 
@@ -394,6 +411,18 @@ namespace BetterCms.Module.MediaManager.Services
                     session.Close();
                 }
             }
+        }
+
+        /// <summary>
+        /// Crops the image.
+        /// </summary>
+        /// <param name="img">The img.</param>
+        /// <param name="cropArea">The crop area.</param>
+        /// <returns>Cropped image</returns>
+        private static Bitmap CropImage(Bitmap img, Rectangle cropArea)
+        {
+            Bitmap bmpCrop = img.Clone(cropArea, img.PixelFormat);
+            return bmpCrop;
         }
     }
 }

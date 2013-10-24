@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Api;
+using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 
@@ -20,6 +21,8 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
     {
         public virtual IContentService ContentService { get; set; }
 
+        public virtual IOptionService OptionService { get; set; }
+
         /// <summary>
         /// Executes the specified request.
         /// </summary>
@@ -33,9 +36,15 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
                 throw new CmsException(string.Format("Server widget does not support Draft state."));
             }
 
+            if (request.Options != null)
+            {
+                OptionService.ValidateOptionKeysUniqueness(request.Options);
+            }
+
             UnitOfWork.BeginTransaction();
 
-            var widget = (ServerControlWidget)ContentService.SaveContentWithStatusUpdate(GetServerControlWidgetFromRequest(request), request.DesirableStatus);
+            var requestWidget = GetServerControlWidgetFromRequest(request);
+            var widget = (ServerControlWidget)ContentService.SaveContentWithStatusUpdate(requestWidget, request.DesirableStatus);
             Repository.Save(widget);
 
             UnitOfWork.Commit();
@@ -45,11 +54,11 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
             {
                 if (request.Id == default(Guid))
                 {
-                    PagesApiContext.Events.OnWidgetCreated(widget);
+                    Events.PageEvents.Instance.OnWidgetCreated(widget);
                 }
                 else
                 {
-                    PagesApiContext.Events.OnWidgetUpdated(widget);
+                    Events.PageEvents.Instance.OnWidgetUpdated(widget);
                 }
             }
 
@@ -88,18 +97,32 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
             widget.Version = request.Version;
             widget.PreviewUrl = request.PreviewImageUrl;            
 
-            if (request.ContentOptions != null)
+            if (request.Options != null)
             {
                 widget.ContentOptions = new List<ContentOption>();
 
-                foreach (var requestContentOption in request.ContentOptions)
+                // NOTE: Loading custom options before saving.
+                // In other case, when loading custom options from option service, nHibernate updates version number (nHibernate bug)
+                var customOptionsIdentifiers = request.Options
+                    .Where(o => o.Type == OptionType.Custom)
+                    .Select(o => o.CustomOption.Identifier)
+                    .Distinct()
+                    .ToArray();
+                var customOptions = OptionService.GetCustomOptionsById(customOptionsIdentifiers);
+
+                foreach (var requestContentOption in request.Options)
                 {
                     var contentOption = new ContentOption {
                                                               Content = widget,
                                                               Key = requestContentOption.OptionKey,
-                                                              DefaultValue = requestContentOption.OptionDefaultValue,
-                                                              Type = requestContentOption.Type
+                                                              DefaultValue = OptionService.ClearFixValueForSave(requestContentOption.OptionKey, requestContentOption.Type, requestContentOption.OptionDefaultValue),
+                                                              Type = requestContentOption.Type,
+                                                              CustomOption = requestContentOption.Type == OptionType.Custom 
+                                                                ? customOptions.First(o => o.Identifier == requestContentOption.CustomOption.Identifier)
+                                                                : null
                                                           };
+
+                    OptionService.ValidateOptionValue(contentOption);
 
                     widget.ContentOptions.Add(contentOption);
                 }

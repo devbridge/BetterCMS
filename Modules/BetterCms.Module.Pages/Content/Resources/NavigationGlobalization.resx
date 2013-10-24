@@ -169,7 +169,7 @@
     <value>Drag &amp; Drop</value>
   </data>
   <data name="Sitemap_AddNewPageDialog_PageName" xml:space="preserve">
-    <value>Page Name:</value>
+    <value>Page Name</value>
   </data>
   <data name="Sitemap_AddNewPageDialog_PageNodeFooter" xml:space="preserve">
     <value>You can always place this page later.</value>
@@ -178,7 +178,7 @@
     <value>Drag your page where you want to place it.</value>
   </data>
   <data name="Sitemap_AddNewPageDialog_PageUrl" xml:space="preserve">
-    <value>URL:</value>
+    <value>URL</value>
   </data>
   <data name="Sitemap_AddNewPageDialog_SitemapHeader" xml:space="preserve">
     <value>Page Placement</value>
@@ -199,6 +199,6 @@
     <value>At least one node is in editing mode.</value>
   </data>
   <data name="Sitemap_Dialog_NodeUrl_InvalidSymbol" xml:space="preserve">
-    <value>Invalid &lt;,&gt;,*,%,&amp;,:,\,? symbols.</value>
+    <value>Invalid &lt;,&gt;,*,&amp;,? symbols.</value>
   </data>
 </root>

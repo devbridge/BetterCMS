@@ -31,6 +31,17 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemapNode
 
             UnitOfWork.Commit();
 
+            if (request.Id.HasDefaultValue())
+            {
+                Events.SitemapEvents.Instance.OnSitemapNodeCreated(node);
+            }
+            else
+            {
+                Events.SitemapEvents.Instance.OnSitemapNodeUpdated(node);
+            }
+
+            Events.SitemapEvents.Instance.OnSitemapUpdated();
+
             return new SitemapNodeViewModel
                 {
                     Id = node.Id,

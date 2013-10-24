@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.IO;
+using System.Net;
 using System.Reflection;
 
 using BetterCms.Core.Services.Storage;
@@ -22,7 +23,7 @@ namespace BetterCms.Test.Module
         /// Mocks the configuration.
         /// </summary>
         /// <returns>Mocked CMS configuration</returns>
-        protected ICmsConfiguration MockConfiguration()
+        protected ICmsConfiguration MockConfiguration(bool accessControlEnabled = false)
         {
             var serviceSection = (CmsTestConfigurationSection)ConfigurationManager.GetSection(CmsTestConfigurationSection.StorageSectionName);
 
@@ -34,6 +35,11 @@ namespace BetterCms.Test.Module
 
             Mock<ICmsConfiguration> cmsConfigurationMock = new Mock<ICmsConfiguration>();
             cmsConfigurationMock.Setup(f => f.Storage).Returns(storageConfiguration);
+
+            var securityConfiguration = new Mock<ICmsSecurityConfiguration>();
+            securityConfiguration.Setup(f => f.AccessControlEnabled).Returns(accessControlEnabled);
+
+            cmsConfigurationMock.Setup(f => f.Security).Returns(securityConfiguration.Object);
 
             return cmsConfigurationMock.Object;
         }
@@ -128,6 +134,66 @@ namespace BetterCms.Test.Module
             // Remove
             storageService.RemoveObject(request.Uri);
             storageService.RemoveObject(copyUri);
+        }
+
+        protected void ShouldDownloadUrlUnsecured(ICmsConfiguration configuration, IStorageService storageService)
+        {
+            // Upload
+            var request = CreateUploadRequest(configuration);
+            var uploadedSize = request.InputStream.Length;
+            storageService.UploadObject(request);
+            request.InputStream.Dispose();
+
+            var downloadRequest = WebRequest.Create(request.Uri.AbsoluteUri);
+            var response = downloadRequest.GetResponse();
+            Assert.NotNull(response);
+            Assert.AreEqual(response.ContentLength, uploadedSize);
+
+            // Remove
+            storageService.RemoveObject(request.Uri);
+        }
+
+        protected void ShouldNotDownloadUrlSecured(ICmsConfiguration configuration, IStorageService storageService)
+        {
+            // Upload
+            var request = CreateUploadRequest(configuration);
+            storageService.UploadObject(request);
+            request.InputStream.Dispose();
+
+            var downloadRequest = WebRequest.Create(request.Uri.AbsoluteUri);
+            var failed = false;
+            try
+            {
+                downloadRequest.GetResponse();
+            }
+            catch (WebException)
+            {
+                failed = true;
+            }
+            Assert.IsTrue(failed);
+
+            // Remove
+            storageService.RemoveObject(request.Uri);
+        }
+
+        protected void ShouldDownloadUrl(ICmsConfiguration configuration, IStorageService storageService)
+        {
+            // Upload
+            var request = CreateUploadRequest(configuration);
+            var uploadedSize = request.InputStream.Length;
+            storageService.UploadObject(request);
+            request.InputStream.Dispose();
+
+            var url = storageService.GetSecuredUrl(request.Uri);
+            Assert.AreNotEqual(url, request.Uri.AbsoluteUri);
+
+            var downloadRequest = WebRequest.Create(url);
+            var response = downloadRequest.GetResponse();
+            Assert.NotNull(response);
+            Assert.AreEqual(response.ContentLength, uploadedSize);
+
+            // Remove
+            storageService.RemoveObject(request.Uri);
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.Mvc;
 
 using BetterCms.Core.Security;
+using BetterCms.Core.Services.Storage;
 using BetterCms.Module.MediaManager.Command.Upload;
 using BetterCms.Module.MediaManager.Command.Upload.CheckFileStatuses;
 using BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload;
@@ -30,23 +31,53 @@ namespace BetterCms.Module.MediaManager.Controllers
     public class UploadController : CmsControllerBase
     {
         /// <summary>
+        /// Gets or sets the CMS configuration.
+        /// </summary>
+        /// <value>
+        /// The CMS configuration.
+        /// </value>
+        public ICmsConfiguration CmsConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the storage service.
+        /// </summary>
+        /// <value>
+        /// The storage service.
+        /// </value>
+        public IStorageService StorageService { get; set; }
+
+        /// <summary>
         /// Multi the file upload.
         /// </summary>
         /// <param name="folderId">The folder id.</param>
         /// <param name="folderType">Type of the folder.</param>
-        /// <returns>File upload html.</returns>
+        /// <param name="reuploadMediaId">The reupload media id.</param>
+        /// <returns>
+        /// File upload html.
+        /// </returns>
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         [HttpGet]
-        public ActionResult MultiFileUpload(string folderId, string folderType)
+        public ActionResult MultiFileUpload(string folderId, string folderType, string reuploadMediaId)
         {
+            var type = (MediaType)Enum.Parse(typeof(MediaType), folderType);
+
+            if (type != MediaType.Image && CmsConfiguration.Security.AccessControlEnabled && !StorageService.SecuredUrlsEnabled)
+            {
+                Messages.AddWarn(MediaGlobalization.TokenBasedSecurity_NotSupported_Message);
+            }
+
             var model = GetCommand<GetMultiFileUploadCommand>().ExecuteCommand(
                 new GetMultiFileUploadRequest
                     {
                         FolderId = folderId.ToGuidOrDefault(),
-                        Type = (MediaType)Enum.Parse(typeof(MediaType), folderType)
+                        Type = type,
+                        ReuploadMediaId = reuploadMediaId.ToGuidOrDefault()
                     });
 
-            return View(model);
+            var success = model != null;
+            var view = RenderView("MultiFileUpload", model);
+
+            return ComboWireJson(success, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -54,19 +85,33 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// </summary>
         /// <param name="folderId">The folder id.</param>
         /// <param name="folderType">Type of the folder.</param>
-        /// <returns>File upload html.</returns>
+        /// <param name="reuploadMediaId">The reupload media id.</param>
+        /// <returns>
+        /// File upload html.
+        /// </returns>
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         [HttpGet]
-        public ActionResult SingleFileUpload(string folderId, string folderType)
+        public ActionResult SingleFileUpload(string folderId, string folderType, string reuploadMediaId)
         {
+            var type = (MediaType)Enum.Parse(typeof(MediaType), folderType);
+
+            if (type != MediaType.Image && CmsConfiguration.Security.AccessControlEnabled && !StorageService.SecuredUrlsEnabled)
+            {
+                Messages.AddWarn(MediaGlobalization.TokenBasedSecurity_NotSupported_Message);
+            }
+
             var model = GetCommand<GetMultiFileUploadCommand>().ExecuteCommand(
                 new GetMultiFileUploadRequest
                 {
-                    FolderId = folderId.ToGuidOrDefault(), 
-                    Type = (MediaType)Enum.Parse(typeof(MediaType), folderType)
+                    FolderId = folderId.ToGuidOrDefault(),
+                    Type = type,
+                    ReuploadMediaId = reuploadMediaId.ToGuidOrDefault()
                 });
 
-            return View("SingleFileUpload", model);
+            var success = model != null;
+            var view = RenderView("SingleFileUpload", model);
+
+            return ComboWireJson(success, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -136,6 +181,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         public ActionResult UploadMedia(HttpPostedFileBase file)
         {
             var rootFolderId = Request.Form["rootFolderId"].ToGuidOrDefault();
+            var reuploadMediaId = Request.Form["reuploadMediaId"].ToGuidOrDefault();
             var rootFolderType = (MediaType)Enum.Parse(typeof(MediaType), Request.Form["rootFolderType"]);
 
             if (file != null && FileFormatIsValid(rootFolderType, file.ContentType))
@@ -146,7 +192,8 @@ namespace BetterCms.Module.MediaManager.Controllers
                         Type = rootFolderType,
                         FileLength = file.ContentLength,
                         FileName = file.FileName,
-                        FileStream = file.InputStream
+                        FileStream = file.InputStream,
+                        ReuploadMediaId = reuploadMediaId
                     };
 
                 var media = GetCommand<UploadCommand>().ExecuteCommand(request);
@@ -155,9 +202,9 @@ namespace BetterCms.Module.MediaManager.Controllers
                 {
                     return WireJson(true, new
                                               {
-                                                  FileId = media.Id, 
-                                                  Version = media.Version, 
-                                                  Type = (int)rootFolderType, 
+                                                  FileId = media.Id,
+                                                  Version = media.Version,
+                                                  Type = (int)rootFolderType,
                                                   IsProcessing = !media.IsUploaded.HasValue,
                                                   IsFailed = media.IsUploaded == false,
                                               });
@@ -201,7 +248,10 @@ namespace BetterCms.Module.MediaManager.Controllers
 
             if (result == null)
             {
-                Messages.AddError(MediaGlobalization.MultiFileUpload_SaveFailed);
+                if (Messages.Error == null || Messages.Error.Count == 0)
+                {
+                    Messages.AddError(MediaGlobalization.MultiFileUpload_SaveFailed);
+                }
             }
             else if (result.FolderIsDeleted)
             {

@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define, console */
+/*global bettercms */
 
 bettercms.define('bcms.pages.seo', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.messages', 'bcms.dynamicContent', 'bcms.redirect'],
     function ($, bcms, modal, messages, dynamicContent, redirect) {
@@ -38,11 +38,13 @@ bettercms.define('bcms.pages.seo', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.m
         if (visible) {
             dialog.container.find(selectors.editUrlPathBox).show();
             dialog.container.find(selectors.editPageUrlLink).hide();
+            dialog.container.find(selectors.pageUrlPath).hide();
             dialog.container.find(selectors.editUrlTextBox).focus();
         } else {
             dialog.container.find(selectors.editUrlTextBox).blur();
             dialog.container.find(selectors.editUrlPathBox).hide();
             dialog.container.find(selectors.editPageUrlLink).show();
+            dialog.container.find(selectors.pageUrlPath).show();
         }
     }
     
@@ -141,7 +143,7 @@ bettercms.define('bcms.pages.seo', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.m
     * Initializes page module.
     */
     seo.init = function () {
-        console.log('Initializing bcms.pages.seo module.');
+        bcms.logger.debug('Initializing bcms.pages.seo module.');
     };
     
     /**

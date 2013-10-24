@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define */
+/*global bettercms */
 
-bettercms.define('bcms.security', ['bcms.jquery'], function($) {
+bettercms.define('bcms.security', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.messages', 'bcms.autocomplete'], function ($, bcms, ko, messages, autocomplete) {
     'use strict';
 
     var security = {},
@@ -10,7 +10,9 @@ bettercms.define('bcms.security', ['bcms.jquery'], function($) {
         // Selectors used in the module to locate DOM elements:
         selectors = {},
         links = {
-            isAuthorized: null
+            isAuthorized: null,
+            rolesSuggestionServiceUrl: null,
+            usersSuggestionServiceUrl: null
         },
         globalization = {},
         authorizedFor = [];
@@ -37,7 +39,7 @@ bettercms.define('bcms.security', ['bcms.jquery'], function($) {
                 }
             }
         } catch (e) {
-            console.log('Error occurred while checking if role(s) is authorized.');
+            bcms.logger.error('Error occurred while checking if role(s) is authorized.');
         }
 
         return false;
@@ -58,6 +60,165 @@ bettercms.define('bcms.security', ['bcms.jquery'], function($) {
             }
         }
         return false;
+    };
+
+    /**
+    * Extend knockout: add maximum length validation
+    */
+    ko.extenders.uniqueAccessRuleIdentity = function (target, options) {
+        var ruleName = 'uniqueAccessRuleIdentity',
+            message = options.message || 'Identity {0} exits!';
+        
+        return ko.extenders.koValidationExtender(ruleName, target, function (newValue) {
+            var hasError = existIdentity(options.identities(), newValue, options.isRole),
+                showMessage = hasError ? $.format(message, newValue) : '';
+
+            target.validator.setError(ruleName, hasError, showMessage);
+        });
+    };
+    
+    function existIdentity(identityList, identityName, isRole) {
+        var i,
+            len = identityList.length,
+            identityNameTrimmedUpper = $.trim(identityName).toUpperCase();
+                
+        for (i = 0; i < len; i++) {
+            var item = identityList[i];
+            if (item.IsForRole() === isRole && $.trim(item.Identity()).toUpperCase() == identityNameTrimmedUpper) {
+                return true;
+            }
+        }
+
+        return false;
+    }            
+    
+    function UserAccessViewModel(item) {
+        this.Identity = ko.observable(item.Identity);
+        this.AccessLevel = ko.observable(item.AccessLevel || 3);
+        this.IsForRole = ko.observable(item.IsForRole);
+    }
+
+    function XXX_AccessControlViewModel(identities, isRole, addMode, autoCompleteUrl) {
+        var self = this;
+        self.identities = identities;
+        self.newName = ko.observable('').extend({ uniqueAccessRuleIdentity: { identities: identities, isRole: isRole } });
+        self.isInAddMode = addMode;
+        self.hasAddNameFocus = ko.observable(false);
+        
+        self.clearNewInput = function() {
+            self.isInAddMode('none');
+        };
+        self.gotoAddNew = function() {
+            if (self.isInAddMode() === (isRole ? 'role' : 'user') && !!self.newName()) {
+                self.addNew();
+            } else {
+                self.hasAddNameFocus(false);
+                self.isInAddMode(self.isInAddMode() === (isRole ? 'role' : 'user') ? 'none' : (isRole ? 'role' : 'user'));
+                self.newName('');
+
+                setTimeout(function() {
+                    self.hasAddNameFocus(true);
+                }, 50);
+            }
+        };
+        self.addNew = function() {
+            var name = self.newName();
+            if (!name || self.newName.hasError()) {
+                return;
+            }
+
+            self.identities.push(new UserAccessViewModel({ Identity: name, IsForRole: isRole }));
+            self.newName('');
+            self.isInAddMode('none');
+            self.hasAddNameFocus(false);
+        };
+                
+        self.serviceUrl = autoCompleteUrl;
+//        self.newItem = function(value) {
+//            // TODO
+//        };
+//        self.addItemWithId = function(value, data) {
+//            self.gotoAddNew();
+//        };
+//        self.addItem = function() {
+//            // TODO
+//        };
+//        self.clearItem = function() {
+//            // TODO
+//        };
+    }
+
+    var AccessControlViewModel = (function (_super) {
+        bcms.extendsClass(AccessControlViewModel, _super);
+
+        function AccessControlViewModel(identities, isRole, addMode, autoCompleteUrl) {
+            var options = {
+                serviceUrl: autoCompleteUrl
+            };
+
+            var self = this;
+            self.identities = identities;
+            self.isInAddMode = addMode;
+            self.clickPlus = function() {
+                if (self.isInAddMode() === (isRole ? 'role' : 'user') && !!self.newItem()) {
+                    var name = self.newItem();
+                    if (!name || self.newItem.hasError()) {
+                        return;
+                    }
+
+                    self.isExpanded(false);
+                    self.clearItem();
+                    self.identities.push(new UserAccessViewModel({ Identity: name, IsForRole: isRole }));
+                    self.isInAddMode('none');
+                } else {
+                    self.clearItem();
+                    self.isExpanded(false);
+                    if (self.isInAddMode() === (isRole ? 'role' : 'user')) {
+                        self.isInAddMode('none');
+                    } else {
+                        self.isInAddMode(isRole ? 'role' : 'user');
+                        setTimeout(function () {
+                            self.isExpanded(true);
+                        }, 50);
+                    }
+                }
+            };
+            
+            _super.call(self, [], options);
+            
+            self.items.subscribe(function (newValue) {
+                self.clickPlus();
+            });
+        }
+
+        return AccessControlViewModel;
+    })(autocomplete.AutocompleteListViewModel);
+
+    security.createUserAccessViewModel = function (accessList) {
+        var messageBox =
+                messages.box({
+                container: $(".bcms-modal")
+                }),
+            identities = ko.observableArray(),
+            addMode = ko.observable('none'),
+            model = {
+                UserAccessList: identities,
+                userAccessControl: new AccessControlViewModel(identities, false, addMode, links.usersSuggestionServiceUrl),
+                roleAccessControl: new AccessControlViewModel(identities, true, addMode, links.rolesSuggestionServiceUrl),
+                removeUser: function(userAccessViewModel) {
+                    model.UserAccessList.remove(userAccessViewModel);
+                },
+            
+                getPropertyIndexer: function(i, propName) {
+                    return 'UserAccessList[' + i + '].' + propName;
+                }                         
+        };
+
+        $.each(accessList, function(i, item) {
+            model.UserAccessList.push(new UserAccessViewModel(item));
+        });
+
+        return model;
     };
 
     return security;

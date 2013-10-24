@@ -3,11 +3,12 @@ using System.Collections.Generic;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Models;
+using BetterCms.Core.Security;
 
 namespace BetterCms.Module.Root.Models
 {
     [Serializable]
-    public class PageContent : EquatableEntity<PageContent>, IPageContent
+    public class PageContent : EquatableEntity<PageContent>, IPageContent, IAccessSecuredObjectDependency
     {
         public virtual int Order { get; set; }
 
@@ -42,6 +43,14 @@ namespace BetterCms.Module.Root.Models
             get
             {
                 return Region;
+            }
+        }
+
+        IAccessSecuredObject IAccessSecuredObjectDependency.SecuredObject
+        {
+            get
+            {
+                return Page;
             }
         }
     }

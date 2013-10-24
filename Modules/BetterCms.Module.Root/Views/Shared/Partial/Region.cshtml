@@ -1,10 +1,10 @@
-@using BetterCms.Module.Root
-@using BetterCms.Module.Root.Mvc
+@model BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel
+
 <script type="text/html" id="bcms-region-overlay-template">
     <div class="bcms-region-overlay bcms-layer">
         <div class="bcms-region-overlay-inner">
             <div class="bcms-hidden-overlay-bg"></div>
-            @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
+            @if (!Model.IsReadOnly && Model.HasEditRole)
             {
                 <div class="bcms-region-actions">
                     <div class="bcms-region-button bcms-region-sortdone" style="display: none;"></div>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -14,6 +15,31 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         static StringHelper()
         {
             EnsureLatinSybmols();
+        }
+
+        public static string UrlHash(this string url)
+        {
+            url = url.Trim();
+
+            if (url.EndsWith("/") && url != "/")
+            {
+                url = url.TrimEnd('/');
+                url = url.Trim();
+            }
+
+            url = url.ToLowerInvariant();
+
+            var md5 = MD5.Create();
+            var inputBytes = Encoding.Unicode.GetBytes(url);
+            var hash = md5.ComputeHash(inputBytes);
+
+            var result = new StringBuilder();
+            foreach (var b in hash)
+            {
+                result.Append(b.ToString("x2").ToLower());
+            }
+
+            return result.ToString();
         }
 
         public static string Transliterate(this string text, bool allowunicodeCharacters = false)

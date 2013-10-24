@@ -10,9 +10,10 @@ namespace BetterCms.Module.Root.Models.Maps
 
             Map(x => x.Key, "[Key]").Length(MaxLength.Name).Not.Nullable();
             Map(x => x.Type).Not.Nullable();
-            Map(x => x.Value).Length(MaxLength.Max).Nullable().LazyLoad();         
+            Map(x => x.Value).Length(MaxLength.Max).Nullable();         
             
             References(x => x.PageContent).Cascade.SaveUpdate().LazyLoad();
+            References(x => x.CustomOption).Cascade.SaveUpdate().LazyLoad();
         }
     }
 }

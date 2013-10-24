@@ -2,6 +2,7 @@
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Controllers;
+using BetterCms.Module.Root.Content.Resources;
 
 namespace BetterCms.Module.Pages.Registration
 {
@@ -32,7 +33,8 @@ namespace BetterCms.Module.Pages.Registration
                      new JavaScriptModuleGlobalization(this, "contentVersionRestoreConfirmation", () => PagesGlobalization.ContentHistory_Restore_ConfirmationMessage),
                      new JavaScriptModuleGlobalization(this, "contentVersionDestroyDraftConfirmation", () => PagesGlobalization.ContentHistory_DestroyDraft_ConfirmationMessage),
                      new JavaScriptModuleGlobalization(this, "restoreButtonTitle", () => PagesGlobalization.ContentHistory_Restore_AcceptButtonTitle),
-                     new JavaScriptModuleGlobalization(this, "destroyButtonTitle", () => PagesGlobalization.ContentHistory_Destroy_AcceptButtonTitle)
+                     new JavaScriptModuleGlobalization(this, "destroyButtonTitle", () => PagesGlobalization.ContentHistory_Destroy_AcceptButtonTitle),
+                     new JavaScriptModuleGlobalization(this, "closeButtonTitle", () => RootGlobalization.Button_Close),
                 };
         }
     }

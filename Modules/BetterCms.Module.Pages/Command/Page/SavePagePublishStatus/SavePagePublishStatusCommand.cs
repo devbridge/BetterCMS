@@ -1,13 +1,18 @@
 ﻿using System;
+using System.Linq;
 
-using BetterCms.Api;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
+using BetterCms.Module.Root.Services;
+
+using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Command.Page.SavePagePublishStatus
 {
@@ -17,6 +22,20 @@ namespace BetterCms.Module.Pages.Command.Page.SavePagePublishStatus
     public class SavePagePublishStatusCommand : CommandBase, ICommand<SavePagePublishStatusRequest, bool>
     {
         /// <summary>
+        /// The content service.
+        /// </summary>
+        private readonly IContentService contentService;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SavePagePublishStatusCommand"/> class.
+        /// </summary>
+        /// <param name="contentService">The content service.</param>
+        public SavePagePublishStatusCommand(IContentService contentService)
+        {
+            this.contentService = contentService;
+        }
+
+        /// <summary>
         /// Executes the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
@@ -24,7 +43,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePagePublishStatus
         /// <exception cref="System.ComponentModel.DataAnnotations.ValidationException">If page status is not correct.</exception>
         public bool Execute(SavePagePublishStatusRequest request)
         {
-            DemandAccess(RootModuleConstants.UserRoles.PublishContent);     // This would rise security exception if user has no access.
+            AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.PublishContent);     // This would rise security exception if user has no access.
 
             var page = UnitOfWork.Session
                 .QueryOver<PageProperties>().Where(p => p.Id == request.PageId && !p.IsDeleted)
@@ -51,12 +70,21 @@ namespace BetterCms.Module.Pages.Command.Page.SavePagePublishStatus
                     page.Status = PageStatus.Unpublished;
                 }
 
-                Repository.Save(page);                
+                // NOTE: When transaction is enabled exception is raised from DefaultEntityTrackingService.DemandReadWriteRule() saying that DB timeouted...
+                // UnitOfWork.BeginTransaction();
+
+                Repository.Save(page);
+
+                if (request.IsPublished)
+                {
+                    contentService.PublishDraftContent(page.Id);
+                }
+
                 UnitOfWork.Commit();
 
                 if (page.Status != initialStatus)
                 {
-                    PagesApiContext.Events.OnPagePublishStatusChanged(page);
+                    Events.PageEvents.Instance.OnPagePublishStatusChanged(page);
                 }
             }
 

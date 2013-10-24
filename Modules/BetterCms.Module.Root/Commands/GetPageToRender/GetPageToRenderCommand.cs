@@ -1,20 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 
-using BetterCms.Api;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Mvc.Extensions;
+using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Projections;
+using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Cms;
+using BetterCms.Module.Root.Models.Extensions;
 
 using NHibernate.Linq;
 
@@ -33,10 +37,12 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         private readonly ICmsConfiguration cmsConfiguration;
 
         private readonly RootModuleDescriptor rootModuleDescriptor;
+        
+        private readonly IOptionService optionService;
 
         public GetPageToRenderCommand(IPageAccessor pageAccessor, PageContentProjectionFactory pageContentProjectionFactory,
             PageStylesheetProjectionFactory pageStylesheetProjectionFactory, PageJavaScriptProjectionFactory pageJavaScriptProjectionFactory,
-            ICmsConfiguration cmsConfiguration, RootModuleDescriptor rootModuleDescriptor)
+            ICmsConfiguration cmsConfiguration, RootModuleDescriptor rootModuleDescriptor, IOptionService optionService)
         {
             this.rootModuleDescriptor = rootModuleDescriptor;
             this.pageContentProjectionFactory = pageContentProjectionFactory;
@@ -44,6 +50,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             this.pageJavaScriptProjectionFactory = pageJavaScriptProjectionFactory;
             this.pageAccessor = pageAccessor;
             this.cmsConfiguration = cmsConfiguration;
+            this.optionService = optionService;
         }
 
         /// <summary>
@@ -56,19 +63,24 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             var pageQuery = GetPageFutureQuery(request);
             var pageContentsQuery = GetPageContentFutureQuery(request);
             
-            var page = pageQuery.FirstOrDefault();
+            var page = pageQuery.ToList().FirstOrDefault();
+
             if (page == null)
             {
-                return Redirect(request.PageUrl);
+                return FindRedirect(request.PageUrl);
             }
 
-            // Redirect user to login page, if page is inaccessible for public users
-            // and user is not authenticated
-            if (request.PreviewPageContentId == null && !request.IsAuthenticated && !page.IsPublic && !string.IsNullOrWhiteSpace(cmsConfiguration.LoginUrl))
+            if (request.PreviewPageContentId == null && !request.IsAuthenticated && page.Status != PageStatus.Published)
             {
-                // TODO: uncomment redirect to login form, when login form will be im
-                return null;
-                // return Redirect(cmsConfiguration.LoginUrl);
+                throw new HttpException(403, "403 Access Forbidden");
+            }
+
+            if (page.Status != PageStatus.Published && !request.CanManageContent)
+            {
+                if (!cmsConfiguration.Security.AccessControlEnabled)
+                {
+                    return null; // Force 404.
+                }
             }
 
             var pageContents = pageContentsQuery.ToList();
@@ -88,19 +100,45 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             renderPageViewModel.Contents = contentProjections;
             renderPageViewModel.Metadata = pageAccessor.GetPageMetaData(page).ToList();
+            renderPageViewModel.Options = optionService.GetMergedOptionValues(page.Layout.LayoutOptions, page.Options).ToList();
+
+            if (page.AccessRules != null)
+            {
+                var list = page.AccessRules.Cast<IAccessRule>().ToList();
+                list.RemoveDuplicates((a, b) => a.Id == b.Id ? 0 : -1);
+
+                renderPageViewModel.AccessRules = list;
+            }
+
+            if (cmsConfiguration.Security.AccessControlEnabled)
+            {
+                SetIsReadOnly(renderPageViewModel, renderPageViewModel.AccessRules);
+            }
+            renderPageViewModel.HasEditRole = SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);
+
+            // Add <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> if current view is in an edit mode.
+            if (request.CanManageContent)
+            {
+                if (renderPageViewModel.Metadata == null)
+                {
+                    renderPageViewModel.Metadata = new List<IPageActionProjection>();
+                }
+
+                renderPageViewModel.Metadata.Insert(0, new MetaDataProjection("X-UA-Compatible", "IE=edge,chrome=1"));
+            }
 
             // Attach styles.
             var styles = new List<IStylesheetAccessor>();
-            styles.Add(pageStylesheetProjectionFactory.Create(page));
+            styles.Add(pageStylesheetProjectionFactory.Create(page, renderPageViewModel.Options));
             styles.AddRange(contentProjections);
             renderPageViewModel.Stylesheets = styles;
 
             // Attach JavaScript includes.
             var js = new List<IJavaScriptAccessor>();
-            js.Add(pageJavaScriptProjectionFactory.Create(page));
+            js.Add(pageJavaScriptProjectionFactory.Create(page, renderPageViewModel.Options));
             js.AddRange(contentProjections);
-
             renderPageViewModel.JavaScripts = js;
+
             // TODO: Fix main.js and processor.js IE cache.
             renderPageViewModel.MainJsPath = string.Format(RootModuleConstants.AutoGeneratedJsFilePathPattern, "bcms.main.js");
             renderPageViewModel.RequireJsPath = VirtualPath.Combine(rootModuleDescriptor.JsBasePath, 
@@ -110,11 +148,13 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             renderPageViewModel.Html5ShivJsPath = VirtualPath.Combine(rootModuleDescriptor.JsBasePath, "html5shiv.js");
 
             // Notify about retrieved page.
-            var result = RootApiContext.Events.OnPageRetrieved(renderPageViewModel, page);
+            var result = Events.RootEvents.Instance.OnPageRetrieved(renderPageViewModel, page);
+
             switch (result)
             {
                 case PageRetrievedEventResult.ForcePageNotFound:
                     return null;
+
                 default:
                     return new CmsRequestViewModel(renderPageViewModel);
             }
@@ -183,10 +223,8 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 throw new CmsException(string.Format("A content version was not found to project on the page. PageContent={0}; Request={1};", pageContent, request));
             }
 
-            List<IOption> options = new List<IOption>();
-            options.AddRange(pageContent.Options);
-            options.AddRange(pageContent.Content.ContentOptions.Where(f => !pageContent.Options.Any(g => g.Key.Trim().Equals(f.Key.Trim(), StringComparison.OrdinalIgnoreCase))));
-
+            var options = optionService.GetMergedOptionValues(contentToProject.ContentOptions, pageContent.Options);
+            
             RenderPageViewModel childViewModel = null;
             var dynamicContent = pageContent.Content as IDynamicContent;
             if (dynamicContent != null)
@@ -229,24 +267,31 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             if (request.PageId == null)
             {
-                query = query.Where(f => f.PageUrl.ToLower() == request.PageUrl.ToLowerInvariant());
+                var requestUrl = request.PageUrl.UrlHash();
+                query = query.Where(f => f.PageUrlHash == requestUrl);
             }
             else
             {
                 query = query.Where(f => f.Id == request.PageId);
             }
 
-            // If page is not published, page is not found
+            // If page is not published, page is not found.
             if (!request.IsAuthenticated && request.PreviewPageContentId == null)
             {
                 query = query.Where(f => f.Status == PageStatus.Published);
             }
 
-            // Add fetched entities
+            // Add fetched entities.
             query = query
                 .Fetch(f => f.Layout)
                 .ThenFetchMany(f => f.LayoutRegions)
                 .ThenFetch(f => f.Region);
+
+            // Add access rules if access control is enabled.
+            if (cmsConfiguration.Security.AccessControlEnabled)
+            {
+                query = query.FetchMany(f => f.AccessRules);
+            }
 
             return query.ToFuture();
         }
@@ -258,7 +303,8 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             if (request.PageId == null)
             {
-                pageContentsQuery = pageContentsQuery.Where(f => f.Page.PageUrl.ToLower() == request.PageUrl.ToLowerInvariant());
+                var requestUrl = request.PageUrl.UrlHash();
+                pageContentsQuery = pageContentsQuery.Where(f => f.Page.PageUrlHash == requestUrl);
             }
             else
             {
@@ -292,8 +338,8 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             return pageContentsQuery.ToFuture();
         }
-
-        private CmsRequestViewModel Redirect(string redirectUrl)
+        
+        private CmsRequestViewModel FindRedirect(string redirectUrl)
         {
             var redirect = pageAccessor.GetRedirect(redirectUrl);
             if (!string.IsNullOrWhiteSpace(redirect))

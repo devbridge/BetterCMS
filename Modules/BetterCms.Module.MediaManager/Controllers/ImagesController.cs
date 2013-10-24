@@ -3,13 +3,13 @@
 using BetterCms.Core.Security;
 
 using BetterCms.Module.MediaManager.Command.Images.GetImage;
-using BetterCms.Module.MediaManager.Command.Images.GetImageProperties;
 using BetterCms.Module.MediaManager.Command.Images.GetImages;
 using BetterCms.Module.MediaManager.Command.Images.SaveImage;
 using BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.ViewModels.Images;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -42,6 +42,7 @@ namespace BetterCms.Module.MediaManager.Controllers
             {
                 options = new MediaManagerViewModel();
             }
+            options.SetDefaultPaging();
 
             var model = GetCommand<GetImagesCommand>().ExecuteCommand(options);
             if (model == null)
@@ -59,13 +60,15 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <summary>
         /// Gets images list to insert to content.
         /// </summary>
+        /// <param name="folderId">The folder id.</param>
         /// <returns>
         /// The view.
         /// </returns>
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
-        public ActionResult ImageInsert()
+        public ActionResult ImageInsert(string folderId)
         {
-            var images = GetCommand<GetImagesCommand>().ExecuteCommand(new MediaManagerViewModel());
+            var request = new MediaManagerViewModel { CurrentFolderId = folderId.ToGuidOrDefault() };
+            var images = GetCommand<GetImagesCommand>().ExecuteCommand(request);
             var success = images != null;
             var view = RenderView("ImageInsert", new MediaImageViewModel());
 
@@ -83,19 +86,6 @@ namespace BetterCms.Module.MediaManager.Controllers
         {
             var model = GetCommand<GetImageCommand>().ExecuteCommand(imageId.ToGuidOrDefault());
             var view = RenderView("ImageEditor", model ?? new ImageViewModel());
-            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>
-        /// Image properties dialog.
-        /// </summary>
-        /// <param name="imageId">The image id.</param>
-        /// <returns>The view with image properties</returns>
-        [HttpGet]
-        public ActionResult ImageProperties(string imageId)
-        {
-            var model = GetCommand<GetImagePropertiesCommand>().ExecuteCommand(imageId.ToGuidOrDefault());
-            var view = RenderView("ImageProperties", model ?? new ImageViewModel());
             return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
         

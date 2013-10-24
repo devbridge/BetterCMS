@@ -11,13 +11,6 @@ namespace BetterCms.Module.Pages.Services
     public interface ISitemapService
     {
         /// <summary>
-        /// Gets the root nodes.
-        /// </summary>
-        /// <param name="search">The search.</param>
-        /// <returns>Sitemap node list.</returns>
-        IList<SitemapNode> GetRootNodes(string search);
-
-        /// <summary>
         /// Gets the node count.
         /// </summary>
         /// <param name="url">The URL.</param>
@@ -37,7 +30,8 @@ namespace BetterCms.Module.Pages.Services
         /// </summary>
         /// <param name="id">The id.</param>
         /// <param name="version">The version.</param>
-        void DeleteNode(Guid id, int version);
+        /// <param name="deletedNodes">The deleted nodes.</param>
+        void DeleteNode(Guid id, int version, out IList<SitemapNode> deletedNodes);
 
         /// <summary>
         /// Deletes the node without page update.

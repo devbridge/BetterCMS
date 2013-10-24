@@ -1,6 +1,5 @@
 ﻿using System;
 
-using BetterCms.Api;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
@@ -28,7 +27,9 @@ namespace BetterCms.Module.MediaManager.Command.Folder
 
             folder.Version = request.Version;
             folder.Title = request.Name;
-            folder.Folder = null;
+            folder.Folder = request.ParentFolderId.HasValue && request.ParentFolderId.Value != default(Guid)
+                                ? Repository.AsProxy<MediaFolder>(request.ParentFolderId.Value)
+                                : null;
             folder.Type = request.Type;
 
             Repository.Save(folder);
@@ -36,11 +37,11 @@ namespace BetterCms.Module.MediaManager.Command.Folder
 
             if (request.Id == default(Guid))
             {
-                MediaManagerApiContext.Events.OnMediaFolderCreated(folder);
+                Events.MediaManagerEvents.Instance.OnMediaFolderCreated(folder);
             }
             else
             {
-                MediaManagerApiContext.Events.OnMediaFolderUpdated(folder);
+                Events.MediaManagerEvents.Instance.OnMediaFolderUpdated(folder);
             }
 
             return new MediaFolderViewModel

@@ -15,5 +15,7 @@ namespace BetterCms.Module.Root.Services
         void RestoreContentFromArchive(Models.Content restoreFrom);
 
         int GetPageContentNextOrderNumber(Guid pageId);
+
+        void PublishDraftContent(Guid pageId);
     }
 }

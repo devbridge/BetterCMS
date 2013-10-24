@@ -1,9 +1,8 @@
-﻿using BetterCms.Api;
+﻿using System.Linq;
+
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
-
-using NHibernate.Proxy.DynamicProxy;
 
 namespace BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia
 {
@@ -19,20 +18,55 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager.DeleteMedia
         /// <returns></returns>
         public bool Execute(DeleteMediaCommandRequest request)
         {
+            UnitOfWork.BeginTransaction();
             var media = Repository.Delete<Media>(request.Id, request.Version, false);
+            DeleteMedias(media);
             UnitOfWork.Commit();
 
             // Notify.
             if (media is MediaFolder)
             {
-                MediaManagerApiContext.Events.OnMediaFolderDeleted((MediaFolder)media);
+                Events.MediaManagerEvents.Instance.OnMediaFolderDeleted((MediaFolder)media);
             }
             else if (media is MediaFile)
             {
-                MediaManagerApiContext.Events.OnMediaFileDeleted((MediaFile)media);
+                Events.MediaManagerEvents.Instance.OnMediaFileDeleted((MediaFile)media);
             }        
 
             return true;
+        }
+
+        /// <summary>
+        /// Deletes medias.
+        /// </summary>
+        /// <param name="media">The parent media.</param>
+        private void DeleteMedias(Media media)
+        {
+            if (media.MediaTags != null)
+            {
+                foreach (var mediaTag in media.MediaTags)
+                {
+                    Repository.Delete(mediaTag);
+                }                
+            }
+
+            if (media is MediaFile)
+            {
+                MediaFile file = (MediaFile)media;
+                if (file.AccessRules != null)
+                {
+                    var rules = file.AccessRules.ToList();
+                    rules.ForEach(file.RemoveRule);
+                }
+            }
+
+            Repository.Delete(media);
+
+            var subItems = Repository.AsQueryable<Media>().Where(m => !m.IsDeleted && m.Folder != null && m.Folder.Id == media.Id).ToList();
+            foreach (var item in subItems)
+            {                
+                DeleteMedias(item);
+            }
         }
     }
 }

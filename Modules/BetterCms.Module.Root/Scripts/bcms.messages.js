@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define */
+/*global bettercms */
 
 bettercms.define('bcms.messages', ['bcms.jquery'], function ($) {
     'use strict';
@@ -13,7 +13,7 @@ bettercms.define('bcms.messages', ['bcms.jquery'], function ($) {
     // Selectors used in the module to locate DOM elements:
         selectors = {
             messagesBox: '#bcms-messages-box',
-            messages: '.bcms-messages-type-1:first, .bcms-messages-type-2:first',
+            messages: '.bcms-messages-type-1:not(.bcms-custom-messages):first, .bcms-messages-type-2:not(.bcms-custom-messages):first',
             success: '.bcms-success-messages:first',
             info: '.bcms-info-messages:first',
             warn: '.bcms-warning-messages:first',

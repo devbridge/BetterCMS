@@ -4,16 +4,23 @@ using System.IO;
 using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Root.Mvc.Helpers;
+using BetterCms.Module.Root.ViewModels.Cms;
+
+using Common.Logging;
 
 namespace BetterCms.Module.Pages.Accessors
 {
     [Serializable]
     public class ServerControlWidgetAccessor : ContentAccessor<ServerControlWidget>
     {
-        public ServerControlWidgetAccessor(ServerControlWidget content, IList<IOption> options)
+        private static readonly ILog logger = LogManager.GetCurrentClassLogger();
+
+        public const string ContentWrapperType = "server-widget";
+
+        public ServerControlWidgetAccessor(ServerControlWidget content, IList<IOptionValue> options)
             : base(content, options)
         {
         }
@@ -39,22 +46,40 @@ namespace BetterCms.Module.Pages.Accessors
                 using (var sw = new StringWriter())
                 {
                     var viewData = new ViewDataDictionary();
-
-                    if (Options != null && Options.Count > 0)
-                    {
-                        foreach (var option in Options)
-                        {
-                            if (option.Value != null)
-                            {
-                                viewData[option.Key] = option.Value;
-                            }                             
-                        }
-                    }
-
-                    viewData["bcmsPageId"] = html.ViewContext.ViewData["pageId"];
-
                     var newViewContext = new ViewContext(html.ViewContext, view, viewData, html.ViewContext.TempData, sw);
-                    view.Render(newViewContext, sw);
+
+                    try
+                    {
+                        var widgetModel = CreateWidgetViewModel(view);
+
+                        widgetModel.Page = (IRenderPage)html.ViewData.Model;
+                        widgetModel.Widget = Content;
+                        widgetModel.Options = Options;
+
+                        // Adding to ViewBag (there are old widgets, thay use this)
+                        if (Options != null && Options.Count > 0)
+                        {
+                            foreach (var option in Options)
+                            {
+                                if (option.Value != null)
+                                {
+                                    viewData[option.Key] = option.Value;
+                                }
+                            }
+                        }
+
+                        newViewContext.ViewData.Model = widgetModel;
+                        view.Render(newViewContext, sw);
+                    }
+                    catch (InvalidOperationException ex)
+                    {
+                        logger.Warn(
+                            string.Format(
+                                "Server widget \"{0}\" rendering failed. Check if widget view model is BetterCms.Module.Root.ViewModels.Cms.WigetViewModel", GetTitle()),
+                            ex);
+                        newViewContext.ViewData.Model = null;
+                        view.Render(newViewContext, sw);
+                    }
 
                     return sw.GetStringBuilder().ToString();
                 }
@@ -67,7 +92,7 @@ namespace BetterCms.Module.Pages.Accessors
 
         public override string GetContentWrapperType()
         {
-            return "server-widget";
+            return ContentWrapperType;
         }
 
         public override string GetHtml(HtmlHelper html)
@@ -92,12 +117,54 @@ namespace BetterCms.Module.Pages.Accessors
             return null;
         }
 
+        public override string[] GetStylesResources(HtmlHelper html)
+        {
+            if (Options != null)
+            {
+                return Options.ToStyleResources();
+            }
+
+            return null;
+        }
+
+        public override string[] GetJavaScriptResources(HtmlHelper html)
+        {
+            if (Options != null)
+            {
+                return Options.ToJavaScriptResources();
+            }
+
+            return null;
+        }
+
         //
         // TODO: Error view ???
         //
         private static string GetErrorString(string view, string message)
         {
             return string.Format(@"<div class=""bcms-error"">Error rendering view ""{0}"": {1}</div>", view, message);
+        }
+
+        private RenderWidgetViewModel CreateWidgetViewModel(IView view)
+        {
+            var razor = view as RazorView;
+            if (razor != null)
+            {
+                var compiledType = System.Web.Compilation.BuildManager.GetCompiledType(razor.ViewPath);
+                var baseType = compiledType.BaseType;
+                if (baseType != null && baseType.IsGenericType)
+                {
+                    var generics = baseType.GetGenericArguments();
+                    if (generics.Length > 0 && generics[0].IsSubclassOf(typeof(RenderWidgetViewModel)))
+                    {
+                        var model = Activator.CreateInstance(generics[0]) as RenderWidgetViewModel;
+
+                        return model;
+                    }
+                }
+            }
+
+            return new RenderWidgetViewModel();
         }
     }
 }

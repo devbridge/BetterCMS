@@ -19,16 +19,16 @@ namespace BetterCms.Module.Users.Registration
         {
             Links = new IActionProjection[]
                         {
-                            new JavaScriptModuleLinkTo<RoleController>(this, "loadCreatRoleUrl", c => c.CreatRoleView()),
-                            new JavaScriptModuleLinkTo<RoleController>(this, "loadEditRoleUrl", c => c.EditRoleView("{0}")),
-                            new JavaScriptModuleLinkTo<RoleController>(this, "loadSiteSettingsRoleUrl", c => c.RolesListView(null)),
-                            new JavaScriptModuleLinkTo<RoleController>(this, "deleteRoleUrl", c=> c.DeleteRole("{0}", "{1}"))
+                            new JavaScriptModuleLinkTo<RoleController>(this, "saveRoleUrl", c => c.SaveRole(null)),
+                            new JavaScriptModuleLinkTo<RoleController>(this, "deleteRoleUrl", c=> c.DeleteRole("{0}", "{1}")),
+                            new JavaScriptModuleLinkTo<RoleController>(this, "loadSiteSettingsRoleUrl", c => c.ListTemplate()),
+                            new JavaScriptModuleLinkTo<RoleController>(this, "loadRolesUrl", c => c.RolesList(null)),
+                            new JavaScriptModuleLinkTo<RoleController>(this, "roleSuggestionServiceUrl", c=> c.SuggestRoles("{0}"))
                         };
 
             Globalization = new IActionProjection[]
                         {
                             new JavaScriptModuleGlobalization(this, "rolesListTabTitle", () => UsersGlobalization.SiteSettings_Roles_ListTab_Title),
-                            new JavaScriptModuleGlobalization(this, "rolesAddNewTitle", () => UsersGlobalization.Role_AddNeww_Dialog_Title),
                             new JavaScriptModuleGlobalization(this, "deleteRoleConfirmMessage" , ()=> UsersGlobalization.DeleteRole_Confirmation_Message), 
                         };
         }

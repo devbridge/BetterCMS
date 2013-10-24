@@ -1,19 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 using BetterCms.Core.Models;
+
 using BetterCms.Module.MediaManager.ViewModels;
+
 using BetterCms.Module.Pages.Content.Resources;
 
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Providers;
+using BetterCms.Module.Root.ViewModels.Option;
+using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.Pages.ViewModels.Page
 {
     /// <summary>
     /// Edit basic page properties view model.
     /// </summary>
-    public class EditPagePropertiesViewModel
+    public class EditPagePropertiesViewModel : IAccessSecuredViewModel
     {
         /// <summary>
         /// Gets or sets the page id.
@@ -82,6 +88,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// The page custom CSS.
         /// </value>
+        [AllowHtml]
         public string PageCSS { get; set; }
         
         /// <summary>
@@ -90,6 +97,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// The page custom JavaScript.
         /// </value>
+        [AllowHtml]
         public string PageJavascript { get; set; }
 
         /// <summary>
@@ -114,7 +122,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// <c>true</c> if page is visible to everyone; otherwise, <c>false</c>.
         /// </value>
-        public bool IsVisibleToEveryone { get; set; }
+        public bool IsPagePublished { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this page must not be scanned for links to follow.
@@ -131,6 +139,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         ///   <c>true</c> if this page must not use the index; otherwise, <c>false</c>.
         /// </value>
         public bool UseNoIndex { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether use canonical URL.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if use canonical URL; otherwise, <c>false</c>.
+        /// </value>
+        public bool UseCanonicalUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the templates.
@@ -157,12 +173,20 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public ImageSelectorViewModel Image { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EditPagePropertiesViewModel" /> class.
+        /// Gets or sets the secondary image.
         /// </summary>
-        public EditPagePropertiesViewModel()
-        {
-            Image = new ImageSelectorViewModel();
-        }
+        /// <value>
+        /// The secondary image.
+        /// </value>
+        public ImageSelectorViewModel SecondaryImage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the featured image.
+        /// </summary>
+        /// <value>
+        /// The featured image.
+        /// </value>
+        public ImageSelectorViewModel FeaturedImage { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is in sitemap.
@@ -171,6 +195,71 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <c>true</c> if this instance is in sitemap; otherwise, <c>false</c>.
         /// </value>
         public bool IsInSitemap { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is archived.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is archived; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsArchived { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page option values.
+        /// </summary>
+        /// <value>
+        /// The page option values.
+        /// </value>
+        public IList<OptionValueEditViewModel> OptionValues { get; set; }
+
+        /// <summary>
+        /// Gets or sets the custom options.
+        /// </summary>
+        /// <value>
+        /// The custom options.
+        /// </value>
+        public List<CustomOptionViewModel> CustomOptions { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [access control enabled].
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if [access control enabled]; otherwise, <c>false</c>.
+        /// </value>
+        public bool AccessControlEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user access list.
+        /// </summary>
+        /// <value>
+        /// The user access list.
+        /// </value>
+        public IList<UserAccessViewModel> UserAccessList { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether dialog should be opened in the read only mode.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if dialog should be opened in the read only mode; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsReadOnly { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether current user can publish page.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if current user can publish page; otherwise, <c>false</c>.
+        /// </value>
+        public bool CanPublishPage { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EditPagePropertiesViewModel" /> class.
+        /// </summary>
+        public EditPagePropertiesViewModel()
+        {
+            Image = new ImageSelectorViewModel();
+            UserAccessList = new List<UserAccessViewModel>();
+        }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

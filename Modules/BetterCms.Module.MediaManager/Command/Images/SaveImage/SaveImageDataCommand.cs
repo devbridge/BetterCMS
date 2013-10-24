@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Web.Helpers;
 
-using BetterCms.Api;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Module.MediaManager.Helpers;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.Images;
 using BetterCms.Module.Root.Mvc;
@@ -37,6 +38,14 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
         public IStorageService StorageService { get; set; }
 
         /// <summary>
+        /// The tag service.
+        /// </summary>
+        /// <value>
+        /// The tag service.
+        /// </value>
+        public ITagService TagService { get; set; }
+
+        /// <summary>
         /// Executes this command.
         /// </summary>
         /// <param name="request">The request.</param>
@@ -44,8 +53,13 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
         {
             var mediaImage = Repository.First<MediaImage>(request.Id.ToGuidOrDefault());
 
+            UnitOfWork.BeginTransaction();
+            Repository.Save(mediaImage.CreateHistoryItem());
+            mediaImage.PublishedOn = DateTime.Now;
+
             mediaImage.Caption = request.Caption;
             mediaImage.Title = request.Title;
+            mediaImage.Description = request.Description;
             mediaImage.ImageAlign = request.ImageAlign;
             mediaImage.Version = request.Version.ToIntOrDefault();
 
@@ -53,9 +67,15 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
             ResizeAndCropImage(mediaImage, request);
 
             Repository.Save(mediaImage);
+
+            // Save tags
+            IList<Root.Models.Tag> newTags;
+            TagService.SaveMediaTags(mediaImage, request.Tags, out newTags);
+
             UnitOfWork.Commit();
 
-            MediaManagerApiContext.Events.OnMediaFileUpdated(mediaImage);
+            // Notify.
+            Events.MediaManagerEvents.Instance.OnMediaFileUpdated(mediaImage);
         }
 
         /// <summary>
@@ -167,16 +187,16 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
 
                 // Change image file names depending on file version
                 var newVersion = mediaImage.Version + 1;
-                mediaImage.FileUri = ApplyVersionToFileUri(mediaImage.FileUri, mediaImage.OriginalUri, newVersion);
-                mediaImage.PublicUrl = ApplyVersionToFileUrl(mediaImage.PublicUrl, mediaImage.PublicOriginallUrl, newVersion);
+                mediaImage.FileUri = ApplyVersionToFileUri(mediaImage.FileUri, mediaImage.OriginalFileName, newVersion);
+                mediaImage.PublicUrl = ApplyVersionToFileUrl(mediaImage.PublicUrl, mediaImage.OriginalFileName, newVersion);
 
-                mediaImage.ThumbnailUri = ApplyVersionToFileUri(mediaImage.ThumbnailUri, mediaImage.OriginalUri, newVersion);
-                mediaImage.PublicThumbnailUrl = ApplyVersionToFileUrl(mediaImage.PublicThumbnailUrl, mediaImage.PublicOriginallUrl, newVersion);
+                mediaImage.ThumbnailUri = ApplyVersionToFileUri(mediaImage.ThumbnailUri, mediaImage.OriginalFileName, newVersion);
+                mediaImage.PublicThumbnailUrl = ApplyVersionToFileUrl(mediaImage.PublicThumbnailUrl, mediaImage.OriginalFileName, newVersion);
 
                 // Upload image to storage
                 bytes = image.GetBytes();
                 var memoryStream = new MemoryStream(bytes);
-                StorageService.UploadObject(new UploadRequest { InputStream = memoryStream, Uri = mediaImage.FileUri });
+                StorageService.UploadObject(new UploadRequest { InputStream = memoryStream, Uri = mediaImage.FileUri, IgnoreAccessControl = true });
                 
                 mediaImage.Size = bytes.Length;
 
@@ -197,14 +217,14 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
         /// Extracts the name of the real file.
         /// </summary>
         /// <param name="fileUri">The file URI.</param>
-        /// <param name="originalFileUri">The original file URI.</param>
+        /// <param name="origFileName">Name of the original file.</param>
         /// <param name="version">The version.</param>
         /// <returns>
         /// File name with new applied version
         /// </returns>
-        private static Uri ApplyVersionToFileUri(Uri fileUri, Uri originalFileUri, int version)
+        private static Uri ApplyVersionToFileUri(Uri fileUri, string origFileName, int version)
         {
-            return new Uri(ApplyVersionToFileUrl(fileUri.OriginalString, originalFileUri.OriginalString, version));
+            return new Uri(ApplyVersionToFileUrl(fileUri.OriginalString, origFileName, version));
         }
 
         /// <summary>
@@ -216,12 +236,9 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
         /// <returns>
         /// File name with new applied version
         /// </returns>
-        private static string ApplyVersionToFileUrl(string fileUrl, string originalFileUrl, int version)
+        private static string ApplyVersionToFileUrl(string fileUrl, string origFileName, int version)
         {
-            var start = MediaImageHelper.OriginalImageFilePrefix.Length;
-            var origFileName = Path.GetFileNameWithoutExtension(originalFileUrl);
-            origFileName = origFileName.Substring(start, origFileName.Length - start);
-
+            origFileName = Path.GetFileNameWithoutExtension(origFileName);
             var realOldFileName = Path.GetFileNameWithoutExtension(fileUrl);
             var realFileNamePath = fileUrl.Substring(0, fileUrl.LastIndexOf(Path.GetFileName(fileUrl)));
             var realFileName = Path.Combine(realFileNamePath, string.Concat(realOldFileName.Substring(0, realOldFileName.IndexOf(origFileName)), origFileName, Path.GetExtension(fileUrl)));

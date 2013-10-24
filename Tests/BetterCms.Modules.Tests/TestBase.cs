@@ -8,8 +8,15 @@ using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules.Registration;
+using BetterCms.Module.Api;
+using BetterCms.Module.Blog;
+using BetterCms.Module.ImagesGallery;
+using BetterCms.Module.MediaManager;
+using BetterCms.Module.Newsletter;
 using BetterCms.Module.Pages;
 using BetterCms.Module.Root;
+using BetterCms.Module.Users;
+using BetterCms.Module.Users.Api;
 using BetterCms.Test.Module.Helpers;
 using BetterCms.Tests.Helpers;
 
@@ -28,8 +35,16 @@ namespace BetterCms.Test.Module
             KnownAssemblies = new List<Assembly>(new[]
                                                      {
                                                          typeof(RootModuleDescriptor).Assembly,
-                                                         typeof(PagesModuleDescriptor).Assembly
+                                                         typeof(PagesModuleDescriptor).Assembly,
+                                                         typeof(BlogModuleDescriptor).Assembly,
+                                                         typeof(NewsletterModuleDescriptor).Assembly,
+                                                         typeof(MediaManagerModuleDescriptor).Assembly,
+                                                         typeof(UsersModuleDescriptor).Assembly,
+                                                         typeof(ApiModuleDescriptor).Assembly,
+                                                         typeof(UsersApiModuleDescriptor).Assembly,
+                                                         typeof(ImagesGalleryModuleDescriptor).Assembly
                                                      });
+            CreateContainer();
         }
 
         public ILifetimeScope Container

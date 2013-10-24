@@ -1,0 +1,63 @@
+﻿@using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Users.Content.Resources
+@using Microsoft.Web.Mvc
+@model BetterCms.Module.Users.ViewModels.Authentication.LoginViewModel
+
+@{
+    Layout = "~/Areas/bcms-users/Views/Shared/PublicActionLayout.cshtml";
+    ViewBag.Title = "Login";
+}
+
+@section Head {
+    <style>
+        .bcms-body {
+            width: 260px;
+            margin: 0 auto;
+            padding: 20px 0 74px;
+        }
+    </style>
+}
+
+@using (Html.BeginForm())
+{
+    <div class="validation-summary-valid" data-valmsg-summary="true">
+       @Html.TabbedContentMessagesBox()
+    </div>
+    <div>
+        <span class="bcms-title">@UsersGlobalization.Login_UserName</span>
+        <p>
+            @Html.TextBoxFor(m => m.UserName, new { id = "userName", @class = "bcms-editor-field-box"})
+            @Html.ValidationMessageFor(m => m.UserName)
+        </p>
+    </div>
+
+    <div>
+        <span class="bcms-title">@UsersGlobalization.Login_Password</span>
+        <p>
+            @Html.PasswordFor(m => m.Password, new { @class = "bcms-editor-field-box" })
+            @Html.ValidationMessageFor(m => m.Password)
+        </p>
+    </div>
+    <div>
+        <span class="bcms-title">&nbsp;</span>
+        <p>
+            @Html.CheckBoxFor(m => m.RememberMe)
+            @Html.LabelFor(m => m.RememberMe)
+        </p>
+    </div>
+
+    Dictionary<string, object> submitProperties = new Dictionary<string, object>();
+    submitProperties.Add("class", "bcms-btn-small");
+    if (!Model.IsFormsAuthenticationEnabled)
+    {
+        submitProperties.Add("disabled", "disabled");
+    }
+    
+    @Html.SubmitButton("submit", "Login", submitProperties)
+    @Html.HiddenFor(m => m.ReturnUrl)
+}
+<script type="text/javascript">
+    (function() {
+        document.getElementById('userName').focus();
+    })();    
+</script>

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
-using BetterCms.Api;
+using System.Linq;
 
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Exceptions.Mvc;
@@ -69,7 +68,7 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
 
             if (request.UpdateSitemap)
             {
-                DemandAccess(RootModuleConstants.UserRoles.EditContent);
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent);
             }
 
             if (request.UpdateSitemap && page.NodeCountInSitemap > 0)
@@ -125,14 +124,32 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
                 }
             }
 
-            // Delete childs
-            foreach (var pageTag in page.PageTags)
+            // Delete child entities.            
+            if (page.PageTags != null)
             {
-                Repository.Delete(pageTag);
+                foreach (var pageTag in page.PageTags)
+                {
+                    Repository.Delete(pageTag);
+                }
             }
-            foreach (var pageContent in page.PageContents)
+            if (page.PageContents != null)
             {
-                Repository.Delete(pageContent);
+                foreach (var pageContent in page.PageContents)
+                {
+                    Repository.Delete(pageContent);
+                }
+            }
+            if (page.Options != null)
+            {
+                foreach (var option in page.Options)
+                {
+                    Repository.Delete(option);
+                }
+            }
+            if (page.AccessRules != null)
+            {
+                var rules = page.AccessRules.ToList();
+                rules.ForEach(page.RemoveRule);
             }
 
             // Delete sitemapNodes.
@@ -153,8 +170,17 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
             // Commit
             UnitOfWork.Commit();
 
+            if (sitemapNodes != null && sitemapNodes.Count > 0)
+            {
+                foreach (var node in sitemapNodes)
+                {
+                    Events.SitemapEvents.Instance.OnSitemapNodeUpdated(node);
+                }
+                Events.SitemapEvents.Instance.OnSitemapUpdated();
+            }
+
             // Notifying, that page is deleted.
-            PagesApiContext.Events.OnPageDeleted(page);
+            Events.PageEvents.Instance.OnPageDeleted(page);
 
             return true;
         }

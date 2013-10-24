@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define, console */
+/*global bettercms */
 
-bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'bcms.ko.extenders', 'bcms.media', 'bcms.pages.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect', 'bcms.pages.history', 'bcms.preview', 'bcms.security'],
-    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid, messages, redirect, history, preview, security) {
+bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'bcms.ko.extenders', 'bcms.media', 'bcms.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect', 'bcms.pages.history', 'bcms.preview', 'bcms.security', 'bcms.blog.filter', 'bcms.sidemenu'],
+    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid, messages, redirect, history, preview, security, filter, sidemenu) {
     'use strict';
 
     var blog = { },
@@ -11,7 +11,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             htmlEditor: 'bcms-contenthtml',
             firstForm: 'form:first',
             siteSettingsBlogsListForm: '#bcms-blogs-form',
-            siteSettingsBlogsSearchButton: '#bcms-blogs-search-btn',
+            siteSettingsBlogsSearchButton: '#bcms-blogs-search-kobtn',
             siteSettingsBlogsSearchInput: '.bcms-search-query',
             siteSettingsBlogCreateButton: '#bcms-create-blog-button',
             siteSettingsBlogDeleteButton: '.bcms-grid-item-delete-button',
@@ -197,6 +197,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
     blog.postNewArticle = function () {
         var postSuccess = function(json) {
             if (json && json.Data && json.Data.PageUrl) {
+                sidemenu.turnEditModeOn();
                 redirect.RedirectWithAlert(json.Data.PageUrl);
             }
         };
@@ -265,12 +266,12 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
     /**
     * Initializes site settings blogs list
     */
-    function initializeSiteSettingsBlogsList(container, content) {
+    function initializeSiteSettingsBlogsList(container, content, jsonData) {
         
         var form = container.find(selectors.siteSettingsBlogsListForm);
-        grid.bindGridForm(form, function (data) {
-            container.html(data);
-            initializeSiteSettingsBlogsList(container, data);
+        grid.bindGridForm(form, function (html, data) {
+            container.html(html);
+            initializeSiteSettingsBlogsList(container, html, data);
         });
 
         form.on('submit', function (event) {
@@ -279,6 +280,13 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             return false;
         });
         
+        form.find(selectors.siteSettingsBlogsSearchInput).keypress(function (event) {
+            if (event.which == 13) {
+                bcms.stopEventPropagation(event);
+                searchSiteSettingsBlogs(container, form);
+            }
+        });
+
         form.find(selectors.siteSettingsBlogTitleCell).on('click', function (event) {
             bcms.stopEventPropagation(event);
         });
@@ -301,6 +309,10 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         });
 
         initializeSiteSettingsBlogsListItems(container);
+
+        filter.bind(container, ((content.Data) ? content.Data : jsonData), function () {
+            searchSiteSettingsBlogs(container, form);
+        });
     }
      
     /**
@@ -341,9 +353,9 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
     * Search site settings blogs
     */
     function searchSiteSettingsBlogs(container, form) {
-        grid.submitGridForm(form, function (data) {
-            container.html(data);
-            initializeSiteSettingsBlogsList(container, data);           
+        grid.submitGridForm(form, function (htmlContent, data) {
+            container.html(htmlContent);
+            initializeSiteSettingsBlogsList(container, htmlContent, data);
             var searchInput = container.find(selectors.siteSettingsBlogsSearchInput);
             grid.focusSearchInput(searchInput);
         });
@@ -353,14 +365,20 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
     * Loads a media manager view to the site settings container.
     */
     blog.loadSiteSettingsBlogs = function () {
-        var tabs = [];
+        var tabs = [],
+            onShow = function (container) {
+                var firstVisibleInputField = container.find('input[type=text],textarea,select').filter(':visible:first');
+                if (firstVisibleInputField) {
+                    firstVisibleInputField.focus();
+                }
+            };
 
-        var blogs = new siteSettings.TabViewModel(globalization.blogPostsTabTitle, links.loadSiteSettingsBlogsUrl, initializeSiteSettingsBlogsList);
+        var blogs = new siteSettings.TabViewModel(globalization.blogPostsTabTitle, links.loadSiteSettingsBlogsUrl, initializeSiteSettingsBlogsList, onShow);
         tabs.push(blogs);
 
         if (security.IsAuthorized(["BcmsEditContent"])) {
-            var authors = new siteSettings.TabViewModel(globalization.authorsTabTitle, links.loadAuthorsTemplateUrl, initializeSiteSettingsAuthorsList);
-            var templates = new siteSettings.TabViewModel(globalization.templatesTabTitle, links.loadTemplatesUrl, initializeSiteSettingsTemplatesList);
+            var authors = new siteSettings.TabViewModel(globalization.authorsTabTitle, links.loadAuthorsTemplateUrl, initializeSiteSettingsAuthorsList, onShow);
+            var templates = new siteSettings.TabViewModel(globalization.templatesTabTitle, links.loadTemplatesUrl, initializeSiteSettingsTemplatesList, onShow);
             tabs.push(authors);
             tabs.push(templates);
         }
@@ -675,7 +693,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
     * Initializes blog module.
     */
     blog.init = function () {
-        console.log('Initializing blog module');
+        bcms.logger.debug('Initializing bcms.blog module.');
     };
 
     /**

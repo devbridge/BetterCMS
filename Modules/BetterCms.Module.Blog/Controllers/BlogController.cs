@@ -9,9 +9,9 @@ using BetterCms.Module.Blog.Commands.SaveBlogPost;
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
+using BetterCms.Module.Blog.ViewModels.Filter;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
 using Microsoft.Web.Mvc;
 
@@ -44,10 +44,20 @@ namespace BetterCms.Module.Blog.Controllers
         /// <param name="request">The request.</param>
         /// <returns>Blog post list html.</returns>
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.DeleteContent)]
-        public ActionResult Index(SearchableGridOptions request)
+        public ActionResult Index(BlogsFilter request)
         {
-            var model = GetCommand<GetBlogPostListCommand>().ExecuteCommand(request ?? new SearchableGridOptions());
-            return View(model);
+            request.SetDefaultPaging();
+            var model = GetCommand<GetBlogPostListCommand>().ExecuteCommand(request);
+            var success = model != null;
+
+            var view = RenderView("Index", model);
+            var json = new
+            {
+                Tags = request.Tags,
+                IncludeArchived = request.IncludeArchived
+            };
+
+            return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

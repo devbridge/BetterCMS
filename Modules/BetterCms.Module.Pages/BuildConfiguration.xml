@@ -17,9 +17,9 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.redirects.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.seo.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.sitemap.js" />
-      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.tags.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.template.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.widgets.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.filter.js" />
 
     </ItemGroup>
 

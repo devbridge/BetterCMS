@@ -74,13 +74,20 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
         /// <value>
         /// The custom CSS.
         /// </value>
+        [AllowHtml]
         public string CustomCSS { get; set; }
 
         public bool EnableCustomJS { get; set; }
 
         [AllowHtml]
-        public string CustomJS { get; set; }       
+        public string CustomJS { get; set; }
 
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
         public override string ToString()
         {
             return string.Format("{0}, Name: {1}, EnableCustomCSS: {2}, EnableCustomJS: {3}", base.ToString(), Name, EnableCustomCSS, EnableCustomJS);

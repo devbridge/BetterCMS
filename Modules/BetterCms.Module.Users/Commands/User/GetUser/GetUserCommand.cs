@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Users.Services;
-using BetterCms.Module.Users.ViewModels;
+using BetterCms.Module.Users.ViewModels.User;
+
+using NHibernate.Linq;
 
 namespace BetterCms.Module.Users.Commands.User.GetUser
 {
@@ -17,60 +18,66 @@ namespace BetterCms.Module.Users.Commands.User.GetUser
     public class GetUserCommand : CommandBase, ICommand<Guid, EditUserViewModel>
     {
         /// <summary>
-        /// The role service
+        /// The file URL resolver
         /// </summary>
-        private IRoleService roleService;
+        private readonly IMediaFileUrlResolver fileUrlResolver;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetUserCommand" /> class.
+        /// Initializes a new instance of the <see cref="GetUserCommand"/> class.
         /// </summary>
-        /// <param name="roleService">The role service.</param>
-        public GetUserCommand(IRoleService roleService)
+        /// <param name="fileUrlResolver">The file URL resolver.</param>
+        public GetUserCommand(IMediaFileUrlResolver fileUrlResolver)
         {
-            this.roleService = roleService;
+            this.fileUrlResolver = fileUrlResolver;
         }
 
         /// <summary>
         /// Executes the specified request.
         /// </summary>
-        /// <param name="id">The user id.</param>
+        /// <param name="userId">The user id.</param>
         /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
         public EditUserViewModel Execute(Guid userId)
         {
-            var model = new EditUserViewModel();
-
+            EditUserViewModel model;
+            
             if (!userId.HasDefaultValue())
             {
-                EditUserViewModel userModelAlias = null;
+                var listFuture = Repository.AsQueryable<Models.User>()
+                    .Where(bp => bp.Id == userId)
+                    .Select(
+                        user =>
+                        new EditUserViewModel
+                            {
+                                Id = user.Id,
+                                Version = user.Version,
+                                FirstName = user.FirstName,
+                                Email = user.Email,
+                                LastName = user.LastName,
+                                UserName = user.UserName,
+                                Image = user.Image != null && !user.Image.IsDeleted ?
+                                    new ImageSelectorViewModel
+                                        {
+                                            ImageId = user.Image.Id,
+                                            ImageUrl = fileUrlResolver.EnsureFullPathUrl(user.Image.PublicUrl),
+                                            ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(user.Image.PublicThumbnailUrl),
+                                            ImageTooltip = user.Image.Caption,
+                                            FolderId = user.Image.Folder != null ? user.Image.Folder.Id : (Guid?)null
+                                        } : null
+                            })
+                    .ToFuture();
 
-                model =
-                    Repository.AsQueryable<Models.Users>()
-                              .Where(bp => bp.Id == userId)
-                              .Select(
-                                  bp =>
-                                  new EditUserViewModel
-                                      {
-                                          Id = bp.Id,
-                                          Version = bp.Version,
-                                          FirstName = bp.FirstName,
-                                          Email = bp.Email,
-                                          LastName = bp.LastName,
-                                          UserName = bp.UserName,
-                                          Image =
-                                              new ImageSelectorViewModel
-                                                  {
-                                                      ImageId = bp.Image.Id,
-                                                      ImageUrl = bp.Image.PublicUrl,
-                                                      ThumbnailUrl = bp.Image.PublicThumbnailUrl,
-                                                      ImageTooltip = bp.Image.Caption
-                                                  }
-                                      })
-                              .FirstOrDefault();
+                var roles = Repository
+                    .AsQueryable<Models.UserRole>()
+                    .Where(ur => ur.User.Id == userId)
+                    .Select(ur => ur.Role.Name)
+                    .ToFuture();
+
+                model = listFuture.FirstOne();
+                model.Roles = roles.ToList();
             }
-            if (model != null)
+            else
             {
-                model.Roles = roleService.GetUserRoles();
+                model = new EditUserViewModel();
             }
 
             return model;

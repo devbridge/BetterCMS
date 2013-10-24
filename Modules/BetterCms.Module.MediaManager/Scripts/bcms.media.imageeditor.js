@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define, console */
+/*global bettercms */
 
-bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.jquery.jcrop', 'bcms.ko.extenders'],
-    function($, bcms, modal, siteSettings, forms, dynamicContent, jcrop, ko) {
+bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.jquery.jcrop', 'bcms.ko.extenders', 'bcms.tags'],
+    function($, bcms, modal, siteSettings, forms, dynamicContent, jcrop, ko, tags) {
         'use strict';
 
         var imageEditor = {},
@@ -16,7 +16,6 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 imageAlignmentControls: ".bcms-alignment-controls",
 
                 imageEditorForm: 'form:first',
-                imagePropertiesContainer: '.bcms-file-manager-inner',
 
                 imageSizeEditBoxWidth: "#image-width",
                 imageSizeEditBoxHeight: "#image-height",
@@ -25,12 +24,11 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
 
                 imageToCrop: ".bcms-croped-block img",
 
-                selectableInputs: 'input.bcms-editor-field-box'
+                selectableInputs: 'input.bcms-editor-selectable-field-box'
             },
             links = {
                 imageEditorDialogUrl: null,
-                imageEditorInsertDialogUrl: null,
-                imagePropertiesUrl: null
+                imageEditorInsertDialogUrl: null
             },
             globalization = {
                 imageEditorDialogTitle: null,
@@ -38,7 +36,6 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 imageEditorInsertDialogAcceptButton: null,
                 imageEditorUpdateFailureMessageTitle: null,
                 imageEditorUpdateFailureMessageMessage: null,
-                imagePropertiesDialogTitle: null,
                 closeButtonTitle: null
             },
             constants = {
@@ -89,12 +86,6 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                                 callback(json.Data);
                             }
                             dialog.close();
-                        },
-                        postError: function () {
-                            modal.alert({
-                                title: globalization.imageEditorUpdateFailureMessageTitle,
-                                content: globalization.imageEditorUpdateFailureMessageMessage
-                            });
                         }
                     });
                 }
@@ -422,11 +413,12 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
         /**
         * Image edit form view model
         */
-        function ImageEditViewModel(titleEditorViewModel, imageEditorViewModel) {
+        function ImageEditViewModel(titleEditorViewModel, imageEditorViewModel, tagsViewModel) {
             var self = this;
 
             self.titleEditorViewModel = titleEditorViewModel;
             self.imageEditorViewModel = imageEditorViewModel;
+            self.tags = tagsViewModel;
         }
 
         /**
@@ -440,13 +432,19 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
             var titleEditorViewModel = new TitleEditorViewModel(dialog, data.Title);
             
             var imageEditorViewModel = new ImageEditorViewModel(dialog, data, true);
+
+            var tagsEditorViewModel = new tags.TagsListViewModel(content.Data.Tags);
             
-            var viewModel = new ImageEditViewModel(titleEditorViewModel, imageEditorViewModel);
+            var viewModel = new ImageEditViewModel(titleEditorViewModel, imageEditorViewModel, tagsEditorViewModel);
             ko.applyBindings(viewModel, dialog.container.find(selectors.imageEditorForm).get(0));
 
             // Image alignment
             dialog.container.find(selectors.imageAlignmentControls).children().each(function () {
                 setImageAlignment(this, dialog);
+            });
+
+            dialog.container.find(selectors.selectableInputs).on('click', function () {
+                this.select();
             });
         }
 
@@ -457,6 +455,11 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
             // Image alignment
             dialog.container.find(selectors.imageAlignmentControls).children().each(function() {
                 setImageAlignment(this, dialog);
+            });
+            
+            // Select publis URL
+            dialog.container.find(selectors.selectableInputs).on('click', function () {
+                this.select();
             });
         }
 
@@ -473,32 +476,6 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 $('input', item).attr('checked', 'true');
             });
         }
-
-        /**
-        * Opens image properties dialog
-        */
-        imageEditor.openImagePropertiesDialog = function(id) {
-            modal.open({
-                title: globalization.imagePropertiesDialogTitle,
-                disableAccept: true,
-                cancelTitle: globalization.closeButtonTitle,
-                onLoad: function (dialog) {
-                    var url = $.format(links.imagePropertiesUrl, id);
-
-                    dynamicContent.bindDialog(dialog, url, {
-                        contentAvailable: function (contentDialog, content) {
-                            contentDialog.container.find(selectors.selectableInputs).on('click', function () {
-                                this.select();
-                            });
-
-                            var json = content.Data ? content.Data : {};
-                            var viewModel = new ImageEditorViewModel(contentDialog, json, false);
-                            ko.applyBindings(viewModel, dialog.container.find(selectors.imagePropertiesContainer).get(0));
-                        },
-                    });
-                }
-            });
-        };
 
         return imageEditor;
     });

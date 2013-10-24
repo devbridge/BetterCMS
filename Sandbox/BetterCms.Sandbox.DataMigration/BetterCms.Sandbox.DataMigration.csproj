@@ -48,9 +48,8 @@
     <OutputPath>bin\Dev\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common.Logging, Version=2.1.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Common.Logging.2.1.1\lib\net40\Common.Logging.dll</HintPath>
+    <Reference Include="Common.Logging">
+      <HintPath>..\..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Common.Logging.NLog">
       <HintPath>..\..\packages\Common.Logging.NLog.2.0.0\lib\2.0\Common.Logging.NLog.dll</HintPath>
@@ -80,12 +79,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Sql\001_ImportFakeData.sql" />
-    <Content Include="Sql\002_ClearAllTables.sql" />
     <None Include="App.config" />
     <Content Include="Config\nlog.config">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TransformOnBuild>true</TransformOnBuild>
     </Content>
     <Content Include="Config\connectionStrings.config">
       <TransformOnBuild>true</TransformOnBuild>
@@ -110,6 +108,10 @@
     <ProjectReference Include="..\..\Modules\BetterCMS.Module.Blog\BetterCms.Module.Blog.csproj">
       <Project>{a66a3046-ef60-4c51-ada7-eb055763419b}</Project>
       <Name>BetterCms.Module.Blog</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.ImagesGallery\BetterCms.Module.ImagesGallery.csproj">
+      <Project>{0bb64452-9b66-403e-94c6-e66c6071d12b}</Project>
+      <Name>BetterCms.Module.ImagesGallery</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.MediaManager\BetterCms.Module.MediaManager.csproj">
       <Project>{f3e41793-e8ed-4ba8-a1ab-cba1e47b0786}</Project>

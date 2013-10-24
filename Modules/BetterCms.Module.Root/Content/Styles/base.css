@@ -3,6 +3,20 @@
     -ms-text-size-adjust: 100%;
 }
 
+[class*="bcms-"] {
+    font-family: 'Open Sans', sans-serif !important;
+}
+
+.bcms-modal form {
+    width: auto !important;
+    max-width: none !important;
+    height: auto !important;
+    color: inherit !important;
+    margin: auto !important;
+    padding: 0 !important;
+    background: none !important;
+}
+
 .bcms-version-number {
     line-height: 21px;
     margin-right: 10px;
@@ -34,11 +48,6 @@
 /*browser compatibility support*/
 a:focus {
     outline: none;
-}
-
-input[type="text"] {
-    -webkit-appearance: none;
-    border-radius: 0;
 }
 
 /* Hidden form submit. Can't set display:none because we need to submit form. */
@@ -122,7 +131,6 @@ hr.bcms-sidebar-separator {
     white-space: nowrap;
     height: 34px;
     width: 225px;
-    font-family: 'Open Sans', sans-serif;
     font-size: 12px;
 }
 
@@ -144,7 +152,6 @@ select.bcms-select-published {
     height: 33px;
     line-height: 33px;
     font-size: 12px;
-    font-family: 'Open Sans', sans-serif;
     color: #FFFFFF;
     cursor: pointer;
     overflow: hidden;
@@ -868,6 +875,7 @@ a.bcms-remove-image {
 .bcms-scroll-window {
     position: relative;
     overflow-y: auto;
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
 }
 
@@ -876,7 +884,7 @@ a.bcms-remove-image {
     max-width: 830px;
 }
 
-div.bcms-noscroll body {
+html.bcms-noscroll {
     overflow: hidden;
 }
 
@@ -1059,7 +1067,6 @@ div.bcms-modal-close {
     .bcms-error-frame > p {
         font-size: 11px;
         line-height: 19px;
-        font-family: 'Open Sans', sans-serif;
     }
 
 .bcms-popinfo-frame {
@@ -1083,7 +1090,6 @@ div.bcms-modal-close {
         line-height: 19px;
         word-wrap: break-word;
         font-size: 11px;
-        font-family: 'Open Sans', sans-serif;
     }
 
 a.bcms-error-close {
@@ -1108,6 +1114,7 @@ a.bcms-error-close {
     height: 12px;
     background: url('images/sprite-base-1.png') no-repeat -3px -777px;
     cursor: pointer;
+    z-index: 100;
 }
 
     .bcms-tooltip-mark:hover {
@@ -1124,6 +1131,7 @@ a.bcms-error-close {
     position: relative;
     background: #eff9fd;
     border: 1px solid #c6c6c6;
+    box-shadow: 1px 1px 5px 0 rgba(0,0,0,0.4);
 }
 
     .bcms-tooltip-box p {
@@ -1131,7 +1139,6 @@ a.bcms-error-close {
         padding: 0;
         margin: 0;
         font-size: 11px;
-        font-family: 'Open Sans', sans-serif;
     }
 
 div.bcms-tip-close {
@@ -1375,7 +1382,8 @@ a.bcms-btn-close {
         }
 
 .bcms-checkbox-holder {
-    padding: 5px 0;
+    display: inline-block;
+    padding: 5px 10px 5px 0;
     color: #595959;
     font-size: 12px;
 }
@@ -1419,6 +1427,8 @@ a.bcms-btn-close {
     border-radius: 0;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
+    -webkit-appearance: none;
+    border-radius: 0;
 }
 
     .bcms-editor-field-box:focus {
@@ -1443,6 +1453,8 @@ a.bcms-btn-close {
     border-radius: 0;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
+    -webkit-appearance: none;
+    border-radius: 0;
 }
 
     .bcms-editor-field-area:focus {
@@ -1451,6 +1463,10 @@ a.bcms-btn-close {
         box-shadow: 0 0 3px 0 rgba(24,145,230,0.35);
         outline: none;
     }
+
+.bcms-code-field {
+    font-family: monospace !important;
+}
 
 /*Global Select*/
 .bcms-global-select {
@@ -1473,7 +1489,6 @@ a.bcms-btn-close {
     height: 30px;
     width: 285px;
     line-height: 17px;
-    font-family: 'Open Sans', sans-serif;
     font-size: 12px;
 }
 
@@ -1907,12 +1922,12 @@ th.bcms-tables-nohover:hover {
     background-position: right -970px;
 }
 
-.bcms-table-row-active .bcms-editor-field-box {
+/*.bcms-table-row-active .bcms-editor-field-box {
     background: #fff;
     border-color: #1894e4;
     box-shadow: 0 0 3px 0 rgba(24,145,230,0.35);
     outline: none;
-}
+}*/
 
 .bcms-table-row-active .bcms-editor-field-area {
     background: #fff;
@@ -2019,7 +2034,7 @@ a.bcms-sort-arrow-top:hover {
     min-height: 30px;
     line-height: 30px;
     left: -1px;
-    padding: 15px 20px 15px 20px;
+    padding: 15px 20px 5px 20px;
     background-color: #eaeaea;
 }
 
@@ -2027,6 +2042,85 @@ a.bcms-sort-arrow-top:hover {
         display: inline-block;
         padding-bottom: 3px;
         vertical-align: middle;
+    }
+
+.bcms-pager {
+    float: right;
+    text-align: right;
+}
+
+.bcms-pager-no {
+    float: left;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    margin-left: -1px;
+    cursor: pointer;
+    color: #6d7076;
+    font-size: 13px;
+    background-color: #f5f5f5;
+    border: 1px solid #dcdcdc;
+    text-align: center;
+}
+
+    .bcms-pager-no:hover {
+        text-decoration: none;
+        color: #000;
+        border-color: #c6c6c6;
+        background-color: #fff;
+    }
+
+a.bcms-active-pager {
+    color: #000;
+    border-color: #c6c6c6;
+    background-color: #fff;
+}
+
+    a.bcms-active-pager:hover {
+        text-decoration: none;
+    }
+
+.bcms-pager-text {
+    float: left;
+    line-height: 30px;
+    padding: 0 6px 0 5px;
+    color: #aaaaaa;
+    font-size: 13px;
+}
+
+.bcms-pager-prev, .bcms-pager-next {
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    overflow: hidden;
+    border: 1px solid #dcdcdc;
+    text-indent: 9999px;
+    background: #f5f5f5 url('images/bcms-arrows-sprite.png') no-repeat;
+}
+
+    .bcms-pager-prev:hover, .bcms-pager-next:hover {
+        background-color: #383838;
+        border-color: #383838;
+    }
+
+.bcms-pager-prev {
+    float: left;
+    margin-left: 9px;
+    background-position: 9px center;
+}
+
+    .bcms-pager-prev:hover {
+        background-position: -56px center;
+    }
+
+.bcms-pager-next {
+    float: right;
+    margin-left: 1px;
+    background-position: -23px center;
+}
+
+    .bcms-pager-next:hover {
+        background-position: -89px center;
     }
 
 /*forms & input fields validation, error messages*/
@@ -2162,7 +2256,6 @@ span.bcms-field-validation-error {
         border: 1px solid #E64343;
         vertical-align: middle;
         font-size: 10px;
-        font-family: 'Open Sans', sans-serif;
     }
 
         span.bcms-field-validation-error > span:after, span.bcms-field-validation-error > span:before {
@@ -2259,23 +2352,23 @@ ul.bcms-info-messages {
 }
 
 /*tag validation errors*/
-.tag-validation-error {
-    background-color: #fcecec;
-    border: 1px solid #e64343;
-    box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
+.bcms-tag-validation-error {
+    background-color: #fcecec !important;
+    border: 1px solid #e64343 !important;
+    box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4) !important;
 }
 
-    .tag-validation-error:focus {
+    .bcms-tag-validation-error:focus {
         background: #fcecec;
         border: 1px solid #e64343;
         box-shadow: 0 0 2px 0 rgba(230, 67, 67, 0.4);
     }
 
-        .tag-validation-error:focus + .tag-field-validation-error span {
+        .bcms-tag-validation-error:focus + .bcms-tag-field-validation-error span {
             visibility: visible;
         }
 
-span.tag-field-validation-error {
+span.bcms-tag-field-validation-error {
     position: absolute;
     right: 1px;
     top: 50%;
@@ -2283,9 +2376,10 @@ span.tag-field-validation-error {
     height: 22px;
     margin-top: -11px;
     background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAJCAYAAAF8oY2FAAAAZElEQVQY02N45uw8DYi/MsAZ////Z0AQQKH/YA6QYYcsuhxD5D8QO0LpTOyCIAtAElBJO5ClIEYmskoUW2ACMDdgqsRlZgtU5Rcg9kZS4A0VA8m1MCBJZEAlkHEG3G6iFRJrNQAfBNhPNe12LwAAAABJRU5ErkJggg==') no-repeat center center #FCECEC;
+    z-index: 1;
 }
 
-    span.tag-field-validation-error > span {
+    span.bcms-tag-field-validation-error > span {
         visibility: hidden;
         position: absolute;
         right: -9px;
@@ -2298,10 +2392,9 @@ span.tag-field-validation-error {
         border: 1px solid #E64343;
         vertical-align: middle;
         font-size: 10px;
-        font-family: 'Open Sans', sans-serif;
     }
 
-        span.tag-field-validation-error > span:after, span.tag-field-validation-error > span:before {
+        span.bcms-tag-field-validation-error > span:after, span.bcms-tag-field-validation-error > span:before {
             top: 100%;
             border: solid transparent;
             content: " ";
@@ -2311,21 +2404,100 @@ span.tag-field-validation-error {
             pointer-events: none;
         }
 
-        span.tag-field-validation-error > span:after {
+        span.bcms-tag-field-validation-error > span:after {
             border-top-color: #FCECEC;
             border-width: 10px;
             right: 7px;
             margin-left: -10px;
         }
 
-        span.tag-field-validation-error > span:before {
+        span.bcms-tag-field-validation-error > span:before {
             border-top-color: #E64343;
             border-width: 11px;
             right: 6px;
             margin-left: -11px;
         }
 
+/*user access controls*/
+.bcms-user-access {
+    padding: 0 0 0 30px;
+    margin: 0 0 20px -30px;
+    border-bottom: 1px solid #c6c6c6;
+}
 
+.bcms-access-table {
+}
+
+.bcms-access-title {
+    border-bottom: 1px solid #c6c6c6;
+}
+
+.bcms-access-title-text {
+    float: left;
+    width: 15%;
+    padding: 5px;
+    text-align: center;
+    font-weight: 700;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+    .bcms-access-title-text:first-child {
+        width: 55%;
+        text-align: left;
+    }
+
+.bcms-access-line {
+    line-height: 1.5em;
+    padding: 5px 0;
+    border-bottom: 1px solid #eeeeee;
+}
+
+    .bcms-access-line:last-child {
+        border-bottom: 0;
+    }
+
+.bcms-access-value {
+    float: left;
+    width: 15%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+    .bcms-access-value:first-child {
+        width: 55%;
+        text-align: left;
+    }
+
+    .bcms-access-value input[type="radio"] {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        cursor: pointer;
+    }
+
+.bcms-access-value-add {
+    font-weight: 700;
+    color: #0383DF;
+    cursor: pointer;
+}
+
+.btn-acces-plus, .btn-acces-minus {
+    display: inline-block;
+    vertical-align: middle;
+    width: 16px;
+    line-height: 16px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.btn-acces-plus {
+    background: url('images/sprite-base-2.png') no-repeat -44px -179px;
+}
+
+.btn-acces-minus {
+    background: url('images/sprite-base-2.png') no-repeat -64px -179px;
+}
 
 /*override jquery ui*/
 .ui-datepicker-trigger {
@@ -2350,7 +2522,7 @@ span.tag-field-validation-error {
 }
 
 .ui-widget {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Open Sans',sans-serif !important;
     font-size: 14px;
 }
 
@@ -2359,7 +2531,6 @@ span.tag-field-validation-error {
     }
 
     .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
-        font-family: 'Open Sans', sans-serif;
         font-size: 14px;
     }
 
@@ -2378,6 +2549,7 @@ span.tag-field-validation-error {
     background: #1894e4;
     color: #ffffff;
     font-weight: bold;
+    font-family: 'Open Sans',sans-serif !important;
     position: relative;
 }
 
@@ -2478,6 +2650,7 @@ a.ui-state-default:hover {
         text-align: center;
         font-size: 14px;
         font-weight: 400;
+        font-family: 'Open Sans',sans-serif !important;
         text-transform: uppercase;
     }
 
@@ -2519,4 +2692,45 @@ a.ui-state-default:hover {
 /*cursor: pointer*/
 .bcms-pointer {
     cursor: pointer;
+}
+
+/*autocomplete styles*/
+.autocomplete-suggestions {
+    margin-top: -1px;
+    overflow: auto;
+    background-color: #FFF;
+    border: 1px solid #D1D1D1;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    font-size: 12px;
+}
+
+.autocomplete-suggestion {
+    padding: 4px 7px 3px;
+    color: #787878;
+    cursor: pointer;
+    font-weight: 400;
+}
+
+.autocomplete-suggestion:hover, .autocomplete-selected {
+    color: #000;
+    background-color: #f5f5f5;
+}
+
+.bcms-inactive {
+    position:relative;
+}
+
+.bcms-inactive:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    cursor: default;
+    z-index: 99;
+    background-color: #FFF;
+    opacity: 0.3;
+    -moz-opacity: 0.3;
 }

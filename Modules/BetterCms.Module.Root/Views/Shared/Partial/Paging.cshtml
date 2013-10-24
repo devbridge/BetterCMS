@@ -1,0 +1,44 @@
+﻿@using BetterCms.Module.Root.Content.Resources
+
+<!-- ko if: totalPages() > 0 -->
+<div class="bcms-pager bcms-clearfix">
+    <span class="bcms-pager-text">@RootGlobalization.Paging_Page_Title:</span>
+
+    <!-- ko if: pagingLowerBound() > 1 -->
+    <a class="bcms-pager-no" data-page-number="1" data-bind="click: openPage.bind($data, 1)">1 </a>
+    <!-- ko if: pagingLowerBound() != 2 -->
+    <span class="bcms-pager-text">...</span>
+    <!-- /ko-->
+    <!-- /ko-->
+
+    <!-- ko foreach: pages() -->
+    <!-- ko if: $data == $parent.pageNumber() -->
+    <a class="bcms-pager-no bcms-active-pager" data-bind="html: $data"></a>
+    <!-- /ko -->
+    <!-- ko ifnot: $data == $parent.pageNumber() -->
+    <a class="bcms-pager-no" data-bind="css: { 'bcms-active-pager': $data == $parent.pageNumber() }, attr: { 'data-page-number': $data }, html: $data, click: $parent.openPage.bind($parent, $data)"></a>
+    <!-- /ko -->
+    <!-- ko if: $data != $parent.pageNumber() && $data == $parent.pagingUpperBound() && $data <= $parent.totalPages() - 1  -->
+    <span class="bcms-pager-text">...</span>
+    <!-- /ko -->
+    <!-- /ko -->
+
+    <!-- ko if: pagingUpperBound() < totalPages() -->
+    <a class="bcms-pager-no" data-bind="attr: { 'data-page-number': totalPages() }, html: totalPages(), click: openPage.bind($data, totalPages())"></a>
+    <!-- /ko -->
+
+    <!-- ko if: pageNumber() == totalPages() -->
+    <a class="bcms-pager-next">@RootGlobalization.Button_Paging_Next</a>
+    <!-- /ko -->
+    <!-- ko ifnot: pageNumber() == totalPages() -->
+    <a class="bcms-pager-next" data-bind="attr: { 'data-page-number': pageNumber() + 1, href: '#' }, click: openPage.bind($data, pageNumber() + 1)">@RootGlobalization.Button_Paging_Next</a>
+    <!-- /ko -->
+
+    <!-- ko if: pageNumber() == 1 -->
+    <a class="bcms-pager-prev">@RootGlobalization.Button_Paging_Previous</a>
+    <!-- /ko -->
+    <!-- ko ifnot: pageNumber() == 1 -->
+    <a class="bcms-pager-prev" data-bind="attr: { 'data-page-number': pageNumber() - 1, href: '#' }, click: openPage.bind($data, pageNumber() - 1)">@RootGlobalization.Button_Paging_Previous</a>
+    <!-- /ko -->
+</div>
+<!-- /ko -->

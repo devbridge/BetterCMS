@@ -3,7 +3,7 @@
 namespace BetterCms.Test.Module.Pages.ModelTests.MapTests
 {
     [TestFixture]
-    public class HtmlContentWidgetMapTest : DatabaseTestBase
+    public class HtmlContentWidgetMapTest : IntegrationTestBase
     {
         [Test]
         public void Should_Insert_And_Retrieve_HtmlContentWidget_Successfully()

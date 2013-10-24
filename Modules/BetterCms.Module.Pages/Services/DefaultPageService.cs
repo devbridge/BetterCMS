@@ -5,6 +5,7 @@ using System.Web;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Exceptions.Service;
 using BetterCms.Core.Models;
@@ -14,6 +15,7 @@ using BetterCms.Core.Web;
 
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.Helpers;
 
 using NHibernate.Linq;
@@ -60,19 +62,20 @@ namespace BetterCms.Module.Pages.Services
         /// </returns>
         public IPage GetPageByVirtualPath(string virtualPath)
         {
-            if (temporaryPageCache.ContainsKey(virtualPath.ToLowerInvariant()))
+            var trimmed = virtualPath.UrlHash();
+            if (temporaryPageCache.ContainsKey(trimmed))
             {
-                return temporaryPageCache[virtualPath.ToLowerInvariant()];
+                return temporaryPageCache[trimmed];
             }
 
             var page = repository
-                .AsQueryable<PageProperties>(p => p.PageUrl == virtualPath)
+                .AsQueryable<PageProperties>(p => p.PageUrlHash == trimmed)
                 .Fetch(p => p.Layout)
                 .FirstOrDefault();
 
             if (page != null)
             {
-                temporaryPageCache.Add(virtualPath.ToLowerInvariant(), page);
+                temporaryPageCache.Add(trimmed, page);
             }
 
             return page;
@@ -128,7 +131,7 @@ namespace BetterCms.Module.Pages.Services
             }
 
             // Is Url unique
-            var query = repository.AsQueryable<PageProperties>(page => page.PageUrl == url);
+            var query = repository.AsQueryable<PageProperties>(page => page.PageUrlHash == url.UrlHash());
             if (pageId.HasValue && pageId != default(Guid))
             {
                 query = query.Where(page => page.Id != pageId.Value);
@@ -155,7 +158,7 @@ namespace BetterCms.Module.Pages.Services
                 ? "{0}"
                 : string.Concat(parentPageUrl.Trim('/'), "/{0}");
 
-            url = url.Transliterate();
+            url = url.Transliterate(true);
             url = urlService.AddPageUrlPostfix(url, prefixPattern);
 
             return url;
@@ -193,10 +196,6 @@ namespace BetterCms.Module.Pages.Services
                 if (!string.IsNullOrWhiteSpace(rootPage.MetaKeywords))
                 {
                     metaData.Add(new MetaDataProjection("keywords", rootPage.MetaKeywords));
-                }
-                if (!string.IsNullOrWhiteSpace(rootPage.MetaTitle))
-                {
-                    metaData.Add(new MetaDataProjection("title", rootPage.MetaTitle));
                 }
             }
 

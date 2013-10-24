@@ -1,5 +1,4 @@
-﻿using BetterCms.Api;
-using BetterCms.Core.Exceptions;
+﻿using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
@@ -23,16 +22,16 @@ namespace BetterCms.Module.MediaManager.Command.Upload.Upload
             {
                 var media = MediaFileService.UploadFile(request.Type, request.RootFolderId, request.FileName, request.FileLength, request.FileStream);
 
-                MediaManagerApiContext.Events.OnMediaFileUploaded(media);
+                Events.MediaManagerEvents.Instance.OnMediaFileUploaded(media);
 
                 return media;
             }
 
             if (request.Type == MediaType.Image)
             {
-                var media = MediaImageService.UploadImage(request.RootFolderId, request.FileName, request.FileLength, request.FileStream);
+                var media = MediaImageService.UploadImage(request.RootFolderId, request.FileName, request.FileLength, request.FileStream, request.ReuploadMediaId);
                 
-                MediaManagerApiContext.Events.OnMediaFileUploaded(media);
+                Events.MediaManagerEvents.Instance.OnMediaFileUploaded(media);
 
                 return media;
             }

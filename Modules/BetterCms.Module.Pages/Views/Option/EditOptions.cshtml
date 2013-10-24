@@ -1,0 +1,43 @@
+﻿@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Pages.Mvc.EditableGrid
+@using BetterCms.Module.Root;
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc.Grids;
+@using BetterCms.Module.Root.ViewModels.Shared;
+
+@{
+    var gridViewModel = new EditableGridViewModel
+    {
+        ShowSearch = false,
+        TopBlockClass = "bcms-top-block-holder",
+        SaveButtonTitle = RootGlobalization.Button_Ok,
+        AddHiddenFields = true,
+        ShowMessages = false,
+        Columns = new List<EditableGridColumn>
+            {
+                new EditableGridColumn(PagesGlobalization.Options_OptionKeyColumn, null, "key")
+                    {
+                        HeaderAttributes = "style=\"width: 250px;\"",
+                        AutoFocus = true,
+                        HiddenFieldName = "Options[{0}].OptionKey"
+                    },
+
+                new EditableGridDropDownColumn(PagesGlobalization.Options_OptionTypeColumn, null, "calcType")
+                    {
+                        OptionsBind = "optionTypes",
+                        ValueTextBind = "typeName"
+                    },
+                                        
+                new OptionValueEditableGridColumn(PagesGlobalization.Options_OptionDefaultValueColumn, "defaultValue", "customOptionDefaultTitle")
+                    {
+                        HeaderAttributes = "style=\"width: 250px;\"",
+                        HiddenFieldName = "Options[{0}].OptionDefaultValue"
+                    },
+                    
+                new EditableGridHiddenField("type", "Options[{0}].Type"),
+                new EditableGridHiddenField("customType", "Options[{0}].CustomType")
+            }
+    };
+}
+
+@Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel)

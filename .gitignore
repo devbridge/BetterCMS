@@ -53,6 +53,8 @@ logs
 /Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/Modules/BetterCms.Module.Newsletter.pdb
 /Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/Modules/BetterCms.Module.Installation.dll
 /Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/Modules/BetterCms.Module.Installation.pdb
+/Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/Modules/BetterCms.Module.WebApi.dll
+/Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/Modules/BetterCms.Module.WebApi.pdb
 /Sandbox/BetterCms.Sandbox.Mvc4/uploads
 /Modules/BetterCms.Module.Root/Content/Styles/bcms.root.min.css
 /Modules/BetterCms.Module.Root/Scripts/bcms.root.min.js
@@ -70,10 +72,16 @@ logs
 /Modules/BetterCms.Module.Pages/Content/Styles/bcms.pages.min.css
 /Modules/BetterCms.Module.Templates/Content/Styles/bcms.templates.min.css
 /Modules/BetterCms.Module.Users/Content/Styles/bcms.users.min.css
-
-/Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/versions.info
+/Modules/BetterCms.Module.ImagesGallery/Scripts/bcms.images_gallery.min.js
 
 /Modules/BetterCms.Module.Installation/Content/Styles/bcms.installation.min.css
 /Modules/BetterCms.Module.Root/Scripts/bcms.knockout-2.2.1.min.js
 
 /Modules/BetterCms.Module.Root/Scripts/bcms.require-2.1.5.min.js
+
+/Sandbox/BetterCms.Sandbox.Mvc4/App_Data/BetterCMS/versions.info
+/Tests/BetterCms.Api.Tests/App_Data/BetterCms/versions.info
+/Tests/BetterCms.Api.Tests/xml_output_dir
+/Tests/BetterCms.Api.Tests/App_Data/Temp/*.mdf
+/Tests/BetterCms.Api.Tests/App_Data/Temp/*.ldf
+

@@ -6,7 +6,7 @@ using System.Web;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("BetterCms.Module.Blog")]
+[assembly: AssemblyTitle("BetterCms.Module.MediaManager")]
 [assembly: AssemblyDescription("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -15,4 +15,6 @@ using System.Web;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("f33163a7-7244-476a-a280-14fac86b43e6")]
+[assembly: Guid("51E17925-57DC-4C4B-A648-217BFE49E0A1")]
+
+[assembly: InternalsVisibleTo("BetterCms.Modules.Tests")]

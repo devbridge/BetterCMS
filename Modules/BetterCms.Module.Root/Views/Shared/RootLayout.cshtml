@@ -21,7 +21,14 @@ else {
         @RenderSection("Styles", false)
         @RenderSection("HeadScripts", false)
     </head>
-    <body @RenderSection("CmsBodyAttributes", false)@RenderSection("BodyAttributes", false)>
+    @if (IsSectionDefined("BodyTag"))
+    {
+        @RenderSection("BodyTag", false)
+    }
+    else
+    {
+        @:<body @RenderSection("CmsBodyAttributes", false)@RenderSection("BodyAttributes", false)>
+    }
         @RenderBody()
         @RenderSection("Scripts", false)
         @RenderSection("CmsScripts", false)

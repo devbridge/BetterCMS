@@ -2,7 +2,7 @@
 @model BetterCms.Module.Root.ViewModels.Rendering.RenderProcessorJsViewModel
 
 /*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define */
+/*global bettercms */
 
 bettercms.define('bcms.processor', [@Model.JavaScriptModules.RenderCommaSeparatedNames()], function (@Model.JavaScriptModules.RenderCommaSeparatedFriendlyNames()) {
     'use strict';
@@ -36,7 +36,7 @@ bettercms.define('bcms.processor', [@Model.JavaScriptModules.RenderCommaSeparate
         }
         catch (ex)
         {
-            console.log('Failed to execute action ' + moduleName + '.' + actionString + '. ' + ex.message);
+            bcms.logger.error('Failed to execute action ' + moduleName + '.' + actionString + '. ' + ex.message);
         }
     }
 
@@ -89,7 +89,7 @@ bettercms.define('bcms.processor', [@Model.JavaScriptModules.RenderCommaSeparate
                     }                    
                     catch (ex)
                     {
-                        console.log("Failed to initialize @module.Name links. ", ex.message);
+                        bcms.logger.error("Failed to initialize @module.Name links. ", ex.message);
                     }
                 </text>
             }
@@ -114,7 +114,7 @@ bettercms.define('bcms.processor', [@Model.JavaScriptModules.RenderCommaSeparate
                     }                    
                     catch (ex)
                     {
-                        console.log("Failed to initialize @module.Name globalization. ", ex.message);
+                        bcms.logger.error("Failed to initialize @module.Name globalization. ", ex.message);
                     }
                 </text>
             }

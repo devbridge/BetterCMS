@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
-using System.Web.Mvc;
 using System.Web.Routing;
 
 using Autofac;
@@ -13,7 +12,6 @@ using BetterCms.Core.Environment.Assemblies;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Mvc.Extensions;
 using BetterCms.Core.Mvc.Routes;
-using BetterCms.Core.Security;
 
 using Common.Logging;
 
@@ -59,8 +57,6 @@ namespace BetterCms.Core.Modules.Registration
         /// </summary>
         private readonly Dictionary<string, JsIncludeDescriptor> knownJavaScriptModules;
 
-        private readonly List<IUserRole> knownUserRoles;
-
         /// <summary>
         /// Thread safe list of registered action projections for a sidebar main content.
         /// </summary>
@@ -102,7 +98,6 @@ namespace BetterCms.Core.Modules.Registration
             knownModuleDescriptorTypes = new Dictionary<string, Type>();
             knownModules = new Dictionary<string, ModuleRegistrationContext>();
             knownJavaScriptModules = new Dictionary<string, JsIncludeDescriptor>();
-            knownUserRoles = new List<IUserRole>();
             knownSidebarHeadContentItems = new List<IPageActionProjection>();
             knownSidebarContentItems = new List<IPageActionProjection>();
             knownSidebarBodyContentItems = new List<IPageActionProjection>();
@@ -152,11 +147,6 @@ namespace BetterCms.Core.Modules.Registration
         public IEnumerable<JsIncludeDescriptor> GetJavaScriptModules()
         {
             return knownJavaScriptModules.Values;
-        }
-
-        public IEnumerable<IUserRole> GetUserAccessRoles()
-        {
-            return knownUserRoles;
         }
 
         /// <summary>
@@ -244,8 +234,7 @@ namespace BetterCms.Core.Modules.Registration
             ModuleRegistrationContext registrationContext = new ModuleRegistrationContext(moduleDescriptor);            
            
             moduleDescriptor.RegisterModuleTypes(registrationContext, containerBuilder);            
-            moduleDescriptor.RegisterModuleCommands(registrationContext, containerBuilder);
-            moduleDescriptor.RegisterModuleApiContexts(registrationContext, containerBuilder);
+            moduleDescriptor.RegisterModuleCommands(registrationContext, containerBuilder);            
             moduleDescriptor.RegisterModuleControllers(registrationContext, containerBuilder, controllerExtensions);
             moduleDescriptor.RegisterCustomRoutes(registrationContext, containerBuilder);
 
@@ -261,9 +250,6 @@ namespace BetterCms.Core.Modules.Registration
                     knownJavaScriptModules.Add(jsModuleDescriptor.Name, jsModuleDescriptor);
                 }
             }
-
-            var userRoles = moduleDescriptor.RegisterUserRoles(containerBuilder);
-            UpdateConcurrentBagWithEnumerator(knownUserRoles, userRoles);
 
             var sidebarHeadProjections = moduleDescriptor.RegisterSidebarHeaderProjections(containerBuilder);
             UpdateConcurrentBagWithEnumerator(knownSidebarHeadContentItems, sidebarHeadProjections);
@@ -312,7 +298,7 @@ namespace BetterCms.Core.Modules.Registration
                 ContainerBuilder containerBuilder = new ContainerBuilder();
                 foreach (var moduleDescriptorType in knownModuleDescriptorTypes.Values)
                 {
-                    containerBuilder.RegisterType(moduleDescriptorType).AsSelf().InstancePerDependency();
+                    containerBuilder.RegisterType(moduleDescriptorType).AsSelf().SingleInstance();
                 }
 
                 ContextScopeProvider.RegisterTypes(containerBuilder);

@@ -122,5 +122,19 @@ namespace BetterCms.Module.MediaManager.Models.Extensions
         {
             return Restrictions.Where(() => alias.IsUploaded == false || alias.IsThumbnailUploaded == false || alias.IsOriginalUploaded == false);
         }
+
+        public static string SizeAsText(this MediaFile image)
+        {
+            string[] sizes = { "bytes", "KB", "MB", "GB" };
+            double fileSize = image.Size;
+            var order = 0;
+            while (fileSize >= 1024 && order + 1 < sizes.Length)
+            {
+                order++;
+                fileSize = fileSize / 1024;
+            }
+
+            return string.Format("{0:0.##} {1}", fileSize, sizes[order]);
+        }
     }
 }

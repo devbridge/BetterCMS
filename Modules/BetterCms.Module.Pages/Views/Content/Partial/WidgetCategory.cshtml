@@ -1,7 +1,6 @@
 ﻿@using BetterCms.Core.DataContracts.Enums
 @using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
-@using BetterCms.Module.Pages.Models
 @using BetterCms.Module.Root
 @using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
@@ -39,18 +38,13 @@
                         </div>
                         @if (!string.IsNullOrWhiteSpace(widget.PreviewImageUrl))
                         {
-                            @Html.PreviewContentBox(widget.PreviewImageUrl, widget.Name, true)
+                            @Html.PreviewContentBox(widget.PreviewImageUrl, widget.PreviewImageUrl, widget.Name, true)
                         }
                         else
                         {
-                            if (widget.WidgetType.HasValue && widget.WidgetType.Value == WidgetType.ServerControl)
-                            {
-                                @Html.PreviewContentBox(Html.BuildUrlFromExpression<WidgetsController>(f => f.PreviewWidget(widget.Id.ToString())), widget.Name)
-                            }
-                            else
-                            {
-                                @Html.PreviewContentBox(Html.BuildUrlFromExpression<WidgetsController>(f => f.PreviewHtmlContentWidget(widget.Id.ToString())), widget.Name)
-                            }
+                            var url1 = Html.BuildUrlFromExpression<WidgetsController>(f => f.PreviewWidget(widget.Id.ToString(), false));
+                            var url2 = Html.BuildUrlFromExpression<WidgetsController>(f => f.PreviewWidget(widget.Id.ToString(), true));
+                            @Html.PreviewContentBox(url1, url2, widget.Name)
                         }
 
                         <div class="bcms-controls-holder">

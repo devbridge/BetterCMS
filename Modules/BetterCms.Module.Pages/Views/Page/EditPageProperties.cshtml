@@ -1,8 +1,11 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
+﻿@using BetterCms.Module.Pages
+@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Page
+@using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Root.ViewModels.Tags
 @using Microsoft.Web.Mvc
 
 @model EditPagePropertiesViewModel
@@ -11,7 +14,7 @@
     return;
 }
 @{
-    var tagsTemplateViewModel = new BetterCms.Module.Pages.ViewModels.Tags.TagsTemplateViewModel
+    var tagsTemplateViewModel = new TagsTemplateViewModel
     {
         TooltipDescription = PagesGlobalization.EditPageProperties_BasicPropertiesTab_AddTags_Tooltip_Description
     };
@@ -21,14 +24,20 @@
     <a class="bcms-tab bcms-tab-active" data-name="#bcms-tab-1">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_Title</a>
     <a class="bcms-tab" data-name="#bcms-tab-2">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Title</a>
     <a class="bcms-tab" data-name="#bcms-tab-3">@PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Title</a>
+    <a class="bcms-tab" data-name="#bcms-tab-4">@PagesGlobalization.EditPageProperties_OptionsTab_Title</a>
 </div>
 
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
-    <div class="bcms-padded-content">
-        @using (Html.BeginForm<PageController>(f => f.EditPageProperties((EditPagePropertiesViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
-        {
-            <div id="bcms-tab-1" class="bcms-tab-single">
+    @using (Html.BeginForm<PageController>(f => f.EditPageProperties((EditPagePropertiesViewModel)null), FormMethod.Post, 
+            new
+                {
+                    @class = "bcms-ajax-form", 
+                    data_readonly=Model.IsReadOnly.ToString().ToLower()
+                }))
+    {
+        <div id="bcms-tab-1" class="bcms-tab-single">
+            <div class="bcms-padded-content">
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Title</div>
@@ -41,37 +50,77 @@
 
                 @Html.Partial("Partial/PagePropertiesEditPermalink")
 
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Title:</div>
-                    <div class="bcms-uploaded-image">
-                        <!-- ko if: image().url() -->
-                        <a class="bcms-remove-image" data-bind="click: image().remove.bind(image())">@RootGlobalization.Button_Remove</a>
-                        <a data-bind="click: image().preview.bind(image())">
-                            <img data-bind="attr: {src: image().thumbnailUrl(), alt: image().tooltip() }" /></a>
-                        <!-- /ko -->
-                    </div>
-                    <div class="bcms-upload-info">
-                        <div class="bcms-upload-info-text">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Description</div>
+                <div class="bcms-page-images-holder">
+                    <div class="bcms-input-list-holder">
+                        @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Tooltip_Description)
+                        <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageImage_Title</div>
+                        <div class="bcms-uploaded-image">
+                            <!-- ko if: image().url() -->
+                            <a class="bcms-remove-image" data-bind="click: image().remove.bind(image())">@RootGlobalization.Button_Remove</a>
+                            <a data-bind="click: image().preview.bind(image())">
+                                <img data-bind="attr: { src: image().thumbnailUrl(), alt: image().tooltip() }" /></a>
+                            <!-- /ko -->
+                        </div>
                         <div class="bcms-btn-small" data-bind="click: image().select.bind(image())">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle</div>
+                    </div>
+
+                    <div class="bcms-input-list-holder">
+                        @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageFeaturedImage_Tooltip_Description)
+                        <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageFeaturedImage_Title</div>
+                        <div class="bcms-uploaded-image">
+                            <!-- ko if: featuredImage().url() -->
+                            <a class="bcms-remove-image" data-bind="click: featuredImage().remove.bind(featuredImage())">@RootGlobalization.Button_Remove</a>
+                            <a data-bind="click: featuredImage().preview.bind(featuredImage())">
+                                <img data-bind="attr: { src: featuredImage().thumbnailUrl(), alt: featuredImage().tooltip() }" /></a>
+                            <!-- /ko -->
+                        </div>
+                        <div class="bcms-btn-small" data-bind="click: featuredImage().select.bind(featuredImage())">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle</div>
+                    </div>
+
+                    <div class="bcms-input-list-holder">
+                        @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageSecondaryImage_Tooltip_Description)
+                        <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageSecondaryImage_Title</div>
+                        <div class="bcms-uploaded-image">
+                            <!-- ko if: secondaryImage().url() -->
+                            <a class="bcms-remove-image" data-bind="click: secondaryImage().remove.bind(secondaryImage())">@RootGlobalization.Button_Remove</a>
+                            <a data-bind="click: secondaryImage().preview.bind(secondaryImage())">
+                                <img data-bind="attr: { src: secondaryImage().thumbnailUrl(), alt: secondaryImage().tooltip() }" /></a>
+                            <!-- /ko -->
+                        </div>
+                        <div class="bcms-btn-small" data-bind="click: secondaryImage().select.bind(secondaryImage())">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle</div>
                     </div>
                 </div>
 
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_Category_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_Category_Title:</div>
+                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_Category_Title</div>
                     @Html.DropDownListFor(model => model.CategoryId, Model.Categories.ToSelectList(Model.CategoryId), string.Empty, new { @class = "bcms-global-select" })
                 </div>
 
                 <div class="bcms-tags-box-holder" data-bind="with: tags">
-                    @Html.Partial("~/Areas/bcms-pages/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
+                    @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
                 </div>
 
+                @if (Model.AccessControlEnabled)
+                {
+                    @Html.Partial(RootModuleConstants.AccessControlTemplate)
+                }
+
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_Title</div>
+                    @Html.Tooltip(PagesGlobalization.EditPageProperties_Properties_Tooltip_Description)
+                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_Properties_Title</div>
                     <div class="bcms-checkbox-holder">
-                        @Html.CheckBoxFor(model => model.IsVisibleToEveryone)
+                        @{
+                            object options = null;
+                            if (!Model.CanPublishPage)
+                            {
+                                options = new {
+                                                  disabled = "disabled"
+                                              };
+                            }
+                        }
+                        @Html.CheckBoxFor(model => model.IsPagePublished, options)
+                        @Html.HiddenFor(model => model.CanPublishPage)
                         <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone</div>
                     </div>
                     <div class="bcms-checkbox-holder">
@@ -82,32 +131,41 @@
                         @Html.CheckBoxFor(model => model.UseNoIndex)
                         <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_UseNoIndex</div>
                     </div>
+                    <div class="bcms-checkbox-holder">
+                        @Html.CheckBoxFor(model => model.IsArchived)
+                        <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_IsArchived</div>
+                    </div>
                 </div>
                 @Html.HiddenFor(model => model.TemplateId, new { @id = "TemplateId" })
                 @Html.HiddenFor(model => model.Id)
                 @Html.HiddenFor(model => model.Version)
                 @Html.HiddenFor(model => model.Image.ImageId, new { data_bind = "value: image().id()" })
+                @Html.HiddenFor(model => model.SecondaryImage.ImageId, new { data_bind = "value: secondaryImage().id()" })
+                @Html.HiddenFor(model => model.FeaturedImage.ImageId, new { data_bind = "value: featuredImage().id()" })
             </div>
+        </div>
 
-            <div id="bcms-tab-2" class="bcms-tab-single">
+        <div id="bcms-tab-2" class="bcms-tab-single">
+            <div class="bcms-padded-content">
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Title</div>
-                    @Html.TextAreaFor(model => model.PageCSS, new { @class = "bcms-editor-field-area" })
+                    @Html.TextAreaFor(model => model.PageCSS, new { @class = "bcms-editor-field-area bcms-code-field" })
                 </div>
 
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageJavascript_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageJavascript_Title</div>
-                    @Html.TextAreaFor(model => model.PageJavascript, new { @class = "bcms-editor-field-area" })
+                    @Html.TextAreaFor(model => model.PageJavascript, new { @class = "bcms-editor-field-area bcms-code-field" })
                 </div>
             </div>
+        </div>
 
-            <div id="bcms-tab-3" class="bcms-tab-single">
-
+        <div id="bcms-tab-3" class="bcms-tab-single">
+            <div class="bcms-padded-content">
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title:</div>
+                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title</div>
                 </div>
 
                 <div class="bcms-info-message-box">
@@ -116,10 +174,13 @@
                 </div>
 
                 @Html.Partial("Partial/TemplatesList", Model.Templates)
-
             </div>
+        </div>
             
-            @Html.HiddenSubmit()
-        }
-    </div>
+        <div id="bcms-tab-4" class="bcms-tab-single" data-bind="with: options">
+            @Html.Partial(PagesConstants.OptionValuesGridTemplate)
+        </div>
+            
+        @Html.HiddenSubmit()
+    }
 </div>

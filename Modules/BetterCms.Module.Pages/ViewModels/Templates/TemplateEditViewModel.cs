@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
+
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Mvc.Attributes;
+
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc.Grids;
+using BetterCms.Module.Root.ViewModels.Option;
 
 namespace BetterCms.Module.Pages.ViewModels.Templates
 {
@@ -59,12 +62,28 @@ namespace BetterCms.Module.Pages.ViewModels.Templates
         public string Url { get; set; }
 
         /// <summary>
-        /// Gets or sets the region options.
+        /// Gets or sets the regions.
         /// </summary>
         /// <value>
-        /// The region options.
+        /// The regions.
         /// </value>
-        public IList<TemplateRegionItemViewModel> RegionOptions { get; set; }
+        public IList<TemplateRegionItemViewModel> Regions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of template options.
+        /// </summary>
+        /// <value>
+        /// The list of template options.
+        /// </value>
+        public IList<OptionViewModel> Options { get; set; }
+
+        /// <summary>
+        /// Gets or sets the custom options.
+        /// </summary>
+        /// <value>
+        /// The custom options.
+        /// </value>
+        public List<CustomOptionViewModel> CustomOptions { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

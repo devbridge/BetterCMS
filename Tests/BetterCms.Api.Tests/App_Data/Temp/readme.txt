@@ -1,0 +1,1 @@
+\Tests\BetterCms.Api.Tests\App_Data\Temp\ folder used to store a temporary databases for tests.

@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Api;
+using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
-
+using BetterCms.Core.Security;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Models.Extensions;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.MediaManager.ViewModels.Upload;
 using BetterCms.Module.Root.Mvc;
@@ -15,12 +18,31 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
 {
     public class ConfirmUploadCommand : CommandBase, ICommand<MultiFileUploadViewModel, ConfirmUploadResponse>
     {
+        private readonly ICmsConfiguration cmsConfiguration;
+        
+        private readonly IMediaFileService fileService;
+
+        private readonly IAccessControlService accessControlService;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConfirmUploadCommand" /> class.
+        /// </summary>
+        /// <param name="cmsConfiguration">The CMS configuration.</param>
+        /// <param name="fileService">The file service.</param>
+        /// <param name="accessControlService">The access control service.</param>
+        public ConfirmUploadCommand(ICmsConfiguration cmsConfiguration, IMediaFileService fileService, IAccessControlService accessControlService)
+        {
+            this.accessControlService = accessControlService;
+            this.cmsConfiguration = cmsConfiguration;
+            this.fileService = fileService;
+        }
+
         /// <summary>
         /// Executes this command.
         /// </summary>
         public ConfirmUploadResponse Execute(MultiFileUploadViewModel request)
         {
-            ConfirmUploadResponse response = new ConfirmUploadResponse { SelectedFolderId = request.SelectedFolderId ?? Guid.Empty };
+            ConfirmUploadResponse response = new ConfirmUploadResponse { SelectedFolderId = request.SelectedFolderId ?? Guid.Empty, ReuploadMediaId = request.ReuploadMediaId };
 
             if (request.UploadedFiles != null && request.UploadedFiles.Count > 0)
             {
@@ -36,20 +58,79 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                     }
                 }
 
+                UnitOfWork.BeginTransaction();
+
                 List<MediaFile> files = new List<MediaFile>();
-                foreach (var fileId in request.UploadedFiles)
+                var updateAccessControl = true;
+
+                if (request.ReuploadMediaId.HasDefaultValue())
                 {
+                    foreach (var fileId in request.UploadedFiles)
+                    {
+                        if (!fileId.HasDefaultValue())
+                        {
+                            var file = Repository.FirstOrDefault<MediaFile>(fileId);
+                            if (folder != null && (file.Folder == null || file.Folder.Id != folder.Id))
+                            {
+                                file.Folder = folder;
+                            }
+                            file.IsTemporary = false;
+                            file.PublishedOn = DateTime.Now;
+                            Repository.Save(file);
+
+                            files.Add(file);
+                        }
+                    }
+                }
+                else
+                {
+                    // Re-upload performed.
+                    var fileId = request.UploadedFiles.FirstOrDefault();
                     if (!fileId.HasDefaultValue())
                     {
+                        var originalMedia = Repository.First<MediaFile>(request.ReuploadMediaId);
+                        AccessControlService.DemandAccess(originalMedia, Context.Principal, AccessLevel.ReadWrite);
+
+                        var historyItem = originalMedia.CreateHistoryItem();
+                        Repository.Save(historyItem);
+
+                        // Do not update access control, if reuploading
+                        updateAccessControl = false;
+
                         var file = Repository.FirstOrDefault<MediaFile>(fileId);
-                        if (folder != null && (file.Folder == null || file.Folder.Id != folder.Id))
+                        file.CopyDataTo(originalMedia);
+
+                        originalMedia.Title = historyItem.Title;
+                        originalMedia.Description = historyItem.Description;
+                        originalMedia.IsArchived = historyItem.IsArchived;
+                        originalMedia.Folder = historyItem.Folder;
+                        originalMedia.Image = historyItem.Image;
+                        if (file is MediaImage && originalMedia is MediaImage)
                         {
-                            file.Folder = folder;
+                            ((MediaImage)originalMedia).Caption = ((MediaImage)historyItem).Caption;
+                            ((MediaImage)originalMedia).ImageAlign = ((MediaImage)historyItem).ImageAlign;
                         }
-                        file.IsTemporary = false;
-                        Repository.Save(file);
-                        files.Add(file);
+
+                        originalMedia.IsTemporary = false;
+                        originalMedia.PublishedOn = DateTime.Now;
+
+                        files.Add(originalMedia);
                     }
+                }
+
+                if (updateAccessControl && cmsConfiguration.Security.AccessControlEnabled)
+                {
+                    foreach (var file in files)
+                    {
+                        if (!(file is MediaImage))
+                        {
+                            var currentFile = file;
+                            var fileEntity = Repository.AsQueryable<MediaFile>().Where(f => f.Id == currentFile.Id).FetchMany(f => f.AccessRules).ToList().FirstOne();
+
+                            accessControlService.UpdateAccessControl(
+                                fileEntity, request.UserAccessList != null ? request.UserAccessList.Cast<IAccessRule>().ToList() : new List<IAccessRule>());
+                        }
+                    }                    
                 }
 
                 UnitOfWork.Commit();
@@ -59,7 +140,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                 // Notify.
                 foreach (var mediaFile in files)
                 {
-                    MediaManagerApiContext.Events.OnMediaFileUpdated(mediaFile);
+                    Events.MediaManagerEvents.Instance.OnMediaFileUpdated(mediaFile);
                 }
             }
 
@@ -75,6 +156,11 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
             if (file.Type == MediaType.File)
             {
                 model = new MediaFileViewModel();
+
+                if (cmsConfiguration.Security.AccessControlEnabled)
+                {
+                    SetIsReadOnly(model, ((IAccessSecuredObject)file).AccessRules);
+                }
             }
             else if (file.Type == MediaType.Audio)
             {
@@ -87,12 +173,13 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
             else if (file.Type == MediaType.Image)
             {
                 var imageFile = (MediaImage)file;
-                model = new MediaImageViewModel {
-                                                    ThumbnailUrl = imageFile.PublicThumbnailUrl,
-                                                    Tooltip = imageFile.Title
-                                                };
+                model = new MediaImageViewModel
+                {
+                    ThumbnailUrl = imageFile.PublicThumbnailUrl,
+                    Tooltip = imageFile.Title
+                };
                 isProcessing = isProcessing || !imageFile.IsOriginalUploaded.HasValue || !imageFile.IsThumbnailUploaded.HasValue;
-                isFailed = isFailed 
+                isFailed = isFailed
                     || (imageFile.IsOriginalUploaded.HasValue && !imageFile.IsOriginalUploaded.Value)
                     || (imageFile.IsThumbnailUploaded.HasValue && !imageFile.IsThumbnailUploaded.Value);
             }
@@ -106,7 +193,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
             model.Type = file.Type;
             model.Version = file.Version;
             model.ContentType = MediaContentType.File;
-            model.PublicUrl = file.PublicUrl;
+            model.PublicUrl = fileService.GetDownloadFileUrl(file.Type, file.Id, file.PublicUrl);
             model.FileExtension = file.OriginalFileExtension;
             model.IsProcessing = isProcessing;
             model.IsFailed = isFailed;

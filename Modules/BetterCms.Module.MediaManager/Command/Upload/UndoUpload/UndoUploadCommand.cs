@@ -37,11 +37,11 @@ namespace BetterCms.Module.MediaManager.Command.Upload.UndoUpload
         {
             if (request.Type == MediaType.File || request.Type == MediaType.Audio || request.Type == MediaType.Video)
             {
-                MediaFileService.RemoveFile(request.FileId, request.Version);
+                MediaFileService.RemoveFile(request.FileId, request.Version, doNotCheckVersion: true);
             }
             else if (request.Type == MediaType.Image)
             {
-                MediaImageService.RemoveImageWithFiles(request.FileId, request.Version);
+                MediaImageService.RemoveImageWithFiles(request.FileId, request.Version, doNotCheckVersion: true);
             }
             else
             {

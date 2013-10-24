@@ -1,7 +1,9 @@
-﻿using BetterCms.Api;
+﻿using System;
+
 using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 
 using BetterCms.Module.Root.Mvc;
@@ -17,6 +19,10 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager.RenameMedia
         {
             Media media = Repository.AsProxy<Media>(request.Id);
 
+            UnitOfWork.BeginTransaction();
+            Repository.Save(media.CreateHistoryItem());
+            media.PublishedOn = DateTime.Now;
+
             media.Version = request.Version;
             media.Title = request.Name;
 
@@ -25,11 +31,11 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager.RenameMedia
 
             if (media is MediaFolder)
             {
-                MediaManagerApiContext.Events.OnMediaFolderUpdated((MediaFolder)media);
+                Events.MediaManagerEvents.Instance.OnMediaFolderUpdated((MediaFolder)media);
             }
             else if (media is MediaFile)
             {
-                MediaManagerApiContext.Events.OnMediaFileUpdated((MediaFile)media);
+                Events.MediaManagerEvents.Instance.OnMediaFileUpdated((MediaFile)media);
             }
 
             return new MediaViewModel

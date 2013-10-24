@@ -1,14 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
+using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
+using BetterCms.Core.Security;
 
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Users;
 using BetterCms.Module.Users.Models;
+
+using BetterCms.Module.Root.Mvc.Helpers;
+
+using NHibernate;
 
 using BlogOption = BetterCms.Module.Blog.Models.Option;
 
@@ -104,6 +112,7 @@ namespace BetterCms.Tests.Helpers
 
             entity.Title = ProvideRandomString(MaxLength.Name);
             entity.PageUrl = ProvideRandomString(MaxLength.Url);
+            entity.PageUrlHash = ProvideRandomString(MaxLength.Url).UrlHash();
             entity.Status = PageStatus.Published;
             entity.PublishedOn = ProvideRandomDateTime();
             entity.Layout = layout ?? CreateNewLayout();
@@ -159,9 +168,9 @@ namespace BetterCms.Tests.Helpers
 
             entity.Status = ProvideRandomEnumValue<PageStatus>();
             entity.PageUrl = ProvideRandomString(MaxLength.Url);
+            entity.PageUrlHash = ProvideRandomString(MaxLength.Url).UrlHash();
             entity.Title = ProvideRandomString(MaxLength.Name);
             entity.Description = ProvideRandomString(2000);
-            entity.CanonicalUrl = ProvideRandomString(MaxLength.Url);
             entity.CustomCss = ProvideRandomString(2000);
             entity.CustomJS = ProvideRandomString(2000);
             entity.MetaTitle = ProvideRandomString(MaxLength.Name);
@@ -185,19 +194,6 @@ namespace BetterCms.Tests.Helpers
             content.PublishedOn = ProvideRandomDateTime();
 
             return content;
-        }
-
-        public User CreateNewUser()
-        {
-            var entity = new User();
-
-            PopulateBaseFields(entity);
-
-            entity.UserName = ProvideRandomString(MaxLength.Name);
-            entity.Email = ProvideRandomString(MaxLength.Email);
-            entity.DisplayName = ProvideRandomString(MaxLength.Name);
-
-            return entity;
         }
 
         public Layout CreateNewLayout()
@@ -246,51 +242,6 @@ namespace BetterCms.Tests.Helpers
 
             return entity;
         }
-
-        //public Approval CreateNewApproval(Content content = null, PageProperties page = null, User publisher = null)
-        //{
-        //    var entity = new Approval();
-
-        //    PopulateBaseFields(entity);
-
-        //    entity.ApprovalStatus = ProvideRandomEnumValue<ApprovalStatus>();
-        //    entity.ApprovedOn = ProvideRandomDateTime();
-        //    entity.EditorComments = ProvideRandomString(2000);
-        //    entity.PublisherComments = ProvideRandomString(2000);
-        //    entity.Content = content ?? CreateNewContent();
-        //    entity.Page = page ?? this.CreateNewPageProperties();
-        //    entity.Publisher = publisher ?? this.CreateNewUser();
-        //    entity.Editor = null;
-        //    entity.Draft = null;
-
-        //    return entity;
-        //}
-
-        //public ServerControlWidget CreateNewControl()
-        //{
-        //    var entity = new ServerControlWidget();
-
-        //    PopulateBaseFields(entity);
-
-        //    entity.Name = ProvideRandomString(50);
-        //    entity.Url = ProvideRandomString(300);
-
-        //    return entity;
-        //}
-
-        //public HtmlContentWidget CreateNewHtmlControl()
-        //{
-        //    var entity = new HtmlContentWidget();
-
-        //    PopulateBaseFields(entity);
-
-        //    entity.Name = ProvideRandomString(200);
-        //    entity.Text = ProvideRandomStringMaxLength();
-        //    entity.CustomCss = ProvideRandomString(2000);
-        //    entity.UseCustomCss = ProvideRandomBooleanValue();
-
-        //    return entity;
-        //}
 
         public Tag CreateNewTag()
         {
@@ -357,6 +308,20 @@ namespace BetterCms.Tests.Helpers
             entity.DefaultValue = ProvideRandomString(100);
 
             return entity;
+        }
+        
+        public LayoutOption CreateNewLayoutOption(Layout layout = null)
+        {
+            var entity = new LayoutOption();
+
+            PopulateBaseFields(entity);
+
+            entity.Key = ProvideRandomString(MaxLength.Name);
+            entity.Layout = layout ?? CreateNewLayout();
+            entity.Type = ProvideRandomEnumValue<OptionType>();
+            entity.DefaultValue = ProvideRandomString(100);
+
+            return entity;
         }  
 
         public PageContentOption CreateNewPageContentOption(PageContent pageContent = null)
@@ -366,6 +331,20 @@ namespace BetterCms.Tests.Helpers
             PopulateBaseFields(entity);
 
             entity.PageContent = pageContent ?? CreateNewPageContent();
+            entity.Key = ProvideRandomString(MaxLength.Name);
+            entity.Value = ProvideRandomString(100);
+            entity.Type = ProvideRandomEnumValue<OptionType>();
+            
+            return entity;
+        }
+
+        public PageOption CreateNewPageOption(Page page = null)
+        {
+            var entity = new PageOption();
+
+            PopulateBaseFields(entity);
+
+            entity.Page = page ?? CreateNewPage();
             entity.Key = ProvideRandomString(MaxLength.Name);
             entity.Value = ProvideRandomString(100);
             entity.Type = ProvideRandomEnumValue<OptionType>();
@@ -452,11 +431,12 @@ namespace BetterCms.Tests.Helpers
             return entity;
         }
        
-        public HtmlContent CreateNewHtmlContent()
+        public HtmlContent CreateNewHtmlContent(int htmlContentLength = 2000)
         {
             var entity = new HtmlContent();
 
             PopulateHtmlContentProperties(entity);
+            entity.Html = ProvideRandomString(htmlContentLength);
 
             return entity;
         }
@@ -487,6 +467,7 @@ namespace BetterCms.Tests.Helpers
 
             entity.Type = type;
             entity.Title = ProvideRandomString(MaxLength.Name);
+            entity.PublishedOn = ProvideRandomDateTime();
 
             return entity;
         }
@@ -499,15 +480,16 @@ namespace BetterCms.Tests.Helpers
 
             if (createParentFolder)
             {
-                entity.ParentFolder = CreateNewMediaFolder(false);
+                entity.Folder = CreateNewMediaFolder(false);
             }
             else
             {
-                entity.ParentFolder = null;
+                entity.Folder = null;
             }
 
             entity.Type = type;
             entity.Title = ProvideRandomString(MaxLength.Name);
+            entity.PublishedOn = ProvideRandomDateTime();
 
             return entity;
         }
@@ -522,6 +504,7 @@ namespace BetterCms.Tests.Helpers
             entity.Title = ProvideRandomString(MaxLength.Name);
             entity.OriginalFileName = ProvideRandomString(MaxLength.Name);
             entity.OriginalFileExtension = ProvideRandomString(10);
+            entity.PublishedOn = ProvideRandomDateTime();
             entity.FileUri = new Uri(@"C:\web\test\content\100200\file.png");
             entity.PublicUrl = "http://bettercms.com/files/file?id=100200";
             entity.Size = ProvideRandomNumber(10, 2000);
@@ -529,6 +512,7 @@ namespace BetterCms.Tests.Helpers
             entity.IsUploaded = true;
             entity.IsTemporary = true;
             entity.IsCanceled = true;
+            entity.IsArchived = false;
 
             return entity;
         }
@@ -543,6 +527,7 @@ namespace BetterCms.Tests.Helpers
             entity.Title = ProvideRandomString(MaxLength.Name);
             entity.OriginalFileName = ProvideRandomString(MaxLength.Name);
             entity.OriginalFileExtension = ProvideRandomString(10);
+            entity.PublishedOn = ProvideRandomDateTime();
             entity.FileUri = new Uri(@"C:\Projects\BetterCMS\file100.png");
             entity.PublicUrl = "http://bettercms.com/files/image?id=100200&t=image;";
             entity.Size = ProvideRandomNumber(10, 2000);
@@ -593,61 +578,104 @@ namespace BetterCms.Tests.Helpers
             PopulateBaseFields(entity);
 
             entity.Name = ProvideRandomString(MaxLength.Name);
-
-            return entity;
-        }
-
-        public Permission CreateNewPermission()
-        {
-            var entity = new Permission();
-
-            PopulateBaseFields(entity);
-
-            entity.Name = ProvideRandomString(MaxLength.Name);
             entity.Description = ProvideRandomString(MaxLength.Name);
+            entity.IsSystematic = ProvideRandomBooleanValue();
 
             return entity;
         }
 
-        public RolePermissions CreateNewRolePermission(Role role = null, Permission permission = null)
+        public User CreateNewUser()
         {
-            var entity = new RolePermissions();
+            var entity = new User();
 
             PopulateBaseFields(entity);
 
-            entity.Role = role ?? CreateNewRole();
-            entity.Permission = permission ?? CreateNewPermission();
-
-            return entity;
-        }
-
-        public UserRoles CreateNewUserRoles(Role role = null, Users user = null)
-        {
-            var entity = new UserRoles();
-
-            PopulateBaseFields(entity);
-
-            entity.Role = role ?? CreateNewRole();
-            entity.User = user ?? CreateNewUsers();
-
-            return entity;
-        }
-
-        public Users CreateNewUsers()
-        {
-            var entity = new Users();
-
-            PopulateBaseFields(entity);
-
-            entity.UserName = ProvideRandomString(MaxLength.Name);
+            entity.UserName = ProvideRandomString(UsersModuleConstants.UserNameMaxLength);
+            entity.Email = ProvideRandomString(MaxLength.Email);
             entity.FirstName = ProvideRandomString(MaxLength.Name);
             entity.LastName = ProvideRandomString(MaxLength.Name);
-            entity.Email = ProvideRandomString(MaxLength.Email);
             entity.Password = ProvideRandomString(MaxLength.Password);
             entity.Salt = ProvideRandomString(MaxLength.Password);
+
             entity.Image = CreateNewMediaImage();
 
             return entity;
+        }
+
+        public Module.Users.Models.UserRole CreateNewUserRoles(Role role = null, User user = null)
+        {
+            var entity = new Module.Users.Models.UserRole();
+
+            PopulateBaseFields(entity);
+
+            entity.Role = role ?? CreateNewRole();
+            entity.User = user ?? CreateNewUser();
+
+            return entity;
+        }
+
+        public AccessRule CreateNewAccessRule()
+        {
+            var entity = new AccessRule();
+
+            entity.Identity = ProvideRandomString(MaxLength.Name);
+            entity.AccessLevel = ProvideRandomEnumValue<AccessLevel>();
+
+            return entity;
+        }
+
+        public PageProperties CreateNewPageWithTagsContentsOptionsAndAccessRules(ISession session, int tagsCount = 2, int contentsCount = 2, int optionsCount = 2, int accessRulesCount = 2)
+        {
+            var page = CreateNewPageProperties();
+
+            if (accessRulesCount > 0)
+            {
+                for (int i = 0; i < accessRulesCount; i++)
+                {
+                    page.AddRule(CreateNewAccessRule());
+                }
+            }
+
+            if (tagsCount > 0)
+            {
+                for (int i = 0; i < tagsCount; i++)
+                {
+                    session.SaveOrUpdate(CreateNewPageTag(page));
+                }
+            }
+
+            if (contentsCount > 0)
+            {
+                for (int i = 0; i < contentsCount; i++)
+                {
+                    session.SaveOrUpdate(CreateNewPageContent(null, page));
+                }
+            }
+
+            if (optionsCount > 0)
+            {
+                for (int i = 0; i < optionsCount; i++)
+                {
+                    session.SaveOrUpdate(CreateNewPageOption(page));
+                }
+            }
+
+            return page;
+        }
+
+        public MediaFile CreateNewMediaFileWithAccessRules(int accessRulesCount = 2)
+        {
+            var file = CreateNewMediaFile();
+
+            if (accessRulesCount > 0)
+            {
+                for (int i = 0; i < accessRulesCount; i++)
+                {
+                    file.AddRule(CreateNewAccessRule());
+                }
+            }
+
+            return file;
         }
     }
 }

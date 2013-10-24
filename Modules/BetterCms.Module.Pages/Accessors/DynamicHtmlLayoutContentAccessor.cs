@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Web.Compilation;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Modules.Projections;
@@ -20,7 +18,7 @@ namespace BetterCms.Module.Pages.Accessors
 
         private readonly RenderPageViewModel childViewModel;
 
-        public DynamicHtmlLayoutContentAccessor(DynamicHtmlLayoutContent content, IList<IOption> options, RenderPageViewModel childViewModel)
+        public DynamicHtmlLayoutContentAccessor(DynamicHtmlLayoutContent content, IList<IOptionValue> options, RenderPageViewModel childViewModel)
             : base(content, options)
         {
             this.childViewModel = childViewModel;
@@ -66,6 +64,16 @@ namespace BetterCms.Module.Pages.Accessors
         }
 
         public override string GetCustomJavaScript(HtmlHelper html)
+        {
+            return null;
+        }
+
+        public override string[] GetStylesResources(HtmlHelper html)
+        {
+            return null;
+        }
+
+        public override string[] GetJavaScriptResources(HtmlHelper html)
         {
             return null;
         }

@@ -4,10 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Mvc.Attributes;
+using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.Pages.ViewModels.Page
 {
-    public class ClonePageViewModel
+    public class ClonePageViewModel : IAccessSecuredViewModel
     {
         /// <summary>
         /// Gets or sets the page id.
@@ -55,5 +56,29 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         {
             return string.Format("PageId: {0}, Version: {1}, PageTitle: {2}, PageUrl: {3}", PageId, Version, PageTitle, PageUrl);
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether access control enabled.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if access control enabled; otherwise, <c>false</c>.
+        /// </value>
+        public bool AccessControlEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user access list.
+        /// </summary>
+        /// <value>
+        /// The user access list.
+        /// </value>
+        public System.Collections.Generic.IList<UserAccessViewModel> UserAccessList { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether dialog should be opened in the read only mode.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if dialog should be opened in the read only mode; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsReadOnly { get; set; }
     }
 }

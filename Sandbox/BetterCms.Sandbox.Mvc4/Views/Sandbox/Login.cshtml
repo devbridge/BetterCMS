@@ -1,0 +1,35 @@
+﻿@model BetterCms.Sandbox.Mvc4.Models.LoginViewModel
+
+@{
+    var isAuthenticated = Model.Identity != null && Model.Identity.IsAuthenticated;
+}
+
+<div>
+    @using (Html.BeginForm(isAuthenticated ? "Logout" : "Login", "Sandbox")) {
+        if (!isAuthenticated)
+        {
+            <div>
+                @Html.LabelFor(m => m.UserName, "User name:")
+                @Html.TextBoxFor(m => m.UserName)
+            </div>
+
+            <div>
+                @Html.LabelFor(m => m.Password, "Password:")
+                @Html.PasswordFor(m => m.Password)
+            </div>
+
+            if (ViewBag.ShowFieldRememberMe != null)
+            {
+                @Html.CheckBoxFor(m => m.RememberMe)
+                @Html.LabelFor(m => m.RememberMe)
+            }
+            
+            <input type="submit" value="Login" />
+        }
+        else
+        {
+            <p>@Model.Identity.Name</p>
+            <input type="submit" value="Logout" />
+        }
+    }
+</div>

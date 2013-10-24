@@ -15,11 +15,10 @@
 @RenderBody()
 
 @section CmsMetaTitle {
-    <title>@Model.Title</title>
+    <title>@Model.MetaTitle</title>
 }
 
-@section CmsMeta {
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+@section CmsMeta {    
     @if (Model.Metadata != null)
     {
         foreach (var metaData in Model.Metadata)
@@ -28,16 +27,20 @@
         }
     }
 }
-
 @section CmsHeadStyles {   
+    <style type="text/css">
+        .bcms-clearfix:after {
+            content: ".";
+            visibility: hidden;
+            display: block;
+            height: 0;
+            clear: both;
+        }
+    </style>
     @if (Model.CanManageContent)
     {
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css' />
         @Html.Action("RenderStyleSheetIncludes", "Rendering")
-    }
-    @if (Model.Stylesheets != null)
-    {
-        @Html.RenderPageCustomCss(Model.Stylesheets)
     }
 }
 
@@ -85,8 +88,6 @@
     }
 }
 
-@section CmsBodyAttributes {@(Html.Raw(Model.CanManageContent ? string.Format(@" data-page-id = ""{0}""", @ViewBag.pageId) : string.Empty))}
-
 @section CmsScripts {
     @if (Model.CanManageContent)
     {
@@ -110,6 +111,11 @@
 
 @section Styles {
     @RenderSection("Styles", false)
+
+    @if (Model.Stylesheets != null)
+    {
+        @Html.RenderPageCustomCss(Model.Stylesheets)
+    }
 }
 @section HeadScripts {
     @RenderSection("HeadScripts", false)
@@ -117,7 +123,6 @@
 @section Scripts {
     @RenderSection("Scripts", false)
 }
-
 @section DoctypeTag { 
     @if (IsSectionDefined("DoctypeTag"))
     {
@@ -129,7 +134,7 @@
     }
 }
 @section HtmlTag { 
-    @if (IsSectionDefined("DoctypeTag"))
+    @if (IsSectionDefined("HtmlTag"))
     {
         @RenderSection("HtmlTag", false)
     } 
@@ -138,5 +143,13 @@
         @:<html>
     }
 }
-@section BodyAttributes {@RenderSection("BodyAttributes", false)}
-
+@section BodyTag { 
+    @if (IsSectionDefined("BodyTag"))
+    {
+        @RenderSection("BodyTag", false)
+    }
+    else
+    {
+        @:<body @Html.RenderBodyAttributes()@RenderSection("BodyAttributes", false)>
+    }
+}

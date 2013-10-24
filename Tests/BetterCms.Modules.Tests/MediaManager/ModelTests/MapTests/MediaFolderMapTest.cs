@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace BetterCms.Test.Module.MediaManager.ModelTests.MapTests
 {
     [TestFixture]
-    public class MediaFolderMapTest : DatabaseTestBase
+    public class MediaFolderMapTest : IntegrationTestBase
     {
         [Test]
         public void Should_Insert_And_Retrieve_MediaFolder_Successfully()

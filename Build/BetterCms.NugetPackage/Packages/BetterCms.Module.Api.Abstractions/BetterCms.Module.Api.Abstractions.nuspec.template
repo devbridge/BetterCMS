@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>BetterCms.Module.Api.Abstractions</id>
+    <version>@BetterCMSVersion@</version>
+    <authors>Devbridge</authors>
+    <owners>Devbridge</owners>
+    <licenseUrl>http://www.bettercms.com/license.txt</licenseUrl>
+    <projectUrl>http://www.bettercms.com</projectUrl>
+    <iconUrl>http://www.bettercms.com/nuget-logo.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>API Abstractions module for BetterCMS. Better CMS is publishing focused and developer friendly .NET Open source CMS.</description>
+    <copyright>Better CMS is licensed under BETTER CMS LICENSE AGREEMENT (http://www.bettercms.com/license.txt).</copyright>
+    <dependencies>
+      <dependency id="ServiceStack" version="3.9.56" />
+      <dependency id="ServiceStack.Common" version="3.9.56" />
+      <dependency id="ServiceStack.OrmLite.SqlServer" version="3.9.56" />
+      <dependency id="ServiceStack.Redis" version="3.9.57" />
+      <dependency id="ServiceStack.Text" version="3.9.56" />
+    </dependencies>
+  </metadata>
+</package>

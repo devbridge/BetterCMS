@@ -1,19 +1,26 @@
 ﻿using System;
+using System.Linq;
 
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Security;
 
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Content;
+
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
+using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.Pages.Command.Content.GetPageHtmlContent
 {
     public class GetPageHtmlContentCommand : CommandBase, ICommand<Guid, PageContentViewModel>
     {
         public virtual IContentService ContentService { get; set; }
+
+        public virtual ICmsConfiguration Configuration { get; set; }
 
         /// <summary>
         /// Executes the specified request.
@@ -32,7 +39,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageHtmlContent
             PageContent pageContent = pageContentForEdit.Item1;
             HtmlContent content = (HtmlContent)pageContentForEdit.Item2;
 
-            return new PageContentViewModel 
+            var model = new PageContentViewModel 
                                             {
                                                 Id = pageContent.Id,
                                                 PageId = pageContent.Page.Id,
@@ -52,6 +59,27 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageHtmlContent
                                                 CurrentStatus = content.Status,
                                                 HasPublishedContent = content.Original != null
                                             };
+
+            if (Configuration.Security.AccessControlEnabled)
+            {
+                var accessRules = Repository.AsQueryable<PageContent>()
+                                            .Where(x => x.Id == pageContentId && !x.IsDeleted)
+                                            .Select(f => f.Page)
+                                            .SelectMany(f => f.AccessRules)                                            
+                                            .ToList()
+                                            .Select(x => new UserAccessViewModel(x)).Cast<IAccessRule>().ToList();
+
+                SetIsReadOnly(model, accessRules);
+            }
+
+            var hasEditContentRole = SecurityService.IsAuthorized(Context.Principal, RootModuleConstants.UserRoles.EditContent);
+            if (!hasEditContentRole)
+            {
+                model.IsReadOnly = true;
+            }
+            model.CanDestroyDraft = !model.IsReadOnly;
+
+            return model;
         }
     }
 }

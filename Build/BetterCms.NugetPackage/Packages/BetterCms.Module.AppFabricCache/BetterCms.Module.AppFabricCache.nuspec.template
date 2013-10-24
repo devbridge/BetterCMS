@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>BetterCms.Module.AppFabricCache</id>
+    <version>@BetterCMSVersion@</version>
+    <authors>Devbridge</authors>
+    <owners>Devbridge</owners>
+    <licenseUrl>http://www.bettercms.com/license.txt</licenseUrl>
+    <projectUrl>http://www.bettercms.com</projectUrl>
+    <iconUrl>http://www.bettercms.com/nuget-logo.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>AppFabric Cache module for BetterCMS. Better CMS is publishing focused and developer friendly .NET Open source CMS.</description>
+    <copyright>Better CMS is licensed under BETTER CMS LICENSE AGREEMENT (http://www.bettercms.com/license.txt).</copyright>
+    <dependencies>
+      <dependency id="BetterCms.Core" version="[@BetterCMSVersion@]" />
+      <dependency id="ServerAppFabric.Client" version="1.1.2106" />
+    </dependencies>
+  </metadata>
+</package>

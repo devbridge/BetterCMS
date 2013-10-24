@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Security.Principal;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.Routing;
 
 using Autofac;
-using Autofac.Core;
 
-using BetterCms.Api;
 using BetterCms.Configuration;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
@@ -18,12 +15,12 @@ using BetterCms.Core.Environment.Assemblies;
 using BetterCms.Core.Environment.FileSystem;
 using BetterCms.Core.Environment.Host;
 using BetterCms.Core.Exceptions;
-using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Modules.Registration;
 using BetterCms.Core.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Mvc.Extensions;
 using BetterCms.Core.Mvc.Routes;
+using BetterCms.Core.Security;
 using BetterCms.Core.Services.Caching;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Core.Web;
@@ -38,39 +35,35 @@ namespace BetterCms.Core
     /// </summary>
     public static class CmsContext
     {
+        private static readonly object configurationLoaderLock = new object();
+
+        private static volatile ICmsConfiguration config;
+
         /// <summary>
-        /// Creates the data API.
+        /// Gets the Better CMS configuration.
         /// </summary>
-        /// <typeparam name="TApiContext">The type of the API content.</typeparam>
-        /// <returns></returns>
-        public static TApiContext CreateApiContextOf<TApiContext>(ApiContext parentApiContext = null) where TApiContext : ApiContext
+        /// <value>
+        /// The Better CMS configuration.
+        /// </value>
+        public static ICmsConfiguration Config 
         {
-            ILifetimeScope lifetimeScope;
-
-            if (parentApiContext == null)
+            get
             {
-                lifetimeScope = ContextScopeProvider.CreateChildContainer();
-            }
-            else
-            {
-                lifetimeScope = parentApiContext.GetLifetimeScope();
-            }
+                if (config == null)
+                {
+                    lock (configurationLoaderLock)
+                    {
+                        if (config == null)
+                        {
+                            IConfigurationLoader configurationLoader = new DefaultConfigurationLoader();
+                            config = configurationLoader.LoadCmsConfiguration();                            
+                        }
+                    }
+                }
 
-            if (!lifetimeScope.IsRegistered<TApiContext>())
-            {
-                throw new CmsApiException(string.Format("A '{0}' type is unknown as Better CMS API context.", typeof(TApiContext).Name));
+                return config;
             }
-
-            var apiContext = lifetimeScope.Resolve<TApiContext>(new Parameter[] { new PositionalParameter(0, lifetimeScope) });
-
-            if (parentApiContext != null)
-            {
-                apiContext.MarkParentLifetimeScope();
-            }
-
-            return apiContext;                        
         }
-
         /// <summary>
         /// Constructs the host context.
         /// </summary>
@@ -101,20 +94,17 @@ namespace BetterCms.Core
         /// <returns>The container builder.</returns>
         public static ContainerBuilder InitializeContainer()
         {
-            IConfigurationLoader configurationLoader = new DefaultConfigurationLoader();
-            ICmsConfiguration cmsConfiguration = configurationLoader.LoadCmsConfiguration();
-
             ContainerBuilder builder = new ContainerBuilder();
-
-            builder.RegisterInstance(configurationLoader).As<IConfigurationLoader>().SingleInstance();
-            builder.RegisterInstance(cmsConfiguration).As<ICmsConfiguration>().SingleInstance();
+            
+            builder.RegisterInstance(Config).As<ICmsConfiguration>().SingleInstance();
 
             builder.RegisterType<DefaultCmsHost>().As<ICmsHost>().SingleInstance();
-            builder.RegisterType<ApiContext>().AsSelf().SingleInstance();
+            
             builder.RegisterType<DefaultSessionFactoryProvider>().As<ISessionFactoryProvider>().SingleInstance();
             builder.RegisterType<DefaultAssemblyLoader>().As<IAssemblyLoader>().SingleInstance();
             builder.RegisterType<DefaultAssemblyManager>().As<IAssemblyManager>().SingleInstance();
             builder.RegisterType<DefaultUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
+            builder.RegisterType<DefaultTextEncryptor>().As<ITextEncryptor>().SingleInstance();
 
             builder.RegisterType<DefaultModulesRegistration>().As<IModulesRegistration>().SingleInstance();
             builder.RegisterType<DefaultMappingResolver>().As<IMappingResolver>().SingleInstance();
@@ -125,7 +115,7 @@ namespace BetterCms.Core
             builder.RegisterType<DefaultHttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
             builder.RegisterType<DefaultControllerExtensions>().As<IControllerExtensions>().SingleInstance();
             builder.RegisterType<DefaultCommandResolver>().As<ICommandResolver>().InstancePerLifetimeScope();
-            builder.RegisterType<DefaultFetchingProvider>().As<IFetchingProvider>().InstancePerLifetimeScope();
+            builder.RegisterType<DefaultFetchingProvider>().As<IFetchingProvider>().SingleInstance();
 
             builder.RegisterType<DefaultUnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
             builder.RegisterType<DefaultRepository>().As<IRepository>().InstancePerLifetimeScope();
@@ -136,10 +126,10 @@ namespace BetterCms.Core
           
             builder.RegisterType<DefaultVersionChecker>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<DefaultMigrationRunner>().AsImplementedInterfaces().SingleInstance();
-            
-            RegisterCacheService(cmsConfiguration, builder);
 
-            RegisterStorageService(cmsConfiguration, builder);
+            RegisterCacheService(builder);
+
+            RegisterStorageService(builder);
 
             return builder;
         }       
@@ -147,20 +137,19 @@ namespace BetterCms.Core
         /// <summary>
         /// Registers the cache service.
         /// </summary>
-        /// <param name="cmsConfiguration">The CMS configuration.</param>
         /// <param name="builder">The builder.</param>
         /// <exception cref="BetterCms.Core.Exceptions.CmsException">Failed to register cache service.</exception>
-        private static void RegisterCacheService(ICmsConfiguration cmsConfiguration, ContainerBuilder builder)
+        private static void RegisterCacheService(ContainerBuilder builder)
         {
             try
             {
-                if (cmsConfiguration.Cache.CacheType != CacheServiceType.Custom)
+                if (Config.Cache.CacheType != CacheServiceType.Custom)
                 {
                     builder.RegisterType<HttpRuntimeCacheService>().As<ICacheService>().SingleInstance();
                 }
                 else
                 {
-                    string customCacheTypeName = cmsConfiguration.Cache.GetValue("typeName");
+                    string customCacheTypeName = Config.Cache.GetValue("typeName");
                     if (!string.IsNullOrEmpty(customCacheTypeName))
                     {
                         Type customCacheType = Type.GetType(customCacheTypeName);
@@ -191,21 +180,21 @@ namespace BetterCms.Core
             }
         }
 
-        private static void RegisterStorageService(ICmsConfiguration cmsConfiguration, ContainerBuilder builder)
+        private static void RegisterStorageService(ContainerBuilder builder)
         {
             try
             {
-                if (cmsConfiguration.Storage.ServiceType == StorageServiceType.FileSystem || cmsConfiguration.Storage.ServiceType == StorageServiceType.Auto)
+                if (Config.Storage.ServiceType == StorageServiceType.FileSystem || Config.Storage.ServiceType == StorageServiceType.Auto)
                 {                    
                     builder.RegisterType<FileSystemStorageService>().As<IStorageService>().SingleInstance();
                 }
-                else if (cmsConfiguration.Storage.ServiceType == StorageServiceType.Ftp)
+                else if (Config.Storage.ServiceType == StorageServiceType.Ftp)
                 {
                     builder.RegisterType<FtpStorageService>().As<IStorageService>().SingleInstance();                    
                 }
                 else
                 {
-                    string customStorageTypeName = cmsConfiguration.Storage.GetValue("typeName");
+                    string customStorageTypeName = Config.Storage.GetValue("typeName");
                     if (!string.IsNullOrEmpty(customStorageTypeName))
                     {
                         Type customStorageType = Type.GetType(customStorageTypeName);

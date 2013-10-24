@@ -3,7 +3,7 @@
 namespace BetterCms.Test.Module.Pages.ModelTests.MapTests
 {
     [TestFixture]
-    public class SitemapNodeMapTest : DatabaseTestBase
+    public class SitemapNodeMapTest : IntegrationTestBase
     {
         [Test]
         public void Should_Insert_And_Retrieve_SitemapNode_Successfully()

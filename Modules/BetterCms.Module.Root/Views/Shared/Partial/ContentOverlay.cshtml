@@ -1,5 +1,4 @@
-@using BetterCms.Module.Root
-@using BetterCms.Module.Root.Mvc
+@model BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel
 <script type="text/html" id="bcms-content-overlay">
     <div class="bcms-content-overlay bcms-layer">
         <div class="bcms-content-actions">
@@ -12,9 +11,12 @@
             <div class="bcms-content-button bcms-content-configure">
                 <div class="bcms-content-icon"></div>
             </div>
-            <div class="bcms-content-button bcms-content-delete">
-                <div class="bcms-content-icon"></div>
-            </div>
+            @if (!Model.IsReadOnly && Model.HasEditRole)
+            {
+                <div class="bcms-content-button bcms-content-delete">
+                    <div class="bcms-content-icon"></div>
+                </div>
+            }
         </div>
     </div>
 </script>

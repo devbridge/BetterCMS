@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 
+using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Service;
 
 namespace BetterCms.Core.Services.Storage
@@ -227,11 +229,34 @@ namespace BetterCms.Core.Services.Storage
         {
             try
             {
-                var ftpRequest = CreateFtpRequest(serverUri);
-                ftpRequest.Method = WebRequestMethods.Ftp.MakeDirectory;
+                var tree = new List<string>();
+                tree.Add(serverUri);
 
-                var ftpResponse = (FtpWebResponse)ftpRequest.GetResponse();
-                ftpResponse.Close();
+                var url = serverUri;
+                var serverRoot = rootUrl.Trim('/');
+                while (url != null)
+                {
+                    url = ExtractPath(url, false);
+
+                    if (url.Contains(serverRoot) && url.Trim('/') != serverRoot)
+                    {
+                        tree.Add(url);
+                    }
+                    else
+                    {
+                        url = null;
+                    }
+                }
+                tree.Reverse();
+
+                foreach (var path in tree)
+                {
+                    var ftpRequest = CreateFtpRequest(path);
+                    ftpRequest.Method = WebRequestMethods.Ftp.MakeDirectory;
+
+                    var ftpResponse = (FtpWebResponse)ftpRequest.GetResponse();
+                    ftpResponse.Close();
+                }
             }
             catch (Exception e)
             {
@@ -263,11 +288,18 @@ namespace BetterCms.Core.Services.Storage
             }
         }
 
-        private string ExtractPath(string absolutePath)
+        private string ExtractPath(string absolutePath, bool addPath = true)
         {
             const char TestChar = '/';
             var lastIndexOfSlash = absolutePath.LastIndexOf(TestChar);
-            return ftpRoot + absolutePath.Substring(0, lastIndexOfSlash).TrimEnd(TestChar);
+            var path = absolutePath.Substring(0, lastIndexOfSlash).TrimEnd(TestChar);
+
+            if (addPath)
+            {
+                path = ftpRoot.TrimEnd(TestChar) + TestChar + path.TrimStart(TestChar);
+            }
+
+            return path;
         }
 
         private void TryCreateDirectory(string sereverUri)
@@ -294,6 +326,16 @@ namespace BetterCms.Core.Services.Storage
             ftpRequest.KeepAlive = false;
 
             return ftpRequest;
+        }
+
+        public bool SecuredUrlsEnabled
+        {
+            get { return false; }
+        }
+
+        public string GetSecuredUrl(Uri uri)
+        {
+            throw new CmsException("FTP storage doesn't support token based security.");
         }
     }
 }

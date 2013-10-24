@@ -8,7 +8,7 @@ using BetterCms.Core.Models;
 namespace BetterCms.Module.Root.Models
 {
     [Serializable]
-    public class Layout : EquatableEntity<Layout>, ILayout
+    public class Layout : EquatableEntity<Layout>, ILayout, IOptionContainer<Layout>
     {
         public virtual string Name { get; set; }
 
@@ -21,6 +21,20 @@ namespace BetterCms.Module.Root.Models
         public virtual IList<Page> Pages { get; set; }
 
         public virtual IList<LayoutRegion> LayoutRegions { get; set; }
+
+        public virtual IList<LayoutOption> LayoutOptions { get; set; }
+
+        IEnumerable<IDeletableOption<Layout>> IOptionContainer<Layout>.Options
+        {
+            get
+            {
+                return LayoutOptions;
+            }
+            set
+            {
+                LayoutOptions = value.Cast<LayoutOption>().ToList();
+            }
+        }
 
         public virtual IList<IRegion> Regions
         {

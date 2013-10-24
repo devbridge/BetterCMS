@@ -197,11 +197,31 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         public bool RedirectFromOldUrl { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether use canonical URL.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if use canonical URL; otherwise, <c>false</c>.
+        /// </value>
+        public bool UseCanonicalUrl { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="BlogPostViewModel" /> class.
         /// </summary>
         public BlogPostViewModel()
         {
             Image = new ImageSelectorViewModel();
+            UseCanonicalUrl = true;
+        }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("Id: {0}, Version: {1}, Title: {2}, ContentId: {3}, ContentVersion: {4}", Id, Version, Title, ContentId, ContentVersion);
         }
     }
 }

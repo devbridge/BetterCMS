@@ -1,0 +1,69 @@
+﻿@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Root.ViewModels.Security
+
+@{
+    UserAccessTemplateViewModel viewModel = (Model is UserAccessTemplateViewModel)
+        ? (UserAccessTemplateViewModel)Model
+        : new UserAccessTemplateViewModel();
+}
+
+<div id="bcms-accesscontrol-context">
+    <div class="bcms-user-access" data-bind="with: accessControl">
+        <div class="bcms-input-list-holder">
+            @Html.Tooltip(@viewModel.Tooltip)
+            <div class="bcms-content-titles">@viewModel.Title</div>
+            <div class="bcms-access-table">
+                <div class="bcms-access-title bcms-clearfix">
+                    <div class="bcms-access-title-text">@RootGlobalization.AccessControl_UserAccess_User</div>
+                    <div class="bcms-access-title-text">@RootGlobalization.AccessControl_UserAccess_ReadAndEdit</div>
+                    <div class="bcms-access-title-text">@RootGlobalization.AccessControl_UserAccess_Read</div>
+                    <div class="bcms-access-title-text">@RootGlobalization.AccessControl_UserAccess_NoAccess</div>
+                </div>
+                <div data-bind="foreach: UserAccessList">
+                    <div class="bcms-access-line bcms-clearfix">
+                        <div class="bcms-access-value">
+                            <div class="btn-acces-minus" data-bind="click: $parent.removeUser">&nbsp;</div>
+                            <span data-bind="visible: IsForRole()">Role:</span><span data-bind="visible: !IsForRole()">User:</span>&nbsp;<span data-bind="text: Identity"></span>
+                        </div>
+                        <div class="bcms-access-value"><input type="radio" value="3" data-bind="checked: AccessLevel, attr: { name: $parent.getPropertyIndexer($index(), 'AccessLevel') }" /></div>
+                        <div class="bcms-access-value"><input type="radio" value="2" data-bind="checked: AccessLevel, attr: { name: $parent.getPropertyIndexer($index(), 'AccessLevel') }" /></div>
+                        <div class="bcms-access-value"><input type="radio" value="1" data-bind="checked: AccessLevel, attr: { name: $parent.getPropertyIndexer($index(), 'AccessLevel') }" /></div>
+                    </div>                    
+                    <input type="hidden" data-bind="attr: { name: $parent.getPropertyIndexer($index(), 'Identity') }, value: Identity" />
+                    <input type="hidden" data-bind="attr: { name: $parent.getPropertyIndexer($index(), 'IsForRole') }, valueBinder: IsForRole" />
+                </div>
+                <div class="bcms-access-line bcms-clearfix" data-bind="with: userAccessControl">
+                    <div class="bcms-access-value-add">
+                        <div class="btn-acces-plus" data-bind="click: clickPlus">&nbsp;</div>
+                        <span data-bind="visible: isInAddMode() !== 'user', click: clickPlus">@RootGlobalization.AccessControl_UserAccess_AddNewUser</span>
+                        <input type="text" data-bind="
+                            css: { 'bcms-tag-validation-error': newItem.hasError() },
+                            hasfocus: isExpanded(),
+                            value: newItem,
+                            visible: isInAddMode() === 'user',
+                            valueUpdate: 'afterkeydown',
+                            enterPress: clickPlus,
+                            autocomplete: '',
+                            escPress: clearItem" />
+                    </div>                    
+                </div>
+                <div class="bcms-access-line bcms-clearfix" data-bind="with: roleAccessControl">
+                    <div class="bcms-access-value-add">
+                        <div class="btn-acces-plus" data-bind="click: clickPlus">&nbsp;</div>
+                        <span data-bind="visible: isInAddMode() !== 'role', click: clickPlus">@RootGlobalization.AccessControl_UserAccess_AddNewRole</span>
+                        <input type="text" data-bind="
+                            css: { 'bcms-tag-validation-error': newItem.hasError() },
+                            hasfocus: isExpanded(),
+                            value: newItem,
+                            visible: isInAddMode() === 'role', 
+                            valueUpdate: 'afterkeydown',
+                            enterPress: clickPlus,
+                            autocomplete: '',
+                            escPress: clearItem" />
+                    </div>                     
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

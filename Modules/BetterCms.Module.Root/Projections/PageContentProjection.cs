@@ -95,6 +95,14 @@ namespace BetterCms.Module.Root.Projections
             }
         }
 
+        public virtual IContent Content
+        {
+            get
+            {
+                return content;
+            }
+        }
+
         public string GetContentWrapperType()
         {
             return contentAccessor.GetContentWrapperType();
@@ -118,6 +126,16 @@ namespace BetterCms.Module.Root.Projections
         public string GetCustomJavaScript(HtmlHelper html)
         {
             return contentAccessor.GetCustomJavaScript(html);
+        }
+
+        public string[] GetStylesResources(HtmlHelper html)
+        {
+            return contentAccessor.GetStylesResources(html);
+        }
+
+        public string[] GetJavaScriptResources(HtmlHelper html)
+        {
+            return contentAccessor.GetJavaScriptResources(html);
         }
     }
 }

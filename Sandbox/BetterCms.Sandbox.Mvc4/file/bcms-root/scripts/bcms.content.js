@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define */
+/*global bettercms */
 
 bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
     'use strict';
@@ -185,17 +185,17 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         });
 
         overlay.on('mouseleave', function () {
-            // console.log('Content mouse leave');
+            bcms.logger.trace('Content mouse leave');
             content.hideOverlay(contentViewModel);
         });
 
         overlay.on('mouseover', function () {
             if (!bcms.editModeIsOn() || currentContentDom === overlay) {
-                // console.log('Exit content mouse over');
+                bcms.logger.trace('Exit content mouse over');
                 return;
             }
 
-            // console.log('Content mouse over');
+            bcms.logger.trace('Content mouse over');
             currentContentDom = overlay;
             content.showOverlay(contentViewModel);
         });
@@ -418,6 +418,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         self.contentStart = contentStart;
         self.contentEnd = contentEnd;
         self.overlay = null;
+        self.hideEndingDiv = contentEnd.data('hide') === true;
 
         self.contentId = contentStart.data('contentId');
         self.contentStartId = contentStart.data('startId');
@@ -540,7 +541,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
     * Initializes events for regions:
     */
     content.initRegions = function () {
-        console.log('Highlight regions');
+        bcms.logger.trace('Highlight regions');
 
         pageViewModel = new PageViewModel();
 
@@ -573,6 +574,9 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         $.each(pageViewModel.contents, function () {
             content.createContentOverlay(this);
             content.initOverlayEvents(this);
+            if (!bcms.editModeIsOn() && this.hideEndingDiv) {
+                this.contentEnd.hide();
+            }
         });
 
         content.refreshRegionsPosition();
@@ -596,7 +600,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         });
 
         sortableRegions = [];
-        console.log('Cancel Sort Mode');
+        bcms.logger.trace('Cancel Sort Mode');
     };
 
     /**
@@ -608,6 +612,10 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         if (pageViewModel != null) {
             $.each(pageViewModel.contents, function () {
                 this.overlay.hide();
+                
+                if (this.hideEndingDiv) {
+                    this.contentEnd.hide();
+                }
             });
         }
     }
@@ -619,6 +627,10 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         if (pageViewModel != null) {
             $.each(pageViewModel.contents, function () {
                 this.overlay.show();
+                
+                if (this.hideEndingDiv) {
+                    this.contentEnd.show();
+                }
             });
         }
 
@@ -630,7 +642,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
     * Initializes sidebar module.
     */
     content.init = function () {
-        console.log('Initializing content module');
+        bcms.logger.debug('Initializing content module');
         content.initRegions();
     };
 

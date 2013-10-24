@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Web;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
@@ -16,3 +15,5 @@ using System.Web;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("f33163a7-7244-476a-a280-14fac86b43e7")]
+
+[assembly: InternalsVisibleTo("BetterCms.Modules.Tests")]

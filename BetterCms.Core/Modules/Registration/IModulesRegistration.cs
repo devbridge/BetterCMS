@@ -3,7 +3,6 @@ using System.Reflection;
 using System.Web.Routing;
 
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Core.Security;
 
 namespace BetterCms.Core.Modules.Registration
 {
@@ -29,8 +28,6 @@ namespace BetterCms.Core.Modules.Registration
         /// </summary>
         /// <returns>Enumerator of known JS modules.</returns>
         IEnumerable<JsIncludeDescriptor> GetJavaScriptModules();
-
-        IEnumerable<IUserRole> GetUserAccessRoles();
 
         /// <summary>
         /// Gets action projections to render in the sidebar header.

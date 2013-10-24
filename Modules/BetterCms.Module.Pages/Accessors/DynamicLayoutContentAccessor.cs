@@ -18,7 +18,7 @@ namespace BetterCms.Module.Pages.Accessors
 
         private readonly RenderPageViewModel childViewModel;
 
-        public DynamicLayoutContentAccessor(DynamicLayoutContent content, IList<IOption> options, RenderPageViewModel childViewModel)
+        public DynamicLayoutContentAccessor(DynamicLayoutContent content, IList<IOptionValue> options, RenderPageViewModel childViewModel)
             : base(content, options)
         {
             this.childViewModel = childViewModel;
@@ -58,6 +58,16 @@ namespace BetterCms.Module.Pages.Accessors
         }
 
         public override string GetCustomJavaScript(HtmlHelper html)
+        {
+            return null;
+        }
+
+        public override string[] GetStylesResources(HtmlHelper html)
+        {
+            return null;
+        }
+
+        public override string[] GetJavaScriptResources(HtmlHelper html)
         {
             return null;
         }

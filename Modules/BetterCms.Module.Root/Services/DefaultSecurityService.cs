@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
+using System.Threading;
 
-using BetterCms.Core.Modules.Registration;
 using BetterCms.Core.Services;
 using BetterCms.Core.Web;
 
@@ -25,11 +25,6 @@ namespace BetterCms.Module.Root.Services
         private readonly ICmsConfiguration configuration;
 
         /// <summary>
-        /// The modules registration.
-        /// </summary>
-        private readonly IModulesRegistration modulesRegistration;
-
-        /// <summary>
         /// The HTTP context accessor.
         /// </summary>
         private readonly IHttpContextAccessor httpContextAccessor;
@@ -39,12 +34,10 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <param name="configuration">The configuration.</param>
         /// <param name="httpContextAccessor">The HTTP context accessor.</param>
-        /// <param name="modulesRegistration">The modules registration.</param>
-        public DefaultSecurityService(ICmsConfiguration configuration, IHttpContextAccessor httpContextAccessor, IModulesRegistration modulesRegistration)
+        public DefaultSecurityService(ICmsConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             this.httpContextAccessor = httpContextAccessor;
             this.configuration = configuration;
-            this.modulesRegistration = modulesRegistration;
         }
 
         /// <summary>
@@ -59,7 +52,7 @@ namespace BetterCms.Module.Root.Services
             {
                 var principal = GetCurrentPrincipal();
 
-                if (principal != null)
+                if (principal != null && principal.Identity.IsAuthenticated)
                 {
                     return principal.Identity.Name;
                 }
@@ -78,27 +71,12 @@ namespace BetterCms.Module.Root.Services
         {
             var currentHttpContext = httpContextAccessor.GetCurrent();
 
-            return currentHttpContext != null
-                ? currentHttpContext.User
-                : null;
-        }
+            if (currentHttpContext == null)
+            {
+                return Thread.CurrentPrincipal;
+            }
 
-        /// <summary>
-        /// Gets all roles.
-        /// </summary>
-        /// <returns>Role list.</returns>
-        public string[] GetAllRoles()
-        {
-            return modulesRegistration.GetUserAccessRoles().Select(m => m.Name).ToArray();
-        }
-
-        /// <summary>
-        /// Gets the configuration.
-        /// </summary>
-        /// <returns>Better CMS security configuration.</returns>
-        public ICmsSecurityConfiguration GetConfiguration()
-        {
-            return configuration.Security;
+            return currentHttpContext.User;
         }
 
         /// <summary>
@@ -127,18 +105,22 @@ namespace BetterCms.Module.Root.Services
 
                 var roleList = ParseRoles(roles);
 
-                if (!configuration.Security.UseCustomRoles)
-                {
-                    return roleList.Any(principal.IsInRole);
-                }
-
                 // Check for configuration defined user roles.
+                bool useCustomRoles = configuration.Security.UseCustomRoles;
                 foreach (var role in roleList)
                 {
-                    var translatedRoles = ParseRoles(configuration.Security.Translate(role));
-                    if (translatedRoles.Any(principal.IsInRole))
+                    if (principal.IsInRole(role))
                     {
                         return true;
+                    }
+
+                    if (useCustomRoles)
+                    {
+                        var translatedRoles = ParseRoles(configuration.Security.Translate(role));
+                        if (translatedRoles.Any(principal.IsInRole))
+                        {
+                            return true;
+                        }                        
                     }
                 }
             }
@@ -166,7 +148,7 @@ namespace BetterCms.Module.Root.Services
         private static IEnumerable<string> ParseRoles(string roles)
         {
             return !string.IsNullOrEmpty(roles)
-                ? roles.Split(RolesSplitter, StringSplitOptions.RemoveEmptyEntries).Distinct().ToArray()
+                ? roles.Split(RolesSplitter, StringSplitOptions.RemoveEmptyEntries).Distinct().Select(role => role.Trim()).ToArray()
                 : new string[] { };
         }
     }

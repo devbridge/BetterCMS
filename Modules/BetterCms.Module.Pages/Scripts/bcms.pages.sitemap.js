@@ -1,5 +1,5 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
-/*global define, console */
+/*global bettercms */
 
 bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'bcms.ko.extenders'],
     function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, ko) {
@@ -103,12 +103,11 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             }
                         });
                     },
-                    onAccept: function() {
+                    onAccept: function (dialog) {
                         addPageController.save(function() {
-                            if (data.Callback && $.isFunction(data.Callback)) {
-                                data.Callback(data);
-                            }
+                            dialog.close();
                         });
+                        return false;
                     },
                     onClose: function() {
                         if (data.Callback && $.isFunction(data.Callback)) {
@@ -130,7 +129,8 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.sitemapSearchModel = null;
 
             self.initialize = function(content) {
-                self.container = siteSettings.getModalDialog().container;
+                var dialog = siteSettings.getModalDialog();
+                self.container = dialog.container;
                 sitemap.activeMessageContainer = self.container.find(selectors.sitemapMessagesContainer);
                 sitemap.activeLoadingContainer = self.container.find(selectors.sitemapSearchDataBind);
                     
@@ -157,6 +157,9 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         updateValidation();
                     }
                 }
+
+                // Select search.
+                dialog.setFocus();
             };
         }
         
@@ -598,8 +601,10 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     onSaveCompleted = function (json) {
                         messages.refreshBox(sitemap.activeMessageContainer, json);
                         sitemap.showLoading(false);
-                        if (onDoneCallback && $.isFunction(onDoneCallback)) {
-                            onDoneCallback(json);
+                        if (json.Success) {
+                            if (onDoneCallback && $.isFunction(onDoneCallback)) {
+                                onDoneCallback(json);
+                            }
                         }
                         self.savingInProgress = false;
                     };
@@ -868,6 +873,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.searchQuery = ko.observable("");
             self.pageLinks = ko.observableArray([]);
             self.sitemap = sitemapViewModel;
+            self.hasfocus = ko.observable(true);
 
             self.searchForPageLinks = function () {
                 var showAll = $.trim(self.searchQuery()).length === 0;
@@ -883,6 +889,8 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         link.isVisible(title.indexOf(searchQuery) !== -1 || url.indexOf(searchQuery) !== -1);
                     }
                 }
+                
+                self.hasfocus(true);
             };
             
             // Parse.
@@ -969,7 +977,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Initializes module.
         */
         sitemap.init = function() {
-            console.log('Initializing bcms.pages.sitemap module.');
+            bcms.logger.debug('Initializing bcms.pages.sitemap module.');
             
             // Bindings for sitemap nodes Drag'n'Drop.
             addDraggableBinding();

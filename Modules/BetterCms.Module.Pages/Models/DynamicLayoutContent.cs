@@ -10,9 +10,9 @@ namespace BetterCms.Module.Pages.Models
     {
         public virtual Layout Layout { get; set; }
 
-        public override Root.Models.Content CopyDataTo(Root.Models.Content content)
+        public override Root.Models.Content CopyDataTo(Root.Models.Content content, bool copyOptions = true)
         {
-            var copy = (DynamicLayoutContent)base.CopyDataTo(content);
+            var copy = (DynamicLayoutContent)base.CopyDataTo(content, copyOptions);
             copy.Layout = Layout;
 
             return copy;

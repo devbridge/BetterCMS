@@ -17,26 +17,9 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
     {
         public static IGridColumn<T> EmptyColumn<T>(this ColumnBuilder<T> builder) where T : class
         {
-            return builder.For(f => string.Empty)
+            return builder.For(f => "&nbsp;")
                 .Named("&nbsp;")
                 .Sortable(false)
-                .Encode(false);
-        }
-
-        public static IGridColumn<T> ColumnHeaderForSortableList<T>(this ColumnBuilder<T> builder, string title, string sortColumnName) where T : class
-        {
-            return builder.For(f => string.Empty)
-                .Named(title)
-                .SortColumnName(sortColumnName)
-                .Encode(false);
-        }
-
-        public static IGridColumn<T> ColumnHeaderForSortableList<T>(this ColumnBuilder<T> builder, string title, string sortColumnName, IDictionary<string, object> attributes) where T : class
-        {
-            return builder.For(f => string.Empty)
-                .Named(title)
-                .SortColumnName(sortColumnName)
-                .HeaderAttributes(attributes)
                 .Encode(false);
         }
 
@@ -109,12 +92,13 @@ namespace BetterCms.Module.Root.Mvc.Grids.Extensions
                 .HeaderAttributes(@style => "width: 145px;", @class => "bcms-tables-nohover");
         }
 
-        public static HtmlString HiddenGridOptions(this HtmlHelper html, GridSortOptions gridOptions)
+        public static HtmlString HiddenGridOptions(this HtmlHelper html, GridOptions.GridOptions gridOptions)
         {
             var column = html.Hidden("Column", gridOptions.Column, new {@id = "bcms-grid-sort-column"});
             var direction = html.Hidden("Direction", gridOptions.Direction, new { @id = "bcms-grid-sort-direction" });
+            var pageNumber = html.Hidden("PageNumber", gridOptions.PageNumber, new { @id = "bcms-grid-page-number" });
 
-            return new HtmlString(string.Concat(column.ToString(), direction.ToString()));
+            return new HtmlString(string.Concat(column.ToString(), direction.ToString(), pageNumber.ToString()));
         }
 
         /// <summary>

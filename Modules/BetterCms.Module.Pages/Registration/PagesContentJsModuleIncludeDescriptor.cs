@@ -47,7 +47,7 @@ namespace BetterCms.Module.Pages.Registration
                     new JavaScriptModuleGlobalization(this, "deleteContentFailureMessageMessage", () => PagesGlobalization.DeletePageContent_FailureMessage_Message),
                     new JavaScriptModuleGlobalization(this, "sortPageContentFailureMessageTitle", () => PagesGlobalization.SortPageContent_FailureMessage_Title),
                     new JavaScriptModuleGlobalization(this, "sortPageContentFailureMessageMessage", () => PagesGlobalization.SortPageContent_FailureMessage_Message),
-                    new JavaScriptModuleGlobalization(this, "datePickerTooltipTitle", () => PagesGlobalization.Date_Picker_Tooltip_Title),
+                    new JavaScriptModuleGlobalization(this, "datePickerTooltipTitle", () => RootGlobalization.Date_Picker_Tooltip_Title),
                                         
                     new JavaScriptModuleGlobalization(this, "errorTitle", () => RootGlobalization.Alert_ErrorTitle)                                       
                 };

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Configuration;
-using System.Diagnostics;
 using System.Reflection;
 
 namespace BetterCms.Configuration
@@ -10,8 +9,10 @@ namespace BetterCms.Configuration
         private const string VersionAttribute = "version";
         private const string UseMinifiedResourcesAttribute = "useMinifiedResources";
         private const string ResourcesBasePathAttribute = "resourcesBasePath";
-        private const string LoginUrlAttribute = "loginUrl";        
-        private const string PageNotFoundUrlAttribute = "pageNotFoundUrl";        
+        private const string LoginUrlAttribute = "loginUrl";
+        private const string WebSiteUrlAttribute = "webSiteUrl";
+        private const string PageNotFoundUrlAttribute = "pageNotFoundUrl";
+        private const string UrlModeAttribute = "urlMode";
         private const string DatabaseNode = "database";
         private const string StorageNode = "storage";
         private const string CacheNode = "cache";
@@ -21,6 +22,9 @@ namespace BetterCms.Configuration
         private const string ArticleUrlPatternAttribute = "articleUrlPattern";
         private const string UrlPatternsNode = "urlPatterns";
         private const string InstallationNode = "installation";
+        private const string UsersNode = "users";
+        private const string RenderContentEndingDivAttribute = "renderContentEndingDiv";
+        private const string ContentEndingDivCssClassNameAttribute = "contentEndingDivCssClassName";
 
         /// <summary>
         /// The version backing field.
@@ -80,6 +84,19 @@ namespace BetterCms.Configuration
         }
 
         /// <summary>
+        /// Gets or sets the web site URL.
+        /// </summary>
+        /// <value>
+        /// The web site URL.
+        /// </value>
+        [ConfigurationProperty(WebSiteUrlAttribute, DefaultValue = "Auto", IsRequired = false)]
+        public string WebSiteUrl
+        {
+            get { return Convert.ToString(this[WebSiteUrlAttribute]); }
+            set { this[WebSiteUrlAttribute] = value; }
+        }
+
+        /// <summary>
         /// Gets the virtual root path (like "~/App_Data") of BetterCMS working directory. 
         /// </summary>
         /// <value>
@@ -132,6 +149,19 @@ namespace BetterCms.Configuration
         }
 
         /// <summary>
+        /// Gets or sets the URL mode.
+        /// </summary>
+        /// <value>
+        /// The URL mode.
+        /// </value>
+        [ConfigurationProperty(UrlModeAttribute, IsRequired = false, DefaultValue = TrailingSlashBehaviorType.TrailingSlash)]
+        public TrailingSlashBehaviorType UrlMode
+        {
+            get { return (TrailingSlashBehaviorType)this[UrlModeAttribute]; }
+            set { this[UrlModeAttribute] = value; }
+        }
+
+        /// <summary>
         /// Gets or sets the article url prefix.
         /// </summary>
         /// <value>
@@ -141,6 +171,32 @@ namespace BetterCms.Configuration
         public string ArticleUrlPattern {
             get {return Convert.ToString(this[ArticleUrlPatternAttribute]); }
             set { this[ArticleUrlPatternAttribute] = value; }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether to render content ending div.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if to render content ending div; otherwise, <c>false</c>.
+        /// </value>
+        [ConfigurationProperty(RenderContentEndingDivAttribute, IsRequired = false, DefaultValue = true)]
+        public bool RenderContentEndingDiv
+        {
+            get { return (bool)this[RenderContentEndingDivAttribute]; }
+            set { this[RenderContentEndingDivAttribute] = value; }
+        }
+
+        /// <summary>
+        /// Gets the name of the content ending div CSS class.
+        /// </summary>
+        /// <value>
+        /// The name of the content ending div CSS class.
+        /// </value>
+        [ConfigurationProperty(ContentEndingDivCssClassNameAttribute, IsRequired = false, DefaultValue = "custom-clearfix")]
+        public string ContentEndingDivCssClassName
+        {
+            get { return Convert.ToString(this[ContentEndingDivCssClassNameAttribute]); }
+            set { this[ContentEndingDivCssClassNameAttribute] = value; }
         }
 
         /// <summary>
@@ -192,7 +248,7 @@ namespace BetterCms.Configuration
         {
             get { return (CmsSecurityConfigurationElement)this[SecurityNode]; }
             set { this[SecurityNode] = value; }
-        }
+        }        
 
         [ConfigurationProperty(ModuleGalleryNode, IsRequired = true)]
         public CmsModuleGalleryConfigurationElement ModuleGallery
@@ -206,6 +262,18 @@ namespace BetterCms.Configuration
         {
             get { return (CmsInstallationConfigurationElement)this[InstallationNode]; }
             set { this[InstallationNode] = value; }
+        }
+
+        [ConfigurationProperty(UsersNode, IsRequired = false)]
+        public CmsUsersConfigurationElement Users
+        {
+            get { return this[UsersNode] as CmsUsersConfigurationElement; }
+            set { this[UsersNode] = value; }
+        }
+
+        ICmsUsersConfiguration ICmsConfiguration.Users
+        {
+            get { return Users; }
         }
 
         ICmsStorageConfiguration ICmsConfiguration.Storage

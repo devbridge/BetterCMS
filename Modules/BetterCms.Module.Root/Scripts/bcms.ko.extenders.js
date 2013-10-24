@@ -1,4 +1,4 @@
-﻿/*global define, console */
+﻿/*global bettercms */
 
 bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], function ($, bcms, ko) {
     'use strict';
@@ -53,6 +53,27 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], funct
     ko.bindingHandlers.stopBindings = {
         init: function () {
             return { controlsDescendantBindings: true };
+        }
+    };
+
+    /**
+    * Extend knockout handlers: add value with boolean value fix.
+    */
+    ko.bindingHandlers.valueBinder = {
+        update: function (element, valueAccessor) {
+            if ($.isFunction(valueAccessor)) {
+                var observable = valueAccessor();
+                if ($.isFunction(observable)) {
+                    var value = observable();
+                    if (typeof value === "boolean") {
+                        $(element).val(value === true ? "true" : "false");
+
+                        return;
+                    }
+                }
+            }
+
+            ko.bindingHandlers.value.update(element, valueAccessor);
         }
     };
 
@@ -133,7 +154,7 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], funct
     */
     ko.extenders.required = function (target, overrideMessage) {
         var ruleName = 'required';
-        return koValidationExtender(ruleName, target, function (newValue) {
+        return ko.extenders.koValidationExtender(ruleName, target, function (newValue) {
             newValue = $.trim(newValue);
 
             var hasError = (!newValue),
@@ -150,7 +171,7 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], funct
         var ruleName = 'maxLength',
             maxLength = options.maxLength,
             message = options.message || ko.globalization.maximumLengthMessage;
-        return koValidationExtender(ruleName, target, function (newValue) {
+        return ko.extenders.koValidationExtender(ruleName, target, function (newValue) {
             var hasError = (newValue != null && newValue.length > maxLength),
                 showMessage = hasError ? $.format(message, maxLength) : '';
             
@@ -176,7 +197,7 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], funct
         var ruleName = 'regularExpression',
             pattern = options.pattern || '',
             message = options.message || ko.globalization.regularExpressionMessage;
-        return koValidationExtender(ruleName, target, function (newValue) {
+        return ko.extenders.koValidationExtender(ruleName, target, function (newValue) {
             var hasError = (newValue != null && pattern && !newValue.match(new RegExp(pattern, "i"))),
                 showMessage = hasError ? $.format(message, pattern) : '';
             
@@ -187,7 +208,7 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], funct
     /**
     * Knockout validation extender
     */
-    function koValidationExtender(ruleName, target, validate) {
+    ko.extenders.koValidationExtender = function(ruleName, target, validate) {
         // add some sub-observables to our observable
         if (!target.hasError) {
             target.hasError = ko.observable(false);
@@ -204,7 +225,86 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], funct
 
         // return the original observable
         return target;
-    }
+    };
+
+    ko.PagingViewModel = (function () {
+        function PagingViewModel(pageSize, pageNumber, totalCount, onOpenPage) {
+            var self = this;
+
+            self.totalPagingLinks = 5;
+            self.activePagePosition = 2;
+
+            self.pageSize = 0;
+            self.pageNumber = ko.observable(1);
+            self.totalPages = ko.observable(1);
+            self.pagingUpperBound = ko.observable(1);
+            self.pagingLowerBound = ko.observable(1);
+            self.totalCount = 0;
+
+            self.pages = ko.computed(function () {
+                var pages = [];
+                for (var i = self.pagingLowerBound(); i <= self.pagingUpperBound(); i++) {
+                    pages.push(i);
+                }
+                return pages;
+            });
+
+            self.openPage = function (pageNr) {
+                self.pageNumber(pageNr);
+
+                if ($.isFunction(onOpenPage)) {
+                    onOpenPage(pageNr);
+                }
+            };
+
+            self.setPaging = function (newPageSize, newPageNumber, newTotalCount) {
+                self.totalCount = newTotalCount > 0 ? newTotalCount : 1;
+                
+                if (newPageSize > 0) {
+                    if (newPageNumber <= 0) {
+                        newPageNumber = 1;
+                    }
+                    if (newTotalCount < 0) {
+                        newTotalCount = 0;
+                    }
+                    var totalPages = parseInt(Math.ceil(newTotalCount / newPageSize));
+                    totalPages = totalPages > 0 ? totalPages : 1;
+
+                    self.pageSize = newPageSize;
+                    self.pageNumber(newPageNumber);
+                    self.totalPages(totalPages);
+                    self.totalCount = newTotalCount;
+
+                    // lower bound
+                    var pagingLowerBound = newPageNumber - self.activePagePosition;
+                    if (pagingLowerBound < 1) {
+                        pagingLowerBound = 1;
+                    }
+
+                    // upper bound
+                    var pagingUpperBound = pagingLowerBound + self.totalPagingLinks;
+                    if (pagingUpperBound > totalPages) {
+                        pagingUpperBound = totalPages;
+                    }
+
+                    // lower bound correction
+                    if (pagingUpperBound - pagingLowerBound < self.totalPagingLinks) {
+                        pagingLowerBound = pagingUpperBound - self.totalPagingLinks;
+                        if (pagingLowerBound < 1) {
+                            pagingLowerBound = 1;
+                        }
+                    }
+
+                    self.pagingLowerBound(pagingLowerBound);
+                    self.pagingUpperBound(pagingUpperBound);
+                }
+            };
+            
+            self.setPaging(pageSize, pageNumber, totalCount);
+        }
+
+        return PagingViewModel;
+    })();
 
     return ko;
 });

@@ -1,13 +1,13 @@
-﻿using BetterCms.Module.MediaManager.Command.MediaManager;
-using BetterCms.Module.MediaManager.Models;
-using BetterCms.Module.MediaManager.Models.Extensions;
-using BetterCms.Module.MediaManager.ViewModels.MediaManager;
+﻿using System;
 
-using NHibernate.Criterion.Lambda;
+using BetterCms.Module.MediaManager.Command.MediaManager;
+using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Services;
+using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 
 namespace BetterCms.Module.MediaManager.Command.Images.GetImages
 {
-    public class GetImagesCommand : GetMediaItemsCommandBase<MediaImageViewModel, MediaImage>
+    public class GetImagesCommand : GetMediaItemsCommandBase<MediaImage>
     {
         /// <summary>
         /// Gets the type of the current media items.
@@ -21,24 +21,27 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImages
         }
 
         /// <summary>
-        /// Selects the items.
+        /// Creates the image view model.
         /// </summary>
-        /// <param name="builder">The builder.</param>
-        /// <returns></returns>
-        protected override QueryOverProjectionBuilder<MediaImage> SelectItems(QueryOverProjectionBuilder<MediaImage> builder)
+        /// <param name="media">The media.</param>
+        /// <returns>Created image view model</returns>
+        protected override MediaViewModel ToViewModel(Media media)
         {
-            return builder
-                    .Select(() => alias.Id).WithAlias(() => modelAlias.Id)
-                    .Select(() => alias.Title).WithAlias(() => modelAlias.Name)
-                    .Select(() => alias.CreatedOn).WithAlias(() => modelAlias.CreatedOn)
-                    .Select(() => alias.Version).WithAlias(() => modelAlias.Version)
-                    .Select(() => alias.Caption).WithAlias(() => modelAlias.Tooltip)
-                    .Select(() => alias.OriginalFileExtension).WithAlias(() => modelAlias.FileExtension)
-                    .Select(() => alias.PublicThumbnailUrl).WithAlias(() => modelAlias.ThumbnailUrl)
-                    .Select(() => alias.PublicUrl).WithAlias(() => modelAlias.PublicUrl)
-                    .Select(alias.GetIsProcessingConditions()).WithAlias(() => modelAlias.IsProcessing)
-                    .Select(alias.GetIsFailedConditions()).WithAlias(() => modelAlias.IsFailed)
-                    .Select(() => alias.Size).WithAlias(() => modelAlias.Size);
+            var image = media as MediaImage;
+            if (image != null)
+            {
+                var model = new MediaImageViewModel();
+                FillMediaFileViewModel(model, image);
+
+                model.Tooltip = image.Caption;
+                model.ThumbnailUrl = FileUrlResolver.EnsureFullPathUrl(image.PublicThumbnailUrl);
+                model.IsProcessing = image.IsUploaded == null || image.IsThumbnailUploaded == null || image.IsOriginalUploaded == null;
+                model.IsFailed = image.IsUploaded == false || image.IsThumbnailUploaded == false || image.IsOriginalUploaded == false;
+
+                return model;
+            }
+
+            throw new InvalidOperationException("Cannot convert image media to image view model. Wrong entity passed.");
         }
     }
 }
