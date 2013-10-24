@@ -226,7 +226,6 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         self.canSelectMedia = ko.observable(false);
         self.canInsertMedia = ko.observable(false);
         self.canInsertMediaWithOptions = ko.observable(false);
-        self.canSelectFolders = ko.observable(false);
 
         self.rowAdded = false;
 
@@ -906,32 +905,13 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             deleteMediaItem(url, message, folderViewModel, this);
         };
 
-        MediaFolderViewModel.prototype.onIconClicked = function (folderViewModel, data, event) {
-            bcms.stopEventPropagation(event);
-            if (this.isDeleting()) {
-                return;
-            }
-            
-            changeFolder(this.id(), folderViewModel);
-        };
-
-        MediaFolderViewModel.prototype.onTitleClicked = function (folderViewModel, data, event) {
-            this.onIconClicked(folderViewModel, data, event);
-        };
-
         MediaFolderViewModel.prototype.openMedia = function (folderViewModel, data, event) {
             bcms.stopEventPropagation(event);
             if (this.isDeleting()) {
                 return;
             }
 
-            // Call open, if view model is not in selectable mode
-            if (!folderViewModel.canSelectFolders()) {
-                changeFolder(this.id(), folderViewModel);
-                return;
-            }
-
-            folderViewModel.unselectAllMedias(this);
+            changeFolder(this.id(), folderViewModel);
         };
 
         MediaFolderViewModel.prototype.toJson = function () {
@@ -1126,7 +1106,6 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             folderViewModelOptions: null,
             onClose: null,
             parentFolderId: '',
-            selectedId: ''
         }, opts);
 
         modal.open({
@@ -1138,7 +1117,6 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     done: function (content) {
                         imagesViewModel = new MediaItemsViewModel(dialog.container, links.loadImagesUrl, dialog.container);
                         imagesViewModel.spinContainer = dialog.container.find(selectors.insertContentContainer);
-                        imagesViewModel.canSelectFolders(true);
                         if (options.folderViewModelOptions) {
                             imagesViewModel = $.extend(imagesViewModel, options.folderViewModelOptions);
                         }
@@ -1147,29 +1125,13 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                             options.onAccept(selectedFolder);
                         };
                         initializeTab(content, imagesViewModel);
-                        selectItemById(imagesViewModel, options.selectedId);
                     }
                 });
             },
             onAcceptClick: function () {
-                var i,
-                    item,
-                    selectedFolder = null;
-
-                for (i = 0; i < imagesViewModel.medias().length; i++) {
-                    item = imagesViewModel.medias()[i];
-                    if (item.isSelected() && item.isFolder()) {
-                        selectedFolder = item;
-                        break;
-                    }
-                }
-
-                if (selectedFolder == null) {
-                    selectedFolder = imagesViewModel.path().currentFolder();
-                }
-
+                
                 if ($.isFunction(options.onAccept)) {
-                    options.onAccept(selectedFolder);
+                    options.onAccept(imagesViewModel.path().currentFolder());
                 }
 
                 return true;
@@ -1906,8 +1868,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     onAccept: onMediaSelect,
                     folderViewModelOptions: mediasViewModelExtender, 
                     onClose: onMediaSelectClose,
-                    parentFolderId: !parentFolderId || bcms.isEmptyGuid(parentFolderId) ? '' : parentFolderId,
-                    selectedId: self.id()
+                    parentFolderId: !parentFolderId || bcms.isEmptyGuid(parentFolderId) ? '' : parentFolderId
                 };
 
             bcms.stopEventPropagation(event);
@@ -1955,7 +1916,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 onAccept: onMediaSelect,
                 onClose: onMediaClose,
                 folderViewModelOptions: mediasViewModelExtender,
-                parentFolderId: optionModel.value()
+                parentFolderId: valueObservable()
             };
 
         media.openFolderSelectDialog(options);
