@@ -266,7 +266,9 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                         customType = newType.substr(split + 1, newType.length - split);
                         
                         // Clearing old value
-                        self.editableValue('');
+                        if (oldType) {
+                            self.editableValue('');
+                        }
                     } else {
                         self.customOptionTitle('');
                         self.customOptionDefaultTitle('');
