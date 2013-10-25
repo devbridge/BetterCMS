@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 
@@ -88,19 +89,57 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             RenderPageViewModel renderPageViewModel = new RenderPageViewModel(page);
             renderPageViewModel.CanManageContent = request.CanManageContent;
-            renderPageViewModel.LayoutPath = page.Layout.LayoutPath;
+            if (page.Layout != null)
+            {
+                renderPageViewModel.LayoutPath = page.Layout.LayoutPath;
+                
+                renderPageViewModel.Regions = page
+                    .Layout.LayoutRegions
+                    .Distinct()
+                    .Select(f => new PageRegionViewModel
+                       {
+                           RegionId = f.Region.Id,
+                           RegionIdentifier = f.Region.RegionIdentifier
+                       })
+                    .ToList();
+            }
+            else if (page.MasterPage != null)
+            {
+                // TODO
+                renderPageViewModel.Regions = Repository
+                    .AsQueryable<PageContent>()
+                    .Where(pc => pc.Page == page.MasterPage)
+                    .SelectMany(pc => pc.Content.ContentRegions)
+                    .Select(cr => new PageRegionViewModel
+                        {
+                            RegionId = cr.Region.Id,
+                            RegionIdentifier = cr.Region.RegionIdentifier
+                        })
+                    .ToList();
 
-            renderPageViewModel.Regions =
-                page.Layout.LayoutRegions.Distinct().Select(f => new PageRegionViewModel
-                                                      {
-                                                          RegionId = f.Region.Id,
-                                                          RegionIdentifier = f.Region.RegionIdentifier
-                                                      })
-                                                      .ToList();
+                renderPageViewModel.Options = new List<IOptionValue>();
+
+                renderPageViewModel.MasterPage = Execute(new GetPageToRenderRequest
+                                                             {
+                                                                 PageId = page.MasterPage.Id,
+                                                                 CanManageContent = request.CanManageContent,
+                                                                 IsAuthenticated = request.IsAuthenticated,
+                                                                 IsPreview = request.IsPreview,
+                                                                 PreviewPageContentId = request.PreviewPageContentId,
+                                                             }).RenderPage;
+            }
+            else
+            {
+                throw new InvalidOperationException(string.Format("Failed to load layout or master page for page {0}.", request.PageUrl));
+            }
 
             renderPageViewModel.Contents = contentProjections;
             renderPageViewModel.Metadata = pageAccessor.GetPageMetaData(page).ToList();
-            renderPageViewModel.Options = optionService.GetMergedOptionValues(page.Layout.LayoutOptions, page.Options).ToList();
+
+            if (page.Layout != null)
+            {
+                renderPageViewModel.Options = optionService.GetMergedOptionValues(page.Layout.LayoutOptions, page.Options).ToList();
+            }
 
             if (page.AccessRules != null)
             {
@@ -237,7 +276,8 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             query = query
                 .Fetch(f => f.Layout)
                 .ThenFetchMany(f => f.LayoutRegions)
-                .ThenFetch(f => f.Region);
+                .ThenFetch(f => f.Region)
+                .Fetch(f => f.MasterPage);
 
             // Add access rules if access control is enabled.
             if (cmsConfiguration.Security.AccessControlEnabled)

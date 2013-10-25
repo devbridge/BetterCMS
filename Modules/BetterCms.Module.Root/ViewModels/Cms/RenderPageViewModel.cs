@@ -137,7 +137,15 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// The layout path.
         /// </value>
         public string LayoutPath { get; set; }
-        
+
+        /// <summary>
+        /// Gets or sets the master page.
+        /// </summary>
+        /// <value>
+        /// The master page.
+        /// </value>
+        public RenderPageViewModel MasterPage { get; set; }
+
         /// <summary>
         /// Gets or sets page content projections list.
         /// </summary>

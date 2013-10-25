@@ -9,6 +9,11 @@
     {
         Layout = Model.LayoutPath;
     }
+    else if (Model.MasterPage != null)
+    {
+        // TODO: remove this when rendering will be implemented
+        Layout = Model.MasterPage.LayoutPath;
+    }
     else
     {
         Layout = "~/Areas/bcms-Root/Views/Shared/BaseLayout.cshtml";
@@ -16,6 +21,20 @@
 }
 
 @{
+    // An algorithm to render a page:
+    /*
+     1. If page has a master page, pass master page for rendering
+     2. Chech recursively if page has more master pages
+     3. Renderer should return string. Layout should be normal layout or empty page
+     4. Create an interface for rendering:
+     * Get Layout: normal layout or empty page
+     * Get Regions: normal regions or content regions
+     * Render method
+     
+     
+     */
+    
+    
     // Render regions and contents.
     Html.RenderSectionContents(this, Model);
 }

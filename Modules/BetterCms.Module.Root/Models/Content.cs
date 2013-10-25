@@ -28,6 +28,8 @@ namespace BetterCms.Module.Root.Models
         public virtual IList<PageContent> PageContents { get; set; }
 
         public virtual IList<ContentOption> ContentOptions { get; set; }
+        
+        public virtual IList<ContentRegion> ContentRegions { get; set; }
 
         IEnumerable<IDeletableOption<Content>> IOptionContainer<Content>.Options
         {
