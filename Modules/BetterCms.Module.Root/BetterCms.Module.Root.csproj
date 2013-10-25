@@ -963,6 +963,7 @@
     <EmbeddedResource Include="Scripts\ace\snippets\xml.js" />
     <EmbeddedResource Include="Scripts\ace\snippets\xquery.js" />
     <EmbeddedResource Include="Scripts\ace\snippets\yaml.js" />
+    <EmbeddedResource Include="Scripts\bcms.codeEditor.js" />
     <Content Include="Views\Web.config" />
     <EmbeddedResource Include="Views\Sidebar\Container.cshtml" />
     <EmbeddedResource Include="Views\Rendering\RenderMainJsFile.cshtml" />
