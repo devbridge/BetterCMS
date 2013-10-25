@@ -13,6 +13,10 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.ViewModels.Cms;
 
+using NHibernate;
+using NHibernate.Criterion;
+using NHibernate.Transform;
+
 namespace BetterCms.Module.ImagesGallery.Command.GetGalleryAlbums
 {
     public class GetGalleryAlbumsCommand : CommandBase, ICommand<RenderWidgetViewModel, GalleryViewModel>
@@ -44,38 +48,60 @@ namespace BetterCms.Module.ImagesGallery.Command.GetGalleryAlbums
         /// <param name="request">The request.</param>
         public GalleryViewModel Execute(RenderWidgetViewModel request)
         {
+            MediaFolder folderAlias = null;
+            AlbumViewModel modelAlias = null;
+
+            var dateSubQuery = QueryOver.Of<MediaImage>()
+                .Where(x => x.Original == null)
+                .And(x => !x.IsDeleted)
+                .And(x => x.Folder.Id == folderAlias.Id)
+                .Select(Projections.Max(Projections.Property<MediaFolder>(c => c.ModifiedOn)));
+
+            var countSubQuery = QueryOver.Of<MediaImage>()
+                .Where(x => x.Original == null)
+                .And(x => !x.IsDeleted)
+                .And(x => x.Folder.Id == folderAlias.Id)
+                .ToRowCountQuery();
+
+            var coverImageUrlSubQuery = QueryOver.Of<MediaImage>()
+                .Where(x => x.Original == null)
+                .And(x => !x.IsDeleted)
+                .And(x => x.Folder.Id == folderAlias.Id)
+                .OrderBy(o => o.Title).Asc
+                .Select(s => s.PublicUrl)
+                .Take(1);
+
+            var albumQuery = UnitOfWork.Session.QueryOver(() => folderAlias).Where(m => m.Type == MediaType.Image);
+
             var id = request.GetOptionValue<Guid?>(ImagesGalleryModuleConstants.OptionKeys.GalleryFolder);
-
-            var albumQuery = Repository.AsQueryable<MediaFolder>();
-
             if (id.HasValue)
             {
                 var folderProxy = Repository.AsProxy<MediaFolder>(id.Value);
-                albumQuery = albumQuery.Where(f => f.Folder == folderProxy);
+                albumQuery = albumQuery.And(f => f.Folder == folderProxy);
             }
             else
             {
-                albumQuery = albumQuery.Where(f => f.Folder == null);
+                albumQuery = albumQuery.And(f => f.Folder == null);
             }
 
             // Load list of albums
             List<AlbumViewModel> albums = albumQuery
-                .Select(a => new AlbumViewModel
-                    {
-                        Url = a.Id.ToString(),
-                        Title = a.Title,
-                        CoverImageUrl = a.Medias.Where(m => m is MediaImage && !m.IsDeleted).OrderBy(m => m.Title).Select(m => ((MediaImage)m).PublicUrl).FirstOrDefault(),
-                        ImagesCount = a.Medias.Count(m => m is MediaImage && !m.IsDeleted),
-                        LastUpdateDate = a.Medias.Where(m => m is MediaImage && !m.IsDeleted).Max(m => m.ModifiedOn)
-                    })
-                .ToList();
-            
+                .SelectList(select => select
+                    .Select(Projections.Cast(NHibernateUtil.String, Projections.Property<MediaFolder>(c => c.Id))).WithAlias(() => modelAlias.Url)
+                    .Select(() => folderAlias.Title).WithAlias(() => modelAlias.Title)
+                    .SelectSubQuery(countSubQuery).WithAlias(() => modelAlias.ImagesCount)
+                    .SelectSubQuery(dateSubQuery).WithAlias(() => modelAlias.LastUpdateDate)
+                    .SelectSubQuery(coverImageUrlSubQuery).WithAlias(() => modelAlias.CoverImageUrl)
+                )
+                .TransformUsing(Transformers.AliasToBean<AlbumViewModel>())
+                .List<AlbumViewModel>().ToList();
+
             var urlPattern = GetAlbumUrlPattern(request);
             albums.ForEach(a =>
-                               {
-                                   a.Url = string.Format(urlPattern, a.Url);
-                                   a.CoverImageUrl = fileUrlResolver.EnsureFullPathUrl(a.CoverImageUrl);
-                               });
+                        {
+                            a.Url = string.Format(urlPattern, a.Url);
+                            a.CoverImageUrl = fileUrlResolver.EnsureFullPathUrl(a.CoverImageUrl);
+                        });
 
             return new GalleryViewModel
                        {
