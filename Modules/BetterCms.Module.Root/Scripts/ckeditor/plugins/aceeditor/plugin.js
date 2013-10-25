@@ -48,11 +48,17 @@ Edited by the Devbridge Better CMS team.
 
                             // Launch the editor and set the theme.
                             var aceEditor = ace.edit("aceEditor_" + editorID);
-                            aceEditor.setTheme("ace/theme/dreamweaver");
                             aceEditor.getSession().setMode("ace/mode/html");
+                            aceEditor.setTheme("ace/theme/chrome");
                             aceEditor.setShowPrintMargin(0);
                             aceEditor.getSession().setValue(editor.getData());
                             aceEditor.getSession().setUseWrapMode(false);
+                            ace.config.loadModule('ace/ext/language_tools', function () {
+                                aceEditor.setOptions({
+                                    enableBasicAutocompletion: true,
+                                    enableSnippets: true
+                                });
+                            });
 
                             // Set the z-index for ACEEditor really high.
                             $('#aceEditor_container_' + editorID).css('z-index', bcms.getHighestZindex() + 1);
