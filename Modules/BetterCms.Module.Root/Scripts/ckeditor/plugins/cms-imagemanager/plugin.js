@@ -1,6 +1,6 @@
 ﻿(function () {
   var a = {
-    modes: { wysiwyg: 1, source: 1 },
+    modes: { wysiwyg: 1, source: 0 },
     exec: function (editor) {
         editor.InsertImageClicked(editor);
     }

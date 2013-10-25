@@ -4,7 +4,7 @@
  */
 
 CKEDITOR.editorConfig = function (config) {
-    config.extraPlugins = 'cms-imagemanager,cms-filemanager';
+    config.extraPlugins = 'cms-imagemanager,cms-filemanager,aceeditor';
 
     config.toolbar = [
 		['Undo', 'Redo'],
