@@ -1,0 +1,10 @@
+﻿@using BetterCms.Module.Root.Mvc.Helpers
+@model BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel
+
+@{
+    Layout = null;
+}
+
+@{
+    Html.RenderSectionContents(this, Model);
+}

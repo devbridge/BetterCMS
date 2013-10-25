@@ -163,6 +163,7 @@
     <Compile Include="Models\Migrations\Migration201310160818.cs" />
     <Compile Include="Models\Migrations\Migration201310180900.cs" />
     <Compile Include="Mvc\Helpers\OptionsExtentions.cs" />
+    <Compile Include="Mvc\ViewRenderingExtensions.cs" />
     <Compile Include="Providers\CustomOptionsProvider.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Content.cs" />
@@ -819,6 +820,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\TopBlock.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Cms\MasterPage.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -105,6 +105,10 @@ namespace BetterCms.Module.Root.Controllers
                         // Notify.
                         Events.RootEvents.Instance.OnPageRendering(model.RenderPage);
 
+                        if (model.RenderPage != null && model.RenderPage.MasterPage != null)
+                        {
+                            return Content(this.RenderPageToString(model.RenderPage));
+                        }
                         return View(model.RenderPage);
                     }
                 }
