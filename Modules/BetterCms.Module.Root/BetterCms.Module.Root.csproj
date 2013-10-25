@@ -155,6 +155,9 @@
     <Compile Include="Controllers\SidebarController.cs" />
     <Compile Include="Controllers\SiteSettingsController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
+    <Compile Include="Models\Maps\ContentRegionMap.cs" />
+    <Compile Include="Models\ContentRegion.cs" />
+    <Compile Include="Models\Migrations\Migration201310241500.cs" />
     <Compile Include="Models\Migrations\Migration201310221445.cs" />
     <Compile Include="Models\Migrations\Migration201310170919.cs" />
     <Compile Include="Models\Migrations\Migration201310160818.cs" />
