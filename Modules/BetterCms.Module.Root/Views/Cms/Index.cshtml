@@ -9,11 +9,6 @@
     {
         Layout = Model.LayoutPath;
     }
-    else if (Model.MasterPage != null)
-    {
-        // TODO: remove this when rendering will be implemented
-        Layout = Model.MasterPage.LayoutPath;
-    }
     else
     {
         Layout = "~/Areas/bcms-Root/Views/Shared/BaseLayout.cshtml";

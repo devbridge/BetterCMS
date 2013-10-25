@@ -130,32 +130,9 @@ namespace BetterCms.Module.Root.Mvc
         protected CmsControllerBase()
         {     
             HtmlHelper.ClientValidationEnabled = true;
-            HtmlHelper.UnobtrusiveJavaScriptEnabled = true;            
+            HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
 
-            RenderViewDelegate = (viewName, model, enableFormContext) =>
-                {
-                    if (string.IsNullOrEmpty(viewName))
-                    {
-                        viewName = ControllerContext.RouteData.GetRequiredString("action");
-                    }
-
-                    ViewData.Model = model;
-
-                    using (var sw = new StringWriter())
-                    {
-                        var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
-                        var viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
-                        if (enableFormContext && viewContext.FormContext == null)
-                        {
-                            viewContext.FormContext = new FormContext();
-                        }
-
-                        viewResult.View.Render(viewContext, sw);
-                        viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
-
-                        return sw.GetStringBuilder().ToString();
-                    }
-                };
+            RenderViewDelegate = this.RenderViewToString;
         }
 
         /// <summary>

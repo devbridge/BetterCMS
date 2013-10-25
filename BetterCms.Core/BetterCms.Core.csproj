@@ -273,6 +273,11 @@
     <Compile Include="Web\DefaultHttpContextAccessor.cs" />
     <Compile Include="Modules\Install\DefaultModuleManager.cs" />
     <Compile Include="Modules\Install\IModuleManager.cs" />
+    <Compile Include="Web\DefaultVirtualPathProvider.cs" />
+    <Compile Include="Web\DynamicLayouts\DefaultDynamicHtmlLayoutProvider.cs" />
+    <Compile Include="Web\DynamicLayouts\DynamicHtmlLayoutContentsContainer.cs" />
+    <Compile Include="Web\DynamicLayouts\DynamicHtmlLayoutVirtualFile.cs" />
+    <Compile Include="Web\DynamicLayouts\IDynamicHtmlLayoutProvider.cs" />
     <Compile Include="Web\EmbeddedResources\DefaultEmbeddedResourcesProvider.cs" />
     <Compile Include="Web\EmbeddedResources\EmbeddedResourceDescriptor.cs" />
     <Compile Include="Web\EmbeddedResources\IEmbeddedResourcesProvider.cs" />
