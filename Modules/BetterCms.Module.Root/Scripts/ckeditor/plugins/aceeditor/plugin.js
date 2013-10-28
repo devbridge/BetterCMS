@@ -130,10 +130,13 @@ Edited by the Devbridge Better CMS team.
                             var updateCKEditor = function () {
                                 bcms.logger.trace('change detected');
 
-                                // Set the data of the CKEditor to the value of ACE Editor
+                                // Set the data of the CKEditor to the value of ACE Editor.
                                 editor.setData(aceEditor.getSession().getValue(), function () {
                                     bcms.logger.trace('change saved');
-                                }, true);
+                                    // NOTE: hack to reattach keyboard events after backspace click. // TODO: investigate for proper fix.
+                                    aceEditor.blur();
+                                    aceEditor.focus();
+                                }, false);
 
                                 return false;
                             };
