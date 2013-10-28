@@ -30,12 +30,12 @@ namespace BetterCms.Module.ImagesGallery.Models.Migrations
         {
             Update.Table("Contents")
                   .InSchema(rootSchemaName)
-                  .Set(new { PreviewUrl = "/file/bcms-images-gallery/Content/GalleryPreview.png" })
+                  .Set(new { PreviewUrl = "/file/bcms-images-gallery/Content/GalleryPreview.png", Name = "Gallery Albums Widget" })
                   .Where(new { Id = "8BD1E830-6C2D-4AF1-BD5C-A24400A83DBC" });
 
             Update.Table("Contents")
                   .InSchema(rootSchemaName)
-                  .Set(new { PreviewUrl = "/file/bcms-images-gallery/Content/GalleryPreview.png" })
+                  .Set(new { PreviewUrl = "/file/bcms-images-gallery/Content/GalleryPreview.png", Name = "Gallery Album Images Widget" })
                   .Where(new { Id = "F67BC85F-83A7-427E-85C5-A24D008B32E1" });
         }
     }
