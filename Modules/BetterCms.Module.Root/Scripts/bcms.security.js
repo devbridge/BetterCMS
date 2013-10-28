@@ -214,9 +214,11 @@ bettercms.define('bcms.security', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', '
                 }                         
         };
 
-        $.each(accessList, function(i, item) {
-            model.UserAccessList.push(new UserAccessViewModel(item));
-        });
+        if (accessList) {
+            $.each(accessList, function(i, item) {
+                model.UserAccessList.push(new UserAccessViewModel(item));
+            });
+        }
 
         return model;
     };

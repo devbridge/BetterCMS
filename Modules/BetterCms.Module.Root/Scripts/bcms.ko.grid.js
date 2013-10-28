@@ -42,7 +42,7 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.paging = new ko.PagingViewModel(options.PageSize, options.PageNumber, options.TotalCount, onOpenPage);
             };
             
-            self.hasFocus = ko.observable(false);
+            self.hasFocus = ko.observable(true);
             
             if (options) {
                 self.setOptions(options);
@@ -593,6 +593,10 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
             self.savePressed = false;
 
+            // Mark item as no new anymore, if trying to save
+            self.isNew(false);
+            self.parent.rowAdded = false;
+
             if (canSave) {
                 var params = self.getSaveParams();
                 if (url) {
@@ -606,25 +610,18 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                         data: JSON.stringify(params)
                     })
                         .done(function (json) {
-                            if (json.Success) {
-                                // Mark item as no new anymore, if trying to save
-                                self.isNew(false);
-                                self.parent.rowAdded = false;
-                            }
-
                             self.onAfterItemSaved(json);
                             self.saving(false);
-                            self.wasSaved = true;
+
+                            if (json.Success) {
+                                self.wasSaved = true;
+                            }
                         })
                         .fail(function(response) {
                             self.onAfterItemSaved(bcms.parseFailedResponse(response));
                             self.saving(false);
                         });
                 } else {
-                    // Mark item as no new anymore, if trying to save
-                    self.isNew(false);
-                    self.parent.rowAdded = false;
-
                     // Save locally if URL is NOT specified
                     var result = {
                         Success: true
@@ -634,10 +631,6 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     self.wasSaved = true;
                 }
             } else {
-                // Mark item as no new anymore, if trying to save
-                self.isNew(false);
-                self.parent.rowAdded = false;
-
                 if (!keepActive) {
                     this.isActive(false);
                     this.loseFocus();

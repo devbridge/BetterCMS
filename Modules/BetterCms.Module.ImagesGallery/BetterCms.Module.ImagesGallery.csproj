@@ -128,6 +128,7 @@
     <Compile Include="ImagesGalleryModuleConstants.cs" />
     <Compile Include="ImagesGalleryModuleDescriptor.cs" />
     <EmbeddedResource Include="Models\Migrations\Migration201310211700.sqlserver.sql" />
+    <Compile Include="Models\Migrations\Migration201310251623.cs" />
     <Compile Include="Models\Migrations\Migration201310211700.cs" />
     <Compile Include="Models\Migrations\Migration201310081540.cs" />
     <Compile Include="Models\Migrations\Migration201310081330.cs" />
@@ -178,6 +179,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Content\GalleryPreview.png" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

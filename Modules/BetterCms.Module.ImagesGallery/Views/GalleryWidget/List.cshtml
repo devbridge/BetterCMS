@@ -23,7 +23,7 @@
             <img src="@album.CoverImageUrl" alt="@album.Title" />
             <div class="bcms-album-name">
                 <h4><a href="@album.Url">@album.Title</a></h4>
-                <span>@album.ImagesCount @ImagesGalleryGlobalization.GalleryWidget_Pictures,</span>
+                <span>@album.ImagesCount @ImagesGalleryGlobalization.GalleryWidget_Pictures@if (album.LastUpdateDate.HasValue) { @Html.Raw(",") }</span>
                 @if (album.LastUpdateDate.HasValue)
                 {
                     <time datetime="@album.LastUpdateDate.Value.ToString(ImagesGalleryModuleConstants.GalleryWidgetUpdateDateTagFormat)">@album.LastUpdateDate.Value.ToString(ImagesGalleryModuleConstants.GalleryWidgetUpdateDateDisplayFormat)</time>
