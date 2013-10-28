@@ -42,7 +42,7 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.paging = new ko.PagingViewModel(options.PageSize, options.PageNumber, options.TotalCount, onOpenPage);
             };
             
-            self.hasFocus = ko.observable(false);
+            self.hasFocus = ko.observable(true);
             
             if (options) {
                 self.setOptions(options);
