@@ -36,7 +36,7 @@ namespace BetterCms.Module.Root.Controllers
 
             var model = GetCommand<GetPageToRenderCommand>().ExecuteCommand(request);
 
-            if (model.RenderPage != null)
+            if (model != null && model.RenderPage != null)
             {
                 return View(model.RenderPage);
             }
