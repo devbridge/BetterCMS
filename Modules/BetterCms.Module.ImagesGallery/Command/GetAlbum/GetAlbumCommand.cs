@@ -47,7 +47,7 @@ namespace BetterCms.Module.ImagesGallery.Command.GetAlbum
             }
 
             var result = imagesQuery
-                .Where(i => i.Original == null && !i.IsDeleted)
+                .Where(i => i.Original == null && !i.IsDeleted && i.IsUploaded == true && !i.IsTemporary)
                 .OrderBy(i => i.Title)
                 .Select(i => new
                                  {
