@@ -162,8 +162,9 @@
     <Compile Include="Models\Migrations\Migration201310170919.cs" />
     <Compile Include="Models\Migrations\Migration201310160818.cs" />
     <Compile Include="Models\Migrations\Migration201310180900.cs" />
+    <Compile Include="Mvc\Helpers\DynamicLayoutHelper.cs" />
     <Compile Include="Mvc\Helpers\OptionsExtentions.cs" />
-    <Compile Include="Mvc\ViewRenderingExtensions.cs" />
+    <Compile Include="Mvc\Helpers\ViewRenderingExtensions.cs" />
     <Compile Include="Providers\CustomOptionsProvider.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Content.cs" />
@@ -1094,9 +1095,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\ace\LICENSE" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Cms\MasterPage.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -163,6 +163,14 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         public List<PageRegionViewModel> Regions { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether regions and contents can be edited for current page.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if regions and contents can be edited for current page; otherwise, <c>false</c>.
+        /// </value>
+        public bool AreRegionsEditable { get; set; }
+
+        /// <summary>
         /// Gets or sets the page options.
         /// </summary>
         /// <value>

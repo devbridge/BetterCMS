@@ -5,7 +5,7 @@ using BetterCms.Core.DataContracts;
 namespace BetterCms.Module.Pages.Models
 {
     [Serializable]
-    public class HtmlContent : Root.Models.Content, IHtmlContent
+    public class HtmlContent : Root.Models.Content, IHtmlContent, IDynamicContentContainer
     {
         public virtual DateTime ActivationDate { get; set; }
 

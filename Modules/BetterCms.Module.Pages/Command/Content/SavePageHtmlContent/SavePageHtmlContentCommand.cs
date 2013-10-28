@@ -120,7 +120,9 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
             pageContent.Content = contentService.SaveContentWithStatusUpdate(
                 contentToSave,
                 request.DesirableStatus);
-            
+
+            contentService.CollectDynamicLayouts(pageContent.Content);
+
             Repository.Save(pageContent);
             UnitOfWork.Commit();
 

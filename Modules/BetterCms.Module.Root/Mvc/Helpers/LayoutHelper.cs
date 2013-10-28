@@ -32,12 +32,12 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                 var contentsBuilder = new StringBuilder();
                 var projections = model.Contents.Where(c => c.RegionId == region.RegionId).OrderBy(c => c.Order).ToList();
 
-                using (new LayoutRegionWrapper(contentsBuilder, region, model.CanManageContent))
+                using (new LayoutRegionWrapper(contentsBuilder, region, model.AreRegionsEditable))
                 {
                     foreach (var projection in projections)
                     {
                         // Add Html
-                        using (new RegionContentWrapper(contentsBuilder, projection, model.CanManageContent))
+                        using (new RegionContentWrapper(contentsBuilder, projection, model.CanManageContent && model.AreRegionsEditable))
                         {
                             var content = projection.GetHtml(htmlHelper);
                             contentsBuilder.Append(content);

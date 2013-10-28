@@ -349,5 +349,15 @@ namespace BetterCms.Module.Root.Services
         {
             optionService.SetOptions<ContentOption, Models.Content>(destination, source.Options);
         }
+
+        public void CollectDynamicLayouts(Models.Content content)
+        {
+            var dynamicContainer = content as IDynamicContentContainer;
+            if (dynamicContainer != null)
+            {
+                // TODO
+                // var regions = DynamicLayoutHelper.CollectDynamicLayouts();
+            }
+        }
     }
 }

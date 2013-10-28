@@ -55,11 +55,26 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         }
 
         /// <summary>
+        /// Executes the specified request.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        public CmsRequestViewModel Execute(GetPageToRenderRequest request)
+        {
+            return GetPageToRender(request, false);
+        }
+
+        /// <summary>
         /// Executes this command.
         /// </summary>
         /// <param name="request">The request data with page data.</param>
-        /// <returns>Executed command result.</returns>
-        public CmsRequestViewModel Execute(GetPageToRenderRequest request)
+        /// <param name="isParent">if set to <c>true</c> page model is parent model.</param>
+        /// <returns>
+        /// Executed command result.
+        /// </returns>
+        /// <exception cref="System.Web.HttpException">403;403 Access Forbidden</exception>
+        /// <exception cref="System.InvalidOperationException"></exception>
+        public CmsRequestViewModel GetPageToRender(GetPageToRenderRequest request, bool isParent)
         {
             var pageQuery = GetPageFutureQuery(request);
             var pageContentsQuery = GetPageContentFutureQuery(request);
@@ -89,6 +104,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             RenderPageViewModel renderPageViewModel = new RenderPageViewModel(page);
             renderPageViewModel.CanManageContent = request.CanManageContent;
+            renderPageViewModel.AreRegionsEditable = request.CanManageContent && !isParent;
             if (page.Layout != null)
             {
                 renderPageViewModel.LayoutPath = page.Layout.LayoutPath;
@@ -119,14 +135,14 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
                 renderPageViewModel.Options = new List<IOptionValue>();
 
-                renderPageViewModel.MasterPage = Execute(new GetPageToRenderRequest
+                renderPageViewModel.MasterPage = GetPageToRender(new GetPageToRenderRequest
                                                              {
                                                                  PageId = page.MasterPage.Id,
                                                                  CanManageContent = request.CanManageContent,
                                                                  IsAuthenticated = request.IsAuthenticated,
                                                                  IsPreview = request.IsPreview,
                                                                  PreviewPageContentId = request.PreviewPageContentId,
-                                                             }).RenderPage;
+                                                             }, true).RenderPage;
             }
             else
             {
@@ -274,10 +290,12 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             // Add fetched entities.
             query = query
+                .Fetch(f => f.MasterPage)
+                // TODO: do not fetch grand-parents: fix projection factories
+                .ThenFetch(f => f.MasterPage)
                 .Fetch(f => f.Layout)
                 .ThenFetchMany(f => f.LayoutRegions)
-                .ThenFetch(f => f.Region)
-                .Fetch(f => f.MasterPage);
+                .ThenFetch(f => f.Region);
 
             // Add access rules if access control is enabled.
             if (cmsConfiguration.Security.AccessControlEnabled)

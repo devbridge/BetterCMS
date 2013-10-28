@@ -25,8 +25,12 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
         public override SaveWidgetResponse Execute(EditHtmlContentWidgetViewModel request)
         {
             UnitOfWork.BeginTransaction();
+            
             var widgetContent = GetHtmlContentWidgetFromRequest(request);
+
             HtmlContentWidget widget = (HtmlContentWidget)ContentService.SaveContentWithStatusUpdate(widgetContent, request.DesirableStatus);
+            ContentService.CollectDynamicLayouts(widget);
+            
             Repository.Save(widget);
 
             UnitOfWork.Commit();

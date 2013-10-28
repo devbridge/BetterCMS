@@ -17,5 +17,7 @@ namespace BetterCms.Module.Root.Services
         int GetPageContentNextOrderNumber(Guid pageId);
 
         void PublishDraftContent(Guid pageId);
+
+        void CollectDynamicLayouts(Models.Content content);
     }
 }

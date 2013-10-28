@@ -6,7 +6,7 @@ using BetterCms.Module.Root.Models;
 namespace BetterCms.Module.Pages.Models
 {
     [Serializable]
-    public class HtmlContentWidget : Widget, IHtmlContentWidget
+    public class HtmlContentWidget : Widget, IHtmlContentWidget, IDynamicContentContainer
     {
         public virtual string CustomCss { get; set; }
 
