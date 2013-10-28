@@ -49,7 +49,7 @@
     
             <div class="bcms-input-list-holder" id="bcms-custom-css-container" style="display: none;">
                 <div class="bcms-content-titles">@PagesGlobalization.HtmlContentWidget_CustomCSS_Title</div>
-                @Html.TextAreaFor(model => model.CustomCSS, new { @class = "bcms-editor-field-area bcms-code-field" })
+                @Html.TextAreaFor(model => model.CustomCSS, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-css" })
             </div>
             
             <div class="bcms-edit-check-field">
@@ -59,7 +59,7 @@
 
             <div class="bcms-input-list-holder" id="bcms-custom-js-container" style="display: none;">
                 <div class="bcms-content-titles">@PagesGlobalization.HtmlContentWidget_CustomJS_Title</div>
-                @Html.TextAreaFor(model => model.CustomJS, new { @class = "bcms-editor-field-area bcms-code-field" })
+                @Html.TextAreaFor(model => model.CustomJS, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-javascript" })
             </div>            
             @Html.HiddenFor(model => model.Id, new { @id = "bcmsContentId" })
             @Html.HiddenFor(model => model.Version, new { @id = "bcmsContentVersion" })

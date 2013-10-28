@@ -21,21 +21,20 @@ bettercms.define('bcms.codeEditor', ['bcms.jquery', 'bcms', 'ace'], function ($,
 
     codeEditor.initialize = function(container) {
         if (!ace) {
-            bcms.logger.warning('ACE editor is not available.');
+            bcms.logger.error('Failed to load ACE editor.');
             return;
         }
-        
+
         var initAceEditor = function (inputField, mode) {
             inputField = $(inputField);
-            var width = inputField.width(),
-                height = inputField.height(),
+            var height = inputField.outerHeight(),
                 id = inputField.attr('id'),
                 editorId = "aceEditor_" + id,
                 containerId = "aceEditor_container_" + id;
             
             inputField.hide();
-            inputField.after('<div id="' + containerId + '" class="bcms-editor-field-area"><div id="' + editorId + '" style="width:100%; height:100%;"></div></div>');
-            $('#' + containerId).width(width).height(height);
+            inputField.after('<div id="' + containerId + '" class="bcms-editor-field-area" style="padding:0;"><div id="' + editorId + '" style="width:100%; height:100%;"></div></div>');
+            $('#' + containerId).width("100%").height(height);
             
             var aceEditor = ace.edit(editorId);
             aceEditor.getSession().setMode(mode);
