@@ -253,6 +253,7 @@
     <Compile Include="Registration\AuthenticationJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\ContentJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\BcmsJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\CodeEditorJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\OptionsJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\TagsJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\SecurityJsModuleIncludeDescriptor.cs" />
