@@ -77,7 +77,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             // Preview and published pages can be accessible to users without content managing roles
             // Unpublished pages can be accessible only to content managers
-            if (page.Status != PageStatus.Published && page.Status != PageStatus.Preview && !request.CanManageContent)
+            if (page.Status != PageStatus.Published && page.Status != PageStatus.Preview && !request.HasContentAccess)
             {
                 if (!cmsConfiguration.Security.AccessControlEnabled)
                 {
