@@ -9,6 +9,8 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         public string PageUrl { get; set; }
 
         public bool CanManageContent { get; set; }
+
+        public bool HasContentAccess { get; set; }
         
         public bool IsAuthenticated { get; set; }
 
