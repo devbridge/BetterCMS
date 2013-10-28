@@ -11,6 +11,7 @@ using BetterCms.Core.Services.Caching;
 
 using BetterCms.Module.Root.Commands.GetPageToRender;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.ViewModels.Cms;
 
 using Common.Logging;
@@ -107,8 +108,11 @@ namespace BetterCms.Module.Root.Controllers
 
                         if (model.RenderPage != null && model.RenderPage.MasterPage != null)
                         {
+                            // Render page with hierarchical master pages
                             return Content(this.RenderPageToString(model.RenderPage));
                         }
+
+                        // Render regular MVC Razor view
                         return View(model.RenderPage);
                     }
                 }
