@@ -38,10 +38,7 @@ Edited by the Devbridge Better CMS team.
 
                             // START ACE.
                             var editorID = editor.id;
-                            var editorName = editor.name;
-
-                            $('.' + editorID).after('<div id="aceEditor_container_' + editorID + '" class="aceEditor_container" style=" background-color:white; position:absolute;">\
-                    <div id="aceEditor_' + editorID + '" style="width:100%; height:100%;"></div></div>');
+                            sourceAreaElement.after('<div id="aceEditor_container_' + editorID + '" class="aceEditor_container" style=" background-color:white;"><div id="aceEditor_' + editorID + '" style="width:100%; height:100%;"></div></div>');
 
                             // Make the editor container fill the space.
                             $('#aceEditor_container_' + editorID).css(holderElement.position()).width(holderElement.width()).height(holderElement.height());
