@@ -54,18 +54,24 @@ namespace BetterCms.Module.ImagesGallery.Command.GetGalleryAlbums
             var dateSubQuery = QueryOver.Of<MediaImage>()
                 .Where(x => x.Original == null)
                 .And(x => !x.IsDeleted)
+                .And(x => !x.IsTemporary)
+                .And(x => x.IsUploaded == true)
                 .And(x => x.Folder.Id == folderAlias.Id)
                 .Select(Projections.Max(Projections.Property<MediaFolder>(c => c.ModifiedOn)));
 
             var countSubQuery = QueryOver.Of<MediaImage>()
                 .Where(x => x.Original == null)
                 .And(x => !x.IsDeleted)
+                .And(x => !x.IsTemporary)
+                .And(x => x.IsUploaded == true)
                 .And(x => x.Folder.Id == folderAlias.Id)
                 .ToRowCountQuery();
 
             var coverImageUrlSubQuery = QueryOver.Of<MediaImage>()
                 .Where(x => x.Original == null)
                 .And(x => !x.IsDeleted)
+                .And(x => !x.IsTemporary)
+                .And(x => x.IsUploaded == true)
                 .And(x => x.Folder.Id == folderAlias.Id)
                 .OrderBy(o => o.Title).Asc
                 .Select(s => s.PublicUrl)
