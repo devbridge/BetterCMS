@@ -21,5 +21,15 @@ namespace BetterCms.Module.Root.Mvc.Helpers
 
             return Regex.Replace(replaceIn, replacement, replaceWith, RegexOptions.IgnoreCase);
         }
+
+        /// <summary>
+        /// Collects the dynamic layouts.
+        /// </summary>
+        /// <returns>Collected dynamic layouts</returns>
+        public static string[] CollectDynamicLayouts()
+        {
+            // TODO
+            return new string[0];
+        }
     }
 }
