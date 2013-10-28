@@ -71,7 +71,7 @@ namespace BetterCms.Module.ImagesGallery.Command.GetGalleryAlbums
                 .Select(s => s.PublicUrl)
                 .Take(1);
 
-            var albumQuery = UnitOfWork.Session.QueryOver(() => folderAlias).Where(m => m.Type == MediaType.Image);
+            var albumQuery = UnitOfWork.Session.QueryOver(() => folderAlias).Where(m => m.Type == MediaType.Image).And(m => !m.IsDeleted);
 
             var id = request.GetOptionValue<Guid?>(ImagesGalleryModuleConstants.OptionKeys.GalleryFolder);
             if (id.HasValue)
