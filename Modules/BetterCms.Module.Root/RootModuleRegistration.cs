@@ -203,6 +203,7 @@ namespace BetterCms.Module.Root
                     new FormsJsModuleIncludeDescriptor(this),
                     new JsIncludeDescriptor(this, "bcms.grid"), 
                     new HtmlEditorJsModuleIncludeDescriptor(this),                     
+                    new CodeEditorJsModuleIncludeDescriptor(this),                     
                     new InlineEditorJsModuleIncludeDescriptor(this),
                     new JsIncludeDescriptor(this, "bcms.jquery", "bcms.jquery-1.7.2"),
                     new JsIncludeDescriptor(this, "bcms.jqueryui", "bcms.jquery-ui-1.9.0"),

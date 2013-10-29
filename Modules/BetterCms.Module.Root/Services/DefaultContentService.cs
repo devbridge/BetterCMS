@@ -342,22 +342,30 @@ namespace BetterCms.Module.Root.Services
 
         public void PublishDraftContent(Guid pageId)
         {
-            var pageContents =
-                repository.AsQueryable<PageContent>().Where(content => content.Page.Id == pageId).Fetch(f => f.Content).ThenFetchMany(f => f.History).ToList();
+            var pageContents = repository.AsQueryable<PageContent>()
+                .Where(content => content.Page.Id == pageId)
+                .Fetch(f => f.Content)
+                .ThenFetchMany(f => f.History)
+                .ToList();
 
             var draftContents = pageContents
                 .Where(
                     content =>
                     (content.Content.Status == ContentStatus.Draft
                      && (content.Content.History == null || content.Content.History.All(content1 => content1.Status != ContentStatus.Published)))
-                    || (content.Content.Status != ContentStatus.Published && content.Content.History.All(content1 => content1.Status != ContentStatus.Published)))
+                    || (content.Content.Status != ContentStatus.Published
+                        && content.Content.History.All(content1 => content1.Status != ContentStatus.Published)
+                        && content.Content.History.Any(content1 => content1.Status == ContentStatus.Draft)))
                 .ToList();
 
-            foreach (var pageContent in draftContents.Where(pageContent => !(pageContent.Content is Root.Models.Widget)))
+            foreach (var pageContent in draftContents.Where(pageContent => !(pageContent.Content is Widget)))
             {
-                pageContent.Content = SaveContentWithStatusUpdate(pageContent.Content.FindEditableContentVersion(), ContentStatus.Published);
-
-                repository.Save(pageContent);
+                var draftContent = pageContent.Content.FindEditableContentVersion();
+                if (draftContent != null)
+                {
+                    pageContent.Content = SaveContentWithStatusUpdate(draftContent, ContentStatus.Published);
+                    repository.Save(pageContent);
+                }
             }
         }
 

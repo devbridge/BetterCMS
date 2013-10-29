@@ -150,13 +150,13 @@
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageCss_Title</div>
-                    @Html.TextAreaFor(model => model.PageCSS, new { @class = "bcms-editor-field-area bcms-code-field" })
+                    @Html.TextAreaFor(model => model.PageCSS, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-css" })
                 </div>
 
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageJavascript_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_PageJavascript_Title</div>
-                    @Html.TextAreaFor(model => model.PageJavascript, new { @class = "bcms-editor-field-area bcms-code-field" })
+                    @Html.TextAreaFor(model => model.PageJavascript, new { @class = "bcms-editor-field-area bcms-code-field bcms-code-field-javascript" })
                 </div>
             </div>
         </div>

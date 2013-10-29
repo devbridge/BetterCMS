@@ -177,6 +177,7 @@ namespace BetterCms.Module.Root.Controllers
             var request = new GetPageToRenderRequest {
                                                          PageUrl = virtualPath,
                                                          CanManageContent = canManageContent,
+                                                         HasContentAccess = canManageContent,
                                                          IsAuthenticated = principal != null && principal.Identity.IsAuthenticated
                                                      };
 

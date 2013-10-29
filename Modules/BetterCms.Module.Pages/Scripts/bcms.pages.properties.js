@@ -2,8 +2,8 @@
 /*global bettercms */
 
 bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.dynamicContent', 'bcms.tags', 'bcms.ko.extenders',
-        'bcms.media', 'bcms.redirect', 'bcms.options', 'bcms.security', 'bcms.messages'],
-    function ($, bcms, modal, forms, dynamicContent, tags, ko, media, redirect, options, security, messages) {
+        'bcms.media', 'bcms.redirect', 'bcms.options', 'bcms.security', 'bcms.messages', 'bcms.codeEditor'],
+    function ($, bcms, modal, forms, dynamicContent, tags, ko, media, redirect, options, security, messages, codeEditor) {
         'use strict';
 
         var page = {},
@@ -135,6 +135,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 }
             });
 
+            codeEditor.initialize(dialog.container);
+            
             return pageViewModel;
         };
 
