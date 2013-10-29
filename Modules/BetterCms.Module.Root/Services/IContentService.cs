@@ -1,12 +1,13 @@
 ﻿using System;
 
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Root.Services
 {
     public interface IContentService
     {
-        Tuple<Models.PageContent, Models.Content> GetPageContentForEdit(Guid pageContentId);
+        Tuple<PageContent, Models.Content> GetPageContentForEdit(Guid pageContentId);
 
         Models.Content GetContentForEdit(Guid contentId);
 
@@ -17,7 +18,5 @@ namespace BetterCms.Module.Root.Services
         int GetPageContentNextOrderNumber(Guid pageId);
 
         void PublishDraftContent(Guid pageId);
-
-        void CollectDynamicLayouts(Models.Content content);
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace BetterCms.Core.DataContracts
 {
-    public interface IDynamicContentContainer
+    public interface IDynamicContentContainer : IContent
     {
-        string Html { get; set; }
+        string Html { get; }
     }
 }

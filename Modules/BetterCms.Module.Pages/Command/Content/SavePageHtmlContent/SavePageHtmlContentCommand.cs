@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
@@ -40,8 +41,6 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
             {
                 AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent);
             }
-
-            UnitOfWork.BeginTransaction();
 
             PageContent pageContent;            
             if (!request.Id.HasDefaultValue())
@@ -117,11 +116,10 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                 contentToSave.EditInSourceMode = contentToPublish.EditInSourceMode;
             }
 
+            UnitOfWork.BeginTransaction();
             pageContent.Content = contentService.SaveContentWithStatusUpdate(
                 contentToSave,
                 request.DesirableStatus);
-
-            contentService.CollectDynamicLayouts(pageContent.Content);
 
             Repository.Save(pageContent);
             UnitOfWork.Commit();
