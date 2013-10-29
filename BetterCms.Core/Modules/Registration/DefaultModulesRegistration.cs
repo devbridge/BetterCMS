@@ -128,6 +128,10 @@ namespace BetterCms.Core.Modules.Registration
                 {
                     knownModuleDescriptorTypes.Add(moduleRegistrationType.Name, moduleRegistrationType);
                 }
+                else
+                {
+                    Log.InfoFormat("Module descriptor {0} from the assembly {1} already included.", moduleRegistrationType.Name, assembly.FullName);
+                }
             }
         }
 
