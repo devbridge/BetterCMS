@@ -4,7 +4,6 @@ using System.Linq;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Widgets;
-
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 
@@ -29,7 +28,6 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
             var widgetContent = GetHtmlContentWidgetFromRequest(request);
 
             HtmlContentWidget widget = (HtmlContentWidget)ContentService.SaveContentWithStatusUpdate(widgetContent, request.DesirableStatus);
-            ContentService.CollectDynamicLayouts(widget);
             
             Repository.Save(widget);
 

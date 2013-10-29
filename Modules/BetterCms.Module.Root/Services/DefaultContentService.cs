@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
@@ -30,18 +31,12 @@ namespace BetterCms.Module.Root.Services
         private readonly IRepository repository;
 
         /// <summary>
-        /// The unit of work
-        /// </summary>
-        private readonly IUnitOfWork unitOfWork;
-
-        /// <summary>
         /// The option service
         /// </summary>
         private readonly IOptionService optionService;
 
-        public DefaultContentService(ISecurityService securityService, IRepository repository, IUnitOfWork unitOfWork, IOptionService optionService)
+        public DefaultContentService(ISecurityService securityService, IRepository repository, IOptionService optionService)
         {
-            this.unitOfWork = unitOfWork;
             this.securityService = securityService;
             this.repository = repository;
             this.optionService = optionService;
@@ -81,6 +76,8 @@ namespace BetterCms.Module.Root.Services
                           .Fetch(f => f.Original).ThenFetchMany(f => f.ContentOptions)
                           .FetchMany(f => f.History)
                           .FetchMany(f => f.ContentOptions)            
+                          .FetchMany(f => f.ContentRegions)            
+                          .ThenFetch(f => f.Region)
                           .ToList()
                           .FirstOrDefault();
 
@@ -94,8 +91,18 @@ namespace BetterCms.Module.Root.Services
                 originalContent = originalContent.Original;
             }
 
+            var dynamicContainer = updatedContent as IDynamicContentContainer;
+            if (dynamicContainer != null)
+            {
+                if (updatedContent.ContentRegions == null)
+                {
+                    updatedContent.ContentRegions = new List<ContentRegion>();
+                }
+                CollectDynamicRegions(dynamicContainer.Html, updatedContent, updatedContent.ContentRegions);
+            }
+
             originalContent = repository.UnProxy(originalContent);
-           
+
             if (originalContent.History != null)
             {
                 originalContent.History = originalContent.History.Distinct().ToList();
@@ -105,7 +112,12 @@ namespace BetterCms.Module.Root.Services
             {
                 originalContent.ContentOptions = originalContent.ContentOptions.Distinct().ToList();
             }
-
+            
+            if (originalContent.ContentOptions != null)
+            {
+                originalContent.ContentRegions = originalContent.ContentRegions.Distinct().ToList();
+            }
+            
             /* Update existing content. */
             switch (originalContent.Status)
             {
@@ -146,6 +158,7 @@ namespace BetterCms.Module.Root.Services
 
                 updatedContent.CopyDataTo(contentVersionOfRequestedStatus, false);
                 SetContentOptions(contentVersionOfRequestedStatus, updatedContent);
+                SetContentRegions(contentVersionOfRequestedStatus, updatedContent);
 
                 contentVersionOfRequestedStatus.Original = originalContent;
                 contentVersionOfRequestedStatus.Status = requestedStatus;
@@ -167,6 +180,7 @@ namespace BetterCms.Module.Root.Services
 
                 updatedContent.CopyDataTo(originalContent, false);
                 SetContentOptions(originalContent, updatedContent);
+                SetContentRegions(originalContent, updatedContent);
 
                 originalContent.Status = requestedStatus;
                 originalContent.PublishedOn = DateTime.Now;
@@ -214,6 +228,7 @@ namespace BetterCms.Module.Root.Services
 
                 updatedContent.CopyDataTo(previewOrDraftContentVersion, false);
                 SetContentOptions(previewOrDraftContentVersion, updatedContent);
+                SetContentRegions(previewOrDraftContentVersion, updatedContent);
                 previewOrDraftContentVersion.Status = requestedStatus;
                 repository.Save(previewOrDraftContentVersion); 
             }            
@@ -231,6 +246,7 @@ namespace BetterCms.Module.Root.Services
 
                 updatedContent.CopyDataTo(originalContent, false);
                 SetContentOptions(originalContent, updatedContent);
+                SetContentRegions(originalContent, updatedContent);
                 originalContent.Status = requestedStatus;
                 originalContent.PublishedOn = DateTime.Now;
                 originalContent.PublishedByUser = securityService.CurrentPrincipalName;
@@ -345,19 +361,86 @@ namespace BetterCms.Module.Root.Services
             }
         }
 
+        public void CollectDynamicRegions(string html, Models.Content content, IList<ContentRegion> contentRegions)
+        {
+            var regionIdentifiers = GetRegionIds(html);
+
+            if (regionIdentifiers.Length > 0)
+            {
+                var existingRegions = repository
+                    .AsQueryable<Region>()
+                    .Where(r => regionIdentifiers.Contains(r.RegionIdentifier))
+                    .ToArray();
+
+                foreach (var regionId in regionIdentifiers)
+                {
+                    Region region = existingRegions.FirstOrDefault(r => r.RegionIdentifier == regionId);
+
+                    if (region == null)
+                    {
+                        region = contentRegions
+                            .Where(cr => cr.Region.RegionIdentifier == regionId)
+                            .Select(cr => cr.Region).FirstOrDefault();
+
+                        if (region == null)
+                        {
+                            region = new Region { RegionIdentifier = regionId };
+                        }
+                    }
+
+                    var contentRegion = new ContentRegion { Region = region, Content = content };
+                    contentRegions.Add(contentRegion);
+                }
+            }
+        }
+
+        private string[] GetRegionIds(string searchIn)
+        {
+            var ids = new List<string>();
+
+            var matches = Regex.Matches(searchIn, RootModuleConstants.DynamicRegionRegexPattern, RegexOptions.IgnoreCase);
+            foreach (Match match in matches)
+            {
+                if (match.Groups.Count > 1)
+                {
+                    ids.Add(match.Groups[1].Value);
+                }
+            }
+
+            return ids.Distinct().ToArray();
+        }
+
         private void SetContentOptions(IOptionContainer<Models.Content> destination, IOptionContainer<Models.Content> source)
         {
             optionService.SetOptions<ContentOption, Models.Content>(destination, source.Options);
         }
 
-        public void CollectDynamicLayouts(Models.Content content)
+        private void SetContentRegions(Models.Content destination, Models.Content source)
         {
-            var dynamicContainer = content as IDynamicContentContainer;
-            if (dynamicContainer != null)
+            if (destination.ContentRegions == null)
             {
-                // TODO
-                // var regions = DynamicLayoutHelper.CollectDynamicLayouts();
+                destination.ContentRegions = new List<ContentRegion>();
             }
+            if (source.ContentRegions == null)
+            {
+                source.ContentRegions = new List<ContentRegion>();
+            }
+
+            // Add regions, which not exists in destination
+            source.ContentRegions
+                .Where(s => destination.ContentRegions.All(d => s.Region.RegionIdentifier != d.Region.RegionIdentifier))
+                .Distinct().ToList()
+                .ForEach(s =>
+                             {
+                                 destination.ContentRegions.Add(new ContentRegion { Region = s.Region, Content = destination });
+                                 source.ContentRegions.Remove(s);
+                             });
+
+            // Remove regions, which not exists in source
+            destination.ContentRegions
+                .Where(s => destination.ContentRegions.All(d => s.Region.RegionIdentifier != d.Region.RegionIdentifier))
+                .Distinct().ToList()
+                .ForEach(d => repository.Delete(d));
         }
     }
 }

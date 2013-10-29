@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Cms;
 
 namespace BetterCms.Module.Root.Mvc.Helpers
@@ -53,33 +54,34 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         {
             var htmlHelper = GetHtmlHelper(controller);
 
-            return RenderRecursively(controller, renderPageViewModel, htmlHelper);
+            return RenderRecursively(controller, renderPageViewModel, renderPageViewModel, htmlHelper);
         }
 
         /// <summary>
         /// Renders page to string recursively - going deep to master pages and layouts.
         /// </summary>
         /// <param name="controller">The controller.</param>
-        /// <param name="model">The model.</param>
+        /// <param name="currentModel">The model.</param>
+        /// <param name="pageModel">The page model.</param>
         /// <param name="htmlHelper">The HTML helper.</param>
         /// <returns></returns>
-        private static string RenderRecursively(CmsControllerBase controller, RenderPageViewModel model, HtmlHelper htmlHelper)
+        private static string RenderRecursively(CmsControllerBase controller, RenderPageViewModel currentModel, RenderPageViewModel pageModel, HtmlHelper htmlHelper)
         {
-            if (model.MasterPage != null)
+            if (currentModel.MasterPage != null)
             {
-                var renderedMaster = RenderRecursively(controller, model.MasterPage, htmlHelper);
+                var renderedMaster = RenderRecursively(controller, currentModel.MasterPage, pageModel, htmlHelper);
 
-                foreach (var region in model.Regions)
+                foreach (var region in currentModel.Regions)
                 {
                     var contentsBuilder = new StringBuilder();
-                    var projections = model.Contents.Where(c => c.RegionId == region.RegionId).OrderBy(c => c.Order).ToList();
+                    var projections = currentModel.Contents.Where(c => c.RegionId == region.RegionId).OrderBy(c => c.Order).ToList();
 
-                    using (new LayoutRegionWrapper(contentsBuilder, region, model.AreRegionsEditable))
+                    using (new LayoutRegionWrapper(contentsBuilder, region, currentModel.AreRegionsEditable))
                     {
                         foreach (var projection in projections)
                         {
                             // Add Html
-                            using (new RegionContentWrapper(contentsBuilder, projection, model.CanManageContent && model.AreRegionsEditable))
+                            using (new RegionContentWrapper(contentsBuilder, projection, currentModel.CanManageContent && currentModel.AreRegionsEditable))
                             {
                                 var content = projection.GetHtml(htmlHelper);
                                 contentsBuilder.Append(content);
@@ -88,13 +90,50 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     }
 
                     var html = contentsBuilder.ToString();
-                    renderedMaster = DynamicLayoutHelper.ReplaceRegionHtml(region.RegionId, renderedMaster, html);
+                    renderedMaster = DynamicLayoutHelper.ReplaceRegionHtml(region.RegionIdentifier, renderedMaster, html);
                 }
                 
                 return renderedMaster;
             }
 
-            var renderedView = RenderViewToString(controller, "~/Areas/bcms-Root/Views/Cms/Index.cshtml", model);
+            // HACK: passing current page id to parent parent page, otherwise master page's id is used
+            // TODO: remove of find more clean solution
+            var newModel = new RenderPageViewModel(
+                new Page
+                    {
+                        Id = pageModel.Id,
+                        IsDeleted = currentModel.IsDeleted,
+                        Version = currentModel.Version,
+                        Title = currentModel.Title,
+                        PageUrl = currentModel.PageUrl,
+                        Status = currentModel.Status,
+                        CreatedOn = currentModel.CreatedOn,
+                        CreatedByUser = currentModel.CreatedByUser,
+                        ModifiedOn = currentModel.ModifiedOn,
+                        ModifiedByUser = currentModel.ModifiedByUser
+                    })
+                               {
+                                   LayoutPath = currentModel.LayoutPath,
+                                   MasterPage = currentModel.MasterPage,
+                                   Contents = currentModel.Contents,
+                                   Regions = currentModel.Regions,
+                                   AreRegionsEditable = currentModel.AreRegionsEditable,
+                                   CanManageContent = currentModel.CanManageContent,
+                                   Options = currentModel.Options,
+                                   Metadata = currentModel.Metadata,
+                                   Stylesheets = currentModel.Stylesheets,
+                                   JavaScripts = currentModel.JavaScripts,
+                                   AccessRules = currentModel.AccessRules,
+                                   RequireJsPath = currentModel.RequireJsPath,
+                                   MainJsPath = currentModel.MainJsPath,
+                                   Html5ShivJsPath = currentModel.Html5ShivJsPath,
+                                   Bag = currentModel.Bag,
+                                   IsReadOnly = currentModel.IsReadOnly,
+                                   HasEditRole = currentModel.HasEditRole,
+                                   SaveUnsecured = currentModel.SaveUnsecured,
+                               };
+
+            var renderedView = RenderViewToString(controller, "~/Areas/bcms-Root/Views/Cms/Index.cshtml", newModel);
             return renderedView;
         }
 

@@ -66,6 +66,16 @@
         public const string EditableOptionValueCellTemplate = "~/Areas/bcms-pages/Views/Option/Partial/OptionCell.cshtml";
 
         /// <summary>
+        /// The dynamic region replacement pattern
+        /// </summary>
+        public const string DynamicRegionReplacePattern = "{{{{DYNAMIC_REGION:{0}}}}}";
+
+        /// <summary>
+        /// The regex pattern for to find all dynamic regions in the content
+        /// </summary>
+        public const string DynamicRegionRegexPattern = "{{DYNAMIC_REGION\\:([a-zA-Z0-9]{8}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{12})}}";
+
+        /// <summary>
         /// Module permissions.
         /// </summary>
         public static class UserRoles
