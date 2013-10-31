@@ -983,6 +983,10 @@ textarea#bcms-contenthtml {
     background: url(icons.png) no-repeat 0 -1248px!important;
 }
 
+.cke_button__cmsdynamicregion_icon {
+    background: url(icons.png) no-repeat 0 -2464px!important;
+}
+
 .cke_rtl .cke_button__indent_icon, .cke_mixed_dir_content .cke_rtl .cke_button__indent_icon {
     background: url(icons.png) no-repeat 0 -1280px!important;
 }

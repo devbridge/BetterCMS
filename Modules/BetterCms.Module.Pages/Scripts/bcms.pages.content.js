@@ -599,6 +599,35 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         };
 
         /**
+        * Creates new Guid
+        */
+        function createGuid() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16).toUpperCase();
+            });
+        }
+
+        /**
+        * Inserts dynamic region 
+        */
+        function onDynamicRegionInsert(htmlContentEditor) {
+            if (htmlContentEditor != null) {
+
+                var guid = createGuid(),
+                    html = "{{DYNAMIC_REGION:" + guid + "}}";
+                
+                if (htmlContentEditor.mode == 'source') {
+                    var oldData = htmlContentEditor.getData();
+                    
+                    htmlContentEditor.setData(oldData + html);
+                } else {
+                    htmlContentEditor.insertHtml(html);
+                }
+            }
+        }
+
+        /**
         * Initializes page module.
         */
         pagesContent.init = function() {
@@ -611,6 +640,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         bcms.on(bcms.events.addPageContent, pagesContent.onAddNewContent);
         bcms.on(bcms.events.sortPageContent, pagesContent.onSortPageContent);
         bcms.on(bcms.events.createContentOverlay, onCreateContentOverlay);
+        bcms.on(htmlEditor.events.insertDynamicRegion, onDynamicRegionInsert);
 
         /**
         * Register initialization

@@ -54,6 +54,17 @@ namespace BetterCms.Module.Root.Services
                 throw new CmsException(string.Format("Can't switch a content to the Archived state directly."));
             }
 
+            // Fill content with dynamic contents info
+            var dynamicContainer = updatedContent as IDynamicContentContainer;
+            if (dynamicContainer != null)
+            {
+                if (updatedContent.ContentRegions == null)
+                {
+                    updatedContent.ContentRegions = new List<ContentRegion>();
+                }
+                CollectDynamicRegions(dynamicContainer.Html, updatedContent, updatedContent.ContentRegions);
+            }
+
             if (updatedContent.Id == default(Guid))
             {
                 /* Just create a new content with requested status.*/
@@ -89,16 +100,6 @@ namespace BetterCms.Module.Root.Services
             if (originalContent.Original != null)
             {
                 originalContent = originalContent.Original;
-            }
-
-            var dynamicContainer = updatedContent as IDynamicContentContainer;
-            if (dynamicContainer != null)
-            {
-                if (updatedContent.ContentRegions == null)
-                {
-                    updatedContent.ContentRegions = new List<ContentRegion>();
-                }
-                CollectDynamicRegions(dynamicContainer.Html, updatedContent, updatedContent.ContentRegions);
             }
 
             originalContent = repository.UnProxy(originalContent);

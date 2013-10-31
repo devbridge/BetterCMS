@@ -14,7 +14,8 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
         globalization = {},
         events = {
             insertImage: 'insertImage',
-            insertFile: 'insertFile'
+            insertFile: 'insertFile',
+            insertDynamicRegion: 'insertDynamicRegion',
         };
 
     // Assign objects to module
@@ -48,6 +49,10 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
         
         CKEDITOR.instances[id].InsertFileClicked = function (editor) {
             bcms.trigger(htmlEditor.events.insertFile, editor);
+        };
+        
+        CKEDITOR.instances[id].InsertDynamicRegion = function (editor) {
+            bcms.trigger(htmlEditor.events.insertDynamicRegion, editor);
         };
         
         // Hide native image button container
