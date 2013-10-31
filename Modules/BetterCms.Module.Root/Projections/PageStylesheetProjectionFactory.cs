@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Autofac;
 using Autofac.Core;
 
+using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Exceptions;
@@ -17,9 +18,12 @@ namespace BetterCms.Module.Root.Projections
     {
         private PerWebRequestContainerProvider containerProvider;
 
-        public PageStylesheetProjectionFactory(PerWebRequestContainerProvider containerProvider)
+        private IRepository repository;
+
+        public PageStylesheetProjectionFactory(PerWebRequestContainerProvider containerProvider, IRepository repository)
         {
             this.containerProvider = containerProvider;
+            this.repository = repository;
         }
 
         public PageStylesheetProjection Create(IPage page, IEnumerable<IOptionValue> options)
@@ -29,6 +33,9 @@ namespace BetterCms.Module.Root.Projections
             if (page is IProxy)
             {
                 pageType = page.GetType().BaseType;
+
+                // TODO: remove this hack
+                page = repository.UnProxy(page);
             }
             else
             {

@@ -615,7 +615,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             if (htmlContentEditor != null) {
 
                 var guid = createGuid(),
-                    html = "{{DYNAMIC_REGION:" + guid + "}}";
+                    html = "<div>{{DYNAMIC_REGION:" + guid + "}}</div>";
                 
                 if (htmlContentEditor.mode == 'source') {
                     var oldData = htmlContentEditor.getData();

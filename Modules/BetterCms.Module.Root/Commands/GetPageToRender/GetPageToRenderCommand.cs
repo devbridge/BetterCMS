@@ -293,8 +293,6 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             // Add fetched entities.
             query = query
                 .Fetch(f => f.MasterPage)
-                // TODO: do not fetch grand-parents: fix projection factories
-                .ThenFetch(f => f.MasterPage)
                 .Fetch(f => f.Layout)
                 .ThenFetchMany(f => f.LayoutRegions)
                 .ThenFetch(f => f.Region);

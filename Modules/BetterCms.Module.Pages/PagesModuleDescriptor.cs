@@ -159,8 +159,10 @@ namespace BetterCms.Module.Pages
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             RegisterStylesheetRendererType<PageStylesheetAccessor, PageProperties>(containerBuilder);
-
             RegisterJavaScriptRendererType<PageJavaScriptAccessor, PageProperties>(containerBuilder);
+
+            RegisterStylesheetRendererType<PageStylesheetAccessor, Root.Models.Page>(containerBuilder);
+            RegisterJavaScriptRendererType<PageJavaScriptAccessor, Root.Models.Page>(containerBuilder);
 
             RegisterContentRendererType<HtmlContentAccessor, HtmlContent>(containerBuilder);
             RegisterContentRendererType<HtmlContentWidgetAccessor, HtmlContentWidget>(containerBuilder);
