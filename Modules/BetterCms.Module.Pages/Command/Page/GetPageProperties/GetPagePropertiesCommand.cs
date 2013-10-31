@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
@@ -7,9 +6,10 @@ using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
+
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels;
-using BetterCms.Module.Pages.Content.Resources;
+
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
@@ -37,7 +37,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         /// The tag service
         /// </summary>
         private readonly ITagService tagService;
-
+        
         /// <summary>
         /// The options service
         /// </summary>
@@ -106,6 +106,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                               IsInSitemap = page.NodeCountInSitemap > 0,
                               IsArchived = page.IsArchived,
                               TemplateId = page.Layout.Id,
+                              MasterPageId = page.MasterPage.Id,
                               CategoryId = page.Category.Id,
                               AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled,
                               Image = page.Image == null || page.Image.IsDeleted ? null :
@@ -174,10 +175,10 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
 
                 // Get templates
                 model.Model.Templates = layoutService.GetLayouts();
-                if (!model.Model.TemplateId.HasDefaultValue())
-                {
-                    model.Model.Templates.Where(x => x.TemplateId == model.Model.TemplateId).ToList().ForEach(x => x.IsActive = true);
-                }                
+                model.Model.Templates
+                    .Where(x => x.TemplateId == model.Model.TemplateId || x.TemplateId == model.Model.MasterPageId)
+                    .Take(1).ToList()
+                    .ForEach(x => x.IsActive = true);               
             }
 
             return model != null ? model.Model : null;

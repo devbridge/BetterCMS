@@ -121,6 +121,13 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                 contentToSave,
                 request.DesirableStatus);
 
+            // TODO: find more clean solution
+            if (pageContent.Content.ContentRegions != null 
+                && pageContent.Content.ContentRegions.Count > 0)
+            {
+                pageContent.Page.IsMasterPage = true;
+            }
+
             Repository.Save(pageContent);
             UnitOfWork.Commit();
 

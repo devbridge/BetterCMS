@@ -9,6 +9,8 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
 
+using NHibernate.Linq;
+
 namespace BetterCms.Module.Pages.Services
 {
     public class DefaultLayoutService : ILayoutService
@@ -42,7 +44,8 @@ namespace BetterCms.Module.Pages.Services
         /// </returns>
         public IList<TemplateViewModel> GetLayouts()
         {
-            var templates = repository
+            // Load layouts
+            var templatesFuture = repository
                 .AsQueryable<Layout>()
                 .OrderBy(t => t.Name)
                 .Select(t => new TemplateViewModel
@@ -51,8 +54,23 @@ namespace BetterCms.Module.Pages.Services
                         TemplateId = t.Id,
                         PreviewUrl = t.PreviewUrl
                     })
-                .ToList();
+                .ToFuture();
 
+            // Load master pages
+            var masterPagesFuture = repository
+                .AsQueryable<Page>()
+                .Where(p => p.IsMasterPage)
+                .OrderBy(t => t.Title)
+                .Select(t => new TemplateViewModel
+                    {
+                        Title = t.PageUrl,
+                        TemplateId = t.Id,
+                        PreviewUrl = null,
+                        IsMasterPage = true
+                    })
+                .ToFuture();
+
+            var templates = templatesFuture.ToList().Concat(masterPagesFuture.ToList()).ToList();
             return templates;
         }
 

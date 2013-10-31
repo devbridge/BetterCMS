@@ -2,7 +2,7 @@
 
 @model BetterCms.Module.Pages.ViewModels.Page.TemplateViewModel
 
-<div class="@(Model.IsActive ? "bcms-grid-box bcms-grid-box-active" : "bcms-grid-box")" data-id="@Model.TemplateId">
+<div class="@(Model.IsActive ? "bcms-grid-box bcms-grid-box-active" : "bcms-grid-box")" data-id="@Model.TemplateId" data-master="@(Model.IsMasterPage ? "1" : "0")">
     <div class="bcms-title-holder">
         <div class="bcms-content-titles">@Model.Title</div>
     </div>

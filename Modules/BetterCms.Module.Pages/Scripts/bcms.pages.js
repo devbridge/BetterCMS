@@ -21,6 +21,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 addNewPageCloseInfoMessageBox: '.bcms-info-message-box',
                 addNewPageTemplateSelect: '.bcms-btn-grid',
                 addNewPageTemplateId: '#TemplateId',
+                addNewPageMasterPageId: '#MasterPageId',
                 addNewPageActiveTemplateBox: '.bcms-grid-box-active',
                 addNewPageTemplateBox: '.bcms-grid-box',
                 addNewPageActiveTemplateMessage: '.bcms-grid-active-message-text',
@@ -235,14 +236,21 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         page.highlightAddNewPageActiveTemplate = function (dialog, selectButton, onChangeCallback) {
             var active = dialog.container.find(selectors.addNewPageActiveTemplateBox),
                 template = $(selectButton).parents(selectors.addNewPageTemplateBox),
-                id = $(template).data('id');
+                id = $(template).data('id'),
+                isMasterPage = $(template).data('master');
 
             active.removeClass(classes.addNewPageActiveTemplateBox);
             active.find(selectors.addNewPageTemplateSelect).show();
             active.find(selectors.addNewPageActiveTemplateMessage).hide();
 
             if (template) {
-                dialog.container.find(selectors.addNewPageTemplateId).val(id);
+                if (isMasterPage) {
+                    dialog.container.find(selectors.addNewPageMasterPageId).val(id);
+                    dialog.container.find(selectors.addNewPageTemplateId).val('');
+                } else {
+                    dialog.container.find(selectors.addNewPageTemplateId).val(id);
+                    dialog.container.find(selectors.addNewPageMasterPageId).val('');
+                }
                 $(template).addClass(classes.addNewPageActiveTemplateBox);
                 $(template).find(selectors.addNewPageActiveTemplateMessage).show();
 

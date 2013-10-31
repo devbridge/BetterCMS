@@ -40,6 +40,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public bool IsActive { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether template is master page.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if template is master page; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsMasterPage { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

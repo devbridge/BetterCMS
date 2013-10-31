@@ -1,8 +1,10 @@
 ﻿using System.Linq;
 
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
+
 using BetterCms.Module.Pages.Command.Page.SavePageProperties;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -66,6 +68,19 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
         /// <returns>Created page</returns>
         public virtual SavePageResponse Execute(AddNewPageViewModel request)
         {
+            if (!request.MasterPageId.HasValue && !request.TemplateId.HasValue)
+            {
+                // TODO: add to resources
+                var message = "Template or master page should be selected for page.";
+                throw new ValidationException(() => message, message);
+            }
+            if (request.MasterPageId.HasValue && request.TemplateId.HasValue)
+            {
+                // TODO: add to resources
+                var message = "Only one of master page and layout can be selected.";
+                throw new ValidationException(() => message, message);
+            }
+
             // Create / fix page url
             var pageUrl = request.PageUrl;
             var createPageUrl = (pageUrl == null);
@@ -88,9 +103,17 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
                     PageUrlHash = pageUrl.UrlHash(),
                     Title = request.PageTitle,
                     MetaTitle = request.PageTitle,
-                    Layout = Repository.First<Root.Models.Layout>(request.TemplateId),
                     Status = PageStatus.Unpublished
                 };
+
+            if (request.MasterPageId.HasValue)
+            {
+                page.MasterPage = Repository.AsProxy<Root.Models.Page>(request.MasterPageId.Value);
+            } 
+            else
+            {
+                page.Layout = Repository.AsProxy<Root.Models.Layout>(request.TemplateId.Value);
+            }
 
             var parentOptions = Repository
                 .AsQueryable<LayoutOption>(o => o.Layout.Id == request.TemplateId)

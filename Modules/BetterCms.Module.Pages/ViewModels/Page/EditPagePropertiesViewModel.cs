@@ -162,7 +162,15 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// The template id.
         /// </value>
-        public Guid TemplateId { get; set; }
+        public Guid? TemplateId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the master page id.
+        /// </summary>
+        /// <value>
+        /// The master page id.
+        /// </value>
+        public Guid? MasterPageId { get; set; }
 
         /// <summary>
         /// Gets or sets the image view model.

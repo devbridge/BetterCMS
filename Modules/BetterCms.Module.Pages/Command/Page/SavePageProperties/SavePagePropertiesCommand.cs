@@ -6,6 +6,7 @@ using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 
@@ -98,7 +99,20 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         /// <returns>Save response.</returns>
         /// <exception cref="CmsException">Failed to save page properties.</exception>
         public SavePageResponse Execute(EditPagePropertiesViewModel request)
-        {            
+        {
+            if (!request.MasterPageId.HasValue && !request.TemplateId.HasValue)
+            {
+                // TODO: add to resources
+                var message = "Template or master page should be selected for page.";
+                throw new ValidationException(() => message, message);
+            }
+            if (request.MasterPageId.HasValue && request.TemplateId.HasValue)
+            {
+                // TODO: add to resources
+                var message = "Only one of master page and layout can be selected.";
+                throw new ValidationException(() => message, message);
+            }
+
             UnitOfWork.BeginTransaction();
 
             var pageQuery = Repository
@@ -149,11 +163,24 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             }
 
             page.PageUrlHash = page.PageUrl.UrlHash();
-            page.Layout = Repository.AsProxy<Root.Models.Layout>(request.TemplateId);
             page.Category = request.CategoryId.HasValue ? Repository.AsProxy<CategoryEntity>(request.CategoryId.Value) : null;
             page.Title = request.PageName;
             page.CustomCss = request.PageCSS;
             page.CustomJS = request.PageJavascript;
+
+            if (request.MasterPageId.HasValue)
+            {
+                page.MasterPage = Repository.AsProxy<Root.Models.Page>(request.MasterPageId.Value);
+                page.Layout = null;
+            }
+            else
+            {
+                if (page.Layout == null || page.Layout.Id != request.TemplateId.Value)
+                {
+                    page.Layout = Repository.First<Root.Models.Layout>(request.TemplateId.Value);
+                }
+                page.MasterPage = null;
+            }
 
             var publishDraftContent = false;
             if (request.CanPublishPage)
@@ -186,7 +213,8 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             page.FeaturedImage = request.FeaturedImage != null && request.FeaturedImage.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.FeaturedImage.ImageId.Value) : null;
 
             var optionValues = page.Options.Distinct();
-            var parentOptions = page.Layout.LayoutOptions.Distinct();
+            // TODO: get options from master page
+            var parentOptions = page.Layout != null ? page.Layout.LayoutOptions.Distinct() : new List<LayoutOption>();
             optionService.SaveOptionValues(request.OptionValues, optionValues, parentOptions, () => new PageOption { Page = page });
 
             if (cmsConfiguration.Security.AccessControlEnabled)

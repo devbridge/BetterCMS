@@ -10,7 +10,9 @@ namespace BetterCms.Module.Pages.Services
         /// <summary>
         /// Gets the list of layout view models.
         /// </summary>
-        /// <returns>The list of layout view models</returns>
+        /// <returns>
+        /// The list of layout view models
+        /// </returns>
         IList<TemplateViewModel> GetLayouts();
 
         /// <summary>

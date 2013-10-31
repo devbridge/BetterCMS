@@ -20,6 +20,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
 
                 pagePropertiesTemplateSelect: '.bcms-btn-grid',
                 pagePropertiesTemplateId: '#TemplateId',
+                pagePropertiesMasterPageId: '#MasterPageId',
                 pagePropertiesActiveTemplateBox: '.bcms-grid-box-active',
                 pagePropertiesTemplateBox: '.bcms-grid-box',
                 pagePropertiesActiveTemplateMessage: '.bcms-grid-active-message-text',
@@ -281,14 +282,21 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         page.highlightPagePropertiesActiveTemplate = function (dialog, selectButton, onChangeCallback) {
             var active = dialog.container.find(selectors.pagePropertiesActiveTemplateBox),
                 template = $(selectButton).parents(selectors.pagePropertiesTemplateBox),
-                id = $(template).data('id');
+                id = $(template).data('id'),
+                isMasterPage = $(template).data('master');
 
             active.removeClass(classes.pagePropertiesActiveTemplateBox);
             active.find(selectors.pagePropertiesTemplateSelect).show();
             active.find(selectors.pagePropertiesActiveTemplateMessage).hide();
 
             if (template) {
-                dialog.container.find(selectors.pagePropertiesTemplateId).val(id);
+                if (isMasterPage) {
+                    dialog.container.find(selectors.pagePropertiesMasterPageId).val(id);
+                    dialog.container.find(selectors.pagePropertiesTemplateId).val('');
+                } else {
+                    dialog.container.find(selectors.pagePropertiesTemplateId).val(id);
+                    dialog.container.find(selectors.pagePropertiesMasterPageId).val('');
+                }
                 $(template).addClass(classes.pagePropertiesActiveTemplateBox);
                 $(template).find(selectors.pagePropertiesActiveTemplateMessage).show();
 

@@ -63,9 +63,13 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
             {
                 model.Templates.ToList().ForEach(x => x.IsActive = false);
                 model.Templates.First().IsActive = true;
-                model.TemplateId = model.Templates.First(t => t.IsActive).TemplateId;
+                model.TemplateId = model.Templates.Where(t => t.IsActive && !t.IsMasterPage).Select(t => (System.Guid?)t.TemplateId).FirstOrDefault();
 
-                model.OptionValues = layoutService.GetLayoutOptionValues(model.TemplateId);
+                // TODO: load page options if possible. At the moment only template options is being loaded.
+                if (model.TemplateId.HasValue)
+                {
+                    model.OptionValues = layoutService.GetLayoutOptionValues(model.TemplateId.Value);
+                }
                 model.CustomOptions = optionService.GetCustomOptions();
             }
 

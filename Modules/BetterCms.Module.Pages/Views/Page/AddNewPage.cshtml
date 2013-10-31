@@ -45,6 +45,7 @@
 
                 @Html.Partial("Partial/TemplatesList", Model.Templates)
                 @Html.HiddenFor(f => f.TemplateId, new { @id = "TemplateId" })
+                @Html.HiddenFor(f => f.MasterPageId, new { @id = "MasterPageId" })
                 @Html.HiddenFor(f => f.ParentPageUrl)
                 @Html.HiddenSubmit()
                 

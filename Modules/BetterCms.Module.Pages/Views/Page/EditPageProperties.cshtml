@@ -137,6 +137,7 @@
                     </div>
                 </div>
                 @Html.HiddenFor(model => model.TemplateId, new { @id = "TemplateId" })
+                @Html.HiddenFor(model => model.MasterPageId, new { @id = "MasterPageId" })
                 @Html.HiddenFor(model => model.Id)
                 @Html.HiddenFor(model => model.Version)
                 @Html.HiddenFor(model => model.Image.ImageId, new { data_bind = "value: image().id()" })
