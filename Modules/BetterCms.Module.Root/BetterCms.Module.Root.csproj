@@ -1008,9 +1008,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\BaseLayout.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Shared\Layouts\OneColumnLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -1096,6 +1093,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\ace\LICENSE" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\BaseLayout.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

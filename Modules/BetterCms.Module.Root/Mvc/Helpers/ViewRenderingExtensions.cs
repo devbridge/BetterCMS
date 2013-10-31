@@ -115,6 +115,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                                {
                                    LayoutPath = currentModel.LayoutPath,
                                    MasterPage = currentModel.MasterPage,
+                                   RenderingPage = pageModel,
                                    Contents = currentModel.Contents,
                                    Regions = currentModel.Regions,
                                    AreRegionsEditable = currentModel.AreRegionsEditable,

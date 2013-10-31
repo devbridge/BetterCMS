@@ -146,6 +146,9 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// </value>
         public RenderPageViewModel MasterPage { get; set; }
 
+        // TODO: find better solution
+        public RenderPageViewModel RenderingPage { get; set; }
+
         /// <summary>
         /// Gets or sets page content projections list.
         /// </summary>
