@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
@@ -109,6 +110,17 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
             if (request.MasterPageId.HasValue)
             {
                 page.MasterPage = Repository.AsProxy<Root.Models.Page>(request.MasterPageId.Value);
+                page.MasterPages = new List<MasterPage>();
+
+                var masterIds = IncludeMasterPagesPath(request.MasterPageId.Value);
+                foreach (var masterId in masterIds)
+                {
+                    page.MasterPages.Add(new MasterPage
+                                             {
+                                                 Master = Repository.AsProxy<Root.Models.Page>(masterId),
+                                                 Page = page
+                                             });
+                }
             } 
             else
             {
@@ -134,6 +146,18 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
             Events.PageEvents.Instance.OnPageCreated(page);
 
             return new SavePageResponse(page);
+        }
+
+
+        private IEnumerable<System.Guid> IncludeMasterPagesPath(System.Guid id)
+        {
+            var ids = Repository
+                .AsQueryable<MasterPage>()
+                .Where(mp => mp.Page.Id == id)
+                .Select(mp => mp.Master.Id).ToList();
+            ids.Add(id);
+
+            return ids.ToArray();
         }
     }
 }

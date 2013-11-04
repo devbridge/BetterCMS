@@ -56,6 +56,23 @@ namespace BetterCms.Module.Root.Models.Migrations
                 .Column("IsMasterPage")
                 .OnTable("Pages").InSchema(SchemaName)
                 .AsBoolean().NotNullable().WithDefaultValue(false);
+
+            // Create master pages table
+            Create
+                .Table("MasterPages").InSchema(SchemaName)
+                .WithCmsBaseColumns()
+                .WithColumn("PageId").AsGuid().NotNullable()
+                .WithColumn("MasterPageId").AsGuid().NotNullable();
+
+            Create
+                .ForeignKey("FK_Cms_MasterPages_PageId_Cms_Pages")
+                .FromTable("MasterPages").InSchema(SchemaName).ForeignColumn("PageId")
+                .ToTable("Pages").InSchema(SchemaName).PrimaryColumn("Id");
+
+            Create
+                .ForeignKey("FK_Cms_MasterPages_MasterPageId_Cms_Pages")
+                .FromTable("MasterPages").InSchema(SchemaName).ForeignColumn("MasterPageId")
+                .ToTable("Pages").InSchema(SchemaName).PrimaryColumn("Id");
         }       
     }
 }

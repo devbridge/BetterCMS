@@ -136,6 +136,14 @@ namespace BetterCms.Module.Root.Models
         public virtual IList<PageOption> Options { get; set; }
 
         /// <summary>
+        /// Gets or sets the master pages.
+        /// </summary>
+        /// <value>
+        /// The master pages.
+        /// </value>
+        public virtual IList<MasterPage> MasterPages { get; set; }
+
+        /// <summary>
         /// Gets or sets the access rules.
         /// </summary>
         /// <value>

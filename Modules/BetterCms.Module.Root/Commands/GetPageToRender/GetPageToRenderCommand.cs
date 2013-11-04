@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Web;
 
@@ -61,24 +60,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         /// <returns></returns>
         public CmsRequestViewModel Execute(GetPageToRenderRequest request)
         {
-            return GetPageToRender(request, false);
-        }
-
-        /// <summary>
-        /// Executes this command.
-        /// </summary>
-        /// <param name="request">The request data with page data.</param>
-        /// <param name="isParent">if set to <c>true</c> page model is parent model.</param>
-        /// <returns>
-        /// Executed command result.
-        /// </returns>
-        /// <exception cref="System.Web.HttpException">403;403 Access Forbidden</exception>
-        /// <exception cref="System.InvalidOperationException"></exception>
-        public CmsRequestViewModel GetPageToRender(GetPageToRenderRequest request, bool isParent)
-        {
             var pageQuery = GetPageFutureQuery(request);
-            var pageContentsQuery = GetPageContentFutureQuery(request);
-            
             var page = pageQuery.ToList().FirstOrDefault();
 
             if (page == null)
@@ -86,6 +68,23 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 return FindRedirect(request.PageUrl);
             }
 
+            var renderPageViewModel = CreatePageViewModel(page, page, request, true);
+
+            // Notify about retrieved page.
+            var result = Events.RootEvents.Instance.OnPageRetrieved(renderPageViewModel, page);
+
+            switch (result)
+            {
+                case PageRetrievedEventResult.ForcePageNotFound:
+                    return null;
+
+                default:
+                    return new CmsRequestViewModel(renderPageViewModel);
+            }
+        }
+
+        public RenderPageViewModel CreatePageViewModel(Page rootPage, Page page, GetPageToRenderRequest request, bool isParent = false)
+        {
             if (request.PreviewPageContentId == null && !request.IsAuthenticated && page.Status != PageStatus.Published)
             {
                 throw new HttpException(403, "403 Access Forbidden");
@@ -101,29 +100,30 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 }
             }
 
-            var pageContents = pageContentsQuery.ToList();
-            var contentProjections = pageContents.Distinct().Select(f => CreatePageContentProjection(request, f)).Where(c => c != null).ToList();
-
             RenderPageViewModel renderPageViewModel = new RenderPageViewModel(page);
             renderPageViewModel.CanManageContent = request.CanManageContent;
-            renderPageViewModel.AreRegionsEditable = request.CanManageContent && !isParent;
+            renderPageViewModel.AreRegionsEditable = request.CanManageContent && isParent;
+
             if (page.Layout != null)
             {
                 renderPageViewModel.LayoutPath = page.Layout.LayoutPath;
-                
-                renderPageViewModel.Regions = page
-                    .Layout.LayoutRegions
-                    .Distinct()
-                    .Select(f => new PageRegionViewModel
-                       {
-                           RegionId = f.Region.Id,
-                           RegionIdentifier = f.Region.RegionIdentifier
-                       })
-                    .ToList();
+                renderPageViewModel.Options = optionService.GetMergedOptionValues(page.Layout.LayoutOptions, page.Options).ToList();
+                renderPageViewModel.Regions =
+                    page.Layout.LayoutRegions.Distinct()
+                        .Select(f => new PageRegionViewModel { RegionId = f.Region.Id, RegionIdentifier = f.Region.RegionIdentifier })
+                        .ToList();
             }
             else if (page.MasterPage != null)
             {
-                // TODO
+                var masterPage = rootPage.MasterPages.FirstOrDefault(p => p.Master.Id == page.MasterPage.Id);
+                if (masterPage == null)
+                {
+                     throw new InvalidOperationException(string.Format("Cannot find a master page in master pages path collection for page {0}.", request.PageUrl));
+                }
+
+                renderPageViewModel.MasterPage = CreatePageViewModel(rootPage, masterPage.Master, request);
+                
+                renderPageViewModel.Options = new List<IOptionValue>();
                 renderPageViewModel.Regions = Repository
                     .AsQueryable<PageContent>()
                     .Where(pc => pc.Page == page.MasterPage)
@@ -134,30 +134,18 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                             RegionIdentifier = cr.Region.RegionIdentifier
                         })
                     .ToList();
-
-                renderPageViewModel.Options = new List<IOptionValue>();
-
-                renderPageViewModel.MasterPage = GetPageToRender(new GetPageToRenderRequest
-                                                             {
-                                                                 PageId = page.MasterPage.Id,
-                                                                 CanManageContent = request.CanManageContent,
-                                                                 IsAuthenticated = request.IsAuthenticated,
-                                                                 IsPreview = request.IsPreview,
-                                                                 PreviewPageContentId = request.PreviewPageContentId,
-                                                             }, true).RenderPage;
             }
             else
             {
                 throw new InvalidOperationException(string.Format("Failed to load layout or master page for page {0}.", request.PageUrl));
             }
 
+            var pageContentsQuery = GetPageContentFutureQuery(page.Id, request);
+            var pageContents = pageContentsQuery.ToList();
+            var contentProjections = pageContents.Distinct().Select(f => CreatePageContentProjection(request, f)).Where(c => c != null).ToList();
+
             renderPageViewModel.Contents = contentProjections;
             renderPageViewModel.Metadata = pageAccessor.GetPageMetaData(page).ToList();
-
-            if (page.Layout != null)
-            {
-                renderPageViewModel.Options = optionService.GetMergedOptionValues(page.Layout.LayoutOptions, page.Options).ToList();
-            }
 
             if (page.AccessRules != null)
             {
@@ -204,17 +192,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                                                                         : "bcms.require-2.1.5.js");
             renderPageViewModel.Html5ShivJsPath = VirtualPath.Combine(rootModuleDescriptor.JsBasePath, "html5shiv.js");
 
-            // Notify about retrieved page.
-            var result = Events.RootEvents.Instance.OnPageRetrieved(renderPageViewModel, page);
-
-            switch (result)
-            {
-                case PageRetrievedEventResult.ForcePageNotFound:
-                    return null;
-
-                default:
-                    return new CmsRequestViewModel(renderPageViewModel);
-            }
+            return renderPageViewModel;
         }
 
         private PageContentProjection CreatePageContentProjection(GetPageToRenderRequest request, PageContent pageContent)
@@ -295,6 +273,16 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 .Fetch(f => f.MasterPage)
                 .Fetch(f => f.Layout)
                 .ThenFetchMany(f => f.LayoutRegions)
+                .ThenFetch(f => f.Region)
+                // Fetch master page with reference to master page
+                .FetchMany(f => f.MasterPages)
+                .ThenFetch(f => f.Master)
+                .ThenFetch(f => f.MasterPage)
+                // Fetch master page with reference to layout
+                .FetchMany(f => f.MasterPages)
+                .ThenFetch(f => f.Master)
+                .ThenFetch(f => f.Layout)
+                .ThenFetchMany(f => f.LayoutRegions)
                 .ThenFetch(f => f.Region);
 
             // Add access rules if access control is enabled.
@@ -306,20 +294,22 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             return query.ToFuture();
         }
 
-        private IEnumerable<PageContent> GetPageContentFutureQuery(GetPageToRenderRequest request)
+        private IEnumerable<PageContent> GetPageContentFutureQuery(Guid pageId, GetPageToRenderRequest request)
         {
             IQueryable<PageContent> pageContentsQuery =
                 Repository.AsQueryable<PageContent>();
 
-            if (request.PageId == null)
-            {
-                var requestUrl = request.PageUrl.UrlHash();
-                pageContentsQuery = pageContentsQuery.Where(f => f.Page.PageUrlHash == requestUrl);
-            }
-            else
-            {
-                pageContentsQuery = pageContentsQuery.Where(f => f.Page.Id == request.PageId);
-            }
+//            if (request.PageId == null)
+//            {
+//                var requestUrl = request.PageUrl.UrlHash();
+//                pageContentsQuery = pageContentsQuery.Where(f => f.Page.PageUrlHash == requestUrl);
+//            }
+//            else
+//            {
+//                pageContentsQuery = pageContentsQuery.Where(f => f.Page.Id == request.PageId);
+//            }
+
+            pageContentsQuery = pageContentsQuery.Where(f => f.Page.Id == pageId);
 
             if (request.PreviewPageContentId != null)
             {
