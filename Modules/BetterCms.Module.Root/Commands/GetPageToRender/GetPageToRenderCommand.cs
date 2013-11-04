@@ -60,15 +60,22 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         /// <returns></returns>
         public CmsRequestViewModel Execute(GetPageToRenderRequest request)
         {
-            var pageQuery = GetPageFutureQuery(request);
-            var page = pageQuery.ToList().FirstOrDefault();
-
+            // Load the page
+            var page = GetPage(request);
             if (page == null)
             {
                 return FindRedirect(request.PageUrl);
             }
 
-            var renderPageViewModel = CreatePageViewModel(page, page, request, true);
+            // Load page contents
+            var ids = new List<Guid> { page.Id };
+            if (page.MasterPages != null)
+            {
+                ids.AddRange(page.MasterPages.Select(mp => mp.Master.Id));
+            }
+            var pageContents = GetPageContents(ids, request);
+
+            var renderPageViewModel = CreatePageViewModel(page, pageContents, page, request, true);
 
             // Notify about retrieved page.
             var result = Events.RootEvents.Instance.OnPageRetrieved(renderPageViewModel, page);
@@ -83,7 +90,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             }
         }
 
-        public RenderPageViewModel CreatePageViewModel(Page rootPage, Page page, GetPageToRenderRequest request, bool isParent = false)
+        public RenderPageViewModel CreatePageViewModel(Page renderingPage, IList<PageContent> allPageContents, Page page, GetPageToRenderRequest request, bool isParent = false)
         {
             if (request.PreviewPageContentId == null && !request.IsAuthenticated && page.Status != PageStatus.Published)
             {
@@ -108,24 +115,27 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             {
                 renderPageViewModel.LayoutPath = page.Layout.LayoutPath;
                 renderPageViewModel.Options = optionService.GetMergedOptionValues(page.Layout.LayoutOptions, page.Options).ToList();
-                renderPageViewModel.Regions =
-                    page.Layout.LayoutRegions.Distinct()
-                        .Select(f => new PageRegionViewModel { RegionId = f.Region.Id, RegionIdentifier = f.Region.RegionIdentifier })
-                        .ToList();
+                renderPageViewModel.Regions = page.Layout.LayoutRegions
+                    .Distinct()
+                    .Select(f => new PageRegionViewModel
+                        {
+                            RegionId = f.Region.Id, 
+                            RegionIdentifier = f.Region.RegionIdentifier
+                        })
+                    .ToList();
             }
             else if (page.MasterPage != null)
             {
-                var masterPage = rootPage.MasterPages.FirstOrDefault(p => p.Master.Id == page.MasterPage.Id);
+                var masterPage = renderingPage.MasterPages.FirstOrDefault(p => p.Master.Id == page.MasterPage.Id);
                 if (masterPage == null)
                 {
                      throw new InvalidOperationException(string.Format("Cannot find a master page in master pages path collection for page {0}.", request.PageUrl));
                 }
 
-                renderPageViewModel.MasterPage = CreatePageViewModel(rootPage, masterPage.Master, request);
+                renderPageViewModel.MasterPage = CreatePageViewModel(renderingPage, allPageContents, masterPage.Master, request);
                 
                 renderPageViewModel.Options = new List<IOptionValue>();
-                renderPageViewModel.Regions = Repository
-                    .AsQueryable<PageContent>()
+                renderPageViewModel.Regions = allPageContents
                     .Where(pc => pc.Page == page.MasterPage)
                     .SelectMany(pc => pc.Content.ContentRegions)
                     .Select(cr => new PageRegionViewModel
@@ -140,8 +150,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 throw new InvalidOperationException(string.Format("Failed to load layout or master page for page {0}.", request.PageUrl));
             }
 
-            var pageContentsQuery = GetPageContentFutureQuery(page.Id, request);
-            var pageContents = pageContentsQuery.ToList();
+            var pageContents = allPageContents.Where(pc => pc.Page.Id == page.Id);
             var contentProjections = pageContents.Distinct().Select(f => CreatePageContentProjection(request, f)).Where(c => c != null).ToList();
 
             renderPageViewModel.Contents = contentProjections;
@@ -248,7 +257,12 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             return pageContentProjectionFactory.Create(pageContent, contentToProject, options);
         }
 
-        private IEnumerable<Page> GetPageFutureQuery(GetPageToRenderRequest request)
+        /// <summary>
+        /// Gets the page.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>Page entity</returns>
+        private Page GetPage(GetPageToRenderRequest request)
         {
             IQueryable<Page> query = Repository.AsQueryable<Page>().Where(f => !f.IsDeleted);
 
@@ -278,6 +292,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 .FetchMany(f => f.MasterPages)
                 .ThenFetch(f => f.Master)
                 .ThenFetch(f => f.MasterPage)
+                .ThenFetchMany(f => f.AccessRules)
                 // Fetch master page with reference to layout
                 .FetchMany(f => f.MasterPages)
                 .ThenFetch(f => f.Master)
@@ -291,25 +306,21 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 query = query.FetchMany(f => f.AccessRules);
             }
 
-            return query.ToFuture();
+            return query.ToList().FirstOrDefault();
         }
 
-        private IEnumerable<PageContent> GetPageContentFutureQuery(Guid pageId, GetPageToRenderRequest request)
+        /// <summary>
+        /// Gets the page contents.
+        /// </summary>
+        /// <param name="pageIds">The page ids.</param>
+        /// <param name="request">The request.</param>
+        /// <returns>The list of page contents</returns>
+        private IList<PageContent> GetPageContents(IList<Guid> pageIds, GetPageToRenderRequest request)
         {
             IQueryable<PageContent> pageContentsQuery =
                 Repository.AsQueryable<PageContent>();
 
-//            if (request.PageId == null)
-//            {
-//                var requestUrl = request.PageUrl.UrlHash();
-//                pageContentsQuery = pageContentsQuery.Where(f => f.Page.PageUrlHash == requestUrl);
-//            }
-//            else
-//            {
-//                pageContentsQuery = pageContentsQuery.Where(f => f.Page.Id == request.PageId);
-//            }
-
-            pageContentsQuery = pageContentsQuery.Where(f => f.Page.Id == pageId);
+            pageContentsQuery = pageContentsQuery.Where(f => pageIds.Contains(f.Page.Id));
 
             if (request.PreviewPageContentId != null)
             {
@@ -329,16 +340,24 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             pageContentsQuery = pageContentsQuery
                 .Fetch(f => f.Content)
                 .ThenFetchMany(f => f.ContentOptions)
-                .FetchMany(f => f.Options);
+                .FetchMany(f => f.Options)
+                .Fetch(f => f.Content)
+                .ThenFetchMany(f => f.ContentRegions)
+                .ThenFetch(f => f.Region);
 
             if (request.CanManageContent || request.PreviewPageContentId != null)
             {
                 pageContentsQuery = pageContentsQuery.Fetch(f => f.Content).ThenFetchMany(f => f.History);
             }
 
-            return pageContentsQuery.ToFuture();
+            return pageContentsQuery.ToList();
         }
-        
+
+        /// <summary>
+        /// Finds the redirect.
+        /// </summary>
+        /// <param name="redirectUrl">The redirect URL.</param>
+        /// <returns>Redirect view model</returns>
         private CmsRequestViewModel FindRedirect(string redirectUrl)
         {
             var redirect = pageAccessor.GetRedirect(redirectUrl);
