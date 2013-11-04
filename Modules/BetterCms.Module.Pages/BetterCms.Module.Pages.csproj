@@ -256,12 +256,14 @@
     <Compile Include="Registration\RedirectsJsModuleIncludeDescriptor.cs" />
     <Compile Include="Services\DefaultHistoryService.cs" />
     <Compile Include="Services\DefaultLayoutService.cs" />
+    <Compile Include="Services\DefaultMasterPageService.cs" />
     <Compile Include="Services\DefaultPreviewService.cs" />
     <Compile Include="Services\DefaultSitemapService.cs" />
     <Compile Include="Services\DefaultTagService.cs" />
     <Compile Include="Services\DefaultUrlService.cs" />
     <Compile Include="Services\IHistoryService.cs" />
     <Compile Include="Services\ILayoutService.cs" />
+    <Compile Include="Services\IMasterPageService.cs" />
     <Compile Include="Services\IPageService.cs" />
     <Compile Include="Services\IPreviewService.cs" />
     <Compile Include="Services\ISitemapService.cs" />

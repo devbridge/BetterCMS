@@ -60,11 +60,25 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         /// </summary>
         private readonly IOptionService optionService;
 
+        /// <summary>
+        /// The CMS configuration
+        /// </summary>
         private readonly ICmsConfiguration cmsConfiguration;
 
+        /// <summary>
+        /// The access control service
+        /// </summary>
         private readonly IAccessControlService accessControlService;
 
+        /// <summary>
+        /// The content service
+        /// </summary>
         private readonly IContentService contentService;
+
+        /// <summary>
+        /// The master page service
+        /// </summary>
+        private readonly IMasterPageService masterPageService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SavePagePropertiesCommand" /> class.
@@ -77,9 +91,12 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         /// <param name="optionService">The option service.</param>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
         /// <param name="accessControlService">The access control service.</param>
+        /// <param name="contentService">The content service.</param>
+        /// <param name="masterPageService">The master page service.</param>
         public SavePagePropertiesCommand(IPageService pageService, IRedirectService redirectService, ITagService tagService,
             ISitemapService sitemapService, IUrlService urlService, IOptionService optionService,
-            ICmsConfiguration cmsConfiguration, IAccessControlService accessControlService, IContentService contentService)
+            ICmsConfiguration cmsConfiguration, IAccessControlService accessControlService, IContentService contentService,
+            IMasterPageService masterPageService)
         {
             this.pageService = pageService;
             this.redirectService = redirectService;
@@ -90,6 +107,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             this.cmsConfiguration = cmsConfiguration;
             this.accessControlService = accessControlService;
             this.contentService = contentService;
+            this.masterPageService = masterPageService;
         }
 
         /// <summary>
@@ -119,6 +137,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                 .AsQueryable<PageProperties>(p => p.Id == request.Id)
                 .FetchMany(p => p.Options)
                 .Fetch(p => p.Layout).ThenFetchMany(l => l.LayoutOptions)
+                .FetchMany(p => p.MasterPages)
                 .AsQueryable();
             
             if (cmsConfiguration.Security.AccessControlEnabled)
@@ -170,7 +189,12 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
 
             if (request.MasterPageId.HasValue)
             {
-                page.MasterPage = Repository.AsProxy<Root.Models.Page>(request.MasterPageId.Value);
+                if (page.MasterPage == null || page.MasterPage.Id != request.MasterPageId.Value)
+                {
+                    page.MasterPage = Repository.AsProxy<Root.Models.Page>(request.MasterPageId.Value);
+                    
+                    masterPageService.SetPageMasterPages(page, request.MasterPageId.Value);
+                }
                 page.Layout = null;
             }
             else

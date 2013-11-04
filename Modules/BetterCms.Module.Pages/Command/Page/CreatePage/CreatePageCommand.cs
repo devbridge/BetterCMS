@@ -45,6 +45,11 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
         private readonly IOptionService optionService;
 
         /// <summary>
+        /// The master page service
+        /// </summary>
+        private readonly IMasterPageService masterPageService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CreatePageCommand" /> class.
         /// </summary>
         /// <param name="pageService">The page service.</param>
@@ -52,14 +57,16 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
         /// <param name="cmsConfiguration">The CMS configuration.</param>
         /// <param name="accessControlService">The access control service.</param>
         /// <param name="optionService">The option service.</param>
+        /// <param name="masterPageService">The master page service.</param>
         public CreatePageCommand(IPageService pageService, IUrlService urlService, ICmsConfiguration cmsConfiguration,
-            IAccessControlService accessControlService, IOptionService optionService)
+            IAccessControlService accessControlService, IOptionService optionService, IMasterPageService masterPageService)
         {
             this.pageService = pageService;
             this.urlService = urlService;
             this.cmsConfiguration = cmsConfiguration;
             this.accessControlService = accessControlService;
             this.optionService = optionService;
+            this.masterPageService = masterPageService;
         }
 
         /// <summary>
@@ -110,17 +117,8 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
             if (request.MasterPageId.HasValue)
             {
                 page.MasterPage = Repository.AsProxy<Root.Models.Page>(request.MasterPageId.Value);
-                page.MasterPages = new List<MasterPage>();
 
-                var masterIds = IncludeMasterPagesPath(request.MasterPageId.Value);
-                foreach (var masterId in masterIds)
-                {
-                    page.MasterPages.Add(new MasterPage
-                                             {
-                                                 Master = Repository.AsProxy<Root.Models.Page>(masterId),
-                                                 Page = page
-                                             });
-                }
+                masterPageService.SetPageMasterPages(page, request.MasterPageId.Value);
             } 
             else
             {
@@ -146,18 +144,6 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
             Events.PageEvents.Instance.OnPageCreated(page);
 
             return new SavePageResponse(page);
-        }
-
-
-        private IEnumerable<System.Guid> IncludeMasterPagesPath(System.Guid id)
-        {
-            var ids = Repository
-                .AsQueryable<MasterPage>()
-                .Where(mp => mp.Page.Id == id)
-                .Select(mp => mp.Master.Id).ToList();
-            ids.Add(id);
-
-            return ids.ToArray();
         }
     }
 }
