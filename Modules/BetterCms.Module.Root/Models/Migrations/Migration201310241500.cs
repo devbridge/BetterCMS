@@ -65,6 +65,11 @@ namespace BetterCms.Module.Root.Models.Migrations
                 .WithColumn("MasterPageId").AsGuid().NotNullable();
 
             Create
+                .UniqueConstraint("UX_Cms_MasterPages_PageId_MasterPageId")
+                .OnTable("MasterPages").WithSchema(SchemaName)
+                .Columns(new[] { "PageId", "MasterPageId", "DeletedOn" });
+
+            Create
                 .ForeignKey("FK_Cms_MasterPages_PageId_Cms_Pages")
                 .FromTable("MasterPages").InSchema(SchemaName).ForeignColumn("PageId")
                 .ToTable("Pages").InSchema(SchemaName).PrimaryColumn("Id");
