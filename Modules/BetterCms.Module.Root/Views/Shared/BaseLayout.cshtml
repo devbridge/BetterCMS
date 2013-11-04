@@ -156,7 +156,7 @@
         if (Model.CanManageContent && Model.RenderingPage != null)
         {
             @* // TODO: find better solution for displaying master pages path *@
-            <div style="position: fixed; top: 2px; width: 100%; text-align: center; border: 1px;">
+            <div style="position: fixed; top: 2px; width: 100%; text-align: center; border: 1px; z-index: 999;">
                 @RenderMasterPage(Model.RenderingPage)	
             </div>
         }
@@ -168,14 +168,14 @@
     if (viewModel.MasterPage != null)
     {
         @RenderMasterPage(viewModel.MasterPage);
-        <div style="display: inline; background-color: #ececec; height: 30px; border: 1px solid navy; margin-right: 5px; z-index: 99999999;">
+        <div style="display: inline; background-color: #ececec; height: 30px; border: 1px solid navy; margin-right: 5px;">
             MasterPage: 
             <a href="@viewModel.MasterPage.PageUrl">@viewModel.MasterPage.Title</a>
         </div>
     }
     else 
     {
-        <div style="display: inline; background-color: #ececec; height: 30px; border: 1px solid navy; margin-right: 5px; z-index: 99999999;">
+        <div style="display: inline; background-color: #ececec; height: 30px; border: 1px solid navy; margin-right: 5px;">
             Layout: 
             @viewModel.LayoutPath
         </div>
