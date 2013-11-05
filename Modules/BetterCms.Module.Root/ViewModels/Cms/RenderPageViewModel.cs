@@ -14,9 +14,16 @@ using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.Root.ViewModels.Cms
 {
+    /// <summary>
+    /// Represents view model for rendering page. Includes page data, contents, scripts, stylesheets, master pages, etc.
+    /// </summary>
     [Serializable]
     public class RenderPageViewModel : IRenderPage, IAccessSecuredObject, IAccessSecuredViewModel
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RenderPageViewModel" /> class.
+        /// </summary>
+        /// <param name="page">The page.</param>
         public RenderPageViewModel(IPage page)
         {
             var rootPage = page as Page;
@@ -37,35 +44,36 @@ namespace BetterCms.Module.Root.ViewModels.Cms
             Bag = new DynamicDictionary();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RenderPageViewModel" /> class.
+        /// </summary>
         public RenderPageViewModel()
         {
         }
 
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
 
-        public bool IsDeleted { get; private set; }
+        public bool IsDeleted { get; set; }
 
-        public int Version { get; private set; }
+        public int Version { get; set; }
         
-        public DateTime CreatedOn { get; private set; }
+        public DateTime CreatedOn { get; set; }
         
-        public DateTime ModifiedOn { get; private set; }
+        public DateTime ModifiedOn { get; set; }
         
-        public string CreatedByUser { get; private set; }
+        public string CreatedByUser { get; set; }
         
-        public string ModifiedByUser { get; private set; }
+        public string ModifiedByUser { get; set; }
 
-        public PageStatus Status { get; private set; }
-        
-        public bool IsPublic { get; private set; }
+        public PageStatus Status { get; set; }
 
-        public bool HasSEO { get; private set; }
+        public bool HasSEO { get; set; }
 
-        public string Title { get; private set; }
+        public string Title { get; set; }
 
-        public string MetaTitle { get; private set; }
+        public string MetaTitle { get; set; }
 
-        public string PageUrl { get; private set; }
+        public string PageUrl { get; set; }
 
         /// <summary>
         /// Gets the entity id.
@@ -146,7 +154,12 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// </value>
         public RenderPageViewModel MasterPage { get; set; }
 
-        // TODO: find better solution
+        /// <summary>
+        /// Gets or sets the rendering page (the most child page).
+        /// </summary>
+        /// <value>
+        /// The rendering page (the most child page).
+        /// </value>
         public RenderPageViewModel RenderingPage { get; set; }
 
         /// <summary>
@@ -297,17 +310,6 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         }
 
         /// <summary>
-        /// Returns a <see cref="System.String" /> that represents this instance.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="System.String" /> that represents this instance.
-        /// </returns>
-        public override string ToString()
-        {
-            return string.Format("Id: {0}, Title: {1}, PageUrl: {2}, LayoutPath: {3}", Id, Title, PageUrl, LayoutPath);
-        }
-
-        /// <summary>
         /// Gets or sets a value indicating whether page should be opened in the read only mode.
         /// </summary>
         /// <value>
@@ -315,8 +317,75 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// </value>
         public bool IsReadOnly { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether current user has edit role.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if current user has edit role; otherwise, <c>false</c>.
+        /// </value>
         public bool HasEditRole { get; set; }
 
+        /// <summary>
+        /// Gets a value indicating whether entity should be saved without checking object security.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if entity can be saved unsecured; otherwise, <c>false</c>.
+        /// </value>
         public bool SaveUnsecured { get; set; }
+
+        /// <summary>
+        /// Clones this instance.
+        /// </summary>
+        /// <returns>Cloned view model</returns>
+        public RenderPageViewModel Clone()
+        {
+            return new RenderPageViewModel
+                       {
+                           Id = Id,
+                           IsDeleted = IsDeleted,
+                           Version = Version,
+                           HasSEO = HasSEO,
+                           Title = Title,
+                           MetaTitle = MetaTitle,
+                           PageUrl = PageUrl,
+                           Status = Status,
+                           CreatedOn = CreatedOn,
+                           CreatedByUser = CreatedByUser,
+                           ModifiedOn = ModifiedOn,
+                           ModifiedByUser = ModifiedByUser,
+                           LayoutPath = LayoutPath,
+                           RequireJsPath = RequireJsPath,
+                           MainJsPath = MainJsPath,
+                           Html5ShivJsPath = Html5ShivJsPath,
+                           Bag = Bag,
+                           CanManageContent = CanManageContent,
+                           AreRegionsEditable = AreRegionsEditable,
+                           IsReadOnly = IsReadOnly,
+                           HasEditRole = HasEditRole,
+                           SaveUnsecured = SaveUnsecured,
+
+                           MasterPage = MasterPage != null ? MasterPage.Clone() : null,
+                           RenderingPage = RenderingPage != null ? RenderingPage.Clone() : null,
+
+                           Contents = Contents != null ? new List<PageContentProjection>(Contents) : null,
+                           Regions = Regions != null ? new List<PageRegionViewModel>(Regions) : null,
+                           Options = Options != null ? new List<IOptionValue>(Options) : null,
+                           Metadata = Metadata != null ? new List<IPageActionProjection>(Metadata) : null,
+                           Stylesheets = Stylesheets != null ? new List<IStylesheetAccessor>(Stylesheets) : null,
+                           JavaScripts = JavaScripts != null ? new List<IJavaScriptAccessor>(JavaScripts) : null,
+                           AccessRules = AccessRules != null ? new List<IAccessRule>(AccessRules) : null
+                       };
+        }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("Id: {0}, Title: {1}, PageUrl: {2}, LayoutPath: {3}, MasterPage: {4}", Id, Title, PageUrl, LayoutPath, MasterPage);
+        }
     }
 }

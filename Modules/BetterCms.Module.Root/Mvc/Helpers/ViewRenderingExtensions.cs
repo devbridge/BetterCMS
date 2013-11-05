@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 
+using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Cms;
 
@@ -96,46 +98,61 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                 return renderedMaster;
             }
 
-            // HACK: passing current page id to parent parent page, otherwise master page's id is used
-            // TODO: remove of find more clean solution
-            var newModel = new RenderPageViewModel(
-                new Page
-                    {
-                        Id = pageModel.Id,
-                        IsDeleted = currentModel.IsDeleted,
-                        Version = currentModel.Version,
-                        Title = currentModel.Title,
-                        PageUrl = currentModel.PageUrl,
-                        Status = currentModel.Status,
-                        CreatedOn = currentModel.CreatedOn,
-                        CreatedByUser = currentModel.CreatedByUser,
-                        ModifiedOn = currentModel.ModifiedOn,
-                        ModifiedByUser = currentModel.ModifiedByUser
-                    })
-                               {
-                                   LayoutPath = currentModel.LayoutPath,
-                                   MasterPage = currentModel.MasterPage,
-                                   RenderingPage = pageModel,
-                                   Contents = currentModel.Contents,
-                                   Regions = currentModel.Regions,
-                                   AreRegionsEditable = currentModel.AreRegionsEditable,
-                                   CanManageContent = currentModel.CanManageContent,
-                                   Options = currentModel.Options,
-                                   Metadata = currentModel.Metadata,
-                                   Stylesheets = currentModel.Stylesheets,
-                                   JavaScripts = currentModel.JavaScripts,
-                                   AccessRules = currentModel.AccessRules,
-                                   RequireJsPath = currentModel.RequireJsPath,
-                                   MainJsPath = currentModel.MainJsPath,
-                                   Html5ShivJsPath = currentModel.Html5ShivJsPath,
-                                   Bag = currentModel.Bag,
-                                   IsReadOnly = currentModel.IsReadOnly,
-                                   HasEditRole = currentModel.HasEditRole,
-                                   SaveUnsecured = currentModel.SaveUnsecured,
-                               };
+            var newModel = currentModel.Clone();
+            newModel.Id = pageModel.Id;
+            newModel.PageUrl = pageModel.PageUrl;
+            newModel.Title = pageModel.Title;
+            newModel.MetaTitle = pageModel.MetaTitle;
+            newModel.RenderingPage = pageModel;
+            newModel.Metadata = pageModel.Metadata;
+
+            PopulateCollections(newModel, pageModel);
 
             var renderedView = RenderViewToString(controller, "~/Areas/bcms-Root/Views/Cms/Index.cshtml", newModel);
             return renderedView;
+        }
+
+        /// <summary>
+        /// Populates the collections.
+        /// </summary>
+        /// <param name="destination">The destination.</param>
+        /// <param name="source">The source.</param>
+        private static void PopulateCollections(RenderPageViewModel destination, RenderPageViewModel source)
+        {
+            if (source.MasterPage != null)
+            {
+                PopulateCollections(destination, source.MasterPage);
+            }
+
+            if (source.JavaScripts != null)
+            {
+                if (destination.JavaScripts == null)
+                {
+                    destination.JavaScripts = new List<IJavaScriptAccessor>();
+                }
+                foreach (var js in source.JavaScripts)
+                {
+                    if (!destination.JavaScripts.Contains(js))
+                    {
+                        destination.JavaScripts.Add(js);
+                    }
+                }
+            }
+
+            if (source.Stylesheets != null)
+            {
+                if (destination.Stylesheets == null)
+                {
+                    destination.Stylesheets = new List<IStylesheetAccessor>();
+                }
+                foreach (var css in source.Stylesheets)
+                {
+                    if (!destination.Stylesheets.Contains(css))
+                    {
+                        destination.Stylesheets.Add(css);
+                    }
+                }
+            }
         }
 
         /// <summary>
