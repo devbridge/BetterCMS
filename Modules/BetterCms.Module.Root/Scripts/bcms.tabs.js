@@ -72,11 +72,16 @@ bettercms.define('bcms.tabs', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 tabId = '#' + tabId;
             }
 
-            this.container.find(selectors.activeTabLink).removeClass(classes.activeTabLink);
-            this.container.find('[data-name="' + tabId + '"]').addClass(classes.activeTabLink);
-
-            this.container.find(selectors.tabContent).hide();
-            this.container.find(tabId).show();
+            var tabHeadToActivate = this.container.find('[data-name="' + tabId + '"]'),
+                headContainer = tabHeadToActivate.parent()/*.closest(selectors.tabsHeader)*/;
+            
+            headContainer.find(selectors.activeTabLink).removeClass(classes.activeTabLink);
+            tabHeadToActivate.addClass(classes.activeTabLink);
+            
+            var tabBodyToActivate = this.container.find(tabId),
+                bodyContainer = tabBodyToActivate.parent();
+            bodyContainer.children(selectors.tabContent).hide();
+            tabBodyToActivate.show();
         },
 
         selectFirstTab: function () {
