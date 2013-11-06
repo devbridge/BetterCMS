@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.DataAccess.DataContext.Fetching;
+using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
@@ -18,6 +18,8 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Security;
+
+using NHibernate.Linq;
 
 using ITagService = BetterCms.Module.Pages.Services.ITagService;
 
@@ -137,11 +139,12 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                                               ImageUrl = fileUrlResolver.EnsureFullPathUrl(page.FeaturedImage.PublicUrl),
                                               ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(page.FeaturedImage.PublicThumbnailUrl),
                                               ImageTooltip = page.FeaturedImage.Caption,
-                                              FolderId = page.FeaturedImage.Folder != null ? page.FeaturedImage.Folder.Id : (System.Guid?)null
+                                              FolderId = page.FeaturedImage.Folder != null ? page.FeaturedImage.Folder.Id : (Guid?)null
                                           }
                           }
                     })
-                .FirstOne();
+                .ToList()
+                .FirstOrDefault();
 
             if (model != null && model.Model != null)
             {
@@ -151,10 +154,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 model.Model.UpdateSitemap = true;
 
                 // Get layout options, page options and merge them
-                var layoutOptions = Repository.AsQueryable<LayoutOption>(lo => lo.Layout.Id == model.Model.TemplateId).Fetch(o => o.CustomOption).ToList();
-                var pageOptions = Repository.AsQueryable<PageOption>(p => p.Page.Id == id).Fetch(o => o.CustomOption).ToList();
-
-                model.Model.OptionValues = optionService.GetMergedOptionValuesForEdit(layoutOptions, pageOptions);
+                LoadOptionValues(model.Model);
                 model.Model.CustomOptions = optionService.GetCustomOptions();
 
                 if (cmsConfiguration.Security.AccessControlEnabled)
@@ -192,6 +192,113 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
             }
 
             return model != null ? model.Model : null;
+        }
+
+        /// <summary>
+        /// Loads the option values and sets up the list of option value view models.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        private void LoadOptionValues(EditPagePropertiesViewModel model)
+        {
+            Guid layoutId;
+            var allPages = new List<PageMasterPage>
+                            {
+                                new PageMasterPage
+                                    {
+                                        Id = model.Id,
+                                        MasterPageId = model.MasterPageId,
+                                        LayoutId = model.TemplateId
+                                    }
+                            };
+            if (model.TemplateId.HasValue)
+            {
+                layoutId = model.TemplateId.Value;
+            }
+            else
+            {
+                // Load ids of all the master pages
+                var masterPages = Repository
+                    .AsQueryable<MasterPage>()
+                    .Where(mp => mp.Page.Id == model.Id)
+                    .Select(mp => new PageMasterPage
+                    {
+                        Id = mp.Master.Id,
+                        MasterPageId = mp.Master.MasterPage.Id,
+                        LayoutId = mp.Master.Layout.Id
+                    })
+                    .ToList();
+                allPages.AddRange(masterPages);
+
+                layoutId = masterPages.Where(m => m.LayoutId.HasValue).Select(m => m.LayoutId.Value).FirstOrDefault();
+            }
+
+            var layoutOptionsFutureQuery = Repository
+                .AsQueryable<LayoutOption>()
+                .Where(lo => lo.Layout.Id == layoutId)
+                .ToFuture();
+
+            var pageIds = allPages.Select(p => p.Id).ToArray();
+            var pageOptionsFutureQuery = Repository
+                .AsQueryable<PageOption>()
+                .Where(po => pageIds.Contains(po.Page.Id))
+                .ToFuture();
+
+            var layoutOptions = layoutOptionsFutureQuery.ToList();
+            var allPagesOptions = pageOptionsFutureQuery.ToList();
+            var pageOptions = allPagesOptions.Where(po => po.Page.Id == model.Id);
+
+            // Get lowest level options, when going up from master pages to layout
+            var masterOptions = GetMasterOptionValues(model.Id, allPages, allPagesOptions, layoutOptions, new List<IOption>());
+            model.OptionValues = optionService.GetMergedOptionValuesForEdit(masterOptions, pageOptions);
+        }
+
+        private List<IOption> GetMasterOptionValues(Guid id, List<PageMasterPage> allPages, List<PageOption> allPagesOptions,
+            List<LayoutOption> layoutOptions, List<IOption> allMasterOptions)
+        {
+            var page = allPages.FirstOrDefault(p => p.Id == id);
+            if (page != null)
+            {
+                if (page.MasterPageId.HasValue)
+                {
+                    allMasterOptions = GetMasterOptionValues(page.MasterPageId.Value, allPages, allPagesOptions, layoutOptions, allMasterOptions);
+
+                    foreach (var option in allPagesOptions.Where(o => o.Page.Id == page.MasterPageId.Value))
+                    {
+                        var masterOption = allMasterOptions.FirstOrDefault(o => o.Key == option.Key
+                            && o.Type == option.Type
+                            && ((o.CustomOption == null && option.CustomOption == null)
+                                || (o.CustomOption != null
+                                    && option.CustomOption != null
+                                    && o.CustomOption.Identifier == option.CustomOption.Identifier)));
+
+                        if (masterOption != null)
+                        {
+                            allMasterOptions.Remove(masterOption);
+                            allMasterOptions.Add(option);
+                        }
+                        else
+                        {
+                            allMasterOptions.Add(option);
+                        }
+                    }
+                }
+                else if (page.LayoutId.HasValue)
+                {
+                    // Returning layout options as master option values
+                    return layoutOptions.Cast<IOption>().ToList();
+                }
+            }
+
+            return allMasterOptions;
+        }
+
+        private class PageMasterPage
+        {
+            public Guid Id { get; set; }
+
+            public Guid? MasterPageId { get; set; }
+
+            public Guid? LayoutId { get; set; }
         }
     }
 }
