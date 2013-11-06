@@ -71,11 +71,12 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             var ids = new List<Guid> { page.Id };
             if (page.MasterPages != null)
             {
-                ids.AddRange(page.MasterPages.Select(mp => mp.Master.Id));
+                ids.AddRange(page.MasterPages.Select(mp => mp.Master.Id).Distinct());
             }
-            var pageContents = GetPageContents(ids, request);
+            var pageContents = GetPageContents(ids.ToArray(), request);
 
-            var renderPageViewModel = CreatePageViewModel(page, pageContents, page, request, true);
+            var childrenList = new List<Page>();
+            var renderPageViewModel = CreatePageViewModel(page, pageContents, page, request, childrenList);
 
             // Notify about retrieved page.
             var result = Events.RootEvents.Instance.OnPageRetrieved(renderPageViewModel, page);
@@ -90,7 +91,8 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             }
         }
 
-        public RenderPageViewModel CreatePageViewModel(Page renderingPage, IList<PageContent> allPageContents, Page page, GetPageToRenderRequest request, bool isParent = false)
+        private RenderPageViewModel CreatePageViewModel(Page renderingPage, IList<PageContent> allPageContents, Page page, 
+            GetPageToRenderRequest request, List<Page> childrenList)
         {
             if (request.PreviewPageContentId == null && !request.IsAuthenticated && page.Status != PageStatus.Published)
             {
@@ -109,12 +111,12 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             RenderPageViewModel renderPageViewModel = new RenderPageViewModel(page);
             renderPageViewModel.CanManageContent = request.CanManageContent;
-            renderPageViewModel.AreRegionsEditable = request.CanManageContent && isParent;
+            renderPageViewModel.AreRegionsEditable = request.CanManageContent && !childrenList.Any();
 
             if (page.Layout != null)
             {
                 renderPageViewModel.LayoutPath = page.Layout.LayoutPath;
-                renderPageViewModel.Options = optionService.GetMergedOptionValues(page.Layout.LayoutOptions, page.Options).ToList();
+                renderPageViewModel.Options = GetMergedOptionValues(page.Layout.LayoutOptions, page.Options, childrenList);
                 renderPageViewModel.Regions = page.Layout.LayoutRegions
                     .Distinct()
                     .Select(f => new PageRegionViewModel
@@ -132,17 +134,19 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                      throw new InvalidOperationException(string.Format("Cannot find a master page in master pages path collection for page {0}.", request.PageUrl));
                 }
 
-                renderPageViewModel.MasterPage = CreatePageViewModel(renderingPage, allPageContents, masterPage.Master, request);
-                
-                renderPageViewModel.Options = new List<IOptionValue>();
+                childrenList.Insert(0, page);
+                renderPageViewModel.MasterPage = CreatePageViewModel(renderingPage, allPageContents, masterPage.Master, request, childrenList);
+                childrenList.Remove(page);
+
+                renderPageViewModel.Options = GetMergedOptionValues(new List<IOption>(), page.Options, childrenList);
                 renderPageViewModel.Regions = allPageContents
                     .Where(pc => pc.Page == page.MasterPage)
                     .SelectMany(pc => pc.Content.ContentRegions)
                     .Select(cr => new PageRegionViewModel
-                        {
-                            RegionId = cr.Region.Id,
-                            RegionIdentifier = cr.Region.RegionIdentifier
-                        })
+                    {
+                        RegionId = cr.Region.Id,
+                        RegionIdentifier = cr.Region.RegionIdentifier
+                    })
                     .ToList();
             }
             else
@@ -204,6 +208,12 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             return renderPageViewModel;
         }
 
+        /// <summary>
+        /// Creates the page content projection.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <param name="pageContent">Content of the page.</param>
+        /// <returns>Page content projection</returns>
         private PageContentProjection CreatePageContentProjection(GetPageToRenderRequest request, PageContent pageContent)
         {
             Models.Content contentToProject = null;
@@ -315,7 +325,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         /// <param name="pageIds">The page ids.</param>
         /// <param name="request">The request.</param>
         /// <returns>The list of page contents</returns>
-        private IList<PageContent> GetPageContents(IList<Guid> pageIds, GetPageToRenderRequest request)
+        private IList<PageContent> GetPageContents(Guid[] pageIds, GetPageToRenderRequest request)
         {
             IQueryable<PageContent> pageContentsQuery =
                 Repository.AsQueryable<PageContent>();
@@ -367,6 +377,33 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Gets the merged option values.
+        /// </summary>
+        /// <param name="options">The options.</param>
+        /// <param name="optionValues">The option values.</param>
+        /// <param name="childrenPages">The children pages.</param>
+        /// <returns>Merged option values</returns>
+        private List<IOptionValue> GetMergedOptionValues(IEnumerable<IOption> options, IEnumerable<IOption> optionValues, IList<Page> childrenPages)
+        {
+            var mergedOptions = new List<IOptionValue>();
+
+            foreach (var option in optionService.GetMergedOptionValues(options, optionValues))
+            {
+                if (!childrenPages.Any(co => co.Options.Any(o => o.Key == option.Key 
+                    && o.Type == option.Type 
+                    && ((o.CustomOption == null && option.CustomOption == null) 
+                        || (o.CustomOption != null 
+                            && option.CustomOption != null 
+                            && o.CustomOption.Identifier == option.CustomOption.Identifier)))))
+                {
+                    mergedOptions.Add(option);
+                }
+            }
+
+            return mergedOptions;
         }
     }
 }
