@@ -178,7 +178,17 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 model.Model.Templates
                     .Where(x => x.TemplateId == model.Model.TemplateId || x.TemplateId == model.Model.MasterPageId)
                     .Take(1).ToList()
-                    .ForEach(x => x.IsActive = true);               
+                    .ForEach(x => x.IsActive = true);
+
+                // Child page can not be selected as master.
+                model.Model.Templates = model.Model.Templates
+                    .Where(x => !x.IsMasterPage || !Repository.AsQueryable<MasterPage>().Where(m => m.Page.Id == x.TemplateId).Any(m => m.Master.Id == model.Model.Id))
+                    .ToList();
+
+                // Page can not be master for it self.
+                model.Model.Templates = model.Model.Templates
+                    .Where(x => x.TemplateId != model.Model.Id)
+                    .ToList();
             }
 
             return model != null ? model.Model : null;

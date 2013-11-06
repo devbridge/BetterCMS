@@ -1116,4 +1116,16 @@
   <data name="EditOptionsValues_UseDefaultValueColumn" xml:space="preserve">
     <value>Use default</value>
   </data>
+  <data name="SavePagePropertiesCommand_LayoutAndMasterIsSelected_Message" xml:space="preserve">
+    <value>Only one of master page and layout can be selected.</value>
+  </data>
+  <data name="SavePagePropertiesCommand_NoLayoutOrMasterSelected_Message" xml:space="preserve">
+    <value>Template or master page should be selected for page.</value>
+  </data>
+  <data name="SavePagePropertiesCommand_SelectedMasterIsChildPage_Message" xml:space="preserve">
+    <value>Selected master page is a child of the current page.</value>
+  </data>
+  <data name="SavePagePropertiesCommand_SelectedMasterIsCurrentPage_Message" xml:space="preserve">
+    <value>Selected master page is the current page.</value>
+  </data>
 </root>

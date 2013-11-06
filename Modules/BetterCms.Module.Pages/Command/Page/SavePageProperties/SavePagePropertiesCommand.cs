@@ -11,6 +11,7 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
@@ -120,17 +121,31 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         {
             if (!request.MasterPageId.HasValue && !request.TemplateId.HasValue)
             {
-                // TODO: add to resources
-                var message = "Template or master page should be selected for page.";
-                throw new ValidationException(() => message, message);
-            }
-            if (request.MasterPageId.HasValue && request.TemplateId.HasValue)
-            {
-                // TODO: add to resources
-                var message = "Only one of master page and layout can be selected.";
-                throw new ValidationException(() => message, message);
+                var logMessage = string.Format("Template or master page should be selected for page {0}.", request.Id);
+                throw new ValidationException(() => PagesGlobalization.SavePagePropertiesCommand_NoLayoutOrMasterSelected_Message, logMessage);
             }
 
+            if (request.MasterPageId.HasValue && request.TemplateId.HasValue)
+            {
+                var logMessage = string.Format("Only one of master page and layout can be selected for page {0}.", request.Id);
+                throw new ValidationException(() => PagesGlobalization.SavePagePropertiesCommand_LayoutAndMasterIsSelected_Message, logMessage);
+            }
+
+            if (request.MasterPageId.HasValue)
+            {
+                if (request.Id == request.MasterPageId.Value)
+                {
+                    var logMessage = string.Format("Selected master page is the current page {0}.", request.Id);
+                    throw new ValidationException(() => PagesGlobalization.SavePagePropertiesCommand_SelectedMasterIsCurrentPage_Message, logMessage);
+                }
+
+                if (Repository.AsQueryable<MasterPage>().Where(m => m.Page.Id == request.MasterPageId.Value).Any(m => m.Master.Id == request.Id))
+                {
+                    var logMessage = string.Format("Selected master page {0} is a child of the current page {1}.", request.MasterPageId.Value, request.Id);
+                    throw new ValidationException(() => PagesGlobalization.SavePagePropertiesCommand_SelectedMasterIsChildPage_Message, logMessage);
+                }
+            }
+            
             UnitOfWork.BeginTransaction();
 
             var pageQuery = Repository
