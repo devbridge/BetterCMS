@@ -124,6 +124,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                 var message = "Template or master page should be selected for page.";
                 throw new ValidationException(() => message, message);
             }
+
             if (request.MasterPageId.HasValue && request.TemplateId.HasValue)
             {
                 // TODO: add to resources
@@ -131,6 +132,23 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                 throw new ValidationException(() => message, message);
             }
 
+            if (request.MasterPageId.HasValue)
+            {
+                if (request.Id == request.MasterPageId.Value)
+                {
+                    // TODO: add to resources
+                    var message = "Selected master page is the current page.";
+                    throw new ValidationException(() => message, message);
+                }
+
+                if (Repository.AsQueryable<MasterPage>().Where(m => m.Page.Id == request.MasterPageId.Value).Any(m => m.Master.Id == request.Id))
+                {
+                    // TODO: add to resources
+                    var message = "Selected master page is a child of the current page.";
+                    throw new ValidationException(() => message, message);
+                }
+            }
+            
             UnitOfWork.BeginTransaction();
 
             var pageQuery = Repository
