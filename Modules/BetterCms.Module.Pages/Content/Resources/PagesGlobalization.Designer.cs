@@ -2176,6 +2176,42 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only one of master page and layout can be selected..
+        /// </summary>
+        public static string SavePagePropertiesCommand_LayoutAndMasterIsSelected_Message {
+            get {
+                return ResourceManager.GetString("SavePagePropertiesCommand_LayoutAndMasterIsSelected_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template or master page should be selected for page..
+        /// </summary>
+        public static string SavePagePropertiesCommand_NoLayoutOrMasterSelected_Message {
+            get {
+                return ResourceManager.GetString("SavePagePropertiesCommand_NoLayoutOrMasterSelected_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected master page is a child of the current page..
+        /// </summary>
+        public static string SavePagePropertiesCommand_SelectedMasterIsChildPage_Message {
+            get {
+                return ResourceManager.GetString("SavePagePropertiesCommand_SelectedMasterIsChildPage_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected master page is the current page..
+        /// </summary>
+        public static string SavePagePropertiesCommand_SelectedMasterIsCurrentPage_Message {
+            get {
+                return ResourceManager.GetString("SavePagePropertiesCommand_SelectedMasterIsCurrentPage_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Page status is inappropriate. Can not change it..
         /// </summary>
         public static string SavePageStatus_PageIsInInappropriateStatus_Message {
