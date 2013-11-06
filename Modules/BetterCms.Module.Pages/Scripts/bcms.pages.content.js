@@ -615,7 +615,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             if (htmlContentEditor != null) {
 
                 var guid = createGuid(),
-                    html = "<div>{{DYNAMIC_REGION:" + guid + "}}</div>";
+                    html = '<div>{{DYNAMIC_REGION:' + guid + '}}</div>';
                 
                 if (htmlContentEditor.mode == 'source') {
                     var oldData = htmlContentEditor.getData();
@@ -623,6 +623,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     htmlContentEditor.setData(oldData + html);
                 } else {
                     htmlContentEditor.insertHtml(html);
+                    htmlContentEditor.setData(htmlContentEditor.getData()); // HACK: quick fix to have valid html.
                 }
             }
         }
