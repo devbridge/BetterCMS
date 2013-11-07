@@ -95,6 +95,11 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     renderedMaster = DynamicLayoutHelper.ReplaceRegionHtml(region.RegionIdentifier, renderedMaster, html);
                 }
                 
+                if (currentModel.AreRegionsEditable)
+                {
+                    renderedMaster = DynamicLayoutHelper.ReplaceRegionRepresentationHtml(renderedMaster);
+                }
+
                 return renderedMaster;
             }
 
