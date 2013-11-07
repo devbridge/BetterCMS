@@ -161,8 +161,8 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             }
 
             dialog.container.find(selectors.addNewPageTemplateSelect).on('click', function () {
-                page.highlightAddNewPageActiveTemplate(dialog, this, function (id) {
-                    pageProperties.loadLayoutOptions(id, dialog.container, content.Data.TemplateId, optionsContainer, viewModel.options);
+                page.highlightAddNewPageActiveTemplate(dialog, this, function (id, isMasterPage) {
+                    pageProperties.loadLayoutOptions(id, isMasterPage, dialog.container, optionsContainer, viewModel.options);
                 });
             });
 
@@ -254,7 +254,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 $(template).addClass(classes.addNewPageActiveTemplateBox);
                 $(template).find(selectors.addNewPageActiveTemplateMessage).show();
 
-                onChangeCallback.call(this, id);
+                onChangeCallback.call(this, id, isMasterPage);
             }
 
             $(selectButton).hide();

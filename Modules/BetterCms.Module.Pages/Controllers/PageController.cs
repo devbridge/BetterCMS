@@ -290,12 +290,16 @@ namespace BetterCms.Module.Pages.Controllers
         /// Loads the layout options.
         /// </summary>
         /// <param name="id">The id.</param>
+        /// <param name="isMasterPage">if set to <c>true</c> layout is master page.</param>
         /// <returns></returns>
         [HttpGet]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
-        public ActionResult LoadLayoutOptions(string id)
+        public ActionResult LoadLayoutOptions(string id, string isMasterPage)
         {
-            var model = GetCommand<GetLayoutOptionsCommand>().ExecuteCommand(id.ToGuidOrDefault());
+            var model = GetCommand<GetLayoutOptionsCommand>().ExecuteCommand(new GetLayoutOptionsCommandRequest {
+                Id = id.ToGuidOrDefault(),
+                IsMasterPage = isMasterPage.ToBoolOrDefault()
+            });
             return WireJson(model != null, model, JsonRequestBehavior.AllowGet);
         }
     }
