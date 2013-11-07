@@ -125,10 +125,7 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
                 page.Layout = Repository.AsProxy<Root.Models.Layout>(request.TemplateId.Value);
             }
 
-            var parentOptions = Repository
-                .AsQueryable<LayoutOption>(o => o.Layout.Id == request.TemplateId)
-                .ToList();
-            optionService.SaveOptionValues(request.OptionValues, null, parentOptions, () => new PageOption { Page = page });
+            optionService.SaveOptionValues(request.OptionValues, null, () => new PageOption { Page = page });
 
             Repository.Save(page);
 

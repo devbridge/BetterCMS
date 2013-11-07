@@ -252,9 +252,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             page.FeaturedImage = request.FeaturedImage != null && request.FeaturedImage.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.FeaturedImage.ImageId.Value) : null;
 
             var optionValues = page.Options.Distinct();
-            // TODO: get options from master page
-            var parentOptions = page.Layout != null ? page.Layout.LayoutOptions.Distinct() : new List<LayoutOption>();
-            optionService.SaveOptionValues(request.OptionValues, optionValues, parentOptions, () => new PageOption { Page = page });
+            optionService.SaveOptionValues(request.OptionValues, optionValues, () => new PageOption { Page = page });
 
             if (cmsConfiguration.Security.AccessControlEnabled)
             {
