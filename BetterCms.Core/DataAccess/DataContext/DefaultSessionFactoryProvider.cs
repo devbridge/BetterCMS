@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SqlClient;
 
 using BetterCms.Configuration;
 using BetterCms.Core.DataAccess.DataContext.Conventions;
@@ -185,6 +186,19 @@ namespace BetterCms.Core.DataAccess.DataContext
             }
 
             return sqlConfiguration;
+        }
+
+        ~DefaultSessionFactoryProvider()
+        {
+            try
+            {
+                SessionFactory.Close();
+                SessionFactory.Dispose();
+            }
+            finally
+            {
+                SqlConnection.ClearAllPools();
+            }
         }
     }
 }
