@@ -56,9 +56,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         {
             var htmlHelper = GetHtmlHelper(controller);
 
-            var html = RenderRecursively(controller, renderPageViewModel, renderPageViewModel, htmlHelper);
-// TODO:    html = DynamicLayoutHelper.ReplaceRegionRepresentationHtml(html);
-            return html;
+            return RenderRecursively(controller, renderPageViewModel, renderPageViewModel, htmlHelper);
         }
 
         /// <summary>
@@ -97,6 +95,11 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     renderedMaster = DynamicLayoutHelper.ReplaceRegionHtml(region.RegionIdentifier, renderedMaster, html);
                 }
                 
+                if (currentModel.AreRegionsEditable)
+                {
+                    renderedMaster = DynamicLayoutHelper.ReplaceRegionRepresentationHtml(renderedMaster);
+                }
+
                 return renderedMaster;
             }
 
