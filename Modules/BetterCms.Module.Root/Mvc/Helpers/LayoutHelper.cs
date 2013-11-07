@@ -49,6 +49,11 @@ namespace BetterCms.Module.Root.Mvc.Helpers
 
                 if (!string.IsNullOrWhiteSpace(html))
                 {
+                    if (model.AreRegionsEditable)
+                    {
+                        html = DynamicLayoutHelper.ReplaceRegionRepresentationHtml(html);
+                    }
+
                     RenderSectionAsLayoutRegion(webPage, html, region.RegionIdentifier);
                 }                
             }
