@@ -56,7 +56,9 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         {
             var htmlHelper = GetHtmlHelper(controller);
 
-            return RenderRecursively(controller, renderPageViewModel, renderPageViewModel, htmlHelper);
+            var html = RenderRecursively(controller, renderPageViewModel, renderPageViewModel, htmlHelper);
+            html = DynamicLayoutHelper.ReplaceRegionRepresentationHtml(html);
+            return html;
         }
 
         /// <summary>

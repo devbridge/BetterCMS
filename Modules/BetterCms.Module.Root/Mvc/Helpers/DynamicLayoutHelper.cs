@@ -19,5 +19,17 @@ namespace BetterCms.Module.Root.Mvc.Helpers
 
             return Regex.Replace(replaceIn, replacement, replaceWith, RegexOptions.IgnoreCase);
         }
+
+        public static string ReplaceRegionRepresentationHtml(string replaceIn)
+        {
+            return Regex.Replace(
+                replaceIn,
+                RootModuleConstants.DynamicRegionRegexPattern,
+                // TODO: refractor identification.
+                //"<div style=\"outline: 1px dashed #009AEB;width: 100%;height: 100%;/*background-color: rgba(0,154,235,0.1);*/\">" +
+                "<p style=\"outline: 1px dashed #009AEB;opacity: 0.5;background-color: rgba(0,154,235,0.1);\">&nbsp;</p>"/* +
+                "</div>"*/,
+                RegexOptions.IgnoreCase);
+        }
     }
 }
