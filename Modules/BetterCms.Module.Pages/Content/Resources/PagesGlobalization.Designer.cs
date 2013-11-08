@@ -1483,7 +1483,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You are about to convert the page to Master Page. Master page is not accessible from the outside and is intended to be used as a template for other pages.&lt;br/&gt;&lt;br/&gt;Proceed?.
+        ///   Looks up a localized string similar to You are about to convert the page to Master Page. Master page is not accessible from the outside and is intended to be used as a template for other pages.&lt;br/&gt;Proceed?.
         /// </summary>
         public static string EditPageProperties_PageConversionToMaster_ConfirmationMessage {
             get {

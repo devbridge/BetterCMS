@@ -335,19 +335,25 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                                 return false;
                             }
 
-                            var isMasterPage = dialog.container.find(selectors.pagePropertiesPageIsMasterCheckbox).is(':checked');
+                            var newPageIsPublished = dialog.container.find(selectors.pagePropertiesPageIsPublishedCheckbox).is(':checked'),
+                                message = newPageIsPublished ? globalization.pageStatusChangeConfirmationMessagePublish : globalization.pageStatusChangeConfirmationMessageUnPublish,
+                                isMasterPage = dialog.container.find(selectors.pagePropertiesPageIsMasterCheckbox).is(':checked');
+                            
                             if (currentPageIsMaster != isMasterPage) {
                                 modal.confirm({
                                     content: globalization.pageConversionToMasterConfirmationMessage,
                                     onAccept: function () {
+                                        // Skip page publishing confirmation, because making master will force to publish.
+                                        if (currentPageIsPublished != newPageIsPublished) {
+                                            currentPageIsPublished = newPageIsPublished;
+                                        }
+                                        currentPageIsMaster = isMasterPage;
                                         dialog.container.find(selectors.pagePropertiesForm).submit();
                                     }
                                 });
                                 return false;
                             }
 
-                            var newPageIsPublished = dialog.container.find(selectors.pagePropertiesPageIsPublishedCheckbox).is(':checked'),
-                                message = newPageIsPublished ? globalization.pageStatusChangeConfirmationMessagePublish : globalization.pageStatusChangeConfirmationMessageUnPublish;
                             if (currentPageIsPublished != newPageIsPublished) {
                                 modal.confirm({
                                     content: message,
