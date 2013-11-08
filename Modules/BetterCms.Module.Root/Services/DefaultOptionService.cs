@@ -705,15 +705,14 @@ namespace BetterCms.Module.Root.Services
             }
             if (!masterPageId.HasValue && !templateId.HasValue)
             {
-                // TODO: add to resources
-                var message = "Template or master page should be selected for page.";
+                var message = RootGlobalization.MasterPage_Or_Layout_ShouldBeSelected_ValidationMessage;
                 throw new ValidationException(() => message, message);
             }
             if (masterPageId.HasValue && templateId.HasValue)
             {
-                // TODO: add to resources
-                var message = "Only one of master page and layout can be selected.";
-                throw new ValidationException(() => message, message);
+                var logMessage = string.Format("Only one of master page and layout can be selected. LayoutId: {0}, MasterPageId: {1}", masterPageId, templateId);
+                var message = RootGlobalization.MasterPage_Or_Layout_OnlyOne_ShouldBeSelected_ValidationMessage;
+                throw new ValidationException(() => message, logMessage);
             }
 
             Guid layoutId;

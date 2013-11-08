@@ -33,9 +33,6 @@ namespace BetterCms.Module.Root.Projections
             if (page is IProxy)
             {
                 pageType = page.GetType().BaseType;
-
-                // TODO: remove this hack
-                page = repository.UnProxy(page);
             }
             else
             {

@@ -10,6 +10,7 @@ using BetterCms.Module.Pages.Command.Page.SavePageProperties;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
+using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
@@ -78,15 +79,14 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
         {
             if (!request.MasterPageId.HasValue && !request.TemplateId.HasValue)
             {
-                // TODO: add to resources
-                var message = "Template or master page should be selected for page.";
+                var message = RootGlobalization.MasterPage_Or_Layout_ShouldBeSelected_ValidationMessage;
                 throw new ValidationException(() => message, message);
             }
             if (request.MasterPageId.HasValue && request.TemplateId.HasValue)
             {
-                // TODO: add to resources
-                var message = "Only one of master page and layout can be selected.";
-                throw new ValidationException(() => message, message);
+                var logMessage = string.Format("Only one of master page and layout can be selected. LayoutId: {0}, MasterPageId: {1}", request.MasterPageId, request.TemplateId);
+                var message = RootGlobalization.MasterPage_Or_Layout_OnlyOne_ShouldBeSelected_ValidationMessage;
+                throw new ValidationException(() => message, logMessage);
             }
 
             // Create / fix page url

@@ -312,6 +312,12 @@
   <data name="MasterPagesPath_ShowPath_Button" xml:space="preserve">
     <value>Show Path</value>
   </data>
+  <data name="MasterPage_Or_Layout_OnlyOne_ShouldBeSelected_ValidationMessage" xml:space="preserve">
+    <value>Only one of master page and template can be specified.</value>
+  </data>
+  <data name="MasterPage_Or_Layout_ShouldBeSelected_ValidationMessage" xml:space="preserve">
+    <value>Template or master page should be selected.</value>
+  </data>
   <data name="Message_AccessForbidden" xml:space="preserve">
     <value>Forbidden: Access is denied.</value>
   </data>
