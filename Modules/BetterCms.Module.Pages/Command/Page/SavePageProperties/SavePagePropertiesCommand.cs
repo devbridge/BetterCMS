@@ -226,6 +226,12 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             {
                 AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.PublishContent);
 
+                if (request.IsMasterPage && !page.IsMasterPage)
+                {
+                    page.IsMasterPage = true;
+                    request.IsPagePublished = true;
+                }
+
                 if (request.IsPagePublished)
                 {
                     if (page.Status != PageStatus.Published)

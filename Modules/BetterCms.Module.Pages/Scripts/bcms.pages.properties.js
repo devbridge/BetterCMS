@@ -327,6 +327,12 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                                 return false;
                             }
 
+                            if (!pageViewModel.options.isValid(true)) {
+                                return false;
+                            }
+
+                            // TODO: add confirmation about making master page.
+
                             var newPageIsPublished = dialog.container.find(selectors.pagePropertiesPageIsPublishedCheckbox).is(':checked'),
                                 message = newPageIsPublished ? globalization.pageStatusChangeConfirmationMessagePublish : globalization.pageStatusChangeConfirmationMessageUnPublish;
                             if (currentPageIsPublished != newPageIsPublished) {
@@ -340,7 +346,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                                 return false;
                             }
 
-                            return pageViewModel.options.isValid(true);
+                            return true;
                         },
 
                         postSuccess: postSuccess

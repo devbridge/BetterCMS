@@ -261,6 +261,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public bool CanPublishPage { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether is master page.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if is master page; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsMasterPage { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="EditPagePropertiesViewModel" /> class.
         /// </summary>
         public EditPagePropertiesViewModel()

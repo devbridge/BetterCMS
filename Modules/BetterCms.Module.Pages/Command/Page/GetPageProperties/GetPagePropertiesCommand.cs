@@ -107,6 +107,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                               IsPagePublished = page.Status == PageStatus.Published,
                               IsInSitemap = page.NodeCountInSitemap > 0,
                               IsArchived = page.IsArchived,
+                              IsMasterPage = page.IsMasterPage,
                               TemplateId = page.Layout.Id,
                               MasterPageId = page.MasterPage.Id,
                               CategoryId = page.Category.Id,

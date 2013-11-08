@@ -1411,6 +1411,33 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Page is Master (is a template for other pages)..
+        /// </summary>
+        public static string EditPageProperties_IsMasterPage_Checkbox {
+            get {
+                return ResourceManager.GetString("EditPageProperties_IsMasterPage_Checkbox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master Page Options.
+        /// </summary>
+        public static string EditPageProperties_IsMasterPage_Title {
+            get {
+                return ResourceManager.GetString("EditPageProperties_IsMasterPage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Make the page to be a template for other pages and not directly accessible from the outside..
+        /// </summary>
+        public static string EditPageProperties_IsMasterPage_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("EditPageProperties_IsMasterPage_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose Page Layout.
         /// </summary>
         public static string EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title {
