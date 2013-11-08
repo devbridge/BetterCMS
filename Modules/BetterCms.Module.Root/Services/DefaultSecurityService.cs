@@ -96,8 +96,7 @@ namespace BetterCms.Module.Root.Services
                     return true;
                 }
 
-                var fullAccessRoles = ParseRoles(configuration.Security.FullAccessRoles);
-                if (fullAccessRoles.Any(principal.IsInRole))
+                if (HasFullAccess(principal))
                 {
                     // User is in full access role.
                     return true;
@@ -138,6 +137,24 @@ namespace BetterCms.Module.Root.Services
         public bool IsAuthorized(string roles)
         {
             return IsAuthorized(GetCurrentPrincipal(), roles);
+        }
+
+        /// <summary>
+        /// Determines whether the specified principal has full access role.
+        /// </summary>
+        /// <param name="principal">The principal.</param>
+        /// <returns>
+        ///   <c>true</c> if user is in full access role, otherwise <c>false</c>.
+        /// </returns>
+        public bool HasFullAccess(IPrincipal principal)
+        {
+            if (principal != null && principal.Identity.IsAuthenticated)
+            {
+                var fullAccessRoles = ParseRoles(configuration.Security.FullAccessRoles);
+                return fullAccessRoles.Any(principal.IsInRole);
+            }
+
+            return false;
         }
 
         /// <summary>

@@ -39,5 +39,12 @@ namespace BetterCms.Core.Services
         ///   <c>true</c> if the current principal is authorized; otherwise, <c>false</c>.
         /// </returns>
         bool IsAuthorized(string roles);
+
+        /// <summary>
+        /// Determines whether the specified principal has full access role.
+        /// </summary>
+        /// <param name="principal">The principal.</param>
+        /// <returns><c>true</c> if user is in full access role, otherwise <c>false</c>.</returns>
+        bool HasFullAccess(IPrincipal principal);
     }
 }
