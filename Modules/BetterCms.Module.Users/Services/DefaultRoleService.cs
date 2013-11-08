@@ -7,6 +7,7 @@ using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Exceptions.Mvc;
 
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Users.Content.Resources;
 using BetterCms.Module.Users.Models;
 
@@ -23,12 +24,19 @@ namespace BetterCms.Module.Users.Services
         private readonly IRepository repository;
 
         /// <summary>
+        /// The configuration.
+        /// </summary>
+        private readonly ICmsConfiguration configuration;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DefaultRoleService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
-        public DefaultRoleService(IRepository repository)
+        /// <param name="configuration">The configuration.</param>
+        public DefaultRoleService(IRepository repository, ICmsConfiguration configuration)
         {
             this.repository = repository;
+            this.configuration = configuration;
         }
 
         /// <summary>
@@ -181,6 +189,12 @@ namespace BetterCms.Module.Users.Services
         /// <param name="throwOnPopulatedRole">If true, throw an exception if role has one or more members and do not delete role.</param>
         private void DeleteRole(Role role, bool throwOnPopulatedRole)
         {
+            var fullAccessRoles = configuration.Security.FullAccessRoles.ParseRoles();
+            if (!throwOnPopulatedRole && fullAccessRoles.Any(r => r == role.Name))
+            {
+                throwOnPopulatedRole = true;
+            }
+
             if (throwOnPopulatedRole && role.UserRoles.Any())
             {
                 var logMessage = string.Format("Cannot delete populated role: {0} {1}", role.Name, role.Description);

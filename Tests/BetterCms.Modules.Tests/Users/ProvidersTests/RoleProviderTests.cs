@@ -2,6 +2,7 @@
 using System.Configuration.Provider;
 using System.Linq;
 
+using BetterCms.Configuration;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Mvc;
@@ -386,14 +387,15 @@ namespace BetterCms.Test.Module.Users.ProvidersTests
             });
         }
 
-        private CmsRoleProvider GetRoleProvider(ISession session, IRepository repository = null, IUnitOfWork unitOfWork = null)
+        private CmsRoleProvider GetRoleProvider(ISession session, IRepository repository = null, IUnitOfWork unitOfWork = null, ICmsConfiguration configuration = null)
         {
             if (repository == null || unitOfWork == null)
             {
                 unitOfWork = new DefaultUnitOfWork(session);
                 repository = new DefaultRepository(unitOfWork);
+                configuration = new CmsConfigurationSection();
             }
-            var roleService = new DefaultRoleService(repository);
+            var roleService = new DefaultRoleService(repository, configuration);
 
             var roleProvider = new CmsRoleProvider(repository, unitOfWork, roleService);
 

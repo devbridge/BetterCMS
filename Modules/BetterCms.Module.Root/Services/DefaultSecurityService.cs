@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Principal;
 using System.Threading;
 
 using BetterCms.Core.Services;
 using BetterCms.Core.Web;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 namespace BetterCms.Module.Root.Services
 {
@@ -14,11 +13,6 @@ namespace BetterCms.Module.Root.Services
     /// </summary>
     public class DefaultSecurityService : ISecurityService
     {
-        /// <summary>
-        /// The roles splitter.
-        /// </summary>
-        private static readonly char[] RolesSplitter = new[] { ',' };
-
         /// <summary>
         /// The configuration service.
         /// </summary>
@@ -102,7 +96,7 @@ namespace BetterCms.Module.Root.Services
                     return true;
                 }
 
-                var roleList = ParseRoles(roles);
+                var roleList = roles.ParseRoles();
 
                 // Check for configuration defined user roles.
                 bool useCustomRoles = configuration.Security.UseCustomRoles;
@@ -115,7 +109,7 @@ namespace BetterCms.Module.Root.Services
 
                     if (useCustomRoles)
                     {
-                        var translatedRoles = ParseRoles(configuration.Security.Translate(role));
+                        var translatedRoles = configuration.Security.Translate(role).ParseRoles();
                         if (translatedRoles.Any(principal.IsInRole))
                         {
                             return true;
@@ -150,23 +144,11 @@ namespace BetterCms.Module.Root.Services
         {
             if (principal != null && principal.Identity.IsAuthenticated)
             {
-                var fullAccessRoles = ParseRoles(configuration.Security.FullAccessRoles);
+                var fullAccessRoles = configuration.Security.FullAccessRoles.ParseRoles();
                 return fullAccessRoles.Any(principal.IsInRole);
             }
 
             return false;
-        }
-
-        /// <summary>
-        /// Parses the roles.
-        /// </summary>
-        /// <param name="roles">The roles.</param>
-        /// <returns>Array of parsed roles</returns>
-        private static IEnumerable<string> ParseRoles(string roles)
-        {
-            return !string.IsNullOrEmpty(roles)
-                ? roles.Split(RolesSplitter, StringSplitOptions.RemoveEmptyEntries).Distinct().Select(role => role.Trim()).ToArray()
-                : new string[] { };
         }
     }
 }

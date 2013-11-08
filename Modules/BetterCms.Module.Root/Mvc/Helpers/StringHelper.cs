@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -9,6 +11,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
     {
         private const string OneMinus = "-";
         private const string TwoMinus = "--";
+        private static readonly char[] RolesSplitter = new[] { ',' };
         private static IDictionary<char, char> symbolsMap = null;
         private static object lockObject = new object();
 
@@ -74,6 +77,18 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             text = text.Trim(new char[] { ' ', '-' }).ToLower();
 
             return text;
+        }
+
+        /// <summary>
+        /// Parses the roles.
+        /// </summary>
+        /// <param name="roles">The roles.</param>
+        /// <returns>Array of parsed roles</returns>
+        public static IEnumerable<string> ParseRoles(this string roles)
+        {
+            return !string.IsNullOrEmpty(roles)
+                ? roles.Split(RolesSplitter, StringSplitOptions.RemoveEmptyEntries).Distinct().Select(role => role.Trim()).ToArray()
+                : new string[] { };
         }
 
         private static string ReplaceWithLatinSymbols(string text)
@@ -219,6 +234,5 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                 symbolsMap.Add('Х', 'X');
             }
         }
-
     }
 }
