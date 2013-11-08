@@ -306,6 +306,12 @@
   <data name="JavascriptSupport_MustBeEnabled_Message_SecondLine" xml:space="preserve">
     <value>JavaScript must be enabled</value>
   </data>
+  <data name="MasterPagesPath_HidePath_Button" xml:space="preserve">
+    <value>Hide Path</value>
+  </data>
+  <data name="MasterPagesPath_ShowPath_Button" xml:space="preserve">
+    <value>Show Path</value>
+  </data>
   <data name="Message_AccessForbidden" xml:space="preserve">
     <value>Forbidden: Access is denied.</value>
   </data>

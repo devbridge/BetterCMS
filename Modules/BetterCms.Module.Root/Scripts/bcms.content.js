@@ -23,24 +23,40 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             regionSortDoneButtons: '.bcms-region-sortdone',
             regionButtons: '.bcms-region-button',
             regionSortWrappers: '.bcms-sort-wrapper',
-            regionSortBlock: '.bcms-sorting-block'
+            regionSortBlock: '.bcms-sorting-block',
+            
+            masterPagesPathContainer: '.bcms-layout-path',
+            masterPagesPathHandler: '.bcms-layout-path-handle',
+            masterPagesPathItem: '.bcms-layout-path-item',
+            masterPagesPathSliderLeft: '.bcms-path-arrow-left',
+            masterPagesPathSliderRight: '.bcms-path-arrow-right'
+       
         },
         classes = {
             regionStart: 'bcms-region-start',
             regionEnd: 'bcms-region-end',
             contentStart: 'bcms-content-start',
             contentEnd: 'bcms-content-end',
-            regionSortOverlay: 'bcms-show-overlay'
+            regionSortOverlay: 'bcms-show-overlay',
+            masterPagesPathToggler: 'bcms-path-toggler',
+            masterPagesPathInactiveArrow: 'bcms-path-arrow-inactive'
+        },
+        keys = {
+            showMasterPagesPath: 'bcms.showMasterPagesPath',
         },
         resizeTimer,
         currentContentDom,
         regionRectangles = $(),
         contentRectangles = $(),
         links = {},
-        globalization = {},
+        globalization = {
+            showMasterPagesPath: null,
+            hideMasterPagesPath: null
+        },
         pageViewModel,
         opacityAnimationSpeed = 50,
-        isSortMode = false;
+        isSortMode = false,
+        masterPagesModel = null;
 
     // Assign objects to module
     content.selectors = selectors;
@@ -555,6 +571,9 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             resizeTimer = setTimeout(function () {
                 content.refreshRegionsPosition();
                 content.refreshContentsPosition();
+                if (masterPagesModel != null) {
+                    masterPagesModel.calculatePathPositions();
+                }
             }, 100);
         });
     };
@@ -601,13 +620,168 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
         content.refreshContentsPosition();
         content.refreshRegionsPosition();
+
+        content.refreshMasterPagesPath();
     }
+
+    /**
+    * Master page path item view model
+    */
+    function PathViewModel(element, index) {
+        var self = this;
+
+        self.element = element;
+        self.index = index;
+        self.width = self.element.outerWidth();
+
+        return self;
+    }
+
+    /**
+    * View model for controling the path of master pages
+    */
+    function MasterPagesPathModel() {
+        var self = this,
+            pathContainer = $(selectors.masterPagesPathContainer),
+            hasPath = pathContainer.length > 0,
+            handle = pathContainer.find(selectors.masterPagesPathHandler),
+            leftSlider = pathContainer.find(selectors.masterPagesPathSliderLeft),
+            rightSlider = pathContainer.find(selectors.masterPagesPathSliderRight),
+            items = [],
+            currentItem = 0;
+       
+        function getPathVisibility() {
+            var showPage = localStorage.getItem(keys.showMasterPagesPath);
+            
+            if (showPage === undefined) {
+                showPage = 1;
+                setPathVisibility(showPage);
+            }
+            
+            return showPage;
+        };
+
+        function setPathVisibility(isVisible) {
+            localStorage.setItem(keys.showMasterPagesPath, isVisible);
+
+            if (isVisible == 1) {
+                pathContainer.removeClass(classes.masterPagesPathToggler);
+                handle.html(globalization.hideMasterPagesPath);
+            } else {
+                pathContainer.addClass(classes.masterPagesPathToggler);
+                handle.html(globalization.showMasterPagesPath);
+            }
+        };
+
+        function onHandleClick() {
+            if (pathContainer.hasClass(classes.masterPagesPathToggler)) {
+                setPathVisibility(1);
+            } else {
+                setPathVisibility(0);
+            }
+        };
+
+        function slide(step) {
+            var itemNr = currentItem + step,
+                length = items.length,
+                margin,
+                i;
+
+            if (itemNr >= 0 && itemNr < length) {
+                currentItem += step;
+                for (i = 0; i < length; i++) {
+                    if (i < currentItem) {
+                        margin = -items[i].width;
+                    } else {
+                        margin = 0;
+                    }
+                    
+                    items[i].element.css('margin-left', margin);
+                }
+            }
+
+            updateSliders();
+        }
+
+        function updateSliders() {
+            if (currentItem > 0) {
+                leftSlider.removeClass(classes.masterPagesPathInactiveArrow);
+            } else {
+                leftSlider.addClass(classes.masterPagesPathInactiveArrow);
+            }
+            
+            if (currentItem < items.length-1) {
+                rightSlider.removeClass(classes.masterPagesPathInactiveArrow);
+            } else {
+                rightSlider.addClass(classes.masterPagesPathInactiveArrow);
+            }
+        }
+
+        self.calculatePathPositions = function () {
+            if (!hasPath) {
+                return;
+            }
+
+            var ww = $(window).width(),
+                cw = ww * 0.8,
+                margin = cw / -2;
+
+            pathContainer.css('width', cw);
+            pathContainer.css('left', ww / 2);
+            pathContainer.css('margin-left', margin);
+        };
+
+        self.initialize = function () {
+            if (!hasPath) {
+                return;
+            }
+            
+            setPathVisibility(getPathVisibility());
+            handle.on('click', onHandleClick);
+            self.calculatePathPositions();
+            pathContainer.show();
+
+            pathContainer.find(selectors.masterPagesPathItem).each(function (index) {
+                var item = $(this);
+
+                items.push(new PathViewModel(item, index));
+
+                item.on('click', function () {
+                    var url = $(this).data('url');
+                    
+                    window.location.href = url;
+                });
+            });
+
+            leftSlider.on('click', function () {
+                slide(-1);
+            });
+            rightSlider.on('click', function () {
+                slide(1);
+            });
+        };
+
+        return self;
+    }
+
+    /**
+    * Recalculates and shows / hides master page path
+    */
+    content.refreshMasterPagesPath = function () {
+        if (masterPagesModel != null) {
+            masterPagesModel.calculatePathPositions();
+        }
+    };
 
     /**
     * Initializes sidebar module.
     */
     content.init = function () {
         bcms.logger.debug('Initializing content module');
+        
+        masterPagesModel = new MasterPagesPathModel();
+        masterPagesModel.initialize();
+
         content.initRegions();
     };
 

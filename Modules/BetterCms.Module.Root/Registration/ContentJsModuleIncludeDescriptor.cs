@@ -23,8 +23,8 @@ namespace BetterCms.Module.Root.Registration
 
             Globalization = new IActionProjection[]
                 {              
-                    new JavaScriptModuleGlobalization(this, "failedLoadDialogMessage", () => RootGlobalization.Message_FailedToLoadDialog),        
-                    new JavaScriptModuleGlobalization(this, "forbiddenDialogMessage", () => RootGlobalization.Message_AccessForbidden),        
+                    new JavaScriptModuleGlobalization(this, "showMasterPagesPath", () => RootGlobalization.MasterPagesPath_ShowPath_Button),        
+                    new JavaScriptModuleGlobalization(this, "hideMasterPagesPath", () => RootGlobalization.MasterPagesPath_HidePath_Button)        
                 };
         }
     }
