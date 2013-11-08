@@ -28,6 +28,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
 
                 pagePropertiesForm: 'form:first',
                 pagePropertiesPageIsPublishedCheckbox: '#IsPagePublished',
+                pagePropertiesPageIsMasterCheckbox: '#IsMasterPage',
 
                 optionsTab: '#bcms-tab-4'
             },
@@ -38,7 +39,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             globalization = {
                 editPagePropertiesModalTitle: null,
                 pageStatusChangeConfirmationMessagePublish: null,
-                pageStatusChangeConfirmationMessageUnPublish: null
+                pageStatusChangeConfirmationMessageUnPublish: null,
+                pageConversionToMasterConfirmationMessage: null
             },
             keys = {
                 editPagePropertiesInfoMessageClosed: 'bcms.EditPagePropertiesInfoBoxClosed'
@@ -46,7 +48,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             classes = {
                 pagePropertiesActiveTemplateBox: 'bcms-grid-box-active'
             },
-            currentPageIsPublished;
+            currentPageIsPublished,
+            currentPageIsMaster;
 
         /**
         * Assign objects to module.
@@ -82,6 +85,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             ko.applyBindings(pageViewModel, form.get(0));
 
             currentPageIsPublished = dialog.container.find(selectors.pagePropertiesPageIsPublishedCheckbox).is(':checked');
+            currentPageIsMaster = dialog.container.find(selectors.pagePropertiesPageIsMasterCheckbox).is(':checked');
 
             dialog.container.find(selectors.editPermalink).on('click', function () {
                 page.showPagePropertiesEditPermalinkBox(dialog);
@@ -331,7 +335,16 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                                 return false;
                             }
 
-                            // TODO: add confirmation about making master page.
+                            var isMasterPage = dialog.container.find(selectors.pagePropertiesPageIsMasterCheckbox).is(':checked');
+                            if (currentPageIsMaster != isMasterPage) {
+                                modal.confirm({
+                                    content: globalization.pageConversionToMasterConfirmationMessage,
+                                    onAccept: function () {
+                                        dialog.container.find(selectors.pagePropertiesForm).submit();
+                                    }
+                                });
+                                return false;
+                            }
 
                             var newPageIsPublished = dialog.container.find(selectors.pagePropertiesPageIsPublishedCheckbox).is(':checked'),
                                 message = newPageIsPublished ? globalization.pageStatusChangeConfirmationMessagePublish : globalization.pageStatusChangeConfirmationMessageUnPublish;
