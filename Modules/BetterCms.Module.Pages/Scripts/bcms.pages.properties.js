@@ -112,8 +112,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             }
 
             dialog.container.find(selectors.pagePropertiesTemplateSelect).on('click', function () {
-                page.highlightPagePropertiesActiveTemplate(dialog, this, function (id) {
-                    page.loadLayoutOptions(id, dialog.container, content.Data.TemplateId, optionsContainer, optionListViewModel);
+                page.highlightPagePropertiesActiveTemplate(dialog, this, function (id, isMasterPage) {
+                    page.loadLayoutOptions(id, isMasterPage, dialog.container, optionsContainer, optionListViewModel);
                 });
             });
 
@@ -144,7 +144,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         /**
         * Loads layout options: when user changes layout, options are reloaded
         */
-        page.loadLayoutOptions = function (id, mainContainer, layoutId, optionsContainer, optionListViewModel) {
+        page.loadLayoutOptions = function (id, isMasterPage, mainContainer, optionsContainer, optionListViewModel) {
             var onComplete = function (json) {
                 var i,
                     j,
@@ -215,7 +215,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
 
             $.ajax({
                 type: 'GET',
-                url: $.format(links.loadLayoutOptionsUrl, id)
+                url: $.format(links.loadLayoutOptionsUrl, id, isMasterPage)
             })
             .done(function (result) {
                 onComplete(result);
@@ -300,7 +300,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 $(template).addClass(classes.pagePropertiesActiveTemplateBox);
                 $(template).find(selectors.pagePropertiesActiveTemplateMessage).show();
 
-                onChangeCallback.call(this, id);
+                onChangeCallback.call(this, id, isMasterPage);
             }
 
             $(selectButton).hide();

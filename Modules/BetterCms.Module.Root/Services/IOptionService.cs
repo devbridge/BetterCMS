@@ -32,6 +32,15 @@ namespace BetterCms.Module.Root.Services
         List<IOptionValue> GetMergedOptionValues(IEnumerable<IOption> options, IEnumerable<IOption> optionValues);
 
         /// <summary>
+        /// Gets the merged master pages option values.
+        /// </summary>
+        /// <param name="masterPageId">The master page id.</param>
+        /// <param name="templateId">The template id.</param>
+        /// <param name="pageId">The page id.</param>
+        /// <returns>List of option values view models, merged from page, master page and layout options and option values</returns>
+        List<OptionValueEditViewModel> GetMergedMasterPagesOptionValues(Guid pageId, Guid? masterPageId, Guid? templateId);
+
+        /// <summary>
         /// Saves the options - adds new ones and deleted the old ones..
         /// </summary>
         /// <typeparam name="TOption">The type of the option entity.</typeparam>
@@ -48,10 +57,9 @@ namespace BetterCms.Module.Root.Services
         /// <typeparam name="TEntity">The type of the entity.</typeparam>
         /// <param name="optionViewModels">The option view models.</param>
         /// <param name="savedOptionValues">The list of saved option values.</param>
-        /// <param name="parentOptions">The list of parent options.</param>
         /// <param name="entityCreator">The entity creator.</param>
         void SaveOptionValues<TEntity>(IEnumerable<OptionValueEditViewModel> optionViewModels, IEnumerable<TEntity> savedOptionValues, 
-            IEnumerable<IOption> parentOptions, Func<TEntity> entityCreator)
+            Func<TEntity> entityCreator)
             where TEntity : Entity, IOption;
 
         /// <summary>
@@ -86,8 +94,21 @@ namespace BetterCms.Module.Root.Services
         /// <returns>List of custom option view models</returns>
         List<CustomOptionViewModel> GetCustomOptions();
 
+        /// <summary>
+        /// Fixes the option value for save.
+        /// </summary>
+        /// <param name="title">The title.</param>
+        /// <param name="type">The type.</param>
+        /// <param name="value">The value.</param>
+        /// <returns>Fixed option value</returns>
         string ClearFixValueForSave(string title, OptionType type, string value);
 
+        /// <summary>
+        /// Fixes the option value for edit.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="value">The value.</param>
+        /// <returns>Fixed option value</returns>
         string ClearFixValueForEdit(OptionType type, string value);
     }
 }

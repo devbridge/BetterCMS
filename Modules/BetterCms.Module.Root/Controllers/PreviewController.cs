@@ -63,6 +63,8 @@ namespace BetterCms.Module.Root.Controllers
 
             if (model != null && model.RenderPage != null)
             {
+                model.RenderPage.AreRegionsEditable = true;
+
                 return View(model.RenderPage);
             }
 
