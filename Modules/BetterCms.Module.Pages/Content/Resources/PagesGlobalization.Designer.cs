@@ -2203,6 +2203,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Page is not a master, so dynamic regions are not allowed..
+        /// </summary>
+        public static string SaveContent_DynamicRegionsAreNotAllowed_Message {
+            get {
+                return ResourceManager.GetString("SaveContent_DynamicRegionsAreNotAllowed_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Page created succesfully..
         /// </summary>
         public static string SavePage_CreatedSuccessfully_Message {

@@ -56,6 +56,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageHtmlContent
                                                 EanbledCustomJs = content.UseCustomJs,
                                                 EnabledCustomCss = content.UseCustomCss,
                                                 EditInSourceMode = content.EditInSourceMode,
+                                                EnableInsetDynamicRegion = pageContent.Page.IsMasterPage,
                                                 CurrentStatus = content.Status,
                                                 HasPublishedContent = content.Original != null
                                             };

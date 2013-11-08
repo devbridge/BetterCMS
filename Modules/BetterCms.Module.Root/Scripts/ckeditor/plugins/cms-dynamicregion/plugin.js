@@ -18,15 +18,21 @@
           );
       }
     },
-    init: function (c) {
-      var d = c.addCommand(b, a);
-      c.ui.addButton('CmsDynamicRegion', {
+    init: function (e) {
+      if (e.DynamicRegionsEnabled !== true) {
+        return;
+      }
+      var c = e.addCommand(b, a);
+      e.ui.addButton('CmsDynamicRegion', {
         label: 'Insert Dynamic Region',
         icon: 'cmsdynamicregion',
         command: b
       });
     },
     afterInit: function (e) {
+        if (e.DynamicRegionsEnabled !== true) {
+            return;
+        }
         var dp = e.dataProcessor,
             hf = dp && dp.htmlFilter,
             df = dp && dp.dataFilter;

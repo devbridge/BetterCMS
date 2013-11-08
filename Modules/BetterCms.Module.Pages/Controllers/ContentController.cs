@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using BetterCms.Core.Security;
 
 using BetterCms.Module.Pages.Command.Content.DeletePageContent;
+using BetterCms.Module.Pages.Command.Content.GetInsertHtmlContent;
 using BetterCms.Module.Pages.Command.Content.GetPageContentOptions;
 using BetterCms.Module.Pages.Command.Content.GetPageHtmlContent;
 using BetterCms.Module.Pages.Command.Content.InsertContent;
@@ -109,17 +110,14 @@ namespace BetterCms.Module.Pages.Controllers
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult AddPageHtmlContent(string pageId, string regionId)
         {
-            var viewModel = new PageContentViewModel
-            {
-                PageId = Guid.Parse(pageId),
-                RegionId = Guid.Parse(regionId),
-                LiveFrom = DateTime.Today
-            };
+            var model = GetCommand<GetInsertHtmlContentCommand>().ExecuteCommand(new InsertHtmlContentRequest() { PageId = pageId, RegionId = regionId });
 
             var request = new GetWidgetCategoryRequest();
-            viewModel.WidgetCategories = GetCommand<GetWidgetCategoryCommand>().ExecuteCommand(request).WidgetCategories;            
+            model.WidgetCategories = GetCommand<GetWidgetCategoryCommand>().ExecuteCommand(request).WidgetCategories;
 
-            return View(viewModel);
+            var view = RenderView("AddPageHtmlContent", model);
+
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

@@ -83,6 +83,11 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
         });
     };
     
+    htmlEditor.enableInsetDynamicRegion = function (textareaId) {
+        var id = textareaId ? textareaId : htmlEditor.id;
+        CKEDITOR.instances[id].DynamicRegionsEnabled = true;
+    };
+    
     htmlEditor.isSourceMode = function (textareaId) {
         var id = textareaId ? textareaId : htmlEditor.id;
 

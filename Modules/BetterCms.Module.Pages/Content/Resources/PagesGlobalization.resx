@@ -1140,4 +1140,7 @@
   <data name="EditPageProperties_PageConversionToMaster_ConfirmationMessage" xml:space="preserve">
     <value>You are about to convert the page to Master Page. Master page is not accessible from the outside and is intended to be used as a template for other pages.&lt;br/&gt;Proceed?</value>
   </data>
+  <data name="SaveContent_DynamicRegionsAreNotAllowed_Message" xml:space="preserve">
+    <value>Page is not a master, so dynamic regions are not allowed.</value>
+  </data>
 </root>

@@ -5,8 +5,10 @@ using System.Linq;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
+using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Content;
@@ -121,11 +123,14 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                 contentToSave,
                 request.DesirableStatus);
 
-            // TODO: find more clean solution
             if (pageContent.Content.ContentRegions != null 
                 && pageContent.Content.ContentRegions.Count > 0)
             {
-                pageContent.Page.IsMasterPage = true;
+                if (!pageContent.Page.IsMasterPage)
+                {
+                    var logMessage = string.Format("Dynamic regions are not allowed. Page: {0}, Content: {1}", pageContent.Page, pageContent.Id);
+                    throw new ValidationException(() => PagesGlobalization.SaveContent_DynamicRegionsAreNotAllowed_Message, logMessage);
+                }
             }
 
             Repository.Save(pageContent);
