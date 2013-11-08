@@ -22,6 +22,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             regionSortButtons: '.bcms-region-sortcontent',
             regionSortDoneButtons: '.bcms-region-sortdone',
             regionButtons: '.bcms-region-button',
+            regionActions: '.bcms-region-actions',
             regionSortWrappers: '.bcms-sort-wrapper',
             regionSortBlock: '.bcms-sorting-block',
             
@@ -260,13 +261,13 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         });
 
         $(selectors.regionSortButtons, regionViewModel.overlay).on('click', function () {
-            content.turnSortModeOn();
+            content.turnSortModeOn(regionViewModel);
         });
 
         $(selectors.regionSortDoneButtons, regionViewModel.overlay).on('click', function() {
             var changedRegions = content.turnSortModeOff();
 
-            if (changedRegions) {
+            if (changedRegions.length > 0) {
                 saveContentChanges(changedRegions);
             }
         });
@@ -300,10 +301,13 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             var regionContents = [],
                 regionViewModel = this;
 
+            $(selectors.regionActions, regionViewModel.overlay).show();
             $(selectors.regionButtons, regionViewModel.overlay).show();
             $(selectors.regionSortDoneButtons, regionViewModel.overlay).hide();
 
-            regionViewModel.sortBlock.sortable('destroy');
+            if (isSortMode) {
+                regionViewModel.sortBlock.sortable('destroy');
+            }
             regionViewModel.overlay.removeClass(classes.regionSortOverlay);
 
             $(selectors.regionSortWrappers, regionViewModel.overlay).each(function () {
@@ -337,14 +341,18 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
     /**
     * Turns region content sorting mode ON:
     */
-    content.turnSortModeOn = function () {
+    content.turnSortModeOn = function (currentRegionViewModel) {
         isSortMode = true;
         
         $.each(pageViewModel.regions, function() {
             var regionViewModel = this;
             
-            $(selectors.regionButtons, regionViewModel.overlay).hide();
-            $(selectors.regionSortDoneButtons, regionViewModel.overlay).show();
+            if (regionViewModel != currentRegionViewModel) {
+                $(selectors.regionActions, regionViewModel.overlay).hide();
+            } else {
+                $(selectors.regionButtons, regionViewModel.overlay).hide();
+                $(selectors.regionSortDoneButtons, regionViewModel.overlay).show();
+            }
 
             $(regionViewModel.contents).each(function () {
                 var sortWrapper = $('<div class="bcms-sort-wrapper" />');
