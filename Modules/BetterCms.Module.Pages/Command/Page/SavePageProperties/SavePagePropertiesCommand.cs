@@ -11,10 +11,12 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 
 using BetterCms.Module.MediaManager.Models;
+
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.Extensions;
@@ -146,8 +148,6 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                 }
             }
             
-            UnitOfWork.BeginTransaction();
-
             var pageQuery = Repository
                 .AsQueryable<PageProperties>(p => p.Id == request.Id)
                 .FetchMany(p => p.Options)
@@ -170,6 +170,11 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             {
                 AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent);
             }
+
+            var masterPagesToUpdate = GetChildrenMasterPagesToUpdate(request, page);
+
+            // Start transaction, only when everything is already loaded
+            UnitOfWork.BeginTransaction();
 
             Models.Redirect redirectCreated = null;
             bool initialSeoStatus = page.HasSEO;
@@ -207,7 +212,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                 if (page.MasterPage == null || page.MasterPage.Id != request.MasterPageId.Value)
                 {
                     page.MasterPage = Repository.AsProxy<Root.Models.Page>(request.MasterPageId.Value);
-                    
+
                     masterPageService.SetPageMasterPages(page, request.MasterPageId.Value);
                 }
                 page.Layout = null;
@@ -270,6 +275,8 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
 
             Repository.Save(page);
 
+            UpdateChildrenMasterPages(masterPagesToUpdate, request.MasterPageId);
+
             // Save tags
             IList<Tag> newTags;
             tagService.SavePageTags(page, request.Tags, out newTags);
@@ -300,6 +307,45 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             Events.RootEvents.Instance.OnTagCreated(newTags);
 
             return new SavePageResponse(page);
+        }
+
+        /// <summary>
+        /// Retrieves all the master page children, when master page is changed.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <param name="page">The page.</param>
+        /// <returns>List of all the childer master pages, which must be changed</returns>
+        private List<MasterPage> GetChildrenMasterPagesToUpdate(EditPagePropertiesViewModel request, PageProperties page)
+        {
+            if (request.MasterPageId.HasValue && page.MasterPage != null && page.MasterPage.Id != request.MasterPageId)
+            {
+                // Retrieve all master pages, refering old master and master, which include updating page also as master page
+                return Repository
+                    .AsQueryable<MasterPage>()
+                    .Where(mp => mp.Master.Id == page.MasterPage.Id 
+                        && mp.Page.MasterPages.Any(mp1 => mp1.Master == page))
+                    .ToList();
+            }
+
+            return new List<MasterPage>();
+        }
+
+        /// <summary>
+        /// Updates the master page children: instead of old master page inserts the new one.
+        /// </summary>
+        /// <param name="masterPagesToUpdate">The master pages to update.</param>
+        /// <param name="masterPageId">The master page id.</param>
+        private void UpdateChildrenMasterPages(List<MasterPage> masterPagesToUpdate, Guid? masterPageId)
+        {
+            if (masterPagesToUpdate.Any() && masterPageId.HasValue)
+            {
+                var newMaster = Repository.AsProxy<Root.Models.Page>(masterPageId.Value);
+                foreach (var mp in masterPagesToUpdate)
+                {
+                    mp.Master = newMaster;
+                    Repository.Save(mp);
+                }
+            }
         }
     }
 }
