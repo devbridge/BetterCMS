@@ -20,7 +20,7 @@
 {
     if (viewModel.MasterPage != null)
     {
-        <div class="bcms-layout-path-item" data-url="@viewModel.MasterPage.PageUrl">@viewModel.MasterPage.Title</div>
         @RenderMasterPage(viewModel.MasterPage)
+        <div class="bcms-layout-path-item" data-url="@viewModel.MasterPage.PageUrl">@viewModel.MasterPage.Title</div>
     }
 }
