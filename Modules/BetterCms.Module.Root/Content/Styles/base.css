@@ -1581,6 +1581,49 @@ a.bcms-btn-close {
             background-color: #FFFFFF;
         }
 
+/*inner tabs for add new page modal*/
+.bcms-inner-tabs-holder .bcms-tab-header {
+    padding-left: 10px;
+    background: #ffffff;
+}
+
+.bcms-inner-tabs-holder .bcms-tab-single {
+    padding-top: 20px;
+}
+
+.bcms-inner-grid-box {
+    float: left;
+    position: relative;
+    max-width: 220px;
+    padding: 8px 3px 3px;
+    margin-left: 20px;
+    cursor: pointer;
+    border: 1px solid #c6c6c6;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+    .bcms-inner-grid-box:first-child {
+        margin-left: 0;
+    }
+
+    .bcms-inner-grid-box .bcms-content-titles {
+        padding: 0 4px;
+    }
+
+.bcms-inner-grid-box-active {
+    cursor: default;
+    border: 2px solid #0383df;
+    background-color: #eff9fd;
+}
+
+    .bcms-inner-grid-box-active .bcms-content-titles {
+        padding-right: 20px;
+        color: #0383df;
+        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA20lEQVQ4y2NgaHrEgIa1gLgPiK8D8Q8ovgYV08JQj8RhA+IpQPwXiP/jwCC5GUDMiW4ASPNuPBrR8V6oHrgBU0nQDMNTYAZoA/EfMgz4A9YLJPqJ0SDa8+R/xtZ36OL9DNDQhguCFIEUo2u+8urXfxDI2Y5iyHWQAT9hAiBJEAAphhmCrBlZHIp/ohiArlhr+nN8mkH4M4YXkA359/8/Ps0gfAVrIBJwNjKeADJAB1s0gjRNPPkJn+Y/YL0UJKSpVE3KFGcmZKwNDpymRzeA+BcQfwGHNkRMB109AFNqT2Ji6QGbAAAAAElFTkSuQmCC") no-repeat right center;
+    }
+
+
 /*preview boxes & widgets grid*/
 .bcms-preview-block {
     position: relative;
@@ -2716,31 +2759,31 @@ a.ui-state-default:hover {
     font-weight: 400;
 }
 
-.autocomplete-suggestion:hover, .autocomplete-selected {
-    color: #000;
-    background-color: #f5f5f5;
-}
+    .autocomplete-suggestion:hover, .autocomplete-selected {
+        color: #000;
+        background-color: #f5f5f5;
+    }
 
 .bcms-inactive {
-    position:relative;
+    position: relative;
 }
 
-.bcms-inactive:after {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    cursor: default;
-    z-index: 99;
-    background-color: #FFF;
-    opacity: 0.3;
-    -moz-opacity: 0.3;
-}
+    .bcms-inactive:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        cursor: default;
+        z-index: 99;
+        background-color: #FFF;
+        opacity: 0.3;
+        -moz-opacity: 0.3;
+    }
 
 /* Master Pages Path */
- .bcms-layout-path-inner:after {
+.bcms-layout-path-inner:after {
     content: ".";
     visibility: hidden;
     display: block;

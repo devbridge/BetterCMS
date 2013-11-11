@@ -157,7 +157,7 @@ namespace BetterCms.Module.Root.Services
                     contentVersionOfRequestedStatus = originalContent.Clone();
                 }
 
-                updatedContent.CopyDataTo(contentVersionOfRequestedStatus, false);
+                updatedContent.CopyDataTo(contentVersionOfRequestedStatus, false, false);
                 SetContentOptions(contentVersionOfRequestedStatus, updatedContent);
                 SetContentRegions(contentVersionOfRequestedStatus, updatedContent);
 
@@ -179,7 +179,7 @@ namespace BetterCms.Module.Root.Services
                 originalContent.History.Add(originalToArchive);
                 repository.Save(originalToArchive);
 
-                updatedContent.CopyDataTo(originalContent, false);
+                updatedContent.CopyDataTo(originalContent, false, false);
                 SetContentOptions(originalContent, updatedContent);
                 SetContentRegions(originalContent, updatedContent);
 
@@ -227,7 +227,7 @@ namespace BetterCms.Module.Root.Services
                     }
                 }
 
-                updatedContent.CopyDataTo(previewOrDraftContentVersion, false);
+                updatedContent.CopyDataTo(previewOrDraftContentVersion, false, false);
                 SetContentOptions(previewOrDraftContentVersion, updatedContent);
                 SetContentRegions(previewOrDraftContentVersion, updatedContent);
                 previewOrDraftContentVersion.Status = requestedStatus;
@@ -245,7 +245,7 @@ namespace BetterCms.Module.Root.Services
                     repository.Save(originalToArchive);
                 }
 
-                updatedContent.CopyDataTo(originalContent, false);
+                updatedContent.CopyDataTo(originalContent, false, false);
                 SetContentOptions(originalContent, updatedContent);
                 SetContentRegions(originalContent, updatedContent);
                 originalContent.Status = requestedStatus;
@@ -381,9 +381,9 @@ namespace BetterCms.Module.Root.Services
                     .Where(r => regionIdentifiers.Contains(r.RegionIdentifier))
                     .ToArray();
 
-                foreach (var regionId in regionIdentifiers)
+                foreach (var regionId in regionIdentifiers.Where(s => contentRegions.All(region => region.Region.RegionIdentifier != s)))
                 {
-                    Region region = existingRegions.FirstOrDefault(r => r.RegionIdentifier == regionId);
+                    var region = existingRegions.FirstOrDefault(r => r.RegionIdentifier == regionId);
 
                     if (region == null)
                     {
@@ -435,7 +435,7 @@ namespace BetterCms.Module.Root.Services
                 source.ContentRegions = new List<ContentRegion>();
             }
 
-            // Add regions, which not exists in destination
+            // Add regions, which not exists in destination.
             source.ContentRegions
                 .Where(s => destination.ContentRegions.All(d => s.Region.RegionIdentifier != d.Region.RegionIdentifier))
                 .Distinct().ToList()
@@ -445,9 +445,9 @@ namespace BetterCms.Module.Root.Services
                                  source.ContentRegions.Remove(s);
                              });
 
-            // Remove regions, which not exists in source
+            // Remove regions, which not exists in source.
             destination.ContentRegions
-                .Where(s => destination.ContentRegions.All(d => s.Region.RegionIdentifier != d.Region.RegionIdentifier))
+                .Where(s => source.ContentRegions.All(d => s.Region.RegionIdentifier != d.Region.RegionIdentifier))
                 .Distinct().ToList()
                 .ForEach(d => repository.Delete(d));
         }
