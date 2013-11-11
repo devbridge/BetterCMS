@@ -179,6 +179,10 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult DeletePageConfirmation(string id)
         {
             var model = GetCommand<GetPageForDeleteCommand>().ExecuteCommand(id.ToGuidOrDefault());
+            if (model != null && model.ValidationMessage != null)
+            {
+                Messages.AddInfo(model.ValidationMessage);
+            }
             var view = RenderView("DeletePageConfirmation", model ?? new DeletePageViewModel());
             return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }

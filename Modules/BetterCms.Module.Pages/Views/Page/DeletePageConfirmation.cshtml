@@ -11,7 +11,11 @@
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
     <div class="bcms-padded-content">
-        @using (Html.BeginForm<PageController>(f => f.DeletePage(null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
+        @using (Html.BeginForm<PageController>(f => f.DeletePage(null), FormMethod.Post, 
+            new {
+                    @class = "bcms-ajax-form",
+                    data_readonly = (Model.ValidationMessage != null) ? "true" : "false"
+                }))
         {
             <div class="bcms-input-list-holder">
                 <div class="bcms-content-titles">@PagesGlobalization.DeletePage_Dialog_ConfirmationMessage_Header</div>
