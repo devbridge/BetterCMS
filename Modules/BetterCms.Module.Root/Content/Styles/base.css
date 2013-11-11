@@ -781,7 +781,7 @@ a.bcms-remove-image {
 /* Content sorting */
 .bcms-sort-wrapper {
     position: relative;
-    height: 20px;
+    height: 30px;
     margin-top: 10px;
     padding: 5px 10px;
     background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAAEFsT2yAAAAEElEQVQI12NgYGDgZUAmeAEBpgA16fkHewAAAABJRU5ErkJggg==');
