@@ -317,14 +317,49 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         /// <returns>List of all the childer master pages, which must be changed</returns>
         private List<MasterPage> GetChildrenMasterPagesToUpdate(EditPagePropertiesViewModel request, PageProperties page)
         {
-            if (request.MasterPageId.HasValue && page.MasterPage != null && page.MasterPage.Id != request.MasterPageId)
+            if (page.IsMasterPage)
             {
-                // Retrieve all master pages, refering old master and master, which include updating page also as master page
-                return Repository
-                    .AsQueryable<MasterPage>()
-                    .Where(mp => mp.Master.Id == page.MasterPage.Id 
-                        && mp.Page.MasterPages.Any(mp1 => mp1.Master == page))
-                    .ToList();
+                // If page had a master page assigned before
+                if (page.MasterPage != null && page.MasterPage.Id != request.MasterPageId)
+                {
+                    var ids = new List<Guid> { page.MasterPage.Id };
+                    if (page.MasterPages != null)
+                    {
+                        ids.AddRange(page.MasterPages.Select(mp => mp.Master.Id).Where(mp => mp != page.MasterPage.Id));
+                    }
+
+                    // Retrieve all master pages, refering old master and master, which include updating page also as master page
+                    var masterPagesToUpdate = Repository
+                        .AsQueryable<MasterPage>()
+                        .Where(mp => ids.Contains(mp.Master.Id)
+                            && mp.Page.MasterPages.Any(mp1 => mp1.Master == page))
+                        .ToList();
+
+                    // If deleting master page, add master pages of current page to list also - they will be deleted
+                    if (!request.MasterPageId.HasValue && page.MasterPages != null)
+                    {
+                        foreach (var mp in page.MasterPages)
+                        {
+                            masterPagesToUpdate.Add(mp);
+                        }
+                    }
+
+                    return masterPagesToUpdate;
+                }
+
+                // If page had layout assigned before
+                if (page.MasterPage == null && request.MasterPageId.HasValue)
+                {
+                    // Retrieve all the pages which has current page as master in the path
+                    var children = Repository
+                        .AsQueryable<MasterPage>()
+                        .Where(mp => mp.Master == page)
+                        .Select(mp => mp.Page)
+                        .Distinct()
+                        .ToList();
+
+                    return children.Select(c => new MasterPage {Page = c}).ToList();
+                }
             }
 
             return new List<MasterPage>();
@@ -337,13 +372,26 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         /// <param name="masterPageId">The master page id.</param>
         private void UpdateChildrenMasterPages(List<MasterPage> masterPagesToUpdate, Guid? masterPageId)
         {
-            if (masterPagesToUpdate.Any() && masterPageId.HasValue)
+            if (masterPagesToUpdate.Any())
             {
-                var newMaster = Repository.AsProxy<Root.Models.Page>(masterPageId.Value);
-                foreach (var mp in masterPagesToUpdate)
+                if (masterPageId.HasValue)
                 {
-                    mp.Master = newMaster;
-                    Repository.Save(mp);
+                    var newMaster = Repository.AsProxy<Root.Models.Page>(masterPageId.Value);
+                    
+                    // Update / create master page in the path
+                    foreach (var mp in masterPagesToUpdate)
+                    {
+                       mp.Master = newMaster;
+                       Repository.Save(mp);
+                    }
+                }
+                else
+                {
+                    // Remove master page from path
+                    foreach (var mp in masterPagesToUpdate)
+                    {
+                        Repository.Delete(mp);
+                    }
                 }
             }
         }
