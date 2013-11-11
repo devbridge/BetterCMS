@@ -656,7 +656,8 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             leftSlider = pathContainer.find(selectors.masterPagesPathSliderLeft),
             rightSlider = pathContainer.find(selectors.masterPagesPathSliderRight),
             items = [],
-            currentItem = 0;
+            currentItem = 0,
+            maxItem = 0;
        
         function getPathVisibility() {
             var showPage = localStorage.getItem(keys.showMasterPagesPath);
@@ -695,7 +696,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 margin,
                 i;
 
-            if (itemNr >= 0 && itemNr < length) {
+            if (itemNr >= 0 && itemNr <= maxItem) {
                 currentItem += step;
                 for (i = 0; i < length; i++) {
                     if (i < currentItem) {
@@ -718,11 +719,29 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 leftSlider.addClass(classes.masterPagesPathInactiveArrow);
             }
             
-            if (currentItem < items.length-1) {
+            if (currentItem < maxItem) {
                 rightSlider.removeClass(classes.masterPagesPathInactiveArrow);
             } else {
                 rightSlider.addClass(classes.masterPagesPathInactiveArrow);
             }
+        }
+        
+        function slideToTheFirstParent() {
+            var width = parseInt(pathContainer.find('.bcms-layout-path-inner').css('width')),
+                length = items.length,
+                sum = items[length - 1].width,
+                i,
+                slidesToLeave = 0;
+
+            for (i = length - 2; i >= 0; i--) {
+                sum += items[i].width;
+                if (sum <= width) {
+                    slidesToLeave++;
+                }
+            }
+
+            maxItem = length - 1 - slidesToLeave;
+            slide(maxItem);
         }
 
         self.calculatePathPositions = function () {
@@ -748,7 +767,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             handle.on('click', onHandleClick);
             self.calculatePathPositions();
             pathContainer.show();
-
+            
             pathContainer.find(selectors.masterPagesPathItem).each(function (index) {
                 var item = $(this);
 
@@ -756,10 +775,12 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
                 item.on('click', function () {
                     var url = $(this).data('url');
-                    
+
                     window.location.href = url;
                 });
             });
+
+            slideToTheFirstParent();
 
             leftSlider.on('click', function () {
                 slide(-1);
