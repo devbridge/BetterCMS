@@ -237,7 +237,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 id = $(template).data('id'),
                 isMasterPage = $(template).data('master');
 
-            if (active === template) {
+            if (active.get(0) === template.get(0)) {
                 return;
             }
 

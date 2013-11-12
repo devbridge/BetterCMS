@@ -80,8 +80,8 @@ namespace BetterCms.Module.Root.Services
                         itemType = item.GetType();
                     }
 
-                    object securedObject = cacheService.GetEntity(itemType, item.Id);
-                    if (securedObject == null)
+                    object securedObject;
+                    if (!cacheService.GetEntity(itemType, item.Id, out securedObject))
                     {
                         securedObject = unitOfWork.Session.Get(itemType, item.Id);
                         cacheService.AddEntity(itemType, item.Id, securedObject);

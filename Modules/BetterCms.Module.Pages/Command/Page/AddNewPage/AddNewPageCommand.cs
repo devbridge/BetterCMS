@@ -71,12 +71,29 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
                     model.Templates.First().IsActive = true;
                 }
 
-                model.TemplateId = model.Templates.Where(t => t.IsActive && !t.IsMasterPage).Select(t => (Guid?)t.TemplateId).FirstOrDefault();
+                var active = model.Templates.First(t => t.IsActive);
+                if (active != null)
+                {
+                    if (active.IsMasterPage)
+                    {
+                        model.MasterPageId = active.TemplateId;
+                    }
+                    else
+                    {
+                        model.TemplateId = active.TemplateId;
+                    }
+                }
 
                 if (model.TemplateId.HasValue)
                 {
                     model.OptionValues = layoutService.GetLayoutOptionValues(model.TemplateId.Value);
                 }
+
+                if (model.MasterPageId.HasValue)
+                {
+                    model.OptionValues = layoutService.GetLayoutOptionValues(model.MasterPageId.Value);
+                }
+
                 model.CustomOptions = optionService.GetCustomOptions();
             }
 
