@@ -88,7 +88,8 @@ namespace BetterCms.Module.Pages.Services
                                 : t.SecondaryImage != null
                                     ? t.SecondaryImage.PublicThumbnailUrl
                                     : null,
-                        IsMasterPage = true
+                        IsMasterPage = true,
+                        MasterUrlHash = t.PageUrlHash
                     }).ToFuture();
 
             var templates = templatesFuture.ToList().Concat(masterPagesFuture.ToList()).ToList();

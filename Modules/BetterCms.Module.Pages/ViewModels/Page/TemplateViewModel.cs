@@ -56,6 +56,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public bool IsMasterPage { get; set; }
 
         /// <summary>
+        /// Gets or sets the URL hash.
+        /// </summary>
+        /// <value>
+        /// The URL hash.
+        /// </value>
+        public string MasterUrlHash { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>
