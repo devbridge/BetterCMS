@@ -790,6 +790,16 @@ a.bcms-remove-image {
     z-index: 10;
 }
 
+.bcms-sort-wrapper-placeholder {
+    position: relative;
+    height: 30px;
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #000;
+    z-index: 10;
+    opacity: 0.1;
+}
+
 .bcms-sort-content {
     color: #505050;
     font-weight: 700;
