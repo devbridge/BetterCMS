@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 using BetterCms.Core.DataAccess;
-
+using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Page;
 
 using BetterCms.Module.Root.Models;
@@ -58,7 +58,7 @@ namespace BetterCms.Module.Pages.Services
 
             // Load master pages
             var masterPagesQuery = repository
-                .AsQueryable<Page>()
+                .AsQueryable<PageProperties>()
                 .Where(p => p.IsMasterPage);
 
             if (currentPageId.HasValue && !currentPageId.Value.HasDefaultValue())
@@ -72,9 +72,22 @@ namespace BetterCms.Module.Pages.Services
                 .OrderBy(t => t.Title)
                 .Select(t => new TemplateViewModel
                     {
-                        Title = t.PageUrl,
+                        Title = t.Title,
                         TemplateId = t.Id,
-                        PreviewUrl = null,
+                        PreviewUrl = t.Image != null
+                            ? t.Image.PublicUrl
+                            : t.FeaturedImage != null
+                                ? t.FeaturedImage.PublicUrl
+                                : t.SecondaryImage != null
+                                    ? t.SecondaryImage.PublicUrl
+                                    : null,
+                        PreviewThumbnailUrl = t.Image != null
+                            ? t.Image.PublicThumbnailUrl
+                            : t.FeaturedImage != null
+                                ? t.FeaturedImage.PublicThumbnailUrl
+                                : t.SecondaryImage != null
+                                    ? t.SecondaryImage.PublicThumbnailUrl
+                                    : null,
                         IsMasterPage = true
                     }).ToFuture();
 

@@ -1,20 +1,13 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
-
-@model BetterCms.Module.Pages.ViewModels.Page.TemplateViewModel
-
-<div class="@(Model.IsActive ? "bcms-grid-box bcms-grid-box-active" : "bcms-grid-box")" data-id="@Model.TemplateId" data-master="@(Model.IsMasterPage ? "1" : "0")">
+﻿@model BetterCms.Module.Pages.ViewModels.Page.TemplateViewModel
+<div class="bcms-inner-grid-box @(Model.IsActive ? "bcms-inner-grid-box-active" : string.Empty)" data-id="@Model.TemplateId" data-master="@(Model.IsMasterPage ? "1" : "0")">
     <div class="bcms-title-holder">
         <div class="bcms-content-titles">@Model.Title</div>
     </div>
     <div class="bcms-grid-image-holder">
-        @if (!string.IsNullOrWhiteSpace(Model.PreviewUrl))
+        @if (!string.IsNullOrWhiteSpace(Model.PreviewThumbnailUrl))
         {
-            <img src="@Model.PreviewUrl" alt="" />
-            <div class="bcms-zoom-overlay bcms-preview-template" data-url="@Model.PreviewUrl" data-alt="@Model.Title"></div>
+            <img src="@Model.PreviewThumbnailUrl" alt="@Model.Title" />
+            <div class="bcms-zoom-overlay bcms-preview-template" data-url="@(!string.IsNullOrWhiteSpace(Model.PreviewUrl) ? Model.PreviewUrl : Model.PreviewThumbnailUrl)" data-alt="@Model.Title"></div>
         }
-    </div>
-    <div class="bcms-grid-button-holder">
-        <div class="bcms-grid-active-message-text" style="@(Model.IsActive ? "display:" : "display: none;")">@PagesGlobalization.AddNewPage_DefaultTemplate_Title</div>
-        <div class="bcms-btn-grid" style="@(Model.IsActive ? "display: none;" : "display:")">@PagesGlobalization.AddNewPage_SelectTemplateButton_Title</div>
     </div>
 </div>

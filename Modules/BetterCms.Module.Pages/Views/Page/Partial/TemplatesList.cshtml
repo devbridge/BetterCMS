@@ -20,21 +20,18 @@
     }    
 }
 @{
-    if (!Model.Any(m => m.IsMasterPage))
-    {
-        @Templates(Model)
-        return;
-    }
     var active = Model.FirstOrDefault(m => m.IsActive);
     var selectFirstTab = active == null || !active.IsMasterPage;
 }
-<div class="bcms-innertab-header" style="background:white;">
-    <a class="bcms-tab @(selectFirstTab ? "bcms-tab-active" : string.Empty)" data-name="#bcms-tab-a">Templates</a>
-    <a class="bcms-tab @(!selectFirstTab ? "bcms-tab-active" : string.Empty)" data-name="#bcms-tab-b">Master Pages</a>
-</div>
-<div id="bcms-tab-a" class="bcms-tab-single" style="display: @(selectFirstTab ? "block" : "none");padding-top: 15px;">
-    @Templates(Model.Where(m => !m.IsMasterPage).ToList())
-</div>
-<div id="bcms-tab-b" class="bcms-tab-single" style="display: @(!selectFirstTab ? "block" : "none");padding-top: 15px;">
-    @Templates(Model.Where(m => m.IsMasterPage).ToList())
+<div class="bcms-inner-tabs-holder">
+    <div class="bcms-tab-header">
+        <a class="bcms-tab @(selectFirstTab ? "bcms-tab-active" : string.Empty)" data-name="#bcms-tab-a">Templates</a>
+        <a class="bcms-tab @(!selectFirstTab ? "bcms-tab-active" : string.Empty)" data-name="#bcms-tab-b">Master Pages</a>
+    </div>
+    <div id="bcms-tab-a" class="bcms-tab-single" style="display: @(selectFirstTab ? "block" : "none");padding-top: 15px;">
+        @Templates(Model.Where(m => !m.IsMasterPage).ToList())
+    </div>
+    <div id="bcms-tab-b" class="bcms-tab-single" style="display: @(!selectFirstTab ? "block" : "none");padding-top: 15px;">
+        @Templates(Model.Where(m => m.IsMasterPage).ToList())
+    </div>
 </div>

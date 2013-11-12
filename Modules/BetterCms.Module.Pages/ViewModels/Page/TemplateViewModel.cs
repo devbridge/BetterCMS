@@ -32,6 +32,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public string PreviewUrl { get; set; }
 
         /// <summary>
+        /// Gets or sets the preview thumbnail URL.
+        /// </summary>
+        /// <value>
+        /// The preview thumbnail URL.
+        /// </value>
+        public string PreviewThumbnailUrl { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether this instance is active.
         /// </summary>
         /// <value>

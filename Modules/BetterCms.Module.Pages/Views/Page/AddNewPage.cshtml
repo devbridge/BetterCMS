@@ -49,49 +49,6 @@
                 @Html.HiddenFor(f => f.ParentPageUrl)
                 @Html.HiddenSubmit()
 
-                @* NEW STYLE BEGIN @
-                <div class="bcms-inner-tabs-holder">
-                    <div class="bcms-tab-header">
-                        <a class="bcms-tab bcms-tab-active" data-name="#bcms-tab-inner-1">Templates</a>
-                        <a class="bcms-tab" data-name="#bcms-tab-inner-2">Master Pages</a>
-                    </div>
-
-                    <div class="bcms-tab-single">
-
-                        <div class="bcms-grid-holder">
-                            <div class="bcms-inner-grid-box bcms-inner-grid-box-active">
-                                <div class="bcms-title-holder">
-                                    <div class="bcms-content-titles">Default Better CMS Template</div>
-                                </div>
-                                <div class="bcms-grid-image-holder">
-                                </div>
-                            </div>
-
-                            <div class="bcms-inner-grid-box">
-                                <div class="bcms-title-holder">
-                                    <div class="bcms-content-titles">Default Better CMS Template Better CMS Template</div>
-                                </div>
-                                <div class="bcms-grid-image-holder">
-                                </div>
-                            </div>
-
-                            <div class="bcms-inner-grid-box">
-                                <div class="bcms-title-holder">
-                                    <div class="bcms-content-titles">Default Better CMSBetter CMS Template Template</div>
-                                </div>
-                                <div class="bcms-grid-image-holder">
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="bcms-tab-single">
-
-                    </div>
-                </div>
-                @* END OF NEW STYLES *@
-
                 @if (Model.AccessControlEnabled)
                 {
                     var viewModel = new UserAccessTemplateViewModel
