@@ -168,6 +168,11 @@ namespace BetterCms.Module.Root.Services
                 securedObject.AccessRules != null && !securedObject.AccessRules.Any() && !readWriteIsDefault ||
                 securedObject.AccessRules != null && securedObject.AccessRules.Any() && securedObject.AccessRules.All(f => f.AccessLevel != AccessLevel.ReadWrite))
             {
+                if (securityService.HasFullAccess(securityService.GetCurrentPrincipal()))
+                {
+                    return;
+                }
+
                 throw new ValidationException(() => RootGlobalization.Validation_SecuredObjectShouldHaveAccess_Message, 
                     string.Format("An '{0}' secured object can't be saved because of the complete access lose.", securedObject));
             }
@@ -237,6 +242,12 @@ namespace BetterCms.Module.Root.Services
 
         private AccessLevel GetAccessLevelInternal(IList<IAccessRule> accessRules, IPrincipal principal)
         {
+            // If user is in full access role - object is accessible to him.
+            if (securityService.HasFullAccess(principal))
+            {
+                return AccessLevel.ReadWrite;
+            }
+
             // If there are no permissions, object is accessible to everyone:
             if (accessRules == null || !accessRules.Any())
             {
