@@ -135,9 +135,6 @@
   <data name="AddNewPageProperties_TemplateId_RequiredMessage" xml:space="preserve">
     <value>Layout template is required.</value>
   </data>
-  <data name="AddNewPage_DefaultTemplate_Title" xml:space="preserve">
-    <value>Selected Template</value>
-  </data>
   <data name="AddNewPage_Dialog_Title" xml:space="preserve">
     <value>Add New Page</value>
   </data>
@@ -158,9 +155,6 @@
   </data>
   <data name="AddNewPage_Permalink_Tooltip_Description" xml:space="preserve">
     <value>Create a unique page URL for your new page.</value>
-  </data>
-  <data name="AddNewPage_SelectTemplateButton_Title" xml:space="preserve">
-    <value>Select</value>
   </data>
   <data name="AddNewPage_Template" xml:space="preserve">
     <value>3. Select a template</value>

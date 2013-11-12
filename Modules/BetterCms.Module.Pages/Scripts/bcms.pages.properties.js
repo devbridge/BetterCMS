@@ -18,12 +18,10 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 permalinkEditField: '#bcms-page-permalink-edit',
                 permalinkInfoField: '#bcms-page-permalink-info',
 
-                pagePropertiesTemplateSelect: '.bcms-btn-grid',
+                pagePropertiesTemplateSelect: '.bcms-inner-grid-box',
                 pagePropertiesTemplateId: '#TemplateId',
                 pagePropertiesMasterPageId: '#MasterPageId',
-                pagePropertiesActiveTemplateBox: '.bcms-grid-box-active',
-                pagePropertiesTemplateBox: '.bcms-grid-box',
-                pagePropertiesActiveTemplateMessage: '.bcms-grid-active-message-text',
+                pagePropertiesActiveTemplateBox: '.bcms-inner-grid-box-active',
                 pagePropertiesTemplatePreviewLink: '.bcms-preview-template',
 
                 pagePropertiesForm: 'form:first',
@@ -46,7 +44,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 editPagePropertiesInfoMessageClosed: 'bcms.EditPagePropertiesInfoBoxClosed'
             },
             classes = {
-                pagePropertiesActiveTemplateBox: 'bcms-grid-box-active'
+                pagePropertiesActiveTemplateBox: 'bcms-inner-grid-box-active'
             },
             currentPageIsPublished,
             currentPageIsMaster;
@@ -285,14 +283,15 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         */
         page.highlightPagePropertiesActiveTemplate = function (dialog, selectButton, onChangeCallback) {
             var active = dialog.container.find(selectors.pagePropertiesActiveTemplateBox),
-                template = $(selectButton).parents(selectors.pagePropertiesTemplateBox),
+                template = $(selectButton),
                 id = $(template).data('id'),
                 isMasterPage = $(template).data('master');
 
-            active.removeClass(classes.pagePropertiesActiveTemplateBox);
-            active.find(selectors.pagePropertiesTemplateSelect).show();
-            active.find(selectors.pagePropertiesActiveTemplateMessage).hide();
+            if (active === template) {
+                return;
+            }
 
+            active.removeClass(classes.pagePropertiesActiveTemplateBox);
             if (template) {
                 if (isMasterPage) {
                     dialog.container.find(selectors.pagePropertiesMasterPageId).val(id);
@@ -302,12 +301,9 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                     dialog.container.find(selectors.pagePropertiesMasterPageId).val('');
                 }
                 $(template).addClass(classes.pagePropertiesActiveTemplateBox);
-                $(template).find(selectors.pagePropertiesActiveTemplateMessage).show();
 
                 onChangeCallback.call(this, id, isMasterPage);
             }
-
-            $(selectButton).hide();
         };
 
         /**

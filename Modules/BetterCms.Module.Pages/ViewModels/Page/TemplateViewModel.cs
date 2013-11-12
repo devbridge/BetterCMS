@@ -32,6 +32,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public string PreviewUrl { get; set; }
 
         /// <summary>
+        /// Gets or sets the preview thumbnail URL.
+        /// </summary>
+        /// <value>
+        /// The preview thumbnail URL.
+        /// </value>
+        public string PreviewThumbnailUrl { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether this instance is active.
         /// </summary>
         /// <value>
@@ -46,6 +54,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <c>true</c> if template is master page; otherwise, <c>false</c>.
         /// </value>
         public bool IsMasterPage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the URL hash.
+        /// </summary>
+        /// <value>
+        /// The URL hash.
+        /// </value>
+        public string MasterUrlHash { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

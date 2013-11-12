@@ -9,6 +9,7 @@ using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Security;
 
@@ -63,7 +64,13 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
             if (model.Templates.Count > 0)
             {
                 model.Templates.ToList().ForEach(x => x.IsActive = false);
-                model.Templates.First().IsActive = true;
+                var urlHash = request.ParentPageUrl.UrlHash();
+                model.Templates.Where(t => t.IsMasterPage && t.MasterUrlHash == urlHash).ToList().ForEach(x => x.IsActive = true);
+                if (model.Templates.Count(t => t.IsActive) != 1)
+                {
+                    model.Templates.First().IsActive = true;
+                }
+
                 model.TemplateId = model.Templates.Where(t => t.IsActive && !t.IsMasterPage).Select(t => (Guid?)t.TemplateId).FirstOrDefault();
 
                 if (model.TemplateId.HasValue)
