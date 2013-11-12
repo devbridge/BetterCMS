@@ -294,21 +294,34 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             // Add fetched entities.
             query = query
+                .FetchMany(f => f.Options)
                 .Fetch(f => f.MasterPage)
                 .Fetch(f => f.Layout)
                 .ThenFetchMany(f => f.LayoutRegions)
                 .ThenFetch(f => f.Region)
+                .Fetch(f => f.Layout)
+                .ThenFetchMany(f => f.LayoutOptions)
+                
                 // Fetch master page with reference to master page
                 .FetchMany(f => f.MasterPages)
                 .ThenFetch(f => f.Master)
-                .ThenFetch(f => f.MasterPage)
                 .ThenFetchMany(f => f.AccessRules)
-                // Fetch master page with reference to layout
+
+                .FetchMany(f => f.MasterPages)
+                .ThenFetch(f => f.Master)
+                .ThenFetchMany(f => f.Options)
+
+                // Fetch master page with reference to layout with it's regions and options
                 .FetchMany(f => f.MasterPages)
                 .ThenFetch(f => f.Master)
                 .ThenFetch(f => f.Layout)
                 .ThenFetchMany(f => f.LayoutRegions)
-                .ThenFetch(f => f.Region);
+                .ThenFetch(f => f.Region)
+
+                .FetchMany(f => f.MasterPages)
+                .ThenFetch(f => f.Master)
+                .ThenFetch(f => f.Layout)
+                .ThenFetchMany(f => f.LayoutOptions);
 
             // Add access rules if access control is enabled.
             if (cmsConfiguration.Security.AccessControlEnabled)
