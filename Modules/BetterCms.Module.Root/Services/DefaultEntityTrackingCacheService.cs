@@ -13,16 +13,19 @@ namespace BetterCms.Module.Root.Services
             this.contextAccessor = contextAccessor;
         }
 
-        public object GetEntity(System.Type type, System.Guid id)
+        public bool GetEntity(System.Type type, System.Guid id, out object entity)
         {
+            entity = null;
+
             var context = GetCurrentContext();
             var key = CreateKey(type, id);
             if (context != null)
             {
-                return context.Items[key];
+                entity = context.Items[key];
+                return true;
             }
-            
-            return null;
+
+            return false;
         }
 
         public void AddEntity(System.Type type, System.Guid id, object entity)
