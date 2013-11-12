@@ -669,6 +669,17 @@ namespace BetterCms.Module.Root.Services
         }
 
         /// <summary>
+        /// Gets the custom options future query.
+        /// </summary>
+        /// <returns>
+        /// Future query for the list of custom option view models
+        /// </returns>
+        public IEnumerable<CustomOptionViewModel> GetCustomOptionsFuture()
+        {
+            return cacheService.Get(CacheKey, TimeSpan.FromSeconds(30), LoadCustomOptionsFuture);
+        }
+
+        /// <summary>
         /// Loads the custom options.
         /// </summary>
         /// <returns>
@@ -676,11 +687,22 @@ namespace BetterCms.Module.Root.Services
         /// </returns>
         private List<CustomOptionViewModel> LoadCustomOptions()
         {
+            return LoadCustomOptionsFuture().ToList();
+        }
+
+        /// <summary>
+        /// Gets the custom options future query.
+        /// </summary>
+        /// <returns>
+        /// Future query for the list of custom option view models
+        /// </returns>
+        private IEnumerable<CustomOptionViewModel> LoadCustomOptionsFuture()
+        {
             return
                 repository.AsQueryable<CustomOption>()
                           .OrderBy(o => o.Title)
                           .Select(o => new CustomOptionViewModel { Identifier = o.Identifier, Title = o.Title })
-                          .ToList();
+                          .ToFuture();
         }
 
         /// <summary>

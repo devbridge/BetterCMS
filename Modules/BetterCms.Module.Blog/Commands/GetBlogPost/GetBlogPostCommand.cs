@@ -153,7 +153,7 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                         model.LiveFromDate = DateTime.Today;
                     }
 
-                    model.Tags = tagService.GetPageTagNames(id);
+                    model.Tags = tagService.GetPageTagNames(id).ToList();
                 }
                 else
                 {

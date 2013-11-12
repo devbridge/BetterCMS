@@ -95,6 +95,12 @@ namespace BetterCms.Module.Root.Services
         List<CustomOptionViewModel> GetCustomOptions();
 
         /// <summary>
+        /// Gets the custom options future query.
+        /// </summary>
+        /// <returns>Future query for the list of custom option view models</returns>
+        IEnumerable<CustomOptionViewModel> GetCustomOptionsFuture();
+
+        /// <summary>
         /// Fixes the option value for save.
         /// </summary>
         /// <param name="title">The title.</param>

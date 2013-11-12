@@ -6,6 +6,7 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Module.Pages.ViewModels.Page;
 
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
 
@@ -37,12 +38,12 @@ namespace BetterCms.Module.Pages.Services
         }
 
         /// <summary>
-        /// Gets the list of layout view models.
+        /// Gets the future query for the list of layout view models.
         /// </summary>
         /// <returns>
-        /// The list of layout view models
+        /// The future query for the list of layout view models
         /// </returns>
-        public IList<TemplateViewModel> GetLayouts()
+        public IList<TemplateViewModel> GetAvailableLayouts(System.Guid? currentPageId = null)
         {
             // Load layouts
             var templatesFuture = repository
@@ -53,13 +54,21 @@ namespace BetterCms.Module.Pages.Services
                         Title = t.Name,
                         TemplateId = t.Id,
                         PreviewUrl = t.PreviewUrl
-                    })
-                .ToFuture();
+                    }).ToFuture();
 
             // Load master pages
-            var masterPagesFuture = repository
+            var masterPagesQuery = repository
                 .AsQueryable<Page>()
-                .Where(p => p.IsMasterPage)
+                .Where(p => p.IsMasterPage);
+
+            if (currentPageId.HasValue && !currentPageId.Value.HasDefaultValue())
+            {
+                masterPagesQuery = masterPagesQuery
+                    .Where(p => p.Id != currentPageId 
+                        && p.MasterPages.All(cp => cp.Master.Id != currentPageId));
+            }
+
+            var masterPagesFuture = masterPagesQuery
                 .OrderBy(t => t.Title)
                 .Select(t => new TemplateViewModel
                     {
@@ -67,8 +76,7 @@ namespace BetterCms.Module.Pages.Services
                         TemplateId = t.Id,
                         PreviewUrl = null,
                         IsMasterPage = true
-                    })
-                .ToFuture();
+                    }).ToFuture();
 
             var templates = templatesFuture.ToList().Concat(masterPagesFuture.ToList()).ToList();
             return templates;

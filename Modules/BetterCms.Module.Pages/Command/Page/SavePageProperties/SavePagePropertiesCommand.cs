@@ -374,6 +374,11 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         private void UpdateChildrenMasterPages(IList<MasterPage> existingChildrenMasterPages,
             IList<Guid> oldMasterIds, IList<Guid> newMasterIds, IEnumerable<Guid> childrenPageIds)
         {
+            if (childrenPageIds == null)
+            {
+                return;
+            }
+
             // Loop in all the distinct master pages
             foreach (var pageId in childrenPageIds)
             {

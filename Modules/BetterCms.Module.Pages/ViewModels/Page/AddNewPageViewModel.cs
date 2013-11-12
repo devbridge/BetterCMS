@@ -52,7 +52,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// The templates.
         /// </value>
-        public IList<TemplateViewModel> Templates { get; set; }
+        public List<TemplateViewModel> Templates { get; set; }
 
         /// <summary>
         /// Gets or sets the template id.

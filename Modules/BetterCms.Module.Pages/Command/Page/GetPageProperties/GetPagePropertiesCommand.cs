@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 
@@ -14,11 +12,11 @@ using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
-using BetterCms.Module.Root.ViewModels.Option;
 using BetterCms.Module.Root.ViewModels.Security;
 
 using NHibernate.Linq;
@@ -89,7 +87,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         /// <returns></returns>
         public EditPagePropertiesViewModel Execute(Guid id)
         {            
-            var model = Repository
+            var modelQuery = Repository
                 .AsQueryable<PageProperties>()
                 .Where(p => p.Id == id)
                 .Select(page =>
@@ -146,28 +144,42 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                                           }
                           }
                     })
-                .ToList()
-                .FirstOrDefault();
+                .ToFuture();
 
+            var tagsFuture = tagService.GetPageTagNames(id);
+            var categories = categoryService.GetCategories();
+            var customOptionsFuture = optionService.GetCustomOptionsFuture();
+
+            IEnumerable<AccessRule> userAccessFuture;
+            if (cmsConfiguration.Security.AccessControlEnabled)
+            {
+                userAccessFuture = Repository
+                    .AsQueryable<Root.Models.Page>()
+                    .Where(x => x.Id == id && !x.IsDeleted)
+                    .SelectMany(x => x.AccessRules)
+                    .OrderBy(x => x.Identity)
+                    .ToFuture();
+            }
+            else
+            {
+                userAccessFuture = null;
+            }
+
+            var model = modelQuery.ToList().FirstOrDefault();
             if (model != null && model.Model != null)
             {
-                model.Model.Tags = tagService.GetPageTagNames(id);
+                model.Model.Tags = tagsFuture.ToList();
                 model.Model.RedirectFromOldUrl = true;
-                model.Model.Categories = categoryService.GetCategories();
+                model.Model.Categories = categories;
                 model.Model.UpdateSitemap = true;
+                model.Model.CustomOptions = customOptionsFuture.ToList();
 
                 // Get layout options, page options and merge them
                 model.Model.OptionValues = optionService.GetMergedMasterPagesOptionValues(model.Model.Id, model.Model.MasterPageId, model.Model.TemplateId);
-                model.Model.CustomOptions = optionService.GetCustomOptions();
 
-                if (cmsConfiguration.Security.AccessControlEnabled)
-                {                    
-                    model.Model.UserAccessList = Repository.AsQueryable<Root.Models.Page>()
-                                                .Where(x => x.Id == id && !x.IsDeleted)                    
-                                                .SelectMany(x => x.AccessRules)
-                                                .OrderBy(x => x.Identity)
-                                                .ToList()
-                                                .Select(x => new UserAccessViewModel(x)).ToList();
+                if (userAccessFuture != null)
+                {
+                    model.Model.UserAccessList = userAccessFuture.Select(x => new UserAccessViewModel(x)).ToList();
 
                     var rules = model.Model.UserAccessList.Cast<IAccessRule>().ToList();
 
@@ -177,21 +189,11 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 model.Model.CanPublishPage = SecurityService.IsAuthorized(Context.Principal, RootModuleConstants.UserRoles.PublishContent);
 
                 // Get templates
-                model.Model.Templates = layoutService.GetLayouts();
+                model.Model.Templates = layoutService.GetAvailableLayouts(id).ToList();
                 model.Model.Templates
                     .Where(x => x.TemplateId == model.Model.TemplateId || x.TemplateId == model.Model.MasterPageId)
                     .Take(1).ToList()
                     .ForEach(x => x.IsActive = true);
-
-                // Child page can not be selected as master.
-                model.Model.Templates = model.Model.Templates
-                    .Where(x => !x.IsMasterPage || !Repository.AsQueryable<MasterPage>().Where(m => m.Page.Id == x.TemplateId).Any(m => m.Master.Id == model.Model.Id))
-                    .ToList();
-
-                // Page can not be master for it self.
-                model.Model.Templates = model.Model.Templates
-                    .Where(x => x.TemplateId != model.Model.Id)
-                    .ToList();
             }
 
             return model != null ? model.Model : null;

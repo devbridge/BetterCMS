@@ -8,12 +8,13 @@ namespace BetterCms.Module.Pages.Services
     public interface ILayoutService
     {
         /// <summary>
-        /// Gets the list of layout view models.
+        /// Gets the future query for the list of layout view models.
         /// </summary>
+        /// <param name="currentPageId">The current page id.</param>
         /// <returns>
-        /// The list of layout view models
+        /// The future query for the list of layout view models
         /// </returns>
-        IList<TemplateViewModel> GetLayouts();
+        IList<TemplateViewModel> GetAvailableLayouts(System.Guid? currentPageId = null);
 
         /// <summary>
         /// Gets the list of layout option view models.

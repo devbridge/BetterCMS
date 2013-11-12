@@ -55,7 +55,7 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
             var model = new AddNewPageViewModel
                             {
                                 ParentPageUrl = request.ParentPageUrl,
-                                Templates = layoutService.GetLayouts(),
+                                Templates = layoutService.GetAvailableLayouts().ToList(),
                                 AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled,
                                 UserAccessList = accessControlService.GetDefaultAccessList(principal).Select(f => new UserAccessViewModel(f)).ToList()
                             };

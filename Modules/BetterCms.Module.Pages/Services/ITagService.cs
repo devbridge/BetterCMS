@@ -16,10 +16,10 @@ namespace BetterCms.Module.Pages.Services
         void SavePageTags(PageProperties page, IList<string> tags, out IList<Tag> newCreatedTags);
 
         /// <summary>
-        /// Gets the page tag names.
+        /// Gets the future query for the page tag names.
         /// </summary>
         /// <param name="pageId">The page id.</param>
-        /// <returns>List fo tag names</returns>
-        IList<string> GetPageTagNames(Guid pageId);
+        /// <returns>The future query for the list fo tag names</returns>
+        IEnumerable<string> GetPageTagNames(Guid pageId);
     }
 }
