@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Permissions;
 using System.Security.Principal;
@@ -22,6 +24,8 @@ namespace BetterCms.Sandbox.Mvc4
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
         private static ICmsHost cmsHost;
+
+        private static List<string> usersToForceRelogin = new List<string>();
 
         protected void Application_Start()
         {
@@ -259,6 +263,12 @@ namespace BetterCms.Sandbox.Mvc4
 
         private void AddUsersEvents()
         {
+            BetterCms.Events.UserEvents.Instance.UserDeleted += args =>
+                {
+                    Log.Info("UserDeleted: " + args.Item.ToString());
+                    usersToForceRelogin.Add(args.Item.UserName);
+                };
+
             BetterCms.Events.UserEvents.Instance.UserProfileUpdated += args =>
             {
                 Log.Info("UserProfileUpdated: " + args.AfterUpdate.ToString());
@@ -329,6 +339,27 @@ namespace BetterCms.Sandbox.Mvc4
             //        FormsAuthentication.SignOut();
             //    }
             //}
+
+            // Super simple example how to force deleted user reauthentication.
+            if (User != null && usersToForceRelogin.Contains(User.Identity.Name))
+            {
+                if (HttpContext.Current.Session != null)
+                {
+                    HttpContext.Current.Session.Clear();
+                }
+
+                if (Roles.Enabled)
+                {
+                    Roles.DeleteCookie();
+                }
+
+                if (FormsAuthentication.IsEnabled)
+                {
+                    FormsAuthentication.SignOut();
+                }
+
+                Response.Redirect(FormsAuthentication.LoginUrl);
+            }
 
             cmsHost.OnAuthenticateRequest(this);
         }
