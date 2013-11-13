@@ -249,15 +249,6 @@ namespace BetterCms.Module.Users
                         }
                     }
                 }
-
-                if (Configuration.Users.EnableCmsFormsAuthentication)
-                {
-                    using (var container = ContextScopeProvider.CreateChildContainer())
-                    {
-                        var registrationService = container.Resolve<IAuthenticationService>();
-                        registrationService.AuthenticateRequest(args.Item);
-                    }
-                }
             }
         }        
         

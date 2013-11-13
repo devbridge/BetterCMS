@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Module.Users.Models;
 
 using NHibernate.Linq;
 
@@ -85,6 +86,20 @@ namespace BetterCms.Module.Users.Services
                  .AsQueryable<Models.User>(u => u.Email == email)
                  .Select(u => u.UserName)
                  .FirstOne();
+        }
+
+        /// <summary>
+        /// Gets the user.
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <returns>
+        /// User by username.
+        /// </returns>
+        public User GetUser(string username)
+        {
+            return repository
+                 .AsQueryable<Models.User>(u => u.UserName == username)
+                 .FirstOrDefault();
         }
 
         /// <summary>
