@@ -69,5 +69,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         /// </value>
         [DataMember]
         public bool IncludeTags { get; set; }
+        
+        /// <summary>
+        /// Gets or sets a value indicating whether to include metadata to results.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if  to include metadata to results; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool IncludeMetadata { get; set; }
     }
 }

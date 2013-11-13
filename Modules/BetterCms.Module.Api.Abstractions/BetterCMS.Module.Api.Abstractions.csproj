@@ -167,6 +167,7 @@
     <Compile Include="Operations\Pages\Pages\GetPagesRequestValidator.cs" />
     <Compile Include="Operations\Pages\Pages\GetPagesResponse.cs" />
     <Compile Include="Operations\Pages\Pages\IPagesService.cs" />
+    <Compile Include="Operations\Pages\Pages\MetadataModel.cs" />
     <Compile Include="Operations\Pages\Pages\OptionModel.cs" />
     <Compile Include="Operations\Pages\Pages\PageModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\IPageContentService.cs" />
