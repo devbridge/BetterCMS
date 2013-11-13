@@ -370,7 +370,8 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
             regionViewModel.sortBlock.sortable({
                 connectWith: '.bcms-sorting-block',
-                dropOnEmpty: true
+                dropOnEmpty: true,
+                placeholder: "bcms-sort-wrapper-placeholder"
             });
             
             regionViewModel.overlay.addClass(classes.regionSortOverlay);

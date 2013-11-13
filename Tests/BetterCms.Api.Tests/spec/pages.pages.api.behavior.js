@@ -363,8 +363,8 @@ describe('pages.pages.api.behavior', function () {
             expect(result.data.items[0].id).toBe('e81a87022bf4419688b4a2070081a57e', 'Correctly filtered id should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            // data.filter.where.length + 1 <-- Because field options and tags cannnot be filtered by
-            expect(data.filter.where.length + 2).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
+            // data.filter.where.length + 3 <-- Because field: {options, tags, metadata} cannnot be filtered by
+            expect(data.filter.where.length + 3).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
         });
     });
     
@@ -626,6 +626,52 @@ describe('pages.pages.api.behavior', function () {
 
         runs(function () {
             api.expectValidationExceptionIsThrown(result, 'Data');
+        });
+    });
+
+    it('01019: Should get a list of pages with included metadata', function () {
+        var url = '/bcms-api/pages/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [{ field: 'Title', operation: 'StartsWith', value: '01019' }]
+            },
+            order: {
+                by:[{ field: 'Title' }]
+            },
+            take: 1,
+            includeUnpublished: true,
+            includeArchived: true,
+            includeMetadata: true
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(2, 'Total count should be 2.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
+
+            expect(result.data.items[0].title).toBe('01019: Page 1', 'Correctly filtered items[0].title should be retrieved.');
+            expect(result.data.items[0].metadata).toBeDefinedAndNotNull('Correctly filtered items[0].metadata should be retrieved');
+            expect(result.data.items[0].metadata.metaTitle).toBe('01019-meta-title', 'Correctly filtered items[0].metadata.metaTitle should be retrieved');
+            expect(result.data.items[0].metadata.metaKeywords).toBe('01019-meta-keywords', 'Correctly filtered items[0].metadata.metaKeywords should be retrieved');
+            expect(result.data.items[0].metadata.metaDescription).toBe('01019-meta-description', 'Correctly filtered items[0].metadata.metaDescription should be retrieved');
+            expect(result.data.items[0].metadata.useNoFollow).toBe(true, 'Correctly filtered items[0].metadata.useNoFollow should be retrieved');
+            expect(result.data.items[0].metadata.useNoIndex).toBe(true, 'Correctly filtered items[0].metadata.useNoIndex should be retrieved');
+            expect(result.data.items[0].metadata.useCanonicalUrl).toBe(true, 'Correctly filtered items[0].metadata.useCanonicalUrl should be retrieved');
         });
     });
 
