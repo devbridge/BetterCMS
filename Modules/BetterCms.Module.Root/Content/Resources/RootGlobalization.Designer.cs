@@ -628,6 +628,42 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only one of master page and template can be specified..
+        /// </summary>
+        public static string MasterPage_Or_Layout_OnlyOne_ShouldBeSelected_ValidationMessage {
+            get {
+                return ResourceManager.GetString("MasterPage_Or_Layout_OnlyOne_ShouldBeSelected_ValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template or master page should be selected..
+        /// </summary>
+        public static string MasterPage_Or_Layout_ShouldBeSelected_ValidationMessage {
+            get {
+                return ResourceManager.GetString("MasterPage_Or_Layout_ShouldBeSelected_ValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide Path.
+        /// </summary>
+        public static string MasterPagesPath_HidePath_Button {
+            get {
+                return ResourceManager.GetString("MasterPagesPath_HidePath_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Path.
+        /// </summary>
+        public static string MasterPagesPath_ShowPath_Button {
+            get {
+                return ResourceManager.GetString("MasterPagesPath_ShowPath_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Forbidden: Access is denied..
         /// </summary>
         public static string Message_AccessForbidden {

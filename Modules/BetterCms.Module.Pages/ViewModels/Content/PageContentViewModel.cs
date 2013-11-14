@@ -154,6 +154,14 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         public bool EditInSourceMode { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether option to inset dynamic region is enabled.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if option to inset dynamic region is enabled; otherwise, <c>false</c>.
+        /// </value>
+        public bool EnableInsetDynamicRegion { get; set; }
+
+        /// <summary>
         /// Gets or sets the custom JavaSctript.
         /// </summary>
         /// <value>

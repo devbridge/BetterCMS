@@ -1,19 +1,37 @@
 ﻿@model IList<BetterCms.Module.Pages.ViewModels.Page.TemplateViewModel> 
-
-@if (Model != null && Model.Count > 0)
+@helper Templates(IList<BetterCms.Module.Pages.ViewModels.Page.TemplateViewModel> model)
 {
-    @Html.Raw("<div class=\"bcms-grid-holder\">")
-
-    for (int i = 0; i < Model.Count; i++)
+    if (model != null && model.Count > 0)
     {
-        if (i % 3 == 0 && i != 0)
+        @Html.Raw("<div class=\"bcms-grid-holder\">")
+
+        for (int i = 0; i < model.Count; i++)
         {
-            @Html.Raw("</div>")
-            @Html.Raw("<div class=\"bcms-grid-holder\">")
+            if (i % 3 == 0 && i != 0)
+            {
+                @Html.Raw("</div>")
+                @Html.Raw("<div class=\"bcms-grid-holder\">")
+            }
+
+            @Html.Partial("Partial/Template", model[i])
         }
 
-        @Html.Partial("Partial/Template", Model[i])
-    }
-
-    @Html.Raw("</div>")
+        @Html.Raw("</div>")
+    }    
 }
+@{
+    var active = Model.FirstOrDefault(m => m.IsActive);
+    var selectFirstTab = active == null || !active.IsMasterPage;
+}
+<div class="bcms-inner-tabs-holder">
+    <div class="bcms-tab-header">
+        <a class="bcms-tab @(selectFirstTab ? "bcms-tab-active" : string.Empty)" data-name="#bcms-tab-a">Templates</a>
+        <a class="bcms-tab @(!selectFirstTab ? "bcms-tab-active" : string.Empty)" data-name="#bcms-tab-b">Master Pages</a>
+    </div>
+    <div id="bcms-tab-a" class="bcms-tab-single" style="display: @(selectFirstTab ? "block" : "none");padding-top: 15px;">
+        @Templates(Model.Where(m => !m.IsMasterPage).ToList())
+    </div>
+    <div id="bcms-tab-b" class="bcms-tab-single" style="display: @(!selectFirstTab ? "block" : "none");padding-top: 15px;">
+        @Templates(Model.Where(m => m.IsMasterPage).ToList())
+    </div>
+</div>

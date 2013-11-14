@@ -141,5 +141,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         /// </value>
         [DataMember]
         public System.Collections.Generic.List<string> Tags  { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page metadata.
+        /// </summary>
+        /// <value>
+        /// The page metadata.
+        /// </value>
+        [DataMember]
+        public MetadataModel Metadata { get; set; }
     }
 }

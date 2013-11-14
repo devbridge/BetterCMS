@@ -1,8 +1,8 @@
 ﻿using System;
 
 using BetterCms.Module.MediaManager.Command.MediaManager;
+using BetterCms.Module.MediaManager.Helpers;
 using BetterCms.Module.MediaManager.Models;
-using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 
 namespace BetterCms.Module.MediaManager.Command.Images.GetImages
@@ -33,10 +33,14 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImages
                 var model = new MediaImageViewModel();
                 FillMediaFileViewModel(model, image);
 
+                var dimensionsCalculator = new ImageDimensionsCalculator(image);
+
                 model.Tooltip = image.Caption;
                 model.ThumbnailUrl = FileUrlResolver.EnsureFullPathUrl(image.PublicThumbnailUrl);
                 model.IsProcessing = image.IsUploaded == null || image.IsThumbnailUploaded == null || image.IsOriginalUploaded == null;
                 model.IsFailed = image.IsUploaded == false || image.IsThumbnailUploaded == false || image.IsOriginalUploaded == false;
+                model.Height = dimensionsCalculator.ResizedCroppedHeight;
+                model.Width = dimensionsCalculator.ResizedCroppedWidth;
 
                 return model;
             }

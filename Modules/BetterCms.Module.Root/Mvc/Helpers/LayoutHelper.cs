@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Mvc.Html;
 using System.Web.WebPages;
 
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.ViewModels.Cms;
-using System.Web.Mvc.Html;
 
 namespace BetterCms.Module.Root.Mvc.Helpers
 {
@@ -32,12 +32,12 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                 var contentsBuilder = new StringBuilder();
                 var projections = model.Contents.Where(c => c.RegionId == region.RegionId).OrderBy(c => c.Order).ToList();
 
-                using (new LayoutRegionWrapper(contentsBuilder, region, model.CanManageContent))
+                using (new LayoutRegionWrapper(contentsBuilder, region, model.AreRegionsEditable))
                 {
                     foreach (var projection in projections)
                     {
                         // Add Html
-                        using (new RegionContentWrapper(contentsBuilder, projection, model.CanManageContent))
+                        using (new RegionContentWrapper(contentsBuilder, projection, model.CanManageContent && model.AreRegionsEditable))
                         {
                             var content = projection.GetHtml(htmlHelper);
                             contentsBuilder.Append(content);
@@ -49,6 +49,11 @@ namespace BetterCms.Module.Root.Mvc.Helpers
 
                 if (!string.IsNullOrWhiteSpace(html))
                 {
+                    if (model.AreRegionsEditable)
+                    {
+                        html = DynamicLayoutHelper.ReplaceRegionRepresentationHtml(html);
+                    }
+
                     RenderSectionAsLayoutRegion(webPage, html, region.RegionIdentifier);
                 }                
             }

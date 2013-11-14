@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content', 'bcms.pages.widgets', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery', 'bcms.redirect', 'bcms.pages.history', 'bcms.security'],
-    function($, bcms, modal, content, widgets, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, editor, slides, redirect, history, security) {
+bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content', 'bcms.pages.widgets', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery', 'bcms.redirect', 'bcms.pages.history', 'bcms.security', 'bcms.codeEditor'],
+    function ($, bcms, modal, content, widgets, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, editor, slides, redirect, history, security, codeEditor) {
         'use strict';
 
         var pagesContent = {},
@@ -95,11 +95,17 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     var url = $.format(links.loadAddNewHtmlContentDialogUrl, bcms.pageId, regionId);
                     dynamicContent.bindDialog(dialog, url, {
                         contentAvailable: function (contentDialog, data) {
-                            var editInSourceMode = false;
-                            if (data && data.Data && data.Data.EditInSourceMode) {
-                                editInSourceMode = true;
+                            var editInSourceMode = false,
+                                enableInsetDynamicRegion = false;
+                            if (data && data.Data) {
+                                if (data.Data.EditInSourceMode) {
+                                    editInSourceMode = true;
+                                }
+                                if (data.Data.EnableInsetDynamicRegion) {
+                                    enableInsetDynamicRegion = true;
+                                }
                             }
-                            pagesContent.initializeAddNewContentForm(contentDialog, editInSourceMode);
+                            pagesContent.initializeAddNewContentForm(contentDialog, editInSourceMode, enableInsetDynamicRegion);
                         },
 
                         beforePost: function() {
@@ -138,9 +144,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Save content order after sorting.
         */
         pagesContent.onSortPageContent = function (model) {
-            if (model.data.pageContents.length < 2) {
-                return; // Sorting is needed for more than one item.
-            }
+            console.log(model);
 
             var info = modal.info({
                 content: globalization.sortingPageContentMessage,
@@ -149,14 +153,17 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             });
 
             var url = links.sortPageContentUrl,
-                alertOnError = function() {
-                    modal.alert({
-                        title: globalization.sortPageContentFailureMessageTitle,
-                        content: globalization.sortPageContentFailureMessageMessage
-                    });
-                },
-                dataToSend = JSON.stringify(model.data);
-            
+               alertOnError = function () {
+                   modal.alert({
+                       title: globalization.sortPageContentFailureMessageTitle,
+                       content: globalization.sortPageContentFailureMessageMessage
+                   });
+               },
+               dataToSend = JSON.stringify({
+                   PageId: bcms.pageId,
+                   PageContents: model
+               });
+
             $.ajax({
                 type: 'POST',
                 url: url,
@@ -186,7 +193,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Initializes content dialog form.
         */
-        pagesContent.initializeAddNewContentForm = function (dialog, editInSourceMode) {
+        pagesContent.initializeAddNewContentForm = function (dialog, editInSourceMode, enableInsetDynamicRegion) {
             dialog.container.find(selectors.dataPickers).initializeDatepicker(globalization.datePickerTooltipTitle);
 
             dialog.container.find(selectors.widgetsSearchButton).on('click', function () {
@@ -222,28 +229,38 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             if (editInSourceMode) {
                 htmlEditor.setSourceMode(selectors.htmlEditor);
             }
+            if (enableInsetDynamicRegion) {
+                htmlEditor.enableInsetDynamicRegion(selectors.htmlEditor);
+            }
 
             pagesContent.initializeCustomTextArea(dialog);
+
+            codeEditor.initialize(dialog.container);
         };
         
         /**
         * Initializes content edit dialog form.
         */
-        pagesContent.initializeEditContentForm = function (dialog, editInSourceMode) {
+        pagesContent.initializeEditContentForm = function (dialog, editInSourceMode, enableInsetDynamicRegion) {
             dialog.container.find(selectors.dataPickers).initializeDatepicker();
 
             htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
             if (editInSourceMode) {
                 htmlEditor.setSourceMode(selectors.htmlEditor);
             }
+            if (enableInsetDynamicRegion) {
+                htmlEditor.enableInsetDynamicRegion(selectors.htmlEditor);
+            }
 
             pagesContent.initializeCustomTextArea(dialog);
             
+            codeEditor.initialize(dialog.container);
+
             dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
                 var contentId = dialog.container.find(selectors.contentId).val(),
                     pageContentId = dialog.container.find(selectors.pageContentId).val(),
                     contentVersion = dialog.container.find(selectors.contentVersion).val();
-                
+
                 history.destroyDraftVersion(contentId, contentVersion, dialog.container, function () {
                     dialog.close();
                     pagesContent.editPageContent(pageContentId, function () {
@@ -488,11 +505,17 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     var url = $.format(links.editPageContentUrl, contentId);
                     dynamicContent.bindDialog(dialog, url, {
                         contentAvailable: function (contentDialog, data) {
-                            var editInSourceMode = false;
-                            if (data && data.Data && data.Data.EditInSourceMode) {
-                                editInSourceMode = true;
+                            var editInSourceMode = false,
+                                enableInsetDynamicRegion = false;
+                            if (data && data.Data) {
+                                if (data.Data.EditInSourceMode) {
+                                    editInSourceMode = true;
+                                }
+                                if (data.Data.EnableInsetDynamicRegion) {
+                                    enableInsetDynamicRegion = true;
+                                }
                             }
-                            pagesContent.initializeEditContentForm(contentDialog, editInSourceMode);
+                            pagesContent.initializeEditContentForm(contentDialog, editInSourceMode, enableInsetDynamicRegion);
                         },
 
                         beforePost: function () {
@@ -594,6 +617,40 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         };
 
         /**
+        * Creates new Guid
+        */
+        function createGuid() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16).toUpperCase();
+            });
+        }
+
+        /**
+        * Inserts dynamic region 
+        */
+        function onDynamicRegionInsert(htmlContentEditor) {
+            if (htmlContentEditor != null) {
+
+                var guid = createGuid(),
+                    html = '<div>{{DYNAMIC_REGION:' + guid + '}}</div>';
+                
+                if (htmlContentEditor.mode == 'source') {
+                    var oldData = htmlContentEditor.getData();
+                    htmlContentEditor.setData(oldData + html);
+                } else {
+                    // Create fake CKEditor object with real object representation (inversion of code in /[BetterCms.Module.Root]/Scripts/ckeditor/plugins/cms-dynamicregion/plugin.js).
+                    // NOTE: EDITOR.createFakeParserElement(...) functionality does not work...
+                    html = '<div class="bcms-draggable-region" data-cke-realelement="%3Cdiv%3E%7B%7BDYNAMIC_REGION%3A'
+                        + guid
+                        + '%7D%7D%3C%2Fdiv%3E" data-cke-real-node-type="1" title="Dynamic Region" data-cke-real-element-type="cmsdynamicregion" contenteditable="false">Content to add</div>';
+                    var re = CKEDITOR.dom.element.createFromHtml(html, htmlContentEditor.document);
+                    htmlContentEditor.insertElement(re);
+                }
+            }
+        }
+
+        /**
         * Initializes page module.
         */
         pagesContent.init = function() {
@@ -606,6 +663,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         bcms.on(bcms.events.addPageContent, pagesContent.onAddNewContent);
         bcms.on(bcms.events.sortPageContent, pagesContent.onSortPageContent);
         bcms.on(bcms.events.createContentOverlay, onCreateContentOverlay);
+        bcms.on(htmlEditor.events.insertDynamicRegion, onDynamicRegionInsert);
 
         /**
         * Register initialization

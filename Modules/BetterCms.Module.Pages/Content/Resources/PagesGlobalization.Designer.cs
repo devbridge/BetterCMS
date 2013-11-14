@@ -70,15 +70,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Selected Template.
-        /// </summary>
-        public static string AddNewPage_DefaultTemplate_Title {
-            get {
-                return ResourceManager.GetString("AddNewPage_DefaultTemplate_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Add New Page.
         /// </summary>
         public static string AddNewPage_Dialog_Title {
@@ -147,15 +138,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string AddNewPage_Permalink_Tooltip_Description {
             get {
                 return ResourceManager.GetString("AddNewPage_Permalink_Tooltip_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select.
-        /// </summary>
-        public static string AddNewPage_SelectTemplateButton_Title {
-            get {
-                return ResourceManager.GetString("AddNewPage_SelectTemplateButton_Title", resourceCulture);
             }
         }
         
@@ -898,6 +880,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot delete page. Other pages are using current page as a master page..
+        /// </summary>
+        public static string DeletePageCommand_MasterPageHasChildren_Message {
+            get {
+                return ResourceManager.GetString("DeletePageCommand_MasterPageHasChildren_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Can not remove this page from the sitemap, because it has child nodes..
         /// </summary>
         public static string DeletePageCommand_SitemapNodeHasChildNodes_Message {
@@ -1411,6 +1402,33 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Page is Master (is a template for other pages)..
+        /// </summary>
+        public static string EditPageProperties_IsMasterPage_Checkbox {
+            get {
+                return ResourceManager.GetString("EditPageProperties_IsMasterPage_Checkbox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master Page Options.
+        /// </summary>
+        public static string EditPageProperties_IsMasterPage_Title {
+            get {
+                return ResourceManager.GetString("EditPageProperties_IsMasterPage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Make the page to be a template for other pages and not directly accessible from the outside..
+        /// </summary>
+        public static string EditPageProperties_IsMasterPage_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("EditPageProperties_IsMasterPage_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose Page Layout.
         /// </summary>
         public static string EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title {
@@ -1452,6 +1470,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string EditPageProperties_OptionsTab_Title {
             get {
                 return ResourceManager.GetString("EditPageProperties_OptionsTab_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are about to convert the page to Master Page. Master page is not accessible from the outside and is intended to be used as a template for other pages.&lt;br/&gt;Proceed?.
+        /// </summary>
+        public static string EditPageProperties_PageConversionToMaster_ConfirmationMessage {
+            get {
+                return ResourceManager.GetString("EditPageProperties_PageConversionToMaster_ConfirmationMessage", resourceCulture);
             }
         }
         
@@ -2167,11 +2194,56 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Page is not a master, so dynamic regions are not allowed..
+        /// </summary>
+        public static string SaveContent_DynamicRegionsAreNotAllowed_Message {
+            get {
+                return ResourceManager.GetString("SaveContent_DynamicRegionsAreNotAllowed_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Page created succesfully..
         /// </summary>
         public static string SavePage_CreatedSuccessfully_Message {
             get {
                 return ResourceManager.GetString("SavePage_CreatedSuccessfully_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only one of master page and layout can be selected..
+        /// </summary>
+        public static string SavePagePropertiesCommand_LayoutAndMasterIsSelected_Message {
+            get {
+                return ResourceManager.GetString("SavePagePropertiesCommand_LayoutAndMasterIsSelected_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template or master page should be selected for page..
+        /// </summary>
+        public static string SavePagePropertiesCommand_NoLayoutOrMasterSelected_Message {
+            get {
+                return ResourceManager.GetString("SavePagePropertiesCommand_NoLayoutOrMasterSelected_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected master page is a child of the current page..
+        /// </summary>
+        public static string SavePagePropertiesCommand_SelectedMasterIsChildPage_Message {
+            get {
+                return ResourceManager.GetString("SavePagePropertiesCommand_SelectedMasterIsChildPage_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected master page is the current page..
+        /// </summary>
+        public static string SavePagePropertiesCommand_SelectedMasterIsCurrentPage_Message {
+            get {
+                return ResourceManager.GetString("SavePagePropertiesCommand_SelectedMasterIsCurrentPage_Message", resourceCulture);
             }
         }
         

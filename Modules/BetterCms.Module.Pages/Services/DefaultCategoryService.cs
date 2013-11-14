@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
+using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.Root.Models;
 
 using NHibernate;
 using NHibernate.Criterion;
+using NHibernate.Linq;
 using NHibernate.Transform;
 
 namespace BetterCms.Module.Pages.Services
@@ -12,17 +15,17 @@ namespace BetterCms.Module.Pages.Services
     internal class DefaultCategoryService : ICategoryService
     {
         /// <summary>
-        /// The unit of work
+        /// The repository
         /// </summary>
-        private IUnitOfWork unitOfWork;
+        private IRepository repository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultRedirectService" /> class.
         /// </summary>
-        /// <param name="unitOfWork">The unit of work.</param>
-        public DefaultCategoryService(IUnitOfWork unitOfWork)
+        /// <param name="repository">The repository.</param>
+        public DefaultCategoryService(IRepository repository)
         {
-            this.unitOfWork = unitOfWork;
+            this.repository = repository;
         }
 
         /// <summary>
@@ -34,21 +37,14 @@ namespace BetterCms.Module.Pages.Services
         /// <exception cref="System.NotImplementedException"></exception>
         public IEnumerable<LookupKeyValue> GetCategories()
         {
-            LookupKeyValue lookupAlias = null;
-            Category alias = null;
-
-            var query = unitOfWork
-                .Session
-                .QueryOver(() => alias)
-                .Where(() => !alias.IsDeleted)
-                .SelectList(select => select
-                    .Select(NHibernate.Criterion.Projections.Cast(NHibernateUtil.String, NHibernate.Criterion.Projections.Property<Category>(c => c.Id))).WithAlias(() => lookupAlias.Key)
-                    .Select(() => alias.Name).WithAlias(() => lookupAlias.Value))
-                .TransformUsing(Transformers.AliasToBean<LookupKeyValue>());
-
-                query.UnderlyingCriteria.AddOrder(new Order(NHibernate.Criterion.Projections.Property(() => alias.Name), true));
-
-            return query.Future<LookupKeyValue>();
+            return repository
+                .AsQueryable<Category>()
+                .Select(c => new LookupKeyValue
+                                 {
+                                     Key = c.Id.ToString(),
+                                     Value = c.Name
+                                 })
+                .ToFuture();
         }
     }
 }

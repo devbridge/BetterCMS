@@ -96,12 +96,28 @@ namespace BetterCms.Module.Root.Models
         public virtual string MetaDescription { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether page can be a master page.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if page can be a master page; otherwise, <c>false</c>.
+        /// </value>
+        public virtual bool IsMasterPage { get; set; }
+
+        /// <summary>
         /// Gets or sets the page layout.
         /// </summary>
         /// <value>
         /// The page layout.
         /// </value>
         public virtual Layout Layout { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the master page.
+        /// </summary>
+        /// <value>
+        /// The master page.
+        /// </value>
+        public virtual Page MasterPage { get; set; }
 
         /// <summary>
         /// Gets or sets the page contents.
@@ -118,6 +134,14 @@ namespace BetterCms.Module.Root.Models
         /// The options.
         /// </value>
         public virtual IList<PageOption> Options { get; set; }
+
+        /// <summary>
+        /// Gets or sets the master pages.
+        /// </summary>
+        /// <value>
+        /// The master pages.
+        /// </value>
+        public virtual IList<MasterPage> MasterPages { get; set; }
 
         /// <summary>
         /// Gets or sets the access rules.

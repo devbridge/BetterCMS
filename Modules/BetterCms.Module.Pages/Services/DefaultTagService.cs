@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 
 using NHibernate.Criterion;
+using NHibernate.Linq;
 using NHibernate.SqlCommand;
 
 namespace BetterCms.Module.Pages.Services
@@ -21,12 +23,19 @@ namespace BetterCms.Module.Pages.Services
         private readonly IUnitOfWork unitOfWork;
 
         /// <summary>
+        /// The unit of work
+        /// </summary>
+        private readonly IRepository repository;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DefaultTagService" /> class.
         /// </summary>
         /// <param name="unitOfWork">The unit of work.</param>
-        public DefaultTagService(IUnitOfWork unitOfWork)
+        /// <param name="repository">The repository.</param>
+        public DefaultTagService(IUnitOfWork unitOfWork, IRepository repository)
         {
             this.unitOfWork = unitOfWork;
+            this.repository = repository;
         }
 
         /// <summary>
@@ -114,23 +123,19 @@ namespace BetterCms.Module.Pages.Services
         }
 
         /// <summary>
-        /// Gets the page tag names.
+        /// Gets the future query for the page tag names.
         /// </summary>
         /// <param name="pageId">The page id.</param>
         /// <returns>
-        /// List fo tag names
+        /// The future query for the list fo tag names
         /// </returns>
-        public IList<string> GetPageTagNames(System.Guid pageId)
+        public IEnumerable<string> GetPageTagNames(System.Guid pageId)
         {
-            Tag tagAlias = null;
-
-            return unitOfWork.Session
-                .QueryOver<PageTag>()
-                .JoinAlias(f => f.Tag, () => tagAlias)
-                .Where(() => !tagAlias.IsDeleted)
-                .Where(w => w.Page.Id == pageId && !w.IsDeleted)
-                .SelectList(select => select.Select(() => tagAlias.Name))
-                .List<string>();
+            return repository
+                .AsQueryable<PageTag>()
+                .Where(pt => pt.Page.Id == pageId && !pt.IsDeleted)
+                .Select(pt => pt.Tag.Name)
+                .ToFuture();
         }
     }
 }

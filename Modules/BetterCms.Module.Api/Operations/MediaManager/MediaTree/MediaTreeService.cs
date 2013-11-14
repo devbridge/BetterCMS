@@ -52,6 +52,15 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
                     .OrderBy(m => m.Title)
                     .Where(f => f.Type == mediaType && f.Original == null);
 
+            if (mediaType == MediaType.Image)
+            {
+                query = query.Where(f => !(f is MediaImage) || (!((MediaImage)f).IsTemporary && ((MediaImage)f).IsUploaded == true));
+            }
+            else
+            {
+                query = query.Where(f => !(f is MediaFile) || (!((MediaFile)f).IsTemporary && ((MediaFile)f).IsUploaded == true));
+            }
+
             if (!includeArchived)
             {
                 query = query.Where(f => !f.IsArchived);

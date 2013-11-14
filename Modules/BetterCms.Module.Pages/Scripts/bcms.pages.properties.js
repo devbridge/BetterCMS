@@ -2,8 +2,8 @@
 /*global bettercms */
 
 bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.dynamicContent', 'bcms.tags', 'bcms.ko.extenders',
-        'bcms.media', 'bcms.redirect', 'bcms.options', 'bcms.security', 'bcms.messages'],
-    function ($, bcms, modal, forms, dynamicContent, tags, ko, media, redirect, options, security, messages) {
+        'bcms.media', 'bcms.redirect', 'bcms.options', 'bcms.security', 'bcms.messages', 'bcms.codeEditor'],
+    function ($, bcms, modal, forms, dynamicContent, tags, ko, media, redirect, options, security, messages, codeEditor) {
         'use strict';
 
         var page = {},
@@ -18,15 +18,15 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 permalinkEditField: '#bcms-page-permalink-edit',
                 permalinkInfoField: '#bcms-page-permalink-info',
 
-                pagePropertiesTemplateSelect: '.bcms-btn-grid',
+                pagePropertiesTemplateSelect: '.bcms-inner-grid-box',
                 pagePropertiesTemplateId: '#TemplateId',
-                pagePropertiesActiveTemplateBox: '.bcms-grid-box-active',
-                pagePropertiesTemplateBox: '.bcms-grid-box',
-                pagePropertiesActiveTemplateMessage: '.bcms-grid-active-message-text',
+                pagePropertiesMasterPageId: '#MasterPageId',
+                pagePropertiesActiveTemplateBox: '.bcms-inner-grid-box-active',
                 pagePropertiesTemplatePreviewLink: '.bcms-preview-template',
 
                 pagePropertiesForm: 'form:first',
                 pagePropertiesPageIsPublishedCheckbox: '#IsPagePublished',
+                pagePropertiesPageIsMasterCheckbox: '#IsMasterPage',
 
                 optionsTab: '#bcms-tab-4'
             },
@@ -37,15 +37,17 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             globalization = {
                 editPagePropertiesModalTitle: null,
                 pageStatusChangeConfirmationMessagePublish: null,
-                pageStatusChangeConfirmationMessageUnPublish: null
+                pageStatusChangeConfirmationMessageUnPublish: null,
+                pageConversionToMasterConfirmationMessage: null
             },
             keys = {
                 editPagePropertiesInfoMessageClosed: 'bcms.EditPagePropertiesInfoBoxClosed'
             },
             classes = {
-                pagePropertiesActiveTemplateBox: 'bcms-grid-box-active'
+                pagePropertiesActiveTemplateBox: 'bcms-inner-grid-box-active'
             },
-            currentPageIsPublished;
+            currentPageIsPublished,
+            currentPageIsMaster;
 
         /**
         * Assign objects to module.
@@ -81,6 +83,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             ko.applyBindings(pageViewModel, form.get(0));
 
             currentPageIsPublished = dialog.container.find(selectors.pagePropertiesPageIsPublishedCheckbox).is(':checked');
+            currentPageIsMaster = dialog.container.find(selectors.pagePropertiesPageIsMasterCheckbox).is(':checked');
 
             dialog.container.find(selectors.editPermalink).on('click', function () {
                 page.showPagePropertiesEditPermalinkBox(dialog);
@@ -111,8 +114,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             }
 
             dialog.container.find(selectors.pagePropertiesTemplateSelect).on('click', function () {
-                page.highlightPagePropertiesActiveTemplate(dialog, this, function (id) {
-                    page.loadLayoutOptions(id, dialog.container, content.Data.TemplateId, optionsContainer, optionListViewModel);
+                page.highlightPagePropertiesActiveTemplate(dialog, this, function (id, isMasterPage) {
+                    page.loadLayoutOptions(id, isMasterPage, dialog.container, optionsContainer, optionListViewModel);
                 });
             });
 
@@ -135,13 +138,15 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 }
             });
 
+            codeEditor.initialize(dialog.container);
+            
             return pageViewModel;
         };
 
         /**
         * Loads layout options: when user changes layout, options are reloaded
         */
-        page.loadLayoutOptions = function (id, mainContainer, layoutId, optionsContainer, optionListViewModel) {
+        page.loadLayoutOptions = function (id, isMasterPage, mainContainer, optionsContainer, optionListViewModel) {
             var onComplete = function (json) {
                 var i,
                     j,
@@ -212,7 +217,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
 
             $.ajax({
                 type: 'GET',
-                url: $.format(links.loadLayoutOptionsUrl, id)
+                url: $.format(links.loadLayoutOptionsUrl, id, isMasterPage)
             })
             .done(function (result) {
                 onComplete(result);
@@ -278,22 +283,27 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         */
         page.highlightPagePropertiesActiveTemplate = function (dialog, selectButton, onChangeCallback) {
             var active = dialog.container.find(selectors.pagePropertiesActiveTemplateBox),
-                template = $(selectButton).parents(selectors.pagePropertiesTemplateBox),
-                id = $(template).data('id');
+                template = $(selectButton),
+                id = $(template).data('id'),
+                isMasterPage = $(template).data('master');
 
-            active.removeClass(classes.pagePropertiesActiveTemplateBox);
-            active.find(selectors.pagePropertiesTemplateSelect).show();
-            active.find(selectors.pagePropertiesActiveTemplateMessage).hide();
-
-            if (template) {
-                dialog.container.find(selectors.pagePropertiesTemplateId).val(id);
-                $(template).addClass(classes.pagePropertiesActiveTemplateBox);
-                $(template).find(selectors.pagePropertiesActiveTemplateMessage).show();
-
-                onChangeCallback.call(this, id);
+            if (active.get(0) === template.get(0)) {
+                return;
             }
 
-            $(selectButton).hide();
+            active.removeClass(classes.pagePropertiesActiveTemplateBox);
+            if (template) {
+                if (isMasterPage) {
+                    dialog.container.find(selectors.pagePropertiesMasterPageId).val(id);
+                    dialog.container.find(selectors.pagePropertiesTemplateId).val('');
+                } else {
+                    dialog.container.find(selectors.pagePropertiesTemplateId).val(id);
+                    dialog.container.find(selectors.pagePropertiesMasterPageId).val('');
+                }
+                $(template).addClass(classes.pagePropertiesActiveTemplateBox);
+
+                onChangeCallback.call(this, id, isMasterPage);
+            }
         };
 
         /**
@@ -317,8 +327,29 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                                 return false;
                             }
 
+                            if (!pageViewModel.options.isValid(true)) {
+                                return false;
+                            }
+
                             var newPageIsPublished = dialog.container.find(selectors.pagePropertiesPageIsPublishedCheckbox).is(':checked'),
-                                message = newPageIsPublished ? globalization.pageStatusChangeConfirmationMessagePublish : globalization.pageStatusChangeConfirmationMessageUnPublish;
+                                message = newPageIsPublished ? globalization.pageStatusChangeConfirmationMessagePublish : globalization.pageStatusChangeConfirmationMessageUnPublish,
+                                isMasterPage = dialog.container.find(selectors.pagePropertiesPageIsMasterCheckbox).is(':checked');
+                            
+                            if (currentPageIsMaster != isMasterPage) {
+                                modal.confirm({
+                                    content: globalization.pageConversionToMasterConfirmationMessage,
+                                    onAccept: function () {
+                                        // Skip page publishing confirmation, because making master will force to publish.
+                                        if (currentPageIsPublished != newPageIsPublished) {
+                                            currentPageIsPublished = newPageIsPublished;
+                                        }
+                                        currentPageIsMaster = isMasterPage;
+                                        dialog.container.find(selectors.pagePropertiesForm).submit();
+                                    }
+                                });
+                                return false;
+                            }
+
                             if (currentPageIsPublished != newPageIsPublished) {
                                 modal.confirm({
                                     content: message,
@@ -330,7 +361,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                                 return false;
                             }
 
-                            return pageViewModel.options.isValid(true);
+                            return true;
                         },
 
                         postSuccess: postSuccess

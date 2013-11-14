@@ -60,6 +60,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public bool UpdateSitemap { get; set; }
 
         /// <summary>
+        /// Gets or sets the validation message.
+        /// </summary>
+        /// <value>
+        /// The validation message.
+        /// </value>
+        public string ValidationMessage { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

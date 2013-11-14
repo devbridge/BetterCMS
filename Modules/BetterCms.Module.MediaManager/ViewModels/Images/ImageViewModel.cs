@@ -128,6 +128,22 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         public int ImageHeight { get; set; }
 
         /// <summary>
+        /// Gets or sets the cropped image width.
+        /// </summary>
+        /// <value>
+        /// The cropped image width.
+        /// </value>
+        public int CroppedWidth { get; set; }
+
+        /// <summary>
+        /// Gets or sets the cropped image height.
+        /// </summary>
+        /// <value>
+        /// The cropped image height.
+        /// </value>
+        public int CroppedHeight { get; set; }
+
+        /// <summary>
         /// Gets or sets the original image width.
         /// </summary>
         /// <value>

@@ -54,6 +54,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
                 request.Data,
                 tagName => { return page => page.PageTags.Any(pageTag => pageTag.Tag.Name == tagName && !pageTag.IsDeleted && !pageTag.Tag.IsDeleted); });
 
+            var includeMetadata = request.Data.IncludeMetadata;
             var listResponse = query
                 .Select(page => new PageModel
                     {
@@ -76,7 +77,17 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
                         MainImageUrl = page.Image != null && !page.Image.IsDeleted ? page.Image.PublicUrl : null,
                         MainImageThumbnauilUrl = page.Image != null && !page.Image.IsDeleted ? page.Image.PublicThumbnailUrl : null,
                         MainImageCaption = page.Image != null && !page.Image.IsDeleted ? page.Image.Caption : null,
-                        IsArchived = page.IsArchived
+                        IsArchived = page.IsArchived,
+                        Metadata = includeMetadata 
+                            ? new MetadataModel
+                                  {
+                                      MetaDescription = page.MetaDescription,
+                                      MetaTitle = page.MetaTitle,
+                                      MetaKeywords = page.MetaKeywords,
+                                      UseNoFollow = page.UseNoFollow,
+                                      UseNoIndex = page.UseNoIndex,
+                                      UseCanonicalUrl = page.UseCanonicalUrl
+                                  } : null
                     }).ToDataListResponse(request);
 
             foreach (var model in listResponse.Items)

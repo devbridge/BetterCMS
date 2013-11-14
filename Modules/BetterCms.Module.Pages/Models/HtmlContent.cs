@@ -5,7 +5,7 @@ using BetterCms.Core.DataContracts;
 namespace BetterCms.Module.Pages.Models
 {
     [Serializable]
-    public class HtmlContent : Root.Models.Content, IHtmlContent
+    public class HtmlContent : Root.Models.Content, IHtmlContent, IDynamicContentContainer
     {
         public virtual DateTime ActivationDate { get; set; }
 
@@ -23,9 +23,9 @@ namespace BetterCms.Module.Pages.Models
         
         public virtual bool EditInSourceMode { get; set; }
 
-        public override Root.Models.Content CopyDataTo(Root.Models.Content content, bool copyOptions = true)
+        public override Root.Models.Content CopyDataTo(Root.Models.Content content, bool copyOptions = true, bool copyRegions = true)
         {
-            var copy = (HtmlContent)base.CopyDataTo(content, copyOptions);
+            var copy = (HtmlContent)base.CopyDataTo(content, copyOptions, copyRegions);
             copy.ActivationDate = ActivationDate;
             copy.ExpirationDate = ExpirationDate;
             copy.CustomCss = CustomCss;

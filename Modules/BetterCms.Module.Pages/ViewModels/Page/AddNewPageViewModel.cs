@@ -52,7 +52,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// The templates.
         /// </value>
-        public IList<TemplateViewModel> Templates { get; set; }
+        public List<TemplateViewModel> Templates { get; set; }
 
         /// <summary>
         /// Gets or sets the template id.
@@ -60,8 +60,15 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// The template id.
         /// </value>
-        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "AddNewPageProperties_TemplateId_RequiredMessage")]
-        public Guid TemplateId { get; set; }
+        public Guid? TemplateId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the master page id.
+        /// </summary>
+        /// <value>
+        /// The master page id.
+        /// </value>
+        public Guid? MasterPageId { get; set; }
 
         /// <summary>
         /// Gets or sets the page option values.

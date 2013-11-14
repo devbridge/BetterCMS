@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using Autofac;
 using Autofac.Core;
 
+using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Exceptions;
-using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 
 using NHibernate.Proxy.DynamicProxy;
@@ -18,9 +18,12 @@ namespace BetterCms.Module.Root.Projections
     {
         private PerWebRequestContainerProvider containerProvider;
 
-        public PageJavaScriptProjectionFactory(PerWebRequestContainerProvider containerProvider)
+        private IRepository repository;
+
+        public PageJavaScriptProjectionFactory(PerWebRequestContainerProvider containerProvider, IRepository repository)
         {
             this.containerProvider = containerProvider;
+            this.repository = repository;
         }
 
         public PageJavaScriptProjection Create(IPage page, IEnumerable<IOptionValue> options)

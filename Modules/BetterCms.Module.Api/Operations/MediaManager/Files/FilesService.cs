@@ -31,7 +31,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
             request.Data.SetDefaultOrder("Title");
 
             var query = repository.AsQueryable<Media>()
-                .Where(m => m.Original == null && m.Type == MediaType.File);
+                .Where(m => m.Original == null && m.Type == MediaType.File)
+                .Where(f => !(f is MediaFile) || (!((MediaFile)f).IsTemporary && ((MediaFile)f).IsUploaded == true));
 
             if (request.Data.FolderId == null)
             {

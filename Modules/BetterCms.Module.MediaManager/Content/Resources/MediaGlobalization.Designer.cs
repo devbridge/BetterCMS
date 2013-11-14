@@ -493,6 +493,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cropped image dimensions (pixels).
+        /// </summary>
+        public static string ImageEditor_Dialog_CroppedDimensions {
+            get {
+                return ResourceManager.GetString("ImageEditor_Dialog_CroppedDimensions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string ImageEditor_Dialog_Description {
@@ -1155,6 +1164,24 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string MediaManager_FileStillProcessing_Message {
             get {
                 return ResourceManager.GetString("MediaManager_FileStillProcessing_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image dimensions.
+        /// </summary>
+        public static string MediaManager_ImageDimensions {
+            get {
+                return ResourceManager.GetString("MediaManager_ImageDimensions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File size.
+        /// </summary>
+        public static string MediaManager_ImageSize {
+            get {
+                return ResourceManager.GetString("MediaManager_ImageSize", resourceCulture);
             }
         }
         

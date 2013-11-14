@@ -6,7 +6,7 @@ using BetterCms.Module.Root.Models;
 namespace BetterCms.Module.Pages.Models
 {
     [Serializable]
-    public class HtmlContentWidget : Widget, IHtmlContentWidget
+    public class HtmlContentWidget : Widget, IHtmlContentWidget, IDynamicContentContainer
     {
         public virtual string CustomCss { get; set; }
 
@@ -22,9 +22,9 @@ namespace BetterCms.Module.Pages.Models
 
         public virtual bool EditInSourceMode { get; set; }
 
-        public override Root.Models.Content CopyDataTo(Root.Models.Content content, bool copyOptions = true)
+        public override Root.Models.Content CopyDataTo(Root.Models.Content content, bool copyOptions = true, bool copyRegions = true)
         {
-            var copy = (HtmlContentWidget)base.CopyDataTo(content, copyOptions);
+            var copy = (HtmlContentWidget)base.CopyDataTo(content, copyOptions, copyRegions);
             copy.CustomCss = CustomCss;
             copy.UseCustomCss = UseCustomCss;
             copy.Html = Html;

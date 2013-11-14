@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 
 using BetterCms.Core.DataAccess;
-
+using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Page;
 
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
+
+using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Services
 {
@@ -35,14 +38,15 @@ namespace BetterCms.Module.Pages.Services
         }
 
         /// <summary>
-        /// Gets the list of layout view models.
+        /// Gets the future query for the list of layout view models.
         /// </summary>
         /// <returns>
-        /// The list of layout view models
+        /// The future query for the list of layout view models
         /// </returns>
-        public IList<TemplateViewModel> GetLayouts()
+        public IList<TemplateViewModel> GetAvailableLayouts(System.Guid? currentPageId = null)
         {
-            var templates = repository
+            // Load layouts
+            var templatesFuture = repository
                 .AsQueryable<Layout>()
                 .OrderBy(t => t.Name)
                 .Select(t => new TemplateViewModel
@@ -50,9 +54,45 @@ namespace BetterCms.Module.Pages.Services
                         Title = t.Name,
                         TemplateId = t.Id,
                         PreviewUrl = t.PreviewUrl
-                    })
-                .ToList();
+                    }).ToFuture();
 
+            // Load master pages
+            var masterPagesQuery = repository
+                .AsQueryable<PageProperties>()
+                .Where(p => p.IsMasterPage);
+
+            if (currentPageId.HasValue && !currentPageId.Value.HasDefaultValue())
+            {
+                masterPagesQuery = masterPagesQuery
+                    .Where(p => p.Id != currentPageId 
+                        && p.MasterPages.All(cp => cp.Master.Id != currentPageId));
+            }
+
+            var masterPagesFuture = masterPagesQuery
+                .OrderBy(t => t.Title)
+                .Select(t => new TemplateViewModel
+                    {
+                        Title = t.Title,
+                        TemplateId = t.Id,
+                        PreviewUrl = t.Image != null
+                            ? t.Image.PublicUrl
+                            : t.FeaturedImage != null
+                                ? t.FeaturedImage.PublicUrl
+                                : t.SecondaryImage != null
+                                    ? t.SecondaryImage.PublicUrl
+                                    : null,
+                        PreviewThumbnailUrl = t.Image != null
+                            ? t.Image.PublicThumbnailUrl
+                            : t.FeaturedImage != null
+                                ? t.FeaturedImage.PublicThumbnailUrl
+                                : t.SecondaryImage != null
+                                    ? t.SecondaryImage.PublicThumbnailUrl
+                                    : null,
+                        IsMasterPage = true,
+                        MasterUrlHash = t.PageUrlHash
+                    }).ToFuture();
+
+            var templates = templatesFuture.ToList().Concat(masterPagesFuture.ToList()).ToList();
             return templates;
         }
 

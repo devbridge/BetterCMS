@@ -11,6 +11,7 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.Pages.Command.Page.DeletePage
@@ -60,6 +61,13 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
             if (page.Version != request.Version)
             {
                 throw new ConcurrentDataException(page);
+            }
+
+            if (page.IsMasterPage && Repository.AsQueryable<MasterPage>(mp => mp.Master == page).Any())
+            {
+                var message = PagesGlobalization.DeletePageCommand_MasterPageHasChildren_Message;
+                var logMessage = string.Format("Failed to delete page. Page is selected as master page. Id: {0} Url: {1}", page.Id, page.PageUrl);
+                throw new ValidationException(() => message, logMessage);
             }
 
             request.RedirectUrl = urlService.FixUrl(request.RedirectUrl);

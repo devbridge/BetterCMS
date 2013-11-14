@@ -7,25 +7,46 @@
     Layout = "~/Areas/bcms-Root/Views/Shared/BaseLayout.cshtml";
 }
 
-@section Styles {    
+@section Styles {
     @RenderSection("Styles", false)
     @(Html.RenderStyleSheets<InstallationModuleDescriptor>())
 }
 
 @section HeadScripts {
     @RenderSection("HeadScripts", false)
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 }
+
+@*<div class="bcms-layout-path js-path-container">
+    <div class="bcms-path-arrow-left bcms-path-arrow-inactive"></div>
+    <div class="bcms-path-arrow-right bcms-path-arrow-inactive"></div>
+    <div class="bcms-layout-path-inner">
+        <div class="bcms-layout-path-item">Master with Header & Footer</div>
+        <div class="bcms-layout-path-item">Master For Product</div>
+    </div>
+    <div class="bcms-layout-path-handle js-path-handle">
+        Hide Path
+    </div>
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+    $('.js-path-handle').on('click', function () {
+        $('.js-path-container').toggleClass('bcms-path-toggler');
+    });
+</script>*@
 
 <div class="page">
 
     <header class="page-header">
         <div class="page-frame bcms-clearfix">
-                @RenderSection("CMSHeader", false)
+            @RenderSection("CMSHeader", false)
         </div>
     </header>
 
     <div class="page-block">
         <div class="page-frame bcms-clearfix">
+            oioioi
             @RenderSection("CMSMainContent", false)
             @RenderBody()
         </div>
@@ -46,7 +67,10 @@
     <!--[if lte IE 8]>
     <body class="ie8 fixed-nav faded"@Html.RenderBodyAttributes()><![endif]-->
     <!--[if IE 9]>
-    <body class="ie9 fixed-nav faded"@Html.RenderBodyAttributes()><![endif]-->
-    <!--[if !IE]><!-->
-    <body class="fixed-nav faded"@Html.RenderBodyAttributes()><!--<![endif]-->
+    <b
+    ody class="ie9 fixed-nav faded"@Html.RenderBodyAttributes()><![endif]-->
+    <!--[if !IE]><!-
+    ->  <body class="fixed-nav<body class="fixed-nav fa
+    <body class=" fixed-nav faded" @Html.RenderBodyAttributes()>
+        <!--<![endif]-->
 }

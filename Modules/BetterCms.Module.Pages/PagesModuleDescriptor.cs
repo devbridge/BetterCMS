@@ -159,8 +159,10 @@ namespace BetterCms.Module.Pages
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             RegisterStylesheetRendererType<PageStylesheetAccessor, PageProperties>(containerBuilder);
-
             RegisterJavaScriptRendererType<PageJavaScriptAccessor, PageProperties>(containerBuilder);
+
+            RegisterStylesheetRendererType<PageStylesheetAccessor, Root.Models.Page>(containerBuilder);
+            RegisterJavaScriptRendererType<PageJavaScriptAccessor, Root.Models.Page>(containerBuilder);
 
             RegisterContentRendererType<HtmlContentAccessor, HtmlContent>(containerBuilder);
             RegisterContentRendererType<HtmlContentWidgetAccessor, HtmlContentWidget>(containerBuilder);
@@ -175,6 +177,7 @@ namespace BetterCms.Module.Pages
             containerBuilder.RegisterType<DefaultUrlService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultLayoutService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultPreviewService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultMasterPageService>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
             // Registering root module, because root module register the last one, and this one should be before users module
             containerBuilder.RegisterType<EmptyUserProfileUrlResolver>().As<IUserProfileUrlResolver>().InstancePerLifetimeScope();

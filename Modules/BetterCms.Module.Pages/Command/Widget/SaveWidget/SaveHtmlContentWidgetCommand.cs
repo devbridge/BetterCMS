@@ -4,7 +4,6 @@ using System.Linq;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Widgets;
-
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 
@@ -25,8 +24,11 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
         public override SaveWidgetResponse Execute(EditHtmlContentWidgetViewModel request)
         {
             UnitOfWork.BeginTransaction();
+            
             var widgetContent = GetHtmlContentWidgetFromRequest(request);
+
             HtmlContentWidget widget = (HtmlContentWidget)ContentService.SaveContentWithStatusUpdate(widgetContent, request.DesirableStatus);
+            
             Repository.Save(widget);
 
             UnitOfWork.Commit();

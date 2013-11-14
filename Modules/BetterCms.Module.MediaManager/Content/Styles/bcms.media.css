@@ -179,6 +179,15 @@ div.bcms-align-right-active {
         display: inline-block;
     }
 
+.bcms-media-properties-preview {
+    background-color: #E8E8E8; 
+    border: 1px solid grey;
+    margin: 5px; 
+    padding: 5px; 
+    position: fixed; 
+    z-index: 2147483647; 
+}
+
 /*file uploader*/
 .bcms-dropzone {
     height: 150px;

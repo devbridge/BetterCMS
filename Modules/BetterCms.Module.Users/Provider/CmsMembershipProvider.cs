@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Web.Security;
 
 using Autofac;
 
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Dependencies;
-
+using BetterCms.Module.Users.Models;
 using BetterCms.Module.Users.Services;
 
 namespace BetterCms.Module.Users.Provider
@@ -235,7 +236,15 @@ namespace BetterCms.Module.Users.Provider
         /// <exception cref="System.NotImplementedException"></exception>
         public override System.Web.Security.MembershipUser GetUser(string username, bool userIsOnline)
         {
-            throw new System.NotImplementedException();
+            if (userService == null)
+            {
+                using (var container = ContextScopeProvider.CreateChildContainer())
+                {
+                    return GetUser(container.Resolve<IUserService>(), username);
+                }
+            }
+
+            return GetUser(userService, username);
         }
 
         /// <summary>
@@ -505,6 +514,14 @@ namespace BetterCms.Module.Users.Provider
             return ToMembershipUserCollection(users);
         }
 
+        private System.Web.Security.MembershipUser GetUser(
+            IUserService service, string username)
+        {
+            var user = service.GetUser(username);
+
+            return ToMembershipUser(user);
+        }
+
         private System.Web.Security.MembershipUserCollection GetAllUsers(IUserService service, int pageIndex, int pageSize, out int totalRecords)
         {
             var users = service.GetAllUsers(pageIndex, pageSize, out totalRecords);
@@ -539,6 +556,29 @@ namespace BetterCms.Module.Users.Provider
             mUsers.ForEach(collection.Add);
 
             return collection;
+        }
+
+        private System.Web.Security.MembershipUser ToMembershipUser(User user)
+        {
+            if (user == null)
+            {
+                return null;
+            }
+
+            return new System.Web.Security.MembershipUser(
+                membershipName ?? Name,
+                user.UserName,
+                user.Id,
+                user.Email,
+                null,
+                null,
+                true,
+                false,
+                user.CreatedOn,
+                System.DateTime.MinValue,
+                System.DateTime.MinValue,
+                System.DateTime.MinValue,
+                System.DateTime.MinValue);
         }
     }
 }

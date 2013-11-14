@@ -12,12 +12,10 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// <summary>
         /// Gets or sets page id.
         /// </summary>
+        /// <value>
+        /// The page id.
+        /// </value>
         public Guid PageId { get; set; }
-
-        /// <summary>
-        /// Gets or sets region id.
-        /// </summary>
-        public Guid RegionId { get; set; }
 
         /// <summary>
         /// Gets or sets the list of page content ids.
@@ -35,7 +33,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// </returns>
         public override string ToString()
         {
-            return string.Format("RegionId: {0}", RegionId);
+            return string.Format("PageId: {0}", PageId);
         }
     }
 }

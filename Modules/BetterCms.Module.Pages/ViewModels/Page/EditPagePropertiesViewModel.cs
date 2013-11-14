@@ -162,7 +162,15 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// The template id.
         /// </value>
-        public Guid TemplateId { get; set; }
+        public Guid? TemplateId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the master page id.
+        /// </summary>
+        /// <value>
+        /// The master page id.
+        /// </value>
+        public Guid? MasterPageId { get; set; }
 
         /// <summary>
         /// Gets or sets the image view model.
@@ -251,6 +259,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <c>true</c> if current user can publish page; otherwise, <c>false</c>.
         /// </value>
         public bool CanPublishPage { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether is master page.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if is master page; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsMasterPage { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EditPagePropertiesViewModel" /> class.

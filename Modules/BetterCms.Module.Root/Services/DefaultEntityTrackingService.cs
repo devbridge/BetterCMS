@@ -18,10 +18,12 @@ namespace BetterCms.Module.Root.Services
     public class DefaultEntityTrackingService : IEntityTrackingService
     {
         private readonly ICmsConfiguration configuration;
+        private readonly IEntityTrackingCacheService cacheService;
 
-        public DefaultEntityTrackingService(ICmsConfiguration configuration)
+        public DefaultEntityTrackingService(ICmsConfiguration configuration, IEntityTrackingCacheService cacheService)
         {
             this.configuration = configuration;
+            this.cacheService = cacheService;
         }
 
         public void OnEntityUpdate(IEntity entity)
@@ -78,7 +80,12 @@ namespace BetterCms.Module.Root.Services
                         itemType = item.GetType();
                     }
 
-                    var securedObject = unitOfWork.Session.Get(itemType, item.Id);
+                    object securedObject;
+                    if (!cacheService.GetEntity(itemType, item.Id, out securedObject))
+                    {
+                        securedObject = unitOfWork.Session.Get(itemType, item.Id);
+                        cacheService.AddEntity(itemType, item.Id, securedObject);
+                    }
 
                     if (securedObject != null)
                     {

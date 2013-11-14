@@ -19,11 +19,10 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 addNewPageTitleInput: '#PageTitle',
                 addNewPageCloseInfoMessage: '#bcms-addnewpage-closeinfomessage',
                 addNewPageCloseInfoMessageBox: '.bcms-info-message-box',
-                addNewPageTemplateSelect: '.bcms-btn-grid',
+                addNewPageTemplateSelect: '.bcms-inner-grid-box',
                 addNewPageTemplateId: '#TemplateId',
-                addNewPageActiveTemplateBox: '.bcms-grid-box-active',
-                addNewPageTemplateBox: '.bcms-grid-box',
-                addNewPageActiveTemplateMessage: '.bcms-grid-active-message-text',
+                addNewPageMasterPageId: '#MasterPageId',
+                addNewPageActiveTemplateBox: '.bcms-inner-grid-box-active',
                 addNewPageTemplatePreviewLink: '.bcms-preview-template',
 
                 addNewPageForm: 'form:first',
@@ -80,7 +79,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 addNewPageInfoMessageClosed: 'bcms.addNewPageInfoBoxClosed'
             },
             classes = {
-                addNewPageActiveTemplateBox: 'bcms-grid-box-active'
+                addNewPageActiveTemplateBox: 'bcms-inner-grid-box-active'
             },
             pageUrlManuallyEdited = false;
 
@@ -160,8 +159,8 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             }
 
             dialog.container.find(selectors.addNewPageTemplateSelect).on('click', function () {
-                page.highlightAddNewPageActiveTemplate(dialog, this, function (id) {
-                    pageProperties.loadLayoutOptions(id, dialog.container, content.Data.TemplateId, optionsContainer, viewModel.options);
+                page.highlightAddNewPageActiveTemplate(dialog, this, function (id, isMasterPage) {
+                    pageProperties.loadLayoutOptions(id, isMasterPage, dialog.container, optionsContainer, viewModel.options);
                 });
             });
 
@@ -234,22 +233,27 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         */
         page.highlightAddNewPageActiveTemplate = function (dialog, selectButton, onChangeCallback) {
             var active = dialog.container.find(selectors.addNewPageActiveTemplateBox),
-                template = $(selectButton).parents(selectors.addNewPageTemplateBox),
-                id = $(template).data('id');
+                template = $(selectButton),
+                id = $(template).data('id'),
+                isMasterPage = $(template).data('master');
 
-            active.removeClass(classes.addNewPageActiveTemplateBox);
-            active.find(selectors.addNewPageTemplateSelect).show();
-            active.find(selectors.addNewPageActiveTemplateMessage).hide();
-
-            if (template) {
-                dialog.container.find(selectors.addNewPageTemplateId).val(id);
-                $(template).addClass(classes.addNewPageActiveTemplateBox);
-                $(template).find(selectors.addNewPageActiveTemplateMessage).show();
-
-                onChangeCallback.call(this, id);
+            if (active.get(0) === template.get(0)) {
+                return;
             }
 
-            $(selectButton).hide();
+            active.removeClass(classes.addNewPageActiveTemplateBox);
+            if (template) {
+                if (isMasterPage) {
+                    dialog.container.find(selectors.addNewPageMasterPageId).val(id);
+                    dialog.container.find(selectors.addNewPageTemplateId).val('');
+                } else {
+                    dialog.container.find(selectors.addNewPageTemplateId).val(id);
+                    dialog.container.find(selectors.addNewPageMasterPageId).val('');
+                }
+                $(template).addClass(classes.addNewPageActiveTemplateBox);
+
+                onChangeCallback.call(this, id, isMasterPage);
+            }
         };
 
         page.changePublishStatus = function (sender) {

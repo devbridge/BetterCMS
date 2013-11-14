@@ -14,7 +14,8 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
         globalization = {},
         events = {
             insertImage: 'insertImage',
-            insertFile: 'insertFile'
+            insertFile: 'insertFile',
+            insertDynamicRegion: 'insertDynamicRegion',
         };
 
     // Assign objects to module
@@ -50,6 +51,10 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
             bcms.trigger(htmlEditor.events.insertFile, editor);
         };
         
+        CKEDITOR.instances[id].InsertDynamicRegion = function (editor) {
+            bcms.trigger(htmlEditor.events.insertDynamicRegion, editor);
+        };
+        
         // Hide native image button container
         CKEDITOR.instances[id].on('instanceReady', function () {
             $(selectors.imageButtonContainer).hide();
@@ -78,6 +83,11 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
         });
     };
     
+    htmlEditor.enableInsetDynamicRegion = function (textareaId) {
+        var id = textareaId ? textareaId : htmlEditor.id;
+        CKEDITOR.instances[id].DynamicRegionsEnabled = true;
+    };
+    
     htmlEditor.isSourceMode = function (textareaId) {
         var id = textareaId ? textareaId : htmlEditor.id;
 
@@ -102,7 +112,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
     * Initializes sidebar module.
     */
     htmlEditor.init = function () {
-        bcms.logger.debug('Initializing bcms.htmlEditor module');
+        bcms.logger.debug('Initializing bcms.htmlEditor module.');
     };
 
     /**

@@ -600,4 +600,13 @@
   <data name="RootFolder_Title" xml:space="preserve">
     <value>Root folder</value>
   </data>
+  <data name="MediaManager_ImageDimensions" xml:space="preserve">
+    <value>Image dimensions</value>
+  </data>
+  <data name="MediaManager_ImageSize" xml:space="preserve">
+    <value>File size</value>
+  </data>
+  <data name="ImageEditor_Dialog_CroppedDimensions" xml:space="preserve">
+    <value>Cropped image dimensions (pixels)</value>
+  </data>
 </root>

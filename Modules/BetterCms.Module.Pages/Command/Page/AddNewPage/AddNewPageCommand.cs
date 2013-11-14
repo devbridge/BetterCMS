@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
@@ -8,6 +9,7 @@ using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Security;
 
@@ -54,7 +56,7 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
             var model = new AddNewPageViewModel
                             {
                                 ParentPageUrl = request.ParentPageUrl,
-                                Templates = layoutService.GetLayouts(),
+                                Templates = layoutService.GetAvailableLayouts().ToList(),
                                 AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled,
                                 UserAccessList = accessControlService.GetDefaultAccessList(principal).Select(f => new UserAccessViewModel(f)).ToList()
                             };
@@ -62,10 +64,36 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
             if (model.Templates.Count > 0)
             {
                 model.Templates.ToList().ForEach(x => x.IsActive = false);
-                model.Templates.First().IsActive = true;
-                model.TemplateId = model.Templates.First(t => t.IsActive).TemplateId;
+                var urlHash = request.ParentPageUrl.UrlHash();
+                model.Templates.Where(t => t.IsMasterPage && t.MasterUrlHash == urlHash).ToList().ForEach(x => x.IsActive = true);
+                if (model.Templates.Count(t => t.IsActive) != 1)
+                {
+                    model.Templates.First().IsActive = true;
+                }
 
-                model.OptionValues = layoutService.GetLayoutOptionValues(model.TemplateId);
+                var active = model.Templates.First(t => t.IsActive);
+                if (active != null)
+                {
+                    if (active.IsMasterPage)
+                    {
+                        model.MasterPageId = active.TemplateId;
+                    }
+                    else
+                    {
+                        model.TemplateId = active.TemplateId;
+                    }
+                }
+
+                if (model.TemplateId.HasValue)
+                {
+                    model.OptionValues = layoutService.GetLayoutOptionValues(model.TemplateId.Value);
+                }
+
+                if (model.MasterPageId.HasValue)
+                {
+                    model.OptionValues = layoutService.GetLayoutOptionValues(model.MasterPageId.Value);
+                }
+
                 model.CustomOptions = optionService.GetCustomOptions();
             }
 

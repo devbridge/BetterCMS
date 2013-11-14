@@ -21,6 +21,26 @@ namespace BetterCms.Module.Root.Mvc
             }
             return Guid.Empty;
         }
+        
+        /// <summary>
+        /// Converts string source to the value of Boolean type.
+        /// </summary>
+        /// <param name="source">The source string.</param>
+        /// <returns>A Boolean value.</returns>
+        public static bool ToBoolOrDefault(this string source)
+        {
+            if (source == "1")
+            {
+                return true;
+            }
+
+            bool result;
+            if (bool.TryParse(source, out result))
+            {
+                return result;
+            }
+            return false;
+        }
 
         /// <summary>
         /// Determines whether the given Guid has default value.

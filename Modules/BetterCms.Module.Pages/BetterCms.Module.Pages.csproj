@@ -31,6 +31,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
+    <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -121,7 +122,10 @@
     </Compile>
     <Compile Include="Accessors\PageStylesheetAccessor.cs" />
     <Compile Include="Accessors\PageJavaScriptAccessor.cs" />
+    <Compile Include="Command\Content\GetInsertHtmlContent\GetInsertHtmlContentCommand.cs" />
+    <Compile Include="Command\Content\GetInsertHtmlContent\InsertHtmlContentRequest.cs" />
     <Compile Include="Command\Layout\GetLayoutOptions\GetLayoutOptionsCommand.cs" />
+    <Compile Include="Command\Layout\GetLayoutOptions\GetLayoutOptionsCommandRequest.cs" />
     <Compile Include="Command\Page\AddNewPage\AddNewPageCommand.cs" />
     <Compile Include="Command\Page\AddNewPage\AddNewPageCommandRequest.cs" />
     <Compile Include="Command\Widget\PreviewWidget\PreviewWidgetCommand.cs" />
@@ -144,7 +148,6 @@
     <Compile Include="Command\Content\DeletePageContent\DeletePageContentCommandRequest.cs" />
     <Compile Include="Command\Content\GetPageHtmlContent\GetPageHtmlContentCommand.cs" />
     <Compile Include="Command\Content\SavePageHtmlContent\SavePageHtmlContentResponse.cs" />
-    <Compile Include="Command\Content\SortPageContent\SortPageContentResponse.cs" />
     <Compile Include="Command\Content\SortPageContent\SortPageContentCommand.cs" />
     <Compile Include="Command\History\DestroyContentDraft\DestroyContentDraftCommand.cs" />
     <Compile Include="Command\History\DestroyContentDraft\DestroyContentDraftCommandResponse.cs" />
@@ -257,12 +260,14 @@
     <Compile Include="Registration\RedirectsJsModuleIncludeDescriptor.cs" />
     <Compile Include="Services\DefaultHistoryService.cs" />
     <Compile Include="Services\DefaultLayoutService.cs" />
+    <Compile Include="Services\DefaultMasterPageService.cs" />
     <Compile Include="Services\DefaultPreviewService.cs" />
     <Compile Include="Services\DefaultSitemapService.cs" />
     <Compile Include="Services\DefaultTagService.cs" />
     <Compile Include="Services\DefaultUrlService.cs" />
     <Compile Include="Services\IHistoryService.cs" />
     <Compile Include="Services\ILayoutService.cs" />
+    <Compile Include="Services\IMasterPageService.cs" />
     <Compile Include="Services\IPageService.cs" />
     <Compile Include="Services\IPreviewService.cs" />
     <Compile Include="Services\ISitemapService.cs" />
@@ -372,12 +377,12 @@
     <EmbeddedResource Include="Scripts\bcms.pages.seo.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.history.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.sitemap.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.filter.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.template.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.properties.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

@@ -41,8 +41,7 @@ namespace BetterCms.Module.Users.Commands.Authentication
                     throw new CmsException("A roles provider should be enabled in web.config.");
                 }
 
-                var roles = Roles.GetRolesForUser(request.UserName);
-                var authTicket = new FormsAuthenticationTicket(1, request.UserName, DateTime.Now, DateTime.Now.AddMonths(1), request.RememberMe, string.Join("|", roles));
+                var authTicket = new FormsAuthenticationTicket(1, request.UserName, DateTime.Now, DateTime.Now.AddMonths(1), request.RememberMe, string.Empty);
 
                 var cookieContents = FormsAuthentication.Encrypt(authTicket);
                 var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, cookieContents) {

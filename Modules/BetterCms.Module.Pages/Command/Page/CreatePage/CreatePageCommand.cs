@@ -1,12 +1,16 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
+
 using BetterCms.Module.Pages.Command.Page.SavePageProperties;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
+using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
@@ -42,6 +46,11 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
         private readonly IOptionService optionService;
 
         /// <summary>
+        /// The master page service
+        /// </summary>
+        private readonly IMasterPageService masterPageService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CreatePageCommand" /> class.
         /// </summary>
         /// <param name="pageService">The page service.</param>
@@ -49,14 +58,16 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
         /// <param name="cmsConfiguration">The CMS configuration.</param>
         /// <param name="accessControlService">The access control service.</param>
         /// <param name="optionService">The option service.</param>
+        /// <param name="masterPageService">The master page service.</param>
         public CreatePageCommand(IPageService pageService, IUrlService urlService, ICmsConfiguration cmsConfiguration,
-            IAccessControlService accessControlService, IOptionService optionService)
+            IAccessControlService accessControlService, IOptionService optionService, IMasterPageService masterPageService)
         {
             this.pageService = pageService;
             this.urlService = urlService;
             this.cmsConfiguration = cmsConfiguration;
             this.accessControlService = accessControlService;
             this.optionService = optionService;
+            this.masterPageService = masterPageService;
         }
 
         /// <summary>
@@ -66,6 +77,18 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
         /// <returns>Created page</returns>
         public virtual SavePageResponse Execute(AddNewPageViewModel request)
         {
+            if (!request.MasterPageId.HasValue && !request.TemplateId.HasValue)
+            {
+                var message = RootGlobalization.MasterPage_Or_Layout_ShouldBeSelected_ValidationMessage;
+                throw new ValidationException(() => message, message);
+            }
+            if (request.MasterPageId.HasValue && request.TemplateId.HasValue)
+            {
+                var logMessage = string.Format("Only one of master page and layout can be selected. LayoutId: {0}, MasterPageId: {1}", request.MasterPageId, request.TemplateId);
+                var message = RootGlobalization.MasterPage_Or_Layout_OnlyOne_ShouldBeSelected_ValidationMessage;
+                throw new ValidationException(() => message, logMessage);
+            }
+
             // Create / fix page url
             var pageUrl = request.PageUrl;
             var createPageUrl = (pageUrl == null);
@@ -88,14 +111,21 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
                     PageUrlHash = pageUrl.UrlHash(),
                     Title = request.PageTitle,
                     MetaTitle = request.PageTitle,
-                    Layout = Repository.First<Root.Models.Layout>(request.TemplateId),
                     Status = PageStatus.Unpublished
                 };
 
-            var parentOptions = Repository
-                .AsQueryable<LayoutOption>(o => o.Layout.Id == request.TemplateId)
-                .ToList();
-            optionService.SaveOptionValues(request.OptionValues, null, parentOptions, () => new PageOption { Page = page });
+            if (request.MasterPageId.HasValue)
+            {
+                page.MasterPage = Repository.AsProxy<Root.Models.Page>(request.MasterPageId.Value);
+
+                masterPageService.SetPageMasterPages(page, request.MasterPageId.Value);
+            } 
+            else
+            {
+                page.Layout = Repository.AsProxy<Root.Models.Layout>(request.TemplateId.Value);
+            }
+
+            optionService.SaveOptionValues(request.OptionValues, null, () => new PageOption { Page = page });
 
             Repository.Save(page);
 

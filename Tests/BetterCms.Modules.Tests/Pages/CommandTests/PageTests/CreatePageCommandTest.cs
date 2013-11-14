@@ -55,7 +55,8 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
                             new DefaultUrlService(uow, config),
                             config,
                             new DefaultAccessControlService(Container.Resolve<ISecurityService>(), new HttpRuntimeCacheService(), config),
-                            new Mock<IOptionService>().SetupAllProperties().Object);
+                            new Mock<IOptionService>().SetupAllProperties().Object,
+                            new Mock<IMasterPageService>().SetupAllProperties().Object);
 
                         command.UnitOfWork = uow;
                         command.Repository = repository;

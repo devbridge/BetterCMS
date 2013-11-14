@@ -135,9 +135,6 @@
   <data name="AddNewPageProperties_TemplateId_RequiredMessage" xml:space="preserve">
     <value>Layout template is required.</value>
   </data>
-  <data name="AddNewPage_DefaultTemplate_Title" xml:space="preserve">
-    <value>Selected Template</value>
-  </data>
   <data name="AddNewPage_Dialog_Title" xml:space="preserve">
     <value>Add New Page</value>
   </data>
@@ -158,9 +155,6 @@
   </data>
   <data name="AddNewPage_Permalink_Tooltip_Description" xml:space="preserve">
     <value>Create a unique page URL for your new page.</value>
-  </data>
-  <data name="AddNewPage_SelectTemplateButton_Title" xml:space="preserve">
-    <value>Select</value>
   </data>
   <data name="AddNewPage_Template" xml:space="preserve">
     <value>3. Select a template</value>
@@ -1115,5 +1109,35 @@
   </data>
   <data name="EditOptionsValues_UseDefaultValueColumn" xml:space="preserve">
     <value>Use default</value>
+  </data>
+  <data name="SavePagePropertiesCommand_LayoutAndMasterIsSelected_Message" xml:space="preserve">
+    <value>Only one of master page and layout can be selected.</value>
+  </data>
+  <data name="SavePagePropertiesCommand_NoLayoutOrMasterSelected_Message" xml:space="preserve">
+    <value>Template or master page should be selected for page.</value>
+  </data>
+  <data name="SavePagePropertiesCommand_SelectedMasterIsChildPage_Message" xml:space="preserve">
+    <value>Selected master page is a child of the current page.</value>
+  </data>
+  <data name="SavePagePropertiesCommand_SelectedMasterIsCurrentPage_Message" xml:space="preserve">
+    <value>Selected master page is the current page.</value>
+  </data>
+  <data name="EditPageProperties_IsMasterPage_Checkbox" xml:space="preserve">
+    <value>Page is Master (is a template for other pages).</value>
+  </data>
+  <data name="EditPageProperties_IsMasterPage_Title" xml:space="preserve">
+    <value>Master Page Options</value>
+  </data>
+  <data name="EditPageProperties_IsMasterPage_Tooltip_Description" xml:space="preserve">
+    <value>Make the page to be a template for other pages and not directly accessible from the outside.</value>
+  </data>
+  <data name="EditPageProperties_PageConversionToMaster_ConfirmationMessage" xml:space="preserve">
+    <value>You are about to convert the page to Master Page. Master page is not accessible from the outside and is intended to be used as a template for other pages.&lt;br/&gt;Proceed?</value>
+  </data>
+  <data name="SaveContent_DynamicRegionsAreNotAllowed_Message" xml:space="preserve">
+    <value>Page is not a master, so dynamic regions are not allowed.</value>
+  </data>
+  <data name="DeletePageCommand_MasterPageHasChildren_Message" xml:space="preserve">
+    <value>Cannot delete page. Other pages are using current page as a master page.</value>
   </data>
 </root>

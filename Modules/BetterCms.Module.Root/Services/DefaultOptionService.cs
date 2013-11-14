@@ -15,9 +15,11 @@ using BetterCms.Core.Services.Caching;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.Extensions;
+using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Providers;
 using BetterCms.Module.Root.ViewModels.Option;
 
+using NHibernate.Linq;
 using NHibernate.Proxy.DynamicProxy;
 
 namespace BetterCms.Module.Root.Services
@@ -191,12 +193,10 @@ namespace BetterCms.Module.Root.Services
         /// <typeparam name="TEntity">The type of the entity.</typeparam>
         /// <param name="optionViewModels">The option view models.</param>
         /// <param name="savedOptionValues">The saved options.</param>
-        /// <param name="parentOptions">The parent options.</param>
         /// <param name="entityCreator">The entity creator.</param>
         public void SaveOptionValues<TEntity>(
             IEnumerable<OptionValueEditViewModel> optionViewModels,
             IEnumerable<TEntity> savedOptionValues,
-            IEnumerable<IOption> parentOptions,
             Func<TEntity> entityCreator) where TEntity : Entity, IOption
         {
             if (optionViewModels == null)
@@ -669,6 +669,17 @@ namespace BetterCms.Module.Root.Services
         }
 
         /// <summary>
+        /// Gets the custom options future query.
+        /// </summary>
+        /// <returns>
+        /// Future query for the list of custom option view models
+        /// </returns>
+        public IEnumerable<CustomOptionViewModel> GetCustomOptionsFuture()
+        {
+            return cacheService.Get(CacheKey, TimeSpan.FromSeconds(30), LoadCustomOptionsFuture);
+        }
+
+        /// <summary>
         /// Loads the custom options.
         /// </summary>
         /// <returns>
@@ -676,11 +687,189 @@ namespace BetterCms.Module.Root.Services
         /// </returns>
         private List<CustomOptionViewModel> LoadCustomOptions()
         {
+            return LoadCustomOptionsFuture().ToList();
+        }
+
+        /// <summary>
+        /// Gets the custom options future query.
+        /// </summary>
+        /// <returns>
+        /// Future query for the list of custom option view models
+        /// </returns>
+        private IEnumerable<CustomOptionViewModel> LoadCustomOptionsFuture()
+        {
             return
                 repository.AsQueryable<CustomOption>()
                           .OrderBy(o => o.Title)
                           .Select(o => new CustomOptionViewModel { Identifier = o.Identifier, Title = o.Title })
-                          .ToList();
+                          .ToFuture();
+        }
+
+        /// <summary>
+        /// Loads the option values and sets up the list of option value view models.
+        /// </summary>
+        /// <param name="pageId">The page id.</param>
+        /// <param name="masterPageId">The master page id.</param>
+        /// <param name="templateId">The template id.</param>
+        /// <returns>
+        /// List of option values for edit
+        /// </returns>
+        /// <exception cref="System.ComponentModel.DataAnnotations.ValidationException"></exception>
+        public List<OptionValueEditViewModel> GetMergedMasterPagesOptionValues(Guid pageId, Guid? masterPageId, Guid? templateId)
+        {
+            if (masterPageId.HasValue && masterPageId.Value.HasDefaultValue())
+            {
+                masterPageId = null;
+            }
+            if (templateId.HasValue && templateId.Value.HasDefaultValue())
+            {
+                templateId = null;
+            }
+            if (!masterPageId.HasValue && !templateId.HasValue)
+            {
+                var message = RootGlobalization.MasterPage_Or_Layout_ShouldBeSelected_ValidationMessage;
+                throw new ValidationException(() => message, message);
+            }
+            if (masterPageId.HasValue && templateId.HasValue)
+            {
+                var logMessage = string.Format("Only one of master page and layout can be selected. LayoutId: {0}, MasterPageId: {1}", masterPageId, templateId);
+                var message = RootGlobalization.MasterPage_Or_Layout_OnlyOne_ShouldBeSelected_ValidationMessage;
+                throw new ValidationException(() => message, logMessage);
+            }
+
+            Guid layoutId;
+            var allPages = new List<PageMasterPage>();
+
+            allPages.Add(new PageMasterPage
+                {
+                    Id = pageId, 
+                    MasterPageId = masterPageId, 
+                    LayoutId = templateId
+                });
+            
+
+            if (templateId.HasValue)
+            {
+                layoutId = templateId.Value;
+            }
+            else
+            {
+                // Load ids of all the master pages
+                var masterPages = repository
+                    .AsQueryable<MasterPage>()
+                    .Where(mp => mp.Page.Id == pageId)
+                    .Select(mp => new PageMasterPage
+                    {
+                        Id = mp.Master.Id,
+                        MasterPageId = mp.Master.MasterPage.Id,
+                        LayoutId = mp.Master.Layout.Id
+                    })
+                    .ToList();
+                allPages.AddRange(masterPages);
+
+                layoutId = masterPages.Where(m => m.LayoutId.HasValue).Select(m => m.LayoutId.Value).FirstOrDefault();
+            }
+
+            var layoutOptionsFutureQuery = repository
+                .AsQueryable<LayoutOption>()
+                .Where(lo => lo.Layout.Id == layoutId)
+                .ToFuture();
+
+            // Load options of page and master pages
+            var pageIds = allPages.Select(p => p.Id).ToArray();
+            var pageOptionsFutureQuery = repository
+                .AsQueryable<PageOption>()
+                .Where(po => pageIds.Contains(po.Page.Id))
+                .ToFuture();
+            var allPagesOptions = pageOptionsFutureQuery.ToList();
+
+            var layoutOptions = layoutOptionsFutureQuery.ToList();
+            var pageOptions = allPagesOptions.Where(po => po.Page.Id == pageId);
+
+            // Get lowest level options, when going up from master pages to layout
+            var masterOptions = GetMergedMasterPagesOptionValues(pageId, allPages, allPagesOptions, layoutOptions, new List<IOption>());
+            return GetMergedOptionValuesForEdit(masterOptions, pageOptions);
+        }
+
+        /// <summary>
+        /// Gets the list of master pages option values.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="allPages">All pages.</param>
+        /// <param name="allPagesOptions">All pages options.</param>
+        /// <param name="layoutOptions">The layout options.</param>
+        /// <param name="allMasterOptions">All master options.</param>
+        /// <returns>
+        /// List of master page option values
+        /// </returns>
+        private List<IOption> GetMergedMasterPagesOptionValues(Guid? id, List<PageMasterPage> allPages, List<PageOption> allPagesOptions,
+            List<LayoutOption> layoutOptions, List<IOption> allMasterOptions)
+        {
+            var page = allPages.FirstOrDefault(p => p.Id == id);
+            if (page != null)
+            {
+                if (page.MasterPageId.HasValue)
+                {
+                    allMasterOptions = GetMergedMasterPagesOptionValues(page.MasterPageId.Value, allPages, allPagesOptions, layoutOptions, allMasterOptions);
+
+                    foreach (var option in allPagesOptions.Where(o => o.Page.Id == page.MasterPageId.Value))
+                    {
+                        var masterOption = allMasterOptions.FirstOrDefault(o => o.Key == option.Key
+                            && o.Type == option.Type
+                            && ((o.CustomOption == null && option.CustomOption == null)
+                                || (o.CustomOption != null
+                                    && option.CustomOption != null
+                                    && o.CustomOption.Identifier == option.CustomOption.Identifier)));
+
+                        if (masterOption != null)
+                        {
+                            allMasterOptions.Remove(masterOption);
+                            allMasterOptions.Add(option);
+                        }
+                        else
+                        {
+                            allMasterOptions.Add(option);
+                        }
+                    }
+                }
+                else if (page.LayoutId.HasValue)
+                {
+                    // Returning layout options as master option values
+                    return layoutOptions.Cast<IOption>().ToList();
+                }
+            }
+
+            return allMasterOptions;
+        }
+
+        /// <summary>
+        /// Helper class for storing page, master page and layout ids
+        /// </summary>
+        private class PageMasterPage
+        {
+            /// <summary>
+            /// Gets or sets the id.
+            /// </summary>
+            /// <value>
+            /// The id.
+            /// </value>
+            public Guid Id { get; set; }
+
+            /// <summary>
+            /// Gets or sets the master page id.
+            /// </summary>
+            /// <value>
+            /// The master page id.
+            /// </value>
+            public Guid? MasterPageId { get; set; }
+
+            /// <summary>
+            /// Gets or sets the layout id.
+            /// </summary>
+            /// <value>
+            /// The layout id.
+            /// </value>
+            public Guid? LayoutId { get; set; }
         }
     }
 }

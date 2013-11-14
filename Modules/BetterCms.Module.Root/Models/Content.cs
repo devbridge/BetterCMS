@@ -28,6 +28,8 @@ namespace BetterCms.Module.Root.Models
         public virtual IList<PageContent> PageContents { get; set; }
 
         public virtual IList<ContentOption> ContentOptions { get; set; }
+        
+        public virtual IList<ContentRegion> ContentRegions { get; set; }
 
         IEnumerable<IDeletableOption<Content>> IOptionContainer<Content>.Options
         {
@@ -46,7 +48,7 @@ namespace BetterCms.Module.Root.Models
             return CopyDataTo(new Content());
         }
 
-        public virtual Content CopyDataTo(Content content, bool copyOptions = true)
+        public virtual Content CopyDataTo(Content content, bool copyOptions = true, bool copyRegions = true)
         {
             content.Name = Name;
             content.PreviewUrl = PreviewUrl;
@@ -68,6 +70,23 @@ namespace BetterCms.Module.Root.Models
                     clonedOption.Content = content;
 
                     content.ContentOptions.Add(clonedOption);
+                }
+            }
+
+            if (copyRegions && ContentRegions != null)
+            {
+                if (content.ContentRegions == null)
+                {
+                    content.ContentRegions = new List<ContentRegion>();
+                }
+
+                foreach (var contentRegion in ContentRegions)
+                {
+                    content.ContentRegions.Add(new ContentRegion
+                        {
+                            Content = content,
+                            Region = contentRegion.Region
+                        });
                 }
             }
 
