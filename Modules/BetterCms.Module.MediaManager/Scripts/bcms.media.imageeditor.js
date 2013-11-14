@@ -327,10 +327,10 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                         height = self.oldHeight(),
                         originalWidth = self.originalWidth,
                         originalHeight = self.originalHeight,
-                        x1 = parseInt(self.cropCoordX1()),
-                        x2 = parseInt(self.cropCoordX2()),
-                        y1 = parseInt(self.cropCoordY1()),
-                        y2 = parseInt(self.cropCoordY2()),
+                        x1 = self.cropCoordX1(),
+                        x2 = self.cropCoordX2(),
+                        y1 = self.cropCoordY1(),
+                        y2 = self.cropCoordY2(),
                         x, y, ratio;
                     
                     if (self.hasCrop()) {
@@ -339,7 +339,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
 
                             x = parseInt(Math.floor(x2 * ratio)) - parseInt(Math.floor(x1 * ratio));
                         } else {
-                            x = x2 - x1;
+                            x = Math.floor(x2) - Math.floor(x1);
                         }
                         
                         if (height != originalHeight && originalHeight) {
@@ -347,7 +347,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
 
                             y = parseInt(Math.floor(y2 * ratio)) - parseInt(Math.floor(y1 * ratio));
                         } else {
-                            y = y2 - y1;
+                            y = Math.floor(y2) - Math.floor(y1);
                         }
                     } else {
                         x = self.oldWidth();

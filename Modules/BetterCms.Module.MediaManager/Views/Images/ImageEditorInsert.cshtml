@@ -1,5 +1,4 @@
 ﻿@using BetterCms.Module.MediaManager.Models
-@using BetterCms.Module.Root.Content.Resources
 @using Microsoft.Web.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.MediaManager.Content.Resources
@@ -43,7 +42,15 @@
                 <div class="bcms-file-info-text"><b>@MediaGlobalization.ImageEditor_Dialog_FileSize:</b> <span id="image-file-size">@Model.FileSize</span></div>
                 
                 <div class="bcms-file-info-text">
-                    <b>@MediaGlobalization.ImageEditor_Dialog_Dimensions:</b> <span id="image-dimensions">@Model.ImageWidth x @Model.ImageHeight</span>
+                    @if (Model.CroppedWidth != Model.OriginalImageWidth || Model.CroppedHeight != Model.OriginalImageHeight)
+                    {
+                        <b>@MediaGlobalization.ImageEditor_Dialog_CroppedDimensions:</b>
+                    }
+                    else
+                    {
+                        <b>@MediaGlobalization.ImageEditor_Dialog_Dimensions:</b>
+                    }
+                    <span id="image-dimensions">@Model.CroppedWidth x @Model.CroppedHeight</span>
                 </div>
             </div>
             
