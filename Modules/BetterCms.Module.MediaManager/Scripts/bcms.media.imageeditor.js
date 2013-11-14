@@ -209,6 +209,8 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 self.height = ko.observable(json.ImageHeight);
                 self.oldWidth = ko.observable(json.ImageWidth);
                 self.oldHeight = ko.observable(json.ImageHeight);
+                self.cropHeight = ko.observable(json.CroppedHeight);
+                self.cropWidth = ko.observable(json.CroppedWidth);
                 self.fit = ko.observable(false);
                 self.calculatedWidth = ko.observable(json.ImageWidth);
                 self.calculatedHeight = ko.observable(json.ImageHeight);
@@ -283,6 +285,8 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                         self.cropCoordY1(coords.y);
                         self.cropCoordX2(coords.x2);
                         self.cropCoordY2(coords.y2);
+
+                        recalculateCroppedDimensions();
                     } else {
                         self.removeCrop();
                     }
@@ -295,11 +299,17 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                         || self.cropCoordY2() != self.originalHeight;
                 });
 
+                self.croppedWidthAndHeight = ko.computed(function () {
+                    return self.cropWidth() + ' x ' + self.cropHeight();
+                });
+
                 self.removeCrop = function () {
                     self.cropCoordX1(0);
                     self.cropCoordY1(0);
                     self.cropCoordX2(self.originalWidth);
                     self.cropCoordY2(self.originalHeight);
+
+                    recalculateCroppedDimensions();
 
                     addCropper();
                 };
@@ -311,6 +321,42 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 self.changeAspectRatio = function () {
                     self.keepAspectRatio(!self.keepAspectRatio());
                 };
+
+                function recalculateCroppedDimensions() {
+                    var width = self.oldWidth(),
+                        height = self.oldHeight(),
+                        originalWidth = self.originalWidth,
+                        originalHeight = self.originalHeight,
+                        x1 = parseInt(self.cropCoordX1()),
+                        x2 = parseInt(self.cropCoordX2()),
+                        y1 = parseInt(self.cropCoordY1()),
+                        y2 = parseInt(self.cropCoordY2()),
+                        x, y, ratio;
+                    
+                    if (self.hasCrop()) {
+                        if (width != originalWidth && originalWidth) {
+                            ratio = width / originalWidth;
+
+                            x = parseInt(Math.floor(x2 * ratio)) - parseInt(Math.floor(x1 * ratio));
+                        } else {
+                            x = x2 - x1;
+                        }
+                        
+                        if (height != originalHeight && originalHeight) {
+                            ratio = height / originalHeight;
+
+                            y = parseInt(Math.floor(y2 * ratio)) - parseInt(Math.floor(y1 * ratio));
+                        } else {
+                            y = y2 - y1;
+                        }
+                    } else {
+                        x = self.oldWidth();
+                        y = self.oldHeight();
+                    }
+
+                    self.cropWidth(x);
+                    self.cropHeight(y);
+                }
 
                 function recalculate() {
                     var calcWidth = self.oldWidth(),

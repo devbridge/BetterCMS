@@ -9,6 +9,7 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.Root.Mvc;
@@ -426,6 +427,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             model.PublicUrl = FileService.GetDownloadFileUrl(MediaType.File, media.Id, FileUrlResolver.EnsureFullPathUrl(media.PublicUrl));
             model.FileExtension = media.OriginalFileExtension;
             model.Size = media.Size;
+            model.SizeText = media.SizeAsText();
             model.IsProcessing = media.IsUploaded == null;
             model.IsFailed = media.IsUploaded == false;
 

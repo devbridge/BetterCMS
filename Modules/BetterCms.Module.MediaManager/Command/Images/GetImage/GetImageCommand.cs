@@ -2,6 +2,7 @@
 using System.Globalization;
 
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.MediaManager.Helpers;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.Services;
@@ -39,6 +40,8 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
         public ImageViewModel Execute(Guid imageId)
         {
             var image = Repository.First<MediaImage>(imageId);
+            var dimensionsCalculator = new ImageDimensionsCalculator(image);
+
             return new ImageViewModel
                 {
                     Id = image.Id.ToString(),
@@ -53,6 +56,8 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
                     FileSize = image.SizeAsText(),
                     ImageWidth = image.Width,
                     ImageHeight = image.Height,
+                    CroppedWidth = dimensionsCalculator.ResizedCroppedWidth,
+                    CroppedHeight = dimensionsCalculator.ResizedCroppedHeight,
                     OriginalImageWidth = image.OriginalWidth,
                     OriginalImageHeight = image.OriginalHeight,
                     ImageAlign = image.ImageAlign.HasValue ? image.ImageAlign.Value : MediaImageAlign.Center,

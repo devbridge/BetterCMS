@@ -114,10 +114,20 @@
         <!-- ko if: showNoDataInfoDiv() -->
         <div class="bcms-nomedia-data">@RootGlobalization.Grid_NoDataAvailable_Message</div>
         <!-- /ko -->
+        
+        <div class="bcms-media-properties-preview" id="bcms-media-properties-preview" data-bind="visible: showPropertiesPreview(), style: {top: previewItem.top(), left: previewItem.left()}">
+            @MediaGlobalization.MediaManager_ImageSize: <span data-bind="text: previewItem.size()"></span>
+            <br />
+            <!-- ko if: previewItem.dimensions() -->
+            @MediaGlobalization.MediaManager_ImageDimensions: <span data-bind="text: previewItem.dimensions()"></span>
+            <!-- /ko -->
+            <br />
+	        <img style="max-height: 200px;" data-bind="attr: {src: previewItem.imageUrl(), alt: previewItem.imageAlt()}" />
+        </div>
 
         <div data-bind="foreach: medias()">
             <div data-bind="click: openMedia.bind($data, $root), clickBubble: false, event: { contextmenu: contextMenu.show }, css: rowClassNames()">
-
+                
                 <div class="bcms-media-context bcms-layer" data-bind="click: stopEvent, clickBubble: false, attr: { id: contextMenu.domId }">
                     <a class="bcms-btn-close">@RootGlobalization.Button_Close</a>
                     <!--  ko if: isProcessing() -->
@@ -207,7 +217,7 @@
                 <div class="bcms-media-items-block">
                     <div data-bind="css: iconClassNames(), click: onIconClicked.bind($data, $root)">
                         <!-- ko if: getImageUrl() && !isProcessing() -->
-                        <img data-bind="attr: { alt: tooltip(), src: getImageUrl() }" />
+                        <img data-bind="attr: { alt: tooltip(), src: getImageUrl() }, event: { mousemove: $root.movePreview, mouseleave: $root.hidePreview }" />
                         <!-- /ko -->
                     </div>
                     <div class="bcms-media-name" data-bind="click: onTitleClicked.bind($data, $root)">
