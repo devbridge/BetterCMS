@@ -45,5 +45,12 @@
         /// The user name associated with the specified e-mail address. If no match is found, return null.
         /// </returns>
         string GetUserNameByEmail(string email);
+
+        /// <summary>
+        /// Gets the user.
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <returns>User by username.</returns>
+        Models.User GetUser(string username);
     }
 }

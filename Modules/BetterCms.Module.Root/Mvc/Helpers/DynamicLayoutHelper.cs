@@ -27,7 +27,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                 RootModuleConstants.DynamicRegionRegexPattern,
                 // TODO: refractor identification.
                 //"<div style=\"outline: 1px dashed #009AEB;width: 100%;height: 100%;/*background-color: rgba(0,154,235,0.1);*/\">" +
-                "<p style=\"outline: 1px dashed #009AEB;opacity: 0.5;background-color: rgba(0,154,235,0.1);\">&nbsp;</p>"/* +
+                "<div class=\"bcms-draggable-region\">Content to add</div>"/* +
                 "</div>"*/,
                 RegexOptions.IgnoreCase);
         }

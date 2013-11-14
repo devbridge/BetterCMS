@@ -1,25 +1,14 @@
 ﻿using System;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
 using System.Security.Cryptography;
-using System.Security.Principal;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Web;
-using System.Web.Security;
 
 using BetterCms.Core.DataAccess;
-using BetterCms.Core.Exceptions;
-using BetterCms.Module.Users.Provider;
-
-using Common.Logging;
 
 namespace BetterCms.Module.Users.Services
 {
     public class DefaultAuthenticationService : IAuthenticationService
     {
-        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
-
         private readonly IRepository repository;
 
         /// <summary>
@@ -168,33 +157,6 @@ namespace BetterCms.Module.Users.Services
             }
 
             return false;
-        }
-
-        public void AuthenticateRequest(HttpApplication httpApplication)
-        {
-            HttpCookie authCookie = httpApplication.Request.Cookies[FormsAuthentication.FormsCookieName];
-
-            if (authCookie != null)
-            {
-                try
-                {
-                    var authTicket = FormsAuthentication.Decrypt(authCookie.Value);
-                    if (authTicket != null)
-                    {
-                        string[] roles = authTicket.UserData.Split('|');
-
-                        var identity = new GenericIdentity(authTicket.Name);
-                        var principal = new GenericPrincipal(identity, roles);
-
-                        httpApplication.Context.User = principal;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Log.Error("Failed to authenticate request.", ex);
-                    FormsAuthentication.SignOut();
-                }
-            }
         }
     }
 }

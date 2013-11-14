@@ -2900,3 +2900,27 @@ a.ui-state-default:hover {
     .bcms-path-arrow-right.bcms-path-arrow-inactive {
         background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAMCAYAAABfnvydAAAAdElEQVQY02Pw9PScDcT/gfglEMsAMQMM////nwHEYAPi41BFJ6F8FAUMUJ0voIrmYlMAwjZA/BOqKAObAhDOgSoAKbTCpgCEL0AVncGmIBvJBGt8bshEd4M0ED/H5QuQv49BJU8BMTu6AlhIvsIakiACHwYAa26Xa0spcakAAAAASUVORK5CYII=");
     }
+
+.bcms-draggable-region {
+    position: relative;
+    height: 35px;
+    line-height: 35px;
+    padding-left: 34px;
+    margin: 0 -2px 0 0;
+    color: #0099ee;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAFRlDm/AAAAHUlEQVQI12P4//8/AxRDqQcPHjAAMUIQyoFQEAAA0/UuXeg1e3EAAAAASUVORK5CYII=') repeat 0 0;
+    border: 1px dashed #0099ee;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+    .bcms-draggable-region:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 11px;
+        width: 15px;
+        height: 18px;
+        margin-top: -9px;
+        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAASCAYAAACEnoQPAAAAV0lEQVQ4y2NgmPX6Pw78D4hLgJgBJ8ajGYZridGMLolsQAclmv+TqhndkOGsmRCf+poJYeprJj6AIOJclGgGYW1CmvHhr0CcQHXNDEQkGB1cziakGR5gAEOrBIwBImPOAAAAAElFTkSuQmCC") no-repeat 0 0;
+    }
