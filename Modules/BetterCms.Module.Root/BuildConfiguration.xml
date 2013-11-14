@@ -25,6 +25,7 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.dynamicContent.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.forms.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.grid.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.codeEditor.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.htmlEditor.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.inlineEdit.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.js" />
