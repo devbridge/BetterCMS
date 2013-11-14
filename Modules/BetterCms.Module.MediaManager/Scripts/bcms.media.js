@@ -22,7 +22,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             spinContainer: '.bcms-rightcol:first',
             insertContentContainer: '.bcms-insert-content-modal:first',
             searchBox: '#bcms-search-input',
-            fileListMessageBox: '#bcms-site-settings-media-messages-'
+            fileListMessageBox: '#bcms-site-settings-media-messages-',
+
+            previewBox: '#bcms-media-properties-preview',
+            previewBoxImage: '#bcms-media-properties-preview img',
         },
         links = {
             loadSiteSettingsMediaManagerUrl: null,
@@ -191,6 +194,77 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     }
 
     /**
+    * Current media's preview view model
+    */
+    function MediaItemPreviewViewModel() {
+        var self = this;
+
+        self.dimensions = ko.observable();
+        self.size = ko.observable();
+        self.imageUrl = ko.observable();
+        self.imageAlt = ko.observable();
+        self.top = ko.observable();
+        self.left = ko.observable();
+
+        self.lastX = null;
+        self.lastY = null;
+
+        function setCoords(clientX, clientY) {
+            if (!clientX) {
+                clientX = self.lastX;
+            }
+            if (!clientY) {
+                clientY = self.lastY;
+            }
+            if (!clientX || !clientY) {
+                return;
+            }
+
+            var top = clientY,
+                previewHeight = $(selectors.previewBox).outerHeight();
+
+            if (top > $(window).height() - 200 || top > $(window).height() - previewHeight) {
+                top -= previewHeight;
+            }
+            self.top(top + 10 + "px");
+            self.left(clientX + 10 + "px");
+
+            self.lastX = clientX;
+            self.lastY = clientY;
+        }
+
+        self.setItem = function (item) {
+            var image = $(selectors.previewBoxImage);
+
+            if (item.isImage) {
+                self.dimensions(item.width + ' x ' + item.height);
+            } else {
+                self.dimensions('');
+            }
+
+            self.size(item.sizeText);
+            self.imageUrl(item.publicUrl());
+            self.imageAlt(item.tooltip());
+
+            image.unbind('load');
+            image.load(function() {
+                setCoords();
+            });
+        };
+
+        self.clearItem = function () {
+            self.imageUrl('');
+            self.imageAlt('');
+        };
+
+        self.setCoords = function (mouseEvent) {
+            setCoords(mouseEvent.clientX, mouseEvent.clientY);
+        };
+
+        return self;
+    }
+
+    /**
     * Media's current folder view model
     */
     function MediaItemsViewModel(container, url, messagesContainer) {
@@ -213,7 +287,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                         }
                     }
                 }
-            };
+            },
+            previewTimer;
 
         self.container = container;
         self.messagesContainer = messagesContainer;
@@ -226,6 +301,9 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         self.canSelectMedia = ko.observable(false);
         self.canInsertMedia = ko.observable(false);
         self.canInsertMediaWithOptions = ko.observable(false);
+        
+        self.showPropertiesPreview = ko.observable(false);
+        self.previewItem = new MediaItemPreviewViewModel();
 
         self.rowAdded = false;
 
@@ -391,6 +469,36 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 
                 item.isSelected(item == keepSelected);
             }
+        };
+
+        self.movePreview = function (data, event) {
+            var showProperties = self.showPropertiesPreview();
+            if (!showProperties) {
+                if (previewTimer != null) {
+                    clearTimeout(previewTimer);
+                }
+
+                previewTimer = setTimeout(function() {
+                    showPreview(data, event);
+                }, 500);
+            } else {
+                self.previewItem.setCoords(event);
+            }
+        };
+
+        function showPreview(data, event) {
+            self.previewItem.setItem(data, event);
+            self.previewItem.setCoords(event);
+            self.showPropertiesPreview(true);
+        };
+        
+        self.hidePreview = function () {
+            if (previewTimer != null) {
+                clearTimeout(previewTimer);
+            }
+            
+            self.showPropertiesPreview(false);
+            self.previewItem.clearItem();
         };
     }
 
@@ -702,6 +810,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
             var self = this;
 
+            self.width = item.Width;
+            self.height = item.Height;
+            self.sizeText = item.SizeText;
+
             self.previewImage = function () {
                 var previewUrl = self.publicUrl();
                 if (previewUrl) {
@@ -746,6 +858,9 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     self.publicUrl(json.Url);
                     self.name(json.Title);
                     self.oldName = json.Title;
+                    self.sizeText = json.FileSize;
+                    self.width = json.CroppedWidth;
+                    self.height = json.CroppedHeight;
                 });
             }
         };

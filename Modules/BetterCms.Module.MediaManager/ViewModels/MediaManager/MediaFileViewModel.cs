@@ -9,6 +9,8 @@ namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
     public class MediaFileViewModel : MediaViewModel, IAccessSecuredViewModel
     {
         public virtual long Size { get; set; }
+        
+        public virtual string SizeText { get; set; }
 
         public virtual string FileExtension { get; set; }
 

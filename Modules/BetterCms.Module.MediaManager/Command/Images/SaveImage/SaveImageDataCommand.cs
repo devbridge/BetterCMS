@@ -114,6 +114,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
             {
                 var downloadResponse = StorageService.DownloadObject(mediaImage.OriginalUri);
                 var image = new WebImage(downloadResponse.ResponseStream);
+                var dimensionsCalculator = new ImageDimensionsCalculator(newWidth, newHeight, mediaImage.OriginalWidth, mediaImage.OriginalHeight, x1, x2, y1, y2);
                 ImageFormat format = null;
                 if (DefaultMediaImageService.transparencyFormats.TryGetValue(image.ImageFormat, out format))
                 {
@@ -140,15 +141,12 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
 
                     if (cropped)
                     {
-                        var xRatio2 = (decimal)newWidth / (mediaImage.OriginalWidth == 0 ? newWidth : mediaImage.OriginalWidth);
-                        var yRatio2 = (decimal)newHeight / (mediaImage.OriginalHeight == 0 ? newHeight : mediaImage.OriginalHeight);
+                        var width = dimensionsCalculator.ResizedCroppedWidth;
+                        var heigth = dimensionsCalculator.ResizedCroppedHeight;
+                        var cropX12 = dimensionsCalculator.CropCoordX1.Value;
+                        var cropY12 = dimensionsCalculator.CropCoordY1.Value;
 
-                        var weigth = (int)((x2.Value - x1.Value) * xRatio2);
-                        var heigth = (int)((y2.Value - y1.Value) * yRatio2);
-                        var cropX12 = (int)Math.Floor(x1.Value * xRatio2);
-                        var cropY12 = (int)Math.Floor(y1.Value * yRatio2);
-
-                        Rectangle rec = new Rectangle(cropX12, cropY12, weigth, heigth);
+                        Rectangle rec = new Rectangle(cropX12, cropY12, width, heigth);
                         using (Bitmap source = new Bitmap(new MemoryStream(image.GetBytes())))
                         {
                             var resizedBitmap = source.Clone(rec, source.PixelFormat);
@@ -169,13 +167,10 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
                     }
                     if (cropped)
                     {
-                        var xRatio = (decimal)newWidth / (mediaImage.OriginalWidth == 0 ? newWidth : mediaImage.OriginalWidth);
-                        var yRatio = (decimal)newHeight / (mediaImage.OriginalHeight == 0 ? newHeight : mediaImage.OriginalHeight);
-
-                        var cropX1 = (int)Math.Floor(x1.Value * xRatio);
-                        var cropY1 = (int)Math.Floor(y1.Value * yRatio);
-                        var cropX2 = image.Width - (int)Math.Floor(x2.Value * xRatio);
-                        var cropY2 = image.Height - (int)Math.Floor(y2.Value * yRatio);
+                        var cropX1 = dimensionsCalculator.ResizedCropCoordX1.Value;
+                        var cropY1 = dimensionsCalculator.ResizedCropCoordY1.Value;
+                        var cropX2 = image.Width - dimensionsCalculator.ResizedCropCoordX2.Value;
+                        var cropY2 = image.Height - dimensionsCalculator.ResizedCropCoordY2.Value;
 
                         // Fix for small resized images
                         if (cropX2 - cropX1 < image.Width && cropY2 - cropY1 < image.Height)
