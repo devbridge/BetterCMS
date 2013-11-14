@@ -10,11 +10,28 @@
     onLoad : function() {
       if (CKEDITOR.addCss) {
           CKEDITOR.addCss(
-            'img.cke_cmsdynamicregion {' +
-                'outline: 1px dashed #009AEB;' +
-                'width:100%;' +
-                'height:30px;' +
-            '}'
+            '.bcms-draggable-region {' +
+            '    position: relative;' +
+            '    height: 35px;' +
+            '    line-height: 35px;' +
+            '    padding-left: 34px;' +
+            '    margin: 0 -2px 0 0;' +
+            '    color: #0099ee;' +
+            "    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAFRlDm/AAAAHUlEQVQI12P4//8/AxRDqQcPHjAAMUIQyoFQEAAA0/UuXeg1e3EAAAAASUVORK5CYII=') repeat 0 0;" +
+            '    border: 1px dashed #0099ee;' +
+            '    font-size: 12px;' +
+            '    font-weight: 700;' +
+            '}' +
+            '    .bcms-draggable-region:after {' +
+            '        content: "";' +
+            '        position: absolute;' +
+            '        top: 50%;' +
+            '        left: 11px;' +
+            '        width: 15px;' +
+            '        height: 18px;' +
+            '        margin-top: -9px;' +
+            '        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAASCAYAAACEnoQPAAAAV0lEQVQ4y2NgmPX6Pw78D4hLgJgBJ8ajGYZridGMLolsQAclmv+TqhndkOGsmRCf+poJYeprJj6AIOJclGgGYW1CmvHhr0CcQHXNDEQkGB1cziakGR5gAEOrBIwBImPOAAAAAElFTkSuQmCC") no-repeat 0 0;' +
+            '    }'
           );
       }
     },
@@ -40,11 +57,19 @@
             df.addRules({
                 elements: {
                     div: function (re) {
+                        // NOTE: after updating source code below - update /[BetterCms.Module.Pages]/Scripts/bcms.pages.content.js function onDynamicRegionInsert(htmlContentEditor), too.
                         var regexp = /^{{DYNAMIC_REGION\:([a-zA-Z0-9]{8}\-[a-zA-Z0-9]{4}\-[a-zA-Z0-9]{4}\-[a-zA-Z0-9]{4}\-[a-zA-Z0-9]{12})}}$/i;
                         if (re.children.length == 1 && CKEDITOR.htmlParser.text.prototype.isPrototypeOf(re.children[0]) && regexp.test(re.children[0].value)) {
-                            var f = e.createFakeParserElement(re, 'cke_cmsdynamicregion', 'cmsdynamicregion', false);
-                            f.attributes.alt = 'Dynamic Region';
+                            var f = e.createFakeParserElement(re, 'bcms-draggable-region', 'cmsdynamicregion', false);
+                            // Customize fake object.
                             f.attributes.title = 'Dynamic Region';
+                            f.attributes.contenteditable = 'false';
+                            f.name = "div";
+                            delete f.attributes["alt"];
+                            delete f.attributes["align"];
+                            delete f.attributes["src"];
+                            f.add(new CKEDITOR.htmlParser.text('Content to add'));
+                            f.isEmpty = false;
                             return f;
                         }
                         return undefined;
@@ -55,7 +80,8 @@
         if (hf) {
             hf.addRules({
                 elements: {
-                    $: function (re) {
+                    div: function (re) {
+                        // NOTE: rule here is not needed because of using fake objects created by editor.
                     }
                 }
             });

@@ -973,7 +973,6 @@
     <EmbeddedResource Include="Scripts\ace\snippets\yaml.js" />
     <EmbeddedResource Include="Scripts\bcms.codeEditor.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-dynamicregion\plugin.js" />
-    <Content Include="Content\Styles\front-region.png" />
     <Content Include="Views\Web.config" />
     <EmbeddedResource Include="Views\Sidebar\Container.cshtml" />
     <EmbeddedResource Include="Views\Rendering\RenderMainJsFile.cshtml" />
