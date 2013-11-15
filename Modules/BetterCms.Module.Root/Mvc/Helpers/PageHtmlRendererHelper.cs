@@ -16,10 +16,19 @@ namespace BetterCms.Module.Root.Mvc.Helpers
     {
         public static class ReplacementIds
         {
-            public const string PageTitle = "CMSPAGETITLE";
-            public const string PageUrl = "CMSPAGEURL";
-            public const string PageCreatedOn = "CMSPAGECREATIONDATE";
-            public const string PageOption = "CMSPAGEOPTION";
+            public const string PageTitle = "CmsPageTitle";
+            public const string PageUrl = "CmsPageUrl";
+            public const string PageId = "CmsPageId";
+            public const string PageCreatedOn = "CmsPageCreatedOn";
+            public const string PageModifiedOn = "CmsPageModifiedOn";
+            public const string PageOption = "CmsPageOption";
+            public const string MetaTitle = "CmsPageMetaTitle";
+            public const string MetaKeywords = "CmsPageMetaKeywords";
+            public const string MetaDescription = "CmsPageMetaDescription";
+            // TODO: public const string MainImageUrl = "CmsPageMainImageUrl";
+            // TODO: public const string SecondaryImageUrl = "CmsPageSecondaryImageUrl";
+            // TODO: public const string FeaturedImageUrl = "CmsPageFeaturedImageUrl";
+            // TODO: public const string PageCategory = "CmsPageCategory";
         }
 
         /// <summary>
@@ -51,7 +60,14 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         {
             html = ReplaceAllMatches(ReplacementIds.PageTitle, html, model.Title);
             html = ReplaceAllMatches(ReplacementIds.PageUrl, html, model.PageUrl);
+            html = ReplaceAllMatches(ReplacementIds.PageId, html, model.Id.ToString());
+            html = ReplaceAllMatches(ReplacementIds.MetaTitle, html, model.MetaTitle);
+            html = ReplaceAllMatches(ReplacementIds.MetaKeywords, html, model.MetaKeywords);
+            html = ReplaceAllMatches(ReplacementIds.MetaDescription, html, model.MetaDescription);
+
             html = ReplaceDates(ReplacementIds.PageCreatedOn, html, model.CreatedOn);
+            html = ReplaceDates(ReplacementIds.PageModifiedOn, html, model.ModifiedOn);
+
             html = ReplaceOptions(ReplacementIds.PageOption, html, model.Options);
 
             return html;

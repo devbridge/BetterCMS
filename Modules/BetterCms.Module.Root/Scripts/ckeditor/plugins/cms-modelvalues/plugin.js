@@ -7,11 +7,19 @@
                lang = editor.lang.format;
 
             var tags = [];
-            //this.add('value', 'drop_text', 'drop_label');
-            tags.push(["{{CMSPAGETITLE}}", "Title", "Title"]);
-            tags.push(["{{CMSPAGEURL}}", "Url", "Url"]);
-            tags.push(["{{CMSPAGECREATIONDATE:yyyy-MM-dd}}", "Creation Date", "Creation Date"]);
-            tags.push(["{{CMSPAGEOPTION:OptionKey}}", "Option", "Option"]);
+            tags.push(["{{CmsPageTitle}}", "Page title", "Page title"]);
+            tags.push(["{{CmsPageUrl}}", "Page url", "Page url"]);
+            tags.push(["{{CmsPageId}}", "Page id", "Page id"]);
+            tags.push(["{{CmsPageCreatedOn:yyyy-MM-dd}}", "Page creation date", "Page creation date"]);
+            tags.push(["{{CmsPageModifiedOn:yyyy-MM-dd}}", "Page last modification date", "Page last modification date"]);
+            tags.push(["{{CmsPageOption:OptionKey}}", "Page option", "Page option"]);
+            tags.push(["{{CmsPageMetaTitle}}", "Page meta title", "Page meta title"]);
+            tags.push(["{{CmsPageMetaKeywords}}", "Page meta keywords", "Page meta keywords"]);
+            tags.push(["{{CmsPageMetaDescription}}", "Page meta description", "Page meta description"]);
+            // TODO: tags.push(["{{CmsPageMainImageUrl}}", "Page main image URL", "Page main image URL"]);
+            // TODO: tags.push(["{{CmsPageSecondaryImageUrl}}", "Page secondary image URL", "Page secondary image URL"]);
+            // TODO: tags.push(["{{CmsPageFeaturedImageUrl}}", "Page featured image URL", "Page featured image URL"]);
+            // TODO: tags.push(["{{CmsPageCategory}}", "Page category name", "Page category name"]);
 
             // Create style objects for all defined styles.
             editor.ui.addRichCombo('CmsModelValues',
@@ -24,7 +32,7 @@
 
                    panel:
                    {
-                       // TODO: css: [config.contentsCss, CKEDITOR.getUrl(editor.skinPath + 'editor.css')],
+                       css: [config.contentsCss, CKEDITOR.basePath + 'skins/' + config.skin + '/editor.css'],
                        voiceLabel: lang.panelVoiceLabel
                    },
 

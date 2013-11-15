@@ -34,6 +34,8 @@ namespace BetterCms.Module.Root.ViewModels.Cms
             HasSEO = page.HasSEO;
             Title = page.Title;
             MetaTitle = rootPage != null && !string.IsNullOrEmpty(rootPage.MetaTitle) ? rootPage.MetaTitle : Title;
+            MetaDescription = rootPage != null ? rootPage.MetaDescription : null;
+            MetaKeywords = rootPage != null ? rootPage.MetaKeywords : null;
             PageUrl = page.PageUrl;
             Status = page.Status;
             CreatedOn = page.CreatedOn;
@@ -72,6 +74,10 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         public string Title { get; set; }
 
         public string MetaTitle { get; set; }
+
+        public string MetaKeywords { get; set; }
+
+        public string MetaDescription { get; set; }
 
         public string PageUrl { get; set; }
 
@@ -347,6 +353,8 @@ namespace BetterCms.Module.Root.ViewModels.Cms
                            HasSEO = HasSEO,
                            Title = Title,
                            MetaTitle = MetaTitle,
+                           MetaDescription = MetaDescription,
+                           MetaKeywords = MetaKeywords,
                            PageUrl = PageUrl,
                            Status = Status,
                            CreatedOn = CreatedOn,
