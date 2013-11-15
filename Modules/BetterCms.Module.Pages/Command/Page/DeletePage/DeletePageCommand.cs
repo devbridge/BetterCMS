@@ -159,6 +159,13 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
                 var rules = page.AccessRules.ToList();
                 rules.ForEach(page.RemoveRule);
             }
+            if (page.MasterPages != null)
+            {
+                foreach (var master in page.MasterPages)
+                {
+                    Repository.Delete(master);
+                }
+            }
 
             // Delete sitemapNodes.
             if (sitemapNodes != null)

@@ -29,6 +29,7 @@ bettercms.define('bcms.codeEditor', ['bcms.jquery', 'bcms', 'ace'], function ($,
             inputField = $(inputField);
             var height = inputField.outerHeight(),
                 id = inputField.attr('id'),
+                isReadOnly = inputField.attr('readonly') === 'readonly',
                 editorId = "aceEditor_" + id,
                 containerId = "aceEditor_container_" + id;
             
@@ -37,6 +38,7 @@ bettercms.define('bcms.codeEditor', ['bcms.jquery', 'bcms', 'ace'], function ($,
             $('#' + containerId).width("100%").height(height);
             
             var aceEditor = ace.edit(editorId);
+            aceEditor.setReadOnly(isReadOnly);
             aceEditor.getSession().setMode(mode);
             aceEditor.setTheme("ace/theme/chrome");
             aceEditor.setShowPrintMargin(0);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
@@ -73,12 +74,8 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageHtmlContent
                 SetIsReadOnly(model, accessRules);
             }
 
-            var hasEditContentRole = SecurityService.IsAuthorized(Context.Principal, RootModuleConstants.UserRoles.EditContent);
-            if (!hasEditContentRole)
-            {
-                model.IsReadOnly = true;
-            }
-            model.CanDestroyDraft = !model.IsReadOnly;
+            model.CanEditContent = SecurityService.IsAuthorized(Context.Principal, RootModuleConstants.UserRoles.EditContent);
+            model.CanDestroyDraft = model.CurrentStatus == ContentStatus.Draft && model.HasPublishedContent && model.CanEditContent;
 
             return model;
         }

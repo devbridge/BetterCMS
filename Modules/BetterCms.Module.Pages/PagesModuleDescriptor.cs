@@ -266,7 +266,7 @@ namespace BetterCms.Module.Pages
                                 Order = 20,
                                 Title = () => PagesGlobalization.Sidebar_EditPagePropertiesButtonTitle,
                                 CssClass = page => "bcms-sidemenu-btn",
-                                AccessRole = RootModuleConstants.UserRoles.EditContent
+                                AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)
                             },
 
                     new ButtonActionProjection(seoJsModuleIncludeDescriptor, page => "openEditSeoDialog")

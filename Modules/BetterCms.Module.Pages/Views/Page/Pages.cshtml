@@ -15,7 +15,7 @@
 @{
     Action<ColumnBuilder<SiteSettingPageViewModel>> columns = column =>
     {
-        if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
+        if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)))
         {
             column.EditButtonColumn();
         }
