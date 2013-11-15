@@ -165,7 +165,7 @@
     <Compile Include="Models\Migrations\Migration201310170919.cs" />
     <Compile Include="Models\Migrations\Migration201310160818.cs" />
     <Compile Include="Models\Migrations\Migration201310180900.cs" />
-    <Compile Include="Mvc\Helpers\DynamicLayoutHelper.cs" />
+    <Compile Include="Mvc\Helpers\PageHtmlRendererHelper.cs" />
     <Compile Include="Mvc\Helpers\OptionsExtentions.cs" />
     <Compile Include="Mvc\Helpers\ViewRenderingExtensions.cs" />
     <Compile Include="Providers\CustomOptionsProvider.cs" />
@@ -973,6 +973,7 @@
     <EmbeddedResource Include="Scripts\ace\snippets\yaml.js" />
     <EmbeddedResource Include="Scripts\bcms.codeEditor.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-dynamicregion\plugin.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-modelvalues\plugin.js" />
     <Content Include="Views\Web.config" />
     <EmbeddedResource Include="Views\Sidebar\Container.cshtml" />
     <EmbeddedResource Include="Views\Rendering\RenderMainJsFile.cshtml" />

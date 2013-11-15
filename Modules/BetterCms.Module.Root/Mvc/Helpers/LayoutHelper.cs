@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
@@ -49,10 +50,12 @@ namespace BetterCms.Module.Root.Mvc.Helpers
 
                 if (!string.IsNullOrWhiteSpace(html))
                 {
+                    var pageHtmlHelper = new PageHtmlRendererHelper(html, model);
                     if (model.AreRegionsEditable)
                     {
-                        html = DynamicLayoutHelper.ReplaceRegionRepresentationHtml(html);
+                        pageHtmlHelper.ReplaceRegionRepresentationHtml();
                     }
+                    html = pageHtmlHelper.GetReplacedHtml();
 
                     RenderSectionAsLayoutRegion(webPage, html, region.RegionIdentifier);
                 }                
