@@ -176,7 +176,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             IList<Guid> oldMasterIds;
             IList<Guid> childrenPageIds;
             IList<MasterPage> existingChildrenMasterPages;
-            if ( (page.MasterPage != null && page.MasterPage.Id != request.MasterPageId) || (page.MasterPage == null && request.MasterPageId.HasValue))
+            if ((page.MasterPage != null && page.MasterPage.Id != request.MasterPageId) || (page.MasterPage == null && request.MasterPageId.HasValue))
             {
                 newMasterIds = request.MasterPageId.HasValue 
                     ? masterPageService.GetPageMasterPageIds(request.MasterPageId.Value) 
@@ -204,15 +204,17 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                 existingChildrenMasterPages = null;
             }
 
+            var canEdit = SecurityService.IsAuthorized(Context.Principal, RootModuleConstants.UserRoles.EditContent);
+
             // Start transaction, only when everything is already loaded
             UnitOfWork.BeginTransaction();
 
             Models.Redirect redirectCreated = null;
-            bool initialSeoStatus = page.HasSEO;
+            var initialSeoStatus = page.HasSEO;
 
             request.PageUrl = urlService.FixUrl(request.PageUrl);
 
-            if (!string.Equals(page.PageUrl, request.PageUrl))
+            if (canEdit && !string.Equals(page.PageUrl, request.PageUrl))
             {
                 pageService.ValidatePageUrl(request.PageUrl, request.Id);
                 if (request.RedirectFromOldUrl)
@@ -232,27 +234,30 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                 page.PageUrl = request.PageUrl;
             }
 
-            page.PageUrlHash = page.PageUrl.UrlHash();
-            page.Category = request.CategoryId.HasValue ? Repository.AsProxy<CategoryEntity>(request.CategoryId.Value) : null;
-            page.Title = request.PageName;
-            page.CustomCss = request.PageCSS;
-            page.CustomJS = request.PageJavascript;
+            if (canEdit)
+            {
+                page.PageUrlHash = page.PageUrl.UrlHash();
+                page.Category = request.CategoryId.HasValue ? Repository.AsProxy<CategoryEntity>(request.CategoryId.Value) : null;
+                page.Title = request.PageName;
+                page.CustomCss = request.PageCSS;
+                page.CustomJS = request.PageJavascript;
 
-            if (request.MasterPageId.HasValue)
-            {
-                if (page.MasterPage == null || page.MasterPage.Id != request.MasterPageId.Value)
+                if (request.MasterPageId.HasValue)
                 {
-                    page.MasterPage = Repository.AsProxy<Root.Models.Page>(request.MasterPageId.Value);
+                    if (page.MasterPage == null || page.MasterPage.Id != request.MasterPageId.Value)
+                    {
+                        page.MasterPage = Repository.AsProxy<Root.Models.Page>(request.MasterPageId.Value);
+                    }
+                    page.Layout = null;
                 }
-                page.Layout = null;
-            }
-            else
-            {
-                if (page.Layout == null || page.Layout.Id != request.TemplateId.Value)
+                else
                 {
-                    page.Layout = Repository.First<Root.Models.Layout>(request.TemplateId.Value);
+                    if (page.Layout == null || page.Layout.Id != request.TemplateId.Value)
+                    {
+                        page.Layout = Repository.First<Root.Models.Layout>(request.TemplateId.Value);
+                    }
+                    page.MasterPage = null;
                 }
-                page.MasterPage = null;
             }
 
             var publishDraftContent = false;
@@ -281,34 +286,42 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                 }
             }
 
-            page.UseNoFollow = request.UseNoFollow;
-            page.UseNoIndex = request.UseNoIndex;
-            page.UseCanonicalUrl = request.UseCanonicalUrl;
-            page.IsArchived = request.IsArchived;
-            page.Version = request.Version;
-
-            page.Image = request.Image != null && request.Image.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.Image.ImageId.Value) : null;
-            page.SecondaryImage = request.SecondaryImage != null && request.SecondaryImage.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.SecondaryImage.ImageId.Value) : null;
-            page.FeaturedImage = request.FeaturedImage != null && request.FeaturedImage.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.FeaturedImage.ImageId.Value) : null;
-
-            var optionValues = page.Options.Distinct();
-            optionService.SaveOptionValues(request.OptionValues, optionValues, () => new PageOption { Page = page });
-
-            if (cmsConfiguration.Security.AccessControlEnabled)
+            if (canEdit)
             {
-                page.AccessRules.RemoveDuplicateEntities();
+                page.UseNoFollow = request.UseNoFollow;
+                page.UseNoIndex = request.UseNoIndex;
+                page.UseCanonicalUrl = request.UseCanonicalUrl;
+                page.IsArchived = request.IsArchived;
+                page.Version = request.Version;
 
-                var accessRules = request.UserAccessList != null ? request.UserAccessList.Cast<IAccessRule>().ToList() : null;                
-                accessControlService.UpdateAccessControl(page, accessRules);
+                page.Image = request.Image != null && request.Image.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.Image.ImageId.Value) : null;
+                page.SecondaryImage = request.SecondaryImage != null && request.SecondaryImage.ImageId.HasValue
+                                          ? Repository.AsProxy<MediaImage>(request.SecondaryImage.ImageId.Value)
+                                          : null;
+                page.FeaturedImage = request.FeaturedImage != null && request.FeaturedImage.ImageId.HasValue
+                                         ? Repository.AsProxy<MediaImage>(request.FeaturedImage.ImageId.Value)
+                                         : null;
+
+                var optionValues = page.Options.Distinct();
+                optionService.SaveOptionValues(request.OptionValues, optionValues, () => new PageOption { Page = page });
+
+                if (cmsConfiguration.Security.AccessControlEnabled)
+                {
+                    page.AccessRules.RemoveDuplicateEntities();
+
+                    var accessRules = request.UserAccessList != null ? request.UserAccessList.Cast<IAccessRule>().ToList() : null;
+                    accessControlService.UpdateAccessControl(page, accessRules);
+                }
             }
 
             Repository.Save(page);
 
-            UpdateChildrenMasterPages(existingChildrenMasterPages, oldMasterIds, newMasterIds, childrenPageIds);
-
-            // Save tags
-            IList<Tag> newTags;
-            tagService.SavePageTags(page, request.Tags, out newTags);
+            IList<Tag> newTags = null;
+            if (canEdit)
+            {
+                UpdateChildrenMasterPages(existingChildrenMasterPages, oldMasterIds, newMasterIds, childrenPageIds);
+                tagService.SavePageTags(page, request.Tags, out newTags);
+            }
 
             if (publishDraftContent)
             {

@@ -44,7 +44,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 editPagePropertiesInfoMessageClosed: 'bcms.EditPagePropertiesInfoBoxClosed'
             },
             classes = {
-                pagePropertiesActiveTemplateBox: 'bcms-inner-grid-box-active'
+                pagePropertiesActiveTemplateBox: 'bcms-inner-grid-box-active',
+                inactive: 'bcms-inactive'
             },
             currentPageIsPublished,
             currentPageIsMaster;
@@ -310,14 +311,43 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         * Opens modal window for given page with page properties
         */
         page.openEditPageDialog = function (id, postSuccess) {
-            var pageViewModel;
-
+            var pageViewModel,
+                canEdit = security.IsAuthorized(["BcmsEditContent"]),
+                canPublish = security.IsAuthorized(["BcmsPublishContent"]);
+            
             modal.open({
                 title: globalization.editPagePropertiesModalTitle,
+                disableAccept: !canEdit && !canPublish,
                 onLoad: function (dialog) {
                     var url = $.format(links.loadEditPropertiesDialogUrl, id);
                     dynamicContent.bindDialog(dialog, url, {
                         contentAvailable: function (childDialog, content) {
+                            var form = dialog.container.find('form'),
+                                publishCheckbox = form.find(selectors.pagePropertiesPageIsPublishedCheckbox);
+                            // User with only BcmsPublishContent but without BcmsEditContent can only publish - only publish checkbox needs to be enabled.
+                            if (form.data('readonly') !== true && !canEdit && canPublish) {
+                                // Disable everything.
+                                dialog.container.find('.bcms-tab-single').each(function () {
+                                    $(this).addClass(classes.inactive);
+                                });
+                                publishCheckbox.parents('.bcms-tab-single').find('.bcms-padded-content').each(function () {
+                                    $(this).children().each(function () {
+                                        $(this).addClass(classes.inactive);
+                                    });
+                                });
+                                form.find('input:visible').attr('readonly', 'readonly');
+                                form.find('textarea:visible').attr('readonly', 'readonly');
+                                form.find('input[type=text]:visible:not([data-bind])').parent('div').css('z-index', 100);
+                                form.find('textarea:visible:not([data-bind])').attr('readonly', 'readonly').parent('div').css('z-index', 100);
+                                publishCheckbox.parents('.bcms-input-list-holder').parent().find('.bcms-checkbox-holder').each(function () {
+                                    $(this).addClass(classes.inactive);
+                                });
+                                // Enable only publish checkbox.
+                                publishCheckbox.parents('.' + classes.inactive).each(function () {
+                                    $(this).removeClass(classes.inactive);
+                                });
+                                publishCheckbox.removeAttr('readonly');
+                            }
                             pageViewModel = page.initEditPagePropertiesDialogEvents(childDialog, content);
                         },
 

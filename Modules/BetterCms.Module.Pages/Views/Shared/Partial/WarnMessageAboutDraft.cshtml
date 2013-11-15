@@ -13,7 +13,7 @@
         <ul class="bcms-warning-messages">
             <li>
                 @PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage
-                @if (Model.HasPublishedContent && Model.CanDestroyDraft)
+                @if (Model.CanDestroyDraft)
                 {
                     @Html.Raw(PagesGlobalization.EditPageContent_Messages_DraftStatusWarnMessage_Destroy)
                 }
