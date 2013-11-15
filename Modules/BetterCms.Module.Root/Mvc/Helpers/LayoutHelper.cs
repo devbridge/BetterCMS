@@ -46,17 +46,15 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     }
                 }
 
-                var html = contentsBuilder.ToString();
+                var pageHtmlHelper = new PageHtmlRendererHelper(contentsBuilder, model);
+                if (model.AreRegionsEditable)
+                {
+                    pageHtmlHelper.ReplaceRegionRepresentationHtml();
+                }
+                var html = pageHtmlHelper.GetReplacedHtml().ToString();
 
                 if (!string.IsNullOrWhiteSpace(html))
                 {
-                    var pageHtmlHelper = new PageHtmlRendererHelper(html, model);
-                    if (model.AreRegionsEditable)
-                    {
-                        pageHtmlHelper.ReplaceRegionRepresentationHtml();
-                    }
-                    html = pageHtmlHelper.GetReplacedHtml();
-
                     RenderSectionAsLayoutRegion(webPage, html, region.RegionIdentifier);
                 }                
             }

@@ -56,18 +56,19 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         {
             var htmlHelper = GetHtmlHelper(controller);
 
-            return RenderRecursively(controller, renderPageViewModel, renderPageViewModel, htmlHelper);
+            return RenderRecursively(controller, renderPageViewModel, renderPageViewModel, htmlHelper).ToString();
         }
 
         /// <summary>
         /// Renders page to string recursively - going deep to master pages and layouts.
         /// </summary>
+        /// <param name="sb">The sb.</param>
         /// <param name="controller">The controller.</param>
         /// <param name="currentModel">The model.</param>
         /// <param name="pageModel">The page model.</param>
         /// <param name="htmlHelper">The HTML helper.</param>
-        /// <returns></returns>
-        private static string RenderRecursively(CmsControllerBase controller, RenderPageViewModel currentModel, RenderPageViewModel pageModel, HtmlHelper htmlHelper)
+        /// <returns>String builder with updated data</returns>
+        private static StringBuilder RenderRecursively(CmsControllerBase controller, RenderPageViewModel currentModel, RenderPageViewModel pageModel, HtmlHelper htmlHelper)
         {
             if (currentModel.MasterPage != null)
             {
@@ -118,7 +119,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             PopulateCollections(newModel, pageModel);
 
             var renderedView = RenderViewToString(controller, "~/Areas/bcms-Root/Views/Cms/Index.cshtml", newModel);
-            return renderedView;
+            return new StringBuilder(renderedView);
         }
 
         /// <summary>

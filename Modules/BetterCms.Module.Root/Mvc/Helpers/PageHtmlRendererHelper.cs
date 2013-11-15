@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 using BetterCms.Core.DataContracts;
@@ -37,40 +38,40 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         private readonly RenderPageViewModel model;
 
         /// <summary>
-        /// The HTML
+        /// The HTML string builder
         /// </summary>
-        private string html;
+        private StringBuilder stringBuilder;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PageHtmlRendererHelper" /> class.
         /// </summary>
-        /// <param name="html">The HTML.</param>
+        /// <param name="stringBuilder">The string builder.</param>
         /// <param name="model">The model.</param>
-        public PageHtmlRendererHelper(string html, RenderPageViewModel model)
+        public PageHtmlRendererHelper(StringBuilder stringBuilder, RenderPageViewModel model)
         {
             this.model = model;
-            this.html = html;
+            this.stringBuilder = stringBuilder;
         }
 
         /// <summary>
         /// Replaces HTML with data from page view model.
         /// </summary>
         /// <returns>Replaced HTML</returns>
-        public string GetReplacedHtml()
+        public StringBuilder GetReplacedHtml()
         {
-            html = ReplaceAllMatches(ReplacementIds.PageTitle, html, model.Title);
-            html = ReplaceAllMatches(ReplacementIds.PageUrl, html, model.PageUrl);
-            html = ReplaceAllMatches(ReplacementIds.PageId, html, model.Id.ToString());
-            html = ReplaceAllMatches(ReplacementIds.MetaTitle, html, model.MetaTitle);
-            html = ReplaceAllMatches(ReplacementIds.MetaKeywords, html, model.MetaKeywords);
-            html = ReplaceAllMatches(ReplacementIds.MetaDescription, html, model.MetaDescription);
+            ReplaceAllMatches(ReplacementIds.PageTitle, model.Title);
+            ReplaceAllMatches(ReplacementIds.PageUrl, model.PageUrl);
+            ReplaceAllMatches(ReplacementIds.PageId, model.Id.ToString());
+            ReplaceAllMatches(ReplacementIds.MetaTitle, model.MetaTitle);
+            ReplaceAllMatches(ReplacementIds.MetaKeywords, model.MetaKeywords);
+            ReplaceAllMatches(ReplacementIds.MetaDescription, model.MetaDescription);
 
-            html = ReplaceDates(ReplacementIds.PageCreatedOn, html, model.CreatedOn);
-            html = ReplaceDates(ReplacementIds.PageModifiedOn, html, model.ModifiedOn);
+            ReplaceDates(ReplacementIds.PageCreatedOn, model.CreatedOn);
+            ReplaceDates(ReplacementIds.PageModifiedOn, model.ModifiedOn);
 
-            html = ReplaceOptions(ReplacementIds.PageOption, html, model.Options);
+            ReplaceOptions(ReplacementIds.PageOption, model.Options);
 
-            return html;
+            return stringBuilder;
         }
 
         /// <summary>
@@ -78,11 +79,11 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// </summary>
         public void ReplaceRegionRepresentationHtml()
         {
-            html = Regex.Replace(
-                html,
+            stringBuilder = new StringBuilder(Regex.Replace(
+                stringBuilder.ToString(),
                 RootModuleConstants.DynamicRegionRegexPattern,
                 "<div class=\"bcms-draggable-region\">Content to add</div>",
-                RegexOptions.IgnoreCase);
+                RegexOptions.IgnoreCase));
         }
 
         /// <summary>
@@ -97,19 +98,17 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         {
             var replacement = string.Format(RootModuleConstants.DynamicRegionReplacePattern, regionId);
 
-            html = Regex.Replace(html, replacement, replaceWith, RegexOptions.IgnoreCase);
+            stringBuilder = new StringBuilder(Regex.Replace(stringBuilder.ToString(), replacement, replaceWith, RegexOptions.IgnoreCase));
         }
 
         /// <summary>
         /// Replaces the options.
         /// </summary>
         /// <param name="identifier">The identifier.</param>
-        /// <param name="html">The HTML.</param>
         /// <param name="options">The options.</param>
-        /// <returns></returns>
-        private string ReplaceOptions(string identifier, string html, IEnumerable<IOptionValue> options)
+        private void ReplaceOptions(string identifier, IEnumerable<IOptionValue> options)
         {
-            foreach (var match in FindAllMatches(identifier, html))
+            foreach (var match in FindAllMatches(identifier))
             {
                 string replaceWith = null;
 
@@ -144,19 +143,17 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     }
                 }
 
-                html = html.Replace(match.GlobalMatch, replaceWith);
+                stringBuilder.Replace(match.GlobalMatch, replaceWith);
             }
-
-            return html;
         }
 
         /// <summary>
         /// Replaces the dates.
         /// </summary>
         /// <returns>HTML with replacements</returns>
-        private string ReplaceDates(string identifier, string html, DateTime replaceWith)
+        private void ReplaceDates(string identifier, DateTime replaceWith)
         {
-            foreach (var match in FindAllMatches(identifier, html))
+            foreach (var match in FindAllMatches(identifier))
             {
                 string date;
                 if (match.Parameters != null && match.Parameters.Length > 0)
@@ -175,41 +172,39 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     date = replaceWith.ToString(CultureInfo.InvariantCulture);
                 }
 
-                html = html.Replace(match.GlobalMatch, date);
+                stringBuilder.Replace(match.GlobalMatch, date);
             }
-
-            return html;
         }
 
         /// <summary>
         /// Replaces all the matches within given HTML.
         /// </summary>
         /// <param name="identifier">The identifier.</param>
-        /// <param name="html">The HTML.</param>
         /// <param name="replaceWith">The replace with.</param>
-        /// <returns>HTML with replacements</returns>
-        private string ReplaceAllMatches(string identifier, string html, string replaceWith)
+        /// <returns>
+        /// HTML with replacements
+        /// </returns>
+        private void ReplaceAllMatches(string identifier, string replaceWith)
         {
-            foreach (var match in FindAllMatches(identifier, html))
+            foreach (var match in FindAllMatches(identifier))
             {
-                html = html.Replace(match.GlobalMatch, replaceWith);
+                stringBuilder.Replace(match.GlobalMatch, replaceWith);
             }
-
-            return html;
         }
 
         /// <summary>
         /// Finds all matches within given HTML.
         /// </summary>
         /// <param name="identifier">The identifier.</param>
-        /// <param name="html">The HTML.</param>
-        /// <returns>List of all found matches</returns>
-        private IEnumerable<PropertyMatch> FindAllMatches(string identifier, string html)
+        /// <returns>
+        /// List of all found matches
+        /// </returns>
+        private IEnumerable<PropertyMatch> FindAllMatches(string identifier)
         {
             var matches = new List<PropertyMatch>();
             var pattern = string.Concat("{{", identifier, "(:([^\\:\\{\\}]*))*}}");
 
-            foreach (Match match in Regex.Matches(html, pattern, RegexOptions.IgnoreCase))
+            foreach (Match match in Regex.Matches(stringBuilder.ToString(), pattern, RegexOptions.IgnoreCase))
             {
                 var propertyMatch = new PropertyMatch
                 {
