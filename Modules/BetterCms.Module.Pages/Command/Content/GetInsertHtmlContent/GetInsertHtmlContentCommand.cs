@@ -18,7 +18,8 @@ namespace BetterCms.Module.Pages.Command.Content.GetInsertHtmlContent
                 PageId = Guid.Parse(request.PageId),
                 RegionId = Guid.Parse(request.RegionId),
                 LiveFrom = DateTime.Today,
-                EnableInsetDynamicRegion = Repository.First<Root.Models.Page>(request.PageId.ToGuidOrDefault()).IsMasterPage
+                EnableInsetDynamicRegion = Repository.First<Root.Models.Page>(request.PageId.ToGuidOrDefault()).IsMasterPage,
+                CanEditContent = true
             };
         }
     }
