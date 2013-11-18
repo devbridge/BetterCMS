@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
@@ -45,15 +46,15 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     }
                 }
 
-                var html = contentsBuilder.ToString();
+                var pageHtmlHelper = new PageHtmlRendererHelper(contentsBuilder, model);
+                if (model.AreRegionsEditable)
+                {
+                    pageHtmlHelper.ReplaceRegionRepresentationHtml();
+                }
+                var html = pageHtmlHelper.GetReplacedHtml().ToString();
 
                 if (!string.IsNullOrWhiteSpace(html))
                 {
-                    if (model.AreRegionsEditable)
-                    {
-                        html = DynamicLayoutHelper.ReplaceRegionRepresentationHtml(html);
-                    }
-
                     RenderSectionAsLayoutRegion(webPage, html, region.RegionIdentifier);
                 }                
             }

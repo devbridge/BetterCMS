@@ -204,6 +204,14 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         public bool CanDestroyDraft { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether user has edit content right.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if user has edit content right; otherwise, <c>false</c>.
+        /// </value>
+        public bool CanEditContent { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

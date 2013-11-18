@@ -537,4 +537,7 @@
   <data name="WidgetStatus_PublishedWithDraft" xml:space="preserve">
     <value>Published (With Draft)</value>
   </data>
+  <data name="Message_NoItemToSelect" xml:space="preserve">
+    <value>No item to select.</value>
+  </data>
 </root>

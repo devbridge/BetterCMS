@@ -1,11 +1,13 @@
-﻿@model IList<BetterCms.Module.Pages.ViewModels.Page.TemplateViewModel> 
+﻿@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Root.Content.Resources
+@model IList<BetterCms.Module.Pages.ViewModels.Page.TemplateViewModel> 
 @helper Templates(IList<BetterCms.Module.Pages.ViewModels.Page.TemplateViewModel> model)
 {
     if (model != null && model.Count > 0)
     {
         @Html.Raw("<div class=\"bcms-grid-holder\">")
 
-        for (int i = 0; i < model.Count; i++)
+        for (var i = 0; i < model.Count; i++)
         {
             if (i % 3 == 0 && i != 0)
             {
@@ -17,7 +19,11 @@
         }
 
         @Html.Raw("</div>")
-    }    
+    }
+    else
+    {
+        <p>@Html.Raw(RootGlobalization.Message_NoItemToSelect)</p>
+    }
 }
 @{
     var active = Model.FirstOrDefault(m => m.IsActive);

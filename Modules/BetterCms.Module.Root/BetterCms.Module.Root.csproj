@@ -60,6 +60,9 @@
     <Reference Include="Autofac.Configuration">
       <HintPath>..\..\packages\Autofac.3.0.0\lib\net40\Autofac.Configuration.dll</HintPath>
     </Reference>
+    <Reference Include="BetterCms.Module.Pages">
+      <HintPath>..\..\Tests\BetterCms.Modules.Tests\bin\Debug\BetterCms.Module.Pages.dll</HintPath>
+    </Reference>
     <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
@@ -165,7 +168,7 @@
     <Compile Include="Models\Migrations\Migration201310170919.cs" />
     <Compile Include="Models\Migrations\Migration201310160818.cs" />
     <Compile Include="Models\Migrations\Migration201310180900.cs" />
-    <Compile Include="Mvc\Helpers\DynamicLayoutHelper.cs" />
+    <Compile Include="Mvc\Helpers\PageHtmlRendererHelper.cs" />
     <Compile Include="Mvc\Helpers\OptionsExtentions.cs" />
     <Compile Include="Mvc\Helpers\ViewRenderingExtensions.cs" />
     <Compile Include="Providers\CustomOptionsProvider.cs" />
@@ -973,6 +976,7 @@
     <EmbeddedResource Include="Scripts\ace\snippets\yaml.js" />
     <EmbeddedResource Include="Scripts\bcms.codeEditor.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-dynamicregion\plugin.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-modelvalues\plugin.js" />
     <Content Include="Views\Web.config" />
     <EmbeddedResource Include="Views\Sidebar\Container.cshtml" />
     <EmbeddedResource Include="Views\Rendering\RenderMainJsFile.cshtml" />

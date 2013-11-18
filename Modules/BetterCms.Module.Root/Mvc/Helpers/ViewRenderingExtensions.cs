@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 
+using BetterCms.Core.DataContracts;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Cms;
 
 namespace BetterCms.Module.Root.Mvc.Helpers
@@ -56,22 +56,25 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         {
             var htmlHelper = GetHtmlHelper(controller);
 
-            return RenderRecursively(controller, renderPageViewModel, renderPageViewModel, htmlHelper);
+            return RenderRecursively(controller, renderPageViewModel, renderPageViewModel, htmlHelper).ToString();
         }
 
         /// <summary>
         /// Renders page to string recursively - going deep to master pages and layouts.
         /// </summary>
+        /// <param name="sb">The sb.</param>
         /// <param name="controller">The controller.</param>
         /// <param name="currentModel">The model.</param>
         /// <param name="pageModel">The page model.</param>
         /// <param name="htmlHelper">The HTML helper.</param>
-        /// <returns></returns>
-        private static string RenderRecursively(CmsControllerBase controller, RenderPageViewModel currentModel, RenderPageViewModel pageModel, HtmlHelper htmlHelper)
+        /// <returns>String builder with updated data</returns>
+        private static StringBuilder RenderRecursively(CmsControllerBase controller, RenderPageViewModel currentModel, RenderPageViewModel pageModel, HtmlHelper htmlHelper)
         {
             if (currentModel.MasterPage != null)
             {
                 var renderedMaster = RenderRecursively(controller, currentModel.MasterPage, pageModel, htmlHelper);
+
+                var pageHtmlHelper = new PageHtmlRendererHelper(renderedMaster, pageModel);
 
                 foreach (var region in currentModel.Regions)
                 {
@@ -91,14 +94,16 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                         }
                     }
 
+                    // Insert region to master page
                     var html = contentsBuilder.ToString();
-                    renderedMaster = DynamicLayoutHelper.ReplaceRegionHtml(region.RegionIdentifier, renderedMaster, html);
+                    pageHtmlHelper.ReplaceRegionHtml(region.RegionIdentifier, html);
                 }
-                
+
                 if (currentModel.AreRegionsEditable)
                 {
-                    renderedMaster = DynamicLayoutHelper.ReplaceRegionRepresentationHtml(renderedMaster);
+                    pageHtmlHelper.ReplaceRegionRepresentationHtml();
                 }
+                renderedMaster = pageHtmlHelper.GetReplacedHtml();
 
                 return renderedMaster;
             }
@@ -114,7 +119,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             PopulateCollections(newModel, pageModel);
 
             var renderedView = RenderViewToString(controller, "~/Areas/bcms-Root/Views/Cms/Index.cshtml", newModel);
-            return renderedView;
+            return new StringBuilder(renderedView);
         }
 
         /// <summary>
@@ -156,6 +161,18 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     {
                         destination.Stylesheets.Add(css);
                     }
+                }
+            }
+
+            if (source.OptionsAsDictionary != null)
+            {
+                if (destination.OptionsAsDictionary == null)
+                {
+                    destination.OptionsAsDictionary = new Dictionary<string, IOptionValue>();
+                }
+                foreach (var option in source.OptionsAsDictionary)
+                {
+                    destination.OptionsAsDictionary[option.Key] = option.Value;
                 }
             }
         }
