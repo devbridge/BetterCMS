@@ -7,7 +7,9 @@ using BetterCms.Module.Pages.Command.Layout.DeleteTemplate;
 using BetterCms.Module.Pages.Command.Layout.GetSiteSettingsTemplates;
 using BetterCms.Module.Pages.Command.Layout.GetTemplateForEdit;
 using BetterCms.Module.Pages.Command.Layout.SaveTemplate;
+using BetterCms.Module.Pages.Command.Page.GetPagesList;
 using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.Templates;
 
 using BetterCms.Module.Root;
@@ -125,6 +127,29 @@ namespace BetterCms.Module.Pages.Controllers
             var model = GetCommand<GetSiteSettingsTemplatesCommand>().ExecuteCommand(request);
             
             return View(model);
+        }
+
+        /// <summary>
+        /// Masters the pages.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        /// Rendered master pages list.
+        /// </returns>
+        public ActionResult MasterPages(PagesFilter request)
+        {
+            request.SetDefaultPaging();
+            var model = GetCommand<GetPagesListCommand>().ExecuteCommand(request);
+            var success = model != null;
+
+            var view = RenderView("MasterPages", model);
+            var json = new
+            {
+                Tags = request.Tags,
+                IncludeArchived = request.IncludeArchived
+            };
+
+            return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);
         }
     }
 }

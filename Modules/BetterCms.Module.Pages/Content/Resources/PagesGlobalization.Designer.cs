@@ -2464,6 +2464,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Master Pages.
+        /// </summary>
+        public static string SiteSettings_MasterPages_Title {
+            get {
+                return ResourceManager.GetString("SiteSettings_MasterPages_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New +.
         /// </summary>
         public static string SiteSettings_Pages_AddNew {

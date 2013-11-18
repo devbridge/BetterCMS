@@ -28,8 +28,7 @@
 {
     @Html.HiddenGridOptions(Model.GridOptions)
     
-    <div class="bcms-twocols-title-block">
-        <div class="bcms-large-titles">@PagesGlobalization.SiteSettings_Templates_Title</div>
+    <div class="bcms-top-block-holder">
         <div class="bcms-btn-links-main" id="bcms-register-template-button">@PagesGlobalization.SiteSettings_Widgets_RegisterNew</div>
         <div class="bcms-search-block">
             @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })

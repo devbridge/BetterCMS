@@ -19,6 +19,7 @@ namespace BetterCms.Module.Pages.Registration
             Links = new IActionProjection[]
                         {
                             new JavaScriptModuleLinkTo<TemplatesController>(this, "loadSiteSettingsTemplateListUrl", controller => controller.Templates(null)),
+                            new JavaScriptModuleLinkTo<TemplatesController>(this, "loadMasterPagesListUrl", controller => controller.MasterPages(null)),
                            
                             new JavaScriptModuleLinkTo<TemplatesController>(this, "loadRegisterTemplateDialogUrl", controller => controller.RegisterTemplate()),
                             new JavaScriptModuleLinkTo<TemplatesController>(this, "loadEditTemplateDialogUrl", controller => controller.EditTemplate("{0}")),
@@ -34,7 +35,9 @@ namespace BetterCms.Module.Pages.Registration
                                     new JavaScriptModuleGlobalization(this, "deleteTemplateConfirmMessage", () => PagesGlobalization.SiteSettings_Template_DeleteCategoryMessage),
                                     new JavaScriptModuleGlobalization(this, "deleteRegionConfirmMessage", () => PagesGlobalization.DeleteRegion_Confirmation_Message),
                                     new JavaScriptModuleGlobalization(this, "previewImageNotFoundMessage", () => PagesGlobalization.EditTemplate_PreviewImageNotFound_Message),
-                                    new JavaScriptModuleGlobalization(this, "deletingMessage", () => RootGlobalization.Message_Deleting)
+                                    new JavaScriptModuleGlobalization(this, "deletingMessage", () => RootGlobalization.Message_Deleting),
+                                    new JavaScriptModuleGlobalization(this, "templatesTabTitle", () => PagesGlobalization.SiteSettings_Templates_Title),
+                                    new JavaScriptModuleGlobalization(this, "masterPagesTabTitle", () => PagesGlobalization.SiteSettings_MasterPages_Title),
                                 };
         }
     }
