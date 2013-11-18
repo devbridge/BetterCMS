@@ -202,6 +202,10 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         {
             get
             {
+                if (OptionsAsDictionary == null)
+                {
+                    OptionsAsDictionary = new Dictionary<string, IOptionValue>();
+                }
                 return OptionsAsDictionary.Values;
             }
 
