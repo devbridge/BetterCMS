@@ -136,6 +136,24 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                                 replaceWith = ((DateTime)option.Value).ToString(CultureInfo.InvariantCulture);
                             }
                         }
+                        else if (option.Value is decimal)
+                        {
+                            if (match.Parameters.Length > 1)
+                            {
+                                try
+                                {
+                                    replaceWith = ((decimal)option.Value).ToString(match.Parameters[1]);
+                                }
+                                catch
+                                {
+                                    // Do nothing
+                                }
+                            }
+                            else
+                            {
+                                replaceWith = ((decimal)option.Value).ToString(CultureInfo.InvariantCulture);
+                            }
+                        }
                         else
                         {
                             replaceWith = option.Value.ToString();
