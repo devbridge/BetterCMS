@@ -29,9 +29,9 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             masterPagesPathContainer: '.bcms-layout-path',
             masterPagesPathHandler: '.bcms-layout-path-handle',
             masterPagesPathItem: '.bcms-layout-path-item',
+            masterPagesPathInnerContainer: '.bcms-layout-path-inner',
             masterPagesPathSliderLeft: '.bcms-path-arrow-left',
             masterPagesPathSliderRight: '.bcms-path-arrow-right'
-       
         },
         classes = {
             regionStart: 'bcms-region-start',
@@ -641,7 +641,6 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
         self.element = element;
         self.index = index;
-        self.width = self.element.outerWidth();
 
         return self;
     }
@@ -695,19 +694,27 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             var itemNr = currentItem + step,
                 length = items.length,
                 margin,
-                i;
+                i,
+                margins = [];
 
             if (itemNr >= 0 && itemNr <= maxItem) {
                 currentItem += step;
                 for (i = 0; i < length; i++) {
                     if (i < currentItem) {
-                        margin = -items[i].width;
+                        margin = -items[i].element.outerWidth();
                     } else {
                         margin = 0;
                     }
-                    
-                    items[i].element.css('margin-left', margin);
+
+                    margins.push({
+                        item: i,
+                        margin: margin
+                    });
                 }
+            }
+
+            for (i = 0; i < margins.length; i++) {
+                items[margins[i].item].element.css('margin-left', margins[i].margin);
             }
 
             updateSliders();
@@ -728,20 +735,22 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         }
         
         function slideToTheFirstParent() {
-            var width = parseInt(pathContainer.find('.bcms-layout-path-inner').css('width')),
+            var width = pathContainer.find(selectors.masterPagesPathInnerContainer).width(),
                 length = items.length,
-                sum = items[length - 1].width,
+                sum = items[length - 1].element.outerWidth(),
                 i,
                 slidesToLeave = 0;
 
             for (i = length - 2; i >= 0; i--) {
-                sum += items[i].width;
+                sum += items[i].element.outerWidth();
                 if (sum <= width) {
                     slidesToLeave++;
                 }
+                bcms.logger.trace('Sliding to first: slidesToLeave: ' + slidesToLeave + ' sum: ' + sum + ' currentItem: ' + items[i].element.outerWidth() + ' width: ' + width);
             }
 
             maxItem = length - 1 - slidesToLeave;
+            bcms.logger.trace('Slide to: ' + maxItem);
             slide(maxItem);
         }
 
@@ -752,11 +761,16 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
             var ww = $(window).width(),
                 cw = ww * 0.8,
-                margin = cw / -2;
+                totalItemsWidth = leftSlider.outerWidth() + leftSlider.outerWidth() + 30;
 
-            pathContainer.css('width', cw);
+            $.each(items, function (index) {
+                totalItemsWidth += items[index].element.outerWidth();
+                bcms.logger.trace('Item: ' + items[index].element.outerWidth() + '; total: ' + totalItemsWidth + '; cw: ' + cw);
+            });
+
+            pathContainer.css('width', cw > totalItemsWidth ? totalItemsWidth : cw);
             pathContainer.css('left', ww / 2);
-            pathContainer.css('margin-left', margin);
+            pathContainer.css('margin-left', cw > totalItemsWidth ? totalItemsWidth / -2 : cw / -2);
         };
 
         self.initialize = function () {
@@ -766,12 +780,17 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             
             setPathVisibility(getPathVisibility());
             handle.on('click', onHandleClick);
-            self.calculatePathPositions();
             pathContainer.show();
             
             pathContainer.find(selectors.masterPagesPathItem).each(function (index) {
-                var item = $(this);
+                var item = $(this),
+                    html = item.html();
 
+                if (html.length > 50) {
+                    item.attr('title', html);
+                    html = html.substr(0, 50) + '...';
+                    item.html(html);
+                }
                 items.push(new PathViewModel(item, index));
 
                 item.on('click', function () {
@@ -781,14 +800,15 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 });
             });
 
-            slideToTheFirstParent();
-
             leftSlider.on('click', function () {
                 slide(-1);
             });
             rightSlider.on('click', function () {
                 slide(1);
             });
+            
+            self.calculatePathPositions();
+            slideToTheFirstParent();
         };
 
         return self;
