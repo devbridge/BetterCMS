@@ -24,7 +24,7 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// Initializes a new instance of the <see cref="RenderPageViewModel" /> class.
         /// </summary>
         /// <param name="page">The page.</param>
-        public RenderPageViewModel(IPage page)
+        public RenderPageViewModel(IPage page) : this()
         {
             var rootPage = page as Page;
 
@@ -42,8 +42,6 @@ namespace BetterCms.Module.Root.ViewModels.Cms
             CreatedByUser = page.CreatedByUser;
             ModifiedOn = page.ModifiedOn;
             ModifiedByUser = page.ModifiedByUser;
-
-            Bag = new DynamicDictionary();
         }
 
         /// <summary>
@@ -51,6 +49,7 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// </summary>
         public RenderPageViewModel()
         {
+            Bag = new DynamicDictionary();
         }
 
         public Guid Id { get; set; }

@@ -13,20 +13,23 @@
             tags.push(["{{CmsPageCreatedOn:yyyy-MM-dd}}", "Page creation date", "Page creation date"]);
             tags.push(["{{CmsPageModifiedOn:yyyy-MM-dd}}", "Page last modification date", "Page last modification date"]);
             tags.push(["{{CmsPageOption:OptionKey}}", "Page option", "Page option"]);
-            tags.push(["{{CmsPageMetaTitle}}", "Page meta title", "Page meta title"]);
-            tags.push(["{{CmsPageMetaKeywords}}", "Page meta keywords", "Page meta keywords"]);
-            tags.push(["{{CmsPageMetaDescription}}", "Page meta description", "Page meta description"]);
-            // TODO: tags.push(["{{CmsPageMainImageUrl}}", "Page main image URL", "Page main image URL"]);
-            // TODO: tags.push(["{{CmsPageSecondaryImageUrl}}", "Page secondary image URL", "Page secondary image URL"]);
-            // TODO: tags.push(["{{CmsPageFeaturedImageUrl}}", "Page featured image URL", "Page featured image URL"]);
-            // TODO: tags.push(["{{CmsPageCategory}}", "Page category name", "Page category name"]);
+            tags.push(["{{CmsPageMetaTitle}}", "Meta title", "Meta title"]);
+            tags.push(["{{CmsPageMetaKeywords}}", "Meta keywords", "Meta keywords"]);
+            tags.push(["{{CmsPageMetaDescription}}", "Meta description", "Meta description"]);
+            tags.push(["{{CmsPageMainImageUrl}}", "Main image URL", "Main image URL"]);
+            tags.push(["{{CmsPageSecondaryImageUrl}}", "Secondary image URL", "Secondary image URL"]);
+            tags.push(["{{CmsPageFeaturedImageUrl}}", "Featured image URL", "Featured image URL"]);
+            tags.push(["{{CmsPageCategory}}", "Category name", "Category name"]);
+            tags.push(["{{CmsBlogAuthor}}", "Blog post author", "Blog post author"]);
+            tags.push(["{{CmsBlogActivationDate:yyyy-MM-dd}}", "Blog post activation date", "Blog post activation date"]);
+            tags.push(["{{CmsBlogExpirationDate:yyyy-MM-dd}}", "Blog post expiration date", "Blog post expiration date"]);
 
             // Create style objects for all defined styles.
             editor.ui.addRichCombo('CmsModelValues',
                {
-                   label: "CMS data",
-                   title: "CMS data",
-                   voiceLabel: "CMS data",
+                   label: "Smart tags",
+                   title: "Smart tags",
+                   voiceLabel: "Smart tags",
                    className: 'cke_format',
                    multiSelect: false,
 
