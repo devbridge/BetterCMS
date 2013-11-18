@@ -581,6 +581,10 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
         grid.ItemViewModel.prototype.saveItem = function () {
             var self = this;
+            if (self.saving() === true) {
+                return;
+            }
+            
             self.hasFocus(false);
             self.saving(true);
             removeSaveTimer(self, true);
