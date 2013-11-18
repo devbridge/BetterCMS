@@ -48,6 +48,7 @@ Edited by the Devbridge Better CMS team.
                             aceEditor.getSession().setMode("ace/mode/html");
                             aceEditor.setTheme("ace/theme/chrome");
                             aceEditor.setShowPrintMargin(0);
+                            aceEditor.setReadOnly(editor.readOnly);
                             aceEditor.getSession().setValue(editor.getData());
                             aceEditor.getSession().setUseWrapMode(false);
                             ace.config.loadModule('ace/ext/language_tools', function () {
