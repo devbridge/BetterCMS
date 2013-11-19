@@ -36,6 +36,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             },
             globalization = {
                 editPagePropertiesModalTitle: null,
+                editMasterPagePropertiesModalTitle: null,
                 pageStatusChangeConfirmationMessagePublish: null,
                 pageStatusChangeConfirmationMessageUnPublish: null,
                 pageConversionToMasterConfirmationMessage: null
@@ -349,6 +350,9 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                                 publishCheckbox.removeAttr('readonly');
                             }
                             pageViewModel = page.initEditPagePropertiesDialogEvents(childDialog, content);
+                            if (content.Data && content.Data.IsMasterPage === true) {
+                                childDialog.setTitle(globalization.editMasterPagePropertiesModalTitle);
+                            }
                         },
 
                         beforePost: function () {
