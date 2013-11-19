@@ -62,6 +62,7 @@ namespace BetterCms.Module.Pages.Models
             duplicate.FeaturedImage = FeaturedImage;
             duplicate.Category = Category;
             duplicate.IsArchived = IsArchived;
+            duplicate.IsMasterPage = IsMasterPage;
 
             return duplicate;
         }
