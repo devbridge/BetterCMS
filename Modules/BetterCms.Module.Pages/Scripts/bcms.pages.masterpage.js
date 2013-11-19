@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSettings', 'bcms.pages'],
-    function ($, bcms, siteSettings, page) {
+bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSettings', 'bcms.pages', 'bcms.grid'],
+    function ($, bcms, siteSettings, page, grid) {
         'use strict';
 
         var module = {},
@@ -13,6 +13,9 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
                 masterPagesTabTitle: null
             },
             selectors = {
+                searchField: '.bcms-search-query',
+                searchButton: '#bcms-pages-search-btn',
+
                 siteSettingsMasterPagesForm: "#bcms-master-pages-form",
                 siteSettingsMasterPageCreateButton: '#bcms-create-page-button',
                 siteSettingsRowCells: 'td',
@@ -31,16 +34,45 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
         /**
         * Initializes site settings master pages list.
         */
-        module.initializeMasterPagesList = function (container, json) {
-            var html = json.Html,
-                data = (json.Success == true) ? json.Data : null,
-                dialog = siteSettings.getModalDialog();
-            container.html(html);
+        module.initializeMasterPagesList = function (container) {
+            var dialog = siteSettings.getModalDialog(),
+                form = dialog.container.find(selectors.siteSettingsMasterPagesForm);
+            
+            grid.bindGridForm(form, function (htmlContent, data) {
+                container.html(htmlContent);
+                module.initializeMasterPagesList(container);
+            });
+            
+            form.on('submit', function (event) {
+                event.preventDefault();
+                searchMasterPages(form, container);
+                return false;
+            });
+            
+            form.find(selectors.searchField).keypress(function (event) {
+                if (event.which == 13) {
+                    bcms.stopEventPropagation(event);
+                    searchMasterPages(form, container);
+                }
+            });
+
+            form.find(selectors.searchButton).on('click', function () {
+                searchMasterPages(form, container);
+            });
 
             initializeListItems(container);
             
             // Select search.
             dialog.setFocus();
+        };
+
+        function searchMasterPages(form, container) {
+            grid.submitGridForm(form, function (htmlContent, data) {
+                container.html(htmlContent);
+                module.initializeMasterPagesList(container);
+                var searchInput = container.find(selectors.searchField);
+                grid.focusSearchInput(searchInput);
+            });
         };
 
         function initializeListItems(container) {
