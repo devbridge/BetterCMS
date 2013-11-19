@@ -614,13 +614,13 @@ namespace BetterCms.Module.Root.Services
         public void SetCustomOptionValueTitles(IEnumerable<OptionViewModel> optionModels, IEnumerable<OptionValueEditViewModel> valueModels = null)
         {
             var values = optionModels
-                    .Where(m => m.Type == OptionType.Custom)
+                    .Where(m => m.Type == OptionType.Custom && m.CustomOption != null)
                     .Select(m => new { m.CustomOption.Identifier, Value = m.OptionDefaultValue });
 
             if (valueModels != null)
             {
                 values = values.Concat(valueModels
-                    .Where(m => m.Type == OptionType.Custom)
+                    .Where(m => m.Type == OptionType.Custom && m.CustomOption != null)
                     .Select(m => new { m.CustomOption.Identifier, Value = m.OptionValue }));
             }
 

@@ -200,7 +200,8 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
                                         Key = option.Key,
                                         Value = option.Value,
                                         Type = option.Type,
-                                        PageContent = newPageContent
+                                        PageContent = newPageContent,
+                                        CustomOption = option.CustomOption
                                     };
                 newPageContent.Options.Add(newOption);
                 Repository.Save(newOption);
@@ -235,7 +236,8 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
                                         Key = pageOption.Key,
                                         Type = pageOption.Type,
                                         Value = pageOption.Value,
-                                        Page = newPage                                        
+                                        Page = newPage,
+                                        CustomOption = pageOption.CustomOption
                                     };
 
             if (newPage.Options == null)
