@@ -1,8 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext;
+
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Services;
+using BetterCms.Module.Root.ViewModels.Option;
 
 namespace BetterCms.Module.Pages.Services
 {
@@ -10,12 +15,15 @@ namespace BetterCms.Module.Pages.Services
     {
         private readonly IRepository repository;
 
-        public DefaultMasterPageService(IRepository repository)
+        private readonly IOptionService optionService;
+
+        public DefaultMasterPageService(IRepository repository, IOptionService optionService)
         {
             this.repository = repository;
+            this.optionService = optionService;
         }
 
-        public IList<System.Guid> GetPageMasterPageIds(System.Guid masterPageId)
+        public IList<Guid> GetPageMasterPageIds(Guid masterPageId)
         {
             // Get list of master page ids
             var ids = repository
@@ -27,14 +35,14 @@ namespace BetterCms.Module.Pages.Services
             return ids.ToList();
         }
 
-        public void SetPageMasterPages(Page page, System.Guid masterPageId)
+        public void SetPageMasterPages(Page page, Guid masterPageId)
         {
             var masterPageIds = GetPageMasterPageIds(masterPageId);
 
             SetPageMasterPages(page, masterPageIds);
         }
 
-        public void SetPageMasterPages(Page page, IList<System.Guid> masterPageIds)
+        public void SetPageMasterPages(Page page, IList<Guid> masterPageIds)
         {
             if (page.MasterPages == null)
             {
@@ -53,6 +61,31 @@ namespace BetterCms.Module.Pages.Services
                     Master = repository.AsProxy<Page>(id),
                     Page = page
                 }));
+        }
+
+        public IList<OptionValueEditViewModel> GetMasterPageOptionValues(Guid id)
+        {
+            var ids = repository
+                    .AsQueryable<Page>()
+                    .Where(p => p.Id == id)
+                    .Select(p => new
+                        {
+                            MasterPageId = p.MasterPage != null ? p.MasterPage.Id : (Guid?)null,
+                            LayoutId = p.Layout != null ? p.Layout.Id : (Guid?)null
+                        })
+                    .FirstOne();
+
+            // Load master page options and set all them as parent options
+            var options = optionService.GetMergedMasterPagesOptionValues(id, ids.MasterPageId, ids.LayoutId);
+            options.ForEach(o =>
+                {
+                    o.UseDefaultValue = true;
+                    o.OptionDefaultValue = o.OptionValue;
+                    o.CanDeleteOption = false;
+                    o.CanEditOption = false;
+                });
+
+            return options;
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.ViewModels.Option;
 
 namespace BetterCms.Module.Pages.Services
 {
@@ -12,5 +13,7 @@ namespace BetterCms.Module.Pages.Services
         void SetPageMasterPages(Page page, Guid masterPageId);
         
         void SetPageMasterPages(Page page, IList<Guid> masterPageIds);
+
+        IList<OptionValueEditViewModel> GetMasterPageOptionValues(System.Guid id);
     }
 }
