@@ -92,7 +92,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Shows add new page to sitemap dialog.
         */
         sitemap.loadAddNewPageDialog = function(data) {
-            if (data && data.Data && (data.Data.Title || data.Data.PageTitle) && (data.Data.Url || data.Data.PageUrl)) {
+            if (data && data.Data && (data.Data.Title || data.Data.PageTitle) && (data.Data.Url || data.Data.PageUrl) && !data.Data.IsMasterPage) {
                 var addPageController = new AddNewPageMapController(data.Data.Title || data.Data.PageTitle, data.Data.Url || data.Data.PageUrl);
                 modal.open({
                     title: globalization.sitemapAddNewPageDialogTitle,
@@ -103,7 +103,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             }
                         });
                     },
-                    onAccept: function (dialog) {
+                    onAccept: function(dialog) {
                         addPageController.save(function() {
                             dialog.close();
                         });
@@ -115,6 +115,10 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         }
                     }
                 });
+            } else {
+                if (data.Callback && $.isFunction(data.Callback)) {
+                    data.Callback(data);
+                }
             }
         };
 

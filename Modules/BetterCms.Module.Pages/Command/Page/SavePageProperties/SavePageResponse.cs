@@ -84,6 +84,14 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         public bool IsArchived { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this page is master.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this page is a master page; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsMasterPage { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SavePageResponse" /> class.
         /// </summary>
         /// <param name="page">The page.</param>
@@ -97,6 +105,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             HasSEO = ((IPage)page).HasSEO;
             PageUrl = page.PageUrl;
             IsArchived = page.IsArchived;
+            IsMasterPage = page.IsMasterPage;
         }
     }
 }

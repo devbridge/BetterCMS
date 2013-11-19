@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSettings', 'bcms.pages', 'bcms.grid'],
-    function ($, bcms, siteSettings, page, grid) {
+bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSettings', 'bcms.pages', 'bcms.grid', 'bcms.pages.properties', 'bcms.messages'],
+    function ($, bcms, siteSettings, page, grid, pageProperties, messages) {
         'use strict';
 
         var module = {},
@@ -18,11 +18,16 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
 
                 siteSettingsMasterPagesForm: "#bcms-master-pages-form",
                 siteSettingsMasterPageCreateButton: '#bcms-create-page-button',
-                siteSettingsRowCells: 'td',
                 siteSettingsPageParentRow: 'tr:first',
-                siteSettingPageTitleCell: '.bcms-page-title',
+                siteSettingsPageTitleCell: '.bcms-page-title',
                 siteSettingsPageEditButton: '.bcms-grid-item-edit-button',
                 siteSettingsPageDeleteButton: '.bcms-grid-item-delete-button',
+                siteSettingsPagesListFormFilterIncludeArchived: "#IncludeArchived",
+                
+                siteSettingsPageRowTemplate: '#bcms-pages-list-row-template',
+                siteSettingsPageRowTemplateFirstRow: 'tr:first',
+                siteSettingsPagesTableFirstRow: 'table.bcms-tables > tbody > tr:first',
+                siteSettingsRowCells: 'td',
             };
 
         /**
@@ -77,17 +82,17 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
 
         function initializeListItems(container) {
             container.find(selectors.siteSettingsMasterPageCreateButton).on('click', function () {
-                page.addSiteSettingsPage(container, true);
+                addMasterPage(container);
             });
 
             container.find(selectors.siteSettingsRowCells).on('click', function () {
                 var editButton = $(this).parents(selectors.siteSettingsPageParentRow).find(selectors.siteSettingsPageEditButton);
                 if (editButton.length > 0) {
-                    page.editSiteSettingsPage(editButton, container);
+                    editMasterPage(editButton, container);
                 }
             });
 
-            container.find(selectors.siteSettingPageTitleCell).on('click', function (event) {
+            container.find(selectors.siteSettingsPageTitleCell).on('click', function (event) {
                 bcms.stopEventPropagation(event);
                 var url = $(this).data('url');
                 window.open(url);
@@ -95,9 +100,62 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
 
             container.find(selectors.siteSettingsPageDeleteButton).on('click', function (event) {
                 bcms.stopEventPropagation(event);
-                page.deleteSiteSettingsPage($(this), container);
+                deleteMasterPage($(this), container);
             });
         };
         
+        function addMasterPage(container) {
+            page.openCreatePageDialog(function (data) {
+                if (data.Data != null) {
+                    var template = $(selectors.siteSettingsPageRowTemplate),
+                        newRow = $(template.html()).find(selectors.siteSettingsPageRowTemplateFirstRow);
+
+                    newRow.find(selectors.siteSettingsPageTitleCell).html(data.Data.Title);
+
+                    newRow.find(selectors.siteSettingsPageTitleCell).data('url', data.Data.PageUrl);
+                    newRow.find(selectors.siteSettingsPageEditButton).data('id', data.Data.PageId);
+                    newRow.find(selectors.siteSettingsPageDeleteButton).data('id', data.Data.PageId);
+                    newRow.find(selectors.siteSettingsPageDeleteButton).data('version', data.Data.Version);
+
+                    newRow.insertBefore($(selectors.siteSettingsPagesTableFirstRow, container));
+
+                    initializeListItems(newRow);
+
+                    grid.showHideEmptyRow(container);
+                }
+            }, true);
+        };
+        
+        function editMasterPage(self, container) {
+            var id = self.data('id');
+
+            pageProperties.openEditPageDialog(id, function (data) {
+                if (data.Data != null) {
+                    if (data.Data.IsArchived) {
+                        var form = container.find(selectors.siteSettingsMasterPagesForm),
+                            includeArchivedField = form.find(selectors.siteSettingsPagesListFormFilterIncludeArchived);
+                        if (!includeArchivedField.is(":checked")) {
+                            self.parents(selectors.siteSettingsPageParentRow).remove();
+                            grid.showHideEmptyRow(container);
+                            return;
+                        }
+                    }
+
+                    var row = self.parents(selectors.siteSettingsPageParentRow);
+                    row.find(selectors.siteSettingsPageTitleCell).html(data.Data.Title);
+                }
+            });
+        };
+
+        function deleteMasterPage(self, container) {
+            var id = self.data('id');
+
+            page.deletePage(id, function (json) {
+                self.parents(selectors.siteSettingsPageParentRow).remove();
+                messages.refreshBox(selectors.siteSettingsMasterPagesForm, json);
+                grid.showHideEmptyRow(container);
+            });
+        };
+
         return module;
     });

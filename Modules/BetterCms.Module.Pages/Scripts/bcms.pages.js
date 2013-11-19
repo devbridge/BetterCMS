@@ -516,20 +516,18 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         /**
         * Opens page create form from site settings pages list
         */
-        page.addSiteSettingsPage = function (container, addMaster) {
+        page.addSiteSettingsPage = function (container) {
             page.openCreatePageDialog(function (data) {
                 if (data.Data != null) {
                     var template = $(selectors.siteSettingsPageRowTemplate),
                         newRow = $(template.html()).find(selectors.siteSettingsPageRowTemplateFirstRow);
 
                     newRow.find(selectors.siteSettingPageTitleCell).html(data.Data.Title);
-                    if (addMaster !== true) {
-                        newRow.find(selectors.siteSettingPageCreatedCell).html(data.Data.CreatedOn);
-                        newRow.find(selectors.siteSettingPageModifiedCell).html(data.Data.ModifiedOn);
+                    newRow.find(selectors.siteSettingPageCreatedCell).html(data.Data.CreatedOn);
+                    newRow.find(selectors.siteSettingPageModifiedCell).html(data.Data.ModifiedOn);
                         
-                        page.siteSettingsPageStatusTemplate(newRow.find(selectors.siteSettingPageStatusCell), data.Data.PageStatus);
-                        page.siteSettingsSetBooleanTemplate(newRow.find(selectors.siteSettingPageHasSeoCell), data.Data.HasSEO);
-                    }
+                    page.siteSettingsPageStatusTemplate(newRow.find(selectors.siteSettingPageStatusCell), data.Data.PageStatus);
+                    page.siteSettingsSetBooleanTemplate(newRow.find(selectors.siteSettingPageHasSeoCell), data.Data.HasSEO);
                     
                     newRow.find(selectors.siteSettingPageTitleCell).data('url', data.Data.PageUrl);
                     newRow.find(selectors.siteSettingsPageEditButton).data('id', data.Data.PageId);
@@ -542,7 +540,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
                     grid.showHideEmptyRow(container);
                 }
-            }, addMaster);
+            });
         };
 
         /**
