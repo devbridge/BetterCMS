@@ -2,8 +2,8 @@
 /*global bettercms */
 
 bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages',
-        'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery', 'bcms.options', 'bcms.ko.extenders'],
-    function ($, bcms, modal, datepicker, dynamicContent, siteSettings, messages, preview, grid, editor, slides, options, ko) {
+        'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery', 'bcms.options', 'bcms.ko.extenders', 'bcms.pages.masterpage'],
+    function ($, bcms, modal, datepicker, dynamicContent, siteSettings, messages, preview, grid, editor, slides, options, ko, masterpage) {
         'use strict';
 
         var template = {},
@@ -21,7 +21,8 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                 deleteRegionConfirmMessage: null,
                 editTemplateRegionTitle: null,
                 previewImageNotFoundMessage: null,
-                deletingMessage: null
+                deletingMessage: null,
+                templatesTabTitle: null,
             },
             selectors = {
                 templatePreviewImageUrl: '#PreviewImageUrl',
@@ -31,7 +32,7 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                 htmlContentTemplateTableFirstRow: 'table.bcms-tables > tbody > tr:first',
 
                 messagesContainer: "#bcms-edit-template-messages",
-
+                siteSettingsTemplatesListForm:"#bcms-templates-form",
                 templateSearchButton: '#bcms-template-search-btn',
                 templateSearchField: '.bcms-search-query',
 
@@ -232,9 +233,18 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
         * Opens site settings template list dialog
         */
         template.loadSiteSettingsTemplateList = function () {
-            dynamicContent.bindSiteSettings(siteSettings, links.loadSiteSettingsTemplateListUrl, {
-                contentAvailable: initializeTemplatesList
-            });
+            var tabs = [],
+                onShow = function (container) {
+                    var firstVisibleInputField = container.find('input[type=text],textarea,select').filter(':visible:first');
+                    if (firstVisibleInputField) {
+                        firstVisibleInputField.focus();
+                    }
+                };
+            var templates = new siteSettings.TabViewModel(globalization.templatesTabTitle, links.loadSiteSettingsTemplateListUrl, initializeTemplatesList, onShow);
+            tabs.push(templates);
+            var masterPages = new siteSettings.TabViewModel(masterpage.globalization.masterPagesTabTitle, masterpage.links.loadMasterPagesListUrl, masterpage.initializeMasterPagesList, onShow);
+            tabs.push(masterPages);
+            siteSettings.initContentTabs(tabs);
         };
 
         /**
@@ -242,7 +252,7 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
         */
         function initializeTemplatesList() {
             var dialog = siteSettings.getModalDialog(),
-                container = dialog.container,
+                container = dialog.container.find(selectors.siteSettingsTemplatesListForm),
                 onTemplateCreated = function (json) {
                     if (json.Success && json.Data != null) {
                         var rowtemplate = $(selectors.templateRowTemplate),
@@ -256,8 +266,8 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                 };
 
             var form = dialog.container.find(selectors.templatesListForm);
-            grid.bindGridForm(form, function (data) {
-                siteSettings.setContent(data);
+            grid.bindGridForm(form, function (html, data) {
+                container.html(html);
                 initializeTemplatesList();
             });
 
@@ -285,8 +295,8 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
         * Search site settings template.
         */
         function searchTemplates(form, container) {
-            grid.submitGridForm(form, function (data) {
-                siteSettings.setContent(data);
+            grid.submitGridForm(form, function (htmlContent, data) {
+                container.html(htmlContent);
                 initializeTemplatesList();
                 var searchInput = container.find(selectors.templateSearchField);
                 grid.focusSearchInput(searchInput);

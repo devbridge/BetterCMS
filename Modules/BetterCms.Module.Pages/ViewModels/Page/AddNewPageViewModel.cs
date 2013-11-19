@@ -103,6 +103,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public bool AccessControlEnabled { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to create a master page.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if master page creation needed; otherwise, <c>false</c>.
+        /// </value>
+        public bool CreateMasterPage { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="AddNewPageViewModel"/> class.
         /// </summary>
         public AddNewPageViewModel()

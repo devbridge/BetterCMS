@@ -66,6 +66,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             globalization = {
                 editPagePropertiesModalTitle: null,
                 addNewPageDialogTitle: null,
+                addNewMasterPageDialogTitle: null,
                 deletePageDialogTitle: null,
                 pageDeletedTitle: null,
                 pageDeletedMessage: null,
@@ -299,13 +300,13 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             });
         };
 
-        page.openCreatePageDialog = function (postSuccess) {
+        page.openCreatePageDialog = function (postSuccess, addMaster) {
             var permalinkValue,
-                url = $.format(links.loadAddNewPageDialogUrl, window.location.pathname),
+                url = $.format(links.loadAddNewPageDialogUrl, window.location.pathname, addMaster),
                 viewModel;
 
             modal.open({
-                title: globalization.addNewPageDialogTitle,
+                title: addMaster === true ? globalization.addNewMasterPageDialogTitle : globalization.addNewPageDialogTitle,
                 onLoad: function (dialog) {
                     dynamicContent.bindDialog(dialog, url, {
                         contentAvailable: function (childDialog, content) {
@@ -515,19 +516,21 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         /**
         * Opens page create form from site settings pages list
         */
-        page.addSiteSettingsPage = function (container) {
+        page.addSiteSettingsPage = function (container, addMaster) {
             page.openCreatePageDialog(function (data) {
                 if (data.Data != null) {
                     var template = $(selectors.siteSettingsPageRowTemplate),
                         newRow = $(template.html()).find(selectors.siteSettingsPageRowTemplateFirstRow);
 
                     newRow.find(selectors.siteSettingPageTitleCell).html(data.Data.Title);
-                    newRow.find(selectors.siteSettingPageCreatedCell).html(data.Data.CreatedOn);
-                    newRow.find(selectors.siteSettingPageModifiedCell).html(data.Data.ModifiedOn);
-
-                    page.siteSettingsPageStatusTemplate(newRow.find(selectors.siteSettingPageStatusCell), data.Data.PageStatus);
-                    page.siteSettingsSetBooleanTemplate(newRow.find(selectors.siteSettingPageHasSeoCell), data.Data.HasSEO);
-
+                    if (addMaster !== true) {
+                        newRow.find(selectors.siteSettingPageCreatedCell).html(data.Data.CreatedOn);
+                        newRow.find(selectors.siteSettingPageModifiedCell).html(data.Data.ModifiedOn);
+                        
+                        page.siteSettingsPageStatusTemplate(newRow.find(selectors.siteSettingPageStatusCell), data.Data.PageStatus);
+                        page.siteSettingsSetBooleanTemplate(newRow.find(selectors.siteSettingPageHasSeoCell), data.Data.HasSEO);
+                    }
+                    
                     newRow.find(selectors.siteSettingPageTitleCell).data('url', data.Data.PageUrl);
                     newRow.find(selectors.siteSettingsPageEditButton).data('id', data.Data.PageId);
                     newRow.find(selectors.siteSettingsPageDeleteButton).data('id', data.Data.PageId);
@@ -539,7 +542,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
                     grid.showHideEmptyRow(container);
                 }
-            });
+            }, addMaster);
         };
 
         /**

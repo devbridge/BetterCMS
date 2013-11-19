@@ -73,6 +73,11 @@ namespace BetterCms.Module.Pages
         private readonly TemplatesJsModuleIncludeDescriptor templatesJsModuleIncludeDescriptor;
 
         /// <summary>
+        /// bcms.pages.masterpage.js module include descriptor.
+        /// </summary>
+        private readonly MasterPagesJsModuleIncludeDescriptor masterPagesJsModuleIncludeDescriptor;
+
+        /// <summary>
         /// bcms.pages.history.js java script module descriptor.
         /// </summary>
         private readonly HistoryJsModuleIncludeDescriptor historyJsModuleIncludeDescriptor;
@@ -94,6 +99,7 @@ namespace BetterCms.Module.Pages
             widgetsJsModuleIncludeDescriptor = new WidgetsJsModuleIncludeDescriptor(this);
             redirectsJsModuleIncludeDescriptor = new RedirectsJsModuleIncludeDescriptor(this);
             templatesJsModuleIncludeDescriptor = new TemplatesJsModuleIncludeDescriptor(this);
+            masterPagesJsModuleIncludeDescriptor = new MasterPagesJsModuleIncludeDescriptor(this);
             historyJsModuleIncludeDescriptor = new HistoryJsModuleIncludeDescriptor(this);
             sitemapJsModuleIncludeDescriptor = new SitemapJsModuleIncludeDescriptor(this);
 
@@ -219,6 +225,7 @@ namespace BetterCms.Module.Pages
                     seoJsModuleIncludeDescriptor,
                     widgetsJsModuleIncludeDescriptor,
                     templatesJsModuleIncludeDescriptor,
+                    masterPagesJsModuleIncludeDescriptor,
                     historyJsModuleIncludeDescriptor,
                     sitemapJsModuleIncludeDescriptor,
                     new JsIncludeDescriptor(this, "bcms.pages.filter")

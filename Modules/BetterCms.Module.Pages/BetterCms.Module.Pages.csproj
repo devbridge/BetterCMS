@@ -258,6 +258,7 @@
     <Compile Include="Accessors\HtmlContentWidgetAccessor.cs" />
     <Compile Include="Accessors\HtmlContentAccessor.cs" />
     <Compile Include="Accessors\ServerControlWidgetAccessor.cs" />
+    <Compile Include="Registration\MasterPagesJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\HistoryJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\SitemapJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\TemplatesJsModuleIncludeDescriptor.cs" />
@@ -388,6 +389,7 @@
     <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.properties.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.masterpage.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -522,7 +524,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\Option\Partial\UseDefaultValueCell.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Templates\MasterPages.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

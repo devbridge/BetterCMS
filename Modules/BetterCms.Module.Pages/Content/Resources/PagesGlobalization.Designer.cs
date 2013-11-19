@@ -70,6 +70,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add New Master Page.
+        /// </summary>
+        public static string AddNewMasterPage_PageTitle {
+            get {
+                return ResourceManager.GetString("AddNewMasterPage_PageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New Page.
         /// </summary>
         public static string AddNewPage_Dialog_Title {
@@ -2460,6 +2469,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string Siderbar_ClonePageButtonTitle {
             get {
                 return ResourceManager.GetString("Siderbar_ClonePageButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master Pages.
+        /// </summary>
+        public static string SiteSettings_MasterPages_Title {
+            get {
+                return ResourceManager.GetString("SiteSettings_MasterPages_Title", resourceCulture);
             }
         }
         
