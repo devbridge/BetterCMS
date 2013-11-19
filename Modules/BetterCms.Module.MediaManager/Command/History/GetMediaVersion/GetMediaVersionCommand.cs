@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
@@ -7,6 +6,7 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 
 using BetterCms.Module.MediaManager.Content.Resources;
+using BetterCms.Module.MediaManager.Helpers;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.Services;
@@ -57,43 +57,63 @@ namespace BetterCms.Module.MediaManager.Command.History.GetMediaVersion
         {
             var response = new MediaPreviewViewModel();
 
-            var media = Repository
-                .AsQueryable<Media>(m => m.Id == request)
-                .Fetch(m => m.Original)
-                .FirstOne();
-
-            var image = media as MediaImage;
-            if (image != null)
-            {
-                response.AddProperty(MediaGlobalization.MediaHistory_Preview_Properties_Caption, image.Caption);
-                response.AddProperty(MediaGlobalization.MediaHistory_Preview_Properties_ImageDimensions, string.Format("{0} x {1}", image.Width, image.Height));
-                response.AddProperty(MediaGlobalization.MediaHistory_Preview_Properties_PublicThumbnailUrl, fileUrlResolver.EnsureFullPathUrl(image.PublicThumbnailUrl), true);
-
-                response.AddProperty(image.Caption, fileUrlResolver.EnsureFullPathUrl(image.PublicUrl), isImageUrl: true);
-            }
-
+            var media = Repository.AsQueryable<Media>(m => m.Id == request).Fetch(m => m.Original).FirstOne();
             var file = media as MediaFile;
+
             if (file != null)
             {
+                var image = media as MediaImage;
+
                 if (cmsConfiguration.Security.AccessControlEnabled)
                 {
                     AccessControlService.DemandAccess(file.Original as MediaFile ?? file, Context.Principal, AccessLevel.Read);
                 }
 
-                var publicUrl = fileService.GetDownloadFileUrl(MediaType.File, file.Id, fileUrlResolver.EnsureFullPathUrl(file.PublicUrl));
-
                 response.AddProperty(MediaGlobalization.MediaHistory_Preview_Properties_Title, file.Title);
-                response.AddProperty(MediaGlobalization.MediaHistory_Preview_Properties_Description, file.Description);
+
+                if (image != null)
+                {
+                    response.AddProperty(MediaGlobalization.MediaHistory_Preview_Properties_Caption, image.Caption);
+                }
+
+                var publicUrl = fileService.GetDownloadFileUrl(MediaType.File, file.Id, fileUrlResolver.EnsureFullPathUrl(file.PublicUrl));
+                response.AddUrl(MediaGlobalization.MediaHistory_Preview_Properties_PublicUrl, publicUrl);
+
+                if (image != null)
+                {
+                    response.AddUrl(MediaGlobalization.MediaHistory_Preview_Properties_PublicThumbnailUrl, fileUrlResolver.EnsureFullPathUrl(image.PublicThumbnailUrl));
+                }
+
                 response.AddProperty(MediaGlobalization.MediaHistory_Preview_Properties_FileSize, file.SizeAsText());
-                response.AddProperty(MediaGlobalization.MediaHistory_Preview_Properties_PublicUrl, publicUrl, true);
+
+                if (image != null)
+                {
+                    var dimensionCalculator = new ImageDimensionsCalculator(image);
+
+                    if (dimensionCalculator.Height != dimensionCalculator.ResizedCroppedHeight || dimensionCalculator.Width != dimensionCalculator.ResizedCroppedWidth)
+                    {
+                        response.AddProperty(MediaGlobalization.MediaHistory_Preview_Properties_CroppedImageDimensions,
+                            string.Format("{0} x {1}", dimensionCalculator.ResizedCroppedWidth, dimensionCalculator.ResizedCroppedHeight));
+                    }
+                    response.AddProperty(MediaGlobalization.MediaHistory_Preview_Properties_ImageDimensions,
+                        string.Format("{0} x {1}", dimensionCalculator.Height, dimensionCalculator.Width));
+                }
+
+                if (!string.IsNullOrWhiteSpace(file.Description))
+                {
+                    response.AddProperty(MediaGlobalization.MediaHistory_Preview_Properties_Description, file.Description);
+                }
 
                 if (media.Image != null)
                 {
-                    response.AddProperty(media.Image.Caption, fileUrlResolver.EnsureFullPathUrl(media.Image.PublicUrl), isImageUrl: true);
+                    response.AddImage(media.Image.Caption, fileUrlResolver.EnsureFullPathUrl(media.Image.PublicUrl));
+                }
+
+                if (image != null)
+                {
+                    response.AddImage(image.Caption, fileUrlResolver.EnsureFullPathUrl(image.PublicUrl));
                 }
             }
-
-            response.Properties = response.Properties.OrderByDescending(o => o.Title).ToList();
 
             return response;
         }

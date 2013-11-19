@@ -42,6 +42,26 @@ namespace BetterCms.Module.MediaManager.ViewModels.History
         }
 
         /// <summary>
+        /// Adds new image view model to propertie slist.
+        /// </summary>
+        /// <param name="title">The title.</param>
+        /// <param name="value">The value.</param>
+        public void AddImage(string title, string value)
+        {
+            AddProperty(title, value, false, true);
+        }
+        
+        /// <summary>
+        /// Adds new URL view model to propertie slist.
+        /// </summary>
+        /// <param name="title">The title.</param>
+        /// <param name="value">The value.</param>
+        public void AddUrl(string title, string value)
+        {
+            AddProperty(title, value, true);
+        }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>
