@@ -550,6 +550,9 @@ a.bcms-remove-image {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+.bcms-sidemenu-username a {
+    color: #2eadd5;
+}
 
 .bcms-sidemenu-openclosearrow {
     height: 20px;

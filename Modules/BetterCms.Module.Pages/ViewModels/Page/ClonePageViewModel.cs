@@ -80,5 +80,13 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <c>true</c> if dialog should be opened in the read only mode; otherwise, <c>false</c>.
         /// </value>
         public bool IsReadOnly { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether page is a master page.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this page is a master page; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsMasterPage { get; set; }
     }
 }

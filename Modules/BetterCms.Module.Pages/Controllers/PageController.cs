@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using BetterCms.Core.Security;
 
 using BetterCms.Module.MediaManager.ViewModels;
+
 using BetterCms.Module.Pages.Command.Layout.GetLayoutOptions;
 using BetterCms.Module.Pages.Command.Page.AddNewPage;
 using BetterCms.Module.Pages.Command.Page.ClonePage;
@@ -69,7 +70,8 @@ namespace BetterCms.Module.Pages.Controllers
             var json = new
             {
                 Tags = request.Tags,
-                IncludeArchived = request.IncludeArchived
+                IncludeArchived = request.IncludeArchived,
+                IncludeMasterPages = request.IncludeMasterPages
             };
 
             return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);
@@ -84,9 +86,13 @@ namespace BetterCms.Module.Pages.Controllers
         /// </returns>
         [HttpGet]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
-        public ActionResult AddNewPage(string parentPageUrl)
+        public ActionResult AddNewPage(string parentPageUrl, string addMaster)
         {
-            var request = new AddNewPageCommandRequest { ParentPageUrl = parentPageUrl };
+            var request = new AddNewPageCommandRequest
+                {
+                    ParentPageUrl = parentPageUrl,
+                    CreateMaster = !string.IsNullOrEmpty(addMaster) && addMaster == "true"
+                };
             var model = GetCommand<AddNewPageCommand>().ExecuteCommand(request);
             var view = RenderView("AddNewPage", model);
 
@@ -139,7 +145,8 @@ namespace BetterCms.Module.Pages.Controllers
                                FeaturedImage = success ? model.FeaturedImage : new ImageSelectorViewModel(),
                                OptionValues = success ? model.OptionValues : null,
                                CustomOptions = success ? model.CustomOptions : null,
-                               UserAccessList = success ? model.UserAccessList : new List<UserAccessViewModel>()
+                               UserAccessList = success ? model.UserAccessList : new List<UserAccessViewModel>(),
+                               IsMasterPage = success && model.IsMasterPage
                            };
 
             return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);

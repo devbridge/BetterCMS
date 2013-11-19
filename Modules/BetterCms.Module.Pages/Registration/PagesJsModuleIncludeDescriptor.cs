@@ -19,7 +19,7 @@ namespace BetterCms.Module.Pages.Registration
         {
             Links = new IActionProjection[]
                 {
-                    new JavaScriptModuleLinkTo<PageController>(this, "loadAddNewPageDialogUrl", c => c.AddNewPage("{0}")),
+                    new JavaScriptModuleLinkTo<PageController>(this, "loadAddNewPageDialogUrl", c => c.AddNewPage("{0}", "{1}")),
                     new JavaScriptModuleLinkTo<PageController>(this, "loadSiteSettingsPageListUrl", c => c.Pages(null)),
                     new JavaScriptModuleLinkTo<PageController>(this, "deletePageConfirmationUrl", c => c.DeletePageConfirmation("{0}")),
                     new JavaScriptModuleLinkTo<PageController>(this, "changePublishStatusUrl", c => c.ChangePublishStatus(null)),
@@ -30,6 +30,7 @@ namespace BetterCms.Module.Pages.Registration
             Globalization = new IActionProjection[]
                 {
                     new JavaScriptModuleGlobalization(this, "addNewPageDialogTitle", () => PagesGlobalization.AddNewPage_Dialog_Title),
+                    new JavaScriptModuleGlobalization(this, "addNewMasterPageDialogTitle", () => PagesGlobalization.AddNewMasterPage_PageTitle),
                     new JavaScriptModuleGlobalization(this, "deletePageDialogTitle", () => PagesGlobalization.DeletePage_Dialog_Title),
                     new JavaScriptModuleGlobalization(this, "pageDeletedMessage", () => PagesGlobalization.DeletePage_SuccessMessage_Message),
                     new JavaScriptModuleGlobalization(this, "pageDeletedTitle", () => PagesGlobalization.DeletePage_SuccessMessage_Title),

@@ -96,16 +96,16 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     dynamicContent.bindDialog(dialog, url, {
                         contentAvailable: function (contentDialog, data) {
                             var editInSourceMode = false,
-                                enableInsetDynamicRegion = false;
+                                enableInsertDynamicRegion = false;
                             if (data && data.Data) {
                                 if (data.Data.EditInSourceMode) {
                                     editInSourceMode = true;
                                 }
-                                if (data.Data.EnableInsetDynamicRegion) {
-                                    enableInsetDynamicRegion = true;
+                                if (data.Data.EnableInsertDynamicRegion) {
+                                    enableInsertDynamicRegion = true;
                                 }
                             }
-                            pagesContent.initializeAddNewContentForm(contentDialog, editInSourceMode, enableInsetDynamicRegion);
+                            pagesContent.initializeAddNewContentForm(contentDialog, editInSourceMode, enableInsertDynamicRegion);
                         },
 
                         beforePost: function() {
@@ -193,7 +193,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Initializes content dialog form.
         */
-        pagesContent.initializeAddNewContentForm = function (dialog, editInSourceMode, enableInsetDynamicRegion) {
+        pagesContent.initializeAddNewContentForm = function (dialog, editInSourceMode, enableInsertDynamicRegion) {
             dialog.container.find(selectors.dataPickers).initializeDatepicker(globalization.datePickerTooltipTitle);
 
             dialog.container.find(selectors.widgetsSearchButton).on('click', function () {
@@ -229,8 +229,8 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             if (editInSourceMode) {
                 htmlEditor.setSourceMode(selectors.htmlEditor);
             }
-            if (enableInsetDynamicRegion) {
-                htmlEditor.enableInsetDynamicRegion(selectors.htmlEditor);
+            if (enableInsertDynamicRegion) {
+                htmlEditor.enableInsertDynamicRegion(selectors.htmlEditor);
             }
 
             pagesContent.initializeCustomTextArea(dialog);
@@ -241,15 +241,15 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Initializes content edit dialog form.
         */
-        pagesContent.initializeEditContentForm = function (dialog, editInSourceMode, enableInsetDynamicRegion) {
+        pagesContent.initializeEditContentForm = function (dialog, editInSourceMode, enableInsertDynamicRegion) {
             dialog.container.find(selectors.dataPickers).initializeDatepicker();
 
             htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
             if (editInSourceMode) {
                 htmlEditor.setSourceMode(selectors.htmlEditor);
             }
-            if (enableInsetDynamicRegion) {
-                htmlEditor.enableInsetDynamicRegion(selectors.htmlEditor);
+            if (enableInsertDynamicRegion) {
+                htmlEditor.enableInsertDynamicRegion(selectors.htmlEditor);
             }
 
             pagesContent.initializeCustomTextArea(dialog);
@@ -506,16 +506,16 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     dynamicContent.bindDialog(dialog, url, {
                         contentAvailable: function (contentDialog, data) {
                             var editInSourceMode = false,
-                                enableInsetDynamicRegion = false;
+                                enableInsertDynamicRegion = false;
                             if (data && data.Data) {
                                 if (data.Data.EditInSourceMode) {
                                     editInSourceMode = true;
                                 }
-                                if (data.Data.EnableInsetDynamicRegion) {
-                                    enableInsetDynamicRegion = true;
+                                if (data.Data.EnableInsertDynamicRegion) {
+                                    enableInsertDynamicRegion = true;
                                 }
                             }
-                            pagesContent.initializeEditContentForm(contentDialog, editInSourceMode, enableInsetDynamicRegion);
+                            pagesContent.initializeEditContentForm(contentDialog, editInSourceMode, enableInsertDynamicRegion);
                         },
 
                         beforePost: function () {

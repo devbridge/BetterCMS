@@ -1,0 +1,11 @@
+﻿@model BetterCms.Core.DataContracts.IPage
+@{
+    Layout = "~/Areas/bcms-Root/Views/Shared/BaseLayout.cshtml";
+}
+@section Styles {    
+    @RenderSection("Styles", false)
+}
+@section HeadScripts {
+    @RenderSection("HeadScripts", false)
+}
+@RenderSection("CMSMainContent", false)

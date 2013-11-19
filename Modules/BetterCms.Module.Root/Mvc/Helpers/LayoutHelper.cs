@@ -46,7 +46,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     }
                 }
 
-                var pageHtmlHelper = new PageHtmlRendererHelper(contentsBuilder, model);
+                var pageHtmlHelper = new PageHtmlRenderer.PageHtmlRenderer(contentsBuilder, model);
                 if (model.AreRegionsEditable)
                 {
                     pageHtmlHelper.ReplaceRegionRepresentationHtml();

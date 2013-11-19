@@ -162,7 +162,7 @@ STYLE MODIFIED BY DEVBRIDGE http://www.devbridge.com
 }
 
 .cke_combopanel {
-    width: 150px;
+    width: 200px;
     height: 170px;
 }
 
@@ -766,7 +766,7 @@ a.cke_path_item:hover, a.cke_path_item:focus, a.cke_path_item:active {
     padding: 1px 2px;
 }
 
-.cke_button__source_label {
+.cke_button__source_label, .cke_button__cmsdynamicregion_label {
     display: inline;
 }
 

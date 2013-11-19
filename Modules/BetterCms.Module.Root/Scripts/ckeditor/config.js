@@ -15,7 +15,8 @@ CKEDITOR.editorConfig = function (config) {
         ['TextColor', 'BGColor'],
 		['NumberedList', 'BulletedList', 'Outdent', 'Indent'],
 		['Styles', 'Format', 'Font', 'FontSize'],
-		['Source', 'Maximize', 'ShowBlocks', 'CmsDynamicRegion', 'CmsModelValues']
+        ['CmsDynamicRegion', 'CmsModelValues'],
+		['Source', 'Maximize', 'ShowBlocks']
     ];
 
     config.removePlugins = 'tabletools';

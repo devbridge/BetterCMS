@@ -163,6 +163,9 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         if (data.EditInSourceMode) {
             htmlEditor.setSourceMode();
         }
+        if (data.EnableInsertDynamicRegion) {
+            htmlEditor.enableInsertDynamicRegion();
+        }
         
         if (data.Version == 0) {
             newPost = true;

@@ -6,15 +6,21 @@ using Autofac;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
+
 using BetterCms.Events;
+
 using BetterCms.Module.Blog.Accessors;
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Helpers.Extensions;
 using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Blog.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Blog.Registration;
 using BetterCms.Module.Blog.Services;
+
 using BetterCms.Module.Pages.Accessors;
+
 using BetterCms.Module.Root;
+using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Root.ViewModels.Cms;
 
 namespace BetterCms.Module.Blog
@@ -43,7 +49,9 @@ namespace BetterCms.Module.Blog
         {
             blogJsModuleIncludeDescriptor = new BlogJsModuleIncludeDescriptor(this);
 
-            Events.RootEvents.Instance.PageRetrieved += Events_PageRetrieved;
+            RootEvents.Instance.PageRetrieved += Events_PageRetrieved;
+
+            RegisterRenderingPageProperties();
         }
 
         /// <summary>
@@ -99,7 +107,7 @@ namespace BetterCms.Module.Blog
                 {
                     new ButtonActionProjection(blogJsModuleIncludeDescriptor, page => "postNewArticle")
                         {
-                            Title = () => BlogGlobalization.Sidebar_AddNewPostButtonTitle,
+                            Title = page => BlogGlobalization.Sidebar_AddNewPostButtonTitle,
                             Order = 200,
                             CssClass = page => "bcms-sidemenu-btn bcms-btn-blog-add",
                             AccessRole = RootModuleConstants.UserRoles.EditContent
@@ -146,7 +154,7 @@ namespace BetterCms.Module.Blog
                     new LinkActionProjection(blogJsModuleIncludeDescriptor, page => "loadSiteSettingsBlogs")
                         {
                             Order = 1200,
-                            Title = () => BlogGlobalization.SiteSettings_BlogsMenuItem,
+                            Title = page => BlogGlobalization.SiteSettings_BlogsMenuItem,
                             CssClass = page => "bcms-sidebar-link",
                             AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.DeleteContent)
                         }                                      
@@ -206,6 +214,13 @@ namespace BetterCms.Module.Blog
             {
                 args.EventResult = PageRetrievedEventResult.ForcePageNotFound;
             }
+        }
+
+        private void RegisterRenderingPageProperties()
+        {
+            PageHtmlRenderer.Register(new RenderingPageAuthorProperty());
+            PageHtmlRenderer.Register(new RenderingPageBlogExpirationDateProperty());
+            PageHtmlRenderer.Register(new RenderingPageBlogActivationDateProperty());
         }
     }
 }

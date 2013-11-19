@@ -907,6 +907,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cropped image dimensions (pixels).
+        /// </summary>
+        public static string MediaHistory_Preview_Properties_CroppedImageDimensions {
+            get {
+                return ResourceManager.GetString("MediaHistory_Preview_Properties_CroppedImageDimensions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string MediaHistory_Preview_Properties_Description {

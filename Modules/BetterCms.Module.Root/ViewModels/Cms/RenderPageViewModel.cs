@@ -24,7 +24,7 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// Initializes a new instance of the <see cref="RenderPageViewModel" /> class.
         /// </summary>
         /// <param name="page">The page.</param>
-        public RenderPageViewModel(IPage page)
+        public RenderPageViewModel(IPage page) : this()
         {
             var rootPage = page as Page;
 
@@ -42,8 +42,7 @@ namespace BetterCms.Module.Root.ViewModels.Cms
             CreatedByUser = page.CreatedByUser;
             ModifiedOn = page.ModifiedOn;
             ModifiedByUser = page.ModifiedByUser;
-
-            Bag = new DynamicDictionary();
+            IsMasterPage = page.IsMasterPage;
         }
 
         /// <summary>
@@ -51,6 +50,7 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// </summary>
         public RenderPageViewModel()
         {
+            Bag = new DynamicDictionary();
         }
 
         public Guid Id { get; set; }
@@ -72,6 +72,8 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         public bool HasSEO { get; set; }
 
         public string Title { get; set; }
+        
+        public bool IsMasterPage { get; set; }
 
         public string MetaTitle { get; set; }
 
@@ -357,6 +359,7 @@ namespace BetterCms.Module.Root.ViewModels.Cms
                            HasSEO = HasSEO,
                            Title = Title,
                            MetaTitle = MetaTitle,
+                           IsMasterPage = IsMasterPage,
                            MetaDescription = MetaDescription,
                            MetaKeywords = MetaKeywords,
                            PageUrl = PageUrl,

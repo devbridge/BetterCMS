@@ -89,9 +89,9 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
                 throw new ValidationException(() => message, logMessage);
             }
 
-            // Create / fix page url
+            // Create / fix page url.
             var pageUrl = request.PageUrl;
-            var createPageUrl = (pageUrl == null);
+            var createPageUrl = pageUrl == null;
 
             if (createPageUrl && !string.IsNullOrWhiteSpace(request.PageTitle))
             {
@@ -111,7 +111,8 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
                     PageUrlHash = pageUrl.UrlHash(),
                     Title = request.PageTitle,
                     MetaTitle = request.PageTitle,
-                    Status = PageStatus.Unpublished
+                    Status = request.CreateMasterPage ? PageStatus.Published : PageStatus.Unpublished,
+                    IsMasterPage = request.CreateMasterPage
                 };
 
             if (request.MasterPageId.HasValue)

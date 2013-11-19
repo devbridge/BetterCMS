@@ -129,6 +129,7 @@
     <Compile Include="ImagesGalleryModuleConstants.cs" />
     <Compile Include="ImagesGalleryModuleDescriptor.cs" />
     <EmbeddedResource Include="Models\Migrations\Migration201310211700.sqlserver.sql" />
+    <Compile Include="Models\Migrations\Migration201311190740.cs" />
     <Compile Include="Models\Migrations\Migration201310251623.cs" />
     <Compile Include="Models\Migrations\Migration201310211700.cs" />
     <Compile Include="Models\Migrations\Migration201310081540.cs" />
@@ -171,6 +172,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Models\Migrations\Migration201311190740.sqlserver.sql" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>

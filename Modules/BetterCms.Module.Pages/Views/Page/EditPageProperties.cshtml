@@ -29,6 +29,10 @@
 
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
+    @if (Model.IsMasterPage)
+    {
+        @Html.Partial("Partial/InfoMessageAboutMasterPage")
+    }
     @using (Html.BeginForm<PageController>(f => f.EditPageProperties((EditPagePropertiesViewModel)null), FormMethod.Post, 
             new
                 {
@@ -166,22 +170,13 @@
         <div id="bcms-tab-3" class="bcms-tab-single">
             <div class="bcms-padded-content">
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.EditPageProperties_IsMasterPage_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_IsMasterPage_Title</div>
-                    <div class="bcms-checkbox-holder">
-                        @Html.CheckBoxFor(model => model.IsMasterPage, Model.IsMasterPage || !Model.CanPublishPage ? new { disabled = "disabled" } : null)
-                        <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_IsMasterPage_Checkbox</div>
-                    </div>
+                    @Html.Tooltip(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Description)
+                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title</div>
                 </div>
-
+                
                 <div class="bcms-info-message-box">
                     <a class="bcms-btn-close">@RootGlobalization.Button_Close</a>
                     @Html.Raw(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_InfoMessage)
-                </div>
-
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title</div>
                 </div>
 
                 @Html.Partial("Partial/TemplatesList", Model.Templates)

@@ -74,7 +74,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             {
                 var renderedMaster = RenderRecursively(controller, currentModel.MasterPage, pageModel, htmlHelper);
 
-                var pageHtmlHelper = new PageHtmlRendererHelper(renderedMaster, pageModel);
+                var pageHtmlHelper = new PageHtmlRenderer.PageHtmlRenderer(renderedMaster, pageModel);
 
                 foreach (var region in currentModel.Regions)
                 {

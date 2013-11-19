@@ -161,7 +161,7 @@ namespace BetterCms.Module.Users
                     new LinkActionProjection(userJsModuleIncludeDescriptor, page => "loadSiteSettingsUsers")
                         {
                             Order = 4100,
-                            Title = () => UsersGlobalization.SiteSettings_UserMenuItem,
+                            Title = page => UsersGlobalization.SiteSettings_UserMenuItem,
                             CssClass = page => "bcms-sidebar-link",
                             AccessRole = RootModuleConstants.UserRoles.Administration
                         }                                      

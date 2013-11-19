@@ -609,4 +609,7 @@
   <data name="ImageEditor_Dialog_CroppedDimensions" xml:space="preserve">
     <value>Cropped image dimensions (pixels)</value>
   </data>
+  <data name="MediaHistory_Preview_Properties_CroppedImageDimensions" xml:space="preserve">
+    <value>Cropped image dimensions (pixels)</value>
+  </data>
 </root>

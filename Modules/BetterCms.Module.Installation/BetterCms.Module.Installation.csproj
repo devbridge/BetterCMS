@@ -106,6 +106,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UsersGlobalization.resx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Migrations\Migration201311181011.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\Migration201309101320.cs" />
     <Compile Include="Models\Migrations\InstallationVersionTableMetaData.cs" />
@@ -146,6 +147,7 @@
     <Content Include="BuildConfiguration.xml">
       <SubType>Designer</SubType>
     </Content>
+    <EmbeddedResource Include="Models\Migrations\Migration201311181011.sqlserver.sql" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
@@ -170,6 +172,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\DefaultLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\BlankLayout.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
