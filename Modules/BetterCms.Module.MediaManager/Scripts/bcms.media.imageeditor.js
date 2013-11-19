@@ -381,6 +381,8 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                     if (jCropApi != null) {
                         addCropper();
                     }
+                    
+                    recalculateCroppedDimensions();
                 }
                 
                 function initialize() {
