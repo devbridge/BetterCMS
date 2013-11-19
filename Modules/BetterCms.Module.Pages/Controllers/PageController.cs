@@ -84,9 +84,13 @@ namespace BetterCms.Module.Pages.Controllers
         /// </returns>
         [HttpGet]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
-        public ActionResult AddNewPage(string parentPageUrl)
+        public ActionResult AddNewPage(string parentPageUrl, string addMaster)
         {
-            var request = new AddNewPageCommandRequest { ParentPageUrl = parentPageUrl };
+            var request = new AddNewPageCommandRequest
+                {
+                    ParentPageUrl = parentPageUrl,
+                    CreateMaster = !string.IsNullOrEmpty(addMaster) && addMaster == "true"
+                };
             var model = GetCommand<AddNewPageCommand>().ExecuteCommand(request);
             var view = RenderView("AddNewPage", model);
 

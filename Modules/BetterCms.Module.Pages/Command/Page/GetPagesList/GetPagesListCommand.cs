@@ -94,6 +94,11 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
                 query = query.Where(() => !alias.IsArchived);
             }
 
+            if (request.OnlyMasterPages)
+            {
+                query = query.Where(() => alias.IsMasterPage);
+            }
+
             if (!string.IsNullOrWhiteSpace(request.SearchQuery))
             {
                 var searchQuery = string.Format("%{0}%", request.SearchQuery);

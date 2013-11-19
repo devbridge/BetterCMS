@@ -58,7 +58,8 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
                                 ParentPageUrl = request.ParentPageUrl,
                                 Templates = layoutService.GetAvailableLayouts().ToList(),
                                 AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled,
-                                UserAccessList = accessControlService.GetDefaultAccessList(principal).Select(f => new UserAccessViewModel(f)).ToList()
+                                UserAccessList = accessControlService.GetDefaultAccessList(principal).Select(f => new UserAccessViewModel(f)).ToList(),
+                                CreateMasterPage = request.CreateMaster
                             };
 
             if (model.Templates.Count > 0)

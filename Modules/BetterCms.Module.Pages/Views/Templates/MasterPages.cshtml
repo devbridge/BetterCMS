@@ -36,12 +36,11 @@
     };
 }
 
-@using (Html.BeginForm<PageController>(f => f.Pages(null), FormMethod.Post, new { @id = "bcms-pages-form", @class = "bcms-ajax-form" }))
+@using (Html.BeginForm<TemplatesController>(f => f.MasterPages(null), FormMethod.Post, new { @id = "bcms-pages-form", @class = "bcms-ajax-form" }))
 {
     @Html.HiddenGridOptions(Model.GridOptions)
 
     <div class="bcms-top-block-holder">
-        <div class="bcms-large-titles">@PagesGlobalization.SiteSettings_Pages_Title</div>
         @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
         {
             <div class="bcms-btn-links-main" id="bcms-create-page-button">@PagesGlobalization.SiteSettings_Pages_AddNew</div>
@@ -53,7 +52,6 @@
         
         <div class="bcms-featured-grid bcms-clearfix">
             @Html.RenderPaging(Model)
-            @Html.Partial("~/Areas/bcms-pages/Views/Filter/PagesFilterTemplate.cshtml", Model)
         </div>
     </div>
     @Html.SiteSettingsMessagesBox()

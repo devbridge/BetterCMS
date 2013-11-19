@@ -139,6 +139,7 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult MasterPages(PagesFilter request)
         {
             request.SetDefaultPaging();
+            request.OnlyMasterPages = true;
             var model = GetCommand<GetPagesListCommand>().ExecuteCommand(request);
             var success = model != null;
 

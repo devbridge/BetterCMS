@@ -2,14 +2,13 @@
 /*global bettercms */
 
 bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages',
-        'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery', 'bcms.options', 'bcms.ko.extenders', 'bcms.pages'],
-    function ($, bcms, modal, datepicker, dynamicContent, siteSettings, messages, preview, grid, editor, slides, options, ko, pages) {
+        'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery', 'bcms.options', 'bcms.ko.extenders', 'bcms.pages.masterpage'],
+    function ($, bcms, modal, datepicker, dynamicContent, siteSettings, messages, preview, grid, editor, slides, options, ko, masterpage) {
         'use strict';
 
         var template = {},
             links = {
                 loadSiteSettingsTemplateListUrl: null,
-                loadMasterPagesListUrl: null,
                 loadRegisterTemplateDialogUrl: null,
                 loadEditTemplateDialogUrl: null,
                 deleteTemplateUrl: null,
@@ -24,7 +23,6 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                 previewImageNotFoundMessage: null,
                 deletingMessage: null,
                 templatesTabTitle: null,
-                masterPagesTabTitle: null
             },
             selectors = {
                 templatePreviewImageUrl: '#PreviewImageUrl',
@@ -35,7 +33,6 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
 
                 messagesContainer: "#bcms-edit-template-messages",
                 siteSettingsTemplatesListForm:"#bcms-templates-form",
-                siteSettingsMasterPagesForm: "#bcms-master-pages-form",
                 templateSearchButton: '#bcms-template-search-btn',
                 templateSearchField: '.bcms-search-query',
 
@@ -245,7 +242,7 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                 };
             var templates = new siteSettings.TabViewModel(globalization.templatesTabTitle, links.loadSiteSettingsTemplateListUrl, initializeTemplatesList, onShow);
             tabs.push(templates);
-            var masterPages = new siteSettings.TabViewModel(globalization.masterPagesTabTitle, links.loadMasterPagesListUrl, initializeMasterPagesList, onShow);
+            var masterPages = new siteSettings.TabViewModel(masterpage.globalization.masterPagesTabTitle, masterpage.links.loadMasterPagesListUrl, masterpage.initializeMasterPagesList, onShow);
             tabs.push(masterPages);
             siteSettings.initContentTabs(tabs);
         };
@@ -293,23 +290,6 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             // Select search.
             dialog.setFocus();
         };
-
-
-        /**
-        * Initializes site settings master pages list.
-        */
-        function initializeMasterPagesList(container, json) {
-            var html = json.Html,
-                data = (json.Success == true) ? json.Data : null,
-                dialog = siteSettings.getModalDialog();
-
-            container.html(html);
-
-            pages.initializeSiteSettingsPagesListItems(container);
-            
-            // Select search.
-            dialog.setFocus();
-        }
 
         /**
         * Search site settings template.
