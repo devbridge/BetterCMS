@@ -101,7 +101,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                 if (data.Data.EditInSourceMode) {
                                     editInSourceMode = true;
                                 }
-                                if (data.Data.enableInsertDynamicRegion) {
+                                if (data.Data.EnableInsertDynamicRegion) {
                                     enableInsertDynamicRegion = true;
                                 }
                             }
