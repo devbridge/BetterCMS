@@ -1403,13 +1403,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             } else {
                 img = '<img src="' + imageUrl + '" alt="' + caption + '" style="float:' + align + '"/>';
             }
-            if (contentEditor.mode == 'source') {
-                var oldData = contentEditor.getData();
 
-                contentEditor.setData(oldData + img);
-            } else {
-                contentEditor.insertHtml(img);
-            }
+            contentEditor.addHtml(img);
         }
     };
 

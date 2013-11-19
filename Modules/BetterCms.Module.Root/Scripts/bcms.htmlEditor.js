@@ -54,7 +54,21 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
         CKEDITOR.instances[id].InsertDynamicRegion = function (editor) {
             bcms.trigger(htmlEditor.events.insertDynamicRegion, editor);
         };
-        
+
+        CKEDITOR.instances[id].addHtml = function (html) {
+            var editor = this;
+
+            if (editor.mode == 'source') {
+                if (editor.aceEditor && $.isFunction(editor.aceEditor.insert)) {
+                    editor.aceEditor.insert(html);
+                } else {
+                    editor.setData(instance.getData() + html);
+                }
+            } else {
+                editor.insertHtml(html);
+            }
+        };
+
         // Hide native image button container
         CKEDITOR.instances[id].on('instanceReady', function () {
             $(selectors.imageButtonContainer).hide();
@@ -102,10 +116,6 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
         var instance = CKEDITOR.instances[id],
         html = instance.getData();
         $('#' + id).val(html);
-    };
-
-    htmlEditor.insertImage = function(imageUrl) {
-        alert('Insert image to html editor! (' + imageUrl +')');
     };
 
     /**
