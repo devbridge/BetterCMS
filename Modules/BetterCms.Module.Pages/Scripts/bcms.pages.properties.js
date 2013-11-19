@@ -311,13 +311,13 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         /**
         * Opens modal window for given page with page properties
         */
-        page.openEditPageDialog = function (id, postSuccess) {
+        page.openEditPageDialog = function (id, postSuccess, title) {
             var pageViewModel,
                 canEdit = security.IsAuthorized(["BcmsEditContent"]),
                 canPublish = security.IsAuthorized(["BcmsPublishContent"]);
             
             modal.open({
-                title: globalization.editPagePropertiesModalTitle,
+                title: title || globalization.editPagePropertiesModalTitle,
                 disableAccept: !canEdit && !canPublish,
                 onLoad: function (dialog) {
                     var url = $.format(links.loadEditPropertiesDialogUrl, id);
@@ -413,7 +413,19 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 if (data.Data && data.Data.PageUrl) {
                     redirect.RedirectWithAlert(data.Data.PageUrl);
                 }
-            });
+            }, globalization.editPagePropertiesModalTitle);
+        };
+        
+        /**
+        * Opens modal window for current page with page properties
+        */
+        page.editMasterPageProperties = function () {
+            page.openEditPageDialog(bcms.pageId, function (data) {
+                // Redirect
+                if (data.Data && data.Data.PageUrl) {
+                    redirect.RedirectWithAlert(data.Data.PageUrl);
+                }
+            }, globalization.editMasterPagePropertiesModalTitle);
         };
 
         /**

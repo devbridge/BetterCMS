@@ -51,7 +51,15 @@ namespace BetterCms.Core.Modules.Projections
         /// <value>
         /// The tooltip.
         /// </value>
-        public Func<IPage, string> Tooltip { get; set; } 
+        public Func<IPage, string> Tooltip { get; set; }
+
+        /// <summary>
+        /// Determines, if HTML projection should be rendered.
+        /// </summary>
+        /// <value>
+        /// <c>true</c>, if HTML projection should be rendered, otherwise <c>false</c>.
+        /// </value>
+        public Func<IPage, bool> ShouldBeRendered { get; set; }
 
         /// <summary>
         /// Gets or sets the order.
@@ -83,6 +91,11 @@ namespace BetterCms.Core.Modules.Projections
         /// <returns><c>true</c> on success, otherwise <c>false</c>.</returns>
         public virtual bool Render(IPage page, ISecurityService securityService, HtmlHelper html)
         {
+            if (ShouldBeRendered != null && !ShouldBeRendered.Invoke(page))
+            {
+                return false;
+            }
+
             if (AccessRole != null && !securityService.IsAuthorized(AccessRole))
             {
                 return false;

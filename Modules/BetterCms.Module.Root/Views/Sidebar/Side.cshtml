@@ -1,4 +1,5 @@
-﻿@using BetterCms.Module.Root.Content.Resources
+﻿@using BetterCms.Core.Modules.Projections
+@using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc
 @model BetterCms.Module.Root.ViewModels.PageProjectionsViewModel
 <div id="bcms-sidemenu-handle">
@@ -9,8 +10,17 @@
         <div title="@RootGlobalization.Sidebar_EditOnOffTitle" id="bcms-sidemenu-switch">&nbsp;</div>
         @foreach (var projection in Model.Projections)
         {
-            <div class="bcms-sidemenu-separator">&nbsp;</div>
-            projection.Render(Model.Page, (ViewContext.Controller as CmsControllerBase).SecurityService, Html);  
+            var renderSeparator = true;
+            var htmlProjection = projection as HtmlElementProjection;
+            if (htmlProjection != null && htmlProjection.ShouldBeRendered != null)
+            {
+                renderSeparator = htmlProjection.ShouldBeRendered.Invoke(Model.Page);
+            }
+            if (renderSeparator)
+            {
+                <div class="bcms-sidemenu-separator">&nbsp;</div>
+            }
+            projection.Render(Model.Page, (ViewContext.Controller as CmsControllerBase).SecurityService, Html);
         }
     </div>
     <div title="@RootGlobalization.Sidebar_DragTitle" id="bcms-sidemenu-draghandle">&nbsp;</div>

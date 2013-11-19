@@ -1,9 +1,6 @@
-﻿using System;
-using System.Security.Principal;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
 using BetterCms.Core.Services;
 
 namespace BetterCms.Core.Modules.Projections

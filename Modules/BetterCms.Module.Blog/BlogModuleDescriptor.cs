@@ -107,7 +107,7 @@ namespace BetterCms.Module.Blog
                 {
                     new ButtonActionProjection(blogJsModuleIncludeDescriptor, page => "postNewArticle")
                         {
-                            Title = () => BlogGlobalization.Sidebar_AddNewPostButtonTitle,
+                            Title = page => BlogGlobalization.Sidebar_AddNewPostButtonTitle,
                             Order = 200,
                             CssClass = page => "bcms-sidemenu-btn bcms-btn-blog-add",
                             AccessRole = RootModuleConstants.UserRoles.EditContent
@@ -154,7 +154,7 @@ namespace BetterCms.Module.Blog
                     new LinkActionProjection(blogJsModuleIncludeDescriptor, page => "loadSiteSettingsBlogs")
                         {
                             Order = 1200,
-                            Title = () => BlogGlobalization.SiteSettings_BlogsMenuItem,
+                            Title = page => BlogGlobalization.SiteSettings_BlogsMenuItem,
                             CssClass = page => "bcms-sidebar-link",
                             AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.DeleteContent)
                         }                                      

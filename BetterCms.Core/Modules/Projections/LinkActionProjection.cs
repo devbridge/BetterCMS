@@ -25,7 +25,7 @@ namespace BetterCms.Core.Modules.Projections
         /// <param name="parentModuleInclude">The parent module.</param>
         /// <param name="title">Link title.</param>
         /// <param name="onClickAction">Name of the action to execute after button click.</param>
-        public LinkActionProjection(JsIncludeDescriptor parentModuleInclude, Func<string> title, Func<IPage, string> onClickAction)
+        public LinkActionProjection(JsIncludeDescriptor parentModuleInclude, Func<IPage, string> title, Func<IPage, string> onClickAction)
             : base("a", parentModuleInclude, title, onClickAction)
         {
         }

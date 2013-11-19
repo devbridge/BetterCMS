@@ -181,7 +181,7 @@ namespace BetterCms.Module.MediaManager
                     new LinkActionProjection(mediaJsModuleIncludeDescriptor, page => "loadSiteSettingsMediaManager")
                         {
                             Order = 2400,
-                            Title = () => MediaGlobalization.SiteSettings_MediaManagerMenuItem,
+                            Title = page => MediaGlobalization.SiteSettings_MediaManagerMenuItem,
                             CssClass = page => "bcms-sidebar-link",
                             AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.Administration, RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.DeleteContent)
                         }                                      

@@ -4,7 +4,6 @@ using System.Web.Mvc;
 using System.Web.UI;
 
 using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
 
 namespace BetterCms.Core.Modules.Projections
 {
@@ -55,7 +54,7 @@ namespace BetterCms.Core.Modules.Projections
         /// <param name="title">The button title.</param>
         /// <param name="onClickAction">Name of the action to execute after button click.</param>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
-        protected ActionCallProjectionBase(string htmlTag, JsIncludeDescriptor parentModuleInclude, Func<string> title, Func<IPage, string> onClickAction)
+        protected ActionCallProjectionBase(string htmlTag, JsIncludeDescriptor parentModuleInclude, Func<IPage, string> title, Func<IPage, string> onClickAction)
             : base(htmlTag)
         {
             this.parentModuleInclude = parentModuleInclude;
@@ -77,7 +76,7 @@ namespace BetterCms.Core.Modules.Projections
         /// <value>
         /// The title.
         /// </value>
-        public Func<string> Title { get; set; }
+        public Func<IPage, string> Title { get; set; }
 
         /// <summary>
         /// Called before render methods sends element to response output.
@@ -91,7 +90,7 @@ namespace BetterCms.Core.Modules.Projections
 
             if (Title != null)
             {
-                string title = Title();
+                string title = Title(page);
                 controlRenderer.Controls.Add(new LiteralControl(title));
             }
 

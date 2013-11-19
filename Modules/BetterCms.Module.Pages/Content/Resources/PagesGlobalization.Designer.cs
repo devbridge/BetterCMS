@@ -2365,6 +2365,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit master page properties.
+        /// </summary>
+        public static string Sidebar_EditMasterPagePropertiesButtonTitle {
+            get {
+                return ResourceManager.GetString("Sidebar_EditMasterPagePropertiesButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit page properties.
         /// </summary>
         public static string Sidebar_EditPagePropertiesButtonTitle {

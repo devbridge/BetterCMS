@@ -38,5 +38,13 @@ namespace BetterCms.Core.DataContracts
         /// The page URL.
         /// </value>
         string PageUrl { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether page is master page.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if page is master page; otherwise, <c>false</c>.
+        /// </value>
+        bool IsMasterPage { get; }
     }
 }

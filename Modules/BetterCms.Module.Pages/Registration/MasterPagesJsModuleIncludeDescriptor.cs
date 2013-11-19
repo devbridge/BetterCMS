@@ -23,6 +23,7 @@ namespace BetterCms.Module.Pages.Registration
             Globalization = new IActionProjection[]
                                 {
                                     new JavaScriptModuleGlobalization(this, "masterPagesTabTitle", () => PagesGlobalization.SiteSettings_MasterPages_Title),
+                                    new JavaScriptModuleGlobalization(this, "editMasterPagePropertiesModalTitle", () => PagesGlobalization.EditPageProperties_EditMasterPage_Title)
                                 };
         }
     }
