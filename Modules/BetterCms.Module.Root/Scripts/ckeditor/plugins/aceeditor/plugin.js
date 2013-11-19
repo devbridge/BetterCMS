@@ -151,6 +151,8 @@ Edited by the Devbridge Better CMS team.
 
                             // Run this after a command executes in CKEditor.
                             editor.on('afterCommandExec', maximizeACE);
+
+                            editor.aceEditor = aceEditor;
                         }
                     });
 

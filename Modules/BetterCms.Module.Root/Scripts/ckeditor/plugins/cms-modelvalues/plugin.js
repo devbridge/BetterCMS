@@ -32,6 +32,7 @@
                    voiceLabel: "Smart tags",
                    className: 'cke_format',
                    multiSelect: false,
+                   modes: { wysiwyg: 1, source: 1 },
 
                    panel:
                    {
@@ -50,7 +51,7 @@
                    onClick: function (value) {
                        editor.focus();
                        editor.fire('saveSnapshot');
-                       editor.insertHtml(value);
+                       editor.addHtml(value);
                        editor.fire('saveSnapshot');
                    }
                });
