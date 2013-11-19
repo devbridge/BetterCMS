@@ -147,7 +147,8 @@ namespace BetterCms.Module.Pages.Controllers
             var json = new
             {
                 Tags = request.Tags,
-                IncludeArchived = request.IncludeArchived
+                IncludeArchived = request.IncludeArchived,
+                IncludeMasterPages = request.IncludeMasterPages
             };
 
             return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);

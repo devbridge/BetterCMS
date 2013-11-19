@@ -98,6 +98,10 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
             {
                 query = query.Where(() => alias.IsMasterPage);
             }
+            else if (!request.IncludeMasterPages)
+            {
+                query = query.Where(() => !alias.IsMasterPage);
+            }
 
             if (!string.IsNullOrWhiteSpace(request.SearchQuery))
             {

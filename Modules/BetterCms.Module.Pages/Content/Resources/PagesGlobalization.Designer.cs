@@ -2563,6 +2563,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Include master pages.
+        /// </summary>
+        public static string SiteSettings_Pages_FilterIncludeMasterPages {
+            get {
+                return ResourceManager.GetString("SiteSettings_Pages_FilterIncludeMasterPages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to modified.
         /// </summary>
         public static string SiteSettings_Pages_FilterIsModified {

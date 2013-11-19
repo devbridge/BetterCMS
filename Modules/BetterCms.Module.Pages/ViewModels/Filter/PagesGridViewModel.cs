@@ -13,6 +13,7 @@ namespace BetterCms.Module.Pages.ViewModels.Filter
         public Guid? CategoryId { get; set; }
         public IEnumerable<LookupKeyValue> Categories { get; set; }
         public bool IncludeArchived { get; set; }
+        public bool IncludeMasterPages { get; set; }
 
         public PagesGridViewModel(IEnumerable<TModel> items, PagesFilter filter, int totalCount, IEnumerable<LookupKeyValue> categories) : base(items, filter, totalCount)
         {
@@ -20,6 +21,7 @@ namespace BetterCms.Module.Pages.ViewModels.Filter
             CategoryId = filter.CategoryId;
             Categories = categories;
             IncludeArchived = filter.IncludeArchived;
+            IncludeMasterPages = filter.IncludeMasterPages;
         }
     }
 }

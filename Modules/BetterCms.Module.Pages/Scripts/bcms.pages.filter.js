@@ -25,6 +25,7 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             self.isVisible = ko.observable(false);
             self.tags = tagsViewModel;
             self.includeArchived = ko.observable(false);
+            self.includeMasterPages = ko.observable(false);
             self.dropDown = container.find(selectors.filterCategory).get(0);
             var dropDownValue = 0;
             if ($(self.dropDown).get(0) && $(self.dropDown).get(0).selectedIndex) {
@@ -36,6 +37,9 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             });
             self.isEdited = ko.computed(function () {
                 if (self.includeArchived()) {
+                    return true;
+                }
+                if (self.includeMasterPages()) {
                     return true;
                 }
                 if (self.tags != null && self.tags.items() != null && self.tags.items().length > 0) {
@@ -62,6 +66,7 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             self.clearFilter = function () {
                 self.tags.items([]);
                 self.includeArchived(false);
+                self.includeMasterPages(false);
                 self.dropDownValue(0);
                 if (self.dropDown) {
                     self.dropDown.selectedIndex = 0;
@@ -71,12 +76,16 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             self.changeIncludeArchived = function () {
                 self.includeArchived(!(self.includeArchived()));
             };
+            self.changeIncludeMasterPages = function () {
+                self.includeMasterPages(!(self.includeMasterPages()));
+            };
         }
 
         filter.bind = function (container, jsonData, onSearchClick) {
             var tagsViewModel = new tags.TagsListViewModel(jsonData.Tags),
                 filterViewModel = new FilterViewModel(tagsViewModel, container, onSearchClick);
             filterViewModel.includeArchived(jsonData.IncludeArchived ? true : false);
+            filterViewModel.includeMasterPages(jsonData.IncludeMasterPages ? true : false);
             ko.applyBindings(filterViewModel, container.find(selectors.filterTemplate).get(0));
         };
 

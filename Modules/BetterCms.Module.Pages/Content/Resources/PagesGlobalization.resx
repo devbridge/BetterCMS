@@ -1149,4 +1149,7 @@
   <data name="MasterPage_InfoMessage" xml:space="preserve">
     <value>This page is a master page.</value>
   </data>
+  <data name="SiteSettings_Pages_FilterIncludeMasterPages" xml:space="preserve">
+    <value>Include master pages</value>
+  </data>
 </root>
