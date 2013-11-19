@@ -132,7 +132,7 @@
     <Compile Include="Pages\CommandTests\PageTests\CreatePageCommandTest.cs" />
     <Compile Include="Pages\CommandTests\PageTests\GetPagesListCommandTest.cs" />
     <Compile Include="Root\AccessControl\AccessControlServiceTests.cs" />
-    <Compile Include="Root\HelperTests\PageHtmlRendererHelperTests.cs" />
+    <Compile Include="Root\HelperTests\PageHtmlRendererTests.cs" />
     <Compile Include="Root\ModelTests\MapTests\AccessRolesMapTest.cs" />
     <Compile Include="AmazonS3Storage\AmazonS3StorageServiceTest.cs" />
     <Compile Include="Api\ApiFacadeTests.cs" />

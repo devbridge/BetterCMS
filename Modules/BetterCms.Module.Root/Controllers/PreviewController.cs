@@ -3,9 +3,11 @@ using System.Web.Mvc;
 
 using BetterCms.Core.Mvc.Attributes;
 using BetterCms.Core.Security;
-using BetterCms.Core.Services.Caching;
+
 using BetterCms.Module.Root.Commands.GetPageToRender;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
+using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 
 using Microsoft.Web.Mvc;
 
@@ -63,9 +65,11 @@ namespace BetterCms.Module.Root.Controllers
 
             if (model != null && model.RenderPage != null)
             {
-                model.RenderPage.AreRegionsEditable = true;
+                // Render page with hierarchical master pages
+                var html = this.RenderPageToString(model.RenderPage);
+                html = PageHtmlRenderer.ReplaceRegionRepresentationHtml(html, string.Empty);
 
-                return View(model.RenderPage);
+                return Content(html);
             }
 
             return HttpNotFound();

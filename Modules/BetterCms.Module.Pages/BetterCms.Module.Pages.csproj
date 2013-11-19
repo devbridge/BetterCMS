@@ -249,6 +249,11 @@
     <Compile Include="Mvc\Attributes\DateValidationAttribute.cs" />
     <Compile Include="Mvc\Attributes\EndDateValidationAttribute.cs" />
     <Compile Include="Mvc\EditableGrid\OptionValueEditableGridColumn.cs" />
+    <Compile Include="Mvc\PageHtmlRenderer\RenderingPageCategoryProperty.cs" />
+    <Compile Include="Mvc\PageHtmlRenderer\RenderingPageFeaturedImageUrlProperty.cs" />
+    <Compile Include="Mvc\PageHtmlRenderer\RenderingPageSecondaryImageUrlProperty.cs" />
+    <Compile Include="Mvc\PageHtmlRenderer\RenderingPageMainImageUrlProperty.cs" />
+    <Compile Include="Mvc\PageHtmlRenderer\RenderingPageProperties.cs" />
     <Compile Include="PagesConstants.cs" />
     <Compile Include="Accessors\HtmlContentWidgetAccessor.cs" />
     <Compile Include="Accessors\HtmlContentAccessor.cs" />

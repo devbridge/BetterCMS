@@ -8,14 +8,19 @@ using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
+
 using BetterCms.Events;
+
 using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Helpers.Extensions;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Pages.Registration;
 using BetterCms.Module.Pages.Services;
+
 using BetterCms.Module.Root;
+using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Root.Services;
 
 namespace BetterCms.Module.Pages
@@ -99,6 +104,8 @@ namespace BetterCms.Module.Pages
             sitemapJsModuleIncludeDescriptor = new SitemapJsModuleIncludeDescriptor(this);
 
             RootEvents.Instance.PageRetrieved += Events_PageRetrieved;
+
+            RegisterRenderingPageProperties();
         }
 
         /// <summary>
@@ -422,6 +429,14 @@ namespace BetterCms.Module.Pages
             {
                 args.RenderPageData.ExtendWithPageData(args.PageData);
             }
+        }
+
+        private void RegisterRenderingPageProperties()
+        {
+            PageHtmlRenderer.Register(new RenderingPageMainImageUrlProperty());
+            PageHtmlRenderer.Register(new RenderingPageSecondaryImageUrlProperty());
+            PageHtmlRenderer.Register(new RenderingPageFeaturedImageUrlProperty());
+            PageHtmlRenderer.Register(new RenderingPageCategoryProperty());
         }
     }
 }

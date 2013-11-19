@@ -188,6 +188,11 @@ div.bcms-align-right-active {
     z-index: 2147483647; 
 }
 
+    .bcms-media-properties-preview img {
+        max-height: 200px;
+        max-width: 500px;
+    }
+
 /*file uploader*/
 .bcms-dropzone {
     height: 150px;

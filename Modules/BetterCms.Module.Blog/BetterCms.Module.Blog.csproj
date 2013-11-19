@@ -156,6 +156,10 @@
     <Compile Include="Models\Option.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
+    <Compile Include="Mvc\PageHtmlRenderer\RenderingPageBlogExpirationDateProperty.cs" />
+    <Compile Include="Mvc\PageHtmlRenderer\RenderingPageBlogActivationDateProperty.cs" />
+    <Compile Include="Mvc\PageHtmlRenderer\RenderingPageAuthorProperty.cs" />
+    <Compile Include="Mvc\PageHtmlRenderer\RenderingPageProperties.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration\BlogJsModuleIncludeDescriptor.cs" />
     <Compile Include="Services\DefaultAuthorService.cs" />
