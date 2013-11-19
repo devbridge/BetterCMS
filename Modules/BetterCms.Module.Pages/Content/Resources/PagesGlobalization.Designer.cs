@@ -2032,6 +2032,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This page is a master page..
+        /// </summary>
+        public static string MasterPage_InfoMessage {
+            get {
+                return ResourceManager.GetString("MasterPage_InfoMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New +.
         /// </summary>
         public static string Options_AddNew {

@@ -1146,4 +1146,7 @@
   <data name="AddNewMasterPage_PageTitle" xml:space="preserve">
     <value>Add New Master Page</value>
   </data>
+  <data name="MasterPage_InfoMessage" xml:space="preserve">
+    <value>This page is a master page.</value>
+  </data>
 </root>
