@@ -26,6 +26,8 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
         private readonly ISecurityService securityService;
         
         private readonly IOptionService optionService;
+        
+        private readonly IMasterPageService masterPageService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AddNewPageCommand" /> class.
@@ -35,14 +37,17 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
         /// <param name="accessControlService">The access control service.</param>
         /// <param name="securityService">The security service.</param>
         /// <param name="optionService">The option service.</param>
+        /// <param name="masterPageService">The master page service.</param>
         public AddNewPageCommand(ILayoutService LayoutService, ICmsConfiguration cmsConfiguration,
-            IAccessControlService accessControlService, ISecurityService securityService, IOptionService optionService)
+            IAccessControlService accessControlService, ISecurityService securityService, IOptionService optionService,
+            IMasterPageService masterPageService)
         {
             layoutService = LayoutService;
             this.cmsConfiguration = cmsConfiguration;
             this.accessControlService = accessControlService;
             this.securityService = securityService;
             this.optionService = optionService;
+            this.masterPageService = masterPageService;
         }
 
         /// <summary>
@@ -54,13 +59,13 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
         {
             var principal = securityService.GetCurrentPrincipal();
             var model = new AddNewPageViewModel
-                            {
-                                ParentPageUrl = request.ParentPageUrl,
-                                Templates = layoutService.GetAvailableLayouts().ToList(),
-                                AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled,
-                                UserAccessList = accessControlService.GetDefaultAccessList(principal).Select(f => new UserAccessViewModel(f)).ToList(),
-                                CreateMasterPage = request.CreateMaster
-                            };
+                {
+                    ParentPageUrl = request.ParentPageUrl,
+                    Templates = layoutService.GetAvailableLayouts().ToList(),
+                    AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled,
+                    UserAccessList = accessControlService.GetDefaultAccessList(principal).Select(f => new UserAccessViewModel(f)).ToList(),
+                    CreateMasterPage = request.CreateMaster
+                };
 
             if (model.Templates.Count > 0)
             {
@@ -92,7 +97,7 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
 
                 if (model.MasterPageId.HasValue)
                 {
-                    model.OptionValues = layoutService.GetLayoutOptionValues(model.MasterPageId.Value);
+                    model.OptionValues = masterPageService.GetMasterPageOptionValues(model.MasterPageId.Value);
                 }
 
                 model.CustomOptions = optionService.GetCustomOptions();
