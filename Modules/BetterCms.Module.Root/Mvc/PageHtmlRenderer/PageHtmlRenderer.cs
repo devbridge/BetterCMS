@@ -61,7 +61,10 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
         /// <param name="property">The property.</param>
         public static void Register(IRenderingPageProperty property)
         {
-            properties.Add(property.Identifier, property);
+            if (!properties.ContainsKey(property.Identifier))
+            {
+                properties.Add(property.Identifier, property);
+            }
         }
 
         /// <summary>
