@@ -41,7 +41,8 @@
       }
       var c = e.addCommand(b, a);
       e.ui.addButton('CmsDynamicRegion', {
-        label: 'Insert Dynamic Region',
+        title: 'Insert Dynamic Region',
+        label: 'Region',
         icon: 'cmsdynamicregion',
         command: b
       });
