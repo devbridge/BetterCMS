@@ -10,6 +10,7 @@ using BetterCms.Module.Pages.Command.Page.SavePageProperties;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -77,6 +78,15 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
         /// <returns>Created page</returns>
         public virtual SavePageResponse Execute(AddNewPageViewModel request)
         {
+            if (request.CreateMasterPage)
+            {
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.Administration);
+            }
+            else
+            {
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent);
+            }
+
             if (!request.MasterPageId.HasValue && !request.TemplateId.HasValue)
             {
                 var message = RootGlobalization.MasterPage_Or_Layout_ShouldBeSelected_ValidationMessage;

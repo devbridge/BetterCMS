@@ -85,13 +85,13 @@ namespace BetterCms.Module.Pages.Controllers
         /// ViewResult to render add new page modal dialog.
         /// </returns>
         [HttpGet]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult AddNewPage(string parentPageUrl, string addMaster)
         {
             var request = new AddNewPageCommandRequest
                 {
                     ParentPageUrl = parentPageUrl,
-                    CreateMaster = !string.IsNullOrEmpty(addMaster) && addMaster == "true"
+                    CreateMasterPage = !string.IsNullOrEmpty(addMaster) && addMaster == "true"
                 };
             var model = GetCommand<AddNewPageCommand>().ExecuteCommand(request);
             var view = RenderView("AddNewPage", model);
@@ -105,7 +105,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// <param name="model">The model.</param>
         /// <returns>Json with result status and redirect url.</returns>
         [HttpPost]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult AddNewPage(AddNewPageViewModel model)
         {
             if (ModelState.IsValid)
@@ -304,7 +304,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// <param name="isMasterPage">if set to <c>true</c> layout is master page.</param>
         /// <returns></returns>
         [HttpGet]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult LoadLayoutOptions(string id, string isMasterPage)
         {
             var model = GetCommand<GetLayoutOptionsCommand>().ExecuteCommand(new GetLayoutOptionsCommandRequest {
