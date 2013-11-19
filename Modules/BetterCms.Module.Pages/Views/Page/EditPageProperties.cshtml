@@ -29,6 +29,10 @@
 
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
+    @if (Model.IsMasterPage)
+    {
+        @Html.Partial("Partial/InfoMessageAboutMasterPage")
+    }
     @using (Html.BeginForm<PageController>(f => f.EditPageProperties((EditPagePropertiesViewModel)null), FormMethod.Post, 
             new
                 {

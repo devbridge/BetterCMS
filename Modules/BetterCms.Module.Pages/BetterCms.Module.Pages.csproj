@@ -527,6 +527,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\Templates\MasterPages.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\Partial\InfoMessageAboutMasterPage.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
