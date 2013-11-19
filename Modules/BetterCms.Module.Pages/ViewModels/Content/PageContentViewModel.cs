@@ -159,7 +159,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// <value>
         /// <c>true</c> if option to inset dynamic region is enabled; otherwise, <c>false</c>.
         /// </value>
-        public bool EnableInsetDynamicRegion { get; set; }
+        public bool EnableInsertDynamicRegion { get; set; }
 
         /// <summary>
         /// Gets or sets the custom JavaSctript.
