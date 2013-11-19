@@ -240,7 +240,7 @@ namespace BetterCms.Module.Root
         {
             return new IPageActionProjection[]
                 {
-                    new ButtonActionProjection(authenticationJsModuleIncludeDescriptor, () => RootGlobalization.Sidebar_LogoutButton, page => "logout")
+                    new ButtonActionProjection(authenticationJsModuleIncludeDescriptor, page => RootGlobalization.Sidebar_LogoutButton, page => "logout")
                         {
                             Order = 10,
                             CssClass = page => "bcms-logout-btn",
@@ -255,7 +255,7 @@ namespace BetterCms.Module.Root
                 {                    
                     new ButtonActionProjection(siteSettingsJsModuleIncludeDescriptor, page => "openSiteSettings")
                         {
-                            Title = () => RootGlobalization.Sidebar_SiteSettingsButtonTitle,
+                            Title = page => RootGlobalization.Sidebar_SiteSettingsButtonTitle,
                             CssClass = page => "bcms-sidemenu-btn bcms-btn-settings",
                             Order = 500,
                         }
@@ -274,14 +274,14 @@ namespace BetterCms.Module.Root
                     new LinkActionProjection(tagsJsModuleIncludeDescriptor, page => "loadSiteSettingsCategoryList")
                         {
                             Order = 2000,
-                            Title = () => RootGlobalization.SiteSettings_CategoriesMenuItem,
+                            Title = page => RootGlobalization.SiteSettings_CategoriesMenuItem,
                             CssClass = page => "bcms-sidebar-link",
                             AccessRole = RootModuleConstants.UserRoles.EditContent
                         },
                    new LinkActionProjection(tagsJsModuleIncludeDescriptor, page => "loadSiteSettingsTagList")
                         {
                             Order = 2100,
-                            Title = () => RootGlobalization.SiteSettings_TagsMenuItem,
+                            Title = page => RootGlobalization.SiteSettings_TagsMenuItem,
                             CssClass = page => "bcms-sidebar-link",
                             AccessRole = RootModuleConstants.UserRoles.EditContent
                         }

@@ -10,7 +10,8 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
                 loadMasterPagesListUrl: null,
             },
             globalization = {
-                masterPagesTabTitle: null
+                masterPagesTabTitle: null,
+                editMasterPagePropertiesModalTitle: null
             },
             selectors = {
                 searchField: '.bcms-search-query',
@@ -144,7 +145,7 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
                     var row = self.parents(selectors.siteSettingsPageParentRow);
                     row.find(selectors.siteSettingsPageTitleCell).html(data.Data.Title);
                 }
-            });
+            }, globalization.editMasterPagePropertiesModalTitle);
         };
 
         function deleteMasterPage(self, container) {

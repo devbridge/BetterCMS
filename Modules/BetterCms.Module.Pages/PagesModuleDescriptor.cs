@@ -272,13 +272,16 @@ namespace BetterCms.Module.Pages
                                 },
                                 Order = 10,
                                 CssClass = page => page.Status != PageStatus.Published ? "bcms-sidemenu-select" : "bcms-sidemenu-select bcms-select-published",
-                                AccessRole = RootModuleConstants.UserRoles.PublishContent
+                                AccessRole = RootModuleConstants.UserRoles.PublishContent,
+                                ShouldBeRendered = page => !page.IsMasterPage
                         }, 
                     
-                    new ButtonActionProjection(pagePropertiesJsModuleIncludeDescriptor, page => "editPageProperties")
+                    new ButtonActionProjection(pagePropertiesJsModuleIncludeDescriptor, page => page.IsMasterPage ? "editMasterPageProperties" : "editPageProperties")
                             {
                                 Order = 20,
-                                Title = () => PagesGlobalization.Sidebar_EditPagePropertiesButtonTitle,
+                                Title = page => page.IsMasterPage 
+                                    ? PagesGlobalization.Sidebar_EditMasterPagePropertiesButtonTitle
+                                    : PagesGlobalization.Sidebar_EditPagePropertiesButtonTitle,
                                 CssClass = page => "bcms-sidemenu-btn",
                                 AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)
                             },
@@ -286,9 +289,10 @@ namespace BetterCms.Module.Pages
                     new ButtonActionProjection(seoJsModuleIncludeDescriptor, page => "openEditSeoDialog")
                             {
                                 Order = 30,
-                                Title = () => PagesGlobalization.Sidebar_EditSeoButtonTitle,
+                                Title = page => PagesGlobalization.Sidebar_EditSeoButtonTitle,
                                 CssClass = page => page.HasSEO ? "bcms-sidemenu-btn bcms-btn-ok" : "bcms-sidemenu-btn bcms-btn-warn",
-                                AccessRole = RootModuleConstants.UserRoles.EditContent
+                                AccessRole = RootModuleConstants.UserRoles.EditContent,
+                                ShouldBeRendered = page => !page.IsMasterPage
                             },
 
                     new SeparatorProjection(40) { CssClass = page => "bcms-sidebar-separator" }, 
@@ -300,14 +304,14 @@ namespace BetterCms.Module.Pages
                                 new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "addNewPage")
                                 {
                                     Order = 10,
-                                    Title = () => PagesGlobalization.Sidebar_AddNewPageButtonTitle,
+                                    Title = page => PagesGlobalization.Sidebar_AddNewPageButtonTitle,
                                     CssClass = page => "bcms-sidemenu-btn bcms-btn-add",
                                     AccessRole = RootModuleConstants.UserRoles.EditContent
                                 },
                                 new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "clonePage")
                                 {
                                     Order = 20,
-                                    Title = () => PagesGlobalization.Siderbar_ClonePageButtonTitle,
+                                    Title = page => PagesGlobalization.Siderbar_ClonePageButtonTitle,
                                     CssClass = page => "bcms-sidemenu-btn bcms-btn-clone",
                                     AccessRole = RootModuleConstants.UserRoles.EditContent
                                 }
@@ -320,7 +324,7 @@ namespace BetterCms.Module.Pages
                     new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "deleteCurrentPage")
                         {
                             Order = 900,
-                            Title = () => PagesGlobalization.Sidebar_DeletePageButtonTitle,
+                            Title = page => PagesGlobalization.Sidebar_DeletePageButtonTitle,
                             CssClass = page => "bcms-sidemenu-btn bcms-btn-delete",
                             AccessRole = RootModuleConstants.UserRoles.DeleteContent
                         }
@@ -345,7 +349,8 @@ namespace BetterCms.Module.Pages
                               Order = 10,
                               CssClass = page => page.Status == PageStatus.Published 
                                                     ? "bcms-sidemenu-pubstatus"
-                                                    : "bcms-sidemenu-pubstatus bcms-pubstatus-warn"
+                                                    : "bcms-sidemenu-pubstatus bcms-pubstatus-warn",
+                              ShouldBeRendered = page => !page.IsMasterPage
                           }, 
 
                       new HtmlElementProjection("div")
@@ -357,7 +362,8 @@ namespace BetterCms.Module.Pages
                               Order = 20,
                               CssClass = page => page.HasSEO 
                                                     ? "bcms-sidemenu-seostatus"
-                                                    : "bcms-sidemenu-seostatus bcms-seostatus-warn"
+                                                    : "bcms-sidemenu-seostatus bcms-seostatus-warn",
+                              ShouldBeRendered = page => !page.IsMasterPage
                           }
                 };
         }
@@ -374,7 +380,7 @@ namespace BetterCms.Module.Pages
                     new LinkActionProjection(pagesJsModuleIncludeDescriptor, page => "loadSiteSettingsPageList")
                         {
                             Order = 1000,
-                            Title = () => PagesGlobalization.SiteSettings_PagesMenuItem,
+                            Title = page => PagesGlobalization.SiteSettings_PagesMenuItem,
                             CssClass = page => "bcms-sidebar-link",
                             AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.DeleteContent)
                         },
@@ -386,7 +392,7 @@ namespace BetterCms.Module.Pages
                     new LinkActionProjection(widgetsJsModuleIncludeDescriptor, page => "loadSiteSettingsWidgetList")
                         {
                             Order = 3000,
-                            Title = () => PagesGlobalization.SiteSettings_WidgetsMenuItem,
+                            Title = page => PagesGlobalization.SiteSettings_WidgetsMenuItem,
                             CssClass = page => "bcms-sidebar-link",
                             AccessRole = RootModuleConstants.UserRoles.Administration
                         },
@@ -394,7 +400,7 @@ namespace BetterCms.Module.Pages
                      new LinkActionProjection(templatesJsModuleIncludeDescriptor, page => "loadSiteSettingsTemplateList")
                         {
                             Order = 3100,
-                            Title = () => PagesGlobalization.SiteSettings_TemplatesMenuItem,
+                            Title = page => PagesGlobalization.SiteSettings_TemplatesMenuItem,
                             CssClass = page => "bcms-sidebar-link",
                             AccessRole = RootModuleConstants.UserRoles.Administration
                         },
@@ -404,7 +410,7 @@ namespace BetterCms.Module.Pages
                     new LinkActionProjection(redirectsJsModuleIncludeDescriptor, page => "loadSiteSettingsRedirectList")
                         {
                             Order = 4000,
-                            Title = () => PagesGlobalization.SiteSettings_Redirects,
+                            Title = page => PagesGlobalization.SiteSettings_Redirects,
                             CssClass = page => "bcms-sidebar-link",
                             AccessRole = RootModuleConstants.UserRoles.EditContent
                         },
@@ -412,7 +418,7 @@ namespace BetterCms.Module.Pages
                     new LinkActionProjection(sitemapJsModuleIncludeDescriptor, page => "loadSiteSettingsSitemap")
                         {
                             Order = 4500,
-                            Title = () => NavigationGlobalization.SiteSettings_SitemapMenuItem,
+                            Title = page => NavigationGlobalization.SiteSettings_SitemapMenuItem,
                             CssClass = page => "bcms-sidebar-link",
                             AccessRole = RootModuleConstants.UserRoles.EditContent
                         }                                      

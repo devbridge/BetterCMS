@@ -573,7 +573,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         /**
         * Opens page edit form from site settings pages list
         */
-        page.editSiteSettingsPage = function (self, container) {
+        page.editSiteSettingsPage = function (self, container, title) {
             var id = self.data('id');
 
             pageProperties.openEditPageDialog(id, function (data) {
@@ -596,7 +596,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                     page.siteSettingsPageStatusTemplate(row.find(selectors.siteSettingPageStatusCell), data.Data.PageStatus);
                     page.siteSettingsSetBooleanTemplate(row.find(selectors.siteSettingPageHasSeoCell), data.Data.HasSEO);
                 }
-            });
+            }, title);
         };
 
         /**

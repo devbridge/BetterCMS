@@ -1122,15 +1122,6 @@
   <data name="SavePagePropertiesCommand_SelectedMasterIsCurrentPage_Message" xml:space="preserve">
     <value>Selected master page is the current page.</value>
   </data>
-  <data name="EditPageProperties_IsMasterPage_Checkbox" xml:space="preserve">
-    <value>Page is Master (is a template for other pages).</value>
-  </data>
-  <data name="EditPageProperties_IsMasterPage_Title" xml:space="preserve">
-    <value>Master Page Options</value>
-  </data>
-  <data name="EditPageProperties_IsMasterPage_Tooltip_Description" xml:space="preserve">
-    <value>Make the page to be a template for other pages and not directly accessible from the outside.</value>
-  </data>
   <data name="EditPageProperties_PageConversionToMaster_ConfirmationMessage" xml:space="preserve">
     <value>You are about to convert the page to Master Page. Master page is not accessible from the outside and is intended to be used as a template for other pages.&lt;br/&gt;Proceed?</value>
   </data>
@@ -1151,5 +1142,11 @@
   </data>
   <data name="SiteSettings_Pages_FilterIncludeMasterPages" xml:space="preserve">
     <value>Include master pages</value>
+  </data>
+  <data name="EditPageProperties_EditMasterPage_Title" xml:space="preserve">
+    <value>Edit Master Page Properties</value>
+  </data>
+  <data name="Sidebar_EditMasterPagePropertiesButtonTitle" xml:space="preserve">
+    <value>Edit master page properties</value>
   </data>
 </root>

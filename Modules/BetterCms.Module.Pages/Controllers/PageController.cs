@@ -144,7 +144,8 @@ namespace BetterCms.Module.Pages.Controllers
                                FeaturedImage = success ? model.FeaturedImage : new ImageSelectorViewModel(),
                                OptionValues = success ? model.OptionValues : null,
                                CustomOptions = success ? model.CustomOptions : null,
-                               UserAccessList = success ? model.UserAccessList : new List<UserAccessViewModel>()
+                               UserAccessList = success ? model.UserAccessList : new List<UserAccessViewModel>(),
+                               IsMasterPage = success && model.IsMasterPage
                            };
 
             return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);

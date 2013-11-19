@@ -42,6 +42,7 @@ namespace BetterCms.Module.Root.ViewModels.Cms
             CreatedByUser = page.CreatedByUser;
             ModifiedOn = page.ModifiedOn;
             ModifiedByUser = page.ModifiedByUser;
+            IsMasterPage = page.IsMasterPage;
         }
 
         /// <summary>
@@ -71,6 +72,8 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         public bool HasSEO { get; set; }
 
         public string Title { get; set; }
+        
+        public bool IsMasterPage { get; set; }
 
         public string MetaTitle { get; set; }
 
@@ -356,6 +359,7 @@ namespace BetterCms.Module.Root.ViewModels.Cms
                            HasSEO = HasSEO,
                            Title = Title,
                            MetaTitle = MetaTitle,
+                           IsMasterPage = IsMasterPage,
                            MetaDescription = MetaDescription,
                            MetaKeywords = MetaKeywords,
                            PageUrl = PageUrl,

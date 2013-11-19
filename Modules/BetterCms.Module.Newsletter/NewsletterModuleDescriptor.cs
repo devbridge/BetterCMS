@@ -117,7 +117,7 @@ namespace BetterCms.Module.Newsletter
                     new LinkActionProjection(newsletterJsModuleIncludeDescriptor, page => "loadSiteSettingsNewsletterSubscribers")
                         {
                             Order = 9999,
-                            Title = () => NewsletterGlobalization.SiteSettings_NewsletterSubscribersMenuItem,
+                            Title = page => NewsletterGlobalization.SiteSettings_NewsletterSubscribersMenuItem,
                             CssClass = page => "bcms-sidebar-link",
                             AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.Administration)
                         }
