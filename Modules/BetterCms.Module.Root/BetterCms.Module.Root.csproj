@@ -1004,7 +1004,6 @@
       <SubType>Designer</SubType>
     </Content>
     <EmbeddedResource Include="Views\Cms\Index.cshtml" />
-    <EmbeddedResource Include="Views\Preview\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Entity\" />

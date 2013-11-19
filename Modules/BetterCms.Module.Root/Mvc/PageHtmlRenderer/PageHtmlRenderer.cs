@@ -86,11 +86,22 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
         /// </summary>
         public void ReplaceRegionRepresentationHtml()
         {
-            stringBuilder = new StringBuilder(Regex.Replace(
-                stringBuilder.ToString(),
+            var html = ReplaceRegionRepresentationHtml(stringBuilder.ToString(), "<div class=\"bcms-draggable-region\">Content to add</div>");
+            stringBuilder = new StringBuilder(html);
+        }
+
+        /// <summary>
+        /// Replaces the region representation HTML.
+        /// </summary>
+        /// <param name="html">The HTML.</param>
+        /// <param name="replaceWith">The replace with.</param>
+        public static string ReplaceRegionRepresentationHtml(string html, string replaceWith)
+        {
+           return Regex.Replace(
+                html,
                 RootModuleConstants.DynamicRegionRegexPattern,
-                "<div class=\"bcms-draggable-region\">Content to add</div>",
-                RegexOptions.IgnoreCase));
+                replaceWith,
+                RegexOptions.IgnoreCase);
         }
 
         /// <summary>
