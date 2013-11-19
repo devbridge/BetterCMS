@@ -26,6 +26,18 @@
             
             @Html.Partial("Partial/ClonePageEditUrl")
 
+            if (!Model.IsMasterPage)
+            {
+                <div class="bcms-input-list-holder">
+                    @Html.Tooltip(PagesGlobalization.ClonePage_Dialog_AsMasterPage_Tooltip_Description)
+                    <div class="bcms-content-titles">@PagesGlobalization.ClonePage_Dialog_AsMasterPage_Title</div>
+                    <div class="bcms-checkbox-holder">
+                        @Html.CheckBoxFor(model => model.CloneAsMasterPage)
+                        <div class="bcms-edit-label">@PagesGlobalization.ClonePage_Dialog_AsMasterPage</div>
+                    </div>
+                </div>
+            }
+            
             if (Model.AccessControlEnabled)
             {
                 @Html.Partial(RootModuleConstants.AccessControlTemplate)

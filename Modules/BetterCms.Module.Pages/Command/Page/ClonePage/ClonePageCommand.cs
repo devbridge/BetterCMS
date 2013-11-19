@@ -83,7 +83,7 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
             var pageOptions = page.Options.Distinct().ToList();
 
             // Clone page with security
-            var newPage = ClonePageOnly(page, request.UserAccessList, request.PageTitle, pageUrl);
+            var newPage = ClonePageOnly(page, request.UserAccessList, request.PageTitle, pageUrl, request.CloneAsMasterPage);
 
             // Clone contents.
             pageContents.ForEach(pageContent => ClonePageContent(pageContent, newPage));
@@ -134,7 +134,7 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
         /// <returns>
         /// Copy for <see cref="PageProperties" />.
         /// </returns>
-        private PageProperties ClonePageOnly(PageProperties page, IList<UserAccessViewModel> userAccess, string newPageTitle, string newPageUrl)
+        private PageProperties ClonePageOnly(PageProperties page, IList<UserAccessViewModel> userAccess, string newPageTitle, string newPageUrl, bool cloneAsMasterPage)
         {
             var newPage = page.Duplicate();
 
@@ -143,6 +143,11 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
             newPage.PageUrl = newPageUrl;
             newPage.PageUrlHash = newPageUrl.UrlHash();
             newPage.Status = PageStatus.Unpublished;
+
+            if (!newPage.IsMasterPage && cloneAsMasterPage)
+            {
+                newPage.IsMasterPage = true;
+            }
 
             // Add security.
             AddAccessRules(newPage, userAccess);

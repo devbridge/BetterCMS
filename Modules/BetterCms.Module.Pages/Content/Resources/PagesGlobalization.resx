@@ -1149,4 +1149,13 @@
   <data name="Sidebar_EditMasterPagePropertiesButtonTitle" xml:space="preserve">
     <value>Edit master page properties</value>
   </data>
+  <data name="ClonePage_Dialog_AsMasterPage" xml:space="preserve">
+    <value>Clone the current page as a master page</value>
+  </data>
+  <data name="ClonePage_Dialog_AsMasterPage_Title" xml:space="preserve">
+    <value>Create Master Page</value>
+  </data>
+  <data name="ClonePage_Dialog_AsMasterPage_Tooltip_Description" xml:space="preserve">
+    <value>Create new master page from the current page.</value>
+  </data>
 </root>
