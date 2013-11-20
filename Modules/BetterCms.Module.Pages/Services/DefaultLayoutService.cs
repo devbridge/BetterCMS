@@ -85,7 +85,7 @@ namespace BetterCms.Module.Pages.Services
                         IsMasterPage = true,
                         MasterUrlHash = t.PageUrlHash,
                         IsCircularToCurrent = currentPageId.HasValue && !currentPageId.Value.HasDefaultValue()
-                            && (t.Id == currentPageId.Value || t.MasterPages.Any(cp => cp.Master.Id != currentPageId.Value))
+                            && (t.Id == currentPageId || t.MasterPages.Any(cp => cp.Master.Id != currentPageId))
                     }).ToFuture();
 
             var templates = templatesFuture.ToList().Concat(masterPagesFuture.ToList()).ToList();
