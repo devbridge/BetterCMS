@@ -130,7 +130,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// ViewResult to render edit page properties modal dialog.
         /// </returns>
         [HttpGet]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult EditPageProperties(string pageId)
         {
             var model = GetCommand<GetPagePropertiesCommand>().ExecuteCommand(pageId.ToGuidOrDefault());
@@ -158,7 +158,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// <param name="model">The model.</param>
         /// <returns>Json with result status and redirect url.</returns>
         [HttpPost]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult EditPageProperties(EditPagePropertiesViewModel model)
         {
             if (ModelState.IsValid)

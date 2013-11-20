@@ -162,13 +162,17 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
 
             var page = pageQuery.ToList().FirstOne();
 
+            var roles = page.IsMasterPage
+                            ? new[] { RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.Administration }
+                            : new[] { RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent };
+
             if (cmsConfiguration.Security.AccessControlEnabled)
             {
-                AccessControlService.DemandAccess(page, Context.Principal, AccessLevel.ReadWrite, RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent);
+                AccessControlService.DemandAccess(page, Context.Principal, AccessLevel.ReadWrite, roles);
             }
             else
             {
-                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent);
+                AccessControlService.DemandAccess(Context.Principal, roles);
             }
 
             // Load master pages for updating page's master path and page's children master path
@@ -204,7 +208,9 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                 existingChildrenMasterPages = null;
             }
 
-            var canEdit = SecurityService.IsAuthorized(Context.Principal, RootModuleConstants.UserRoles.EditContent);
+            var canEdit = page.IsMasterPage
+                ? SecurityService.IsAuthorized(Context.Principal, RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration))
+                : SecurityService.IsAuthorized(Context.Principal, RootModuleConstants.UserRoles.EditContent);
 
             // Start transaction, only when everything is already loaded
             UnitOfWork.BeginTransaction();

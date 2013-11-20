@@ -169,6 +169,15 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
             var model = modelQuery.ToList().FirstOrDefault();
             if (model != null && model.Model != null)
             {
+                if (model.Model.IsMasterPage)
+                {
+                    AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.Administration);
+                }
+                else
+                {
+                    AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent));
+                }
+
                 model.Model.Tags = tagsFuture.ToList();
                 model.Model.RedirectFromOldUrl = true;
                 model.Model.Categories = categories;
