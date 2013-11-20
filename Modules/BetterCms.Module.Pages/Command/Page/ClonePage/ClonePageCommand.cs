@@ -8,7 +8,7 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
-
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
@@ -46,6 +46,15 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
         /// <returns>true if page cloned successfully; false otherwise.</returns>
         public virtual ClonePageViewModel Execute(ClonePageViewModel request)
         {
+            if (request.CloneAsMasterPage)
+            {
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.Administration);
+            }
+            else
+            {
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent);
+            }
+
             // Create / fix page url
             var pageUrl = request.PageUrl;
             if (pageUrl == null && !string.IsNullOrWhiteSpace(request.PageTitle))
