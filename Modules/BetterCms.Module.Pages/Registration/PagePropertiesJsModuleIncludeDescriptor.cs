@@ -30,7 +30,8 @@ namespace BetterCms.Module.Pages.Registration
                     new JavaScriptModuleGlobalization(this, "editMasterPagePropertiesModalTitle", () => PagesGlobalization.EditPageProperties_EditMasterPage_Title),
                     new JavaScriptModuleGlobalization(this, "pageStatusChangeConfirmationMessagePublish", () => PagesGlobalization.EditPageProperties_PageStatusChange_ConfirmationMessage_Publish),
                     new JavaScriptModuleGlobalization(this, "pageStatusChangeConfirmationMessageUnPublish", () => PagesGlobalization.EditPageProperties_PageStatusChange_ConfirmationMessage_UnPublish),
-                    new JavaScriptModuleGlobalization(this, "pageConversionToMasterConfirmationMessage", () => PagesGlobalization.EditPageProperties_PageConversionToMaster_ConfirmationMessage)
+                    new JavaScriptModuleGlobalization(this, "pageConversionToMasterConfirmationMessage", () => PagesGlobalization.EditPageProperties_PageConversionToMaster_ConfirmationMessage),
+                    new JavaScriptModuleGlobalization(this, "selectedMasterIsChildPage", () => PagesGlobalization.SavePagePropertiesCommand_SelectedMasterIsChildPage_Message)
                 };
         }
     }

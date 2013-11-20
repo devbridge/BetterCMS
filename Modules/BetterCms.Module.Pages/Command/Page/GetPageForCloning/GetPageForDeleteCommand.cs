@@ -44,7 +44,8 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageForCloning
                 .Select(p => new ClonePageViewModel
                         {
                             PageId = p.Id,
-                            Version = p.Version
+                            Version = p.Version,
+                            IsMasterPage = p.IsMasterPage
                         })
                 .ToFuture();
 

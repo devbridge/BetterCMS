@@ -67,6 +67,7 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
                                       .FetchMany(f => f.PageContents).ThenFetch(f => f.Content)
                                       .FetchMany(f => f.PageContents).ThenFetchMany(f => f.Options)
                                       .FetchMany(f => f.PageTags).ThenFetch(f => f.Tag)
+                                      .FetchMany(f => f.MasterPages).ThenFetch(f => f.Master)
                                       .ToList().FirstOne();
 
             UnitOfWork.BeginTransaction();
@@ -82,8 +83,10 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
             var pageTags = page.PageTags.Distinct().ToList();
             var pageOptions = page.Options.Distinct().ToList();
 
+            var masterPages = page.MasterPages != null ? page.MasterPages.Distinct().ToList() : new List<MasterPage>();
+
             // Clone page with security
-            var newPage = ClonePageOnly(page, request.UserAccessList, request.PageTitle, pageUrl);
+            var newPage = ClonePageOnly(page, request.UserAccessList, request.PageTitle, pageUrl, request.CloneAsMasterPage);
 
             // Clone contents.
             pageContents.ForEach(pageContent => ClonePageContent(pageContent, newPage));
@@ -93,6 +96,9 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
 
             // Clone options.
             pageOptions.ForEach(pageOption => ClonePageOption(pageOption, newPage));
+            
+            // Clone master pages
+            masterPages.ForEach(masterPage => CloneMasterPages(masterPage, newPage));
            
             UnitOfWork.Commit();
 
@@ -134,7 +140,7 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
         /// <returns>
         /// Copy for <see cref="PageProperties" />.
         /// </returns>
-        private PageProperties ClonePageOnly(PageProperties page, IList<UserAccessViewModel> userAccess, string newPageTitle, string newPageUrl)
+        private PageProperties ClonePageOnly(PageProperties page, IList<UserAccessViewModel> userAccess, string newPageTitle, string newPageUrl, bool cloneAsMasterPage)
         {
             var newPage = page.Duplicate();
 
@@ -143,6 +149,11 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
             newPage.PageUrl = newPageUrl;
             newPage.PageUrlHash = newPageUrl.UrlHash();
             newPage.Status = PageStatus.Unpublished;
+
+            if (!newPage.IsMasterPage && cloneAsMasterPage)
+            {
+                newPage.IsMasterPage = true;
+            }
 
             // Add security.
             AddAccessRules(newPage, userAccess);
@@ -248,6 +259,23 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
 
             newPage.Options.Add(newPageOption);
             Repository.Save(newPageOption);            
+        }
+
+        private void CloneMasterPages(MasterPage masterPage, PageProperties newPage)
+        {
+            var newMasterPage = new MasterPage
+                                    {
+                                        Master = masterPage.Master,
+                                        Page = newPage
+                                    };
+
+            if (newPage.MasterPages == null)
+            {
+                newPage.MasterPages = new List<MasterPage>();
+            }
+
+            newPage.MasterPages.Add(newMasterPage);
+            Repository.Save(newMasterPage);            
         }
     }
 }

@@ -7,7 +7,7 @@ using BetterCms.Core.Services;
 
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
-
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
@@ -57,6 +57,15 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
         /// <returns>AddNewPage view model</returns>
         public AddNewPageViewModel Execute(AddNewPageCommandRequest request)
         {
+            if (request.CreateMasterPage)
+            {
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.Administration);
+            }
+            else
+            {
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent);
+            }
+
             var principal = securityService.GetCurrentPrincipal();
             var model = new AddNewPageViewModel
                 {
@@ -64,7 +73,7 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
                     Templates = layoutService.GetAvailableLayouts().ToList(),
                     AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled,
                     UserAccessList = accessControlService.GetDefaultAccessList(principal).Select(f => new UserAccessViewModel(f)).ToList(),
-                    CreateMasterPage = request.CreateMaster
+                    CreateMasterPage = request.CreateMasterPage
                 };
 
             if (model.Templates.Count > 0)

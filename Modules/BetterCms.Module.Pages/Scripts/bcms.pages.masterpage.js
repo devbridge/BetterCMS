@@ -142,8 +142,10 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
                         }
                     }
 
-                    var row = self.parents(selectors.siteSettingsPageParentRow);
-                    row.find(selectors.siteSettingsPageTitleCell).html(data.Data.Title);
+                    var row = self.parents(selectors.siteSettingsPageParentRow),
+                        cell = row.find(selectors.siteSettingsPageTitleCell);
+                    cell.html(data.Data.Title);
+                    cell.data('url', data.Data.PageUrl);
                 }
             }, globalization.editMasterPagePropertiesModalTitle);
         };

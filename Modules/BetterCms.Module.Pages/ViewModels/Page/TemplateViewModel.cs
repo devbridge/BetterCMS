@@ -63,6 +63,8 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// </value>
         public string MasterUrlHash { get; set; }
 
+        public bool IsCircularToCurrent { get; set; }
+
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
