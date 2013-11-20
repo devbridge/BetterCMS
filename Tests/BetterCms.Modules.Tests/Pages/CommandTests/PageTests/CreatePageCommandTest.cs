@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
+using System.Web.Security;
 
 using Autofac;
 
@@ -9,12 +11,14 @@ using BetterCms.Configuration;
 using BetterCms.Core;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 using BetterCms.Core.Services.Caching;
 using BetterCms.Module.Pages.Command.Page.CreatePage;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Security;
@@ -48,18 +52,22 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
                                                                                          {
                                                                                              DefaultAccessLevel = "readwrite"
                                                                                          });
-                        var config = configMock.Object; 
+                        var config = configMock.Object;
 
                         var command = new CreatePageCommand(
                             new Mock<IPageService>().SetupAllProperties().Object,
                             new DefaultUrlService(uow, config),
                             config,
-                            new DefaultAccessControlService(Container.Resolve<ISecurityService>(), new HttpRuntimeCacheService(), config),
                             new Mock<IOptionService>().SetupAllProperties().Object,
                             new Mock<IMasterPageService>().SetupAllProperties().Object);
 
                         command.UnitOfWork = uow;
                         command.Repository = repository;
+                        command.AccessControlService = new DefaultAccessControlService(Container.Resolve<ISecurityService>(), new HttpRuntimeCacheService(), config);
+
+                        var contextMock = new Mock<ICommandContext>();
+                        contextMock.Setup(c => c.Principal).Returns(new GenericPrincipal(new GenericIdentity("John Doe"), new[] { RootModuleConstants.UserRoles.EditContent }));
+                        command.Context = contextMock.Object;
 
                         var request = new AddNewPageViewModel();
                         request.AccessControlEnabled = true;
