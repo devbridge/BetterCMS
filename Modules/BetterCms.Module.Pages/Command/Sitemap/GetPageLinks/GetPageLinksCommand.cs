@@ -30,7 +30,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetPageLinks
 
             var query = UnitOfWork.Session
                 .QueryOver(() => alias)
-                .Where(() => !alias.IsDeleted && alias.Status != PageStatus.Preview);
+                .Where(() => !alias.IsDeleted && alias.Status != PageStatus.Preview && !alias.IsMasterPage);
 
             if (!string.IsNullOrWhiteSpace(request))
             {
