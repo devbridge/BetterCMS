@@ -57,6 +57,7 @@ namespace BetterCms.Module.Pages.Models
             duplicate.UseNoFollow = UseNoFollow;
             duplicate.UseNoIndex = UseNoIndex;
             duplicate.Layout = Layout;
+            duplicate.MasterPage = MasterPage;
             duplicate.Image = Image;
             duplicate.SecondaryImage = SecondaryImage;
             duplicate.FeaturedImage = FeaturedImage;
