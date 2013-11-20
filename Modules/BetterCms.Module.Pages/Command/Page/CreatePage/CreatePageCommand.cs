@@ -37,11 +37,6 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
         private readonly ICmsConfiguration cmsConfiguration;
 
         /// <summary>
-        /// The access control service
-        /// </summary>
-        private readonly IAccessControlService accessControlService;
-
-        /// <summary>
         /// The options service
         /// </summary>
         private readonly IOptionService optionService;
@@ -57,16 +52,13 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
         /// <param name="pageService">The page service.</param>
         /// <param name="urlService">The URL service.</param>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
-        /// <param name="accessControlService">The access control service.</param>
         /// <param name="optionService">The option service.</param>
         /// <param name="masterPageService">The master page service.</param>
-        public CreatePageCommand(IPageService pageService, IUrlService urlService, ICmsConfiguration cmsConfiguration,
-            IAccessControlService accessControlService, IOptionService optionService, IMasterPageService masterPageService)
+        public CreatePageCommand(IPageService pageService, IUrlService urlService, ICmsConfiguration cmsConfiguration, IOptionService optionService, IMasterPageService masterPageService)
         {
             this.pageService = pageService;
             this.urlService = urlService;
             this.cmsConfiguration = cmsConfiguration;
-            this.accessControlService = accessControlService;
             this.optionService = optionService;
             this.masterPageService = masterPageService;
         }
@@ -143,7 +135,7 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
             // Update access control if enabled:
             if (cmsConfiguration.Security.AccessControlEnabled)
             {
-                accessControlService.UpdateAccessControl(page, request.UserAccessList != null ? request.UserAccessList.Cast<IAccessRule>().ToList() : null);
+                AccessControlService.UpdateAccessControl(page, request.UserAccessList != null ? request.UserAccessList.Cast<IAccessRule>().ToList() : null);
             }
 
             UnitOfWork.Commit();
