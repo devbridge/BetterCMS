@@ -62,13 +62,6 @@ namespace BetterCms.Module.Pages.Services
                 .AsQueryable<PageProperties>()
                 .Where(p => p.IsMasterPage);
 
-            if (currentPageId.HasValue && !currentPageId.Value.HasDefaultValue())
-            {
-                masterPagesQuery = masterPagesQuery
-                    .Where(p => p.Id != currentPageId 
-                        && p.MasterPages.All(cp => cp.Master.Id != currentPageId));
-            }
-
             var masterPagesFuture = masterPagesQuery
                 .OrderBy(t => t.Title)
                 .Select(t => new TemplateViewModel
@@ -90,7 +83,9 @@ namespace BetterCms.Module.Pages.Services
                                     ? t.SecondaryImage.PublicThumbnailUrl
                                     : null,
                         IsMasterPage = true,
-                        MasterUrlHash = t.PageUrlHash
+                        MasterUrlHash = t.PageUrlHash,
+                        IsCircularToCurrent = currentPageId.HasValue && !currentPageId.Value.HasDefaultValue()
+                            && (t.Id == currentPageId.Value || t.MasterPages.Any(cp => cp.Master.Id != currentPageId.Value))
                     }).ToFuture();
 
             var templates = templatesFuture.ToList().Concat(masterPagesFuture.ToList()).ToList();

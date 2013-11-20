@@ -39,7 +39,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 editMasterPagePropertiesModalTitle: null,
                 pageStatusChangeConfirmationMessagePublish: null,
                 pageStatusChangeConfirmationMessageUnPublish: null,
-                pageConversionToMasterConfirmationMessage: null
+                pageConversionToMasterConfirmationMessage: null,
+                selectedMasterIsChildPage: null
             },
             keys = {
                 editPagePropertiesInfoMessageClosed: 'bcms.EditPagePropertiesInfoBoxClosed'
@@ -159,7 +160,9 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                     length;
 
                 optionsContainer.hideLoading();
-                messages.refreshBox(mainContainer, json);
+                if (json.Messages && json.Messages.length > 0) {
+                    messages.refreshBox(mainContainer, json);
+                }
                 if (json.Success) {
                     // Remove unchanged items
                     for (i = 0, length = items().length; i < length; i++) {
@@ -287,10 +290,17 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             var active = dialog.container.find(selectors.pagePropertiesActiveTemplateBox),
                 template = $(selectButton),
                 id = $(template).data('id'),
-                isMasterPage = $(template).data('master');
-
+                isMasterPage = $(template).data('master'),
+                isCircular = $(template).data('iscircular');
+            
             if (active.get(0) === template.get(0)) {
                 return;
+            }
+
+            if (isCircular) {
+                var messagesBox = messages.box({ container: dialog.container });
+                messagesBox.clearMessages();
+                messagesBox.addWarningMessage(globalization.selectedMasterIsChildPage);
             }
 
             active.removeClass(classes.pagePropertiesActiveTemplateBox);

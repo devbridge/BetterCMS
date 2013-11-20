@@ -1,5 +1,8 @@
 ﻿@model BetterCms.Module.Pages.ViewModels.Page.TemplateViewModel
-<div class="bcms-inner-grid-box @(Model.IsActive ? "bcms-inner-grid-box-active" : string.Empty)" data-id="@Model.TemplateId" data-master="@(Model.IsMasterPage ? "1" : "0")">
+<div class="bcms-inner-grid-box @(Model.IsActive ? "bcms-inner-grid-box-active" : string.Empty)"
+     data-id="@Model.TemplateId"
+     data-master="@(Model.IsMasterPage ? "1" : "0")"
+     data-iscircular="@(Model.IsCircularToCurrent ? "1" : "0")">
     <div class="bcms-title-holder">
         <div class="bcms-content-titles">@Model.Title</div>
     </div>
