@@ -162,7 +162,7 @@
     <Compile Include="Command\Layout\SaveTemplate\SaveTemplateCommand.cs" />
     <Compile Include="Command\Layout\SaveTemplate\SaveTemplateResponse.cs" />
     <Compile Include="Command\Page\ClonePage\ClonePageCommand.cs" />
-    <Compile Include="Command\Page\GetPageForCloning\GetPageForDeleteCommand.cs" />
+    <Compile Include="Command\Page\GetPageForCloning\GetPageForCloningCommand.cs" />
     <Compile Include="Command\Sitemap\DeleteSitemapNode\DeleteSitemapNodeCommand.cs" />
     <Compile Include="Command\Sitemap\GetPageLinks\GetPageLinksCommand.cs" />
     <Compile Include="Command\Sitemap\GetSitemap\GetSitemapCommand.cs" />

@@ -222,7 +222,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// Json result status.
         /// </returns>
         [HttpGet]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult ClonePage(string id)
         {
             var model = GetCommand<GetPageForCloningCommand>().ExecuteCommand(id.ToGuidOrDefault());
@@ -238,7 +238,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// Json result status.
         /// </returns>
         [HttpPost]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult ClonePage(ClonePageViewModel model)
         {
             model = GetCommand<ClonePageCommand>().ExecuteCommand(model);

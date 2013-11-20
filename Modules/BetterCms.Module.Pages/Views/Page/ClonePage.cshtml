@@ -2,6 +2,7 @@
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Page
 @using BetterCms.Module.Root
+@using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
 
@@ -26,7 +27,7 @@
             
             @Html.Partial("Partial/ClonePageEditUrl")
 
-            if (!Model.IsMasterPage)
+            if (!Model.IsMasterPage && (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.Administration))
             {
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.ClonePage_Dialog_AsMasterPage_Tooltip_Description)
