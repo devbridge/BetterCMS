@@ -88,6 +88,9 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                             // Add Html
                             using (new RegionContentWrapper(contentsBuilder, projection, currentModel.CanManageContent && currentModel.AreRegionsEditable))
                             {
+                                // Pass current model as view data model
+                                htmlHelper.ViewData.Model = pageModel;
+
                                 var content = projection.GetHtml(htmlHelper);
                                 contentsBuilder.Append(content);
                             }
