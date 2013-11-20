@@ -1,5 +1,4 @@
 ﻿@model BetterCms.Module.Root.ViewModels.Cms.RenderWidgetViewModel
-
 @if (Model != null)
 {
     <h2>Widget Name: @Model.Widget.Name</h2>
@@ -10,27 +9,11 @@ else
     <p>Widget Preview...</p>
 }
 
-@if (Model != null)
+@if (Model != null && Model.Options != null)
 {
-    if (Model.Options != null)
+    foreach (var option in Model.Options)
     {
-        foreach (var option in Model.Options)
-        {
-            <p>
-                <strong>Widget Option "@option.Key" Type:</strong> @(option.Value != null ? option.Value.GetType().ToString() : string.Empty)
-                <strong>Value</strong>: @option.Value
-            </p>
-        }
-    }
-
-    if (Model.Page != null && Model.Page.Options != null)
-    {
-        foreach (var option in Model.Page.Options)
-        {
-            <p>
-                <strong>Page Option "@option.Key" Type:</strong> @(option.Value != null ? option.Value.GetType().ToString() : string.Empty)
-                <strong>Value</strong>: @option.Value
-            </p>
-        }
+        <strong>Option "@option.Key" Type:</strong> @(option.Value != null ? option.Value.GetType().ToString() : string.Empty)
+        <strong>; Value: </strong> @option.Value <br />
     }
 }

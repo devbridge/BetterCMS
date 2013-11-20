@@ -130,7 +130,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// ViewResult to render edit page properties modal dialog.
         /// </returns>
         [HttpGet]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult EditPageProperties(string pageId)
         {
             var model = GetCommand<GetPagePropertiesCommand>().ExecuteCommand(pageId.ToGuidOrDefault());
@@ -158,7 +158,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// <param name="model">The model.</param>
         /// <returns>Json with result status and redirect url.</returns>
         [HttpPost]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult EditPageProperties(EditPagePropertiesViewModel model)
         {
             if (ModelState.IsValid)
@@ -222,7 +222,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// Json result status.
         /// </returns>
         [HttpGet]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult ClonePage(string id)
         {
             var model = GetCommand<GetPageForCloningCommand>().ExecuteCommand(id.ToGuidOrDefault());
@@ -238,7 +238,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// Json result status.
         /// </returns>
         [HttpPost]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult ClonePage(ClonePageViewModel model)
         {
             model = GetCommand<ClonePageCommand>().ExecuteCommand(model);

@@ -20,7 +20,14 @@
             .SortColumnName("Title")
             .Attributes()
             .Encode(false);
-        column.DeleteButtonColumn();
+        if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))
+        {
+            column.DeleteButtonColumn();
+        }
+        else
+        {
+            column.EmptyColumn();
+        }
     };
 }
 

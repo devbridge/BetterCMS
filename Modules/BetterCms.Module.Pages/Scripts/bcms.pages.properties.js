@@ -324,11 +324,12 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         page.openEditPageDialog = function (id, postSuccess, title) {
             var pageViewModel,
                 canEdit = security.IsAuthorized(["BcmsEditContent"]),
+                canEditMaster = security.IsAuthorized(["BcmsAdministration"]),
                 canPublish = security.IsAuthorized(["BcmsPublishContent"]);
             
             modal.open({
                 title: title || globalization.editPagePropertiesModalTitle,
-                disableAccept: !canEdit && !canPublish,
+                disableAccept: !canEdit && !canPublish && !canEditMaster,
                 onLoad: function (dialog) {
                     var url = $.format(links.loadEditPropertiesDialogUrl, id);
                     dynamicContent.bindDialog(dialog, url, {
@@ -336,7 +337,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                             var form = dialog.container.find('form'),
                                 publishCheckbox = form.find(selectors.pagePropertiesPageIsPublishedCheckbox);
                             // User with only BcmsPublishContent but without BcmsEditContent can only publish - only publish checkbox needs to be enabled.
-                            if (form.data('readonly') !== true && !canEdit && canPublish) {
+                            if (form.data('readonly') !== true && canPublish && !canEdit && !canEditMaster) {
                                 // Disable everything.
                                 dialog.container.find('.bcms-tab-single').each(function () {
                                     $(this).addClass(classes.inactive);

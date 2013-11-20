@@ -1,8 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
-using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 
 using BetterCms.Module.Pages.Services;
@@ -21,8 +19,6 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
 
         private readonly ICmsConfiguration cmsConfiguration;
 
-        private readonly IAccessControlService accessControlService;
-
         private readonly ISecurityService securityService;
         
         private readonly IOptionService optionService;
@@ -34,17 +30,15 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
         /// </summary>
         /// <param name="LayoutService">The layout service.</param>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
-        /// <param name="accessControlService">The access control service.</param>
         /// <param name="securityService">The security service.</param>
         /// <param name="optionService">The option service.</param>
         /// <param name="masterPageService">The master page service.</param>
         public AddNewPageCommand(ILayoutService LayoutService, ICmsConfiguration cmsConfiguration,
-            IAccessControlService accessControlService, ISecurityService securityService, IOptionService optionService,
+            ISecurityService securityService, IOptionService optionService,
             IMasterPageService masterPageService)
         {
             layoutService = LayoutService;
             this.cmsConfiguration = cmsConfiguration;
-            this.accessControlService = accessControlService;
             this.securityService = securityService;
             this.optionService = optionService;
             this.masterPageService = masterPageService;
@@ -72,7 +66,7 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
                     ParentPageUrl = request.ParentPageUrl,
                     Templates = layoutService.GetAvailableLayouts().ToList(),
                     AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled,
-                    UserAccessList = accessControlService.GetDefaultAccessList(principal).Select(f => new UserAccessViewModel(f)).ToList(),
+                    UserAccessList = AccessControlService.GetDefaultAccessList(principal).Select(f => new UserAccessViewModel(f)).ToList(),
                     CreateMasterPage = request.CreateMasterPage
                 };
 

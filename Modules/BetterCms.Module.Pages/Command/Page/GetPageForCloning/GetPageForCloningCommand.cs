@@ -7,6 +7,7 @@ using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Page;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Security;
 
@@ -71,6 +72,15 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageForCloning
             model = pageQuery.FirstOne();
             model.AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled;
             model.UserAccessList = accessRules;
+
+            if (model.IsMasterPage)
+            {
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.Administration);
+            }
+            else
+            {
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent);
+            }
 
             return model;
         }

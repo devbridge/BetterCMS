@@ -55,6 +55,10 @@
         {
             column.DeleteButtonColumn();
         }
+        else
+        {
+            column.EmptyColumn();
+        }
     };
 }
 
@@ -66,6 +70,10 @@
         @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
         {
             <div class="bcms-btn-links-main" id="bcms-create-blog-button">@BlogGlobalization.SiteSettings_Blogs_AddNew</div>
+        }
+        else
+        {
+            <div class="bcms-btn-links-main">&nbsp;</div>
         }
 
         <div class="bcms-search-block">
