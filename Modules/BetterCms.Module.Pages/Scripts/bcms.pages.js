@@ -588,8 +588,10 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                         }
                     }
 
-                    var row = self.parents(selectors.siteSettingsPageParentRow);
-                    row.find(selectors.siteSettingPageTitleCell).html(data.Data.Title);
+                    var row = self.parents(selectors.siteSettingsPageParentRow),
+                        cell = row.find(selectors.siteSettingPageTitleCell);
+                    cell.html(data.Data.Title);
+                    cell.data('url', data.Data.PageUrl);
                     row.find(selectors.siteSettingPageCreatedCell).html(data.Data.CreatedOn);
                     row.find(selectors.siteSettingPageModifiedCell).html(data.Data.ModifiedOn);
 
