@@ -107,7 +107,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             var layout = LoadLayout();
             var region = LoadRegion();
             var isNew = request.Id.HasDefaultValue();
-            var userCanEdit = false;
+            bool userCanEdit;
 
             if (isNew || request.DesirableStatus != ContentStatus.Published)
             {

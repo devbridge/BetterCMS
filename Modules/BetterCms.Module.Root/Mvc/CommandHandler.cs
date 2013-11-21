@@ -34,6 +34,10 @@ namespace BetterCms.Module.Root.Mvc
                 command.Execute();
                 return true;
             }
+            catch (ConfirmationRequestException ex)
+            {
+                HandleConfirmationRequestException(ex, command);
+            }
             catch (ValidationException ex)
             {
                 HandleValidationException(ex, command);
@@ -76,6 +80,10 @@ namespace BetterCms.Module.Root.Mvc
                 command.Execute(request);
                 return true;
             }
+            catch (ConfirmationRequestException ex)
+            {
+                HandleConfirmationRequestException(ex, command, request);
+            }
             catch (ValidationException ex)
             {
                 HandleValidationException(ex, command, request);
@@ -115,6 +123,10 @@ namespace BetterCms.Module.Root.Mvc
             try
             {
                 return command.Execute();                
+            }
+            catch (ConfirmationRequestException ex)
+            {
+                HandleConfirmationRequestException(ex, command);
             }
             catch (ValidationException ex)
             {
@@ -157,6 +169,10 @@ namespace BetterCms.Module.Root.Mvc
             try
             {
                 return command.Execute(request);
+            }
+            catch (ConfirmationRequestException ex)
+            {
+                HandleConfirmationRequestException(ex, command, request);
             }
             catch (ValidationException ex)
             {
@@ -211,6 +227,19 @@ namespace BetterCms.Module.Root.Mvc
             {
                 command.Context.Messages.AddError(message);
             }
+        }
+
+        /// <summary>
+        /// Handles the user confirmation request exception.
+        /// </summary>
+        /// <param name="ex">The exception.</param>
+        /// <param name="command">The command.</param>
+        /// <param name="request">The request.</param>
+        private static void HandleConfirmationRequestException(ConfirmationRequestException ex, ICommandBase command, object request = null)
+        {
+            Log.Trace(FormatCommandExceptionMessage(command, request), ex);
+
+            throw ex;
         }
 
         /// <summary>

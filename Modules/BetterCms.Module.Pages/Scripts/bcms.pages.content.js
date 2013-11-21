@@ -18,6 +18,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 dataPickers: '.bcms-datepicker',
                 htmlEditor: 'bcms-contenthtml',
                 destroyDraftVersionLink: '.bcms-messages-draft-destroy',
+                pageContentUserConfirmationHiddenField: '#bcms-user-confirmed-region-deletion',
 
                 widgetsSearchButton: '#bcms-advanced-content-search-btn',
                 widgetsSearchInput: '#bcms-advanced-content-search',
@@ -523,6 +524,19 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             
                             var editInSourceMode = htmlEditor.isSourceMode(selectors.htmlEditor);
                             dialog.container.find(selectors.editInSourceModeHiddenField).val(editInSourceMode);
+                        },
+
+                        postError: function(json) {
+                            if (json.Data && json.Data.ConfirmationMessage) {
+                                modal.confirm({
+                                    content: json.Data.ConfirmationMessage,
+                                    onAccept: function () {
+                                        dialog.container.find(selectors.pageContentUserConfirmationHiddenField).val(true);
+                                        dialog.submitForm();
+                                        return true;
+                                    }
+                                });
+                            }
                         },
 
                         postSuccess: function (json) {
