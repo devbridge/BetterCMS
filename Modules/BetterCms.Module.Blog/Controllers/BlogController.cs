@@ -2,7 +2,9 @@
 using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Security;
+
 using BetterCms.Module.Blog.Commands.GetBlogPost;
 using BetterCms.Module.Blog.Commands.GetBlogPostList;
 using BetterCms.Module.Blog.Commands.SaveBlogPost;
@@ -10,6 +12,7 @@ using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Blog.ViewModels.Filter;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 
@@ -106,16 +109,23 @@ namespace BetterCms.Module.Blog.Controllers
         [HttpPost]
         public ActionResult SaveBlogPost(BlogPostViewModel model)
         {
-            var response = GetCommand<SaveBlogPostCommand>().ExecuteCommand(model);
-            if (response != null)
+            try
             {
-                if (model.DesirableStatus != ContentStatus.Preview && model.Id.HasDefaultValue())
+                var response = GetCommand<SaveBlogPostCommand>().ExecuteCommand(model);
+                if (response != null)
                 {
-                    Messages.AddSuccess(BlogGlobalization.CreatePost_CreatedSuccessfully_Message);
+                    if (model.DesirableStatus != ContentStatus.Preview && model.Id.HasDefaultValue())
+                    {
+                        Messages.AddSuccess(BlogGlobalization.CreatePost_CreatedSuccessfully_Message);
+                    }
                 }
-            }
 
-            return WireJson(response != null, response);
+                return WireJson(response != null, response);
+            }
+            catch (ConfirmationRequestException exc)
+            {
+                return WireJson(false, new { ConfirmationMessage = exc.Resource() });
+            }
         }
 
         /// <summary>

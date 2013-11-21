@@ -30,7 +30,8 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             overlayDelete: '.bcms-content-delete',
             destroyDraftVersionLink: '.bcms-messages-draft-destroy',
             blogTitle: "#bcms-editor-blog-title",
-	        editPermalinkEditField: '#bcms-page-permalink-edit'
+            editPermalinkEditField: '#bcms-page-permalink-edit',
+            contentUserConfirmationHiddenField: '#bcms-user-confirmed-region-deletion',
         },
         links = {
             loadSiteSettingsBlogsUrl: null,
@@ -111,10 +112,21 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                         blogViewModel.editInSourceMode(editInSourceMode);
                     },
                     
-                     postError: function () {
+                    postError: function (json) {
                         if (!pages.isEditedPageUrlManually()) {
                             var blogUrlField = dialog.container.find(selectors.editPermalinkEditField);
                             blogUrlField.val(permalinkValue);
+                        }
+                         
+                        if (json.Data && json.Data.ConfirmationMessage) {
+                            modal.confirm({
+                                content: json.Data.ConfirmationMessage,
+                                onAccept: function () {
+                                    dialog.container.find(selectors.contentUserConfirmationHiddenField).val(true);
+                                    dialog.submitForm();
+                                    return true;
+                                }
+                            });
                         }
                     },
                     

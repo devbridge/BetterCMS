@@ -1159,6 +1159,6 @@
     <value>Create new master page from the current page.</value>
   </data>
   <data name="SaveContent_ContentHasChildrenContents_RegionDeleteConfirmationMessage" xml:space="preserve">
-    <value>You are trying to delete dynamic regions. There are some children pages, which have contents created within these regions. If you delete this content, children page contens will be deleted also. Anyway, you can restore them by restoring archived version of current content. &lt;br /&gt;&lt;br /&gt;Are you sure you want to continue?</value>
+    <value>You are trying to delete dynamic regions. There are some children pages, which have contents created within these regions. If you delete this region, children page contens will be deleted also. Anyway, you can restore them by restoring archived version of current content. &lt;br /&gt;&lt;br /&gt;Are you sure you want to continue?</value>
   </data>
 </root>
