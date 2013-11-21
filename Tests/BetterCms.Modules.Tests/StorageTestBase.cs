@@ -17,6 +17,8 @@ namespace BetterCms.Test.Module
     {
         protected const string TestImagePath = "BetterCms.Test.Module.Contents.Images.logo.png";
         protected const string TestImageFileName = "logo.png";
+        protected const string TestBigImageFileName = "logo.big.png";
+        protected const string TestBigImagePath = "BetterCms.Test.Module.Contents.Images.logo.big.png";
         protected const string TestImageCopyFileName = "logo.copy.png";
 
         /// <summary>
@@ -54,12 +56,14 @@ namespace BetterCms.Test.Module
         /// <summary>
         /// Creates the upload request.
         /// </summary>
+        /// <param name="configuration">The configuration.</param>
+        /// <param name="useSmallImage">if set to <c>true</c> [use small image].</param>
         /// <returns></returns>
-        protected UploadRequest CreateUploadRequest(ICmsConfiguration configuration)
+        protected UploadRequest CreateUploadRequest(ICmsConfiguration configuration, bool useSmallImage = true)
         {
-            string url = Path.Combine(configuration.Storage.ContentRoot, TestImageFileName);
+            string url = Path.Combine(configuration.Storage.ContentRoot, useSmallImage ? TestImageFileName : TestBigImageFileName);
             var fileUri = new Uri(url);
-            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(TestImagePath);
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(useSmallImage ? TestImagePath : TestBigImagePath);
 
             var request = new UploadRequest
             {
@@ -75,10 +79,11 @@ namespace BetterCms.Test.Module
         /// </summary>
         /// <param name="configuration">The configuration.</param>
         /// <param name="storageService">The storage service.</param>
-        protected void ShouldUploadObject(ICmsConfiguration configuration, IStorageService storageService)
+        /// <param name="useSmallImage">if set to <c>true</c> [use small image].</param>
+        protected void ShouldUploadObject(ICmsConfiguration configuration, IStorageService storageService, bool useSmallImage = true)
         {
             // Upload
-            var request = CreateUploadRequest(configuration);
+            var request = CreateUploadRequest(configuration, useSmallImage);
             storageService.UploadObject(request);
             request.InputStream.Dispose();
 

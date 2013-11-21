@@ -68,6 +68,17 @@ namespace BetterCms.Test.Module.AmazonS3Storage
 
             ShouldDownloadUrl(configuration, amazonStorageService);
         }
+        
+        [Test]
+        [ExpectedException(typeof(ObjectDisposedException))]
+        public void Should_Fail_Timeout()
+        {
+            var configuration = MockConfiguration(true);
+            var amazonStorageService = new AmazonS3StorageService(configuration);
+            amazonStorageService.Timeout = 1;
+
+            ShouldUploadObject(configuration, amazonStorageService, false);
+        }
 
         /// <summary>
         /// Gets the storage configuration.
@@ -96,7 +107,8 @@ namespace BetterCms.Test.Module.AmazonS3Storage
                     {
                         ContentRoot = Environment.GetEnvironmentVariable("BETTERCMS_AMAZON_STORAGE_CONTENT_ROOT", EnvironmentVariableTarget.Machine),
                         PublicContentUrlRoot = Environment.GetEnvironmentVariable("BETTERCMS_AMAZON_STORAGE_PUBLIC_CONTENT_ROOT", EnvironmentVariableTarget.Machine),
-                        ServiceType = StorageServiceType.Auto
+                        ServiceType = StorageServiceType.Auto,
+                        ProcessTimeout = serviceSection.AmazonStorage.ProcessTimeout
                     };
 
                 configuration.Add(new KeyValueElement {Key = AmazonAccessKey, Value = accessKey});

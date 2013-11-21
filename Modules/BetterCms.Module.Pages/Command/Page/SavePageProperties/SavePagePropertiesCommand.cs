@@ -221,7 +221,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
 
             // Notify about SEO status change.
             if (initialSeoStatus != page.HasSEO)
-            {
+            {                
                 Events.PageEvents.Instance.OnPageSeoStatusChanged(page);
             }
 

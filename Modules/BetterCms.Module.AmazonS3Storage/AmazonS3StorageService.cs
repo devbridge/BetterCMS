@@ -13,14 +13,23 @@ using BetterCms.Core.Services.Storage;
 namespace BetterCms.Module.AmazonS3Storage
 {
     public class AmazonS3StorageService : IStorageService
-    { 
+    {
+        private const int DefaultTimeout = 300000;
+
         private readonly string accessKey;
         private readonly string secretKey;
         private readonly string bucketName;
+        private int timeout;
 
         private readonly bool accessControlEnabledGlobally;
 
         private readonly TimeSpan tokenExpiryTime;
+
+        public int Timeout
+        {
+            get { return timeout; }
+            set { timeout = value; }
+        }
 
         public AmazonS3StorageService(ICmsConfiguration config)
         {
@@ -31,6 +40,26 @@ namespace BetterCms.Module.AmazonS3Storage
                 accessKey = serviceSection.GetValue("AmazonAccessKey");
                 secretKey = serviceSection.GetValue("AmazonSecretKey");
                 bucketName = serviceSection.GetValue("AmazonBucketName");
+
+                try
+                {
+                    if (serviceSection.ProcessTimeout.TotalMilliseconds > Int32.MaxValue)
+                    {
+                        timeout = Int32.MaxValue;
+                    }
+                    else
+                    {
+                        timeout = Convert.ToInt32(serviceSection.ProcessTimeout.TotalMilliseconds);
+                        if (timeout <= 0)
+                        {
+                            timeout = DefaultTimeout;
+                        }
+                    }
+                }
+                catch (OverflowException)
+                {
+                    timeout = DefaultTimeout;
+                }
 
                 if (!TimeSpan.TryParse(serviceSection.GetValue("AmazonTokenExpiryTime"), out tokenExpiryTime))
                 {
@@ -59,7 +88,9 @@ namespace BetterCms.Module.AmazonS3Storage
                         var request = new GetObjectMetadataRequest();
 
                         request.WithBucketName(bucketName)
-                            .WithKey(key);
+                            .WithKey(key)
+                            .WithTimeout(timeout)
+                            .WithReadWriteTimeout(timeout);
 
                         using (client.GetObjectMetadata(request))
                         {
@@ -98,7 +129,9 @@ namespace BetterCms.Module.AmazonS3Storage
 
                     putRequest.WithBucketName(bucketName)
                         .WithKey(key)
-                        .WithInputStream(request.InputStream);
+                        .WithInputStream(request.InputStream)
+                        .WithTimeout(timeout)
+                        .WithReadWriteTimeout(timeout);
 
                     if (accessControlEnabledGlobally && !request.IgnoreAccessControl)
                     {
@@ -139,6 +172,9 @@ namespace BetterCms.Module.AmazonS3Storage
             try
             {                
                 var request = (HttpWebRequest)WebRequest.Create(uri);
+                request.Timeout = timeout;
+                request.ReadWriteTimeout = timeout;
+
                 var response = request.GetResponse();
                 var downloadResponse = new DownloadResponse();
                 downloadResponse.Uri = uri;
@@ -178,7 +214,8 @@ namespace BetterCms.Module.AmazonS3Storage
                         .WithCannedACL(S3CannedACL.PublicRead)
                         .WithSourceKey(sourceKey)
                         .WithDestinationKey(destinationKey)
-                        .WithDirective(S3MetadataDirective.COPY);
+                        .WithDirective(S3MetadataDirective.COPY)
+                        .WithTimeout(timeout);
 
                     client.CopyObject(request);
 
@@ -200,7 +237,7 @@ namespace BetterCms.Module.AmazonS3Storage
 
                 using (var client = CreateAmazonS3Client())
                 {
-                    var request = new DeleteObjectRequest()
+                    var request = new DeleteObjectRequest { Timeout = timeout, ReadWriteTimeout = timeout}
                         .WithKey(sourceKey)
                         .WithBucketName(bucketName);
 
@@ -223,7 +260,7 @@ namespace BetterCms.Module.AmazonS3Storage
 
                 using (var client = CreateAmazonS3Client())
                 {
-                    var request = new DeleteObjectRequest()
+                    var request = new DeleteObjectRequest { Timeout = timeout, ReadWriteTimeout = timeout}
                         .WithKey(sourceKey)
                         .WithBucketName(bucketName);
 
@@ -268,7 +305,9 @@ namespace BetterCms.Module.AmazonS3Storage
 
                     request.WithBucketName(bucketName)
                         .WithKey(key)
-                        .WithExpires(DateTime.UtcNow.Add(tokenExpiryTime));
+                        .WithExpires(DateTime.UtcNow.Add(tokenExpiryTime))
+                        .WithTimeout(timeout)
+                        .WithReadWriteTimeout(timeout);
 
                     var url = client.GetPreSignedURL(request);
                     return url;
