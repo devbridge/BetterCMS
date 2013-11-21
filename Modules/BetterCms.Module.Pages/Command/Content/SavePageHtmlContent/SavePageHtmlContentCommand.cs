@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
@@ -8,6 +7,7 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
+
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
@@ -52,12 +52,30 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                     .Where(f => f.Id == request.Id && !f.IsDeleted)
                     .AsQueryable();
 
+                if (!request.IsUserConfirmed)
+                {
+                    query = query.Fetch(f => f.Page);
+                }
+
                 if (configuration.Security.AccessControlEnabled)
                 {
                     query = query.Fetch(f => f.Page).ThenFetchMany(f => f.AccessRules);
                 }
 
                 pageContent = query.ToList().FirstOne();
+
+                // Check if user has confirmed the deletion of content
+                if (!request.IsUserConfirmed && pageContent.Page.IsMasterPage)
+                {
+                    var hasAnyChildren = contentService.CheckIfContentHasDeletingChildren(request.PageId, request.ContentId, request.PageContent);
+                    if (hasAnyChildren)
+                    {
+                        var message = PagesGlobalization.SaveContent_ContentHasChildrenContents_RegionDeleteConfirmationMessage;
+                        var logMessage = string.Format("User is trying to delete content regions wchich has children contents. Confirmation is required. ContentId: {0}, PageId: {1}",
+                                request.Id, request.PageId);
+                        throw new ConfirmationRequestException(() => message, logMessage);
+                    }
+                }
             }
             else
             {              
