@@ -5,7 +5,8 @@
         /// <summary>
         /// The page URL regular expression
         /// </summary>
-        public const string PageUrlRegularExpression = @"^([^:?#[\]@!$&'()*+,;= /%]{0,260}/)*[^:?#[\]@!$&'()*+,;= /%]{0,260}$";
+        // NOTE: After changing this regexp please run BetterCms.Test.Module.Pages.ServiceTests.UrlServiceTests test.
+        public const string PageUrlRegularExpression = @"^\/?([^\\:?#[\]@!$&'()*+,;= \/%]{1,260}\/)*([^\\:?#[\]@!$&'()*+,;= \/%]{1,260})?$";
 
         /// <summary>
         /// The site map URL regular expression
