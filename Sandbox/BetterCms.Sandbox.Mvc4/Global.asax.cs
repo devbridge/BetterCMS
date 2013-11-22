@@ -239,10 +239,7 @@ namespace BetterCms.Sandbox.Mvc4
 
             BetterCms.Events.PageEvents.Instance.PagePropertiesChanging += args =>
             {
-                if (args.AfterUpdate.Title == args.BeforeUpdate.Title)
-                {
-                    args.CancelWithErrorMessage("You are not allowed to change page title");
-                }
+                Log.Info("PagePropertiesChanging: BeforeUpdate: " + args.BeforeUpdate.ToString() + "; AfterUpdate: " + args.AfterUpdate.ToString());
             };
         }
 
