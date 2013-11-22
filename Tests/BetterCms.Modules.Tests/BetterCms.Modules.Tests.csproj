@@ -226,6 +226,7 @@
     <Compile Include="Users\ModelTests\MapTests\UserMapTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Contents\Images\logo.big.png" />
     <EmbeddedResource Include="Contents\Images\logo.png" />
     <None Include="App.config" />
     <Content Include="Config\cms.config">

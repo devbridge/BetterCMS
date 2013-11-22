@@ -47,7 +47,7 @@ namespace BetterCms.Configuration
             set { this[ServiceTypeAttribute] = value; }
         }
 
-        [ConfigurationProperty(ProcessTimeoutAttribute, IsRequired = false, DefaultValue = "00:30:00")]
+        [ConfigurationProperty(ProcessTimeoutAttribute, IsRequired = false, DefaultValue = "00:05:00")]
         public TimeSpan ProcessTimeout
         {
             get { return (TimeSpan)this[ProcessTimeoutAttribute]; }

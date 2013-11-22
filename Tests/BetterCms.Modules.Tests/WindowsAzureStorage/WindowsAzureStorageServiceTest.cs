@@ -69,6 +69,17 @@ namespace BetterCms.Test.Module.WindowsAzureStorage
             ShouldDownloadUrl(configuration, azureClient);
         }
 
+        [Test]
+        [ExpectedException(typeof(BetterCms.Core.Exceptions.Service.StorageException))]
+        public void Should_Fail_Timeout()
+        {
+            var configuration = MockConfiguration(true);
+            var azureClient = new WindowsAzureStorageService(configuration);
+            azureClient.Timeout = new TimeSpan(0, 0, 0, 0, 1);
+
+            ShouldUploadObject(configuration, azureClient, false);
+        }
+
         protected override ICmsStorageConfiguration GetStorageConfiguration(Configuration.CmsTestConfigurationSection serviceSection)
         {
             var accountName = serviceSection.AzureStorage.GetValue(AzureAccountName);

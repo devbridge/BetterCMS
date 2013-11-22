@@ -22,8 +22,16 @@ namespace BetterCms.Module.WindowsAzureStorage
         
         private readonly TimeSpan tokenExpiryTime;
 
+        private TimeSpan timeout;
+
         // Allow resource to be cached by any cache for 7 days:
         private const string CacheControl = "public, max-age=604800";
+
+        public TimeSpan Timeout
+        {
+            get { return timeout; }
+            set { timeout = value; }
+        }
 
         public WindowsAzureStorageService(ICmsConfiguration config)
         {
@@ -38,6 +46,9 @@ namespace BetterCms.Module.WindowsAzureStorage
                 {
                     tokenExpiryTime = TimeSpan.FromMinutes(10);
                 }
+
+                timeout = serviceSection.ProcessTimeout;
+                
                 accessControlEnabledGlobally = config.Security.AccessControlEnabled;
                 containerName = serviceSection.GetValue("AzureContainerName");
 
@@ -60,7 +71,7 @@ namespace BetterCms.Module.WindowsAzureStorage
 
                 try
                 {
-                    var blob = client.GetBlobReferenceFromServer(uri);
+                    var blob = client.GetBlobReferenceFromServer(uri, options: new BlobRequestOptions { MaximumExecutionTime = timeout, ServerTimeout = timeout });
                     return blob.Exists();
                 }
                 catch (Microsoft.WindowsAzure.Storage.StorageException ex)
@@ -116,7 +127,7 @@ namespace BetterCms.Module.WindowsAzureStorage
                     request.InputStream.Position = 0;
                 }
 
-                blob.UploadFromStream(request.InputStream);
+                blob.UploadFromStream(request.InputStream, options: new BlobRequestOptions { MaximumExecutionTime = timeout, ServerTimeout = timeout });
             }
             catch (Exception e)
             {
@@ -130,7 +141,12 @@ namespace BetterCms.Module.WindowsAzureStorage
 
             try
             {
+                var timeoutMs = timeout.TotalMilliseconds <= Int32.MaxValue ? Convert.ToInt32(timeout.TotalMilliseconds) : Int32.MaxValue;
+
                 var request = (HttpWebRequest)WebRequest.Create(uri);
+                request.Timeout = timeoutMs;
+                request.ReadWriteTimeout = timeoutMs;
+
                 var response = request.GetResponse();
                 var downloadResponse = new DownloadResponse();
                 downloadResponse.Uri = uri;
@@ -163,7 +179,7 @@ namespace BetterCms.Module.WindowsAzureStorage
                 var container = client.GetContainerReference(containerName);
                 var destinationBlob = container.GetBlockBlobReference(destinationUri.AbsoluteUri);
 
-                destinationBlob.StartCopyFromBlob(sourceUri);
+                destinationBlob.StartCopyFromBlob(sourceUri, options: new BlobRequestOptions { MaximumExecutionTime = timeout, ServerTimeout = timeout });
             }
             catch (Exception e)
             {
@@ -180,7 +196,7 @@ namespace BetterCms.Module.WindowsAzureStorage
                 var container = client.GetContainerReference(containerName);
                 var blob = container.GetBlockBlobReference(uri.AbsoluteUri);
 
-                blob.DeleteIfExists();
+                blob.DeleteIfExists(options: new BlobRequestOptions { MaximumExecutionTime = timeout, ServerTimeout = timeout });
             }
             catch (Exception e)
             {
@@ -198,7 +214,7 @@ namespace BetterCms.Module.WindowsAzureStorage
 
             var blobs = client.GetContainerReference(containerName);
 
-            var blobsList = blobs.GetDirectoryReference(prefix).ListBlobs(true);
+            var blobsList = blobs.GetDirectoryReference(prefix).ListBlobs(true, options: new BlobRequestOptions { MaximumExecutionTime = timeout, ServerTimeout = timeout });
             try
             {
                 foreach (var blob in blobsList)
@@ -226,7 +242,7 @@ namespace BetterCms.Module.WindowsAzureStorage
                 var client = cloudStorageAccount.CreateCloudBlobClient();
                 client.ParallelOperationThreadCount = 1;
 
-                var blob = client.GetBlobReferenceFromServer(uri);
+                var blob = client.GetBlobReferenceFromServer(uri, options: new BlobRequestOptions { MaximumExecutionTime = timeout, ServerTimeout = timeout });
 
                 var sharedAccessPolicy = new SharedAccessBlobPolicy();
                 sharedAccessPolicy.Permissions = SharedAccessBlobPermissions.Read;
