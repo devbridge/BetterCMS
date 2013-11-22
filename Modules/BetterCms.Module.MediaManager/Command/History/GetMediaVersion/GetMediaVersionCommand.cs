@@ -96,7 +96,7 @@ namespace BetterCms.Module.MediaManager.Command.History.GetMediaVersion
                             string.Format("{0} x {1}", dimensionCalculator.ResizedCroppedWidth, dimensionCalculator.ResizedCroppedHeight));
                     }
                     response.AddProperty(MediaGlobalization.MediaHistory_Preview_Properties_ImageDimensions,
-                        string.Format("{0} x {1}", dimensionCalculator.Height, dimensionCalculator.Width));
+                        string.Format("{0} x {1}", dimensionCalculator.Width, dimensionCalculator.Height));
                 }
 
                 if (!string.IsNullOrWhiteSpace(file.Description))
