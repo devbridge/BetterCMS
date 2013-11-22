@@ -12,12 +12,12 @@ namespace BetterCms.Events
         /// <summary>
         /// Initializes a new instance of the <see cref="PagePropertiesChangingEventArgs" /> class.
         /// </summary>
-        /// <param name="oldPage">The old page.</param>
-        /// <param name="newPage">The new page.</param>
-        public PagePropertiesChangingEventArgs(UpdatingPagePropertiesModel oldPage, UpdatingPagePropertiesModel newPage)
+        /// <param name="beforeUpdate">The old page.</param>
+        /// <param name="afterUpdate">The new page.</param>
+        public PagePropertiesChangingEventArgs(UpdatingPagePropertiesModel beforeUpdate, UpdatingPagePropertiesModel afterUpdate)
         {
-            OldPage = oldPage;
-            NewPage = newPage;
+            BeforeUpdate = beforeUpdate;
+            AfterUpdate = afterUpdate;
             CancellationErrorMessages = new List<string>();
         }
 
@@ -38,20 +38,20 @@ namespace BetterCms.Events
         }
 
         /// <summary>
-        /// Gets or sets the render page view model.
+        /// Gets the page model before update.
         /// </summary>
         /// <value>
-        /// The render page view model.
+        /// The page model before update.
         /// </value>
-        public UpdatingPagePropertiesModel OldPage { get; private set; }
+        public UpdatingPagePropertiesModel BeforeUpdate { get; private set; }
 
         /// <summary>
-        /// Gets or sets the render page view model.
+        /// Gets the page model after update.
         /// </summary>
         /// <value>
-        /// The render page view model.
+        /// The page model after update.
         /// </value>
-        public UpdatingPagePropertiesModel NewPage { get; private set; }
+        public UpdatingPagePropertiesModel AfterUpdate { get; private set; }
 
         /// <summary>
         /// Gets the cancellation messages.

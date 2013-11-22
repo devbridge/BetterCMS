@@ -239,10 +239,9 @@ namespace BetterCms.Sandbox.Mvc4
 
             BetterCms.Events.PageEvents.Instance.PagePropertiesChanging += args =>
             {
-                Log.Info("PagePropertiesChanging: OldPage: " + args.OldPage.ToString() + "; NewPage: ");
-                if (args.NewPage.Title == "bcms.cancel.page.saving")
+                if (args.AfterUpdate.Title == args.BeforeUpdate.Title)
                 {
-                    args.CancelWithErrorMessage("Invalid title: bcms.cancel.page.saving");
+                    args.CancelWithErrorMessage("You are not allowed to change page title");
                 }
             };
         }

@@ -90,9 +90,9 @@ namespace BetterCms.Events
             }
         }
 
-        public PagePropertiesChangingEventArgs OnPagePropertiesChanging(UpdatingPagePropertiesModel oldPage, UpdatingPagePropertiesModel newPage)
+        public PagePropertiesChangingEventArgs OnPagePropertiesChanging(UpdatingPagePropertiesModel beforeUpdate, UpdatingPagePropertiesModel afterUpdate)
         {
-            var args = new PagePropertiesChangingEventArgs(oldPage, newPage);
+            var args = new PagePropertiesChangingEventArgs(beforeUpdate, afterUpdate);
             
             if (PagePropertiesChanging != null)
             {
