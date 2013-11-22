@@ -119,6 +119,30 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
         };
 
         /**
+        * Calculates dimensions for image to fit to maximum allowable size
+        */
+        imageEditor.calculateImageDimensionsToFit = function (width, height, maxWidth, maxHeight, enlarge) {
+            if (enlarge || height > maxHeight || width > maxWidth) {
+
+                var scaleX = maxWidth > 0 ? width / maxWidth : 0,
+                scaleY = maxHeight > 0 ? height / maxHeight : 0;
+
+                if (scaleX > scaleY) {
+                    width = maxWidth;
+                    height = scaleX > 0 ? height / scaleX : 0;
+                } else {
+                    height = maxHeight;
+                    width = scaleY > 0 ? width / scaleY : 0;
+                }
+            }
+
+            return {
+                width: width,
+                height: height
+            };
+        };
+
+        /**
         * Editor base view model
         */
         var EditorBaseViewModel = (function () {
@@ -361,18 +385,13 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 function recalculate() {
                     var calcWidth = self.oldWidth(),
                         calcHeight = self.oldHeight(),
-                        scaleX = constants.maxWidthToFit > 0 ? calcWidth / constants.maxWidthToFit : 0,
-                        scaleY = constants.maxHeightToFit > 0 ? calcHeight / constants.maxHeightToFit : 0;
+                        resized;
 
-                    if (self.fit() && (calcHeight > constants.maxHeightToFit || calcWidth > constants.maxWidthToFit)) {
-                        
-                        if (scaleX > scaleY) {
-                            calcWidth = constants.maxWidthToFit;
-                            calcHeight = scaleX > 0 ? calcHeight / scaleX : 0;
-                        } else {
-                            calcHeight = constants.maxHeightToFit;
-                            calcWidth = scaleY > 0 ? calcWidth / scaleY : 0;
-                        }
+                    if (self.fit()) {
+
+                        resized = imageEditor.calculateImageDimensionsToFit(calcWidth, calcHeight, constants.maxWidthToFit, constants.maxHeightToFit);
+                        calcWidth = resized.width;
+                        calcHeight = resized.height;
                     }
                     
                     self.calculatedWidth(calcWidth);

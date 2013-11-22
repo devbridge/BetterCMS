@@ -7,11 +7,13 @@ using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
+
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
 using BetterCms.Module.MediaManager.ViewModels.Upload;
+
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
@@ -176,7 +178,10 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                 model = new MediaImageViewModel
                 {
                     ThumbnailUrl = imageFile.PublicThumbnailUrl,
-                    Tooltip = imageFile.Title
+                    Tooltip = imageFile.Title,
+                    Width = imageFile.Width,
+                    Height = imageFile.Height
+                    
                 };
                 isProcessing = isProcessing || !imageFile.IsOriginalUploaded.HasValue || !imageFile.IsThumbnailUploaded.HasValue;
                 isFailed = isFailed

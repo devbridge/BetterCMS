@@ -24,8 +24,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             searchBox: '#bcms-search-input',
             fileListMessageBox: '#bcms-site-settings-media-messages-',
 
-            previewBox: '#bcms-media-properties-preview',
-            previewBoxImage: '#bcms-media-properties-preview img',
+            previewBox: '#bcms-media-properties-preview'
         },
         links = {
             loadSiteSettingsMediaManagerUrl: null,
@@ -197,14 +196,23 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Current media's preview view model
     */
     function MediaItemPreviewViewModel() {
-        var self = this;
+        var self = this,
+            maxHeight = 250,
+            maxWidth = 400,
+            thumbnailWidth = 150,
+            thumbnailHeight = 150;
 
         self.dimensions = ko.observable();
         self.size = ko.observable();
         self.imageUrl = ko.observable();
+        self.previewUrl = ko.observable();
         self.imageAlt = ko.observable();
         self.top = ko.observable();
         self.left = ko.observable();
+        self.width = ko.observable();
+        self.height = ko.observable();
+        self.containerWidth = ko.observable();
+        self.containerHeight = ko.observable();
 
         self.lastX = null;
         self.lastY = null;
@@ -223,7 +231,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             var top = clientY,
                 previewHeight = $(selectors.previewBox).outerHeight();
 
-            if (top > $(window).height() - 200 || top > $(window).height() - previewHeight) {
+            if (top > $(window).height() - maxHeight || top > $(window).height() - previewHeight) {
                 top -= previewHeight;
             }
             self.top(top + 10 + "px");
@@ -234,22 +242,34 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         }
 
         self.setItem = function (item) {
-            var image = $(selectors.previewBoxImage);
+
+            self.imageUrl(item.publicUrl());
+            self.previewUrl(item.thumbnailUrl());
 
             if (item.isImage) {
                 self.dimensions(item.width + ' x ' + item.height);
+                
+                var dimensions = imageEditor.calculateImageDimensionsToFit(item.width, item.height, maxWidth, maxHeight);
+                self.containerWidth(parseInt(dimensions.width) + 'px');
+                self.containerHeight(parseInt(dimensions.height) + 'px');
+                
+                dimensions = imageEditor.calculateImageDimensionsToFit(thumbnailWidth, thumbnailHeight, dimensions.width, dimensions.height, true);
+                self.width(parseInt(dimensions.width) + 'px');
+                self.height(parseInt(dimensions.height) + 'px');
             } else {
                 self.dimensions('');
             }
 
             self.size(item.sizeText);
-            self.imageUrl(item.publicUrl());
             self.imageAlt(item.tooltip());
+        };
 
-            image.unbind('load');
-            image.load(function() {
-                setCoords();
-            });
+        self.onImageLoad = function () {
+            self.previewUrl(self.imageUrl());
+            self.width('');
+            self.height('');
+                
+            setCoords();
         };
 
         self.clearItem = function () {
@@ -480,7 +500,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
                 previewTimer = setTimeout(function() {
                     showPreview(data, event);
-                }, 500);
+                }, 300);
             } else {
                 self.previewItem.setCoords(event);
             }
