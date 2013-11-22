@@ -565,7 +565,12 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Removes regular content from page.
         */
         pagesContent.removeContentFromPage = function (pageContentId, pageContentVersion, contentVersion) {
-            var url = $.format(links.deletePageContentUrl, pageContentId, pageContentVersion, contentVersion),
+            var createUrl = function(isUserConfirmed) {
+                    return $.format(links.deletePageContentUrl, pageContentId, pageContentVersion, contentVersion, isUserConfirmed);
+                },
+                getUrl = function() {
+                    return createUrl(false);
+                },
                 onDeleteCompleted = function (json) {
                     try {
                         if (json.Success) {
@@ -576,7 +581,18 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             });
                         }
                         else {
-                            if (json.Messages && json.Messages.length > 0) {
+                            if (json.Data && json.Data.ConfirmationMessage) {
+                                modal.confirm({
+                                    content: json.Data.ConfirmationMessage,
+                                    onAccept: function () {
+                                        getUrl = function() {
+                                            return createUrl(true);
+                                        };
+                                        confirmDialog.accept();
+                                        return true;
+                                    }
+                                });
+                            } else if (json.Messages && json.Messages.length > 0) {
                                 modal.showMessages(json);
                             } else {
                                 modal.alert({
@@ -595,7 +611,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     onAccept: function () {
                         $.ajax({
                             type: 'POST',
-                            url: url,
+                            url: getUrl(),
                             contentType: 'application/json; charset=utf-8',
                             dataType: 'json',
                             cache: false

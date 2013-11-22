@@ -27,5 +27,13 @@ namespace BetterCms.Module.Pages.Command.Content.DeletePageContent
         /// The version.
         /// </value>
         public int ContentVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether user has confirmed the deletion of content with dynamic regions.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if user has confirmed the deletion of content with dynamic regions; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsUserConfirmed { get; set; }
     }
 }

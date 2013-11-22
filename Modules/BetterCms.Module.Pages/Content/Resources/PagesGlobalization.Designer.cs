@@ -952,6 +952,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You are trying to delete content which contains dynamic regions. There are some children pages, which have contents created within these regions. If you delete this content, children page contens will be deleted also and there will be no possibility to restore them. &lt;br /&gt;&lt;br /&gt;Are you sure you want to continue and lose all the children contents?.
+        /// </summary>
+        public static string DeletePageContent_ContentHasChildrenContents_DeleteConfirmationMessage {
+            get {
+                return ResourceManager.GetString("DeletePageContent_ContentHasChildrenContents_DeleteConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to delete content..
         /// </summary>
         public static string DeletePageContent_FailureMessage_Message {

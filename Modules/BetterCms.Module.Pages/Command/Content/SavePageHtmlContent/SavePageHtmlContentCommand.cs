@@ -71,7 +71,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                     if (hasAnyChildren)
                     {
                         var message = PagesGlobalization.SaveContent_ContentHasChildrenContents_RegionDeleteConfirmationMessage;
-                        var logMessage = string.Format("User is trying to delete content regions wchich has children contents. Confirmation is required. PageContentId: {0}, ContentId: {1}, PageId: {2}",
+                        var logMessage = string.Format("User is trying to delete content regions which has children contents. Confirmation is required. PageContentId: {0}, ContentId: {1}, PageId: {2}",
                                request.Id, request.ContentId, request.PageId);
                         throw new ConfirmationRequestException(() => message, logMessage);
                     }
