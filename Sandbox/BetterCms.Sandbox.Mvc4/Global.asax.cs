@@ -236,6 +236,15 @@ namespace BetterCms.Sandbox.Mvc4
             {
                 Log.Info("PageSeoStatusChanged: " + args.Item.ToString());
             };
+
+            BetterCms.Events.PageEvents.Instance.PagePropertiesChanging += args =>
+            {
+                Log.Info("PagePropertiesChanging: OldPage: " + args.OldPage.ToString() + "; NewPage: ");
+                if (args.NewPage.Title == "bcms.cancel.page.saving")
+                {
+                    args.CancelWithErrorMessage("Invalid title: bcms.cancel.page.saving");
+                }
+            };
         }
 
         private void AddSitemapEvents()

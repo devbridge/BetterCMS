@@ -1,4 +1,6 @@
-﻿using BetterCms.Module.Pages.Models;
+﻿using BetterCms.Core.Mvc;
+using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Models.Events;
 using BetterCms.Module.Root.Models;
 
 // ReSharper disable CheckNamespace
@@ -24,6 +26,11 @@ namespace BetterCms.Events
         /// Occurs when a page cloned.
         /// </summary>
         public event DefaultEventHandler<SingleItemEventArgs<PageProperties>> PageCloned;
+
+        /// <summary>
+        /// Occurs before page properties are changed.
+        /// </summary>
+        public event DefaultEventHandler<PagePropertiesChangingEventArgs> PagePropertiesChanging;
 
         /// <summary>
         /// Occurs when a page properties is changed.
@@ -81,6 +88,18 @@ namespace BetterCms.Events
             {
                 PagePropertiesChanged(new SingleItemEventArgs<PageProperties>(page));
             }
+        }
+
+        public PagePropertiesChangingEventArgs OnPagePropertiesChanging(UpdatingPagePropertiesModel oldPage, UpdatingPagePropertiesModel newPage)
+        {
+            var args = new PagePropertiesChangingEventArgs(oldPage, newPage);
+            
+            if (PagePropertiesChanging != null)
+            {
+                PagePropertiesChanging(args);
+            }
+
+            return args;
         }
 
         public void OnPagePublishStatusChanged(PageProperties page)
