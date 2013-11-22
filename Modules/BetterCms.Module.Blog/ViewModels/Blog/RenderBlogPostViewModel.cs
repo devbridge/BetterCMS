@@ -11,8 +11,15 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// Initializes a new instance of the <see cref="RenderBlogPostViewModel" /> class.
         /// </summary>
         /// <param name="blogPost">The blog post.</param>
-        public RenderBlogPostViewModel(BlogPost blogPost = null)
+        /// <param name="content">The content.</param>
+        public RenderBlogPostViewModel(BlogPost blogPost = null, BlogPostContent content = null)
         {
+            if (content != null)
+            {
+                ActivationDate = content.ActivationDate;
+                ExpirationDate = content.ExpirationDate;
+            }
+
             if (blogPost != null)
             {
                 if (blogPost.Author != null)
@@ -20,8 +27,11 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
                     Author = new RenderBlogPostAuthorViewModel(blogPost.Author);
                 }
 
-                ActivationDate = blogPost.ActivationDate;
-                ExpirationDate = blogPost.ExpirationDate;
+                if (content == null)
+                {
+                    ActivationDate = blogPost.ActivationDate;
+                    ExpirationDate = blogPost.ExpirationDate;
+                }
             }
         }
 
