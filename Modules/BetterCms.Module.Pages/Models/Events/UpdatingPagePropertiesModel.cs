@@ -66,5 +66,18 @@ namespace BetterCms.Module.Pages.Models.Events
         public Guid? MainImageId { get; private set; }
         public Guid? SecondaryImageId { get; private set; }
         public Guid? FeaturedImageId { get; private set; }
+
+        public override string ToString()
+        {
+            return string.Format(
+                "{0}, Title: {1}, Url: {2}, Status: {3}, HasSEO: {4}, LayoutId: {5}, MasterPageId: {6}",
+                base.ToString(),
+                Title,
+                PageUrl,
+                Status,
+                HasSEO,
+                LayoutId,
+                MasterPageId);
+        }
     }
 }
