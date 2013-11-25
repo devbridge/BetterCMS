@@ -68,6 +68,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                                 LayoutId = page.Layout != null && !page.Layout.IsDeleted ? page.Layout.Id : Guid.Empty,
                                 CategoryId = page.Category != null && !page.Category.IsDeleted ? page.Category.Id : (Guid?)null,
                                 IsArchived = page.IsArchived,
+                                IsMasterPage = page.IsMasterPage,
                                 MainImageId = page.Image != null && !page.Image.IsDeleted ? page.Image.Id : (Guid?)null,
                                 FeaturedImageId = page.FeaturedImage != null && !page.FeaturedImage.IsDeleted ?  page.FeaturedImage.Id : (Guid?)null,
                                 SecondaryImageId = page.SecondaryImage != null && !page.SecondaryImage.IsDeleted ? page.SecondaryImage.Id : (Guid?)null,

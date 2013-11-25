@@ -150,5 +150,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// </value>
         [DataMember]
         public bool UseNoIndex { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether a page is a master page.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if the page is a master page; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool IsMasterPage { get; set; }
     }
 }
