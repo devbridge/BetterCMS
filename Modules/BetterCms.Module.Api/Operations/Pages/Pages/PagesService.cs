@@ -50,6 +50,11 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
                 query = query.Where(b => b.Status == PageStatus.Published);
             }
 
+            if (!request.Data.IncludeMasterPages)
+            {
+                query = query.Where(b => !b.IsMasterPage);
+            }
+
             query = query.ApplyTagsFilter(
                 request.Data,
                 tagName => { return page => page.PageTags.Any(pageTag => pageTag.Tag.Name == tagName && !pageTag.IsDeleted && !pageTag.Tag.IsDeleted); });
@@ -78,6 +83,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
                         MainImageThumbnauilUrl = page.Image != null && !page.Image.IsDeleted ? page.Image.PublicThumbnailUrl : null,
                         MainImageCaption = page.Image != null && !page.Image.IsDeleted ? page.Image.Caption : null,
                         IsArchived = page.IsArchived,
+                        IsMasterPage = page.IsMasterPage,
                         Metadata = includeMetadata 
                             ? new MetadataModel
                                   {
