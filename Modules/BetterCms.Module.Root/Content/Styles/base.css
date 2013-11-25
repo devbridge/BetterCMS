@@ -60,12 +60,6 @@ a:focus {
 }
 
 /*Sidemenu*/
-.bcms-disabled-content {
-    opacity: 0.5;
-    filter: alpha(opacity=50);
-    cursor: default;
-}
-
 hr.bcms-sidebar-separator {
     border-style: solid none solid none;
     border-width: 1px;
