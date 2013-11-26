@@ -46,6 +46,7 @@
         icon: 'cmsdynamicregion',
         command: b
       });
+      e.filter.allow( 'div[data-cke-realelement,src,alt,title,contenteditable](*){*}', 'fakeobjects' );
     },
     afterInit: function (e) {
         if (e.DynamicRegionsEnabled !== true) {
@@ -65,6 +66,7 @@
                             // Customize fake object.
                             f.attributes.title = 'Dynamic Region';
                             f.attributes.contenteditable = 'false';
+                            f.attributes.isregion = 'true';
                             f.name = "div";
                             delete f.attributes["alt"];
                             delete f.attributes["align"];
@@ -81,10 +83,21 @@
         if (hf) {
             hf.addRules({
                 elements: {
-                    div: function (re) {
-                        // NOTE: rule here is not needed because of using fake objects created by editor.
+                    div: function( element ) {
+                        if(element.attributes.isregion !== 'true') {
+                            return element;
+                        }
+                        
+                        var attributes = element.attributes,
+                            realHtml = attributes && attributes[ 'data-cke-realelement' ],
+                            realFragment = realHtml && new CKEDITOR.htmlParser.fragment.fromHtml( decodeURIComponent( realHtml ) ),
+                            realElement = realFragment && realFragment.children[ 0 ];
+
+                        return realElement;
                     }
                 }
+            }, {
+                applyToAll: true
             });
         }
     }
