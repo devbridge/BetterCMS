@@ -189,8 +189,8 @@ div.bcms-align-right-active {
 }
 
     .bcms-media-properties-preview img {
-        max-height: 200px;
-        max-width: 500px;
+        max-height: 250px;
+        max-width: 400px;
     }
 
 /*file uploader*/

@@ -122,7 +122,10 @@
             @MediaGlobalization.MediaManager_ImageDimensions: <span data-bind="text: previewItem.dimensions()"></span>
             <!-- /ko -->
             <br />
-	        <img data-bind="attr: {src: previewItem.imageUrl(), alt: previewItem.imageAlt()}" />
+            <div data-bind="style: {width: previewItem.containerWidth(), height: previewItem.containerHeight()}">
+                <img data-bind="attr: {src: previewItem.previewUrl(), alt: previewItem.imageAlt()}, style: {width: previewItem.width(), height: previewItem.height()}" />
+            </div>
+	        <img data-bind="attr: {src: previewItem.imageUrl(), alt: previewItem.imageAlt()}, event: {load:previewItem.onImageLoad}" style="display: none;" />
         </div>
 
         <div data-bind="foreach: medias()">

@@ -236,6 +236,11 @@ namespace BetterCms.Sandbox.Mvc4
             {
                 Log.Info("PageSeoStatusChanged: " + args.Item.ToString());
             };
+
+            BetterCms.Events.PageEvents.Instance.PagePropertiesChanging += args =>
+            {
+                Log.Info("PagePropertiesChanging: BeforeUpdate: " + args.BeforeUpdate.ToString() + "; AfterUpdate: " + args.AfterUpdate.ToString());
+            };
         }
 
         private void AddSitemapEvents()

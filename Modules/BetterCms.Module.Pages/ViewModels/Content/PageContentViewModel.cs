@@ -212,6 +212,14 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         public bool CanEditContent { get; set; }
 
         /// <summary>
+        /// Gets or sets a value whether user confirmed content saving when affecting children pages.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if user confirmed content saving when affecting children pages; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsUserConfirmed { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

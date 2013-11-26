@@ -30,7 +30,8 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             overlayDelete: '.bcms-content-delete',
             destroyDraftVersionLink: '.bcms-messages-draft-destroy',
             blogTitle: "#bcms-editor-blog-title",
-	        editPermalinkEditField: '#bcms-page-permalink-edit'
+            editPermalinkEditField: '#bcms-page-permalink-edit',
+            contentUserConfirmationHiddenField: '#bcms-user-confirmed-region-deletion',
         },
         links = {
             loadSiteSettingsBlogsUrl: null,
@@ -54,6 +55,9 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             authorsTabTitle: null,
             templatesTabTitle: null,
             datePickerTooltipTitle: null
+        },
+        classes = {
+            inactive: 'bcms-inactive'
         },
         contentTypes = {
             blogContent: 'blog-post-content'
@@ -88,6 +92,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         var canEdit = security.IsAuthorized(["BcmsEditContent"]),
             blogViewModel,
             permalinkValue;
+        
         modal.edit({
             title: title,
             disableSaveDraft: !canEdit,
@@ -111,10 +116,21 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                         blogViewModel.editInSourceMode(editInSourceMode);
                     },
                     
-                     postError: function () {
+                    postError: function (json) {
                         if (!pages.isEditedPageUrlManually()) {
                             var blogUrlField = dialog.container.find(selectors.editPermalinkEditField);
                             blogUrlField.val(permalinkValue);
+                        }
+                         
+                        if (json.Data && json.Data.ConfirmationMessage) {
+                            modal.confirm({
+                                content: json.Data.ConfirmationMessage,
+                                onAccept: function () {
+                                    dialog.container.find(selectors.contentUserConfirmationHiddenField).val(true);
+                                    dialog.submitForm();
+                                    return true;
+                                }
+                            });
                         }
                     },
                     
@@ -156,8 +172,10 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         var data = content.Data,
             image = data.Image,
             tagsList = data.Tags,
-            newPost = false;
-        dialog.container.find(selectors.datePickers).initializeDatepicker(globalization.datePickerTooltipTitle);
+            newPost = false,
+            canEdit = security.IsAuthorized(["BcmsEditContent"]),
+            canPublish = security.IsAuthorized(["BcmsPublishContent"]),
+            form = dialog.container.find(selectors.firstForm);
         
         htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
         if (data.EditInSourceMode) {
@@ -190,6 +208,22 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 editBlogPost(data.Id, onSave, calledFromPage, onClose);
             });
         });
+        
+        dialog.container.find(selectors.datePickers).initializeDatepicker(globalization.datePickerTooltipTitle);
+
+        // User with only BcmsPublishContent but without BcmsEditContent can only publish
+        if (form.data('readonly') !== true && canPublish && !canEdit) {
+            // Disable everything except publish dates.
+            dialog.container.find('.bcms-blog-left,.bcms-blog-right').each(function () {
+                $(this).children(':not(.bcms-blog-dates-holder)').each(function () {
+                    $(this).addClass(classes.inactive);
+                });
+            });
+            form.find('input:visible:not(.bcms-datepicker)').attr('readonly', 'readonly');
+            form.find('textarea:visible').attr('readonly', 'readonly');
+            form.find('input[type=text]:not(.bcms-datepicker):visible:not([data-bind])').parent('div').css('z-index', 100);
+            form.find('textarea:visible:not([data-bind])').attr('readonly', 'readonly').parent('div').css('z-index', 100);
+        }
 
         return blogViewModel;
     }

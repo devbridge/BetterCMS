@@ -1,6 +1,10 @@
-﻿using BetterCms.Core.DataAccess;
+﻿using Autofac;
+
+using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+
 using BetterCms.Module.Pages.Command.Content.DeletePageContent;
+using BetterCms.Module.Root.Services;
 
 using NUnit.Framework;
 
@@ -30,9 +34,11 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                                       ContentVersion = content.Version
                                   };
                 var unitOfWork = new DefaultUnitOfWork(session);
-                var command = new DeletePageContentCommand();
+                var repository = new DefaultRepository(unitOfWork);
+                var contentService = Container.Resolve<IContentService>();
+                var command = new DeletePageContentCommand(contentService);
                 command.UnitOfWork = unitOfWork;
-                command.Repository = new DefaultRepository(unitOfWork);
+                command.Repository = repository;
 
                 var result = command.Execute(request);
                 Assert.IsTrue(result);

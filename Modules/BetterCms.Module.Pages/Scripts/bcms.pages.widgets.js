@@ -41,6 +41,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 destroyDraftVersionLink: '.bcms-messages-draft-destroy',
                 contentId: '#bcmsContentId',
                 contentVersion: '#bcmsContentVersion',
+                aceEditorContainer: '.bcms-editor-field-area-container:first',
                 
                 messagesContainer: "#bcms-edit-widget-messages",
 
@@ -238,11 +239,11 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             }
             
             dialog.container.find(selectors.enableCustomCss).on('change', function () {
-                showHideCustomCssText(dialog);
+                showHideCustomCssText(dialog, true);
             });
 
             dialog.container.find(selectors.enableCustomJs).on('change', function () {
-                showHideCustomJsText(dialog);
+                showHideCustomJsText(dialog, true);
             });
 
             dialog.container.find(selectors.enableCustomHtml).on('change', function () {
@@ -594,29 +595,53 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         };
         
         /**
+        * Function tries to resolve ace editor container ithin given container and focuses the editor
+        */
+        function focusAceEditor(container) {
+            var aceEditor = container.find(selectors.aceEditorContainer).data('aceEditor');
+            if (aceEditor != null) {
+                aceEditor.focus();
+            }
+        }
+
+        /**
         * Shows/hides custom css field in a html content widget edit form
         */
-        function showHideCustomCssText(dialog) {
+        function showHideCustomCssText(dialog, focus) {
+            var container = dialog.container.find(selectors.customCssContainer);
+
             if (dialog.container.find(selectors.enableCustomCss).attr('checked')) {
-                dialog.container.find(selectors.customCssContainer).show();
+                container.show();
+                
+                if (focus) {
+                    focusAceEditor(container);
+                }
             } else {
-                dialog.container.find(selectors.customCssContainer).hide();
+                container.hide();
             }
         };
 
-        function showHideCustomJsText(dialog) {
+        function showHideCustomJsText(dialog, focus) {
+            var container = dialog.container.find(selectors.customJsContainer);
+
             if (dialog.container.find(selectors.enableCustomJs).attr('checked')) {
-                dialog.container.find(selectors.customJsContainer).show();
+                container.show();
+                
+                if (focus) {
+                    focusAceEditor(container);
+                }
             } else {
-                dialog.container.find(selectors.customJsContainer).hide();
+                container.hide();
             }
         };
 
         function showHideCustomHtmlText(dialog) {
+            var container = dialog.container.find(selectors.customHtmlContainer);
+
             if (dialog.container.find(selectors.enableCustomHtml).attr('checked')) {
-                dialog.container.find(selectors.customHtmlContainer).show();                
+                container.show();
             } else {
-                dialog.container.find(selectors.customHtmlContainer).hide();
+                container.hide();
             }
         };
         

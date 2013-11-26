@@ -405,6 +405,11 @@ namespace BetterCms.Module.Root.Services
 
         private string[] GetRegionIds(string searchIn)
         {
+            if (string.IsNullOrWhiteSpace(searchIn))
+            {
+                return new string[0];
+            }
+
             var ids = new List<string>();
 
             var matches = Regex.Matches(searchIn, RootModuleConstants.DynamicRegionRegexPattern, RegexOptions.IgnoreCase);
@@ -450,6 +455,37 @@ namespace BetterCms.Module.Root.Services
                 .Where(s => source.ContentRegions.All(d => s.Region.RegionIdentifier != d.Region.RegionIdentifier))
                 .Distinct().ToList()
                 .ForEach(d => repository.Delete(d));
+        }
+
+        /// <summary>
+        /// Validates if content has no children.
+        /// </summary>
+        /// <param name="pageId">The page id.</param>
+        /// <param name="contentId">The content id.</param>
+        /// <param name="html">The HTML.</param>
+        /// <returns>
+        /// Boolean value, indicating, if content has any children contents, which are based on deleting regions
+        /// </returns>
+        public bool CheckIfContentHasDeletingChildren(Guid pageId, Guid contentId, string html = null)
+        {
+            bool hasAnyContents = false;
+            var regionIdentifiers = GetRegionIds(html);
+
+            // Get regions going to be deleted
+            var regionIds = repository.AsQueryable<ContentRegion>()
+                .Where(cr => cr.Content.Id == contentId
+                    && !regionIdentifiers.Contains(cr.Region.RegionIdentifier))
+                .Select(cr => cr.Region.Id)
+                .ToArray();
+
+            if (regionIds.Length > 0)
+            {
+                hasAnyContents = repository
+                    .AsQueryable<PageContent>()
+                    .Any(pc => pc.Page.MasterPage.Id == pageId && regionIds.Contains(pc.Region.Id));
+            }
+
+            return hasAnyContents;
         }
     }
 }

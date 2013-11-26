@@ -140,7 +140,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         /// The list of tag names.
         /// </value>
         [DataMember]
-        public System.Collections.Generic.List<string> Tags  { get; set; }
+        public System.Collections.Generic.List<string> Tags { get; set; }
 
         /// <summary>
         /// Gets or sets the page metadata.
@@ -150,5 +150,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         /// </value>
         [DataMember]
         public MetadataModel Metadata { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether a page is a master page.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if the page is a master page; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool IsMasterPage { get; set; }
     }
 }

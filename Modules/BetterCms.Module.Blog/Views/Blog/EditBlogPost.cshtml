@@ -1,38 +1,23 @@
-﻿@using System.Reflection
-@using BetterCms.Core.DataContracts.Enums
+﻿@using BetterCms.Core.DataContracts.Enums
+
 @using BetterCms.Module.Blog.Content.Resources
 @using BetterCms.Module.Blog.Controllers
+
 @using BetterCms.Module.Pages.Content.Resources
+
 @using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.Mvc.UI
 @using BetterCms.Module.Root.ViewModels.Tags
+
 @using Microsoft.Web.Mvc
 
 @model BetterCms.Module.Blog.ViewModels.Blog.BlogPostViewModel
 @if (Model == null)
 {
     return;
-}
-@functions
-{
-    private static Dictionary<string, object> GetAttributesObject(bool canEdit, dynamic properties)
-    {
-        var attributes = new Dictionary<string, object>();
-
-        foreach (var prop in properties.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
-        {
-            attributes.Add(prop.Name, prop.GetValue(properties, null));
-        }
-        
-        if (!canEdit)
-        {
-            attributes.Add("disabled", "disabled");
-        }
-        return attributes;
-    }
 }
 @{
     var canEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);
@@ -71,16 +56,17 @@
         @Html.HiddenFor(model => model.Image.ImageId, new { data_bind = "value: image().id()" })
         @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" })        
         @Html.HiddenFor(model => model.EditInSourceMode, new { @data_bind = "value: editInSourceMode()" })
+        @Html.HiddenFor(modal => modal.IsUserConfirmed, new { @id = "bcms-user-confirmed-region-deletion" })
 
         <div class="bcms-new-blog-content">
 
-            <div class="bcms-blog-left @(!canEdit ? "bcms-disabled-content" : string.Empty)">
+            <div class="bcms-blog-left">
 
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(BlogGlobalization.EditBlockPost_Title_Tooltip_Description)
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_Title_Title</div>
                     <div class="bcms-input-box">
-                        @Html.TextBoxFor(m => m.Title, GetAttributesObject(canEdit, new { @style = "width: 510px;", @class = "bcms-editor-field-box", @id = "bcms-editor-blog-title" }))
+                        @Html.TextBoxFor(m => m.Title, new { @style = "width: 510px;", @class = "bcms-editor-field-box", @id = "bcms-editor-blog-title" })
                         @Html.BcmsValidationMessageFor(m => m.Title)
                     </div>
                 </div>
@@ -91,14 +77,14 @@
                     @Html.Tooltip(BlogGlobalization.EditBlockPost_IntroText_Tooltip_Description)
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_IntroText_Title</div>
                     <div class="bcms-textarea-box">
-                        @Html.TextAreaFor(m => m.IntroText, GetAttributesObject(canEdit, new { @style = "width: 510px; height: 170px;", @class = "bcms-editor-field-area" }))
+                        @Html.TextAreaFor(m => m.IntroText, new { @style = "width: 510px; height: 170px;", @class = "bcms-editor-field-area" })
                         @Html.BcmsValidationMessageFor(m => m.IntroText)
                     </div>
                 </div>
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(BlogGlobalization.EditBlockPost_Content_Tooltip_Description)
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_Content_Title</div>
-                    @Html.TextAreaFor(model => model.Content, GetAttributesObject(canEdit, new { @id = "bcms-contenthtml" }))
+                    @Html.TextAreaFor(model => model.Content, new { @id = "bcms-contenthtml" })
                 </div>
 
             </div>
@@ -109,20 +95,20 @@
                         @Html.Tooltip(BlogGlobalization.EditBlockPost_LiveDates_Tooltip_Description)
                         <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_LiveFrom_Title</div>
                         <div class="bcms-date-input-box">
-                            @Html.DateTextBoxFor(model => model.LiveFromDate, Model.LiveFromDate, GetAttributesObject(true, new { @class = "bcms-editor-field-box bcms-datepicker", @style = "width: 127px;" }))
+                            @Html.DateTextBoxFor(model => model.LiveFromDate, Model.LiveFromDate, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, {"style", "width: 127px;"} })
                             @Html.BcmsValidationMessageFor(m => m.LiveFromDate)
                         </div>
                     </div>
                     <div class="bcms-input-field-holder">
                         <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_LiveTo_Title</div>
                         <div class="bcms-date-input-box">
-                            @Html.DateTextBoxFor(model => model.LiveToDate, Model.LiveToDate, GetAttributesObject(true, new { @class = "bcms-editor-field-box bcms-datepicker", @style = "width: 127px;" }))
+                            @Html.DateTextBoxFor(model => model.LiveToDate, Model.LiveToDate, new Dictionary<string, object> { { "class", "bcms-editor-field-box bcms-datepicker" }, {"style", "width: 127px;"} })
                             @Html.BcmsValidationMessageFor(m => m.LiveToDate)
                         </div>
                     </div>
                 </div>
 
-                <div class="bcms-input-field-holder @(!canEdit ? "bcms-disabled-content" : string.Empty)">
+                <div class="bcms-input-field-holder">
                     @Html.Tooltip(BlogGlobalization.EditBlockPost_FeaturedImage_Tooltip_Description)
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_FeaturedImage_Title</div>
                     <div class="bcms-uploaded-image">
@@ -138,19 +124,19 @@
                     </div>
                 </div>
 
-                <div class="bcms-input-field-holder @(!canEdit ? "bcms-disabled-content" : string.Empty)">
+                <div class="bcms-input-field-holder">
                     @Html.Tooltip(BlogGlobalization.EditBlockPost_Author_Tooltip_Description)
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_Author_Title</div>
-                    @Html.DropDownListFor(model => model.AuthorId, Model.Authors.ToSelectList(Model.AuthorId), string.Empty, GetAttributesObject(canEdit, new { @class = "bcms-global-select", @style = "width: 245px;" }))
+                    @Html.DropDownListFor(model => model.AuthorId, Model.Authors.ToSelectList(Model.AuthorId), string.Empty, new { @class = "bcms-global-select", @style = "width: 245px;" })
                 </div>
 
-                <div class="bcms-input-field-holder @(!canEdit ? "bcms-disabled-content" : string.Empty)">
+                <div class="bcms-input-field-holder">
                     @Html.Tooltip(BlogGlobalization.EditBlockPost_Category_Tooltip_Description)
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_Category_Title</div>
-                    @Html.DropDownListFor(model => model.CategoryId, Model.Categories.ToSelectList(Model.CategoryId), string.Empty, GetAttributesObject(canEdit, new { @class = "bcms-global-select", @style = "width: 245px;" }))
+                    @Html.DropDownListFor(model => model.CategoryId, Model.Categories.ToSelectList(Model.CategoryId), string.Empty, new { @class = "bcms-global-select", @style = "width: 245px;" })
                 </div>
 
-                <div class="bcms-blog-tags-holder @(!canEdit ? "bcms-disabled-content" : string.Empty)" data-bind="with: tags">
+                <div class="bcms-blog-tags-holder" data-bind="with: tags">
                     @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
                 </div>
             </div>

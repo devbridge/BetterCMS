@@ -131,9 +131,11 @@
     <Compile Include="Command\Widget\PreviewWidget\PreviewWidgetCommand.cs" />
     <Compile Include="Command\Widget\PreviewWidget\PreviewWidgetCommandRequest.cs" />
     <Compile Include="Events\CategoryEvents.cs" />
+    <Compile Include="Events\PagePropertiesChangingEventArgs.cs" />
     <Compile Include="Events\SitemapEvents.cs" />
     <Compile Include="Events\TagEvents.cs" />
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
+    <Compile Include="Models\Events\UpdatingPagePropertiesModel.cs" />
     <Compile Include="Models\Migrations\Migration201307301145.cs" />
     <Compile Include="Models\Migrations\Migration201307220940.cs" />
     <Compile Include="Models\Migrations\Migration201306260946.cs" />

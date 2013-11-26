@@ -119,6 +119,30 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
         };
 
         /**
+        * Calculates dimensions for image to fit to maximum allowable size
+        */
+        imageEditor.calculateImageDimensionsToFit = function (width, height, maxWidth, maxHeight, enlarge) {
+            if (enlarge || height > maxHeight || width > maxWidth) {
+
+                var scaleX = maxWidth > 0 ? width / maxWidth : 0,
+                scaleY = maxHeight > 0 ? height / maxHeight : 0;
+
+                if (scaleX > scaleY) {
+                    width = maxWidth;
+                    height = scaleX > 0 ? height / scaleX : 0;
+                } else {
+                    height = maxHeight;
+                    width = scaleY > 0 ? width / scaleY : 0;
+                }
+            }
+
+            return {
+                width: width,
+                height: height
+            };
+        };
+
+        /**
         * Editor base view model
         */
         var EditorBaseViewModel = (function () {
@@ -218,7 +242,6 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 self.cropCoordX2 = ko.observable(json.CropCoordX2);
                 self.cropCoordY1 = ko.observable(json.CropCoordY1);
                 self.cropCoordY2 = ko.observable(json.CropCoordY2);
-                self.keepAspectRatio = ko.observable(false);
                 self.url = json.OriginalImageUrl;
 
                 // Recalculate image dimensions on image change
@@ -231,16 +254,12 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 self.oldHeight.subscribe(function () {
                     recalculate();
                 });
-                self.keepAspectRatio.subscribe(function () {
-                    self.changeHeight();
-                });
-
                 self.widthAndHeight = ko.computed(function () {
                     return self.oldWidth() + ' x ' + self.oldHeight();
                 });
 
                 self.changeHeight = function() {
-                    if (self.keepAspectRatio() && self.widthInput.valid() && self.oldWidth != self.width()) {
+                    if (self.widthInput.valid() && self.oldWidth != self.width()) {
                         var ratio = self.width() / (self.originalWidth || 1);
 
                         self.height(Math.round(self.originalHeight * ratio));
@@ -250,7 +269,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 };
                 
                 self.changeWidth = function () {
-                    if (self.keepAspectRatio() && self.heightInput.valid() && self.oldHeight != self.height()) {
+                    if (self.heightInput.valid() && self.oldHeight != self.height()) {
                         var ratio = self.height() / (self.originalHeight || 1);
 
                         self.width(Math.round(self.originalWidth * ratio));
@@ -276,7 +295,6 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 self.restoreOriginalSize = function() {
                     self.width(self.originalWidth);
                     self.height(self.originalHeight);
-                    self.save();
                 };
 
                 self.onCropCoordsUpdated = function (coords) {
@@ -318,10 +336,6 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                     self.fit(!self.fit());
                 };
                 
-                self.changeAspectRatio = function () {
-                    self.keepAspectRatio(!self.keepAspectRatio());
-                };
-
                 function recalculateCroppedDimensions() {
                     var width = self.oldWidth(),
                         height = self.oldHeight(),
@@ -361,18 +375,13 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 function recalculate() {
                     var calcWidth = self.oldWidth(),
                         calcHeight = self.oldHeight(),
-                        scaleX = constants.maxWidthToFit > 0 ? calcWidth / constants.maxWidthToFit : 0,
-                        scaleY = constants.maxHeightToFit > 0 ? calcHeight / constants.maxHeightToFit : 0;
+                        resized;
 
-                    if (self.fit() && (calcHeight > constants.maxHeightToFit || calcWidth > constants.maxWidthToFit)) {
-                        
-                        if (scaleX > scaleY) {
-                            calcWidth = constants.maxWidthToFit;
-                            calcHeight = scaleX > 0 ? calcHeight / scaleX : 0;
-                        } else {
-                            calcHeight = constants.maxHeightToFit;
-                            calcWidth = scaleY > 0 ? calcWidth / scaleY : 0;
-                        }
+                    if (self.fit()) {
+
+                        resized = imageEditor.calculateImageDimensionsToFit(calcWidth, calcHeight, constants.maxWidthToFit, constants.maxHeightToFit);
+                        calcWidth = resized.width;
+                        calcHeight = resized.height;
                     }
                     
                     self.calculatedWidth(calcWidth);
@@ -431,7 +440,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
             }
 
             ImageEditorViewModel.prototype.onSave = function (element) {
-                // Call recalculation, if "keep aspect ratio" is checked
+                // Call recalculation
                 if (element.get(0) == this.widthInput.get(0)) {
                     this.changeHeight();
                 } else if (element.get(0) == this.heightInput.get(0)) {

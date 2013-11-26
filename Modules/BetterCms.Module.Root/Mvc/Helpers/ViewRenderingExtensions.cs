@@ -62,12 +62,13 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// <summary>
         /// Renders page to string recursively - going deep to master pages and layouts.
         /// </summary>
-        /// <param name="sb">The sb.</param>
         /// <param name="controller">The controller.</param>
         /// <param name="currentModel">The model.</param>
         /// <param name="pageModel">The page model.</param>
         /// <param name="htmlHelper">The HTML helper.</param>
-        /// <returns>String builder with updated data</returns>
+        /// <returns>
+        /// String builder with updated data
+        /// </returns>
         private static StringBuilder RenderRecursively(CmsControllerBase controller, RenderPageViewModel currentModel, RenderPageViewModel pageModel, HtmlHelper htmlHelper)
         {
             if (currentModel.MasterPage != null)

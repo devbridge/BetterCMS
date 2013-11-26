@@ -58,7 +58,8 @@ namespace BetterCms.Module.Blog.Helpers.Extensions
                     var blogPost = viewModel.Bag.BlogPostData.BlogPost as BlogPost;
                     if (blogPost != null)
                     {
-                        viewModel.Bag.BlogPostData.BlogPostViewModel = new RenderBlogPostViewModel(blogPost);
+                        var content = viewModel.Bag.BlogPostData.BlogPostContent as BlogPostContent;
+                        viewModel.Bag.BlogPostData.BlogPostViewModel = new RenderBlogPostViewModel(blogPost, content);
                     }
                 }
 

@@ -18,5 +18,7 @@ namespace BetterCms.Module.Root.Services
         int GetPageContentNextOrderNumber(Guid pageId);
 
         void PublishDraftContent(Guid pageId);
+
+        bool CheckIfContentHasDeletingChildren(Guid pageId, Guid contentId, string html = null);
     }
 }

@@ -74,9 +74,18 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         /// Gets or sets a value indicating whether to include metadata to results.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if  to include metadata to results; otherwise, <c>false</c>.
+        ///   <c>true</c> if to include metadata to results; otherwise, <c>false</c>.
         /// </value>
         [DataMember]
         public bool IncludeMetadata { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to include master pages.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to include master pages to results; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool IncludeMasterPages { get; set; }
     }
 }

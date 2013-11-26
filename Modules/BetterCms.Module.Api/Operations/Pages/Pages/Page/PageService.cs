@@ -81,7 +81,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
                         MainImageUrl = page.Image != null && !page.Image.IsDeleted ? page.Image.PublicUrl : null,
                         MainImageThumbnauilUrl = page.Image != null && !page.Image.IsDeleted ? page.Image.PublicThumbnailUrl : null,
                         MainImageCaption = page.Image != null && !page.Image.IsDeleted ? page.Image.Caption : null,
-                        IsArchived = page.IsArchived
+                        IsArchived = page.IsArchived,
+                        IsMasterPage = page.IsMasterPage
                     })
                 .FirstOne();
 

@@ -14,6 +14,7 @@ using BetterCms.Module.MediaManager.Models;
 
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Models.Events;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 
@@ -161,6 +162,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             }
 
             var page = pageQuery.ToList().FirstOne();
+            var beforeChange = new UpdatingPagePropertiesModel(page);
 
             var roles = page.IsMasterPage
                             ? new[] { RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.Administration }
@@ -312,6 +314,14 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                     var accessRules = request.UserAccessList != null ? request.UserAccessList.Cast<IAccessRule>().ToList() : null;
                     accessControlService.UpdateAccessControl(page, accessRules);
                 }
+            }
+
+            // Notify about page properties changing.
+            var cancelEventArgs = Events.PageEvents.Instance.OnPagePropertiesChanging(beforeChange, new UpdatingPagePropertiesModel(page));
+            if (cancelEventArgs.Cancel)
+            {
+                Context.Messages.AddError(cancelEventArgs.CancellationErrorMessages.ToArray());
+                return null;
             }
 
             Repository.Save(page);

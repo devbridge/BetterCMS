@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
@@ -14,6 +15,7 @@ using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
 
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root;
@@ -21,6 +23,8 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
+
+using NHibernate.Linq;
 
 namespace BetterCms.Module.Blog.Commands.SaveBlogPost
 {
@@ -107,7 +111,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             var layout = LoadLayout();
             var region = LoadRegion();
             var isNew = request.Id.HasDefaultValue();
-            var userCanEdit = false;
+            bool userCanEdit;
 
             if (isNew || request.DesirableStatus != ContentStatus.Published)
             {
@@ -129,10 +133,33 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             // Loading blog post and it's content, or creating new, if such not exists
             if (!isNew)
             {
-                blogPost = Repository.First<BlogPost>(request.Id);
-                content = Repository.FirstOrDefault<BlogPostContent>(c => c.PageContents.Any(x => x.Page == blogPost && x.Region == region && !x.IsDeleted));
+                var blogPostFuture = Repository
+                    .AsQueryable<BlogPost>(b => b.Id == request.Id)
+                    .ToFuture();
+                
+                content = Repository
+                    .AsQueryable<BlogPostContent>(c => c.PageContents.Any(x => x.Page.Id == request.Id 
+                        && x.Region == region && !x.IsDeleted))
+                    .ToFuture()
+                    .FirstOrDefault();
+
+                blogPost = blogPostFuture.FirstOne();
+
                 if (content != null)
                 {
+                    // Check if user has confirmed the deletion of content
+                    if (!request.IsUserConfirmed && blogPost.IsMasterPage)
+                    {
+                        var hasAnyChildren = contentService.CheckIfContentHasDeletingChildren(blogPost.Id, content.Id, request.Content);
+                        if (hasAnyChildren)
+                        {
+                            var message = PagesGlobalization.SaveContent_ContentHasChildrenContents_RegionDeleteConfirmationMessage;
+                            var logMessage = string.Format("User is trying to delete content regions which has children contents. Confirmation is required. ContentId: {0}, PageId: {1}",
+                                    content.Id, blogPost.Id);
+                            throw new ConfirmationRequestException(() => message, logMessage);
+                        }
+                    }
+
                     pageContent = Repository.FirstOrDefault<PageContent>(c => c.Page == blogPost && c.Region == region && !c.IsDeleted && c.Content == content);
                 }
 

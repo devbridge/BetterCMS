@@ -213,6 +213,14 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         public bool EnableInsertDynamicRegion { get; set; }
 
         /// <summary>
+        /// Gets or sets a value whether user confirmed content saving when affecting children pages.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if user confirmed content saving when affecting children pages; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsUserConfirmed { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="BlogPostViewModel" /> class.
         /// </summary>
         public BlogPostViewModel()

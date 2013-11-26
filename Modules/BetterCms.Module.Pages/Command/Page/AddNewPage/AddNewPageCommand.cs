@@ -1,10 +1,12 @@
 ﻿using System.Linq;
 
+using BetterCms.Core.DataAccess;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services;
 
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
@@ -25,6 +27,8 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
         
         private readonly IMasterPageService masterPageService;
 
+        private readonly IRepository repository;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AddNewPageCommand" /> class.
         /// </summary>
@@ -33,15 +37,17 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
         /// <param name="securityService">The security service.</param>
         /// <param name="optionService">The option service.</param>
         /// <param name="masterPageService">The master page service.</param>
+        /// <param name="repository">The repository.</param>
         public AddNewPageCommand(ILayoutService LayoutService, ICmsConfiguration cmsConfiguration,
             ISecurityService securityService, IOptionService optionService,
-            IMasterPageService masterPageService)
+            IMasterPageService masterPageService, IRepository repository)
         {
             layoutService = LayoutService;
             this.cmsConfiguration = cmsConfiguration;
             this.securityService = securityService;
             this.optionService = optionService;
             this.masterPageService = masterPageService;
+            this.repository = repository;
         }
 
         /// <summary>
@@ -73,8 +79,43 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
             if (model.Templates.Count > 0)
             {
                 model.Templates.ToList().ForEach(x => x.IsActive = false);
+
+                // Select current page as master
                 var urlHash = request.ParentPageUrl.UrlHash();
                 model.Templates.Where(t => t.IsMasterPage && t.MasterUrlHash == urlHash).ToList().ForEach(x => x.IsActive = true);
+                
+                // Select current page's layout
+                if (model.Templates.Count(t => t.IsActive) != 1)
+                {
+                    // Try to get layout of the current page
+                    var currentPageLayout = repository
+                        .AsQueryable<Root.Models.Page>(p => p.PageUrlHash == request.ParentPageUrl.UrlHash())
+                        .Select(p => new
+                                         {
+                                             MasterPageId = p.MasterPage != null ? p.MasterPage.Id : (System.Guid?)null,
+                                             LayoutId = p.Layout != null ? p.Layout.Id : (System.Guid?)null
+                                         })
+                        .FirstOrDefault();
+                    if (currentPageLayout != null)
+                    {
+                        if (currentPageLayout.MasterPageId.HasValue)
+                        {
+                            model.Templates
+                                .Where(t => t.IsMasterPage && t.TemplateId == currentPageLayout.MasterPageId.Value)
+                                .Take(1)
+                                .ToList().ForEach(x => x.IsActive = true);
+                        }
+                        else if (currentPageLayout.LayoutId.HasValue)
+                        {
+                            model.Templates
+                                .Where(t => !t.IsMasterPage && t.TemplateId == currentPageLayout.LayoutId.Value)
+                                .Take(1)
+                                .ToList().ForEach(x => x.IsActive = true);
+                        }
+                    }
+                }
+
+                // Select first layout as active
                 if (model.Templates.Count(t => t.IsActive) != 1)
                 {
                     model.Templates.First().IsActive = true;

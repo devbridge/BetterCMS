@@ -338,7 +338,8 @@ describe('pages.pages.api.behavior', function () {
                     { field: 'MainImageUrl', value: 'http://bettercms.sandbox.mvc4.local/uploads/image/6173795ceadc4b619d68005ef57c9ca8/1_1.jpg' },
                     { field: 'MainImageThumbnauilUrl', value: 'http://bettercms.sandbox.mvc4.local/uploads/image/6173795ceadc4b619d68005ef57c9ca8/t_1_1.png' },
                     { field: 'MainImageCaption', value: '01011 caption' },
-                    { field: 'IsArchived', value: false }
+                    { field: 'IsArchived', value: false },
+                    { field: 'IsMasterPage', value: false }
                 ]
             }
         };
@@ -364,7 +365,7 @@ describe('pages.pages.api.behavior', function () {
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
             // data.filter.where.length + 3 <-- Because field: {options, tags, metadata} cannnot be filtered by
-            expect(data.filter.where.length + 3).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
+            expect(data.filter.where.length + 3).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties count should be equal to filtering parameters count.');
         });
     });
     
@@ -690,6 +691,7 @@ describe('pages.pages.api.behavior', function () {
         expect(page.mainImageThumbnauilUrl).toBeDefinedAndNotNull('mainImageThumbnailUrl should be retrieved.');
         expect(page.mainImageCaption).toBe("Image for _0000_Page_For_Tests", 'Correctly filtered mainImageCaption should be retrieved.');
         expect(page.isArchived).toBe(true, 'Correctly filtered isArchived should be retrieved.');
+        expect(page.isMasterPage).toBe(false, 'Correctly filtered isMasterPage should be retrieved.');
     }
 
     function expectPagePropertiesAreNotNull(page) {
@@ -707,6 +709,7 @@ describe('pages.pages.api.behavior', function () {
         expect(page.mainImageThumbnauilUrl).toBeDefinedAndNotNull('mainImageThumbnailUrl should be retrieved.');
         expect(page.mainImageCaption).toBe("Image for _0000_Page_For_Tests", 'Correctly filtered mainImageCaption should be retrieved.');
         expect(page.isArchived).toBe(true, 'Correctly filtered isArchived should be retrieved.');
+        expect(page.isMasterPage).toBe(false, 'Correctly filtered isMasterPage should be retrieved.');
     }
 
     function expectPagePropertiesPropertiesAreNotNull(response) {
@@ -729,7 +732,8 @@ describe('pages.pages.api.behavior', function () {
         expect(page.useNoFollow).toBe(true, 'Correctly filtered useNoFollow should be retrieved.');
         expect(page.useNoIndex).toBe(true, 'Correctly filtered useNoIndex should be retrieved.');
         expect(page.isArchived).toBe(true, 'Correctly filtered isArchived should be retrieved.');
-        
+        expect(page.isMasterPage).toBe(false, 'Correctly filtered isMasterPage should be retrieved.');
+
         // layout
         var layout = response.layout;
         expect(layout).toBeDefinedAndNotNull('JSON layout object should be retrieved.');

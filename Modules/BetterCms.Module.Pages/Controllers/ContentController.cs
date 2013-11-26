@@ -1,7 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Security;
 
 using BetterCms.Module.Pages.Command.Content.DeletePageContent;
@@ -131,26 +131,35 @@ namespace BetterCms.Module.Pages.Controllers
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)]
         public ActionResult SavePageHtmlContent(PageContentViewModel model)
         {
-            var result = GetCommand<SavePageHtmlContentCommand>().ExecuteCommand(model);
-
-            if (result != null)
+            try
             {
-                return Json(
-                    new WireJson
-                        {
-                            Success = true,
-                            Data = new
-                                       {
-                                           PageContentId = result.PageContentId,
-                                           ContentId = result.ContentId,
-                                           RegionId = result.RegionId,
-                                           PageId = result.PageId,
-                                           DesirableStatus = model.DesirableStatus
-                                       }
-                        });
-            }
+                var result = GetCommand<SavePageHtmlContentCommand>().ExecuteCommand(model);
 
-            return Json(new WireJson { Success = false });
+                if (result != null)
+                {
+                    return
+                        Json(
+                            new WireJson
+                                {
+                                    Success = true,
+                                    Data =
+                                        new
+                                            {
+                                                PageContentId = result.PageContentId,
+                                                ContentId = result.ContentId,
+                                                RegionId = result.RegionId,
+                                                PageId = result.PageId,
+                                                DesirableStatus = model.DesirableStatus
+                                            }
+                                });
+                }
+
+                return Json(new WireJson { Success = false });
+            }
+            catch (ConfirmationRequestException exc)
+            {
+                return Json(new WireJson { Success = false, Data = new { ConfirmationMessage = exc.Resource() } });
+            }
         }
 
         /// <summary>
@@ -210,23 +219,32 @@ namespace BetterCms.Module.Pages.Controllers
         /// <param name="pageContentId">Page content id.</param>
         /// <param name="pageContentVersion">The page content version.</param>
         /// <param name="contentVersion">The content version.</param>
+        /// <param name="isUserConfirmed">if set to <c>true</c> user has confirmed the deletion of content with dynamic regions.</param>
         /// <returns>
         /// Json with result status.
         /// </returns>
         [HttpPost]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
-        public ActionResult DeletePageContent(string pageContentId, string pageContentVersion, string contentVersion)
+        public ActionResult DeletePageContent(string pageContentId, string pageContentVersion, string contentVersion, string isUserConfirmed)
         {
-            var request = new DeletePageContentCommandRequest
-                              {
-                                  PageContentId = pageContentId.ToGuidOrDefault(),
-                                  PageContentVersion = pageContentVersion.ToIntOrDefault(),
-                                  ContentVersion = contentVersion.ToIntOrDefault(),
-                              };
+            try
+            {
+                var request = new DeletePageContentCommandRequest
+                                  {
+                                      PageContentId = pageContentId.ToGuidOrDefault(),
+                                      PageContentVersion = pageContentVersion.ToIntOrDefault(),
+                                      ContentVersion = contentVersion.ToIntOrDefault(),
+                                      IsUserConfirmed = isUserConfirmed.ToBoolOrDefault()
+                                  };
 
-            var success = GetCommand<DeletePageContentCommand>().ExecuteCommand(request);
+                var success = GetCommand<DeletePageContentCommand>().ExecuteCommand(request);
 
-            return Json(new WireJson(success));
+                return Json(new WireJson(success));
+            }
+            catch (ConfirmationRequestException exc)
+            {
+                return Json(new WireJson { Success = false, Data = new { ConfirmationMessage = exc.Resource() } });
+            }
         }
 
         /// <summary>

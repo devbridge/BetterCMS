@@ -18,6 +18,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 dataPickers: '.bcms-datepicker',
                 htmlEditor: 'bcms-contenthtml',
                 destroyDraftVersionLink: '.bcms-messages-draft-destroy',
+                pageContentUserConfirmationHiddenField: '#bcms-user-confirmed-region-deletion',
 
                 widgetsSearchButton: '#bcms-advanced-content-search-btn',
                 widgetsSearchInput: '#bcms-advanced-content-search',
@@ -39,6 +40,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 enableCustomCss: '#bcms-enable-custom-css',
                 customJsContainer: '#bcms-custom-js-container',
                 customCssContainer: '#bcms-custom-css-container',
+                aceEditorContainer: '.bcms-editor-field-area-container:first',
                 
                 editInSourceModeHiddenField: '#bcms-edit-in-source-mode'
             },
@@ -275,11 +277,11 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         */
         pagesContent.initializeCustomTextArea = function(dialog) {
             dialog.container.find(selectors.enableCustomCss).on('change', function() {
-                showHideCustomCssText(dialog);
+                showHideCustomCssText(dialog, true);
             });
 
             dialog.container.find(selectors.enableCustomJs).on('change', function() {
-                showHideCustomJsText(dialog);
+                showHideCustomJsText(dialog, true);
             });
             showHideCustomCssText(dialog);
             showHideCustomJsText(dialog);
@@ -525,6 +527,19 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             dialog.container.find(selectors.editInSourceModeHiddenField).val(editInSourceMode);
                         },
 
+                        postError: function(json) {
+                            if (json.Data && json.Data.ConfirmationMessage) {
+                                modal.confirm({
+                                    content: json.Data.ConfirmationMessage,
+                                    onAccept: function () {
+                                        dialog.container.find(selectors.pageContentUserConfirmationHiddenField).val(true);
+                                        dialog.submitForm();
+                                        return true;
+                                    }
+                                });
+                            }
+                        },
+
                         postSuccess: function (json) {
                             if (json.Data.DesirableStatus == bcms.contentStatus.preview) {
                                 try {                                    
@@ -551,7 +566,12 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Removes regular content from page.
         */
         pagesContent.removeContentFromPage = function (pageContentId, pageContentVersion, contentVersion) {
-            var url = $.format(links.deletePageContentUrl, pageContentId, pageContentVersion, contentVersion),
+            var createUrl = function(isUserConfirmed) {
+                    return $.format(links.deletePageContentUrl, pageContentId, pageContentVersion, contentVersion, isUserConfirmed);
+                },
+                getUrl = function() {
+                    return createUrl(false);
+                },
                 onDeleteCompleted = function (json) {
                     try {
                         if (json.Success) {
@@ -562,7 +582,18 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             });
                         }
                         else {
-                            if (json.Messages && json.Messages.length > 0) {
+                            if (json.Data && json.Data.ConfirmationMessage) {
+                                modal.confirm({
+                                    content: json.Data.ConfirmationMessage,
+                                    onAccept: function () {
+                                        getUrl = function() {
+                                            return createUrl(true);
+                                        };
+                                        confirmDialog.accept();
+                                        return true;
+                                    }
+                                });
+                            } else if (json.Messages && json.Messages.length > 0) {
                                 modal.showMessages(json);
                             } else {
                                 modal.alert({
@@ -581,7 +612,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     onAccept: function () {
                         $.ajax({
                             type: 'POST',
-                            url: url,
+                            url: getUrl(),
                             contentType: 'application/json; charset=utf-8',
                             dataType: 'json',
                             cache: false
@@ -597,22 +628,42 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 });
         };    
         
-         /**
+        /**
+        * Function tries to resolve ace editor container ithin given container and focuses the editor
+        */
+        function focusAceEditor(container) {
+            var aceEditor = container.find(selectors.aceEditorContainer).data('aceEditor');
+            if (aceEditor != null) {
+                aceEditor.focus();
+            }
+        }
+
+        /**
         * Shows/hides custom css field in a content edit form
         */
-        function showHideCustomCssText(dialog) {
+        function showHideCustomCssText(dialog, focus) {
+            var customCssContainer = dialog.container.find(selectors.customCssContainer);
+
             if (dialog.container.find(selectors.enableCustomCss).attr('checked')) {
-                dialog.container.find(selectors.customCssContainer).show();
+                customCssContainer.show();
+                if (focus) {
+                    focusAceEditor(customCssContainer);
+                }
             } else {
-                dialog.container.find(selectors.customCssContainer).hide();
+                customCssContainer.hide();
             }
         };
 
-        function showHideCustomJsText(dialog) {
+        function showHideCustomJsText(dialog, focus) {
+            var customJsContainer = dialog.container.find(selectors.customJsContainer);
+            
             if (dialog.container.find(selectors.enableCustomJs).attr('checked')) {
-                dialog.container.find(selectors.customJsContainer).show();
+                customJsContainer.show();
+                if (focus) {
+                    focusAceEditor(customJsContainer);
+                }
             } else {
-                dialog.container.find(selectors.customJsContainer).hide();
+                customJsContainer.hide();
             }
         };
 
