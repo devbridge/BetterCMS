@@ -295,7 +295,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 var image = dialog.container.find(selectors.widgetPreviewImage);
                 if (image.attr("src") != null && image.attr("src") != "") {
                     messages.box({ container: dialog.container.find(selectors.messagesContainer) }).addWarningMessage(globalization.previewImageNotFoundMessage);
-                    image.hide();
+                    image.parent().hide();
                     image.removeAttr("src");
                 }
             });
@@ -306,10 +306,10 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
                 if (urlInput.valid()) {
                     image.attr({ src: urlInput.val() });
-                    image.show();
+                    image.parent().show();
                 } else {
                     image.hide();
-                    image.removeAttr("src");
+                    image.parent().removeAttr("src");
                 }
             });
             
@@ -331,7 +331,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             // IE fix: by default, while loading, picture is hidden
             var previewImage = dialog.container.find(selectors.widgetPreviewImage);
             if (previewImage.attr('src')) {
-                previewImage.show();
+                previewImage.parent().show();
             }
 
             return optionListViewModel;

@@ -419,10 +419,10 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         data = previewBox.data();
                     if (!data.isLoaded) {
                         if (data.asImage === "True") {
-                            previewBox.prepend($.format("<img src=\"{0}\" alt=\"{1}\" />",
+                            previewBox.find('div:first').append($.format("<img src=\"{0}\" alt=\"{1}\" />",
                                 data.previewUrl, data.title));
                         } else {
-                            previewBox.prepend($.format("<iframe class=\"{0}\" width=\"{1}\" height=\"{2}\" scrolling=\"no\" border=\"0\" frameborder=\"0\" src=\"{3}\" style=\"background-color:white;\"/>",
+                            previewBox.find('div:first').append($.format("<iframe class=\"{0}\" width=\"{1}\" height=\"{2}\" scrolling=\"no\" border=\"0\" frameborder=\"0\" src=\"{3}\" style=\"background-color:white;\"/>",
                                 data.frameCssClass, data.width, data.height, data.previewUrl));
                         }
                         previewBox.data("isLoaded", true);
