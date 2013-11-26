@@ -41,6 +41,11 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
         if (instance) {
             instance.destroy(true);
         }
+        
+        if (window.location.href.slice(-1) === '#') {
+            window.location.hash = '#-';
+        }
+
         CKEDITOR.replace(id, options);
         
         CKEDITOR.instances[id].InsertImageClicked = function(editor) {
@@ -79,12 +84,18 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
         for (name in CKEDITOR.instances) {
             CKEDITOR.instances[name].destroy();
         }
+        if (window.location.href.slice(-2) === '#-') {
+            window.location.hash = '';
+        }
     };
     
     htmlEditor.destroyHtmlEditorInstance = function () {
         var editor = CKEDITOR.instances[htmlEditor.id];
         if (editor) {
             editor.destroy();
+        }
+        if (window.location.href.slice(-2) === '#-') {
+            window.location.hash = '';
         }
     };
 
