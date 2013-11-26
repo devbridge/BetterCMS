@@ -162,6 +162,7 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
             if (!newPage.IsMasterPage && cloneAsMasterPage)
             {
                 newPage.IsMasterPage = true;
+                newPage.Status = PageStatus.Published;
             }
 
             // Add security.
