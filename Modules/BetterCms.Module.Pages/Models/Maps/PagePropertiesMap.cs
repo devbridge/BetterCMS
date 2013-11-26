@@ -9,8 +9,8 @@ namespace BetterCms.Module.Pages.Models.Maps
             Table("Pages");
             
             Map(x => x.Description).Nullable();
-            Map(x => x.CustomJS).Nullable();
-            Map(x => x.CustomCss).Nullable();
+            Map(x => x.CustomJS).Length(int.MaxValue).Nullable();
+            Map(x => x.CustomCss).Length(int.MaxValue).Nullable();
             Map(x => x.UseCanonicalUrl).Not.Nullable();
             Map(x => x.UseNoFollow).Not.Nullable();
             Map(x => x.UseNoIndex).Not.Nullable();

@@ -1449,8 +1449,7 @@ a.bcms-btn-close {
         outline: none;
     }
 
-.bcms-editor-field-area {
-    height: 104px;
+.bcms-editor-field-area, .bcms-editor-field-area-container {
     width: 100%;
     line-height: 18px;
     padding: 6px;
@@ -1459,7 +1458,6 @@ a.bcms-btn-close {
     font-family: "Open Sans", sans-serif;
     font-size: 12px;
     color: #000;
-    resize: vertical;
     background-color: #f5f5f5;
     border-radius: 0;
     box-sizing: border-box;
@@ -1468,12 +1466,17 @@ a.bcms-btn-close {
     border-radius: 0;
 }
 
-    .bcms-editor-field-area:focus {
+    .bcms-editor-field-area:focus, .bcms-editor-field-area-container:focus {
         background: #fff;
         border-color: #1894e4;
         box-shadow: 0 0 3px 0 rgba(24,145,230,0.35);
         outline: none;
     }
+
+.bcms-editor-field-area {
+    height: 104px;
+    resize: vertical;
+}
 
 .bcms-code-field {
     font-family: monospace !important;
