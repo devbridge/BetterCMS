@@ -9,7 +9,10 @@ bettercms.define('bcms.contextMenu', ['bcms.jquery', 'bcms'],
     function ($, bcms) {
         'use strict';
 
-        var menu = { },
+        var menu = {
+            isVisible: false,
+            options: { hideCallback: null, showCallback: null }
+        },
             selectors = {
                 links: 'a'
             },
@@ -25,22 +28,18 @@ bettercms.define('bcms.contextMenu', ['bcms.jquery', 'bcms'],
                 topRight: 'bcms-media-context-tr',
                 bottomRight: 'bcms-media-context-br'
             },
-            
             /**
             * Replace the system context menu?
             */
             replaceContext = false,
-            
             /**
             * Is the mouse over the context menu?
             */
             mouseOverContext = false,
-            
             /**
             * Is context menu disabled?
             */
             noContext = false,
-
             /**
             * Context menu container
             */
@@ -58,6 +57,22 @@ bettercms.define('bcms.contextMenu', ['bcms.jquery', 'bcms'],
                 menu.closeContext();
             }
             contextMenuContainer = container;
+        }
+
+        function onHideContext() {
+            menu.isVisible = false;
+            
+            if (menu.options && $.isFunction(menu.options.hideCallback)) {
+                menu.options.hideCallback();
+            }
+        }
+        
+        function onShowContext() {
+            menu.isVisible = true;
+            
+            if (menu.options && $.isFunction(menu.options.showCallback)) {
+                menu.options.showCallback();
+            }
         }
 
         /**
@@ -105,6 +120,7 @@ bettercms.define('bcms.contextMenu', ['bcms.jquery', 'bcms'],
             if (contextMenuContainer != null) {
                 contextMenuContainer.hide();
             }
+            onHideContext();
         };
 
         /**
@@ -120,14 +136,14 @@ bettercms.define('bcms.contextMenu', ['bcms.jquery', 'bcms'],
                 event = window.event;
 
             if (replaceContext) {
-                
+
                 if (menuContainer) {
                     setContextMenuContainer(menuContainer);
                 }
 
                 // hide the menu first to avoid an "up-then-over" visual effect
                 contextMenuContainer.hide();
-                
+
                 var leftPadding = 10,
                     topPadding = 14,
                     target = $(event.currentTarget || event.srcElement),
@@ -146,7 +162,7 @@ bettercms.define('bcms.contextMenu', ['bcms.jquery', 'bcms'],
                     addBottomClass = false,
                     addRightClass = false,
                     className;
-                
+
                 // Calculate top and left
                 if (totalHeight > scrollHeight) {
                     top = top - menuHeight + topPadding;
@@ -167,7 +183,7 @@ bettercms.define('bcms.contextMenu', ['bcms.jquery', 'bcms'],
                 contextMenuContainer.removeClass(classes.bottomRight);
                 contextMenuContainer.removeClass(classes.topLeft);
                 contextMenuContainer.removeClass(classes.topRight);
-                
+
                 className = (addBottomClass)
                     ? (addRightClass ? classes.bottomRight : classes.bottomLeft)
                     : (addRightClass ? classes.topRight : classes.topLeft);
@@ -180,6 +196,8 @@ bettercms.define('bcms.contextMenu', ['bcms.jquery', 'bcms'],
                 contextMenuContainer.show();
 
                 replaceContext = false;
+
+                onShowContext();
 
                 return false;
             }
@@ -200,7 +218,7 @@ bettercms.define('bcms.contextMenu', ['bcms.jquery', 'bcms'],
         /**
         * Enables context menu
         */
-        menu.enableContext = function() {
+        menu.enableContext = function () {
             noContext = false;
             mouseOverContext = false; // this gets left enabled when "disable menus" is chosen
 
@@ -212,7 +230,7 @@ bettercms.define('bcms.contextMenu', ['bcms.jquery', 'bcms'],
         */
         menu.init = function () {
             bcms.logger.debug('Initializing bcms.contextMenu module.');
-            
+
             $(document).on('mousedown', menu.contextMouseDown);
         };
 

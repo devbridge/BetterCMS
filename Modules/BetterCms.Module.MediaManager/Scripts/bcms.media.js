@@ -493,6 +493,14 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         self.movePreview = function (data, event) {
             var showProperties = self.showPropertiesPreview();
+            
+            if (menu.isVisible) {
+                if (showProperties) {
+                    self.showPropertiesPreview(false);
+                }
+                return;
+            }
+
             if (!showProperties) {
                 if (previewTimer != null) {
                     clearTimeout(previewTimer);
@@ -507,6 +515,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         };
 
         function showPreview(data, event) {
+            if (menu.isVisible) {
+                return;
+            }
+
             self.previewItem.setItem(data, event);
             self.previewItem.setCoords(event);
             self.showPropertiesPreview(true);
@@ -519,6 +531,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             
             self.showPropertiesPreview(false);
             self.previewItem.clearItem();
+        };
+
+        menu.options.showCallback = function() {
+            self.showPropertiesPreview(false);
         };
     }
 

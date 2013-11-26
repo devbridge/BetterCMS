@@ -62,12 +62,16 @@ div.bcms-btn-blog-add {
     background: url('images/bcms-no-image-1.png') no-repeat center center #f5f5f5;
     overflow: hidden;
 }
+    .bcms-blog-templates-image-holder > div.bcms-blog-templates-image {
+        height: 100%;
+        width: 100%;
+        background: #ffffff;
+    }
 
     .bcms-blog-templates-image-holder img {
         display: block;
-        height: 145px;
-        width: 165px;
-        background: #f5f5f5;
+        max-height: 145px;
+        max-width: 165px;
     }
 
 .bcms-blog-templates-button-holder {

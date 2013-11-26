@@ -628,15 +628,6 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Keep aspect ratio.
-        /// </summary>
-        public static string ImageEditor_Dialog_KeepAspectRatio {
-            get {
-                return ResourceManager.GetString("ImageEditor_Dialog_KeepAspectRatio", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Public URL.
         /// </summary>
         public static string ImageEditor_Dialog_PublicUrl {

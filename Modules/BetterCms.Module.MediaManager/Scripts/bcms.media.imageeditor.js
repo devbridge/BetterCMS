@@ -242,7 +242,6 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 self.cropCoordX2 = ko.observable(json.CropCoordX2);
                 self.cropCoordY1 = ko.observable(json.CropCoordY1);
                 self.cropCoordY2 = ko.observable(json.CropCoordY2);
-                self.keepAspectRatio = ko.observable(false);
                 self.url = json.OriginalImageUrl;
 
                 // Recalculate image dimensions on image change
@@ -255,16 +254,12 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 self.oldHeight.subscribe(function () {
                     recalculate();
                 });
-                self.keepAspectRatio.subscribe(function () {
-                    self.changeHeight();
-                });
-
                 self.widthAndHeight = ko.computed(function () {
                     return self.oldWidth() + ' x ' + self.oldHeight();
                 });
 
                 self.changeHeight = function() {
-                    if (self.keepAspectRatio() && self.widthInput.valid() && self.oldWidth != self.width()) {
+                    if (self.widthInput.valid() && self.oldWidth != self.width()) {
                         var ratio = self.width() / (self.originalWidth || 1);
 
                         self.height(Math.round(self.originalHeight * ratio));
@@ -274,7 +269,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 };
                 
                 self.changeWidth = function () {
-                    if (self.keepAspectRatio() && self.heightInput.valid() && self.oldHeight != self.height()) {
+                    if (self.heightInput.valid() && self.oldHeight != self.height()) {
                         var ratio = self.height() / (self.originalHeight || 1);
 
                         self.width(Math.round(self.originalWidth * ratio));
@@ -300,7 +295,6 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 self.restoreOriginalSize = function() {
                     self.width(self.originalWidth);
                     self.height(self.originalHeight);
-                    self.save();
                 };
 
                 self.onCropCoordsUpdated = function (coords) {
@@ -342,10 +336,6 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                     self.fit(!self.fit());
                 };
                 
-                self.changeAspectRatio = function () {
-                    self.keepAspectRatio(!self.keepAspectRatio());
-                };
-
                 function recalculateCroppedDimensions() {
                     var width = self.oldWidth(),
                         height = self.oldHeight(),
@@ -450,7 +440,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
             }
 
             ImageEditorViewModel.prototype.onSave = function (element) {
-                // Call recalculation, if "keep aspect ratio" is checked
+                // Call recalculation
                 if (element.get(0) == this.widthInput.get(0)) {
                     this.changeHeight();
                 } else if (element.get(0) == this.heightInput.get(0)) {

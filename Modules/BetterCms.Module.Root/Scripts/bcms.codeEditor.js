@@ -27,15 +27,14 @@ bettercms.define('bcms.codeEditor', ['bcms.jquery', 'bcms', 'ace'], function ($,
 
         var initAceEditor = function (inputField, mode) {
             inputField = $(inputField);
-            var height = inputField.outerHeight(),
-                id = inputField.attr('id'),
+            var id = inputField.attr('id'),
                 isReadOnly = inputField.attr('readonly') === 'readonly',
                 editorId = "aceEditor_" + id,
-                containerId = "aceEditor_container_" + id;
+                containerId = "aceEditor_container_" + id,
+                aceContainer = $('<div id="' + containerId + '" class="bcms-editor-field-area-container" style="padding:0;"><div id="' + editorId + '" style="width:100%; height:100%;"></div></div>');
             
             inputField.hide();
-            inputField.after('<div id="' + containerId + '" class="bcms-editor-field-area" style="padding:0;"><div id="' + editorId + '" style="width:100%; height:100%;"></div></div>');
-            $('#' + containerId).width("100%").height(height);
+            inputField.after(aceContainer);
             
             var aceEditor = ace.edit(editorId);
             aceEditor.setReadOnly(isReadOnly);
@@ -47,12 +46,15 @@ bettercms.define('bcms.codeEditor', ['bcms.jquery', 'bcms', 'ace'], function ($,
             ace.config.loadModule('ace/ext/language_tools', function () {
                 aceEditor.setOptions({
                     enableBasicAutocompletion: true,
-                    enableSnippets: true
+                    enableSnippets: true,
+                    maxLines: 20,
+                    minLines: 5
                 });
             });
             aceEditor.getSession().on('change', function() {
                 inputField.val(aceEditor.getSession().getValue());
             });
+            aceContainer.data('aceEditor', aceEditor);
         };
         
         container.find(selectors.inputFieldForJS).each(function () {

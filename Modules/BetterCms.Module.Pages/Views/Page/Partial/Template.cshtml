@@ -9,7 +9,9 @@
     <div class="bcms-grid-image-holder">
         @if (!string.IsNullOrWhiteSpace(Model.PreviewThumbnailUrl) || !string.IsNullOrWhiteSpace(Model.PreviewUrl))
         {
-            <img src="@(!string.IsNullOrWhiteSpace(Model.PreviewThumbnailUrl) ? Model.PreviewThumbnailUrl : Model.PreviewUrl)" alt="@Model.Title" />
+            <div class="bcms-grid-image">
+                <img src="@(!string.IsNullOrWhiteSpace(Model.PreviewThumbnailUrl) ? Model.PreviewThumbnailUrl : Model.PreviewUrl)" alt="@Model.Title" />
+            </div>
             <div class="bcms-zoom-overlay bcms-preview-template" data-url="@(!string.IsNullOrWhiteSpace(Model.PreviewUrl) ? Model.PreviewUrl : Model.PreviewThumbnailUrl)" data-alt="@Model.Title"></div>
         }
     </div>
