@@ -215,7 +215,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         if (form.data('readonly') !== true && canPublish && !canEdit) {
             // Disable everything except publish dates.
             dialog.container.find('.bcms-blog-left,.bcms-blog-right').each(function () {
-                $(this).children(':not(.bcms-blog-dates-holder)').each(function () {
+                $(this).children(':not(.bcms-blog-dates-holder, #bcms-blog-content-holder)').each(function () {
                     $(this).addClass(classes.inactive);
                 });
             });

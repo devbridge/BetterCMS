@@ -76,11 +76,11 @@ namespace BetterCms.Module.Pages.Services
                                     ? t.SecondaryImage.PublicUrl
                                     : null,
                         PreviewThumbnailUrl = t.Image != null
-                            ? t.Image.PublicThumbnailUrl
+                            ? t.Image.PublicUrl
                             : t.FeaturedImage != null
-                                ? t.FeaturedImage.PublicThumbnailUrl
+                                ? t.FeaturedImage.PublicUrl
                                 : t.SecondaryImage != null
-                                    ? t.SecondaryImage.PublicThumbnailUrl
+                                    ? t.SecondaryImage.PublicUrl
                                     : null,
                         IsMasterPage = true,
                         MasterUrlHash = t.PageUrlHash,

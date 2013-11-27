@@ -682,22 +682,9 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         */
         function onDynamicRegionInsert(htmlContentEditor) {
             if (htmlContentEditor != null) {
-
                 var guid = createGuid(),
-                    html;
-                
-                if (htmlContentEditor.mode == 'source') {
                     html = '<div>{{DYNAMIC_REGION:' + guid + '}}</div>';
-                    htmlContentEditor.addHtml(html);
-                } else {
-                    // Create fake CKEditor object with real object representation (inversion of code in /[BetterCms.Module.Root]/Scripts/ckeditor/plugins/cms-dynamicregion/plugin.js).
-                    // NOTE: EDITOR.createFakeParserElement(...) functionality does not work...
-                    html = '<div class="bcms-draggable-region" data-cke-realelement="%3Cdiv%3E%7B%7BDYNAMIC_REGION%3A'
-                        + guid
-                        + '%7D%7D%3C%2Fdiv%3E" data-cke-real-node-type="1" title="Dynamic Region" data-cke-real-element-type="cmsdynamicregion" contenteditable="false">Content to add</div>';
-                    var re = CKEDITOR.dom.element.createFromHtml(html, htmlContentEditor.document);
-                    htmlContentEditor.insertElement(re);
-                }
+                htmlContentEditor.addHtml(html);
             }
         }
 
