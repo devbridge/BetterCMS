@@ -78,7 +78,9 @@
                         return undefined;
                     }
                 }
-            }, 3);
+            }, {
+                applyToAll: true
+            });
         }
         if (hf) {
             hf.addRules({
