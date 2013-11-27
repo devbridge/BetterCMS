@@ -81,7 +81,7 @@
                         @Html.BcmsValidationMessageFor(m => m.IntroText)
                     </div>
                 </div>
-                <div class="bcms-input-list-holder">
+                <div class="bcms-input-list-holder" id="bcms-blog-content-holder">
                     @Html.Tooltip(BlogGlobalization.EditBlockPost_Content_Tooltip_Description)
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_Content_Title</div>
                     @Html.TextAreaFor(model => model.Content, new { @id = "bcms-contenthtml" })
