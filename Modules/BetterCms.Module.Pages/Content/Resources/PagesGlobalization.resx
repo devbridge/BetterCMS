@@ -1117,7 +1117,7 @@
     <value>Template or master page should be selected for page.</value>
   </data>
   <data name="SavePagePropertiesCommand_SelectedMasterIsChildPage_Message" xml:space="preserve">
-    <value>Selected master page is a child of the current page.</value>
+    <value>Selected master page is the current page or is a child of it.</value>
   </data>
   <data name="SavePagePropertiesCommand_SelectedMasterIsCurrentPage_Message" xml:space="preserve">
     <value>Selected master page is the current page.</value>

@@ -165,7 +165,8 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 });
             });
 
-            dialog.container.find(selectors.addNewPageTemplatePreviewLink).on('click', function () {
+            dialog.container.find(selectors.addNewPageTemplatePreviewLink).on('click', function (event) {
+                bcms.stopEventPropagation(event);
                 var template = $(this),
                     url = template.data('url'),
                     alt = template.data('alt');
