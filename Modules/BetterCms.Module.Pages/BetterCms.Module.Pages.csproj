@@ -287,6 +287,7 @@
     <Compile Include="Services\IRedirectService.cs" />
     <Compile Include="ViewModels\Content\ContentViewModel.cs" />
     <Compile Include="ViewModels\Content\ContentSortViewModel.cs" />
+    <Compile Include="ViewModels\Content\RestorePageContentViewModel.cs" />
     <Compile Include="ViewModels\Content\IDraftDestroy.cs" />
     <Compile Include="ViewModels\Content\PageContentSortViewModel.cs" />
     <Compile Include="ViewModels\Filter\PagesGridViewModel.cs" />

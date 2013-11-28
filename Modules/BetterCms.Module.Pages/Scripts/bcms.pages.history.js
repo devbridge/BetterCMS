@@ -66,40 +66,51 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
     }
 
     /**
-    * Restores specified version from history
+    * Restores specified version from history.
     */
     function restoreVersion(container, id) {
+        var submitRestoreIt = function (isConfirmed) {
+            var url = $.format(links.restoreContentVersionUrl, id, isConfirmed),
+                onComplete = function(json) {
+                    if (json.Success) {
+                        messages.refreshBox(container, json);
+                        redirect.ReloadWithAlert();
+                    } else {
+                        if (json.Data && json.Data.ConfirmationMessage) {
+                            modal.confirm({
+                                content: json.Data.ConfirmationMessage,
+                                onAccept: function() {
+                                    submitRestoreIt(1);
+                                }
+                            });
+                        }
+                    }
+                };
+
+            $.ajax({
+                type: 'POST',
+                cache: false,
+                url: url
+            })
+                .done(function(result) {
+                    onComplete(result);
+                })
+                .fail(function(response) {
+                    onComplete(bcms.parseFailedResponse(response));
+                });
+        };
+
         modal.confirm({
             content: globalization.contentVersionRestoreConfirmation,
             acceptTitle: globalization.restoreButtonTitle,
-            onAccept: function () {
-                
-                var url = $.format(links.restoreContentVersionUrl, id),
-                        onComplete = function (json) {
-                            messages.refreshBox(container, json);
-                            
-                            if (json.Success) {
-                                redirect.ReloadWithAlert();
-                            }
-                        };
-
-                $.ajax({
-                    type: 'POST',
-                    cache: false,
-                    url: url
-                })
-                    .done(function (result) {
-                        onComplete(result);
-                    })
-                    .fail(function (response) {
-                        onComplete(bcms.parseFailedResponse(response));
-                    });
+            onAccept: function() {
+                submitRestoreIt(0);
             }
         });
     }
    
     /**
-    * Posts content history form with search query
+    * Posts content history form with search query.
     */
     function searchPageContentHistory(dialog, container, form) {
         grid.submitGridForm(form, function (data) {
