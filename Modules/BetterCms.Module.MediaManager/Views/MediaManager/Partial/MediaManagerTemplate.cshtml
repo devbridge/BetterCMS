@@ -192,18 +192,18 @@
                     <!-- /ko -->
                     @if (canEdit)
                     {
-                        <!-- ko if: !isFolder() && !isArchived() -->
+                        <!-- ko if: !isFolder() -->
                         <a class="bcms-media-content-link" data-bind="click: reuploadMedia.bind($data, $root), clickBubble: false, visible: !isReadOnly()">@MediaGlobalization.Button_Reupload</a>
                         <!-- /ko -->
                     }
 
-                    <!-- ko if: (!isFolder() && !isArchived() && @(canEdit ? "true" : "false")) || (!isFailed() && isImage()) -->
+                    <!-- ko if: (!isFolder() && @(canEdit ? "true" : "false")) || (!isFailed() && isImage()) -->
                     <div class="bcms-settings-separator"></div>
                     <!-- /ko -->
 
                     @if (canEdit)
                     {
-                        <!-- ko if: !isFolder() && !isArchived() -->
+                        <!-- ko if: !isFolder() -->
                         <a class="bcms-media-content-link" data-bind="click: showHistory.bind($data, $root), clickBubble: false">@MediaGlobalization.Button_ShowHistory</a>
                         <!-- /ko -->
                     }
@@ -220,7 +220,7 @@
                 <div class="bcms-media-items-block">
                     <div data-bind="css: iconClassNames(), click: onIconClicked.bind($data, $root)">
                         <!-- ko if: getImageUrl() && !isProcessing() -->
-                        <img data-bind="attr: { alt: tooltip(), src: getImageUrl() }, event: { mousemove: $root.movePreview, mouseleave: $root.hidePreview }" />
+                        <img data-bind="attr: { alt: tooltip(), src: getImageUrl() }, event: { mousemove: $root.movePreview, mouseleave: $root.hidePreview, mouseout: $root.hidePreview }" />
                         <!-- /ko -->
                     </div>
                     <div class="bcms-media-name" data-bind="click: onTitleClicked.bind($data, $root)">

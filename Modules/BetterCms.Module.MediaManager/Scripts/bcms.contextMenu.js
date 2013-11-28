@@ -10,8 +10,7 @@ bettercms.define('bcms.contextMenu', ['bcms.jquery', 'bcms'],
         'use strict';
 
         var menu = {
-            isVisible: false,
-            options: { hideCallback: null, showCallback: null }
+            isVisible: false
         },
             selectors = {
                 links: 'a'
@@ -27,6 +26,10 @@ bettercms.define('bcms.contextMenu', ['bcms.jquery', 'bcms'],
                 bottomLeft: 'bcms-media-context-bl',
                 topRight: 'bcms-media-context-tr',
                 bottomRight: 'bcms-media-context-br'
+            },
+            events = {
+                menuOn: 'bcms-context-menu-on',
+                menuOff: 'bcms-context-menu-off'
             },
             /**
             * Replace the system context menu?
@@ -51,6 +54,7 @@ bettercms.define('bcms.contextMenu', ['bcms.jquery', 'bcms'],
         menu.links = links;
         menu.globalization = globalization;
         menu.selectors = selectors;
+        menu.events = events;
 
         function setContextMenuContainer(container) {
             if (contextMenuContainer != null) {
@@ -61,18 +65,12 @@ bettercms.define('bcms.contextMenu', ['bcms.jquery', 'bcms'],
 
         function onHideContext() {
             menu.isVisible = false;
-            
-            if (menu.options && $.isFunction(menu.options.hideCallback)) {
-                menu.options.hideCallback();
-            }
+            bcms.trigger(menu.events.menuOn);
         }
         
         function onShowContext() {
             menu.isVisible = true;
-            
-            if (menu.options && $.isFunction(menu.options.showCallback)) {
-                menu.options.showCallback();
-            }
+            bcms.trigger(menu.events.menuOff);
         }
 
         /**

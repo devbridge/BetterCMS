@@ -47,8 +47,8 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
         }
 
         CKEDITOR.replace(id, options);
-        
-        CKEDITOR.instances[id].InsertImageClicked = function(editor) {
+
+        CKEDITOR.instances[id].InsertImageClicked = function (editor) {
             bcms.trigger(htmlEditor.events.insertImage, editor);
         };
         
@@ -67,7 +67,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
                 if (editor.aceEditor && $.isFunction(editor.aceEditor.insert)) {
                     editor.aceEditor.insert(html);
                 } else {
-                    editor.setData(instance.getData() + html);
+                    editor.setData(editor.getData() + html);
                 }
             } else {
                 editor.insertHtml(html);
@@ -77,6 +77,9 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
         // Hide native image button container
         CKEDITOR.instances[id].on('instanceReady', function () {
             $(selectors.imageButtonContainer).hide();
+            var element = $('#' + id),
+                isReadOnly = element.attr('readonly') === 'readonly' || element.attr('disabled') === 'disabled';
+            CKEDITOR.instances[id].setReadOnly(isReadOnly);
         });
     };
 

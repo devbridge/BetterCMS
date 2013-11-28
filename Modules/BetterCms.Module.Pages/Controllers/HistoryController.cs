@@ -1,11 +1,14 @@
 ﻿using System.Web.Mvc;
 
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Command.History.DestroyContentDraft;
 using BetterCms.Module.Pages.Command.History.GetContentHistory;
 using BetterCms.Module.Pages.Command.History.GetContentVersion;
 using BetterCms.Module.Pages.Command.History.RestoreContentVersion;
+using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
 using Microsoft.Web.Mvc;
@@ -70,11 +73,17 @@ namespace BetterCms.Module.Pages.Controllers
         /// <returns>Json result.</returns>
         [HttpPost]
         [BcmsAuthorize(RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.Administration)]
-        public ActionResult RestorePageContentVersion(string id)
+        public ActionResult RestorePageContentVersion(string id, string isUserConfirmed)
         {
-            var result = GetCommand<RestoreContentVersionCommand>().ExecuteCommand(id.ToGuidOrDefault());
-
-            return WireJson(result);
+            try
+            {
+                var result = GetCommand<RestoreContentVersionCommand>().ExecuteCommand(new RestorePageContentViewModel() { PageContentId = id.ToGuidOrDefault(), IsUserConfirmed = isUserConfirmed.ToBoolOrDefault() });
+                return WireJson(result);
+            }
+            catch (ConfirmationRequestException exc)
+            {
+                return Json(new WireJson { Success = false, Data = new { ConfirmationMessage = exc.Resource() } });
+            }
         }
 
         /// <summary>

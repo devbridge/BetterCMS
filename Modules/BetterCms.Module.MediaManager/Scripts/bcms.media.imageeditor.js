@@ -14,6 +14,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 imageFileSize: "#image-file-size",
                 imageAlignment: "input[name=ImageAlign]:checked",
                 imageAlignmentControls: ".bcms-alignment-controls",
+                imageDimensionsBox: "#bcms-image-dimensions-editor",
 
                 imageEditorForm: 'form:first',
 
@@ -153,6 +154,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 
                 self.open = function () {
                     self.isOpened(true);
+                    self.onOpen();
                 };
 
                 self.close = function () {
@@ -166,6 +168,8 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                     }
                 };
             }
+            
+            EditorBaseViewModel.prototype.onOpen = function () { };
             
             EditorBaseViewModel.prototype.onSave = function () { };
             
@@ -243,6 +247,11 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 self.cropCoordY1 = ko.observable(json.CropCoordY1);
                 self.cropCoordY2 = ko.observable(json.CropCoordY2);
                 self.url = json.OriginalImageUrl;
+
+                // IE8 re-rendering fix
+                self.isIE8 = $.browser.msie && parseInt($.browser.version, 10) <= 8;
+                self.boxHeightHidden = self.dialog.container.find(selectors.imageDimensionsBox).height();
+                self.boxHeightOpen = 0;
 
                 // Recalculate image dimensions on image change
                 self.fit.subscribe(function () {
@@ -462,6 +471,23 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 this.height(this.oldHeight());
                 this.heightInput.blur();
                 this.widthInput.blur();
+
+                // IE8 fails to rerender dimensions box: need to set it's height manually
+                if (this.isIE8) {
+                    this.dialog.container.find(selectors.imageDimensionsBox).height(this.boxHeightHidden);
+                }
+            };
+
+            ImageEditorViewModel.prototype.onOpen = function () {
+                // IE8 fails to rerender dimensions box: need to set it's height manually
+                if (this.isIE8) {
+                    var box = this.dialog.container.find(selectors.imageDimensionsBox);
+                    if (!this.boxHeightOpen) {
+                        this.boxHeightOpen = box.height();
+                    }
+                    
+                    box.height(this.boxHeightOpen);
+                }
             };
             
             return ImageEditorViewModel;

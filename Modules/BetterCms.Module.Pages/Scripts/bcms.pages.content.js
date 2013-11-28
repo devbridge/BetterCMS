@@ -682,7 +682,6 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         */
         function onDynamicRegionInsert(htmlContentEditor) {
             if (htmlContentEditor != null) {
-
                 var guid = createGuid(),
                     html;
                 
@@ -694,7 +693,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     // NOTE: EDITOR.createFakeParserElement(...) functionality does not work...
                     html = '<div class="bcms-draggable-region" data-cke-realelement="%3Cdiv%3E%7B%7BDYNAMIC_REGION%3A'
                         + guid
-                        + '%7D%7D%3C%2Fdiv%3E" data-cke-real-node-type="1" title="Dynamic Region" data-cke-real-element-type="cmsdynamicregion" contenteditable="false" isregion="true">Content to add</div>';
+                        + '%7D%7D%3C%2Fdiv%3E" data-cke-real-node-type="1" title="Dynamic Region" data-cke-real-element-type="cmsdynamicregion" isregion="true">Content to add</div>';
                     var re = CKEDITOR.dom.element.createFromHtml(html, htmlContentEditor.document);
                     htmlContentEditor.insertElement(re);
                 }

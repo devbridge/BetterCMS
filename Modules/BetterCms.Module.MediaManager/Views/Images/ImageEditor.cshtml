@@ -90,7 +90,7 @@
                     <div class="bcms-editing-text" id="image-file-size" data-bind="text: imageEditorViewModel.croppedWidthAndHeight()">@Model.CroppedWidth x @Model.CroppedHeight</div>
                 </div>
 
-                <div class="bcms-file-info-text" data-bind="with: imageEditorViewModel">
+                <div class="bcms-file-info-text" data-bind="with: imageEditorViewModel" id="bcms-image-dimensions-editor">
                     <b>@MediaGlobalization.ImageEditor_Dialog_Dimensions:</b>
                     <div class="bcms-editing-text" data-bind="text: widthAndHeight()">@Model.ImageWidth x @Model.ImageHeight</div>
                     <a class="bcms-file-link" data-bind="click: open, visible: !isOpened()">@RootGlobalization.Button_Edit</a>
