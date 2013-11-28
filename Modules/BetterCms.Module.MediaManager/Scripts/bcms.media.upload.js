@@ -253,7 +253,7 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
                 failModel.failureMessage('');
                 if (newImg.Messages) {
                     var failureMessages = '';
-                    for (var i in newImg.Messages) {
+                    for (var i = 0; i < newImg.Messages.length; i++) {
                         failureMessages += newImg.Messages[i] + ' ';
                     }
                     failModel.failureMessage(failureMessages);
@@ -535,7 +535,7 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
                                 fileModel.failureMessage('');
                                 if (result.Messages) {
                                     var failureMessages = '';
-                                    for (var i in result.Messages) {
+                                    for (var i = 0; i < result.Messages.length; i++) {
                                         failureMessages += result.Messages[i] + ' ';
                                     }
                                     clearInterval(transferAnimationId);

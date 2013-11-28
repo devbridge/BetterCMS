@@ -473,7 +473,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             };
             self.searchInNodes = function (nodes, searchQuery, showAll) {
                 var hasResult = false;
-                for (var i in nodes) {
+                for (var i = 0; i < nodes.length; i++) {
                     var node = nodes[i];
                     if (showAll) {
                         node.isVisible(true);
@@ -536,7 +536,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 self.expandOrCollapse(self.childNodes(), false);
             };
             self.expandOrCollapse = function (nodes, expand) {
-                for (var i in nodes) {
+                for (var i = 0; i < nodes.length; i++) {
                     var node = nodes[i];
                     node.isExpanded(expand);
                     self.expandOrCollapse(node.childNodes(), expand);
@@ -545,8 +545,9 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             
             self.hasChildNodes = function () {
                 // Has at least one not deleted child node.
-                for (var i in self.childNodes()) {
-                    if (!self.childNodes()[i].isDeleted()) {
+                var nodes = self.childNodes();
+                for (var i = 0; i < nodes.length; i++) {
+                    if (!nodes[i].isDeleted()) {
                         return true;
                     }
                 }
@@ -581,7 +582,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             };
 
             self.focusOnActiveNode = function(nodes) {
-                for (var i in nodes) {
+                for (var i = 0; i < nodes.length; i++) {
                     if (nodes[i].isActive()) {
                         $($('input', '#' + nodes[i].containerId).get(0)).focus();
                         return true;
@@ -649,7 +650,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             };
             self.nodesToJson = function(nodes) {
                 var result = [];
-                for (var i in nodes) {
+                for (var i = 0; i < nodes.length; i++) {
                     var node = nodes[i];
                     result.push({
                             Id: node.id(),
@@ -705,8 +706,9 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.isLastNode = ko.observable(false);
             self.hasChildNodes = function () {
                 // Has at least one not deleted child node.
-                for (var i in self.childNodes()) {
-                    if (!self.childNodes()[i].isDeleted()) {
+                var nodes = self.childNodes();
+                for (var i = 0; i < nodes.length; i++) {
+                    if (!nodes[i].isDeleted()) {
                         return true;
                     }
                 }
@@ -882,7 +884,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.searchForPageLinks = function () {
                 var showAll = $.trim(self.searchQuery()).length === 0;
                 var pageLinks = self.pageLinks();
-                for (var i in pageLinks) {
+                for (var i = 0; i < pageLinks.length; i++) {
                     if (showAll) {
                         pageLinks[i].isVisible(true);
                     } else {
