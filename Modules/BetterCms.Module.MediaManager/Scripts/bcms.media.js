@@ -273,8 +273,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.imageAlt('');
         };
 
-        self.setCoords = function (mouseEvent) {
-            setCoords(mouseEvent.clientX, mouseEvent.clientY);
+        self.setCoords = function (clientX, clientY) {
+            setCoords(clientX, clientY);
         };
 
         return self;
@@ -488,7 +488,9 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         };
 
         self.movePreview = function (data, event) {
-            var showProperties = self.showPropertiesPreview();
+            var showProperties = self.showPropertiesPreview(),
+                clientX = event.clientX,
+                clientY = event.clientY;
             
             if (menu.isVisible || !data.isImage()) {
                 if (showProperties) {
@@ -503,20 +505,20 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 }
 
                 previewTimer = setTimeout(function() {
-                    showPreview(data, event);
+                    showPreview(data, clientX, clientY);
                 }, 300);
             } else {
-                self.previewItem.setCoords(event);
+                self.previewItem.setCoords(clientX, clientY);
             }
         };
 
-        function showPreview(data, event) {
+        function showPreview(data, clientX, clientY) {
             if (menu.isVisible || !data.isImage()) {
                 return;
             }
 
-            self.previewItem.setItem(data, event);
-            self.previewItem.setCoords(event);
+            self.previewItem.setItem(data);
+            self.previewItem.setCoords(clientX, clientY);
             self.showPropertiesPreview(true);
         };
         
