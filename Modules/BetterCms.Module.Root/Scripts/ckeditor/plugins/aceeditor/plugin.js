@@ -18,6 +18,11 @@ Edited by the Devbridge Better CMS team.
                         bcms.logger.error('Failed to load ACE editor.');
                         return;
                     }
+                    
+                    if ($.browser.msie && parseInt($.browser.version, 10) <= 8) {
+                        bcms.logger.info('ACE editor is enabled only on IE versions > 8.');
+                        return;
+                    }
 
                     bcms.logger.debug('Initializing ACE plug-in for CKEditor.');
 
