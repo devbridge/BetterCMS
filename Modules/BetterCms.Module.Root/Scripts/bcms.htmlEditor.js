@@ -67,7 +67,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
                 if (editor.aceEditor && $.isFunction(editor.aceEditor.insert)) {
                     editor.aceEditor.insert(html);
                 } else {
-                    editor.setData(instance.getData() + html);
+                    editor.setData(editor.getData() + html);
                 }
             } else {
                 editor.insertHtml(html);
