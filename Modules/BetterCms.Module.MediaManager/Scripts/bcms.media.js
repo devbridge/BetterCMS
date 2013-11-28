@@ -246,19 +246,15 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.imageUrl(item.publicUrl());
             self.previewUrl(item.thumbnailUrl());
 
-            if (item.isImage) {
-                self.dimensions(item.width + ' x ' + item.height);
+            self.dimensions(item.width + ' x ' + item.height);
                 
-                var dimensions = imageEditor.calculateImageDimensionsToFit(item.width, item.height, maxWidth, maxHeight);
-                self.containerWidth(parseInt(dimensions.width) + 'px');
-                self.containerHeight(parseInt(dimensions.height) + 'px');
+            var dimensions = imageEditor.calculateImageDimensionsToFit(item.width, item.height, maxWidth, maxHeight);
+            self.containerWidth(parseInt(dimensions.width) + 'px');
+            self.containerHeight(parseInt(dimensions.height) + 'px');
                 
-                dimensions = imageEditor.calculateImageDimensionsToFit(thumbnailWidth, thumbnailHeight, dimensions.width, dimensions.height, true);
-                self.width(parseInt(dimensions.width) + 'px');
-                self.height(parseInt(dimensions.height) + 'px');
-            } else {
-                self.dimensions('');
-            }
+            dimensions = imageEditor.calculateImageDimensionsToFit(thumbnailWidth, thumbnailHeight, dimensions.width, dimensions.height, true);
+            self.width(parseInt(dimensions.width) + 'px');
+            self.height(parseInt(dimensions.height) + 'px');
 
             self.size(item.sizeText);
             self.imageAlt(item.tooltip());
@@ -515,7 +511,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         };
 
         function showPreview(data, event) {
-            if (menu.isVisible) {
+            if (menu.isVisible || !data.isImage()) {
                 return;
             }
 
