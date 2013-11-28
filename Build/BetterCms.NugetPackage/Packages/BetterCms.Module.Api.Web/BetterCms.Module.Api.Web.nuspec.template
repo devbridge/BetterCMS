@@ -23,7 +23,7 @@
       <dependency id="Mvc3Futures" version="3.0.20105.0" />
       <dependency id="MvcContrib.Mvc3-ci" version="3.0.100.0" />
       <dependency id="Newtonsoft.Json" version="4.5.11" />
-      <dependency id="NHibernate" version="3.3.3.4000" />
+      <dependency id="NHibernate" version="[3.3.3.4001]" />
       <dependency id="ServiceStack" version="3.9.56" />
       <dependency id="ServiceStack.Common" version="3.9.56" />
       <dependency id="ServiceStack.OrmLite.SqlServer" version="3.9.56" />
