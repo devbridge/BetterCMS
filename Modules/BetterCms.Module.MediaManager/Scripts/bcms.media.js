@@ -490,7 +490,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         self.movePreview = function (data, event) {
             var showProperties = self.showPropertiesPreview();
             
-            if (menu.isVisible) {
+            if (menu.isVisible || !data.isImage()) {
                 if (showProperties) {
                     self.showPropertiesPreview(false);
                 }
@@ -527,10 +527,6 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             
             self.showPropertiesPreview(false);
             self.previewItem.clearItem();
-        };
-
-        menu.options.showCallback = function() {
-            self.showPropertiesPreview(false);
         };
     }
 
@@ -2065,6 +2061,15 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     }
 
     /**
+    * Called when context menu is shown.
+    */
+    function onShowContextMenu() {
+        if (imagesViewModel && $.isFunction(imagesViewModel.showPropertiesPreview)) {
+            imagesViewModel.showPropertiesPreview(false);
+        }
+    }
+
+    /**
     * Initializes media module.
     */
     media.init = function () {
@@ -2075,6 +2080,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         */
         bcms.on(htmlEditor.events.insertImage, onOpenImageInsertDialog);
         bcms.on(htmlEditor.events.insertFile, onOpenFileInsertDialog);
+        bcms.on(menu.events.menuOn, onShowContextMenu);
 
         fileEditor.SetMedia(media);
         
