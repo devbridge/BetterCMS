@@ -122,7 +122,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 });
             });
 
-            dialog.container.find(selectors.pagePropertiesTemplatePreviewLink).on('click', function () {
+            dialog.container.find(selectors.pagePropertiesTemplatePreviewLink).on('click', function (event) {
+                bcms.stopEventPropagation(event);
                 var template = $(this),
                     url = template.data('url'),
                     alt = template.data('alt');
@@ -297,10 +298,11 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 return;
             }
 
+            var messagesBox = messages.box({ container: dialog.container });
+            messagesBox.clearMessages();
             if (isCircular) {
-                var messagesBox = messages.box({ container: dialog.container });
-                messagesBox.clearMessages();
                 messagesBox.addWarningMessage(globalization.selectedMasterIsChildPage);
+                return;
             }
 
             active.removeClass(classes.pagePropertiesActiveTemplateBox);
