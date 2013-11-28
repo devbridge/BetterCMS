@@ -38,10 +38,10 @@
                         <div class="btn-acces-plus" data-bind="click: clickPlus">&nbsp;</div>
                         <span data-bind="visible: isInAddMode() !== 'user', click: clickPlus">@RootGlobalization.AccessControl_UserAccess_AddNewUser</span>
                         <input type="text" data-bind="
-                            css: { 'bcms-tag-validation-error': newItem.hasError() },
-                            hasfocus: isExpanded(),
-                            value: newItem,
                             visible: isInAddMode() === 'user',
+                            css: { 'bcms-tag-validation-error': newItem.hasError() },
+                            hasfocus: isInAddMode() === 'user' && isExpanded(),
+                            value: newItem,
                             valueUpdate: 'afterkeydown',
                             enterPress: clickPlus,
                             autocomplete: '',
@@ -53,10 +53,10 @@
                         <div class="btn-acces-plus" data-bind="click: clickPlus">&nbsp;</div>
                         <span data-bind="visible: isInAddMode() !== 'role', click: clickPlus">@RootGlobalization.AccessControl_UserAccess_AddNewRole</span>
                         <input type="text" data-bind="
-                            css: { 'bcms-tag-validation-error': newItem.hasError() },
-                            hasfocus: isExpanded(),
-                            value: newItem,
                             visible: isInAddMode() === 'role', 
+                            css: { 'bcms-tag-validation-error': newItem.hasError() },
+                            hasfocus: isInAddMode() === 'role' && isExpanded(),
+                            value: newItem,
                             valueUpdate: 'afterkeydown',
                             enterPress: clickPlus,
                             autocomplete: '',
