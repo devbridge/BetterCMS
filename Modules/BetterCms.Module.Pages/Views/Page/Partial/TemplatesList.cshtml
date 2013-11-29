@@ -29,7 +29,7 @@
     var selectFirstTab = active == null || !active.IsMasterPage;
 }
 <div class="bcms-inner-tabs-holder">
-    <div class="bcms-tab-header">
+    <div class="bcms-tab-header bcms-tab-header-inner">
         <a class="bcms-tab @(selectFirstTab ? "bcms-tab-active" : string.Empty)" data-name="#bcms-tab-a">Templates</a>
         <a class="bcms-tab @(!selectFirstTab ? "bcms-tab-active" : string.Empty)" data-name="#bcms-tab-b">Master Pages</a>
     </div>
