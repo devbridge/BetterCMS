@@ -718,7 +718,6 @@ a.bcms-remove-image {
     margin: -1px;
     min-height: 35px;
     border: 1px dashed #009AEB;
-    z-index: 10;
 }
 
 .bcms-on .bcms-region-overlay {
