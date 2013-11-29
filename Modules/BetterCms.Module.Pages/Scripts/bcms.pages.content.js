@@ -419,10 +419,10 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         data = previewBox.data();
                     if (!data.isLoaded) {
                         if (data.asImage === "True") {
-                            previewBox.prepend($.format("<img src=\"{0}\" alt=\"{1}\" />",
+                            previewBox.find('div:first').append($.format("<img src=\"{0}\" alt=\"{1}\" />",
                                 data.previewUrl, data.title));
                         } else {
-                            previewBox.prepend($.format("<iframe class=\"{0}\" width=\"{1}\" height=\"{2}\" scrolling=\"no\" border=\"0\" frameborder=\"0\" src=\"{3}\" style=\"background-color:white;\"/>",
+                            previewBox.find('div:first').append($.format("<iframe class=\"{0}\" width=\"{1}\" height=\"{2}\" scrolling=\"no\" border=\"0\" frameborder=\"0\" src=\"{3}\" style=\"background-color:white;\"/>",
                                 data.frameCssClass, data.width, data.height, data.previewUrl));
                         }
                         previewBox.data("isLoaded", true);
@@ -682,7 +682,6 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         */
         function onDynamicRegionInsert(htmlContentEditor) {
             if (htmlContentEditor != null) {
-
                 var guid = createGuid(),
                     html;
                 
@@ -694,7 +693,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     // NOTE: EDITOR.createFakeParserElement(...) functionality does not work...
                     html = '<div class="bcms-draggable-region" data-cke-realelement="%3Cdiv%3E%7B%7BDYNAMIC_REGION%3A'
                         + guid
-                        + '%7D%7D%3C%2Fdiv%3E" data-cke-real-node-type="1" title="Dynamic Region" data-cke-real-element-type="cmsdynamicregion" contenteditable="false">Content to add</div>';
+                        + '%7D%7D%3C%2Fdiv%3E" data-cke-real-node-type="1" title="Dynamic Region" data-cke-real-element-type="cmsdynamicregion" isregion="true">Content to add</div>';
                     var re = CKEDITOR.dom.element.createFromHtml(html, htmlContentEditor.document);
                     htmlContentEditor.insertElement(re);
                 }

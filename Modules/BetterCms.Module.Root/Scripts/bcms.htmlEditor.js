@@ -41,9 +41,14 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
         if (instance) {
             instance.destroy(true);
         }
-        CKEDITOR.replace(id, options);
         
-        CKEDITOR.instances[id].InsertImageClicked = function(editor) {
+        if (window.location.href.slice(-1) === '#') {
+            window.location.hash = '#-';
+        }
+
+        CKEDITOR.replace(id, options);
+
+        CKEDITOR.instances[id].InsertImageClicked = function (editor) {
             bcms.trigger(htmlEditor.events.insertImage, editor);
         };
         
@@ -62,7 +67,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
                 if (editor.aceEditor && $.isFunction(editor.aceEditor.insert)) {
                     editor.aceEditor.insert(html);
                 } else {
-                    editor.setData(instance.getData() + html);
+                    editor.setData(editor.getData() + html);
                 }
             } else {
                 editor.insertHtml(html);
@@ -72,6 +77,9 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
         // Hide native image button container
         CKEDITOR.instances[id].on('instanceReady', function () {
             $(selectors.imageButtonContainer).hide();
+            var element = $('#' + id),
+                isReadOnly = element.attr('readonly') === 'readonly' || element.attr('disabled') === 'disabled';
+            CKEDITOR.instances[id].setReadOnly(isReadOnly);
         });
     };
 
@@ -79,12 +87,18 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
         for (name in CKEDITOR.instances) {
             CKEDITOR.instances[name].destroy();
         }
+        if (window.location.href.slice(-2) === '#-') {
+            window.location.hash = '';
+        }
     };
     
     htmlEditor.destroyHtmlEditorInstance = function () {
         var editor = CKEDITOR.instances[htmlEditor.id];
         if (editor) {
             editor.destroy();
+        }
+        if (window.location.href.slice(-2) === '#-') {
+            window.location.hash = '';
         }
     };
 

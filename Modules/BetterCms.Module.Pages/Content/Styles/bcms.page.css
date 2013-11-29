@@ -307,16 +307,23 @@ a.bcms-slider-next {
 
 .bcms-preview-module-image {
     float: left;
-    min-width: 521px;
-    min-height: 350px;
+    width: 521px;
+    height: 350px;
     margin-bottom: 20px;
     border: 1px solid #c6c6c6;
     background: url('images/bcms-no-image-1.png') no-repeat center center #f5f5f5;
     overflow: hidden;
 }
 
-    .bcms-preview-module-image img {
+    .bcms-preview-module-image > div {
+        height: 100%;
         width: 100%;
+        background-color: #ffffff;
+    }
+
+    .bcms-preview-module-image img {
+        max-width: 521px;
+        max-height: 350px;
         background: #f5f5f5;
     }
 

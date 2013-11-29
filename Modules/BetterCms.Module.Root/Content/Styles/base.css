@@ -718,7 +718,6 @@ a.bcms-remove-image {
     margin: -1px;
     min-height: 35px;
     border: 1px dashed #009AEB;
-    /*overflow: hidden;*/
 }
 
 .bcms-on .bcms-region-overlay {
@@ -1633,6 +1632,10 @@ a.bcms-btn-close {
         background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA20lEQVQ4y2NgaHrEgIa1gLgPiK8D8Q8ovgYV08JQj8RhA+IpQPwXiP/jwCC5GUDMiW4ASPNuPBrR8V6oHrgBU0nQDMNTYAZoA/EfMgz4A9YLJPqJ0SDa8+R/xtZ36OL9DNDQhguCFIEUo2u+8urXfxDI2Y5iyHWQAT9hAiBJEAAphhmCrBlZHIp/ohiArlhr+nN8mkH4M4YXkA359/8/Ps0gfAVrIBJwNjKeADJAB1s0gjRNPPkJn+Y/YL0UJKSpVE3KFGcmZKwNDpymRzeA+BcQfwGHNkRMB109AFNqT2Ji6QGbAAAAAElFTkSuQmCC") no-repeat right center;
     }
 
+.bcms-inner-grid-box-notcompatible {
+    border: 1px solid #e64343;
+    background-color: #fcecec;
+}
 
 /*preview boxes & widgets grid*/
 .bcms-preview-block {
@@ -1668,11 +1671,16 @@ a.bcms-btn-close {
     background: url('images/bcms-no-image-1.png') no-repeat center center #f5f5f5;
 }
 
+    .bcms-preview-box > div.bcms-preview-box-image {
+        background-color: #ffffff;
+        width: 100%;
+        height: 100%;
+    }
+
     .bcms-preview-box img {
         display: block;
-        width: 208px;
-        height: 175px;
-        background: #f5f5f5;
+        max-width: 208px;
+        max-height: 175px;
     }
 
     .bcms-preview-box:hover > .bcms-zoom-overlay {
@@ -1759,11 +1767,16 @@ a.bcms-btn-close {
     background: url('images/bcms-no-image-1.png') no-repeat center center #f5f5f5;
     overflow: hidden;
 }
+    .bcms-grid-image-holder > div.bcms-grid-image {
+        background-color: #ffffff;
+        height: 100%;
+        width: 100%;
+    }
 
     .bcms-grid-image-holder img {
         display: block;
-        height: 175px;
-        width: 208px;
+        max-height: 175px;
+        max-width: 208px;
         background: #f5f5f5;
     }
 

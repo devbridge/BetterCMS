@@ -1117,7 +1117,7 @@
     <value>Template or master page should be selected for page.</value>
   </data>
   <data name="SavePagePropertiesCommand_SelectedMasterIsChildPage_Message" xml:space="preserve">
-    <value>Selected master page is a child of the current page.</value>
+    <value>Selected master page is the current page or is a child of it.</value>
   </data>
   <data name="SavePagePropertiesCommand_SelectedMasterIsCurrentPage_Message" xml:space="preserve">
     <value>Selected master page is the current page.</value>
@@ -1163,5 +1163,8 @@
   </data>
   <data name="DeletePageContent_ContentHasChildrenContents_DeleteConfirmationMessage" xml:space="preserve">
     <value>You are trying to delete content which contains dynamic regions. There are some children pages, which have contents created within these regions. If you delete this content, children page contens will be deleted also and there will be no possibility to restore them. &lt;br /&gt;&lt;br /&gt;Are you sure you want to continue and lose all the children contents?</value>
+  </data>
+  <data name="RestoreContent_ContentHasChildrenContents_RegionDeleteConfirmationMessage" xml:space="preserve">
+    <value>You are trying to restore content without dynamic regions currently exist. There are some children pages, which have contents created within these regions. If you restore this version regions will be deleted, children page contens will be deleted also. Anyway, you can restore them by restoring archived version of the current content. &lt;br /&gt;&lt;br /&gt;Are you sure you want to continue?</value>
   </data>
 </root>

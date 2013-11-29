@@ -149,7 +149,7 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                 var image = dialog.container.find(selectors.templatePreviewImage);
                 if (image.attr("src") != null && image.attr("src") != "") {
                     messages.box({ container: dialog.container.find(selectors.messagesContainer) }).addWarningMessage(globalization.previewImageNotFoundMessage);
-                    image.hide();
+                    image.parent().hide();
                     image.removeAttr("src");
                 }
             });
@@ -160,17 +160,17 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
 
                 if (urlInput.valid()) {
                     image.attr({ src: urlInput.val() });
-                    image.show();
+                    image.parent().show();
                 } else {
                     image.hide();
-                    image.removeAttr("src");
+                    image.parent().removeAttr("src");
                 }
             });
             
             // IE fix: by default, while loading, picture is hidden
             var previewImage = dialog.container.find(selectors.templatePreviewImage);
             if (previewImage.attr('src')) {
-                previewImage.show();
+                previewImage.parent().show();
             }
 
             return optionListViewModel;

@@ -19,7 +19,12 @@ bettercms.define('bcms.codeEditor', ['bcms.jquery', 'bcms', 'ace'], function ($,
     codeEditor.globalization = globalization;
     codeEditor.events = events;
 
-    codeEditor.initialize = function(container) {
+    codeEditor.initialize = function (container) {
+        if ($.browser.msie && parseInt($.browser.version, 10) <= 8) {
+            bcms.logger.info('ACE editor is enabled only on IE versions > 8.');
+            return;
+        }
+
         if (!ace) {
             bcms.logger.error('Failed to load ACE editor.');
             return;

@@ -18,7 +18,7 @@ bettercms.define('bcms.tabs', ['bcms.jquery', 'bcms'], function ($, bcms) {
             tabLink: '.bcms-tab',
             firstTabLink: 'a.bcms-tab:first',
             activeTabLink: '.bcms-tab-active',
-            tabsHeader: '.bcms-tab-header'
+            tabsHeader: '.bcms-tab-header:not(.bcms-tab-header-inner)'
         },
 
         links = {},

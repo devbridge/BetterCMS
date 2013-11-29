@@ -14,6 +14,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 editPermalinkBox: '.bcms-edit-urlpath-box',
                 editPermalinkClose: 'div.bcms-edit-urlpath-box .bcms-tip-close, div.bcms-edit-urlpath-box .bcms-btn-links-small',
                 editPermalinkSave: '#bcms-save-permalink',
+                
                 permalinkHiddenField: '#bcms-page-permalink',
                 permalinkEditField: '#bcms-page-permalink-edit',
                 permalinkInfoField: '#bcms-page-permalink-info',
@@ -23,12 +24,14 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 pagePropertiesMasterPageId: '#MasterPageId',
                 pagePropertiesActiveTemplateBox: '.bcms-inner-grid-box-active',
                 pagePropertiesTemplatePreviewLink: '.bcms-preview-template',
+                pagePropertiesAceEditorContainer: '.bcms-editor-field-area-container',
 
                 pagePropertiesForm: 'form:first',
                 pagePropertiesPageIsPublishedCheckbox: '#IsPagePublished',
                 pagePropertiesPageIsMasterCheckbox: '#IsMasterPage',
 
-                optionsTab: '#bcms-tab-4'
+                optionsTab: '#bcms-tab-4',
+                javascriptCssTabOpener: '.bcms-tab[data-name="#bcms-tab-2"]'
             },
             links = {
                 loadEditPropertiesDialogUrl: null,
@@ -122,7 +125,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 });
             });
 
-            dialog.container.find(selectors.pagePropertiesTemplatePreviewLink).on('click', function () {
+            dialog.container.find(selectors.pagePropertiesTemplatePreviewLink).on('click', function (event) {
+                bcms.stopEventPropagation(event);
                 var template = $(this),
                     url = template.data('url'),
                     alt = template.data('alt');
@@ -142,6 +146,19 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             });
 
             codeEditor.initialize(dialog.container);
+
+            // IE11 fix: recall resize method after editors initialization
+            dialog.container.find(selectors.javascriptCssTabOpener).on('click', function () {
+                setTimeout(function() {
+                    dialog.container.find(selectors.pagePropertiesAceEditorContainer).each(function () {
+                        var editor = $(this).data('aceEditor');
+                        if (editor && $.isFunction(editor.resize)) {
+                            editor.resize(true);
+                            editor.renderer.updateFull();
+                        }
+                    });
+                }, 20);
+            });
             
             return pageViewModel;
         };
@@ -297,10 +314,11 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 return;
             }
 
+            var messagesBox = messages.box({ container: dialog.container });
+            messagesBox.clearMessages();
             if (isCircular) {
-                var messagesBox = messages.box({ container: dialog.container });
-                messagesBox.clearMessages();
                 messagesBox.addWarningMessage(globalization.selectedMasterIsChildPage);
+                return;
             }
 
             active.removeClass(classes.pagePropertiesActiveTemplateBox);

@@ -76,16 +76,16 @@ namespace BetterCms.Module.Pages.Services
                                     ? t.SecondaryImage.PublicUrl
                                     : null,
                         PreviewThumbnailUrl = t.Image != null
-                            ? t.Image.PublicThumbnailUrl
+                            ? t.Image.PublicUrl
                             : t.FeaturedImage != null
-                                ? t.FeaturedImage.PublicThumbnailUrl
+                                ? t.FeaturedImage.PublicUrl
                                 : t.SecondaryImage != null
-                                    ? t.SecondaryImage.PublicThumbnailUrl
+                                    ? t.SecondaryImage.PublicUrl
                                     : null,
                         IsMasterPage = true,
                         MasterUrlHash = t.PageUrlHash,
                         IsCircularToCurrent = currentPageId.HasValue && !currentPageId.Value.HasDefaultValue()
-                            && (t.Id == currentPageId || t.MasterPages.Any(cp => cp.Master.Id != currentPageId))
+                            && (t.Id == currentPageId || t.MasterPages.Any(cp => cp.Master.Id == currentPageId))
                     }).ToFuture();
 
             var templates = templatesFuture.ToList().Concat(masterPagesFuture.ToList()).ToList();
