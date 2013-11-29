@@ -46,7 +46,7 @@ bettercms.define('bcms.security', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', '
     }
 
     security.IsAuthorized = function (accessRoleArray) {
-        for (var i in accessRoleArray) {
+        for (var i = 0; i < accessRoleArray.length; i++) {
             var role = accessRoleArray[i];
             var value = authorizedFor[role];
             if (value === true || value === false) {
