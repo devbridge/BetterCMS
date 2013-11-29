@@ -14,7 +14,8 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 imageFileSize: "#image-file-size",
                 imageAlignment: "input[name=ImageAlign]:checked",
                 imageAlignmentControls: ".bcms-alignment-controls",
-                imageDimensionsBox: "#bcms-image-dimensions-editor",
+                imageDimensionsBox: "#bcms-image-dimensions-editor-box",
+                titleEditBox: "#bcms-image-title-editor-box",
 
                 imageEditorForm: 'form:first',
 
@@ -147,29 +148,53 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
         * Editor base view model
         */
         var EditorBaseViewModel = (function () {
-            function EditorBaseViewModel() {
+            function EditorBaseViewModel(dialog, boxSelector) {
                 var self = this;
 
+                self.dialog = dialog;
+                self.boxSelector = boxSelector;
                 self.isOpened = ko.observable(false);
                 
-                self.open = function () {
+                // IE8 re-rendering fix
+                // TODO: self.isIE8 = $.browser.msie && parseInt($.browser.version, 10) <= 8;
+                self.isIE8 = true;
+                self.boxHeightHidden = self.dialog.container.find(self.boxSelector).height();
+                self.boxHeightOpen = 0;
+
+                function onAfterBoxIsClosed(viewModel) {
+                    // IE8 fails to rerender dimensions box: need to set it's height manually
+                    if (viewModel.isIE8) {
+                        viewModel.dialog.container.find(viewModel.boxSelector).height(viewModel.boxHeightHidden);
+                    }
+                }
+
+                self.open = function() {
                     self.isOpened(true);
-                    self.onOpen();
+
+                    // IE8 fails to rerender dimensions box: need to set it's height manually
+                    if (self.isIE8) {
+                        var box = self.dialog.container.find(self.boxSelector);
+                        if (!self.boxHeightOpen) {
+                            self.boxHeightOpen = box.height();
+                        }
+                        box.height(self.boxHeightOpen);
+                    }
                 };
 
                 self.close = function () {
-                    self.onClose();
-                    self.isOpened(false);
+                    if (self.onClose()) {
+                        self.isOpened(false);
+                        onAfterBoxIsClosed(self);
+                    }
                 };
 
                 self.save = function (element) {
                     if (self.onSave($(element))) {
                         self.isOpened(false);
+                        onAfterBoxIsClosed(self);
                     }
                 };
             }
-            
-            EditorBaseViewModel.prototype.onOpen = function () { };
             
             EditorBaseViewModel.prototype.onSave = function () { };
             
@@ -185,7 +210,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
             bcms.extendsClass(TitleEditorViewModel, _super);
 
             function TitleEditorViewModel(dialog, title) {
-                _super.call(this);
+                _super.call(this, dialog, selectors.titleEditBox);
 
                 var self = this;
 
@@ -208,6 +233,8 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
             TitleEditorViewModel.prototype.onClose = function () {
                 this.title(this.oldTitle());
                 this.input.blur();
+
+                return true;
             };
 
             return TitleEditorViewModel;
@@ -220,11 +247,10 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
             bcms.extendsClass(ImageEditorViewModel, _super);
 
             function ImageEditorViewModel(dialog, json, enableCrop) {
-                _super.call(this);
+                _super.call(this, dialog, selectors.imageDimensionsBox);
 
                 var self = this;
 
-                self.dialog = dialog;
                 self.enableCrop = enableCrop;
 
                 self.widthInput = dialog.container.find(selectors.imageSizeEditBoxWidth);
@@ -247,11 +273,6 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 self.cropCoordY1 = ko.observable(json.CropCoordY1);
                 self.cropCoordY2 = ko.observable(json.CropCoordY2);
                 self.url = json.OriginalImageUrl;
-
-                // IE8 re-rendering fix
-                self.isIE8 = $.browser.msie && parseInt($.browser.version, 10) <= 8;
-                self.boxHeightHidden = self.dialog.container.find(selectors.imageDimensionsBox).height();
-                self.boxHeightOpen = 0;
 
                 // Recalculate image dimensions on image change
                 self.fit.subscribe(function () {
@@ -304,6 +325,9 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 self.restoreOriginalSize = function() {
                     self.width(self.originalWidth);
                     self.height(self.originalHeight);
+
+                    self.widthInput.valid();
+                    self.heightInput.valid();
                 };
 
                 self.onCropCoordsUpdated = function (coords) {
@@ -472,22 +496,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 this.heightInput.blur();
                 this.widthInput.blur();
 
-                // IE8 fails to rerender dimensions box: need to set it's height manually
-                if (this.isIE8) {
-                    this.dialog.container.find(selectors.imageDimensionsBox).height(this.boxHeightHidden);
-                }
-            };
-
-            ImageEditorViewModel.prototype.onOpen = function () {
-                // IE8 fails to rerender dimensions box: need to set it's height manually
-                if (this.isIE8) {
-                    var box = this.dialog.container.find(selectors.imageDimensionsBox);
-                    if (!this.boxHeightOpen) {
-                        this.boxHeightOpen = box.height();
-                    }
-                    
-                    box.height(this.boxHeightOpen);
-                }
+                return true;
             };
             
             return ImageEditorViewModel;

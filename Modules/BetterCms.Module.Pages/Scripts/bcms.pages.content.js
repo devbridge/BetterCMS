@@ -637,6 +637,19 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 aceEditor.focus();
             }
         }
+        
+        /**
+        * IE11 fix: recall resize method after editors initialization
+        */
+        function resizeAceEditor(container) {
+            setTimeout(function () {
+                var aceEditor = container.find(selectors.aceEditorContainer).data('aceEditor');
+                if (aceEditor && $.isFunction(aceEditor.resize)) {
+                    aceEditor.resize(true);
+                    aceEditor.renderer.updateFull();
+                }
+            }, 20);
+        }
 
         /**
         * Shows/hides custom css field in a content edit form
@@ -646,6 +659,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             if (dialog.container.find(selectors.enableCustomCss).attr('checked')) {
                 customCssContainer.show();
+                resizeAceEditor(customCssContainer);
                 if (focus) {
                     focusAceEditor(customCssContainer);
                 }
@@ -659,6 +673,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             
             if (dialog.container.find(selectors.enableCustomJs).attr('checked')) {
                 customJsContainer.show();
+                resizeAceEditor(customJsContainer);
                 if (focus) {
                     focusAceEditor(customJsContainer);
                 }
