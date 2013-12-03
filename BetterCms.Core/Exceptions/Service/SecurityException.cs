@@ -2,6 +2,7 @@
 
 namespace BetterCms.Core.Exceptions.Service
 {
+    [Serializable]
     public class SecurityException : CmsException
     {
         public SecurityException(string message) : base(message)

@@ -2,6 +2,7 @@
 
 namespace BetterCms.Core.Exceptions.DataTier
 {
+    [Serializable]
     public class EntityNotFoundException : DataTierException
     {
         public EntityNotFoundException(string message)

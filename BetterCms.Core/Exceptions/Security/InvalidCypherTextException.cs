@@ -5,6 +5,7 @@ namespace BetterCms.Core.Exceptions.Security
     /// <summary>
     /// Represents errors that occur when a text can't be decoded or the text is tampered 
     /// </summary>
+    [Serializable]
     public class InvalidCypherTextException : CmsException
     {
         /// <summary>
