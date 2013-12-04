@@ -269,7 +269,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             }
 
             var publishDraftContent = false;
-            if (request.CanPublishPage)
+            if (request.CanPublishPage && !page.IsMasterPage)
             {
                 AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.PublishContent);
 
