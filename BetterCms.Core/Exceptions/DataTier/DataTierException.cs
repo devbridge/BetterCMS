@@ -2,6 +2,7 @@
 
 namespace BetterCms.Core.Exceptions.DataTier
 {
+    [Serializable]
     public class DataTierException : CmsException
     {
         public DataTierException(string message)

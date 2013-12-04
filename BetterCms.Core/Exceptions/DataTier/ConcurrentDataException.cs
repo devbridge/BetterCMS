@@ -6,6 +6,7 @@ namespace BetterCms.Core.Exceptions.DataTier
     /// <summary>
     /// Concurrent data exception
     /// </summary>
+    [Serializable]
     public class ConcurrentDataException : DataTierException
     {
         /// <summary>

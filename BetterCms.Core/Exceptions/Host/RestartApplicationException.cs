@@ -2,6 +2,7 @@
 
 namespace BetterCms.Core.Exceptions.Host
 {
+    [Serializable]
     public class RestartApplicationException : CmsException
     {
         public RestartApplicationException(string message)

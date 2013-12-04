@@ -418,6 +418,7 @@ namespace BetterCms.Module.Api.Helpers
         }
     }
 
+    [Serializable]
     public sealed class ParseException : Exception
     {
         int position;

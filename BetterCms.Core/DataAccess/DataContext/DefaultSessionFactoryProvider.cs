@@ -7,13 +7,14 @@ using BetterCms.Core.DataAccess.DataContext.EventListeners;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Services;
 
+using Common.Logging;
+
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using FluentNHibernate.Conventions.Helpers;
 using NHibernate;
 using BetterCms.Core.DataAccess.DataContext.Interceptors;
 
-using NHibernate.Dialect;
 using NHibernate.Event;
 
 namespace BetterCms.Core.DataAccess.DataContext
@@ -25,6 +26,11 @@ namespace BetterCms.Core.DataAccess.DataContext
         private readonly IMappingResolver mappingResolver;
         private volatile ISessionFactory sessionFactory;
         private readonly ISecurityService securityService;
+
+        /// <summary>
+        /// Current class logger.
+        /// </summary>
+        private static readonly ILog Logger = LogManager.GetCurrentClassLogger();
 
         public DefaultSessionFactoryProvider(IMappingResolver mappingResolver, ICmsConfiguration configuration, ISecurityService securityService)
         {
@@ -192,8 +198,18 @@ namespace BetterCms.Core.DataAccess.DataContext
         {
             try
             {
-                SessionFactory.Close();
-                SessionFactory.Dispose();
+                if (sessionFactory != null)
+                {
+                    if (!sessionFactory.IsClosed)
+                    {
+                        sessionFactory.Close();
+                    }
+                    sessionFactory.Dispose();
+                }
+            }
+            catch (Exception exc)
+            {
+                Logger.Error("Unhandled exception occurred when disposing Session Factory Provider.", exc);
             }
             finally
             {
