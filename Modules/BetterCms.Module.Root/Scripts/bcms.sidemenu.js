@@ -154,7 +154,7 @@ bettercms.define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security'], func
             isMenuOnTheRight = localStorage.getItem(keys.sideMenuOnTheRight),
             isSideMenuOpen = localStorage.getItem(keys.sideMenuOpen),
             editingOn = localStorage.getItem(keys.editingOn),
-            middleOfTheScreen;
+            middleOfThePage;
 
         if (offsetTop) {
             var windowHeight = $(window).height();
@@ -224,17 +224,17 @@ bettercms.define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security'], func
                 localStorage.setItem(keys.sideMenuOffsetTop, top);
             },
             start: function () {
-                middleOfTheScreen = $(window).width() / 2;
+                middleOfThePage = $(window).width() / 2;
             },
             drag: function (event) {
-                var left = event.screenX;
+                var left = event.clientX;
                 if (isMenuOnTheRight) {
-                    if (left < middleOfTheScreen) {
+                    if (left < middleOfThePage) {
                         isMenuOnTheRight = false;
                         sidemenu.moveToLeft();
                     }
                 } else {
-                    if (left > middleOfTheScreen) {
+                    if (left > middleOfThePage) {
                         isMenuOnTheRight = true;
                         sidemenu.moveToRight();
                     }
