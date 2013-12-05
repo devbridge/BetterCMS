@@ -290,10 +290,14 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
 
             if (canEdit)
             {
-                page.UseNoFollow = request.UseNoFollow;
-                page.UseNoIndex = request.UseNoIndex;
+                if (!page.IsMasterPage)
+                {
+                    page.UseNoFollow = request.UseNoFollow;
+                    page.UseNoIndex = request.UseNoIndex;
+                    page.IsArchived = request.IsArchived;
+                }
+
                 page.UseCanonicalUrl = request.UseCanonicalUrl;
-                page.IsArchived = request.IsArchived;
                 page.Version = request.Version;
 
                 page.Image = request.Image != null && request.Image.ImageId.HasValue ? Repository.AsProxy<MediaImage>(request.Image.ImageId.Value) : null;
