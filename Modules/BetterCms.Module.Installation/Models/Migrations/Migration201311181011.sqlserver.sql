@@ -43,6 +43,11 @@ INSERT INTO [bcms_root].[Regions]
            ,'Better CMS'
            ,'CMSMainContent')
 
+DECLARE @regionId uniqueidentifier
+SELECT @regionId = Id 
+  FROM [bcms_root].[Regions] 
+ WHERE [RegionIdentifier] = 'CMSMainContent' AND IsDeleted = 0
+
 INSERT INTO [bcms_root].[LayoutRegions]
            ([Id]
            ,[Version]
@@ -62,6 +67,4 @@ INSERT INTO [bcms_root].[LayoutRegions]
            ,getdate()
            ,'Better CMS'
            ,'24A9FDBC-7A9B-4C02-AFF5-A0B09F2CA9E7'
-           ,(SELECT top 1 Id 
-               FROM [bcms_root].[Regions] 
-              WHERE ([RegionIdentifier] = 'CMSMainContent' AND IsDeleted = 0)))
+           ,@regionId)
