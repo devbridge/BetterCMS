@@ -112,7 +112,15 @@
         <!-- /ko -->
 
         <!-- ko if: showNoDataInfoDiv() -->
-        <div class="bcms-nomedia-data">@RootGlobalization.Grid_NoDataAvailable_Message</div>
+        <div class="bcms-nomedia-data">
+            <!-- ko if: isSearchResults() -->
+                <!-- ko text: noSearchResultFound --><!-- /ko -->
+                <a href="#" data-bind="visible: canSearchInHistory(), click: searchWithFilter.bind($data, true)">@MediaGlobalization.MediaManager_Search_TrySearchInHistory</a>
+            <!-- /ko -->
+            <!-- ko ifnot: isSearchResults() -->
+                @RootGlobalization.Grid_NoDataAvailable_Message
+            <!-- /ko -->
+        </div>
         <!-- /ko -->
         
         <div class="bcms-media-properties-preview" id="bcms-media-properties-preview" data-bind="visible: showPropertiesPreview(), style: {top: previewItem.top(), left: previewItem.left()}">

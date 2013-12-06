@@ -1222,6 +1222,24 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No matches found for &quot;{0}&quot;..
+        /// </summary>
+        public static string MediaManager_Search_NoMatchesFound {
+            get {
+                return ResourceManager.GetString("MediaManager_Search_NoMatchesFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Try searching again in older versions of media items..
+        /// </summary>
+        public static string MediaManager_Search_TrySearchInHistory {
+            get {
+                return ResourceManager.GetString("MediaManager_Search_TrySearchInHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Searched in.
         /// </summary>
         public static string MediaManager_SearchedInPath_Prefix {

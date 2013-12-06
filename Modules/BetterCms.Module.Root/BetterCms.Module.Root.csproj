@@ -1065,10 +1065,7 @@
     </Content>
     <EmbeddedResource Include="Views\Cms\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\Entity\" />
-    <Folder Include="Data\Map\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
       <Project>{DA2B225E-6AEE-4465-8B08-4D5B1C1CED49}</Project>

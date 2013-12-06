@@ -81,6 +81,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             fileNotSelectedMessageMessage: null,
 
             searchedInPathPrefix: null,
+            noResultFoundMessage: null,
 
             imagesTabTitle: null,
             audiosTabTitle: null,
@@ -317,6 +318,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         self.canSelectMedia = ko.observable(false);
         self.canInsertMedia = ko.observable(false);
         self.canInsertMediaWithOptions = ko.observable(false);
+        self.searchInHistory = false;
+        self.canSearchInHistory = ko.observable(false);
         
         self.showPropertiesPreview = ko.observable(false);
         self.previewItem = new MediaItemPreviewViewModel();
@@ -337,6 +340,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         };
 
         self.isSearchResults = ko.observable(false);
+        self.noSearchResultFound = ko.observable('');
 
         self.addNewFolder = function () {
             if (!self.rowAdded) {
@@ -387,7 +391,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.loadMedia();
         };
 
-        self.searchWithFilter = function () {
+        self.searchWithFilter = function (searchInHistory) {
+            if (searchInHistory) {
+                self.searchInHistory = true;
+            }
             self.searchMedia();
         };
 
@@ -474,6 +481,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     parseJsonResults(json, self);
                     $(selectors.searchBox).focus();
                 };
+            params.SearchInHistory = self.searchInHistory;
             loadTabData(self, params, onComplete);
         };
 
@@ -1663,7 +1671,8 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     * Parse json result and map data to view model
     */
     function parseJsonResults(json, folderViewModel) {
-        var i;
+        var i,
+            isSearchResult;
 
         messages.refreshBox(folderViewModel.container, json);
 
@@ -1706,8 +1715,17 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                     folderViewModel.gridOptions(new MediaItemsOptionsViewModel(folderViewModel.onOpenPage));
                 }
                 folderViewModel.gridOptions().fromJson(json.Data);
-                folderViewModel.isSearchResults(!folderViewModel.gridOptions().isSearchEmpty());
-                folderViewModel.path().isSearchResults(folderViewModel.isSearchResults());
+
+                isSearchResult = !folderViewModel.gridOptions().isSearchEmpty();
+                folderViewModel.isSearchResults(isSearchResult);
+                folderViewModel.path().isSearchResults(isSearchResult);
+                if (isSearchResult) {
+                    folderViewModel.noSearchResultFound($.format(globalization.noResultFoundMessage, folderViewModel.gridOptions().searchQuery()));
+                } else {
+                    folderViewModel.noSearchResultFound('');
+                }
+                folderViewModel.canSearchInHistory(!folderViewModel.searchInHistory);
+                folderViewModel.searchInHistory = false;
 
                 // Replace unobtrusive validator
                 bcms.updateFormValidator(folderViewModel.container.find(selectors.firstForm));
