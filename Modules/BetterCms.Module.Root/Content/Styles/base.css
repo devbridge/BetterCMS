@@ -804,6 +804,7 @@ a.bcms-remove-image {
 
 .bcms-sorting-block {
     min-height: 20px;
+    height: 100%;
 }
 
 .bcms-content-overlay {
