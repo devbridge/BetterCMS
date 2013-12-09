@@ -6,7 +6,7 @@ using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
-
+using BetterCms.Module.Root.ViewModels.Autocomplete;
 using BetterCms.Module.Users.Commands.Role.DeleteRole;
 using BetterCms.Module.Users.Commands.Role.GetRoles;
 using BetterCms.Module.Users.Commands.Role.SaveRole;
@@ -110,12 +110,12 @@ namespace BetterCms.Module.Users.Controllers
         /// <summary>
         /// Suggests the tags.
         /// </summary>
-        /// <param name="query">The query.</param>
+        /// <param name="model">The model.</param>
         /// <returns></returns>
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
-        public ActionResult SuggestRoles(string query)
+        public ActionResult SuggestRoles(SuggestionViewModel model)
         {
-            var suggestedRoles = GetCommand<SearchRolesCommand>().ExecuteCommand(query);
+            var suggestedRoles = GetCommand<SearchRolesCommand>().ExecuteCommand(model);
 
             return Json(new { suggestions = suggestedRoles });
         }

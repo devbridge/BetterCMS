@@ -9,13 +9,14 @@ using BetterCms.Core.Services.Caching;
 
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.ViewModels.Autocomplete;
 
 namespace BetterCms.Module.Root.Commands.Authentication.SearchRoles
 {
     /// <summary>
     /// A command to get roles list by filter.
     /// </summary>
-    public class SearchRolesCommand : CommandBase, ICommand<string, List<LookupKeyValue>>
+    public class SearchRolesCommand : CommandBase, ICommand<SuggestionViewModel, List<LookupKeyValue>>
     {
         /// <summary>
         /// The cache key.
@@ -46,16 +47,23 @@ namespace BetterCms.Module.Root.Commands.Authentication.SearchRoles
         /// <summary>
         /// Executes this command.
         /// </summary>
-        /// <param name="roleName">Name of the role.</param>
+        /// <param name="model">The model.</param>
         /// <returns>
         /// A list of roles.
         /// </returns>
-        public List<LookupKeyValue> Execute(string roleName)
+        public List<LookupKeyValue> Execute(SuggestionViewModel model)
         {
             var allRoleNames = cacheService.Get(CacheKey, TimeSpan.FromSeconds(30), GetAllRoleNames);
 
-            return allRoleNames
-                .Where(role => role.ToLower().Contains(roleName.ToLower()))
+            var query = allRoleNames
+                .Where(role => role.ToLower().Contains(model.Query.ToLower()));
+
+            if (model.ExistingItemsArray.Length > 0)
+            {
+                query = query.Where(role => !model.ExistingItems.Contains(role));
+            }
+
+            return query
                 .Select(role => new LookupKeyValue { Key = role, Value = role })
                 .ToList();
         }

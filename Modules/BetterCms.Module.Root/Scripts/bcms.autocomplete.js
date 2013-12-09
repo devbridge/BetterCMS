@@ -44,8 +44,15 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
                                     viewModel.addItem();
                                 }
                                 viewModel.clearItem();
+                                if (viewModel.autocompleteInstance) {
+                                    viewModel.autocompleteInstance.ignoreValueChange = false;
+                                }
+                            },
+                            onSearchStart: function(params) {
+                                params.ExistingItems = viewModel.getExistingItems();
                             }
                         });
+                    viewModel.autocompleteInstance = complete;
                 }
             };
         }
@@ -62,6 +69,7 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
                         pattern: null
                     }, opts);
 
+                self.autocompleteInstance = null;
                 self.serviceUrl = options.serviceUrl;
                 self.pattern = options.pattern;
 
@@ -114,9 +122,27 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
 
                     return false;
                 };
+                
+                self.getExistingItems = function () {
+                    var existingItems = '',
+                        i, item;
+
+                    for (i = 0; i < self.items().length; i++) {
+                        item = self.items()[i];
+                        if (existingItems.length > 0) {
+                            existingItems = existingItems + '|';
+                        }
+                        existingItems += item.id() || item.name();
+                    }
+
+                    return existingItems;
+                };
 
                 self.clearItem = function() {
                     self.newItem('');
+                    if (self.autocompleteInstance) {
+                        self.autocompleteInstance.currentValue = '';
+                    }
                 };
 
                 self.applyItemList = function(itemToApplyList) {

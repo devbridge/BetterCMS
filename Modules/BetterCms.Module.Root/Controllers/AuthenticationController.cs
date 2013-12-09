@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
 using BetterCms.Core.Security;
+
 using BetterCms.Module.Root.Commands.Authentication.GetAuthenticationInfo;
 using BetterCms.Module.Root.Commands.Authentication.SearchRoles;
 using BetterCms.Module.Root.Commands.Authentication.SearchUsers;
 using BetterCms.Module.Root.Models;
-using BetterCms.Module.Root.Models.Authentication;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.ViewModels.Autocomplete;
 
 using Common.Logging;
 
@@ -65,17 +65,17 @@ namespace BetterCms.Module.Root.Controllers
         }
 
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
-        public ActionResult SuggestRoles(string query)
+        public ActionResult SuggestRoles(SuggestionViewModel model)
         {
-            var suggestedRoles = GetCommand<SearchRolesCommand>().ExecuteCommand(query);
+            var suggestedRoles = GetCommand<SearchRolesCommand>().ExecuteCommand(model);
 
             return Json(new { suggestions = suggestedRoles });
         }
 
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
-        public ActionResult SuggestUsers(string query)
+        public ActionResult SuggestUsers(SuggestionViewModel model)
         {
-            var suggestedRoles = GetCommand<SearchUsersCommand>().ExecuteCommand(query);
+            var suggestedRoles = GetCommand<SearchUsersCommand>().ExecuteCommand(model);
 
             return Json(new { suggestions = suggestedRoles });
         }
