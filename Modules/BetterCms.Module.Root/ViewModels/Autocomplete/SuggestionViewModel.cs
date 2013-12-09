@@ -18,5 +18,10 @@
                 return ExistingItems.Split('|');
             }
         }
+
+        public override string ToString()
+        {
+            return string.Format("{0}, Query: {1}, ExistingItems: {2}", base.ToString(), Query, ExistingItems);
+        }
     }
 }
