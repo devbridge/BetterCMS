@@ -107,26 +107,12 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
 
                 if (model != null)
                 {
-                    var regionId = UnitOfWork.Session
-                        .QueryOver<Region>()
-                        .Where(r => r.RegionIdentifier == BlogModuleConstants.BlogPostMainContentRegionIdentifier)
-                        .Select(r => r.Id)
-                        .FutureValue<Guid>();
-
-                    PageContent pageContentAlias = null;
-                    BlogPostContent blogPostContentAlias = null;
-
-                    var pageContentId = UnitOfWork.Session
-                        .QueryOver(() => pageContentAlias)
-                        .Inner.JoinAlias(c => c.Content, () => blogPostContentAlias)
-                        .Where(() => pageContentAlias.Page.Id == id
-                            && !pageContentAlias.IsDeleted
-                            && pageContentAlias.Region.Id == regionId.Value)
-                        .OrderBy(() => pageContentAlias.CreatedOn).Asc
-                        .Select(c => c.Id)
-                        .Take(1)
-                        .List<Guid>()
-                        .FirstOrDefault();
+                    var pageContentId =
+                        Repository.AsQueryable<PageContent>()
+                                  .Where(pageContent => pageContent.Page.Id == id && !pageContent.Page.IsDeleted)
+                                  .OrderBy(pageContent => pageContent.CreatedOn)
+                                  .Select(pageContent => pageContent.Id)
+                                  .FirstOrDefault();
 
                     BlogPostContent content = null;
                     if (!pageContentId.HasDefaultValue())
