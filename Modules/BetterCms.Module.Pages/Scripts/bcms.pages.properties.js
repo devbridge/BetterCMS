@@ -152,9 +152,14 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 setTimeout(function() {
                     dialog.container.find(selectors.pagePropertiesAceEditorContainer).each(function () {
                         var editor = $(this).data('aceEditor');
+                        
                         if (editor && $.isFunction(editor.resize)) {
                             editor.resize(true);
                             editor.renderer.updateFull();
+
+                            if (form.data('readonlyWithPublishing') == true || form.data('readonly') == true) {
+                                forms.setFieldsReadOnly(form);
+                            }
                         }
                     });
                 }, 20);
@@ -352,31 +357,23 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                     var url = $.format(links.loadEditPropertiesDialogUrl, id);
                     dynamicContent.bindDialog(dialog, url, {
                         contentAvailable: function (childDialog, content) {
-                            var form = dialog.container.find('form'),
-                                publishCheckbox = form.find(selectors.pagePropertiesPageIsPublishedCheckbox);
+                            var form = dialog.container.find(selectors.pagePropertiesForm),
+                                publishCheckbox,
+                                publishCheckboxParent;
+                            
                             // User with only BcmsPublishContent but without BcmsEditContent can only publish - only publish checkbox needs to be enabled.
                             if (form.data('readonly') !== true && canPublish && !canEdit && !canEditMaster) {
-                                // Disable everything.
-                                dialog.container.find('.bcms-tab-single').each(function () {
-                                    $(this).addClass(classes.inactive);
-                                });
-                                publishCheckbox.parents('.bcms-tab-single').find('.bcms-padded-content').each(function () {
-                                    $(this).children().each(function () {
-                                        $(this).addClass(classes.inactive);
-                                    });
-                                });
-                                form.find('input:visible').attr('readonly', 'readonly');
-                                form.find('textarea:visible').attr('readonly', 'readonly');
-                                form.find('input[type=text]:visible:not([data-bind])').parent('div').css('z-index', 100);
-                                form.find('textarea:visible:not([data-bind])').attr('readonly', 'readonly').parent('div').css('z-index', 100);
-                                publishCheckbox.parents('.bcms-input-list-holder').parent().find('.bcms-checkbox-holder').each(function () {
-                                    $(this).addClass(classes.inactive);
-                                });
-                                // Enable only publish checkbox.
-                                publishCheckbox.parents('.' + classes.inactive).each(function () {
-                                    $(this).removeClass(classes.inactive);
-                                });
+                                form.data('readonlyWithPublishing', true);
+                                form.addClass(classes.inactive);
+                                forms.setFieldsReadOnly(form);
+
+                                publishCheckbox = form.find(selectors.pagePropertiesPageIsPublishedCheckbox);
+                                publishCheckboxParent = publishCheckbox.parents('.bcms-input-list-holder:first');
+
                                 publishCheckbox.removeAttr('readonly');
+                                publishCheckboxParent.find('input[type="checkbox"]').attr("disabled", "disabled");
+                                publishCheckbox.removeAttr("disabled");
+                                publishCheckboxParent.css('z-index', 100);
                             }
                             pageViewModel = page.initEditPagePropertiesDialogEvents(childDialog, content);
                             if (content.Data && content.Data.IsMasterPage === true) {
