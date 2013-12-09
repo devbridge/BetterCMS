@@ -8,6 +8,7 @@ using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Exceptions.Service;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Security;
 
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Models;
@@ -15,9 +16,11 @@ using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
 
 using BetterCms.Module.MediaManager.Models;
+
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Services;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -79,6 +82,11 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         private readonly IRedirectService redirectService;
 
         /// <summary>
+        /// The CMS configuration
+        /// </summary>
+        private readonly ICmsConfiguration cmsConfiguration;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SaveBlogPostCommand" /> class.
         /// </summary>
         /// <param name="tagService">The tag service.</param>
@@ -88,9 +96,11 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// <param name="blogService">The blog service.</param>
         /// <param name="redirectService">The redirect service.</param>
         /// <param name="urlService">The URL service.</param>
+        /// <param name="cmsConfiguration">The CMS configuration.</param>
+        /// <param name="masterPageService">The master page service.</param>
         public SaveBlogPostCommand(ITagService tagService, Services.IOptionService optionService, IContentService contentService, 
-                                    IPageService pageService, IBlogService blogService, 
-                                    IRedirectService redirectService, IUrlService urlService, IMasterPageService masterPageService)
+                                    IPageService pageService, IBlogService blogService, IRedirectService redirectService,
+                                    IUrlService urlService, ICmsConfiguration cmsConfiguration, IMasterPageService masterPageService)
         {
             this.tagService = tagService;
             this.optionService = optionService;
@@ -100,6 +110,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             this.redirectService = redirectService;
             this.urlService = urlService;
             this.masterPageService = masterPageService;
+            this.cmsConfiguration = cmsConfiguration;
         }
 
         /// <summary>
@@ -109,9 +120,16 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// <returns>Blog post view model</returns>
         public SaveBlogPostCommandResponse Execute(BlogPostViewModel request)
         {
+            string[] roles;
             if (request.DesirableStatus == ContentStatus.Published)
             {
                 AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.PublishContent);
+                roles = new[] { RootModuleConstants.UserRoles.PublishContent };
+            }
+            else
+            {
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent);
+                roles = new[] { RootModuleConstants.UserRoles.EditContent };
             }
 
             Layout layout;
@@ -119,17 +137,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             LoadLayout(out layout, out masterPage);
             var region = LoadRegion(layout, masterPage);
             var isNew = request.Id.HasDefaultValue();
-            bool userCanEdit;
-
-            if (isNew || request.DesirableStatus != ContentStatus.Published)
-            {
-                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent);
-                userCanEdit = true;
-            }
-            else
-            {
-                userCanEdit = SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);
-            }
+            var userCanEdit = SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);
 
             // UnitOfWork.BeginTransaction(); // NOTE: this causes concurrent data exception.
 
@@ -152,6 +160,11 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                     .FirstOrDefault();
 
                 blogPost = blogPostFuture.FirstOne();
+
+                if (cmsConfiguration.Security.AccessControlEnabled)
+                {
+                    AccessControlService.DemandAccess(blogPost, Context.Principal, AccessLevel.ReadWrite, roles);
+                }
 
                 if (content != null)
                 {
