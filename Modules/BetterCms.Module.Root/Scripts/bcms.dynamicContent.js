@@ -20,7 +20,8 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             failedLoadDialogMessage: null,
             dialogLoadingCancelledMessage: null,
             forbiddenDialogMessage: null
-        };
+        },
+        lastDialogId = null;
 
     /**
     /* Assign objects to module.
@@ -69,7 +70,7 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             }
         }, options);
 
-        dialog["currentDialogId"] = currentDialogId;
+        lastDialogId = currentDialogId;
         dynamicConent.showLoading(dialog);
 
         $.ajax({
@@ -78,7 +79,7 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             cache: false
         })
         .done(function (content, status, response) {
-            if (dialog["currentDialogId"] !== currentDialogId) {
+            if (lastDialogId !== currentDialogId) {
                 return;
             }
             
