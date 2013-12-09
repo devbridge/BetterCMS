@@ -63,6 +63,12 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// </value>
         public string MasterUrlHash { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether master page has circular references to current.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if master page has circular references to current; otherwise, <c>false</c>.
+        /// </value>
         public bool IsCircularToCurrent { get; set; }
 
         /// <summary>

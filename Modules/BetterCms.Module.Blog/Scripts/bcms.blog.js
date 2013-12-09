@@ -668,9 +668,12 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         
         self.isActive = ko.observable(template.IsActive);
         self.isCompatible = template.IsCompatible;
+        self.isMasterPage = template.IsMasterPage;
 
         self.select = function () {
-            var url = $.format(links.saveDefaultTemplateUrl, self.id),
+            var url = self.isMasterPage
+                        ? $.format(links.saveDefaultTemplateUrl, "00000000-0000-0000-0000-000000000000", self.id)
+                        : $.format(links.saveDefaultTemplateUrl, self.id),
                 onComplete = function (json) {
                     self.container.hideLoading();
                     messages.refreshBox(self.container, json);

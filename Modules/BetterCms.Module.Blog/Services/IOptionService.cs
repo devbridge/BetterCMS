@@ -1,13 +1,12 @@
-﻿using System;
+﻿using BetterCms.Module.Blog.Models;
 
 namespace BetterCms.Module.Blog.Services
 {
     public interface IOptionService
     {
         /// <summary>
-        /// Gets the default template id.
+        /// Gets the default option.
         /// </summary>
-        /// <returns>Default template id or null, if such is not set</returns>
-        Guid? GetDefaultTemplateId();
+        Option GetDefaultOption();
     }
 }

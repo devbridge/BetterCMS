@@ -55,6 +55,7 @@ namespace BetterCms.Module.Pages.Services
             // Add new master pages to list
             masterPageIds
                 .Where(id => page.MasterPages.All(mp => mp.Master.Id != id))
+                .Distinct()
                 .ToList()
                 .ForEach(id => page.MasterPages.Add(new MasterPage
                 {
