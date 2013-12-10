@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 
 using BetterCms.Core.Security;
+
 using BetterCms.Module.Root.Commands.Tag.DeleteTag;
 using BetterCms.Module.Root.Commands.Tag.GetTagList;
 using BetterCms.Module.Root.Commands.Tag.SaveTag;
@@ -9,6 +10,7 @@ using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
+using BetterCms.Module.Root.ViewModels.Autocomplete;
 using BetterCms.Module.Root.ViewModels.Tags;
 
 using Microsoft.Web.Mvc;
@@ -89,9 +91,9 @@ namespace BetterCms.Module.Root.Controllers
         }
 
         [HttpPost]
-        public ActionResult SuggestTags(string query)
+        public ActionResult SuggestTags(SuggestionViewModel model)
         {
-            var suggestedTags = GetCommand<SearchTagsCommand>().ExecuteCommand(query);
+            var suggestedTags = GetCommand<SearchTagsCommand>().ExecuteCommand(model);
             return Json(new { suggestions = suggestedTags });
         }
     }

@@ -315,6 +315,7 @@
     <Compile Include="Services\IRenderingService.cs" />
     <Compile Include="Services\IUserProfileUrlResolver.cs" />
     <Compile Include="ViewModels\Authentication\InfoViewModel.cs" />
+    <Compile Include="ViewModels\Autocomplete\SuggestionViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryItemViewModel.cs" />
     <Compile Include="ViewModels\Cms\CmsRequestViewModel.cs" />
     <Compile Include="ViewModels\Cms\PageRegionViewModel.cs" />
