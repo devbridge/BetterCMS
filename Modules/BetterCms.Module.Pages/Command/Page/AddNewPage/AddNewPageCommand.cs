@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.Mvc.Commands;
@@ -8,6 +9,7 @@ using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 
 using BetterCms.Module.Root;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
@@ -28,6 +30,8 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
         private readonly IMasterPageService masterPageService;
 
         private readonly IRepository repository;
+        
+        private readonly ICultureService cultureService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AddNewPageCommand" /> class.
@@ -38,9 +42,10 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
         /// <param name="optionService">The option service.</param>
         /// <param name="masterPageService">The master page service.</param>
         /// <param name="repository">The repository.</param>
+        /// <param name="cultureService">The culture service.</param>
         public AddNewPageCommand(ILayoutService LayoutService, ICmsConfiguration cmsConfiguration,
             ISecurityService securityService, IOptionService optionService,
-            IMasterPageService masterPageService, IRepository repository)
+            IMasterPageService masterPageService, IRepository repository, ICultureService cultureService)
         {
             layoutService = LayoutService;
             this.cmsConfiguration = cmsConfiguration;
@@ -48,6 +53,7 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
             this.optionService = optionService;
             this.masterPageService = masterPageService;
             this.repository = repository;
+            this.cultureService = cultureService;
         }
 
         /// <summary>
@@ -66,6 +72,8 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
                 AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent);
             }
 
+            var culturesFuture = (cmsConfiguration.EnableMultilanguage) ? cultureService.GetCultures() : null;
+
             var principal = securityService.GetCurrentPrincipal();
             var model = new AddNewPageViewModel
                 {
@@ -73,8 +81,13 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
                     Templates = layoutService.GetAvailableLayouts().ToList(),
                     AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled,
                     UserAccessList = AccessControlService.GetDefaultAccessList(principal).Select(f => new UserAccessViewModel(f)).ToList(),
-                    CreateMasterPage = request.CreateMasterPage
+                    CreateMasterPage = request.CreateMasterPage,
                 };
+
+            if (culturesFuture != null)
+            {
+                model.Cultures = culturesFuture.ToList();
+            }
 
             if (model.Templates.Count > 0)
             {

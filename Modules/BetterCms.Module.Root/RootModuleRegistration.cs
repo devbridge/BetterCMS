@@ -2,6 +2,7 @@
 
 using Autofac;
 
+using BetterCms.Core;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules;
@@ -139,6 +140,7 @@ namespace BetterCms.Module.Root
             containerBuilder.RegisterType<DefaultAccessControlService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultEntityTrackingService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultEntityTrackingCacheService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultCultureService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 
         /// <summary>
@@ -282,7 +284,7 @@ namespace BetterCms.Module.Root
         /// <returns>Settings action projections.</returns>
         public override IEnumerable<IPageActionProjection> RegisterSiteSettingsProjections(ContainerBuilder containerBuilder)
         {
-            return new IPageActionProjection[]
+            return new List<IPageActionProjection>
                 {
                     new LinkActionProjection(tagsJsModuleIncludeDescriptor, page => "loadSiteSettingsCategoryList")
                         {
@@ -298,14 +300,14 @@ namespace BetterCms.Module.Root
                             CssClass = page => "bcms-sidebar-link",
                             AccessRole = RootModuleConstants.UserRoles.EditContent
                         },
-                   new LinkActionProjection(culturesJsModuleIncludeDescriptor, page => "loadSiteSettingsCulturesList")
+                    new LinkActionProjection(culturesJsModuleIncludeDescriptor, page => "loadSiteSettingsCulturesList")
                         {
                             Order = 2200,
                             Title = page => RootGlobalization.SiteSettings_CulturesMenuItem,
                             CssClass = page => "bcms-sidebar-link",
-                            AccessRole = RootModuleConstants.UserRoles.Administration
+                            AccessRole = RootModuleConstants.UserRoles.Administration,
+                            ShouldBeRendered = page => CmsContext.Config.EnableMultilanguage
                         }
-
                 };
         }
 

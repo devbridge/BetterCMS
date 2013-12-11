@@ -266,6 +266,18 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                     }
                     page.MasterPage = null;
                 }
+
+                if (cmsConfiguration.EnableMultilanguage)
+                {
+                    if (request.CultureId.HasValue)
+                    {
+                        page.Culture = Repository.First<Culture>(request.CultureId.Value);
+                    }
+                    else
+                    {
+                        page.Culture = null;
+                    }
+                }
             }
 
             var publishDraftContent = false;

@@ -120,6 +120,22 @@ namespace BetterCms.Module.Root.Models
         public virtual Page MasterPage { get; set; }
 
         /// <summary>
+        /// Gets or sets the page culture.
+        /// </summary>
+        /// <value>
+        /// The page culture.
+        /// </value>
+        public virtual Culture Culture { get; set; }
+
+        /// <summary>
+        /// Gets or sets the main culture page.
+        /// </summary>
+        /// <value>
+        /// The main culture page.
+        /// </value>
+        public virtual Page MainCulturePage { get; set; }
+
+        /// <summary>
         /// Gets or sets the page contents.
         /// </summary>
         /// <value>

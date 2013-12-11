@@ -25,6 +25,7 @@ namespace BetterCms.Configuration
         private const string UsersNode = "users";
         private const string RenderContentEndingDivAttribute = "renderContentEndingDiv";
         private const string ContentEndingDivCssClassNameAttribute = "contentEndingDivCssClassName";
+        private const string EnableMultilanguageAttribute = "enableMultilanguage";
 
         /// <summary>
         /// The version backing field.
@@ -197,6 +198,19 @@ namespace BetterCms.Configuration
         {
             get { return Convert.ToString(this[ContentEndingDivCssClassNameAttribute]); }
             set { this[ContentEndingDivCssClassNameAttribute] = value; }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether to enable multilanguage.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to enable multilanguage; otherwise, <c>false</c>.
+        /// </value>
+        [ConfigurationProperty(EnableMultilanguageAttribute, IsRequired = false, DefaultValue = true)]
+        public bool EnableMultilanguage
+        {
+            get { return (bool)this[EnableMultilanguageAttribute]; }
+            set { this[EnableMultilanguageAttribute] = value; }
         }
 
         /// <summary>

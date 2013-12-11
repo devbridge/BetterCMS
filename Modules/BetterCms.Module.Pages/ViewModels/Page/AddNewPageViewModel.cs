@@ -6,8 +6,7 @@ using BetterCms.Core.Models;
 
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Mvc.Attributes;
-
-using BetterCms.Module.Root.Providers;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Option;
 using BetterCms.Module.Root.ViewModels.Security;
 
@@ -69,6 +68,22 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// The master page id.
         /// </value>
         public Guid? MasterPageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the culture id.
+        /// </summary>
+        /// <value>
+        /// The culture id.
+        /// </value>
+        public Guid? CultureId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of cultures.
+        /// </summary>
+        /// <value>
+        /// The list of cultures.
+        /// </value>
+        public IEnumerable<LookupKeyValue> Cultures { get; set; }
 
         /// <summary>
         /// Gets or sets the page option values.

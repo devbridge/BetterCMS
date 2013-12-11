@@ -145,19 +145,19 @@
     <value>Page URL must start and end with "/" and can contain only following characters: '0-9', 'a-z', '-', '/, '_'</value>
   </data>
   <data name="AddNewPage_PageTitle" xml:space="preserve">
-    <value>1. Create a page title (H1)</value>
+    <value>Create a page title (H1)</value>
   </data>
   <data name="AddNewPage_PageTitle_Tooltip_Description" xml:space="preserve">
     <value>Create a title for your new page.</value>
   </data>
   <data name="AddNewPage_Permalink" xml:space="preserve">
-    <value>2. Change Page URL</value>
+    <value>Change Page URL</value>
   </data>
   <data name="AddNewPage_Permalink_Tooltip_Description" xml:space="preserve">
     <value>Create a unique page URL for your new page.</value>
   </data>
   <data name="AddNewPage_Template" xml:space="preserve">
-    <value>3. Select a template</value>
+    <value>Select a template</value>
   </data>
   <data name="AddNewPage_Template_InfoMessage_Text" xml:space="preserve">
     <value>&lt;b&gt;The layout of this page is based on a template.&lt;/b&gt; Select a template from options below. &#x3;If you need an additional template contact your system administrator to create a custom template.</value>
@@ -1102,7 +1102,7 @@
     <value>Page</value>
   </data>
   <data name="AddNewPage_UserAccess" xml:space="preserve">
-    <value>4. Define security level</value>
+    <value>Define security level</value>
   </data>
   <data name="AddNewPage_UserAccess_Tooltip_Description" xml:space="preserve">
     <value>Set users and/or roles, which can later read / modify created page.</value>
@@ -1166,5 +1166,20 @@
   </data>
   <data name="RestoreContent_ContentHasChildrenContents_RegionDeleteConfirmationMessage" xml:space="preserve">
     <value>You are trying to restore content without dynamic regions currently exist. There are some children pages, which have contents created within these regions. If you restore this version regions will be deleted, children page contens will be deleted also. Anyway, you can restore them by restoring archived version of the current content. &lt;br /&gt;&lt;br /&gt;Are you sure you want to continue?</value>
+  </data>
+  <data name="AddNewPage_Culture" xml:space="preserve">
+    <value>Choose page culture (language)</value>
+  </data>
+  <data name="AddNewPage_Culture_Tooltip_Description" xml:space="preserve">
+    <value>Choose current page culture, which will be used in sitemap and determines the language of the page</value>
+  </data>
+  <data name="EditPageProperties_BasicPropertiesTab_Culture" xml:space="preserve">
+    <value>Page culture (language)</value>
+  </data>
+  <data name="EditPageProperties_BasicPropertiesTab_Culture_Tooltip_Description" xml:space="preserve">
+    <value>Edit current page culture, which will be used in sitemap and determines the language of the page</value>
+  </data>
+  <data name="Sidebar_TranslationsButtonTitle" xml:space="preserve">
+    <value>Translations</value>
   </data>
 </root>

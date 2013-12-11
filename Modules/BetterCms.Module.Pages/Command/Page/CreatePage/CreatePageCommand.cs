@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
@@ -126,6 +125,11 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
             else
             {
                 page.Layout = Repository.AsProxy<Root.Models.Layout>(request.TemplateId.Value);
+            }
+
+            if (cmsConfiguration.EnableMultilanguage && request.CultureId.HasValue && !request.CultureId.Value.HasDefaultValue())
+            {
+                page.Culture = Repository.AsProxy<Culture>(request.CultureId.Value);
             }
 
             optionService.SaveOptionValues(request.OptionValues, null, () => new PageOption { Page = page });

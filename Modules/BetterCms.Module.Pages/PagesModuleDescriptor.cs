@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 
 using Autofac;
 
+using BetterCms.Core;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Modules;
@@ -319,7 +320,15 @@ namespace BetterCms.Module.Pages
                         {
                             Order = 50,
                             CssClass = page => "bcms-buttons-block"
-                        },                          
+                        }, 
+                        
+                    new ButtonActionProjection(pagePropertiesJsModuleIncludeDescriptor, page => "editPageTranslations")
+                        {
+                            Title = page => PagesGlobalization.Sidebar_TranslationsButtonTitle,
+                            CssClass = page => "bcms-sidemenu-btn",
+                            Order = 600,
+                            ShouldBeRendered = page => CmsContext.Config.EnableMultilanguage
+                        },
 
                     new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "deleteCurrentPage")
                         {

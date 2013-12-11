@@ -171,6 +171,7 @@
     <Compile Include="Models\MasterPage.cs" />
     <Compile Include="Models\Maps\ContentRegionMap.cs" />
     <Compile Include="Models\ContentRegion.cs" />
+    <Compile Include="Models\Migrations\Migration201312111700.cs" />
     <Compile Include="Models\Migrations\Migration201312101400.cs" />
     <Compile Include="Models\Migrations\Migration201310241500.cs" />
     <Compile Include="Models\Migrations\Migration201310221445.cs" />
@@ -310,6 +311,8 @@
     <Compile Include="Mvc\Helpers\MessagesHelper.cs" />
     <Compile Include="Registration\TabsJsModuleIncludeDescriptor.cs" />
     <Compile Include="RootModuleConstants.cs" />
+    <Compile Include="Services\DefaultCultureService.cs" />
+    <Compile Include="Services\ICultureService.cs" />
     <Compile Include="Services\DefaultEntityTrackingCacheService.cs" />
     <Compile Include="Services\IEntityTrackingCacheService.cs" />
     <Compile Include="Services\DefaultAccessControlService.cs" />

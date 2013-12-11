@@ -172,6 +172,22 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public Guid? MasterPageId { get; set; }
 
         /// <summary>
+        /// Gets or sets the culture id.
+        /// </summary>
+        /// <value>
+        /// The culture id.
+        /// </value>
+        public Guid? CultureId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of cultures.
+        /// </summary>
+        /// <value>
+        /// The list of cultures.
+        /// </value>
+        public IEnumerable<LookupKeyValue> Cultures { get; set; }
+
+        /// <summary>
         /// Gets or sets the image view model.
         /// </summary>
         /// <value>

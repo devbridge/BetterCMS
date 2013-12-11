@@ -22,6 +22,16 @@
     {
         <div id="bcms-tab-1" class="bcms-tab-single">
             <div class="bcms-padded-content">
+                
+                @if (Model.Cultures != null && Model.Cultures.Any())
+                {
+                    <div class="bcms-input-list-holder">
+                        @Html.Tooltip(PagesGlobalization.AddNewPage_Culture_Tooltip_Description)
+                        <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_Culture</div>
+                        @Html.DropDownListFor(model => model.CultureId, Model.Cultures.ToSelectList(Model.CultureId), string.Empty, new { @class = "bcms-global-select" })
+                    </div>
+                }
+
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.AddNewPage_PageTitle_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_PageTitle</div>

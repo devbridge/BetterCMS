@@ -137,5 +137,13 @@ namespace BetterCms
         /// The name of the content ending div CSS class.
         /// </value>
         string ContentEndingDivCssClassName { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether to enable multilanguage.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to enable multilanguage; otherwise, <c>false</c>.
+        /// </value>
+        bool EnableMultilanguage { get; }
     }
 }

@@ -14,7 +14,6 @@ using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 
 using BetterCms.Module.Root;
-using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
@@ -35,6 +34,11 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         /// The category service
         /// </summary>
         private ICategoryService categoryService;
+
+        /// <summary>
+        /// The culture service
+        /// </summary>
+        private ICultureService cultureService;
 
         /// <summary>
         /// The tag service
@@ -70,11 +74,14 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         /// <param name="cmsConfiguration">The CMS configuration.</param>
         /// <param name="layoutService">The layout service.</param>
         /// <param name="fileUrlResolver">The file URL resolver.</param>
+        /// <param name="cultureService">The culture service.</param>
         public GetPagePropertiesCommand(ITagService tagService, ICategoryService categoryService, IOptionService optionService,
-            ICmsConfiguration cmsConfiguration, ILayoutService layoutService, IMediaFileUrlResolver fileUrlResolver)
+            ICmsConfiguration cmsConfiguration, ILayoutService layoutService, IMediaFileUrlResolver fileUrlResolver,
+            ICultureService cultureService)
         {
             this.tagService = tagService;
             this.categoryService = categoryService;
+            this.cultureService = cultureService;
             this.optionService = optionService;
             this.cmsConfiguration = cmsConfiguration;
             this.layoutService = layoutService;
@@ -112,6 +119,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                               TemplateId = page.Layout.Id,
                               MasterPageId = page.MasterPage.Id,
                               CategoryId = page.Category.Id,
+                              CultureId = page.Culture.Id,
                               AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled,
                               Image = page.Image == null || page.Image.IsDeleted ? null :
                                   new ImageSelectorViewModel
@@ -150,6 +158,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
             var tagsFuture = tagService.GetPageTagNames(id);
             var categories = categoryService.GetCategories();
             var customOptionsFuture = optionService.GetCustomOptionsFuture();
+            var culturesFuture = (cmsConfiguration.EnableMultilanguage) ? cultureService.GetCultures() : null;
 
             IEnumerable<AccessRule> userAccessFuture;
             if (cmsConfiguration.Security.AccessControlEnabled)
@@ -183,6 +192,10 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 model.Model.Categories = categories;
                 model.Model.UpdateSitemap = true;
                 model.Model.CustomOptions = customOptionsFuture.ToList();
+                if (culturesFuture != null)
+                {
+                    model.Model.Cultures = culturesFuture.ToList();
+                }
 
                 // Get layout options, page options and merge them
                 model.Model.OptionValues = optionService.GetMergedMasterPagesOptionValues(model.Model.Id, model.Model.MasterPageId, model.Model.TemplateId);
