@@ -33,14 +33,25 @@ namespace BetterCms.Module.Root
         /// </summary>
         internal const string RootAreaName = "bcms-root";
 
+        /// <summary>
+        /// The bcms.authentication.js include descriptor
+        /// </summary>
         private readonly AuthenticationJsModuleIncludeDescriptor authenticationJsModuleIncludeDescriptor;
 
+        /// <summary>
+        /// The bcms.siteSettings.js include descriptor
+        /// </summary>
         private readonly SiteSettingsJsModuleIncludeDescriptor siteSettingsJsModuleIncludeDescriptor;
 
         /// <summary>
         /// bcms.tags.js java script module descriptor.
         /// </summary>
         private readonly TagsJsModuleIncludeDescriptor tagsJsModuleIncludeDescriptor;
+
+        /// <summary>
+        /// bcms.cultures.js java script module descriptor.
+        /// </summary>
+        private readonly CulturesJsModuleIncludeDescriptor culturesJsModuleIncludeDescriptor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RootModuleDescriptor" /> class.
@@ -50,6 +61,7 @@ namespace BetterCms.Module.Root
             authenticationJsModuleIncludeDescriptor = new AuthenticationJsModuleIncludeDescriptor(this);
             siteSettingsJsModuleIncludeDescriptor = new SiteSettingsJsModuleIncludeDescriptor(this);
             tagsJsModuleIncludeDescriptor = new TagsJsModuleIncludeDescriptor(this);
+            culturesJsModuleIncludeDescriptor = new CulturesJsModuleIncludeDescriptor(this);
 
             InitializeSecurity();            
         }        
@@ -232,6 +244,7 @@ namespace BetterCms.Module.Root
                     new JsIncludeDescriptor(this, "ace", "ace/ace.js", "ace/ace.js"),
                     new JsIncludeDescriptor(this, "ckeditor", "ckeditor/ckeditor.js", "ckeditor/ckeditor.js"),
                     tagsJsModuleIncludeDescriptor,
+                    culturesJsModuleIncludeDescriptor,
                     new OptionsJsModuleIncludeDescriptor(this)
                 };
         }
@@ -284,6 +297,13 @@ namespace BetterCms.Module.Root
                             Title = page => RootGlobalization.SiteSettings_TagsMenuItem,
                             CssClass = page => "bcms-sidebar-link",
                             AccessRole = RootModuleConstants.UserRoles.EditContent
+                        },
+                   new LinkActionProjection(culturesJsModuleIncludeDescriptor, page => "loadSiteSettingsCulturesList")
+                        {
+                            Order = 2200,
+                            Title = page => RootGlobalization.SiteSettings_CulturesMenuItem,
+                            CssClass = page => "bcms-sidebar-link",
+                            AccessRole = RootModuleConstants.UserRoles.Administration
                         }
 
                 };

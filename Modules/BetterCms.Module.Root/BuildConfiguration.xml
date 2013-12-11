@@ -21,6 +21,7 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.spinner.jquery.js" />      
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.authentication.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.content.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.cultures.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.datepicker.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.dynamicContent.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.forms.js" />

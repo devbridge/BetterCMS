@@ -6,7 +6,6 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
         'use strict';
 
         var autocomplete = {},
-            selectors = {},
             links = {},
             globalization = {};
 
@@ -19,43 +18,106 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
         /**
         * Creates knockout binding for autocomplete
         */
-        function addAutoCompleteBinding() {
+        function addAutoCompleteBindings() {
+            var transformResult = function(response) {
+                var result = typeof response === 'string' ? $.parseJSON(response) : response;
+                return {
+                    suggestions: $.map(result.suggestions, function(dataItem) {
+                        return { value: dataItem.Value, data: dataItem.Key };
+                    })
+                };
+            };
+
             ko.bindingHandlers.autocomplete = {
-                init: function(element, valueAccessor, allBindingsAccessor, viewModel) {
-                    var onlyExisting = valueAccessor() == "onlyExisting",
+                init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+                    var autocompleteViewModel = viewModel && viewModel.autocompleteViewModel
+                            ? viewModel.autocompleteViewModel : viewModel,
+                        onlyExisting = valueAccessor() == "onlyExisting",
                         complete = new jqAutoComplete(element, {
-                            serviceUrl: viewModel.serviceUrl,
+                            serviceUrl: autocompleteViewModel.serviceUrl,
                             type: 'POST',
                             appendTo: $(element).parent(),
                             autoSelectFirst: onlyExisting,
-                            transformResult: function(response) {
-                                var result = typeof response === 'string' ? $.parseJSON(response) : response;
-                                return {
-                                    suggestions: $.map(result.suggestions, function(dataItem) {
-                                        return { value: dataItem.Value, data: dataItem.Key };
-                                    })
-                                };
-                            },
+                            transformResult: transformResult,
                             onSelect: function(suggestion) {
-                                viewModel.newItem(suggestion.value);
-                                if (onlyExisting) {
-                                    viewModel.addItemWithId(suggestion.value, suggestion.data);
-                                } else {
-                                    viewModel.addItem();
+                                autocompleteViewModel.setItem(suggestion.data, suggestion.value);
+                                
+                                if (autocompleteViewModel.autocompleteInstance) {
+                                    autocompleteViewModel.autocompleteInstance.ignoreValueChange = false;
                                 }
-                                viewModel.clearItem();
-                                if (viewModel.autocompleteInstance) {
-                                    viewModel.autocompleteInstance.ignoreValueChange = false;
+                            }
+                        });
+                    
+                    autocompleteViewModel.autocompleteInstance = complete;
+                }
+            };
+
+            ko.bindingHandlers.autocompleteList = {
+                init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+                    var autocompleteViewModel = viewModel && viewModel.autocompleteViewModel
+                            ? viewModel.autocompleteViewModel : viewModel,
+                        onlyExisting = valueAccessor() == "onlyExisting",
+                        complete = new jqAutoComplete(element, {
+                            serviceUrl: autocompleteViewModel.serviceUrl,
+                            type: 'POST',
+                            appendTo: $(element).parent(),
+                            autoSelectFirst: onlyExisting,
+                            transformResult: transformResult,
+                            onSelect: function(suggestion) {
+                                autocompleteViewModel.newItem(suggestion.value);
+                                if (onlyExisting) {
+                                    autocompleteViewModel.addItemWithId(suggestion.value, suggestion.data);
+                                } else {
+                                    autocompleteViewModel.addItem();
+                                }
+                                autocompleteViewModel.clearItem();
+                                if (autocompleteViewModel.autocompleteInstance) {
+                                    autocompleteViewModel.autocompleteInstance.ignoreValueChange = false;
                                 }
                             },
                             onSearchStart: function(params) {
-                                params.ExistingItems = viewModel.getExistingItems();
+                                params.ExistingItems = autocompleteViewModel.getExistingItems();
                             }
                         });
-                    viewModel.autocompleteInstance = complete;
+                    
+                    autocompleteViewModel.autocompleteInstance = complete;
                 }
             };
         }
+
+        /**
+        * Autocomplete view model for single item
+        */
+        autocomplete.AutocompleteViewModel = (function () {
+
+            autocomplete.AutocompleteViewModel = function (opts) {
+                var self = this,
+                    options = $.extend({
+                        serviceUrl: null,
+                        onItemSelect: function (item) {}
+                    }, opts);
+
+                self.autocompleteInstance = null;
+                self.serviceUrl = options.serviceUrl;
+
+                self.item = null;
+
+                self.setItem = function (key, value) {
+                    if (key || value) {
+                        if (key && value) {
+                            self.item = new autocomplete.AutocompleteItemViewModel(self, value, key);
+                        } else {
+                            self.item = new autocomplete.AutocompleteItemViewModel(self, value);
+                        }
+
+                        options.onItemSelect(self.item);
+                    }
+                };
+            };
+
+            return autocomplete.AutocompleteViewModel;
+        })();
+        
 
         /**
         * Autocomplete items list view model
@@ -203,7 +265,7 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
         autocomplete.init = function() {
             bcms.logger.debug('Initializing bcms.autocomplete module.');
 
-            addAutoCompleteBinding();
+            addAutoCompleteBindings();
         };
 
         /**

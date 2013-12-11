@@ -1,0 +1,28 @@
+﻿@using BetterCms.Module.Root;
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc.Grids;
+@using BetterCms.Module.Root.ViewModels.Shared;
+
+@{
+    var gridViewModel = new EditableGridViewModel
+    {
+        ShowMessages = true,
+        TopBlockTitle = RootGlobalization.SiteSettings_Cultures_Title,
+        TopBlockAddItemView = "Partial/AddCulture",
+        Columns = new List<EditableGridColumn>
+            {
+                new EditableGridColumn(RootGlobalization.SiteSettings_Cultures_Name_Title, "Name", "name")
+                    {
+                        AutoFocus = true
+                        
+                    },
+                new EditableGridColumn(RootGlobalization.SiteSettings_Cultures_Code_Title, "Code", "code")
+                    {
+                        CanBeEdited = false,
+                        HeaderAttributes = "style=\"width: 130px;\""
+                    }           
+            }
+    };
+}
+
+@Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel)
