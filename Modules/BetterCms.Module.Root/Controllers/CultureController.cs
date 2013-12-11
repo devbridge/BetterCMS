@@ -20,6 +20,7 @@ namespace BetterCms.Module.Root.Controllers
     /// Cultures / multilanguage controller.
     /// </summary>
     [ActionLinkArea(RootModuleDescriptor.RootAreaName)]
+    [BcmsAuthorize]
     public class CultureController : CmsControllerBase
     {
         /// <summary>
