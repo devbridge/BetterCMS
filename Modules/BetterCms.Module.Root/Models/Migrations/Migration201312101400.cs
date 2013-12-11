@@ -19,7 +19,6 @@ namespace BetterCms.Module.Root.Models.Migrations
         public override void Up()
         {
             CreateCulturesTable();
-            AlterPagesTable();
         }       
 
         private void CreateCulturesTable()
@@ -39,29 +38,6 @@ namespace BetterCms.Module.Root.Models.Migrations
                 .UniqueConstraint("UX_Cms_Cultures_Code")
                 .OnTable("Cultures").WithSchema(SchemaName)
                 .Columns(new[] { "Code", "DeletedOn" });
-        }
-        
-        private void AlterPagesTable()
-        {
-            Create
-                .Column("CultureId")
-                .OnTable("Pages").InSchema(SchemaName)
-                .AsGuid().Nullable();
-
-            Create
-                .ForeignKey("FK_Cms_Pages_Cms_Cultures")
-                .FromTable("Pages").InSchema(SchemaName).ForeignColumn("CultureId")
-                .ToTable("Cultures").InSchema(SchemaName).PrimaryColumn("Id");
-
-            Create
-                .Column("MainCulturePageId")
-                .OnTable("Pages").InSchema(SchemaName)
-                .AsGuid().Nullable();
-
-            Create
-                .ForeignKey("FK_Cms_Pages_MainCulturePageId_Cms_Pages_Id")
-                .FromTable("Pages").InSchema(SchemaName).ForeignColumn("MainCulturePageId")
-                .ToTable("Pages").InSchema(SchemaName).PrimaryColumn("Id");
         }
     }
 }
