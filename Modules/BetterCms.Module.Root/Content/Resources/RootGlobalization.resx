@@ -567,4 +567,7 @@
   <data name="SiteSettings_Cultures_Title" xml:space="preserve">
     <value>Cultures</value>
   </data>
+  <data name="Button_Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
 </root>

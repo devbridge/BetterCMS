@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Globalization;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Models;
+
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -92,6 +91,22 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         public bool IsMasterPage { get; set; }
 
         /// <summary>
+        /// Gets or sets the culture id.
+        /// </summary>
+        /// <value>
+        /// The culture id.
+        /// </value>
+        public Guid? CultureId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the main culture page id.
+        /// </summary>
+        /// <value>
+        /// The main culture page id.
+        /// </value>
+        public Guid? MainCulturePageId { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SavePageResponse" /> class.
         /// </summary>
         /// <param name="page">The page.</param>
@@ -106,6 +121,8 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             PageUrl = page.PageUrl;
             IsArchived = page.IsArchived;
             IsMasterPage = page.IsMasterPage;
+            CultureId = page.Culture != null ? page.Culture.Id : (Guid?)null;
+            MainCulturePageId = page.MainCulturePage != null ? page.MainCulturePage.Id : (Guid?)null;
         }
     }
 }

@@ -322,7 +322,7 @@ namespace BetterCms.Module.Pages
                             CssClass = page => "bcms-buttons-block"
                         }, 
                         
-                    new ButtonActionProjection(pagePropertiesJsModuleIncludeDescriptor, page => "editPageTranslations")
+                    new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "editPageTranslations")
                         {
                             Title = page => PagesGlobalization.Sidebar_TranslationsButtonTitle,
                             CssClass = page => "bcms-sidemenu-btn",

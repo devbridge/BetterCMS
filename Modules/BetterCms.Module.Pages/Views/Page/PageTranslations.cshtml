@@ -1,0 +1,41 @@
+﻿@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc.Helpers
+
+<div class="bcms-scroll-window">
+    @Html.TabbedContentMessagesBox()
+        
+    <table class="bcms-tables">
+        <thead>
+            <tr>
+                <th class="bcms-tables-nohover"> </th>
+                <th style="width: 250px;">@PagesGlobalization.PageTranslations_Culture_Title</th>
+                <th>@PagesGlobalization.PageTranslations_PageTitle_Title</th>
+                <th class="bcms-tables-nohover" style="width: 100px;">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- ko foreach: items() -->
+            <tr>
+                <td>
+                    <!-- ko if: isPageCreated() -->
+                    <a class="bcms-icn-edit" data-bind="click: editPage">@RootGlobalization.Button_Edit</a>
+                    <!-- /ko -->
+                </td>
+                <td data-bind="html: cultureName()"></td>
+                <td><a target="_blank" data-bind="html: title(), attr: {href: url()}"></a></td>
+                <td>
+                    <!-- ko ifnot: isPageCreated() -->
+                    <a class="bcms-icn-delete" data-bind="click: assignPage">@PagesGlobalization.PageTranslations_Assign_ButtonTitle</a>
+                    <a class="bcms-icn-delete" data-bind="click: createPage">@RootGlobalization.Button_Create</a>
+                    <!-- /ko -->
+                    <!-- ko if: isPageCreated() -->
+                    <a class="bcms-icn-delete" data-bind="click: deletePage">@RootGlobalization.Button_Delete</a>
+                    <!-- /ko -->
+                </td>
+            </tr>
+            <!-- /ko -->
+        </tbody>
+    </table>
+
+</div>

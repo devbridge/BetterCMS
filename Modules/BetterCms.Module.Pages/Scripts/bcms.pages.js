@@ -53,6 +53,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 siteSettingPageHasSeoCell: '.bcms-page-hasseo',
 
                 clonePageForm: 'form:first',
+                translationsContainer: '.bcms-scroll-window'
             },
             links = {
                 loadEditPropertiesUrl: null,
@@ -61,7 +62,8 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 deletePageConfirmationUrl: null,
                 changePublishStatusUrl: null,
                 clonePageDialogUrl: null,
-                convertStringToSlugUrl: null
+                convertStringToSlugUrl: null,
+                loadEditTranslationsDialogUrl: null
             },
             globalization = {
                 editPagePropertiesModalTitle: null,
@@ -74,7 +76,8 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 cloneButtonTitle: null,
                 deleteButtonTitle: null,
                 pageStatusChangeConfirmationMessagePublish: null,
-                pageStatusChangeConfirmationMessageUnPublish: null
+                pageStatusChangeConfirmationMessageUnPublish: null,
+                editTranslationsDialogTitle: null
             },
             keys = {
                 addNewPageInfoMessageClosed: 'bcms.addNewPageInfoBoxClosed'
@@ -706,6 +709,147 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 opts.rules["jqenddatevalidation"] = { message: opts.message, startdateproperty: opts.params.startdateproperty };
             });
         }
+
+        /**
+        * Page translations list view model
+        */
+        function PageTranslationsListViewModel() {
+            var self = this;
+
+            self.items = ko.observableArray();
+            self.mainPageId = ko.observable();
+
+            self.addItems = function (items, cultures) {
+                var lj = items.length,
+                    li = cultures.length,
+                    viewModel, i, j, culture, item, translation;
+
+                // Add invariant culture
+                for (j = 0; j < lj; j++) {
+                    item = items[j];
+
+                    if (!item.CultureId) {
+                        viewModel = new PageTranslationViewModel({ Key: '', Value: 'Invariant culture' }, item, self);
+                        self.items.push(viewModel);
+
+                        break;
+                    }
+                }
+
+                // Add all available cultures
+                for (i = 0; i < li; i++) {
+                    culture = cultures[i];
+                    translation = null;
+
+                    for (j = 0; j < lj; j++) {
+                        item = items[j];
+
+                        if (item.CultureId == culture.Key.toLowerCase()) {
+                            translation = item;
+                            break;
+                        }
+                    }
+
+                    viewModel = new PageTranslationViewModel(culture, translation, self);
+                    self.items.push(viewModel);
+                }
+            };
+
+            return self;
+        }
+
+        /**
+        * Page translation view model
+        */
+        function PageTranslationViewModel(culture, translation, parent) {
+            var self = this;
+
+            self.parent = parent;
+            self.id = ko.observable(translation ? translation.Id : '');
+            self.mainPageId = ko.observable(translation ? translation.MainCulturePageId : '');
+            self.title = ko.observable(translation ? translation.Title : '');
+            self.url = ko.observable(translation ? translation.PageUrl : '');
+            self.cultureName = ko.observable(culture.Value);
+            self.cultureId = ko.observable(culture.Key);
+
+            self.isPageCreated = ko.computed(function () {
+                return self.id();
+            });
+
+            self.deletePage = function () {
+                page.deletePage(self.id(), function () {
+                    if (bcms.pageId == self.id()) {
+                        redirect.RedirectWithAlert('/', {
+                            title: globalization.pageDeletedTitle,
+                            message: globalization.pageDeletedMessage
+                        });
+                    } else {
+                        self.id('');
+                        self.title('');
+                        self.url('');
+                    }
+                });
+            };
+
+            self.createPage = function () {
+//                page.openCreatePageDialog(function (json) {
+//                    if (json.Data) {
+//                        self.id(json.Data.PageId);
+//                        self.title(json.Data.Title);
+//                        self.url(json.Data.PageUrl);
+//                    }
+//                });
+                alert('// TODO: need implementation');
+            };
+
+            self.editPage = function () {
+                pageProperties.openEditPageDialog(self.id(), function (json) {
+                    self.title(json.Data.Title);
+                    self.url(json.Data.PageUrl);
+                });
+            };
+
+            self.assignPage = function () {
+                alert('// TODO: need implementation');
+            };
+
+            return self;
+        }
+
+        /**
+        * Initializes page translation events
+        */
+        function initTranslationEvents(dialog, json) {
+            var model = new PageTranslationsListViewModel(),
+                container = dialog.container.find(selectors.translationsContainer);
+
+            model.addItems(json.Data.Translations, json.Data.Cultures);
+            ko.applyBindings(model, container.get(0));
+        }
+
+        /**
+        * Opens modal window for managing current page translations
+        */
+        page.editPageTranslations = function () {
+            modal.open({
+                title: globalization.editTranslationsDialogTitle,
+                onLoad: function (dialog) {
+                    var url = $.format(links.loadEditTranslationsDialogUrl, bcms.pageId);
+                    dynamicContent.bindDialog(dialog, url, {
+                        contentAvailable: initTranslationEvents,
+
+                        beforePost: function () {
+                            dialog.container.showLoading();
+                        },
+
+                        postComplete: function (json) {
+                            dialog.container.hideLoading();
+                        }
+                    });
+
+                }
+            });
+        };
 
         /**
         * Initializes page module.

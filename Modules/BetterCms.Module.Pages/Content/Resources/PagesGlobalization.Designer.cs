@@ -1645,6 +1645,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit page translations.
+        /// </summary>
+        public static string EditPageTranslations_Dialog_Title {
+            get {
+                return ResourceManager.GetString("EditPageTranslations_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Seo.
         /// </summary>
         public static string EditSeo_Dialog_Title {
@@ -2199,6 +2208,33 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string PageProperties_PageUrl_InvalidMessage {
             get {
                 return ResourceManager.GetString("PageProperties_PageUrl_InvalidMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assign.
+        /// </summary>
+        public static string PageTranslations_Assign_ButtonTitle {
+            get {
+                return ResourceManager.GetString("PageTranslations_Assign_ButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Culture.
+        /// </summary>
+        public static string PageTranslations_Culture_Title {
+            get {
+                return ResourceManager.GetString("PageTranslations_Culture_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page Title.
+        /// </summary>
+        public static string PageTranslations_PageTitle_Title {
+            get {
+                return ResourceManager.GetString("PageTranslations_PageTitle_Title", resourceCulture);
             }
         }
         

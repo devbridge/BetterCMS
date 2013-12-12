@@ -14,6 +14,7 @@ using BetterCms.Module.Pages.Command.Page.DeletePage;
 using BetterCms.Module.Pages.Command.Page.GetPageForCloning;
 using BetterCms.Module.Pages.Command.Page.GetPageForDelete;
 using BetterCms.Module.Pages.Command.Page.GetPageProperties;
+using BetterCms.Module.Pages.Command.Page.GetPageTranslations;
 using BetterCms.Module.Pages.Command.Page.GetPagesList;
 using BetterCms.Module.Pages.Command.Page.SavePageProperties;
 using BetterCms.Module.Pages.Command.Page.SavePagePublishStatus;
@@ -312,6 +313,18 @@ namespace BetterCms.Module.Pages.Controllers
                 IsMasterPage = isMasterPage.ToBoolOrDefault()
             });
             return WireJson(model != null, model, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.Administration)]
+        public ActionResult PageTranslations(string pageId)
+        {
+            var model = GetCommand<GetPageTranslationsCommand>().ExecuteCommand(pageId.ToGuidOrDefault());
+            var success = model != null;
+            var view = RenderView("PageTranslations", model);
+           
+
+            return ComboWireJson(success, view, model, JsonRequestBehavior.AllowGet);
         }
     }
 }

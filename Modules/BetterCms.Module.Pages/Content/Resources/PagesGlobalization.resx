@@ -1182,4 +1182,16 @@
   <data name="Sidebar_TranslationsButtonTitle" xml:space="preserve">
     <value>Translations</value>
   </data>
+  <data name="EditPageTranslations_Dialog_Title" xml:space="preserve">
+    <value>Edit page translations</value>
+  </data>
+  <data name="PageTranslations_Culture_Title" xml:space="preserve">
+    <value>Culture</value>
+  </data>
+  <data name="PageTranslations_PageTitle_Title" xml:space="preserve">
+    <value>Page Title</value>
+  </data>
+  <data name="PageTranslations_Assign_ButtonTitle" xml:space="preserve">
+    <value>Assign</value>
+  </data>
 </root>

@@ -455,13 +455,6 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         };
 
         /**
-        * Opens modal window for managing current page translations
-        */
-        page.editPageTranslations = function() {
-            alert('// TODO: needs implementation');
-        };
-
-        /**
         * Initializes page module.
         */
         page.init = function () {
