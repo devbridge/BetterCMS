@@ -2,22 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
+
+using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.SiteSettings;
+
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
+using BetterCms.Module.Root.Services;
 
 using NHibernate;
 using NHibernate.Criterion;
-using NHibernate.SqlCommand;
 using NHibernate.Transform;
 
 namespace BetterCms.Module.Pages.Command.Page.GetPagesList
@@ -27,16 +30,15 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
     /// </summary>
     public class GetPagesListCommand : CommandBase, ICommand<PagesFilter, PagesGridViewModel<SiteSettingPageViewModel>>
     {
-        /// <summary>
-        /// The category service
-        /// </summary>
         private readonly ICategoryService categoryService;
 
-        private IAccessControlService accessControlService;
+        private readonly ICultureService cultureService;
 
-        private ISecurityService securityService;
+        private readonly IAccessControlService accessControlService;
 
-        private ICmsConfiguration configuration;
+        private readonly ISecurityService securityService;
+
+        private readonly ICmsConfiguration configuration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetPagesListCommand" /> class.
@@ -45,13 +47,15 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
         /// <param name="accessControlService">The access control service.</param>
         /// <param name="securityService">The security service.</param>
         /// <param name="configuration">The configuration.</param>
+        /// <param name="cultureService">The culture service.</param>
         public GetPagesListCommand(ICategoryService categoryService, IAccessControlService accessControlService, ISecurityService securityService,
-                                   ICmsConfiguration configuration)
+                                   ICmsConfiguration configuration, ICultureService cultureService)
         {
             this.configuration = configuration;
             this.securityService = securityService;
             this.accessControlService = accessControlService;
             this.categoryService = categoryService;
+            this.cultureService = cultureService;
         }
 
         private IEnumerable<Guid> GetDeniedPages(PagesFilter request)
@@ -118,6 +122,18 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
             {
                 query = query.Where(Restrictions.Eq(Projections.Property(() => alias.Category.Id), request.CategoryId.Value));
             }
+            
+            if (request.CultureId.HasValue)
+            {
+                if (request.CultureId.Value.HasDefaultValue())
+                {
+                    query = query.Where(Restrictions.IsNull(Projections.Property(() => alias.Culture.Id)));
+                }
+                else
+                {
+                    query = query.Where(Restrictions.Eq(Projections.Property(() => alias.Culture.Id), request.CultureId.Value));
+                }
+            }
 
             if (request.Tags != null)
             {
@@ -160,9 +176,24 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
 
             var count = query.ToRowCountFutureValue();
 
+            var categoriesFuture = categoryService.GetCategories();
+            IEnumerable<LookupKeyValue> culturesFuture = configuration.EnableMultilanguage ? cultureService.GetCultures() : null;
+
             var pages = query.AddSortingAndPaging(request).Future<SiteSettingPageViewModel>();
 
-            return new PagesGridViewModel<SiteSettingPageViewModel>(pages.ToList(), request, count.Value, categoryService.GetCategories());
+            var model = new PagesGridViewModel<SiteSettingPageViewModel>(
+                pages.ToList(), 
+                request, 
+                count.Value, 
+                categoriesFuture.ToList());
+
+            if (culturesFuture != null)
+            {
+                model.Cultures = culturesFuture.ToList();
+                model.Cultures.Insert(0, new LookupKeyValue(Guid.Empty.ToString(), PagesGlobalization.InvariantCulture_Title));
+            }
+
+            return model;
         }
     }
 }

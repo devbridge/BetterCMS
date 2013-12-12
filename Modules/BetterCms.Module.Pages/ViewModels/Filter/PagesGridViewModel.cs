@@ -11,7 +11,9 @@ namespace BetterCms.Module.Pages.ViewModels.Filter
     {
         public IEnumerable<LookupKeyValue> Tags { get; set; }
         public Guid? CategoryId { get; set; }
+        public Guid? CultureId { get; set; }
         public IEnumerable<LookupKeyValue> Categories { get; set; }
+        public IList<LookupKeyValue> Cultures { get; set; }
         public bool IncludeArchived { get; set; }
         public bool IncludeMasterPages { get; set; }
 
@@ -19,6 +21,7 @@ namespace BetterCms.Module.Pages.ViewModels.Filter
         {
             Tags = filter.Tags;
             CategoryId = filter.CategoryId;
+            CultureId = filter.CultureId;
             Categories = categories;
             IncludeArchived = filter.IncludeArchived;
             IncludeMasterPages = filter.IncludeMasterPages;

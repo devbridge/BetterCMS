@@ -3,6 +3,7 @@
 @using BetterCms.Module.Root.Mvc.Helpers
 
 @model BetterCms.Module.Pages.ViewModels.Filter.PagesGridViewModel<BetterCms.Module.Pages.ViewModels.SiteSettings.SiteSettingPageViewModel>
+
 <div id="bcms-filter-template">
     <div class="bcms-grid-filtering" data-bind="css: { 'bcms-active-filter': isVisible() }">
         <div class="bcms-filterbox" data-bind="click: toggleFilter">
@@ -35,6 +36,14 @@
                     <div class="bcms-filter-text">@PagesGlobalization.SiteSettings_Pages_FilterByCategory</div>
                     @Html.DropDownListFor(model => model.CategoryId, Model.Categories.ToSelectList(Model.CategoryId), string.Empty, new { id = "bcms-filter-category-selection", @class = "bcms-global-select" })
                 </div>
+                
+                @if (Model.Cultures != null && Model.Cultures.Any())
+                {
+                    <div class="bcms-filter-options">
+                        <div class="bcms-filter-text">@PagesGlobalization.SiteSettings_Pages_FilterByCulture</div>
+                        @Html.DropDownListFor(model => model.CultureId, Model.Cultures.ToSelectList(Model.CultureId), string.Empty, new { id = "bcms-filter-culture-selection", @class = "bcms-global-select" })
+                    </div>
+                }
 
             </div>
 

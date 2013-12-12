@@ -9,6 +9,7 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             selectors = {
                 filterTemplate: '#bcms-filter-template',
                 filterCategory: '#bcms-filter-category-selection',
+                filterCulture: '#bcms-filter-culture-selection',
             },
             links = {},
             globalization = {};
@@ -26,15 +27,32 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             self.tags = tagsViewModel;
             self.includeArchived = ko.observable(false);
             self.includeMasterPages = ko.observable(false);
-            self.dropDown = container.find(selectors.filterCategory).get(0);
-            var dropDownValue = 0;
-            if ($(self.dropDown).get(0) && $(self.dropDown).get(0).selectedIndex) {
-                dropDownValue = $(self.dropDown).get(0).selectedIndex;
+            
+            // Initialize categories drop down
+            self.categoryDropDown = container.find(selectors.filterCategory).get(0);
+            var categoryDropDownValue = 0;
+            if ($(self.categoryDropDown).get(0) && $(self.categoryDropDown).get(0).selectedIndex) {
+                categoryDropDownValue = $(self.categoryDropDown).get(0).selectedIndex;
             }
-            self.dropDownValue = ko.observable(dropDownValue);
-            $(self.dropDown).change(function () {
-                self.dropDownValue(this.selectedIndex);
+            self.categoryDropDownValue = ko.observable(categoryDropDownValue);
+            $(self.categoryDropDown).change(function () {
+                self.categoryDropDownValue(this.selectedIndex);
             });
+
+            // Initialize cultures drop down
+            self.cultureDropDown = container.find(selectors.filterCulture).get(0);
+            self.cultureDropDownValue = ko.observable(0);
+            if (self.cultureDropDown) {
+                var cultureDropDownValue = 0;
+                if ($(self.cultureDropDown).get(0) && $(self.cultureDropDown).get(0).selectedIndex) {
+                    cultureDropDownValue = $(self.cultureDropDown).get(0).selectedIndex;
+                }
+                self.cultureDropDownValue = ko.observable(cultureDropDownValue);
+                $(self.cultureDropDown).change(function() {
+                    self.cultureDropDownValue(this.selectedIndex);
+                });
+            }
+
             self.isEdited = ko.computed(function () {
                 if (self.includeArchived()) {
                     return true;
@@ -45,7 +63,10 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                 if (self.tags != null && self.tags.items() != null && self.tags.items().length > 0) {
                     return true;
                 }
-                if (self.dropDownValue() != 0) {
+                if (self.categoryDropDownValue() != 0) {
+                    return true;
+                }
+                if (self.cultureDropDownValue() != 0) {
                     return true;
                 }
                 return false;
@@ -67,9 +88,13 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                 self.tags.items([]);
                 self.includeArchived(false);
                 self.includeMasterPages(false);
-                self.dropDownValue(0);
-                if (self.dropDown) {
-                    self.dropDown.selectedIndex = 0;
+                self.categoryDropDownValue(0);
+                if (self.categoryDropDown) {
+                    self.categoryDropDown.selectedIndex = 0;
+                }
+                self.cultureDropDownValue(0);
+                if (self.cultureDropDown) {
+                    self.cultureDropDown.selectedIndex = 0;
                 }
                 self.searchWithFilter();
             };

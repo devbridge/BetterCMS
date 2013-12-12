@@ -2095,6 +2095,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ivariant culture.
+        /// </summary>
+        public static string InvariantCulture_Title {
+            get {
+                return ResourceManager.GetString("InvariantCulture_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This page is a master page..
         /// </summary>
         public static string MasterPage_InfoMessage {
@@ -2649,6 +2658,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string SiteSettings_Pages_FilterByCategory {
             get {
                 return ResourceManager.GetString("SiteSettings_Pages_FilterByCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By Culture.
+        /// </summary>
+        public static string SiteSettings_Pages_FilterByCulture {
+            get {
+                return ResourceManager.GetString("SiteSettings_Pages_FilterByCulture", resourceCulture);
             }
         }
         
