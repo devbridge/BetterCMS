@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Exceptions.Service;
@@ -13,6 +14,7 @@ using BetterCms.Core.Web;
 
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 
 using NHibernate.Linq;
@@ -223,6 +225,26 @@ namespace BetterCms.Module.Pages.Services
             }
             
             return metaData;
+        }
+
+        /// <summary>
+        /// Gets the main culture page id by given page id.
+        /// </summary>
+        /// <param name="pageId">The page id.</param>
+        /// <returns>
+        /// Main culture page id
+        /// </returns>
+        public Guid GetMainCulturePageId(Guid pageId)
+        {
+            var mainPage = repository
+                .AsQueryable<Root.Models.Page>()
+                .Where(p => p.Id == pageId)
+                .Select(p => new { MainCulturePageId = p.MainCulturePage != null ? p.MainCulturePage.Id : (Guid?)null })
+                .FirstOne();
+
+            return mainPage.MainCulturePageId.HasValue && !mainPage.MainCulturePageId.Value.HasDefaultValue() 
+                ? mainPage.MainCulturePageId.Value 
+                : pageId;
         }
     }
 }

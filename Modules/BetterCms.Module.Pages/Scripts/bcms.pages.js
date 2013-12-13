@@ -64,10 +64,12 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 deletePageConfirmationUrl: null,
                 changePublishStatusUrl: null,
                 clonePageDialogUrl: null,
+                clonePageWithCultureDialogUrl: null,
                 convertStringToSlugUrl: null,
                 loadEditTranslationsDialogUrl: null,
                 loadSelectPageUrl: null,
-                assignPageToMainCulturePageUrl: null
+                assignPageToMainCulturePageUrl: null,
+                unassignMainCulturePageUrl: null
             },
             globalization = {
                 editPagePropertiesModalTitle: null,
@@ -77,6 +79,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 pageDeletedTitle: null,
                 pageDeletedMessage: null,
                 clonePageDialogTitle: null,
+                clonePageWithCultureDialogTitle: null,
                 cloneButtonTitle: null,
                 deleteButtonTitle: null,
                 pageStatusChangeConfirmationMessagePublish: null,
@@ -85,7 +88,8 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 selectPageDialogTitle: null,
                 selectPageSelectButtonTitle: null,
                 pageNotSelectedMessage: null,
-                close: null
+                close: null,
+                unassignMainCulturePageConfirmation: null
             },
             keys = {
                 addNewPageInfoMessageClosed: 'bcms.addNewPageInfoBoxClosed'
@@ -643,17 +647,13 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             });
         };
 
-        /**
-        * Opens dialog for clone the page
-        */
-        page.clonePage = function () {
+        function clonePage(url, title) {
             var permalinkValue;
 
             modal.open({
-                title: globalization.clonePageDialogTitle,
+                title: title,
                 acceptTitle: globalization.cloneButtonTitle,
                 onLoad: function (dialog) {
-                    var url = $.format(links.clonePageDialogUrl, bcms.pageId);
                     dynamicContent.bindDialog(dialog, url, {
                         contentAvailable: function (childDialog, content) {
                             page.initializePermalinkBox(dialog, false, links.convertStringToSlugUrl, selectors.addNewPageTitleInput, true);
@@ -696,6 +696,26 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                     });
                 }
             });
+        }
+
+        /**
+        * Opens dialog for clone the page
+        */
+        page.clonePage = function () {
+            var url = $.format(links.clonePageDialogUrl, bcms.pageId),
+                title = globalization.clonePageDialogTitle;
+
+            clonePage(url, title);
+        };
+
+        /**
+        * Opens dialog for cloning the page to different cultre
+        */
+        page.translatePage = function (cultureId) {
+            var url = $.format(links.clonePageWithCultureDialogUrl, bcms.pageId, cultureId),
+                title = globalization.clonePageWithCultureDialogTitle;
+
+            clonePage(url, title);
         };
 
         /**
@@ -797,6 +817,12 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             self.cultureName = ko.observable(culture.Value);
             self.cultureId = ko.observable(culture.Key);
 
+            function removeAssignment() {
+                self.id('');
+                self.title('');
+                self.url('');
+            }
+
             self.isPageCreated = ko.computed(function () {
                 return self.id();
             });
@@ -809,15 +835,13 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                             message: globalization.pageDeletedMessage
                         });
                     } else {
-                        self.id('');
-                        self.title('');
-                        self.url('');
+                        removeAssignment();
                     }
                 });
             };
 
             self.createPage = function () {
-                alert('// TODO: need implementation');
+                page.translatePage(self.cultureId());
             };
 
             self.editPage = function () {
@@ -861,6 +885,34 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                         },
                         params: 'CultureId=' + self.cultureId()
                     }, gridOptions);
+            };
+
+            self.unassignPage = function () {
+                var onComplete = function (json) {
+                    if (json.Messages && json.Messages.length > 0) {
+                        modal.showMessages(json);
+                    }
+                    if (json.Success) {
+                        removeAssignment();
+                    }
+                };
+
+                modal.confirm({
+                    content: globalization.unassignMainCulturePageConfirmation,
+                    onAccept: function () {
+                        $.ajax({
+                            type: 'POST',
+                            url: $.format(links.unassignMainCulturePageUrl, self.id()),
+                        })
+                            .done(function (result) {
+                                onComplete(result);
+                            })
+                            .fail(function (response) {
+                                onComplete(bcms.parseFailedResponse(response));
+                            });
+                        return true;
+                    }
+                });
             };
 
             return self;

@@ -29,6 +29,9 @@
                     <a class="bcms-icn-delete" data-bind="click: assignPage">@PagesGlobalization.PageTranslations_Assign_ButtonTitle</a>
                     <a class="bcms-icn-delete" data-bind="click: createPage">@RootGlobalization.Button_Create</a>
                     <!-- /ko -->
+                    <!-- ko if: isPageCreated() && mainPageId() -->
+                    <a class="bcms-icn-delete" data-bind="click: unassignPage">@PagesGlobalization.PageTranslations_Unassign_ButtonTitle</a>
+                    <!-- /ko -->
                     <!-- ko if: isPageCreated() -->
                     <a class="bcms-icn-delete" data-bind="click: deletePage">@RootGlobalization.Button_Delete</a>
                     <!-- /ko -->

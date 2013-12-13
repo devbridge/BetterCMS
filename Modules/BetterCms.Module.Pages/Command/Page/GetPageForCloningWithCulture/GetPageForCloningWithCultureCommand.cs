@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
@@ -13,9 +12,9 @@ using BetterCms.Module.Root.ViewModels.Security;
 
 using NHibernate.Linq;
 
-namespace BetterCms.Module.Pages.Command.Page.GetPageForCloning
-{   
-    public class GetPageForCloningCommand : CommandBase, ICommand<Guid, ClonePageViewModel>
+namespace BetterCms.Module.Pages.Command.Page.GetPageForCloningWithCulture
+{
+    public class GetPageForCloningWithCultureCommand : CommandBase, ICommand<GetPageForCloningWithCultureCommandRequest, ClonePageWithCultureViewModel>
     {
         /// <summary>
         /// The CMS configuration
@@ -23,10 +22,10 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageForCloning
         private readonly ICmsConfiguration cmsConfiguration;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetPageForCloningCommand" /> class.
+        /// Initializes a new instance of the <see cref="GetPageForCloningWithCultureCommand" /> class.
         /// </summary>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
-        public GetPageForCloningCommand(ICmsConfiguration cmsConfiguration)
+        public GetPageForCloningWithCultureCommand(ICmsConfiguration cmsConfiguration)
         {
             this.cmsConfiguration = cmsConfiguration;
         }
@@ -36,26 +35,34 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageForCloning
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public ClonePageViewModel Execute(Guid request)
+        public ClonePageWithCultureViewModel Execute(GetPageForCloningWithCultureCommandRequest request)
         {
-            var pageQuery = Repository
+            var pageFutureQuery = Repository
                 .AsQueryable<PageProperties>()
-                .Where(p => p.Id == request && !p.IsDeleted)
-                .Select(p => new ClonePageViewModel
+                .Where(p => p.Id == request.PageId && !p.IsDeleted)
+                .Select(p => new ClonePageWithCultureViewModel
                         {
                             PageId = p.Id,
                             IsMasterPage = p.IsMasterPage
                         })
                 .ToFuture();
 
-            ClonePageViewModel model;
+            var cultureFutureQuery = Repository
+                .AsQueryable<Root.Models.Culture>()
+                .Where(c => c.Id == request.CultureId)
+                .Select(c => new
+                        {
+                            Name = c.Name
+                        })
+                .ToFuture();
+
+            ClonePageWithCultureViewModel model;
             IList<UserAccessViewModel> accessRules;
             if (cmsConfiguration.Security.AccessControlEnabled)
             {
                 accessRules = Repository
                     .AsQueryable<Root.Models.Page>()
-                    .Where(x => x.Id == request && !x.IsDeleted)
+                    .Where(x => x.Id == request.PageId && !x.IsDeleted)
                     .SelectMany(x => x.AccessRules)
                     .OrderBy(x => x.Identity)
                     .ToFuture()
@@ -68,9 +75,11 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageForCloning
                 accessRules = null;
             }
 
-            model = pageQuery.FirstOne();
+            model = pageFutureQuery.FirstOne();
+            model.CultureName = cultureFutureQuery.FirstOne().Name;
             model.AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled;
             model.UserAccessList = accessRules;
+            model.CultureId = request.CultureId;
 
             if (model.IsMasterPage)
             {

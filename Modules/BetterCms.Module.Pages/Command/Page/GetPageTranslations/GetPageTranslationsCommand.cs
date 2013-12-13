@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Linq;
 
-using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
+
+using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
@@ -15,9 +16,12 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageTranslations
     {
         private readonly ICultureService cultureService;
 
-        public GetPageTranslationsCommand(ICultureService cultureService)
+        private readonly IPageService pageService;
+
+        public GetPageTranslationsCommand(ICultureService cultureService, IPageService pageService)
         {
             this.cultureService = cultureService;
+            this.pageService = pageService;
         }
 
         public GetPageTranslationsCommandResponse Execute(Guid request)
@@ -25,14 +29,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageTranslations
             var response = new GetPageTranslationsCommandResponse();
             var culturesFuture = cultureService.GetCultures();
 
-            // Get main page
-            var mainPage = Repository
-                .AsQueryable<Root.Models.Page>()
-                .Where(p => p.Id == request)
-                .Select(p => new { MainCulturePageId = p.MainCulturePage != null ? p.MainCulturePage.Id : (Guid?)null })
-                .FirstOne();
-            var isTranslation = mainPage.MainCulturePageId.HasValue && !mainPage.MainCulturePageId.Value.HasDefaultValue();
-            var mainPageCultureId = isTranslation ? mainPage.MainCulturePageId.Value : request;
+            var mainPageCultureId = pageService.GetMainCulturePageId(request);
             var mainPageProxy = Repository.AsProxy<Root.Models.Page>(mainPageCultureId);
 
             response.Translations = Repository

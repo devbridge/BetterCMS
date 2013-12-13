@@ -23,5 +23,12 @@ namespace BetterCms.Module.Pages.Services
         /// Created permalink
         /// </returns>
         string CreatePagePermalink(string url, string parentPageUrl);
+
+        /// <summary>
+        /// Gets the main culture page id by given page id.
+        /// </summary>
+        /// <param name="pageId">The page id.</param>
+        /// <returns>Main culture page id</returns>
+        Guid GetMainCulturePageId(Guid pageId);
     }
 }

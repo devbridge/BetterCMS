@@ -1209,4 +1209,19 @@
   <data name="SelectPage_PageIsNotSelected_Message" xml:space="preserve">
     <value>Please select a page.</value>
   </data>
+  <data name="PageTranslations_Unassign_ButtonTitle" xml:space="preserve">
+    <value>Unassign</value>
+  </data>
+  <data name="EditPageTranslations_UnassignPage_ConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to unassign this translation from main culture page?</value>
+  </data>
+  <data name="ClonePageWithCulture_Dialog_ConfirmationMessage_Header" xml:space="preserve">
+    <value>Are you sure you want to clone this page?</value>
+  </data>
+  <data name="ClonePageWithCulture_Dialog_ConfirmationMessage_Text" xml:space="preserve">
+    <value>You are going to copy all content and properties from the current page and page will be created in different culture ({0}).</value>
+  </data>
+  <data name="ClonePageWithCulture_Dialog_Title" xml:space="preserve">
+    <value>Translate page</value>
+  </data>
 </root>

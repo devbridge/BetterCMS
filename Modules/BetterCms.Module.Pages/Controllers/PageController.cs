@@ -10,15 +10,18 @@ using BetterCms.Module.Pages.Command.Layout.GetLayoutOptions;
 using BetterCms.Module.Pages.Command.Page.AddNewPage;
 using BetterCms.Module.Pages.Command.Page.AssignMainCulturePage;
 using BetterCms.Module.Pages.Command.Page.ClonePage;
+using BetterCms.Module.Pages.Command.Page.ClonePageWithCulture;
 using BetterCms.Module.Pages.Command.Page.CreatePage;
 using BetterCms.Module.Pages.Command.Page.DeletePage;
 using BetterCms.Module.Pages.Command.Page.GetPageForCloning;
+using BetterCms.Module.Pages.Command.Page.GetPageForCloningWithCulture;
 using BetterCms.Module.Pages.Command.Page.GetPageForDelete;
 using BetterCms.Module.Pages.Command.Page.GetPageProperties;
 using BetterCms.Module.Pages.Command.Page.GetPageTranslations;
 using BetterCms.Module.Pages.Command.Page.GetPagesList;
 using BetterCms.Module.Pages.Command.Page.SavePageProperties;
 using BetterCms.Module.Pages.Command.Page.SavePagePublishStatus;
+using BetterCms.Module.Pages.Command.Page.UnassignMainCulturePage;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Filter;
@@ -260,6 +263,29 @@ namespace BetterCms.Module.Pages.Controllers
         }
 
         /// <summary>
+        /// Clones the page with culture id.
+        /// </summary>
+        /// <param name="pageId">The page id.</param>
+        /// <param name="cultureId">The culture id.</param>
+        /// <returns>
+        /// Json result status.
+        /// </returns>
+        [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
+        public ActionResult ClonePageWithCulture(string pageId, string cultureId)
+        {
+            var request = new GetPageForCloningWithCultureCommandRequest
+                              {
+                                  PageId = pageId.ToGuidOrDefault(),
+                                  CultureId = cultureId.ToGuidOrDefault()
+                              };
+            var model = GetCommand<GetPageForCloningWithCultureCommand>().ExecuteCommand(request);
+            var view = RenderView("ClonePageWithCulture", model ?? new ClonePageWithCultureViewModel());
+
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
         /// Clones the page.
         /// </summary>
         /// <param name="model">The model.</param>
@@ -271,6 +297,27 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult ClonePage(ClonePageViewModel model)
         {
             model = GetCommand<ClonePageCommand>().ExecuteCommand(model);
+            if (model != null)
+            {
+                Messages.AddSuccess(string.Format(PagesGlobalization.ClonePage_Dialog_Success, model.PageUrl));
+                return Json(new WireJson { Success = true, Data = model });
+            }
+
+            return Json(new WireJson { Success = false });
+        }
+        
+        /// <summary>
+        /// Clones the page with culture.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>
+        /// Json result status.
+        /// </returns>
+        [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
+        public ActionResult ClonePageWithCulture(ClonePageWithCultureViewModel model)
+        {
+            model = GetCommand<ClonePageWithCultureCommand>().ExecuteCommand(model);
             if (model != null)
             {
                 Messages.AddSuccess(string.Format(PagesGlobalization.ClonePage_Dialog_Success, model.PageUrl));
@@ -381,6 +428,22 @@ namespace BetterCms.Module.Pages.Controllers
             });
 
             return WireJson(model != null, model, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Unassigns the main culture page for specified page id.
+        /// </summary>
+        /// <param name="pageId">The page id.</param>
+        /// <returns>
+        /// JSON result
+        /// </returns>
+        [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.Administration)]
+        public ActionResult UnassignMainCulturePage(string pageId)
+        {
+            var success = GetCommand<UnassignMainCulturePageCommand>().ExecuteCommand(pageId.ToGuidOrDefault());
+
+            return WireJson(success, null, JsonRequestBehavior.AllowGet);
         }
     }
 }

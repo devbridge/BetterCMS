@@ -592,6 +592,33 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to clone this page?.
+        /// </summary>
+        public static string ClonePageWithCulture_Dialog_ConfirmationMessage_Header {
+            get {
+                return ResourceManager.GetString("ClonePageWithCulture_Dialog_ConfirmationMessage_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are going to copy all content and properties from the current page and page will be created in different culture ({0})..
+        /// </summary>
+        public static string ClonePageWithCulture_Dialog_ConfirmationMessage_Text {
+            get {
+                return ResourceManager.GetString("ClonePageWithCulture_Dialog_ConfirmationMessage_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Translate page.
+        /// </summary>
+        public static string ClonePageWithCulture_Dialog_Title {
+            get {
+                return ResourceManager.GetString("ClonePageWithCulture_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Archived On.
         /// </summary>
         public static string ContentHistory_Column_ArchivedOn {
@@ -1654,6 +1681,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to unassign this translation from main culture page?.
+        /// </summary>
+        public static string EditPageTranslations_UnassignPage_ConfirmationMessage {
+            get {
+                return ResourceManager.GetString("EditPageTranslations_UnassignPage_ConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Seo.
         /// </summary>
         public static string EditSeo_Dialog_Title {
@@ -2244,6 +2280,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string PageTranslations_PageTitle_Title {
             get {
                 return ResourceManager.GetString("PageTranslations_PageTitle_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unassign.
+        /// </summary>
+        public static string PageTranslations_Unassign_ButtonTitle {
+            get {
+                return ResourceManager.GetString("PageTranslations_Unassign_ButtonTitle", resourceCulture);
             }
         }
         

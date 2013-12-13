@@ -131,6 +131,10 @@
     <Compile Include="Command\Page\AssignMainCulturePage\AssignMainCulturePageCommand.cs" />
     <Compile Include="Command\Page\AssignMainCulturePage\AssignMainCulturePageCommandRequest.cs" />
     <Compile Include="Command\Page\AssignMainCulturePage\AssignMainCulturePageCommandResponse.cs" />
+    <Compile Include="Command\Page\ClonePageWithCulture\ClonePageWithCultureCommand.cs" />
+    <Compile Include="Command\Page\GetPageForCloningWithCulture\GetPageForCloningWithCultureCommandRequest.cs" />
+    <Compile Include="Command\Page\GetPageForCloningWithCulture\GetPageForCloningWithCultureCommand.cs" />
+    <Compile Include="Command\Page\UnassignMainCulturePage\UnassignMainCulturePageCommand.cs" />
     <Compile Include="Command\Page\GetPageTranslations\GetPageTranslationsCommand.cs" />
     <Compile Include="Command\Page\GetPageTranslations\GetPageTranslationsCommandResponse.cs" />
     <Compile Include="Command\Widget\PreviewWidget\PreviewWidgetCommand.cs" />
@@ -274,6 +278,7 @@
     <Compile Include="Services\DefaultHistoryService.cs" />
     <Compile Include="Services\DefaultLayoutService.cs" />
     <Compile Include="Services\DefaultMasterPageService.cs" />
+    <Compile Include="Services\DefaultPageCloneService.cs" />
     <Compile Include="Services\DefaultPreviewService.cs" />
     <Compile Include="Services\DefaultSitemapService.cs" />
     <Compile Include="Services\DefaultTagService.cs" />
@@ -281,6 +286,7 @@
     <Compile Include="Services\IHistoryService.cs" />
     <Compile Include="Services\ILayoutService.cs" />
     <Compile Include="Services\IMasterPageService.cs" />
+    <Compile Include="Services\IPageCloneService.cs" />
     <Compile Include="Services\IPageService.cs" />
     <Compile Include="Services\IPreviewService.cs" />
     <Compile Include="Services\ISitemapService.cs" />
@@ -299,6 +305,7 @@
     <Compile Include="ViewModels\Filter\PagesFilter.cs" />
     <Compile Include="ViewModels\History\ContentHistoryItem.cs" />
     <Compile Include="ViewModels\History\ContentHistoryViewModel.cs" />
+    <Compile Include="ViewModels\Page\ClonePageWithCultureViewModel.cs" />
     <Compile Include="ViewModels\Page\PageTranslationViewModel.cs" />
     <Compile Include="ViewModels\Page\RenderPageCategoryViewModel.cs" />
     <Compile Include="ViewModels\Page\RenderPageImageViewModel.cs" />
@@ -435,9 +442,6 @@
     <EmbeddedResource Include="Views\Page\AddNewPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\ClonePage.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Page\DeletePageConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -540,10 +544,16 @@
     <EmbeddedResource Include="Views\Shared\Partial\InfoMessageAboutMasterPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\PageTranslations.cshtml" />
+    <EmbeddedResource Include="Views\Page\SelectPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\SelectPage.cshtml" />
+    <EmbeddedResource Include="Views\Page\ClonePage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\ClonePageWithCulture.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\PageTranslations.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

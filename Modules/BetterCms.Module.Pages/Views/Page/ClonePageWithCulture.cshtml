@@ -2,20 +2,21 @@
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Page
 @using BetterCms.Module.Root
-@using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
 
-@model ClonePageViewModel
+@model ClonePageWithCultureViewModel
+
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
     <div class="bcms-padded-content">
-        @using (Html.BeginForm<PageController>(f => f.ClonePage((ClonePageViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
+        @using (Html.BeginForm<PageController>(f => f.ClonePageWithCulture(null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
         {
             <div class="bcms-input-list-holder">
-                <div class="bcms-content-titles">@PagesGlobalization.ClonePage_Dialog_ConfirmationMessage_Header</div>
-                <div>@PagesGlobalization.ClonePage_Dialog_ConfirmationMessage_Text</div>
+                <div class="bcms-content-titles">@PagesGlobalization.ClonePageWithCulture_Dialog_ConfirmationMessage_Header</div>
+                <div>@string.Format(PagesGlobalization.ClonePageWithCulture_Dialog_ConfirmationMessage_Text, Model.CultureName)</div>
             </div>
+            
             <div class="bcms-input-list-holder">
                 @Html.Tooltip(PagesGlobalization.ClonePage_Dialog_PageTitle_Tooltip_Description)
                 <div class="bcms-content-titles">@PagesGlobalization.ClonePage_Dialog_PageTitle</div>
@@ -27,24 +28,13 @@
             
             @Html.Partial("Partial/ClonePageEditUrl")
 
-            if (!Model.IsMasterPage && (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.Administration))
-            {
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.ClonePage_Dialog_AsMasterPage_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.ClonePage_Dialog_AsMasterPage_Title</div>
-                    <div class="bcms-checkbox-holder">
-                        @Html.CheckBoxFor(model => model.CloneAsMasterPage)
-                        <div class="bcms-edit-label">@PagesGlobalization.ClonePage_Dialog_AsMasterPage</div>
-                    </div>
-                </div>
-            }
-            
             if (Model.AccessControlEnabled)
             {
                 @Html.Partial(RootModuleConstants.AccessControlTemplate)
             }
             
             @Html.HiddenFor(m => m.PageId)
+            @Html.HiddenFor(m => m.CultureId)
             @Html.HiddenSubmit()
         }
     </div>

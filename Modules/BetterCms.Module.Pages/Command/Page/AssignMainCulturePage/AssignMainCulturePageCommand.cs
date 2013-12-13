@@ -1,26 +1,25 @@
-﻿using System.Linq;
-
-using BetterCms.Core.DataAccess.DataContext;
+﻿using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
+
+using BetterCms.Module.Pages.Services;
+
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.Pages.Command.Page.AssignMainCulturePage
 {
     public class AssignMainCulturePageCommand : CommandBase, ICommand<AssignMainCulturePageCommandRequest, AssignMainCulturePageCommandResponse>
     {
+        private readonly IPageService pageService;
+
+        public AssignMainCulturePageCommand(IPageService pageService)
+        {
+            this.pageService = pageService;
+        }
+
         public AssignMainCulturePageCommandResponse Execute(AssignMainCulturePageCommandRequest request)
         {
-            // Get main page
-            var mainPage = Repository
-                .AsQueryable<Root.Models.Page>()
-                .Where(p => p.Id == request.MainCulturePageId)
-                .Select(p => new { MainCulturePageId = p.MainCulturePage != null ? p.MainCulturePage.Id : (System.Guid?)null })
-                .FirstOne();
-            var mainPageCultureId = mainPage.MainCulturePageId.HasValue && !mainPage.MainCulturePageId.Value.HasDefaultValue()
-                                        ? mainPage.MainCulturePageId.Value
-                                        : request.MainCulturePageId;
-
+            var mainPageCultureId = pageService.GetMainCulturePageId(request.MainCulturePageId);
             var page = Repository.AsQueryable<Root.Models.Page>(p => p.Id == request.PageId).FirstOne();
 
             ValidatePage(page, request);
