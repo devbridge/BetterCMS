@@ -1224,4 +1224,28 @@
   <data name="ClonePageWithCulture_Dialog_Title" xml:space="preserve">
     <value>Translate page</value>
   </data>
+  <data name="EditPageProperties_BasicPropertiesTab_MainCulturePage" xml:space="preserve">
+    <value>Main culture page (parent page with invariant culture)</value>
+  </data>
+  <data name="EditPageProperties_BasicPropertiesTab_MainCulturePage_Tooltip_Description" xml:space="preserve">
+    <value>Change current page's parent page with invariant culture, which is going to be displayed when page language is not specified</value>
+  </data>
+  <data name="EditPageProperties_BasicPropertiesTab_ChangeMainCulturePage_ButtonTitle" xml:space="preserve">
+    <value>Assign ...</value>
+  </data>
+  <data name="EditPageProperties_BasicPropertiesTab_ClearMainCulturePage_ButtonTitle" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="AddNewPage_ChangeMainCulturePage_ButtonTitle" xml:space="preserve">
+    <value>Choose ...</value>
+  </data>
+  <data name="AddNewPage_ClearMainCulturePage_ButtonTitle" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="AddNewPage_MainCulturePage" xml:space="preserve">
+    <value>Main culture page (parent page with invariant culture)</value>
+  </data>
+  <data name="AddNewPage_MainCulturePage_Tooltip_Description" xml:space="preserve">
+    <value>Choose current page's parent page with invariant culture, which is going to be displayed when page language is not specified.</value>
+  </data>
 </root>

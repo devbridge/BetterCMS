@@ -169,8 +169,7 @@ namespace BetterCms.Module.Pages.Controllers
             var success = model != null;
 
             var view = RenderView("EditPageProperties", model);
-            var json = new
-                           {
+            var json = new {
                                Tags = success ? model.Tags : null,
                                Image = success ? model.Image : new ImageSelectorViewModel(),
                                SecondaryImage = success ? model.SecondaryImage : new ImageSelectorViewModel(),
@@ -178,7 +177,12 @@ namespace BetterCms.Module.Pages.Controllers
                                OptionValues = success ? model.OptionValues : null,
                                CustomOptions = success ? model.CustomOptions : null,
                                UserAccessList = success ? model.UserAccessList : new List<UserAccessViewModel>(),
-                               IsMasterPage = success && model.IsMasterPage
+                               IsMasterPage = success && model.IsMasterPage,
+                               Cultures = success ? model.Cultures : null,
+                               CultureId = success ? model.CultureId : null,
+                               MainCulturePageId = success ? model.MainCulturePageId : null,
+                               MainCulturePageTitle = success ? model.MainCulturePageTitle : null,
+                               MainCulturePageUrl = success ? model.MainCulturePageUrl : null,
                            };
 
             return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);

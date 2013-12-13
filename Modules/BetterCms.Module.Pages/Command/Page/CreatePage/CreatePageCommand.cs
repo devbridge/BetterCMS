@@ -127,9 +127,16 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
                 page.Layout = Repository.AsProxy<Root.Models.Layout>(request.TemplateId.Value);
             }
 
-            if (cmsConfiguration.EnableMultilanguage && request.CultureId.HasValue && !request.CultureId.Value.HasDefaultValue())
+            if (cmsConfiguration.EnableMultilanguage)
             {
-                page.Culture = Repository.AsProxy<Culture>(request.CultureId.Value);
+                if (request.CultureId.HasValue && !request.CultureId.Value.HasDefaultValue())
+                {
+                    page.Culture = Repository.AsProxy<Culture>(request.CultureId.Value);
+                }
+                if (request.MainCulturePageId.HasValue)
+                {
+                    page.MainCulturePage = Repository.AsProxy<Root.Models.Page>(request.MainCulturePageId.Value);
+                }
             }
 
             optionService.SaveOptionValues(request.OptionValues, null, () => new PageOption { Page = page });

@@ -35,6 +35,9 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
         keys = {
             loggerLevel: 'bcms.loggerLevel',
         },
+        constants = {
+            emptyGuid: '00000000-0000-0000-0000-000000000000'
+        },
         errorTrace = !!true;
 
     /**
@@ -46,6 +49,11 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
     * Exposes reference to globalization:
     */
     app.globalization = globalization;
+
+    /**
+    * Exposes reference to constants:
+    */
+    app.constants = constants;
 
     /**
     * Current page id.
@@ -62,8 +70,6 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
     */
     app.contentStatus = contentStatus;
 
-    /**
-    */
     app.previewWindow = '__bcmsPreview';
 
     /**
@@ -344,7 +350,7 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
     * Helper method, tests, if given Guid is empty guid
     */
     app.isEmptyGuid = function (guid) {
-        return guid === '00000000-0000-0000-0000-000000000000' || guid === '00000000000000000000000000000000';
+        return guid === constants.emptyGuid || guid === '00000000000000000000000000000000';
     };
 
     /**

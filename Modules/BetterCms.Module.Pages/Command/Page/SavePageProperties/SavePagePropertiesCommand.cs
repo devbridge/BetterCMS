@@ -277,6 +277,15 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                     {
                         page.Culture = null;
                     }
+                    
+                    if (request.MainCulturePageId.HasValue)
+                    {
+                        page.MainCulturePage = Repository.First<Root.Models.Page>(request.MainCulturePageId.Value);
+                    }
+                    else
+                    {
+                        page.MainCulturePage = null;
+                    }
                 }
             }
 

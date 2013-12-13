@@ -6,7 +6,9 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
     function ($, bcms, modal, forms, dynamicContent, tags, ko, media, redirect, options, security, messages, codeEditor) {
         'use strict';
 
-        var page = {},
+        var page = {
+                openPageSelectDialog: null
+            },
             selectors = {
                 editPagePropertiesCloseInfoMessageBox: '.bcms-info-message-box',
 
@@ -64,7 +66,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         /**
         * Page view model
         */
-        function PageViewModel(image, secondaryImage, featuredImage, tagsViewModel, optionListViewModel, accessControlViewModel) {
+        function PageViewModel(image, secondaryImage, featuredImage, tagsViewModel, optionListViewModel, accessControlViewModel, pageCultureViewModel) {
             var self = this;
 
             self.tags = tagsViewModel;
@@ -73,7 +75,51 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             self.secondaryImage = ko.observable(new media.ImageSelectorViewModel(secondaryImage));
             self.featuredImage = ko.observable(new media.ImageSelectorViewModel(featuredImage));
             self.accessControl = accessControlViewModel;
+            self.culture = pageCultureViewModel;
         }
+
+        /**
+        * Page culture view model
+        */
+        page.PageCultureViewModel = function(data) {
+            var self = this,
+                i, l;
+
+            self.mainCulturePageId = ko.observable(data.MainCulturePageId);
+            self.mainCulturePageTitle = ko.observable(data.MainCulturePageTitle);
+            self.mainCulturePageUrl = ko.observable(data.MainCulturePageUrl);
+            self.cultureId = ko.observable(data.CultureId);
+
+            self.cultures = [];
+            self.cultures.push({ key: '', value: '' });
+            for (i = 0, l = data.Cultures.length; i < l; i++) {
+                self.cultures.push({
+                    key: data.Cultures[i].Key.toLowerCase(),
+                    value: data.Cultures[i].Value
+                });
+            }
+
+            self.change = function () {
+                page.openPageSelectDialog({
+                    onAccept: function (selectedPage) {
+                        self.mainCulturePageId(selectedPage.id);
+                        self.mainCulturePageTitle(selectedPage.title);
+                        self.mainCulturePageUrl(selectedPage.url);
+
+                        return true;
+                    },
+                    params: 'CultureId=' + bcms.constants.emptyGuid
+                });
+            };
+            
+            self.clear = function () {
+                self.mainCulturePageId('');
+                self.mainCulturePageTitle('');
+                self.mainCulturePageUrl('');
+            };
+
+            return self;
+        };
 
         /**
         * Initializes EditPageProperties dialog events.
@@ -83,7 +129,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 optionListViewModel = options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues, content.Data.CustomOptions),
                 tagsViewModel = new tags.TagsListViewModel(content.Data.Tags),
                 accessControlViewModel = security.createUserAccessViewModel(content.Data.UserAccessList),
-                pageViewModel = new PageViewModel(content.Data.Image, content.Data.SecondaryImage, content.Data.FeaturedImage, tagsViewModel, optionListViewModel, accessControlViewModel),
+                pageCultureViewModel = content.Data.Cultures ? new page.PageCultureViewModel(content.Data) : null,
+                pageViewModel = new PageViewModel(content.Data.Image, content.Data.SecondaryImage, content.Data.FeaturedImage, tagsViewModel, optionListViewModel, accessControlViewModel, pageCultureViewModel),
                 form = dialog.container.find(selectors.pagePropertiesForm);
 
             ko.applyBindings(pageViewModel, form.get(0));

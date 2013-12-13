@@ -159,8 +159,10 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         page.initAddNewPageDialogEvents = function (dialog, content) {
             var infoMessageClosed = localStorage.getItem(keys.addNewPageInfoMessageClosed),
                 optionsContainer = dialog.container.find(selectors.addNewPageOptionsTab),
+                cultureViewModel = content.Data.Cultures ? new pageProperties.PageCultureViewModel(content.Data) : null,
                 viewModel = {
                     accessControl: security.createUserAccessViewModel(content.Data.UserAccessList),
+                    culture: cultureViewModel,
                     options: options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues, content.Data.CustomOptions)
                 };
 
@@ -852,19 +854,16 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             };
 
             self.assignPage = function() {
-                var gridOptions = {
-                    filterByCulture: self.cultureId()
-                },
-                    selectDialog = page.openPageSelectDialog({
-                        onAccept: function(id) {
-                            var url = $.format(links.assignPageToMainCulturePageUrl, id, self.mainPageId() || bcms.pageId, self.cultureId()),
+                var selectDialog = page.openPageSelectDialog({
+                        onAccept: function(selectedPage) {
+                            var url = $.format(links.assignPageToMainCulturePageUrl, selectedPage.id, self.mainPageId() || bcms.pageId, self.cultureId()),
                                 onComplete = function(json) {
                                     messages.refreshBox(selectDialog.container, json);
                                     if (json.Success) {
                                         self.title(json.Data.Title);
                                         self.url(json.Data.PageUrl);
                                         self.mainPageId(json.Data.MainCulturePageId);
-                                        self.id(id);
+                                        self.id(selectedPage.id);
 
                                         selectDialog.close();
                                     }
@@ -884,7 +883,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                             return false;
                         },
                         params: 'CultureId=' + self.cultureId()
-                    }, gridOptions);
+                    });
             };
 
             self.unassignPage = function () {
@@ -995,7 +994,8 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 onAcceptClick: function () {
                     var result = true,
                         selectedItem = selectDialog.container.find(selectors.siteSettingsPagesTableActiveRow),
-                        id = selectedItem.find(selectors.siteSettingsPageEditButton).data('id');
+                        id = selectedItem.find(selectors.siteSettingsPageEditButton).data('id'),
+                        titleLink = selectedItem.find(selectors.siteSettingPageTitleCell);
 
                     if (selectedItem.length == 0) {
                         modal.info({
@@ -1006,7 +1006,11 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                         result = false;
                     } else {
                         if ($.isFunction(opts.onAccept)) {
-                            result = opts.onAccept(id);
+                            result = opts.onAccept({
+                                id: id,
+                                title: titleLink.html(),
+                                url: titleLink.data('url')
+                            });
                         }
                     }
 
@@ -1024,6 +1028,9 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             bcms.logger.debug('Initializing bcms.pages module.');
 
             initializeCustomValidation();
+
+            // Pass method to page properties (it can be reached directly because of circular references)
+            pageProperties.openPageSelectDialog = page.openPageSelectDialog;
         };
 
         /**

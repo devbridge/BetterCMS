@@ -120,6 +120,9 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                               MasterPageId = page.MasterPage.Id,
                               CategoryId = page.Category.Id,
                               CultureId = page.Culture.Id,
+                              MainCulturePageId = page.MainCulturePage.Id,
+                              MainCulturePageTitle = page.MainCulturePage.Title,
+                              MainCulturePageUrl = page.MainCulturePage.PageUrl,
                               AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled,
                               Image = page.Image == null || page.Image.IsDeleted ? null :
                                   new ImageSelectorViewModel

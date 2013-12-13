@@ -25,10 +25,22 @@
                 
                 @if (Model.Cultures != null && Model.Cultures.Any())
                 {
-                    <div class="bcms-input-list-holder">
+                    <div class="bcms-input-list-holder" data-bind="with: culture">
                         @Html.Tooltip(PagesGlobalization.AddNewPage_Culture_Tooltip_Description)
                         <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_Culture</div>
-                        @Html.DropDownListFor(model => model.CultureId, Model.Cultures.ToSelectList(Model.CultureId), string.Empty, new { @class = "bcms-global-select" })
+                        <select class="bcms-global-select" data-bind="options: cultures, optionsText: 'value', optionsValue: 'key', value: cultureId"></select>
+                    </div>
+                    
+                    <div class="bcms-input-list-holder" data-bind="with: culture">
+                        @Html.Tooltip(PagesGlobalization.AddNewPage_MainCulturePage_Tooltip_Description)
+                        <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_MainCulturePage</div>
+                        <!-- ko if: mainCulturePageId() -->
+                        <a data-bind="html: mainCulturePageTitle(), attr: { href: mainCulturePageUrl() }" target="_blank"></a>
+                        <!-- /ko -->
+                        <div class="bcms-btn-small" data-bind="click: change">@PagesGlobalization.AddNewPage_ChangeMainCulturePage_ButtonTitle</div>
+                        <!-- ko if: mainCulturePageId() -->
+                        <div class="bcms-btn-small" data-bind="click: clear">@PagesGlobalization.AddNewPage_ClearMainCulturePage_ButtonTitle</div>
+                        <!-- /ko -->
                     </div>
                 }
 
@@ -58,6 +70,11 @@
                 @Html.HiddenFor(f => f.MasterPageId, new { @id = "MasterPageId" })
                 @Html.HiddenFor(f => f.ParentPageUrl)
                 @Html.HiddenFor(f => f.CreateMasterPage)
+                @if (Model.Cultures != null && Model.Cultures.Any())
+                {
+                    @Html.HiddenFor(model => model.CultureId, new { data_bind = "value: culture.cultureId()" })
+                    @Html.HiddenFor(model => model.MainCulturePageId, new { data_bind = "value: culture.mainCulturePageId()" })
+                }
                 @Html.HiddenSubmit()
 
                 @if (Model.AccessControlEnabled)

@@ -79,6 +79,24 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose ....
+        /// </summary>
+        public static string AddNewPage_ChangeMainCulturePage_ButtonTitle {
+            get {
+                return ResourceManager.GetString("AddNewPage_ChangeMainCulturePage_ButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear.
+        /// </summary>
+        public static string AddNewPage_ClearMainCulturePage_ButtonTitle {
+            get {
+                return ResourceManager.GetString("AddNewPage_ClearMainCulturePage_ButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose page culture (language).
         /// </summary>
         public static string AddNewPage_Culture {
@@ -120,6 +138,24 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string AddNewPage_EditPermalink_Tooltip_Description {
             get {
                 return ResourceManager.GetString("AddNewPage_EditPermalink_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Main culture page (parent page with invariant culture).
+        /// </summary>
+        public static string AddNewPage_MainCulturePage {
+            get {
+                return ResourceManager.GetString("AddNewPage_MainCulturePage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose current page&apos;s parent page with invariant culture, which is going to be displayed when page language is not specified..
+        /// </summary>
+        public static string AddNewPage_MainCulturePage_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("AddNewPage_MainCulturePage_Tooltip_Description", resourceCulture);
             }
         }
         
@@ -1366,6 +1402,24 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assign ....
+        /// </summary>
+        public static string EditPageProperties_BasicPropertiesTab_ChangeMainCulturePage_ButtonTitle {
+            get {
+                return ResourceManager.GetString("EditPageProperties_BasicPropertiesTab_ChangeMainCulturePage_ButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear.
+        /// </summary>
+        public static string EditPageProperties_BasicPropertiesTab_ClearMainCulturePage_ButtonTitle {
+            get {
+                return ResourceManager.GetString("EditPageProperties_BasicPropertiesTab_ClearMainCulturePage_ButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Page culture (language).
         /// </summary>
         public static string EditPageProperties_BasicPropertiesTab_Culture {
@@ -1380,6 +1434,24 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string EditPageProperties_BasicPropertiesTab_Culture_Tooltip_Description {
             get {
                 return ResourceManager.GetString("EditPageProperties_BasicPropertiesTab_Culture_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Main culture page (parent page with invariant culture).
+        /// </summary>
+        public static string EditPageProperties_BasicPropertiesTab_MainCulturePage {
+            get {
+                return ResourceManager.GetString("EditPageProperties_BasicPropertiesTab_MainCulturePage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change current page&apos;s parent page with invariant culture, which is going to be displayed when page language is not specified.
+        /// </summary>
+        public static string EditPageProperties_BasicPropertiesTab_MainCulturePage_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("EditPageProperties_BasicPropertiesTab_MainCulturePage_Tooltip_Description", resourceCulture);
             }
         }
         
