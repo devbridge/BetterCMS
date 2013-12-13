@@ -1,21 +1,29 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'bcms.ko.extenders'],
-    function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, ko) {
+bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'bcms.ko.extenders', 'bcms.grid'],
+    function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, ko, grid) {
         'use strict';
 
         var sitemap = {},
             selectors = {
-                sitemapSearchDataBind: "#bcms-sitemap-form",
-                sitemapSearchInput: "bcms-search-input",
                 sitemapAddNodeDataBind: "#bcms-sitemap-addnode",
                 sitemapAddNewPageDataBind: "#bcms-sitemap-addnewpage",
                 sitemapForm: ".bcms-sitemap-form",
-                sitemapMessagesContainer: '#bcms-site-settings-placeholder'
+                
+                searchField: '.bcms-search-query',
+                searchButton: '#bcms-sitemaps-search-btn',
+
+                siteSettingsSitemapsForm: "#bcms-sitemaps-form",
+                siteSettingsSitemapCreateButton: '#bcms-create-sitemap-button',
+                siteSettingsSitemapTitleCell: '.bcms-sitemap-title',
+                siteSettingsRowCells: 'td',
+                siteSettingsSitemapParentRow: 'tr:first',
+                siteSettingsSitemapEditButton: '.bcms-grid-item-edit-button',
+                siteSettingsSitemapDeleteButton: '.bcms-grid-item-delete-button',
             },
             links = {
-                loadSiteSettingsSitemapUrl: null,
+                loadSiteSettingsSitemapsListUrl: null,
                 saveSitemapUrl: null,
                 saveSitemapNodeUrl: null,
                 deleteSitemapNodeUrl: null,
@@ -53,22 +61,148 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Loads a sitemap view to the site settings container.
         */
-        sitemap.loadSiteSettingsSitemap = function () {
-            var sitemapController = new SiteSettingsMapController();
-            
-            dynamicContent.bindSiteSettings(siteSettings, links.loadSiteSettingsSitemapUrl, {
-                contentAvailable: sitemapController.initialize
+        sitemap.loadSiteSettingsSitemapList = function () {
+            dynamicContent.bindSiteSettings(siteSettings, links.loadSiteSettingsSitemapsListUrl, {
+                contentAvailable: function() {
+                    sitemap.initializeSitemapsList(siteSettings.getMainContainer());
+                }
             });
+        };
+
+        /**
+        * Initializes site settings master pages list.
+        */
+        sitemap.initializeSitemapsList = function (container) {
+            var dialog = siteSettings.getModalDialog(),
+                form = container.find(selectors.siteSettingsSitemapsForm);
+
+            grid.bindGridForm(form, function (htmlContent, data) {
+                container.html(htmlContent);
+                sitemap.initializeSitemapsList(container);
+            });
+
+            form.on('submit', function (event) {
+                event.preventDefault();
+                searchSitemaps(form, container);
+                return false;
+            });
+
+            form.find(selectors.searchField).keypress(function (event) {
+                if (event.which == 13) {
+                    bcms.stopEventPropagation(event);
+                    searchSitemaps(form, container);
+                }
+            });
+
+            form.find(selectors.searchButton).on('click', function () {
+                searchSitemaps(form, container);
+            });
+
+            initializeListItems(container);
+
+            // Select search.
+            dialog.setFocus();
+        };
+        
+        /*
+        * TODO: add description.
+        */
+        function searchSitemaps(form, container) {
+            grid.submitGridForm(form, function (htmlContent, data) {
+                container.html(htmlContent);
+                sitemap.initializeSitemapsList(container);
+                var searchInput = container.find(selectors.searchField);
+                grid.focusSearchInput(searchInput);
+            });
+        };
+
+        /*
+        * TODO: add description.
+        */
+        function initializeListItems(container) {
+            container.find(selectors.siteSettingsSitemapCreateButton).on('click', function (event) {
+                bcms.stopEventPropagation(event);
+                addSitemap(container);
+            });
+
+            container.find(selectors.siteSettingsSitemapEditButton).on('click', function (event) {
+                bcms.stopEventPropagation(event);
+                editSitemap($(this), container);
+            });
+
+            container.find(selectors.siteSettingsSitemapDeleteButton).on('click', function (event) {
+                bcms.stopEventPropagation(event);
+                deleteSitemap($(this), container);
+            });
+        };
+
+        /*
+        * TODO: add description.
+        */
+        function addSitemap(container) {
+            sitemap.openCreateSitemapDialog(function (data) {
+                if (data.Data != null) {
+                    var template = $(selectors.siteSettingsSitemapRowTemplate),
+                        newRow = $(template.html()).find(selectors.siteSettingsSitemapRowTemplateFirstRow);
+
+                    newRow.find(selectors.siteSettingsSitemapTitleCell).html(data.Data.Title);
+                    newRow.find(selectors.siteSettingsSitemapEditButton).data('id', data.Data.PageId);
+                    newRow.find(selectors.siteSettingsSitemapDeleteButton).data('id', data.Data.PageId);
+                    newRow.find(selectors.siteSettingsSitemapDeleteButton).data('version', data.Data.Version);
+
+                    newRow.insertBefore($(selectors.siteSettingsSitemapsTableFirstRow, container));
+
+                    initializeListItems(newRow);
+
+                    grid.showHideEmptyRow(container);
+                }
+            }, true);
+        };
+
+        /*
+        * TODO: add description.
+        */
+        function editSitemap(self, container) {
+            var id = self.data('id');
+
+            sitemap.loadAddNodeDialog(id, function (data) {
+                if (data.Data != null) {
+                    var row = self.parents(selectors.siteSettingsSitemapParentRow),
+                        cell = row.find(selectors.siteSettingsSitemapTitleCell);
+                    cell.html(data.Data.Title);
+                }
+            }, globalization.sitemapEditorDialogTitle);
+        };
+
+        /*
+        * TODO: add description.
+        */
+        function deleteSitemap(self, container) {
+            var id = self.data('id');
+
+            sitemap.deleteSitemap(id, function (json) {
+                self.parents(selectors.siteSettingsSitemapParentRow).remove();
+                messages.refreshBox(selectors.siteSettingsSitemapsForm, json);
+                grid.showHideEmptyRow(container);
+            });
+        };
+
+        /*
+        * TODO: add description.
+        */
+        sitemap.openCreateSitemapDialog = function (callBackOnSuccess) {
+            alert("TODO: implement.");  // TODO: implement.
         };
 
         /**
         * Loads a sitemap view to the add node dialog container.
         */
-        sitemap.loadAddNodeDialog = function () {
+        sitemap.loadAddNodeDialog = function (id, onClose, dialogTitle) {
             var addNodeController = new AddNodeMapController();
             modal.open({
-                title: globalization.sitemapEditorDialogTitle,
+                title: dialogTitle || globalization.sitemapEditorDialogTitle,
                 onLoad: function (dialog) {
+                    alert('TODO: incorporate id'); // TODO: implement
                     dynamicContent.setContentFromUrl(dialog, links.sitemapEditDialogUrl, {
                         done: function (content) {
                             addNodeController.initialize(content, dialog);
@@ -86,6 +220,13 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     return false;
                 }
             });
+        };
+
+        /*
+        * TODO: add description.
+        */
+        sitemap.deleteSitemap = function (callBackOnSuccess) {
+            alert("TODO: implement.");  // TODO: implement.
         };
 
         /**
@@ -124,49 +265,6 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
 
         // --- Controllers ----------------------------------------------------
-        /**
-        * Controller for sitemap in site settings dialog.
-        */
-        function SiteSettingsMapController() {
-            var self = this;
-            self.container = null;
-            self.sitemapSearchModel = null;
-
-            self.initialize = function(content) {
-                var dialog = siteSettings.getModalDialog();
-                self.container = dialog.container;
-                sitemap.activeMessageContainer = self.container.find(selectors.sitemapMessagesContainer);
-                sitemap.activeLoadingContainer = self.container.find(selectors.sitemapSearchDataBind);
-                    
-                sitemap.showMessage(content);
-                if (content.Success) {
-                    // Create data models.
-                    var sitemapModel = new SitemapViewModel();
-                    sitemapModel.parseJsonNodes(content.Data.RootNodes);
-                    self.sitemapSearchModel = new SearchSitemapViewModel(sitemapModel);
-                    sitemap.activeMapModel = sitemapModel;
-
-                    // Setup settings.
-                    sitemapModel.settings.canEditNode = true;
-                    sitemapModel.settings.canDeleteNode = true;
-                    sitemapModel.settings.canDragNode = false;
-                    sitemapModel.settings.canDropNode = false;
-                    sitemapModel.settings.nodeSaveButtonTitle = globalization.sitemapNodeSaveButton;
-                    sitemapModel.settings.nodeSaveAfterUpdate = true;
-
-                    // Bind models.
-                    var context = self.container.find(selectors.sitemapSearchDataBind).get(0);
-                    if (context) {
-                        ko.applyBindings(self.sitemapSearchModel, context);
-                        updateValidation();
-                    }
-                }
-
-                // Select search.
-                dialog.setFocus();
-            };
-        }
-        
         /**
         * Controller for sitemap add node dialog.
         */
@@ -453,55 +551,6 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         
 
         // --- View Models ----------------------------------------------------
-        /**
-        * Responsible for searching in sitemap.
-        */
-        function SearchSitemapViewModel(sitemapViewModel) {
-            var self = this;
-            self.searchQuery = ko.observable("");
-            self.sitemap = sitemapViewModel;
-
-            self.searchForNodes = function() {
-                if (self.sitemap && self.sitemap.hasChildNodes()) {
-                    var showAll = $.trim(self.searchQuery()).length === 0,
-                        searchQuery = self.searchQuery().toLowerCase();
-
-                    var hasResult = self.searchInNodes(self.sitemap.childNodes(), searchQuery, showAll);
-                    self.sitemap.showHasNoDataMessage(!(hasResult || showAll));
-                }
-                document.getElementById(selectors.sitemapSearchInput).focus();
-            };
-            self.searchInNodes = function (nodes, searchQuery, showAll) {
-                var hasResult = false;
-                for (var i = 0; i < nodes.length; i++) {
-                    var node = nodes[i];
-                    if (showAll) {
-                        node.isVisible(true);
-                        self.searchInNodes(node.childNodes(), searchQuery, showAll);
-                    } else {
-                        node.isVisible(false);
-                        node.isExpanded(false);
-                        if (node.title().toLowerCase().indexOf(searchQuery) !== -1 || node.url().toLowerCase().indexOf(searchQuery) !== -1) {
-                            node.isVisible(true);
-                            self.searchInNodes(node.childNodes(), "", true);
-                            hasResult = true;
-                        } else {
-                            if (self.searchInNodes(node.childNodes(), searchQuery, showAll)) {
-                                node.isVisible(true);
-                                node.isExpanded(true);
-                                hasResult = true;
-                            }
-                        }
-                    }
-                }
-                return hasResult;
-            };
-
-            self.editSitemapClicked = function() {
-                sitemap.loadAddNodeDialog();
-            };
-        }
-        
         /**
         * Responsible for sitemap structure.
         */

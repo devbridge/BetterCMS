@@ -5,9 +5,11 @@ using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Command.Sitemap.DeleteSitemapNode;
 using BetterCms.Module.Pages.Command.Sitemap.GetPageLinks;
 using BetterCms.Module.Pages.Command.Sitemap.GetSitemap;
+using BetterCms.Module.Pages.Command.Sitemap.GetSitemapsList;
 using BetterCms.Module.Pages.Command.Sitemap.SaveSitemap;
 using BetterCms.Module.Pages.Command.Sitemap.SaveSitemapNode;
 using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.Sitemap;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
@@ -24,20 +26,41 @@ namespace BetterCms.Module.Pages.Controllers
     [ActionLinkArea(PagesModuleDescriptor.PagesAreaName)]
     public class SitemapController : CmsControllerBase
     {
+// TODO: remove.
+//        /// <summary>
+//        /// Renders sitemap container.
+//        /// </summary>
+//        /// <param name="searchQuery">The search query.</param>
+//        /// <returns>
+//        /// Rendered sitemap container.
+//        /// </returns>
+//        public ActionResult Index(string searchQuery)
+//        {
+//            var sitemap = GetCommand<GetSitemapCommand>().ExecuteCommand(searchQuery);
+//            var success = sitemap != null;
+//            var view = RenderView("Index", new SearchableSitemapViewModel());
+//
+//            return ComboWireJson(success, view, sitemap, JsonRequestBehavior.AllowGet);
+//        }
+        
         /// <summary>
-        /// Renders sitemap container.
+        /// Gets sitemaps list for Site Settings.
         /// </summary>
-        /// <param name="searchQuery">The search query.</param>
-        /// <returns>
-        /// Rendered sitemap container.
-        /// </returns>
-        public ActionResult Index(string searchQuery)
+        /// <param name="request">The request.</param>
+        /// <returns>Sitemaps list.</returns>
+        public ActionResult Sitemaps(SitemapsFilter request)
         {
-            var sitemap = GetCommand<GetSitemapCommand>().ExecuteCommand(searchQuery);
-            var success = sitemap != null;
-            var view = RenderView("Index", new SearchableSitemapViewModel());
+            request.SetDefaultPaging();
+            var model = GetCommand<GetSitemapsListCommand>().ExecuteCommand(request);
+            var success = model != null;
 
-            return ComboWireJson(success, view, sitemap, JsonRequestBehavior.AllowGet);
+            var view = RenderView("Sitemaps", model);
+            var json = new
+            {
+                Tags = request.Tags,
+            };
+
+            return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

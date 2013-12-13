@@ -126,12 +126,6 @@
   <data name="SiteSettings_SitemapMenuItem" xml:space="preserve">
     <value>Site Map</value>
   </data>
-  <data name="Sitemap_Dialog_Edit" xml:space="preserve">
-    <value>Edit</value>
-  </data>
-  <data name="Sitemap_Dialog_Search" xml:space="preserve">
-    <value>Search...</value>
-  </data>
   <data name="Sitemap_Dialog_Title" xml:space="preserve">
     <value>Sitemap</value>
   </data>
@@ -200,5 +194,14 @@
   </data>
   <data name="Sitemap_Dialog_NodeUrl_InvalidSymbol" xml:space="preserve">
     <value>Invalid &lt;,&gt;,*,&amp;,? symbols.</value>
+  </data>
+  <data name="SiteSettings_Sitemaps_TitleColumn" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="SiteSettings_Sitemaps_AddNew" xml:space="preserve">
+    <value>Add New+</value>
+  </data>
+  <data name="SiteSettings_Sitemaps_Search" xml:space="preserve">
+    <value>Search</value>
   </data>
 </root>
