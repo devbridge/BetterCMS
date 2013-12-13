@@ -41,13 +41,13 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             Reader = IndexReader.Open(Index, true);    
         }
 
-        public void AddHtmlDocument(CrawlerResult crawlerResult)
+        public void AddHtmlDocument(PageData pageData)
         {
             var doc = new Document();
-
-            doc.Add(new Field("path", crawlerResult.CurrentUrl, Field.Store.YES, Field.Index.NOT_ANALYZED));
-            doc.Add(new Field("title", GetTitle(crawlerResult.Content), Field.Store.YES, Field.Index.ANALYZED));
-            doc.Add(new Field("content", GetBody(crawlerResult.Content), Field.Store.YES, Field.Index.ANALYZED));
+            
+            doc.Add(new Field("path", pageData.AbsolutePath, Field.Store.YES, Field.Index.NOT_ANALYZED));
+            doc.Add(new Field("title", GetTitle(pageData.Content), Field.Store.YES, Field.Index.ANALYZED));
+            doc.Add(new Field("content", GetBody(pageData.Content), Field.Store.YES, Field.Index.ANALYZED));
 
             Writer.AddDocument(doc);
         }
@@ -57,7 +57,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             var result = new List<string>();
             var searcher = new IndexSearcher(Reader);
             TopScoreDocCollector collector = TopScoreDocCollector.Create(ResultCount, true);
-            var query = new QueryParser(Version.LUCENE_30, "content", Analyzer).Parse(searchString);
+            var query = Parser.Parse(searchString);
             searcher.Search(query, collector);
             ScoreDoc[] hits = collector.TopDocs().ScoreDocs;
             for (int i = 0; i < hits.Length; i++)
@@ -101,10 +101,10 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             return Regex.Replace(html, "\\s+", " ");
         }
 
-        public void Close()
+        public void Commit()
         {
             Writer.Optimize();
-            Writer.Dispose();
+            Writer.Commit();
         }
     }
 }

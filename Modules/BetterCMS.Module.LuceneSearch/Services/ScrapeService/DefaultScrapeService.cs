@@ -21,7 +21,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
         // Timeouts in minutes
         //private const int CrawlFrequency = 3 * 60;
 
-        private const int CrawlFrequency = 1;
+        public static int CrawlFrequency = 10;
 
         private const int EndTimeout = 5;
 
@@ -87,6 +87,30 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
             }
 
             return links;
+        }
+
+        public Queue<CrawlLink> GetProcessedLinks(int limit = 1000)
+        {
+            CrawlUrl crawlUrlAlias = null;
+
+            var processedUrls =
+                Repository.AsQueryOver(() => crawlUrlAlias)
+                          .Where(() => crawlUrlAlias.StartTime != null && crawlUrlAlias.EndTime != null)
+                          .OrderByAlias(() => crawlUrlAlias.Id)
+                          .Asc.Lock(() => crawlUrlAlias)
+                          .Read.Take(limit)
+                          .List();
+
+            var links = processedUrls.Where(url => (DateTime.Now - url.EndTime).Value.TotalMinutes < CrawlFrequency);
+
+            var result = new Queue<CrawlLink>();
+
+            foreach (var url in links)
+            {
+                result.Enqueue(new CrawlLink { Id = url.Id, Path = url.Path });
+            }
+
+            return result;
         }
 
         public void MarkVisited(Guid id)

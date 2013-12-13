@@ -11,8 +11,6 @@ namespace BetterCMS.Module.LuceneSearch.Services.LuceneSearchService
 {
     public class DefaultLuceneSearchService : ILuceneSearchService
     {
-        private string RootUrl = "/";
-
         private const int MaxTasksCount = 10;
 
         private Queue<CrawlLink> UrlQueue;
@@ -41,10 +39,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.LuceneSearchService
             {
                 Crawl();
             }
-
-            indexerService.Close();
         }
-
 
         private void Crawl()
         {
@@ -79,7 +74,6 @@ namespace BetterCMS.Module.LuceneSearch.Services.LuceneSearchService
                     {
                         newUrls.Add(newUrl);
                     }
-                    indexerService.AddHtmlDocument(result);
                     scrapeService.MarkVisited(tasks[i].Result.Id);
                 }
                 else
@@ -94,6 +88,20 @@ namespace BetterCMS.Module.LuceneSearch.Services.LuceneSearchService
                 {
                     UrlQueue = scrapeService.GetUnprocessedLinks();
                 }            
+        }
+
+        public void UpdateIndex()
+        {
+            var pages = scrapeService.GetProcessedLinks();
+
+            foreach (var page in pages)
+            {
+                var result = webCrawlerService.FetchPage(page.Path);
+                
+                indexerService.AddHtmlDocument(result);
+            }
+
+            indexerService.Commit();
         }
     }
 }

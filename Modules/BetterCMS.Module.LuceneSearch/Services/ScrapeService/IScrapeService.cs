@@ -11,6 +11,8 @@ namespace BetterCMS.Module.LuceneSearch.Services
 
         Queue<CrawlLink> GetUnprocessedLinks(int limit = 1000);
 
+        Queue<CrawlLink> GetProcessedLinks(int limit = 1000);
+        
         void MarkVisited(Guid id);
     }
 }

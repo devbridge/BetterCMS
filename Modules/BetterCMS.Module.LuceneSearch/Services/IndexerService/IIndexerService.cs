@@ -11,10 +11,10 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 {
     public interface IIndexerService
     {
-        void AddHtmlDocument(CrawlerResult crawlerResult);
+        void AddHtmlDocument(PageData pageData);
 
         IList<string> Search(string searchString);
 
-        void Close();
+        void Commit();
     }
 }

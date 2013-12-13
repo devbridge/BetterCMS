@@ -23,19 +23,16 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
 
         public CrawlerResult ProccessUrl(string url, Guid id)
         {
-            var response = FetchPage(url);
-
             return new CrawlerResult
             {
                 NewUrls = Succes ? ParseLinks(url) : new List<string>(),
                 CurrentUrl = url,
                 Id = id,
-                Content = response.Content,
                 Succes = Succes
             };
         }
 
-        private PageData FetchPage(string url)
+        public PageData FetchPage(string url)
         {
             var response = new PageData();
             HttpWebResponse httpWebResponse = null;
@@ -100,11 +97,20 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
             using (var api = ApiFactory.Create())
             {
                 var request = new GetSitemapNodesRequest();
-
                 var nodes = api.Pages.Sitemap.Nodes.Get(request);
-
                 var rootNodes = nodes.Data.Items.Where(p => p.ParentId == null).Select(n => n.Url);
                 return rootNodes.ToList();
+            }
+        } 
+
+        public IList<string> GetPagesList()
+        {
+            using (var api = ApiFactory.Create())
+            {
+                var request = new GetPagesRequest();
+                var items = api.Pages.Pages.Get(request);
+                var result = items.Data.Items.Select(i => i.PageUrl);
+                return result.ToList();
             }
         } 
 

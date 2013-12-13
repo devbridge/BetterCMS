@@ -4,8 +4,6 @@
     {
         void Start();
 
-        //void UpdateIndex();
-
-        //void ParseUrls();
+        void UpdateIndex();
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Threading;
+﻿using System.Threading;
 
 using Autofac;
 
@@ -10,7 +8,6 @@ using BetterCMS.Module.LuceneSearch.Services.LuceneSearchService;
 using BetterCMS.Module.LuceneSearch.Services.ScrapeService;
 using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 
-using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules;
 
@@ -59,14 +56,14 @@ namespace BetterCms.Module.LuceneSearch
             Events.CoreEvents.Instance.HostStart += x =>
                 {
                     // How to create long running thread
+                    urlWatcher = new Thread(new ThreadStart(DoUrlWork));
+                    urlWatcher.Start();
                     indexerWorker = new Thread(new ThreadStart(DoIndexWork));
                     indexerWorker.Start();
-                    //TODO: add url parsing worker
-                    //urlWatcher = new Thread(new ThreadStart(DoUrlWork));
                 };                    
         }
 
-        private void DoIndexWork()
+        private void DoUrlWork()
         {
             while (true)
             {
@@ -76,33 +73,30 @@ namespace BetterCms.Module.LuceneSearch
                     var service = container.Resolve<ILuceneSearchService>();
 
                     service.Start();
-                    // service1 == service2, nes InstancePerLifetimeScope
-                    //service.UpdateIndex();
                 }
 
                 // TODO: next step - add sleep time to cms.config
-                Thread.Sleep(5 * 60 * 1000);
+                Thread.Sleep(15 * 60 * 1000);
             }
         }
 
-        private void DoUrlWork()
+        private void DoIndexWork()
         {
             while (true)
             {
                 using (var container = ContextScopeProvider.CreateChildContainer())
                 {
                     var service = container.Resolve<ILuceneSearchService>();
-
-                    //service.ParseUrls();
+                    service.UpdateIndex();
                 }
-                Thread.Sleep(1 * 60 * 1000);
+                Thread.Sleep(30 * 60 * 1000);
             }
         }
 
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterType<DefaultIndexerService>().As<IIndexerService>().InstancePerDependency();
-            containerBuilder.RegisterType<DefaultLuceneSearchService>().As<ILuceneSearchService>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultLuceneSearchService>().As<ILuceneSearchService>().SingleInstance();
             containerBuilder.RegisterType<DefaultScrapeService>().As<IScrapeService>().InstancePerDependency();
             containerBuilder.RegisterType<DefaultWebCrawlerService>().As<IWebCrawleService>().InstancePerDependency();
         }
