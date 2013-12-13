@@ -50,7 +50,7 @@ namespace BetterCms.Module.Root
             authenticationJsModuleIncludeDescriptor = new AuthenticationJsModuleIncludeDescriptor(this);
             siteSettingsJsModuleIncludeDescriptor = new SiteSettingsJsModuleIncludeDescriptor(this);
             tagsJsModuleIncludeDescriptor = new TagsJsModuleIncludeDescriptor(this);
-
+            
             InitializeSecurity();            
         }        
 
