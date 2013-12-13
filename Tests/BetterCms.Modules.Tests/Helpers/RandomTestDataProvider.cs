@@ -562,7 +562,17 @@ namespace BetterCms.Tests.Helpers
             return entity;
         }
 
-        public SitemapNode CreateNewSitemapNode()
+        public Sitemap CreateNewSitemap()
+        {
+            var entity = new Sitemap();
+
+            PopulateBaseFields(entity);
+            entity.Title = ProvideRandomString(MaxLength.Name);
+
+            return entity;
+        }
+
+        public SitemapNode CreateNewSitemapNode(Sitemap sitemap)
         {
             var entity = new SitemapNode();
 
@@ -571,7 +581,8 @@ namespace BetterCms.Tests.Helpers
             entity.Title = ProvideRandomString(MaxLength.Name);
             entity.Url = ProvideRandomString(MaxLength.Url);
             entity.DisplayOrder = ProvideRandomNumber(0, int.MaxValue);
-
+            entity.Sitemap = sitemap;
+            
             return entity;
         }
 

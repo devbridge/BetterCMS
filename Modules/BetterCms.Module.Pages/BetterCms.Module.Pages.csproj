@@ -135,12 +135,15 @@
     <Compile Include="Events\SitemapEvents.cs" />
     <Compile Include="Events\TagEvents.cs" />
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
+    <Compile Include="Models\Migrations\Migration201312121313.cs" />
     <Compile Include="Models\Events\UpdatingPagePropertiesModel.cs" />
+    <Compile Include="Models\Maps\SitemapMap.cs" />
     <Compile Include="Models\Migrations\Migration201307301145.cs" />
     <Compile Include="Models\Migrations\Migration201307220940.cs" />
     <Compile Include="Models\Migrations\Migration201306260946.cs" />
     <Compile Include="Models\Migrations\Migration201306140841.cs" />
     <Compile Include="Models\Migrations\Migration201305281700.cs" />
+    <Compile Include="Models\Sitemap.cs" />
     <Compile Include="Mvc\Attributes\ValidVirtualPathValidationAttribute.cs" />
     <Compile Include="Events\WidgetEvents.cs" />
     <Compile Include="Events\RedirectEvents.cs" />

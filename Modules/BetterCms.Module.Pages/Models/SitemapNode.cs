@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using BetterCms.Core.Models;
+using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Pages.Models
 {
@@ -11,6 +12,14 @@ namespace BetterCms.Module.Pages.Models
     [Serializable]
     public class SitemapNode : EquatableEntity<SitemapNode>
     {
+        /// <summary>
+        /// Gets or sets the sitemap.
+        /// </summary>
+        /// <value>
+        /// The sitemap.
+        /// </value>
+        public virtual Sitemap Sitemap { get; set; }
+
         /// <summary>
         /// Gets or sets the title.
         /// </summary>
@@ -26,6 +35,14 @@ namespace BetterCms.Module.Pages.Models
         /// The URL.
         /// </value>
         public virtual string Url { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page.
+        /// </summary>
+        /// <value>
+        /// The page.
+        /// </value>
+        public virtual Page Page { get; set; }
 
         /// <summary>
         /// Gets or sets the display order.
