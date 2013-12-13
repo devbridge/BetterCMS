@@ -41,5 +41,17 @@
         /// The page culture id.
         /// </value>
         public virtual System.Guid? CultureId { get; set; }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("{0}, Id: {1}, Title: {2}, PageUrl: {3}, CultureId: {4}, MainCulturePageId: {5}", 
+                base.ToString(), Id, Title, PageUrl, CultureId, MainCulturePageId);
+        }
     }
 }
