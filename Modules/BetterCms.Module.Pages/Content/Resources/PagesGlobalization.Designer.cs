@@ -2482,6 +2482,33 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select page.
+        /// </summary>
+        public static string SelectPage_Dialog_Title {
+            get {
+                return ResourceManager.GetString("SelectPage_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select a page..
+        /// </summary>
+        public static string SelectPage_PageIsNotSelected_Message {
+            get {
+                return ResourceManager.GetString("SelectPage_PageIsNotSelected_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        public static string SelectPage_Select_ButtonTitle {
+            get {
+                return ResourceManager.GetString("SelectPage_Select_ButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New page.
         /// </summary>
         public static string Sidebar_AddNewPageButtonTitle {

@@ -19,11 +19,11 @@
                     <div class="bcms-filter-text">@PagesGlobalization.SiteSettings_Pages_FilterByTags</div>
                     <div class="bcms-filter-field-holder">
                         <input type="text" class="bcms-add-tags-field" data-bind="
-    css: { 'bcms-tag-validation-error': newItem.hasError() },
-    value: newItem,
-    valueUpdate: 'afterkeydown',
-    escPress: clearItem,
-    autocompleteList: 'onlyExisting'" />
+                            css: { 'bcms-tag-validation-error': newItem.hasError() },
+                            value: newItem,
+                            valueUpdate: 'afterkeydown',
+                            escPress: clearItem,
+                            autocompleteList: 'onlyExisting'" />
                         <!-- ko if: newItem.hasError()  -->
                         <span class="bcms-tag-field-validation-error">
                             <span data-bind="text: newItem.validationMessage()"></span>

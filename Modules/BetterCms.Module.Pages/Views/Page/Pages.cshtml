@@ -12,6 +12,7 @@
 @using MvcContrib.UI.Grid
 
 @model BetterCms.Module.Pages.ViewModels.Filter.PagesGridViewModel<SiteSettingPageViewModel>
+
 @{
     Action<ColumnBuilder<SiteSettingPageViewModel>> columns = column =>
     {
@@ -61,7 +62,7 @@
     };
 }
 
-@using (Html.BeginForm<PageController>(f => f.Pages(null), FormMethod.Post, new { @id = "bcms-pages-form", @class = "bcms-ajax-form" }))
+@using (Html.BeginForm(Model.Action, FormMethod.Post, new { @id = "bcms-pages-form", @class = "bcms-ajax-form" }))
 {
     @Html.HiddenGridOptions(Model.GridOptions)
 

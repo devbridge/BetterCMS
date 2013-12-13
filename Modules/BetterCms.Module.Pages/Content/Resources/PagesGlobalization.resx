@@ -1200,4 +1200,13 @@
   <data name="SiteSettings_Pages_FilterByCulture" xml:space="preserve">
     <value>By Culture</value>
   </data>
+  <data name="SelectPage_Dialog_Title" xml:space="preserve">
+    <value>Select page</value>
+  </data>
+  <data name="SelectPage_Select_ButtonTitle" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="SelectPage_PageIsNotSelected_Message" xml:space="preserve">
+    <value>Please select a page.</value>
+  </data>
 </root>

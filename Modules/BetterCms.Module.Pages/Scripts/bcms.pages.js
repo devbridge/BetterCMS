@@ -44,6 +44,8 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 siteSettingsPageRowTemplateFirstRow: 'tr:first',
                 siteSettingsPageParentRow: 'tr:first',
                 siteSettingsPagesTableFirstRow: 'table.bcms-tables > tbody > tr:first',
+                siteSettingsPagesTableRows: 'table.bcms-tables > tbody > tr',
+                siteSettingsPagesTableActiveRow: 'table.bcms-tables > tbody > tr.bcms-table-row-active:first',
                 siteSettingsRowCells: 'td',
 
                 siteSettingPageTitleCell: '.bcms-page-title',
@@ -63,7 +65,9 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 changePublishStatusUrl: null,
                 clonePageDialogUrl: null,
                 convertStringToSlugUrl: null,
-                loadEditTranslationsDialogUrl: null
+                loadEditTranslationsDialogUrl: null,
+                loadSelectPageUrl: null,
+                assignPageToMainCulturePageUrl: null
             },
             globalization = {
                 editPagePropertiesModalTitle: null,
@@ -77,13 +81,18 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 deleteButtonTitle: null,
                 pageStatusChangeConfirmationMessagePublish: null,
                 pageStatusChangeConfirmationMessageUnPublish: null,
-                editTranslationsDialogTitle: null
+                editTranslationsDialogTitle: null,
+                selectPageDialogTitle: null,
+                selectPageSelectButtonTitle: null,
+                pageNotSelectedMessage: null,
+                close: null
             },
             keys = {
                 addNewPageInfoMessageClosed: 'bcms.addNewPageInfoBoxClosed'
             },
             classes = {
-                addNewPageActiveTemplateBox: 'bcms-inner-grid-box-active'
+                addNewPageActiveTemplateBox: 'bcms-inner-grid-box-active',
+                gridActiveRow: 'bcms-table-row-active'
             },
             pageUrlManuallyEdited = false;
 
@@ -441,37 +450,42 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         /**
         * Initializes site settings pages list and list items
         */
-        page.initializeSiteSettingsPagesList = function (content, jsonData) {
-            var dialog = siteSettings.getModalDialog(),
+        page.initializeSiteSettingsPagesList = function (content, jsonData, opts) {
+            opts = $.extend({
+                dialog: siteSettings.getModalDialog(),
+                dialogContainer: siteSettings,
+                canBeSelected: false
+            }, opts);
+
+            var dialog = opts.dialog,
                 container = dialog.container;
 
             var form = dialog.container.find(selectors.siteSettingsPagesListForm);
             grid.bindGridForm(form, function (content, data) {
-                siteSettings.setContent(content);
-                page.initializeSiteSettingsPagesList(content, data);
+                opts.dialogContainer.setContent(content);
+                page.initializeSiteSettingsPagesList(content, data, opts);
             });
 
             form.on('submit', function (event) {
                 event.preventDefault();
-                page.searchSiteSettingsPages(form, container);
+                page.searchSiteSettingsPages(form, container, opts);
                 return false;
             });
 
-            form.find(selectors.siteSettingsPagesSearchField).keypress(function (event) {
-                if (event.which == 13) {
-                    bcms.stopEventPropagation(event);
-                    page.searchSiteSettingsPages(form, container);
-                }
+            bcms.preventInputFromSubmittingForm(form.find(selectors.siteSettingsPagesSearchField), {
+                preventedEnter: function () {
+                    page.searchSiteSettingsPages(form, container, opts);
+                },
             });
 
             form.find(selectors.siteSettingsPagesSearchButton).on('click', function () {
-                page.searchSiteSettingsPages(form, container);
+                page.searchSiteSettingsPages(form, container, opts);
             });
 
-            page.initializeSiteSettingsPagesListItems(container);
+            page.initializeSiteSettingsPagesListItems(container, opts);
 
             filter.bind(container, ((content.Data) ? content.Data : jsonData), function () {
-                page.searchSiteSettingsPages(form, container);
+                page.searchSiteSettingsPages(form, container, opts);
             });
 
             // Select search.
@@ -481,17 +495,28 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         /**
         * Initializes site settings pages list items
         */
-        page.initializeSiteSettingsPagesListItems = function (container) {
+        page.initializeSiteSettingsPagesListItems = function (container, opts) {
+            var editButtonSelector = opts.canBeSelected ? selectors.siteSettingsPageEditButton : selectors.siteSettingsRowCells;
+
             container.find(selectors.siteSettingsPageCreateButton).on('click', function () {
                 page.addSiteSettingsPage(container);
             });
 
-            container.find(selectors.siteSettingsRowCells).on('click', function () {
+            container.find(editButtonSelector).on('click', function () {
                 var editButton = $(this).parents(selectors.siteSettingsPageParentRow).find(selectors.siteSettingsPageEditButton);
                 if (editButton.length > 0) {
                     page.editSiteSettingsPage(editButton, container);
                 }
             });
+            
+            if (opts.canBeSelected) {
+                container.find(selectors.siteSettingsRowCells).on('click', function () {
+                    container.find(selectors.siteSettingsPagesTableRows).removeClass(classes.gridActiveRow);
+
+                    var row = $(this).parents(selectors.siteSettingsPageParentRow);
+                    row.addClass(classes.gridActiveRow);
+                });
+            }
 
             container.find(selectors.siteSettingPageTitleCell).on('click', function (event) {
                 bcms.stopEventPropagation(event);
@@ -508,10 +533,10 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         /**
         * Search site settings pages
         */
-        page.searchSiteSettingsPages = function (form, container) {
+        page.searchSiteSettingsPages = function (form, container, opts) {
             grid.submitGridForm(form, function (htmlContent, data) {
-                siteSettings.setContent(htmlContent);
-                page.initializeSiteSettingsPagesList(htmlContent, data);
+                opts.dialogContainer.setContent(htmlContent);
+                page.initializeSiteSettingsPagesList(htmlContent, data, opts);
                 var searchInput = container.find(selectors.siteSettingsPagesSearchField);
                 grid.focusSearchInput(searchInput);
             });
@@ -792,13 +817,6 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             };
 
             self.createPage = function () {
-//                page.openCreatePageDialog(function (json) {
-//                    if (json.Data) {
-//                        self.id(json.Data.PageId);
-//                        self.title(json.Data.Title);
-//                        self.url(json.Data.PageUrl);
-//                    }
-//                });
                 alert('// TODO: need implementation');
             };
 
@@ -809,8 +827,40 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 });
             };
 
-            self.assignPage = function () {
-                alert('// TODO: need implementation');
+            self.assignPage = function() {
+                var gridOptions = {
+                    filterByCulture: self.cultureId()
+                },
+                    selectDialog = page.openPageSelectDialog({
+                        onAccept: function(id) {
+                            var url = $.format(links.assignPageToMainCulturePageUrl, id, self.mainPageId() || bcms.pageId, self.cultureId()),
+                                onComplete = function(json) {
+                                    messages.refreshBox(selectDialog.container, json);
+                                    if (json.Success) {
+                                        self.title(json.Data.Title);
+                                        self.url(json.Data.PageUrl);
+                                        self.mainPageId(json.Data.MainCulturePageId);
+                                        self.id(id);
+
+                                        selectDialog.close();
+                                    }
+                                };
+
+                            $.ajax({
+                                type: 'POST',
+                                url: url,
+                            })
+                                .done(function(result) {
+                                    onComplete(result);
+                                })
+                                .fail(function(response) {
+                                    onComplete(bcms.parseFailedResponse(response));
+                                });
+
+                            return false;
+                        },
+                        params: 'CultureId=' + self.cultureId()
+                    }, gridOptions);
             };
 
             return self;
@@ -832,6 +882,8 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         */
         page.editPageTranslations = function () {
             modal.open({
+                disableAccept: true,
+                cancelTitle: globalization.close,
                 title: globalization.editTranslationsDialogTitle,
                 onLoad: function (dialog) {
                     var url = $.format(links.loadEditTranslationsDialogUrl, bcms.pageId);
@@ -849,6 +901,68 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
                 }
             });
+        };
+
+        /**
+        * Show folder selection window
+        */
+        page.openPageSelectDialog = function (opts, pageGridOptions) {
+
+            opts = $.extend({
+                onAccept: function () { return true; },
+                onClose: function () { return true; },
+                params: ''
+            }, opts);
+
+            var url = opts.params 
+                    ? (links.loadSelectPageUrl.indexOf('?') > 0
+                        ? links.loadSelectPageUrl + '&' + opts.params
+                        : links.loadSelectPageUrl + '?' + opts.params)
+                    : links.loadSelectPageUrl,
+                selectDialog = modal.open({
+                title: globalization.selectPageDialogTitle,
+                acceptTitle: globalization.selectPageSelectButtonTitle,
+                onClose: function () {
+                    var result = true;
+                    if ($.isFunction(opts.onClose)) {
+                        result = opts.onClose();
+                    }
+                    return result;
+                },
+                onLoad: function (dialog) {
+                    dynamicContent.setContentFromUrl(dialog, url, {
+                        done: function (content) {
+                            page.initializeSiteSettingsPagesList(content.Html, content.Data, $.extend({
+                                dialog: dialog,
+                                dialogContainer: selectDialog,
+                                canBeSelected: true
+                            }, pageGridOptions));
+                        }
+                    });
+                },
+                onAcceptClick: function () {
+                    var result = true,
+                        selectedItem = selectDialog.container.find(selectors.siteSettingsPagesTableActiveRow),
+                        id = selectedItem.find(selectors.siteSettingsPageEditButton).data('id');
+
+                    if (selectedItem.length == 0) {
+                        modal.info({
+                            content: globalization.pageNotSelectedMessage,
+                            disableCancel: true
+                        });
+
+                        result = false;
+                    } else {
+                        if ($.isFunction(opts.onAccept)) {
+                            result = opts.onAccept(id);
+                        }
+                    }
+
+                    return result;
+                }
+            });
+
+            return selectDialog;
         };
 
         /**

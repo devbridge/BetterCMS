@@ -8,6 +8,7 @@ using BetterCms.Module.MediaManager.ViewModels;
 
 using BetterCms.Module.Pages.Command.Layout.GetLayoutOptions;
 using BetterCms.Module.Pages.Command.Page.AddNewPage;
+using BetterCms.Module.Pages.Command.Page.AssignMainCulturePage;
 using BetterCms.Module.Pages.Command.Page.ClonePage;
 using BetterCms.Module.Pages.Command.Page.CreatePage;
 using BetterCms.Module.Pages.Command.Page.DeletePage;
@@ -68,6 +69,33 @@ namespace BetterCms.Module.Pages.Controllers
             var success = model != null;
 
             var view = RenderView("Pages", model);
+            var json = new
+            {
+                Tags = request.Tags,
+                IncludeArchived = request.IncludeArchived,
+                IncludeMasterPages = request.IncludeMasterPages
+            };
+
+            return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Opens dialog for selecting the page.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>Rendered pages list</returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.DeleteContent)]
+        public ActionResult SelectPage(PagesFilter request)
+        {
+            request.SetDefaultPaging();
+            var model = GetCommand<GetPagesListCommand>().ExecuteCommand(request);
+            if (model != null)
+            {
+                model.Action = controller => controller.SelectPage(null);
+            }
+            var success = model != null;
+
+            var view = RenderView("SelectPage", model);
             var json = new
             {
                 Tags = request.Tags,
@@ -312,9 +340,15 @@ namespace BetterCms.Module.Pages.Controllers
                 Id = id.ToGuidOrDefault(),
                 IsMasterPage = isMasterPage.ToBoolOrDefault()
             });
+
             return WireJson(model != null, model, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Loads the view for managing page translations.
+        /// </summary>
+        /// <param name="pageId">The page id.</param>
+        /// <returns>Rendered view for managing page translations</returns>
         [HttpGet]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.Administration)]
         public ActionResult PageTranslations(string pageId)
@@ -322,9 +356,31 @@ namespace BetterCms.Module.Pages.Controllers
             var model = GetCommand<GetPageTranslationsCommand>().ExecuteCommand(pageId.ToGuidOrDefault());
             var success = model != null;
             var view = RenderView("PageTranslations", model);
-           
 
             return ComboWireJson(success, view, model, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Assigns the page to main culture page.
+        /// </summary>
+        /// <param name="pageId">The page id.</param>
+        /// <param name="mainCulturePageId">The main culture page id.</param>
+        /// <param name="cultureId">The culture id.</param>
+        /// <returns>
+        /// JSON result
+        /// </returns>
+        [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.Administration)]
+        public ActionResult AssignMainCulturePage(string pageId, string mainCulturePageId, string cultureId)
+        {
+            var model = GetCommand<AssignMainCulturePageCommand>().ExecuteCommand(new AssignMainCulturePageCommandRequest
+            {
+                PageId = pageId.ToGuidOrDefault(),
+                MainCulturePageId = mainCulturePageId.ToGuidOrDefault(),
+                CultureId = cultureId.ToGuidOrDefault(),
+            });
+
+            return WireJson(model != null, model, JsonRequestBehavior.AllowGet);
         }
     }
 }
