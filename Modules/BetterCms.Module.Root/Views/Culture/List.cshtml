@@ -8,19 +8,17 @@
     {
         ShowMessages = true,
         TopBlockTitle = RootGlobalization.SiteSettings_Cultures_Title,
-        TopBlockAddItemView = "Partial/AddCulture",
         Columns = new List<EditableGridColumn>
             {
-                new EditableGridColumn(RootGlobalization.SiteSettings_Cultures_Name_Title, "Name", "name")
-                    {
-                        AutoFocus = true
-                        
-                    },
                 new EditableGridColumn(RootGlobalization.SiteSettings_Cultures_Code_Title, "Code", "code")
                     {
-                        CanBeEdited = false,
-                        HeaderAttributes = "style=\"width: 130px;\""
-                    }           
+                        CustomBinding = "autocomplete: 'onlyExisting', hasfocus: hasCodeFocus",
+                        HeaderAttributes = "style=\"width: 200px;\""
+                    },
+                new EditableGridColumn(RootGlobalization.SiteSettings_Cultures_Name_Title, "Name", "name")
+                    {
+                        CustomBinding = "hasfocus: hasNameFocus"
+                    }  
             }
     };
 }

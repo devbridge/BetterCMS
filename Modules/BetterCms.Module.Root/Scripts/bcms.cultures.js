@@ -51,32 +51,7 @@ function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete) {
 
         function CulturesListViewModel(container, items, gridOptions) {
             _super.call(this, container, links.loadCulturesUrl, items, gridOptions);
-
-            var self = this;
-
-            self.newCulture = null;
-            self.isAddModeActive = ko.observable(false);
-
-            self.addCulture = function() {
-                self.isAddModeActive(true);
-            };
-
-            self.closeAddCulture = function() {
-                self.isAddModeActive(false);
-            };
-
-            self.autocompleteViewModel = new CultureAutocompleteListViewModel(function (suggestionItem) {
-                self.newCulture = suggestionItem;
-                self.addNewItem();
-                self.closeAddCulture();
-            });
         }
-
-        CulturesListViewModel.prototype.onAfterNewItemAdded = function (newItem) {
-            newItem.code(this.newCulture.id());
-            newItem.name(this.newCulture.name());
-        };
-
 
         CulturesListViewModel.prototype.createItem = function(item) {
             var newItem = new CultureViewModel(this, item);
@@ -99,23 +74,55 @@ function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete) {
 
             var self = this;
 
+            self.hasCodeFocus = ko.observable(false);
+            self.hasNameFocus = ko.observable(false);
             self.name = ko.observable().extend({ required: "", maxLength: { maxLength: ko.maxLength.name } });
-            self.code = ko.observable();
+            self.code = ko.observable().extend({ required: "", maxLength: { maxLength: ko.maxLength.name } });
+            self.shortCode = ko.observable();
+            self.oldAutocompleteValue = '';
 
             self.registerFields(self.name, self.code);
 
             self.name(item.Name);
             self.code(item.Code);
+
+            self.autocompleteViewModel = new CultureAutocompleteListViewModel(function (suggestionItem) {
+                var name = self.name(),
+                    suggestedName = suggestionItem.name();
+
+                if (!name || self.oldAutocompleteValue == self.name()) {
+                    self.name(suggestedName);
+                }
+
+                self.oldAutocompleteValue = suggestedName;
+                self.shortCode(suggestionItem.id());
+            });
+
+            if (!self.isNew()) {
+                self.code.editingIsDisabled = ko.observable(true);
+                self.hasNameFocus(true);
+            } else {
+                self.hasCodeFocus(true);
+            }
         }
 
         CultureViewModel.prototype.getDeleteConfirmationMessage = function() {
             return $.format(globalization.deleteCultureConfirmMessage, this.name());
         };
 
+        CultureViewModel.prototype.onAfterItemSaved = function (json) {
+            _super.prototype.onAfterItemSaved.call(this, json);
+            
+            if (!this.code.editingIsDisabled) {
+                this.code.editingIsDisabled = ko.observable(true);
+                this.hasNameFocus(true);
+            }
+        };
+
         CultureViewModel.prototype.getSaveParams = function() {
             var params = _super.prototype.getSaveParams.call(this);
             params.Name = this.name();
-            params.Code = this.code();
+            params.Code = this.shortCode() || this.code();
 
             return params;
         };

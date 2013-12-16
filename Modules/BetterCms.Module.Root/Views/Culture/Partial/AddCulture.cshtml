@@ -1,8 +1,0 @@
-﻿@model BetterCms.Module.Root.ViewModels.Shared.EditableGridViewModel
-
-<!-- ko ifnot: isAddModeActive() -->
-<div class="bcms-btn-links-main" data-bind="click: addCulture">@Model.AddNewTitle</div>
-<!-- /ko -->
-<!-- ko if: isAddModeActive() -->
-<input type="text" data-bind="hasfocus: true, autocomplete: 'onlyExisting', escPress: closeAddCulture, event: {blur: closeAddCulture}" />
-<!-- /ko -->

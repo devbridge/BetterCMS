@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Globalization;
+using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Mvc;
@@ -23,11 +24,12 @@ namespace BetterCms.Module.Root.Commands.Culture.SaveCulture
             Models.Culture culture;
 
             // Validate
-            ValidateCulture(request);
+            ValidateCulture(request, isNew);
 
             if (isNew)
             {
                 culture = new Models.Culture();
+                culture.Code = request.Code;
             }
             else
             {
@@ -35,7 +37,6 @@ namespace BetterCms.Module.Root.Commands.Culture.SaveCulture
             }
 
             culture.Name = request.Name;
-            culture.Code = request.Code;
             culture.Version = request.Version;
 
             Repository.Save(culture);
@@ -59,7 +60,7 @@ namespace BetterCms.Module.Root.Commands.Culture.SaveCulture
                 };
         }
 
-        private void ValidateCulture(CultureViewModel request)
+        private void ValidateCulture(CultureViewModel request, bool isNew)
         {
             var query = Repository.AsQueryable<Models.Culture>();
             if (!request.Id.HasDefaultValue())
@@ -81,6 +82,17 @@ namespace BetterCms.Module.Root.Commands.Culture.SaveCulture
                 var message = string.Format(RootGlobalization.SaveCultureCommand_CodeAlreadyExists_Message, request.Code);
 
                 throw new ValidationException(() => message, logMessage);
+            }
+
+            if (isNew)
+            {
+                if (!CultureInfo.GetCultures(CultureTypes.AllCultures).Any(c => c.Name == request.Code))
+                {
+                    var logMessage = string.Format("Culture with code {0} doesn't exist. Id: {1}, Name: {2}", request.Code, request.Id, request.Name);
+                    var message = string.Format(RootGlobalization.SaveCultureCommand_CultureNotExists_Message, request.Name);
+
+                    throw new ValidationException(() => message, logMessage);
+                }
             }
         }
     }

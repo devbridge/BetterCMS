@@ -2,7 +2,9 @@
 using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Autocomplete;
 
@@ -24,12 +26,15 @@ namespace BetterCms.Module.Root.Commands.Culture.SuggestCultures
         {
             var query = model.Query.ToLowerInvariant();
 
+            var alreadyAdded = Repository.AsQueryable<Models.Culture>().Select(c => c.Code).ToList();
+            alreadyAdded.Add(System.Globalization.CultureInfo.InvariantCulture.Name);
+
             return System.Globalization.CultureInfo
                 .GetCultures(System.Globalization.CultureTypes.AllCultures)
-                .Except(System.Globalization.CultureInfo.GetCultures(System.Globalization.CultureTypes.SpecificCultures))
                 .Where(culture => culture.Name.ToLower().Contains(query) || culture.EnglishName.ToLower().Contains(query) || culture.NativeName.ToLower().Contains(query))
+                .Where(cullture => !alreadyAdded.Contains(cullture.Name))
                 .OrderBy(culture => culture.Name)
-                .Select(culture => new LookupKeyValue { Key = culture.Name, Value = string.Format("{0} ({1}, {2})", culture.Name, culture.EnglishName, culture.NativeName) })
+                .Select(culture => new LookupKeyValue { Key = culture.Name, Value = culture.GetFullName() })
                 .ToList();
         }
     }

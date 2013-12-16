@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
-
+using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
@@ -32,7 +34,7 @@ namespace BetterCms.Module.Root.Commands.Culture.GetCultureList
                 query = query.Where(culture => culture.Name.Contains(request.SearchQuery) || culture.Code.Contains(request.SearchQuery));
             }
 
-            var cultures = query
+            var culturesFuture = query
                 .Select(culture =>
                     new CultureViewModel
                         {
@@ -43,11 +45,26 @@ namespace BetterCms.Module.Root.Commands.Culture.GetCultureList
                         });
 
             var count = query.ToRowCountFutureValue();
-            cultures = cultures.AddSortingAndPaging(request);
+            culturesFuture = culturesFuture.AddSortingAndPaging(request);
 
-            model = new SearchableGridViewModel<CultureViewModel>(cultures.ToList(), request, count.Value);
+            var cultures = culturesFuture.ToList();
+            SetCultureCodes(cultures);
+            model = new SearchableGridViewModel<CultureViewModel>(cultures, request, count.Value);
 
             return model;
+        }
+
+        private void SetCultureCodes(List<CultureViewModel> cultures)
+        {
+            var codes = cultures.Select(c => c.Code).ToArray();
+            var names = CultureInfo.GetCultures(CultureTypes.AllCultures)
+                .Where(c => codes.Contains(c.Name))
+                .ToDictionary(c => c.Name, c => c.GetFullName());
+
+            foreach (var pair in names)
+            {
+                cultures.Where(c => c.Code == pair.Key).ToList().ForEach(c => c.Code = pair.Value);
+            }
         }
     }
 }

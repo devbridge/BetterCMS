@@ -979,6 +979,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Culture {0} doesn&apos;t exist..
+        /// </summary>
+        public static string SaveCultureCommand_CultureNotExists_Message {
+            get {
+                return ResourceManager.GetString("SaveCultureCommand_CultureNotExists_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Culture with name {0} already exists..
         /// </summary>
         public static string SaveCultureCommand_NameAlreadyExists_Message {
@@ -1159,7 +1168,7 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Code.
+        ///   Looks up a localized string similar to Culture.
         /// </summary>
         public static string SiteSettings_Cultures_Code_Title {
             get {
@@ -1168,7 +1177,7 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name.
+        ///   Looks up a localized string similar to Custom name.
         /// </summary>
         public static string SiteSettings_Cultures_Name_Title {
             get {
