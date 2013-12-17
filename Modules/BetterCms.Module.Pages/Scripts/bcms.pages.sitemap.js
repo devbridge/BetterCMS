@@ -21,6 +21,9 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 siteSettingsSitemapParentRow: 'tr:first',
                 siteSettingsSitemapEditButton: '.bcms-grid-item-edit-button',
                 siteSettingsSitemapDeleteButton: '.bcms-grid-item-delete-button',
+                siteSettingsSitemapRowTemplate: '#bcms-sitemap-list-row-template',
+                siteSettingsSitemapRowTemplateFirstRow: 'tr:first',
+                siteSettingsSitemapsTableFirstRow: 'table.bcms-tables > tbody > tr:first'
             },
             links = {
                 loadSiteSettingsSitemapsListUrl: null,
@@ -31,6 +34,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 sitemapAddNewPageDialogUrl: null
             },
             globalization = {
+                sitemapCreatorDialogTitle: null,
                 sitemapEditorDialogTitle: null,
                 sitemapEditorDialogCustomLinkTitle: null,
                 sitemapAddNewPageDialogTitle: null,
@@ -146,8 +150,8 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         newRow = $(template.html()).find(selectors.siteSettingsSitemapRowTemplateFirstRow);
 
                     newRow.find(selectors.siteSettingsSitemapTitleCell).html(data.Data.Title);
-                    newRow.find(selectors.siteSettingsSitemapEditButton).data('id', data.Data.PageId);
-                    newRow.find(selectors.siteSettingsSitemapDeleteButton).data('id', data.Data.PageId);
+                    newRow.find(selectors.siteSettingsSitemapEditButton).data('id', data.Data.Id);
+                    newRow.find(selectors.siteSettingsSitemapDeleteButton).data('id', data.Data.Id);
                     newRow.find(selectors.siteSettingsSitemapDeleteButton).data('version', data.Data.Version);
 
                     newRow.insertBefore($(selectors.siteSettingsSitemapsTableFirstRow, container));
@@ -191,7 +195,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Shows sitemap creation form.
         */
         sitemap.openCreateSitemapDialog = function (callBackOnSuccess) {
-            alert("TODO: implement.");  // TODO: implement.
+            sitemap.loadAddNodeDialog(defaultIdValue, callBackOnSuccess, globalization.sitemapCreatorDialogTitle);
         };
 
         /**
@@ -215,8 +219,10 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             if (onClose && $.isFunction(onClose)) {
                                 onClose(json);
                             }
+                            messages.refreshBox(selectors.siteSettingsSitemapsForm, json);
+                        } else {
+                            sitemap.showMessage(json);
                         }
-                        sitemap.showMessage(json);
                     });
                     return false;
                 }
@@ -283,7 +289,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 if (content.Success) {
                     // Create data models.
                     var sitemapModel = new SitemapViewModel(content.Data);
-                    
+                    // TODO: update sitemap editing for read only mode.
                     sitemapModel.parseJsonNodes(content.Data.Sitemap.RootNodes);
                     self.pageLinksModel = new SearchPageLinksViewModel(sitemapModel);
                     self.pageLinksModel.parseJsonLinks(content.Data.PageLinks);
@@ -699,6 +705,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             // Parsing / composing.
             self.parseJsonNodes = function (jsonNodes) {
                 var nodes = [];
+                jsonNodes = jsonNodes || [];
                 for (var i = 0; i < jsonNodes.length; i++) {
                     var node = new NodeViewModel();
                     node.fromJson(jsonNodes[i]);

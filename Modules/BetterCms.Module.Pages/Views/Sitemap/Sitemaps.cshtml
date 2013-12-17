@@ -35,6 +35,6 @@
     @Html.SiteSettingsMessagesBox()
     @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingSitemapViewModel>())
 }
-<script type="text/html" id="bcms-pages-list-row-template">
+<script type="text/html" id="bcms-sitemap-list-row-template">
     @Html.Grid(new List<SiteSettingSitemapViewModel> { new SiteSettingSitemapViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingSitemapViewModel>())
 </script>

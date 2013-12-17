@@ -130,7 +130,7 @@ namespace BetterCms.Module.Pages.Services
         /// <returns>
         /// Updated or newly created sitemap node.
         /// </returns>
-        public SitemapNode SaveNode(Guid sitemapId, Guid nodeId, int version, string url, string title, int displayOrder, Guid parentId, bool isDeleted = false, SitemapNode parentNode = null)
+        public SitemapNode SaveNode(Sitemap sitemap, Guid nodeId, int version, string url, string title, int displayOrder, Guid parentId, bool isDeleted = false, SitemapNode parentNode = null)
         {
             var node = nodeId.HasDefaultValue()
                 ? new SitemapNode()
@@ -148,7 +148,7 @@ namespace BetterCms.Module.Pages.Services
             }
             else
             {
-                node.Sitemap = repository.AsProxy<Sitemap>(sitemapId);
+                node.Sitemap = sitemap;
                 node.Version = version;
                 node.Title = title;
                 node.Url = url;

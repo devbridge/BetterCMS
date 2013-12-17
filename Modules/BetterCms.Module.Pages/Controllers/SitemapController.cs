@@ -77,8 +77,22 @@ namespace BetterCms.Module.Pages.Controllers
         [HttpPost]
         public ActionResult SaveSitemap(SitemapViewModel model)
         {
-            model.UserAccessList = model.UserAccessList ?? new List<UserAccessViewModel>();
-            return Json(new WireJson { Success = GetCommand<SaveSitemapCommand>().ExecuteCommand(model) });
+            if (ModelState.IsValid)
+            {
+                model.UserAccessList = model.UserAccessList ?? new List<UserAccessViewModel>();
+                var response = GetCommand<SaveSitemapCommand>().ExecuteCommand(model);
+                if (response != null)
+                {
+                    if (model.Id.HasDefaultValue())
+                    {
+                        Messages.AddSuccess(NavigationGlobalization.Sitemap_SitemapCreatedSuccessfully_Message);
+                    }
+
+                    return Json(new WireJson { Success = true, Data = response });
+                }
+            }
+
+            return Json(new WireJson { Success = false });
         }
 
         /// <summary>

@@ -142,6 +142,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add New Site Map.
+        /// </summary>
+        public static string Sitemap_CreatorDialog_Title {
+            get {
+                return ResourceManager.GetString("Sitemap_CreatorDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to delete node &quot;{0}&quot;?.
         /// </summary>
         public static string Sitemap_DeleteNode_Confirmation_Message {
@@ -286,7 +295,16 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Site Map.
+        ///   Looks up a localized string similar to Site map created successfully..
+        /// </summary>
+        public static string Sitemap_SitemapCreatedSuccessfully_Message {
+            get {
+                return ResourceManager.GetString("Sitemap_SitemapCreatedSuccessfully_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Site Maps.
         /// </summary>
         public static string SiteSettings_SitemapMenuItem {
             get {

@@ -124,7 +124,7 @@
     <value>Url is required.</value>
   </data>
   <data name="SiteSettings_SitemapMenuItem" xml:space="preserve">
-    <value>Site Map</value>
+    <value>Site Maps</value>
   </data>
   <data name="Sitemap_Dialog_Title" xml:space="preserve">
     <value>Sitemap</value>
@@ -203,5 +203,11 @@
   </data>
   <data name="SiteSettings_Sitemaps_Search" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="Sitemap_CreatorDialog_Title" xml:space="preserve">
+    <value>Add New Site Map</value>
+  </data>
+  <data name="Sitemap_SitemapCreatedSuccessfully_Message" xml:space="preserve">
+    <value>Site map created successfully.</value>
   </data>
 </root>

@@ -45,6 +45,15 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemap
         /// </returns>
         public SitemapViewModel Execute(Guid sitemapId)
         {
+            if (sitemapId.HasDefaultValue())
+            {
+                return new SitemapViewModel()
+                    {
+                        AccessControlEnabled = CmsConfiguration.Security.AccessControlEnabled,
+                        // UserAccessList // TODO: updated.
+                    };
+            }
+
             IEnumerable<AccessRule> userAccessFuture;
             if (CmsConfiguration.Security.AccessControlEnabled)
             {
