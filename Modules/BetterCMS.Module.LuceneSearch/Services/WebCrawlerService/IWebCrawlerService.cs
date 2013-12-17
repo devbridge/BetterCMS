@@ -5,14 +5,8 @@ using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 
 namespace BetterCMS.Module.LuceneSearch.Services
 {
-    public interface IWebCrawleService
+    public interface IWebCrawlerService
     {
-        void Start();
-
-        void Stop();
-
-        int GetPageCount();
-
         CrawlerResult ProccessUrl(string url, Guid id);
 
         IList<string> GetRootNodes();

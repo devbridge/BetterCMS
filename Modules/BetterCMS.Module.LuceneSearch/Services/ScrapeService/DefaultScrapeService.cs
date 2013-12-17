@@ -18,10 +18,11 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
 
         private IUnitOfWork UnitOfWork { get; set; }
 
-        // Timeouts in minutes
-        //private const int CrawlFrequency = 3 * 60;
+        private const int ResultLimit = 10;
 
-        public static int CrawlFrequency = 10;
+        // Timeouts in minutes
+
+        private const int CrawlFrequency = 1;
 
         private const int EndTimeout = 5;
 
@@ -79,14 +80,43 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
                           .Read.Take(limit)
                           .List();
 
-            var expiredLinks = expiredUrls.Where(url => (DateTime.Now - url.EndTime).Value.TotalMinutes > CrawlFrequency);
+            var expiredLinks = expiredUrls.Where(url => (DateTime.Now - url.EndTime).Value.TotalMinutes > CrawlFrequency).Take(ResultLimit);
 
             foreach (var link in expiredLinks)
             {
                 links.Enqueue(new CrawlLink { Id = link.Id, Path = link.Path });
             }
 
+            if (links.Count == 0)
+            {
+                links = GetFailedLinks();
+            }
+
             return links;
+        }
+ 
+        public Queue<CrawlLink> GetFailedLinks(int limit = 1000)
+        {
+            CrawlUrl crawlUrlAlias = null;
+
+            var result = new Queue<CrawlLink>();
+
+            var urls =
+                Repository.AsQueryOver(() => crawlUrlAlias)
+                          .Where(() => crawlUrlAlias.StartTime != null && crawlUrlAlias.EndTime == null)
+                          .OrderByAlias(() => crawlUrlAlias.Id)
+                          .Asc.Lock(() => crawlUrlAlias)
+                          .Read.Take(limit)
+                          .List();
+
+            var failedLinks = urls.Where(url => (DateTime.Now - url.StartTime).Value.TotalMinutes > EndTimeout).Take(ResultLimit);
+
+            foreach (var link in failedLinks)
+            {
+                result.Enqueue(new CrawlLink { Id = link.Id, Path = link.Path });
+            }
+
+            return result;
         }
 
         public Queue<CrawlLink> GetProcessedLinks(int limit = 1000)
@@ -101,7 +131,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
                           .Read.Take(limit)
                           .List();
 
-            var links = processedUrls.Where(url => (DateTime.Now - url.EndTime).Value.TotalMinutes < CrawlFrequency);
+            var links = processedUrls.Where(url => (DateTime.Now - url.EndTime).Value.TotalMinutes < CrawlFrequency).Take(ResultLimit);
 
             var result = new Queue<CrawlLink>();
 

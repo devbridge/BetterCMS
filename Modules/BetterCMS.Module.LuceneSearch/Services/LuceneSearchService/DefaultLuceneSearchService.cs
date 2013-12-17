@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 using BetterCMS.Module.LuceneSearch.Models;
 using BetterCMS.Module.LuceneSearch.Services.IndexerService;
+using BetterCMS.Module.LuceneSearch.Services.ScrapeService;
 using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 
 namespace BetterCMS.Module.LuceneSearch.Services.LuceneSearchService
@@ -15,13 +16,15 @@ namespace BetterCMS.Module.LuceneSearch.Services.LuceneSearchService
 
         private Queue<CrawlLink> UrlQueue;
 
+        private IList<string> urlList;
+
         private readonly IIndexerService indexerService;
 
         private readonly IScrapeService scrapeService;
 
-        private readonly IWebCrawleService webCrawlerService;
+        private readonly IWebCrawlerService webCrawlerService;
 
-        public DefaultLuceneSearchService(IScrapeService scrapeService, IWebCrawleService webCrawlerService, IIndexerService indexerService)
+        public DefaultLuceneSearchService(IScrapeService scrapeService, IWebCrawlerService webCrawlerService, IIndexerService indexerService)
         {
             this.scrapeService = scrapeService;
             this.webCrawlerService = webCrawlerService;
@@ -32,7 +35,10 @@ namespace BetterCMS.Module.LuceneSearch.Services.LuceneSearchService
 
         public void Start()
         {
-            scrapeService.AddUniqueLink(webCrawlerService.GetRootNodes());
+            urlList = webCrawlerService.GetPagesList();
+
+            SaveUrls();
+           
             UrlQueue = scrapeService.GetUnprocessedLinks();
 
             while (UrlQueue.Count > 0)
@@ -62,32 +68,25 @@ namespace BetterCMS.Module.LuceneSearch.Services.LuceneSearchService
             Task.WaitAll(tasks);
 
             var newUrls = new HashSet<string>();
-            var failedUrls = new List<Guid>();
 
             for (int i = 0; i < currentTasksCount; i++)
             {
                 var result = tasks[i].Result;
 
-                if (result.Succes)
+                if (result.Success)
                 {
-                    foreach (var newUrl in result.NewUrls)
-                    {
-                        newUrls.Add(newUrl);
-                    }
                     scrapeService.MarkVisited(tasks[i].Result.Id);
-                }
-                else
-                {
-                    failedUrls.Add(result.Id);
                 }
             }
 
-                scrapeService.AddUniqueLink(newUrls.ToList());
+            SaveUrls();
+
+            scrapeService.AddUniqueLink(newUrls.ToList());
                 
-                if (UrlQueue.Count == 0)
-                {
-                    UrlQueue = scrapeService.GetUnprocessedLinks();
-                }            
+            if (UrlQueue.Count == 0)
+            {
+                UrlQueue = scrapeService.GetUnprocessedLinks();
+            }
         }
 
         public void UpdateIndex()
@@ -102,6 +101,21 @@ namespace BetterCMS.Module.LuceneSearch.Services.LuceneSearchService
             }
 
             indexerService.Commit();
+        }
+
+        private void SaveUrls()
+        {
+            var urls = new List<string>();
+
+            int limit = urlList.Count > MaxTasksCount ? MaxTasksCount : urlList.Count;
+            
+            for (int i = 0; i < limit; i++)
+            {
+                urls.Add(urlList[urlList.Count - 1]);
+                urlList.RemoveAt(urlList.Count - 1);
+            }
+
+            scrapeService.AddUniqueLink(urls.ToList());
         }
     }
 }

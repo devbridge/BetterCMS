@@ -58,14 +58,17 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             var searcher = new IndexSearcher(Reader);
             TopScoreDocCollector collector = TopScoreDocCollector.Create(ResultCount, true);
             var query = Parser.Parse(searchString);
+            
             searcher.Search(query, collector);
             ScoreDoc[] hits = collector.TopDocs().ScoreDocs;
+            
             for (int i = 0; i < hits.Length; i++)
             {
                 int docId = hits[i].Doc;
                 Document d = searcher.Doc(docId);
                 result.Add(d.Get("path"));
             }
+            
             return result;
         }
 
@@ -93,7 +96,6 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             }
 
             return RemoveDuplicateWhitespace(HtmlEntity.DeEntitize(contentHtml));
-
         }
 
         private static string RemoveDuplicateWhitespace(string html)

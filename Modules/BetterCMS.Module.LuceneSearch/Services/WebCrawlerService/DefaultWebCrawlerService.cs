@@ -14,10 +14,10 @@ using HtmlAgilityPack;
 
 namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
 {
-    class DefaultWebCrawlerService : IWebCrawleService
+    class DefaultWebCrawlerService : IWebCrawlerService
     {
         private static readonly Regex RegexLink = new Regex("(?<=<a\\s*?href=(?:'|\"))[^'\"]*?(?=(?:'|\"))", RegexOptions.Compiled);
-        private bool Succes = true;
+        private bool Success = true;
 
         private static readonly string RootUrl = "http://bettercms.sandbox.mvc4.local";
 
@@ -25,10 +25,10 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
         {
             return new CrawlerResult
             {
-                NewUrls = Succes ? ParseLinks(url) : new List<string>(),
+                //NewUrls = Success ? ParseLinks(url) : new List<string>(),
                 CurrentUrl = url,
                 Id = id,
-                Succes = Succes
+                Success = Success
             };
         }
 
@@ -59,13 +59,13 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
                     }
                     else
                     {
-                        Succes = false;
+                        Success = false;
                     }
                 }
             }
             catch (SystemException)
             {
-                Succes = false;
+                Success = false;
             }
 
             if (httpWebResponse != null)
@@ -108,25 +108,11 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
             using (var api = ApiFactory.Create())
             {
                 var request = new GetPagesRequest();
+                
                 var items = api.Pages.Pages.Get(request);
                 var result = items.Data.Items.Select(i => i.PageUrl);
                 return result.ToList();
             }
         } 
-
-        public void Start()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Stop()
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GetPageCount()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

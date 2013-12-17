@@ -76,7 +76,7 @@ namespace BetterCms.Module.LuceneSearch
                 }
 
                 // TODO: next step - add sleep time to cms.config
-                Thread.Sleep(15 * 60 * 1000);
+                Thread.Sleep(1 * 30 * 1000);
             }
         }
 
@@ -89,7 +89,7 @@ namespace BetterCms.Module.LuceneSearch
                     var service = container.Resolve<ILuceneSearchService>();
                     service.UpdateIndex();
                 }
-                Thread.Sleep(30 * 60 * 1000);
+                Thread.Sleep(1 * 30 * 1000);
             }
         }
 
@@ -98,7 +98,7 @@ namespace BetterCms.Module.LuceneSearch
             containerBuilder.RegisterType<DefaultIndexerService>().As<IIndexerService>().InstancePerDependency();
             containerBuilder.RegisterType<DefaultLuceneSearchService>().As<ILuceneSearchService>().SingleInstance();
             containerBuilder.RegisterType<DefaultScrapeService>().As<IScrapeService>().InstancePerDependency();
-            containerBuilder.RegisterType<DefaultWebCrawlerService>().As<IWebCrawleService>().InstancePerDependency();
+            containerBuilder.RegisterType<DefaultWebCrawlerService>().As<IWebCrawlerService>().InstancePerDependency();
         }
     }
 }
