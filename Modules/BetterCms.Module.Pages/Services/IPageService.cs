@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+
+using BetterCms.Module.Pages.ViewModels.Page;
+
 using Page = BetterCms.Module.Pages.Models.PageProperties;
 
 namespace BetterCms.Module.Pages.Services
 {
-    /// <summary>
-    /// </summary>    
     public interface IPageService
     {
         /// <summary>
@@ -30,5 +32,12 @@ namespace BetterCms.Module.Pages.Services
         /// <param name="pageId">The page id.</param>
         /// <returns>Main culture page id</returns>
         Guid GetMainCulturePageId(Guid pageId);
+
+        /// <summary>
+        /// Gets the list of page translation view models.
+        /// </summary>
+        /// <param name="mainPageCultureId">The main page culture id.</param>
+        /// <returns>The list of page translation view models</returns>
+        IEnumerable<PageTranslationViewModel> GetPageTranslations(Guid mainPageCultureId);
     }
 }

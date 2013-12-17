@@ -1173,14 +1173,14 @@
   <data name="AddNewPage_Culture_Tooltip_Description" xml:space="preserve">
     <value>Choose current page culture, which will be used in sitemap and determines the language of the page</value>
   </data>
-  <data name="EditPageProperties_BasicPropertiesTab_Culture" xml:space="preserve">
-    <value>Page culture (language)</value>
+  <data name="EditPageProperties_TranslationsTab_Culture" xml:space="preserve">
+    <value>Current page culture</value>
   </data>
-  <data name="EditPageProperties_BasicPropertiesTab_Culture_Tooltip_Description" xml:space="preserve">
+  <data name="EditPageProperties_TranslationsTab_Culture_Tooltip_Description" xml:space="preserve">
     <value>Edit current page culture, which will be used in sitemap and determines the language of the page</value>
   </data>
-  <data name="Sidebar_TranslationsButtonTitle" xml:space="preserve">
-    <value>Translations</value>
+  <data name="Sidebar_TranslatePageButtonTitle" xml:space="preserve">
+    <value>Translate page</value>
   </data>
   <data name="EditPageTranslations_Dialog_Title" xml:space="preserve">
     <value>Edit page translations</value>
@@ -1213,7 +1213,7 @@
     <value>Unassign</value>
   </data>
   <data name="EditPageTranslations_UnassignPage_ConfirmationMessage" xml:space="preserve">
-    <value>Are you sure you want to unassign this translation from main culture page?</value>
+    <value>Are you sure you want to remove this translation?</value>
   </data>
   <data name="ClonePageWithCulture_Dialog_ConfirmationMessage_Header" xml:space="preserve">
     <value>Are you sure you want to clone this page?</value>
@@ -1247,5 +1247,8 @@
   </data>
   <data name="AddNewPage_MainCulturePage_Tooltip_Description" xml:space="preserve">
     <value>Choose current page's parent page with invariant culture, which is going to be displayed when page language is not specified.</value>
+  </data>
+  <data name="EditPageProperties_TranslationsTab_Title" xml:space="preserve">
+    <value>Translations</value>
   </data>
 </root>

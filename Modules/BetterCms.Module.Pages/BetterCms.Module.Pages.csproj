@@ -439,24 +439,6 @@
     <EmbeddedResource Include="Views\History\ContentVersion.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\DeletePageConfirmation.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Page\Partial\AddNewPageEditPermalink.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Page\Partial\ClonePageEditUrl.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Page\Partial\PagePropertiesEditPermalink.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Page\Partial\Template.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Page\Partial\TemplatesList.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Redirect\Redirects.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -517,9 +499,6 @@
     <EmbeddedResource Include="Views\Filter\PagesFilterTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\Pages.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Option\EditOptions.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -538,7 +517,7 @@
     <EmbeddedResource Include="Views\Shared\Partial\InfoMessageAboutMasterPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\SelectPage.cshtml" />
+    <EmbeddedResource Include="Views\Page\AddNewPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Page\ClonePage.cshtml" />
@@ -547,13 +526,34 @@
     <EmbeddedResource Include="Views\Page\ClonePageWithCulture.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\PageTranslations.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Page\AddNewPage.cshtml" />
+    <EmbeddedResource Include="Views\Page\DeletePageConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Page\EditPageProperties.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\Pages.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\Partial\AddNewPageEditPermalink.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\Partial\ClonePageEditUrl.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\Partial\PagePropertiesEditPermalink.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\Partial\Template.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\Partial\TemplatesList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\Partial\TranslationsGrid.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\SelectPage.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

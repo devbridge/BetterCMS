@@ -66,6 +66,11 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         private readonly IMediaFileUrlResolver fileUrlResolver;
 
         /// <summary>
+        /// The page service
+        /// </summary>
+        private readonly IPageService pageService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GetPagePropertiesCommand" /> class.
         /// </summary>
         /// <param name="tagService">The tag service.</param>
@@ -75,9 +80,10 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         /// <param name="layoutService">The layout service.</param>
         /// <param name="fileUrlResolver">The file URL resolver.</param>
         /// <param name="cultureService">The culture service.</param>
+        /// <param name="pageService">The page service.</param>
         public GetPagePropertiesCommand(ITagService tagService, ICategoryService categoryService, IOptionService optionService,
             ICmsConfiguration cmsConfiguration, ILayoutService layoutService, IMediaFileUrlResolver fileUrlResolver,
-            ICultureService cultureService)
+            ICultureService cultureService, IPageService pageService)
         {
             this.tagService = tagService;
             this.categoryService = categoryService;
@@ -86,6 +92,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
             this.cmsConfiguration = cmsConfiguration;
             this.layoutService = layoutService;
             this.fileUrlResolver = fileUrlResolver;
+            this.pageService = pageService;
         }
 
         /// <summary>
@@ -121,8 +128,6 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                               CategoryId = page.Category.Id,
                               CultureId = page.Culture.Id,
                               MainCulturePageId = page.MainCulturePage.Id,
-                              MainCulturePageTitle = page.MainCulturePage.Title,
-                              MainCulturePageUrl = page.MainCulturePage.PageUrl,
                               AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled,
                               Image = page.Image == null || page.Image.IsDeleted ? null :
                                   new ImageSelectorViewModel
@@ -198,6 +203,11 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 if (culturesFuture != null)
                 {
                     model.Model.Cultures = culturesFuture.ToList();
+                }
+                if (cmsConfiguration.EnableMultilanguage)
+                {
+                    var mainCultureId = model.Model.MainCulturePageId.HasValue ? model.Model.MainCulturePageId.Value : id;
+                    model.Model.Translations = pageService.GetPageTranslations(mainCultureId).ToList();
                 }
 
                 // Get layout options, page options and merge them

@@ -14,6 +14,7 @@ using BetterCms.Core.Web;
 
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 
@@ -245,6 +246,31 @@ namespace BetterCms.Module.Pages.Services
             return mainPage.MainCulturePageId.HasValue && !mainPage.MainCulturePageId.Value.HasDefaultValue() 
                 ? mainPage.MainCulturePageId.Value 
                 : pageId;
+        }
+
+        /// <summary>
+        /// Gets the list of page translation view models.
+        /// </summary>
+        /// <param name="mainPageCultureId">The main page culture id.</param>
+        /// <returns>
+        /// The list of page translation view models
+        /// </returns>
+        public IEnumerable<PageTranslationViewModel> GetPageTranslations(Guid mainPageCultureId)
+        {
+            var mainPageProxy = repository.AsProxy<Root.Models.Page>(mainPageCultureId);
+
+            return repository
+                .AsQueryable<Root.Models.Page>()
+                .Where(p => p.MainCulturePage == mainPageProxy || p.Id == mainPageCultureId)
+                .Select(p => new PageTranslationViewModel
+                {
+                    Id = p.Id,
+                    MainCulturePageId = p.MainCulturePage.Id,
+                    Title = p.Title,
+                    PageUrl = p.PageUrl,
+                    CultureId = p.Culture.Id
+                })
+                .ToFuture();
         }
     }
 }

@@ -1420,24 +1420,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page culture (language).
-        /// </summary>
-        public static string EditPageProperties_BasicPropertiesTab_Culture {
-            get {
-                return ResourceManager.GetString("EditPageProperties_BasicPropertiesTab_Culture", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit current page culture, which will be used in sitemap and determines the language of the page.
-        /// </summary>
-        public static string EditPageProperties_BasicPropertiesTab_Culture_Tooltip_Description {
-            get {
-                return ResourceManager.GetString("EditPageProperties_BasicPropertiesTab_Culture_Tooltip_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Main culture page (parent page with invariant culture).
         /// </summary>
         public static string EditPageProperties_BasicPropertiesTab_MainCulturePage {
@@ -1744,6 +1726,33 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current page culture.
+        /// </summary>
+        public static string EditPageProperties_TranslationsTab_Culture {
+            get {
+                return ResourceManager.GetString("EditPageProperties_TranslationsTab_Culture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit current page culture, which will be used in sitemap and determines the language of the page.
+        /// </summary>
+        public static string EditPageProperties_TranslationsTab_Culture_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("EditPageProperties_TranslationsTab_Culture_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Translations.
+        /// </summary>
+        public static string EditPageProperties_TranslationsTab_Title {
+            get {
+                return ResourceManager.GetString("EditPageProperties_TranslationsTab_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit page translations.
         /// </summary>
         public static string EditPageTranslations_Dialog_Title {
@@ -1753,7 +1762,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to unassign this translation from main culture page?.
+        ///   Looks up a localized string similar to Are you sure you want to remove this translation?.
         /// </summary>
         public static string EditPageTranslations_UnassignPage_ConfirmationMessage {
             get {
@@ -2743,11 +2752,11 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Translations.
+        ///   Looks up a localized string similar to Translate page.
         /// </summary>
-        public static string Sidebar_TranslationsButtonTitle {
+        public static string Sidebar_TranslatePageButtonTitle {
             get {
-                return ResourceManager.GetString("Sidebar_TranslationsButtonTitle", resourceCulture);
+                return ResourceManager.GetString("Sidebar_TranslatePageButtonTitle", resourceCulture);
             }
         }
         

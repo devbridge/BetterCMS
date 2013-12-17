@@ -44,8 +44,9 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 siteSettingsPageRowTemplateFirstRow: 'tr:first',
                 siteSettingsPageParentRow: 'tr:first',
                 siteSettingsPagesTableFirstRow: 'table.bcms-tables > tbody > tr:first',
-                siteSettingsPagesTableRows: 'table.bcms-tables > tbody > tr',
+                siteSettingsPagesTableRows: 'tbody > tr',
                 siteSettingsPagesTableActiveRow: 'table.bcms-tables > tbody > tr.bcms-table-row-active:first',
+                siteSettingsPagesParentTable: 'table.bcms-tables:first',
                 siteSettingsRowCells: 'td',
 
                 siteSettingPageTitleCell: '.bcms-page-title',
@@ -54,8 +55,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 siteSettingPageStatusCell: '.bcms-page-ispublished',
                 siteSettingPageHasSeoCell: '.bcms-page-hasseo',
 
-                clonePageForm: 'form:first',
-                translationsContainer: '.bcms-scroll-window'
+                clonePageForm: 'form:first'
             },
             links = {
                 loadEditPropertiesUrl: null,
@@ -66,10 +66,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 clonePageDialogUrl: null,
                 clonePageWithCultureDialogUrl: null,
                 convertStringToSlugUrl: null,
-                loadEditTranslationsDialogUrl: null,
                 loadSelectPageUrl: null,
-                assignPageToMainCulturePageUrl: null,
-                unassignMainCulturePageUrl: null
             },
             globalization = {
                 editPagePropertiesModalTitle: null,
@@ -84,18 +81,15 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 deleteButtonTitle: null,
                 pageStatusChangeConfirmationMessagePublish: null,
                 pageStatusChangeConfirmationMessageUnPublish: null,
-                editTranslationsDialogTitle: null,
                 selectPageDialogTitle: null,
                 selectPageSelectButtonTitle: null,
                 pageNotSelectedMessage: null,
-                close: null,
-                unassignMainCulturePageConfirmation: null
             },
             keys = {
                 addNewPageInfoMessageClosed: 'bcms.addNewPageInfoBoxClosed'
             },
             classes = {
-                addNewPageActiveTemplateBox: 'bcms-inner-grid-box-active',
+                addNewPageActitraveTemplateBox: 'bcms-inner-grid-box-active',
                 gridActiveRow: 'bcms-table-row-active'
             },
             pageUrlManuallyEdited = false;
@@ -159,7 +153,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         page.initAddNewPageDialogEvents = function (dialog, content) {
             var infoMessageClosed = localStorage.getItem(keys.addNewPageInfoMessageClosed),
                 optionsContainer = dialog.container.find(selectors.addNewPageOptionsTab),
-                cultureViewModel = content.Data.Cultures ? new pageProperties.PageCultureViewModel(content.Data) : null,
+                cultureViewModel = content.Data.Cultures ? new pageProperties.PageCultureViewModel(content.Data.Cultures) : null,
                 viewModel = {
                     accessControl: security.createUserAccessViewModel(content.Data.UserAccessList),
                     culture: cultureViewModel,
@@ -505,7 +499,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             var editButtonSelector = opts.canBeSelected ? selectors.siteSettingsPageEditButton : selectors.siteSettingsRowCells;
 
             container.find(selectors.siteSettingsPageCreateButton).on('click', function () {
-                page.addSiteSettingsPage(container);
+                page.addSiteSettingsPage(container, opts);
             });
 
             container.find(editButtonSelector).on('click', function () {
@@ -517,7 +511,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             
             if (opts.canBeSelected) {
                 container.find(selectors.siteSettingsRowCells).on('click', function () {
-                    container.find(selectors.siteSettingsPagesTableRows).removeClass(classes.gridActiveRow);
+                    $(this).parents(selectors.siteSettingsPagesParentTable).find(selectors.siteSettingsPagesTableRows).removeClass(classes.gridActiveRow);
 
                     var row = $(this).parents(selectors.siteSettingsPageParentRow);
                     row.addClass(classes.gridActiveRow);
@@ -551,7 +545,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         /**
         * Opens page create form from site settings pages list
         */
-        page.addSiteSettingsPage = function (container) {
+        page.addSiteSettingsPage = function (container, opts) {
             page.openCreatePageDialog(function (data) {
                 if (data.Data != null) {
                     var template = $(selectors.siteSettingsPageRowTemplate),
@@ -571,7 +565,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
                     newRow.insertBefore($(selectors.siteSettingsPagesTableFirstRow, container));
 
-                    page.initializeSiteSettingsPagesListItems(newRow);
+                    page.initializeSiteSettingsPagesListItems(newRow, opts);
 
                     grid.showHideEmptyRow(container);
                 }
@@ -758,203 +752,6 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         }
 
         /**
-        * Page translations list view model
-        */
-        function PageTranslationsListViewModel() {
-            var self = this;
-
-            self.items = ko.observableArray();
-            self.mainPageId = ko.observable();
-
-            self.addItems = function (items, cultures) {
-                var lj = items.length,
-                    li = cultures.length,
-                    viewModel, i, j, culture, item, translation;
-
-                // Add invariant culture
-                for (j = 0; j < lj; j++) {
-                    item = items[j];
-
-                    if (!item.CultureId) {
-                        viewModel = new PageTranslationViewModel({ Key: '', Value: 'Invariant culture' }, item, self);
-                        self.items.push(viewModel);
-
-                        break;
-                    }
-                }
-
-                // Add all available cultures
-                for (i = 0; i < li; i++) {
-                    culture = cultures[i];
-                    translation = null;
-
-                    for (j = 0; j < lj; j++) {
-                        item = items[j];
-
-                        if (item.CultureId == culture.Key.toLowerCase()) {
-                            translation = item;
-                            break;
-                        }
-                    }
-
-                    viewModel = new PageTranslationViewModel(culture, translation, self);
-                    self.items.push(viewModel);
-                }
-            };
-
-            return self;
-        }
-
-        /**
-        * Page translation view model
-        */
-        function PageTranslationViewModel(culture, translation, parent) {
-            var self = this;
-
-            self.parent = parent;
-            self.id = ko.observable(translation ? translation.Id : '');
-            self.mainPageId = ko.observable(translation ? translation.MainCulturePageId : '');
-            self.title = ko.observable(translation ? translation.Title : '');
-            self.url = ko.observable(translation ? translation.PageUrl : '');
-            self.cultureName = ko.observable(culture.Value);
-            self.cultureId = ko.observable(culture.Key);
-
-            function removeAssignment() {
-                self.id('');
-                self.title('');
-                self.url('');
-            }
-
-            self.isPageCreated = ko.computed(function () {
-                return self.id();
-            });
-
-            self.deletePage = function () {
-                page.deletePage(self.id(), function () {
-                    if (bcms.pageId == self.id()) {
-                        redirect.RedirectWithAlert('/', {
-                            title: globalization.pageDeletedTitle,
-                            message: globalization.pageDeletedMessage
-                        });
-                    } else {
-                        removeAssignment();
-                    }
-                });
-            };
-
-            self.createPage = function () {
-                page.translatePage(self.cultureId());
-            };
-
-            self.editPage = function () {
-                pageProperties.openEditPageDialog(self.id(), function (json) {
-                    self.title(json.Data.Title);
-                    self.url(json.Data.PageUrl);
-                });
-            };
-
-            self.assignPage = function() {
-                var selectDialog = page.openPageSelectDialog({
-                        onAccept: function(selectedPage) {
-                            var url = $.format(links.assignPageToMainCulturePageUrl, selectedPage.id, self.mainPageId() || bcms.pageId, self.cultureId()),
-                                onComplete = function(json) {
-                                    messages.refreshBox(selectDialog.container, json);
-                                    if (json.Success) {
-                                        self.title(json.Data.Title);
-                                        self.url(json.Data.PageUrl);
-                                        self.mainPageId(json.Data.MainCulturePageId);
-                                        self.id(selectedPage.id);
-
-                                        selectDialog.close();
-                                    }
-                                };
-
-                            $.ajax({
-                                type: 'POST',
-                                url: url,
-                            })
-                                .done(function(result) {
-                                    onComplete(result);
-                                })
-                                .fail(function(response) {
-                                    onComplete(bcms.parseFailedResponse(response));
-                                });
-
-                            return false;
-                        },
-                        params: 'CultureId=' + self.cultureId()
-                    });
-            };
-
-            self.unassignPage = function () {
-                var onComplete = function (json) {
-                    if (json.Messages && json.Messages.length > 0) {
-                        modal.showMessages(json);
-                    }
-                    if (json.Success) {
-                        removeAssignment();
-                    }
-                };
-
-                modal.confirm({
-                    content: globalization.unassignMainCulturePageConfirmation,
-                    onAccept: function () {
-                        $.ajax({
-                            type: 'POST',
-                            url: $.format(links.unassignMainCulturePageUrl, self.id()),
-                        })
-                            .done(function (result) {
-                                onComplete(result);
-                            })
-                            .fail(function (response) {
-                                onComplete(bcms.parseFailedResponse(response));
-                            });
-                        return true;
-                    }
-                });
-            };
-
-            return self;
-        }
-
-        /**
-        * Initializes page translation events
-        */
-        function initTranslationEvents(dialog, json) {
-            var model = new PageTranslationsListViewModel(),
-                container = dialog.container.find(selectors.translationsContainer);
-
-            model.addItems(json.Data.Translations, json.Data.Cultures);
-            ko.applyBindings(model, container.get(0));
-        }
-
-        /**
-        * Opens modal window for managing current page translations
-        */
-        page.editPageTranslations = function () {
-            modal.open({
-                disableAccept: true,
-                cancelTitle: globalization.close,
-                title: globalization.editTranslationsDialogTitle,
-                onLoad: function (dialog) {
-                    var url = $.format(links.loadEditTranslationsDialogUrl, bcms.pageId);
-                    dynamicContent.bindDialog(dialog, url, {
-                        contentAvailable: initTranslationEvents,
-
-                        beforePost: function () {
-                            dialog.container.showLoading();
-                        },
-
-                        postComplete: function (json) {
-                            dialog.container.hideLoading();
-                        }
-                    });
-
-                }
-            });
-        };
-
-        /**
         * Show folder selection window
         */
         page.openPageSelectDialog = function (opts, pageGridOptions) {
@@ -1007,9 +804,9 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                     } else {
                         if ($.isFunction(opts.onAccept)) {
                             result = opts.onAccept({
-                                id: id,
-                                title: titleLink.html(),
-                                url: titleLink.data('url')
+                                Id: id,
+                                Title: titleLink.html(),
+                                PageUrl: titleLink.data('url')
                             });
                         }
                     }

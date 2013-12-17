@@ -323,9 +323,9 @@ namespace BetterCms.Module.Pages
                             CssClass = page => "bcms-buttons-block"
                         }, 
                         
-                    new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "editPageTranslations")
+                    new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "translatePage")
                         {
-                            Title = page => PagesGlobalization.Sidebar_TranslationsButtonTitle,
+                            Title = page => PagesGlobalization.Sidebar_TranslatePageButtonTitle,
                             CssClass = page => "bcms-sidemenu-btn",
                             Order = 600,
                             ShouldBeRendered = page => CmsContext.Config.EnableMultilanguage

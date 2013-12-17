@@ -181,8 +181,7 @@ namespace BetterCms.Module.Pages.Controllers
                                Cultures = success ? model.Cultures : null,
                                CultureId = success ? model.CultureId : null,
                                MainCulturePageId = success ? model.MainCulturePageId : null,
-                               MainCulturePageTitle = success ? model.MainCulturePageTitle : null,
-                               MainCulturePageUrl = success ? model.MainCulturePageUrl : null,
+                               Translations = success ? model.Translations : null
                            };
 
             return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);

@@ -45,7 +45,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 pageStatusChangeConfirmationMessagePublish: null,
                 pageStatusChangeConfirmationMessageUnPublish: null,
                 pageConversionToMasterConfirmationMessage: null,
-                selectedMasterIsChildPage: null
+                selectedMasterIsChildPage: null,
+                unassignMainCulturePageConfirmation: null
             },
             keys = {
                 editPagePropertiesInfoMessageClosed: 'bcms.EditPagePropertiesInfoBoxClosed'
@@ -66,7 +67,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         /**
         * Page view model
         */
-        function PageViewModel(image, secondaryImage, featuredImage, tagsViewModel, optionListViewModel, accessControlViewModel, pageCultureViewModel) {
+        function PageViewModel(image, secondaryImage, featuredImage, tagsViewModel, optionListViewModel, accessControlViewModel, translationsViewModel) {
             var self = this;
 
             self.tags = tagsViewModel;
@@ -75,51 +76,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             self.secondaryImage = ko.observable(new media.ImageSelectorViewModel(secondaryImage));
             self.featuredImage = ko.observable(new media.ImageSelectorViewModel(featuredImage));
             self.accessControl = accessControlViewModel;
-            self.culture = pageCultureViewModel;
+            self.translations = translationsViewModel;
         }
-
-        /**
-        * Page culture view model
-        */
-        page.PageCultureViewModel = function(data) {
-            var self = this,
-                i, l;
-
-            self.mainCulturePageId = ko.observable(data.MainCulturePageId);
-            self.mainCulturePageTitle = ko.observable(data.MainCulturePageTitle);
-            self.mainCulturePageUrl = ko.observable(data.MainCulturePageUrl);
-            self.cultureId = ko.observable(data.CultureId);
-
-            self.cultures = [];
-            self.cultures.push({ key: '', value: '' });
-            for (i = 0, l = data.Cultures.length; i < l; i++) {
-                self.cultures.push({
-                    key: data.Cultures[i].Key.toLowerCase(),
-                    value: data.Cultures[i].Value
-                });
-            }
-
-            self.change = function () {
-                page.openPageSelectDialog({
-                    onAccept: function (selectedPage) {
-                        self.mainCulturePageId(selectedPage.id);
-                        self.mainCulturePageTitle(selectedPage.title);
-                        self.mainCulturePageUrl(selectedPage.url);
-
-                        return true;
-                    },
-                    params: 'CultureId=' + bcms.constants.emptyGuid
-                });
-            };
-            
-            self.clear = function () {
-                self.mainCulturePageId('');
-                self.mainCulturePageTitle('');
-                self.mainCulturePageUrl('');
-            };
-
-            return self;
-        };
 
         /**
         * Initializes EditPageProperties dialog events.
@@ -129,8 +87,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 optionListViewModel = options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues, content.Data.CustomOptions),
                 tagsViewModel = new tags.TagsListViewModel(content.Data.Tags),
                 accessControlViewModel = security.createUserAccessViewModel(content.Data.UserAccessList),
-                pageCultureViewModel = content.Data.Cultures ? new page.PageCultureViewModel(content.Data) : null,
-                pageViewModel = new PageViewModel(content.Data.Image, content.Data.SecondaryImage, content.Data.FeaturedImage, tagsViewModel, optionListViewModel, accessControlViewModel, pageCultureViewModel),
+                translationsViewModel = new page.PageTranslationsListViewModel(content.Data.Translations, content.Data.Cultures, content.Data.CultureId),
+                pageViewModel = new PageViewModel(content.Data.Image, content.Data.SecondaryImage, content.Data.FeaturedImage, tagsViewModel, optionListViewModel, accessControlViewModel, translationsViewModel),
                 form = dialog.container.find(selectors.pagePropertiesForm);
 
             ko.applyBindings(pageViewModel, form.get(0));
@@ -499,6 +457,231 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                     redirect.RedirectWithAlert(data.Data.PageUrl);
                 }
             }, globalization.editMasterPagePropertiesModalTitle);
+        };
+
+        /**
+        * Page culture view model
+        */
+        page.PageCultureViewModel = function (cultures, cultureId) {
+            var self = this,
+                i, l;
+
+            self.mainCulturePageId = ko.observable();
+            self.mainCulturePageTitle = ko.observable();
+            self.mainCulturePageUrl = ko.observable();
+            self.cultureId = ko.observable(cultureId);
+
+            self.cultures = [];
+            self.cultures.push({ key: '', value: '' });
+            for (i = 0, l = cultures.length; i < l; i++) {
+                self.cultures.push({
+                    key: cultures[i].Key.toLowerCase(),
+                    value: cultures[i].Value
+                });
+            }
+
+            self.change = function () {
+                page.openPageSelectDialog({
+                    onAccept: function (selectedPage) {
+                        self.mainCulturePageId(selectedPage.Id);
+                        self.mainCulturePageTitle(selectedPage.Title);
+                        self.mainCulturePageUrl(selectedPage.PageUrl);
+
+                        return true;
+                    },
+                    params: 'CultureId=' + bcms.constants.emptyGuid
+                });
+            };
+
+            self.clear = function () {
+                self.mainCulturePageId('');
+                self.mainCulturePageTitle('');
+                self.mainCulturePageUrl('');
+            };
+
+            return self;
+        };
+
+        /**
+        * Page translations list view model
+        */
+        page.PageTranslationsListViewModel = function (items, cultures, cultureId) {
+            var self = this;
+
+            self.culture = new page.PageCultureViewModel(cultures, cultureId);
+            self.items = ko.observableArray();
+            self.isInAddMode = ko.observable(false);
+            self.addCultureId = ko.observable();
+
+            function closeAddMode() {
+                self.isInAddMode(false);
+                self.addCultureId('');
+            }
+
+            self.clickPlus = function () {
+                var isInAddMode = !self.isInAddMode();
+                if (!isInAddMode) {
+                    closeAddMode();
+                } else {
+                    self.isInAddMode(true);
+                }
+            };
+
+            self.selectPage = function() {
+                page.openPageSelectDialog({
+                    onAccept: function (selectedPage) {
+
+                        var i, l = self.culture.cultures.length,
+                            culture, viewModel;
+                        
+                        for (i = 0; i < l; i++) {
+                            culture = self.culture.cultures[i];
+                            
+                            if (culture.key == self.addCultureId()) {
+                                viewModel = new page.PageTranslationViewModel(culture, selectedPage, self);
+                                self.items.push(viewModel);
+
+                                closeAddMode();
+                                break;
+                            }
+                        }
+                    },
+                    params: 'CultureId=' + self.addCultureId()
+                });
+            };
+
+            self.unassignPage = function (item) {
+                modal.confirm({
+                    content: globalization.unassignMainCulturePageConfirmation,
+                    onAccept: function () {
+                        self.items.remove(item);
+
+                        return true;
+                    }
+                });
+            };
+            
+            self.unassignedCultures = ko.computed(function() {
+                var cult = [],
+                    lj = self.items().length,
+                    li = self.culture.cultures.length,
+                    i, j, culture, item, isAssigned;
+
+                for (i = 0; i < li; i++) {
+                    culture = self.culture.cultures[i];
+                    isAssigned = false;
+
+                    for (j = 0; j < lj; j++) {
+                        item = self.items()[j];
+
+                        if (item.cultureId() == culture.key) {
+                            isAssigned = true;
+                            break;
+                        }
+                    }
+                    
+                    if (!isAssigned) {
+                        cult.push(culture);
+                    }
+                }
+
+                return cult;
+            });
+
+            function addItems() {
+                var lj = items.length,
+                    li = self.culture.cultures.length,
+                    viewModel, i, j, culture, item, translation;
+
+                // Set main page data
+                for (j = 0; j < lj; j++) {
+                    item = items[j];
+
+                    if (!item.CultureId) {
+                        self.culture.mainCulturePageTitle(item.Title);
+                        self.culture.mainCulturePageUrl(item.PageUrl);
+                        self.culture.mainCulturePageId(item.Id);
+                        
+                        break;
+                    }
+                }
+
+                // Add all available cultures
+                for (i = 0; i < li; i++) {
+                    culture = self.culture.cultures[i];
+                    translation = null;
+
+                    for (j = 0; j < lj; j++) {
+                        item = items[j];
+
+                        if (item.CultureId == culture.key) {
+                            translation = item;
+                            break;
+                        }
+                    }
+
+                    if (translation) {
+                        viewModel = new page.PageTranslationViewModel(culture, translation, self);
+                        self.items.push(viewModel);
+                    }
+                }
+            };
+            
+            addItems();
+
+            return self;
+        };
+
+        /**
+        * Page translation view model
+        */
+        page.PageTranslationViewModel = function(culture, translation, parent) {
+            var self = this;
+
+            self.parent = parent;
+            self.id = ko.observable(translation ? translation.Id : '');
+            self.title = ko.observable(translation ? translation.Title : '');
+            self.url = ko.observable(translation ? translation.PageUrl : '');
+            self.cultureName = ko.observable(culture.value);
+            self.cultureId = ko.observable(culture.key);
+
+            self.getPropertyIndexer = function(i, propName) {
+                return 'Translations[' + i + '].' + propName;
+            };
+
+            self.assignPage = function () {
+//                var selectDialog = page.openPageSelectDialog({
+//                    onAccept: function (selectedPage) {
+//                        var url = $.format(links.assignPageToMainCulturePageUrl, selectedPage.id, bcms.pageId, self.cultureId()),
+//                            onComplete = function (json) {
+//                                messages.refreshBox(selectDialog.container, json);
+//                                if (json.Success) {
+//                                    self.title(json.Data.Title);
+//                                    self.url(json.Data.PageUrl);
+//                                    self.id(selectedPage.id);
+//
+//                                    selectDialog.close();
+//                                }
+//                            };
+//
+//                        $.ajax({
+//                            type: 'POST',
+//                            url: url,
+//                        })
+//                            .done(function (result) {
+//                                onComplete(result);
+//                            })
+//                            .fail(function (response) {
+//                                onComplete(bcms.parseFailedResponse(response));
+//                            });
+//
+//                        return false;
+//                    },
+//                    params: 'CultureId=' + self.cultureId()
+//                });
+            };
+
+            return self;
         };
 
         /**

@@ -188,28 +188,20 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public Guid? MainCulturePageId { get; set; }
 
         /// <summary>
-        /// Gets or sets the main culture page title.
-        /// </summary>
-        /// <value>
-        /// The main culture page title.
-        /// </value>
-        public string MainCulturePageTitle { get; set; }
-
-        /// <summary>
-        /// Gets or sets the main culture page URL.
-        /// </summary>
-        /// <value>
-        /// The main culture page URL.
-        /// </value>
-        public string MainCulturePageUrl { get; set; }
-
-        /// <summary>
         /// Gets or sets the list of cultures.
         /// </summary>
         /// <value>
         /// The list of cultures.
         /// </value>
-        public IEnumerable<LookupKeyValue> Cultures { get; set; }
+        public List<LookupKeyValue> Cultures { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of translation view models.
+        /// </summary>
+        /// <value>
+        /// The list of translation view models.
+        /// </value>
+        public List<PageTranslationViewModel> Translations { get; set; }
 
         /// <summary>
         /// Gets or sets the image view model.

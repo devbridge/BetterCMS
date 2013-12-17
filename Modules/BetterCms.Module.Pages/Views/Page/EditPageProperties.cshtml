@@ -25,6 +25,7 @@
     <a class="bcms-tab" data-name="#bcms-tab-2">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Title</a>
     <a class="bcms-tab" data-name="#bcms-tab-3">@PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Title</a>
     <a class="bcms-tab" data-name="#bcms-tab-4">@PagesGlobalization.EditPageProperties_OptionsTab_Title</a>
+    <a class="bcms-tab" data-name="#bcms-tab-5">@PagesGlobalization.EditPageProperties_TranslationsTab_Title</a>
 </div>
 
 <div class="bcms-scroll-window">
@@ -41,27 +42,6 @@
     {
         <div id="bcms-tab-1" class="bcms-tab-single">
             <div class="bcms-padded-content">
-                @if (Model.Cultures != null && Model.Cultures.Any())
-                {
-                    <div class="bcms-input-list-holder" data-bind="with: culture">
-                        @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_Culture_Tooltip_Description)
-                        <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_Culture</div>
-                        <select class="bcms-global-select" data-bind="options: cultures, optionsText: 'value', optionsValue: 'key', value: cultureId"></select>
-                    </div>
-                    
-                    <div class="bcms-input-list-holder" data-bind="with: culture">
-                        @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_MainCulturePage_Tooltip_Description)
-                        <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_MainCulturePage</div>
-                        <!-- ko if: mainCulturePageId() -->
-                        <a data-bind="html: mainCulturePageTitle(), attr: { href: mainCulturePageUrl() }" target="_blank"></a>
-                        <!-- /ko -->
-                        <div class="bcms-btn-small" data-bind="click: change">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_ChangeMainCulturePage_ButtonTitle</div>
-                        <!-- ko if: mainCulturePageId() -->
-                        <div class="bcms-btn-small" data-bind="click: clear">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_ClearMainCulturePage_ButtonTitle</div>
-                        <!-- /ko -->
-                    </div>
-                }
-
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Title</div>
@@ -170,8 +150,8 @@
                 @Html.HiddenFor(model => model.FeaturedImage.ImageId, new { data_bind = "value: featuredImage().id()" })
                 @if (Model.Cultures != null && Model.Cultures.Any())
                 {
-                    @Html.HiddenFor(model => model.CultureId, new { data_bind = "value: culture.cultureId()" })
-                    @Html.HiddenFor(model => model.MainCulturePageId, new { data_bind = "value: culture.mainCulturePageId()" })
+                    @Html.HiddenFor(model => model.CultureId, new { data_bind = "value: translations.culture.cultureId()" })
+                    @Html.HiddenFor(model => model.MainCulturePageId, new { data_bind = "value: translations.culture.mainCulturePageId()" })
                 }
             </div>
         </div>
@@ -211,7 +191,34 @@
         <div id="bcms-tab-4" class="bcms-tab-single" data-bind="with: options">
             @Html.Partial(PagesConstants.OptionValuesGridTemplate)
         </div>
-            
+
+        if (Model.Cultures != null && Model.Cultures.Any())
+        {
+            <div id="bcms-tab-5" class="bcms-tab-single">
+                <div class="bcms-padded-content">
+                    <div class="bcms-input-list-holder" data-bind="with: translations.culture">
+                        @Html.Tooltip(PagesGlobalization.EditPageProperties_TranslationsTab_Culture_Tooltip_Description)
+                        <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_TranslationsTab_Culture</div>
+                        <select class="bcms-global-select" data-bind="options: cultures, optionsText: 'value', optionsValue: 'key', value: cultureId"></select>
+                    </div>
+                    
+                    <div class="bcms-input-list-holder" data-bind="with: translations.culture">
+                        @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_MainCulturePage_Tooltip_Description)
+                        <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_MainCulturePage</div>
+                        <!-- ko if: mainCulturePageId() -->
+                        <a data-bind="html: mainCulturePageTitle(), attr: { href: mainCulturePageUrl() }" target="_blank"></a>
+                        <!-- /ko -->
+                        <div class="bcms-btn-small" data-bind="click: change">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_ChangeMainCulturePage_ButtonTitle</div>
+                        <!-- ko if: mainCulturePageId() -->
+                        <div class="bcms-btn-small" data-bind="click: clear">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_ClearMainCulturePage_ButtonTitle</div>
+                        <!-- /ko -->
+                    </div>
+                    
+                     @Html.Partial("Partial/TranslationsGrid")
+                </div>
+            </div>
+        }
+
         @Html.HiddenSubmit()
     }
 </div>
