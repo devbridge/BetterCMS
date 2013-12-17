@@ -41,7 +41,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemap
         /// </summary>
         /// <param name="sitemapId">The sitemap identifier.</param>
         /// <returns>
-        /// Sitemap root nodes.
+        /// Sitemap view model.
         /// </returns>
         public SitemapViewModel Execute(Guid sitemapId)
         {

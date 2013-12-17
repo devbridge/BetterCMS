@@ -270,8 +270,8 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Shows add new page to sitemap dialog.
         */
         sitemap.loadAddNewPageDialog = function(data) {
-            if (data && data.Data && (data.Data.Title || data.Data.PageTitle) && (data.Data.Url || data.Data.PageUrl) && !data.Data.IsMasterPage) {
-                var addPageController = new AddNewPageMapController(data.Data.Title || data.Data.PageTitle, data.Data.Url || data.Data.PageUrl);
+            if (data && data.Data && (data.Data.Title || data.Data.PageTitle) && (data.Data.Url || data.Data.PageUrl) && (data.Data.Id || data.Data.PageId) && !data.Data.IsMasterPage) {
+                var addPageController = new AddNewPageMapController(data.Data.Title || data.Data.PageTitle, data.Data.Url || data.Data.PageUrl, data.Data.Id || data.Data.PageId);
                 modal.open({
                     title: globalization.sitemapAddNewPageDialogTitle,
                     onLoad: function(dialog) {
@@ -318,7 +318,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 sitemap.showMessage(content);
                 if (content.Success) {
                     // Create data models.
-                    var sitemapModel = new SitemapViewModel(content.Data);
+                    var sitemapModel = new SitemapViewModel(content.Data.Sitemap);
                     // TODO: update sitemap editing for read only mode.
                     sitemapModel.parseJsonNodes(content.Data.Sitemap.RootNodes);
                     self.pageLinksModel = new SearchPageLinksViewModel(sitemapModel);
@@ -351,7 +351,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Controller for sitemap add new page dialog.
         */
-        function AddNewPageMapController(title, url) {
+        function AddNewPageMapController(title, url, id) {
             var self = this;
             self.container = null;
             self.newPageModel = null;
@@ -359,8 +359,23 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.pageLinkModel = new PageLinkViewModel();
             self.pageLinkModel.title(title);
             self.pageLinkModel.url(url);
+            self.pageLinkModel.id(id);
 
             self.initialize = function (content, dialog) {
+                if (!(content != null && content.Data != null && content.Data.length > 0)) {
+                    // No sitemaps to place the new page.
+                    dialog.close();
+                    return;
+                }
+
+                if (content.Data.length > 1) {
+                    // TODO: implement new page placement.
+                    dialog.close();
+                    alert("TODO: Implement new page placement for multiple sitemaps.");
+                    return;
+                    // TODO: implement new page placement.
+                }
+
                 self.container = dialog.container;
                 sitemap.activeMessageContainer = self.container;
                 sitemap.activeLoadingContainer = self.container.find(selectors.sitemapAddNewPageDataBind);
@@ -372,8 +387,8 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     };
                     
                     // Create data models.
-                    var sitemapModel = new SitemapViewModel();
-                    sitemapModel.parseJsonNodes(content.Data.RootNodes); // TODO: update.
+                    var sitemapModel = new SitemapViewModel(content.Data[0]); // TODO: update.
+                    sitemapModel.parseJsonNodes(content.Data[0].RootNodes);
                     self.newPageModel = new AddNewPageViewModel(sitemapModel, self.pageLinkModel, onSkip);
                     sitemap.activeMapModel = sitemapModel;
 
@@ -592,10 +607,10 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Responsible for sitemap structure.
         */
-        function SitemapViewModel(json) {
+        function SitemapViewModel(jsonSitemap) {
             var self = this;
             
-            self.id = function () { return json.Sitemap.Id; };
+            self.id = function () { return jsonSitemap.Id; };
             self.childNodes = ko.observableArray([]);
             self.childNodes.subscribe(updateFirstLastNode);
             self.someNodeIsOver = ko.observable(false);     // Someone is dragging some node over the sitemap, but not over the particular node.
@@ -603,10 +618,10 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.showHasNoDataMessage = ko.observable(false);
             self.savingInProgress = false;                  // To prevent multiple saving.
 
-            self.version = json.Sitemap.Version;
-            self.title = ko.observable(json.Sitemap.Title);
-            self.tags = new tags.TagsListViewModel(json.Sitemap.Tags);
-            self.accessControl = security.createUserAccessViewModel(json.Sitemap.UserAccessList);
+            self.version = jsonSitemap.Version;
+            self.title = ko.observable(jsonSitemap.Title);
+            self.tags = new tags.TagsListViewModel(jsonSitemap.Tags);
+            self.accessControl = security.createUserAccessViewModel(jsonSitemap.UserAccessList);
 
             self.settings = {
                 canEditNode: false,
@@ -1057,6 +1072,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             var self = this;
             self.title = ko.observable();
             self.url = ko.observable();
+            self.id = ko.observable();
             self.isVisible = ko.observable(true);
             self.isCustom = ko.observable(false);
             self.isBeingDragged = ko.observable(false);
@@ -1072,6 +1088,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 self.isVisible(true);
                 self.title(json.Title);
                 self.url(json.Url);
+                self.id(json.Id);
             };
         }
         

@@ -7,6 +7,7 @@ using BetterCms.Module.Pages.Command.Sitemap.DeleteSitemap;
 using BetterCms.Module.Pages.Command.Sitemap.DeleteSitemapNode;
 using BetterCms.Module.Pages.Command.Sitemap.GetPageLinks;
 using BetterCms.Module.Pages.Command.Sitemap.GetSitemap;
+using BetterCms.Module.Pages.Command.Sitemap.GetSitemapsForNewPage;
 using BetterCms.Module.Pages.Command.Sitemap.GetSitemapsList;
 using BetterCms.Module.Pages.Command.Sitemap.SaveSitemap;
 using BetterCms.Module.Pages.Command.Sitemap.SaveSitemapNode;
@@ -104,11 +105,11 @@ namespace BetterCms.Module.Pages.Controllers
         [HttpGet]
         public ActionResult AddNewPage()
         {
-            var sitemap = GetCommand<GetSitemapCommand>().ExecuteCommand(string.Empty.ToGuidOrDefault()); // TODO: update.
-            var success = sitemap != null;
-            var view = RenderView("NewPage", new SitemapViewModel());
+            var model = GetCommand<GetSitemapsForNewPageCommand>().ExecuteCommand();
+            var success = model != null;
+            var view = RenderView("NewPage", model);
 
-            return ComboWireJson(success, view, sitemap, JsonRequestBehavior.AllowGet);
+            return ComboWireJson(success, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
