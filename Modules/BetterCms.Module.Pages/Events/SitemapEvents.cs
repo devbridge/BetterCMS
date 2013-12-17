@@ -35,11 +35,11 @@ namespace BetterCms.Events
         /// <summary>
         /// Called when sitemap is updated.
         /// </summary>
-        public void OnSitemapUpdated()
+        public void OnSitemapUpdated(Sitemap sitemap)
         {
             if (SitemapUpdated != null)
             {
-                SitemapUpdated(EventArgs.Empty);
+                SitemapUpdated(new SingleItemEventArgs<Sitemap>(sitemap));
             }
         }
 

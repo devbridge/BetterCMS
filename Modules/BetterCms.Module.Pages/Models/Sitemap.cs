@@ -28,7 +28,7 @@ namespace BetterCms.Module.Pages.Models
         /// <value>
         /// The sitemap tags.
         /// </value>
-        public virtual IList<Tag> Tags { get; set; }
+        public virtual IList<SitemapTag> SitemapTags { get; set; }
 
         /// <summary>
         /// Gets or sets the access rules.

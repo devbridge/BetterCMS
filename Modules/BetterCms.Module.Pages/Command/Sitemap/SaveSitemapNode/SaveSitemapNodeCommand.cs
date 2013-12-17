@@ -27,7 +27,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemapNode
         {
             UnitOfWork.BeginTransaction();
 
-            var node = SitemapService.SaveNode(request.Id, request.Version, request.Url, request.Title, request.DisplayOrder, request.ParentId);
+            var node = SitemapService.SaveNode(request.SitemapId, request.Id, request.Version, request.Url, request.Title, request.DisplayOrder, request.ParentId);
 
             UnitOfWork.Commit();
 
@@ -40,7 +40,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemapNode
                 Events.SitemapEvents.Instance.OnSitemapNodeUpdated(node);
             }
 
-            Events.SitemapEvents.Instance.OnSitemapUpdated();
+            Events.SitemapEvents.Instance.OnSitemapUpdated(node.Sitemap);
 
             return new SitemapNodeViewModel
                 {

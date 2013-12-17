@@ -1,17 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Sitemap;
+using BetterCms.Module.Root;
+using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
+
+using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
 {
     /// <summary>
     /// Saves sitemap data.
     /// </summary>
-    public class SaveSitemapCommand : CommandBase, ICommandIn<IList<SitemapNodeViewModel>>
+    public class SaveSitemapCommand : CommandBase, ICommandIn<SitemapViewModel>
     {
         private IList<SitemapNode> createdNodes = new List<SitemapNode>();
         private IList<SitemapNode> updatedNodes = new List<SitemapNode>();
@@ -26,17 +34,71 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
         public ISitemapService SitemapService { get; set; }
 
         /// <summary>
+        /// Gets or sets the tag service.
+        /// </summary>
+        /// <value>
+        /// The tag service.
+        /// </value>
+        public ITagService TagService { get; set; }
+
+        /// <summary>
+        /// Gets or sets the CMS configuration.
+        /// </summary>
+        /// <value>
+        /// The CMS configuration.
+        /// </value>
+        public ICmsConfiguration CmsConfiguration { get; set; }
+
+        /// <summary>
         /// Executes the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
-        public void Execute(IList<SitemapNodeViewModel> request)
+        public void Execute(SitemapViewModel request)
         {
             createdNodes.Clear();
             updatedNodes.Clear();
             deletedNodes.Clear();
 
+            var sitemapQuery = Repository.AsQueryable<Models.Sitemap>().Where(s => s.Id == request.Id);
+
+            if (CmsConfiguration.Security.AccessControlEnabled)
+            {
+                sitemapQuery = sitemapQuery.FetchMany(f => f.AccessRules);
+            }
+
+            var sitemap = sitemapQuery.ToList().First();
+
+            var roles = new[] { RootModuleConstants.UserRoles.EditContent };
+            if (CmsConfiguration.Security.AccessControlEnabled)
+            {
+                AccessControlService.DemandAccess(sitemap, Context.Principal, AccessLevel.ReadWrite, roles);
+            }
+            else
+            {
+                AccessControlService.DemandAccess(Context.Principal, roles);
+            }
+
+
             UnitOfWork.BeginTransaction();
-            SaveNodeList(request, null);
+
+            SaveNodeList(sitemap.Id, request.RootNodes, null);
+
+            if (CmsConfiguration.Security.AccessControlEnabled)
+            {
+                sitemap.AccessRules.RemoveDuplicateEntities();
+
+                var accessRules = request.UserAccessList != null ? request.UserAccessList.Cast<IAccessRule>().ToList() : null;
+                AccessControlService.UpdateAccessControl(sitemap, accessRules);
+            }
+
+            sitemap.Title = request.Title;
+            sitemap.Version = request.Version;
+            Repository.Save(sitemap);
+
+            IList<Tag> newTags;
+            TagService.SaveTags(sitemap, request.Tags, out newTags);
+
+
             UnitOfWork.Commit();
 
             if (createdNodes.Count <= 0 && updatedNodes.Count <= 0 && deletedNodes.Count <= 0)
@@ -44,22 +106,40 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
                 return;
             }
 
+            var updatedSitemaps = new List<Models.Sitemap>();
             foreach (var node in createdNodes)
             {
                 Events.SitemapEvents.Instance.OnSitemapNodeCreated(node);
+                if (!updatedSitemaps.Contains(node.Sitemap))
+                {
+                    updatedSitemaps.Add(node.Sitemap);
+                }
             }
 
             foreach (var node in updatedNodes)
             {
                 Events.SitemapEvents.Instance.OnSitemapNodeUpdated(node);
+                if (!updatedSitemaps.Contains(node.Sitemap))
+                {
+                    updatedSitemaps.Add(node.Sitemap);
+                }
             }
 
             foreach (var node in deletedNodes)
             {
                 Events.SitemapEvents.Instance.OnSitemapNodeDeleted(node);
+                if (!updatedSitemaps.Contains(node.Sitemap))
+                {
+                    updatedSitemaps.Add(node.Sitemap);
+                }
             }
 
-            Events.SitemapEvents.Instance.OnSitemapUpdated();
+            foreach (var updatedSitemap in updatedSitemaps)
+            {
+                Events.SitemapEvents.Instance.OnSitemapUpdated(updatedSitemap);
+            }
+
+            Events.RootEvents.Instance.OnTagCreated(newTags);
         }
 
         /// <summary>
@@ -67,7 +147,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
         /// </summary>
         /// <param name="nodes">The nodes.</param>
         /// <param name="parentNode">The parent node.</param>
-        private void SaveNodeList(IEnumerable<SitemapNodeViewModel> nodes, SitemapNode parentNode)
+        private void SaveNodeList(Guid sitemapId, IEnumerable<SitemapNodeViewModel> nodes, SitemapNode parentNode)
         {
             if (nodes == null)
             {
@@ -81,7 +161,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
                 var update = !node.Id.HasDefaultValue() && !isDeleted;
                 var delete = !node.Id.HasDefaultValue() && isDeleted;
 
-                var sitemapNode = SitemapService.SaveNode(node.Id, node.Version, node.Url, node.Title, node.DisplayOrder, node.ParentId, isDeleted, parentNode);
+                var sitemapNode = SitemapService.SaveNode(sitemapId, node.Id, node.Version, node.Url, node.Title, node.DisplayOrder, node.ParentId, isDeleted, parentNode);
 
                 if (create)
                 {
@@ -96,7 +176,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
                     deletedNodes.Add(sitemapNode);
                 }
 
-                SaveNodeList(node.ChildNodes, sitemapNode);
+                SaveNodeList(sitemapId, node.ChildNodes, sitemapNode);
             }
         }
    }

@@ -49,7 +49,8 @@ namespace BetterCms.Module.Pages.Services
         /// <summary>
         /// Saves the node.
         /// </summary>
-        /// <param name="id">The id.</param>
+        /// <param name="sitemapId">The sitemap identifier.</param>
+        /// <param name="nodeId">The node identifier.</param>
         /// <param name="version">The version.</param>
         /// <param name="url">The URL.</param>
         /// <param name="title">The title.</param>
@@ -60,6 +61,6 @@ namespace BetterCms.Module.Pages.Services
         /// <returns>
         /// Updated or newly created sitemap node.
         /// </returns>
-        SitemapNode SaveNode(Guid id, int version, string url, string title, int displayOrder, Guid parentId, bool isDeleted = false, SitemapNode parentNode = null);
+        SitemapNode SaveNode(Guid sitemapId, Guid nodeId, int version, string url, string title, int displayOrder, Guid parentId, bool isDeleted = false, SitemapNode parentNode = null);
     }
 }

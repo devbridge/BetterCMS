@@ -1,98 +1,103 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
-
+using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Sitemap;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.ViewModels.Security;
+
+using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemap
 {
     /// <summary>
     /// Command to get sitemap data.
     /// </summary>
-    public class GetSitemapCommand : CommandBase, ICommand<string, SearchableSitemapViewModel>
+    public class GetSitemapCommand : CommandBase, ICommand<Guid, SitemapViewModel>
     {
+        /// <summary>
+        /// Gets or sets the CMS configuration.
+        /// </summary>
+        /// <value>
+        /// The CMS configuration.
+        /// </value>
+        public ICmsConfiguration CmsConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tag service.
+        /// </summary>
+        /// <value>
+        /// The tag service.
+        /// </value>
+        public ITagService TagService { get; set; }
+
         /// <summary>
         /// Executes the specified request.
         /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns>Sitemap root nodes.</returns>
-        public SearchableSitemapViewModel Execute(string request)
+        /// <param name="sitemapId">The sitemap identifier.</param>
+        /// <returns>
+        /// Sitemap root nodes.
+        /// </returns>
+        public SitemapViewModel Execute(Guid sitemapId)
         {
-            var nodes = GetNodes(request);
+            IEnumerable<AccessRule> userAccessFuture;
+            if (CmsConfiguration.Security.AccessControlEnabled)
+            {
+                userAccessFuture = Repository
+                    .AsQueryable<Models.Sitemap>()
+                    .Where(x => x.Id == sitemapId && !x.IsDeleted)
+                    .SelectMany(x => x.AccessRules)
+                    .OrderBy(x => x.Identity)
+                    .ToFuture();
+            }
+            else
+            {
+                userAccessFuture = null;
+            }
 
-            return new SearchableSitemapViewModel
+            var tagsFuture = TagService.GetSitemapTagNames(sitemapId);
+
+            var sitemap = Repository.AsQueryable<Models.Sitemap>()
+                .Where(map => map.Id == sitemapId)
+                .Fetch(map => map.Nodes)
+                .Distinct()
+                .ToList()
+                .First();
+
+            var model = new SitemapViewModel
                 {
-                    SearchQuery = request,
-                    RootNodes = nodes
+                    Id = sitemap.Id,
+                    Version = sitemap.Version,
+                    Title = sitemap.Title,
+                    RootNodes = GetSitemapNodesInHierarchy(sitemap.Nodes.Where(f => f.ParentNode == null).ToList(), sitemap.Nodes.ToList()),
+                    Tags = tagsFuture.ToList(),
+                    AccessControlEnabled = CmsConfiguration.Security.AccessControlEnabled
                 };
-        }
 
-        public IList<SitemapNodeViewModel> GetNodes(string search)
-        {
-            var allNodes = Repository.AsQueryable<SitemapNode>().ToList();
-            var allModels = GetSitemapNodesInHierarchy(allNodes.Where(f => f.ParentNode == null).ToList(), allNodes);
-
-            if (string.IsNullOrEmpty(search))
+            if (userAccessFuture != null)
             {
-                return allModels;
+                model.UserAccessList = userAccessFuture.Select(x => new UserAccessViewModel(x)).ToList();
+
+                var rules = model.UserAccessList.Cast<IAccessRule>().ToList();
+
+                SetIsReadOnly(model, rules);
             }
 
-            // Remove branches without search results
-            RemoveInvalidItems(allModels, search);
-
-            return allModels;
+            return model;
         }
 
-        private void RemoveInvalidItems(IList<SitemapNodeViewModel> models, string search)
-        {
-            var itemsToRemove = new List<SitemapNodeViewModel>();
-
-            foreach (var model in models)
-            {
-                if (!AddToSearchResults(model, search))
-                {
-                    itemsToRemove.Add(model);
-                }
-                else
-                {
-                    RemoveInvalidItems(model.ChildNodes, search);
-                }
-            }
-
-            foreach (var item in itemsToRemove)
-            {
-                models.Remove(item);
-            }
-        }
-
-        private bool AddToSearchResults(SitemapNodeViewModel model, string search)
-        {
-            if (ContainsSearchQuery(model.Title, search) || ContainsSearchQuery(model.Url, search))
-            {
-                return true;
-            }
-
-            foreach (var childModel in model.ChildNodes)
-            {
-                var result = AddToSearchResults(childModel, search);
-                if (result)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private bool ContainsSearchQuery(string value, string search)
-        {
-            return value.ToLower().Contains(search.ToLower());
-        }
-
-        private List<SitemapNodeViewModel> GetSitemapNodesInHierarchy(IList<SitemapNode> sitemapNodes, IList<SitemapNode> allNodes)
+        /// <summary>
+        /// Gets the sitemap nodes in hierarchy.
+        /// </summary>
+        /// <param name="sitemapNodes">The sitemap nodes.</param>
+        /// <param name="allNodes">All nodes.</param>
+        /// <returns>The list with all root nodes.</returns>
+        private static List<SitemapNodeViewModel> GetSitemapNodesInHierarchy(IList<SitemapNode> sitemapNodes, IList<SitemapNode> allNodes)
         {
             var nodeList = new List<SitemapNodeViewModel>();
 

@@ -136,6 +136,8 @@
     <Compile Include="Events\SitemapEvents.cs" />
     <Compile Include="Events\TagEvents.cs" />
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
+    <Compile Include="Models\Maps\SitemapTagMap.cs" />
+    <Compile Include="Models\SitemapTag.cs" />
     <Compile Include="Models\Migrations\Migration201312121313.cs" />
     <Compile Include="Models\Events\UpdatingPagePropertiesModel.cs" />
     <Compile Include="Models\Maps\SitemapMap.cs" />
@@ -304,7 +306,7 @@
     <Compile Include="ViewModels\Page\RenderPageImageViewModel.cs" />
     <Compile Include="ViewModels\Page\RenderPagePropertiesViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\PageLinkViewModel.cs" />
-    <Compile Include="ViewModels\Sitemap\SearchableSitemapViewModel.cs" />
+    <Compile Include="ViewModels\Sitemap\SitemapViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\SitemapAndPageLinksViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\SitemapNodeViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingSitemapViewModel.cs" />

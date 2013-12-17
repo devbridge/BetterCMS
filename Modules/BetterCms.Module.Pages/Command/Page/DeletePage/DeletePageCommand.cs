@@ -187,11 +187,20 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
 
             if (sitemapNodes != null && sitemapNodes.Count > 0)
             {
+                var updatedSitemaps = new List<Models.Sitemap>();
                 foreach (var node in sitemapNodes)
                 {
                     Events.SitemapEvents.Instance.OnSitemapNodeUpdated(node);
+                    if (!updatedSitemaps.Contains(node.Sitemap))
+                    {
+                        updatedSitemaps.Add(node.Sitemap);
+                    }
                 }
-                Events.SitemapEvents.Instance.OnSitemapUpdated();
+
+                foreach (var updatedSitemap in updatedSitemaps)
+                {
+                    Events.SitemapEvents.Instance.OnSitemapUpdated(updatedSitemap);
+                }
             }
 
             // Notifying, that page is deleted.

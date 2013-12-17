@@ -14,6 +14,7 @@ using BetterCms.Module.Pages.ViewModels.Sitemap;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.ViewModels.Security;
 
 using Microsoft.Web.Mvc;
 
@@ -26,23 +27,6 @@ namespace BetterCms.Module.Pages.Controllers
     [ActionLinkArea(PagesModuleDescriptor.PagesAreaName)]
     public class SitemapController : CmsControllerBase
     {
-// TODO: remove.
-//        /// <summary>
-//        /// Renders sitemap container.
-//        /// </summary>
-//        /// <param name="searchQuery">The search query.</param>
-//        /// <returns>
-//        /// Rendered sitemap container.
-//        /// </returns>
-//        public ActionResult Index(string searchQuery)
-//        {
-//            var sitemap = GetCommand<GetSitemapCommand>().ExecuteCommand(searchQuery);
-//            var success = sitemap != null;
-//            var view = RenderView("Index", new SearchableSitemapViewModel());
-//
-//            return ComboWireJson(success, view, sitemap, JsonRequestBehavior.AllowGet);
-//        }
-        
         /// <summary>
         /// Gets sitemaps list for Site Settings.
         /// </summary>
@@ -68,17 +52,17 @@ namespace BetterCms.Module.Pages.Controllers
         /// </summary>
         /// <returns>Rendered sitemap container.</returns>
         [HttpGet]
-        public ActionResult EditSitemap()
+        public ActionResult EditSitemap(string sitemapId)
         {
-            var sitemap = GetCommand<GetSitemapCommand>().ExecuteCommand(string.Empty);
+            var model = GetCommand<GetSitemapCommand>().ExecuteCommand(sitemapId.ToGuidOrDefault());
             var pageLinks = GetCommand<GetPageLinksCommand>().ExecuteCommand(string.Empty);
-            var success = sitemap != null & pageLinks != null;
-            var view = RenderView("Edit", null);
+            var success = model != null & pageLinks != null;
+            var view = RenderView("Edit", model);
 
             var data = new SitemapAndPageLinksViewModel();
             if (success)
             {
-                data.RootNodes = sitemap.RootNodes;
+                data.Sitemap = model;
                 data.PageLinks = pageLinks;
             }
 
@@ -91,8 +75,9 @@ namespace BetterCms.Module.Pages.Controllers
         /// <param name="model">The model.</param>
         /// <returns>Action result.</returns>
         [HttpPost]
-        public ActionResult SaveSitemap(List<SitemapNodeViewModel> model)
+        public ActionResult SaveSitemap(SitemapViewModel model)
         {
+            model.UserAccessList = model.UserAccessList ?? new List<UserAccessViewModel>();
             return Json(new WireJson { Success = GetCommand<SaveSitemapCommand>().ExecuteCommand(model) });
         }
 
@@ -103,9 +88,9 @@ namespace BetterCms.Module.Pages.Controllers
         [HttpGet]
         public ActionResult AddNewPage()
         {
-            var sitemap = GetCommand<GetSitemapCommand>().ExecuteCommand(string.Empty);
+            var sitemap = GetCommand<GetSitemapCommand>().ExecuteCommand(string.Empty.ToGuidOrDefault()); // TODO: update.
             var success = sitemap != null;
-            var view = RenderView("NewPage", new SearchableSitemapViewModel());
+            var view = RenderView("NewPage", new SitemapViewModel());
 
             return ComboWireJson(success, view, sitemap, JsonRequestBehavior.AllowGet);
         }

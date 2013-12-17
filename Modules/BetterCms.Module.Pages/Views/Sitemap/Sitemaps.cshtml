@@ -15,7 +15,7 @@
         column.For(m => m.Title)
             .Named(NavigationGlobalization.SiteSettings_Sitemaps_TitleColumn)
             .SortColumnName("Title")
-            .Attributes();
+            .Attributes(@class => "bcms-sitemap-title");
         column.DeleteButtonColumn();
     };
 }

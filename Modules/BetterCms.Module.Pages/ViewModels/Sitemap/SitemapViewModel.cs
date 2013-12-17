@@ -1,26 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Root.Content.Resources;
+using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.Pages.ViewModels.Sitemap
 {
     /// <summary>
-    /// View model for sitemap node data.
+    /// View model for sitemap data.
     /// </summary>
-    public class SitemapNodeViewModel
+    public class SitemapViewModel : IAccessSecuredViewModel
     {
-        /// <summary>
-        /// Gets or sets the sitemap identifier.
-        /// </summary>
-        /// <value>
-        /// The sitemap identifier.
-        /// </value>
-        public Guid SitemapId { get; set; }
-
         /// <summary>
         /// Gets or sets the id.
         /// </summary>
@@ -48,47 +42,44 @@ namespace BetterCms.Module.Pages.ViewModels.Sitemap
         public string Title { get; set; }
 
         /// <summary>
-        /// Gets or sets the URL.
+        /// Gets or sets the sitemap root nodes.
         /// </summary>
         /// <value>
-        /// The URL.
+        /// The root nodes.
         /// </value>
-        [StringLength(MaxLength.Url, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
-        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(NavigationGlobalization), ErrorMessageResourceName = "Sitemap_Dialog_NodeUrl_RequiredMessage")]
-        [RegularExpression(PagesConstants.SiteMapUrlRegularExpression, ErrorMessageResourceType = typeof(NavigationGlobalization), ErrorMessageResourceName = "Sitemap_Dialog_NodeUrl_InvalidSymbol")]
-        public string Url { get; set; }
+        public List<SitemapNodeViewModel> RootNodes { get; set; }
 
         /// <summary>
-        /// Gets or sets the display order.
+        /// Gets or sets the tags.
         /// </summary>
         /// <value>
-        /// The display order.
+        /// The tags.
         /// </value>
-        public int DisplayOrder { get; set; }
+        public IList<string> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets the parent id.
+        /// Gets or sets a value indicating whether access control is enabled.
         /// </summary>
         /// <value>
-        /// The parent id.
+        /// <c>true</c> if access control is enabled; otherwise, <c>false</c>.
         /// </value>
-        public Guid ParentId { get; set; }
+        public bool AccessControlEnabled { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this instance is deleted.
+        /// Gets or sets the user access list.
         /// </summary>
         /// <value>
-        /// <c>true</c> if this instance is deleted; otherwise, <c>false</c>.
+        /// The user access list.
         /// </value>
-        public bool IsDeleted { get; set; }
+        public IList<UserAccessViewModel> UserAccessList { get; set; }
 
         /// <summary>
-        /// Gets or sets the child nodes.
+        /// Gets or sets a value indicating whether dialog should be opened in the read only mode.
         /// </summary>
         /// <value>
-        /// The child nodes.
+        /// <c>true</c> if dialog should be opened in the read only mode; otherwise, <c>false</c>.
         /// </value>
-        public IList<SitemapNodeViewModel> ChildNodes { get; set; }
+        public bool IsReadOnly { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
@@ -98,7 +89,7 @@ namespace BetterCms.Module.Pages.ViewModels.Sitemap
         /// </returns>
         public override string ToString()
         {
-            return string.Format("Id: {0}, Version: {1}, Title:{2}", Id, Version, Title);
+            return string.Format("Id: {0}, Version: {1}, Title:{2}, RootNodes count: {3}", Id, Version, Title, RootNodes != null ? RootNodes.Count.ToString(CultureInfo.InvariantCulture) : string.Empty);
         }
     }
 }

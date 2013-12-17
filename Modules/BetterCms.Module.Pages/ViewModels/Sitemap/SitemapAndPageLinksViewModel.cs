@@ -9,20 +9,20 @@ namespace BetterCms.Module.Pages.ViewModels.Sitemap
     public class SitemapAndPageLinksViewModel
     {
         /// <summary>
-        /// Gets or sets the sitemap root nodes.
-        /// </summary>
-        /// <value>
-        /// The root nodes.
-        /// </value>
-        public IList<SitemapNodeViewModel> RootNodes { get; set; }
-
-        /// <summary>
         /// Gets or sets the page links.
         /// </summary>
         /// <value>
         /// The page links.
         /// </value>
         public IList<PageLinkViewModel> PageLinks { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sitemap.
+        /// </summary>
+        /// <value>
+        /// The sitemap.
+        /// </value>
+        public SitemapViewModel Sitemap { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
@@ -35,7 +35,7 @@ namespace BetterCms.Module.Pages.ViewModels.Sitemap
             return string.Format(
                 "PageLinks count: {0}, RootNodes count: {1}",
                 PageLinks != null ? PageLinks.Count.ToString(CultureInfo.InvariantCulture) : string.Empty,
-                RootNodes != null ? RootNodes.Count.ToString(CultureInfo.InvariantCulture) : string.Empty);
+                Sitemap != null && Sitemap.RootNodes != null ? Sitemap.RootNodes.Count.ToString(CultureInfo.InvariantCulture) : string.Empty);
         }
     }
 }

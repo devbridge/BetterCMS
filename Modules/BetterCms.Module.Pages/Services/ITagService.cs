@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+
+using BetterCms.Core.DataContracts;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 
@@ -21,5 +23,20 @@ namespace BetterCms.Module.Pages.Services
         /// <param name="pageId">The page id.</param>
         /// <returns>The future query for the list fo tag names</returns>
         IEnumerable<string> GetPageTagNames(Guid pageId);
+
+        /// <summary>
+        /// Gets the sitemap tag names.
+        /// </summary>
+        /// <param name="sitemapId">The sitemap identifier.</param>
+        /// <returns></returns>
+        IEnumerable<string> GetSitemapTagNames(Guid sitemapId);
+
+        /// <summary>
+        /// Saves the tags.
+        /// </summary>
+        /// <param name="sitemap">The sitemap.</param>
+        /// <param name="tags">The tags.</param>
+        /// <param name="newTags">The new tags.</param>
+        void SaveTags(Sitemap sitemap, IList<string> tags, out IList<Tag> newTags);
     }
 }

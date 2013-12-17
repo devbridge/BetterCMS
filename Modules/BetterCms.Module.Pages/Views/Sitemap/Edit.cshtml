@@ -1,28 +1,62 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Sitemap
+@using BetterCms.Module.Root
 @using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Root.ViewModels.Tags
 @using Microsoft.Web.Mvc
-
-
+@model SitemapViewModel
+@{
+    var tagsTemplateViewModel = new TagsTemplateViewModel
+    {
+        TooltipDescription = PagesGlobalization.EditPageProperties_BasicPropertiesTab_AddTags_Tooltip_Description // TODO: update
+    };
+}
+<div class="bcms-tab-header">
+    <a class="bcms-tab bcms-tab-active" data-name="#bcms-tab-1">Properties</a>
+    <a class="bcms-tab" data-name="#bcms-tab-2">Nodes</a>
+</div>
 <div class="bcms-scroll-window" id="bcms-sitemap-addnode">
-    <div class="bcms-columns-container">
-        <div class="bcms-leftcol bcms-add-node-col">
-            <div class="bcms-sitemap-links-holder" data-bind="template: { name: 'bcms-navigation-pagelinks-template' }"></div>
+    @Html.TabbedContentMessagesBox()
+    @* Form is required for unobtrusive validation. *@
+    @using (Html.BeginForm<SitemapController>(f => f.EditSitemap(null), FormMethod.Post, new { @class = "bcms-sitemap-form bcms-ajax-form" }))
+    {
+        <div id="bcms-tab-1" class="bcms-tab-single">
+            <div class="bcms-padded-content">
+                <div class="bcms-input-list-holder">
+                    @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description)
+                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Title</div>
+                    <div class="bcms-input-box">
+                        @Html.TextBoxFor(model => model.Title, new { @class = "bcms-editor-field-box", data_bind = "value: title, valueUpdate: 'afterkeydown'" })
+                        @Html.BcmsValidationMessageFor(f => f.Title)
+                        @Html.HiddenFor(m => m.Id)
+                        @Html.HiddenFor(m => m.Version)
+                    </div>
+                </div>
+                <div class="bcms-tags-box-holder" data-bind="with: tags">
+                    @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
+                </div>
+                @if (Model.AccessControlEnabled)
+                {
+                    @Html.Partial(RootModuleConstants.AccessControlTemplate)
+                }
+            </div>
         </div>
-        <div class="bcms-rightcol">
-            @Html.TabbedContentMessagesBox()
-            <div class="bcms-sitemap-holder">
-                <div class="bcms-addnode-placement-holder">
-                    @* Form is required for unobtrusive validation. *@
-                    @using (Html.BeginForm<SitemapController>(f => f.EditSitemap(), FormMethod.Post, new { @class = "bcms-sitemap-form bcms-ajax-form" }))
-                    {
-                        @Html.Partial("Partial/Sitemap", new SitemapNodeViewModel())
-                    }
+        <div id="bcms-tab-2" class="bcms-tab-single">
+            <div class="bcms-columns-container">
+                <div class="bcms-leftcol bcms-add-node-col">
+                    <div class="bcms-sitemap-links-holder" data-bind="template: { name: 'bcms-navigation-pagelinks-template' }"></div>
+                </div>
+                <div class="bcms-rightcol">
+                    <div class="bcms-sitemap-holder">
+                        <div class="bcms-addnode-placement-holder">
+                            @Html.Partial("Partial/Sitemap", new SitemapNodeViewModel())
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
 </div>
 <script type="text/html" id="bcms-navigation-pagelinks-template">
     <div class="bcms-plain-text">@NavigationGlobalization.Sitemap_EditDialog_PageLink_Header</div>
