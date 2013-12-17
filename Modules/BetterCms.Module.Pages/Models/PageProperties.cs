@@ -47,6 +47,7 @@ namespace BetterCms.Module.Pages.Models
 
         protected virtual PageProperties CopyDataToDuplicate(PageProperties duplicate)
         {
+            duplicate.CultureGroupIdentifier = Guid.NewGuid();
             duplicate.MetaTitle = MetaTitle;
             duplicate.MetaKeywords = MetaKeywords;
             duplicate.MetaDescription = MetaDescription;

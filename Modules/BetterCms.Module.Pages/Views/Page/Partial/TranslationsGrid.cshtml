@@ -9,15 +9,13 @@
                 <div class="bcms-access-title-text">Url</div> 
             </div> 
             <div data-bind="foreach: items()">
-                <!-- ko if: cultureId() != $parent.culture.cultureId() -->
                 <div class="bcms-access-line bcms-clearfix">
                     <div class="bcms-access-value">
                         <div class="btn-acces-minus" data-bind="click: $parent.unassignPage">&nbsp;</div> <span data-bind="html: cultureName()"></span> 
                     </div> 
                     <div class="bcms-access-value" data-bind="html: title()"></div> 
-                    <div class="bcms-access-value"><a data-bind="html: title(), attr: {href: url()}" target="_blank"></a></div> 
+                    <div class="bcms-access-value"><a data-bind="html: url(), attr: {href: url()}" target="_blank"></a></div> 
                 </div>
-                <!-- /ko -->
                 <input type="hidden" data-bind="attr: { name: getPropertyIndexer($index(), 'CultureId') }, value: cultureId()" />
                 <input type="hidden" data-bind="attr: { name: getPropertyIndexer($index(), 'Id') }, value: id()" />
             </div> 

@@ -128,15 +128,9 @@
     <Compile Include="Command\Layout\GetLayoutOptions\GetLayoutOptionsCommandRequest.cs" />
     <Compile Include="Command\Page\AddNewPage\AddNewPageCommand.cs" />
     <Compile Include="Command\Page\AddNewPage\AddNewPageCommandRequest.cs" />
-    <Compile Include="Command\Page\AssignMainCulturePage\AssignMainCulturePageCommand.cs" />
-    <Compile Include="Command\Page\AssignMainCulturePage\AssignMainCulturePageCommandRequest.cs" />
-    <Compile Include="Command\Page\AssignMainCulturePage\AssignMainCulturePageCommandResponse.cs" />
     <Compile Include="Command\Page\ClonePageWithCulture\ClonePageWithCultureCommand.cs" />
     <Compile Include="Command\Page\GetPageForCloningWithCulture\GetPageForCloningWithCultureCommandRequest.cs" />
     <Compile Include="Command\Page\GetPageForCloningWithCulture\GetPageForCloningWithCultureCommand.cs" />
-    <Compile Include="Command\Page\UnassignMainCulturePage\UnassignMainCulturePageCommand.cs" />
-    <Compile Include="Command\Page\GetPageTranslations\GetPageTranslationsCommand.cs" />
-    <Compile Include="Command\Page\GetPageTranslations\GetPageTranslationsCommandResponse.cs" />
     <Compile Include="Command\Widget\PreviewWidget\PreviewWidgetCommand.cs" />
     <Compile Include="Command\Widget\PreviewWidget\PreviewWidgetCommandRequest.cs" />
     <Compile Include="Events\CategoryEvents.cs" />

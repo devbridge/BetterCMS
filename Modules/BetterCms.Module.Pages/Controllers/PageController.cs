@@ -8,7 +8,6 @@ using BetterCms.Module.MediaManager.ViewModels;
 
 using BetterCms.Module.Pages.Command.Layout.GetLayoutOptions;
 using BetterCms.Module.Pages.Command.Page.AddNewPage;
-using BetterCms.Module.Pages.Command.Page.AssignMainCulturePage;
 using BetterCms.Module.Pages.Command.Page.ClonePage;
 using BetterCms.Module.Pages.Command.Page.ClonePageWithCulture;
 using BetterCms.Module.Pages.Command.Page.CreatePage;
@@ -17,11 +16,9 @@ using BetterCms.Module.Pages.Command.Page.GetPageForCloning;
 using BetterCms.Module.Pages.Command.Page.GetPageForCloningWithCulture;
 using BetterCms.Module.Pages.Command.Page.GetPageForDelete;
 using BetterCms.Module.Pages.Command.Page.GetPageProperties;
-using BetterCms.Module.Pages.Command.Page.GetPageTranslations;
 using BetterCms.Module.Pages.Command.Page.GetPagesList;
 using BetterCms.Module.Pages.Command.Page.SavePageProperties;
 using BetterCms.Module.Pages.Command.Page.SavePagePublishStatus;
-using BetterCms.Module.Pages.Command.Page.UnassignMainCulturePage;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Filter;
@@ -180,7 +177,6 @@ namespace BetterCms.Module.Pages.Controllers
                                IsMasterPage = success && model.IsMasterPage,
                                Cultures = success ? model.Cultures : null,
                                CultureId = success ? model.CultureId : null,
-                               MainCulturePageId = success ? model.MainCulturePageId : null,
                                Translations = success ? model.Translations : null
                            };
 
@@ -392,61 +388,6 @@ namespace BetterCms.Module.Pages.Controllers
             });
 
             return WireJson(model != null, model, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>
-        /// Loads the view for managing page translations.
-        /// </summary>
-        /// <param name="pageId">The page id.</param>
-        /// <returns>Rendered view for managing page translations</returns>
-        [HttpGet]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.Administration)]
-        public ActionResult PageTranslations(string pageId)
-        {
-            var model = GetCommand<GetPageTranslationsCommand>().ExecuteCommand(pageId.ToGuidOrDefault());
-            var success = model != null;
-            var view = RenderView("PageTranslations", model);
-
-            return ComboWireJson(success, view, model, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>
-        /// Assigns the page to main culture page.
-        /// </summary>
-        /// <param name="pageId">The page id.</param>
-        /// <param name="mainCulturePageId">The main culture page id.</param>
-        /// <param name="cultureId">The culture id.</param>
-        /// <returns>
-        /// JSON result
-        /// </returns>
-        [HttpPost]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.Administration)]
-        public ActionResult AssignMainCulturePage(string pageId, string mainCulturePageId, string cultureId)
-        {
-            var model = GetCommand<AssignMainCulturePageCommand>().ExecuteCommand(new AssignMainCulturePageCommandRequest
-            {
-                PageId = pageId.ToGuidOrDefault(),
-                MainCulturePageId = mainCulturePageId.ToGuidOrDefault(),
-                CultureId = cultureId.ToGuidOrDefault(),
-            });
-
-            return WireJson(model != null, model, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>
-        /// Unassigns the main culture page for specified page id.
-        /// </summary>
-        /// <param name="pageId">The page id.</param>
-        /// <returns>
-        /// JSON result
-        /// </returns>
-        [HttpPost]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.Administration)]
-        public ActionResult UnassignMainCulturePage(string pageId)
-        {
-            var success = GetCommand<UnassignMainCulturePageCommand>().ExecuteCommand(pageId.ToGuidOrDefault());
-
-            return WireJson(success, null, JsonRequestBehavior.AllowGet);
         }
     }
 }

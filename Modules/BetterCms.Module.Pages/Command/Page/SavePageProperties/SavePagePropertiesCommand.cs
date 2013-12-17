@@ -132,7 +132,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         {
             var isMultilanguageEnabled = cmsConfiguration.EnableMultilanguage;
 
-            ValidateRequest(request, isMultilanguageEnabled);
+            ValidateRequest(request);
 
             var pageQuery =
                 Repository.AsQueryable<PageProperties>(p => p.Id == request.Id)
@@ -425,9 +425,8 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         /// Validates the request.
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <param name="isMultilanguageEnabled">if set to <c>true</c> multilanguage is enabled in cms.config.</param>
         /// <exception cref="System.ComponentModel.DataAnnotations.ValidationException">Occurs if invalid page data is specified</exception>
-        private void ValidateRequest(EditPagePropertiesViewModel request, bool isMultilanguageEnabled)
+        private void ValidateRequest(EditPagePropertiesViewModel request)
         {
             if (!request.MasterPageId.HasValue && !request.TemplateId.HasValue)
             {
@@ -465,22 +464,10 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         /// <returns>List of old and new page translations</returns>
         private IList<Root.Models.Page> LoadAndValidateTranslations(PageProperties page, EditPagePropertiesViewModel request)
         {
-            var oldMainPageId = page.MainCulturePage != null ? page.MainCulturePage.Id : (Guid?)null;
-            var newMainPageId = request.MainCulturePageId;
             var predicateBuilder = PredicateBuilder.False<Root.Models.Page>();
-
-            predicateBuilder = predicateBuilder.Or(p => p.MainCulturePage == page);
-            if (oldMainPageId.HasValue)
+            if (page.CultureGroupIdentifier.HasValue)
             {
-                var pageProxy = Repository.AsProxy<Root.Models.Page>(oldMainPageId.Value);
-                predicateBuilder = predicateBuilder.Or(p => p.MainCulturePage == pageProxy);
-                predicateBuilder = predicateBuilder.Or(p => p == pageProxy);
-            }
-            if (newMainPageId.HasValue)
-            {
-                var pageProxy = Repository.AsProxy<Root.Models.Page>(newMainPageId.Value);
-                predicateBuilder = predicateBuilder.Or(p => p.MainCulturePage == pageProxy);
-                predicateBuilder = predicateBuilder.Or(p => p == pageProxy);
+                predicateBuilder = predicateBuilder.Or(p => p.CultureGroupIdentifier == page.CultureGroupIdentifier.Value);
             }
 
             if (request.Translations != null)
@@ -499,30 +486,48 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         /// <param name="request">The request.</param>
         private void UpdatePageTranslations(PageProperties page, IList<Root.Models.Page> translations, EditPagePropertiesViewModel request)
         {
-            // Update page source page
-            var oldMainPageId = page.MainCulturePage != null ? page.MainCulturePage.Id : (Guid?)null;
-            var newMainPageId = request.MainCulturePageId;
-            if (oldMainPageId != newMainPageId)
-            {
-                page.MainCulturePage = request.MainCulturePageId.HasValue ? Repository.AsProxy<Root.Models.Page>(request.MainCulturePageId.Value) : null;
-            }
-
             // Update page culture
-            var oldCultureId = page.MainCulturePage != null ? page.MainCulturePage.Id : (Guid?)null;
-            var newCultureId = request.MainCulturePageId;
+            var oldCultureId = page.Culture != null ? page.Culture.Id : (Guid?)null;
+            var newCultureId = request.CultureId;
             if (oldCultureId != newCultureId)
             {
                 page.Culture = request.CultureId.HasValue ? Repository.AsProxy<Culture>(request.CultureId.Value) : null;
             }
 
-            // Save current page translations
+            // Change culture group
             var requestTranslations = request.Translations ?? new List<PageTranslationViewModel>();
-            var mainCulturePage = page.MainCulturePage ?? page;
+            var oldCultureGroupId = page.CultureGroupIdentifier;
+
+            // Old group's translations, not included to current group, goes to independent groups
+            if (oldCultureGroupId.HasValue)
+            {
+                translations
+                    .Where(t => t.CultureGroupIdentifier == oldCultureGroupId
+                        && requestTranslations.All(rt => rt.Id != t.Id)
+                        && t.Id != page.Id)
+                    .ToList()
+                    .ForEach(t =>
+                            {
+                                t.CultureGroupIdentifier = null;
+                                Repository.Save(t);
+                            });
+            }
+
+            if (requestTranslations.Count == 0)
+            {
+                page.CultureGroupIdentifier = null;
+            }
+            else if (!page.CultureGroupIdentifier.HasValue)
+            {
+                page.CultureGroupIdentifier = Guid.NewGuid();
+            }
+
+            // Save current page translations
             foreach (var translationViewModel in requestTranslations)
             {
                 var translation = translations.Where(t => t.Id == translationViewModel.Id).FirstOne();
-                translation.MainCulturePage = mainCulturePage;
-
+                translation.CultureGroupIdentifier = page.CultureGroupIdentifier;
+            
                 Repository.Save(translation);
             }
         }

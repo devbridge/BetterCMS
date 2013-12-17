@@ -30,18 +30,6 @@
                         <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_Culture</div>
                         <select class="bcms-global-select" data-bind="options: cultures, optionsText: 'value', optionsValue: 'key', value: cultureId"></select>
                     </div>
-                    
-                    <div class="bcms-input-list-holder" data-bind="with: culture">
-                        @Html.Tooltip(PagesGlobalization.AddNewPage_MainCulturePage_Tooltip_Description)
-                        <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_MainCulturePage</div>
-                        <!-- ko if: mainCulturePageId() -->
-                        <a data-bind="html: mainCulturePageTitle(), attr: { href: mainCulturePageUrl() }" target="_blank"></a>
-                        <!-- /ko -->
-                        <div class="bcms-btn-small" data-bind="click: change">@PagesGlobalization.AddNewPage_ChangeMainCulturePage_ButtonTitle</div>
-                        <!-- ko if: mainCulturePageId() -->
-                        <div class="bcms-btn-small" data-bind="click: clear">@PagesGlobalization.AddNewPage_ClearMainCulturePage_ButtonTitle</div>
-                        <!-- /ko -->
-                    </div>
                 }
 
                 <div class="bcms-input-list-holder">
@@ -73,7 +61,6 @@
                 @if (Model.Cultures != null && Model.Cultures.Any())
                 {
                     @Html.HiddenFor(model => model.CultureId, new { data_bind = "value: culture.cultureId()" })
-                    @Html.HiddenFor(model => model.MainCulturePageId, new { data_bind = "value: culture.mainCulturePageId()" })
                 }
                 @Html.HiddenSubmit()
 

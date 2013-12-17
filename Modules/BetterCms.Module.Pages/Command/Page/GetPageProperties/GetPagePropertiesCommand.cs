@@ -127,7 +127,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                               MasterPageId = page.MasterPage.Id,
                               CategoryId = page.Category.Id,
                               CultureId = page.Culture.Id,
-                              MainCulturePageId = page.MainCulturePage.Id,
+                              CultureGroupIdentifier = page.CultureGroupIdentifier,
                               AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled,
                               Image = page.Image == null || page.Image.IsDeleted ? null :
                                   new ImageSelectorViewModel
@@ -204,10 +204,9 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 {
                     model.Model.Cultures = culturesFuture.ToList();
                 }
-                if (cmsConfiguration.EnableMultilanguage)
+                if (cmsConfiguration.EnableMultilanguage && model.Model.CultureGroupIdentifier.HasValue)
                 {
-                    var mainCultureId = model.Model.MainCulturePageId.HasValue ? model.Model.MainCulturePageId.Value : id;
-                    model.Model.Translations = pageService.GetPageTranslations(mainCultureId).ToList();
+                    model.Model.Translations = pageService.GetPageTranslations(model.Model.CultureGroupIdentifier.Value).ToList();
                 }
 
                 // Get layout options, page options and merge them

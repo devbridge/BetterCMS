@@ -466,7 +466,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             var self = this,
                 i, l;
 
-            self.mainCulturePageId = ko.observable();
+            self.cultureGroupIdentifier = ko.observable();
             self.mainCulturePageTitle = ko.observable();
             self.mainCulturePageUrl = ko.observable();
             self.cultureId = ko.observable(cultureId);
@@ -483,7 +483,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             self.change = function () {
                 page.openPageSelectDialog({
                     onAccept: function (selectedPage) {
-                        self.mainCulturePageId(selectedPage.Id);
+                        self.cultureGroupIdentifier(selectedPage.CultureGroupIdentifier);
                         self.mainCulturePageTitle(selectedPage.Title);
                         self.mainCulturePageUrl(selectedPage.PageUrl);
 
@@ -494,7 +494,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             };
 
             self.clear = function () {
-                self.mainCulturePageId('');
+                self.cultureGroupIdentifier('');
                 self.mainCulturePageTitle('');
                 self.mainCulturePageUrl('');
             };
@@ -517,6 +517,10 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 self.isInAddMode(false);
                 self.addCultureId('');
             }
+
+            self.culture.cultureId.subscribe(function(newValue) {
+                closeAddMode();
+            });
 
             self.clickPlus = function () {
                 var isInAddMode = !self.isInAddMode();
@@ -565,7 +569,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 var cult = [],
                     lj = self.items().length,
                     li = self.culture.cultures.length,
-                    i, j, culture, item, isAssigned;
+                    i, j, culture, item, isAssigned,
+                    currentCultureId = self.culture.cultureId();
 
                 for (i = 0; i < li; i++) {
                     culture = self.culture.cultures[i];
@@ -580,7 +585,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                         }
                     }
                     
-                    if (!isAssigned) {
+                    if (!isAssigned && culture.key != currentCultureId) {
                         cult.push(culture);
                     }
                 }
@@ -589,6 +594,10 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             });
 
             function addItems() {
+                if (!items) {
+                    items = [];
+                }
+
                 var lj = items.length,
                     li = self.culture.cultures.length,
                     viewModel, i, j, culture, item, translation;
@@ -600,7 +609,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                     if (!item.CultureId) {
                         self.culture.mainCulturePageTitle(item.Title);
                         self.culture.mainCulturePageUrl(item.PageUrl);
-                        self.culture.mainCulturePageId(item.Id);
+                        self.culture.cultureGroupIdentifier(item.Id);
                         
                         break;
                     }
@@ -620,7 +629,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                         }
                     }
 
-                    if (translation) {
+                    if (translation && translation.Id != bcms.pageId) {
                         viewModel = new page.PageTranslationViewModel(culture, translation, self);
                         self.items.push(viewModel);
                     }

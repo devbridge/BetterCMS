@@ -47,13 +47,13 @@ namespace BetterCms.Module.Pages.Services
             return ClonePage(pageId, pageTitle, pageUrl, userAccessList, cloneAsMasterPage, null, null);
         }
 
-        public PageProperties ClonePageWithCulture(System.Guid pageId, string pageTitle, string pageUrl, IEnumerable<IAccessRule> userAccessList, System.Guid cultureId, System.Guid mainCulturePageId)
+        public PageProperties ClonePageWithCulture(System.Guid pageId, string pageTitle, string pageUrl, IEnumerable<IAccessRule> userAccessList, System.Guid cultureId, System.Guid cultureGroupIdentifier)
         {
-            return ClonePage(pageId, pageTitle, pageUrl, userAccessList, false, cultureId, mainCulturePageId);
+            return ClonePage(pageId, pageTitle, pageUrl, userAccessList, false, cultureId, cultureGroupIdentifier);
         }
 
-        private PageProperties ClonePage(System.Guid pageId, string pageTitle, string pageUrl, 
-            IEnumerable<IAccessRule> userAccessList, bool cloneAsMasterPage, System.Guid? cultureId, System.Guid? mainCulturePageId)
+        private PageProperties ClonePage(System.Guid pageId, string pageTitle, string pageUrl,
+            IEnumerable<IAccessRule> userAccessList, bool cloneAsMasterPage, System.Guid? cultureId, System.Guid? cultureGroupIdentifier)
         {
             var principal = securityService.GetCurrentPrincipal();
 
@@ -109,9 +109,9 @@ namespace BetterCms.Module.Pages.Services
             {
                 newPage.Culture = repository.AsProxy<Culture>(cultureId.Value);
             }
-            if (mainCulturePageId.HasValue)
+            if (cultureGroupIdentifier.HasValue)
             {
-                newPage.MainCulturePage = repository.AsProxy<Page>(mainCulturePageId.Value);
+                newPage.CultureGroupIdentifier = cultureGroupIdentifier.Value;
             }
             repository.Save(newPage);
 
@@ -126,6 +126,12 @@ namespace BetterCms.Module.Pages.Services
 
             // Clone master pages
             masterPages.ForEach(masterPage => CloneMasterPages(masterPage, newPage));
+
+            if (cultureGroupIdentifier.HasValue && !page.CultureGroupIdentifier.HasValue)
+            {
+                page.CultureGroupIdentifier = cultureGroupIdentifier.Value;
+                repository.Save(page);
+            }
 
             unitOfWork.Commit();
 

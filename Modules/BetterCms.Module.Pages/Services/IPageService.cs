@@ -27,17 +27,12 @@ namespace BetterCms.Module.Pages.Services
         string CreatePagePermalink(string url, string parentPageUrl);
 
         /// <summary>
-        /// Gets the main culture page id by given page id.
-        /// </summary>
-        /// <param name="pageId">The page id.</param>
-        /// <returns>Main culture page id</returns>
-        Guid GetMainCulturePageId(Guid pageId);
-
-        /// <summary>
         /// Gets the list of page translation view models.
         /// </summary>
-        /// <param name="mainPageCultureId">The main page culture id.</param>
-        /// <returns>The list of page translation view models</returns>
-        IEnumerable<PageTranslationViewModel> GetPageTranslations(Guid mainPageCultureId);
+        /// <param name="cultureGroupIdentifier">Culture group identifier.</param>
+        /// <returns>
+        /// The list of page translation view models
+        /// </returns>
+        IEnumerable<PageTranslationViewModel> GetPageTranslations(Guid cultureGroupIdentifier);
     }
 }

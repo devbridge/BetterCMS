@@ -172,6 +172,7 @@
     <Compile Include="Models\MasterPage.cs" />
     <Compile Include="Models\Maps\ContentRegionMap.cs" />
     <Compile Include="Models\ContentRegion.cs" />
+    <Compile Include="Models\Migrations\Migration201312171300.cs" />
     <Compile Include="Models\Migrations\Migration201312111700.cs" />
     <Compile Include="Models\Migrations\Migration201312101400.cs" />
     <Compile Include="Models\Migrations\Migration201310241500.cs" />

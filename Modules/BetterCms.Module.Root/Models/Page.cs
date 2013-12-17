@@ -128,12 +128,12 @@ namespace BetterCms.Module.Root.Models
         public virtual Culture Culture { get; set; }
 
         /// <summary>
-        /// Gets or sets the main culture page.
+        /// Gets or sets the culture group identifier.
         /// </summary>
         /// <value>
-        /// The main culture page.
+        /// The culture group identifier.
         /// </value>
-        public virtual Page MainCulturePage { get; set; }
+        public virtual Guid? CultureGroupIdentifier { get; set; }
 
         /// <summary>
         /// Gets or sets the page contents.

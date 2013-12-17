@@ -229,43 +229,21 @@ namespace BetterCms.Module.Pages.Services
         }
 
         /// <summary>
-        /// Gets the main culture page id by given page id.
-        /// </summary>
-        /// <param name="pageId">The page id.</param>
-        /// <returns>
-        /// Main culture page id
-        /// </returns>
-        public Guid GetMainCulturePageId(Guid pageId)
-        {
-            var mainPage = repository
-                .AsQueryable<Root.Models.Page>()
-                .Where(p => p.Id == pageId)
-                .Select(p => new { MainCulturePageId = p.MainCulturePage != null ? p.MainCulturePage.Id : (Guid?)null })
-                .FirstOne();
-
-            return mainPage.MainCulturePageId.HasValue && !mainPage.MainCulturePageId.Value.HasDefaultValue() 
-                ? mainPage.MainCulturePageId.Value 
-                : pageId;
-        }
-
-        /// <summary>
         /// Gets the list of page translation view models.
         /// </summary>
-        /// <param name="mainPageCultureId">The main page culture id.</param>
+        /// <param name="cultureGroupIdentifier">Culture group identifier.</param>
         /// <returns>
         /// The list of page translation view models
         /// </returns>
-        public IEnumerable<PageTranslationViewModel> GetPageTranslations(Guid mainPageCultureId)
+        public IEnumerable<PageTranslationViewModel> GetPageTranslations(Guid cultureGroupIdentifier)
         {
-            var mainPageProxy = repository.AsProxy<Root.Models.Page>(mainPageCultureId);
-
             return repository
                 .AsQueryable<Root.Models.Page>()
-                .Where(p => p.MainCulturePage == mainPageProxy || p.Id == mainPageCultureId)
+                .Where(p => p.CultureGroupIdentifier == cultureGroupIdentifier)
                 .Select(p => new PageTranslationViewModel
                 {
                     Id = p.Id,
-                    MainCulturePageId = p.MainCulturePage.Id,
+                    CultureGroupIdentifier = p.CultureGroupIdentifier,
                     Title = p.Title,
                     PageUrl = p.PageUrl,
                     CultureId = p.Culture.Id

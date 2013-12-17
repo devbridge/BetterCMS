@@ -1,4 +1,7 @@
-﻿using BetterCms.Core.Mvc.Commands;
+﻿using System.Linq;
+
+using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
@@ -28,9 +31,18 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePageWithCulture
         /// <returns>true if page cloned successfully; false otherwise.</returns>
         public virtual ClonePageWithCultureViewModel Execute(ClonePageWithCultureViewModel request)
         {
-            var mainPageCultureId = pageService.GetMainCulturePageId(request.PageId);
+            var cultureGroupIdentifier = Repository
+                .AsQueryable<Root.Models.Page>(p => p.Id == request.PageId)
+                .Select(p => p.CultureGroupIdentifier)
+                .FirstOne();
+            
+            if (!cultureGroupIdentifier.HasValue)
+            {
+                cultureGroupIdentifier = System.Guid.NewGuid();
+            }
+
             var newPage = cloneService.ClonePageWithCulture(request.PageId, request.PageTitle, 
-                request.PageUrl, request.UserAccessList, request.CultureId, mainPageCultureId);
+                request.PageUrl, request.UserAccessList, request.CultureId, cultureGroupIdentifier.Value);
 
             return new ClonePageWithCultureViewModel
                 {

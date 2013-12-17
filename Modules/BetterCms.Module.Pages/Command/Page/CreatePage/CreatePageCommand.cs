@@ -133,9 +133,9 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
                 {
                     page.Culture = Repository.AsProxy<Culture>(request.CultureId.Value);
                 }
-                if (request.MainCulturePageId.HasValue)
+                if (request.CultureGroupIdentifier.HasValue)
                 {
-                    page.MainCulturePage = Repository.AsProxy<Root.Models.Page>(request.MainCulturePageId.Value);
+                    page.CultureGroupIdentifier = request.CultureGroupIdentifier.Value;
                 }
             }
 

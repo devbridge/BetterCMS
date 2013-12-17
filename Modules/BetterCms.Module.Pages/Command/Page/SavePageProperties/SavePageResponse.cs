@@ -99,12 +99,12 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         public Guid? CultureId { get; set; }
 
         /// <summary>
-        /// Gets or sets the main culture page id.
+        /// Gets or sets the culture group identifier.
         /// </summary>
         /// <value>
-        /// The main culture page id.
+        /// The culture group identifier.
         /// </value>
-        public Guid? MainCulturePageId { get; set; }
+        public Guid? CultureGroupIdentifier { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SavePageResponse" /> class.
@@ -122,7 +122,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             IsArchived = page.IsArchived;
             IsMasterPage = page.IsMasterPage;
             CultureId = page.Culture != null ? page.Culture.Id : (Guid?)null;
-            MainCulturePageId = page.MainCulturePage != null ? page.MainCulturePage.Id : (Guid?)null;
+            CultureGroupIdentifier = page.CultureGroupIdentifier;
         }
     }
 }
