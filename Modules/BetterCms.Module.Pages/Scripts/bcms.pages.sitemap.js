@@ -88,7 +88,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             });
 
             form.on('submit', function (event) {
-                event.preventDefault();
+                bcms.stopEventPropagation(event);
                 searchSitemaps(form, container);
                 return false;
             });
@@ -100,7 +100,8 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 }
             });
 
-            form.find(selectors.searchButton).on('click', function () {
+            form.find(selectors.searchButton).on('click', function (event) {
+                bcms.stopEventPropagation(event);
                 searchSitemaps(form, container);
             });
 
@@ -125,20 +126,20 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /*
         * Attach the sitemap grid events.
         */
-        function initializeListItems(container) {
+        function initializeListItems(container, masterContainer) {
             container.find(selectors.siteSettingsSitemapCreateButton).on('click', function (event) {
                 bcms.stopEventPropagation(event);
-                addSitemap(container);
+                addSitemap(masterContainer || container);
             });
 
             container.find(selectors.siteSettingsSitemapEditButton).on('click', function (event) {
                 bcms.stopEventPropagation(event);
-                editSitemap($(this), container);
+                editSitemap($(this), masterContainer || container);
             });
 
             container.find(selectors.siteSettingsSitemapDeleteButton).on('click', function (event) {
                 bcms.stopEventPropagation(event);
-                deleteSitemap($(this), container);
+                deleteSitemap($(this), masterContainer || container);
             });
         };
 
@@ -158,7 +159,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
                     newRow.insertBefore($(selectors.siteSettingsSitemapsTableFirstRow, container));
 
-                    initializeListItems(newRow);
+                    initializeListItems(newRow, container);
 
                     grid.showHideEmptyRow(container);
                 }
