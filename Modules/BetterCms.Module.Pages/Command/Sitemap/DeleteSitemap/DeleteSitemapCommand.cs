@@ -48,8 +48,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.DeleteSitemap
 
             UnitOfWork.Commit();
 
-            // TODO: add new event.
-            Events.SitemapEvents.Instance.OnSitemapUpdated(sitemap);
+            Events.SitemapEvents.Instance.OnSitemapDeleted(sitemap);
 
             return true;
         }

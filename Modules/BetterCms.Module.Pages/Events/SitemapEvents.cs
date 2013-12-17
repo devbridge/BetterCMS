@@ -13,9 +13,19 @@ namespace BetterCms.Events
     public partial class SitemapEvents : EventsBase<SitemapEvents>
     {
         /// <summary>
+        /// Occurs when a sitemap is created.
+        /// </summary>
+        public event DefaultEventHandler<SingleItemEventArgs<Sitemap>> SitemapCreated;
+
+        /// <summary>
         /// Occurs when a sitemap is updated.
         /// </summary>
-        public event DefaultEventHandler<EventArgs> SitemapUpdated;
+        public event DefaultEventHandler<SingleItemEventArgs<Sitemap>> SitemapUpdated;
+
+        /// <summary>
+        /// Occurs when a sitemap is updated.
+        /// </summary>
+        public event DefaultEventHandler<SingleItemEventArgs<Sitemap>> SitemapDeleted;
 
         /// <summary>
         /// Occurs when a sitemap node is created.
@@ -33,13 +43,35 @@ namespace BetterCms.Events
         public event DefaultEventHandler<SingleItemEventArgs<SitemapNode>> SitemapNodeDeleted;
 
         /// <summary>
-        /// Called when sitemap is updated.
+        /// Called when the sitemap is created.
+        /// </summary>
+        public void OnSitemapCreated(Sitemap sitemap)
+        {
+            if (SitemapCreated != null)
+            {
+                SitemapCreated(new SingleItemEventArgs<Sitemap>(sitemap));
+            }
+        }
+
+        /// <summary>
+        /// Called when the sitemap is updated.
         /// </summary>
         public void OnSitemapUpdated(Sitemap sitemap)
         {
             if (SitemapUpdated != null)
             {
                 SitemapUpdated(new SingleItemEventArgs<Sitemap>(sitemap));
+            }
+        }
+
+        /// <summary>
+        /// Called when the sitemap is deleted.
+        /// </summary>
+        public void OnSitemapDeleted(Sitemap sitemap)
+        {
+            if (SitemapDeleted != null)
+            {
+                SitemapDeleted(new SingleItemEventArgs<Sitemap>(sitemap));
             }
         }
 

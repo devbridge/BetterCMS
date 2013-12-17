@@ -107,11 +107,6 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
 
             UnitOfWork.Commit();
 
-            if (createdNodes.Count <= 0 && updatedNodes.Count <= 0 && deletedNodes.Count <= 0)
-            {
-                return GetModelMainData(sitemap);
-            }
-
             foreach (var node in createdNodes)
             {
                 Events.SitemapEvents.Instance.OnSitemapNodeCreated(node);
@@ -127,7 +122,14 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
                 Events.SitemapEvents.Instance.OnSitemapNodeDeleted(node);
             }
 
-            Events.SitemapEvents.Instance.OnSitemapUpdated(sitemap);
+            if (createNew)
+            {
+                Events.SitemapEvents.Instance.OnSitemapCreated(sitemap);
+            }
+            else
+            {
+                Events.SitemapEvents.Instance.OnSitemapUpdated(sitemap);
+            }
 
             Events.RootEvents.Instance.OnTagCreated(newTags);
 
