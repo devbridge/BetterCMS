@@ -151,6 +151,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete the site map?.
+        /// </summary>
+        public static string Sitemap_Delete_Confirmation_Message {
+            get {
+                return ResourceManager.GetString("Sitemap_Delete_Confirmation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to delete node &quot;{0}&quot;?.
         /// </summary>
         public static string Sitemap_DeleteNode_Confirmation_Message {
@@ -300,6 +309,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string Sitemap_SitemapCreatedSuccessfully_Message {
             get {
                 return ResourceManager.GetString("Sitemap_SitemapCreatedSuccessfully_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Site map deleted successfully..
+        /// </summary>
+        public static string Sitemap_SitemapDeletedSuccessfully_Message {
+            get {
+                return ResourceManager.GetString("Sitemap_SitemapDeletedSuccessfully_Message", resourceCulture);
             }
         }
         

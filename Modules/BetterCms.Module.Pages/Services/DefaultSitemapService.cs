@@ -172,6 +172,24 @@ namespace BetterCms.Module.Pages.Services
         }
 
         /// <summary>
+        /// Deletes the sitemap.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="version">The version.</param>
+        /// <returns>Deleted sitemap.</returns>
+        public Sitemap DeleteSitemap(Guid id, int version)
+        {
+            var sitemap = repository.First<Sitemap>(id);
+            if (sitemap.AccessRules != null)
+            {
+                var rules = sitemap.AccessRules.ToList();
+                rules.ForEach(sitemap.RemoveRule);
+            }
+
+            return repository.Delete<Sitemap>(id, version);
+        }
+
+        /// <summary>
         /// Deletes the node.
         /// </summary>
         /// <param name="node">The node.</param>

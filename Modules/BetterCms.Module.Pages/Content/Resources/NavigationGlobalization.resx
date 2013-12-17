@@ -210,4 +210,10 @@
   <data name="Sitemap_SitemapCreatedSuccessfully_Message" xml:space="preserve">
     <value>Site map created successfully.</value>
   </data>
+  <data name="Sitemap_SitemapDeletedSuccessfully_Message" xml:space="preserve">
+    <value>Site map deleted successfully.</value>
+  </data>
+  <data name="Sitemap_Delete_Confirmation_Message" xml:space="preserve">
+    <value>Are you sure you want to delete the site map?</value>
+  </data>
 </root>

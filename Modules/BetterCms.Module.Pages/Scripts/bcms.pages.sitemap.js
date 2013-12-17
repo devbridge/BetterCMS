@@ -29,6 +29,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 loadSiteSettingsSitemapsListUrl: null,
                 saveSitemapUrl: null,
                 saveSitemapNodeUrl: null,
+                deleteSitemapUrl: null,
                 deleteSitemapNodeUrl: null,
                 sitemapEditDialogUrl: null,
                 sitemapAddNewPageDialogUrl: null
@@ -39,6 +40,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 sitemapEditorDialogCustomLinkTitle: null,
                 sitemapAddNewPageDialogTitle: null,
                 sitemapDeleteNodeConfirmationMessage: null,
+                sitemapDeleteConfirmMessage: null,
                 sitemapSomeNodesAreInEditingState: null,
                 sitemapNodeSaveButton: null,
                 sitemapNodeOkButton: null
@@ -174,6 +176,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     var row = self.parents(selectors.siteSettingsSitemapParentRow),
                         cell = row.find(selectors.siteSettingsSitemapTitleCell);
                     cell.html(data.Data.Title);
+                    row.find(selectors.siteSettingsSitemapDeleteButton).data('version', data.Data.Version);
                 }
             }, globalization.sitemapEditorDialogTitle);
         };
@@ -182,12 +185,15 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Delete the sitemap and remove it form the list.
         */
         function deleteSitemap(self, container) {
-            var id = self.data('id');
+            var id = self.data('id'),
+                version = self.data('version');
 
-            sitemap.deleteSitemap(id, function (json) {
-                self.parents(selectors.siteSettingsSitemapParentRow).remove();
+            sitemap.deleteSitemap(id, version, function (json) {
                 messages.refreshBox(selectors.siteSettingsSitemapsForm, json);
-                grid.showHideEmptyRow(container);
+                if (json.Success) {
+                    self.parents(selectors.siteSettingsSitemapParentRow).remove();
+                    grid.showHideEmptyRow(container);
+                }
             });
         };
 
@@ -232,8 +238,31 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /*
         * Deletes the sitemap if user confirms.
         */
-        sitemap.deleteSitemap = function (callBackOnSuccess) {
-            alert("TODO: implement.");  // TODO: implement.
+        sitemap.deleteSitemap = function (id, version, callBack) {
+            var url = $.format(links.deleteSitemapUrl, id, version),
+                onDeleteCompleted = function (json) {
+                if ($.isFunction(callBack)) {
+                    callBack(json);
+                }
+            };
+            modal.confirm({
+                content: globalization.sitemapDeleteConfirmMessage,
+                onAccept: function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: url,
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        cache: false
+                    })
+                    .done(function (json) {
+                        onDeleteCompleted(json);
+                    })
+                    .fail(function (response) {
+                        onDeleteCompleted(bcms.parseFailedResponse(response));
+                    });
+                }
+            });
         };
 
         /**

@@ -79,10 +79,6 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
                 {
                     AccessControlService.DemandAccess(sitemap, Context.Principal, AccessLevel.ReadWrite, roles);
                 }
-                else
-                {
-                    AccessControlService.DemandAccess(Context.Principal, roles);
-                }
             }
             else
             {

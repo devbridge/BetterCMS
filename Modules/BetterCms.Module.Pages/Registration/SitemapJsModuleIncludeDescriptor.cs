@@ -23,6 +23,7 @@ namespace BetterCms.Module.Pages.Registration
                     new JavaScriptModuleLinkTo<SitemapController>(this, "loadSiteSettingsSitemapsListUrl", c => c.Sitemaps(null)),
                     new JavaScriptModuleLinkTo<SitemapController>(this, "saveSitemapUrl", c => c.SaveSitemap(null)),
                     new JavaScriptModuleLinkTo<SitemapController>(this, "saveSitemapNodeUrl", c => c.SaveSitemapNode(null)),
+                    new JavaScriptModuleLinkTo<SitemapController>(this, "deleteSitemapUrl", c => c.DeleteSitemap("{0}", "{1}")),
                     new JavaScriptModuleLinkTo<SitemapController>(this, "deleteSitemapNodeUrl", c => c.DeleteSitemapNode(null)),
                     new JavaScriptModuleLinkTo<SitemapController>(this, "sitemapEditDialogUrl", c => c.EditSitemap("{0}")),
                     new JavaScriptModuleLinkTo<SitemapController>(this, "sitemapAddNewPageDialogUrl", c => c.AddNewPage())
@@ -35,6 +36,7 @@ namespace BetterCms.Module.Pages.Registration
                     new JavaScriptModuleGlobalization(this, "sitemapEditorDialogCustomLinkTitle", () => NavigationGlobalization.Sitemap_EditorDialog_CustomLinkTitle),
                     new JavaScriptModuleGlobalization(this, "sitemapAddNewPageDialogTitle", () => NavigationGlobalization.Sitemap_AddNewPageDialog_Title),
                     new JavaScriptModuleGlobalization(this, "sitemapDeleteNodeConfirmationMessage", () => NavigationGlobalization.Sitemap_DeleteNode_Confirmation_Message),
+                    new JavaScriptModuleGlobalization(this, "sitemapDeleteConfirmMessage", () => NavigationGlobalization.Sitemap_Delete_Confirmation_Message),
                     new JavaScriptModuleGlobalization(this, "sitemapSomeNodesAreInEditingState", () => NavigationGlobalization.Sitemap_EditDialog_SomeNodesAreInEditingState),
                     new JavaScriptModuleGlobalization(this, "sitemapNodeSaveButton", () => RootGlobalization.Button_Save),
                     new JavaScriptModuleGlobalization(this, "sitemapNodeOkButton", () => RootGlobalization.Button_Ok)

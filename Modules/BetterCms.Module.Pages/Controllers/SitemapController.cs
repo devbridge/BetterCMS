@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 using BetterCms.Core.Security;
+using BetterCms.Module.Pages.Command.Sitemap.DeleteSitemap;
 using BetterCms.Module.Pages.Command.Sitemap.DeleteSitemapNode;
 using BetterCms.Module.Pages.Command.Sitemap.GetPageLinks;
 using BetterCms.Module.Pages.Command.Sitemap.GetSitemap;
@@ -159,11 +161,35 @@ namespace BetterCms.Module.Pages.Controllers
         [HttpPost]
         public ActionResult DeleteSitemapNode(SitemapNodeViewModel node)
         {
-            bool success = GetCommand<DeleteSitemapNodeCommand>().ExecuteCommand(node);
+            var success = GetCommand<DeleteSitemapNodeCommand>().ExecuteCommand(node);
 
             if (success)
             {
                 Messages.AddSuccess(NavigationGlobalization.Sitemap_NodeDeletedSuccessfully_Message);
+            }
+
+            return Json(new WireJson(success));
+        }
+
+        /// <summary>
+        /// Deletes the sitemap node.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="version">The version.</param>
+        /// <returns>
+        /// JSON result.
+        /// </returns>
+        [HttpPost]
+        public ActionResult DeleteSitemap(string id, string version)
+        {
+            var success = GetCommand<DeleteSitemapCommand>().ExecuteCommand(new SitemapViewModel()
+                {
+                    Id = id.ToGuidOrDefault(), Version = version.ToIntOrDefault()
+                });
+
+            if (success)
+            {
+                Messages.AddSuccess(NavigationGlobalization.Sitemap_SitemapDeletedSuccessfully_Message);
             }
 
             return Json(new WireJson(success));
