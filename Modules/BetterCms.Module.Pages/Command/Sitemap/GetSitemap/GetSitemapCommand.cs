@@ -73,7 +73,8 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemap
 
             var sitemap = Repository.AsQueryable<Models.Sitemap>()
                 .Where(map => map.Id == sitemapId)
-                .Fetch(map => map.Nodes)
+                .FetchMany(map => map.Nodes)
+                .ThenFetch(node => node.Page)
                 .Distinct()
                 .ToList()
                 .First();
@@ -117,7 +118,8 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemap
                     Id = node.Id,
                     Version = node.Version,
                     Title = node.Title,
-                    Url = node.Url,
+                    Url = node.Page != null ? node.Page.PageUrl : node.Url,
+                    PageId = node.Page != null ? node.Page.Id : Guid.Empty,
                     DisplayOrder = node.DisplayOrder,
                     ChildNodes = GetSitemapNodesInHierarchy(allNodes.Where(f => f.ParentNode == node).ToList(), allNodes)
                 });

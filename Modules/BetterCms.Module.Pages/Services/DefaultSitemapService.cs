@@ -5,6 +5,7 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.Pages.Services
@@ -118,11 +119,12 @@ namespace BetterCms.Module.Pages.Services
         /// <summary>
         /// Saves the node.
         /// </summary>
-        /// <param name="sitemapId">The sitemap identifier.</param>
+        /// <param name="sitemap">The sitemap.</param>
         /// <param name="nodeId">The id.</param>
         /// <param name="version">The version.</param>
         /// <param name="url">The URL.</param>
         /// <param name="title">The title.</param>
+        /// <param name="pageId"></param>
         /// <param name="displayOrder">The display order.</param>
         /// <param name="parentId">The parent id.</param>
         /// <param name="isDeleted">if set to <c>true</c> [is deleted].</param>
@@ -130,7 +132,7 @@ namespace BetterCms.Module.Pages.Services
         /// <returns>
         /// Updated or newly created sitemap node.
         /// </returns>
-        public SitemapNode SaveNode(Sitemap sitemap, Guid nodeId, int version, string url, string title, int displayOrder, Guid parentId, bool isDeleted = false, SitemapNode parentNode = null)
+        public SitemapNode SaveNode(Sitemap sitemap, Guid nodeId, int version, string url, string title, Guid pageId, int displayOrder, Guid parentId, bool isDeleted = false, SitemapNode parentNode = null)
         {
             var node = nodeId.HasDefaultValue()
                 ? new SitemapNode()
@@ -151,7 +153,8 @@ namespace BetterCms.Module.Pages.Services
                 node.Sitemap = sitemap;
                 node.Version = version;
                 node.Title = title;
-                node.Url = url;
+                node.Page = !pageId.HasDefaultValue() ? repository.AsProxy<Page>(pageId) : null;
+                node.Url = node.Page != null ? null : url;
                 node.DisplayOrder = displayOrder;
                 if (parentNode != null && !parentNode.Id.HasDefaultValue())
                 {

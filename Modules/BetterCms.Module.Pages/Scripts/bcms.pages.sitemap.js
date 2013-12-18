@@ -351,7 +351,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Controller for sitemap add new page dialog.
         */
-        function AddNewPageMapController(title, url, id) {
+        function AddNewPageMapController(title, url, pageId) {
             var self = this;
             self.container = null;
             self.newPageModel = null;
@@ -379,7 +379,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     for (var i = 0; i < content.Data.length; i++) {
                         // Create data models.
                         var sitemapModel = new SitemapViewModel(content.Data[i]),
-                            pageLinkModel = new PageLinkViewModel(title, url, id),
+                            pageLinkModel = new PageLinkViewModel(title, url, pageId),
                             newPageModel = new AddNewPageViewModel(sitemapModel, pageLinkModel, onSkip),
                             tabModel = new TabModel(newPageModel);
                         tabs.push(tabModel);
@@ -517,6 +517,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                     var node = new NodeViewModel();
                                     node.title(dragObject.title());
                                     node.url(dragObject.url());
+                                    node.pageId(dragObject.pageId());
                                     if (dropZoneType == DropZoneTypes.EmptyListZone || dropZoneType == DropZoneTypes.MiddleZone) {
                                         node.parentNode(dropZoneObject);
                                     } else {
@@ -779,6 +780,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             Version: node.version(),
                             Title: node.title(),
                             Url: node.url(),
+                            PageId: node.pageId(),
                             DisplayOrder: node.displayOrder(),
                             IsDeleted: node.isDeleted(),
                             ChildNodes: self.nodesToJson(node.childNodes())
@@ -828,6 +830,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.version = ko.observable(0);
             self.title = ko.observable();
             self.url = ko.observable();
+            self.pageId = ko.observable(defaultIdValue);
             self.displayOrder = ko.observable(0);
             self.isDeleted = ko.observable(false);
             self.isDeleted.subscribe(function () {
@@ -865,6 +868,9 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 return false;
             };
             self.superDraggable = ko.observable(false);     // Used to force dragging if sitemap settings !canDragNode.
+            self.getReadonlyUrlState = ko.computed(function() {
+                return self.pageId() == null || self.pageId() === defaultIdValue ? undefined : 'readonly';
+            });
 
             // User for validation.
             self.containerId = 'node-' + nodeId++;
@@ -995,6 +1001,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 self.version(jsonNode.Version);
                 self.title(jsonNode.Title);
                 self.url(jsonNode.Url);
+                self.pageId(jsonNode.PageId);
                 self.displayOrder(jsonNode.DisplayOrder);
 
                 var nodes = [];
@@ -1015,6 +1022,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     Version: self.version(),
                     Title: self.title(),
                     Url: self.url(),
+                    PageId: self.pageId(),
                     DisplayOrder: self.displayOrder(),
                     ParentId: self.parentNode().id()
                 };
@@ -1057,6 +1065,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 
                 customLink.title(globalization.sitemapEditorDialogCustomLinkTitle);
                 customLink.url('/../');
+                customLink.pageId(defaultIdValue);
                 customLink.isCustom(true);
                 pageLinks.push(customLink);
                 
@@ -1076,11 +1085,11 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Responsible for page link data.
         */
-        function PageLinkViewModel(title, url, id) {
+        function PageLinkViewModel(title, url, pageId) {
             var self = this;
             self.title = ko.observable(title);
             self.url = ko.observable(url);
-            self.id = ko.observable(id);
+            self.pageId = ko.observable(pageId);
             self.isVisible = ko.observable(true);
             self.isCustom = ko.observable(false);
             self.isBeingDragged = ko.observable(false);
@@ -1096,7 +1105,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 self.isVisible(true);
                 self.title(json.Title);
                 self.url(json.Url);
-                self.id(json.Id);
+                self.pageId(json.Id);
             };
         }
         
@@ -1134,6 +1143,9 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             };
         }
         
+        /**
+        * Responsible for tabs handling for new page placement into multiple sitemaps.
+        */
         function TabsModel(tabs) {
             var self = this;
             self.activeTab = ko.observable();
@@ -1159,6 +1171,9 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.tabs()[0].activate();
         }
         
+        /**
+        * Responsible for single tab behavior for new page placement into sitemap.
+        */
         function TabModel(newPageViewModel) {
             var self = this;
             self.newPageViewModel = newPageViewModel;

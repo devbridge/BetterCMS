@@ -76,7 +76,7 @@
                         <div class="bcms-custom-input-box" style="width: 65%;">
                             @Html.TextBoxFor(m => m.Url, new
                             {
-                                data_bind = "value: url, valueUpdate: 'afterkeydown', enterPress: saveSitemapNodeWithValidation, escPress: cancelEditSitemapNode",
+                                data_bind = "value: url, valueUpdate: 'afterkeydown', enterPress: saveSitemapNodeWithValidation, escPress: cancelEditSitemapNode, attr: { 'readonly': getReadonlyUrlState() }",
                                 @class = "bcms-editor-field-box",
                                 Url = (string)null,
                             })

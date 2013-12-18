@@ -42,6 +42,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetPageLinks
 
             query = query
                 .SelectList(select => select
+                    .Select(() => alias.Id).WithAlias(() => modelAlias.Id)
                     .Select(() => alias.Title).WithAlias(() => modelAlias.Title)
                     .Select(() => alias.PageUrl).WithAlias(() => modelAlias.Url))
                 .TransformUsing(Transformers.AliasToBean<PageLinkViewModel>());

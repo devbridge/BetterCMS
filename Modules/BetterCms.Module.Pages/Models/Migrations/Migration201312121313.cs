@@ -186,6 +186,10 @@ namespace BetterCms.Module.Pages.Models.Migrations
                 .OnTable("SitemapNodes").InSchema(SchemaName)
                 .AsGuid().Nullable();
 
+            Alter
+                .Table("SitemapNodes").InSchema(SchemaName)
+                .AlterColumn("Url").AsString(MaxLength.Url).Nullable();
+
             Create
                 .ForeignKey("FK_Cms_SitemapNodes_SitemapId_Cms_Page_Id")
                 .FromTable("SitemapNodes").InSchema(SchemaName).ForeignColumn("PageId")

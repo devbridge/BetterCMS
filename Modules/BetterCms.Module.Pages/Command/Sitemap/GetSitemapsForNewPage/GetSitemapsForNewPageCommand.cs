@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
@@ -36,8 +37,9 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemapsForNewPage
             var sitemaps = new List<SitemapViewModel>();
 
             var allSitmaps = Repository.AsQueryable<Models.Sitemap>()
-                .Fetch(map => map.Nodes)
                 .Fetch(map => map.AccessRules)
+                .FetchMany(map => map.Nodes)
+                .ThenFetch(node => node.Page)
                 .Distinct()
                 .ToList();
 
@@ -85,7 +87,8 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemapsForNewPage
                     Id = node.Id,
                     Version = node.Version,
                     Title = node.Title,
-                    Url = node.Url,
+                    Url = node.Page != null ? node.Page.PageUrl : node.Url,
+                    PageId = node.Page != null ? node.Page.Id : Guid.Empty,
                     DisplayOrder = node.DisplayOrder,
                     ChildNodes = GetSitemapNodesInHierarchy(allNodes.Where(f => f.ParentNode == node).ToList(), allNodes)
                 });
