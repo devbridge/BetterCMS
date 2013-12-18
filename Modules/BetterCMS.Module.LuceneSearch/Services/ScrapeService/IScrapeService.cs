@@ -7,8 +7,6 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
 {
     public interface IScrapeService
     {
-        void AddUniqueLink(IList<string> urls);
-
         Queue<CrawlLink> GetUnprocessedLinks(int limit = 1000);
 
         Queue<CrawlLink> GetProcessedLinks(int limit = 1000);
@@ -16,5 +14,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
         Queue<CrawlLink> GetFailedLinks(int limit = 1000); 
 
         void MarkVisited(Guid id);
+
+        void FetchNewUrls();
     }
 }

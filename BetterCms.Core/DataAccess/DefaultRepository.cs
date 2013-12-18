@@ -160,11 +160,6 @@ namespace BetterCms.Core.DataAccess
         public void Refresh<TEntity>(TEntity entity) where TEntity : IEntity
         {
             UnitOfWork.Session.Refresh(entity);
-        }
-
-        public int Execute(string query)
-        {
-            return UnitOfWork.Session.CreateSQLQuery(query).ExecuteUpdate();
-        }
+        }        
     }
 }

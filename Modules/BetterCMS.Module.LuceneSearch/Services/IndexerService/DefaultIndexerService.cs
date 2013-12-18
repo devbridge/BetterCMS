@@ -16,7 +16,7 @@ using Lucene.Net.Util;
 
 namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 {
-    class DefaultIndexerService : IIndexerService
+    public class DefaultIndexerService : IIndexerService
     {
         private readonly IndexWriter Writer;
 
@@ -35,6 +35,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
         public DefaultIndexerService()
         {
             Index = FSDirectory.Open(directory);
+
             Analyzer = new StandardAnalyzer(Version.LUCENE_30);
             Writer = new IndexWriter(Index, Analyzer, true, IndexWriter.MaxFieldLength.LIMITED);
             Parser = new QueryParser(Version.LUCENE_30, "title", Analyzer);

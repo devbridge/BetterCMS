@@ -6,38 +6,25 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 
-using BetterCms.Module.Api;
-using BetterCms.Module.Api.Operations.Pages.Pages;
-using BetterCms.Module.Api.Operations.Pages.Sitemap.Nodes;
+using BetterCms.Module.LuceneSearch;
+
+using Common.Logging;
 
 using HtmlAgilityPack;
 
 namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
 {
-    class DefaultWebCrawlerService : IWebCrawlerService
+    public class DefaultWebCrawlerService : IWebCrawlerService
     {
-        private static readonly Regex RegexLink = new Regex("(?<=<a\\s*?href=(?:'|\"))[^'\"]*?(?=(?:'|\"))", RegexOptions.Compiled);
-        private bool Success = true;
-
-        private static readonly string RootUrl = "http://bettercms.sandbox.mvc4.local";
-
-        public CrawlerResult ProccessUrl(string url, Guid id)
-        {
-            return new CrawlerResult
-            {
-                //NewUrls = Success ? ParseLinks(url) : new List<string>(),
-                CurrentUrl = url,
-                Id = id,
-                Success = Success
-            };
-        }
-
+        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+        
         public PageData FetchPage(string url)
         {
             var response = new PageData();
             HttpWebResponse httpWebResponse = null;
 
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(RootUrl + url);
+            
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(LuceneSearchModuleDescriptor.HostUrl + url);
             httpWebRequest.AllowAutoRedirect = true;
             httpWebRequest.Timeout = 60 * 1000;
 
@@ -57,62 +44,21 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
                             response.Content.LoadHtml(streamReader.ReadToEnd());
                         }
                     }
-                    else
-                    {
-                        Success = false;
-                    }
                 }
             }
-            catch (SystemException)
+            catch (SystemException ex)
             {
-                Success = false;
+                Log.ErrorFormat("Failed to fetch page by url {0}.", ex, url);
             }
-
-            if (httpWebResponse != null)
+            finally
             {
-                httpWebResponse.Close();
+                if (httpWebResponse != null)
+                {                    
+                    httpWebResponse.Close();
+                }
             }
 
             return response;
         }
-
-        private IEnumerable<string> ParseLinks(string pageUrl)
-        {
-            pageUrl = pageUrl.Replace("http://bettercms.sandbox.mvc4.local", "");
-
-            using (var api = ApiFactory.Create())
-            {
-                var request = new GetSitemapNodesRequest();
-                var nodes = api.Pages.Sitemap.Nodes.Get(request);
-
-                var rootNode = nodes.Data.Items.First(p => p.Url == pageUrl);
-
-                var result = nodes.Data.Items.Where(n => n.ParentId == rootNode.Id).Select(n => n.Url);
-                return result;
-            }
-        }
-
-        public IList<string> GetRootNodes()
-        {
-            using (var api = ApiFactory.Create())
-            {
-                var request = new GetSitemapNodesRequest();
-                var nodes = api.Pages.Sitemap.Nodes.Get(request);
-                var rootNodes = nodes.Data.Items.Where(p => p.ParentId == null).Select(n => n.Url);
-                return rootNodes.ToList();
-            }
-        } 
-
-        public IList<string> GetPagesList()
-        {
-            using (var api = ApiFactory.Create())
-            {
-                var request = new GetPagesRequest();
-                
-                var items = api.Pages.Pages.Get(request);
-                var result = items.Data.Items.Select(i => i.PageUrl);
-                return result.ToList();
-            }
-        } 
     }
 }

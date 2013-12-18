@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
-
-using HtmlAgilityPack;
 
 namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 {

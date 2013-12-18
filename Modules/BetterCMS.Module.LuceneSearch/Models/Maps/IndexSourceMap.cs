@@ -3,13 +3,14 @@ using BetterCms.Module.LuceneSearch;
 
 namespace BetterCMS.Module.LuceneSearch.Models.Maps
 {
-    class CrawlUrlMap : EntityMapBase<CrawlUrl>
+    public class IndexSourceMap : EntityMapBase<IndexSource>
     {
-        public CrawlUrlMap()
+        public IndexSourceMap()
             : base(LuceneSearchModuleDescriptor.ModuleName)
         {
-            Table("IndexedPages");
+            Table("IndexSources");
 
+            Map(x => x.SourceId).Not.Nullable();
             Map(x => x.Path).Not.Nullable();
             Map(x => x.StartTime).Nullable();
             Map(x => x.EndTime).Nullable();

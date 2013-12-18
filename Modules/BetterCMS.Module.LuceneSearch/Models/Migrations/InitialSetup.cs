@@ -5,7 +5,7 @@ using FluentMigrator;
 
 namespace BetterCms.Module.LuceneSearch.Models.Migrations
 {
-    [Migration(201312130922)]
+    [Migration(201312190004)]
     public class InitialSetup : DefaultMigration
     {
         public InitialSetup()
@@ -15,15 +15,20 @@ namespace BetterCms.Module.LuceneSearch.Models.Migrations
 
         public override void Up()
         {
-            Create.Table("IndexedPages").InSchema(SchemaName).WithCmsBaseColumns()
+            Create
+                .Table("IndexSources")
+                .InSchema(SchemaName)
+                .WithCmsBaseColumns()
+                .WithColumn("SourceId").AsGuid().NotNullable()
                 .WithColumn("Path").AsString(MaxLength.Url).NotNullable()
                 .WithColumn("StartTime").AsDateTime().Nullable()
                 .WithColumn("EndTime").AsDateTime().Nullable();
-        }
 
-        public override void Down()
-        {
-            Delete.Table("IndexedPages").InSchema(SchemaName);
+            Create
+                .Index("IX_Cms_IndexSources_SourceId")
+                .OnTable("IndexSources")
+                .InSchema(SchemaName)
+                .OnColumn("SourceId");                
         }
     }
 }

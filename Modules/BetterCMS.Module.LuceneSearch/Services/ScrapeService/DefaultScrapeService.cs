@@ -7,8 +7,8 @@ using BetterCMS.Module.LuceneSearch.Models;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
-
-using NHibernate.Criterion;
+using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Module.Root.Models;
 
 namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
 {
@@ -32,36 +32,47 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
             UnitOfWork = unitOfWork;
         }
 
-        public void AddUniqueLink(IList<string> urls)
+        public void FetchNewUrls()
         {
-            if (urls != null && urls.Count > 0)
+            var newSources = Repository.AsQueryable<Page>()
+                          .Where(page => !page.IsDeleted && !page.IsMasterPage && page.Status == PageStatus.Published)
+                          .Where(page => !Repository.AsQueryable<IndexSource>().Any(crawlUrl => crawlUrl.SourceId == page.Id))
+                          .Select(page =>
+                                    new IndexSource
+                                    {
+                                        Path = page.PageUrl,
+                                        SourceId = page.Id                                       
+                                    })
+                          .ToList();
+                          
+            
+            UnitOfWork.BeginTransaction();
+
+            int i = 0;
+            foreach (var source in newSources)
             {
-                var query = new StringBuilder("MERGE INTO [bcms_lucene].[IndexedPages] C USING ( VALUES");
+                Repository.Save(source);
 
-                query.AppendFormat("('{0}',0,0)", urls[0]);
-
-                for (int index = 1; index < urls.Count; index++)
+                // Flushes every 20-size batch.
+                if (i++ % 20 == 0)
                 {
-                    query.AppendFormat(",('{0}',0,0)", urls[index]);
+                    UnitOfWork.Session.Flush();
+                    UnitOfWork.Session.Clear();
                 }
-
-                query.AppendFormat(
-                    ")T([Path], [StartTime], [EndTime]) ON C.[Path] = T.[Path] WHEN NOT MATCHED THEN INSERT ([Path], [StartTime], [EndTime], [Version], [CreatedByUser], [ModifiedByUser]) VALUES (T.[Path], CONVERT(datetime,'{0}'), NULL, 1, 'System', 'System');",
-                    DateTime.Now);
-
-                Repository.Execute(query.ToString());
             }
+            
+            UnitOfWork.Commit();
         }
 
         public Queue<CrawlLink> GetUnprocessedLinks(int limit = 1000)
         {
-            CrawlUrl crawlUrlAlias = null;
+            IndexSource indexSourceAlias = null;
 
             var unprocessedUrls =
-                Repository.AsQueryOver(() => crawlUrlAlias)
-                          .Where(() => crawlUrlAlias.EndTime == null)
-                          .OrderByAlias(() => crawlUrlAlias.Id)
-                          .Asc.Lock(() => crawlUrlAlias)
+                Repository.AsQueryOver(() => indexSourceAlias)
+                          .Where(() => indexSourceAlias.EndTime == null)
+                          .OrderByAlias(() => indexSourceAlias.Id)
+                          .Asc.Lock(() => indexSourceAlias)
                           .Read.Take(limit)
                           .List();
 
@@ -73,10 +84,10 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
             }
 
             var expiredUrls =
-                Repository.AsQueryOver(() => crawlUrlAlias)
-                          .Where(() => crawlUrlAlias.EndTime != null)
-                          .OrderByAlias(() => crawlUrlAlias.Id)
-                          .Asc.Lock(() => crawlUrlAlias)
+                Repository.AsQueryOver(() => indexSourceAlias)
+                          .Where(() => indexSourceAlias.EndTime != null)
+                          .OrderByAlias(() => indexSourceAlias.Id)
+                          .Asc.Lock(() => indexSourceAlias)
                           .Read.Take(limit)
                           .List();
 
@@ -97,15 +108,15 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
  
         public Queue<CrawlLink> GetFailedLinks(int limit = 1000)
         {
-            CrawlUrl crawlUrlAlias = null;
+            IndexSource indexSourceAlias = null;
 
             var result = new Queue<CrawlLink>();
 
             var urls =
-                Repository.AsQueryOver(() => crawlUrlAlias)
-                          .Where(() => crawlUrlAlias.StartTime != null && crawlUrlAlias.EndTime == null)
-                          .OrderByAlias(() => crawlUrlAlias.Id)
-                          .Asc.Lock(() => crawlUrlAlias)
+                Repository.AsQueryOver(() => indexSourceAlias)
+                          .Where(() => indexSourceAlias.StartTime != null && indexSourceAlias.EndTime == null)
+                          .OrderByAlias(() => indexSourceAlias.Id)
+                          .Asc.Lock(() => indexSourceAlias)
                           .Read.Take(limit)
                           .List();
 
@@ -121,13 +132,13 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
 
         public Queue<CrawlLink> GetProcessedLinks(int limit = 1000)
         {
-            CrawlUrl crawlUrlAlias = null;
+            IndexSource indexSourceAlias = null;
 
             var processedUrls =
-                Repository.AsQueryOver(() => crawlUrlAlias)
-                          .Where(() => crawlUrlAlias.StartTime != null && crawlUrlAlias.EndTime != null)
-                          .OrderByAlias(() => crawlUrlAlias.Id)
-                          .Asc.Lock(() => crawlUrlAlias)
+                Repository.AsQueryOver(() => indexSourceAlias)
+                          .Where(() => indexSourceAlias.StartTime != null && indexSourceAlias.EndTime != null)
+                          .OrderByAlias(() => indexSourceAlias.Id)
+                          .Asc.Lock(() => indexSourceAlias)
                           .Read.Take(limit)
                           .List();
 
@@ -145,7 +156,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
 
         public void MarkVisited(Guid id)
         {
-            var url = Repository.First<CrawlUrl>(x => x.Id == id);
+            var url = Repository.First<IndexSource>(x => x.Id == id);
             url.EndTime = DateTime.Now;
 
             UnitOfWork.BeginTransaction();

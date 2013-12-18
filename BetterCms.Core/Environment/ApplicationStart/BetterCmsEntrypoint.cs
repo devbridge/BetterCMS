@@ -42,7 +42,7 @@ namespace BetterCms.Core.Environment.ApplicationStart
             }
             catch (Exception ex)
             {
-                throw new CmsException("Logging is not working. A reason may be that Common.Logging section is not configured in web.config.", ex);
+                    throw new CmsException("Logging is not working. A reason may be that Common.Logging section is not configured in web.config.", ex);
             }            
 
             if (!IsFullTrust)

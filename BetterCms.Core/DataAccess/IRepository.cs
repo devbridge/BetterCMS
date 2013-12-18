@@ -44,8 +44,6 @@ namespace BetterCms.Core.DataAccess
 
         void Detach<TEntity>(TEntity entity) where TEntity : IEntity;
 
-        void Refresh<TEntity>(TEntity entity) where TEntity : IEntity;
-
-        int Execute(string query);
+        void Refresh<TEntity>(TEntity entity) where TEntity : IEntity;        
     }
 }
