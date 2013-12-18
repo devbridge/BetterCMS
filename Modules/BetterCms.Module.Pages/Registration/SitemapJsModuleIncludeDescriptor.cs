@@ -26,7 +26,8 @@ namespace BetterCms.Module.Pages.Registration
                     new JavaScriptModuleLinkTo<SitemapController>(this, "deleteSitemapUrl", c => c.DeleteSitemap("{0}", "{1}")),
                     new JavaScriptModuleLinkTo<SitemapController>(this, "deleteSitemapNodeUrl", c => c.DeleteSitemapNode(null)),
                     new JavaScriptModuleLinkTo<SitemapController>(this, "sitemapEditDialogUrl", c => c.EditSitemap("{0}")),
-                    new JavaScriptModuleLinkTo<SitemapController>(this, "sitemapAddNewPageDialogUrl", c => c.AddNewPage())
+                    new JavaScriptModuleLinkTo<SitemapController>(this, "sitemapAddNewPageDialogUrl", c => c.AddNewPage()),
+                    new JavaScriptModuleLinkTo<SitemapController>(this, "saveMultipleSitemapsUrl", c => c.SaveMultipleSitemaps(null))
                 };
 
             Globalization = new IActionProjection[]

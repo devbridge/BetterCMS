@@ -9,6 +9,7 @@ using BetterCms.Module.Pages.Command.Sitemap.GetPageLinks;
 using BetterCms.Module.Pages.Command.Sitemap.GetSitemap;
 using BetterCms.Module.Pages.Command.Sitemap.GetSitemapsForNewPage;
 using BetterCms.Module.Pages.Command.Sitemap.GetSitemapsList;
+using BetterCms.Module.Pages.Command.Sitemap.SaveMultipleSitemaps;
 using BetterCms.Module.Pages.Command.Sitemap.SaveSitemap;
 using BetterCms.Module.Pages.Command.Sitemap.SaveSitemapNode;
 using BetterCms.Module.Pages.Content.Resources;
@@ -93,6 +94,24 @@ namespace BetterCms.Module.Pages.Controllers
 
                     return Json(new WireJson { Success = true, Data = response });
                 }
+            }
+
+            return Json(new WireJson { Success = false });
+        }
+
+        /// <summary>
+        /// Saves multiple sitemaps at once.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>Action result.</returns>
+        [HttpPost]
+        public ActionResult SaveMultipleSitemaps(List<SitemapViewModel> model)
+        {
+            if (ModelState.IsValid)
+            {
+                model.ForEach(svm => svm.UserAccessList = svm.UserAccessList ?? new List<UserAccessViewModel>());
+                var success = GetCommand<SaveMultipleSitemapsCommand>().ExecuteCommand(model);
+                return Json(new WireJson(success));
             }
 
             return Json(new WireJson { Success = false });

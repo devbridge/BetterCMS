@@ -32,7 +32,8 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 deleteSitemapUrl: null,
                 deleteSitemapNodeUrl: null,
                 sitemapEditDialogUrl: null,
-                sitemapAddNewPageDialogUrl: null
+                sitemapAddNewPageDialogUrl: null,
+                saveMultipleSitemapsUrl: null
             },
             globalization = {
                 sitemapCreatorDialogTitle: null,
@@ -405,20 +406,49 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 }
             };
             self.save = function (onDoneCallback) {
-                // TODO: refactor saving to save all the sitemaps at once.
                 var tabs = self.tabsModel.tabs(),
-                    totalTabs = tabs.length,
-                    totalResponses = 0;
-                
-                for (var i = 0; i < totalTabs; i++) {
-                    tabs[i].newPageViewModel.sitemap.save(function(data) {
-                        totalResponses++;
-                        if (totalResponses === totalTabs) {
+                    sitemapsToSave = [],
+                    onSaveCompleted = function (json) {
+                        messages.refreshBox(sitemap.activeMessageContainer, json);
+                        sitemap.showLoading(false);
+                        if (json.Success) {
                             if (onDoneCallback && $.isFunction(onDoneCallback)) {
-                                onDoneCallback(data);
+                                if (json.Data == null) {
+                                    json.Data = {
+                                        Title: title,
+                                        PageUrl: url,
+                                        PageId: pageId
+                                    };
+                                }
+                                onDoneCallback(json);
                             }
                         }
-                    });
+                    };
+                
+                for (var i = 0; i < tabs.length; i++) {
+                    if (tabs[i].newPageViewModel.linkIsDropped()) {
+                        sitemapsToSave.push(tabs[i].newPageViewModel.sitemap.getModelToSave());
+                    }
+                }
+                
+                if (sitemapsToSave.length > 0) {
+                    $.ajax({
+                        url: links.saveMultipleSitemapsUrl,
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        cache: false,
+                        data: JSON.stringify(sitemapsToSave),
+                        beforeSend: function() {
+                            sitemap.showLoading(true);
+                        }
+                    })
+                        .done(function (json) {
+                            onSaveCompleted(json);
+                        })
+                        .fail(function (response) {
+                            onSaveCompleted(bcms.parseFailedResponse(response));
+                        });
                 }
             };
         }
