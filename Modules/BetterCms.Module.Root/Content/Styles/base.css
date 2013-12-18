@@ -1923,11 +1923,12 @@ a.bcms-btn-close {
 
     .bcms-tables th {
         padding: 10px;
-        line-height: 16px;
+        line-height: 14px;
         background-color: #f5f5f5;
         border-top: 1px solid #c6c6c6;
         border-bottom: 1px solid #c6c6c6;
         font-weight: 700;
+        font-size: 13px !important;
         text-align: left;
         cursor: pointer;
     }
@@ -2034,6 +2035,7 @@ table.bcms-tables td:first-child {
     background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAYAAAGN9z9QAAAAV0lEQVQI12N4+vTpNCD+zwAjQPgPiAaLIIu6whi3YTJALMSAxIHhaSBBfiSB2zADQdgJZgNMkBmI92IxBoZBcmww3SCsAsQfkBSA2OrIJqLjTCDOQRcHAEn2vvYOPcQQAAAAAElFTkSuQmCC') no-repeat left 4px;
     color: #000;
     text-align: left;
+    font-size: 13px !important;
     font-weight: 700;
     overflow: hidden;
     text-overflow: ellipsis;
