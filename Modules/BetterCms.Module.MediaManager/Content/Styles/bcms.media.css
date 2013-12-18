@@ -204,6 +204,7 @@ div.bcms-align-right-active {
 }
 
     .bcms-media-reload:after {
+        content: "";
         position: absolute;
         left: 0;
         top: 50%;
@@ -848,6 +849,7 @@ input.bcms-grid-input:focus {
 
     .bcms-list .bcms-image-box .bcms-media-items-block {
         display: inline-block;
+        width: 530px;
         padding: 10px 15px;
         border-left: 1px solid #e3e3e3;
         vertical-align: middle;
