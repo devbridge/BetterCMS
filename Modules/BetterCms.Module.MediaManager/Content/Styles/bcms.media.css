@@ -569,10 +569,29 @@ div.bcms-upload-success {
 div.bcms-nomedia-data {
     position: relative;
     height: 62px;
-    line-height: 62px;
     padding: 0 20px 0 55px;
     border-bottom: 1px solid #e3e3e3;
     font-size: 14px;
+}
+
+    div.bcms-nomedia-data > a {
+        position: absolute;
+        left: 55px;
+        bottom: 10px;
+    }
+
+.bcms-media-content-message {
+    position: absolute;
+    top: 10px;
+    left: 55px;
+    max-width: 550px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.bcms-no-data-available {
+    line-height: 62px;
 }
 
 .bcms-media-items-block img {
@@ -582,15 +601,10 @@ div.bcms-nomedia-data {
 /*media manger files*/
 .bcms-list .bcms-grid-input {
     display: none;
-    /*position: absolute;
-    left: 135px;
-    top: 50%;*/
     height: 30px;
-    /*width: 380px;*/
     width: 100%;
     line-height: 18px;
     padding: 6px;
-    /*margin: -15px 0 0;*/
     border: 1px solid #1894e4;
     box-shadow: 0 0 3px 0 rgba(24,145,230,0.35);
     font-family: "Open Sans", sans-serif;
@@ -623,7 +637,7 @@ input.bcms-grid-input:focus {
     display: inline-block;
     width: 56px;
     height: 43px;
-    background: url('images/sprite-media-3.png') no-repeat; /*change bg above*/
+    background: url('images/sprite-media-3.png') no-repeat;
     vertical-align: middle;
 }
 
