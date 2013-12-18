@@ -180,12 +180,12 @@ div.bcms-align-right-active {
     }
 
 .bcms-media-properties-preview {
-    background-color: #E8E8E8; 
+    background-color: #E8E8E8;
     border: 1px solid grey;
-    margin: 5px; 
-    padding: 5px; 
-    position: fixed; 
-    z-index: 2147483647; 
+    margin: 5px;
+    padding: 5px;
+    position: fixed;
+    z-index: 2147483647;
 }
 
     .bcms-media-properties-preview img {
@@ -247,9 +247,8 @@ div.bcms-align-right-active {
     overflow: hidden;
     box-shadow: 0 0 1px 1px #292929;
     background-color: #676767;
-    background-image: linear-gradient(to bottom, #676767 0, #555555 100%);
-    background-image: -moz-linear-gradient(top, #676767 0, #555555 100%);
     background-image: -webkit-linear-gradient(top, #676767 0, #555555 100%);
+    background-image: linear-gradient(to bottom, #676767 0, #555555 100%);
 }
 
     .bcms-btn-upload-files label:active {
@@ -647,8 +646,8 @@ input.bcms-grid-input:focus {
 
 .bcms-list div.bcms-media-click-active {
     background-color: #effcfe;
-    transition: background-color 0.5s ease-out;
     -webkit-transition: background-color 0.5s ease-out;
+    transition: background-color 0.5s ease-out;
 }
 
     .bcms-list div.bcms-media-click-active:hover {
@@ -1553,10 +1552,9 @@ input.bcms-grid-input:focus {
     height: 100%;
     width: 100%;
     -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-    user-select: none;
-    -moz-user-select: none;
     -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
 }
 
 /* Positioning of handles and drag bars */

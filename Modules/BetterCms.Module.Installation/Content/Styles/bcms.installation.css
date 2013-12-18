@@ -77,8 +77,8 @@ p {
 a {
     color: #2eadd5;
     text-decoration: none;
-    transition: color 0.1s ease-in;
     -webkit-transition: color 0.1s ease-in;
+    transition: color 0.1s ease-in;
 }
 
     a:hover {
@@ -212,8 +212,8 @@ input[type="submit"].btn-secondary, input[type="submit"].btn-primary {
         font-weight: 700;
         font-family: 'Opan Sans', sans-serif;
         border-top: 1px solid #24a2c9;
-        transition: background 0.1s ease-in-out;
         -webkit-transition: background 0.1s ease-in-out;
+        transition: background 0.1s ease-in-out;
     }
 
         .submenu a:first-child {
@@ -257,8 +257,8 @@ a.bcms-logo {
         font-weight: 700;
         font-family: 'Open Sans', sans-serif;
         text-align: center;
-        transition: color 0.1s ease-in;
         -webkit-transition: color 0.1s ease-in;
+        transition: color 0.1s ease-in;
     }
 
         .page-navigation a:hover {
@@ -323,9 +323,8 @@ a.bcms-logo {
     font-family: 'Open Sans',sans-serif;
     text-shadow: 0 -1px 1px #19a2cd;
     background: #2eadd5;
-    background: linear-gradient(to bottom, #39b7df 0, #2eadd5 100%);
-    background: -moz-linear-gradient(top, #39b7df 0, #2eadd5 100%);
     background: -webkit-linear-gradient(top, #39b7df 0, #2eadd5 100%);
+    background: linear-gradient(to bottom, #39b7df 0, #2eadd5 100%);
 }
 
     .btn-primary:hover {
@@ -354,9 +353,8 @@ a.bcms-logo {
     font-family: 'Open Sans',sans-serif;
     text-shadow: 0 1px 1px #fff;
     background: #eeeeee;
-    background: linear-gradient(to bottom, #f8f8f8 0, #eeeeee 100%);
-    background: -moz-linear-gradient(top, #f8f8f8 0, #eeeeee 100%);
     background: -webkit-linear-gradient(top, #f8f8f8 0, #eeeeee 100%);
+    background: linear-gradient(to bottom, #f8f8f8 0, #eeeeee 100%);
 }
 
     .btn-secondary:hover {
@@ -375,9 +373,8 @@ a.action-arrow {
     z-index: 1;
     margin-left: 24px;
     background: url('images/icn-btn-arrow.png') no-repeat right center #2eadd5;
-    background: url('images/icn-btn-arrow.png') no-repeat right center, linear-gradient(to bottom, #39b7df 0, #2eadd5 100%);
-    background: url('images/icn-btn-arrow.png') no-repeat right center, -moz-linear-gradient(top, #39b7df 0, #2eadd5 100%);
     background: url('images/icn-btn-arrow.png') no-repeat right center, -webkit-linear-gradient(top, #39b7df 0, #2eadd5 100%);
+    background: url('images/icn-btn-arrow.png') no-repeat right center, linear-gradient(to bottom, #39b7df 0, #2eadd5 100%);
 }
 
     a.action-arrow:hover {
