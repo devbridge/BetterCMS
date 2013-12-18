@@ -3,8 +3,16 @@
 @using BetterCms.Module.Pages.ViewModels.Sitemap
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
-
-<div class="bcms-scroll-window" id="bcms-sitemap-addnewpage">
+<div class="bcms-tab-header">
+    <!-- ko foreach: tabs -->
+    <a class="bcms-tab" data-bind="text: newPageViewModel.sitemap.title(), css: { 'bcms-tab-active': isActive }, click: activate"></a>
+    <!-- /ko -->
+</div>
+<div class="bcms-scroll-window" id="bcms-sitemap-addnewpage" data-bind="with: activeNewPageViewModel">
+    @Html.SiteSettingsMessagesBox()
+    <div class="bcms-tab-single" style="height: 100%;" data-bind='template: { name: "bcms-sitemap-template" }'></div>
+</div>
+<script type="text/html" id="bcms-sitemap-template">
     <div class="bcms-columns-container">
         <div class="bcms-leftcol">
             <div class="bcms-sidebar-info-block">
@@ -34,9 +42,6 @@
             <div class="bcms-twocols-title-block">
                 <div class="bcms-large-titles">@NavigationGlobalization.Sitemap_AddNewPageDialog_SitemapHeader</div>
             </div>
-            
-            @Html.SiteSettingsMessagesBox()
-
             <div class="bcms-placement-holder">
                 @* Form is required for unobtrusive validation. *@
                 @using (Html.BeginForm<SitemapController>(f => f.SaveSitemap(null), FormMethod.Post, new { @class = "bcms-sitemap-form bcms-ajax-form" }))
@@ -46,4 +51,4 @@
             </div>
         </div>
     </div>
-</div>
+</script>

@@ -355,25 +355,13 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             var self = this;
             self.container = null;
             self.newPageModel = null;
+            self.tabsModel = null;
             
-            self.pageLinkModel = new PageLinkViewModel();
-            self.pageLinkModel.title(title);
-            self.pageLinkModel.url(url);
-            self.pageLinkModel.id(id);
-
             self.initialize = function (content, dialog) {
                 if (!(content != null && content.Data != null && content.Data.length > 0)) {
                     // No sitemaps to place the new page.
                     dialog.close();
                     return;
-                }
-
-                if (content.Data.length > 1) {
-                    // TODO: implement new page placement.
-                    dialog.close();
-                    alert("TODO: Implement new page placement for multiple sitemaps.");
-                    return;
-                    // TODO: implement new page placement.
                 }
 
                 self.container = dialog.container;
@@ -382,35 +370,55 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
                 sitemap.showMessage(content);
                 if (content.Success) {
-                    var onSkip = function () {
-                        dialog.close();
-                    };
+                    var tabs = [],
+                        onSkip = function() {
+                            dialog.close();
+                        };
                     
-                    // Create data models.
-                    var sitemapModel = new SitemapViewModel(content.Data[0]); // TODO: update.
-                    sitemapModel.parseJsonNodes(content.Data[0].RootNodes);
-                    self.newPageModel = new AddNewPageViewModel(sitemapModel, self.pageLinkModel, onSkip);
-                    sitemap.activeMapModel = sitemapModel;
+                    // Create all the tabs.
+                    for (var i = 0; i < content.Data.length; i++) {
+                        // Create data models.
+                        var sitemapModel = new SitemapViewModel(content.Data[i]),
+                            pageLinkModel = new PageLinkViewModel(title, url, id),
+                            newPageModel = new AddNewPageViewModel(sitemapModel, pageLinkModel, onSkip),
+                            tabModel = new TabModel(newPageModel);
+                        tabs.push(tabModel);
+                        sitemapModel.parseJsonNodes(content.Data[i].RootNodes);
 
-                    // Setup settings.
-                    sitemapModel.settings.canEditNode = false;
-                    sitemapModel.settings.canDeleteNode = false;
-                    sitemapModel.settings.canDragNode = false;
-                    sitemapModel.settings.canDropNode = true;
-                    sitemapModel.settings.nodeSaveButtonTitle = globalization.sitemapNodeSaveButton;
-                    sitemapModel.settings.nodeSaveAfterUpdate = false;
+                        // Setup settings.
+                        sitemapModel.settings.canEditNode = false;
+                        sitemapModel.settings.canDeleteNode = false;
+                        sitemapModel.settings.canDragNode = false;
+                        sitemapModel.settings.canDropNode = true;
+                        sitemapModel.settings.nodeSaveButtonTitle = globalization.sitemapNodeSaveButton;
+                        sitemapModel.settings.nodeSaveAfterUpdate = false;
+                    }
+
+                    self.tabsModel = new TabsModel(tabs);
 
                     // Bind models.
-                    var context = self.container.find(selectors.sitemapAddNewPageDataBind).get(0);
+                    var context = self.container.find(selectors.sitemapAddNewPageDataBind).parent().get(0);
                     if (context) {
-                        ko.applyBindings(self.newPageModel, context);
+                        ko.applyBindings(self.tabsModel, context);
                         updateValidation();
                     }
                 }
             };
             self.save = function (onDoneCallback) {
-                if (sitemap.activeMapModel) {
-                    sitemap.activeMapModel.save(onDoneCallback);
+                // TODO: refactor saving to save all the sitemaps at once.
+                var tabs = self.tabsModel.tabs(),
+                    totalTabs = tabs.length,
+                    totalResponses = 0;
+                
+                for (var i = 0; i < totalTabs; i++) {
+                    tabs[i].newPageViewModel.sitemap.save(function(data) {
+                        totalResponses++;
+                        if (totalResponses === totalTabs) {
+                            if (onDoneCallback && $.isFunction(onDoneCallback)) {
+                                onDoneCallback(data);
+                            }
+                        }
+                    });
                 }
             };
         }
@@ -1068,11 +1076,11 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Responsible for page link data.
         */
-        function PageLinkViewModel() {
+        function PageLinkViewModel(title, url, id) {
             var self = this;
-            self.title = ko.observable();
-            self.url = ko.observable();
-            self.id = ko.observable();
+            self.title = ko.observable(title);
+            self.url = ko.observable(url);
+            self.id = ko.observable(id);
             self.isVisible = ko.observable(true);
             self.isCustom = ko.observable(false);
             self.isBeingDragged = ko.observable(false);
@@ -1123,6 +1131,41 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 }
                 self.pageLink.isVisible(true);
                 self.linkIsDropped(false);
+            };
+        }
+        
+        function TabsModel(tabs) {
+            var self = this;
+            self.activeTab = ko.observable();
+            self.activeNewPageViewModel = ko.observable();
+            self.activateTab = function(tabModel) {
+                var active = self.activeTab();
+                if (active) {
+                    active.isActive(false);
+                }
+                tabModel.isActive(true);
+                sitemap.activeMapModel = tabModel.newPageViewModel.sitemap;
+                self.activeTab(tabModel);
+                self.activeNewPageViewModel(tabModel.newPageViewModel);
+            };
+
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].activateTab = self.activateTab;
+            }
+            
+            self.tabs = ko.observableArray(tabs);
+
+            // Activate first tab.
+            self.tabs()[0].activate();
+        }
+        
+        function TabModel(newPageViewModel) {
+            var self = this;
+            self.newPageViewModel = newPageViewModel;
+            self.isActive = ko.observable(false);
+            self.activateTab = null;
+            self.activate = function() {
+                self.activateTab(self);
             };
         }
         // --------------------------------------------------------------------
