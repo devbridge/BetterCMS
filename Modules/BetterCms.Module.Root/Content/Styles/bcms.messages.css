@@ -79,7 +79,7 @@
     .bcms-msg-choose-browser a:hover {
         color: #000000;
         border: 1px dashed #ce2b27;
-		text-decoration: none;
+        text-decoration: none;
     }
 
 .bcms-msg-download-chrome, .bcms-msg-download-ff {
@@ -105,43 +105,44 @@
     cursor: pointer;
 }
 
-.bcms-msg-message-close:hover{
-	text-decoration: underline;
+    .bcms-msg-message-close:hover {
+        text-decoration: underline;
+    }
+
+.bcms-msg-top-page {
+    height: 74px;
+    padding-top: 20px;
+    color: #5f4126;
+    background: url('images/msg-bg.jpg');
+    overflow: hidden;
+    font-family: Arial, sans-serif;
 }
-    .bcms-msg-top-page {
-        height: 74px;
-        padding-top: 20px;
-        color: #5f4126;
-        background: url('images/msg-bg.jpg');
-        overflow: hidden;
-        font-family: Arial, sans-serif;
-    }
 
-    .bcms-msg-top-holder {
-        position: relative;
-        width: 540px;
-        margin: 0 auto;
-    }
+.bcms-msg-top-holder {
+    position: relative;
+    width: 540px;
+    margin: 0 auto;
+}
 
-    .bcms-msg-top-block {
-        text-align: center;
-        font-size: 14px;
-    }
+.bcms-msg-top-block {
+    text-align: center;
+    font-size: 14px;
+}
 
-    .bcms-msg-cookies {
-        position: absolute;
-        right: -140px;
-        top: -21px;
-        width: 119px;
-        height: 85px;
-        background: url('images/cookies.png') no-repeat center top;
-    }
-
-    .bcms-msg-js {
+.bcms-msg-cookies {
     position: absolute;
-right: -140px;
-top: -20px;
-width: 195px;
-height: 93px;
-background: url('images/js.png') no-repeat center top;
-    }
+    right: -140px;
+    top: -21px;
+    width: 119px;
+    height: 85px;
+    background: url('images/cookies.png') no-repeat center top;
+}
+
+.bcms-msg-js {
+    position: absolute;
+    right: -140px;
+    top: -20px;
+    width: 195px;
+    height: 93px;
+    background: url('images/js.png') no-repeat center top;
+}

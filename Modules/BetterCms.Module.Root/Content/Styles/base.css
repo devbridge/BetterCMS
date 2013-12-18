@@ -46,7 +46,7 @@
 }
 
 /*browser compatibility support*/
-a:focus {
+a:focus, div:focus, button:focus {
     outline: none;
 }
 
@@ -82,9 +82,9 @@ hr.bcms-sidebar-separator {
     font-family: "Open Sans", sans-serif;
     font-size: 12px;
     color: #7B7B7B;
-    user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
+    user-select: none;
 }
 
 .bcms-sidemenu-body {
@@ -152,9 +152,8 @@ select.bcms-select-published {
     box-shadow: 0 0 1px 1px #292929;
     border-radius: 2px;
     background-color: #676767;
-    background-image: linear-gradient(to bottom, #676767 0, #555555 100%);
-    background-image: -moz-linear-gradient(top, #676767 0, #555555 100%);
     background-image: -webkit-linear-gradient(top, #676767 0, #555555 100%);
+    background-image: linear-gradient(to bottom, #676767 0, #555555 100%);
 }
 
     .bcms-sidemenu-btn:active {
@@ -165,9 +164,8 @@ select.bcms-select-published {
 div.bcms-btn-ok {
     padding-left: 30px;
     background: url('images/sprite-base-1.png') no-repeat left -265px #676767;
-    background: url('images/sprite-base-1.png') no-repeat left -265px, linear-gradient(to bottom, #676767 0, #555555 100%);
-    background: url('images/sprite-base-1.png') no-repeat left -265px, -moz-linear-gradient(top, #676767 0, #555555 100%);
     background: url('images/sprite-base-1.png') no-repeat left -265px, -webkit-linear-gradient(top, #676767 0, #555555 100%);
+    background: url('images/sprite-base-1.png') no-repeat left -265px, linear-gradient(to bottom, #676767 0, #555555 100%);
 }
 
     div.bcms-btn-ok:active {
@@ -177,9 +175,8 @@ div.bcms-btn-ok {
 div.bcms-btn-warn {
     padding-left: 30px;
     background: url('images/sprite-base-1.png') no-repeat left -165px #676767;
-    background: url('images/sprite-base-1.png') no-repeat left -165px, linear-gradient(to bottom, #676767 0, #555555 100%);
-    background: url('images/sprite-base-1.png') no-repeat left -165px, -moz-linear-gradient(top, #676767 0, #555555 100%);
     background: url('images/sprite-base-1.png') no-repeat left -165px, -webkit-linear-gradient(top, #676767 0, #555555 100%);
+    background: url('images/sprite-base-1.png') no-repeat left -165px, linear-gradient(to bottom, #676767 0, #555555 100%);
 }
 
     div.bcms-btn-warn:active {
@@ -190,9 +187,8 @@ div.bcms-btn-add {
     padding-right: 35px;
     margin-bottom: 20px;
     background: url('images/sprite-base-1.png') no-repeat right 8px #1892E4;
-    background: url('images/sprite-base-1.png') no-repeat right 8px, linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
-    background: url('images/sprite-base-1.png') no-repeat right 8px, -moz-linear-gradient(top, #1892E4 0, #0C7FC7 100%);
     background: url('images/sprite-base-1.png') no-repeat right 8px, -webkit-linear-gradient(top, #1892E4 0, #0C7FC7 100%);
+    background: url('images/sprite-base-1.png') no-repeat right 8px, linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
 }
 
     div.bcms-btn-add:active {
@@ -202,9 +198,8 @@ div.bcms-btn-add {
 div.bcms-btn-clone {
     padding-right: 35px;
     background: url('images/sprite-base-1.png') no-repeat right -212px #1892E4;
-    background: url('images/sprite-base-1.png') no-repeat right -212px, linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
-    background: url('images/sprite-base-1.png') no-repeat right -212px, -moz-linear-gradient(top, #1892E4 0, #0C7FC7 100%);
     background: url('images/sprite-base-1.png') no-repeat right -212px, -webkit-linear-gradient(top, #1892E4 0, #0C7FC7 100%);
+    background: url('images/sprite-base-1.png') no-repeat right -212px, linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
 }
 
     div.bcms-btn-clone:active {
@@ -215,9 +210,8 @@ div.bcms-btn-settings {
     padding-right: 35px;
     margin-bottom: 20px;
     background: url('images/sprite-base-1.png') no-repeat right -51px, #8E8E8E;
-    background: url('images/sprite-base-1.png') no-repeat right -51px, linear-gradient(to bottom, #8E8E8E 0, #787878 100%);
-    background: url('images/sprite-base-1.png') no-repeat right -51px, -moz-linear-gradient(top, #8E8E8E 0, #787878 100%);
     background: url('images/sprite-base-1.png') no-repeat right -51px, -webkit-linear-gradient(top, #8E8E8E 0, #787878 100%);
+    background: url('images/sprite-base-1.png') no-repeat right -51px, linear-gradient(to bottom, #8E8E8E 0, #787878 100%);
 }
 
     div.bcms-btn-settings:active {
@@ -227,9 +221,8 @@ div.bcms-btn-settings {
 .bcms-btn-delete {
     padding-right: 35px;
     background: url('images/sprite-base-1.png') no-repeat right -107px #A63333;
-    background: url('images/sprite-base-1.png') no-repeat right -107px, linear-gradient(to bottom, #A63333 0, #8E2626 100%);
-    background: url('images/sprite-base-1.png') no-repeat right -107px, -moz-linear-gradient(top, #A63333 0, #8E2626 100%);
     background: url('images/sprite-base-1.png') no-repeat right -107px, -webkit-linear-gradient(top, #A63333 0, #8E2626 100%);
+    background: url('images/sprite-base-1.png') no-repeat right -107px, linear-gradient(to bottom, #A63333 0, #8E2626 100%);
 }
 
     .bcms-btn-delete:active {
@@ -253,9 +246,8 @@ div.bcms-btn-plus-expand {
 /*blue buttons*/
 div.bcms-btn-blue {
     background: #1892E4;
-    background: linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
-    background: -moz-linear-gradient(top, #1892E4 0, #0C7FC7 100%);
     background: -webkit-linear-gradient(top, #1892E4 0, #0C7FC7 100%);
+    background: linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
 }
 
     div.bcms-btn-blue:active {
@@ -264,9 +256,8 @@ div.bcms-btn-blue {
 /*red buttons*/
 div.bcms-btn-red {
     background: #A63333;
-    background: linear-gradient(to bottom, #A63333 0, #8E2626 100%);
-    background: -moz-linear-gradient(top, #A63333 0, #8E2626 100%);
     background: -webkit-linear-gradient(top, #A63333 0, #8E2626 100%);
+    background: linear-gradient(to bottom, #A63333 0, #8E2626 100%);
 }
 
     div.bcms-btn-red:active {
@@ -275,9 +266,8 @@ div.bcms-btn-red {
 /*gray buttons*/
 div.bcms-btn-gray {
     background: #8E8E8E;
-    background: linear-gradient(to bottom, #8E8E8E 0, #787878 100%);
-    background: -moz-linear-gradient(top, #8E8E8E 0, #787878 100%);
     background: -webkit-linear-gradient(top, #8E8E8E 0, #787878 100%);
+    background: linear-gradient(to bottom, #8E8E8E 0, #787878 100%);
 }
 
     div.bcms-btn-gray:active {
@@ -389,8 +379,8 @@ a.bcms-icn-delete {
     cursor: pointer;
     font-size: 12px;
     font-weight: 600;
-    transition: all 0.1s ease-in-out;
     -webkit-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
 }
 
     a.bcms-icn-delete:hover {
@@ -517,9 +507,8 @@ a.bcms-remove-image {
     box-shadow: 0 0 2px #000;
     border-radius: 4px;
     background: #A63333;
-    background-image: linear-gradient(to bottom, #A63333 0, #8E2626 100%);
-    background-image: -moz-linear-gradient(top, #A63333 0, #8E2626 100%);
     background-image: -webkit-linear-gradient(top, #A63333 0, #8E2626 100%);
+    background-image: linear-gradient(to bottom, #A63333 0, #8E2626 100%);
 }
 
     .bcms-logout-btn:active {
@@ -544,9 +533,10 @@ a.bcms-remove-image {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-.bcms-sidemenu-username a {
-    color: #2eadd5;
-}
+
+    .bcms-sidemenu-username a {
+        color: #2eadd5;
+    }
 
 .bcms-sidemenu-openclosearrow {
     height: 20px;
@@ -592,9 +582,9 @@ a.bcms-remove-image {
     width: 50px;
     background: #000000;
     border-radius: 0 4px 4px 0;
-    user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
+    user-select: none;
 }
 
 #bcms-sidemenu-hide {
@@ -698,9 +688,8 @@ a.bcms-remove-image {
     color: #FFFFFF;
     cursor: pointer;
     background: #1891e6;
-    background: linear-gradient(to bottom, #1891e6 0, #0c7bc8 100%);
-    background: -moz-linear-gradient(top, #1891e6 0, #0c7bc8 100%);
     background: -webkit-linear-gradient(top, #1891e6 0, #0c7bc8 100%);
+    background: linear-gradient(to bottom, #1891e6 0, #0c7bc8 100%);
 }
 
 /* Conetnt region */
@@ -887,7 +876,6 @@ a.bcms-remove-image {
     position: relative;
     overflow-y: auto;
     overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
 }
 
 .bcms-padded-content {
@@ -1060,9 +1048,8 @@ div.bcms-modal-close {
     position: relative;
     padding: 20px;
     background-color: #A73331;
-    background-image: linear-gradient(to bottom, #A73331 0, #8F2724 100%);
-    background-image: -moz-linear-gradient(top, #A73331 0, #8F2724 100%);
     background-image: -webkit-linear-gradient(top, #A73331 0, #8F2724 100%);
+    background-image: linear-gradient(to bottom, #A73331 0, #8F2724 100%);
     color: #f3bfbf;
     top: 50%;
     left: 50%;
@@ -1213,9 +1200,8 @@ div.bcms-tip-close {
     font-size: 16px;
     text-transform: uppercase;
     background: #1890E6;
-    background: linear-gradient(to bottom, #1890E6 0, #0D7BC9 100%);
-    background: -moz-linear-gradient(top, #1890E6 0, #0D7BC9 100%);
     background: -webkit-linear-gradient(top, #1890E6 0, #0D7BC9 100%);
+    background: linear-gradient(to bottom, #1890E6 0, #0D7BC9 100%);
 }
 
     .bcms-btn-main:active {
@@ -1238,9 +1224,8 @@ div.bcms-tip-close {
     overflow: hidden;
     text-transform: uppercase;
     background: #1890E6;
-    background: linear-gradient(to bottom, #1890E6 0, #0D7BC9 100%);
-    background: -moz-linear-gradient(top, #1890E6 0, #0D7BC9 100%);
     background: -webkit-linear-gradient(top, #1890E6 0, #0D7BC9 100%);
+    background: linear-gradient(to bottom, #1890E6 0, #0D7BC9 100%);
 }
 
     .bcms-btn-small:active {
@@ -1316,9 +1301,8 @@ div.bcms-tip-close {
     text-align: center;
     text-transform: uppercase;
     background: #676767;
-    background: linear-gradient(to bottom, #676767 0, #555555 100%);
-    background: -moz-linear-gradient(top, #676767 0, #555555 100%);
     background: -webkit-linear-gradient(top, #676767 0, #555555 100%);
+    background: linear-gradient(to bottom, #676767 0, #555555 100%);
 }
 
     .bcms-btn-grid:active {
@@ -1436,8 +1420,8 @@ a.bcms-btn-close {
     vertical-align: middle;
     background-color: #f5f5f5;
     border-radius: 0;
-    box-sizing: border-box;
     -moz-box-sizing: border-box;
+    box-sizing: border-box;
     -webkit-appearance: none;
     border-radius: 0;
 }
@@ -1460,8 +1444,8 @@ a.bcms-btn-close {
     color: #000;
     background-color: #f5f5f5;
     border-radius: 0;
-    box-sizing: border-box;
     -moz-box-sizing: border-box;
+    box-sizing: border-box;
     -webkit-appearance: none;
     border-radius: 0;
 }
@@ -1533,8 +1517,8 @@ a.bcms-btn-close {
         font-size: 14px;
         font-weight: 700;
         text-decoration: none;
-        transition: all 0.1s ease-in-out;
         -webkit-transition: all 0.1s ease-in-out;
+        transition: all 0.1s ease-in-out;
     }
 
         .bcms-tab-header > .bcms-tab:hover {
@@ -1574,8 +1558,8 @@ a.bcms-btn-close {
         font-size: 14px;
         font-weight: 700;
         text-decoration: none;
-        transition: all 0.1s ease-in-out;
         -webkit-transition: all 0.1s ease-in-out;
+        transition: all 0.1s ease-in-out;
     }
 
         .bcms-innertab-header > .bcms-tab:hover {
@@ -1609,8 +1593,8 @@ a.bcms-btn-close {
     margin-left: 20px;
     cursor: pointer;
     border: 1px solid #c6c6c6;
-    box-sizing: border-box;
     -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
     .bcms-inner-grid-box:first-child {
@@ -1688,8 +1672,8 @@ a.bcms-btn-close {
         cursor: pointer;
         opacity: 1;
         filter: Alpha(opacity=100);
-        transition: opacity 0.2s ease-in-out;
         -webkit-transition: opacity 0.2s ease-in-out;
+        transition: opacity 0.2s ease-in-out;
     }
 
 .bcms-zoom-overlay {
@@ -1768,6 +1752,7 @@ a.bcms-btn-close {
     background: url('images/bcms-no-image-1.png') no-repeat center center #f5f5f5;
     overflow: hidden;
 }
+
     .bcms-grid-image-holder > div.bcms-grid-image {
         background-color: #ffffff;
         height: 100%;
@@ -1835,8 +1820,8 @@ a.bcms-btn-close {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    transition: background-color 0.1s ease-in-out;
     -webkit-transition: background-color 0.1s ease-in-out;
+    transition: background-color 0.1s ease-in-out;
 }
 
     .bcms-single-tag:hover {
@@ -1857,11 +1842,11 @@ a.bcms-btn-close {
     }
 
 .bcms-single-tag-active {
-    animation: duplicateTag 1.5s 3;
     -webkit-animation: duplicateTag 1.5s 3;
+    animation: duplicateTag 1.5s 3;
 }
 
-@keyframes duplicateTag {
+@-webkit-keyframes duplicateTag {
     0% {
         background-color: #def8ff;
         border: 1px solid #95d3e7;
@@ -1878,7 +1863,7 @@ a.bcms-btn-close {
     }
 }
 
-@-webkit-keyframes duplicateTag {
+@keyframes duplicateTag {
     0% {
         background-color: #def8ff;
         border: 1px solid #95d3e7;
@@ -1967,8 +1952,8 @@ th.bcms-tables-nohover:hover {
 
 .bcms-table-row-active {
     background-color: #effcfe;
-    transition: background-color 0.5s ease-out;
     -webkit-transition: background-color 0.5s ease-out;
+    transition: background-color 0.5s ease-out;
 }
 
 .bcms-tables tr.bcms-table-row-active:hover {
