@@ -193,6 +193,26 @@ div.bcms-align-right-active {
         max-width: 400px;
     }
 
+.bcms-media-reload {
+    float: right;
+    position: relative;
+    padding-left: 18px;
+    margin-top: 10px;
+    font-size: 13px;
+    color: #0383df;
+    cursor: pointer;
+}
+
+    .bcms-media-reload:after {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 12px;
+        height: 14px;
+        margin-top: -5px;
+        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAOCAYAAAFsus16AAAA6ElEQVQoz2Ngbr7PAMS5DFAGA4g4BSJYQcQFZGEQ7odxOIH4C7IMCB9E5vxH5oCV8QDxUyRBayC+AWKoI6uE4tkwBgfILCB+BsSfgZgRJlEEdcJJqHPAdtwGYnMkY16BJEGMnVjsOA0i+LFIPEPmrITSnUDsCBPcDnUVCJcihwMjVJABPeiUgPgaEP8F4h1AXA/EDUC8G4j/AfElIFaEaaiCKjTD4jgYtoNqLAFxvgNxOx7FMNwHxG9xSTKj8dmA+DEQr2fAIrEByaMgvy2A8iejpwpQiExHCi6QE5KBWBRbKKHjDlx+AQDr4Bggwk5KagAAAABJRU5ErkJggg==") no-repeat center;
+    }
+
 /*file uploader*/
 .bcms-dropzone {
     height: 150px;
