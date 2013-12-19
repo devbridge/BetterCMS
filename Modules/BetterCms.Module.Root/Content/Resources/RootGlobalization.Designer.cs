@@ -583,6 +583,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot delete culture {0}, because it&apos;s used in pages..
+        /// </summary>
+        public static string DeleteCultureCommand_PagesAreUsingCulture_Message {
+            get {
+                return ResourceManager.GetString("DeleteCultureCommand_PagesAreUsingCulture_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to delete option {0}?.
         /// </summary>
         public static string DeleteOption_Confirmation_Message {

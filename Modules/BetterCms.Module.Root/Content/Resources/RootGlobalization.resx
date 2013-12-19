@@ -573,4 +573,7 @@
   <data name="SaveCultureCommand_CultureNotExists_Message" xml:space="preserve">
     <value>Culture {0} doesn't exist.</value>
   </data>
+  <data name="DeleteCultureCommand_PagesAreUsingCulture_Message" xml:space="preserve">
+    <value>Cannot delete culture {0}, because it's used in pages.</value>
+  </data>
 </root>
