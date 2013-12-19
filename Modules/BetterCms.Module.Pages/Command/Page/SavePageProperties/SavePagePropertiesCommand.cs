@@ -235,9 +235,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                     }
                 }
 
-                page.NodeCountInSitemap = request.UpdateSitemap
-                    ? sitemapService.ChangeUrl(page.PageUrl, request.PageUrl)
-                    : sitemapService.NodesWithUrl(request.PageUrl);
+                sitemapService.ChangeUrlsInAllSitemapsNodes(page.PageUrl, request.PageUrl);
 
                 page.PageUrl = request.PageUrl;
             }

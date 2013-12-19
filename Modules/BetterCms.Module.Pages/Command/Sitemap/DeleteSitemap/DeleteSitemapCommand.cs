@@ -64,8 +64,6 @@ namespace BetterCms.Module.Pages.Command.Sitemap.DeleteSitemap
 
             sitemap = Repository.Delete<Models.Sitemap>(request.Id, request.Version);
 
-            SitemapService.DecreaseNodeCountForPages(sitemap.Nodes);    
-
             UnitOfWork.Commit();
 
             Events.SitemapEvents.Instance.OnSitemapDeleted(sitemap);

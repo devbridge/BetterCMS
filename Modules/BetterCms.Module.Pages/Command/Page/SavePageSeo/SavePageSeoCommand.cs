@@ -83,10 +83,6 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
                     }
                 }
 
-                page.NodeCountInSitemap = model.UpdateSitemap
-                    ? sitemapService.ChangeUrl(page.PageUrl, model.ChangedUrlPath)
-                    : sitemapService.NodesWithUrl(model.ChangedUrlPath);
-
                 page.PageUrl = model.ChangedUrlPath;
             }
 

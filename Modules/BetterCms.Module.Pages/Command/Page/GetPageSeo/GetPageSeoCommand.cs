@@ -9,7 +9,10 @@ using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Seo;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.ViewModels.Security;
+
+using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Command.Page.GetPageSeo
 {
@@ -37,6 +40,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageSeo
                 return new EditSeoViewModel();
             }
 
+            var inSitemapFuture = Repository.AsQueryable<SitemapNode>().Where(node => node.Page.Id == pageId).Select(node => node.Id).ToFuture();
             var page = Repository
                 .AsQueryable<PageProperties>()
                 .Where(f => f.Id == pageId)
@@ -50,7 +54,6 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageSeo
                             MetaKeywords = f.MetaKeywords,
                             MetaDescription = f.MetaDescription,
                             UseCanonicalUrl = f.UseCanonicalUrl,
-                            IsInSitemap = f.NodeCountInSitemap > 0,
                             Version = f.Version
                         })
                 .FirstOne();
@@ -68,7 +71,8 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageSeo
                 model.MetaKeywords = page.MetaKeywords;
                 model.MetaDescription = page.MetaDescription;
                 model.UseCanonicalUrl = page.UseCanonicalUrl;
-                model.IsInSitemap = page.IsInSitemap;
+                var urlHash = page.PageUrl.UrlHash(); 
+                model.IsInSitemap = inSitemapFuture.Any() || Repository.AsQueryable<SitemapNode>().Any(node => node.UrlHash == urlHash);
                 model.UpdateSitemap = true;
 
                 if (cmsConfiguration.Security.AccessControlEnabled)

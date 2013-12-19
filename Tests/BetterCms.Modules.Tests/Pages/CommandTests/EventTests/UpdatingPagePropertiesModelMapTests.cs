@@ -12,7 +12,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.EventTests
             var entity = TestDataProvider.CreateNewPageProperties();
             entity.MasterPage = TestDataProvider.CreateNewPageProperties();
             entity.PublishedOn = TestDataProvider.ProvideRandomDateTime();
-            entity.NodeCountInSitemap = TestDataProvider.ProvideRandomNumber(1, 100);
+            entity.IsInSitemap = TestDataProvider.ProvideRandomBooleanValue();
 
             var model = new UpdatingPagePropertiesModel(entity);
 
@@ -35,8 +35,8 @@ namespace BetterCms.Test.Module.Pages.CommandTests.EventTests
             Assert.AreEqual(entity.UseNoIndex, model.UseNoIndex);
             Assert.AreEqual(entity.IsMasterPage, model.IsMasterPage);
             Assert.AreEqual(entity.IsArchived, model.IsArchived);
-            
-            Assert.AreEqual(entity.NodeCountInSitemap, model.NodeCountInSitemap);
+
+            Assert.AreEqual(entity.IsInSitemap, model.IsInSitemap);
             
             Assert.AreEqual(entity.Layout.Id, model.LayoutId);
             Assert.AreEqual(entity.MasterPage.Id, model.MasterPageId);

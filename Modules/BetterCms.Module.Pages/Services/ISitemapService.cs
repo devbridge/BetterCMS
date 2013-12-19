@@ -23,8 +23,7 @@ namespace BetterCms.Module.Pages.Services
         /// </summary>
         /// <param name="oldUrl">The old URL.</param>
         /// <param name="newUrl">The new URL.</param>
-        /// <returns>Node with new url count.</returns>
-        int ChangeUrl(string oldUrl, string newUrl);
+        void ChangeUrlsInAllSitemapsNodes(string oldUrl, string newUrl);
 
         /// <summary>
         /// Deletes the node.
@@ -65,11 +64,5 @@ namespace BetterCms.Module.Pages.Services
         /// Updated or newly created sitemap node.
         /// </returns>
         SitemapNode SaveNode(Sitemap sitemap, Guid nodeId, int version, string url, string title, Guid pageId, int displayOrder, Guid parentId, bool isDeleted = false, SitemapNode parentNode = null);
-
-        /// <summary>
-        /// Lowers NodeCountInSitemap property value for pages related with removedNodes.
-        /// </summary>
-        /// <param name="removedNodes">The removed nodes.</param>
-        void DecreaseNodeCountForPages(IList<SitemapNode> removedNodes);
     }
 }

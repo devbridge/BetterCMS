@@ -37,6 +37,14 @@ namespace BetterCms.Module.Pages.Models
         public virtual string Url { get; set; }
 
         /// <summary>
+        /// Gets or sets the URL hash.
+        /// </summary>
+        /// <value>
+        /// The URL hash.
+        /// </value>
+        public virtual string UrlHash { get; set; }
+
+        /// <summary>
         /// Gets or sets the page.
         /// </summary>
         /// <value>

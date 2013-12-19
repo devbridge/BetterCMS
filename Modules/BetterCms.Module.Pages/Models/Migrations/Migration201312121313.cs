@@ -143,6 +143,27 @@ namespace BetterCms.Module.Pages.Models.Migrations
         {
             CorrelateWithSitemap();
             CorrelateWithPage();
+            CreateUrlHashColumn();
+        }
+
+        private void CreateUrlHashColumn()
+        {
+            Alter
+                .Table("SitemapNodes").InSchema(SchemaName)
+                .AddColumn("UrlHash").AsAnsiString(MaxLength.UrlHash).Nullable();
+
+            IfSqlServer().Execute.EmbeddedScript("Migration201312121313.sqlserver.sql");
+
+            // TODO: add Postgres support.
+            IfPostgres().Execute.Sql(PostgresThrowNotSupportedErrorSql);
+
+            // TODO: add Oracle support.
+            IfOracle().Execute.Sql(OracleThrowNotSupportedErrorSql);
+
+            Create
+                .Index("IX_Cms_SitemapNodes_UrlHash")
+                .OnTable("SitemapNodes").InSchema(SchemaName)
+                .OnColumn("UrlHash").Ascending();
         }
 
         /// <summary>

@@ -8,6 +8,8 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 
+using NHibernate.Linq;
+
 namespace BetterCms.Module.Pages.Services
 {
     /// <summary>
@@ -54,25 +56,18 @@ namespace BetterCms.Module.Pages.Services
         /// <returns>
         /// Node with new url count.
         /// </returns>
-        public int ChangeUrl(string oldUrl, string newUrl)
+        public void ChangeUrlsInAllSitemapsNodes(string oldUrl, string newUrl)
         {
-            oldUrl = (oldUrl ?? string.Empty).ToLower();
+            var oldUrlHash = (oldUrl ?? string.Empty).UrlHash();
+            newUrl = newUrl ?? string.Empty;
 
-            if (string.IsNullOrEmpty(oldUrl) || string.IsNullOrEmpty(newUrl))
-            {
-                return 0;
-            }
-
-            var nodes = repository.AsQueryable<SitemapNode>(n => n.Url.ToLower() == oldUrl);
-            var count = 0;
+            var nodes = repository.AsQueryable<SitemapNode>().Where(n => n.UrlHash == oldUrlHash).ToList();
             foreach (var node in nodes)
             {
                 node.Url = newUrl;
+                node.UrlHash = newUrl.UrlHash();
                 repository.Save(node);
-                count++;
             }
-
-            return count;
         }
 
         /// <summary>
@@ -108,9 +103,11 @@ namespace BetterCms.Module.Pages.Services
         /// </returns>
         public IList<SitemapNode> GetNodesByPage(Page page)
         {
-            var url = page.PageUrl.ToLower();
+            var urlHash = page.PageUrl.UrlHash();
             return repository
-                .AsQueryable<SitemapNode>(n => (n.Page != null && n.Page.Id == page.Id) || (n.Url != null && n.Url.ToLower() == url))
+                .AsQueryable<SitemapNode>()
+                .Where(n => (n.Page != null && n.Page.Id == page.Id) || (n.UrlHash == urlHash))
+                .Fetch(node => node.ChildNodes)
                 .Distinct()
                 .ToList();
         }
@@ -144,7 +141,6 @@ namespace BetterCms.Module.Pages.Services
                 if (!node.Id.HasDefaultValue())
                 {
                     repository.Delete(node);
-                    UpdatePageProperties(nodeId.HasDefaultValue(), node.IsDeleted, oldUrl, url, pageId);
                 }
             }
             else
@@ -154,6 +150,7 @@ namespace BetterCms.Module.Pages.Services
                 node.Title = title;
                 node.Page = !pageId.HasDefaultValue() ? repository.AsProxy<PageProperties>(pageId) : null;
                 node.Url = node.Page != null ? null : url;
+                node.UrlHash = node.Page != null ? null : url.UrlHash();
                 node.DisplayOrder = displayOrder;
                 if (parentNode != null && !parentNode.Id.HasDefaultValue())
                 {
@@ -167,38 +164,9 @@ namespace BetterCms.Module.Pages.Services
                 }
 
                 repository.Save(node);
-                UpdatePageProperties(nodeId.HasDefaultValue(), node.IsDeleted, oldUrl, url, pageId);
             }
 
             return node;
-        }
-
-        /// <summary>
-        /// Lowers NodeCountInSitemap property value for pages related with removedNodes.
-        /// </summary>
-        /// <param name="removedNodes">The removed nodes.</param>
-        public void DecreaseNodeCountForPages(IList<SitemapNode> removedNodes)
-        {
-            foreach (var node in removedNodes)
-            {
-                PageProperties page;
-                if (node.Page != null)
-                {
-                    page = node.Page;
-                }
-                else
-                {
-                    var hashedUrl = node.Url.UrlHash();
-                    page = repository.AsQueryable<PageProperties>().FirstOrDefault(p => p.PageUrlHash == hashedUrl);
-                }
-
-                if (page != null)
-                {
-                    var value = page.NodeCountInSitemap - 1;
-                    page.NodeCountInSitemap = value > 0 ? value : 0;
-                    repository.Save(page);
-                }
-            }
         }
 
         /// <summary>
@@ -215,83 +183,6 @@ namespace BetterCms.Module.Pages.Services
 
             repository.Delete(node);
             deletedNodes.Add(node);
-
-            UpdatePageProperties(false, true, node.Url, string.Empty, node.Page != null ? node.Page.Id : Guid.Empty);
-        }
-
-        /// <summary>
-        /// Updates page properties.
-        /// </summary>
-        /// <param name="isNodeNew">if set to <c>true</c> [is node new].</param>
-        /// <param name="isNodeDeleted">if set to <c>true</c> [is node deleted].</param>
-        /// <param name="oldUrl">The old URL.</param>
-        /// <param name="newUrl">The new URL.</param>
-        /// <param name="pageId">The page identifier.</param>
-        private void UpdatePageProperties(bool isNodeNew, bool isNodeDeleted, string oldUrl, string newUrl, Guid pageId)
-        {
-            oldUrl = (oldUrl ?? string.Empty).ToLower();
-            newUrl = (newUrl ?? string.Empty).ToLower();
-            var getPageById = !pageId.HasDefaultValue();
-
-            if (isNodeNew)
-            {
-                if (string.IsNullOrEmpty(newUrl))
-                {
-                    return;
-                }
-
-                // New sitemap node created.
-                if (!isNodeDeleted)
-                {
-                    var page = repository.FirstOrDefault<PageProperties>(p => (getPageById && p.Id == pageId) || (!getPageById && p.PageUrl.ToLower() == newUrl));
-                    if (page != null)
-                    {
-                        page.NodeCountInSitemap += 1;
-                        page.SaveUnsecured = true;
-
-                        repository.Save(page);
-                    }
-                }
-            }
-            else if (isNodeDeleted)
-            {
-                if (string.IsNullOrEmpty(oldUrl))
-                {
-                    return;
-                }
-
-                // Sitemap node deleted.
-                var page = repository.FirstOrDefault<PageProperties>(p => (getPageById && p.Id == pageId) || (!getPageById && p.PageUrl.ToLower() == oldUrl));
-                if (page != null && page.NodeCountInSitemap > 0)
-                {
-                    page.NodeCountInSitemap -= 1;
-                    page.SaveUnsecured = true;
-
-                    repository.Save(page);
-                }
-            }
-            else if (oldUrl != newUrl)
-            {
-                // Url in sitemap node changed.
-                var pages = repository.AsQueryable<PageProperties>(p => p.PageUrl.ToLower() == newUrl || p.PageUrl.ToLower() == oldUrl).ToList();
-                foreach (var page in pages)
-                {
-                    if (page.PageUrl.ToLower() == oldUrl && page.NodeCountInSitemap > 0)
-                    {
-                        page.NodeCountInSitemap -= 1;
-                        page.SaveUnsecured = true;
-
-                        repository.Save(page);
-                    }
-                    else if (page.PageUrl.ToLower() == newUrl)
-                    {
-                        page.NodeCountInSitemap += 1;
-                        page.SaveUnsecured = true;
-
-                        repository.Save(page);
-                    }
-                }
-            }
         }
     }
 }

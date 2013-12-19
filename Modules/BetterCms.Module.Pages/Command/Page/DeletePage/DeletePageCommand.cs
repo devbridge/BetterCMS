@@ -79,7 +79,7 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
                 AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent);
             }
 
-            if (request.UpdateSitemap && page.NodeCountInSitemap > 0)
+            if (request.UpdateSitemap)
             {
                 sitemapNodes = sitemapService.GetNodesByPage(page);
                 foreach (var node in sitemapNodes)
@@ -174,9 +174,6 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
                 {
                     sitemapService.DeleteNodeWithoutPageUpdate(node);
                 }
-
-                page.NodeCountInSitemap -= sitemapNodes.Count;
-                Repository.Save(page);
             }
 
             // Delete page

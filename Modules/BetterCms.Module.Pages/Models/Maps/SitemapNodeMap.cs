@@ -16,6 +16,7 @@ namespace BetterCms.Module.Pages.Models.Maps
 
             Map(x => x.Title).Not.Nullable().Length(MaxLength.Name);
             Map(x => x.Url).Nullable().Length(MaxLength.Url);
+            Map(x => x.UrlHash).Nullable().Length(MaxLength.UrlHash);
             Map(x => x.DisplayOrder).Not.Nullable();
 
             References(x => x.Sitemap).Cascade.SaveUpdate().LazyLoad();

@@ -17,6 +17,7 @@ using BetterCms.Module.Root;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Security;
 
@@ -106,7 +107,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                               UseNoIndex = page.UseNoIndex,
                               UseCanonicalUrl = page.UseCanonicalUrl,
                               IsPagePublished = page.Status == PageStatus.Published,
-                              IsInSitemap = page.NodeCountInSitemap > 0,
+//                              IsInSitemap = page.NodeCountInSitemap > 0,
                               IsArchived = page.IsArchived,
                               IsMasterPage = page.IsMasterPage,
                               TemplateId = page.Layout.Id,
@@ -147,6 +148,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                     })
                 .ToFuture();
 
+            var inSitemapFuture = Repository.AsQueryable<SitemapNode>().Where(node => node.Page.Id == id).Select(node => node.Id).ToFuture();
             var tagsFuture = tagService.GetPageTagNames(id);
             var categories = categoryService.GetCategories();
             var customOptionsFuture = optionService.GetCustomOptionsFuture();
@@ -181,6 +183,8 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 model.Model.Tags = tagsFuture.ToList();
                 model.Model.RedirectFromOldUrl = true;
                 model.Model.Categories = categories;
+                var urlHash = model.Model.PageUrl.UrlHash();
+                model.Model.IsInSitemap = inSitemapFuture.Any() || Repository.AsQueryable<SitemapNode>().Any(node => node.UrlHash == urlHash);
                 model.Model.UpdateSitemap = true;
                 model.Model.CustomOptions = customOptionsFuture.ToList();
 
