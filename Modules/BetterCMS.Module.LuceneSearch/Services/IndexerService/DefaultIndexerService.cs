@@ -55,6 +55,8 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         public void AddHtmlDocument(PageData pageData)
         {
+            //TODO prevent existing pages from being indexed
+            
             var doc = new Document();
             
             doc.Add(new Field("path", pageData.AbsolutePath, Field.Store.YES, Field.Index.NOT_ANALYZED));

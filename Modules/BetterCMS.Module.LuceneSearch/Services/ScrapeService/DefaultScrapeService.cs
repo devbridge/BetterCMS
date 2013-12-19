@@ -83,19 +83,9 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
                 links.Enqueue(new CrawlLink { Id = url.Id, Path = url.Path });
             }
 
-            var expiredUrls =
-                Repository.AsQueryOver(() => indexSourceAlias)
-                          .Where(() => indexSourceAlias.EndTime != null)
-                          .OrderByAlias(() => indexSourceAlias.Id)
-                          .Asc.Lock(() => indexSourceAlias)
-                          .Read.Take(limit)
-                          .List();
-
-            var expiredLinks = expiredUrls.Where(url => (DateTime.Now - url.EndTime).Value.TotalMinutes > CrawlFrequency).Take(ResultLimit);
-
-            foreach (var link in expiredLinks)
+            if (links.Count == 0)
             {
-                links.Enqueue(new CrawlLink { Id = link.Id, Path = link.Path });
+                links = GetExpiredLinks();
             }
 
             if (links.Count == 0)
@@ -106,6 +96,31 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
             return links;
         }
  
+
+        public Queue<CrawlLink> GetExpiredLinks(int limit = 1000)
+        {
+            IndexSource indexSourceAlias = null;
+
+            var result = new Queue<CrawlLink>();
+
+            var expiredUrls =
+            Repository.AsQueryOver(() => indexSourceAlias)
+              .Where(() => indexSourceAlias.EndTime != null)
+              .OrderByAlias(() => indexSourceAlias.Id)
+              .Asc.Lock(() => indexSourceAlias)
+              .Read.Take(limit)
+              .List();
+
+            var expiredLinks = expiredUrls.Where(url => (DateTime.Now - url.EndTime).Value.TotalMinutes > CrawlFrequency).Take(ResultLimit);
+
+            foreach (var link in expiredLinks)
+            {
+                result.Enqueue(new CrawlLink { Id = link.Id, Path = link.Path });
+            }
+
+            return result;
+        } 
+
         public Queue<CrawlLink> GetFailedLinks(int limit = 1000)
         {
             IndexSource indexSourceAlias = null;
