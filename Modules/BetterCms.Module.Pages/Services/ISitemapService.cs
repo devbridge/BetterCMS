@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Pages.Services
 {
@@ -42,9 +43,11 @@ namespace BetterCms.Module.Pages.Services
         /// <summary>
         /// Gets the nodes by URL.
         /// </summary>
-        /// <param name="url">The URL.</param>
-        /// <returns>Node list.</returns>
-        IList<SitemapNode> GetNodesByUrl(string url);
+        /// <param name="page">The page.</param>
+        /// <returns>
+        /// Node list.
+        /// </returns>
+        IList<SitemapNode> GetNodesByPage(Page page);
 
         /// <summary>
         /// Saves the node.
@@ -64,11 +67,9 @@ namespace BetterCms.Module.Pages.Services
         SitemapNode SaveNode(Sitemap sitemap, Guid nodeId, int version, string url, string title, Guid pageId, int displayOrder, Guid parentId, bool isDeleted = false, SitemapNode parentNode = null);
 
         /// <summary>
-        /// Deletes the sitemap.
+        /// Lowers NodeCountInSitemap property value for pages related with removedNodes.
         /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <param name="version">The version.</param>
-        /// <returns>Deleted sitemap entity.</returns>
-        Sitemap DeleteSitemap(Guid id, int version);
+        /// <param name="removedNodes">The removed nodes.</param>
+        void DecreaseNodeCountForPages(IList<SitemapNode> removedNodes);
     }
 }

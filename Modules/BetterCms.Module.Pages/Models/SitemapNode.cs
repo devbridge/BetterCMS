@@ -42,7 +42,7 @@ namespace BetterCms.Module.Pages.Models
         /// <value>
         /// The page.
         /// </value>
-        public virtual Page Page { get; set; }
+        public virtual PageProperties Page { get; set; }
 
         /// <summary>
         /// Gets or sets the display order.

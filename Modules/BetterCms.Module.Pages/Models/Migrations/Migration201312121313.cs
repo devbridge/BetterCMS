@@ -193,7 +193,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
             Create
                 .ForeignKey("FK_Cms_SitemapNodes_SitemapId_Cms_Page_Id")
                 .FromTable("SitemapNodes").InSchema(SchemaName).ForeignColumn("PageId")
-                .ToTable("Pages").InSchema(rootModuleSchemaName).PrimaryColumn("Id");
+                .ToTable("Pages").InSchema(SchemaName).PrimaryColumn("Id");
 
             Create
                 .Index("IX_Cms_SitemapNodes_PageId")

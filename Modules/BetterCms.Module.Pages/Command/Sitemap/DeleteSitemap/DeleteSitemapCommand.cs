@@ -2,9 +2,12 @@
 
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
+using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Sitemap;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
+
+using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Command.Sitemap.DeleteSitemap
 {
@@ -22,13 +25,28 @@ namespace BetterCms.Module.Pages.Command.Sitemap.DeleteSitemap
         public ICmsConfiguration CmsConfiguration { get; set; }
 
         /// <summary>
+        /// Gets or sets the sitemap service.
+        /// </summary>
+        /// <value>
+        /// The sitemap service.
+        /// </value>
+        public ISitemapService SitemapService { get; set; }
+
+        /// <summary>
         /// Executes the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>Execution result.</returns>
         public bool Execute(SitemapViewModel request)
         {
-            var sitemap = Repository.First<Models.Sitemap>(request.Id);
+            var sitemap = Repository
+                .AsQueryable<Models.Sitemap>()
+                .Where(map => map.Id == request.Id)
+                .FetchMany(map => map.Nodes)
+                .ThenFetch(node => node.Page)
+                .Fetch(map => map.AccessRules)
+                .Distinct()
+                .First();
 
             var roles = new[] { RootModuleConstants.UserRoles.EditContent };
             if (CmsConfiguration.Security.AccessControlEnabled)
@@ -45,6 +63,8 @@ namespace BetterCms.Module.Pages.Command.Sitemap.DeleteSitemap
             }
 
             sitemap = Repository.Delete<Models.Sitemap>(request.Id, request.Version);
+
+            SitemapService.DecreaseNodeCountForPages(sitemap.Nodes);    
 
             UnitOfWork.Commit();
 

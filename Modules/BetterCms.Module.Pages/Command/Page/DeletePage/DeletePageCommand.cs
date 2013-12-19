@@ -81,7 +81,7 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
 
             if (request.UpdateSitemap && page.NodeCountInSitemap > 0)
             {
-                sitemapNodes = sitemapService.GetNodesByUrl(page.PageUrl);
+                sitemapNodes = sitemapService.GetNodesByPage(page);
                 foreach (var node in sitemapNodes)
                 {
                     if (node.ChildNodes.Count > 0)
@@ -167,7 +167,7 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
                 }
             }
 
-            // Delete sitemapNodes.
+            // Delete sitemapNodes. // TODO: update.
             if (sitemapNodes != null)
             {
                 foreach (var node in sitemapNodes)
