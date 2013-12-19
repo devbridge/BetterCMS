@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5255ABED-2111-497F-A94C-6AA89862D814}</ProjectGuid>
+    <ProjectGuid>{EC53AC56-C1A7-4752-8152-B4559827DD91}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BetterCMS.Module.LuceneSearch</RootNamespace>
-    <AssemblyName>BetterCMS.Module.LuceneSearch</AssemblyName>
+    <RootNamespace>BetterCMS.Module.GoogleSiteSearch</RootNamespace>
+    <AssemblyName>BetterCMS.Module.GoogleSiteSearch</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
@@ -38,25 +38,8 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="LuceneSearchModuleDescriptor.cs" />
-    <Compile Include="Models\CrawlLink.cs" />
-    <Compile Include="Models\IndexSource.cs" />
-    <Compile Include="Models\Maps\IndexSourceMap.cs" />
-    <Compile Include="Models\Migrations\InitialSetup.cs" />
-    <Compile Include="Models\Migrations\PageVersionMetaData.cs" />
+    <Compile Include="GoogleSiteSearchModuleDescriptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\IndexerService\DefaultIndexerService.cs" />
-    <Compile Include="Services\IndexerService\IIndexerService.cs" />
-    <Compile Include="Services\ScrapeService\DefaultScrapeService.cs" />
-    <Compile Include="Services\WebCrawlerService\CrawlerResult.cs" />
-    <Compile Include="Services\WebCrawlerService\DefaultWebCrawlerService.cs" />
-    <Compile Include="Services\ScrapeService\IScrapeService.cs" />
-    <Compile Include="Services\WebCrawlerService\IWebCrawlerService.cs" />
-    <Compile Include="Services\WebCrawlerService\PageData.cs" />
-    <Compile Include="Workers\DefaultIndexSourceWatcher.cs" />
-    <Compile Include="Workers\DefaultContentIndexingRobot.cs" />
-    <Compile Include="Workers\IWorker.cs" />
-    <Compile Include="Workers\WorkerBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
