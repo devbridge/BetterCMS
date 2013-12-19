@@ -33,16 +33,19 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePageWithCulture
         {
             var cultureGroupIdentifier = Repository
                 .AsQueryable<Root.Models.Page>(p => p.Id == request.PageId)
-                .Select(p => p.CultureGroupIdentifier)
-                .FirstOne();
+                .Select(p => new { CultureGroupIdentifier = p.CultureGroupIdentifier })
+                .FirstOne()
+                .CultureGroupIdentifier;
             
             if (!cultureGroupIdentifier.HasValue)
             {
                 cultureGroupIdentifier = System.Guid.NewGuid();
             }
 
+            var cultureId = request.CultureId.HasDefaultValue() ? (System.Guid?)null : request.CultureId;
+
             var newPage = cloneService.ClonePageWithCulture(request.PageId, request.PageTitle, 
-                request.PageUrl, request.UserAccessList, request.CultureId, cultureGroupIdentifier.Value);
+                request.PageUrl, request.UserAccessList, cultureId, cultureGroupIdentifier.Value);
 
             return new ClonePageWithCultureViewModel
                 {

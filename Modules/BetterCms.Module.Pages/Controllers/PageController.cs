@@ -28,7 +28,6 @@ using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.ViewModels.Autocomplete;
 using BetterCms.Module.Root.ViewModels.Security;
 
 using Microsoft.Web.Mvc;
@@ -267,20 +266,23 @@ namespace BetterCms.Module.Pages.Controllers
         /// Clones the page with culture id.
         /// </summary>
         /// <param name="pageId">The page id.</param>
-        /// <param name="cultureId">The culture id.</param>
         /// <returns>
         /// Json result status.
         /// </returns>
         [HttpGet]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
-        public ActionResult ClonePageWithCulture(string pageId, string cultureId)
+        public ActionResult ClonePageWithCulture(string pageId)
         {
             var request = new GetPageForCloningWithCultureCommandRequest
                               {
-                                  PageId = pageId.ToGuidOrDefault(),
-                                  CultureId = cultureId.ToGuidOrDefault()
+                                  PageId = pageId.ToGuidOrDefault()
                               };
             var model = GetCommand<GetPageForCloningWithCultureCommand>().ExecuteCommand(request);
+            if (model != null && model.Cultures.Count == 0)
+            {
+                Messages.AddWarn(PagesGlobalization.ClonePageWithCulture_PageHasAllTranslations_Message);
+            }
+
             var view = RenderView("ClonePageWithCulture", model ?? new ClonePageWithCultureViewModel());
 
             return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);

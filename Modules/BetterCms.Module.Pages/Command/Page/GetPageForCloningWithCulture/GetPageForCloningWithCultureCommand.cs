@@ -3,11 +3,13 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
-
+using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Security;
 
 using NHibernate.Linq;
@@ -22,12 +24,19 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageForCloningWithCulture
         private readonly ICmsConfiguration cmsConfiguration;
 
         /// <summary>
+        /// The culture service
+        /// </summary>
+        private readonly ICultureService cultureService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GetPageForCloningWithCultureCommand" /> class.
         /// </summary>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
-        public GetPageForCloningWithCultureCommand(ICmsConfiguration cmsConfiguration)
+        /// <param name="cultureService">The culture service.</param>
+        public GetPageForCloningWithCultureCommand(ICmsConfiguration cmsConfiguration, ICultureService cultureService)
         {
             this.cmsConfiguration = cmsConfiguration;
+            this.cultureService = cultureService;
         }
 
         /// <summary>
@@ -40,23 +49,33 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageForCloningWithCulture
             var pageFutureQuery = Repository
                 .AsQueryable<PageProperties>()
                 .Where(p => p.Id == request.PageId && !p.IsDeleted)
-                .Select(p => new ClonePageWithCultureViewModel
-                        {
-                            PageId = p.Id,
-                            IsMasterPage = p.IsMasterPage
-                        })
+                .Select(p =>
+                    new
+                    {
+                        Model = new ClonePageWithCultureViewModel
+                            {
+                                PageId = p.Id,
+                                IsMasterPage = p.IsMasterPage
+                            },
+                        CultureGroupIdentifier = p.CultureGroupIdentifier,
+                        CultureId = p.Culture != null ? p.Culture.Id : (System.Guid?) null
+                    })
                 .ToFuture();
 
-            var cultureFutureQuery = Repository
-                .AsQueryable<Root.Models.Culture>()
-                .Where(c => c.Id == request.CultureId)
-                .Select(c => new
-                        {
-                            Name = c.Name
-                        })
-                .ToFuture();
+            var culturesFuture = cultureService.GetCultures();
+            var result = pageFutureQuery.FirstOne();
+            var model = result.Model;
+            model.Cultures = culturesFuture.ToList();
 
-            ClonePageWithCultureViewModel model;
+            if (model.IsMasterPage)
+            {
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.Administration);
+            }
+            else
+            {
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent);
+            }
+
             IList<UserAccessViewModel> accessRules;
             if (cmsConfiguration.Security.AccessControlEnabled)
             {
@@ -75,22 +94,44 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageForCloningWithCulture
                 accessRules = null;
             }
 
-            model = pageFutureQuery.FirstOne();
-            model.CultureName = cultureFutureQuery.FirstOne().Name;
             model.AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled;
             model.UserAccessList = accessRules;
-            model.CultureId = request.CultureId;
 
-            if (model.IsMasterPage)
+            AddRemoveCultures(model.Cultures, result.CultureGroupIdentifier, result.CultureId);
+
+            return model;
+        }
+
+        private void AddRemoveCultures(List<LookupKeyValue> cultures, System.Guid? cultureGroupIdentifier, System.Guid? pageCultureId)
+        {
+            var existingCultures = new List<System.Guid?>();
+            if (cultureGroupIdentifier.HasValue)
             {
-                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.Administration);
+                existingCultures = Repository
+                    .AsQueryable<Root.Models.Page>(p => p.CultureGroupIdentifier == cultureGroupIdentifier.Value)
+                    .Select(p => p.Culture != null ? p.Culture.Id : (System.Guid?)null)
+                    .ToArray()
+                    .Concat(existingCultures)
+                    .ToList();
             }
             else
             {
-                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent);
+                existingCultures.Add(pageCultureId);
             }
 
-            return model;
+            foreach (var cultureId in existingCultures)
+            {
+                var culture = cultures.FirstOrDefault(c => c.Key == cultureId.ToString().ToLowerInvariant());
+                if (culture != null)
+                {
+                    cultures.Remove(culture);
+                }
+            }
+
+            if (pageCultureId.HasValue && !existingCultures.Contains(null))
+            {
+                cultures.Insert(0, new LookupKeyValue(System.Guid.Empty.ToString().ToLowerInvariant(), PagesGlobalization.InvariantCulture_Title));
+            }
         }
     }
 }

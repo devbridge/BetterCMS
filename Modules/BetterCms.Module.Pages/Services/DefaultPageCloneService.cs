@@ -4,9 +4,10 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
-
+using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 
 using BetterCms.Module.Root;
@@ -47,7 +48,7 @@ namespace BetterCms.Module.Pages.Services
             return ClonePage(pageId, pageTitle, pageUrl, userAccessList, cloneAsMasterPage, null, null);
         }
 
-        public PageProperties ClonePageWithCulture(System.Guid pageId, string pageTitle, string pageUrl, IEnumerable<IAccessRule> userAccessList, System.Guid cultureId, System.Guid cultureGroupIdentifier)
+        public PageProperties ClonePageWithCulture(System.Guid pageId, string pageTitle, string pageUrl, IEnumerable<IAccessRule> userAccessList, System.Guid? cultureId, System.Guid cultureGroupIdentifier)
         {
             return ClonePage(pageId, pageTitle, pageUrl, userAccessList, false, cultureId, cultureGroupIdentifier);
         }
@@ -87,6 +88,8 @@ namespace BetterCms.Module.Pages.Services
                 .FetchMany(f => f.PageTags).ThenFetch(f => f.Tag)
                 .FetchMany(f => f.MasterPages).ThenFetch(f => f.Master)
                 .ToList().FirstOne();
+
+            ValidateCloningPage(page, cultureId, cultureGroupIdentifier);
 
             unitOfWork.BeginTransaction();
 
@@ -302,6 +305,30 @@ namespace BetterCms.Module.Pages.Services
 
             newPage.MasterPages.Add(newMasterPage);
             repository.Save(newMasterPage);
+        }
+
+        private void ValidateCloningPage(PageProperties page, System.Guid? cultureId, System.Guid? cultureGroupIdentifier)
+        {
+            // Validate request, if cloning page with culture
+            if (cultureGroupIdentifier.HasValue)
+            {
+                var query = repository.AsQueryable<Page>().Where(p => p.CultureGroupIdentifier == cultureGroupIdentifier);
+                if (cultureId.HasValue)
+                {
+                    var culture = repository.AsProxy<Culture>(cultureId.Value);
+                    query = query.Where(p => p.Culture == culture);
+                }
+                else
+                {
+                    query = query.Where(p => p.Culture == null);
+                }
+
+                if (query.Any())
+                {
+                    var logMessage = string.Format("Page already has translations for culture. Id: {0}, CultureId: {1}", page.Id, cultureId);
+                    throw new ValidationException(() => PagesGlobalization.ClonePageWithCulture_PageAlreadyHasSuchTranslation_Message, logMessage);
+                }
+            }
         }
     }
 }

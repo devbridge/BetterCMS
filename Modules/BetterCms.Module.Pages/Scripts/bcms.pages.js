@@ -707,8 +707,8 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         /**
         * Opens dialog for cloning the page to different cultre
         */
-        page.translatePage = function (cultureId) {
-            var url = $.format(links.clonePageWithCultureDialogUrl, bcms.pageId, cultureId),
+        page.translatePage = function () {
+            var url = $.format(links.clonePageWithCultureDialogUrl, bcms.pageId),
                 title = globalization.clonePageWithCultureDialogTitle;
 
             clonePage(url, title);

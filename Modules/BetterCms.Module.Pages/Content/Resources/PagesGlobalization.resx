@@ -1189,7 +1189,7 @@
     <value>Assign</value>
   </data>
   <data name="InvariantCulture_Title" xml:space="preserve">
-    <value>Ivariant culture</value>
+    <value>Invariant culture</value>
   </data>
   <data name="SiteSettings_Pages_FilterByCulture" xml:space="preserve">
     <value>By Culture</value>
@@ -1213,7 +1213,7 @@
     <value>Are you sure you want to clone this page?</value>
   </data>
   <data name="ClonePageWithCulture_Dialog_ConfirmationMessage_Text" xml:space="preserve">
-    <value>You are going to copy all content and properties from the current page and page will be created in different culture ({0}).</value>
+    <value>You are going to copy all content and properties from the current page and created page will be created with another culture and linked with the current page.</value>
   </data>
   <data name="ClonePageWithCulture_Dialog_Title" xml:space="preserve">
     <value>Translate page</value>
@@ -1241,5 +1241,20 @@
   </data>
   <data name="SavePagePropertiesCommand_PageTranslationsIsAlreadyAssigned_Message" xml:space="preserve">
     <value>Page {0} cannot be assigned as translation, because it's already assigned to another page.</value>
+  </data>
+  <data name="ClonePageWithCulture_Dialog_Culture_Title" xml:space="preserve">
+    <value>Culture</value>
+  </data>
+  <data name="ClonePageWithCulture_Dialog_Culture_Tootlip" xml:space="preserve">
+    <value>Choose creating page culture, which will be used in sitemap and determines the language of the page</value>
+  </data>
+  <data name="ClonePageWithCulture_Culture_RequiredMessage" xml:space="preserve">
+    <value>Page culture is requred field.</value>
+  </data>
+  <data name="ClonePageWithCulture_PageHasAllTranslations_Message" xml:space="preserve">
+    <value>Current page already has translations in all the available languages.</value>
+  </data>
+  <data name="ClonePageWithCulture_PageAlreadyHasSuchTranslation_Message" xml:space="preserve">
+    <value>Page already has translation for specified culture.</value>
   </data>
 </root>

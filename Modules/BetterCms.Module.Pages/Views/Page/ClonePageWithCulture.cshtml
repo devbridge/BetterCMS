@@ -10,13 +10,22 @@
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
     <div class="bcms-padded-content">
-        @using (Html.BeginForm<PageController>(f => f.ClonePageWithCulture(null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
+        @using (Html.BeginForm<PageController>(f => f.ClonePageWithCulture((string)null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
         {
             <div class="bcms-input-list-holder">
                 <div class="bcms-content-titles">@PagesGlobalization.ClonePageWithCulture_Dialog_ConfirmationMessage_Header</div>
-                <div>@string.Format(PagesGlobalization.ClonePageWithCulture_Dialog_ConfirmationMessage_Text, Model.CultureName)</div>
+                <div>@PagesGlobalization.ClonePageWithCulture_Dialog_ConfirmationMessage_Text</div>
             </div>
-            
+
+            <div class="bcms-input-list-holder">
+                @Html.Tooltip(PagesGlobalization.ClonePageWithCulture_Dialog_Culture_Tootlip)
+                <div class="bcms-content-titles">@PagesGlobalization.ClonePageWithCulture_Dialog_Culture_Title</div>
+                <div class="bcms-input-box">
+                    @Html.DropDownListFor(model => model.CultureId, Model.Cultures.ToSelectList(Model.CultureId), string.Empty, new { @class = "bcms-global-select" })
+                    @Html.BcmsValidationMessageFor(f => f.CultureId)
+                </div>
+            </div>
+
             <div class="bcms-input-list-holder">
                 @Html.Tooltip(PagesGlobalization.ClonePage_Dialog_PageTitle_Tooltip_Description)
                 <div class="bcms-content-titles">@PagesGlobalization.ClonePage_Dialog_PageTitle</div>
@@ -25,14 +34,14 @@
                     @Html.BcmsValidationMessageFor(f => f.PageTitle)
                 </div>
             </div>
-            
+
             @Html.Partial("Partial/ClonePageEditUrl")
 
             if (Model.AccessControlEnabled)
             {
                 @Html.Partial(RootModuleConstants.AccessControlTemplate)
             }
-            
+
             @Html.HiddenFor(m => m.PageId)
             @Html.HiddenFor(m => m.CultureId)
             @Html.HiddenSubmit()

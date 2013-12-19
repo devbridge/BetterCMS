@@ -592,6 +592,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Page culture is requred field..
+        /// </summary>
+        public static string ClonePageWithCulture_Culture_RequiredMessage {
+            get {
+                return ResourceManager.GetString("ClonePageWithCulture_Culture_RequiredMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to clone this page?.
         /// </summary>
         public static string ClonePageWithCulture_Dialog_ConfirmationMessage_Header {
@@ -601,11 +610,29 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You are going to copy all content and properties from the current page and page will be created in different culture ({0})..
+        ///   Looks up a localized string similar to You are going to copy all content and properties from the current page and created page will be created with another culture and linked with the current page..
         /// </summary>
         public static string ClonePageWithCulture_Dialog_ConfirmationMessage_Text {
             get {
                 return ResourceManager.GetString("ClonePageWithCulture_Dialog_ConfirmationMessage_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Culture.
+        /// </summary>
+        public static string ClonePageWithCulture_Dialog_Culture_Title {
+            get {
+                return ResourceManager.GetString("ClonePageWithCulture_Dialog_Culture_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose creating page culture, which will be used in sitemap and determines the language of the page.
+        /// </summary>
+        public static string ClonePageWithCulture_Dialog_Culture_Tootlip {
+            get {
+                return ResourceManager.GetString("ClonePageWithCulture_Dialog_Culture_Tootlip", resourceCulture);
             }
         }
         
@@ -615,6 +642,24 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string ClonePageWithCulture_Dialog_Title {
             get {
                 return ResourceManager.GetString("ClonePageWithCulture_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page already has translation for specified culture..
+        /// </summary>
+        public static string ClonePageWithCulture_PageAlreadyHasSuchTranslation_Message {
+            get {
+                return ResourceManager.GetString("ClonePageWithCulture_PageAlreadyHasSuchTranslation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current page already has translations in all the available languages..
+        /// </summary>
+        public static string ClonePageWithCulture_PageHasAllTranslations_Message {
+            get {
+                return ResourceManager.GetString("ClonePageWithCulture_PageHasAllTranslations_Message", resourceCulture);
             }
         }
         
@@ -2140,7 +2185,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ivariant culture.
+        ///   Looks up a localized string similar to Invariant culture.
         /// </summary>
         public static string InvariantCulture_Title {
             get {
