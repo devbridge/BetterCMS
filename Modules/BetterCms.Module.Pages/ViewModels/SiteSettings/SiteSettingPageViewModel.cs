@@ -73,6 +73,14 @@ namespace BetterCms.Module.Pages.ViewModels.SiteSettings
         public PageStatus PageStatus { get; set; }
 
         /// <summary>
+        /// Gets or sets the culture id.
+        /// </summary>
+        /// <value>
+        /// The culture id.
+        /// </value>
+        public Guid? CultureId { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

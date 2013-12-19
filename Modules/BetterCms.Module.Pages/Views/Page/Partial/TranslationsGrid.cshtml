@@ -1,4 +1,5 @@
-﻿<div class="bcms-user-access" data-bind="with: translations">
+﻿@using BetterCms.Module.Root.Content.Resources
+<div class="bcms-user-access" data-bind="with: translations">
     <div class="bcms-input-list-holder">
         <div class="bcms-tooltip-mark" data-message="TODO TODO TODO TODO TODO TODO "></div> 
         <div class="bcms-content-titles">Other languages</div> 
@@ -19,16 +20,25 @@
                 <input type="hidden" data-bind="attr: { name: getPropertyIndexer($index(), 'CultureId') }, value: cultureId()" />
                 <input type="hidden" data-bind="attr: { name: getPropertyIndexer($index(), 'Id') }, value: id()" />
             </div> 
-            <div class="bcms-access-line bcms-clearfix" data-bind="visible: unassignedCultures().length > 1">
+            <div class="bcms-access-line bcms-clearfix">
                 <div class="bcms-access-value-add">
                     <div class="btn-acces-plus" data-bind="click: clickPlus">&nbsp;</div> 
                     <span data-bind="click: clickPlus, visible: !isInAddMode()">Add Translation</span> 
                     <!-- ko if: isInAddMode() -->
-                    <select data-bind="options: unassignedCultures(), optionsText: 'value', optionsValue: 'key', value: addCultureId">
-                    </select>
-                    <!-- ko if: addCultureId() -->
-                    <a data-bind="click: selectPage" src="#">Select page</a>
+                    
+                    <input type="text" data-bind="value: addPageTitle, autocomplete: 'onlyExisting', hasfocus: hasFocus, enterPress: addTranslation, escPress: clickPlus" />
+                    @* TODO: remove : <div class="bcms-btn-small" data-bind="click: selectPage">...</div>*@
+
+                    <!-- ko if: addPageId() -->
+                    <select data-bind="options: addingPageCultures, optionsText: 'value', optionsValue: 'key', value: addCultureId"></select>
                     <!-- /ko -->
+                    
+                    <!-- ko if: addCultureId() -->
+                    <div class="bcms-btn-small" data-bind="click: addTranslation">@RootGlobalization.Button_Ok</div>
+                    <!-- /ko -->
+                    
+                    <div class="bcms-btn-links-small" data-bind="click: clickPlus">@RootGlobalization.Button_Cancel</div>
+
                     <!-- /ko -->
                 </div> 
             </div> 

@@ -37,7 +37,7 @@ namespace BetterCms.Module.Root.Services
                 .OrderBy(c => c.Code)
                 .Select(c => new LookupKeyValue
                                  {
-                                     Key = c.Id.ToString(),
+                                     Key = c.Id.ToString().ToLowerInvariant(),
                                      Value = c.Name
                                  })
                 .ToFuture();

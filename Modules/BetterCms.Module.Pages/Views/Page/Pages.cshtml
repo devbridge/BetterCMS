@@ -1,6 +1,6 @@
-﻿@using BetterCms.Core.DataContracts.Enums
+﻿@using BetterCms.Core
+@using BetterCms.Core.DataContracts.Enums
 @using BetterCms.Module.Pages.Content.Resources
-@using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.SiteSettings
 @using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
@@ -25,7 +25,9 @@
             column.EmptyColumn();
         }
 
-        column.For(m => string.Format("<a class=\"bcms-tables-link bcms-page-title\" data-id=\"{0}\" data-url=\"{2}\">{1}</a>", m.Id, m.Title, m.Url))
+        column.For(m => string.Format("<a class=\"bcms-tables-link bcms-page-title\" data-id=\"{0}\" data-url=\"{2}\"{3}>{1}</a>", 
+            m.Id, m.Title, m.Url,
+            (CmsContext.Config.EnableMultilanguage ? string.Format("data-culture-id=\"{0}\"", m.CultureId) : "")))
             .Named(PagesGlobalization.SiteSettings_Pages_TitleColumn)
             .SortColumnName("Title")
             .Attributes()

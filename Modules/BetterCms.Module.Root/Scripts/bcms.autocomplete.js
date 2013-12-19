@@ -23,9 +23,15 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
                 var result = typeof response === 'string' ? $.parseJSON(response) : response;
                 return {
                     suggestions: $.map(result.suggestions, function(dataItem) {
-                        return { value: dataItem.Value, data: dataItem.Key };
+                        return { value: dataItem.Value, data: dataItem.Key, jsonItem: dataItem };
                     })
                 };
+            }, onSearchStart = function (params, autocompleteViewModel) {
+                var additionalParams = autocompleteViewModel.getAdditionalParameters(),
+                    param;
+                for (param in additionalParams) {
+                    params[param] = additionalParams[param];
+                }
             };
 
             ko.bindingHandlers.autocomplete = {
@@ -40,11 +46,10 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
                             autoSelectFirst: onlyExisting,
                             transformResult: transformResult,
                             onSelect: function(suggestion) {
-                                autocompleteViewModel.setItem(suggestion.data, suggestion.value);
-                                
-                                if (autocompleteViewModel.autocompleteInstance) {
-                                    autocompleteViewModel.autocompleteInstance.ignoreValueChange = false;
-                                }
+                                autocompleteViewModel.setItem(suggestion.data, suggestion.value, suggestion.jsonItem);
+                            },
+                            onSearchStart: function (params) {
+                                onSearchStart(params, autocompleteViewModel);
                             }
                         });
                     
@@ -75,8 +80,8 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
                                     autocompleteViewModel.autocompleteInstance.ignoreValueChange = false;
                                 }
                             },
-                            onSearchStart: function(params) {
-                                params.ExistingItems = autocompleteViewModel.getExistingItems();
+                            onSearchStart: function (params) {
+                                onSearchStart(params, autocompleteViewModel);
                             }
                         });
                     
@@ -102,7 +107,7 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
 
                 self.item = null;
 
-                self.setItem = function (key, value) {
+                self.setItem = function (key, value, jsonItem) {
                     if (key || value) {
                         if (key && value) {
                             self.item = new autocomplete.AutocompleteItemViewModel(self, value, key);
@@ -110,9 +115,13 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
                             self.item = new autocomplete.AutocompleteItemViewModel(self, value);
                         }
 
-                        options.onItemSelect(self.item);
+                        options.onItemSelect(self.item, jsonItem);
                     }
                 };
+            };
+
+            autocomplete.AutocompleteViewModel.prototype.getAdditionalParameters = function () {
+                return {};
             };
 
             return autocomplete.AutocompleteViewModel;
@@ -184,7 +193,7 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
 
                     return false;
                 };
-                
+
                 self.getExistingItems = function () {
                     var existingItems = '',
                         i, item;
@@ -225,6 +234,12 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
                 };
 
                 self.applyItemList(itemsList);
+            };
+
+            autocomplete.AutocompleteListViewModel.prototype.getAdditionalParameters = function () {
+                return {
+                    ExistingItems: this.getExistingItems()
+                };
             };
 
             return autocomplete.AutocompleteListViewModel;

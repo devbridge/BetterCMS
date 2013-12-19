@@ -806,7 +806,8 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                             result = opts.onAccept({
                                 Id: id,
                                 Title: titleLink.html(),
-                                PageUrl: titleLink.data('url')
+                                PageUrl: titleLink.data('url'),
+                                CultureId: titleLink.data('cultureId')
                             });
                         }
                     }

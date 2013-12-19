@@ -161,7 +161,8 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
                     .Select(hasSeoProjection).WithAlias(() => modelAlias.HasSEO)
                     .Select(() => alias.CreatedOn).WithAlias(() => modelAlias.CreatedOn)
                     .Select(() => alias.ModifiedOn).WithAlias(() => modelAlias.ModifiedOn)
-                    .Select(() => alias.PageUrl).WithAlias(() => modelAlias.Url))
+                    .Select(() => alias.PageUrl).WithAlias(() => modelAlias.Url)
+                    .Select(() => alias.Culture.Id).WithAlias(() => modelAlias.CultureId))
                 .TransformUsing(Transformers.AliasToBean<SiteSettingPageViewModel>());
 
             if (configuration.Security.AccessControlEnabled)

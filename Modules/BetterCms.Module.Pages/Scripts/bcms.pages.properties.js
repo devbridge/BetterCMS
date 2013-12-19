@@ -2,8 +2,8 @@
 /*global bettercms */
 
 bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.dynamicContent', 'bcms.tags', 'bcms.ko.extenders',
-        'bcms.media', 'bcms.redirect', 'bcms.options', 'bcms.security', 'bcms.messages', 'bcms.codeEditor'],
-    function ($, bcms, modal, forms, dynamicContent, tags, ko, media, redirect, options, security, messages, codeEditor) {
+        'bcms.media', 'bcms.redirect', 'bcms.options', 'bcms.security', 'bcms.messages', 'bcms.codeEditor', 'bcms.autocomplete'],
+    function ($, bcms, modal, forms, dynamicContent, tags, ko, media, redirect, options, security, messages, codeEditor, autocomplete) {
         'use strict';
 
         var page = {
@@ -37,7 +37,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             },
             links = {
                 loadEditPropertiesDialogUrl: null,
-                loadLayoutOptionsUrl: null
+                loadLayoutOptionsUrl: null,
+                suggestUntranslatedPagesUrl: null
             },
             globalization = {
                 editPagePropertiesModalTitle: null,
@@ -46,7 +47,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 pageStatusChangeConfirmationMessageUnPublish: null,
                 pageConversionToMasterConfirmationMessage: null,
                 selectedMasterIsChildPage: null,
-                unassignMainCulturePageConfirmation: null
+                unassignTranslationConfirmation: null
             },
             keys = {
                 editPagePropertiesInfoMessageClosed: 'bcms.EditPagePropertiesInfoBoxClosed'
@@ -460,44 +461,52 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         };
 
         /**
+        * Culture autocomplete list view model
+        */
+        var UntranslatedPagesAutocompleteViewModel = (function (_super) {
+            bcms.extendsClass(UntranslatedPagesAutocompleteViewModel, _super);
+
+            function UntranslatedPagesAutocompleteViewModel(onItemSelect, onAppendWithIncludedIds) {
+                var opts = {
+                    serviceUrl: links.suggestUntranslatedPagesUrl,
+                    onItemSelect: onItemSelect
+                };
+
+                _super.call(this, opts);
+
+                this.onAppendWithIncludedIds = onAppendWithIncludedIds;
+            }
+
+            UntranslatedPagesAutocompleteViewModel.prototype.getAdditionalParameters = function () {
+                var params = _super.prototype.getAdditionalParameters.call(this);
+                
+                if ($.isFunction(this.onAppendWithIncludedIds)) {
+                    this.onAppendWithIncludedIds(params);
+                }
+
+                return params;
+            };
+
+            return UntranslatedPagesAutocompleteViewModel;
+        })(autocomplete.AutocompleteViewModel);
+
+        /**
         * Page culture view model
         */
         page.PageCultureViewModel = function (cultures, cultureId) {
             var self = this,
                 i, l;
 
-            self.cultureGroupIdentifier = ko.observable();
-            self.mainCulturePageTitle = ko.observable();
-            self.mainCulturePageUrl = ko.observable();
             self.cultureId = ko.observable(cultureId);
 
             self.cultures = [];
             self.cultures.push({ key: '', value: '' });
             for (i = 0, l = cultures.length; i < l; i++) {
                 self.cultures.push({
-                    key: cultures[i].Key.toLowerCase(),
+                    key: cultures[i].Key,
                     value: cultures[i].Value
                 });
             }
-
-            self.change = function () {
-                page.openPageSelectDialog({
-                    onAccept: function (selectedPage) {
-                        self.cultureGroupIdentifier(selectedPage.CultureGroupIdentifier);
-                        self.mainCulturePageTitle(selectedPage.Title);
-                        self.mainCulturePageUrl(selectedPage.PageUrl);
-
-                        return true;
-                    },
-                    params: 'CultureId=' + bcms.constants.emptyGuid
-                });
-            };
-
-            self.clear = function () {
-                self.cultureGroupIdentifier('');
-                self.mainCulturePageTitle('');
-                self.mainCulturePageUrl('');
-            };
 
             return self;
         };
@@ -511,14 +520,82 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             self.culture = new page.PageCultureViewModel(cultures, cultureId);
             self.items = ko.observableArray();
             self.isInAddMode = ko.observable(false);
+            self.hasFocus = ko.observable(false);
             self.addCultureId = ko.observable();
+            self.addPageId = ko.observable();
+            self.addPageTitle = ko.observable();
+            
+            self.pageCultureId = null;
+            self.pageUrl = null;
+            self.originalItems = [];
 
-            function closeAddMode() {
-                self.isInAddMode(false);
+            function onSelectPage(pageId, pageCultureId, pageTitle, pageUrl) {
+                self.pageCultureId = pageCultureId;
+                self.pageUrl = pageUrl;
                 self.addCultureId('');
+                self.addPageId(pageId);
+                self.addPageTitle(pageTitle);
+
+                return true;
             }
 
-            self.culture.cultureId.subscribe(function(newValue) {
+            function closeAddMode() {
+                self.hasFocus(false);
+                self.isInAddMode(false);
+                self.addCultureId('');
+                self.addPageId('');
+
+                self.pageCultureId = null;
+                self.addPageTitle('');
+                self.pageUrl = null;
+            }
+
+            function appendId(ids, id) {
+                if (ids !== '') {
+                    ids += '|';
+                }
+                ids += id;
+                
+                return ids;
+            }
+
+            function setAdditionalParameters(params) {
+                var include = '',
+                    exclude = bcms.pageId,
+                    il = self.originalItems.length,
+                    jl = self.items().length,
+                    i, j, exists, id;
+                
+                for (i = 0; i < il; i++) {
+                    id = self.originalItems[i];
+                    exists = false;
+
+                    for (j = 0; j < jl; j++) {
+                        if (self.items()[j].id() == id) {
+                            exists = true;
+                            break;
+                        }
+                    }
+                    
+                    if (!exists) {
+                        include = appendId(include, id);
+                    }
+                }
+
+                for (j = 0; j < jl; j++) {
+                    exclude = appendId(exclude, self.items()[j].id());
+                }
+
+                params.ExcplicitlyIncludedPages = include;
+                params.ExistingItems = exclude;
+                params.ExcludedCultureId = self.culture.cultureId();
+            };
+
+            self.autocompleteViewModel = new UntranslatedPagesAutocompleteViewModel(function (suggestionItem, jsonItem) {
+                return onSelectPage(suggestionItem.id(), jsonItem.CultureId, suggestionItem.name(), jsonItem.PageUrl);
+            }, setAdditionalParameters);
+
+            self.culture.cultureId.subscribe(function() {
                 closeAddMode();
             });
 
@@ -527,36 +604,22 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 if (!isInAddMode) {
                     closeAddMode();
                 } else {
+                    self.hasFocus(true);
                     self.isInAddMode(true);
                 }
             };
 
-            self.selectPage = function() {
-                page.openPageSelectDialog({
-                    onAccept: function (selectedPage) {
-
-                        var i, l = self.culture.cultures.length,
-                            culture, viewModel;
-                        
-                        for (i = 0; i < l; i++) {
-                            culture = self.culture.cultures[i];
-                            
-                            if (culture.key == self.addCultureId()) {
-                                viewModel = new page.PageTranslationViewModel(culture, selectedPage, self);
-                                self.items.push(viewModel);
-
-                                closeAddMode();
-                                break;
-                            }
-                        }
-                    },
-                    params: 'CultureId=' + self.addCultureId()
-                });
-            };
+//            self.selectPage = function() {
+//                page.openPageSelectDialog({
+//                    onAccept: function (selectedPage) {
+//                        onSelectPage(selectedPage.Id, selectedPage.CultureId, selectedPage.Title, selectedPage.PageUrl);
+//                    }
+//                });
+//            };
 
             self.unassignPage = function (item) {
                 modal.confirm({
-                    content: globalization.unassignMainCulturePageConfirmation,
+                    content: globalization.unassignTranslationConfirmation,
                     onAccept: function () {
                         self.items.remove(item);
 
@@ -565,33 +628,81 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 });
             };
             
-            self.unassignedCultures = ko.computed(function() {
+            self.addingPageCultures = ko.computed(function () {
+                if (!self.addPageId()) {
+                    return [];
+                }
+
                 var cult = [],
-                    lj = self.items().length,
                     li = self.culture.cultures.length,
-                    i, j, culture, item, isAssigned,
-                    currentCultureId = self.culture.cultureId();
+                    currentCultureId = self.culture.cultureId(),
+                    selectedCultureId = self.pageCultureId,
+                    i, culture;
 
                 for (i = 0; i < li; i++) {
                     culture = self.culture.cultures[i];
-                    isAssigned = false;
 
-                    for (j = 0; j < lj; j++) {
-                        item = self.items()[j];
-
-                        if (item.cultureId() == culture.key) {
-                            isAssigned = true;
-                            break;
-                        }
-                    }
-                    
-                    if (!isAssigned && culture.key != currentCultureId) {
-                        cult.push(culture);
+                    if (culture.key != currentCultureId && (selectedCultureId == culture.key || !selectedCultureId)) {
+                        cult.push({
+                            key: culture.key || '-',
+                            value: culture.value
+                        });
                     }
                 }
-
+                
                 return cult;
             });
+
+            self.addTranslation = function () {
+                if (self.isInAddMode() && self.addCultureId() && self.addPageId()) {
+                    var currentCultureId = self.addCultureId() == '-' ? '' : self.addCultureId(),
+                        addTranslation = function (viewModel) {
+                            var li = self.culture.cultures.length,
+                                i, culture;
+
+                            for (i = 0; i < li; i++) {
+                                culture = self.culture.cultures[i];
+
+                                if (culture.key == currentCultureId) {
+                                    if (viewModel == null) {
+                                        viewModel = new page.PageTranslationViewModel(self);
+                                        self.items.push(viewModel);
+                                    }
+                                    viewModel.id(self.addPageId());
+                                    viewModel.title(self.addPageTitle());
+                                    viewModel.url(self.pageUrl);
+                                    viewModel.cultureId(currentCultureId);
+                                    viewModel.cultureName(culture.value);
+
+                                    closeAddMode();
+                                }
+                            }
+                        },
+                        lj = self.items().length,
+                        j, item;
+                    
+                    for (j = 0; j < lj; j++) {
+                        item = self.items()[j];
+                        
+                        if (item.cultureId() == currentCultureId) {
+                            self.hasFocus(false);
+                            modal.confirm({
+                                // TODO: translate
+                                content: 'There is already an item with selected culture. Are you sure you want to replace it?',
+                                onAccept: function () {
+                                    addTranslation(item);
+                                    
+                                    return true;
+                                }
+                            });
+
+                            return;
+                        }
+                    }
+
+                    addTranslation();
+                }
+            };
 
             function addItems() {
                 if (!items) {
@@ -602,19 +713,6 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                     li = self.culture.cultures.length,
                     viewModel, i, j, culture, item, translation;
 
-                // Set main page data
-                for (j = 0; j < lj; j++) {
-                    item = items[j];
-
-                    if (!item.CultureId) {
-                        self.culture.mainCulturePageTitle(item.Title);
-                        self.culture.mainCulturePageUrl(item.PageUrl);
-                        self.culture.cultureGroupIdentifier(item.Id);
-                        
-                        break;
-                    }
-                }
-
                 // Add all available cultures
                 for (i = 0; i < li; i++) {
                     culture = self.culture.cultures[i];
@@ -623,15 +721,22 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                     for (j = 0; j < lj; j++) {
                         item = items[j];
 
-                        if (item.CultureId == culture.key) {
+                        if ((item.CultureId || '') == culture.key) {
                             translation = item;
                             break;
                         }
                     }
 
                     if (translation && translation.Id != bcms.pageId) {
-                        viewModel = new page.PageTranslationViewModel(culture, translation, self);
+                        viewModel = new page.PageTranslationViewModel(self);
+                        viewModel.id(translation.Id);
+                        viewModel.title(translation.Title);
+                        viewModel.url(translation.PageUrl);
+                        viewModel.cultureName(culture.value);
+                        viewModel.cultureId(culture.key);
+
                         self.items.push(viewModel);
+                        self.originalItems.push(translation.Id);
                     }
                 }
             };
@@ -651,43 +756,11 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             self.id = ko.observable(translation ? translation.Id : '');
             self.title = ko.observable(translation ? translation.Title : '');
             self.url = ko.observable(translation ? translation.PageUrl : '');
-            self.cultureName = ko.observable(culture.value);
-            self.cultureId = ko.observable(culture.key);
+            self.cultureName = ko.observable(culture ? culture.value : '');
+            self.cultureId = ko.observable(culture ? culture.key : '');
 
             self.getPropertyIndexer = function(i, propName) {
                 return 'Translations[' + i + '].' + propName;
-            };
-
-            self.assignPage = function () {
-//                var selectDialog = page.openPageSelectDialog({
-//                    onAccept: function (selectedPage) {
-//                        var url = $.format(links.assignPageToMainCulturePageUrl, selectedPage.id, bcms.pageId, self.cultureId()),
-//                            onComplete = function (json) {
-//                                messages.refreshBox(selectDialog.container, json);
-//                                if (json.Success) {
-//                                    self.title(json.Data.Title);
-//                                    self.url(json.Data.PageUrl);
-//                                    self.id(selectedPage.id);
-//
-//                                    selectDialog.close();
-//                                }
-//                            };
-//
-//                        $.ajax({
-//                            type: 'POST',
-//                            url: url,
-//                        })
-//                            .done(function (result) {
-//                                onComplete(result);
-//                            })
-//                            .fail(function (response) {
-//                                onComplete(bcms.parseFailedResponse(response));
-//                            });
-//
-//                        return false;
-//                    },
-//                    params: 'CultureId=' + self.cultureId()
-//                });
             };
 
             return self;

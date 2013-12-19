@@ -19,6 +19,7 @@ using BetterCms.Module.Pages.Command.Page.GetPageProperties;
 using BetterCms.Module.Pages.Command.Page.GetPagesList;
 using BetterCms.Module.Pages.Command.Page.SavePageProperties;
 using BetterCms.Module.Pages.Command.Page.SavePagePublishStatus;
+using BetterCms.Module.Pages.Command.Page.SuggestPages;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Filter;
@@ -27,6 +28,7 @@ using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.ViewModels.Autocomplete;
 using BetterCms.Module.Root.ViewModels.Security;
 
 using Microsoft.Web.Mvc;
@@ -388,6 +390,20 @@ namespace BetterCms.Module.Pages.Controllers
             });
 
             return WireJson(model != null, model, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Suggests untranslated pages.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>Suggested untranslated pages list</returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
+        public ActionResult SuggestUntranslatedPages(PageSuggestionViewModel model)
+        {
+            model.OnlyUntranslatedPages = true;
+            var suggestedPages = GetCommand<SuggestPagesCommand>().ExecuteCommand(model);
+
+            return Json(new { suggestions = suggestedPages });
         }
     }
 }

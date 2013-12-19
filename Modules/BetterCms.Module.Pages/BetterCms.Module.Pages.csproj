@@ -131,6 +131,7 @@
     <Compile Include="Command\Page\ClonePageWithCulture\ClonePageWithCultureCommand.cs" />
     <Compile Include="Command\Page\GetPageForCloningWithCulture\GetPageForCloningWithCultureCommandRequest.cs" />
     <Compile Include="Command\Page\GetPageForCloningWithCulture\GetPageForCloningWithCultureCommand.cs" />
+    <Compile Include="Command\Page\SuggestPages\SuggestPagesCommand.cs" />
     <Compile Include="Command\Widget\PreviewWidget\PreviewWidgetCommand.cs" />
     <Compile Include="Command\Widget\PreviewWidget\PreviewWidgetCommandRequest.cs" />
     <Compile Include="Events\CategoryEvents.cs" />
@@ -300,6 +301,8 @@
     <Compile Include="ViewModels\History\ContentHistoryItem.cs" />
     <Compile Include="ViewModels\History\ContentHistoryViewModel.cs" />
     <Compile Include="ViewModels\Page\ClonePageWithCultureViewModel.cs" />
+    <Compile Include="ViewModels\Page\PageLookupKeyValue.cs" />
+    <Compile Include="ViewModels\Page\PageSuggestionViewModel.cs" />
     <Compile Include="ViewModels\Page\PageTranslationViewModel.cs" />
     <Compile Include="ViewModels\Page\RenderPageCategoryViewModel.cs" />
     <Compile Include="ViewModels\Page\RenderPageImageViewModel.cs" />
