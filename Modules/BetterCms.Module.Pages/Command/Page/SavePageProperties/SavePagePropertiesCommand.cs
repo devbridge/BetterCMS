@@ -132,7 +132,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         {
             var isMultilanguageEnabled = cmsConfiguration.EnableMultilanguage;
 
-            ValidateRequest(request);
+            ValidateRequest(request, isMultilanguageEnabled);
 
             var pageQuery =
                 Repository.AsQueryable<PageProperties>(p => p.Id == request.Id)
@@ -425,8 +425,8 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         /// Validates the request.
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <exception cref="System.ComponentModel.DataAnnotations.ValidationException">Occurs if invalid page data is specified</exception>
-        private void ValidateRequest(EditPagePropertiesViewModel request)
+        /// <param name="isMultilanguageEnabled">if set to <c>true</c> multilanguage is enabled.</param>
+        private void ValidateRequest(EditPagePropertiesViewModel request, bool isMultilanguageEnabled)
         {
             if (!request.MasterPageId.HasValue && !request.TemplateId.HasValue)
             {
@@ -454,6 +454,33 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                     throw new ValidationException(() => PagesGlobalization.SavePagePropertiesCommand_SelectedMasterIsChildPage_Message, logMessage);
                 }
             }
+
+            if (isMultilanguageEnabled)
+            {
+                var pageId = request.Id.HasDefaultValue() ? (Guid?)null : request.Id;
+                var pageCultureId = request.CultureId.HasValue && !request.CultureId.Value.HasDefaultValue() ? request.CultureId : null;
+                
+                if (request.Translations != null)
+                {
+                    if (pageId.HasValue && request.Translations.Any(t => t.Id == pageId))
+                    {
+                        var logMessage = string.Format("Page cannot be added itself to tranlations list. Id: {0}, ", request.Id);
+                        throw new ValidationException(() => PagesGlobalization.SavePagePropertiesCommand_PageHasTranslationsWithItsId_Message, logMessage);
+                    }
+
+                    if (request.Translations.Any(t => t.CultureId == pageCultureId))
+                    {
+                        var logMessage = string.Format("Page cannot contain translations with the same culture as itself. Id: {0}, CultureId: {1}", request.Id, request.CultureId);
+                        throw new ValidationException(() => PagesGlobalization.SavePagePropertiesCommand_PageHasTranslationsWithItsCulture_Message, logMessage);
+                    }
+
+                    if (request.Translations.GroupBy(t => t.CultureId).Any(g => g.Count() > 1))
+                    {
+                        var logMessage = string.Format("Page cannot contain two or more translations with the same culture. Id: {0}, CultureId: {1}", request.Id, request.CultureId);
+                        throw new ValidationException(() => PagesGlobalization.SavePagePropertiesCommand_PageHasTranslationsWithSameCulture_Message, logMessage);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -464,6 +491,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         /// <returns>List of old and new page translations</returns>
         private IList<Root.Models.Page> LoadAndValidateTranslations(PageProperties page, EditPagePropertiesViewModel request)
         {
+            // Load translations
             var predicateBuilder = PredicateBuilder.False<Root.Models.Page>();
             if (page.CultureGroupIdentifier.HasValue)
             {
@@ -475,7 +503,34 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                 request.Translations.Select(t => t.Id).ToList().ForEach(t => { predicateBuilder = predicateBuilder.Or(p => p.Id == t); });
             }
 
-            return Repository.AsQueryable<Root.Models.Page>().Where(predicateBuilder).ToList();
+            var translations = Repository.AsQueryable<Root.Models.Page>().Where(predicateBuilder).ToList();
+
+            // Validate translations
+            if (request.Translations != null)
+            {
+                request.Translations.ForEach(rt =>
+                    {
+                        var translation = translations.FirstOrDefault(t => t.Id == rt.Id && t.CultureGroupIdentifier != null && t.CultureGroupIdentifier != page.CultureGroupIdentifier);
+                        if (translation != null)
+                        {
+                            var logMessage = string.Format("Page cannot be assigned as translation, because it's assigned with another page. PageId: {0}, TranslationId: {1}", request.Id, translation.Id);
+                            var message = string.Format(PagesGlobalization.SavePagePropertiesCommand_PageTranslationsIsAlreadyAssigned_Message, translation.Title);
+                            throw new ValidationException(() => message, logMessage);
+                        }
+
+                        translation = translations.FirstOrDefault(t => t.Id == rt.Id && ((t.Culture == null && rt.CultureId.HasValue) || (t.Culture != null && t.Culture.Id != rt.CultureId)));
+                        if (translation != null)
+                        {
+                            var logMessage = string.Format("Page cannot be assigned with culture {0}, because it has assigned another culture {1}. PageId: {2}, TranslationId: {1}", 
+                                rt.CultureId,
+                                translation.Culture != null ? translation.Culture.Id : (Guid?)null, request.Id);
+                            var message = string.Format(PagesGlobalization.SavePagePropertiesCommand_PageTranslationsHasDifferentCultureId_Message, translation.Title);
+                            throw new ValidationException(() => message, logMessage);
+                        }
+                    });
+            }
+
+            return translations;
         }
 
         /// <summary>

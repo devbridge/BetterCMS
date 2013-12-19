@@ -1227,4 +1227,19 @@
   <data name="EditPageProperties_TranslationsTab_Culture_Tooltip_Description" xml:space="preserve">
     <value>Edit current page culture, which will be used in sitemap and determines the language of the page</value>
   </data>
+  <data name="SavePagePropertiesCommand_PageHasTranslationsWithItsCulture_Message" xml:space="preserve">
+    <value>Page cannot contain translations with the same culture as itself.</value>
+  </data>
+  <data name="SavePagePropertiesCommand_PageHasTranslationsWithItsId_Message" xml:space="preserve">
+    <value>Page cannot be added itself to tranlations list.</value>
+  </data>
+  <data name="SavePagePropertiesCommand_PageHasTranslationsWithSameCulture_Message" xml:space="preserve">
+    <value>Page cannot contain two or more translations with the same culture.</value>
+  </data>
+  <data name="SavePagePropertiesCommand_PageTranslationsHasDifferentCultureId_Message" xml:space="preserve">
+    <value>Page {0} cannot be assigned as translation, because it has assigned another culture.</value>
+  </data>
+  <data name="SavePagePropertiesCommand_PageTranslationsIsAlreadyAssigned_Message" xml:space="preserve">
+    <value>Page {0} cannot be assigned as translation, because it's already assigned to another page.</value>
+  </data>
 </root>

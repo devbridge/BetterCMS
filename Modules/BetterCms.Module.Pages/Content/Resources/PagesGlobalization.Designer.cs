@@ -2419,6 +2419,51 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Page cannot contain translations with the same culture as itself..
+        /// </summary>
+        public static string SavePagePropertiesCommand_PageHasTranslationsWithItsCulture_Message {
+            get {
+                return ResourceManager.GetString("SavePagePropertiesCommand_PageHasTranslationsWithItsCulture_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page cannot be added itself to tranlations list..
+        /// </summary>
+        public static string SavePagePropertiesCommand_PageHasTranslationsWithItsId_Message {
+            get {
+                return ResourceManager.GetString("SavePagePropertiesCommand_PageHasTranslationsWithItsId_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page cannot contain two or more translations with the same culture..
+        /// </summary>
+        public static string SavePagePropertiesCommand_PageHasTranslationsWithSameCulture_Message {
+            get {
+                return ResourceManager.GetString("SavePagePropertiesCommand_PageHasTranslationsWithSameCulture_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page {0} cannot be assigned as translation, because it has assigned another culture..
+        /// </summary>
+        public static string SavePagePropertiesCommand_PageTranslationsHasDifferentCultureId_Message {
+            get {
+                return ResourceManager.GetString("SavePagePropertiesCommand_PageTranslationsHasDifferentCultureId_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page {0} cannot be assigned as translation, because it&apos;s already assigned to another page..
+        /// </summary>
+        public static string SavePagePropertiesCommand_PageTranslationsIsAlreadyAssigned_Message {
+            get {
+                return ResourceManager.GetString("SavePagePropertiesCommand_PageTranslationsIsAlreadyAssigned_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Selected master page is the current page or is a child of it..
         /// </summary>
         public static string SavePagePropertiesCommand_SelectedMasterIsChildPage_Message {
