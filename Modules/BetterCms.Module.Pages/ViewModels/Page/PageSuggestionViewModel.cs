@@ -58,5 +58,21 @@ namespace BetterCms.Module.Pages.ViewModels.Page
                 return result.ToArray();
             }
         }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format(
+                "{0}, ExcplicitlyIncludedPages: {1}, OnlyUntranslatedPages: {2}, ExcludedCultureId: {3}",
+                base.ToString(),
+                ExcplicitlyIncludedPages,
+                OnlyUntranslatedPages,
+                ExcludedCultureId);
+        }
     }
 }
