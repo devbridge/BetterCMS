@@ -2,8 +2,8 @@
 /*global bettercms */
 
 bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent',
-        'bcms.pages.properties', 'bcms.grid', 'bcms.redirect', 'bcms.messages', 'bcms.pages.filter', 'bcms.options', 'bcms.ko.extenders', 'bcms.security', 'bcms.sidemenu', 'bcms.datepicker'],
-    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, grid, redirect, messages, filter, options, ko, security, sidemenu, datepicker) {
+        'bcms.pages.properties', 'bcms.grid', 'bcms.redirect', 'bcms.messages', 'bcms.pages.filter', 'bcms.options', 'bcms.ko.extenders', 'bcms.security', 'bcms.sidemenu', 'bcms.datepicker', 'bcms.pages.cultures'],
+    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, grid, redirect, messages, filter, options, ko, security, sidemenu, datepicker, pageCultures) {
         'use strict';
 
         var page = {},
@@ -153,7 +153,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         page.initAddNewPageDialogEvents = function (dialog, content) {
             var infoMessageClosed = localStorage.getItem(keys.addNewPageInfoMessageClosed),
                 optionsContainer = dialog.container.find(selectors.addNewPageOptionsTab),
-                cultureViewModel = content.Data.Cultures ? new pageProperties.PageCultureViewModel(content.Data.Cultures) : null,
+                cultureViewModel = content.Data.Cultures ? new pageCultures.PageCultureViewModel(content.Data.Cultures) : null,
                 viewModel = {
                     accessControl: security.createUserAccessViewModel(content.Data.UserAccessList),
                     culture: cultureViewModel,
@@ -827,8 +827,8 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
             initializeCustomValidation();
 
-            // Pass method to page properties (it can be reached directly because of circular references)
-            pageProperties.openPageSelectDialog = page.openPageSelectDialog;
+            // Pass method to page cultures (it can be reached directly because of circular references)
+            pageCultures.openPageSelectDialog = page.openPageSelectDialog;
         };
 
         /**

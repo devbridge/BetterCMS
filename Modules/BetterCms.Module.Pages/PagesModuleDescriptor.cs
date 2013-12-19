@@ -230,6 +230,7 @@ namespace BetterCms.Module.Pages
                     masterPagesJsModuleIncludeDescriptor,
                     historyJsModuleIncludeDescriptor,
                     sitemapJsModuleIncludeDescriptor,
+                    new PagesCulturesJsModuleIncludeDescriptor(this), 
                     new JsIncludeDescriptor(this, "bcms.pages.filter")
                 };
         }

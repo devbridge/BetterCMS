@@ -21,8 +21,7 @@ namespace BetterCms.Module.Pages.Registration
             Links = new IActionProjection[]
                 {
                     new JavaScriptModuleLinkTo<PageController>(this, "loadEditPropertiesDialogUrl", c => c.EditPageProperties("{0}")),
-                    new JavaScriptModuleLinkTo<PageController>(this, "loadLayoutOptionsUrl", c => c.LoadLayoutOptions("{0}", "{1}")),
-                    new JavaScriptModuleLinkTo<PageController>(this, "suggestUntranslatedPagesUrl", c => c.SuggestUntranslatedPages(null))
+                    new JavaScriptModuleLinkTo<PageController>(this, "loadLayoutOptionsUrl", c => c.LoadLayoutOptions("{0}", "{1}"))
                 };
 
             Globalization = new IActionProjection[]
@@ -32,8 +31,7 @@ namespace BetterCms.Module.Pages.Registration
                     new JavaScriptModuleGlobalization(this, "pageStatusChangeConfirmationMessagePublish", () => PagesGlobalization.EditPageProperties_PageStatusChange_ConfirmationMessage_Publish),
                     new JavaScriptModuleGlobalization(this, "pageStatusChangeConfirmationMessageUnPublish", () => PagesGlobalization.EditPageProperties_PageStatusChange_ConfirmationMessage_UnPublish),
                     new JavaScriptModuleGlobalization(this, "pageConversionToMasterConfirmationMessage", () => PagesGlobalization.EditPageProperties_PageConversionToMaster_ConfirmationMessage),
-                    new JavaScriptModuleGlobalization(this, "selectedMasterIsChildPage", () => PagesGlobalization.SavePagePropertiesCommand_SelectedMasterIsChildPage_Message),
-                    new JavaScriptModuleGlobalization(this, "unassignTranslationConfirmation", () => PagesGlobalization.EditPageTranslations_UnassignTranslation_ConfirmationMessage)
+                    new JavaScriptModuleGlobalization(this, "selectedMasterIsChildPage", () => PagesGlobalization.SavePagePropertiesCommand_SelectedMasterIsChildPage_Message)
                 };
         }
     }

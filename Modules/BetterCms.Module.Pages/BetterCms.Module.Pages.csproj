@@ -264,6 +264,7 @@
     <Compile Include="Accessors\HtmlContentWidgetAccessor.cs" />
     <Compile Include="Accessors\HtmlContentAccessor.cs" />
     <Compile Include="Accessors\ServerControlWidgetAccessor.cs" />
+    <Compile Include="Registration\PagesCulturesJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\MasterPagesJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\HistoryJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\SitemapJsModuleIncludeDescriptor.cs" />
@@ -403,6 +404,7 @@
     <EmbeddedResource Include="Scripts\bcms.pages.properties.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.masterpage.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.cultures.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
