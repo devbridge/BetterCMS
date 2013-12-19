@@ -63,7 +63,7 @@ namespace BetterCms.Module.LuceneSearch
             workers.Add(new DefaultContentIndexingRobot());
             workers.Add(new DefaultIndexSourceWatcher());
 
-            containerBuilder.RegisterType<DefaultIndexerService>().As<IIndexerService>().InstancePerDependency();
+            containerBuilder.RegisterType<DefaultIndexerService>().As<IIndexerService>().SingleInstance();
             containerBuilder.RegisterType<DefaultScrapeService>().As<IScrapeService>().InstancePerDependency();
             containerBuilder.RegisterType<DefaultWebCrawlerService>().As<IWebCrawlerService>().InstancePerDependency();
         }

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Text.RegularExpressions;
 
 using BetterCms.Module.LuceneSearch;
 
@@ -23,7 +20,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
             var response = new PageData();
             HttpWebResponse httpWebResponse = null;
 
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(LuceneSearchModuleDescriptor.HostUrl + url);
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(LuceneSearchModuleDescriptor.HostUrl + url.TrimStart('/'));
             httpWebRequest.AllowAutoRedirect = true;
             httpWebRequest.Timeout = 60 * 1000;
 
@@ -50,6 +47,12 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
             catch (SystemException ex)
             {
                 Log.ErrorFormat("Failed to fetch page by url {0}.", ex, url);
+
+                if (ex.GetType() == typeof(WebException))
+                {
+                    var webException = (WebException)ex;
+                    response.StatusCode = ((HttpWebResponse)webException.Response).StatusCode;
+                }
             }
             finally
             {

@@ -20,7 +20,7 @@ namespace BetterCMS.Module.LuceneSearch.Workers
             using (var lifetimeScope = ContextScopeProvider.CreateChildContainer())
             {
                 var scrapeService = lifetimeScope.Resolve<IScrapeService>();
-                
+
                 scrapeService.FetchNewUrls();
             }
         }

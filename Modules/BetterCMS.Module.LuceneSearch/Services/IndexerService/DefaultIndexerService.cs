@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 
 using HtmlAgilityPack;
 
-using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
@@ -14,11 +15,13 @@ using Lucene.Net.Search;
 using Lucene.Net.Store;
 using Lucene.Net.Util;
 
+using Directory = Lucene.Net.Store.Directory;
+
 namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 {
     public class DefaultIndexerService : IIndexerService
     {
-        private readonly IndexWriter Writer;
+        private IndexWriter Writer;
 
         private readonly IndexReader Reader;
 
@@ -37,9 +40,17 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             Index = FSDirectory.Open(directory);
 
             Analyzer = new StandardAnalyzer(Version.LUCENE_30);
-            Writer = new IndexWriter(Index, Analyzer, true, IndexWriter.MaxFieldLength.LIMITED);
-            Parser = new QueryParser(Version.LUCENE_30, "title", Analyzer);
+            Parser = new QueryParser(Version.LUCENE_30, "content", Analyzer);
             Reader = IndexReader.Open(Index, true);    
+        }
+
+        public void Open()
+        {
+            while (File.Exists(IndexWriter.WRITE_LOCK_NAME))
+            {
+                Thread.Sleep(1000);
+            }
+            Writer = new IndexWriter(Index, Analyzer, false, IndexWriter.MaxFieldLength.LIMITED);
         }
 
         public void AddHtmlDocument(PageData pageData)

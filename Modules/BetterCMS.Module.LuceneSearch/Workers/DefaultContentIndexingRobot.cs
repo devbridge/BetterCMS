@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 
 using BetterCMS.Module.LuceneSearch.Services.IndexerService;
@@ -13,6 +14,8 @@ namespace BetterCMS.Module.LuceneSearch.Workers
 {
     public class DefaultContentIndexingRobot : WorkerBase
     {
+        private const int RetryCount = 10;
+
         public DefaultContentIndexingRobot()
             : base(new TimeSpan(0, 0, 10, 0))
         {
@@ -28,25 +31,28 @@ namespace BetterCMS.Module.LuceneSearch.Workers
 
                 var links = scrapeService.GetUnprocessedLinks();
 
+                var pages = new List<PageData>();
+
                 foreach (var link in links)
                 {
                     scrapeService.MarkStarted(link.Id);
+
                     var response = crawlerService.FetchPage(link.Path);
+                    response.Id = link.Id;
 
                     switch (response.StatusCode)
                     {
-                        case HttpStatusCode.OK:
+                        case (HttpStatusCode.OK):
                             {
-                                indexerService.AddHtmlDocument(response);
-                                scrapeService.MarkVisited(link.Id);
+                                pages.Add(response);
                                 break;
                             }
-
-                        case HttpStatusCode.InternalServerError:
+                            
+                            case HttpStatusCode.InternalServerError:
                             {
                                 bool success = false;
 
-                                for (int i = 0; !success && i < 10; i++)
+                                for (int i = 0; !success && i < RetryCount; i++)
                                 {
                                     response = crawlerService.FetchPage(link.Path);
                                     if (response.StatusCode == HttpStatusCode.OK)
@@ -57,8 +63,7 @@ namespace BetterCMS.Module.LuceneSearch.Workers
 
                                 if (success)
                                 {
-                                    indexerService.AddHtmlDocument(response);
-                                    scrapeService.MarkVisited(link.Id);
+                                    pages.Add(response);
                                 }
                                 else
                                 {
@@ -75,8 +80,15 @@ namespace BetterCMS.Module.LuceneSearch.Workers
                     }
                 }
 
+                indexerService.Open();
+                foreach (var page in pages)
+                {
+                    indexerService.AddHtmlDocument(page);
+                    scrapeService.MarkVisited(page.Id);
+                }
                 indexerService.Close();
             }
+
         }
     }
 }

@@ -70,7 +70,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
 
             var unprocessedUrls =
                 Repository.AsQueryOver(() => indexSourceAlias)
-                          .Where(() => indexSourceAlias.EndTime == null)
+                          .Where(() => indexSourceAlias.StartTime == null)
                           .OrderByAlias(() => indexSourceAlias.Id)
                           .Asc.Lock(() => indexSourceAlias)
                           .Read.Take(limit)
