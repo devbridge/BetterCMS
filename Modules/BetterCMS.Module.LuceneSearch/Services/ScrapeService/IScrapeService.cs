@@ -11,10 +11,14 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
 
         Queue<CrawlLink> GetProcessedLinks(int limit = 1000);
 
-        Queue<CrawlLink> GetFailedLinks(int limit = 1000); 
+        Queue<CrawlLink> GetFailedLinks(int limit = 1000);
+
+        void MarkStarted(Guid id);
 
         void MarkVisited(Guid id);
 
         void FetchNewUrls();
+
+        void Delete(Guid id);
     }
 }

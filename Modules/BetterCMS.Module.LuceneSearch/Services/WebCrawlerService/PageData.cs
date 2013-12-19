@@ -1,4 +1,6 @@
-﻿using HtmlAgilityPack;
+﻿using System.Net;
+
+using HtmlAgilityPack;
 
 namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
 {
@@ -9,5 +11,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
         public string AbsoluteUri { get; set; }
 
         public HtmlDocument Content { get; set; }
+
+        public HttpStatusCode StatusCode { get; set; }
     }
 }

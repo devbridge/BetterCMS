@@ -104,10 +104,10 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             return Regex.Replace(html, "\\s+", " ");
         }
 
-        public void Commit()
+        public void Close()
         {
             Writer.Optimize();
-            Writer.Commit();
+            Writer.Dispose();
         }
     }
 }

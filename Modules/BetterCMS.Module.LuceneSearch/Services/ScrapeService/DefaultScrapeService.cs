@@ -154,6 +154,16 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
             return result;
         }
 
+        public void MarkStarted(Guid id)
+        {
+            var url = Repository.First<IndexSource>(x => x.Id == id);
+            url.StartTime = DateTime.Now;
+
+            UnitOfWork.BeginTransaction();
+            Repository.Save(url);
+            UnitOfWork.Commit();
+        }
+
         public void MarkVisited(Guid id)
         {
             var url = Repository.First<IndexSource>(x => x.Id == id);
@@ -161,6 +171,15 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
 
             UnitOfWork.BeginTransaction();
             Repository.Save(url);
+            UnitOfWork.Commit();
+        }
+
+        public void Delete(Guid id)
+        {
+            var url = Repository.First<IndexSource>(x => x.Id == id);
+
+            UnitOfWork.BeginTransaction();
+            Repository.Delete(url);
             UnitOfWork.Commit();
         }
     }

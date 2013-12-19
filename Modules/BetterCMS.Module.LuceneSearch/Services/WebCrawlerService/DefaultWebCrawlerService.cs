@@ -23,7 +23,6 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
             var response = new PageData();
             HttpWebResponse httpWebResponse = null;
 
-            
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(LuceneSearchModuleDescriptor.HostUrl + url);
             httpWebRequest.AllowAutoRedirect = true;
             httpWebRequest.Timeout = 60 * 1000;
@@ -31,6 +30,8 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
             try
             {
                 httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+                response.StatusCode = httpWebResponse.StatusCode;
                 response.AbsolutePath = httpWebResponse.ResponseUri.AbsolutePath;
                 response.AbsoluteUri = httpWebResponse.ResponseUri.AbsoluteUri;
 
