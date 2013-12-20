@@ -19,7 +19,7 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
         {
             var document1 = new HtmlDocument();
             document1.DocumentNode.AppendChild(HtmlNode.CreateNode("<title>Test title</title>"));
-            document1.DocumentNode.AppendChild(HtmlNode.CreateNode("<body><p>Bodywith search phrase test</p></body>"));
+            document1.DocumentNode.AppendChild(HtmlNode.CreateNode("<body><p>Body with search phrase test</p></body>"));
             
             var document2 = new HtmlDocument();
             document2.DocumentNode.AppendChild(HtmlNode.CreateNode("<title>Test title</title>"));

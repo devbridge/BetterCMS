@@ -105,28 +105,28 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         private static string GetTitle(HtmlDocument html)
         {
-            var titleHtml = string.Empty;
+            var titleText = string.Empty;
             var title = html.DocumentNode.SelectSingleNode("//title");
 
             if (title != null)
             {
-                titleHtml = title.InnerHtml;
+                titleText = title.InnerText;
             }
 
-            return HtmlEntity.DeEntitize(titleHtml);
+            return titleText;
         }
 
         private static string GetBody(HtmlDocument html)
         {
-            var contentHtml = string.Empty;
+            var contentText = string.Empty;
             var content = html.DocumentNode.SelectSingleNode("//body");
 
             if (content != null)
             {
-                contentHtml = content.InnerHtml;
+                contentText = content.InnerText;
             }
 
-            return RemoveDuplicateWhitespace(HtmlEntity.DeEntitize(contentHtml));
+            return RemoveDuplicateWhitespace(contentText);
         }
 
         private static string RemoveDuplicateWhitespace(string html)
