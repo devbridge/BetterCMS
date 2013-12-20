@@ -62,6 +62,12 @@
     <Reference Include="FluentNHibernate">
       <HintPath>..\..\packages\FluentNHibernate.1.3.0.733\lib\FluentNHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\..\Modules\BetterCMS.Module.LuceneSearch\bin\Debug\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="Iesi.Collections">
       <HintPath>..\..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
     </Reference>
@@ -126,6 +132,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LuceneSearch\ServiceTests\IndexerServiceTests.cs" />
+    <Compile Include="LuceneSearch\ServiceTests\ScrapeServiceTests.cs" />
+    <Compile Include="LuceneSearch\ServiceTests\WebCrawlerServiceTests.cs" />
     <Compile Include="MediaManager\CommandTests\DeleteMediaCommandTest.cs" />
     <Compile Include="Pages\CommandTests\EventTests\UpdatingPagePropertiesModelMapTests.cs" />
     <Compile Include="Pages\CommandTests\PageTests\ClonePageCommandTest.cs" />
@@ -278,6 +287,10 @@
     <ProjectReference Include="..\..\Modules\BetterCms.Module.ImagesGallery\BetterCms.Module.ImagesGallery.csproj">
       <Project>{0bb64452-9b66-403e-94c6-e66c6071d12b}</Project>
       <Name>BetterCms.Module.ImagesGallery</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCMS.Module.LuceneSearch\BetterCms.Module.LuceneSearch.csproj">
+      <Project>{5255ABED-2111-497F-A94C-6AA89862D814}</Project>
+      <Name>BetterCms.Module.LuceneSearch</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.MediaManager\BetterCms.Module.MediaManager.csproj">
       <Project>{f3e41793-e8ed-4ba8-a1ab-cba1e47b0786}</Project>

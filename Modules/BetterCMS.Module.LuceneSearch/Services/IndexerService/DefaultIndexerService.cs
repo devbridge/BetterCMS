@@ -23,7 +23,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
     {
         private IndexWriter Writer;
 
-        private readonly IndexReader Reader;
+        private IndexReader Reader;
 
         private readonly StandardAnalyzer Analyzer;
 
@@ -31,7 +31,9 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         private readonly Directory Index;
 
-        private string directory = "C:\\LuceneWorkFolder5";
+        //private string directory = "C:\\LuceneWorkFolder5";
+
+        private string directory = "C:\\Lucene\\Test";
 
         private readonly int ResultCount = 10;
 
@@ -41,33 +43,46 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
             Analyzer = new StandardAnalyzer(Version.LUCENE_30);
             Parser = new QueryParser(Version.LUCENE_30, "content", Analyzer);
-            Reader = IndexReader.Open(Index, true);    
+            
+            if (!IndexReader.IndexExists(Index))
+            {
+                Open(true);
+                Close();
+            }
+
+            Reader = IndexReader.Open(Index, true);
         }
 
-        public void Open()
+        public void Open(bool create = false)
         {
             while (File.Exists(IndexWriter.WRITE_LOCK_NAME))
             {
                 Thread.Sleep(1000);
             }
-            Writer = new IndexWriter(Index, Analyzer, false, IndexWriter.MaxFieldLength.LIMITED);
+
+            Writer = new IndexWriter(Index, Analyzer, create, IndexWriter.MaxFieldLength.LIMITED);
         }
 
         public void AddHtmlDocument(PageData pageData)
         {
-            //TODO prevent existing pages from being indexed
-            
             var doc = new Document();
-            
+
+            var path = new Term("path", pageData.AbsolutePath);
+
             doc.Add(new Field("path", pageData.AbsolutePath, Field.Store.YES, Field.Index.NOT_ANALYZED));
             doc.Add(new Field("title", GetTitle(pageData.Content), Field.Store.YES, Field.Index.ANALYZED));
             doc.Add(new Field("content", GetBody(pageData.Content), Field.Store.YES, Field.Index.ANALYZED));
 
-            Writer.AddDocument(doc);
+            Writer.UpdateDocument(path, doc, Analyzer);
         }
 
         public IList<string> Search(string searchString)
         {
+            if (!Reader.IsCurrent())
+            {
+                Reader = Reader.Reopen();
+            }
+
             var result = new List<string>();
             var searcher = new IndexSearcher(Reader);
             TopScoreDocCollector collector = TopScoreDocCollector.Create(ResultCount, true);
@@ -85,6 +100,8 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             
             return result;
         }
+
+
 
         private static string GetTitle(HtmlDocument html)
         {

@@ -10,7 +10,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         IList<string> Search(string searchString);
 
-        void Open();
+        void Open(bool create = false);
 
         void Close();
     }
