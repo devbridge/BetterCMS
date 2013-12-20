@@ -131,8 +131,7 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                     }
 
                     var pageContentId = Repository.AsQueryable<PageContent>()
-                        .Where(pageContent => pageContent.Page.Id == id && !pageContent.Page.IsDeleted)
-                        .OrderBy(pageContent => pageContent.CreatedOn)
+                        .Where(pageContent => pageContent.Page.Id == id && !pageContent.Page.IsDeleted && pageContent.Content is BlogPostContent)
                         .Select(pageContent => pageContent.Id)
                         .FirstOrDefault();
 
