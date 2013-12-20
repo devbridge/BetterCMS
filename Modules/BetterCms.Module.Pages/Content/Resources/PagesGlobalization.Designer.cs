@@ -1726,6 +1726,24 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Translation.
+        /// </summary>
+        public static string EditPageTranslations_AddTranslation_ButtonTitle {
+            get {
+                return ResourceManager.GetString("EditPageTranslations_AddTranslation_ButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Culture.
+        /// </summary>
+        public static string EditPageTranslations_Culture_Title {
+            get {
+                return ResourceManager.GetString("EditPageTranslations_Culture_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit page translations.
         /// </summary>
         public static string EditPageTranslations_Dialog_Title {
@@ -1735,11 +1753,65 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Other languages.
+        /// </summary>
+        public static string EditPageTranslations_OtherLanguages_Title {
+            get {
+                return ResourceManager.GetString("EditPageTranslations_OtherLanguages_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current page translations - another pages with different culture, which are associated with current page..
+        /// </summary>
+        public static string EditPageTranslations_OtherLanguages_Tooltip {
+            get {
+                return ResourceManager.GetString("EditPageTranslations_OtherLanguages_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is already an item with selected culture. Are you sure you want to replace it?.
+        /// </summary>
+        public static string EditPageTranslations_ReplaceTranslationWithCulture_ConfirmationMessage {
+            get {
+                return ResourceManager.GetString("EditPageTranslations_ReplaceTranslationWithCulture_ConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is already translation with current culture. If you change current page&apos;s culture to {0}, translation will be removed from list. Are you sure you want to continue?.
+        /// </summary>
+        public static string EditPageTranslations_ReplaceTranslationWithCurrentCulture_ConfirmationMessage {
+            get {
+                return ResourceManager.GetString("EditPageTranslations_ReplaceTranslationWithCurrentCulture_ConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string EditPageTranslations_Title_Title {
+            get {
+                return ResourceManager.GetString("EditPageTranslations_Title_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to remove this translation?.
         /// </summary>
         public static string EditPageTranslations_UnassignTranslation_ConfirmationMessage {
             get {
                 return ResourceManager.GetString("EditPageTranslations_UnassignTranslation_ConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Url.
+        /// </summary>
+        public static string EditPageTranslations_Url_Title {
+            get {
+                return ResourceManager.GetString("EditPageTranslations_Url_Title", resourceCulture);
             }
         }
         

@@ -13,7 +13,9 @@
             },
             globalization = {
                 unassignTranslationConfirmation: null,
-                invariantCulture: null
+                invariantCulture: null,
+                replaceItemWithCurrentCultureConfirmation: null,
+                replaceItemWithCultureConfirmation: null
             };
         
         /**
@@ -166,8 +168,7 @@
 
                     if (item.cultureId() == newValue) {
                         modal.confirm({
-                            // TODO: translate
-                            content: $.format("There is already translation with current culture. If you change current page's culture to {0}, translation will be removed from list. Are you sure you want to continue?", item.cultureName()),
+                            content: $.format(globalization.replaceItemWithCurrentCultureConfirmation, item.cultureName()),
                             onAccept: function () {
                                 self.items.remove(item);
                                 self.oldCurrentPageCultureId = newValue;
@@ -280,8 +281,7 @@
                         if (item.cultureId() == currentCultureId) {
                             self.hasFocus(false);
                             modal.confirm({
-                                // TODO: translate
-                                content: 'There is already an item with selected culture. Are you sure you want to replace it?',
+                                content: globalization.replaceItemWithCultureConfirmation,
                                 onAccept: function () {
                                     addTranslation(item);
 

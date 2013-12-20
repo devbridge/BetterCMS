@@ -1254,4 +1254,28 @@
   <data name="ClonePageWithCulture_PageAlreadyHasSuchTranslation_Message" xml:space="preserve">
     <value>Page already has translation for specified culture.</value>
   </data>
+  <data name="EditPageTranslations_ReplaceTranslationWithCulture_ConfirmationMessage" xml:space="preserve">
+    <value>There is already an item with selected culture. Are you sure you want to replace it?</value>
+  </data>
+  <data name="EditPageTranslations_ReplaceTranslationWithCurrentCulture_ConfirmationMessage" xml:space="preserve">
+    <value>There is already translation with current culture. If you change current page's culture to {0}, translation will be removed from list. Are you sure you want to continue?</value>
+  </data>
+  <data name="EditPageTranslations_AddTranslation_ButtonTitle" xml:space="preserve">
+    <value>Add Translation</value>
+  </data>
+  <data name="EditPageTranslations_Culture_Title" xml:space="preserve">
+    <value>Culture</value>
+  </data>
+  <data name="EditPageTranslations_OtherLanguages_Title" xml:space="preserve">
+    <value>Other languages</value>
+  </data>
+  <data name="EditPageTranslations_Title_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="EditPageTranslations_Url_Title" xml:space="preserve">
+    <value>Url</value>
+  </data>
+  <data name="EditPageTranslations_OtherLanguages_Tooltip" xml:space="preserve">
+    <value>Current page translations - another pages with different culture, which are associated with current page.</value>
+  </data>
 </root>
