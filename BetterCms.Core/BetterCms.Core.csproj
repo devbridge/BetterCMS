@@ -120,6 +120,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="DataAccess\PredicateBuilder.cs" />
     <Compile Include="DataContracts\IContentRegion.cs" />
     <Compile Include="DataContracts\ICustomOption.cs" />
     <Compile Include="DataContracts\IDeletableOption.cs" />

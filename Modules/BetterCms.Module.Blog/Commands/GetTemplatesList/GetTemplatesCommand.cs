@@ -6,9 +6,11 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
+using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
+using NHibernate.Criterion;
 using NHibernate.Transform;
 
 namespace BetterCms.Module.Blog.Commands.GetTemplatesList
@@ -50,18 +52,13 @@ namespace BetterCms.Module.Blog.Commands.GetTemplatesList
                 .TransformUsing(Transformers.AliasToBean<BlogTemplateViewModel>())
                 .List<BlogTemplateViewModel>();
 
-            // Load regions
-            Region regionAlias = null;
-            LayoutRegion layoutRegionAlias = null;
-
-            var compatibleLayouts = UnitOfWork.Session
-                .QueryOver(() => layoutRegionAlias)
-                .Inner.JoinQueryOver(() => layoutRegionAlias.Region, () => regionAlias)
-                .Where(() => !layoutRegionAlias.IsDeleted
-                    && !regionAlias.IsDeleted
-                    && regionAlias.RegionIdentifier == BlogModuleConstants.BlogPostMainContentRegionIdentifier)
-                .Select(select => select.Layout.Id)
-                .List<Guid>();
+            var compatibleLayouts = Repository.AsQueryable<Layout>()
+                      .Where(
+                          layout =>
+                          layout.LayoutRegions.Count(region => !region.IsDeleted && !region.Region.IsDeleted).Equals(1)
+                          || layout.LayoutRegions.Any(region => !region.IsDeleted && !region.Region.IsDeleted && region.Region.RegionIdentifier == BlogModuleConstants.BlogPostMainContentRegionIdentifier))
+                      .Select(layout => layout.Id)
+                      .ToList();
 
             foreach (var id in compatibleLayouts)
             {
@@ -71,12 +68,41 @@ namespace BetterCms.Module.Blog.Commands.GetTemplatesList
                     .ForEach(t => t.IsCompatible = true);
             }
 
-            // Load default template
-            var defaultTemplateId = optionService.GetDefaultTemplateId();
+            Repository.AsQueryable<PageProperties>()
+                      .Where(page => page.IsMasterPage && !page.IsDeleted)
+                      .Select(
+                          page =>
+                          new BlogTemplateViewModel()
+                              {
+                                  TemplateId = page.Id,
+                                  Title = page.Title,
+                                  PreviewUrl =
+                                      page.Image != null
+                                          ? page.Image.PublicUrl
+                                          : page.FeaturedImage != null ? page.FeaturedImage.PublicUrl : page.SecondaryImage != null ? page.SecondaryImage.PublicUrl : null,
+                                  IsMasterPage = true,
+                                  IsCompatible =
+                                      page.PageContents.Count(
+                                          pageContnet =>
+                                          !pageContnet.IsDeleted && !pageContnet.Content.IsDeleted
+                                          && pageContnet.Content.ContentRegions.Any(contentRegion => !contentRegion.IsDeleted && !contentRegion.Region.IsDeleted)).Equals(1)
+                                      && page.PageContents.Count(
+                                          pageContnet =>
+                                          !pageContnet.IsDeleted && !pageContnet.Content.IsDeleted
+                                          && pageContnet.Content.ContentRegions.Count(contentRegion => !contentRegion.IsDeleted && !contentRegion.Region.IsDeleted).Equals(1))
+                                             .Equals(1)
+                              })
+                      .ToList()
+                      .ForEach(templates.Add);
 
-            if (defaultTemplateId.HasValue)
+            var option = optionService.GetDefaultOption();
+
+            // Load default template.
+            if (option != null && (option.DefaultLayout != null || option.DefaultMasterPage != null))
             {
-                var defaultTemplate = templates.FirstOrDefault(t => t.TemplateId == defaultTemplateId.Value);
+                var id = option.DefaultLayout != null ? option.DefaultLayout.Id : option.DefaultMasterPage.Id;
+
+                var defaultTemplate = templates.FirstOrDefault(t => t.TemplateId == id);
                 if (defaultTemplate != null)
                 {
                     defaultTemplate.IsActive = true;

@@ -609,4 +609,10 @@
   <data name="MediaHistory_Preview_Properties_CroppedImageDimensions" xml:space="preserve">
     <value>Cropped image dimensions (pixels)</value>
   </data>
+  <data name="MediaManager_Search_NoMatchesFound" xml:space="preserve">
+    <value>No matches found for "{0}".</value>
+  </data>
+  <data name="MediaManager_Search_TrySearchInHistory" xml:space="preserve">
+    <value>Try searching again in older versions of media items.</value>
+  </data>
 </root>

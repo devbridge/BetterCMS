@@ -8,6 +8,7 @@ using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Exceptions.Service;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Security;
 
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Models;
@@ -15,9 +16,11 @@ using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
 
 using BetterCms.Module.MediaManager.Models;
+
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Services;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -67,11 +70,21 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// The url service.
         /// </summary>
         private readonly IUrlService urlService;
-        
+
+        /// <summary>
+        /// The master page service.
+        /// </summary>
+        private readonly IMasterPageService masterPageService;
+
         /// <summary>
         /// The redirect service.
         /// </summary>
         private readonly IRedirectService redirectService;
+
+        /// <summary>
+        /// The CMS configuration
+        /// </summary>
+        private readonly ICmsConfiguration cmsConfiguration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SaveBlogPostCommand" /> class.
@@ -83,9 +96,11 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// <param name="blogService">The blog service.</param>
         /// <param name="redirectService">The redirect service.</param>
         /// <param name="urlService">The URL service.</param>
+        /// <param name="cmsConfiguration">The CMS configuration.</param>
+        /// <param name="masterPageService">The master page service.</param>
         public SaveBlogPostCommand(ITagService tagService, Services.IOptionService optionService, IContentService contentService, 
-                                    IPageService pageService, IBlogService blogService, 
-                                    IRedirectService redirectService, IUrlService urlService)
+                                    IPageService pageService, IBlogService blogService, IRedirectService redirectService,
+                                    IUrlService urlService, ICmsConfiguration cmsConfiguration, IMasterPageService masterPageService)
         {
             this.tagService = tagService;
             this.optionService = optionService;
@@ -94,6 +109,8 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             this.blogService = blogService;
             this.redirectService = redirectService;
             this.urlService = urlService;
+            this.masterPageService = masterPageService;
+            this.cmsConfiguration = cmsConfiguration;
         }
 
         /// <summary>
@@ -103,25 +120,24 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// <returns>Blog post view model</returns>
         public SaveBlogPostCommandResponse Execute(BlogPostViewModel request)
         {
+            string[] roles;
             if (request.DesirableStatus == ContentStatus.Published)
             {
                 AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.PublishContent);
-            }
-
-            var layout = LoadLayout();
-            var region = LoadRegion();
-            var isNew = request.Id.HasDefaultValue();
-            bool userCanEdit;
-
-            if (isNew || request.DesirableStatus != ContentStatus.Published)
-            {
-                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent);
-                userCanEdit = true;
+                roles = new[] { RootModuleConstants.UserRoles.PublishContent };
             }
             else
             {
-                userCanEdit = SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);
+                AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent);
+                roles = new[] { RootModuleConstants.UserRoles.EditContent };
             }
+
+            Layout layout;
+            Page masterPage;
+            LoadLayout(out layout, out masterPage);
+            var region = LoadRegion(layout, masterPage);
+            var isNew = request.Id.HasDefaultValue();
+            var userCanEdit = SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);
 
             // UnitOfWork.BeginTransaction(); // NOTE: this causes concurrent data exception.
 
@@ -144,6 +160,11 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                     .FirstOrDefault();
 
                 blogPost = blogPostFuture.FirstOne();
+
+                if (cmsConfiguration.Security.AccessControlEnabled)
+                {
+                    AccessControlService.DemandAccess(blogPost, Context.Principal, AccessLevel.ReadWrite, roles);
+                }
 
                 if (content != null)
                 {
@@ -223,7 +244,15 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                 }
 
                 blogPost.MetaTitle = request.Title;
-                blogPost.Layout = layout;
+                if (masterPage != null)
+                {
+                    blogPost.MasterPage = masterPage;
+                    masterPageService.SetPageMasterPages(blogPost, masterPage.Id);
+                }
+                else
+                {
+                    blogPost.Layout = layout;
+                }
                 UpdateStatus(blogPost, request.DesirableStatus);
             }
             else if (request.DesirableStatus == ContentStatus.Published)
@@ -341,22 +370,23 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// </summary>
         /// <returns>Layout for blog post.</returns>
         /// <exception cref="System.ComponentModel.DataAnnotations.ValidationException">If layout was not found.</exception>
-        private Layout LoadLayout()
+        private void LoadLayout(out Layout layout, out Page masterPage)
         {
-            var layoutId = optionService.GetDefaultTemplateId();
+            var option = optionService.GetDefaultOption();
 
-            var layout = (layoutId.HasValue
-                                 ? Repository.AsQueryable<Layout>(l => l.Id == layoutId.Value).FirstOrDefault()
-                                 : null) ?? GetFirstCompatibleLayout();
+            layout = option != null ? option.DefaultLayout : null;
+            masterPage = option != null ? option.DefaultMasterPage : null;
+            if (layout == null && masterPage == null)
+            {
+                layout = GetFirstCompatibleLayout();
+            }
 
-            if (layout == null)
+            if (layout == null && masterPage == null)
             {
                 var message = BlogGlobalization.SaveBlogPost_LayoutNotFound_Message;
                 const string logMessage = "Failed to save blog post. No compatible layouts found.";
                 throw new ValidationException(() => message, logMessage);
             }
-
-            return layout;
         }
 
         /// <summary>
@@ -364,9 +394,28 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// </summary>
         /// <returns>Region for blog post content.</returns>
         /// <exception cref="System.ComponentModel.DataAnnotations.ValidationException">If no region found.</exception>
-        private Region LoadRegion()
+        private Region LoadRegion(Layout layout, Page masterPage)
         {
-            var regionId = Repository.AsQueryable<Region>(r => !r.IsDeleted && r.RegionIdentifier == regionIdentifier).Select(s => s.Id).FirstOrDefault();
+            var regionId = Guid.Empty;
+            if (layout != null)
+            {
+                regionId = layout.LayoutRegions.Count(layoutRegion => !layoutRegion.IsDeleted && !layoutRegion.Region.IsDeleted) == 1
+                                   ? layout.LayoutRegions.First(layoutRegion => !layoutRegion.IsDeleted).Region.Id
+                                   : layout.LayoutRegions.Where(
+                                       layoutRegion =>
+                                       !layoutRegion.IsDeleted && !layoutRegion.Region.IsDeleted && layoutRegion.Region.RegionIdentifier == regionIdentifier)
+                                           .Select(layoutRegion => layoutRegion.Region.Id)
+                                           .FirstOrDefault();
+            }
+            else if (masterPage != null)
+            {
+                regionId = Repository.AsQueryable<PageContent>()
+                          .Where(pageContent => pageContent.Page == masterPage)
+                          .SelectMany(pageContent => pageContent.Content.ContentRegions)
+                          .Select(contentRegion => contentRegion.Region.Id)
+                          .FirstOrDefault();
+            }
+
             if (regionId.HasDefaultValue())
             {
                 var message = string.Format(BlogGlobalization.SaveBlogPost_RegionNotFound_Message, regionIdentifier);
@@ -385,25 +434,16 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// <returns>Layout for blog post.</returns>
         private Layout GetFirstCompatibleLayout()
         {
-            LayoutRegion layoutRegionAlias = null;
-            Region regionAlias = null;
-
-            var compatibleLayouts = UnitOfWork.Session
-               .QueryOver(() => layoutRegionAlias)
-               .Inner.JoinQueryOver(() => layoutRegionAlias.Region, () => regionAlias)
-               .Where(() => !layoutRegionAlias.IsDeleted
-                   && !regionAlias.IsDeleted
-                   && regionAlias.RegionIdentifier == BlogModuleConstants.BlogPostMainContentRegionIdentifier)
-               .Select(select => select.Layout.Id)
-               .Take(1)
-               .List<Guid>();
-            
-            if (compatibleLayouts != null && compatibleLayouts.Count > 0)
-            {
-                return Repository.AsProxy<Layout>(compatibleLayouts[0]);
-            }
-
-            return null;
+            return
+                Repository.AsQueryable<Layout>()
+                          .Where(
+                              layout =>
+                              layout.LayoutRegions.Count(region => !region.IsDeleted && !region.Region.IsDeleted).Equals(1)
+                              || layout.LayoutRegions.Any(region => !region.IsDeleted && !region.Region.IsDeleted && region.Region.RegionIdentifier == regionIdentifier))
+                          .FetchMany(layout => layout.LayoutRegions)
+                          .ThenFetch(l => l.Region)
+                          .ToList()
+                          .FirstOrDefault();
         }
 
         /// <summary>

@@ -3,13 +3,17 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Security;
 
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
+
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels;
+
 using BetterCms.Module.Pages.Services;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
@@ -50,20 +54,29 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
         private readonly IMediaFileUrlResolver fileUrlResolver;
 
         /// <summary>
+        /// The CMS configuration
+        /// </summary>
+        private readonly ICmsConfiguration cmsConfiguration;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GetBlogPostCommand" /> class.
         /// </summary>
         /// <param name="categoryService">The category service.</param>
         /// <param name="authorService">The author service.</param>
         /// <param name="tagService">The tag service.</param>
         /// <param name="contentService">The content service.</param>
+        /// <param name="fileUrlResolver">The file URL resolver.</param>
+        /// <param name="cmsConfiguration">The CMS configuration.</param>
         public GetBlogPostCommand(ICategoryService categoryService, IAuthorService authorService,
-            ITagService tagService, IContentService contentService, IMediaFileUrlResolver fileUrlResolver)
+            ITagService tagService, IContentService contentService, IMediaFileUrlResolver fileUrlResolver,
+            ICmsConfiguration cmsConfiguration)
         {
             this.categoryService = categoryService;
             this.authorService = authorService;
             this.tagService = tagService;
             this.contentService = contentService;
             this.fileUrlResolver = fileUrlResolver;
+            this.cmsConfiguration = cmsConfiguration;
         }
 
         /// <summary>
@@ -78,54 +91,49 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
 
             if (!id.HasDefaultValue())
             {
-                model = Repository.AsQueryable<BlogPost>()
+                var result = Repository.AsQueryable<BlogPost>()
                     .Where(bp => bp.Id == id)
-                    .Select(bp =>
-                        new BlogPostViewModel
-                            {
-                                Id = bp.Id,
-                                Version = bp.Version,
-                                Title = bp.Title,
-                                BlogUrl = bp.PageUrl,
-                                UseCanonicalUrl = bp.UseCanonicalUrl,
-                                IntroText = bp.Description,
-                                AuthorId = bp.Author.Id,
-                                CategoryId = bp.Category.Id,
-                                EnableInsertDynamicRegion = bp.IsMasterPage,
-                                Image = bp.Image == null || bp.Image.IsDeleted ? null :
-                                    new ImageSelectorViewModel
-                                    {
-                                        ImageId = bp.Image.Id,
-                                        ImageVersion = bp.Image.Version,
-                                        ImageUrl = fileUrlResolver.EnsureFullPathUrl(bp.Image.PublicUrl),
-                                        ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(bp.Image.PublicThumbnailUrl),
-                                        ImageTooltip = bp.Image.Caption,
-                                        FolderId = bp.Image.Folder != null ? bp.Image.Folder.Id : (Guid?)null
-                                    }
+                    .Select(bp => new {
+                            AccessRules = bp.AccessRules,
+                            Model = new BlogPostViewModel
+                                {
+                                    Id = bp.Id,
+                                    Version = bp.Version,
+                                    Title = bp.Title,
+                                    BlogUrl = bp.PageUrl,
+                                    UseCanonicalUrl = bp.UseCanonicalUrl,
+                                    IntroText = bp.Description,
+                                    AuthorId = bp.Author.Id,
+                                    CategoryId = bp.Category.Id,
+                                    EnableInsertDynamicRegion = bp.IsMasterPage,
+                                    Image = bp.Image == null || bp.Image.IsDeleted ? null :
+                                        new ImageSelectorViewModel
+                                        {
+                                            ImageId = bp.Image.Id,
+                                            ImageVersion = bp.Image.Version,
+                                            ImageUrl = fileUrlResolver.EnsureFullPathUrl(bp.Image.PublicUrl),
+                                            ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(bp.Image.PublicThumbnailUrl),
+                                            ImageTooltip = bp.Image.Caption,
+                                            FolderId = bp.Image.Folder != null ? bp.Image.Folder.Id : (Guid?)null
+                                        }
+                                }
                             })
+                    .ToList()
                     .FirstOne();
+
+                model = result.Model;
 
                 if (model != null)
                 {
-                    var regionId = UnitOfWork.Session
-                        .QueryOver<Region>()
-                        .Where(r => r.RegionIdentifier == BlogModuleConstants.BlogPostMainContentRegionIdentifier)
-                        .Select(r => r.Id)
-                        .FutureValue<Guid>();
+                    if (cmsConfiguration.Security.AccessControlEnabled)
+                    {
+                        SetIsReadOnly(model, result.AccessRules.Cast<IAccessRule>().ToList());
+                    }
 
-                    PageContent pageContentAlias = null;
-                    BlogPostContent blogPostContentAlias = null;
-
-                    var pageContentId = UnitOfWork.Session
-                        .QueryOver(() => pageContentAlias)
-                        .Inner.JoinAlias(c => c.Content, () => blogPostContentAlias)
-                        .Where(() => pageContentAlias.Page.Id == id
-                            && !pageContentAlias.IsDeleted
-                            && pageContentAlias.Region.Id == regionId.Value)
-                        .OrderBy(() => pageContentAlias.CreatedOn).Asc
-                        .Select(c => c.Id)
-                        .Take(1)
-                        .List<Guid>()
+                    var pageContentId = Repository.AsQueryable<PageContent>()
+                        .Where(pageContent => pageContent.Page.Id == id && !pageContent.Page.IsDeleted)
+                        .OrderBy(pageContent => pageContent.CreatedOn)
+                        .Select(pageContent => pageContent.Id)
                         .FirstOrDefault();
 
                     BlogPostContent content = null;

@@ -11,10 +11,11 @@ using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Mvc.Attributes;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.Blog.ViewModels.Blog
 {
-    public class BlogPostViewModel
+    public class BlogPostViewModel : IAccessSecuredViewModel
     {
         /// <summary>
         /// Gets or sets the blog post id.
@@ -219,6 +220,14 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// <c>true</c> if user confirmed content saving when affecting children pages; otherwise, <c>false</c>.
         /// </value>
         public bool IsUserConfirmed { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether dialog should be opened in the read only mode.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if dialog should be opened in the read only mode; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsReadOnly { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlogPostViewModel" /> class.

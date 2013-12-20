@@ -24,6 +24,8 @@ namespace BetterCms.Module.MediaManager.Models
 
         public virtual IList<MediaTag> MediaTags { get; set; }
 
+        public virtual IList<Media> History { get; set; }
+
         public virtual MediaImage Image { get; set; }
 
         public virtual string Description { get; set; }

@@ -23,4 +23,5 @@ CKEDITOR.editorConfig = function (config) {
     config.disableNativeSpellChecker = false;
     config.allowedContent = true;
     config.extraAllowedContent = 'div[class]';
+    config.autoParagraph = false;
 };

@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
+using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
+
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.MediaManager;
+
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 
@@ -158,7 +161,22 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             if (!string.IsNullOrWhiteSpace(request.SearchQuery))
             {               
                 var searchQuery = string.Format("%{0}%", request.SearchQuery);
-                query = query.Where(m => m.Title.Contains(searchQuery) || m.Description.Contains(searchQuery) || m.MediaTags.Any(mt => mt.Tag.Name.Contains(searchQuery)));
+
+                var predicate = PredicateBuilder.False<Media>();
+                predicate = predicate.Or(m => m.Title.Contains(searchQuery));
+                predicate = predicate.Or(m => m.Description.Contains(searchQuery));
+                predicate = predicate.Or(m => m.MediaTags.Any(mt => mt.Tag.Name.Contains(searchQuery)));
+                predicate = AppendSearchFilter(predicate, searchQuery);
+
+                if (request.SearchInHistory)
+                {
+                    query = query.Where(m => m.History.AsQueryable().Any(predicate));
+                }
+                else
+                {
+                    query = query.Where(predicate);
+                }
+
                 query = query.Fetch(f => f.Folder);
 
                 var mediaList = query.ToList();
@@ -188,6 +206,11 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             return removeEmptyFolders
                 ? RemoveEmptyFolders(query, request)
                 : ToResponse(request, query, true);
+        }
+
+        protected virtual Expression<Func<Media, bool>> AppendSearchFilter(Expression<Func<Media, bool>> searchFilter, string searchQuery)
+        {
+            return searchFilter;
         }
 
         private IQueryable<Media> AttachDeniedMediasFilterIfEnabled(IQueryable<Media> query, MediaManagerViewModel request)

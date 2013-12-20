@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq.Expressions;
+
+using BetterCms.Core.DataAccess;
 
 using BetterCms.Module.MediaManager.Command.MediaManager;
 using BetterCms.Module.MediaManager.Helpers;
@@ -46,6 +49,22 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImages
             }
 
             throw new InvalidOperationException("Cannot convert image media to image view model. Wrong entity passed.");
+        }
+
+        /// <summary>
+        /// Appends the search filter.
+        /// </summary>
+        /// <param name="searchFilter">The search filter.</param>
+        /// <param name="searchQuery">The search query.</param>
+        /// <returns>
+        /// Appended search filter
+        /// </returns>
+        protected override Expression<Func<Media, bool>> AppendSearchFilter(Expression<Func<Media, bool>> searchFilter, string searchQuery)
+        {
+            return searchFilter.Or(m => (m is MediaImage
+                && ((MediaImage)m).PublicUrl.Contains(searchQuery)
+                    || ((MediaImage)m).Caption.Contains(searchQuery))
+                    );
         }
     }
 }

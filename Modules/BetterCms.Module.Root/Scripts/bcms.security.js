@@ -98,56 +98,6 @@ bettercms.define('bcms.security', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', '
         this.IsForRole = ko.observable(item.IsForRole);
     }
 
-    function XXX_AccessControlViewModel(identities, isRole, addMode, autoCompleteUrl) {
-        var self = this;
-        self.identities = identities;
-        self.newName = ko.observable('').extend({ uniqueAccessRuleIdentity: { identities: identities, isRole: isRole } });
-        self.isInAddMode = addMode;
-        self.hasAddNameFocus = ko.observable(false);
-        
-        self.clearNewInput = function() {
-            self.isInAddMode('none');
-        };
-        self.gotoAddNew = function() {
-            if (self.isInAddMode() === (isRole ? 'role' : 'user') && !!self.newName()) {
-                self.addNew();
-            } else {
-                self.hasAddNameFocus(false);
-                self.isInAddMode(self.isInAddMode() === (isRole ? 'role' : 'user') ? 'none' : (isRole ? 'role' : 'user'));
-                self.newName('');
-
-                setTimeout(function() {
-                    self.hasAddNameFocus(true);
-                }, 50);
-            }
-        };
-        self.addNew = function() {
-            var name = self.newName();
-            if (!name || self.newName.hasError()) {
-                return;
-            }
-
-            self.identities.push(new UserAccessViewModel({ Identity: name, IsForRole: isRole }));
-            self.newName('');
-            self.isInAddMode('none');
-            self.hasAddNameFocus(false);
-        };
-                
-        self.serviceUrl = autoCompleteUrl;
-//        self.newItem = function(value) {
-//            // TODO
-//        };
-//        self.addItemWithId = function(value, data) {
-//            self.gotoAddNew();
-//        };
-//        self.addItem = function() {
-//            // TODO
-//        };
-//        self.clearItem = function() {
-//            // TODO
-//        };
-    }
-
     var AccessControlViewModel = (function (_super) {
         bcms.extendsClass(AccessControlViewModel, _super);
 

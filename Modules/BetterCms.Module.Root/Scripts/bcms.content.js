@@ -371,9 +371,10 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             regionViewModel.sortBlock.sortable({
                 connectWith: '.bcms-sorting-block',
                 dropOnEmpty: true,
-                placeholder: "bcms-sort-wrapper-placeholder"
+                placeholder: "bcms-sort-wrapper-placeholder",
+                tolerance: "intersect"
             });
-            
+
             regionViewModel.overlay.addClass(classes.regionSortOverlay);
         });
         

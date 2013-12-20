@@ -4,26 +4,35 @@ using System.Linq;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.ViewModels.Autocomplete;
 
 namespace BetterCms.Module.Root.Commands.Tag.SearchTags
 {
     /// <summary>
     /// A command to get tag list by filter.
     /// </summary>
-    public class SearchTagsCommand : CommandBase, ICommand<string, List<LookupKeyValue>>
+    public class SearchTagsCommand : CommandBase, ICommand<SuggestionViewModel, List<LookupKeyValue>>
     {
         /// <summary>
         /// Executes this command.
         /// </summary>
-        /// <param name="request">A filter to search for specific tags.</param>
-        /// <returns>A list of tags.</returns>
-        public List<LookupKeyValue> Execute(string request)
+        /// <param name="model">The model.</param>
+        /// <returns>
+        /// A list of tags.
+        /// </returns>
+        public List<LookupKeyValue> Execute(SuggestionViewModel model)
         {
-            return Repository.AsQueryable<Models.Tag>()
-                      .Where(tag => tag.Name.Contains(request))
-                      .OrderBy(tag => tag.Name)
-                      .Select(tag => new LookupKeyValue() { Key = tag.Id.ToString(), Value = tag.Name })
-                      .ToList();
+            var query = Repository.AsQueryable<Models.Tag>()
+                .Where(tag => tag.Name.Contains(model.Query));
+
+            if (model.ExistingItemsArray.Length > 0)
+            {
+                query = query.Where(tag => !model.ExistingItems.Contains(tag.Name));
+            }
+
+            return query.OrderBy(tag => tag.Name)
+                .Select(tag => new LookupKeyValue { Key = tag.Id.ToString(), Value = tag.Name })
+                .ToList();
         }
     }
 }

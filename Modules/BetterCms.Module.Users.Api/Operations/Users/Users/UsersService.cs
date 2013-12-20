@@ -13,6 +13,8 @@ using BetterCms.Module.MediaManager.Services;
 using ServiceStack.OrmLite;
 using ServiceStack.ServiceInterface;
 
+using PredicateBuilder = ServiceStack.OrmLite.PredicateBuilder;
+
 namespace BetterCms.Module.Users.Api.Operations.Users.Users
 {
     public class UsersService : Service, IUsersService
@@ -88,11 +90,11 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users
                         Expression<Func<Models.User, bool>> whereClause = user => user.UserRoles.Any(userRole => userRole.Role.Name == roleName && !userRole.Role.IsDeleted);
                         if (model.FilterByRolesConnector == FilterConnector.Or)
                         {
-                            predicate = predicate.Or(whereClause);
+                            predicate = PredicateBuilder.Or(predicate, whereClause);
                         }
                         else
                         {
-                            predicate = predicate.And(whereClause);
+                            predicate = PredicateBuilder.And(predicate, whereClause);
                         }
                     }
                 }

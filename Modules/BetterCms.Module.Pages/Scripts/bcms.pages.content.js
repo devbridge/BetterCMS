@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content', 'bcms.pages.widgets', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery', 'bcms.redirect', 'bcms.pages.history', 'bcms.security', 'bcms.codeEditor'],
-    function ($, bcms, modal, content, widgets, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, editor, slides, redirect, history, security, codeEditor) {
+bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.content', 'bcms.pages.widgets', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery', 'bcms.redirect', 'bcms.pages.history', 'bcms.security', 'bcms.codeEditor', 'bcms.forms'],
+    function ($, bcms, modal, content, widgets, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, editor, slides, redirect, history, security, codeEditor, forms) {
         'use strict';
 
         var pagesContent = {},
@@ -42,11 +42,14 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 customCssContainer: '#bcms-custom-css-container',
                 aceEditorContainer: '.bcms-editor-field-area-container:first',
                 
-                editInSourceModeHiddenField: '#bcms-edit-in-source-mode'
+                editInSourceModeHiddenField: '#bcms-edit-in-source-mode',
+                firstForm: 'form:first',
+                datePickers: 'input.bcms-datepicker'
             },
             classes = {
                 sliderPrev: 'bcms-slider-prev',
-                sliderNext: 'bcms-slider-next'
+                sliderNext: 'bcms-slider-next',
+                inactive: 'bcms-inactive'
             },
             links = {
                 loadWidgetsUrl: null,
@@ -244,9 +247,12 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Initializes content edit dialog form.
         */
         pagesContent.initializeEditContentForm = function (dialog, editInSourceMode, enableInsertDynamicRegion) {
-            dialog.container.find(selectors.dataPickers).initializeDatepicker();
+            var canEdit = security.IsAuthorized(["BcmsEditContent"]),
+                canPublish = security.IsAuthorized(["BcmsPublishContent"]),
+                form = dialog.container.find(selectors.firstForm);
 
             htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
+
             if (editInSourceMode) {
                 htmlEditor.setSourceMode(selectors.htmlEditor);
             }
@@ -270,6 +276,22 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     });
                 });
             });
+            
+            // User with only BcmsPublishContent but without BcmsEditContent can only publish and change publish dates
+            if (form.data('readonly') !== true && canPublish && !canEdit) {
+                form.addClass(classes.inactive);
+                forms.setFieldsReadOnly(form);
+
+                // Enable date pickers for editing
+                $.each(form.find(selectors.datePickers), function () {
+                    var self = $(this);
+
+                    self.removeAttr('readonly');
+                    self.parent('div').css('z-index', bcms.getHighestZindex() + 1);
+                });
+            }
+
+            dialog.container.find(selectors.dataPickers).initializeDatepicker();
         };
 
          /**

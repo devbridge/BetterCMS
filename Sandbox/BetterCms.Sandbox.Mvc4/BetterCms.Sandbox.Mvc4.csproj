@@ -252,6 +252,7 @@
     <Folder Include="Areas\bcms-images-gallery\" />
     <Folder Include="Areas\bcms-media\Views\" />
     <Folder Include="Areas\bcms-root\Views\Shared\" />
+    <Folder Include="file\bcms-blog\scripts\" />
     <Folder Include="file\bcms-images-gallery\scripts\" />
     <Folder Include="file\bcms-media\scripts\" />
     <Folder Include="file\bcms-pages\scripts\" />

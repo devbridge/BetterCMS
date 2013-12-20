@@ -12,6 +12,8 @@ namespace BetterCms.Module.MediaManager.ViewModels.MediaManager
         
         public bool IncludeArchivedItems { get; set; }
 
+        public bool SearchInHistory { get; set; }
+
         public List<LookupKeyValue> Tags { get; set; }
 
         public MediaManagerViewModel()

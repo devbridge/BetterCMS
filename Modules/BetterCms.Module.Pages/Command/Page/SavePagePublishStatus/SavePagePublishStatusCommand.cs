@@ -51,6 +51,11 @@ namespace BetterCms.Module.Pages.Command.Page.SavePagePublishStatus
 
             if (page != null)
             {
+                if (page.IsMasterPage)
+                {
+                    return false;
+                }
+
                 var initialStatus = page.Status;
 
                 if (page.Status == PageStatus.Draft || page.Status == PageStatus.Preview)

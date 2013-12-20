@@ -60,9 +60,6 @@
     <Reference Include="Autofac.Configuration">
       <HintPath>..\..\packages\Autofac.3.0.0\lib\net40\Autofac.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="BetterCms.Module.Pages">
-      <HintPath>..\..\Tests\BetterCms.Modules.Tests\bin\Debug\BetterCms.Module.Pages.dll</HintPath>
-    </Reference>
     <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
@@ -315,6 +312,7 @@
     <Compile Include="Services\IRenderingService.cs" />
     <Compile Include="Services\IUserProfileUrlResolver.cs" />
     <Compile Include="ViewModels\Authentication\InfoViewModel.cs" />
+    <Compile Include="ViewModels\Autocomplete\SuggestionViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryItemViewModel.cs" />
     <Compile Include="ViewModels\Cms\CmsRequestViewModel.cs" />
     <Compile Include="ViewModels\Cms\PageRegionViewModel.cs" />
@@ -1065,10 +1063,7 @@
     </Content>
     <EmbeddedResource Include="Views\Cms\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\Entity\" />
-    <Folder Include="Data\Map\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
       <Project>{DA2B225E-6AEE-4465-8B08-4D5B1C1CED49}</Project>
