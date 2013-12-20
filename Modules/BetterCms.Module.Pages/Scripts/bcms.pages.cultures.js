@@ -12,7 +12,8 @@
                 suggestUntranslatedPagesUrl: null
             },
             globalization = {
-                unassignTranslationConfirmation: null
+                unassignTranslationConfirmation: null,
+                invariantCulture: null
             };
         
         /**
@@ -237,7 +238,7 @@
                     if (culture.key != currentCultureId && (selectedCultureId == culture.key || !selectedCultureId)) {
                         cult.push({
                             key: culture.key || '-',
-                            value: culture.value
+                            value: culture.value || globalization.invariantCulture
                         });
                     }
                 }
@@ -264,7 +265,7 @@
                                     viewModel.title(self.addPageTitle());
                                     viewModel.url(self.pageUrl);
                                     viewModel.cultureId(currentCultureId);
-                                    viewModel.cultureName(culture.value);
+                                    viewModel.cultureName(culture.value || globalization.invariantCulture);
 
                                     closeAddMode();
                                 }
@@ -324,7 +325,7 @@
                         viewModel.id(translation.Id);
                         viewModel.title(translation.Title);
                         viewModel.url(translation.PageUrl);
-                        viewModel.cultureName(culture.value);
+                        viewModel.cultureName(culture.value || globalization.invariantCulture);
                         viewModel.cultureId(culture.key);
 
                         self.items.push(viewModel);
@@ -348,7 +349,7 @@
             self.id = ko.observable(translation ? translation.Id : '');
             self.title = ko.observable(translation ? translation.Title : '');
             self.url = ko.observable(translation ? translation.PageUrl : '');
-            self.cultureName = ko.observable(culture ? culture.value : '');
+            self.cultureName = ko.observable(culture ? culture.value || globalization.invariantCulture : '');
             self.cultureId = ko.observable(culture ? culture.key : '');
 
             self.getPropertyIndexer = function (i, propName) {

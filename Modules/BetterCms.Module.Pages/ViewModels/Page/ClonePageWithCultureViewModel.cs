@@ -16,7 +16,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// The culture id.
         /// </value>
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "ClonePageWithCulture_Culture_RequiredMessage")]
-        public Guid CultureId { get; set; }
+        public Guid? CultureId { get; set; }
 
         /// <summary>
         /// Gets or sets the list of cultures.

@@ -655,6 +655,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invariant culture.
+        /// </summary>
+        public static string InvariantCulture_Title {
+            get {
+                return ResourceManager.GetString("InvariantCulture_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sorry, looks like &lt;b&gt;JavaScript is disabled&lt;/b&gt; in your browser. For full web experience.
         /// </summary>
         public static string JavascriptSupport_MustBeEnabled_Message_FirstLine {

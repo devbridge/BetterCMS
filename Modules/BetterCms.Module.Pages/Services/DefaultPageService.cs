@@ -243,7 +243,6 @@ namespace BetterCms.Module.Pages.Services
                 .Select(p => new PageTranslationViewModel
                 {
                     Id = p.Id,
-                    CultureGroupIdentifier = p.CultureGroupIdentifier,
                     Title = p.Title,
                     PageUrl = p.PageUrl,
                     CultureId = p.Culture.Id

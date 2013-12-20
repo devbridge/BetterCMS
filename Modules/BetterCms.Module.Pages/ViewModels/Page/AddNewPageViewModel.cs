@@ -78,14 +78,6 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public Guid? CultureId { get; set; }
 
         /// <summary>
-        /// Gets or sets the main culture page id.
-        /// </summary>
-        /// <value>
-        /// The main culture page id.
-        /// </value>
-        public Guid? CultureGroupIdentifier { get; set; }
-
-        /// <summary>
         /// Gets or sets the list of cultures.
         /// </summary>
         /// <value>

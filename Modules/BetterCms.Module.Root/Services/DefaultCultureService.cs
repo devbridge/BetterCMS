@@ -2,6 +2,7 @@
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
+using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 
 using NHibernate.Linq;
@@ -41,6 +42,17 @@ namespace BetterCms.Module.Root.Services
                                      Value = c.Name
                                  })
                 .ToFuture();
+        }
+
+        /// <summary>
+        /// Gets the invariant culture model.
+        /// </summary>
+        /// <returns>
+        /// Invariant culture model
+        /// </returns>
+        public LookupKeyValue GetInvariantCultureModel()
+        {
+            return new LookupKeyValue(System.Guid.Empty.ToString(), RootGlobalization.InvariantCulture_Title);
         }
     }
 }

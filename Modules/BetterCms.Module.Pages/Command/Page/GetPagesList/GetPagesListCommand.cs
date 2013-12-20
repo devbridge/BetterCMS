@@ -191,7 +191,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
             if (culturesFuture != null)
             {
                 model.Cultures = culturesFuture.ToList();
-                model.Cultures.Insert(0, new LookupKeyValue(Guid.Empty.ToString(), PagesGlobalization.InvariantCulture_Title));
+                model.Cultures.Insert(0, cultureService.GetInvariantCultureModel());
             }
 
             return model;

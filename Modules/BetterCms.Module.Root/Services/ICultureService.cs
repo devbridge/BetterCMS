@@ -11,5 +11,11 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <returns>List of culture lookup values.</returns>
         IEnumerable<LookupKeyValue> GetCultures();
+
+        /// <summary>
+        /// Gets the invariant culture model.
+        /// </summary>
+        /// <returns>Invariant culture model</returns>
+        LookupKeyValue GetInvariantCultureModel();
     }
 }

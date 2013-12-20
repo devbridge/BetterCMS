@@ -4,6 +4,8 @@ using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Controllers;
 
+using BetterCms.Module.Root.Content.Resources;
+
 namespace BetterCms.Module.Pages.Registration
 {
     /// <summary>
@@ -25,7 +27,8 @@ namespace BetterCms.Module.Pages.Registration
 
             Globalization = new IActionProjection[]
                 {
-                    new JavaScriptModuleGlobalization(this, "unassignTranslationConfirmation", () => PagesGlobalization.EditPageTranslations_UnassignTranslation_ConfirmationMessage)
+                    new JavaScriptModuleGlobalization(this, "unassignTranslationConfirmation", () => PagesGlobalization.EditPageTranslations_UnassignTranslation_ConfirmationMessage),
+                    new JavaScriptModuleGlobalization(this, "invariantCulture", () => RootGlobalization.InvariantCulture_Title)
                 };
         }
     }

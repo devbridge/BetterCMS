@@ -42,7 +42,7 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePageWithCulture
                 cultureGroupIdentifier = System.Guid.NewGuid();
             }
 
-            var cultureId = request.CultureId.HasDefaultValue() ? (System.Guid?)null : request.CultureId;
+            var cultureId = !request.CultureId.HasValue || request.CultureId.Value.HasDefaultValue() ? null : request.CultureId;
 
             var newPage = cloneService.ClonePageWithCulture(request.PageId, request.PageTitle, 
                 request.PageUrl, request.UserAccessList, cultureId, cultureGroupIdentifier.Value);

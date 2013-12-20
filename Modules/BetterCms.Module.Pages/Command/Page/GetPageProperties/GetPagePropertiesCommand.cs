@@ -8,7 +8,7 @@ using BetterCms.Core.Security;
 
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels;
-
+using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
@@ -127,7 +127,6 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                               MasterPageId = page.MasterPage.Id,
                               CategoryId = page.Category.Id,
                               CultureId = page.Culture.Id,
-                              CultureGroupIdentifier = page.CultureGroupIdentifier,
                               AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled,
                               Image = page.Image == null || page.Image.IsDeleted ? null :
                                   new ImageSelectorViewModel
@@ -159,7 +158,8 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                                               ImageTooltip = page.FeaturedImage.Caption,
                                               FolderId = page.FeaturedImage.Folder != null ? page.FeaturedImage.Folder.Id : (Guid?)null
                                           }
-                          }
+                          },
+                        CultureGroupIdentifier = page.CultureGroupIdentifier
                     })
                 .ToFuture();
 
@@ -204,9 +204,9 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 {
                     model.Model.Cultures = culturesFuture.ToList();
                 }
-                if (cmsConfiguration.EnableMultilanguage && model.Model.CultureGroupIdentifier.HasValue)
+                if (cmsConfiguration.EnableMultilanguage && model.CultureGroupIdentifier.HasValue)
                 {
-                    model.Model.Translations = pageService.GetPageTranslations(model.Model.CultureGroupIdentifier.Value).ToList();
+                    model.Model.Translations = pageService.GetPageTranslations(model.CultureGroupIdentifier.Value).ToList();
                 }
 
                 // Get layout options, page options and merge them

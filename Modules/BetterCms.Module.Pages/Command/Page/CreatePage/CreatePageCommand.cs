@@ -133,10 +133,6 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
                 {
                     page.Culture = Repository.AsProxy<Culture>(request.CultureId.Value);
                 }
-                if (request.CultureGroupIdentifier.HasValue)
-                {
-                    page.CultureGroupIdentifier = request.CultureGroupIdentifier.Value;
-                }
             }
 
             optionService.SaveOptionValues(request.OptionValues, null, () => new PageOption { Page = page });

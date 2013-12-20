@@ -130,7 +130,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageForCloningWithCulture
 
             if (pageCultureId.HasValue && !existingCultures.Contains(null))
             {
-                cultures.Insert(0, new LookupKeyValue(System.Guid.Empty.ToString().ToLowerInvariant(), PagesGlobalization.InvariantCulture_Title));
+                cultures.Insert(0, cultureService.GetInvariantCultureModel());
             }
         }
     }

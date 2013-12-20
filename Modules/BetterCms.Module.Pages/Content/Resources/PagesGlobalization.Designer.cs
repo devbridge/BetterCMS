@@ -2185,15 +2185,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invariant culture.
-        /// </summary>
-        public static string InvariantCulture_Title {
-            get {
-                return ResourceManager.GetString("InvariantCulture_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to This page is a master page..
         /// </summary>
         public static string MasterPage_InfoMessage {

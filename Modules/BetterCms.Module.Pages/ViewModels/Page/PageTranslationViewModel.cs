@@ -11,14 +11,6 @@
         public virtual System.Guid Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the culture group identifier.
-        /// </summary>
-        /// <value>
-        /// The culture group identifier.
-        /// </value>
-        public virtual System.Guid? CultureGroupIdentifier { get; set; }
-
-        /// <summary>
         /// Gets or sets the page title.
         /// </summary>
         /// <value>
@@ -50,8 +42,8 @@
         /// </returns>
         public override string ToString()
         {
-            return string.Format("{0}, Id: {1}, Title: {2}, PageUrl: {3}, CultureId: {4}, CultureGroupIdentifier: {5}", 
-                base.ToString(), Id, Title, PageUrl, CultureId, CultureGroupIdentifier);
+            return string.Format("{0}, Id: {1}, Title: {2}, PageUrl: {3}, CultureId: {4}", 
+                base.ToString(), Id, Title, PageUrl, CultureId);
         }
     }
 }

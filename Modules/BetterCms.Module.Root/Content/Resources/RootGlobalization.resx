@@ -576,4 +576,7 @@
   <data name="DeleteCultureCommand_PagesAreUsingCulture_Message" xml:space="preserve">
     <value>Cannot delete culture {0}, because it's used in pages.</value>
   </data>
+  <data name="InvariantCulture_Title" xml:space="preserve">
+    <value>Invariant culture</value>
+  </data>
 </root>
