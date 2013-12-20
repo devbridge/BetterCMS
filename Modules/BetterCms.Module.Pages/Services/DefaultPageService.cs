@@ -6,7 +6,6 @@ using System.Web;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Exceptions.Mvc;
-using BetterCms.Core.Exceptions.Service;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Services;
 using BetterCms.Core.Web;
@@ -65,6 +64,8 @@ namespace BetterCms.Module.Pages.Services
                 return temporaryPageCache[trimmed];
             }
 
+            // NOTE: if GetPageQuery() and CachePage() is used properly below code should not be executed.
+            var inSitemapFuture = repository.AsQueryable<SitemapNode>().Where(node => node.UrlHash == trimmed).Select(node => node.Id).ToFuture();
             var page = repository
                 .AsQueryable<PageProperties>(p => p.PageUrlHash == trimmed)
                 .Fetch(p => p.Layout)
@@ -72,36 +73,25 @@ namespace BetterCms.Module.Pages.Services
 
             if (page != null)
             {
+                page.IsInSitemap = inSitemapFuture.Any() || repository.AsQueryable<SitemapNode>().Any(node => node.Page.Id == page.Id);
                 temporaryPageCache.Add(trimmed, page);
             }
 
             return page;
         }
-        
-        /// <summary>
-        /// Gets a page by id.
-        /// </summary>
-        /// <param name="id">The id.</param>
-        /// <param name="loadFull">if set to <c>true</c> load full entity with childs.</param>
-        /// <returns>
-        /// A page object.
-        /// </returns>
-        public Page GetPageById(Guid id, bool loadFull = false)
-        {
-            try
-            {
-                var query = repository.AsQueryable<PageProperties>(x => x.Id == id);
-                var page = query.First();
-                if (loadFull)
-                {
-                    page.PageTags = repository.AsQueryable<PageTag>(x => x.Page == page).Fetch(x => x.Tag).ToList();
-                }
 
-                return page;
-            }
-            catch (Exception inner)
+        public IQueryable<IPage> GetPageQuery(Guid? pageId, string pageUrl)
+        {
+            return repository.AsQueryable<PageProperties>();
+        }
+
+        public void CachePage(IPage page)
+        {
+            var pageProperties = page as PageProperties;
+            if (pageProperties != null)
             {
-                throw new PageException(string.Format("Failed to get page by Id: {0}.", id), inner);
+                pageProperties.IsInSitemap = repository.AsQueryable<SitemapNode>().Any(node => node.Page.Id == pageProperties.Id || node.UrlHash == pageProperties.PageUrlHash);
+                temporaryPageCache.Add(pageProperties.PageUrlHash, pageProperties);
             }
         }
 

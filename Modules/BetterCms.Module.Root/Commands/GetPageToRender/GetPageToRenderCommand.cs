@@ -274,7 +274,8 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         /// <returns>Page entity</returns>
         private Page GetPage(GetPageToRenderRequest request)
         {
-            IQueryable<Page> query = Repository.AsQueryable<Page>().Where(f => !f.IsDeleted);
+            IQueryable<Page> query = (IQueryable<Page>)pageAccessor.GetPageQuery(request.PageId, request.PageUrl);
+            query = query.Where(f => !f.IsDeleted);
 
             if (request.PageId == null)
             {
@@ -329,7 +330,10 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 query = query.FetchMany(f => f.AccessRules);
             }
 
-            return query.ToList().FirstOrDefault();
+            var page = query.ToList().FirstOrDefault();
+            pageAccessor.CachePage(page);
+
+            return page;
         }
 
         /// <summary>
