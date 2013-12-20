@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Web;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
@@ -52,7 +53,10 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFiles
         /// </returns>
         protected override Expression<Func<Media, bool>> AppendSearchFilter(Expression<Func<Media, bool>> searchFilter, string searchQuery)
         {
-            return searchFilter.Or(m => (m is MediaFile && ((MediaFile)m).PublicUrl.Contains(searchQuery)));
+            var searcQueryDecoded = HttpUtility.UrlDecode(searchQuery);
+
+            return searchFilter.Or(m => (m is MediaFile
+                && (((MediaFile)m).PublicUrl.Contains(searchQuery)) || ((MediaFile)m).PublicUrl.Contains(searcQueryDecoded)));
         }
     }
 }
