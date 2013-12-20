@@ -599,6 +599,7 @@ div.bcms-nomedia-data {
         position: absolute;
         left: 55px;
         bottom: 10px;
+        cursor: pointer;
     }
 
 .bcms-media-content-message {
@@ -1061,6 +1062,7 @@ input.bcms-grid-input:focus {
 
     .bcms-list .bcms-folder-box .bcms-media-items-block {
         display: inline-block;
+        width: 540px;
         min-width: 480px;
         padding: 10px 15px;
         border-left: 1px solid #e3e3e3;

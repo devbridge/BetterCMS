@@ -336,7 +336,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         };
 
         self.showNoDataInfoDiv = function () {
-            return (self.isRootFolder() && self.medias().length == 0) || self.isSearchResults();
+            return ((self.isRootFolder() || self.isSearchResults()) && self.medias().length == 0);
         };
 
         self.isSearchResults = ko.observable(false);
