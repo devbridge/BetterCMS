@@ -22,7 +22,8 @@ namespace BetterCms.Module.Pages.Registration
         {
             Links = new IActionProjection[]
                 {
-                    new JavaScriptModuleLinkTo<PageController>(this, "suggestUntranslatedPagesUrl", c => c.SuggestUntranslatedPages(null))
+                    new JavaScriptModuleLinkTo<PageController>(this, "suggestUntranslatedPagesUrl", c => c.SuggestUntranslatedPages(null)),
+                    new JavaScriptModuleLinkTo<PageController>(this, "searchUntranslatedPagesUrl", c => c.SearchUntranslatedPages(null))
                 };
 
             Globalization = new IActionProjection[]

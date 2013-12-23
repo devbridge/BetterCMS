@@ -559,6 +559,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                     page.siteSettingsSetBooleanTemplate(newRow.find(selectors.siteSettingPageHasSeoCell), data.Data.HasSEO);
                     
                     newRow.find(selectors.siteSettingPageTitleCell).data('url', data.Data.PageUrl);
+                    newRow.find(selectors.siteSettingPageTitleCell).data('cultureId', data.Data.CultureId);
                     newRow.find(selectors.siteSettingsPageEditButton).data('id', data.Data.PageId);
                     newRow.find(selectors.siteSettingsPageDeleteButton).data('id', data.Data.PageId);
                     newRow.find(selectors.siteSettingsPageDeleteButton).data('version', data.Data.Version);
@@ -759,13 +760,14 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             opts = $.extend({
                 onAccept: function () { return true; },
                 onClose: function () { return true; },
-                params: ''
+                url: links.loadSelectPageUrl,
+                params: {}
             }, opts);
 
-            var url = opts.params 
-                    ? (links.loadSelectPageUrl.indexOf('?') > 0
-                        ? links.loadSelectPageUrl + '&' + opts.params
-                        : links.loadSelectPageUrl + '?' + opts.params)
+            var url = opts.params
+                    ? (opts.url.indexOf('?') > 0
+                        ? opts.url + '&' + $.param(opts.params)
+                        : opts.url + '?' + $.param(opts.params))
                     : links.loadSelectPageUrl,
                 selectDialog = modal.open({
                 title: globalization.selectPageDialogTitle,

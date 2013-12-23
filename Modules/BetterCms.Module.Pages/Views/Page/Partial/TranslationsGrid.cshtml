@@ -30,7 +30,7 @@
                     <!-- ko if: isInAddMode() -->
                     
                     <input type="text" data-bind="value: addPageTitle, autocomplete: 'onlyExisting', hasfocus: hasFocus, enterPress: addTranslation, escPress: clickPlus" />
-                    @* TODO: remove : <div class="bcms-btn-small" data-bind="click: selectPage">...</div>*@
+                    <div class="bcms-btn-small" data-bind="click: selectPage">...</div>
 
                     <!-- ko if: addPageId() -->
                     <select data-bind="options: addingPageCultures, optionsText: 'value', optionsValue: 'key', value: addCultureId"></select>

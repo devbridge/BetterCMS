@@ -9,7 +9,8 @@
                 
             },
             links = {
-                suggestUntranslatedPagesUrl: null
+                suggestUntranslatedPagesUrl: null,
+                searchUntranslatedPagesUrl: null
             },
             globalization = {
                 unassignTranslationConfirmation: null,
@@ -46,7 +47,7 @@
                 var params = _super.prototype.getAdditionalParameters.call(this);
 
                 if ($.isFunction(this.onAppendWithIncludedIds)) {
-                    this.onAppendWithIncludedIds(params);
+                    params = this.onAppendWithIncludedIds(params);
                 }
 
                 return params;
@@ -125,8 +126,9 @@
                 return ids;
             }
 
-            function setAdditionalParameters(params) {
-                var include = '',
+            function getAdditionalParameters() {
+                var params = {},
+                    include = '',
                     exclude = bcms.pageId,
                     il = self.originalItems.length,
                     jl = self.items().length,
@@ -155,6 +157,12 @@
                 params.ExcplicitlyIncludedPages = include;
                 params.ExistingItems = exclude;
                 params.ExcludedCultureId = self.culture.cultureId();
+
+                return params;
+            }
+
+            function setAdditionalParameters(params) {
+                return $.extend(getAdditionalParameters(), params);
             };
 
             function onCultureChange(newValue) {
@@ -203,13 +211,15 @@
                 }
             };
 
-//            self.selectPage = function() {
-//                pageCultures.openPageSelectDialog({
-//                    onAccept: function (selectedPage) {
-//                        onSelectPage(selectedPage.Id, selectedPage.CultureId, selectedPage.Title, selectedPage.PageUrl);
-//                    }
-//                });
-//            };
+            self.selectPage = function() {
+                pageCultures.openPageSelectDialog({
+                    onAccept: function (selectedPage) {
+                        onSelectPage(selectedPage.Id, selectedPage.CultureId, selectedPage.Title, selectedPage.PageUrl);
+                    },
+                    params: getAdditionalParameters(),
+                    url: links.searchUntranslatedPagesUrl
+                });
+            };
 
             self.unassignPage = function (item) {
                 modal.confirm({

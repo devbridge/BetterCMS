@@ -131,6 +131,7 @@
     <Compile Include="Command\Page\ClonePageWithCulture\ClonePageWithCultureCommand.cs" />
     <Compile Include="Command\Page\GetPageForCloningWithCulture\GetPageForCloningWithCultureCommandRequest.cs" />
     <Compile Include="Command\Page\GetPageForCloningWithCulture\GetPageForCloningWithCultureCommand.cs" />
+    <Compile Include="Command\Page\GetUntranslatedPagesList\GetUntranslatedPagesListCommand.cs" />
     <Compile Include="Command\Page\SuggestPages\SuggestPagesCommand.cs" />
     <Compile Include="Command\Widget\PreviewWidget\PreviewWidgetCommand.cs" />
     <Compile Include="Command\Widget\PreviewWidget\PreviewWidgetCommandRequest.cs" />
@@ -299,6 +300,7 @@
     <Compile Include="ViewModels\Content\PageContentSortViewModel.cs" />
     <Compile Include="ViewModels\Filter\PagesGridViewModel.cs" />
     <Compile Include="ViewModels\Filter\PagesFilter.cs" />
+    <Compile Include="ViewModels\Filter\UntranslatedPagesFilter.cs" />
     <Compile Include="ViewModels\History\ContentHistoryItem.cs" />
     <Compile Include="ViewModels\History\ContentHistoryViewModel.cs" />
     <Compile Include="ViewModels\Page\ClonePageWithCultureViewModel.cs" />

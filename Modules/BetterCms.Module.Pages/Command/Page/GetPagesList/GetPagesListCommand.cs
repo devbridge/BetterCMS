@@ -4,8 +4,6 @@ using System.Linq;
 
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
-using BetterCms.Core.Security;
-using BetterCms.Core.Services;
 
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -32,10 +30,6 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
 
         private readonly ICultureService cultureService;
 
-        private readonly IAccessControlService accessControlService;
-
-        private readonly ISecurityService securityService;
-
         private readonly ICmsConfiguration configuration;
         
         private readonly IPageService pageService;
@@ -44,17 +38,12 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
         /// Initializes a new instance of the <see cref="GetPagesListCommand" /> class.
         /// </summary>
         /// <param name="categoryService">The category service.</param>
-        /// <param name="accessControlService">The access control service.</param>
-        /// <param name="securityService">The security service.</param>
         /// <param name="configuration">The configuration.</param>
         /// <param name="cultureService">The culture service.</param>
         /// <param name="pageService">The page service.</param>
-        public GetPagesListCommand(ICategoryService categoryService, IAccessControlService accessControlService, ISecurityService securityService,
-                                   ICmsConfiguration configuration, ICultureService cultureService, IPageService pageService)
+        public GetPagesListCommand(ICategoryService categoryService, ICmsConfiguration configuration, ICultureService cultureService, IPageService pageService)
         {
             this.configuration = configuration;
-            this.securityService = securityService;
-            this.accessControlService = accessControlService;
             this.categoryService = categoryService;
             this.cultureService = cultureService;
             this.pageService = pageService;
@@ -65,7 +54,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>Result model.</returns>
-        public PagesGridViewModel<SiteSettingPageViewModel> Execute(PagesFilter request)
+        public virtual PagesGridViewModel<SiteSettingPageViewModel> Execute(PagesFilter request)
         {
             request.SetDefaultSortingOptions("Title");
 
@@ -76,56 +65,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
                 .QueryOver(() => alias)
                 .Where(() => !alias.IsDeleted && alias.Status != PageStatus.Preview);
 
-            if (!request.IncludeArchived)
-            {
-                query = query.Where(() => !alias.IsArchived);
-            }
-
-            if (request.OnlyMasterPages)
-            {
-                query = query.Where(() => alias.IsMasterPage);
-            }
-            else if (!request.IncludeMasterPages)
-            {
-                query = query.Where(() => !alias.IsMasterPage);
-            }
-
-            if (!string.IsNullOrWhiteSpace(request.SearchQuery))
-            {
-                var searchQuery = string.Format("%{0}%", request.SearchQuery);
-                query = query.Where(Restrictions.Disjunction()
-                                        .Add(Restrictions.InsensitiveLike(Projections.Property(() => alias.Title), searchQuery))
-                                        .Add(Restrictions.InsensitiveLike(Projections.Property(() => alias.PageUrl), searchQuery))
-                                        .Add(Restrictions.InsensitiveLike(Projections.Property(() => alias.MetaTitle), searchQuery))
-                                        .Add(Restrictions.InsensitiveLike(Projections.Property(() => alias.MetaDescription), searchQuery))
-                                        .Add(Restrictions.InsensitiveLike(Projections.Property(() => alias.MetaKeywords), searchQuery)));
-            }
-
-            if (request.CategoryId.HasValue)
-            {
-                query = query.Where(Restrictions.Eq(Projections.Property(() => alias.Category.Id), request.CategoryId.Value));
-            }
-            
-            if (request.CultureId.HasValue)
-            {
-                if (request.CultureId.Value.HasDefaultValue())
-                {
-                    query = query.Where(Restrictions.IsNull(Projections.Property(() => alias.Culture.Id)));
-                }
-                else
-                {
-                    query = query.Where(Restrictions.Eq(Projections.Property(() => alias.Culture.Id), request.CultureId.Value));
-                }
-            }
-
-            if (request.Tags != null)
-            {
-                foreach (var tagKeyValue in request.Tags)
-                {
-                    var id = tagKeyValue.Key.ToGuidOrDefault();
-                    query = query.WithSubquery.WhereExists(QueryOver.Of<PageTag>().Where(tag => tag.Tag.Id == id && tag.Page.Id == alias.Id).Select(tag => 1));
-                }
-            }
+            query = FilterQuery(query, request);
 
             IProjection hasSeoProjection = Projections.Conditional(
                 Restrictions.Disjunction()
@@ -178,6 +118,64 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
             }
 
             return model;
+        }
+
+        protected virtual IQueryOver<PageProperties, PageProperties> FilterQuery(IQueryOver<PageProperties, PageProperties> query, PagesFilter request)
+        {
+            PageProperties alias = null;
+
+            if (!request.IncludeArchived)
+            {
+                query = query.Where(() => !alias.IsArchived);
+            }
+
+            if (request.OnlyMasterPages)
+            {
+                query = query.Where(() => alias.IsMasterPage);
+            }
+            else if (!request.IncludeMasterPages)
+            {
+                query = query.Where(() => !alias.IsMasterPage);
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.SearchQuery))
+            {
+                var searchQuery = string.Format("%{0}%", request.SearchQuery);
+                query = query.Where(Restrictions.Disjunction()
+                                        .Add(Restrictions.InsensitiveLike(Projections.Property(() => alias.Title), searchQuery))
+                                        .Add(Restrictions.InsensitiveLike(Projections.Property(() => alias.PageUrl), searchQuery))
+                                        .Add(Restrictions.InsensitiveLike(Projections.Property(() => alias.MetaTitle), searchQuery))
+                                        .Add(Restrictions.InsensitiveLike(Projections.Property(() => alias.MetaDescription), searchQuery))
+                                        .Add(Restrictions.InsensitiveLike(Projections.Property(() => alias.MetaKeywords), searchQuery)));
+            }
+
+            if (request.CategoryId.HasValue)
+            {
+                query = query.Where(Restrictions.Eq(Projections.Property(() => alias.Category.Id), request.CategoryId.Value));
+            }
+
+            if (request.CultureId.HasValue)
+            {
+                if (request.CultureId.Value.HasDefaultValue())
+                {
+                    query = query.Where(Restrictions.IsNull(Projections.Property(() => alias.Culture.Id)));
+                }
+                else
+                {
+                    query = query.Where(Restrictions.Eq(Projections.Property(() => alias.Culture.Id), request.CultureId.Value));
+                }
+            }
+
+            if (request.Tags != null)
+            {
+                foreach (var tagKeyValue in request.Tags)
+                {
+                    var id = tagKeyValue.Key.ToGuidOrDefault();
+                    query = query.WithSubquery.WhereExists(QueryOver.Of<PageTag>().Where(tag => tag.Tag.Id == id && tag.Page.Id == alias.Id).Select(tag => 1));
+                }
+            }
+
+            return query;
         }
     }
 }

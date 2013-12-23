@@ -17,6 +17,7 @@ using BetterCms.Module.Pages.Command.Page.GetPageForCloningWithCulture;
 using BetterCms.Module.Pages.Command.Page.GetPageForDelete;
 using BetterCms.Module.Pages.Command.Page.GetPageProperties;
 using BetterCms.Module.Pages.Command.Page.GetPagesList;
+using BetterCms.Module.Pages.Command.Page.GetUntranslatedPagesList;
 using BetterCms.Module.Pages.Command.Page.SavePageProperties;
 using BetterCms.Module.Pages.Command.Page.SavePagePublishStatus;
 using BetterCms.Module.Pages.Command.Page.SuggestPages;
@@ -406,6 +407,31 @@ namespace BetterCms.Module.Pages.Controllers
             var suggestedPages = GetCommand<SuggestPagesCommand>().ExecuteCommand(model);
 
             return Json(new { suggestions = suggestedPages });
+        }
+
+        /// <summary>
+        /// Searches within untranslated pages.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        /// Search result with untranslated pages list
+        /// </returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
+        public ActionResult SearchUntranslatedPages(UntranslatedPagesFilter request)
+        {
+            request.SetDefaultPaging();
+            var model = GetCommand<GetUntranslatedPagesListCommand>().ExecuteCommand(request);
+            var success = model != null;
+
+            var view = RenderView("SelectPage", model);
+            var json = new
+            {
+                Tags = request.Tags,
+                IncludeArchived = request.IncludeArchived,
+                IncludeMasterPages = request.IncludeMasterPages
+            };
+
+            return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);
         }
     }
 }
