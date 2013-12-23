@@ -1278,4 +1278,7 @@
   <data name="EditPageTranslations_OtherLanguages_Tooltip" xml:space="preserve">
     <value>Current page translations - another pages with different culture, which are associated with current page.</value>
   </data>
+  <data name="SavePagePropertiesCommand_PageTranslationsIsMasterPage_Message" xml:space="preserve">
+    <value>Master pages cannot be assigned as translation.</value>
+  </data>
 </root>

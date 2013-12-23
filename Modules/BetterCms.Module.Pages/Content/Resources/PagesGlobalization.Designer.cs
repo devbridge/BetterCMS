@@ -2572,6 +2572,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Master pages cannot be assigned as translation..
+        /// </summary>
+        public static string SavePagePropertiesCommand_PageTranslationsIsMasterPage_Message {
+            get {
+                return ResourceManager.GetString("SavePagePropertiesCommand_PageTranslationsIsMasterPage_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Selected master page is the current page or is a child of it..
         /// </summary>
         public static string SavePagePropertiesCommand_SelectedMasterIsChildPage_Message {

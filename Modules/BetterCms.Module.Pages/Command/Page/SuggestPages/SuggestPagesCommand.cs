@@ -72,6 +72,11 @@ namespace BetterCms.Module.Pages.Command.Page.SuggestPages
                 var cultureProxy = Repository.AsProxy<Root.Models.Culture>(model.ExcludedCultureId.Value);
                 query = query.Where(q => (q.Culture != cultureProxy || q.Culture == null));
             }
+
+            if (!model.IncludeMasterPages)
+            {
+                query = query.Where(q => !q.IsMasterPage);
+            }
             
             var predicateBuilder = PredicateBuilder.False<PageProperties>();
             if (model.OnlyUntranslatedPages)

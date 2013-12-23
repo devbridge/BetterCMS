@@ -518,13 +518,21 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                             throw new ValidationException(() => message, logMessage);
                         }
 
-                        translation = translations.FirstOrDefault(t => t.Id == rt.Id && ((t.Culture == null && rt.CultureId.HasValue) || (t.Culture != null && t.Culture.Id != rt.CultureId)));
+                        translation = translations.FirstOrDefault(t => t.Id == rt.Id && (t.Culture != null && t.Culture.Id != rt.CultureId));
                         if (translation != null)
                         {
                             var logMessage = string.Format("Page cannot be assigned with culture {0}, because it has assigned another culture {1}. PageId: {2}, TranslationId: {1}", 
                                 rt.CultureId,
                                 translation.Culture != null ? translation.Culture.Id : (Guid?)null, request.Id);
                             var message = string.Format(PagesGlobalization.SavePagePropertiesCommand_PageTranslationsHasDifferentCultureId_Message, translation.Title);
+                            throw new ValidationException(() => message, logMessage);
+                        }
+
+                        translation = translations.FirstOrDefault(t => t.Id == rt.Id && t.IsMasterPage);
+                        if (translation != null)
+                        {
+                            var logMessage = string.Format("Master pages cannot be assigned as translation. PageId: {0}, TranslationId: {1}", request.Id, translation.Id);
+                            var message = string.Format(PagesGlobalization.SavePagePropertiesCommand_PageTranslationsIsMasterPage_Message, translation.Title);
                             throw new ValidationException(() => message, logMessage);
                         }
                     });

@@ -17,6 +17,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public bool OnlyUntranslatedPages { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to include master pages.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to include master pages; otherwise, <c>false</c>.
+        /// </value>
+        public bool IncludeMasterPages { get; set; }
+
+        /// <summary>
         /// Gets or sets the excluded culture id.
         /// </summary>
         /// <value>
