@@ -107,7 +107,6 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                               UseNoIndex = page.UseNoIndex,
                               UseCanonicalUrl = page.UseCanonicalUrl,
                               IsPagePublished = page.Status == PageStatus.Published,
-//                              IsInSitemap = page.NodeCountInSitemap > 0,
                               IsArchived = page.IsArchived,
                               IsMasterPage = page.IsMasterPage,
                               TemplateId = page.Layout.Id,

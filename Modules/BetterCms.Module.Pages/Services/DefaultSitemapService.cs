@@ -86,15 +86,6 @@ namespace BetterCms.Module.Pages.Services
         }
 
         /// <summary>
-        /// Deletes the node without page update.
-        /// </summary>
-        /// <param name="node">The node.</param>
-        public void DeleteNodeWithoutPageUpdate(SitemapNode node)
-        {
-            repository.Delete(node);
-        }
-
-        /// <summary>
         /// Gets the nodes by URL.
         /// </summary>
         /// <param name="page">The page.</param>
@@ -134,8 +125,6 @@ namespace BetterCms.Module.Pages.Services
                 ? new SitemapNode()
                 : repository.First<SitemapNode>(nodeId);
 
-            var oldUrl = node.Url;
-
             if (isDeleted)
             {
                 if (!node.Id.HasDefaultValue())
@@ -174,7 +163,7 @@ namespace BetterCms.Module.Pages.Services
         /// </summary>
         /// <param name="node">The node.</param>
         /// <param name="deletedNodes">The deleted nodes.</param>
-        private void DeleteNode(SitemapNode node, ref IList<SitemapNode> deletedNodes)
+        public void DeleteNode(SitemapNode node, ref IList<SitemapNode> deletedNodes)
         {
             foreach (var childNode in node.ChildNodes)
             {

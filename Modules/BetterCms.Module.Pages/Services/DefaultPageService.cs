@@ -80,11 +80,19 @@ namespace BetterCms.Module.Pages.Services
             return page;
         }
 
-        public IQueryable<IPage> GetPageQuery(Guid? pageId, string pageUrl)
+        /// <summary>
+        /// Gets the page query.
+        /// </summary>
+        /// <returns>Queryable to find the page.</returns>
+        public IQueryable<IPage> GetPageQuery()
         {
             return repository.AsQueryable<PageProperties>();
         }
 
+        /// <summary>
+        /// Caches the page.
+        /// </summary>
+        /// <param name="page">The page.</param>
         public void CachePage(IPage page)
         {
             var pageProperties = page as PageProperties;

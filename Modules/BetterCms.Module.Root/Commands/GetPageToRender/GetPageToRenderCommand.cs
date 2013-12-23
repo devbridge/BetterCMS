@@ -274,7 +274,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         /// <returns>Page entity</returns>
         private Page GetPage(GetPageToRenderRequest request)
         {
-            IQueryable<Page> query = (IQueryable<Page>)pageAccessor.GetPageQuery(request.PageId, request.PageUrl);
+            IQueryable<Page> query = (IQueryable<Page>)pageAccessor.GetPageQuery();
             query = query.Where(f => !f.IsDeleted);
 
             if (request.PageId == null)

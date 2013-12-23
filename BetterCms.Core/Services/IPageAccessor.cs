@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
 using BetterCms.Core.DataContracts;
-using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 
 namespace BetterCms.Core.Services
@@ -40,8 +38,16 @@ namespace BetterCms.Core.Services
         /// <returns>The list of meta data projections</returns>
         IList<IPageActionProjection> GetPageMetaData(IPage page);
 
-        IQueryable<IPage> GetPageQuery(Guid? pageId, string pageUrl);
+        /// <summary>
+        /// Gets the page query.
+        /// </summary>
+        /// <returns></returns>
+        IQueryable<IPage> GetPageQuery();
 
+        /// <summary>
+        /// Caches the page.
+        /// </summary>
+        /// <param name="page">The page.</param>
         void CachePage(IPage page);
     }
 }

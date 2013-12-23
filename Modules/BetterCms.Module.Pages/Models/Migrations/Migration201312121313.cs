@@ -43,6 +43,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
             CreateDefaultSitemap();
 
             UpdateSitemapNodesTable();
+            UpdatePagesTable();
         }
 
         /// <summary>
@@ -219,6 +220,17 @@ namespace BetterCms.Module.Pages.Models.Migrations
             Create
                 .Index("IX_Cms_SitemapNodes_PageId")
                 .OnTable("SitemapNodes").InSchema(SchemaName).OnColumn("PageId");
+        }
+
+        /// <summary>
+        /// Updates the pages table.
+        /// </summary>
+        private void UpdatePagesTable()
+        {
+            
+            Delete
+                .Column("NodeCountInSitemap")
+                .FromTable("Pages").InSchema(SchemaName);
         }
     }
 }

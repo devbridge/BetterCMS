@@ -26,7 +26,7 @@ namespace BetterCms.Module.Pages.Services
         void ChangeUrlsInAllSitemapsNodes(string oldUrl, string newUrl);
 
         /// <summary>
-        /// Deletes the node.
+        /// Deletes the node and child nodes.
         /// </summary>
         /// <param name="id">The id.</param>
         /// <param name="version">The version.</param>
@@ -34,10 +34,11 @@ namespace BetterCms.Module.Pages.Services
         void DeleteNode(Guid id, int version, out IList<SitemapNode> deletedNodes);
 
         /// <summary>
-        /// Deletes the node without page update.
+        /// Deletes the node and child nodes.
         /// </summary>
         /// <param name="node">The node.</param>
-        void DeleteNodeWithoutPageUpdate(SitemapNode node);
+        /// <param name="deletedNodes">The deleted nodes.</param>
+        void DeleteNode(SitemapNode node, ref IList<SitemapNode> deletedNodes);
 
         /// <summary>
         /// Gets the nodes by URL.
