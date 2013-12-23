@@ -184,6 +184,7 @@ namespace BetterCms.Module.Pages.Services
             {
                 newPage.IsMasterPage = true;
                 newPage.Status = PageStatus.Published;
+                newPage.Culture = null;
             }
 
             // Add security.
