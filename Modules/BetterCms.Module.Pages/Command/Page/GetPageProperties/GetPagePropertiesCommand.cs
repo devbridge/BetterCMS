@@ -200,11 +200,11 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 model.Model.Categories = categories;
                 model.Model.UpdateSitemap = true;
                 model.Model.CustomOptions = customOptionsFuture.ToList();
-                if (culturesFuture != null)
+                if (culturesFuture != null && !model.Model.IsMasterPage)
                 {
                     model.Model.Cultures = culturesFuture.ToList();
                 }
-                if (cmsConfiguration.EnableMultilanguage && model.CultureGroupIdentifier.HasValue)
+                if (cmsConfiguration.EnableMultilanguage && model.CultureGroupIdentifier.HasValue && !model.Model.IsMasterPage)
                 {
                     model.Model.Translations = pageService.GetPageTranslations(model.CultureGroupIdentifier.Value).ToList();
                 }

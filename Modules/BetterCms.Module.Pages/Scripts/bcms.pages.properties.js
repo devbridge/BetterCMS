@@ -84,7 +84,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 optionListViewModel = options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues, content.Data.CustomOptions),
                 tagsViewModel = new tags.TagsListViewModel(content.Data.Tags),
                 accessControlViewModel = security.createUserAccessViewModel(content.Data.UserAccessList),
-                translationsViewModel = new pageCultures.PageTranslationsListViewModel(content.Data.Translations, content.Data.Cultures, content.Data.CultureId),
+                translationsViewModel = content.Data.Cultures ? new pageCultures.PageTranslationsListViewModel(content.Data.Translations, content.Data.Cultures, content.Data.CultureId) : null,
                 pageViewModel = new PageViewModel(content.Data.Image, content.Data.SecondaryImage, content.Data.FeaturedImage, tagsViewModel, optionListViewModel, accessControlViewModel, translationsViewModel),
                 form = dialog.container.find(selectors.pagePropertiesForm);
 

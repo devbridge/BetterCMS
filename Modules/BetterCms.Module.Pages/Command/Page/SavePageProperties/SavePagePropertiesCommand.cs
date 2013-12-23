@@ -173,7 +173,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                               : SecurityService.IsAuthorized(Context.Principal, RootModuleConstants.UserRoles.EditContent);
 
             IList<Root.Models.Page> translations = null;
-            if (canEdit && isMultilanguageEnabled)
+            if (canEdit && isMultilanguageEnabled && !page.IsMasterPage)
             {
                 translations = LoadAndValidateTranslations(page, request);
             }
@@ -258,7 +258,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                     page.MasterPage = null;
                 }
 
-                if (isMultilanguageEnabled)
+                if (isMultilanguageEnabled && !page.IsMasterPage)
                 {
                     UpdatePageTranslations(page, translations, request);
                 }

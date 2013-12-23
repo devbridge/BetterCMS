@@ -89,7 +89,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 addNewPageInfoMessageClosed: 'bcms.addNewPageInfoBoxClosed'
             },
             classes = {
-                addNewPageActitraveTemplateBox: 'bcms-inner-grid-box-active',
+                addNewPageActiveTemplateBox: 'bcms-inner-grid-box-active',
                 gridActiveRow: 'bcms-table-row-active'
             },
             pageUrlManuallyEdited = false;
