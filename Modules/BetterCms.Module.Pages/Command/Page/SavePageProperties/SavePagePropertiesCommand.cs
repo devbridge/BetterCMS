@@ -590,6 +590,10 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             {
                 var translation = translations.Where(t => t.Id == translationViewModel.Id).FirstOne();
                 translation.CultureGroupIdentifier = page.CultureGroupIdentifier;
+                if (translation.Culture == null && translationViewModel.CultureId.HasValue)
+                {
+                    translation.Culture = Repository.AsProxy<Culture>(translationViewModel.CultureId.Value);
+                }
             
                 Repository.Save(translation);
             }
