@@ -56,18 +56,22 @@ namespace BetterCms.Module.Pages.Services
         /// <returns>
         /// Node with new url count.
         /// </returns>
-        public void ChangeUrlsInAllSitemapsNodes(string oldUrl, string newUrl)
+        public IList<SitemapNode> ChangeUrlsInAllSitemapsNodes(string oldUrl, string newUrl)
         {
             var oldUrlHash = (oldUrl ?? string.Empty).UrlHash();
             newUrl = newUrl ?? string.Empty;
 
+            var updatedNodes = new List<SitemapNode>();
             var nodes = repository.AsQueryable<SitemapNode>().Where(n => n.UrlHash == oldUrlHash).ToList();
             foreach (var node in nodes)
             {
                 node.Url = newUrl;
                 node.UrlHash = newUrl.UrlHash();
                 repository.Save(node);
+                updatedNodes.Add(node);
             }
+
+            return updatedNodes;
         }
 
         /// <summary>

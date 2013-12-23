@@ -23,7 +23,8 @@ namespace BetterCms.Module.Pages.Services
         /// </summary>
         /// <param name="oldUrl">The old URL.</param>
         /// <param name="newUrl">The new URL.</param>
-        void ChangeUrlsInAllSitemapsNodes(string oldUrl, string newUrl);
+        /// <returns>Updated nodes.</returns>
+        IList<SitemapNode> ChangeUrlsInAllSitemapsNodes(string oldUrl, string newUrl);
 
         /// <summary>
         /// Deletes the node and child nodes.

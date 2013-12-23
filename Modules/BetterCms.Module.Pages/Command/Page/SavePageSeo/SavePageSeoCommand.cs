@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
@@ -69,6 +70,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
 
             model.ChangedUrlPath = urlService.FixUrl(model.ChangedUrlPath);
 
+            IList<SitemapNode> updatedNodes = null;
             if (!string.Equals(model.PageUrlPath, model.ChangedUrlPath))
             {
                 pageService.ValidatePageUrl(model.ChangedUrlPath, model.PageId);
@@ -81,6 +83,11 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
                         Repository.Save(redirect);
                         newRedirect = redirect;
                     }
+                }
+
+                if (model.UpdateSitemap)
+                {
+                    updatedNodes = sitemapService.ChangeUrlsInAllSitemapsNodes(page.PageUrl, model.ChangedUrlPath);
                 }
 
                 page.PageUrl = model.ChangedUrlPath;
@@ -105,6 +112,25 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
             if (newRedirect != null)
             {
                 Events.PageEvents.Instance.OnRedirectCreated(newRedirect);
+            }
+
+            // Notify about updated sitemap nodes.
+            if (updatedNodes != null)
+            {
+                var updatedSitemaps = new List<Models.Sitemap>();
+                foreach (var node in updatedNodes)
+                {
+                    Events.SitemapEvents.Instance.OnSitemapNodeUpdated(node);
+                    if (!updatedSitemaps.Contains(node.Sitemap))
+                    {
+                        updatedSitemaps.Add(node.Sitemap);
+                    }
+                }
+
+                foreach (var updatedSitemap in updatedSitemaps)
+                {
+                    Events.SitemapEvents.Instance.OnSitemapUpdated(updatedSitemap);
+                }
             }
 
             return new EditSeoViewModel { PageUrlPath = page.PageUrl };
