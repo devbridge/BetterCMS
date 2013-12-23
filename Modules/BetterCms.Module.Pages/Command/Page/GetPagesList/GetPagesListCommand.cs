@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 
-using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Filter;
@@ -39,6 +37,8 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
         private readonly ISecurityService securityService;
 
         private readonly ICmsConfiguration configuration;
+        
+        private readonly IPageService pageService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetPagesListCommand" /> class.
@@ -48,33 +48,16 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
         /// <param name="securityService">The security service.</param>
         /// <param name="configuration">The configuration.</param>
         /// <param name="cultureService">The culture service.</param>
+        /// <param name="pageService">The page service.</param>
         public GetPagesListCommand(ICategoryService categoryService, IAccessControlService accessControlService, ISecurityService securityService,
-                                   ICmsConfiguration configuration, ICultureService cultureService)
+                                   ICmsConfiguration configuration, ICultureService cultureService, IPageService pageService)
         {
             this.configuration = configuration;
             this.securityService = securityService;
             this.accessControlService = accessControlService;
             this.categoryService = categoryService;
             this.cultureService = cultureService;
-        }
-
-        private IEnumerable<Guid> GetDeniedPages(PagesFilter request)
-        {
-            var query = Repository.AsQueryable<Root.Models.Page>()
-                            .Where(f => f.AccessRules.Any(b => b.AccessLevel == AccessLevel.Deny))
-                            .FetchMany(f => f.AccessRules);                            
-
-            var list = query.ToList().Distinct();
-            var principle = securityService.GetCurrentPrincipal();
-            
-            foreach (var page in list)
-            {
-                var accessLevel = accessControlService.GetAccessLevel(page, principle);
-                if (accessLevel == AccessLevel.Deny)
-                {
-                    yield return page.Id;
-                }
-            }           
+            this.pageService = pageService;
         }
 
         /// <summary>
@@ -167,7 +150,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
 
             if (configuration.Security.AccessControlEnabled)
             {
-                IEnumerable<Guid> deniedPages = GetDeniedPages(request);
+                IEnumerable<Guid> deniedPages = pageService.GetDeniedPages();
                 foreach (var deniedPageId in deniedPages)
                 {
                     var id = deniedPageId;

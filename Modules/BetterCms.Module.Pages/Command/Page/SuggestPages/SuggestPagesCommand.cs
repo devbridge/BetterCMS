@@ -5,6 +5,7 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 
 using BetterCms.Module.Root.Mvc;
@@ -16,6 +17,27 @@ namespace BetterCms.Module.Pages.Command.Page.SuggestPages
     /// </summary>
     public class SuggestPagesCommand : CommandBase, ICommand<PageSuggestionViewModel, List<PageLookupKeyValue>>
     {
+        /// <summary>
+        /// The configuration
+        /// </summary>
+        private readonly ICmsConfiguration configuration;
+
+        /// <summary>
+        /// The page service
+        /// </summary>
+        private readonly IPageService pageService;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SuggestPagesCommand" /> class.
+        /// </summary>
+        /// <param name="configuration">The configuration.</param>
+        /// <param name="pageService">The page service.</param>
+        public SuggestPagesCommand(ICmsConfiguration configuration, IPageService pageService)
+        {
+            this.configuration = configuration;
+            this.pageService = pageService;
+        }
+
         /// <summary>
         /// Executes this command.
         /// </summary>
@@ -62,6 +84,15 @@ namespace BetterCms.Module.Pages.Command.Page.SuggestPages
                 predicateBuilder = predicateBuilder.Or(page => includeIds.Contains(page.Id));
             }
             query = query.Where(predicateBuilder);
+
+            if (configuration.Security.AccessControlEnabled)
+            {
+                IEnumerable<Guid> deniedPages = pageService.GetDeniedPages();
+                foreach (var deniedPageId in deniedPages)
+                {
+                    query = query.Where(f => f.Id != deniedPageId);
+                }
+            }
 
             return query.OrderBy(page => page.Title)
                 .Select(page => new PageLookupKeyValue

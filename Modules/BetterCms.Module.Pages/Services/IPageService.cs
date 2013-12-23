@@ -34,5 +34,11 @@ namespace BetterCms.Module.Pages.Services
         /// The list of page translation view models
         /// </returns>
         IEnumerable<PageTranslationViewModel> GetPageTranslations(Guid cultureGroupIdentifier);
+
+        /// <summary>
+        /// Gets the list of denied pages ids.
+        /// </summary>
+        /// <returns>Enumerable list of denied pages ids</returns>
+        IEnumerable<Guid> GetDeniedPages(bool useCache = true);
     }
 }

@@ -4,18 +4,19 @@ using System.Linq;
 using System.Web;
 
 using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Exceptions.Service;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Core.Security;
 using BetterCms.Core.Services;
+using BetterCms.Core.Services.Caching;
 using BetterCms.Core.Web;
 
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Page;
-using BetterCms.Module.Root.Mvc;
+
 using BetterCms.Module.Root.Mvc.Helpers;
 
 using NHibernate.Linq;
@@ -30,14 +31,22 @@ namespace BetterCms.Module.Pages.Services
         private readonly IRepository repository;
         private readonly IRedirectService redirectService;
         private readonly IUrlService urlService;
+        private readonly ISecurityService securityService;
+        private readonly IAccessControlService accessControlService;
+        private readonly ICacheService cacheService;
 
         private IDictionary<string, IPage> temporaryPageCache;
 
-        public DefaultPageService(IRepository repository, IRedirectService redirectService, IUrlService urlService)
+        public DefaultPageService(IRepository repository, IRedirectService redirectService, IUrlService urlService,
+            ISecurityService securityService, IAccessControlService accessControlService, ICacheService cacheService)
         {
             this.repository = repository;
             this.redirectService = redirectService;
             this.urlService = urlService;
+            this.securityService = securityService;
+            this.accessControlService = accessControlService;
+            this.cacheService = cacheService;
+
             temporaryPageCache = new Dictionary<string, IPage>();
         }
         
@@ -248,6 +257,52 @@ namespace BetterCms.Module.Pages.Services
                     CultureId = p.Culture.Id
                 })
                 .ToFuture();
+        }
+
+        /// <summary>
+        /// Gets the list of denied pages ids.
+        /// </summary>
+        /// <param name="useCache"></param>
+        /// <returns>
+        /// Enumerable list of denied pages ids
+        /// </returns>
+        public IEnumerable<Guid> GetDeniedPages(bool useCache = true)
+        {
+            IEnumerable<Root.Models.Page> list;
+            var principal = securityService.GetCurrentPrincipal();
+
+            if (useCache)
+            {
+                var cacheKey = string.Format("CMS_DeniedPages_{0}_C9E7517250F64F84ADC8-B991C8391306", principal.Identity.Name);
+                list = cacheService.Get(cacheKey, new TimeSpan(0, 0, 0, 30), LoadDeniedPages);
+            }
+            else
+            {
+                list = LoadDeniedPages();
+            }
+
+            foreach (var page in list)
+            {
+                var accessLevel = accessControlService.GetAccessLevel(page, principal);
+                if (accessLevel == AccessLevel.Deny)
+                {
+                    yield return page.Id;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Loads the list of denied pages.
+        /// </summary>
+        /// <returns>The list of denied page</returns>
+        private IEnumerable<Root.Models.Page> LoadDeniedPages()
+        {
+            return repository
+                .AsQueryable<Root.Models.Page>()
+                .Where(f => f.AccessRules.Any(b => b.AccessLevel == AccessLevel.Deny))
+                .FetchMany(f => f.AccessRules)
+                .ToList()
+                .Distinct();
         }
     }
 }
