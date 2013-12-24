@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 
 using BetterCms.Core.Security;
+using BetterCms.Module.Pages.Command.History.GetSitemapHistory;
 using BetterCms.Module.Pages.Command.Sitemap.DeleteSitemap;
 using BetterCms.Module.Pages.Command.Sitemap.DeleteSitemapNode;
 using BetterCms.Module.Pages.Command.Sitemap.GetPageLinks;
@@ -71,6 +72,20 @@ namespace BetterCms.Module.Pages.Controllers
             }
 
             return ComboWireJson(success, view, data, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Shows the sitemap history.
+        /// </summary>
+        /// <param name="sitemapId">The sitemap identifier.</param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult ShowSitemapHistory(GetSitemapHistoryRequest request)
+        {
+            var model = GetCommand<GetSitemapHistoryCommand>().ExecuteCommand(request);
+            var view = RenderView("History", model);
+
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

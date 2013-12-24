@@ -20,6 +20,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 siteSettingsRowCells: 'td',
                 siteSettingsSitemapParentRow: 'tr:first',
                 siteSettingsSitemapEditButton: '.bcms-grid-item-edit-button',
+                siteSettingsSitemapHistoryButton: '.bcms-grid-item-history-button',
                 siteSettingsSitemapDeleteButton: '.bcms-grid-item-delete-button',
                 siteSettingsSitemapRowTemplate: '#bcms-sitemap-list-row-template',
                 siteSettingsSitemapRowTemplateFirstRow: 'tr:first',
@@ -32,12 +33,14 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 deleteSitemapUrl: null,
                 deleteSitemapNodeUrl: null,
                 sitemapEditDialogUrl: null,
+                sitemapHistoryDialogUrl: null,
                 sitemapAddNewPageDialogUrl: null,
                 saveMultipleSitemapsUrl: null
             },
             globalization = {
                 sitemapCreatorDialogTitle: null,
                 sitemapEditorDialogTitle: null,
+                sitemapHistoryDialogTitle: null,
                 sitemapEditorDialogCustomLinkTitle: null,
                 sitemapAddNewPageDialogTitle: null,
                 sitemapDeleteNodeConfirmationMessage: null,
@@ -138,6 +141,11 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 editSitemap($(this), masterContainer || container);
             });
 
+            container.find(selectors.siteSettingsSitemapHistoryButton).on('click', function (event) {
+                bcms.stopEventPropagation(event);
+                viewSitemapHistory($(this), masterContainer || container);
+            });
+            
             container.find(selectors.siteSettingsSitemapDeleteButton).on('click', function (event) {
                 bcms.stopEventPropagation(event);
                 deleteSitemap($(this), masterContainer || container);
@@ -155,6 +163,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
                     newRow.find(selectors.siteSettingsSitemapTitleCell).html(data.Data.Title);
                     newRow.find(selectors.siteSettingsSitemapEditButton).data('id', data.Data.Id);
+                    newRow.find(selectors.siteSettingsSitemapHistoryButton).data('id', data.Data.Id);
                     newRow.find(selectors.siteSettingsSitemapDeleteButton).data('id', data.Data.Id);
                     newRow.find(selectors.siteSettingsSitemapDeleteButton).data('version', data.Data.Version);
 
@@ -181,6 +190,22 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     row.find(selectors.siteSettingsSitemapDeleteButton).data('version', data.Data.Version);
                 }
             }, globalization.sitemapEditorDialogTitle);
+        };
+
+        /*
+        * View sitemap history.
+        */
+        function viewSitemapHistory(self, container) {
+            var id = self.data('id');
+
+            sitemap.showSitemapHistoryDialog(id, function (data) {
+                if (data.Data != null) {
+                    var row = self.parents(selectors.siteSettingsSitemapParentRow),
+                        cell = row.find(selectors.siteSettingsSitemapTitleCell);
+                    cell.html(data.Data.Title);
+                    row.find(selectors.siteSettingsSitemapDeleteButton).data('version', data.Data.Version);
+                }
+            }, globalization.sitemapHistoryDialogTitle);
         };
 
         /*
@@ -232,6 +257,38 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             sitemap.showMessage(json);
                         }
                     });
+                    return false;
+                }
+            });
+        };
+
+
+        /**
+        * Loads a sitemap history dialog.
+        */
+        sitemap.showSitemapHistoryDialog = function(id, onClose, dialogTitle) {
+            modal.open({
+                title: dialogTitle || globalization.sitemapHistoryDialogTitle,
+                onLoad: function(dialog) {
+                    dynamicContent.setContentFromUrl(dialog, $.format(links.sitemapHistoryDialogUrl, id), {
+                        done: function(content) {
+                            // TODO: implement: ...Controller.initialize(content, dialog);
+                        }
+                    });
+                },
+                onAccept: function (dialog) {
+// TODO: implement: ...
+//                    addNodeController.save(function (json) {
+//                        if (json.Success) {
+//                            dialog.close();
+//                            if (onClose && $.isFunction(onClose)) {
+//                                onClose(json);
+//                            }
+//                            messages.refreshBox(selectors.siteSettingsSitemapsForm, json);
+//                        } else {
+//                            sitemap.showMessage(json);
+//                        }
+//                    });
                     return false;
                 }
             });

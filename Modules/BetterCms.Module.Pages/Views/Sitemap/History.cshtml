@@ -1,0 +1,104 @@
+﻿@using BetterCms.Core.DataContracts.Enums
+@using BetterCms.Module.Pages.Command.History.GetContentHistory
+@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Pages.Controllers
+@using BetterCms.Module.Pages.ViewModels.History
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc
+@using BetterCms.Module.Root.Mvc.Grids.Extensions
+@using BetterCms.Module.Root.Mvc.Grids.TableRenderers
+@using BetterCms.Module.Root.Mvc.Helpers
+@using Microsoft.Web.Mvc
+@using MvcContrib.UI.Grid
+@model SitemapHistoryViewModel
+@helper PreviewLink(SitemapHistoryItem item)
+{
+    <a class="bcms-icn-preview" data-id="@item.Id">@RootGlobalization.Button_Preview</a>
+}
+@helper RestoreLink(SitemapHistoryItem item)
+{
+    if (item.CanCurrentUserRestoreIt)
+    {
+        <a class="bcms-icn-restore" data-id="@item.Id" data-version="@item.Version">@RootGlobalization.Button_Restore</a>
+    }
+    else
+    {
+    @:&nbsp;
+    }
+}
+@{
+    Action<ColumnBuilder<SitemapHistoryItem>> columns = column =>
+    {
+        column.For(f => PreviewLink(f))
+               .Encode(false)
+               .Named("&nbsp;")
+               .Sortable(false)
+               .HeaderAttributes(@style => "width: 40px; padding: 10px;", @class => "bcms-tables-nohover");
+
+        column.For(m => m.PublishedOn.ToFormattedDateString())
+               .Named(PagesGlobalization.ContentHistory_Column_PublishedOn)
+               .SortColumnName("PublishedOn")
+               .HeaderAttributes(@style => "width: 95px;")
+               .Attributes(@style => "width: 100px;");
+
+        column.For(m => m.PublishedByUser)
+               .Named(PagesGlobalization.ContentHistory_Column_PublishedByUser)
+               .SortColumnName("PublishedByUser")
+               .HeaderAttributes(@style => "width: 200px;")
+               .Attributes(@style => "width: 200px;");
+
+        column.For(m => m.ArchivedOn.ToFormattedDateString())
+               .Named(PagesGlobalization.ContentHistory_Column_ArchivedOn)
+               .SortColumnName("ArchivedOn")
+               .HeaderAttributes(@style => "width: 100px;")
+               .Attributes(@style => "width: 100px;");
+
+        column.For(m => m.DisplayedFor.ToFormatedTimeString())
+               .Named(PagesGlobalization.ContentHistory_Column_DisplayedFor)
+               .SortColumnName("DisplayedFor")
+               .HeaderAttributes(@style => "width: 105px;")
+               .Attributes(@style => "width: 105px;");
+
+        column.For(f => RestoreLink(f))
+               .Encode(false)
+               .Named("&nbsp;")
+               .Sortable(false)
+               .HeaderAttributes(@style => "width: 170px;", @class => "bcms-tables-nohover")
+               .Attributes(@style => "width: 144px;");
+    };
+}
+<div class="bcms-scroll-window">
+    <div class="bcms-history-preview-holder">
+        @Html.TabbedContentMessagesBox()
+        <div class="bcms-history-preview">
+            <div id="bcms-history-preview" style="height: 100%">
+                <div class="bcms-history-info" style="display: block;">@PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage</div>
+                <div class="bcms-history-content"></div>
+            </div>
+        </div>
+    </div>
+    <div class="bcms-history-table-holder">
+        @using (Html.BeginForm<HistoryController>(f => f.ContentHistory((GetContentHistoryRequest)null), FormMethod.Post, new { @id = "bcms-sitemaphistory-form", @class = "bcms-ajax-form" }))
+        {                        
+            @Html.HiddenGridOptions(Model.GridOptions)
+            @Html.HiddenFor(model => model.SitemapId)
+
+            <div class="bcms-history-table-top">
+                <div class="bcms-large-titles">@PagesGlobalization.ContentHistory_OlderVersions</div>
+                <div class="bcms-search-block">
+                    @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box", @placeholder = RootGlobalization.WaterMark_Search })
+                    <div class="bcms-btn-search" id="bcms-sitemaphistory-search-btn">@RootGlobalization.Button_Search</div>
+                </div>
+            </div>                        
+            @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<SitemapHistoryItem>()
+                                                                                                                                 {
+                                                                                                                                     InternalTableCssClass = "bcms-history-cell"
+
+                                                                                                                                 })
+            @Html.HiddenSubmit()
+        }
+    </div>
+</div>
+<script type="text/html" id="bcms-history-preview-template">
+    <iframe src="" style="width: 100%; height: 100%; border: 0px;"></iframe>
+</script>

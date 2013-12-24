@@ -124,6 +124,8 @@
     <Compile Include="Accessors\PageJavaScriptAccessor.cs" />
     <Compile Include="Command\Content\GetInsertHtmlContent\GetInsertHtmlContentCommand.cs" />
     <Compile Include="Command\Content\GetInsertHtmlContent\InsertHtmlContentRequest.cs" />
+    <Compile Include="Command\History\GetSitemapHistory\GetSitemapHistoryCommand.cs" />
+    <Compile Include="Command\History\GetSitemapHistory\GetSitemapHistoryRequest.cs" />
     <Compile Include="Command\Layout\GetLayoutOptions\GetLayoutOptionsCommand.cs" />
     <Compile Include="Command\Layout\GetLayoutOptions\GetLayoutOptionsCommandRequest.cs" />
     <Compile Include="Command\Page\AddNewPage\AddNewPageCommand.cs" />
@@ -305,6 +307,8 @@
     <Compile Include="ViewModels\Filter\PagesFilter.cs" />
     <Compile Include="ViewModels\History\ContentHistoryItem.cs" />
     <Compile Include="ViewModels\History\ContentHistoryViewModel.cs" />
+    <Compile Include="ViewModels\History\SitemapHistoryItem.cs" />
+    <Compile Include="ViewModels\History\SitemapHistoryViewModel.cs" />
     <Compile Include="ViewModels\Page\RenderPageCategoryViewModel.cs" />
     <Compile Include="ViewModels\Page\RenderPageImageViewModel.cs" />
     <Compile Include="ViewModels\Page\RenderPagePropertiesViewModel.cs" />
@@ -546,7 +550,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\Sitemap\Sitemaps.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Views\Sitemap\History.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

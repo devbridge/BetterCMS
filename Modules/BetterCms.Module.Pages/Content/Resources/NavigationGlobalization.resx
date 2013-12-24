@@ -216,4 +216,7 @@
   <data name="Sitemap_Delete_Confirmation_Message" xml:space="preserve">
     <value>Are you sure you want to delete the site map?</value>
   </data>
+  <data name="Sitemap_HistoryDialog_Title" xml:space="preserve">
+    <value>Site Map History</value>
+  </data>
 </root>

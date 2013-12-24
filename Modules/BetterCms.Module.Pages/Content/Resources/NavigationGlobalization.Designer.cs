@@ -259,6 +259,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Site Map History.
+        /// </summary>
+        public static string Sitemap_HistoryDialog_Title {
+            get {
+                return ResourceManager.GetString("Sitemap_HistoryDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sitemap node created successfully..
         /// </summary>
         public static string Sitemap_NodeCreatedSuccessfully_Message {
