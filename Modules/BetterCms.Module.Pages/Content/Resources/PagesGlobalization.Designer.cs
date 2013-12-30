@@ -79,24 +79,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose page culture (language).
-        /// </summary>
-        public static string AddNewPage_Culture {
-            get {
-                return ResourceManager.GetString("AddNewPage_Culture", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Choose current page culture, which will be used in sitemap and determines the language of the page.
-        /// </summary>
-        public static string AddNewPage_Culture_Tooltip_Description {
-            get {
-                return ResourceManager.GetString("AddNewPage_Culture_Tooltip_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Add New Page.
         /// </summary>
         public static string AddNewPage_Dialog_Title {
@@ -120,6 +102,24 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string AddNewPage_EditPermalink_Tooltip_Description {
             get {
                 return ResourceManager.GetString("AddNewPage_EditPermalink_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose page language.
+        /// </summary>
+        public static string AddNewPage_Language {
+            get {
+                return ResourceManager.GetString("AddNewPage_Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose language for current page, which will be used in sitemap and determines the language and culture of the page.
+        /// </summary>
+        public static string AddNewPage_Language_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("AddNewPage_Language_Tooltip_Description", resourceCulture);
             }
         }
         
@@ -592,83 +592,83 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page culture is requred field..
+        ///   Looks up a localized string similar to Are you sure you want to translate this page?.
         /// </summary>
-        public static string ClonePageWithCulture_Culture_RequiredMessage {
+        public static string ClonePageWithLanguage_Dialog_ConfirmationMessage_Header {
             get {
-                return ResourceManager.GetString("ClonePageWithCulture_Culture_RequiredMessage", resourceCulture);
+                return ResourceManager.GetString("ClonePageWithLanguage_Dialog_ConfirmationMessage_Header", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to clone this page?.
+        ///   Looks up a localized string similar to You are going to create new page and copy all content and properties from the current page. Your selected language will be assigned to created page and page will be linked with the current page..
         /// </summary>
-        public static string ClonePageWithCulture_Dialog_ConfirmationMessage_Header {
+        public static string ClonePageWithLanguage_Dialog_ConfirmationMessage_Text {
             get {
-                return ResourceManager.GetString("ClonePageWithCulture_Dialog_ConfirmationMessage_Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You are going to copy all content and properties from the current page and created page will be created with another culture and linked with the current page..
-        /// </summary>
-        public static string ClonePageWithCulture_Dialog_ConfirmationMessage_Text {
-            get {
-                return ResourceManager.GetString("ClonePageWithCulture_Dialog_ConfirmationMessage_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Culture.
-        /// </summary>
-        public static string ClonePageWithCulture_Dialog_Culture_Title {
-            get {
-                return ResourceManager.GetString("ClonePageWithCulture_Dialog_Culture_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Choose creating page culture, which will be used in sitemap and determines the language of the page.
-        /// </summary>
-        public static string ClonePageWithCulture_Dialog_Culture_Tootlip {
-            get {
-                return ResourceManager.GetString("ClonePageWithCulture_Dialog_Culture_Tootlip", resourceCulture);
+                return ResourceManager.GetString("ClonePageWithLanguage_Dialog_ConfirmationMessage_Text", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Open &lt;a href=&quot;#&quot; id=&quot;bcms-open-page-translations&quot;&gt;page translations&lt;/a&gt; list..
         /// </summary>
-        public static string ClonePageWithCulture_Dialog_GoToPageProperties {
+        public static string ClonePageWithLanguage_Dialog_GoToPageProperties {
             get {
-                return ResourceManager.GetString("ClonePageWithCulture_Dialog_GoToPageProperties", resourceCulture);
+                return ResourceManager.GetString("ClonePageWithLanguage_Dialog_GoToPageProperties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Page Language.
+        /// </summary>
+        public static string ClonePageWithLanguage_Dialog_Language_Title {
+            get {
+                return ResourceManager.GetString("ClonePageWithLanguage_Dialog_Language_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose creating page language, which will be used in sitemap and determines the language and culture of the page.
+        /// </summary>
+        public static string ClonePageWithLanguage_Dialog_Language_Tootlip {
+            get {
+                return ResourceManager.GetString("ClonePageWithLanguage_Dialog_Language_Tootlip", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Translate page.
         /// </summary>
-        public static string ClonePageWithCulture_Dialog_Title {
+        public static string ClonePageWithLanguage_Dialog_Title {
             get {
-                return ResourceManager.GetString("ClonePageWithCulture_Dialog_Title", resourceCulture);
+                return ResourceManager.GetString("ClonePageWithLanguage_Dialog_Title", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page already has translation for specified culture..
+        ///   Looks up a localized string similar to Page language is requred field..
         /// </summary>
-        public static string ClonePageWithCulture_PageAlreadyHasSuchTranslation_Message {
+        public static string ClonePageWithLanguage_Language_RequiredMessage {
             get {
-                return ResourceManager.GetString("ClonePageWithCulture_PageAlreadyHasSuchTranslation_Message", resourceCulture);
+                return ResourceManager.GetString("ClonePageWithLanguage_Language_RequiredMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Current page already has translations in all the available languages..
+        ///   Looks up a localized string similar to Page already has translation to the specified language..
         /// </summary>
-        public static string ClonePageWithCulture_PageHasAllTranslations_Message {
+        public static string ClonePageWithLanguage_PageAlreadyHasSuchTranslation_Message {
             get {
-                return ResourceManager.GetString("ClonePageWithCulture_PageHasAllTranslations_Message", resourceCulture);
+                return ResourceManager.GetString("ClonePageWithLanguage_PageAlreadyHasSuchTranslation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current page already has translations to all the available languages..
+        /// </summary>
+        public static string ClonePageWithLanguage_PageHasAllTranslations_Message {
+            get {
+                return ResourceManager.GetString("ClonePageWithLanguage_PageHasAllTranslations_Message", resourceCulture);
             }
         }
         
@@ -1708,20 +1708,20 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Current page culture.
+        ///   Looks up a localized string similar to Current page language.
         /// </summary>
-        public static string EditPageProperties_TranslationsTab_Culture {
+        public static string EditPageProperties_TranslationsTab_Language {
             get {
-                return ResourceManager.GetString("EditPageProperties_TranslationsTab_Culture", resourceCulture);
+                return ResourceManager.GetString("EditPageProperties_TranslationsTab_Language", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit current page culture, which will be used in sitemap and determines the language of the page.
+        ///   Looks up a localized string similar to Edit current page language, which will be used in sitemap and determines the language and the culture of the page.
         /// </summary>
-        public static string EditPageProperties_TranslationsTab_Culture_Tooltip_Description {
+        public static string EditPageProperties_TranslationsTab_Language_Tooltip_Description {
             get {
-                return ResourceManager.GetString("EditPageProperties_TranslationsTab_Culture_Tooltip_Description", resourceCulture);
+                return ResourceManager.GetString("EditPageProperties_TranslationsTab_Language_Tooltip_Description", resourceCulture);
             }
         }
         
@@ -1744,20 +1744,20 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Culture.
-        /// </summary>
-        public static string EditPageTranslations_Culture_Title {
-            get {
-                return ResourceManager.GetString("EditPageTranslations_Culture_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Edit page translations.
         /// </summary>
         public static string EditPageTranslations_Dialog_Title {
             get {
                 return ResourceManager.GetString("EditPageTranslations_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string EditPageTranslations_Language_Title {
+            get {
+                return ResourceManager.GetString("EditPageTranslations_Language_Title", resourceCulture);
             }
         }
         
@@ -1771,7 +1771,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Current page translations - another pages with different culture, which are associated with current page..
+        ///   Looks up a localized string similar to Current page translations - another pages with different language, which are associated with current page..
         /// </summary>
         public static string EditPageTranslations_OtherLanguages_Tooltip {
             get {
@@ -1780,20 +1780,20 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There is already an item with selected culture. Are you sure you want to replace it?.
+        ///   Looks up a localized string similar to There is already translation with current language. If you change current page&apos;s language to {0}, translation will be removed from list. Are you sure you want to continue?.
         /// </summary>
-        public static string EditPageTranslations_ReplaceTranslationWithCulture_ConfirmationMessage {
+        public static string EditPageTranslations_ReplaceTranslationWithCurrentLanguage_ConfirmationMessage {
             get {
-                return ResourceManager.GetString("EditPageTranslations_ReplaceTranslationWithCulture_ConfirmationMessage", resourceCulture);
+                return ResourceManager.GetString("EditPageTranslations_ReplaceTranslationWithCurrentLanguage_ConfirmationMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There is already translation with current culture. If you change current page&apos;s culture to {0}, translation will be removed from list. Are you sure you want to continue?.
+        ///   Looks up a localized string similar to There is already an item with selected language. Are you sure you want to replace it?.
         /// </summary>
-        public static string EditPageTranslations_ReplaceTranslationWithCurrentCulture_ConfirmationMessage {
+        public static string EditPageTranslations_ReplaceTranslationWithLanguage_ConfirmationMessage {
             get {
-                return ResourceManager.GetString("EditPageTranslations_ReplaceTranslationWithCurrentCulture_ConfirmationMessage", resourceCulture);
+                return ResourceManager.GetString("EditPageTranslations_ReplaceTranslationWithLanguage_ConfirmationMessage", resourceCulture);
             }
         }
         
@@ -2392,11 +2392,11 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Culture.
+        ///   Looks up a localized string similar to Language.
         /// </summary>
-        public static string PageTranslations_Culture_Title {
+        public static string PageTranslations_Language_Title {
             get {
-                return ResourceManager.GetString("PageTranslations_Culture_Title", resourceCulture);
+                return ResourceManager.GetString("PageTranslations_Language_Title", resourceCulture);
             }
         }
         
@@ -2536,15 +2536,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page cannot contain translations with the same culture as itself..
-        /// </summary>
-        public static string SavePagePropertiesCommand_PageHasTranslationsWithItsCulture_Message {
-            get {
-                return ResourceManager.GetString("SavePagePropertiesCommand_PageHasTranslationsWithItsCulture_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Page cannot be added itself to tranlations list..
         /// </summary>
         public static string SavePagePropertiesCommand_PageHasTranslationsWithItsId_Message {
@@ -2554,20 +2545,29 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page cannot contain two or more translations with the same culture..
+        ///   Looks up a localized string similar to Page cannot contain translations to the same language as itself..
         /// </summary>
-        public static string SavePagePropertiesCommand_PageHasTranslationsWithSameCulture_Message {
+        public static string SavePagePropertiesCommand_PageHasTranslationsWithItsLanguage_Message {
             get {
-                return ResourceManager.GetString("SavePagePropertiesCommand_PageHasTranslationsWithSameCulture_Message", resourceCulture);
+                return ResourceManager.GetString("SavePagePropertiesCommand_PageHasTranslationsWithItsLanguage_Message", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page {0} cannot be assigned as translation, because it has assigned another culture..
+        ///   Looks up a localized string similar to Page cannot contain two or more translations to the same language..
         /// </summary>
-        public static string SavePagePropertiesCommand_PageTranslationsHasDifferentCultureId_Message {
+        public static string SavePagePropertiesCommand_PageHasTranslationsWithSameLanguage_Message {
             get {
-                return ResourceManager.GetString("SavePagePropertiesCommand_PageTranslationsHasDifferentCultureId_Message", resourceCulture);
+                return ResourceManager.GetString("SavePagePropertiesCommand_PageHasTranslationsWithSameLanguage_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page {0} cannot be assigned as translation, because it has assigned another language..
+        /// </summary>
+        public static string SavePagePropertiesCommand_PageTranslationsHasDifferentLanguage_Message {
+            get {
+                return ResourceManager.GetString("SavePagePropertiesCommand_PageTranslationsHasDifferentLanguage_Message", resourceCulture);
             }
         }
         
@@ -2914,11 +2914,11 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to By Culture.
+        ///   Looks up a localized string similar to By Language.
         /// </summary>
-        public static string SiteSettings_Pages_FilterByCulture {
+        public static string SiteSettings_Pages_FilterByLanguage {
             get {
-                return ResourceManager.GetString("SiteSettings_Pages_FilterByCulture", resourceCulture);
+                return ResourceManager.GetString("SiteSettings_Pages_FilterByLanguage", resourceCulture);
             }
         }
         

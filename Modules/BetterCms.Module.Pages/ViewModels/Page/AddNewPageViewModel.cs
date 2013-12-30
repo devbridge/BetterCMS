@@ -70,20 +70,20 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public Guid? MasterPageId { get; set; }
 
         /// <summary>
-        /// Gets or sets the culture id.
+        /// Gets or sets the language id.
         /// </summary>
         /// <value>
-        /// The culture id.
+        /// The language id.
         /// </value>
-        public Guid? CultureId { get; set; }
+        public Guid? LanguageId { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of cultures.
+        /// Gets or sets the list of languages
         /// </summary>
         /// <value>
-        /// The list of cultures.
+        /// The list of languages.
         /// </value>
-        public IEnumerable<LookupKeyValue> Cultures { get; set; }
+        public IEnumerable<LookupKeyValue> Languages { get; set; }
 
         /// <summary>
         /// Gets or sets the page option values.

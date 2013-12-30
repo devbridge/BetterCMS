@@ -4,7 +4,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
 {
     public class PageLookupKeyValue : LookupKeyValue
     {
-        public System.Guid? CultureId { get; set; }
+        public System.Guid? LanguageId { get; set; }
         
         public string PageUrl { get; set; }
     }

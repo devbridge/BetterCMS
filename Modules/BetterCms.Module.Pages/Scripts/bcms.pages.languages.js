@@ -1,8 +1,8 @@
-﻿bettercms.define('bcms.pages.cultures', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.ko.extenders','bcms.autocomplete'],
+﻿bettercms.define('bcms.pages.languages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.ko.extenders', 'bcms.autocomplete'],
     function($, bcms, modal, ko, autocomplete) {
         'use strict';
 
-        var pageCultures = {
+        var pageLanguages = {
                 openPageSelectDialog: null
             },
             selectors = {
@@ -14,20 +14,20 @@
             },
             globalization = {
                 unassignTranslationConfirmation: null,
-                invariantCulture: null,
-                replaceItemWithCurrentCultureConfirmation: null,
-                replaceItemWithCultureConfirmation: null
+                invariantLanguage: null,
+                replaceItemWithCurrentLanguageConfirmation: null,
+                replaceItemWithLanguageConfirmation: null
             };
         
         /**
         * Assign objects to module.
         */
-        pageCultures.links = links;
-        pageCultures.globalization = globalization;
-        pageCultures.selectors = selectors;
+        pageLanguages.links = links;
+        pageLanguages.globalization = globalization;
+        pageLanguages.selectors = selectors;
 
         /**
-        * Culture autocomplete list view model
+        * Untranslated pages autocomplete list view model
         */
         var UntranslatedPagesAutocompleteViewModel = (function (_super) {
             bcms.extendsClass(UntranslatedPagesAutocompleteViewModel, _super);
@@ -57,20 +57,20 @@
         })(autocomplete.AutocompleteViewModel);
 
         /**
-        * Page culture view model
+        * Page language view model
         */
-        pageCultures.PageCultureViewModel = function (cultures, cultureId) {
+        pageLanguages.PageLanguageViewModel = function (languages, languageId) {
             var self = this,
                 i, l;
 
-            self.cultureId = ko.observable(cultureId);
+            self.languageId = ko.observable(languageId);
 
-            self.cultures = [];
-            self.cultures.push({ key: '', value: '' });
-            for (i = 0, l = cultures.length; i < l; i++) {
-                self.cultures.push({
-                    key: cultures[i].Key,
-                    value: cultures[i].Value
+            self.languages = [];
+            self.languages.push({ key: '', value: '' });
+            for (i = 0, l = languages.length; i < l; i++) {
+                self.languages.push({
+                    key: languages[i].Key,
+                    value: languages[i].Value
                 });
             }
 
@@ -80,35 +80,35 @@
         /**
         * Page translations list view model
         */
-        pageCultures.PageTranslationsListViewModel = function (items, cultures, cultureId) {
+        pageLanguages.PageTranslationsListViewModel = function (items, languages, languageId) {
             var self = this;
 
-            self.culture = new pageCultures.PageCultureViewModel(cultures, cultureId);
+            self.language = new pageLanguages.PageLanguageViewModel(languages, languageId);
             self.items = ko.observableArray();
             self.isInAddMode = ko.observable(false);
             self.hasFocus = ko.observable(false);
-            self.addCultureId = ko.observable();
+            self.addLanguageId = ko.observable();
             self.addPageId = ko.observable();
             self.addPageTitle = ko.observable();
 
-            self.oldCurrentPageCultureId = cultureId;
-            self.pageCultureId = null;
+            self.oldCurrentPageLanguageId = languageId;
+            self.pageLanguageId = null;
             self.pageUrl = null;
             self.originalItems = [];
 
-            function onSelectPage(pageId, pageCultureId, pageTitle, pageUrl) {
-                var culturesList;
+            function onSelectPage(pageId, pageLanguageId, pageTitle, pageUrl) {
+                var languagesList;
 
-                self.pageCultureId = pageCultureId;
+                self.pageLanguageId = pageLanguageId;
                 self.pageUrl = pageUrl;
                 self.addPageId(pageId);
                 self.addPageTitle(pageTitle);
 
-                culturesList = self.addingPageCultures();
-                if (culturesList.length > 0) {
-                    self.addCultureId(culturesList[0].key);
+                languagesList = self.addingPageLanguages();
+                if (languagesList.length > 0) {
+                    self.addLanguageId(languagesList[0].key);
                 } else {
-                    self.addCultureId('');
+                    self.addLanguageId('');
                 }
 
                 return true;
@@ -117,10 +117,10 @@
             function closeAddMode() {
                 self.hasFocus(false);
                 self.isInAddMode(false);
-                self.addCultureId('');
+                self.addLanguageId('');
                 self.addPageId('');
 
-                self.pageCultureId = null;
+                self.pageLanguageId = null;
                 self.addPageTitle('');
                 self.pageUrl = null;
             }
@@ -164,7 +164,7 @@
 
                 params.ExcplicitlyIncludedPages = include;
                 params.ExistingItems = exclude;
-                params.ExcludedCultureId = self.culture.cultureId();
+                params.ExcludedLanguageId = self.language.languageId();
 
                 return params;
             }
@@ -173,7 +173,7 @@
                 return $.extend(getAdditionalParameters(), params);
             };
 
-            function onCultureChange(newValue) {
+            function onLanguageChange(newValue) {
                 var il = self.items().length,
                     i, item;
 
@@ -182,17 +182,17 @@
                 for (i = 0; i < il; i++) {
                     item = self.items()[i];
 
-                    if (item.cultureId() == newValue) {
+                    if (item.languageId() == newValue) {
                         modal.confirm({
-                            content: $.format(globalization.replaceItemWithCurrentCultureConfirmation, item.cultureName()),
+                            content: $.format(globalization.replaceItemWithCurrentLanguageConfirmation, item.languageName()),
                             onAccept: function () {
                                 self.items.remove(item);
-                                self.oldCurrentPageCultureId = newValue;
+                                self.oldCurrentPageLanguageId = newValue;
 
                                 return true;
                             },
                             onClose: function () {
-                                self.culture.cultureId(self.oldCurrentPageCultureId);
+                                self.language.languageId(self.oldCurrentPageLanguageId);
 
                                 return true;
                             }
@@ -204,10 +204,10 @@
             }
 
             self.autocompleteViewModel = new UntranslatedPagesAutocompleteViewModel(function (suggestionItem, jsonItem) {
-                return onSelectPage(suggestionItem.id(), jsonItem.CultureId, suggestionItem.name(), jsonItem.PageUrl);
+                return onSelectPage(suggestionItem.id(), jsonItem.LanguageId, suggestionItem.name(), jsonItem.PageUrl);
             }, setAdditionalParameters);
 
-            self.culture.cultureId.subscribe(onCultureChange);
+            self.language.languageId.subscribe(onLanguageChange);
 
             self.clickPlus = function () {
                 var isInAddMode = !self.isInAddMode();
@@ -220,9 +220,9 @@
             };
 
             self.selectPage = function() {
-                pageCultures.openPageSelectDialog({
+                pageLanguages.openPageSelectDialog({
                     onAccept: function (selectedPage) {
-                        onSelectPage(selectedPage.Id, selectedPage.CultureId, selectedPage.Title, selectedPage.PageUrl);
+                        onSelectPage(selectedPage.Id, selectedPage.LanguageId, selectedPage.Title, selectedPage.PageUrl);
                     },
                     params: getAdditionalParameters(),
                     url: links.searchUntranslatedPagesUrl
@@ -241,51 +241,51 @@
                 });
             };
 
-            self.addingPageCultures = ko.computed(function () {
+            self.addingPageLanguages = ko.computed(function () {
                 if (!self.addPageId()) {
                     return [];
                 }
 
-                var cult = [],
-                    li = self.culture.cultures.length,
-                    currentCultureId = self.culture.cultureId(),
-                    selectedCultureId = self.pageCultureId,
-                    i, culture;
+                var lang = [],
+                    li = self.language.languages.length,
+                    currentLanguageId = self.language.languageId(),
+                    selectedLanguageId = self.pageLanguageId,
+                    i, language;
 
                 for (i = 0; i < li; i++) {
-                    culture = self.culture.cultures[i];
+                    language = self.language.languages[i];
 
-                    if (culture.key != currentCultureId && (selectedCultureId == culture.key || !selectedCultureId)) {
-                        cult.push({
-                            key: culture.key || bcms.constants.emptyGuid,
-                            value: culture.value || globalization.invariantCulture
+                    if (language.key != currentLanguageId && (selectedLanguageId == language.key || !selectedLanguageId)) {
+                        lang.push({
+                            key: language.key || bcms.constants.emptyGuid,
+                            value: language.value || globalization.invariantLanguage
                         });
                     }
                 }
 
-                return cult;
+                return lang;
             });
 
             self.addTranslation = function () {
-                if (self.isInAddMode() && self.addCultureId() && self.addPageId()) {
-                    var currentCultureId = self.addCultureId() == bcms.constants.emptyGuid ? '' : self.addCultureId(),
+                if (self.isInAddMode() && self.addLanguageId() && self.addPageId()) {
+                    var currentLanguageId = self.addLanguageId() == bcms.constants.emptyGuid ? '' : self.addLanguageId(),
                         addTranslation = function (viewModel) {
-                            var li = self.culture.cultures.length,
-                                i, culture;
+                            var li = self.language.languages.length,
+                                i, language;
 
                             for (i = 0; i < li; i++) {
-                                culture = self.culture.cultures[i];
+                                language = self.language.languages[i];
 
-                                if (culture.key == currentCultureId) {
+                                if (language.key == currentLanguageId) {
                                     if (viewModel == null) {
-                                        viewModel = new pageCultures.PageTranslationViewModel(self);
+                                        viewModel = new pageLanguages.PageTranslationViewModel(self);
                                         self.items.push(viewModel);
                                     }
                                     viewModel.id(self.addPageId());
                                     viewModel.title(self.addPageTitle());
                                     viewModel.url(self.pageUrl);
-                                    viewModel.cultureId(currentCultureId);
-                                    viewModel.cultureName(culture.value || globalization.invariantCulture);
+                                    viewModel.languageId(currentLanguageId);
+                                    viewModel.languageName(language.value || globalization.invariantLanguage);
 
                                     closeAddMode();
                                 }
@@ -297,10 +297,10 @@
                     for (j = 0; j < lj; j++) {
                         item = self.items()[j];
 
-                        if (item.cultureId() == currentCultureId) {
+                        if (item.languageId() == currentLanguageId) {
                             self.hasFocus(false);
                             modal.confirm({
-                                content: globalization.replaceItemWithCultureConfirmation,
+                                content: globalization.replaceItemWithLanguageConfirmation,
                                 onAccept: function () {
                                     addTranslation(item);
 
@@ -322,30 +322,30 @@
                 }
 
                 var lj = items.length,
-                    li = self.culture.cultures.length,
-                    viewModel, i, j, culture, item, translation;
+                    li = self.language.languages.length,
+                    viewModel, i, j, language, item, translation;
 
-                // Add all available cultures
+                // Add all available languages
                 for (i = 0; i < li; i++) {
-                    culture = self.culture.cultures[i];
+                    language = self.language.languages[i];
                     translation = null;
 
                     for (j = 0; j < lj; j++) {
                         item = items[j];
 
-                        if ((item.CultureId || '') == culture.key) {
+                        if ((item.LanguageId || '') == language.key) {
                             translation = item;
                             break;
                         }
                     }
 
                     if (translation && translation.Id != bcms.pageId) {
-                        viewModel = new pageCultures.PageTranslationViewModel(self);
+                        viewModel = new pageLanguages.PageTranslationViewModel(self);
                         viewModel.id(translation.Id);
                         viewModel.title(translation.Title);
                         viewModel.url(translation.PageUrl);
-                        viewModel.cultureName(culture.value || globalization.invariantCulture);
-                        viewModel.cultureId(culture.key);
+                        viewModel.languageName(language.value || globalization.invariantLanguage);
+                        viewModel.languageId(language.key);
 
                         self.items.push(viewModel);
                         self.originalItems.push(translation.Id);
@@ -361,15 +361,15 @@
         /**
         * Page translation view model
         */
-        pageCultures.PageTranslationViewModel = function (culture, translation, parent) {
+        pageLanguages.PageTranslationViewModel = function (language, translation, parent) {
             var self = this;
 
             self.parent = parent;
             self.id = ko.observable(translation ? translation.Id : '');
             self.title = ko.observable(translation ? translation.Title : '');
             self.url = ko.observable(translation ? translation.PageUrl : '');
-            self.cultureName = ko.observable(culture ? culture.value || globalization.invariantCulture : '');
-            self.cultureId = ko.observable(culture ? culture.key : '');
+            self.languageName = ko.observable(language ? language.value || globalization.invariantLanguage : '');
+            self.languageId = ko.observable(language ? language.key : '');
 
             self.getPropertyIndexer = function (i, propName) {
                 return 'Translations[' + i + '].' + propName;
@@ -379,16 +379,16 @@
         };
 
         /**
-        * Initializes page cultures module.
+        * Initializes page languages module.
         */
-        pageCultures.init = function() {
-            bcms.logger.debug('Initializing bcms.pages.cultures module.');
+        pageLanguages.init = function() {
+            bcms.logger.debug('Initializing bcms.pages.languages module.');
         };
 
         /**
         * Register initialization
         */
-        bcms.registerInit(pageCultures.init);
+        bcms.registerInit(pageLanguages.init);
 
-        return pageCultures;
+        return pageLanguages;
     });

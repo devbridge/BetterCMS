@@ -8,25 +8,25 @@ using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Autocomplete;
 
-namespace BetterCms.Module.Root.Commands.Culture.SuggestCultures
+namespace BetterCms.Module.Root.Commands.Language.SuggestLanguages
 {
     /// <summary>
-    /// A command to get cultures list by filter.
+    /// A command to get languages list by filter.
     /// </summary>
-    public class SuggestCulturesCommand : CommandBase, ICommand<SuggestionViewModel, List<LookupKeyValue>>
+    public class SuggestLanguagesCommand : CommandBase, ICommand<SuggestionViewModel, List<LookupKeyValue>>
     {
         /// <summary>
         /// Executes this command.
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns>
-        /// A list of cultures.
+        /// A list of languages.
         /// </returns>
         public List<LookupKeyValue> Execute(SuggestionViewModel model)
         {
             var query = model.Query.ToLowerInvariant();
 
-            var alreadyAdded = Repository.AsQueryable<Models.Culture>().Select(c => c.Code).ToList();
+            var alreadyAdded = Repository.AsQueryable<Models.Language>().Select(c => c.Code).ToList();
             alreadyAdded.Add(System.Globalization.CultureInfo.InvariantCulture.Name);
 
             return System.Globalization.CultureInfo

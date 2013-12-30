@@ -36,9 +36,9 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         private ICategoryService categoryService;
 
         /// <summary>
-        /// The culture service
+        /// The language service
         /// </summary>
-        private ICultureService cultureService;
+        private ILanguageService languageService;
 
         /// <summary>
         /// The tag service
@@ -79,15 +79,15 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         /// <param name="cmsConfiguration">The CMS configuration.</param>
         /// <param name="layoutService">The layout service.</param>
         /// <param name="fileUrlResolver">The file URL resolver.</param>
-        /// <param name="cultureService">The culture service.</param>
+        /// <param name="languageService">The language service.</param>
         /// <param name="pageService">The page service.</param>
         public GetPagePropertiesCommand(ITagService tagService, ICategoryService categoryService, IOptionService optionService,
             ICmsConfiguration cmsConfiguration, ILayoutService layoutService, IMediaFileUrlResolver fileUrlResolver,
-            ICultureService cultureService, IPageService pageService)
+            ILanguageService languageService, IPageService pageService)
         {
             this.tagService = tagService;
             this.categoryService = categoryService;
-            this.cultureService = cultureService;
+            this.languageService = languageService;
             this.optionService = optionService;
             this.cmsConfiguration = cmsConfiguration;
             this.layoutService = layoutService;
@@ -126,7 +126,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                               TemplateId = page.Layout.Id,
                               MasterPageId = page.MasterPage.Id,
                               CategoryId = page.Category.Id,
-                              CultureId = page.Culture.Id,
+                              LanguageId = page.Language.Id,
                               AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled,
                               Image = page.Image == null || page.Image.IsDeleted ? null :
                                   new ImageSelectorViewModel
@@ -159,14 +159,14 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                                               FolderId = page.FeaturedImage.Folder != null ? page.FeaturedImage.Folder.Id : (Guid?)null
                                           }
                           },
-                        CultureGroupIdentifier = page.CultureGroupIdentifier
+                        LanguageGroupIdentifier = page.LanguageGroupIdentifier
                     })
                 .ToFuture();
 
             var tagsFuture = tagService.GetPageTagNames(id);
             var categories = categoryService.GetCategories();
             var customOptionsFuture = optionService.GetCustomOptionsFuture();
-            var culturesFuture = (cmsConfiguration.EnableMultilanguage) ? cultureService.GetCultures() : null;
+            var languagesFuture = (cmsConfiguration.EnableMultilanguage) ? languageService.GetLanguages() : null;
 
             IEnumerable<AccessRule> userAccessFuture;
             if (cmsConfiguration.Security.AccessControlEnabled)
@@ -200,13 +200,13 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 model.Model.Categories = categories;
                 model.Model.UpdateSitemap = true;
                 model.Model.CustomOptions = customOptionsFuture.ToList();
-                if (culturesFuture != null && !model.Model.IsMasterPage)
+                if (languagesFuture != null && !model.Model.IsMasterPage)
                 {
-                    model.Model.Cultures = culturesFuture.ToList();
+                    model.Model.Languages = languagesFuture.ToList();
                 }
-                if (cmsConfiguration.EnableMultilanguage && model.CultureGroupIdentifier.HasValue && !model.Model.IsMasterPage)
+                if (cmsConfiguration.EnableMultilanguage && model.LanguageGroupIdentifier.HasValue && !model.Model.IsMasterPage)
                 {
-                    model.Model.Translations = pageService.GetPageTranslations(model.CultureGroupIdentifier.Value).ToList();
+                    model.Model.Translations = pageService.GetPageTranslations(model.LanguageGroupIdentifier.Value).ToList();
                 }
 
                 // Get layout options, page options and merge them

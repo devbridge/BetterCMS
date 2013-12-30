@@ -21,12 +21,12 @@ namespace BetterCms.Module.Pages.ViewModels.Filter
         public string ExcplicitlyIncludedPages { get; set; }
 
         /// <summary>
-        /// Gets or sets the excluded culture id.
+        /// Gets or sets the excluded language id.
         /// </summary>
         /// <value>
-        /// The excluded culture id.
+        /// The excluded language id.
         /// </value>
-        public System.Guid? ExcludedCultureId { get; set; }
+        public System.Guid? ExcludedLanguageId { get; set; }
 
         /// <summary>
         /// Gets the excplicitly included pages array.

@@ -9,16 +9,16 @@ using BetterCms.Module.Root.Content.Resources;
 namespace BetterCms.Module.Pages.Registration
 {
     /// <summary>
-    /// bcms.pages.cultures.js module descriptor.
+    /// bcms.pages.languages.js module descriptor.
     /// </summary>
-    public class PagesCulturesJsModuleIncludeDescriptor : JsIncludeDescriptor
+    public class PagesLanguagesJsModuleIncludeDescriptor : JsIncludeDescriptor
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PagesCulturesJsModuleIncludeDescriptor" /> class.
+        /// Initializes a new instance of the <see cref="PagesLanguagesJsModuleIncludeDescriptor" /> class.
         /// </summary>
         /// <param name="module">The container module.</param>
-        public PagesCulturesJsModuleIncludeDescriptor(ModuleDescriptor module)
-            : base(module, "bcms.pages.cultures")
+        public PagesLanguagesJsModuleIncludeDescriptor(ModuleDescriptor module)
+            : base(module, "bcms.pages.languages")
         {
             Links = new IActionProjection[]
                 {
@@ -29,9 +29,9 @@ namespace BetterCms.Module.Pages.Registration
             Globalization = new IActionProjection[]
                 {
                     new JavaScriptModuleGlobalization(this, "unassignTranslationConfirmation", () => PagesGlobalization.EditPageTranslations_UnassignTranslation_ConfirmationMessage),
-                    new JavaScriptModuleGlobalization(this, "invariantCulture", () => RootGlobalization.InvariantCulture_Title),
-                    new JavaScriptModuleGlobalization(this, "replaceItemWithCurrentCultureConfirmation", () => PagesGlobalization.EditPageTranslations_ReplaceTranslationWithCurrentCulture_ConfirmationMessage),
-                    new JavaScriptModuleGlobalization(this, "replaceItemWithCultureConfirmation", () => PagesGlobalization.EditPageTranslations_ReplaceTranslationWithCulture_ConfirmationMessage)
+                    new JavaScriptModuleGlobalization(this, "invariantLanguage", () => RootGlobalization.InvariantLanguage_Title),
+                    new JavaScriptModuleGlobalization(this, "replaceItemWithCurrentLanguageConfirmation", () => PagesGlobalization.EditPageTranslations_ReplaceTranslationWithCurrentLanguage_ConfirmationMessage),
+                    new JavaScriptModuleGlobalization(this, "replaceItemWithLanguageConfirmation", () => PagesGlobalization.EditPageTranslations_ReplaceTranslationWithLanguage_ConfirmationMessage)
                 };
         }
     }

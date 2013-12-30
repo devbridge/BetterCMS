@@ -529,11 +529,11 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Culture created successfully.
+        ///   Looks up a localized string similar to Language created successfully.
         /// </summary>
-        public static string CreateCulture_CreatedSuccessfully_Message {
+        public static string CreateLanguage_CreatedSuccessfully_Message {
             get {
-                return ResourceManager.GetString("CreateCulture_CreatedSuccessfully_Message", resourceCulture);
+                return ResourceManager.GetString("CreateLanguage_CreatedSuccessfully_Message", resourceCulture);
             }
         }
         
@@ -565,29 +565,29 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to delete the culture {0}?.
+        ///   Looks up a localized string similar to Are you sure you want to delete the language {0}?.
         /// </summary>
-        public static string DeleteCulture_Confirmation_Message {
+        public static string DeleteLanguage_Confirmation_Message {
             get {
-                return ResourceManager.GetString("DeleteCulture_Confirmation_Message", resourceCulture);
+                return ResourceManager.GetString("DeleteLanguage_Confirmation_Message", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Culture deleted successfully.
+        ///   Looks up a localized string similar to Language deleted successfully.
         /// </summary>
-        public static string DeleteCulture_DeletedSuccessfully_Message {
+        public static string DeleteLanguage_DeletedSuccessfully_Message {
             get {
-                return ResourceManager.GetString("DeleteCulture_DeletedSuccessfully_Message", resourceCulture);
+                return ResourceManager.GetString("DeleteLanguage_DeletedSuccessfully_Message", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot delete culture {0}, because it&apos;s used in pages..
+        ///   Looks up a localized string similar to Cannot delete language {0}, because it&apos;s used in pages..
         /// </summary>
-        public static string DeleteCultureCommand_PagesAreUsingCulture_Message {
+        public static string DeleteLanguageCommand_PagesAreUsingLanguage_Message {
             get {
-                return ResourceManager.GetString("DeleteCultureCommand_PagesAreUsingCulture_Message", resourceCulture);
+                return ResourceManager.GetString("DeleteLanguageCommand_PagesAreUsingLanguage_Message", resourceCulture);
             }
         }
         
@@ -655,11 +655,11 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invariant culture.
+        ///   Looks up a localized string similar to Default language.
         /// </summary>
-        public static string InvariantCulture_Title {
+        public static string InvariantLanguage_Title {
             get {
-                return ResourceManager.GetString("InvariantCulture_Title", resourceCulture);
+                return ResourceManager.GetString("InvariantLanguage_Title", resourceCulture);
             }
         }
         
@@ -988,29 +988,29 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Culture with code {0} already exists..
+        ///   Looks up a localized string similar to Language with code {0} already exists..
         /// </summary>
-        public static string SaveCultureCommand_CodeAlreadyExists_Message {
+        public static string SaveLanguageCommand_CodeAlreadyExists_Message {
             get {
-                return ResourceManager.GetString("SaveCultureCommand_CodeAlreadyExists_Message", resourceCulture);
+                return ResourceManager.GetString("SaveLanguageCommand_CodeAlreadyExists_Message", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Culture {0} doesn&apos;t exist..
+        ///   Looks up a localized string similar to Language {0} doesn&apos;t exist..
         /// </summary>
-        public static string SaveCultureCommand_CultureNotExists_Message {
+        public static string SaveLanguageCommand_LanguageNotExists_Message {
             get {
-                return ResourceManager.GetString("SaveCultureCommand_CultureNotExists_Message", resourceCulture);
+                return ResourceManager.GetString("SaveLanguageCommand_LanguageNotExists_Message", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Culture with name {0} already exists..
+        ///   Looks up a localized string similar to Language with name {0} already exists..
         /// </summary>
-        public static string SaveCultureCommand_NameAlreadyExists_Message {
+        public static string SaveLanguageCommand_NameAlreadyExists_Message {
             get {
-                return ResourceManager.GetString("SaveCultureCommand_NameAlreadyExists_Message", resourceCulture);
+                return ResourceManager.GetString("SaveLanguageCommand_NameAlreadyExists_Message", resourceCulture);
             }
         }
         
@@ -1186,38 +1186,38 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Culture.
+        ///   Looks up a localized string similar to Language.
         /// </summary>
-        public static string SiteSettings_Cultures_Code_Title {
+        public static string SiteSettings_Languages_Code_Title {
             get {
-                return ResourceManager.GetString("SiteSettings_Cultures_Code_Title", resourceCulture);
+                return ResourceManager.GetString("SiteSettings_Languages_Code_Title", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Custom name.
         /// </summary>
-        public static string SiteSettings_Cultures_Name_Title {
+        public static string SiteSettings_Languages_Name_Title {
             get {
-                return ResourceManager.GetString("SiteSettings_Cultures_Name_Title", resourceCulture);
+                return ResourceManager.GetString("SiteSettings_Languages_Name_Title", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cultures.
+        ///   Looks up a localized string similar to Languages.
         /// </summary>
-        public static string SiteSettings_Cultures_Title {
+        public static string SiteSettings_Languages_Title {
             get {
-                return ResourceManager.GetString("SiteSettings_Cultures_Title", resourceCulture);
+                return ResourceManager.GetString("SiteSettings_Languages_Title", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cultures.
+        ///   Looks up a localized string similar to Languages.
         /// </summary>
-        public static string SiteSettings_CulturesMenuItem {
+        public static string SiteSettings_LanguagesMenuItem {
             get {
-                return ResourceManager.GetString("SiteSettings_CulturesMenuItem", resourceCulture);
+                return ResourceManager.GetString("SiteSettings_LanguagesMenuItem", resourceCulture);
             }
         }
         

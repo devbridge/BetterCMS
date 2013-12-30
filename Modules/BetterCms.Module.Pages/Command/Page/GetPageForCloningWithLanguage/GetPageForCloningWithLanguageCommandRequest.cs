@@ -1,6 +1,6 @@
-﻿namespace BetterCms.Module.Pages.Command.Page.GetPageForCloningWithCulture
+﻿namespace BetterCms.Module.Pages.Command.Page.GetPageForCloningWithLanguage
 {
-    public class GetPageForCloningWithCultureCommandRequest
+    public class GetPageForCloningWithLanguageCommandRequest
     {
         /// <summary>
         /// Gets or sets the page id.
@@ -11,11 +11,11 @@
         public System.Guid PageId { get; set; }
 
         /// <summary>
-        /// Gets or sets the culture id.
+        /// Gets or sets the language id.
         /// </summary>
         /// <value>
-        /// The culture id.
+        /// The language id.
         /// </value>
-        public System.Guid CultureId { get; set; }
+        public System.Guid LanguageId { get; set; }
     }
 }

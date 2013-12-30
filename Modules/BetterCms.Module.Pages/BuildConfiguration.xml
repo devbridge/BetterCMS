@@ -11,7 +11,7 @@
       <CssFiles Include="$(ProjectDir)Content\Styles\bcms.page.css" />
 
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.content.js" />
-      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.cultures.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.languages.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.history.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.pages.properties.js" />

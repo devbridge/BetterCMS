@@ -28,7 +28,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
     {
         private readonly ICategoryService categoryService;
 
-        private readonly ICultureService cultureService;
+        private readonly ILanguageService languageService;
 
         private readonly ICmsConfiguration configuration;
         
@@ -39,13 +39,13 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
         /// </summary>
         /// <param name="categoryService">The category service.</param>
         /// <param name="configuration">The configuration.</param>
-        /// <param name="cultureService">The culture service.</param>
+        /// <param name="languageService">The language service.</param>
         /// <param name="pageService">The page service.</param>
-        public GetPagesListCommand(ICategoryService categoryService, ICmsConfiguration configuration, ICultureService cultureService, IPageService pageService)
+        public GetPagesListCommand(ICategoryService categoryService, ICmsConfiguration configuration, ILanguageService languageService, IPageService pageService)
         {
             this.configuration = configuration;
             this.categoryService = categoryService;
-            this.cultureService = cultureService;
+            this.languageService = languageService;
             this.pageService = pageService;
         }
 
@@ -85,7 +85,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
                     .Select(() => alias.CreatedOn).WithAlias(() => modelAlias.CreatedOn)
                     .Select(() => alias.ModifiedOn).WithAlias(() => modelAlias.ModifiedOn)
                     .Select(() => alias.PageUrl).WithAlias(() => modelAlias.Url)
-                    .Select(() => alias.Culture.Id).WithAlias(() => modelAlias.CultureId))
+                    .Select(() => alias.Language.Id).WithAlias(() => modelAlias.LanguageId))
                 .TransformUsing(Transformers.AliasToBean<SiteSettingPageViewModel>());
 
             if (configuration.Security.AccessControlEnabled)
@@ -101,16 +101,16 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
             var count = query.ToRowCountFutureValue();
 
             var categoriesFuture = categoryService.GetCategories();
-            IEnumerable<LookupKeyValue> culturesFuture = configuration.EnableMultilanguage ? cultureService.GetCultures() : null;
+            IEnumerable<LookupKeyValue> languagesFuture = configuration.EnableMultilanguage ? languageService.GetLanguages() : null;
 
             var pages = query.AddSortingAndPaging(request).Future<SiteSettingPageViewModel>();
             
             var model = CreateModel(pages, request, count, categoriesFuture);
 
-            if (culturesFuture != null)
+            if (languagesFuture != null)
             {
-                model.Cultures = culturesFuture.ToList();
-                model.Cultures.Insert(0, cultureService.GetInvariantCultureModel());
+                model.Languages = languagesFuture.ToList();
+                model.Languages.Insert(0, languageService.GetInvariantLanguageModel());
             }
 
             return model;
@@ -160,15 +160,15 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
                 query = query.Where(Restrictions.Eq(Projections.Property(() => alias.Category.Id), request.CategoryId.Value));
             }
 
-            if (request.CultureId.HasValue)
+            if (request.LanguageId.HasValue)
             {
-                if (request.CultureId.Value.HasDefaultValue())
+                if (request.LanguageId.Value.HasDefaultValue())
                 {
-                    query = query.Where(Restrictions.IsNull(Projections.Property(() => alias.Culture.Id)));
+                    query = query.Where(Restrictions.IsNull(Projections.Property(() => alias.Language.Id)));
                 }
                 else
                 {
-                    query = query.Where(Restrictions.Eq(Projections.Property(() => alias.Culture.Id), request.CultureId.Value));
+                    query = query.Where(Restrictions.Eq(Projections.Property(() => alias.Language.Id), request.LanguageId.Value));
                 }
             }
 

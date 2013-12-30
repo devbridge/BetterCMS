@@ -128,9 +128,9 @@
     <Compile Include="Command\Layout\GetLayoutOptions\GetLayoutOptionsCommandRequest.cs" />
     <Compile Include="Command\Page\AddNewPage\AddNewPageCommand.cs" />
     <Compile Include="Command\Page\AddNewPage\AddNewPageCommandRequest.cs" />
-    <Compile Include="Command\Page\ClonePageWithCulture\ClonePageWithCultureCommand.cs" />
-    <Compile Include="Command\Page\GetPageForCloningWithCulture\GetPageForCloningWithCultureCommandRequest.cs" />
-    <Compile Include="Command\Page\GetPageForCloningWithCulture\GetPageForCloningWithCultureCommand.cs" />
+    <Compile Include="Command\Page\ClonePageWithLanguage\ClonePageWithLanguageCommand.cs" />
+    <Compile Include="Command\Page\GetPageForCloningWithLanguage\GetPageForCloningWithLanguageCommandRequest.cs" />
+    <Compile Include="Command\Page\GetPageForCloningWithLanguage\GetPageForCloningWithLanguageCommand.cs" />
     <Compile Include="Command\Page\GetUntranslatedPagesList\GetUntranslatedPagesListCommand.cs" />
     <Compile Include="Command\Page\SuggestPages\SuggestPagesCommand.cs" />
     <Compile Include="Command\Widget\PreviewWidget\PreviewWidgetCommand.cs" />
@@ -265,7 +265,7 @@
     <Compile Include="Accessors\HtmlContentWidgetAccessor.cs" />
     <Compile Include="Accessors\HtmlContentAccessor.cs" />
     <Compile Include="Accessors\ServerControlWidgetAccessor.cs" />
-    <Compile Include="Registration\PagesCulturesJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\PagesLanguagesJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\MasterPagesJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\HistoryJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\SitemapJsModuleIncludeDescriptor.cs" />
@@ -304,7 +304,7 @@
     <Compile Include="ViewModels\Filter\UntranslatedPagesGridViewModel.cs" />
     <Compile Include="ViewModels\History\ContentHistoryItem.cs" />
     <Compile Include="ViewModels\History\ContentHistoryViewModel.cs" />
-    <Compile Include="ViewModels\Page\ClonePageWithCultureViewModel.cs" />
+    <Compile Include="ViewModels\Page\ClonePageWithLanguageViewModel.cs" />
     <Compile Include="ViewModels\Page\PageLookupKeyValue.cs" />
     <Compile Include="ViewModels\Page\PageSuggestionViewModel.cs" />
     <Compile Include="ViewModels\Page\PageTranslationViewModel.cs" />
@@ -407,7 +407,7 @@
     <EmbeddedResource Include="Scripts\bcms.pages.properties.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.masterpage.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.cultures.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.languages.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -525,7 +525,7 @@
     <EmbeddedResource Include="Views\Page\ClonePage.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\ClonePageWithCulture.cshtml" />
+    <EmbeddedResource Include="Views\Page\ClonePageWithLanguage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Page\DeletePageConfirmation.cshtml" />

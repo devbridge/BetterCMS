@@ -2,8 +2,8 @@
 /*global bettercms */
 
 bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent',
-        'bcms.pages.properties', 'bcms.grid', 'bcms.redirect', 'bcms.messages', 'bcms.pages.filter', 'bcms.options', 'bcms.ko.extenders', 'bcms.security', 'bcms.sidemenu', 'bcms.datepicker', 'bcms.pages.cultures'],
-    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, grid, redirect, messages, filter, options, ko, security, sidemenu, datepicker, pageCultures) {
+        'bcms.pages.properties', 'bcms.grid', 'bcms.redirect', 'bcms.messages', 'bcms.pages.filter', 'bcms.options', 'bcms.ko.extenders', 'bcms.security', 'bcms.sidemenu', 'bcms.datepicker', 'bcms.pages.languages'],
+    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, grid, redirect, messages, filter, options, ko, security, sidemenu, datepicker, pageLanguages) {
         'use strict';
 
         var page = {},
@@ -56,7 +56,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 siteSettingPageHasSeoCell: '.bcms-page-hasseo',
 
                 clonePageForm: 'form:first',
-                cloneWithCultureGoToPagePropertiesLink: '#bcms-open-page-translations',
+                cloneWithLanguageGoToPagePropertiesLink: '#bcms-open-page-translations',
                 pagePropertiesTranslationsTab: '.bcms-tab-header .bcms-tab[data-name="#bcms-tab-5"]'
             },
             links = {
@@ -66,7 +66,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 deletePageConfirmationUrl: null,
                 changePublishStatusUrl: null,
                 clonePageDialogUrl: null,
-                clonePageWithCultureDialogUrl: null,
+                clonePageWithLanguageDialogUrl: null,
                 convertStringToSlugUrl: null,
                 loadSelectPageUrl: null,
             },
@@ -78,7 +78,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 pageDeletedTitle: null,
                 pageDeletedMessage: null,
                 clonePageDialogTitle: null,
-                clonePageWithCultureDialogTitle: null,
+                clonePageWithLanguageDialogTitle: null,
                 cloneButtonTitle: null,
                 deleteButtonTitle: null,
                 pageStatusChangeConfirmationMessagePublish: null,
@@ -155,10 +155,10 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         page.initAddNewPageDialogEvents = function (dialog, content) {
             var infoMessageClosed = localStorage.getItem(keys.addNewPageInfoMessageClosed),
                 optionsContainer = dialog.container.find(selectors.addNewPageOptionsTab),
-                cultureViewModel = content.Data.Cultures ? new pageCultures.PageCultureViewModel(content.Data.Cultures) : null,
+                languageViewModel = content.Data.Languages ? new pageLanguages.PageLanguageViewModel(content.Data.Languages) : null,
                 viewModel = {
                     accessControl: security.createUserAccessViewModel(content.Data.UserAccessList),
-                    culture: cultureViewModel,
+                    language: languageViewModel,
                     options: options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues, content.Data.CustomOptions)
                 };
 
@@ -561,7 +561,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                     page.siteSettingsSetBooleanTemplate(newRow.find(selectors.siteSettingPageHasSeoCell), data.Data.HasSEO);
                     
                     newRow.find(selectors.siteSettingPageTitleCell).data('url', data.Data.PageUrl);
-                    newRow.find(selectors.siteSettingPageTitleCell).data('cultureId', data.Data.CultureId);
+                    newRow.find(selectors.siteSettingPageTitleCell).data('languageId', data.Data.LanguageId);
                     newRow.find(selectors.siteSettingsPageEditButton).data('id', data.Data.PageId);
                     newRow.find(selectors.siteSettingsPageDeleteButton).data('id', data.Data.PageId);
                     newRow.find(selectors.siteSettingsPageDeleteButton).data('version', data.Data.Version);
@@ -721,11 +721,11 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         * Opens dialog for cloning the page to different cultre
         */
         page.translatePage = function () {
-            var url = $.format(links.clonePageWithCultureDialogUrl, bcms.pageId),
-                title = globalization.clonePageWithCultureDialogTitle;
+            var url = $.format(links.clonePageWithLanguageDialogUrl, bcms.pageId),
+                title = globalization.clonePageWithLanguageDialogTitle;
 
             clonePage(url, title, function(clonePageDialog) {
-                clonePageDialog.container.find(selectors.cloneWithCultureGoToPagePropertiesLink).on('click', function() {
+                clonePageDialog.container.find(selectors.cloneWithLanguageGoToPagePropertiesLink).on('click', function () {
                     clonePageDialog.close();
                     pageProperties.editPageProperties(function (pagePropertiesDialog) {
                         // Open translations tab
@@ -829,7 +829,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                                 Id: id,
                                 Title: titleLink.html(),
                                 PageUrl: titleLink.data('url'),
-                                CultureId: titleLink.data('cultureId')
+                                LanguageId: titleLink.data('languageId')
                             });
                         }
                     }
@@ -849,8 +849,8 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
             initializeCustomValidation();
 
-            // Pass method to page cultures (it can be reached directly because of circular references)
-            pageCultures.openPageSelectDialog = page.openPageSelectDialog;
+            // Pass method to page languagess (it can be reached directly because of circular references)
+            pageLanguages.openPageSelectDialog = page.openPageSelectDialog;
         };
 
         /**

@@ -67,10 +67,10 @@ namespace BetterCms.Module.Pages.Command.Page.SuggestPages
                 }
             }
 
-            if (model.ExcludedCultureId.HasValue)
+            if (model.ExcludedLanguageId.HasValue)
             {
-                var cultureProxy = Repository.AsProxy<Root.Models.Culture>(model.ExcludedCultureId.Value);
-                query = query.Where(q => (q.Culture != cultureProxy || q.Culture == null));
+                var languageProxy = Repository.AsProxy<Root.Models.Language>(model.ExcludedLanguageId.Value);
+                query = query.Where(q => (q.Language != languageProxy || q.Language == null));
             }
 
             if (!model.IncludeMasterPages)
@@ -81,7 +81,7 @@ namespace BetterCms.Module.Pages.Command.Page.SuggestPages
             var predicateBuilder = PredicateBuilder.False<PageProperties>();
             if (model.OnlyUntranslatedPages)
             {
-                predicateBuilder = predicateBuilder.Or(page => page.CultureGroupIdentifier == null);
+                predicateBuilder = predicateBuilder.Or(page => page.LanguageGroupIdentifier == null);
             }
             var includeIds = model.ExcplicitlyIncludedPagesArray;
             if (includeIds.Any())
@@ -104,7 +104,7 @@ namespace BetterCms.Module.Pages.Command.Page.SuggestPages
                                     {
                                         Key = page.Id.ToString().ToLowerInvariant(),
                                         Value = page.Title,
-                                        CultureId = page.Culture != null ? page.Culture.Id : (Guid?) null,
+                                        LanguageId = page.Language != null ? page.Language.Id : (Guid?) null,
                                         PageUrl = page.PageUrl
                                     })
                 .ToList();

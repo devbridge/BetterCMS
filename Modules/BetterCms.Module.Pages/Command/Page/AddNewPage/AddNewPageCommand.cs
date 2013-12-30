@@ -29,7 +29,7 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
 
         private readonly IRepository repository;
         
-        private readonly ICultureService cultureService;
+        private readonly ILanguageService languageService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AddNewPageCommand" /> class.
@@ -40,10 +40,10 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
         /// <param name="optionService">The option service.</param>
         /// <param name="masterPageService">The master page service.</param>
         /// <param name="repository">The repository.</param>
-        /// <param name="cultureService">The culture service.</param>
+        /// <param name="languageService">The language service.</param>
         public AddNewPageCommand(ILayoutService LayoutService, ICmsConfiguration cmsConfiguration,
             ISecurityService securityService, IOptionService optionService,
-            IMasterPageService masterPageService, IRepository repository, ICultureService cultureService)
+            IMasterPageService masterPageService, IRepository repository, ILanguageService languageService)
         {
             layoutService = LayoutService;
             this.cmsConfiguration = cmsConfiguration;
@@ -51,7 +51,7 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
             this.optionService = optionService;
             this.masterPageService = masterPageService;
             this.repository = repository;
-            this.cultureService = cultureService;
+            this.languageService = languageService;
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
                 AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent);
             }
 
-            var culturesFuture = (cmsConfiguration.EnableMultilanguage && !request.CreateMasterPage) ? cultureService.GetCultures() : null;
+            var languagesFuture = (cmsConfiguration.EnableMultilanguage && !request.CreateMasterPage) ? languageService.GetLanguages() : null;
 
             var principal = securityService.GetCurrentPrincipal();
             var model = new AddNewPageViewModel
@@ -82,9 +82,9 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
                     CreateMasterPage = request.CreateMasterPage,
                 };
 
-            if (culturesFuture != null)
+            if (languagesFuture != null)
             {
-                model.Cultures = culturesFuture.ToList();
+                model.Languages = languagesFuture.ToList();
             }
 
             if (model.Templates.Count > 0)

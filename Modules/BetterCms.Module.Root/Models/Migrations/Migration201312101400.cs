@@ -18,25 +18,25 @@ namespace BetterCms.Module.Root.Models.Migrations
 
         public override void Up()
         {
-            CreateCulturesTable();
-        }       
+            CreateLanguagesTable();
+        }
 
-        private void CreateCulturesTable()
+        private void CreateLanguagesTable()
         {
             Create
-                .Table("Cultures").InSchema(SchemaName)
+                .Table("Languages").InSchema(SchemaName)
                 .WithCmsBaseColumns()
                 .WithColumn("Name").AsString(MaxLength.Name).NotNullable()
                 .WithColumn("Code").AsString(MaxLength.Name).NotNullable();
 
             Create
-                .UniqueConstraint("UX_Cms_Cultures_Name")
-                .OnTable("Cultures").WithSchema(SchemaName)
+                .UniqueConstraint("UX_Cms_Languages_Name")
+                .OnTable("Languages").WithSchema(SchemaName)
                 .Columns(new[] { "Name", "DeletedOn" });
             
             Create
-                .UniqueConstraint("UX_Cms_Cultures_Code")
-                .OnTable("Cultures").WithSchema(SchemaName)
+                .UniqueConstraint("UX_Cms_Languages_Code")
+                .OnTable("Languages").WithSchema(SchemaName)
                 .Columns(new[] { "Code", "DeletedOn" });
         }
     }

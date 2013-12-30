@@ -25,12 +25,12 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public bool IncludeMasterPages { get; set; }
 
         /// <summary>
-        /// Gets or sets the excluded culture id.
+        /// Gets or sets the excluded language id.
         /// </summary>
         /// <value>
-        /// The excluded culture id.
+        /// The excluded language id.
         /// </value>
-        public Guid? ExcludedCultureId { get; set; }
+        public Guid? ExcludedLanguageId { get; set; }
 
         /// <summary>
         /// Gets or sets the excplicitly included pages.
@@ -76,11 +76,11 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public override string ToString()
         {
             return string.Format(
-                "{0}, ExcplicitlyIncludedPages: {1}, OnlyUntranslatedPages: {2}, ExcludedCultureId: {3}",
+                "{0}, ExcplicitlyIncludedPages: {1}, OnlyUntranslatedPages: {2}, ExcludedLanguageId: {3}",
                 base.ToString(),
                 ExcplicitlyIncludedPages,
                 OnlyUntranslatedPages,
-                ExcludedCultureId);
+                ExcludedLanguageId);
         }
     }
 }

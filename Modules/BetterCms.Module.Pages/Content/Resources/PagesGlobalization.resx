@@ -1167,11 +1167,11 @@
   <data name="RestoreContent_ContentHasChildrenContents_RegionDeleteConfirmationMessage" xml:space="preserve">
     <value>You are trying to restore content without dynamic regions currently exist. There are some children pages, which have contents created within these regions. If you restore this version regions will be deleted, children page contens will be deleted also. Anyway, you can restore them by restoring archived version of the current content. &lt;br /&gt;&lt;br /&gt;Are you sure you want to continue?</value>
   </data>
-  <data name="AddNewPage_Culture" xml:space="preserve">
-    <value>Choose page culture (language)</value>
+  <data name="AddNewPage_Language" xml:space="preserve">
+    <value>Choose page language</value>
   </data>
-  <data name="AddNewPage_Culture_Tooltip_Description" xml:space="preserve">
-    <value>Choose current page culture, which will be used in sitemap and determines the language of the page</value>
+  <data name="AddNewPage_Language_Tooltip_Description" xml:space="preserve">
+    <value>Choose language for current page, which will be used in sitemap and determines the language and culture of the page</value>
   </data>
   <data name="Sidebar_TranslatePageButtonTitle" xml:space="preserve">
     <value>Translate page</value>
@@ -1179,8 +1179,8 @@
   <data name="EditPageTranslations_Dialog_Title" xml:space="preserve">
     <value>Edit page translations</value>
   </data>
-  <data name="PageTranslations_Culture_Title" xml:space="preserve">
-    <value>Culture</value>
+  <data name="PageTranslations_Language_Title" xml:space="preserve">
+    <value>Language</value>
   </data>
   <data name="PageTranslations_PageTitle_Title" xml:space="preserve">
     <value>Page Title</value>
@@ -1188,8 +1188,8 @@
   <data name="PageTranslations_Assign_ButtonTitle" xml:space="preserve">
     <value>Assign</value>
   </data>
-  <data name="SiteSettings_Pages_FilterByCulture" xml:space="preserve">
-    <value>By Culture</value>
+  <data name="SiteSettings_Pages_FilterByLanguage" xml:space="preserve">
+    <value>By Language</value>
   </data>
   <data name="SelectPage_Dialog_Title" xml:space="preserve">
     <value>Select page</value>
@@ -1206,65 +1206,65 @@
   <data name="EditPageTranslations_UnassignTranslation_ConfirmationMessage" xml:space="preserve">
     <value>Are you sure you want to remove this translation?</value>
   </data>
-  <data name="ClonePageWithCulture_Dialog_ConfirmationMessage_Header" xml:space="preserve">
-    <value>Are you sure you want to clone this page?</value>
+  <data name="ClonePageWithLanguage_Dialog_ConfirmationMessage_Header" xml:space="preserve">
+    <value>Are you sure you want to translate this page?</value>
   </data>
-  <data name="ClonePageWithCulture_Dialog_ConfirmationMessage_Text" xml:space="preserve">
-    <value>You are going to copy all content and properties from the current page and created page will be created with another culture and linked with the current page.</value>
+  <data name="ClonePageWithLanguage_Dialog_ConfirmationMessage_Text" xml:space="preserve">
+    <value>You are going to create new page and copy all content and properties from the current page. Your selected language will be assigned to created page and page will be linked with the current page.</value>
   </data>
-  <data name="ClonePageWithCulture_Dialog_Title" xml:space="preserve">
+  <data name="ClonePageWithLanguage_Dialog_Title" xml:space="preserve">
     <value>Translate page</value>
   </data>
   <data name="EditPageProperties_TranslationsTab_Title" xml:space="preserve">
     <value>Translations</value>
   </data>
-  <data name="EditPageProperties_TranslationsTab_Culture" xml:space="preserve">
-    <value>Current page culture</value>
+  <data name="EditPageProperties_TranslationsTab_Language" xml:space="preserve">
+    <value>Current page language</value>
   </data>
-  <data name="EditPageProperties_TranslationsTab_Culture_Tooltip_Description" xml:space="preserve">
-    <value>Edit current page culture, which will be used in sitemap and determines the language of the page</value>
+  <data name="EditPageProperties_TranslationsTab_Language_Tooltip_Description" xml:space="preserve">
+    <value>Edit current page language, which will be used in sitemap and determines the language and the culture of the page</value>
   </data>
-  <data name="SavePagePropertiesCommand_PageHasTranslationsWithItsCulture_Message" xml:space="preserve">
-    <value>Page cannot contain translations with the same culture as itself.</value>
+  <data name="SavePagePropertiesCommand_PageHasTranslationsWithItsLanguage_Message" xml:space="preserve">
+    <value>Page cannot contain translations to the same language as itself.</value>
   </data>
   <data name="SavePagePropertiesCommand_PageHasTranslationsWithItsId_Message" xml:space="preserve">
     <value>Page cannot be added itself to tranlations list.</value>
   </data>
-  <data name="SavePagePropertiesCommand_PageHasTranslationsWithSameCulture_Message" xml:space="preserve">
-    <value>Page cannot contain two or more translations with the same culture.</value>
+  <data name="SavePagePropertiesCommand_PageHasTranslationsWithSameLanguage_Message" xml:space="preserve">
+    <value>Page cannot contain two or more translations to the same language.</value>
   </data>
-  <data name="SavePagePropertiesCommand_PageTranslationsHasDifferentCultureId_Message" xml:space="preserve">
-    <value>Page {0} cannot be assigned as translation, because it has assigned another culture.</value>
+  <data name="SavePagePropertiesCommand_PageTranslationsHasDifferentLanguage_Message" xml:space="preserve">
+    <value>Page {0} cannot be assigned as translation, because it has assigned another language.</value>
   </data>
   <data name="SavePagePropertiesCommand_PageTranslationsIsAlreadyAssigned_Message" xml:space="preserve">
     <value>Page {0} cannot be assigned as translation, because it's already assigned to another page.</value>
   </data>
-  <data name="ClonePageWithCulture_Dialog_Culture_Title" xml:space="preserve">
-    <value>Culture</value>
+  <data name="ClonePageWithLanguage_Dialog_Language_Title" xml:space="preserve">
+    <value>New Page Language</value>
   </data>
-  <data name="ClonePageWithCulture_Dialog_Culture_Tootlip" xml:space="preserve">
-    <value>Choose creating page culture, which will be used in sitemap and determines the language of the page</value>
+  <data name="ClonePageWithLanguage_Dialog_Language_Tootlip" xml:space="preserve">
+    <value>Choose creating page language, which will be used in sitemap and determines the language and culture of the page</value>
   </data>
-  <data name="ClonePageWithCulture_Culture_RequiredMessage" xml:space="preserve">
-    <value>Page culture is requred field.</value>
+  <data name="ClonePageWithLanguage_Language_RequiredMessage" xml:space="preserve">
+    <value>Page language is requred field.</value>
   </data>
-  <data name="ClonePageWithCulture_PageHasAllTranslations_Message" xml:space="preserve">
-    <value>Current page already has translations in all the available languages.</value>
+  <data name="ClonePageWithLanguage_PageHasAllTranslations_Message" xml:space="preserve">
+    <value>Current page already has translations to all the available languages.</value>
   </data>
-  <data name="ClonePageWithCulture_PageAlreadyHasSuchTranslation_Message" xml:space="preserve">
-    <value>Page already has translation for specified culture.</value>
+  <data name="ClonePageWithLanguage_PageAlreadyHasSuchTranslation_Message" xml:space="preserve">
+    <value>Page already has translation to the specified language.</value>
   </data>
-  <data name="EditPageTranslations_ReplaceTranslationWithCulture_ConfirmationMessage" xml:space="preserve">
-    <value>There is already an item with selected culture. Are you sure you want to replace it?</value>
+  <data name="EditPageTranslations_ReplaceTranslationWithLanguage_ConfirmationMessage" xml:space="preserve">
+    <value>There is already an item with selected language. Are you sure you want to replace it?</value>
   </data>
-  <data name="EditPageTranslations_ReplaceTranslationWithCurrentCulture_ConfirmationMessage" xml:space="preserve">
-    <value>There is already translation with current culture. If you change current page's culture to {0}, translation will be removed from list. Are you sure you want to continue?</value>
+  <data name="EditPageTranslations_ReplaceTranslationWithCurrentLanguage_ConfirmationMessage" xml:space="preserve">
+    <value>There is already translation with current language. If you change current page's language to {0}, translation will be removed from list. Are you sure you want to continue?</value>
   </data>
   <data name="EditPageTranslations_AddTranslation_ButtonTitle" xml:space="preserve">
     <value>Add Translation</value>
   </data>
-  <data name="EditPageTranslations_Culture_Title" xml:space="preserve">
-    <value>Culture</value>
+  <data name="EditPageTranslations_Language_Title" xml:space="preserve">
+    <value>Language</value>
   </data>
   <data name="EditPageTranslations_OtherLanguages_Title" xml:space="preserve">
     <value>Other languages</value>
@@ -1276,12 +1276,12 @@
     <value>Page Url</value>
   </data>
   <data name="EditPageTranslations_OtherLanguages_Tooltip" xml:space="preserve">
-    <value>Current page translations - another pages with different culture, which are associated with current page.</value>
+    <value>Current page translations - another pages with different language, which are associated with current page.</value>
   </data>
   <data name="SavePagePropertiesCommand_PageTranslationsIsMasterPage_Message" xml:space="preserve">
     <value>Master pages cannot be assigned as translation.</value>
   </data>
-  <data name="ClonePageWithCulture_Dialog_GoToPageProperties" xml:space="preserve">
+  <data name="ClonePageWithLanguage_Dialog_GoToPageProperties" xml:space="preserve">
     <value>Open &lt;a href="#" id="bcms-open-page-translations"&gt;page translations&lt;/a&gt; list.</value>
   </data>
 </root>

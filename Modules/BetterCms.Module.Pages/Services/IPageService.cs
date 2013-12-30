@@ -29,11 +29,11 @@ namespace BetterCms.Module.Pages.Services
         /// <summary>
         /// Gets the list of page translation view models.
         /// </summary>
-        /// <param name="cultureGroupIdentifier">Culture group identifier.</param>
+        /// <param name="languageGroupIdentifier">Language group identifier.</param>
         /// <returns>
         /// The list of page translation view models
         /// </returns>
-        IEnumerable<PageTranslationViewModel> GetPageTranslations(Guid cultureGroupIdentifier);
+        IEnumerable<PageTranslationViewModel> GetPageTranslations(Guid languageGroupIdentifier);
 
         /// <summary>
         /// Gets the list of denied pages ids.

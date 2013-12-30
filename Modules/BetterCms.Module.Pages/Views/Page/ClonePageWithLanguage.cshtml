@@ -5,26 +5,26 @@
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
 
-@model ClonePageWithCultureViewModel
+@model ClonePageWithLanguageViewModel
 
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
     <div class="bcms-padded-content">
-        @if (Model.Cultures.Any())
+        @if (Model.Languages.Any())
         {
-            using (Html.BeginForm<PageController>(f => f.ClonePageWithCulture((string)null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
+            using (Html.BeginForm<PageController>(f => f.ClonePageWithLanguage((string)null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
             {
                 <div class="bcms-input-list-holder">
-                    <div class="bcms-content-titles">@PagesGlobalization.ClonePageWithCulture_Dialog_ConfirmationMessage_Header</div>
-                    <div>@PagesGlobalization.ClonePageWithCulture_Dialog_ConfirmationMessage_Text</div>
+                    <div class="bcms-content-titles">@PagesGlobalization.ClonePageWithLanguage_Dialog_ConfirmationMessage_Header</div>
+                    <div>@PagesGlobalization.ClonePageWithLanguage_Dialog_ConfirmationMessage_Text</div>
                 </div>
 
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.ClonePageWithCulture_Dialog_Culture_Tootlip)
-                    <div class="bcms-content-titles">@PagesGlobalization.ClonePageWithCulture_Dialog_Culture_Title</div>
+                    @Html.Tooltip(PagesGlobalization.ClonePageWithLanguage_Dialog_Language_Tootlip)
+                    <div class="bcms-content-titles">@PagesGlobalization.ClonePageWithLanguage_Dialog_Language_Title</div>
                     <div class="bcms-input-box">
-                        @Html.DropDownListFor(model => model.CultureId, Model.Cultures.ToSelectList(Model.CultureId), string.Empty, new { @class = "bcms-global-select" })
-                        @Html.BcmsValidationMessageFor(f => f.CultureId)
+                        @Html.DropDownListFor(model => model.LanguageId, Model.Languages.ToSelectList(Model.LanguageId), string.Empty, new { @class = "bcms-global-select" })
+                        @Html.BcmsValidationMessageFor(f => f.LanguageId)
                     </div>
                 </div>
 
@@ -45,13 +45,13 @@
                 }
 
                 @Html.HiddenFor(m => m.PageId)
-                @Html.HiddenFor(m => m.CultureId)
+                @Html.HiddenFor(m => m.LanguageId)
                 @Html.HiddenSubmit()
             }
         }
         else
         {
-            <h4>@Html.Raw(PagesGlobalization.ClonePageWithCulture_Dialog_GoToPageProperties)</h4>
+            <h4>@Html.Raw(PagesGlobalization.ClonePageWithLanguage_Dialog_GoToPageProperties)</h4>
         }
     </div>
 </div>

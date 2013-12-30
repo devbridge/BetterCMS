@@ -28,7 +28,7 @@
 
         column.For(m => string.Format("<a class=\"bcms-tables-link bcms-page-title\" data-id=\"{0}\" data-url=\"{2}\"{3}>{1}</a>",
             m.Id, m.Title, m.Url,
-            (CmsContext.Config.EnableMultilanguage ? string.Format("data-culture-id=\"{0}\"", m.CultureId) : "")))
+            (CmsContext.Config.EnableMultilanguage ? string.Format("data-language-id=\"{0}\"", m.LanguageId) : "")))
             .Named(PagesGlobalization.SiteSettings_Pages_TitleColumn)
             .SortColumnName("Title")
             .Attributes()

@@ -129,9 +129,9 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
 
             if (cmsConfiguration.EnableMultilanguage)
             {
-                if (request.CultureId.HasValue && !request.CultureId.Value.HasDefaultValue())
+                if (request.LanguageId.HasValue && !request.LanguageId.Value.HasDefaultValue())
                 {
-                    page.Culture = Repository.AsProxy<Culture>(request.CultureId.Value);
+                    page.Language = Repository.AsProxy<Language>(request.LanguageId.Value);
                 }
             }
 

@@ -91,12 +91,12 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         public bool IsMasterPage { get; set; }
 
         /// <summary>
-        /// Gets or sets the culture id.
+        /// Gets or sets the language id.
         /// </summary>
         /// <value>
-        /// The culture id.
+        /// The language id.
         /// </value>
-        public Guid? CultureId { get; set; }
+        public Guid? LanguageId { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SavePageResponse" /> class.
@@ -113,7 +113,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             PageUrl = page.PageUrl;
             IsArchived = page.IsArchived;
             IsMasterPage = page.IsMasterPage;
-            CultureId = page.Culture != null ? page.Culture.Id : (Guid?)null;
+            LanguageId = page.Language != null ? page.Language.Id : (Guid?)null;
         }
     }
 }

@@ -18,24 +18,14 @@ namespace BetterCms.Module.Root.Models.Migrations
         public override void Up()
         {
             Create
-                .Column("CultureId")
+                .Column("LanguageId")
                 .OnTable("Pages").InSchema(SchemaName)
                 .AsGuid().Nullable();
 
             Create
-                .ForeignKey("FK_Cms_Pages_Cms_Cultures")
-                .FromTable("Pages").InSchema(SchemaName).ForeignColumn("CultureId")
-                .ToTable("Cultures").InSchema(SchemaName).PrimaryColumn("Id");
-
-            Create
-                .Column("MainCulturePageId")
-                .OnTable("Pages").InSchema(SchemaName)
-                .AsGuid().Nullable();
-
-            Create
-                .ForeignKey("FK_Cms_Pages_MainCulturePageId_Cms_Pages_Id")
-                .FromTable("Pages").InSchema(SchemaName).ForeignColumn("MainCulturePageId")
-                .ToTable("Pages").InSchema(SchemaName).PrimaryColumn("Id");
+                .ForeignKey("FK_Cms_Pages_Cms_Languages")
+                .FromTable("Pages").InSchema(SchemaName).ForeignColumn("LanguageId")
+                .ToTable("Languages").InSchema(SchemaName).PrimaryColumn("Id");
         }       
     }
 }

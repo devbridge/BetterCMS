@@ -50,13 +50,13 @@ namespace BetterCms.Module.Pages.Services
             return ClonePage(pageId, pageTitle, pageUrl, userAccessList, cloneAsMasterPage, null, null);
         }
 
-        public PageProperties ClonePageWithCulture(System.Guid pageId, string pageTitle, string pageUrl, IEnumerable<IAccessRule> userAccessList, System.Guid cultureId, System.Guid cultureGroupIdentifier)
+        public PageProperties ClonePageWithLanguage(System.Guid pageId, string pageTitle, string pageUrl, IEnumerable<IAccessRule> userAccessList, System.Guid languageId, System.Guid languageGroupIdentifier)
         {
-            return ClonePage(pageId, pageTitle, pageUrl, userAccessList, false, cultureId, cultureGroupIdentifier);
+            return ClonePage(pageId, pageTitle, pageUrl, userAccessList, false, languageId, languageGroupIdentifier);
         }
 
         private PageProperties ClonePage(System.Guid pageId, string pageTitle, string pageUrl,
-            IEnumerable<IAccessRule> userAccessList, bool cloneAsMasterPage, System.Guid? cultureId, System.Guid? cultureGroupIdentifier)
+            IEnumerable<IAccessRule> userAccessList, bool cloneAsMasterPage, System.Guid? languageId, System.Guid? languageGroupIdentifier)
         {
             var principal = securityService.GetCurrentPrincipal();
 
@@ -91,7 +91,7 @@ namespace BetterCms.Module.Pages.Services
                 .FetchMany(f => f.MasterPages).ThenFetch(f => f.Master)
                 .ToList().FirstOne();
 
-            ValidateCloningPage(page, cultureId, cultureGroupIdentifier);
+            ValidateCloningPage(page, languageId, languageGroupIdentifier);
 
             unitOfWork.BeginTransaction();
 
@@ -110,20 +110,20 @@ namespace BetterCms.Module.Pages.Services
 
             // Clone page with security
             var newPage = ClonePageOnly(page, userAccessList, pageTitle, pageUrl, cloneAsMasterPage);
-            if (cultureId.HasValue)
+            if (languageId.HasValue)
             {
-                if (cultureId.Value.HasDefaultValue())
+                if (languageId.Value.HasDefaultValue())
                 {
-                    newPage.Culture = null;
+                    newPage.Language = null;
                 }
                 else
                 {
-                    newPage.Culture = repository.AsProxy<Culture>(cultureId.Value);
+                    newPage.Language = repository.AsProxy<Language>(languageId.Value);
                 }
             }
-            if (cultureGroupIdentifier.HasValue)
+            if (languageGroupIdentifier.HasValue)
             {
-                newPage.CultureGroupIdentifier = cultureGroupIdentifier.Value;
+                newPage.LanguageGroupIdentifier = languageGroupIdentifier.Value;
             }
             repository.Save(newPage);
 
@@ -139,9 +139,9 @@ namespace BetterCms.Module.Pages.Services
             // Clone master pages
             masterPages.ForEach(masterPage => CloneMasterPages(masterPage, newPage));
 
-            if (cultureGroupIdentifier.HasValue && !page.CultureGroupIdentifier.HasValue)
+            if (languageGroupIdentifier.HasValue && !page.LanguageGroupIdentifier.HasValue)
             {
-                page.CultureGroupIdentifier = cultureGroupIdentifier.Value;
+                page.LanguageGroupIdentifier = languageGroupIdentifier.Value;
                 repository.Save(page);
             }
 
@@ -193,7 +193,7 @@ namespace BetterCms.Module.Pages.Services
             {
                 newPage.IsMasterPage = true;
                 newPage.Status = PageStatus.Published;
-                newPage.Culture = null;
+                newPage.Language = null;
             }
 
             // Add security.
@@ -317,26 +317,26 @@ namespace BetterCms.Module.Pages.Services
             repository.Save(newMasterPage);
         }
 
-        private void ValidateCloningPage(PageProperties page, System.Guid? cultureId, System.Guid? cultureGroupIdentifier)
+        private void ValidateCloningPage(PageProperties page, System.Guid? languageId, System.Guid? languageGroupIdentifier)
         {
-            // Validate request, if cloning page with culture
-            if (cultureGroupIdentifier.HasValue)
+            // Validate request, if cloning page with language
+            if (languageGroupIdentifier.HasValue)
             {
-                var query = repository.AsQueryable<Page>().Where(p => p.CultureGroupIdentifier == cultureGroupIdentifier);
-                if (cultureId.HasValue && !cultureId.Value.HasDefaultValue())
+                var query = repository.AsQueryable<Page>().Where(p => p.LanguageGroupIdentifier == languageGroupIdentifier);
+                if (languageId.HasValue && !languageId.Value.HasDefaultValue())
                 {
-                    var culture = repository.AsProxy<Culture>(cultureId.Value);
-                    query = query.Where(p => p.Culture == culture);
+                    var language = repository.AsProxy<Language>(languageId.Value);
+                    query = query.Where(p => p.Language == language);
                 }
                 else
                 {
-                    query = query.Where(p => p.Culture == null);
+                    query = query.Where(p => p.Language == null);
                 }
 
                 if (query.Any())
                 {
-                    var logMessage = string.Format("Page already has translations for culture. Id: {0}, CultureId: {1}", page.Id, cultureId);
-                    throw new ValidationException(() => PagesGlobalization.ClonePageWithCulture_PageAlreadyHasSuchTranslation_Message, logMessage);
+                    var logMessage = string.Format("Page already has translations for language. Id: {0}, LanguageId: {1}", page.Id, languageId);
+                    throw new ValidationException(() => PagesGlobalization.ClonePageWithLanguage_PageAlreadyHasSuchTranslation_Message, logMessage);
                 }
             }
         }

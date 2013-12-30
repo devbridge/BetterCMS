@@ -5,7 +5,7 @@ using BetterCms.Core.Models;
 namespace BetterCms.Module.Root.Models
 {
     [Serializable]
-    public class Culture : EquatableEntity<Culture>
+    public class Language : EquatableEntity<Language>
     {
         public virtual string Name { get; set; }
 

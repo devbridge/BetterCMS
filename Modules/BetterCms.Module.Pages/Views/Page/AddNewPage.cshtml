@@ -49,9 +49,9 @@
                 @Html.HiddenFor(f => f.MasterPageId, new { @id = "MasterPageId" })
                 @Html.HiddenFor(f => f.ParentPageUrl)
                 @Html.HiddenFor(f => f.CreateMasterPage)
-                @if (Model.Cultures != null && Model.Cultures.Any())
+                @if (Model.Languages != null && Model.Languages.Any())
                 {
-                    @Html.HiddenFor(model => model.CultureId, new { data_bind = "value: culture.cultureId()" })
+                    @Html.HiddenFor(model => model.LanguageId, new { data_bind = "value: language.languageId()" })
                 }
                 @Html.HiddenSubmit()
 
@@ -65,12 +65,12 @@
                     @Html.Partial(RootModuleConstants.AccessControlTemplate, viewModel)
                 }
                 
-                @if (Model.Cultures != null && Model.Cultures.Any())
+                @if (Model.Languages != null && Model.Languages.Any())
                 {
-                    <div class="bcms-input-list-holder" data-bind="with: culture">
-                        @Html.Tooltip(PagesGlobalization.AddNewPage_Culture_Tooltip_Description)
-                        <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_Culture</div>
-                        <select class="bcms-global-select" data-bind="options: cultures, optionsText: 'value', optionsValue: 'key', value: cultureId"></select>
+                    <div class="bcms-input-list-holder" data-bind="with: language">
+                        @Html.Tooltip(PagesGlobalization.AddNewPage_Language_Tooltip_Description)
+                        <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_Language</div>
+                        <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
                     </div>
                 }
             </div>

@@ -2,12 +2,13 @@
 using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
+
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc.Grids;
 
-namespace BetterCms.Module.Root.ViewModels.Cultures
+namespace BetterCms.Module.Root.ViewModels.Language
 {
-    public class CultureViewModel : IEditableGridItem
+    public class LanguageViewModel : IEditableGridItem
     {
         /// <summary>
         /// Gets or sets the id.

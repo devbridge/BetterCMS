@@ -25,7 +25,7 @@
     <a class="bcms-tab" data-name="#bcms-tab-2">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Title</a>
     <a class="bcms-tab" data-name="#bcms-tab-3">@PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Title</a>
     <a class="bcms-tab" data-name="#bcms-tab-4">@PagesGlobalization.EditPageProperties_OptionsTab_Title</a>
-    @if (Model.Cultures != null && Model.Cultures.Any())
+    @if (Model.Languages != null && Model.Languages.Any())
     {
         <a class="bcms-tab" data-name="#bcms-tab-5">@PagesGlobalization.EditPageProperties_TranslationsTab_Title</a>
     }
@@ -151,9 +151,9 @@
                 @Html.HiddenFor(model => model.Image.ImageId, new { data_bind = "value: image().id()" })
                 @Html.HiddenFor(model => model.SecondaryImage.ImageId, new { data_bind = "value: secondaryImage().id()" })
                 @Html.HiddenFor(model => model.FeaturedImage.ImageId, new { data_bind = "value: featuredImage().id()" })
-                @if (Model.Cultures != null && Model.Cultures.Any())
+                @if (Model.Languages != null && Model.Languages.Any())
                 {
-                    @Html.HiddenFor(model => model.CultureId, new { data_bind = "value: translations.culture.cultureId()" })
+                    @Html.HiddenFor(model => model.LanguageId, new { data_bind = "value: translations.language.languageId()" })
                 }
             </div>
         </div>
@@ -194,14 +194,14 @@
             @Html.Partial(PagesConstants.OptionValuesGridTemplate)
         </div>
 
-        if (Model.Cultures != null && Model.Cultures.Any())
+        if (Model.Languages != null && Model.Languages.Any())
         {
             <div id="bcms-tab-5" class="bcms-tab-single">
                 <div class="bcms-padded-content">
-                    <div class="bcms-input-list-holder" data-bind="with: translations.culture">
-                        @Html.Tooltip(PagesGlobalization.EditPageProperties_TranslationsTab_Culture_Tooltip_Description)
-                        <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_TranslationsTab_Culture</div>
-                        <select class="bcms-global-select" data-bind="options: cultures, optionsText: 'value', optionsValue: 'key', value: cultureId"></select>
+                    <div class="bcms-input-list-holder" data-bind="with: translations.language">
+                        @Html.Tooltip(PagesGlobalization.EditPageProperties_TranslationsTab_Language_Tooltip_Description)
+                        <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_TranslationsTab_Language</div>
+                        <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
                     </div>
                     
                      @Html.Partial("Partial/TranslationsGrid")

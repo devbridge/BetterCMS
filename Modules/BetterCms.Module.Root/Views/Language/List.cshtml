@@ -7,15 +7,15 @@
     var gridViewModel = new EditableGridViewModel
     {
         ShowMessages = true,
-        TopBlockTitle = RootGlobalization.SiteSettings_Cultures_Title,
+        TopBlockTitle = RootGlobalization.SiteSettings_Languages_Title,
         Columns = new List<EditableGridColumn>
             {
-                new EditableGridColumn(RootGlobalization.SiteSettings_Cultures_Code_Title, "Code", "code")
+                new EditableGridColumn(RootGlobalization.SiteSettings_Languages_Code_Title, "Code", "code")
                     {
                         CustomBinding = "autocomplete: 'onlyExisting', hasfocus: hasCodeFocus",
                         HeaderAttributes = "style=\"width: 200px;\""
                     },
-                new EditableGridColumn(RootGlobalization.SiteSettings_Cultures_Name_Title, "Name", "name")
+                new EditableGridColumn(RootGlobalization.SiteSettings_Languages_Name_Title, "Name", "name")
                     {
                         CustomBinding = "hasfocus: hasNameFocus"
                     }  

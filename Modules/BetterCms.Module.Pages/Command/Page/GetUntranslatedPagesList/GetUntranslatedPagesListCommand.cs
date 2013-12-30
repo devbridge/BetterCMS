@@ -18,10 +18,10 @@ namespace BetterCms.Module.Pages.Command.Page.GetUntranslatedPagesList
         /// </summary>
         /// <param name="categoryService">The category service.</param>
         /// <param name="configuration">The configuration.</param>
-        /// <param name="cultureService">The culture service.</param>
+        /// <param name="languageService">The language service.</param>
         /// <param name="pageService">The page service.</param>
-        public GetUntranslatedPagesListCommand(ICategoryService categoryService, ICmsConfiguration configuration, ICultureService cultureService, IPageService pageService)
-            : base(categoryService, configuration, cultureService, pageService)
+        public GetUntranslatedPagesListCommand(ICategoryService categoryService, ICmsConfiguration configuration, ILanguageService languageService, IPageService pageService)
+            : base(categoryService, configuration, languageService, pageService)
         {
         }
 
@@ -40,12 +40,12 @@ namespace BetterCms.Module.Pages.Command.Page.GetUntranslatedPagesList
                 model.HideMasterPagesFiltering = true;
 
                 var filter = request as UntranslatedPagesFilter;
-                if (model.Cultures != null && filter != null && filter.ExcludedCultureId.HasValue)
+                if (model.Languages != null && filter != null && filter.ExcludedLanguageId.HasValue)
                 {
-                    var cultureToExclude = model.Cultures.FirstOrDefault(c => c.Key == filter.ExcludedCultureId.Value.ToString().ToLowerInvariant());
-                    if (cultureToExclude != null)
+                    var languageToExclude = model.Languages.FirstOrDefault(c => c.Key == filter.ExcludedLanguageId.Value.ToString().ToLowerInvariant());
+                    if (languageToExclude != null)
                     {
-                        model.Cultures.Remove(cultureToExclude);
+                        model.Languages.Remove(languageToExclude);
                     }
                 }
             }
@@ -91,11 +91,11 @@ namespace BetterCms.Module.Pages.Command.Page.GetUntranslatedPagesList
                     query = query.Where(Restrictions.Not(Restrictions.In(Projections.Property(() => alias.Id), filter.ExistingItemsArray)));
                 }
 
-                // Excluded culture id
-                if (filter.ExcludedCultureId.HasValue)
+                // Excluded language id
+                if (filter.ExcludedLanguageId.HasValue)
                 {
-                    var cultureProxy = Repository.AsProxy<Root.Models.Culture>(filter.ExcludedCultureId.Value);
-                    query = query.Where(() => (alias.Culture != cultureProxy || alias.Culture == null));
+                    var languageProxy = Repository.AsProxy<Root.Models.Language>(filter.ExcludedLanguageId.Value);
+                    query = query.Where(() => (alias.Language != languageProxy || alias.Language == null));
                 }
                 
                 if (filter.ExcplicitlyIncludedPagesArray.Any())
@@ -103,12 +103,12 @@ namespace BetterCms.Module.Pages.Command.Page.GetUntranslatedPagesList
                     // Include to results explicitly included or untranslated
                     query = query.Where(Restrictions.Disjunction()
                         .Add(Restrictions.In(Projections.Property(() => alias.Id), filter.ExcplicitlyIncludedPagesArray))
-                        .Add(Restrictions.IsNull(Projections.Property(() => alias.CultureGroupIdentifier))));
+                        .Add(Restrictions.IsNull(Projections.Property(() => alias.LanguageGroupIdentifier))));
                 }
                 else
                 {
                     // Only untranslated
-                    query = query.Where(Restrictions.IsNull(Projections.Property(() => alias.CultureGroupIdentifier)));
+                    query = query.Where(Restrictions.IsNull(Projections.Property(() => alias.LanguageGroupIdentifier)));
                 }
             }
 

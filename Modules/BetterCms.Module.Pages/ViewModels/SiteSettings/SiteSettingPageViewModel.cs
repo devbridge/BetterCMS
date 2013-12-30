@@ -1,7 +1,6 @@
 ﻿using System;
 
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Models;
 using BetterCms.Module.Root.Mvc.Grids;
 
 namespace BetterCms.Module.Pages.ViewModels.SiteSettings
@@ -73,12 +72,12 @@ namespace BetterCms.Module.Pages.ViewModels.SiteSettings
         public PageStatus PageStatus { get; set; }
 
         /// <summary>
-        /// Gets or sets the culture id.
+        /// Gets or sets the language id.
         /// </summary>
         /// <value>
-        /// The culture id.
+        /// The language id.
         /// </value>
-        public Guid? CultureId { get; set; }
+        public Guid? LanguageId { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

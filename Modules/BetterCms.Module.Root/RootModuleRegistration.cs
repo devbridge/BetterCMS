@@ -50,9 +50,9 @@ namespace BetterCms.Module.Root
         private readonly TagsJsModuleIncludeDescriptor tagsJsModuleIncludeDescriptor;
 
         /// <summary>
-        /// bcms.cultures.js java script module descriptor.
+        /// bcms.languages.js java script module descriptor.
         /// </summary>
-        private readonly CulturesJsModuleIncludeDescriptor culturesJsModuleIncludeDescriptor;
+        private readonly LanguagesJsModuleIncludeDescriptor languagesJsModuleIncludeDescriptor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RootModuleDescriptor" /> class.
@@ -62,7 +62,7 @@ namespace BetterCms.Module.Root
             authenticationJsModuleIncludeDescriptor = new AuthenticationJsModuleIncludeDescriptor(this);
             siteSettingsJsModuleIncludeDescriptor = new SiteSettingsJsModuleIncludeDescriptor(this);
             tagsJsModuleIncludeDescriptor = new TagsJsModuleIncludeDescriptor(this);
-            culturesJsModuleIncludeDescriptor = new CulturesJsModuleIncludeDescriptor(this);
+            languagesJsModuleIncludeDescriptor = new LanguagesJsModuleIncludeDescriptor(this);
 
             InitializeSecurity();            
         }        
@@ -140,7 +140,7 @@ namespace BetterCms.Module.Root
             containerBuilder.RegisterType<DefaultAccessControlService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultEntityTrackingService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultEntityTrackingCacheService>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            containerBuilder.RegisterType<DefaultCultureService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultLanguageService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 
         /// <summary>
@@ -246,7 +246,7 @@ namespace BetterCms.Module.Root
                     new JsIncludeDescriptor(this, "ace", "ace/ace.js", "ace/ace.js"),
                     new JsIncludeDescriptor(this, "ckeditor", "ckeditor/ckeditor.js", "ckeditor/ckeditor.js"),
                     tagsJsModuleIncludeDescriptor,
-                    culturesJsModuleIncludeDescriptor,
+                    languagesJsModuleIncludeDescriptor,
                     new OptionsJsModuleIncludeDescriptor(this)
                 };
         }
@@ -300,10 +300,10 @@ namespace BetterCms.Module.Root
                             CssClass = page => "bcms-sidebar-link",
                             AccessRole = RootModuleConstants.UserRoles.EditContent
                         },
-                    new LinkActionProjection(culturesJsModuleIncludeDescriptor, page => "loadSiteSettingsCulturesList")
+                    new LinkActionProjection(languagesJsModuleIncludeDescriptor, page => "loadSiteSettingsLanguagesList")
                         {
                             Order = 2200,
-                            Title = page => RootGlobalization.SiteSettings_CulturesMenuItem,
+                            Title = page => RootGlobalization.SiteSettings_LanguagesMenuItem,
                             CssClass = page => "bcms-sidebar-link",
                             AccessRole = RootModuleConstants.UserRoles.Administration,
                             ShouldBeRendered = page => CmsContext.Config.EnableMultilanguage

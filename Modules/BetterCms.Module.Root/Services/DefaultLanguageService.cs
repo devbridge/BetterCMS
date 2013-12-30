@@ -2,6 +2,7 @@
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
+
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 
@@ -9,7 +10,7 @@ using NHibernate.Linq;
 
 namespace BetterCms.Module.Root.Services
 {
-    public class DefaultCultureService : ICultureService
+    public class DefaultLanguageService : ILanguageService
     {
         /// <summary>
         /// The repository
@@ -17,24 +18,24 @@ namespace BetterCms.Module.Root.Services
         private IRepository repository;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DefaultCultureService" /> class.
+        /// Initializes a new instance of the <see cref="DefaultLanguageService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
-        public DefaultCultureService(IRepository repository)
+        public DefaultLanguageService(IRepository repository)
         {
             this.repository = repository;
         }
 
         /// <summary>
-        /// Gets the list of cultures.
+        /// Gets the list of languages.
         /// </summary>
         /// <returns>
-        /// List of culture lookup values.
+        /// List of language lookup values.
         /// </returns>
-        public IEnumerable<LookupKeyValue> GetCultures()
+        public IEnumerable<LookupKeyValue> GetLanguages()
         {
             return repository
-                .AsQueryable<Culture>()
+                .AsQueryable<Language>()
                 .OrderBy(c => c.Code)
                 .Select(c => new LookupKeyValue
                                  {
@@ -45,14 +46,14 @@ namespace BetterCms.Module.Root.Services
         }
 
         /// <summary>
-        /// Gets the invariant culture model.
+        /// Gets the invariant language model.
         /// </summary>
         /// <returns>
-        /// Invariant culture model
+        /// Invariant language model
         /// </returns>
-        public LookupKeyValue GetInvariantCultureModel()
+        public LookupKeyValue GetInvariantLanguageModel()
         {
-            return new LookupKeyValue(System.Guid.Empty.ToString(), RootGlobalization.InvariantCulture_Title);
+            return new LookupKeyValue(System.Guid.Empty.ToString(), RootGlobalization.InvariantLanguage_Title);
         }
     }
 }

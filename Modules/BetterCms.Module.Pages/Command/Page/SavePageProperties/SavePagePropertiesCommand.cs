@@ -458,26 +458,26 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             if (isMultilanguageEnabled)
             {
                 var pageId = request.Id.HasDefaultValue() ? (Guid?)null : request.Id;
-                var pageCultureId = request.CultureId.HasValue && !request.CultureId.Value.HasDefaultValue() ? request.CultureId : null;
+                var pageLanguageId = request.LanguageId.HasValue && !request.LanguageId.Value.HasDefaultValue() ? request.LanguageId : null;
                 
                 if (request.Translations != null)
                 {
                     if (pageId.HasValue && request.Translations.Any(t => t.Id == pageId))
                     {
-                        var logMessage = string.Format("Page cannot be added itself to tranlations list. Id: {0}, ", request.Id);
+                        var logMessage = string.Format("Page cannot be added itself to translations list. Id: {0}, ", request.Id);
                         throw new ValidationException(() => PagesGlobalization.SavePagePropertiesCommand_PageHasTranslationsWithItsId_Message, logMessage);
                     }
 
-                    if (request.Translations.Any(t => t.CultureId == pageCultureId))
+                    if (request.Translations.Any(t => t.LanguageId == pageLanguageId))
                     {
-                        var logMessage = string.Format("Page cannot contain translations with the same culture as itself. Id: {0}, CultureId: {1}", request.Id, request.CultureId);
-                        throw new ValidationException(() => PagesGlobalization.SavePagePropertiesCommand_PageHasTranslationsWithItsCulture_Message, logMessage);
+                        var logMessage = string.Format("Page cannot contain translations with the same language as itself. Id: {0}, LanguageId: {1}", request.Id, request.LanguageId);
+                        throw new ValidationException(() => PagesGlobalization.SavePagePropertiesCommand_PageHasTranslationsWithItsLanguage_Message, logMessage);
                     }
 
-                    if (request.Translations.GroupBy(t => t.CultureId).Any(g => g.Count() > 1))
+                    if (request.Translations.GroupBy(t => t.LanguageId).Any(g => g.Count() > 1))
                     {
-                        var logMessage = string.Format("Page cannot contain two or more translations with the same culture. Id: {0}, CultureId: {1}", request.Id, request.CultureId);
-                        throw new ValidationException(() => PagesGlobalization.SavePagePropertiesCommand_PageHasTranslationsWithSameCulture_Message, logMessage);
+                        var logMessage = string.Format("Page cannot contain two or more translations with the same language. Id: {0}, LanguageId: {1}", request.Id, request.LanguageId);
+                        throw new ValidationException(() => PagesGlobalization.SavePagePropertiesCommand_PageHasTranslationsWithSameLanguage_Message, logMessage);
                     }
                 }
             }
@@ -493,9 +493,9 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         {
             // Load translations
             var predicateBuilder = PredicateBuilder.False<Root.Models.Page>();
-            if (page.CultureGroupIdentifier.HasValue)
+            if (page.LanguageGroupIdentifier.HasValue)
             {
-                predicateBuilder = predicateBuilder.Or(p => p.CultureGroupIdentifier == page.CultureGroupIdentifier.Value);
+                predicateBuilder = predicateBuilder.Or(p => p.LanguageGroupIdentifier == page.LanguageGroupIdentifier.Value);
             }
 
             if (request.Translations != null)
@@ -510,7 +510,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             {
                 request.Translations.ForEach(rt =>
                     {
-                        var translation = translations.FirstOrDefault(t => t.Id == rt.Id && t.CultureGroupIdentifier != null && t.CultureGroupIdentifier != page.CultureGroupIdentifier);
+                        var translation = translations.FirstOrDefault(t => t.Id == rt.Id && t.LanguageGroupIdentifier != null && t.LanguageGroupIdentifier != page.LanguageGroupIdentifier);
                         if (translation != null)
                         {
                             var logMessage = string.Format("Page cannot be assigned as translation, because it's assigned with another page. PageId: {0}, TranslationId: {1}", request.Id, translation.Id);
@@ -518,13 +518,13 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                             throw new ValidationException(() => message, logMessage);
                         }
 
-                        translation = translations.FirstOrDefault(t => t.Id == rt.Id && (t.Culture != null && t.Culture.Id != rt.CultureId));
+                        translation = translations.FirstOrDefault(t => t.Id == rt.Id && (t.Language != null && t.Language.Id != rt.LanguageId));
                         if (translation != null)
                         {
-                            var logMessage = string.Format("Page cannot be assigned with culture {0}, because it has assigned another culture {1}. PageId: {2}, TranslationId: {1}", 
-                                rt.CultureId,
-                                translation.Culture != null ? translation.Culture.Id : (Guid?)null, request.Id);
-                            var message = string.Format(PagesGlobalization.SavePagePropertiesCommand_PageTranslationsHasDifferentCultureId_Message, translation.Title);
+                            var logMessage = string.Format("Page cannot be assigned with language {0}, because it has assigned another language {1}. PageId: {2}, TranslationId: {1}", 
+                                rt.LanguageId,
+                                translation.Language != null ? translation.Language.Id : (Guid?)null, request.Id);
+                            var message = string.Format(PagesGlobalization.SavePagePropertiesCommand_PageTranslationsHasDifferentLanguage_Message, translation.Title);
                             throw new ValidationException(() => message, logMessage);
                         }
 
@@ -549,50 +549,50 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         /// <param name="request">The request.</param>
         private void UpdatePageTranslations(PageProperties page, IList<Root.Models.Page> translations, EditPagePropertiesViewModel request)
         {
-            // Update page culture
-            var oldCultureId = page.Culture != null ? page.Culture.Id : (Guid?)null;
-            var newCultureId = request.CultureId;
-            if (oldCultureId != newCultureId)
+            // Update page language
+            var oldLanguageId = page.Language != null ? page.Language.Id : (Guid?)null;
+            var newLanguageId = request.LanguageId;
+            if (oldLanguageId != newLanguageId)
             {
-                page.Culture = request.CultureId.HasValue ? Repository.AsProxy<Culture>(request.CultureId.Value) : null;
+                page.Language = request.LanguageId.HasValue ? Repository.AsProxy<Language>(request.LanguageId.Value) : null;
             }
 
-            // Change culture group
+            // Change language group
             var requestTranslations = request.Translations ?? new List<PageTranslationViewModel>();
-            var oldCultureGroupId = page.CultureGroupIdentifier;
+            var oldLanguageGroupId = page.LanguageGroupIdentifier;
 
             // Old group's translations, not included to current group, goes to independent groups
-            if (oldCultureGroupId.HasValue)
+            if (oldLanguageGroupId.HasValue)
             {
                 translations
-                    .Where(t => t.CultureGroupIdentifier == oldCultureGroupId
+                    .Where(t => t.LanguageGroupIdentifier == oldLanguageGroupId
                         && requestTranslations.All(rt => rt.Id != t.Id)
                         && t.Id != page.Id)
                     .ToList()
                     .ForEach(t =>
                             {
-                                t.CultureGroupIdentifier = null;
+                                t.LanguageGroupIdentifier = null;
                                 Repository.Save(t);
                             });
             }
 
             if (requestTranslations.Count == 0)
             {
-                page.CultureGroupIdentifier = null;
+                page.LanguageGroupIdentifier = null;
             }
-            else if (!page.CultureGroupIdentifier.HasValue)
+            else if (!page.LanguageGroupIdentifier.HasValue)
             {
-                page.CultureGroupIdentifier = Guid.NewGuid();
+                page.LanguageGroupIdentifier = Guid.NewGuid();
             }
 
             // Save current page translations
             foreach (var translationViewModel in requestTranslations)
             {
                 var translation = translations.Where(t => t.Id == translationViewModel.Id).FirstOne();
-                translation.CultureGroupIdentifier = page.CultureGroupIdentifier;
-                if (translation.Culture == null && translationViewModel.CultureId.HasValue)
+                translation.LanguageGroupIdentifier = page.LanguageGroupIdentifier;
+                if (translation.Language == null && translationViewModel.LanguageId.HasValue)
                 {
-                    translation.Culture = Repository.AsProxy<Culture>(translationViewModel.CultureId.Value);
+                    translation.Language = Repository.AsProxy<Language>(translationViewModel.LanguageId.Value);
                 }
             
                 Repository.Save(translation);

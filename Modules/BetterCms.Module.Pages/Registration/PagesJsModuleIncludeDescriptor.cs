@@ -26,7 +26,7 @@ namespace BetterCms.Module.Pages.Registration
                     new JavaScriptModuleLinkTo<PageController>(this, "deletePageConfirmationUrl", c => c.DeletePageConfirmation("{0}")),
                     new JavaScriptModuleLinkTo<PageController>(this, "changePublishStatusUrl", c => c.ChangePublishStatus(null)),
                     new JavaScriptModuleLinkTo<PageController>(this, "clonePageDialogUrl", c => c.ClonePage("{0}")),
-                    new JavaScriptModuleLinkTo<PageController>(this, "clonePageWithCultureDialogUrl", c => c.ClonePageWithCulture("{0}")),
+                    new JavaScriptModuleLinkTo<PageController>(this, "clonePageWithLanguageDialogUrl", c => c.ClonePageWithLanguage("{0}")),
                     new JavaScriptModuleLinkTo<PageController>(this, "convertStringToSlugUrl", c => c.ConvertStringToSlug("{0}", "{1}", "{2}"))
                 };
 
@@ -38,7 +38,7 @@ namespace BetterCms.Module.Pages.Registration
                     new JavaScriptModuleGlobalization(this, "pageDeletedMessage", () => PagesGlobalization.DeletePage_SuccessMessage_Message),
                     new JavaScriptModuleGlobalization(this, "pageDeletedTitle", () => PagesGlobalization.DeletePage_SuccessMessage_Title),
                     new JavaScriptModuleGlobalization(this, "clonePageDialogTitle", () => PagesGlobalization.ClonePage_Dialog_Title),
-                    new JavaScriptModuleGlobalization(this, "clonePageWithCultureDialogTitle", () => PagesGlobalization.ClonePageWithCulture_Dialog_Title),
+                    new JavaScriptModuleGlobalization(this, "clonePageWithLanguageDialogTitle", () => PagesGlobalization.ClonePageWithLanguage_Dialog_Title),
                     new JavaScriptModuleGlobalization(this, "cloneButtonTitle", () => PagesGlobalization.ClonePage_Dialog_CloneButton), 
                     new JavaScriptModuleGlobalization(this, "deleteButtonTitle", () => PagesGlobalization.DeletePage_Dialog_DeleteButton),
                     new JavaScriptModuleGlobalization(this, "pageStatusChangeConfirmationMessagePublish", () => PagesGlobalization.EditPageProperties_PageStatusChange_ConfirmationMessage_Publish),

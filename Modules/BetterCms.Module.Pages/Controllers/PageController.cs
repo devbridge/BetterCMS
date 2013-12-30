@@ -9,11 +9,11 @@ using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Command.Layout.GetLayoutOptions;
 using BetterCms.Module.Pages.Command.Page.AddNewPage;
 using BetterCms.Module.Pages.Command.Page.ClonePage;
-using BetterCms.Module.Pages.Command.Page.ClonePageWithCulture;
+using BetterCms.Module.Pages.Command.Page.ClonePageWithLanguage;
 using BetterCms.Module.Pages.Command.Page.CreatePage;
 using BetterCms.Module.Pages.Command.Page.DeletePage;
 using BetterCms.Module.Pages.Command.Page.GetPageForCloning;
-using BetterCms.Module.Pages.Command.Page.GetPageForCloningWithCulture;
+using BetterCms.Module.Pages.Command.Page.GetPageForCloningWithLanguage;
 using BetterCms.Module.Pages.Command.Page.GetPageForDelete;
 using BetterCms.Module.Pages.Command.Page.GetPageProperties;
 using BetterCms.Module.Pages.Command.Page.GetPagesList;
@@ -173,8 +173,8 @@ namespace BetterCms.Module.Pages.Controllers
                                CustomOptions = success ? model.CustomOptions : null,
                                UserAccessList = success ? model.UserAccessList : new List<UserAccessViewModel>(),
                                IsMasterPage = success && model.IsMasterPage,
-                               Cultures = success ? model.Cultures : null,
-                               CultureId = success ? model.CultureId : null,
+                               Languages = success ? model.Languages : null,
+                               LanguageId = success ? model.LanguageId : null,
                                Translations = success ? model.Translations : null
                            };
 
@@ -260,7 +260,7 @@ namespace BetterCms.Module.Pages.Controllers
         }
 
         /// <summary>
-        /// Clones the page with culture id.
+        /// Clones the page with language id.
         /// </summary>
         /// <param name="pageId">The page id.</param>
         /// <returns>
@@ -268,19 +268,19 @@ namespace BetterCms.Module.Pages.Controllers
         /// </returns>
         [HttpGet]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
-        public ActionResult ClonePageWithCulture(string pageId)
+        public ActionResult ClonePageWithLanguage(string pageId)
         {
-            var request = new GetPageForCloningWithCultureCommandRequest
+            var request = new GetPageForCloningWithLanguageCommandRequest
                               {
                                   PageId = pageId.ToGuidOrDefault()
                               };
-            var model = GetCommand<GetPageForCloningWithCultureCommand>().ExecuteCommand(request);
-            if (model != null && model.Cultures.Count == 0)
+            var model = GetCommand<GetPageForCloningWithLanguageCommand>().ExecuteCommand(request);
+            if (model != null && model.Languages.Count == 0)
             {
-                Messages.AddWarn(PagesGlobalization.ClonePageWithCulture_PageHasAllTranslations_Message);
+                Messages.AddWarn(PagesGlobalization.ClonePageWithLanguage_PageHasAllTranslations_Message);
             }
 
-            var view = RenderView("ClonePageWithCulture", model ?? new ClonePageWithCultureViewModel());
+            var view = RenderView("ClonePageWithLanguage", model ?? new ClonePageWithLanguageViewModel());
 
             return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
@@ -307,7 +307,7 @@ namespace BetterCms.Module.Pages.Controllers
         }
         
         /// <summary>
-        /// Clones the page with culture.
+        /// Clones the page with language.
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns>
@@ -315,9 +315,9 @@ namespace BetterCms.Module.Pages.Controllers
         /// </returns>
         [HttpPost]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
-        public ActionResult ClonePageWithCulture(ClonePageWithCultureViewModel model)
+        public ActionResult ClonePageWithLanguage(ClonePageWithLanguageViewModel model)
         {
-            model = GetCommand<ClonePageWithCultureCommand>().ExecuteCommand(model);
+            model = GetCommand<ClonePageWithLanguageCommand>().ExecuteCommand(model);
             if (model != null)
             {
                 Messages.AddSuccess(string.Format(PagesGlobalization.ClonePage_Dialog_Success, model.PageUrl));

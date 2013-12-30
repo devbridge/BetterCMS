@@ -7,24 +7,24 @@ using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Pages.ViewModels.Page
 {
-    public class ClonePageWithCultureViewModel : ClonePageViewModel
+    public class ClonePageWithLanguageViewModel : ClonePageViewModel
     {
         /// <summary>
-        /// Gets or sets the culture id.
+        /// Gets or sets the language id.
         /// </summary>
         /// <value>
-        /// The culture id.
+        /// The language id.
         /// </value>
-        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "ClonePageWithCulture_Culture_RequiredMessage")]
-        public Guid? CultureId { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "ClonePageWithLanguage_Language_RequiredMessage")]
+        public Guid? LanguageId { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of cultures.
+        /// Gets or sets the list of languages.
         /// </summary>
         /// <value>
-        /// The list of cultures.
+        /// The list of languages.
         /// </value>
-        public List<LookupKeyValue> Cultures { get; set; }
+        public List<LookupKeyValue> Languages { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
@@ -34,7 +34,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// </returns>
         public override string ToString()
         {
-            return string.Format("{0}, CultureId: {1}", base.ToString(), CultureId);
+            return string.Format("{0}, LanguageId: {1}", base.ToString(), LanguageId);
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.Pages.Content.Resources;
+
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root;
@@ -14,9 +14,9 @@ using BetterCms.Module.Root.ViewModels.Security;
 
 using NHibernate.Linq;
 
-namespace BetterCms.Module.Pages.Command.Page.GetPageForCloningWithCulture
+namespace BetterCms.Module.Pages.Command.Page.GetPageForCloningWithLanguage
 {
-    public class GetPageForCloningWithCultureCommand : CommandBase, ICommand<GetPageForCloningWithCultureCommandRequest, ClonePageWithCultureViewModel>
+    public class GetPageForCloningWithLanguageCommand : CommandBase, ICommand<GetPageForCloningWithLanguageCommandRequest, ClonePageWithLanguageViewModel>
     {
         /// <summary>
         /// The CMS configuration
@@ -24,19 +24,19 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageForCloningWithCulture
         private readonly ICmsConfiguration cmsConfiguration;
 
         /// <summary>
-        /// The culture service
+        /// The language service
         /// </summary>
-        private readonly ICultureService cultureService;
+        private readonly ILanguageService languageService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetPageForCloningWithCultureCommand" /> class.
+        /// Initializes a new instance of the <see cref="GetPageForCloningWithLanguageCommand" /> class.
         /// </summary>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
-        /// <param name="cultureService">The culture service.</param>
-        public GetPageForCloningWithCultureCommand(ICmsConfiguration cmsConfiguration, ICultureService cultureService)
+        /// <param name="languageService">The language service.</param>
+        public GetPageForCloningWithLanguageCommand(ICmsConfiguration cmsConfiguration, ILanguageService languageService)
         {
             this.cmsConfiguration = cmsConfiguration;
-            this.cultureService = cultureService;
+            this.languageService = languageService;
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageForCloningWithCulture
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        public ClonePageWithCultureViewModel Execute(GetPageForCloningWithCultureCommandRequest request)
+        public ClonePageWithLanguageViewModel Execute(GetPageForCloningWithLanguageCommandRequest request)
         {
             var pageFutureQuery = Repository
                 .AsQueryable<PageProperties>()
@@ -52,20 +52,20 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageForCloningWithCulture
                 .Select(p =>
                     new
                     {
-                        Model = new ClonePageWithCultureViewModel
+                        Model = new ClonePageWithLanguageViewModel
                             {
                                 PageId = p.Id,
                                 IsMasterPage = p.IsMasterPage
                             },
-                        CultureGroupIdentifier = p.CultureGroupIdentifier,
-                        CultureId = p.Culture != null ? p.Culture.Id : (System.Guid?) null
+                        LanguageGroupIdentifier = p.LanguageGroupIdentifier,
+                        LanguageId = p.Language != null ? p.Language.Id : (System.Guid?) null
                     })
                 .ToFuture();
 
-            var culturesFuture = cultureService.GetCultures();
+            var languagesFuture = languageService.GetLanguages();
             var result = pageFutureQuery.FirstOne();
             var model = result.Model;
-            model.Cultures = culturesFuture.ToList();
+            model.Languages = languagesFuture.ToList();
 
             if (model.IsMasterPage)
             {
@@ -97,40 +97,40 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageForCloningWithCulture
             model.AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled;
             model.UserAccessList = accessRules;
 
-            AddRemoveCultures(model.Cultures, result.CultureGroupIdentifier, result.CultureId);
+            AddRemoveLanguages(model.Languages, result.LanguageGroupIdentifier, result.LanguageId);
 
             return model;
         }
 
-        private void AddRemoveCultures(List<LookupKeyValue> cultures, System.Guid? cultureGroupIdentifier, System.Guid? pageCultureId)
+        private void AddRemoveLanguages(List<LookupKeyValue> languages, System.Guid? languageGroupIdentifier, System.Guid? pageLanguageId)
         {
-            var existingCultures = new List<System.Guid?>();
-            if (cultureGroupIdentifier.HasValue)
+            var existingLanguages = new List<System.Guid?>();
+            if (languageGroupIdentifier.HasValue)
             {
-                existingCultures = Repository
-                    .AsQueryable<Root.Models.Page>(p => p.CultureGroupIdentifier == cultureGroupIdentifier.Value)
-                    .Select(p => p.Culture != null ? p.Culture.Id : (System.Guid?)null)
+                existingLanguages = Repository
+                    .AsQueryable<Root.Models.Page>(p => p.LanguageGroupIdentifier == languageGroupIdentifier.Value)
+                    .Select(p => p.Language != null ? p.Language.Id : (System.Guid?)null)
                     .ToArray()
-                    .Concat(existingCultures)
+                    .Concat(existingLanguages)
                     .ToList();
             }
             else
             {
-                existingCultures.Add(pageCultureId);
+                existingLanguages.Add(pageLanguageId);
             }
 
-            foreach (var cultureId in existingCultures)
+            foreach (var languageId in existingLanguages)
             {
-                var culture = cultures.FirstOrDefault(c => c.Key == cultureId.ToString().ToLowerInvariant());
-                if (culture != null)
+                var language = languages.FirstOrDefault(c => c.Key == languageId.ToString().ToLowerInvariant());
+                if (language != null)
                 {
-                    cultures.Remove(culture);
+                    languages.Remove(language);
                 }
             }
 
-            if (pageCultureId.HasValue && !existingCultures.Contains(null))
+            if (pageLanguageId.HasValue && !existingLanguages.Contains(null))
             {
-                cultures.Insert(0, cultureService.GetInvariantCultureModel());
+                languages.Insert(0, languageService.GetInvariantLanguageModel());
             }
         }
     }

@@ -27,12 +27,12 @@
         public virtual string PageUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the page culture id.
+        /// Gets or sets the page language id.
         /// </summary>
         /// <value>
-        /// The page culture id.
+        /// The page language id.
         /// </value>
-        public virtual System.Guid? CultureId { get; set; }
+        public virtual System.Guid? LanguageId { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
@@ -42,8 +42,8 @@
         /// </returns>
         public override string ToString()
         {
-            return string.Format("{0}, Id: {1}, Title: {2}, PageUrl: {3}, CultureId: {4}", 
-                base.ToString(), Id, Title, PageUrl, CultureId);
+            return string.Format("{0}, Id: {1}, Title: {2}, PageUrl: {3}, LanguageId: {4}", 
+                base.ToString(), Id, Title, PageUrl, LanguageId);
         }
     }
 }

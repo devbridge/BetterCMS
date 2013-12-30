@@ -240,21 +240,21 @@ namespace BetterCms.Module.Pages.Services
         /// <summary>
         /// Gets the list of page translation view models.
         /// </summary>
-        /// <param name="cultureGroupIdentifier">Culture group identifier.</param>
+        /// <param name="languageGroupIdentifier">Language group identifier.</param>
         /// <returns>
         /// The list of page translation view models
         /// </returns>
-        public IEnumerable<PageTranslationViewModel> GetPageTranslations(Guid cultureGroupIdentifier)
+        public IEnumerable<PageTranslationViewModel> GetPageTranslations(Guid languageGroupIdentifier)
         {
             return repository
                 .AsQueryable<Root.Models.Page>()
-                .Where(p => p.CultureGroupIdentifier == cultureGroupIdentifier)
+                .Where(p => p.LanguageGroupIdentifier == languageGroupIdentifier)
                 .Select(p => new PageTranslationViewModel
                 {
                     Id = p.Id,
                     Title = p.Title,
                     PageUrl = p.PageUrl,
-                    CultureId = p.Culture.Id
+                    LanguageId = p.Language.Id
                 })
                 .ToFuture();
         }

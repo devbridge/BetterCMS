@@ -121,13 +121,13 @@
     <Compile Include="Commands\Authentication\GetAuthenticationInfo\GetAuthenticationInfoCommand.cs" />
     <Compile Include="Commands\Authentication\SearchUsers\SearchUsersCommand.cs" />
     <Compile Include="Commands\Authentication\SearchRoles\SearchRolesCommand.cs" />
-    <Compile Include="Commands\Culture\DeleteCulture\DeleteCultureCommand.cs" />
-    <Compile Include="Commands\Culture\GetCultureList\GetCultureListCommand.cs" />
-    <Compile Include="Commands\Culture\SaveCulture\SaveCultureCommand.cs" />
-    <Compile Include="Commands\Culture\SuggestCultures\SuggestCulturesCommand.cs" />
-    <Compile Include="Controllers\CultureController.cs" />
+    <Compile Include="Commands\Language\DeleteLanguage\DeleteLanguageCommand.cs" />
+    <Compile Include="Commands\Language\GetLanguageList\GetLanguageListCommand.cs" />
+    <Compile Include="Commands\Language\SaveLanguage\SaveLanguageCommand.cs" />
+    <Compile Include="Commands\Language\SuggestLanguages\SuggestLanguagesCommand.cs" />
+    <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Events\CategoryEvents.cs" />
-    <Compile Include="Events\CultureEvents.cs" />
+    <Compile Include="Events\LanguageEvents.cs" />
     <Compile Include="Events\PageRetrievedEventArgs.cs" />
     <Compile Include="Events\RootEvents.cs" />
     <Compile Include="Events\PageRenderingEventArgs.cs" />
@@ -162,13 +162,14 @@
     <Compile Include="Controllers\SidebarController.cs" />
     <Compile Include="Controllers\SiteSettingsController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
-    <Compile Include="Models\Culture.cs" />
+    <Compile Include="Models\Language.cs" />
     <Compile Include="Models\Extensions\CultureInfoExtensions.cs" />
-    <Compile Include="Models\Maps\CultureMap.cs" />
+    <Compile Include="Models\Maps\LanguageMap.cs" />
     <Compile Include="Models\Maps\MasterPageMap.cs" />
     <Compile Include="Models\MasterPage.cs" />
     <Compile Include="Models\Maps\ContentRegionMap.cs" />
     <Compile Include="Models\ContentRegion.cs" />
+    <Compile Include="Models\Migrations\Migration201312301700.cs" />
     <Compile Include="Models\Migrations\Migration201312171300.cs" />
     <Compile Include="Models\Migrations\Migration201312111700.cs" />
     <Compile Include="Models\Migrations\Migration201312101400.cs" />
@@ -282,7 +283,7 @@
     <Compile Include="Registration\ContentJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\BcmsJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\CodeEditorJsModuleIncludeDescriptor.cs" />
-    <Compile Include="Registration\CulturesJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\LanguagesJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\OptionsJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\TagsJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\SecurityJsModuleIncludeDescriptor.cs" />
@@ -310,8 +311,8 @@
     <Compile Include="Mvc\Helpers\MessagesHelper.cs" />
     <Compile Include="Registration\TabsJsModuleIncludeDescriptor.cs" />
     <Compile Include="RootModuleConstants.cs" />
-    <Compile Include="Services\DefaultCultureService.cs" />
-    <Compile Include="Services\ICultureService.cs" />
+    <Compile Include="Services\DefaultLanguageService.cs" />
+    <Compile Include="Services\ILanguageService.cs" />
     <Compile Include="Services\DefaultEntityTrackingCacheService.cs" />
     <Compile Include="Services\IEntityTrackingCacheService.cs" />
     <Compile Include="Services\DefaultAccessControlService.cs" />
@@ -335,7 +336,7 @@
     <Compile Include="ViewModels\Cms\RedirectViewModel.cs" />
     <Compile Include="ViewModels\Cms\RenderPageViewModel.cs" />
     <Compile Include="ViewModels\Cms\RenderWidgetViewModel.cs" />
-    <Compile Include="ViewModels\Cultures\CultureViewModel.cs" />
+    <Compile Include="ViewModels\Language\LanguageViewModel.cs" />
     <Compile Include="ViewModels\Option\CustomOptionViewModel.cs" />
     <Compile Include="ViewModels\Option\OptionValueEditViewModel.cs" />
     <Compile Include="ViewModels\Option\OptionValueViewModel.cs" />
@@ -1063,7 +1064,7 @@
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\lock.png" />
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\refresh.png" />
     <EmbeddedResource Include="Scripts\ckeditor\styles.js" />
-    <EmbeddedResource Include="Scripts\bcms.cultures.js" />
+    <EmbeddedResource Include="Scripts\bcms.languages.js" />
     <Content Include="Views\Web.config" />
     <EmbeddedResource Include="Views\Sidebar\Container.cshtml" />
     <EmbeddedResource Include="Views\Rendering\RenderMainJsFile.cshtml" />
@@ -1195,7 +1196,7 @@
     <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\TopBlockAddItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Culture\List.cshtml" />
+    <EmbeddedResource Include="Views\Language\List.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

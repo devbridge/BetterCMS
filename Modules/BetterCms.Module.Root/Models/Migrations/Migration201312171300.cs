@@ -19,18 +19,21 @@ namespace BetterCms.Module.Root.Models.Migrations
         {
             // Create new column
             Create
-                .Column("CultureGroupIdentifier")
+                .Column("LanguageGroupIdentifier")
                 .OnTable("Pages").InSchema(SchemaName)
                 .AsGuid().Nullable();
 
-            // Drop old column
-            Delete
-                .ForeignKey("FK_Cms_Pages_MainCulturePageId_Cms_Pages_Id")
-                .OnTable("Pages").InSchema(SchemaName);
+            // Drop old column, if such was created
+            if (Schema.Table("Pages").Column("MainCulturePageId").Exists())
+            {
+                Delete
+                    .ForeignKey("FK_Cms_Pages_MainCulturePageId_Cms_Pages_Id")
+                    .OnTable("Pages").InSchema(SchemaName);
 
-            Delete
-                .Column("MainCulturePageId")
-                .FromTable("Pages").InSchema(SchemaName);
+                Delete
+                    .Column("MainCulturePageId")
+                    .FromTable("Pages").InSchema(SchemaName);
+            }
         }       
     }
 }
