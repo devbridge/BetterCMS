@@ -301,6 +301,7 @@
     <Compile Include="ViewModels\Filter\PagesGridViewModel.cs" />
     <Compile Include="ViewModels\Filter\PagesFilter.cs" />
     <Compile Include="ViewModels\Filter\UntranslatedPagesFilter.cs" />
+    <Compile Include="ViewModels\Filter\UntranslatedPagesGridViewModel.cs" />
     <Compile Include="ViewModels\History\ContentHistoryItem.cs" />
     <Compile Include="ViewModels\History\ContentHistoryViewModel.cs" />
     <Compile Include="ViewModels\Page\ClonePageWithCultureViewModel.cs" />
@@ -555,6 +556,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Page\SelectPage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\Partial\SiteSettingsPagesList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\SearchUntranslatedPages.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 
-using BetterCms.Module.Pages.Controllers;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.Grids;
 using BetterCms.Module.Root.ViewModels.SiteSettings;
@@ -19,7 +17,6 @@ namespace BetterCms.Module.Pages.ViewModels.Filter
         public IList<LookupKeyValue> Cultures { get; set; }
         public bool IncludeArchived { get; set; }
         public bool IncludeMasterPages { get; set; }
-        public Expression<Action<PageController>> Action { get; set; }
         public bool HideMasterPagesFiltering { get; set; }
 
         public PagesGridViewModel(IEnumerable<TModel> items, PagesFilter filter, int totalCount, IEnumerable<LookupKeyValue> categories) : base(items, filter, totalCount)
@@ -30,8 +27,6 @@ namespace BetterCms.Module.Pages.ViewModels.Filter
             Categories = categories;
             IncludeArchived = filter.IncludeArchived;
             IncludeMasterPages = filter.IncludeMasterPages;
-
-            Action = controller => controller.Pages(null);
         }
     }
 }

@@ -91,10 +91,6 @@ namespace BetterCms.Module.Pages.Controllers
         {
             request.SetDefaultPaging();
             var model = GetCommand<GetPagesListCommand>().ExecuteCommand(request);
-            if (model != null)
-            {
-                model.Action = controller => controller.SelectPage(null);
-            }
             var success = model != null;
 
             var view = RenderView("SelectPage", model);
@@ -423,7 +419,7 @@ namespace BetterCms.Module.Pages.Controllers
             var model = GetCommand<GetUntranslatedPagesListCommand>().ExecuteCommand(request);
             var success = model != null;
 
-            var view = RenderView("SelectPage", model);
+            var view = RenderView("SearchUntranslatedPages", model);
             var json = new
             {
                 Tags = request.Tags,

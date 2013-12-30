@@ -104,12 +104,8 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
             IEnumerable<LookupKeyValue> culturesFuture = configuration.EnableMultilanguage ? cultureService.GetCultures() : null;
 
             var pages = query.AddSortingAndPaging(request).Future<SiteSettingPageViewModel>();
-
-            var model = new PagesGridViewModel<SiteSettingPageViewModel>(
-                pages.ToList(), 
-                request, 
-                count.Value, 
-                categoriesFuture.ToList());
+            
+            var model = CreateModel(pages, request, count, categoriesFuture);
 
             if (culturesFuture != null)
             {
@@ -118,6 +114,16 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
             }
 
             return model;
+        }
+
+        protected virtual PagesGridViewModel<SiteSettingPageViewModel> CreateModel(IEnumerable<SiteSettingPageViewModel> pages, 
+            PagesFilter request, IFutureValue<int> count, IEnumerable<LookupKeyValue> categoriesFuture)
+        {
+            return new PagesGridViewModel<SiteSettingPageViewModel>(
+                pages.ToList(),
+                request,
+                count.Value,
+                categoriesFuture.ToList());
         }
 
         protected virtual IQueryOver<PageProperties, PageProperties> FilterQuery(IQueryOver<PageProperties, PageProperties> query, PagesFilter request)
