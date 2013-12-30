@@ -15,6 +15,7 @@ namespace BetterCms.Configuration
         private const string UrlModeAttribute = "urlMode";
         private const string DatabaseNode = "database";
         private const string StorageNode = "storage";
+        private const string SearchNode = "search";
         private const string CacheNode = "cache";
         private const string SecurityNode = "security";
         private const string ModuleGalleryNode = "moduleGallery";
@@ -229,6 +230,13 @@ namespace BetterCms.Configuration
             set { this[StorageNode] = value; }
         }
 
+        [ConfigurationProperty(SearchNode, IsRequired = false)]
+        public CmsSearchConfigurationElement Search
+        {
+            get { return (CmsSearchConfigurationElement)this[SearchNode]; }
+            set { this[SearchNode] = value; }
+        }
+
         [ConfigurationProperty(CacheNode, IsRequired = true)]
         public CmsCacheConfigurationElement Cache
         {
@@ -280,6 +288,12 @@ namespace BetterCms.Configuration
         {
             get { return Storage; }
         }
+
+        ICmsSearchConfiguration ICmsConfiguration.Search
+        {
+            get { return Search; }
+        }
+
 
         ICmsCacheConfiguration ICmsConfiguration.Cache
         {

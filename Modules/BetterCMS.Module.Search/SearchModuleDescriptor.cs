@@ -1,19 +1,42 @@
-﻿using Autofac;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
-using BetterCms;
+using Autofac;
+
 using BetterCms.Core.Modules;
+using BetterCms.Core.Modules.Projections;
+using BetterCms.Module.Root;
 
-namespace BetterCMS.Module.Search
+namespace BetterCms.Module.Search
 {
+    /// <summary>
+    /// Pages module descriptor.
+    /// </summary>
     public class SearchModuleDescriptor : ModuleDescriptor
     {
-        internal const string ModuleName = "search";        
+        /// <summary>
+        /// The module name.
+        /// </summary>
+        internal const string ModuleName = "search";
 
         /// <summary>
-        /// Gets the name.
+        /// The newsletter area name.
+        /// </summary>
+        internal const string SearchAreaName = "bcms-search";
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchModuleDescriptor" /> class.
+        /// </summary>
+        public SearchModuleDescriptor(ICmsConfiguration cmsConfiguration)
+            : base(cmsConfiguration)
+        {            
+        }
+
+        /// <summary>
+        /// Gets the name of module.
         /// </summary>
         /// <value>
-        /// The name.
+        /// The name of pages module.
         /// </value>
         public override string Name
         {
@@ -23,26 +46,41 @@ namespace BetterCMS.Module.Search
             }
         }
 
+        /// <summary>
+        /// Gets the description.
+        /// </summary>
+        /// <value>
+        /// The module description.
+        /// </value>
         public override string Description
         {
             get
             {
-                return "A search module for Better CMS. It depends on a concrete search engine module (LuceneSearch or GoogleSiteSearch).";
+                return "A search module for Better CMS (has dependencies with the Google Site Search or the Lucene Search module).";
             }
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SearchModuleDescriptor" class./>
+        /// Gets the name of the module area.
         /// </summary>
-        /// <param name="configuration">The configuration</param>
-        public SearchModuleDescriptor(ICmsConfiguration configuration)
-            : base(configuration)
+        /// <value>
+        /// The name of the module area.
+        /// </value>
+        public override string AreaName
         {
+            get
+            {
+                return SearchAreaName;
+            }
         }
-        
+
+        /// <summary>
+        /// Registers module types.
+        /// </summary>
+        /// <param name="context">The area registration context.</param>
+        /// <param name="containerBuilder">The container builder.</param>        
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
-        
-        }
+        }        
     }
 }

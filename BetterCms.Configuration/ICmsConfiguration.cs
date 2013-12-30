@@ -81,6 +81,11 @@ namespace BetterCms
         ICmsUsersConfiguration Users { get; }
 
         /// <summary>
+        /// Gets the configuration of CMS search services.
+        /// </summary>
+        ICmsSearchConfiguration Search { get; }
+
+        /// <summary>
         /// Gets or sets the page not found url.
         /// </summary>
         /// <value>

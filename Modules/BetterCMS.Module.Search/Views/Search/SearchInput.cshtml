@@ -1,0 +1,23 @@
+﻿@using BetterCms.Module.Search.Controllers
+@using BetterCms.Module.Root.Mvc.Helpers
+@using Microsoft.Web.Mvc
+
+@model BetterCms.Module.Search.ViewModels.SearchInputViewModel
+
+@{
+    string labelTitle = ViewData["Label.Title"] as string;
+    string submitTitle = ViewData["Button.Title"] as string;
+    string emailPlaceholder = ViewData["Input.Placeholder.Title"] as string;
+    string searchResultsUrl = ViewData["SearchResults.Url"] as string;    
+}
+
+<form action="@searchResultsUrl" class="bcms-search-input-form" method="POST">
+    @Html.LabelFor(f => f.Query, labelTitle)
+    @Html.TextBoxFor(m => m.Query, 
+                                       new {
+                                               @type = "email",
+                                               @class = "bcms-search-input required",
+                                               @placeholder = @emailPlaceholder
+                                           })
+    <button type="submit" class="bcms-search-submit">@submitTitle</button>    
+</form>
