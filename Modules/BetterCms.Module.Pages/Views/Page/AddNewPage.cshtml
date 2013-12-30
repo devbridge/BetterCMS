@@ -22,15 +22,6 @@
     {
         <div id="bcms-tab-1" class="bcms-tab-single">
             <div class="bcms-padded-content">
-                
-                @if (Model.Cultures != null && Model.Cultures.Any())
-                {
-                    <div class="bcms-input-list-holder" data-bind="with: culture">
-                        @Html.Tooltip(PagesGlobalization.AddNewPage_Culture_Tooltip_Description)
-                        <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_Culture</div>
-                        <select class="bcms-global-select" data-bind="options: cultures, optionsText: 'value', optionsValue: 'key', value: cultureId"></select>
-                    </div>
-                }
 
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(PagesGlobalization.AddNewPage_PageTitle_Tooltip_Description)
@@ -72,6 +63,15 @@
                                             Tooltip = PagesGlobalization.AddNewPage_UserAccess_Tooltip_Description
                                         };
                     @Html.Partial(RootModuleConstants.AccessControlTemplate, viewModel)
+                }
+                
+                @if (Model.Cultures != null && Model.Cultures.Any())
+                {
+                    <div class="bcms-input-list-holder" data-bind="with: culture">
+                        @Html.Tooltip(PagesGlobalization.AddNewPage_Culture_Tooltip_Description)
+                        <div class="bcms-content-titles">@PagesGlobalization.AddNewPage_Culture</div>
+                        <select class="bcms-global-select" data-bind="options: cultures, optionsText: 'value', optionsValue: 'key', value: cultureId"></select>
+                    </div>
                 }
             </div>
         </div>

@@ -55,7 +55,9 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 siteSettingPageStatusCell: '.bcms-page-ispublished',
                 siteSettingPageHasSeoCell: '.bcms-page-hasseo',
 
-                clonePageForm: 'form:first'
+                clonePageForm: 'form:first',
+                cloneWithCultureGoToPagePropertiesLink: '#bcms-open-page-translations',
+                pagePropertiesTranslationsTab: '.bcms-tab-header .bcms-tab[data-name="#bcms-tab-5"]'
             },
             links = {
                 loadEditPropertiesUrl: null,
@@ -644,7 +646,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             });
         };
 
-        function clonePage(url, title) {
+        function clonePage(url, title, onLoad) {
             var permalinkValue;
 
             modal.open({
@@ -657,8 +659,18 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
                             var viewModel = {
                                 accessControl: security.createUserAccessViewModel(content.Data.UserAccessList)
-                            };
-                            ko.applyBindings(viewModel, dialog.container.find(selectors.clonePageForm).get(0));
+                            },
+                                form = dialog.container.find(selectors.clonePageForm);
+
+                            if (form.length > 0) {
+                                ko.applyBindings(viewModel, form.get(0));
+                            } else {
+                                $(modal.selectors.accept).hide();
+                            }
+                            
+                            if ($.isFunction(onLoad)) {
+                                onLoad(childDialog, content);
+                            }
                         },
 
                         beforePost: function () {
@@ -712,7 +724,15 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             var url = $.format(links.clonePageWithCultureDialogUrl, bcms.pageId),
                 title = globalization.clonePageWithCultureDialogTitle;
 
-            clonePage(url, title);
+            clonePage(url, title, function(clonePageDialog) {
+                clonePageDialog.container.find(selectors.cloneWithCultureGoToPagePropertiesLink).on('click', function() {
+                    clonePageDialog.close();
+                    pageProperties.editPageProperties(function (pagePropertiesDialog) {
+                        // Open translations tab
+                        pagePropertiesDialog.container.find(selectors.pagePropertiesTranslationsTab).click();
+                    });
+                });
+            });
         };
 
         /**

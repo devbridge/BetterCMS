@@ -8,17 +8,17 @@
         <div class="bcms-content-titles">@PagesGlobalization.EditPageTranslations_OtherLanguages_Title</div> 
         <div class="bcms-access-table">
             <div class="bcms-access-title bcms-clearfix">
-                <div class="bcms-access-title-text">@PagesGlobalization.EditPageTranslations_Culture_Title</div> 
                 <div class="bcms-access-title-text">@PagesGlobalization.EditPageTranslations_Title_Title</div> 
                 <div class="bcms-access-title-text">@PagesGlobalization.EditPageTranslations_Url_Title</div> 
+                <div class="bcms-access-title-text">@PagesGlobalization.EditPageTranslations_Culture_Title</div> 
             </div> 
             <div data-bind="foreach: items()">
                 <div class="bcms-access-line bcms-clearfix">
                     <div class="bcms-access-value">
-                        <div class="btn-acces-minus" data-bind="click: $parent.unassignPage">&nbsp;</div> <span data-bind="html: cultureName()"></span> 
+                        <div class="btn-acces-minus" data-bind="click: $parent.unassignPage">&nbsp;</div> <span data-bind="html: title()"></span> 
                     </div> 
-                    <div class="bcms-access-value" data-bind="html: title()"></div> 
                     <div class="bcms-access-value"><a data-bind="html: url(), attr: {href: url()}" target="_blank"></a></div> 
+                    <div class="bcms-access-value" data-bind="html: cultureName()"></div> 
                 </div>
                 <input type="hidden" data-bind="attr: { name: getPropertyIndexer($index(), 'CultureId') }, value: cultureId()" />
                 <input type="hidden" data-bind="attr: { name: getPropertyIndexer($index(), 'Id') }, value: id()" />
@@ -32,8 +32,11 @@
                     <input type="text" data-bind="value: addPageTitle, autocomplete: 'onlyExisting', hasfocus: hasFocus, enterPress: addTranslation, escPress: clickPlus" />
                     <div class="bcms-btn-small" data-bind="click: selectPage">...</div>
 
-                    <!-- ko if: addPageId() -->
+                    <!-- ko if: addPageId() && addingPageCultures().length > 1 -->
                     <select data-bind="options: addingPageCultures, optionsText: 'value', optionsValue: 'key', value: addCultureId"></select>
+                    <!-- /ko -->
+                    <!-- ko if: addPageId() && addingPageCultures().length == 1 -->
+                    <span data-bind="html: addingPageCultures()[0].value"></span>
                     <!-- /ko -->
                     
                     <!-- ko if: addCultureId() -->

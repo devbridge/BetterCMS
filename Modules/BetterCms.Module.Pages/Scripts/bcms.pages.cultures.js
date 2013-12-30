@@ -97,11 +97,19 @@
             self.originalItems = [];
 
             function onSelectPage(pageId, pageCultureId, pageTitle, pageUrl) {
+                var culturesList;
+
                 self.pageCultureId = pageCultureId;
                 self.pageUrl = pageUrl;
-                self.addCultureId('');
                 self.addPageId(pageId);
                 self.addPageTitle(pageTitle);
+
+                culturesList = self.addingPageCultures();
+                if (culturesList.length > 0) {
+                    self.addCultureId(culturesList[0].key);
+                } else {
+                    self.addCultureId('');
+                }
 
                 return true;
             }
@@ -225,6 +233,7 @@
                 modal.confirm({
                     content: globalization.unassignTranslationConfirmation,
                     onAccept: function () {
+                        closeAddMode();
                         self.items.remove(item);
 
                         return true;
@@ -248,7 +257,7 @@
 
                     if (culture.key != currentCultureId && (selectedCultureId == culture.key || !selectedCultureId)) {
                         cult.push({
-                            key: culture.key || '-',
+                            key: culture.key || bcms.constants.emptyGuid,
                             value: culture.value || globalization.invariantCulture
                         });
                     }
@@ -259,7 +268,7 @@
 
             self.addTranslation = function () {
                 if (self.isInAddMode() && self.addCultureId() && self.addPageId()) {
-                    var currentCultureId = self.addCultureId() == '-' ? '' : self.addCultureId(),
+                    var currentCultureId = self.addCultureId() == bcms.constants.emptyGuid ? '' : self.addCultureId(),
                         addTranslation = function (viewModel) {
                             var li = self.culture.cultures.length,
                                 i, culture;

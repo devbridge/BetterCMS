@@ -346,7 +346,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         /**
         * Opens modal window for given page with page properties
         */
-        page.openEditPageDialog = function (id, postSuccess, title) {
+        page.openEditPageDialog = function (id, postSuccess, title, onLoad) {
             var pageViewModel,
                 canEdit = security.IsAuthorized(["BcmsEditContent"]),
                 canEditMaster = security.IsAuthorized(["BcmsAdministration"]),
@@ -380,6 +380,10 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                             pageViewModel = page.initEditPagePropertiesDialogEvents(childDialog, content);
                             if (content.Data && content.Data.IsMasterPage === true) {
                                 childDialog.setTitle(globalization.editMasterPagePropertiesModalTitle);
+                            }
+                            
+                            if ($.isFunction(onLoad)) {
+                                onLoad(childDialog, content);
                             }
                         },
 
@@ -435,13 +439,13 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         /**
         * Opens modal window for current page with page properties
         */
-        page.editPageProperties = function () {
+        page.editPageProperties = function (onLoad) {
             page.openEditPageDialog(bcms.pageId, function (data) {
                 // Redirect
                 if (data.Data && data.Data.PageUrl) {
                     redirect.RedirectWithAlert(data.Data.PageUrl);
                 }
-            }, globalization.editPagePropertiesModalTitle);
+            }, globalization.editPagePropertiesModalTitle, onLoad);
         };
         
         /**

@@ -7,11 +7,13 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
+
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 
 using NHibernate.Linq;
@@ -48,7 +50,7 @@ namespace BetterCms.Module.Pages.Services
             return ClonePage(pageId, pageTitle, pageUrl, userAccessList, cloneAsMasterPage, null, null);
         }
 
-        public PageProperties ClonePageWithCulture(System.Guid pageId, string pageTitle, string pageUrl, IEnumerable<IAccessRule> userAccessList, System.Guid? cultureId, System.Guid cultureGroupIdentifier)
+        public PageProperties ClonePageWithCulture(System.Guid pageId, string pageTitle, string pageUrl, IEnumerable<IAccessRule> userAccessList, System.Guid cultureId, System.Guid cultureGroupIdentifier)
         {
             return ClonePage(pageId, pageTitle, pageUrl, userAccessList, false, cultureId, cultureGroupIdentifier);
         }
@@ -110,7 +112,14 @@ namespace BetterCms.Module.Pages.Services
             var newPage = ClonePageOnly(page, userAccessList, pageTitle, pageUrl, cloneAsMasterPage);
             if (cultureId.HasValue)
             {
-                newPage.Culture = repository.AsProxy<Culture>(cultureId.Value);
+                if (cultureId.Value.HasDefaultValue())
+                {
+                    newPage.Culture = null;
+                }
+                else
+                {
+                    newPage.Culture = repository.AsProxy<Culture>(cultureId.Value);
+                }
             }
             if (cultureGroupIdentifier.HasValue)
             {
@@ -314,7 +323,7 @@ namespace BetterCms.Module.Pages.Services
             if (cultureGroupIdentifier.HasValue)
             {
                 var query = repository.AsQueryable<Page>().Where(p => p.CultureGroupIdentifier == cultureGroupIdentifier);
-                if (cultureId.HasValue)
+                if (cultureId.HasValue && !cultureId.Value.HasDefaultValue())
                 {
                     var culture = repository.AsProxy<Culture>(cultureId.Value);
                     query = query.Where(p => p.Culture == culture);

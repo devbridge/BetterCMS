@@ -637,6 +637,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open &lt;a href=&quot;#&quot; id=&quot;bcms-open-page-translations&quot;&gt;page translations&lt;/a&gt; list..
+        /// </summary>
+        public static string ClonePageWithCulture_Dialog_GoToPageProperties {
+            get {
+                return ResourceManager.GetString("ClonePageWithCulture_Dialog_GoToPageProperties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Translate page.
         /// </summary>
         public static string ClonePageWithCulture_Dialog_Title {
@@ -1789,7 +1798,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Title.
+        ///   Looks up a localized string similar to Page Title.
         /// </summary>
         public static string EditPageTranslations_Title_Title {
             get {
@@ -1807,7 +1816,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Url.
+        ///   Looks up a localized string similar to Page Url.
         /// </summary>
         public static string EditPageTranslations_Url_Title {
             get {

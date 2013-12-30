@@ -1270,15 +1270,18 @@
     <value>Other languages</value>
   </data>
   <data name="EditPageTranslations_Title_Title" xml:space="preserve">
-    <value>Title</value>
+    <value>Page Title</value>
   </data>
   <data name="EditPageTranslations_Url_Title" xml:space="preserve">
-    <value>Url</value>
+    <value>Page Url</value>
   </data>
   <data name="EditPageTranslations_OtherLanguages_Tooltip" xml:space="preserve">
     <value>Current page translations - another pages with different culture, which are associated with current page.</value>
   </data>
   <data name="SavePagePropertiesCommand_PageTranslationsIsMasterPage_Message" xml:space="preserve">
     <value>Master pages cannot be assigned as translation.</value>
+  </data>
+  <data name="ClonePageWithCulture_Dialog_GoToPageProperties" xml:space="preserve">
+    <value>Open &lt;a href="#" id="bcms-open-page-translations"&gt;page translations&lt;/a&gt; list.</value>
   </data>
 </root>
