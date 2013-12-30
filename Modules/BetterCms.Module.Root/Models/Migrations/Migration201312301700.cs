@@ -17,7 +17,7 @@ namespace BetterCms.Module.Root.Models.Migrations
 
         public override void Up()
         {
-            if (Schema.Table("Pages").Column("CultureGroupIdentifier").Exists())
+            if (Schema.Schema(SchemaName).Table("Pages").Column("CultureGroupIdentifier").Exists())
             {
                 Rename
                     .Column("CultureGroupIdentifier")
@@ -25,7 +25,7 @@ namespace BetterCms.Module.Root.Models.Migrations
                     .To("LanguageGroupIdentifier");
             }
 
-            if (Schema.Table("Pages").Column("CultureId").Exists())
+            if (Schema.Schema(SchemaName).Table("Pages").Column("CultureId").Exists())
             {
                 Rename
                     .Column("CultureId")
@@ -33,7 +33,7 @@ namespace BetterCms.Module.Root.Models.Migrations
                     .To("LanguageId");
             }
 
-            if (Schema.Table("Cultures").Exists())
+            if (Schema.Schema(SchemaName).Table("Cultures").Exists())
             {
                 Rename
                     .Table("Cultures").InSchema(SchemaName)

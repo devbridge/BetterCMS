@@ -24,7 +24,7 @@ namespace BetterCms.Module.Root.Models.Migrations
                 .AsGuid().Nullable();
 
             // Drop old column, if such was created
-            if (Schema.Table("Pages").Column("MainCulturePageId").Exists())
+            if (Schema.Schema(SchemaName).Table("Pages").Column("MainCulturePageId").Exists())
             {
                 Delete
                     .ForeignKey("FK_Cms_Pages_MainCulturePageId_Cms_Pages_Id")
