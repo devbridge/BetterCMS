@@ -27,6 +27,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public List<LookupKeyValue> Languages { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to show warning about no cultures created.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if to show warning about no cultures created; otherwise, <c>false</c>.
+        /// </value>
+        public bool ShowWarningAboutNoCultures { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

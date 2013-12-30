@@ -66,6 +66,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageForCloningWithLanguage
             var result = pageFutureQuery.FirstOne();
             var model = result.Model;
             model.Languages = languagesFuture.ToList();
+            model.ShowWarningAboutNoCultures = !model.Languages.Any();
 
             if (model.IsMasterPage)
             {

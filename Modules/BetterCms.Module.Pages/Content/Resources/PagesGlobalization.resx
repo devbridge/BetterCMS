@@ -1249,7 +1249,7 @@
     <value>Page language is requred field.</value>
   </data>
   <data name="ClonePageWithLanguage_PageHasAllTranslations_Message" xml:space="preserve">
-    <value>Current page already has translations to all the available languages.</value>
+    <value>Current page already has translations to all the available languages. &lt;a href="#" id="bcms-open-page-translations"&gt;Open page translations.&lt;/a&gt;</value>
   </data>
   <data name="ClonePageWithLanguage_PageAlreadyHasSuchTranslation_Message" xml:space="preserve">
     <value>Page already has translation to the specified language.</value>
@@ -1281,7 +1281,7 @@
   <data name="SavePagePropertiesCommand_PageTranslationsIsMasterPage_Message" xml:space="preserve">
     <value>Master pages cannot be assigned as translation.</value>
   </data>
-  <data name="ClonePageWithLanguage_Dialog_GoToPageProperties" xml:space="preserve">
-    <value>Open &lt;a href="#" id="bcms-open-page-translations"&gt;page translations&lt;/a&gt; list.</value>
+  <data name="ClonePageWithLanguage_NoLanguagesCreated_Message" xml:space="preserve">
+    <value>There are no languages created yet. To create a language, go to Site Settings -&gt; Languages or contact your system administrator.</value>
   </data>
 </root>

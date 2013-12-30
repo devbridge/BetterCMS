@@ -277,7 +277,14 @@ namespace BetterCms.Module.Pages.Controllers
             var model = GetCommand<GetPageForCloningWithLanguageCommand>().ExecuteCommand(request);
             if (model != null && model.Languages.Count == 0)
             {
-                Messages.AddWarn(PagesGlobalization.ClonePageWithLanguage_PageHasAllTranslations_Message);
+                if (model.ShowWarningAboutNoCultures)
+                {
+                    Messages.AddInfo(PagesGlobalization.ClonePageWithLanguage_NoLanguagesCreated_Message);
+                }
+                else
+                {
+                    Messages.AddInfo(PagesGlobalization.ClonePageWithLanguage_PageHasAllTranslations_Message);
+                }
             }
 
             var view = RenderView("ClonePageWithLanguage", model ?? new ClonePageWithLanguageViewModel());

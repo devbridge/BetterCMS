@@ -610,15 +610,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open &lt;a href=&quot;#&quot; id=&quot;bcms-open-page-translations&quot;&gt;page translations&lt;/a&gt; list..
-        /// </summary>
-        public static string ClonePageWithLanguage_Dialog_GoToPageProperties {
-            get {
-                return ResourceManager.GetString("ClonePageWithLanguage_Dialog_GoToPageProperties", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to New Page Language.
         /// </summary>
         public static string ClonePageWithLanguage_Dialog_Language_Title {
@@ -655,6 +646,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There are no languages created yet. To create a language, go to Site Settings -&gt; Languages or contact your system administrator..
+        /// </summary>
+        public static string ClonePageWithLanguage_NoLanguagesCreated_Message {
+            get {
+                return ResourceManager.GetString("ClonePageWithLanguage_NoLanguagesCreated_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Page already has translation to the specified language..
         /// </summary>
         public static string ClonePageWithLanguage_PageAlreadyHasSuchTranslation_Message {
@@ -664,7 +664,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Current page already has translations to all the available languages..
+        ///   Looks up a localized string similar to Current page already has translations to all the available languages. &lt;a href=&quot;#&quot; id=&quot;bcms-open-page-translations&quot;&gt;Open page translations.&lt;/a&gt;.
         /// </summary>
         public static string ClonePageWithLanguage_PageHasAllTranslations_Message {
             get {

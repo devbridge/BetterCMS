@@ -10,48 +10,45 @@
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
     <div class="bcms-padded-content">
-        @if (Model.Languages.Any())
+        @using (Html.BeginForm<PageController>(f => f.ClonePageWithLanguage((string)null), FormMethod.Post,
+            new {
+                    @class = "bcms-ajax-form",
+                    data_readonly = (!Model.Languages.Any()).ToString().ToLower()
+                }))
         {
-            using (Html.BeginForm<PageController>(f => f.ClonePageWithLanguage((string)null), FormMethod.Post, new { @class = "bcms-ajax-form" }))
+            <div class="bcms-input-list-holder">
+                <div class="bcms-content-titles">@PagesGlobalization.ClonePageWithLanguage_Dialog_ConfirmationMessage_Header</div>
+                <div>@PagesGlobalization.ClonePageWithLanguage_Dialog_ConfirmationMessage_Text</div>
+            </div>
+
+            <div class="bcms-input-list-holder">
+                @Html.Tooltip(PagesGlobalization.ClonePageWithLanguage_Dialog_Language_Tootlip)
+                <div class="bcms-content-titles">@PagesGlobalization.ClonePageWithLanguage_Dialog_Language_Title</div>
+                <div class="bcms-input-box">
+                    @Html.DropDownListFor(model => model.LanguageId, Model.Languages.ToSelectList(Model.LanguageId), string.Empty, new { @class = "bcms-global-select" })
+                    @Html.BcmsValidationMessageFor(f => f.LanguageId)
+                </div>
+            </div>
+
+            <div class="bcms-input-list-holder">
+                @Html.Tooltip(PagesGlobalization.ClonePage_Dialog_PageTitle_Tooltip_Description)
+                <div class="bcms-content-titles">@PagesGlobalization.ClonePage_Dialog_PageTitle</div>
+                <div class="bcms-input-box">
+                    @Html.TextBoxFor(m => m.PageTitle, new { @class = "bcms-editor-field-box" })
+                    @Html.BcmsValidationMessageFor(f => f.PageTitle)
+                </div>
+            </div>
+
+            @Html.Partial("Partial/ClonePageEditUrl")
+
+            if (Model.AccessControlEnabled)
             {
-                <div class="bcms-input-list-holder">
-                    <div class="bcms-content-titles">@PagesGlobalization.ClonePageWithLanguage_Dialog_ConfirmationMessage_Header</div>
-                    <div>@PagesGlobalization.ClonePageWithLanguage_Dialog_ConfirmationMessage_Text</div>
-                </div>
-
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.ClonePageWithLanguage_Dialog_Language_Tootlip)
-                    <div class="bcms-content-titles">@PagesGlobalization.ClonePageWithLanguage_Dialog_Language_Title</div>
-                    <div class="bcms-input-box">
-                        @Html.DropDownListFor(model => model.LanguageId, Model.Languages.ToSelectList(Model.LanguageId), string.Empty, new { @class = "bcms-global-select" })
-                        @Html.BcmsValidationMessageFor(f => f.LanguageId)
-                    </div>
-                </div>
-
-                <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.ClonePage_Dialog_PageTitle_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.ClonePage_Dialog_PageTitle</div>
-                    <div class="bcms-input-box">
-                        @Html.TextBoxFor(m => m.PageTitle, new { @class = "bcms-editor-field-box" })
-                        @Html.BcmsValidationMessageFor(f => f.PageTitle)
-                    </div>
-                </div>
-
-                @Html.Partial("Partial/ClonePageEditUrl")
-
-                if (Model.AccessControlEnabled)
-                {
-                    @Html.Partial(RootModuleConstants.AccessControlTemplate)
-                }
-
-                @Html.HiddenFor(m => m.PageId)
-                @Html.HiddenFor(m => m.LanguageId)
-                @Html.HiddenSubmit()
+                @Html.Partial(RootModuleConstants.AccessControlTemplate)
             }
-        }
-        else
-        {
-            <h4>@Html.Raw(PagesGlobalization.ClonePageWithLanguage_Dialog_GoToPageProperties)</h4>
+
+            @Html.HiddenFor(m => m.PageId)
+            @Html.HiddenFor(m => m.LanguageId)
+            @Html.HiddenSubmit()
         }
     </div>
 </div>
