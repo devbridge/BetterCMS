@@ -209,6 +209,7 @@
     <Content Include="Scripts\jasmine.phantomjs.xml-runner.js" />
     <Content Include="spec\blog.authors.api.behavior.js" />
     <Content Include="spec\blog.blogPosts.api.behavior.js" />
+    <Content Include="spec\root.languages.api.behavior.js" />
     <Content Include="spec\users.roles.api.behavior.js" />
     <Content Include="spec\users.users.api.behavior.js" />
     <Content Include="spec\root.filtering.api.behavior.js" />

@@ -243,6 +243,14 @@
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\Options\OptionModel.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\ServerControlWidgetModel.cs" />
     <Compile Include="Operations\Root\Categories\Category\GetCategoryRequestValidator.cs" />
+    <Compile Include="Operations\Root\Languages\GetLanguagesRequest.cs" />
+    <Compile Include="Operations\Root\Languages\GetLanguagesResponse.cs" />
+    <Compile Include="Operations\Root\Languages\ILanguagesService.cs" />
+    <Compile Include="Operations\Root\Languages\LanguageModel.cs" />
+    <Compile Include="Operations\Root\Languages\Language\GetLanguageRequest.cs" />
+    <Compile Include="Operations\Root\Languages\Language\GetLanguageRequestValidator.cs" />
+    <Compile Include="Operations\Root\Languages\Language\GetLanguageResponse.cs" />
+    <Compile Include="Operations\Root\Languages\Language\ILanguageService.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\Options\GetLayoutOptionsRequest.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\Options\GetLayoutOptionsResponse.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\Options\ILayoutOptionsService.cs" />
