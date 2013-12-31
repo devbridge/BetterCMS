@@ -116,6 +116,8 @@ namespace BetterCms.Tests.Helpers
             entity.Status = PageStatus.Published;
             entity.PublishedOn = ProvideRandomDateTime();
             entity.Layout = layout ?? CreateNewLayout();
+            entity.Language = CreateNewLanguage();
+            entity.LanguageGroupIdentifier = ProvideRandomGuid();
 
             return entity;
         }
@@ -243,6 +245,18 @@ namespace BetterCms.Tests.Helpers
             PopulateBaseFields(entity);
 
             entity.Name = ProvideRandomString(MaxLength.Name);
+
+            return entity;
+        }
+
+        public Language CreateNewLanguage()
+        {
+            var entity = new Language();
+
+            PopulateBaseFields(entity);
+
+            entity.Name = ProvideRandomString(MaxLength.Name);
+            entity.Code = ProvideRandomString(MaxLength.Name);
 
             return entity;
         }

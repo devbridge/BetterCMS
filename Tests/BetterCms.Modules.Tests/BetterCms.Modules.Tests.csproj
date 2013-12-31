@@ -168,6 +168,7 @@
     <Compile Include="Root\CommandTests\GetMainJsDataCommandTest.cs" />
     <Compile Include="Root\CommandTests\GetProcessorJsDataCommandTest.cs" />
     <Compile Include="Root\CommandTests\GetStyleSheetsToRenderCommandTest.cs" />
+    <Compile Include="Root\ModelTests\MapTests\LanguageMapTest.cs" />
     <Compile Include="Root\ModelTests\MapTests\PageOptionMapTest.cs" />
     <Compile Include="Root\ModelTests\MapTests\LayoutOptionMapTest.cs" />
     <Compile Include="Root\ServiceTests\DefaultOptionServiceIntegrationTests.cs" />
