@@ -31,6 +31,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 pagePropertiesPageIsMasterCheckbox: '#IsMasterPage',
 
                 optionsTab: '#bcms-tab-4',
+                translationsTabContent: '#bcms-tab-5 .bcms-padded-content',
                 javascriptCssTabOpener: '.bcms-tab[data-name="#bcms-tab-2"]'
             },
             links = {
@@ -167,6 +168,11 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 }, 20);
             });
             
+            // Translations tab
+            if (content.Data.ShowTranslationsTab && (!content.Data.Languages || content.Data.Languages.length == 0)) {
+                dialog.container.find(selectors.translationsTabContent).addClass(classes.inactive);
+            }
+
             return pageViewModel;
         };
 

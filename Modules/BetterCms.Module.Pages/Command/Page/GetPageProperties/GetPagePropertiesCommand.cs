@@ -200,13 +200,19 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 model.Model.Categories = categories;
                 model.Model.UpdateSitemap = true;
                 model.Model.CustomOptions = customOptionsFuture.ToList();
-                if (languagesFuture != null && !model.Model.IsMasterPage)
+                model.Model.ShowTranslationsTab = cmsConfiguration.EnableMultilanguage && !model.Model.IsMasterPage;
+                if (model.Model.ShowTranslationsTab)
                 {
                     model.Model.Languages = languagesFuture.ToList();
-                }
-                if (cmsConfiguration.EnableMultilanguage && model.LanguageGroupIdentifier.HasValue && !model.Model.IsMasterPage)
-                {
-                    model.Model.Translations = pageService.GetPageTranslations(model.LanguageGroupIdentifier.Value).ToList();
+                    if (!model.Model.Languages.Any())
+                    {
+                        model.Model.TranslationMessages = new UserMessages();
+                        model.Model.TranslationMessages.AddInfo(PagesGlobalization.EditPageProperties_TranslationsTab_NoLanguagesCreated_Message);
+                    }
+                    if (model.LanguageGroupIdentifier.HasValue)
+                    {
+                        model.Model.Translations = pageService.GetPageTranslations(model.LanguageGroupIdentifier.Value).ToList();
+                    }
                 }
 
                 // Get layout options, page options and merge them

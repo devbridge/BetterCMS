@@ -175,7 +175,8 @@ namespace BetterCms.Module.Pages.Controllers
                                IsMasterPage = success && model.IsMasterPage,
                                Languages = success ? model.Languages : null,
                                LanguageId = success ? model.LanguageId : null,
-                               Translations = success ? model.Translations : null
+                               Translations = success ? model.Translations : null,
+                               ShowTranslationsTab = success && model.ShowTranslationsTab
                            };
 
             return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);

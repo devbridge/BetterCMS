@@ -1726,6 +1726,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There are no languages created yet. To create a language, go to Site Settings -&gt; Languages or contact your system administrator..
+        /// </summary>
+        public static string EditPageProperties_TranslationsTab_NoLanguagesCreated_Message {
+            get {
+                return ResourceManager.GetString("EditPageProperties_TranslationsTab_NoLanguagesCreated_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Translations.
         /// </summary>
         public static string EditPageProperties_TranslationsTab_Title {

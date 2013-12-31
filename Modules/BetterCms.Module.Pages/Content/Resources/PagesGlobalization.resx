@@ -1284,4 +1284,7 @@
   <data name="ClonePageWithLanguage_NoLanguagesCreated_Message" xml:space="preserve">
     <value>There are no languages created yet. To create a language, go to Site Settings -&gt; Languages or contact your system administrator.</value>
   </data>
+  <data name="EditPageProperties_TranslationsTab_NoLanguagesCreated_Message" xml:space="preserve">
+    <value>There are no languages created yet. To create a language, go to Site Settings -&gt; Languages or contact your system administrator.</value>
+  </data>
 </root>

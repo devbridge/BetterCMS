@@ -196,6 +196,22 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public List<PageTranslationViewModel> Translations { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to show translations tab.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to show translations tab; otherwise, <c>false</c>.
+        /// </value>
+        public bool ShowTranslationsTab { get; set; }
+
+        /// <summary>
+        /// Gets or sets the translation messages.
+        /// </summary>
+        /// <value>
+        /// The translation messages.
+        /// </value>
+        public UserMessages TranslationMessages { get; set; }
+
+        /// <summary>
         /// Gets or sets the image view model.
         /// </summary>
         /// <value>
