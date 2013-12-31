@@ -197,11 +197,13 @@
     <Compile Include="Operations\Pages\Pages\Page\Properties\GetPagePropertiesResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\ImageModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\IPagePropertiesService.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Properties\LanguageModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\LayoutModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\MetadataModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\OptionModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PageContentModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PagePropertiesModel.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Properties\PageTranslationModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\TagModel.cs" />
     <Compile Include="Operations\Pages\Redirects\GetRedirectsRequest.cs" />
     <Compile Include="Operations\Pages\Redirects\GetRedirectsResponse.cs" />

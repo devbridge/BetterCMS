@@ -84,6 +84,9 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
                         MainImageCaption = page.Image != null && !page.Image.IsDeleted ? page.Image.Caption : null,
                         IsArchived = page.IsArchived,
                         IsMasterPage = page.IsMasterPage,
+                        LanguageId = page.Language != null ? page.Language.Id : (Guid?)null,
+                        LanguageCode = page.Language != null ? page.Language.Code : null,
+                        LanguageGroupIdentifier = page.LanguageGroupIdentifier,
                         Metadata = includeMetadata 
                             ? new MetadataModel
                                   {

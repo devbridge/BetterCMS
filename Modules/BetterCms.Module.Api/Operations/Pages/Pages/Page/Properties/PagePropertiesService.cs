@@ -69,6 +69,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                                 CategoryId = page.Category != null && !page.Category.IsDeleted ? page.Category.Id : (Guid?)null,
                                 IsArchived = page.IsArchived,
                                 IsMasterPage = page.IsMasterPage,
+                                LanguageGroupIdentifier = page.LanguageGroupIdentifier,
+                                LanguageId = page.Language != null ? page.Language.Id : (Guid?)null,
                                 MainImageId = page.Image != null && !page.Image.IsDeleted ? page.Image.Id : (Guid?)null,
                                 FeaturedImageId = page.FeaturedImage != null && !page.FeaturedImage.IsDeleted ?  page.FeaturedImage.Id : (Guid?)null,
                                 SecondaryImageId = page.SecondaryImage != null && !page.SecondaryImage.IsDeleted ? page.SecondaryImage.Id : (Guid?)null,
@@ -159,7 +161,20 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                                 Url = fileUrlResolver.EnsureFullPathUrl(page.SecondaryImage.PublicUrl),
                                 ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(page.SecondaryImage.PublicThumbnailUrl)
                             } 
-                            : null
+                            : null,
+                        Language = page.Language != null && !page.Language.IsDeleted && request.Data.IncludeLanguage
+                            ? new LanguageModel
+                            {
+                                Id = page.Language.Id,
+                                Version = page.Language.Version,
+                                CreatedBy = page.Language.CreatedByUser,
+                                CreatedOn = page.Language.CreatedOn,
+                                LastModifiedBy = page.Language.ModifiedByUser,
+                                LastModifiedOn = page.Language.ModifiedOn,
+
+                                Name = page.Language.Name,
+                                Code = page.Language.Code,
+                            } : null,
                     })
                 .FirstOne();
 
@@ -191,6 +206,25 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                                 DefaultValue = o.OptionDefaultValue,
                                 Type = ((Root.OptionType)(int)o.Type)
                             })
+                    .ToList();
+            }
+            
+            if (request.Data.IncludePageTranslations 
+                && response.Data.LanguageGroupIdentifier.HasValue)
+            {
+                // Get layout options, page options and merge them
+                response.PageTranslations = repository
+                    .AsQueryable<Module.Pages.Models.PageProperties>()
+                    .Where(p => p.LanguageGroupIdentifier == response.Data.LanguageGroupIdentifier)
+                    .OrderBy(p => p.Title)
+                    .Select(p => new PageTranslationModel
+                        {
+                            Id = p.Id,
+                            Title = p.Title,
+                            PageUrl = p.PageUrl,
+                            LanguageId = p.Language != null ? p.Language.Id: (Guid?)null,
+                            LanguageCode = p.Language != null ? p.Language.Code : null,
+                        })
                     .ToList();
             }
 
