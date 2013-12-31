@@ -1735,6 +1735,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Type page title here ....
+        /// </summary>
+        public static string EditPageProperties_TranslationsTab_PageSelectionPlaceholder {
+            get {
+                return ResourceManager.GetString("EditPageProperties_TranslationsTab_PageSelectionPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Translations.
         /// </summary>
         public static string EditPageProperties_TranslationsTab_Title {

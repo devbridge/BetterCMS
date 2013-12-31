@@ -1290,4 +1290,7 @@
   <data name="EditPageTranslations_PageHasSameCulture_Message" xml:space="preserve">
     <value>Page {0} cannot be selected as current page translation, because it has assigned the same language as the current page.</value>
   </data>
+  <data name="EditPageProperties_TranslationsTab_PageSelectionPlaceholder" xml:space="preserve">
+    <value>Type page title here ...</value>
+  </data>
 </root>

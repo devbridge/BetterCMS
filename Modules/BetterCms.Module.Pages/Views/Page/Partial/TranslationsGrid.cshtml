@@ -29,7 +29,7 @@
                     <span data-bind="click: clickPlus, visible: !isInAddMode()">@PagesGlobalization.EditPageTranslations_AddTranslation_ButtonTitle</span> 
                     <!-- ko if: isInAddMode() -->
                     
-                    <input type="text" data-bind="value: addPageTitle, autocomplete: 'onlyExisting', hasfocus: hasFocus, enterPress: addTranslation, escPress: clickPlus" />
+                    <input type="text" data-bind="value: addPageTitle, autocomplete: 'onlyExisting', hasfocus: hasFocus, enterPress: addTranslation, escPress: clickPlus" placeholder="@PagesGlobalization.EditPageProperties_TranslationsTab_PageSelectionPlaceholder" />
                     <div class="bcms-btn-small" data-bind="click: selectPage">...</div>
 
                     <!-- ko if: addPageId() && addingPageLanguages().length > 1 -->
