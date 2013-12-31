@@ -1789,6 +1789,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Page {0} cannot be selected as current page translation, because it has assigned the same language as the current page..
+        /// </summary>
+        public static string EditPageTranslations_PageHasSameCulture_Message {
+            get {
+                return ResourceManager.GetString("EditPageTranslations_PageHasSameCulture_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There is already translation with current language. If you change current page&apos;s language to {0}, translation will be removed from list. Are you sure you want to continue?.
         /// </summary>
         public static string EditPageTranslations_ReplaceTranslationWithCurrentLanguage_ConfirmationMessage {

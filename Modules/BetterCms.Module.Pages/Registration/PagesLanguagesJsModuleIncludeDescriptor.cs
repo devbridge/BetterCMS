@@ -31,7 +31,8 @@ namespace BetterCms.Module.Pages.Registration
                     new JavaScriptModuleGlobalization(this, "unassignTranslationConfirmation", () => PagesGlobalization.EditPageTranslations_UnassignTranslation_ConfirmationMessage),
                     new JavaScriptModuleGlobalization(this, "invariantLanguage", () => RootGlobalization.InvariantLanguage_Title),
                     new JavaScriptModuleGlobalization(this, "replaceItemWithCurrentLanguageConfirmation", () => PagesGlobalization.EditPageTranslations_ReplaceTranslationWithCurrentLanguage_ConfirmationMessage),
-                    new JavaScriptModuleGlobalization(this, "replaceItemWithLanguageConfirmation", () => PagesGlobalization.EditPageTranslations_ReplaceTranslationWithLanguage_ConfirmationMessage)
+                    new JavaScriptModuleGlobalization(this, "replaceItemWithLanguageConfirmation", () => PagesGlobalization.EditPageTranslations_ReplaceTranslationWithLanguage_ConfirmationMessage),
+                    new JavaScriptModuleGlobalization(this, "assigningPageHasSameCultureAsCurrentPageMessage", () => PagesGlobalization.EditPageTranslations_PageHasSameCulture_Message),
                 };
         }
     }

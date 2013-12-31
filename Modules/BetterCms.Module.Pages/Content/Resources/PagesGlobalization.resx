@@ -1287,4 +1287,7 @@
   <data name="EditPageProperties_TranslationsTab_NoLanguagesCreated_Message" xml:space="preserve">
     <value>There are no languages created yet. To create a language, go to Site Settings -&gt; Languages or contact your system administrator.</value>
   </data>
+  <data name="EditPageTranslations_PageHasSameCulture_Message" xml:space="preserve">
+    <value>Page {0} cannot be selected as current page translation, because it has assigned the same language as the current page.</value>
+  </data>
 </root>

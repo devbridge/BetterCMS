@@ -16,7 +16,8 @@
                 unassignTranslationConfirmation: null,
                 invariantLanguage: null,
                 replaceItemWithCurrentLanguageConfirmation: null,
-                replaceItemWithLanguageConfirmation: null
+                replaceItemWithLanguageConfirmation: null,
+                assigningPageHasSameCultureAsCurrentPageMessage: null
             };
         
         /**
@@ -97,6 +98,14 @@
             self.originalItems = [];
 
             function onSelectPage(pageId, pageLanguageId, pageTitle, pageUrl) {
+                
+                if (pageLanguageId == self.language.languageId()) {
+                    modal.info({
+                        content: $.format(globalization.assigningPageHasSameCultureAsCurrentPageMessage, pageTitle)
+                    });
+                    return false;
+                }
+
                 var languagesList;
 
                 self.pageLanguageId = pageLanguageId;
@@ -222,7 +231,7 @@
             self.selectPage = function() {
                 pageLanguages.openPageSelectDialog({
                     onAccept: function (selectedPage) {
-                        onSelectPage(selectedPage.Id, selectedPage.LanguageId, selectedPage.Title, selectedPage.PageUrl);
+                        return onSelectPage(selectedPage.Id, selectedPage.LanguageId, selectedPage.Title, selectedPage.PageUrl);
                     },
                     params: getAdditionalParameters(),
                     url: links.searchUntranslatedPagesUrl
