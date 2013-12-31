@@ -317,7 +317,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
         page.openCreatePageDialog = function (postSuccess, addMaster) {
             var permalinkValue,
-                url = $.format(links.loadAddNewPageDialogUrl, window.location.pathname, addMaster),
+                url = $.format(links.loadAddNewPageDialogUrl, window.location.pathname, addMaster || false),
                 viewModel;
 
             modal.open({

@@ -83,7 +83,15 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// The list of languages.
         /// </value>
-        public IEnumerable<LookupKeyValue> Languages { get; set; }
+        public List<LookupKeyValue> Languages { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show languages.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to show languages; otherwise, <c>false</c>.
+        /// </value>
+        public bool ShowLanguages { get; set; }
 
         /// <summary>
         /// Gets or sets the page option values.

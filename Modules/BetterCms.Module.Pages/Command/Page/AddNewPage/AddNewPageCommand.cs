@@ -70,7 +70,8 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
                 AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent);
             }
 
-            var languagesFuture = (cmsConfiguration.EnableMultilanguage && !request.CreateMasterPage) ? languageService.GetLanguages() : null;
+            var showLanguages = cmsConfiguration.EnableMultilanguage && !request.CreateMasterPage;
+            var languagesFuture = (showLanguages) ? languageService.GetLanguages() : null;
 
             var principal = securityService.GetCurrentPrincipal();
             var model = new AddNewPageViewModel
@@ -80,9 +81,10 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
                     AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled,
                     UserAccessList = AccessControlService.GetDefaultAccessList(principal).Select(f => new UserAccessViewModel(f)).ToList(),
                     CreateMasterPage = request.CreateMasterPage,
+                    ShowLanguages = showLanguages
                 };
 
-            if (languagesFuture != null)
+            if (showLanguages)
             {
                 model.Languages = languagesFuture.ToList();
             }

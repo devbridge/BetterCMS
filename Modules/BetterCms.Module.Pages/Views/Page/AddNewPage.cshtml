@@ -65,7 +65,7 @@
                     @Html.Partial(RootModuleConstants.AccessControlTemplate, viewModel)
                 }
                 
-                @if (Model.Languages != null && Model.Languages.Any())
+                @if (Model.ShowLanguages)
                 {
                     <div class="bcms-input-list-holder" data-bind="with: language">
                         @Html.Tooltip(PagesGlobalization.AddNewPage_Language_Tooltip_Description)

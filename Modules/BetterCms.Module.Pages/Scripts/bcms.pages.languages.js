@@ -66,7 +66,7 @@
             self.languageId = ko.observable(languageId);
 
             self.languages = [];
-            self.languages.push({ key: '', value: '' });
+            self.languages.push({ key: '', value: globalization.invariantLanguage });
             for (i = 0, l = languages.length; i < l; i++) {
                 self.languages.push({
                     key: languages[i].Key,
