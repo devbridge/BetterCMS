@@ -25,6 +25,10 @@
     <a class="bcms-tab" data-name="#bcms-tab-2">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Title</a>
     <a class="bcms-tab" data-name="#bcms-tab-3">@PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Title</a>
     <a class="bcms-tab" data-name="#bcms-tab-4">@PagesGlobalization.EditPageProperties_OptionsTab_Title</a>
+    @if (Model.ShowTranslationsTab)
+    {
+        <a class="bcms-tab" data-name="#bcms-tab-5">@PagesGlobalization.EditPageProperties_TranslationsTab_Title</a>
+    }
 </div>
 
 <div class="bcms-scroll-window">
@@ -34,8 +38,7 @@
         @Html.Partial("Partial/InfoMessageAboutMasterPage")
     }
     @using (Html.BeginForm<PageController>(f => f.EditPageProperties((EditPagePropertiesViewModel)null), FormMethod.Post, 
-            new
-                {
+            new {
                     @class = "bcms-ajax-form", 
                     data_readonly=Model.IsReadOnly.ToString().ToLower()
                 }))
@@ -148,6 +151,10 @@
                 @Html.HiddenFor(model => model.Image.ImageId, new { data_bind = "value: image().id()" })
                 @Html.HiddenFor(model => model.SecondaryImage.ImageId, new { data_bind = "value: secondaryImage().id()" })
                 @Html.HiddenFor(model => model.FeaturedImage.ImageId, new { data_bind = "value: featuredImage().id()" })
+                @if (Model.ShowTranslationsTab)
+                {
+                    @Html.HiddenFor(model => model.LanguageId, new { data_bind = "value: translations.language.languageId()" })
+                }
             </div>
         </div>
 
@@ -186,7 +193,27 @@
         <div id="bcms-tab-4" class="bcms-tab-single" data-bind="with: options">
             @Html.Partial(PagesConstants.OptionValuesGridTemplate)
         </div>
-            
+
+        if (Model.ShowTranslationsTab)
+        {
+            <div id="bcms-tab-5" class="bcms-tab-single">
+                @if (Model.TranslationMessages!= null)
+                {
+                    @Html.TabbedContentCustomMessagesBox(Model.TranslationMessages)
+                }
+
+                <div class="bcms-padded-content">
+                    <div class="bcms-input-list-holder" data-bind="with: translations.language">
+                        @Html.Tooltip(PagesGlobalization.EditPageProperties_TranslationsTab_Language_Tooltip_Description)
+                        <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_TranslationsTab_Language</div>
+                        <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
+                    </div>
+                    
+                    @Html.Partial("Partial/TranslationsGrid")
+                </div>
+            </div>
+        }
+
         @Html.HiddenSubmit()
     }
 </div>

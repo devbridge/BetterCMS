@@ -8,13 +8,12 @@ using BetterCms.Core.Security;
 
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels;
-
+using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 
 using BetterCms.Module.Root;
-using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
@@ -35,6 +34,11 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         /// The category service
         /// </summary>
         private ICategoryService categoryService;
+
+        /// <summary>
+        /// The language service
+        /// </summary>
+        private ILanguageService languageService;
 
         /// <summary>
         /// The tag service
@@ -62,6 +66,11 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         private readonly IMediaFileUrlResolver fileUrlResolver;
 
         /// <summary>
+        /// The page service
+        /// </summary>
+        private readonly IPageService pageService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GetPagePropertiesCommand" /> class.
         /// </summary>
         /// <param name="tagService">The tag service.</param>
@@ -70,15 +79,20 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
         /// <param name="cmsConfiguration">The CMS configuration.</param>
         /// <param name="layoutService">The layout service.</param>
         /// <param name="fileUrlResolver">The file URL resolver.</param>
+        /// <param name="languageService">The language service.</param>
+        /// <param name="pageService">The page service.</param>
         public GetPagePropertiesCommand(ITagService tagService, ICategoryService categoryService, IOptionService optionService,
-            ICmsConfiguration cmsConfiguration, ILayoutService layoutService, IMediaFileUrlResolver fileUrlResolver)
+            ICmsConfiguration cmsConfiguration, ILayoutService layoutService, IMediaFileUrlResolver fileUrlResolver,
+            ILanguageService languageService, IPageService pageService)
         {
             this.tagService = tagService;
             this.categoryService = categoryService;
+            this.languageService = languageService;
             this.optionService = optionService;
             this.cmsConfiguration = cmsConfiguration;
             this.layoutService = layoutService;
             this.fileUrlResolver = fileUrlResolver;
+            this.pageService = pageService;
         }
 
         /// <summary>
@@ -112,6 +126,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                               TemplateId = page.Layout.Id,
                               MasterPageId = page.MasterPage.Id,
                               CategoryId = page.Category.Id,
+                              LanguageId = page.Language.Id,
                               AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled,
                               Image = page.Image == null || page.Image.IsDeleted ? null :
                                   new ImageSelectorViewModel
@@ -143,13 +158,15 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                                               ImageTooltip = page.FeaturedImage.Caption,
                                               FolderId = page.FeaturedImage.Folder != null ? page.FeaturedImage.Folder.Id : (Guid?)null
                                           }
-                          }
+                          },
+                        LanguageGroupIdentifier = page.LanguageGroupIdentifier
                     })
                 .ToFuture();
 
             var tagsFuture = tagService.GetPageTagNames(id);
             var categories = categoryService.GetCategories();
             var customOptionsFuture = optionService.GetCustomOptionsFuture();
+            var languagesFuture = (cmsConfiguration.EnableMultilanguage) ? languageService.GetLanguages() : null;
 
             IEnumerable<AccessRule> userAccessFuture;
             if (cmsConfiguration.Security.AccessControlEnabled)
@@ -183,6 +200,20 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 model.Model.Categories = categories;
                 model.Model.UpdateSitemap = true;
                 model.Model.CustomOptions = customOptionsFuture.ToList();
+                model.Model.ShowTranslationsTab = cmsConfiguration.EnableMultilanguage && !model.Model.IsMasterPage;
+                if (model.Model.ShowTranslationsTab)
+                {
+                    model.Model.Languages = languagesFuture.ToList();
+                    if (!model.Model.Languages.Any())
+                    {
+                        model.Model.TranslationMessages = new UserMessages();
+                        model.Model.TranslationMessages.AddInfo(PagesGlobalization.EditPageProperties_TranslationsTab_NoLanguagesCreated_Message);
+                    }
+                    if (model.LanguageGroupIdentifier.HasValue)
+                    {
+                        model.Model.Translations = pageService.GetPageTranslations(model.LanguageGroupIdentifier.Value).ToList();
+                    }
+                }
 
                 // Get layout options, page options and merge them
                 model.Model.OptionValues = optionService.GetMergedMasterPagesOptionValues(model.Model.Id, model.Model.MasterPageId, model.Model.TemplateId);

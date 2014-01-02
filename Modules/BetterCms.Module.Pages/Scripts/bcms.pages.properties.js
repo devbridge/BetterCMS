@@ -2,8 +2,8 @@
 /*global bettercms */
 
 bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.dynamicContent', 'bcms.tags', 'bcms.ko.extenders',
-        'bcms.media', 'bcms.redirect', 'bcms.options', 'bcms.security', 'bcms.messages', 'bcms.codeEditor'],
-    function ($, bcms, modal, forms, dynamicContent, tags, ko, media, redirect, options, security, messages, codeEditor) {
+        'bcms.media', 'bcms.redirect', 'bcms.options', 'bcms.security', 'bcms.messages', 'bcms.codeEditor', 'bcms.pages.languages'],
+    function ($, bcms, modal, forms, dynamicContent, tags, ko, media, redirect, options, security, messages, codeEditor, pageLanguages) {
         'use strict';
 
         var page = {},
@@ -31,6 +31,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 pagePropertiesPageIsMasterCheckbox: '#IsMasterPage',
 
                 optionsTab: '#bcms-tab-4',
+                translationsTabContent: '#bcms-tab-5 .bcms-padded-content',
                 javascriptCssTabOpener: '.bcms-tab[data-name="#bcms-tab-2"]'
             },
             links = {
@@ -64,7 +65,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         /**
         * Page view model
         */
-        function PageViewModel(image, secondaryImage, featuredImage, tagsViewModel, optionListViewModel, accessControlViewModel) {
+        function PageViewModel(image, secondaryImage, featuredImage, tagsViewModel, optionListViewModel, accessControlViewModel, translationsViewModel) {
             var self = this;
 
             self.tags = tagsViewModel;
@@ -73,6 +74,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             self.secondaryImage = ko.observable(new media.ImageSelectorViewModel(secondaryImage));
             self.featuredImage = ko.observable(new media.ImageSelectorViewModel(featuredImage));
             self.accessControl = accessControlViewModel;
+            self.translations = translationsViewModel;
         }
 
         /**
@@ -83,7 +85,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 optionListViewModel = options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues, content.Data.CustomOptions),
                 tagsViewModel = new tags.TagsListViewModel(content.Data.Tags),
                 accessControlViewModel = security.createUserAccessViewModel(content.Data.UserAccessList),
-                pageViewModel = new PageViewModel(content.Data.Image, content.Data.SecondaryImage, content.Data.FeaturedImage, tagsViewModel, optionListViewModel, accessControlViewModel),
+                translationsViewModel = content.Data.Languages ? new pageLanguages.PageTranslationsListViewModel(content.Data.Translations, content.Data.Languages, content.Data.LanguageId) : null,
+                pageViewModel = new PageViewModel(content.Data.Image, content.Data.SecondaryImage, content.Data.FeaturedImage, tagsViewModel, optionListViewModel, accessControlViewModel, translationsViewModel),
                 form = dialog.container.find(selectors.pagePropertiesForm);
 
             ko.applyBindings(pageViewModel, form.get(0));
@@ -152,14 +155,24 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 setTimeout(function() {
                     dialog.container.find(selectors.pagePropertiesAceEditorContainer).each(function () {
                         var editor = $(this).data('aceEditor');
+                        
                         if (editor && $.isFunction(editor.resize)) {
                             editor.resize(true);
                             editor.renderer.updateFull();
+
+                            if (form.data('readonlyWithPublishing') == true || form.data('readonly') == true) {
+                                forms.setFieldsReadOnly(form);
+                            }
                         }
                     });
                 }, 20);
             });
             
+            // Translations tab
+            if (content.Data.ShowTranslationsTab && (!content.Data.Languages || content.Data.Languages.length == 0)) {
+                dialog.container.find(selectors.translationsTabContent).addClass(classes.inactive);
+            }
+
             return pageViewModel;
         };
 
@@ -339,7 +352,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         /**
         * Opens modal window for given page with page properties
         */
-        page.openEditPageDialog = function (id, postSuccess, title) {
+        page.openEditPageDialog = function (id, postSuccess, title, onLoad) {
             var pageViewModel,
                 canEdit = security.IsAuthorized(["BcmsEditContent"]),
                 canEditMaster = security.IsAuthorized(["BcmsAdministration"]),
@@ -352,35 +365,31 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                     var url = $.format(links.loadEditPropertiesDialogUrl, id);
                     dynamicContent.bindDialog(dialog, url, {
                         contentAvailable: function (childDialog, content) {
-                            var form = dialog.container.find('form'),
-                                publishCheckbox = form.find(selectors.pagePropertiesPageIsPublishedCheckbox);
+                            var form = dialog.container.find(selectors.pagePropertiesForm),
+                                publishCheckbox,
+                                publishCheckboxParent;
+                            
                             // User with only BcmsPublishContent but without BcmsEditContent can only publish - only publish checkbox needs to be enabled.
                             if (form.data('readonly') !== true && canPublish && !canEdit && !canEditMaster) {
-                                // Disable everything.
-                                dialog.container.find('.bcms-tab-single').each(function () {
-                                    $(this).addClass(classes.inactive);
-                                });
-                                publishCheckbox.parents('.bcms-tab-single').find('.bcms-padded-content').each(function () {
-                                    $(this).children().each(function () {
-                                        $(this).addClass(classes.inactive);
-                                    });
-                                });
-                                form.find('input:visible').attr('readonly', 'readonly');
-                                form.find('textarea:visible').attr('readonly', 'readonly');
-                                form.find('input[type=text]:visible:not([data-bind])').parent('div').css('z-index', 100);
-                                form.find('textarea:visible:not([data-bind])').attr('readonly', 'readonly').parent('div').css('z-index', 100);
-                                publishCheckbox.parents('.bcms-input-list-holder').parent().find('.bcms-checkbox-holder').each(function () {
-                                    $(this).addClass(classes.inactive);
-                                });
-                                // Enable only publish checkbox.
-                                publishCheckbox.parents('.' + classes.inactive).each(function () {
-                                    $(this).removeClass(classes.inactive);
-                                });
+                                form.data('readonlyWithPublishing', true);
+                                form.addClass(classes.inactive);
+                                forms.setFieldsReadOnly(form);
+
+                                publishCheckbox = form.find(selectors.pagePropertiesPageIsPublishedCheckbox);
+                                publishCheckboxParent = publishCheckbox.parents('.bcms-input-list-holder:first');
+
                                 publishCheckbox.removeAttr('readonly');
+                                publishCheckboxParent.find('input[type="checkbox"]').attr("disabled", "disabled");
+                                publishCheckbox.removeAttr("disabled");
+                                publishCheckboxParent.css('z-index', 100);
                             }
                             pageViewModel = page.initEditPagePropertiesDialogEvents(childDialog, content);
                             if (content.Data && content.Data.IsMasterPage === true) {
                                 childDialog.setTitle(globalization.editMasterPagePropertiesModalTitle);
+                            }
+                            
+                            if ($.isFunction(onLoad)) {
+                                onLoad(childDialog, content);
                             }
                         },
 
@@ -436,13 +445,13 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         /**
         * Opens modal window for current page with page properties
         */
-        page.editPageProperties = function () {
+        page.editPageProperties = function (onLoad) {
             page.openEditPageDialog(bcms.pageId, function (data) {
                 // Redirect
                 if (data.Data && data.Data.PageUrl) {
                     redirect.RedirectWithAlert(data.Data.PageUrl);
                 }
-            }, globalization.editPagePropertiesModalTitle);
+            }, globalization.editPagePropertiesModalTitle, onLoad);
         };
         
         /**

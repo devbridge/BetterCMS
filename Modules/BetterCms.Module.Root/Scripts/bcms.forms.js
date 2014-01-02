@@ -164,5 +164,12 @@ bettercms.define('bcms.forms', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.ta
         });
     };
 
+    forms.setFieldsReadOnly = function (form) {
+        form.find('input:visible').attr('readonly', 'readonly');
+        form.find('textarea:visible').attr('readonly', 'readonly');
+        form.find('input[type=text]:visible:not([data-bind])').parent('div').css('z-index', 100);
+        form.find('textarea:visible:not([data-bind])').attr('readonly', 'readonly').parent('div').css('z-index', 100);
+    };
+
     return forms;
 });

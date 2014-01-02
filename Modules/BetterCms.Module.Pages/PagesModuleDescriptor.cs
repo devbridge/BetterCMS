@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 
 using Autofac;
 
+using BetterCms.Core;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Modules;
@@ -191,6 +192,7 @@ namespace BetterCms.Module.Pages
             containerBuilder.RegisterType<DefaultLayoutService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultPreviewService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultMasterPageService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultPageCloneService>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
             // Registering root module, because root module register the last one, and this one should be before users module
             containerBuilder.RegisterType<EmptyUserProfileUrlResolver>().As<IUserProfileUrlResolver>().InstancePerLifetimeScope();
@@ -228,6 +230,7 @@ namespace BetterCms.Module.Pages
                     masterPagesJsModuleIncludeDescriptor,
                     historyJsModuleIncludeDescriptor,
                     sitemapJsModuleIncludeDescriptor,
+                    new PagesLanguagesJsModuleIncludeDescriptor(this), 
                     new JsIncludeDescriptor(this, "bcms.pages.filter")
                 };
         }
@@ -319,7 +322,15 @@ namespace BetterCms.Module.Pages
                         {
                             Order = 50,
                             CssClass = page => "bcms-buttons-block"
-                        },                          
+                        }, 
+                        
+                    new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "translatePage")
+                        {
+                            Title = page => PagesGlobalization.Sidebar_TranslatePageButtonTitle,
+                            CssClass = page => "bcms-sidemenu-btn",
+                            Order = 600,
+                            ShouldBeRendered = page => CmsContext.Config.EnableMultilanguage && !page.IsMasterPage
+                        },
 
                     new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "deleteCurrentPage")
                         {

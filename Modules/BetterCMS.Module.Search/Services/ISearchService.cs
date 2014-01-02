@@ -1,6 +1,6 @@
 ﻿using BetterCms.Module.Search.Models;
 
-namespace BetterCMS.Module.GoogleSiteSearch.Services.Search
+namespace BetterCms.Module.Search.Services
 {
     public interface ISearchService
     {

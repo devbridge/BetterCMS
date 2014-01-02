@@ -38,11 +38,11 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="bcms-croped-block">
                 <img src="" data-bind="style: { width: imageEditorViewModel.calculatedWidth() + 'px', height: imageEditorViewModel.calculatedHeight() + 'px' }" />
             </div>
-                
+
             <div class="bcms-edit-file-info">
 
                 <div class="bcms-file-info-text">
@@ -84,7 +84,7 @@
                     <b>@MediaGlobalization.ImageEditor_Dialog_FileSize:</b>
                     <div class="bcms-editing-text" id="image-file-size">@Model.FileSize</div>
                 </div>
-                
+
                 <div class="bcms-file-info-text">
                     <b>@MediaGlobalization.ImageEditor_Dialog_CroppedDimensions:</b>
                     <div class="bcms-editing-text" id="image-file-size" data-bind="text: imageEditorViewModel.croppedWidthAndHeight()">@Model.CroppedWidth x @Model.CroppedHeight</div>
@@ -125,18 +125,18 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="bcms-file-alignment">
                 <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_AligmentTitle</div>
                 <div class="bcms-alignment-controls">
                     <div class="bcms-align-center@(Model.ImageAlign == MediaImageAlign.Center ? "-active" : string.Empty)">
-                        <input type="radio" id="aligncenter" name="ImageAlign" value="@((int)MediaImageAlign.Center)" @(Model.ImageAlign == MediaImageAlign.Center ? "checked" : string.Empty)/>
+                        <input type="radio" id="aligncenter" name="ImageAlign" value="@((int)MediaImageAlign.Center)" @(Model.ImageAlign == MediaImageAlign.Center ? "checked" : string.Empty) />
                     </div>
                     <div class="bcms-align-left@(Model.ImageAlign == MediaImageAlign.Left ? "-active" : string.Empty)">
-                        <input type="radio" id="alignleft" name="ImageAlign" value="@((int)MediaImageAlign.Left)" @(Model.ImageAlign == MediaImageAlign.Left ? "checked" : string.Empty)/>
+                        <input type="radio" id="alignleft" name="ImageAlign" value="@((int)MediaImageAlign.Left)" @(Model.ImageAlign == MediaImageAlign.Left ? "checked" : string.Empty) />
                     </div>
                     <div class="bcms-align-right@(Model.ImageAlign == MediaImageAlign.Right ? "-active" : string.Empty)">
-                        <input type="radio" id="alignright" name="ImageAlign" value="@((int)MediaImageAlign.Right)" @(Model.ImageAlign == MediaImageAlign.Right ? "checked" : string.Empty)/>
+                        <input type="radio" id="alignright" name="ImageAlign" value="@((int)MediaImageAlign.Right)" @(Model.ImageAlign == MediaImageAlign.Right ? "checked" : string.Empty) />
                     </div>
                 </div>
 
@@ -148,12 +148,16 @@
                         @Html.BcmsValidationMessageFor(f => f.Description)
                     </div>
                 </div>
-                        
+
             </div>
-            
+
             <div class="bcms-media-tags-box-holder bcms-clearfix" data-bind="with: tags">
                 @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
             </div>
+
+
+@*            <div class="bcms-media-reload">Reload</div>*@
+            <div class="bcms-media-reload">Reload</div>
             
             @Html.HiddenSubmit()
         }

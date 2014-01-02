@@ -1,6 +1,8 @@
 ﻿using System.Web;
 
 using BetterCms;
+using BetterCms.Module.Search.Models;
+using BetterCms.Module.Search.Services;
 
 using Newtonsoft.Json;
 

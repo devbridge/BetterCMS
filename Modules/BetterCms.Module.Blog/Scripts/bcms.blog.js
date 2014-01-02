@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'bcms.ko.extenders', 'bcms.media', 'bcms.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect', 'bcms.pages.history', 'bcms.preview', 'bcms.security', 'bcms.blog.filter', 'bcms.sidemenu'],
-    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid, messages, redirect, history, preview, security, filter, sidemenu) {
+bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'bcms.ko.extenders', 'bcms.media', 'bcms.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect', 'bcms.pages.history', 'bcms.preview', 'bcms.security', 'bcms.blog.filter', 'bcms.sidemenu', 'bcms.forms'],
+    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid, messages, redirect, history, preview, security, filter, sidemenu, forms) {
     'use strict';
 
     var blog = { },
@@ -32,6 +32,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             blogTitle: "#bcms-editor-blog-title",
             editPermalinkEditField: '#bcms-page-permalink-edit',
             contentUserConfirmationHiddenField: '#bcms-user-confirmed-region-deletion',
+            blogPostFormDatePickers: 'input.bcms-datepicker'
         },
         links = {
             loadSiteSettingsBlogsUrl: null,
@@ -209,21 +210,21 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             });
         });
         
-        dialog.container.find(selectors.datePickers).initializeDatepicker(globalization.datePickerTooltipTitle);
-
-        // User with only BcmsPublishContent but without BcmsEditContent can only publish
+        // User with only BcmsPublishContent but without BcmsEditContent can only publish and change publish dates
         if (form.data('readonly') !== true && canPublish && !canEdit) {
-            // Disable everything except publish dates.
-            dialog.container.find('.bcms-blog-left,.bcms-blog-right').each(function () {
-                $(this).children(':not(.bcms-blog-dates-holder, #bcms-blog-content-holder)').each(function () {
-                    $(this).addClass(classes.inactive);
-                });
+            form.addClass(classes.inactive);
+            forms.setFieldsReadOnly(form);
+            
+            // Enable date pickers for editing
+            $.each(form.find(selectors.blogPostFormDatePickers), function () {
+                var self = $(this);
+                
+                self.removeAttr('readonly');
+                self.parent('div').css('z-index', bcms.getHighestZindex() + 1);
             });
-            form.find('input:visible:not(.bcms-datepicker)').attr('readonly', 'readonly');
-            form.find('textarea:visible').attr('readonly', 'readonly');
-            form.find('input[type=text]:not(.bcms-datepicker):visible:not([data-bind])').parent('div').css('z-index', 100);
-            form.find('textarea:visible:not([data-bind])').attr('readonly', 'readonly').parent('div').css('z-index', 100);
         }
+        
+        dialog.container.find(selectors.datePickers).initializeDatepicker(globalization.datePickerTooltipTitle);
 
         return blogViewModel;
     }
@@ -668,9 +669,12 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         
         self.isActive = ko.observable(template.IsActive);
         self.isCompatible = template.IsCompatible;
+        self.isMasterPage = template.IsMasterPage;
 
         self.select = function () {
-            var url = $.format(links.saveDefaultTemplateUrl, self.id),
+            var url = self.isMasterPage
+                        ? $.format(links.saveDefaultTemplateUrl, "00000000-0000-0000-0000-000000000000", self.id)
+                        : $.format(links.saveDefaultTemplateUrl, self.id),
                 onComplete = function (json) {
                     self.container.hideLoading();
                     messages.refreshBox(self.container, json);

@@ -49,7 +49,11 @@
             </ul>
         </div>
     }
-    @using (Html.BeginForm<BlogController>(c => c.SaveBlogPost(null), FormMethod.Post, new { @id = "bcms-blog-post-form", @class = "bcms-ajax-form" }))
+    @using (Html.BeginForm<BlogController>(c => c.SaveBlogPost(null), FormMethod.Post, new {
+                                                                                               @id = "bcms-blog-post-form", 
+                                                                                               @class = "bcms-ajax-form",
+                                                                                               data_readonly = Model.IsReadOnly.ToString().ToLower()
+                                                                                           }))
     {
         @Html.HiddenFor(model => model.Id, new { data_bind = "value: id()" })
         @Html.HiddenFor(model => model.Version, new { data_bind = "value: version()" })

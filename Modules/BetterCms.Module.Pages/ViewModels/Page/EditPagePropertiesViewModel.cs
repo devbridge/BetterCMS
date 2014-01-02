@@ -172,6 +172,46 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public Guid? MasterPageId { get; set; }
 
         /// <summary>
+        /// Gets or sets the language id.
+        /// </summary>
+        /// <value>
+        /// The language id.
+        /// </value>
+        public Guid? LanguageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of languages.
+        /// </summary>
+        /// <value>
+        /// The list of languages.
+        /// </value>
+        public List<LookupKeyValue> Languages { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of translation view models.
+        /// </summary>
+        /// <value>
+        /// The list of translation view models.
+        /// </value>
+        public List<PageTranslationViewModel> Translations { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show translations tab.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to show translations tab; otherwise, <c>false</c>.
+        /// </value>
+        public bool ShowTranslationsTab { get; set; }
+
+        /// <summary>
+        /// Gets or sets the translation messages.
+        /// </summary>
+        /// <value>
+        /// The translation messages.
+        /// </value>
+        public UserMessages TranslationMessages { get; set; }
+
+        /// <summary>
         /// Gets or sets the image view model.
         /// </summary>
         /// <value>

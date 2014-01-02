@@ -19,14 +19,6 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public Guid PageId { get; set; }
 
         /// <summary>
-        /// Gets or sets the version.
-        /// </summary>
-        /// <value>
-        /// The version.
-        /// </value>
-        public int Version { get; set; }
-
-        /// <summary>
         /// Gets or sets the page title.
         /// </summary>
         /// <value>
@@ -54,7 +46,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// </returns>
         public override string ToString()
         {
-            return string.Format("PageId: {0}, Version: {1}, PageTitle: {2}, PageUrl: {3}", PageId, Version, PageTitle, PageUrl);
+            return string.Format("PageId: {0}, PageTitle: {1}, PageUrl: {2}", PageId, PageTitle, PageUrl);
         }
 
         /// <summary>

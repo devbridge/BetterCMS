@@ -19,8 +19,8 @@ namespace BetterCms.Module.Root.Registration
             Links = new IActionProjection[]
                 {                       
                     new JavaScriptModuleLinkTo<AuthenticationController>(this, "isAuthorized", c => c.IsAuthorized("{0}")),
-                    new JavaScriptModuleLinkTo<AuthenticationController>(this, "usersSuggestionServiceUrl", c => c.SuggestUsers("{0}")),
-                    new JavaScriptModuleLinkTo<AuthenticationController>(this, "rolesSuggestionServiceUrl", c => c.SuggestRoles("{0}")),
+                    new JavaScriptModuleLinkTo<AuthenticationController>(this, "usersSuggestionServiceUrl", c => c.SuggestUsers(null)),
+                    new JavaScriptModuleLinkTo<AuthenticationController>(this, "rolesSuggestionServiceUrl", c => c.SuggestRoles(null)),
                 };
 
             Globalization = new IActionProjection[]

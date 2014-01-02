@@ -69,6 +69,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// </value>
         [DataMember]
         public MetadataModel MetaData { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the language.
+        /// </summary>
+        /// <value>
+        /// The language.
+        /// </value>
+        [DataMember]
+        public LanguageModel Language { get; set; }
 
         /// <summary>
         /// Gets or sets the list of page contents.
@@ -86,6 +95,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// The list of page options.
         /// </value>
         [DataMember]
-        public System.Collections.Generic.IList<OptionModel> PageOptions { get; set; }   
+        public System.Collections.Generic.IList<OptionModel> PageOptions { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the list of page translations.
+        /// </summary>
+        /// <value>
+        /// The list of page translations.
+        /// </value>
+        [DataMember]
+        public System.Collections.Generic.IList<PageTranslationModel> PageTranslations { get; set; }   
     }
 }

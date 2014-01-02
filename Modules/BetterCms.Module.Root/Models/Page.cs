@@ -120,6 +120,22 @@ namespace BetterCms.Module.Root.Models
         public virtual Page MasterPage { get; set; }
 
         /// <summary>
+        /// Gets or sets the page language.
+        /// </summary>
+        /// <value>
+        /// The page language.
+        /// </value>
+        public virtual Language Language { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language group identifier.
+        /// </summary>
+        /// <value>
+        /// The language group identifier.
+        /// </value>
+        public virtual Guid? LanguageGroupIdentifier { get; set; }
+
+        /// <summary>
         /// Gets or sets the page contents.
         /// </summary>
         /// <value>

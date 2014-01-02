@@ -49,6 +49,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// </value>
         [DataMember]
         public bool IncludeMetaData { get; set; }
+        
+        /// <summary>
+        /// Gets or sets a value indicating whether to include language.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to include language; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool IncludeLanguage { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to include page contents.
@@ -67,5 +76,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// </value>
         [DataMember]
         public bool IncludePageOptions { get; set; }
+        
+        /// <summary>
+        /// Gets or sets a value indicating whether to include page translations.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to include page translations; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool IncludePageTranslations { get; set; }
     }
 }

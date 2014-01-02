@@ -127,13 +127,17 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         contentEditor = null,
         imageInsertDialog = null,
         fileInsertDialog = null,
-        blurTimer = null;
+        blurTimer = null,
+        events = {
+            mediaListViewModeChanged: 'bcms-media-list-view-mode-changed',
+        };
 
     /**
     * Assign objects to module.
     */
     media.links = links;
     media.globalization = globalization;
+    media.events = events;
 
     /**
     * Media's current folder sort / search / paging option view model
@@ -336,7 +340,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         };
 
         self.showNoDataInfoDiv = function () {
-            return self.isRootFolder() && self.medias().length == 0;
+            return ((self.isRootFolder() || self.isSearchResults()) && self.medias().length == 0);
         };
 
         self.isSearchResults = ko.observable(false);
@@ -426,13 +430,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         self.switchViewStyle = function () {
             var isGrid = !self.isGrid();
             localStorage.setItem(keys.folderViewMode, isGrid ? 1 : 0);
-
-            // Loop through all media view models
-            $.each([imagesViewModel, audiosViewModel, videosViewModel, filesViewModel], function (index, viewModel) {
-                if (viewModel && viewModel.isGrid) {
-                    viewModel.isGrid(isGrid);
-                }
-            });
+            bcms.trigger(media.events.mediaListViewModeChanged, isGrid);
         };
 
         self.isSortedAscending = function (column) {
@@ -538,6 +536,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.showPropertiesPreview(false);
             self.previewItem.clearItem();
         };
+
+        bcms.on(media.events.mediaListViewModeChanged, function(currentMode) {
+            self.isGrid(currentMode);
+        });
     }
 
     /**

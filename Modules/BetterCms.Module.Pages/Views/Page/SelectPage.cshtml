@@ -1,0 +1,12 @@
+﻿@using BetterCms.Module.Pages.Controllers
+@using BetterCms.Module.Pages.ViewModels.SiteSettings
+@using Microsoft.Web.Mvc
+
+@model BetterCms.Module.Pages.ViewModels.Filter.PagesGridViewModel<SiteSettingPageViewModel>
+
+<div class="bcms-scroll-window">
+    @using (Html.BeginForm<PageController>(controller => controller.SelectPage(null), FormMethod.Post, new { @id = "bcms-pages-form", @class = "bcms-ajax-form" }))
+    {
+        @Html.Partial("Pages")
+    }
+</div>

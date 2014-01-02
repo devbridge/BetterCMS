@@ -279,6 +279,7 @@ namespace BetterCms.Module.MediaManager.Controllers
                     case "image/jpeg":
                     case "image/pjpeg": // IE8 fix.
                     case "image/gif":
+                    case "image/bmp":
                         break;
                     default:
                         Messages.AddError(MediaGlobalization.FileUpload_Failed_ImageFormatNotSuported);

@@ -8,11 +8,15 @@ using BetterCms.Core.DataContracts;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Exceptions.Service;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Core.Security;
 using BetterCms.Core.Services;
+using BetterCms.Core.Services.Caching;
 using BetterCms.Core.Web;
 
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.ViewModels.Page;
+
 using BetterCms.Module.Root.Mvc.Helpers;
 
 using NHibernate.Linq;
@@ -27,14 +31,22 @@ namespace BetterCms.Module.Pages.Services
         private readonly IRepository repository;
         private readonly IRedirectService redirectService;
         private readonly IUrlService urlService;
+        private readonly ISecurityService securityService;
+        private readonly IAccessControlService accessControlService;
+        private readonly ICacheService cacheService;
 
         private IDictionary<string, IPage> temporaryPageCache;
 
-        public DefaultPageService(IRepository repository, IRedirectService redirectService, IUrlService urlService)
+        public DefaultPageService(IRepository repository, IRedirectService redirectService, IUrlService urlService,
+            ISecurityService securityService, IAccessControlService accessControlService, ICacheService cacheService)
         {
             this.repository = repository;
             this.redirectService = redirectService;
             this.urlService = urlService;
+            this.securityService = securityService;
+            this.accessControlService = accessControlService;
+            this.cacheService = cacheService;
+
             temporaryPageCache = new Dictionary<string, IPage>();
         }
         
@@ -223,6 +235,74 @@ namespace BetterCms.Module.Pages.Services
             }
             
             return metaData;
+        }
+
+        /// <summary>
+        /// Gets the list of page translation view models.
+        /// </summary>
+        /// <param name="languageGroupIdentifier">Language group identifier.</param>
+        /// <returns>
+        /// The list of page translation view models
+        /// </returns>
+        public IEnumerable<PageTranslationViewModel> GetPageTranslations(Guid languageGroupIdentifier)
+        {
+            return repository
+                .AsQueryable<Root.Models.Page>()
+                .Where(p => p.LanguageGroupIdentifier == languageGroupIdentifier)
+                .Select(p => new PageTranslationViewModel
+                {
+                    Id = p.Id,
+                    Title = p.Title,
+                    PageUrl = p.PageUrl,
+                    LanguageId = p.Language.Id
+                })
+                .ToFuture();
+        }
+
+        /// <summary>
+        /// Gets the list of denied pages ids.
+        /// </summary>
+        /// <param name="useCache"></param>
+        /// <returns>
+        /// Enumerable list of denied pages ids
+        /// </returns>
+        public IEnumerable<Guid> GetDeniedPages(bool useCache = true)
+        {
+            IEnumerable<Root.Models.Page> list;
+            var principal = securityService.GetCurrentPrincipal();
+
+            if (useCache)
+            {
+                var cacheKey = string.Format("CMS_DeniedPages_{0}_C9E7517250F64F84ADC8-B991C8391306", principal.Identity.Name);
+                list = cacheService.Get(cacheKey, new TimeSpan(0, 0, 0, 30), LoadDeniedPages);
+            }
+            else
+            {
+                list = LoadDeniedPages();
+            }
+
+            foreach (var page in list)
+            {
+                var accessLevel = accessControlService.GetAccessLevel(page, principal);
+                if (accessLevel == AccessLevel.Deny)
+                {
+                    yield return page.Id;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Loads the list of denied pages.
+        /// </summary>
+        /// <returns>The list of denied page</returns>
+        private IEnumerable<Root.Models.Page> LoadDeniedPages()
+        {
+            return repository
+                .AsQueryable<Root.Models.Page>()
+                .Where(f => f.AccessRules.Any(b => b.AccessLevel == AccessLevel.Deny))
+                .FetchMany(f => f.AccessRules)
+                .ToList()
+                .Distinct();
         }
     }
 }

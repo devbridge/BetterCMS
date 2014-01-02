@@ -100,7 +100,7 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
            return Regex.Replace(
                 html,
                 RootModuleConstants.DynamicRegionRegexPattern,
-                replaceWith,
+                EscapeReplacement(replaceWith),
                 RegexOptions.IgnoreCase);
         }
 
@@ -116,7 +116,17 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
         {
             var replacement = string.Format(RootModuleConstants.DynamicRegionReplacePattern, regionId);
 
-            stringBuilder = new StringBuilder(Regex.Replace(stringBuilder.ToString(), replacement, replaceWith, RegexOptions.IgnoreCase));
+            stringBuilder = new StringBuilder(Regex.Replace(stringBuilder.ToString(), replacement, EscapeReplacement(replaceWith), RegexOptions.IgnoreCase));
+        }
+
+        /// <summary>
+        /// Escapes the replacement.
+        /// </summary>
+        /// <param name="replacement">The replacement.</param>
+        /// <returns></returns>
+        private static string EscapeReplacement(string replacement)
+        {
+            return replacement.Replace("$", "$$");
         }
     }
 }

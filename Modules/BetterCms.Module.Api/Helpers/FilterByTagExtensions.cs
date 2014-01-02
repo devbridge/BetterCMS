@@ -1,42 +1,55 @@
-﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
+﻿using System.Linq;
 
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Infrastructure.Enums;
-
-using ServiceStack.OrmLite;
+using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.Pages.Models;
 
 namespace BetterCms.Module.Api.Helpers
 {
     public static class FilterByTagExtensions
     {
-        public static IQueryable<TModel> ApplyTagsFilter<TModel>(this IQueryable<TModel> query, IFilterByTags tagsFilter, 
-            Func<string, Expression<Func<TModel, bool>>> filterByTagName)
+        public static IQueryable<TModel> ApplyPageTagsFilter<TModel>(this IQueryable<TModel> query, IFilterByTags tagsFilter) 
+            where TModel : PageProperties
         {
-            if (tagsFilter.FilterByTags != null && tagsFilter.FilterByTags.Any(tag => !string.IsNullOrWhiteSpace(tag)))
+            if (tagsFilter != null && tagsFilter.FilterByTags != null)
             {
-                var predicate = (tagsFilter.FilterByTagsConnector == FilterConnector.Or)
-                    ? PredicateBuilder.False<TModel>()
-                    : PredicateBuilder.True<TModel>();
+                var tags = tagsFilter.FilterByTags.Where(tag => !string.IsNullOrWhiteSpace(tag)).Distinct().ToArray();
 
-                foreach (var tagName in tagsFilter.FilterByTags)
+                if (tags.Length > 0)
                 {
-                    if (!string.IsNullOrWhiteSpace(tagName))
+                    if (tagsFilter.FilterByTagsConnector == FilterConnector.And)
                     {
-                        Expression<Func<TModel, bool>> whereClause = filterByTagName(tagName);
-                        if (tagsFilter.FilterByTagsConnector == FilterConnector.Or)
-                        {
-                            predicate = predicate.Or(whereClause);
-                        }
-                        else
-                        {
-                            predicate = predicate.And(whereClause);
-                        }
+                        query = query.Where(page => page.PageTags.Count(pageTag => tags.Contains(pageTag.Tag.Name) && !pageTag.IsDeleted && !pageTag.Tag.IsDeleted) == tags.Length);
+                    }
+                    else
+                    {
+                        query = query.Where(page => page.PageTags.Any(pageTag => tags.Contains(pageTag.Tag.Name) && !pageTag.IsDeleted && !pageTag.Tag.IsDeleted));
                     }
                 }
+            }
 
-                query = query.Where(predicate);
+            return query;
+        }
+        
+        public static IQueryable<TModel> ApplyMediaTagsFilter<TModel>(this IQueryable<TModel> query, IFilterByTags tagsFilter) 
+            where TModel : Media
+        {
+            if (tagsFilter != null && tagsFilter.FilterByTags != null)
+            {
+                var tags = tagsFilter.FilterByTags.Where(tag => !string.IsNullOrWhiteSpace(tag)).Distinct().ToArray();
+
+                if (tags.Length > 0)
+                {
+                    if (tagsFilter.FilterByTagsConnector == FilterConnector.And)
+                    {
+                        query = query.Where(page => page.MediaTags.Count(pageTag => tags.Contains(pageTag.Tag.Name) && !pageTag.IsDeleted && !pageTag.Tag.IsDeleted) == tags.Length);
+                    }
+                    else
+                    {
+                        query = query.Where(page => page.MediaTags.Any(pageTag => tags.Contains(pageTag.Tag.Name) && !pageTag.IsDeleted && !pageTag.Tag.IsDeleted));
+                    }
+                }
             }
 
             return query;

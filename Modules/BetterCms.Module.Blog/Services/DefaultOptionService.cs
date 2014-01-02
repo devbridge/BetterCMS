@@ -1,8 +1,9 @@
-﻿using System;
+﻿using System.Linq;
 
-using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataAccess;
 using BetterCms.Module.Blog.Models;
-using BetterCms.Module.Root.Models;
+
+using NHibernate.Linq;
 
 namespace BetterCms.Module.Blog.Services
 {
@@ -11,15 +12,15 @@ namespace BetterCms.Module.Blog.Services
         /// <summary>
         /// The unit of work
         /// </summary>
-        private IUnitOfWork unitOfWork;
+        private IRepository repository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultOptionService" /> class.
         /// </summary>
-        /// <param name="unitOfWork">The unit of work.</param>
-        public DefaultOptionService(IUnitOfWork unitOfWork)
+        /// <param name="repository">The repository.</param>
+        public DefaultOptionService(IRepository repository)
         {
-            this.unitOfWork = unitOfWork;
+            this.repository = repository;
         }
 
         /// <summary>
@@ -28,26 +29,19 @@ namespace BetterCms.Module.Blog.Services
         /// <returns>
         /// Default template id or null, if such is not set
         /// </returns>
-        public Guid? GetDefaultTemplateId()
+        public Option GetDefaultOption()
         {
-            Option optionAlias = null;
-            Layout layoutAlias = null;
+            return repository.AsQueryable<Option>()
+                .Fetch(option => option.DefaultLayout)
 
-            var options = unitOfWork.Session
-                .QueryOver(() => optionAlias)
-                .Left.JoinQueryOver(() => optionAlias.DefaultLayout, () => layoutAlias)
-                .Where(() => !optionAlias.IsDeleted)
-                .OrderBy(() => optionAlias.CreatedOn).Desc
-                .Select(select => select.DefaultLayout.Id)
-                .Take(1)
-                .List<Guid>();
+// In not supported by NHibernate - too deep.
+//                .FetchMany(option => option.DefaultLayout.LayoutRegions)
+//                .ThenFetch(region => region.Region)
 
-            if (options != null && options.Count > 0)
-            {
-                return options[0];
-            }
-
-            return null;
+                .Fetch(option => option.DefaultMasterPage)
+                .Distinct()
+                .ToList()
+                .FirstOrDefault();
         }
     }
 }

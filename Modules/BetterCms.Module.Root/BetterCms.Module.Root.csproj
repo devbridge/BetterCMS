@@ -60,9 +60,6 @@
     <Reference Include="Autofac.Configuration">
       <HintPath>..\..\packages\Autofac.3.0.0\lib\net40\Autofac.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="BetterCms.Module.Pages">
-      <HintPath>..\..\Tests\BetterCms.Modules.Tests\bin\Debug\BetterCms.Module.Pages.dll</HintPath>
-    </Reference>
     <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
@@ -124,7 +121,13 @@
     <Compile Include="Commands\Authentication\GetAuthenticationInfo\GetAuthenticationInfoCommand.cs" />
     <Compile Include="Commands\Authentication\SearchUsers\SearchUsersCommand.cs" />
     <Compile Include="Commands\Authentication\SearchRoles\SearchRolesCommand.cs" />
+    <Compile Include="Commands\Language\DeleteLanguage\DeleteLanguageCommand.cs" />
+    <Compile Include="Commands\Language\GetLanguageList\GetLanguageListCommand.cs" />
+    <Compile Include="Commands\Language\SaveLanguage\SaveLanguageCommand.cs" />
+    <Compile Include="Commands\Language\SuggestLanguages\SuggestLanguagesCommand.cs" />
+    <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Events\CategoryEvents.cs" />
+    <Compile Include="Events\LanguageEvents.cs" />
     <Compile Include="Events\PageRetrievedEventArgs.cs" />
     <Compile Include="Events\RootEvents.cs" />
     <Compile Include="Events\PageRenderingEventArgs.cs" />
@@ -159,10 +162,17 @@
     <Compile Include="Controllers\SidebarController.cs" />
     <Compile Include="Controllers\SiteSettingsController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
+    <Compile Include="Models\Language.cs" />
+    <Compile Include="Models\Extensions\CultureInfoExtensions.cs" />
+    <Compile Include="Models\Maps\LanguageMap.cs" />
     <Compile Include="Models\Maps\MasterPageMap.cs" />
     <Compile Include="Models\MasterPage.cs" />
     <Compile Include="Models\Maps\ContentRegionMap.cs" />
     <Compile Include="Models\ContentRegion.cs" />
+    <Compile Include="Models\Migrations\Migration201312301700.cs" />
+    <Compile Include="Models\Migrations\Migration201312171300.cs" />
+    <Compile Include="Models\Migrations\Migration201312111700.cs" />
+    <Compile Include="Models\Migrations\Migration201312101400.cs" />
     <Compile Include="Models\Migrations\Migration201310241500.cs" />
     <Compile Include="Models\Migrations\Migration201310221445.cs" />
     <Compile Include="Models\Migrations\Migration201310170919.cs" />
@@ -273,6 +283,7 @@
     <Compile Include="Registration\ContentJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\BcmsJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\CodeEditorJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\LanguagesJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\OptionsJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\TagsJavaScriptModuleDescriptor.cs" />
     <Compile Include="Registration\SecurityJsModuleIncludeDescriptor.cs" />
@@ -300,6 +311,8 @@
     <Compile Include="Mvc\Helpers\MessagesHelper.cs" />
     <Compile Include="Registration\TabsJsModuleIncludeDescriptor.cs" />
     <Compile Include="RootModuleConstants.cs" />
+    <Compile Include="Services\DefaultLanguageService.cs" />
+    <Compile Include="Services\ILanguageService.cs" />
     <Compile Include="Services\DefaultEntityTrackingCacheService.cs" />
     <Compile Include="Services\IEntityTrackingCacheService.cs" />
     <Compile Include="Services\DefaultAccessControlService.cs" />
@@ -315,6 +328,7 @@
     <Compile Include="Services\IRenderingService.cs" />
     <Compile Include="Services\IUserProfileUrlResolver.cs" />
     <Compile Include="ViewModels\Authentication\InfoViewModel.cs" />
+    <Compile Include="ViewModels\Autocomplete\SuggestionViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryItemViewModel.cs" />
     <Compile Include="ViewModels\Cms\CmsRequestViewModel.cs" />
     <Compile Include="ViewModels\Cms\PageRegionViewModel.cs" />
@@ -322,6 +336,7 @@
     <Compile Include="ViewModels\Cms\RedirectViewModel.cs" />
     <Compile Include="ViewModels\Cms\RenderPageViewModel.cs" />
     <Compile Include="ViewModels\Cms\RenderWidgetViewModel.cs" />
+    <Compile Include="ViewModels\Language\LanguageViewModel.cs" />
     <Compile Include="ViewModels\Option\CustomOptionViewModel.cs" />
     <Compile Include="ViewModels\Option\OptionValueEditViewModel.cs" />
     <Compile Include="ViewModels\Option\OptionValueViewModel.cs" />
@@ -1049,6 +1064,7 @@
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\lock.png" />
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\refresh.png" />
     <EmbeddedResource Include="Scripts\ckeditor\styles.js" />
+    <EmbeddedResource Include="Scripts\bcms.languages.js" />
     <Content Include="Views\Web.config" />
     <EmbeddedResource Include="Views\Sidebar\Container.cshtml" />
     <EmbeddedResource Include="Views\Rendering\RenderMainJsFile.cshtml" />
@@ -1065,7 +1081,6 @@
     </Content>
     <EmbeddedResource Include="Views\Cms\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
       <Project>{DA2B225E-6AEE-4465-8B08-4D5B1C1CED49}</Project>
@@ -1176,6 +1191,12 @@
     <EmbeddedResource Include="Scripts\ckeditor\plugins\scayt\README.md" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\LICENSE.md" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\TopBlockAddItem.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Language\List.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

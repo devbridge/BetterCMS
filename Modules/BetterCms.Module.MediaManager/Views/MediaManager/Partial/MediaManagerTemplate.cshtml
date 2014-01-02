@@ -5,7 +5,7 @@
 @using BetterCms.Module.Root.Mvc.Helpers
 @model BetterCms.Module.MediaManager.ViewModels.MediaManager.MediaViewModel
 @{
-    var canEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);    
+    var canEdit = (ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);
 }
 <script type="text/html" id="bcms-media-list-template">
     <div class="bcms-top-block-holder">
@@ -54,7 +54,7 @@
     value: newItem,
     valueUpdate: 'afterkeydown',
     escPress: clearItem,
-    autocomplete: 'onlyExisting'" />
+    autocompleteList: 'onlyExisting'" />
                                 <!-- ko if: newItem.hasError()  -->
                                 <span class="bcms-tag-field-validation-error">
                                     <span data-bind="text: newItem.validationMessage()"></span>
@@ -110,19 +110,21 @@
             </div>
         </div>
         <!-- /ko -->
-
         <!-- ko if: showNoDataInfoDiv() -->
         <div class="bcms-nomedia-data">
             <!-- ko if: isSearchResults() -->
-                <!-- ko text: noSearchResultFound --><!-- /ko -->
-                <a href="#" data-bind="visible: canSearchInHistory(), click: searchWithFilter.bind($data, true)">@MediaGlobalization.MediaManager_Search_TrySearchInHistory</a>
+            <div class="bcms-media-content-message">
+                <!-- ko text: noSearchResultFound -->
+                <!-- /ko -->
+            </div>
+            <a data-bind="visible: canSearchInHistory(), click: searchWithFilter.bind($data, true)">@MediaGlobalization.MediaManager_Search_TrySearchInHistory</a>
             <!-- /ko -->
             <!-- ko ifnot: isSearchResults() -->
-                @RootGlobalization.Grid_NoDataAvailable_Message
+            <div class="bcms-no-data-available">@RootGlobalization.Grid_NoDataAvailable_Message</div>
             <!-- /ko -->
         </div>
         <!-- /ko -->
-        
+
         <div class="bcms-media-properties-preview" id="bcms-media-properties-preview" data-bind="visible: showPropertiesPreview(), style: {top: previewItem.top(), left: previewItem.left()}">
             @MediaGlobalization.MediaManager_ImageSize: <span data-bind="text: previewItem.size()"></span>
             <br />
@@ -133,12 +135,12 @@
             <div data-bind="style: {width: previewItem.containerWidth(), height: previewItem.containerHeight()}">
                 <img data-bind="attr: {src: previewItem.previewUrl(), alt: previewItem.imageAlt()}, style: {width: previewItem.width(), height: previewItem.height()}" />
             </div>
-	        <img data-bind="attr: {src: previewItem.imageUrl(), alt: previewItem.imageAlt()}, event: {load:previewItem.onImageLoad}" style="display: none;" />
+            <img data-bind="attr: {src: previewItem.imageUrl(), alt: previewItem.imageAlt()}, event: {load:previewItem.onImageLoad}" style="display: none;" />
         </div>
 
         <div data-bind="foreach: medias()">
             <div data-bind="click: openMedia.bind($data, $root), clickBubble: false, event: { contextmenu: contextMenu.show }, css: rowClassNames()">
-                
+
                 <div class="bcms-media-context bcms-layer" data-bind="click: stopEvent, clickBubble: false, attr: { id: contextMenu.domId }">
                     <a class="bcms-btn-close">@RootGlobalization.Button_Close</a>
                     <!--  ko if: isProcessing() -->
@@ -147,9 +149,7 @@
                     <!--  ko if: isDeleting() -->
                     @RootGlobalization.Message_Deleting
                     <!-- /ko -->
-
                     <!--  ko if: !isProcessing() && !isDeleting() -->
-                    
                     <!-- ko if: !isFailed() && !isFolder() && !isImage() && $root.canInsertMedia() -->
                     <a class="bcms-media-content-link" data-bind="click: insertMedia.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonInsertFile</a>
                     <!-- /ko -->
@@ -159,11 +159,9 @@
                     <!-- ko if: !isFailed() && isImage() && $root.canInsertMediaWithOptions() -->
                     <a class="bcms-media-content-link" data-bind="click: insertMediaWithOptions.bind($data, $root), clickBubble: false">@MediaGlobalization.MediaManager_ButtonInsertImageWithOptions</a>
                     <!-- /ko -->
-
                     <!-- ko if: !isFailed() && ($root.canInsertMedia() || $root.canInsertMediaWithOptions()) -->
                     <div class="bcms-settings-separator"></div>
                     <!-- /ko -->
-
                     <!-- ko if: !isFailed() && isFolder() -->
                     <a class="bcms-media-content-link" data-bind="click: openMedia.bind($data, $root), clickBubble: false">@RootGlobalization.Button_Open</a>
                     <!-- /ko -->
@@ -173,11 +171,9 @@
                     <!-- ko if: !isFailed() && !isFolder() && publicUrl() -->
                     <input class="bcms-editor-field-box" type="text" readonly="readonly" data-bind="value: publicUrl(), click: selectThis.bind($data, $root, $element)" />
                     <!-- /ko -->
-
                     <!-- ko if: !isReadOnly() && !isFailed() && (isFolder() || isImage() && !publicUrl() || (@(canEdit ? "true" : "false") && !isFolder() && !publicUrl()) || (!isFolder() && !publicUrl())) -->
                     <div class="bcms-settings-separator"></div>
                     <!-- /ko -->
-
                     @if (canEdit)
                     {
                         <!-- ko if: !isFailed() && !isArchived() && !isReadOnly() -->
@@ -208,7 +204,6 @@
                     <!-- ko if: (!isFolder() && @(canEdit ? "true" : "false")) || (!isFailed() && isImage()) -->
                     <div class="bcms-settings-separator"></div>
                     <!-- /ko -->
-
                     @if (canEdit)
                     {
                         <!-- ko if: !isFolder() -->
@@ -264,7 +259,7 @@
                                 {"class", "bcms-grid-input"}
                             };
                             attributes = Html.MergeValidationAttributes(m => m.Name, attributes);
-                            
+
                             @Html.TextBoxFor(m => m.Name, attributes)
                             @Html.BcmsValidationMessageFor(m => m.Name, null, new { @data_bind = "attr: {'data-valmsg-for': nameDomId}" })
                         }

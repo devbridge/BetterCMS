@@ -2,6 +2,7 @@
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Controllers;
+using BetterCms.Module.Root.Content.Resources;
 
 namespace BetterCms.Module.Pages.Registration
 {
@@ -21,9 +22,11 @@ namespace BetterCms.Module.Pages.Registration
                 {
                     new JavaScriptModuleLinkTo<PageController>(this, "loadAddNewPageDialogUrl", c => c.AddNewPage("{0}", "{1}")),
                     new JavaScriptModuleLinkTo<PageController>(this, "loadSiteSettingsPageListUrl", c => c.Pages(null)),
+                    new JavaScriptModuleLinkTo<PageController>(this, "loadSelectPageUrl", c => c.SelectPage(null)),
                     new JavaScriptModuleLinkTo<PageController>(this, "deletePageConfirmationUrl", c => c.DeletePageConfirmation("{0}")),
                     new JavaScriptModuleLinkTo<PageController>(this, "changePublishStatusUrl", c => c.ChangePublishStatus(null)),
                     new JavaScriptModuleLinkTo<PageController>(this, "clonePageDialogUrl", c => c.ClonePage("{0}")),
+                    new JavaScriptModuleLinkTo<PageController>(this, "clonePageWithLanguageDialogUrl", c => c.ClonePageWithLanguage("{0}")),
                     new JavaScriptModuleLinkTo<PageController>(this, "convertStringToSlugUrl", c => c.ConvertStringToSlug("{0}", "{1}", "{2}"))
                 };
 
@@ -35,10 +38,14 @@ namespace BetterCms.Module.Pages.Registration
                     new JavaScriptModuleGlobalization(this, "pageDeletedMessage", () => PagesGlobalization.DeletePage_SuccessMessage_Message),
                     new JavaScriptModuleGlobalization(this, "pageDeletedTitle", () => PagesGlobalization.DeletePage_SuccessMessage_Title),
                     new JavaScriptModuleGlobalization(this, "clonePageDialogTitle", () => PagesGlobalization.ClonePage_Dialog_Title),
+                    new JavaScriptModuleGlobalization(this, "clonePageWithLanguageDialogTitle", () => PagesGlobalization.ClonePageWithLanguage_Dialog_Title),
                     new JavaScriptModuleGlobalization(this, "cloneButtonTitle", () => PagesGlobalization.ClonePage_Dialog_CloneButton), 
                     new JavaScriptModuleGlobalization(this, "deleteButtonTitle", () => PagesGlobalization.DeletePage_Dialog_DeleteButton),
                     new JavaScriptModuleGlobalization(this, "pageStatusChangeConfirmationMessagePublish", () => PagesGlobalization.EditPageProperties_PageStatusChange_ConfirmationMessage_Publish),
-                    new JavaScriptModuleGlobalization(this, "pageStatusChangeConfirmationMessageUnPublish", () => PagesGlobalization.EditPageProperties_PageStatusChange_ConfirmationMessage_UnPublish)
+                    new JavaScriptModuleGlobalization(this, "pageStatusChangeConfirmationMessageUnPublish", () => PagesGlobalization.EditPageProperties_PageStatusChange_ConfirmationMessage_UnPublish),
+                    new JavaScriptModuleGlobalization(this, "selectPageDialogTitle", () => PagesGlobalization.SelectPage_Dialog_Title),
+                    new JavaScriptModuleGlobalization(this, "selectPageSelectButtonTitle", () => PagesGlobalization.SelectPage_Select_ButtonTitle),
+                    new JavaScriptModuleGlobalization(this, "pageNotSelectedMessage", () => PagesGlobalization.SelectPage_PageIsNotSelected_Message)
                 };
         }
     }

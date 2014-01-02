@@ -151,6 +151,7 @@
     <Compile Include="Models\Maps\BlogPostContentMap.cs" />
     <Compile Include="Models\Maps\BlogPostMap.cs" />
     <Compile Include="Models\Maps\OptionMap.cs" />
+    <Compile Include="Models\Migrations\Migration201312051034.cs" />
     <Compile Include="Models\Migrations\Migration201305271258.cs" />
     <Compile Include="Models\Migrations\Migration201305271234.cs" />
     <Compile Include="Models\Option.cs" />
@@ -172,6 +173,7 @@
     <Compile Include="ViewModels\Author\RenderBlogPostAuthorViewModel.cs" />
     <Compile Include="ViewModels\Blog\BlogPostViewModel.cs" />
     <Compile Include="ViewModels\Blog\BlogTemplateViewModel.cs" />
+    <Compile Include="ViewModels\Blog\DefaultTemplateViewModel.cs" />
     <Compile Include="ViewModels\Blog\RenderBlogPostViewModel.cs" />
     <Compile Include="ViewModels\Blog\SiteSettingBlogPostViewModel.cs" />
     <Compile Include="ViewModels\Filter\BlogsFilter.cs" />

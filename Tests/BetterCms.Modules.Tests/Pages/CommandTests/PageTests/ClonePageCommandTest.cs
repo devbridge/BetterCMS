@@ -6,6 +6,7 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
+using BetterCms.Core.Services;
 using BetterCms.Module.Pages.Command.Page.ClonePage;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -30,7 +31,6 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
                     var uow = new DefaultUnitOfWork(session);
                     var repository = new DefaultRepository(uow);
 
-
                     var pageToClone = TestDataProvider.CreateNewPageWithTagsContentsOptionsAndAccessRules(session, 2, 2, 2, 2);
                     
                     session.SaveOrUpdate(pageToClone);
@@ -50,13 +50,12 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
                     var rule2 = TestDataProvider.CreateNewAccessRule();
                     rules.Add(rule2);
 
-                    var command = new ClonePageCommand();
+                    var pageCloningService = new DefaultPageCloneService(pageService.Object, urlService.Object, 
+                        new Mock<ISecurityService>().Object, new Mock<IAccessControlService>().Object, repository, uow);
+
+                    var command = new ClonePageCommand(pageCloningService);
                     command.Repository = repository;
                     command.UnitOfWork = uow;
-                    command.PageService = pageService.Object;
-                    command.UrlService = urlService.Object;
-                    command.AccessControlService = new Mock<IAccessControlService>().Object;
-                    command.Context = new Mock<ICommandContext>().Object;
 
                     var result = command.Execute(new ClonePageViewModel
                                         {

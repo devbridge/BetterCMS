@@ -1,9 +1,8 @@
-﻿using BetterCMS.Module.GoogleSiteSearch.Services.Search;
-
-using BetterCms.Core.Exceptions;
+﻿using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Search.Models;
+using BetterCms.Module.Search.Services;
 
 namespace BetterCms.Module.Search.Command.SearchQuery
 {

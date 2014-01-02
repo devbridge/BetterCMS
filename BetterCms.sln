@@ -42,6 +42,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Sandbox.DataMigra
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Modules.Tests", "Tests\BetterCms.Modules.Tests\BetterCms.Modules.Tests.csproj", "{FDB66E62-C630-4055-B3FB-27DAF5B464BB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B935DD58-18EC-4340-B236-F1DAE4509CC8} = {B935DD58-18EC-4340-B236-F1DAE4509CC8}
+		{5255ABED-2111-497F-A94C-6AA89862D814} = {5255ABED-2111-497F-A94C-6AA89862D814}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Module.AppFabricCache", "Modules\BetterCMS.Module.AppFabricCache\BetterCms.Module.AppFabricCache.csproj", "{573925F2-F15F-4CBE-8F13-7C67DA06DF0D}"
 EndProject
@@ -98,6 +102,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Search", "Search", "{D3C4BD50-0A61-44FB-816D-8BF7B7451BC6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Module.LuceneSearch", "Modules\BetterCMS.Module.LuceneSearch\BetterCms.Module.LuceneSearch.csproj", "{5255ABED-2111-497F-A94C-6AA89862D814}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B935DD58-18EC-4340-B236-F1DAE4509CC8} = {B935DD58-18EC-4340-B236-F1DAE4509CC8}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Module.Search", "Modules\BetterCms.Module.Search\BetterCms.Module.Search.csproj", "{B935DD58-18EC-4340-B236-F1DAE4509CC8}"
 EndProject

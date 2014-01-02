@@ -98,60 +98,10 @@ bettercms.define('bcms.security', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', '
         this.IsForRole = ko.observable(item.IsForRole);
     }
 
-    function XXX_AccessControlViewModel(identities, isRole, addMode, autoCompleteUrl) {
-        var self = this;
-        self.identities = identities;
-        self.newName = ko.observable('').extend({ uniqueAccessRuleIdentity: { identities: identities, isRole: isRole } });
-        self.isInAddMode = addMode;
-        self.hasAddNameFocus = ko.observable(false);
-        
-        self.clearNewInput = function() {
-            self.isInAddMode('none');
-        };
-        self.gotoAddNew = function() {
-            if (self.isInAddMode() === (isRole ? 'role' : 'user') && !!self.newName()) {
-                self.addNew();
-            } else {
-                self.hasAddNameFocus(false);
-                self.isInAddMode(self.isInAddMode() === (isRole ? 'role' : 'user') ? 'none' : (isRole ? 'role' : 'user'));
-                self.newName('');
-
-                setTimeout(function() {
-                    self.hasAddNameFocus(true);
-                }, 50);
-            }
-        };
-        self.addNew = function() {
-            var name = self.newName();
-            if (!name || self.newName.hasError()) {
-                return;
-            }
-
-            self.identities.push(new UserAccessViewModel({ Identity: name, IsForRole: isRole }));
-            self.newName('');
-            self.isInAddMode('none');
-            self.hasAddNameFocus(false);
-        };
-                
-        self.serviceUrl = autoCompleteUrl;
-//        self.newItem = function(value) {
-//            // TODO
-//        };
-//        self.addItemWithId = function(value, data) {
-//            self.gotoAddNew();
-//        };
-//        self.addItem = function() {
-//            // TODO
-//        };
-//        self.clearItem = function() {
-//            // TODO
-//        };
-    }
-
     var AccessControlViewModel = (function (_super) {
         bcms.extendsClass(AccessControlViewModel, _super);
 
-        function AccessControlViewModel(identities, isRole, addMode, autoCompleteUrl) {
+        function AccessControlViewModel(identities, isRole, addMode, autoCompleteUrl, initialValues) {
             var options = {
                 serviceUrl: autoCompleteUrl
             };
@@ -184,7 +134,7 @@ bettercms.define('bcms.security', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', '
                 }
             };
             
-            _super.call(self, [], options);
+            _super.call(self, initialValues, options);
             
             self.items.subscribe(function (newValue) {
                 self.clickPlus();
@@ -195,6 +145,19 @@ bettercms.define('bcms.security', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', '
     })(autocomplete.AutocompleteListViewModel);
 
     security.createUserAccessViewModel = function (accessList) {
+        var roles = [],
+            users = [];
+
+        if (accessList) {
+            $.each(accessList, function(i, item) {
+                if (item.IsForRole) {
+                    roles.push(item.Identity);
+                } else {
+                    users.push(item.Identity);
+                }
+            });
+        }
+
         var messageBox =
                 messages.box({
                 container: $(".bcms-modal")
@@ -203,8 +166,8 @@ bettercms.define('bcms.security', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', '
             addMode = ko.observable('none'),
             model = {
                 UserAccessList: identities,
-                userAccessControl: new AccessControlViewModel(identities, false, addMode, links.usersSuggestionServiceUrl),
-                roleAccessControl: new AccessControlViewModel(identities, true, addMode, links.rolesSuggestionServiceUrl),
+                userAccessControl: new AccessControlViewModel(identities, false, addMode, links.usersSuggestionServiceUrl, users),
+                roleAccessControl: new AccessControlViewModel(identities, true, addMode, links.rolesSuggestionServiceUrl, roles),
                 removeUser: function(userAccessViewModel) {
                     model.UserAccessList.remove(userAccessViewModel);
                 },
@@ -215,7 +178,7 @@ bettercms.define('bcms.security', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', '
         };
 
         if (accessList) {
-            $.each(accessList, function(i, item) {
+            $.each(accessList, function (i, item) {
                 model.UserAccessList.push(new UserAccessViewModel(item));
             });
         }

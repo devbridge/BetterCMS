@@ -23,7 +23,7 @@ namespace BetterCms.Module.Users.Registration
                             new JavaScriptModuleLinkTo<RoleController>(this, "deleteRoleUrl", c=> c.DeleteRole("{0}", "{1}")),
                             new JavaScriptModuleLinkTo<RoleController>(this, "loadSiteSettingsRoleUrl", c => c.ListTemplate()),
                             new JavaScriptModuleLinkTo<RoleController>(this, "loadRolesUrl", c => c.RolesList(null)),
-                            new JavaScriptModuleLinkTo<RoleController>(this, "roleSuggestionServiceUrl", c=> c.SuggestRoles("{0}"))
+                            new JavaScriptModuleLinkTo<RoleController>(this, "roleSuggestionServiceUrl", c=> c.SuggestRoles(null))
                         };
 
             Globalization = new IActionProjection[]

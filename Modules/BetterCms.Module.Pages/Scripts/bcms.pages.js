@@ -2,8 +2,8 @@
 /*global bettercms */
 
 bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent',
-        'bcms.pages.properties', 'bcms.grid', 'bcms.redirect', 'bcms.messages', 'bcms.pages.filter', 'bcms.options', 'bcms.ko.extenders', 'bcms.security', 'bcms.sidemenu', 'bcms.datepicker'],
-    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, grid, redirect, messages, filter, options, ko, security, sidemenu, datepicker) {
+        'bcms.pages.properties', 'bcms.grid', 'bcms.redirect', 'bcms.messages', 'bcms.pages.filter', 'bcms.options', 'bcms.ko.extenders', 'bcms.security', 'bcms.sidemenu', 'bcms.datepicker', 'bcms.pages.languages'],
+    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, grid, redirect, messages, filter, options, ko, security, sidemenu, datepicker, pageLanguages) {
         'use strict';
 
         var page = {},
@@ -44,6 +44,9 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 siteSettingsPageRowTemplateFirstRow: 'tr:first',
                 siteSettingsPageParentRow: 'tr:first',
                 siteSettingsPagesTableFirstRow: 'table.bcms-tables > tbody > tr:first',
+                siteSettingsPagesTableRows: 'tbody > tr',
+                siteSettingsPagesTableActiveRow: 'table.bcms-tables > tbody > tr.bcms-table-row-active:first',
+                siteSettingsPagesParentTable: 'table.bcms-tables:first',
                 siteSettingsRowCells: 'td',
 
                 siteSettingPageTitleCell: '.bcms-page-title',
@@ -53,6 +56,8 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 siteSettingPageHasSeoCell: '.bcms-page-hasseo',
 
                 clonePageForm: 'form:first',
+                cloneWithLanguageGoToPagePropertiesLink: '#bcms-open-page-translations',
+                pagePropertiesTranslationsTab: '.bcms-tab-header .bcms-tab[data-name="#bcms-tab-5"]'
             },
             links = {
                 loadEditPropertiesUrl: null,
@@ -61,7 +66,9 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 deletePageConfirmationUrl: null,
                 changePublishStatusUrl: null,
                 clonePageDialogUrl: null,
-                convertStringToSlugUrl: null
+                clonePageWithLanguageDialogUrl: null,
+                convertStringToSlugUrl: null,
+                loadSelectPageUrl: null,
             },
             globalization = {
                 editPagePropertiesModalTitle: null,
@@ -71,16 +78,21 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 pageDeletedTitle: null,
                 pageDeletedMessage: null,
                 clonePageDialogTitle: null,
+                clonePageWithLanguageDialogTitle: null,
                 cloneButtonTitle: null,
                 deleteButtonTitle: null,
                 pageStatusChangeConfirmationMessagePublish: null,
-                pageStatusChangeConfirmationMessageUnPublish: null
+                pageStatusChangeConfirmationMessageUnPublish: null,
+                selectPageDialogTitle: null,
+                selectPageSelectButtonTitle: null,
+                pageNotSelectedMessage: null,
             },
             keys = {
                 addNewPageInfoMessageClosed: 'bcms.addNewPageInfoBoxClosed'
             },
             classes = {
-                addNewPageActiveTemplateBox: 'bcms-inner-grid-box-active'
+                addNewPageActiveTemplateBox: 'bcms-inner-grid-box-active',
+                gridActiveRow: 'bcms-table-row-active'
             },
             pageUrlManuallyEdited = false;
 
@@ -143,8 +155,10 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         page.initAddNewPageDialogEvents = function (dialog, content) {
             var infoMessageClosed = localStorage.getItem(keys.addNewPageInfoMessageClosed),
                 optionsContainer = dialog.container.find(selectors.addNewPageOptionsTab),
+                languageViewModel = content.Data.Languages ? new pageLanguages.PageLanguageViewModel(content.Data.Languages) : null,
                 viewModel = {
                     accessControl: security.createUserAccessViewModel(content.Data.UserAccessList),
+                    language: languageViewModel,
                     options: options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues, content.Data.CustomOptions)
                 };
 
@@ -303,7 +317,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
         page.openCreatePageDialog = function (postSuccess, addMaster) {
             var permalinkValue,
-                url = $.format(links.loadAddNewPageDialogUrl, window.location.pathname, addMaster),
+                url = $.format(links.loadAddNewPageDialogUrl, window.location.pathname, addMaster || false),
                 viewModel;
 
             modal.open({
@@ -438,37 +452,42 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         /**
         * Initializes site settings pages list and list items
         */
-        page.initializeSiteSettingsPagesList = function (content, jsonData) {
-            var dialog = siteSettings.getModalDialog(),
+        page.initializeSiteSettingsPagesList = function (content, jsonData, opts) {
+            opts = $.extend({
+                dialog: siteSettings.getModalDialog(),
+                dialogContainer: siteSettings,
+                canBeSelected: false
+            }, opts);
+
+            var dialog = opts.dialog,
                 container = dialog.container;
 
             var form = dialog.container.find(selectors.siteSettingsPagesListForm);
             grid.bindGridForm(form, function (content, data) {
-                siteSettings.setContent(content);
-                page.initializeSiteSettingsPagesList(content, data);
+                opts.dialogContainer.setContent(content);
+                page.initializeSiteSettingsPagesList(content, data, opts);
             });
 
             form.on('submit', function (event) {
                 event.preventDefault();
-                page.searchSiteSettingsPages(form, container);
+                page.searchSiteSettingsPages(form, container, opts);
                 return false;
             });
 
-            form.find(selectors.siteSettingsPagesSearchField).keypress(function (event) {
-                if (event.which == 13) {
-                    bcms.stopEventPropagation(event);
-                    page.searchSiteSettingsPages(form, container);
-                }
+            bcms.preventInputFromSubmittingForm(form.find(selectors.siteSettingsPagesSearchField), {
+                preventedEnter: function () {
+                    page.searchSiteSettingsPages(form, container, opts);
+                },
             });
 
             form.find(selectors.siteSettingsPagesSearchButton).on('click', function () {
-                page.searchSiteSettingsPages(form, container);
+                page.searchSiteSettingsPages(form, container, opts);
             });
 
-            page.initializeSiteSettingsPagesListItems(container);
+            page.initializeSiteSettingsPagesListItems(container, opts);
 
             filter.bind(container, ((content.Data) ? content.Data : jsonData), function () {
-                page.searchSiteSettingsPages(form, container);
+                page.searchSiteSettingsPages(form, container, opts);
             });
 
             // Select search.
@@ -478,17 +497,28 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         /**
         * Initializes site settings pages list items
         */
-        page.initializeSiteSettingsPagesListItems = function (container) {
+        page.initializeSiteSettingsPagesListItems = function (container, opts) {
+            var editButtonSelector = opts.canBeSelected ? selectors.siteSettingsPageEditButton : selectors.siteSettingsRowCells;
+
             container.find(selectors.siteSettingsPageCreateButton).on('click', function () {
-                page.addSiteSettingsPage(container);
+                page.addSiteSettingsPage(container, opts);
             });
 
-            container.find(selectors.siteSettingsRowCells).on('click', function () {
+            container.find(editButtonSelector).on('click', function () {
                 var editButton = $(this).parents(selectors.siteSettingsPageParentRow).find(selectors.siteSettingsPageEditButton);
                 if (editButton.length > 0) {
                     page.editSiteSettingsPage(editButton, container);
                 }
             });
+            
+            if (opts.canBeSelected) {
+                container.find(selectors.siteSettingsRowCells).on('click', function () {
+                    $(this).parents(selectors.siteSettingsPagesParentTable).find(selectors.siteSettingsPagesTableRows).removeClass(classes.gridActiveRow);
+
+                    var row = $(this).parents(selectors.siteSettingsPageParentRow);
+                    row.addClass(classes.gridActiveRow);
+                });
+            }
 
             container.find(selectors.siteSettingPageTitleCell).on('click', function (event) {
                 bcms.stopEventPropagation(event);
@@ -505,10 +535,10 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         /**
         * Search site settings pages
         */
-        page.searchSiteSettingsPages = function (form, container) {
+        page.searchSiteSettingsPages = function (form, container, opts) {
             grid.submitGridForm(form, function (htmlContent, data) {
-                siteSettings.setContent(htmlContent);
-                page.initializeSiteSettingsPagesList(htmlContent, data);
+                opts.dialogContainer.setContent(htmlContent);
+                page.initializeSiteSettingsPagesList(htmlContent, data, opts);
                 var searchInput = container.find(selectors.siteSettingsPagesSearchField);
                 grid.focusSearchInput(searchInput);
             });
@@ -517,7 +547,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         /**
         * Opens page create form from site settings pages list
         */
-        page.addSiteSettingsPage = function (container) {
+        page.addSiteSettingsPage = function (container, opts) {
             page.openCreatePageDialog(function (data) {
                 if (data.Data != null) {
                     var template = $(selectors.siteSettingsPageRowTemplate),
@@ -531,13 +561,14 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                     page.siteSettingsSetBooleanTemplate(newRow.find(selectors.siteSettingPageHasSeoCell), data.Data.HasSEO);
                     
                     newRow.find(selectors.siteSettingPageTitleCell).data('url', data.Data.PageUrl);
+                    newRow.find(selectors.siteSettingPageTitleCell).data('languageId', data.Data.LanguageId);
                     newRow.find(selectors.siteSettingsPageEditButton).data('id', data.Data.PageId);
                     newRow.find(selectors.siteSettingsPageDeleteButton).data('id', data.Data.PageId);
                     newRow.find(selectors.siteSettingsPageDeleteButton).data('version', data.Data.Version);
 
                     newRow.insertBefore($(selectors.siteSettingsPagesTableFirstRow, container));
 
-                    page.initializeSiteSettingsPagesListItems(newRow);
+                    page.initializeSiteSettingsPagesListItems(newRow, opts);
 
                     grid.showHideEmptyRow(container);
                 }
@@ -615,25 +646,31 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             });
         };
 
-        /**
-        * Opens dialog for clone the page
-        */
-        page.clonePage = function () {
+        function clonePage(url, title, onLoad) {
             var permalinkValue;
 
             modal.open({
-                title: globalization.clonePageDialogTitle,
+                title: title,
                 acceptTitle: globalization.cloneButtonTitle,
                 onLoad: function (dialog) {
-                    var url = $.format(links.clonePageDialogUrl, bcms.pageId);
                     dynamicContent.bindDialog(dialog, url, {
                         contentAvailable: function (childDialog, content) {
                             page.initializePermalinkBox(dialog, false, links.convertStringToSlugUrl, selectors.addNewPageTitleInput, true);
 
                             var viewModel = {
                                 accessControl: security.createUserAccessViewModel(content.Data.UserAccessList)
-                            };
-                            ko.applyBindings(viewModel, dialog.container.find(selectors.clonePageForm).get(0));
+                            },
+                                form = dialog.container.find(selectors.clonePageForm);
+
+                            if (form.length > 0) {
+                                ko.applyBindings(viewModel, form.get(0));
+                            } else {
+                                $(modal.selectors.accept).hide();
+                            }
+                            
+                            if ($.isFunction(onLoad)) {
+                                onLoad(childDialog, content);
+                            }
                         },
 
                         beforePost: function () {
@@ -667,6 +704,34 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                         }
                     });
                 }
+            });
+        }
+
+        /**
+        * Opens dialog for clone the page
+        */
+        page.clonePage = function () {
+            var url = $.format(links.clonePageDialogUrl, bcms.pageId),
+                title = globalization.clonePageDialogTitle;
+
+            clonePage(url, title);
+        };
+
+        /**
+        * Opens dialog for cloning the page to different cultre
+        */
+        page.translatePage = function () {
+            var url = $.format(links.clonePageWithLanguageDialogUrl, bcms.pageId),
+                title = globalization.clonePageWithLanguageDialogTitle;
+
+            clonePage(url, title, function(clonePageDialog) {
+                clonePageDialog.container.find(selectors.cloneWithLanguageGoToPagePropertiesLink).on('click', function () {
+                    clonePageDialog.close();
+                    pageProperties.editPageProperties(function (pagePropertiesDialog) {
+                        // Open translations tab
+                        pagePropertiesDialog.container.find(selectors.pagePropertiesTranslationsTab).click();
+                    });
+                });
             });
         };
 
@@ -708,12 +773,84 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         }
 
         /**
+        * Show folder selection window
+        */
+        page.openPageSelectDialog = function (opts, pageGridOptions) {
+
+            opts = $.extend({
+                onAccept: function () { return true; },
+                onClose: function () { return true; },
+                url: links.loadSelectPageUrl,
+                params: {}
+            }, opts);
+
+            var url = opts.params
+                    ? (opts.url.indexOf('?') > 0
+                        ? opts.url + '&' + $.param(opts.params)
+                        : opts.url + '?' + $.param(opts.params))
+                    : links.loadSelectPageUrl,
+                selectDialog = modal.open({
+                title: globalization.selectPageDialogTitle,
+                acceptTitle: globalization.selectPageSelectButtonTitle,
+                onClose: function () {
+                    var result = true;
+                    if ($.isFunction(opts.onClose)) {
+                        result = opts.onClose();
+                    }
+                    return result;
+                },
+                onLoad: function (dialog) {
+                    dynamicContent.setContentFromUrl(dialog, url, {
+                        done: function (content) {
+                            page.initializeSiteSettingsPagesList(content.Html, content.Data, $.extend({
+                                dialog: dialog,
+                                dialogContainer: selectDialog,
+                                canBeSelected: true
+                            }, pageGridOptions));
+                        }
+                    });
+                },
+                onAcceptClick: function () {
+                    var result = true,
+                        selectedItem = selectDialog.container.find(selectors.siteSettingsPagesTableActiveRow),
+                        id = selectedItem.find(selectors.siteSettingsPageEditButton).data('id'),
+                        titleLink = selectedItem.find(selectors.siteSettingPageTitleCell);
+
+                    if (selectedItem.length == 0) {
+                        modal.info({
+                            content: globalization.pageNotSelectedMessage,
+                            disableCancel: true
+                        });
+
+                        result = false;
+                    } else {
+                        if ($.isFunction(opts.onAccept)) {
+                            result = opts.onAccept({
+                                Id: id,
+                                Title: titleLink.html(),
+                                PageUrl: titleLink.data('url'),
+                                LanguageId: titleLink.data('languageId')
+                            });
+                        }
+                    }
+
+                    return result;
+                }
+            });
+
+            return selectDialog;
+        };
+
+        /**
         * Initializes page module.
         */
         page.init = function () {
             bcms.logger.debug('Initializing bcms.pages module.');
 
             initializeCustomValidation();
+
+            // Pass method to page languagess (it can be reached directly because of circular references)
+            pageLanguages.openPageSelectDialog = page.openPageSelectDialog;
         };
 
         /**

@@ -139,7 +139,9 @@ describe('pages.pages.api.behavior', function () {
             includeImages: true,
             includeMetaData: true,
             includePageContents: true,
-            includePageOptions: true
+            includePageOptions: true,
+            includeLanguage: true,
+            includePageTranslations: true
         };
 
         runs(function () {
@@ -173,7 +175,9 @@ describe('pages.pages.api.behavior', function () {
             includeImages: true,
             includeMetaData: true,
             includePageContents: true,
-            includePageOptions: true
+            includePageOptions: true,
+            includeLanguage: true,
+            includePageTranslations: true
         };
 
         runs(function () {
@@ -339,7 +343,10 @@ describe('pages.pages.api.behavior', function () {
                     { field: 'MainImageThumbnauilUrl', value: 'http://bettercms.sandbox.mvc4.local/uploads/image/6173795ceadc4b619d68005ef57c9ca8/t_1_1.png' },
                     { field: 'MainImageCaption', value: '01011 caption' },
                     { field: 'IsArchived', value: false },
-                    { field: 'IsMasterPage', value: false }
+                    { field: 'IsMasterPage', value: false },
+                    { field: 'LanguageId', value: '67432fcff2c349c09678a2a70091cf48' },
+                    { field: 'LanguageCode', value: 'ar-YE' },
+                    { field: 'LanguageGroupIdentifier', value: 'b2aa47dc114b47dd8f24d489bf8cdf71' }
                 ]
             }
         };
@@ -676,6 +683,130 @@ describe('pages.pages.api.behavior', function () {
         });
     });
 
+    it('01020: Should get page translations by page id', function () {
+        var url = '/bcms-api/pages/' + constants.testPageId + '/translations',
+            result,
+            ready = false,
+            data = {
+                skip: 2,
+                take: 2
+            };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.items).toBeDefinedAndNotNull('JSON data.items object should be retrieved.');
+            expect(result.data.totalCount).toBe(4, 'Total count should be 4.');
+            expect(result.data.items.length).toBe(2, 'Returned array length should be 2.');
+            
+            expectPageTranslationsPropertiesAreNotNull(result.data.items, true);
+        });
+    });
+
+    it('01021: Should get page translations by page url', function () {
+        var url = '/bcms-api/pages/translations/by-url' + constants.testPageUrl,
+            result,
+            ready = false,
+            data = {
+                skip: 2,
+                take: 2
+            };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.items).toBeDefinedAndNotNull('JSON data.items object should be retrieved.');
+            expect(result.data.totalCount).toBe(4, 'Total count should be 4.');
+            expect(result.data.items.length).toBe(2, 'Returned array length should be 2.');
+
+            expectPageTranslationsPropertiesAreNotNull(result.data.items, true);
+        });
+    });
+
+    it('01022: Should get a list with one page translation, filtered by all available columns', function () {
+        var url = '/bcms-api/pages/' + constants.testPageId + '/translations',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [
+                    { field: 'Id', value: constants.testPageId },
+                    { field: 'PageUrl', value: constants.testPageUrl },
+                    { field: 'Title', value: constants.testPageTitle },
+                    { field: 'LanguageId', value: '5fea841ef108430da6eca2a7009366ec' },
+                    { field: 'LanguageCode', value: 'ar-KW' }
+                ]
+            }
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
+
+            expect(result.data.items[0].id).toBe(constants.testPageId, 'Correctly filtered id should be retrieved.');
+
+            // Check if model properties count didn't changed. If so - update current test filter and another tests.
+            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties count should be equal to filtering parameters count.');
+        });
+    });
+
+    it('01023: Should throw validation exception for PageId/PageCode, when getting page translation.', function () {
+        var url = '/bcms-api/pages/' + api.emptyGuid + '/translations/?pageUrl=test',
+            result,
+            ready = false;
+
+        runs(function () {
+            api.get(url, null, null, function (response) {
+                result = response.responseJSON;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            api.expectValidationExceptionIsThrown(result, 'PageId');
+        });
+    });
+
     function expectPageListItemPropertiesAreNotNull(page) {
         api.expectBasePropertiesAreNotNull(page);
 
@@ -692,6 +823,9 @@ describe('pages.pages.api.behavior', function () {
         expect(page.mainImageCaption).toBe("Image for _0000_Page_For_Tests", 'Correctly filtered mainImageCaption should be retrieved.');
         expect(page.isArchived).toBe(true, 'Correctly filtered isArchived should be retrieved.');
         expect(page.isMasterPage).toBe(false, 'Correctly filtered isMasterPage should be retrieved.');
+        expect(page.languageId).toBe('5fea841ef108430da6eca2a7009366ec', 'Correctly filtered languageId should be retrieved.');
+        expect(page.languageCode).toBe('ar-KW', 'Correctly filtered languageCode should be retrieved.');
+        expect(page.languageGroupIdentifier).toBe('10e54c92e03643f2b5df656825726ad6', 'Correctly filtered languageGroupIdentifier should be retrieved.');
     }
 
     function expectPagePropertiesAreNotNull(page) {
@@ -710,6 +844,9 @@ describe('pages.pages.api.behavior', function () {
         expect(page.mainImageCaption).toBe("Image for _0000_Page_For_Tests", 'Correctly filtered mainImageCaption should be retrieved.');
         expect(page.isArchived).toBe(true, 'Correctly filtered isArchived should be retrieved.');
         expect(page.isMasterPage).toBe(false, 'Correctly filtered isMasterPage should be retrieved.');
+        expect(page.languageId).toBe('5fea841ef108430da6eca2a7009366ec', 'Correctly filtered languageId should be retrieved.');
+        expect(page.languageCode).toBe('ar-KW', 'Correctly filtered languageCode should be retrieved.');
+        expect(page.languageGroupIdentifier).toBe('10e54c92e03643f2b5df656825726ad6', 'Correctly filtered languageGroupIdentifier should be retrieved.');
     }
 
     function expectPagePropertiesPropertiesAreNotNull(response) {
@@ -733,6 +870,8 @@ describe('pages.pages.api.behavior', function () {
         expect(page.useNoIndex).toBe(true, 'Correctly filtered useNoIndex should be retrieved.');
         expect(page.isArchived).toBe(true, 'Correctly filtered isArchived should be retrieved.');
         expect(page.isMasterPage).toBe(false, 'Correctly filtered isMasterPage should be retrieved.');
+        expect(page.languageId).toBe('5fea841ef108430da6eca2a7009366ec', 'Correctly filtered languageId should be retrieved.');
+        expect(page.languageGroupIdentifier).toBe('10e54c92e03643f2b5df656825726ad6', 'Correctly filtered languageGroupIdentifier should be retrieved.');
 
         // layout
         var layout = response.layout;
@@ -769,6 +908,13 @@ describe('pages.pages.api.behavior', function () {
         expect(metadata.metaKeywords).toBe('Test meta keywords', 'Correctly filtered metaKeywords should be retrieved.');
         expect(metadata.metaDescription).toBe('Test meta description', 'Correctly filtered metaDescription should be retrieved.');
         
+        // language
+        var language = response.language;
+        expect(language).toBeDefinedAndNotNull('JSON language object should be retrieved.');
+        api.expectBasePropertiesAreNotNull(language);
+        expect(language.name).toBe('language for 0000-page-for-tests', 'Correctly filtered language.name should be retrieved.');
+        expect(language.code).toBe('ar-KW', 'Correctly filtered language.name should be retrieved.');
+
         // options
         var options = response.pageOptions;
         expect(options).toBeDefinedAndNotNull('JSON pageOptions object should be retrieved.');
@@ -782,6 +928,30 @@ describe('pages.pages.api.behavior', function () {
         expect(options[0].defaultValue).toBe('Default 1', 'Correctly filtered pageOptions[0].defaultValue should be retrieved.');
         expect(options[1].defaultValue).toBe('50', 'Correctly filtered pageOptions[1].defaultValue should be retrieved.');
         
+        // translations
+        var translations = response.pageTranslations;
+        expect(translations).toBeDefinedAndNotNull('JSON pageTranslations object should be retrieved.');
+        expect(translations.length).toBe(4, 'Returned pageTranslations array length should be 2.');
+        expect(translations[0].id).toBe('f0464c233b67406babe8a20400b4d8b8', 'Correctly filtered pageTranslations[0].id should be retrieved.');
+        expect(translations[1].id).toBe('c8ced8bd4a3643a48759a2a7009b482a', 'Correctly filtered pageTranslations[1].id should be retrieved.');
+        expect(translations[2].id).toBe('5ad9f5f2c3fa401a9b31a2a7009b6b1d', 'Correctly filtered pageTranslations[2].id should be retrieved.');
+        expect(translations[3].id).toBe('4266673e191c47c38be8a2a7009cd9b9', 'Correctly filtered pageTranslations[3].id should be retrieved.');
+        expect(translations[0].title).toBe('_0000_Page_For_Tests', 'Correctly filtered pageTranslations[0].title should be retrieved.');
+        expect(translations[1].title).toBe('translation 1 for 0000-page-for-tests', 'Correctly filtered pageTranslations[1].title should be retrieved.');
+        expect(translations[2].title).toBe('translation 2 for 0000-page-for-tests', 'Correctly filtered pageTranslations[2].title should be retrieved.');
+        expect(translations[3].title).toBe('translation 3 for 0000-page-for-tests', 'Correctly filtered pageTranslations[3].title should be retrieved.');
+        expect(translations[0].pageUrl).toBe('/0000-page-for-tests/', 'Correctly filtered pageTranslations[0].pageUrl should be retrieved.');
+        expect(translations[1].pageUrl).toBe('/translation-1-for-0000-page-for-tests/', 'Correctly filtered pageTranslations[1].pageUrl should be retrieved.');
+        expect(translations[2].pageUrl).toBe('/translation-2-for-0000-page-for-tests/', 'Correctly filtered pageTranslations[2].pageUrl should be retrieved.');
+        expect(translations[3].pageUrl).toBe('/translation-3-for-0000-page-for-tests/', 'Correctly filtered pageTranslations[3].pageUrl should be retrieved.');
+        expect(translations[0].languageId).toBe('5fea841ef108430da6eca2a7009366ec', 'Correctly filtered pageTranslations[0].languageId should be retrieved.');
+        expect(translations[1].languageId).toBe('c8b29d008d224d99be24a2a7009b16dc', 'Correctly filtered pageTranslations[1].languageId should be retrieved.');
+        expect(translations[2].languageId).toBe('c7205b78f63243d5a7e0a2a7009b309e', 'Correctly filtered pageTranslations[2].languageId should be retrieved.');
+        expect(translations[3].languageId).toBeNull('Correctly filtered pageTranslations[3].languageId should be retrieved.');
+        expect(translations[0].languageCode).toBe('ar-KW', 'Correctly filtered pageTranslations[0].languageCode should be retrieved.');
+        expect(translations[1].languageCode).toBe('ar-IQ', 'Correctly filtered pageTranslations[1].languageCode should be retrieved.');
+        expect(translations[2].languageCode).toBe('ar-JO', 'Correctly filtered pageTranslations[2].languageCode should be retrieved.');
+        expect(translations[3].languageCode).toBeNull('Correctly filtered pageTranslations[3].languageCode should be retrieved.');
 
         // page contents
         var contents = response.pageContents;
@@ -834,6 +1004,22 @@ describe('pages.pages.api.behavior', function () {
         expect(image.thumbnailUrl).toBeDefinedAndNotNull('thumbnailUrl should be retrieved.');
     }
     
+    function expectPageTranslationsPropertiesAreNotNull(translations, full) {
+        expect(translations[0].id).toBe('5ad9f5f2c3fa401a9b31a2a7009b6b1d', 'Correctly filtered pageTranslations[0].id should be retrieved.');
+        expect(translations[0].title).toBe('translation 2 for 0000-page-for-tests', 'Correctly filtered pageTranslations[0].title should be retrieved.');
+        expect(translations[0].pageUrl).toBe('/translation-2-for-0000-page-for-tests/', 'Correctly filtered pageTranslations[0].pageUrl should be retrieved.');
+        expect(translations[0].languageId).toBe('c7205b78f63243d5a7e0a2a7009b309e', 'Correctly filtered pageTranslations[0].languageId should be retrieved.');
+        expect(translations[0].languageCode).toBe('ar-JO', 'Correctly filtered pageTranslations[0].languageCode should be retrieved.');
+        
+        if (full) {
+            expect(translations[1].id).toBe('4266673e191c47c38be8a2a7009cd9b9', 'Correctly filtered pageTranslations[1].id should be retrieved.');
+            expect(translations[1].title).toBe('translation 3 for 0000-page-for-tests', 'Correctly filtered pageTranslations[1].title should be retrieved.');
+            expect(translations[1].pageUrl).toBe('/translation-3-for-0000-page-for-tests/', 'Correctly filtered pageTranslations[1].pageUrl should be retrieved.');
+            expect(translations[1].languageId).toBeNull('Correctly filtered pageTranslations[1].languageId should be retrieved.');
+            expect(translations[1].languageCode).toBeNull('Correctly filtered pageTranslations[1].languageCode should be retrieved.');
+        }
+    }
+
     function filterByTags(connector, expectedCount, expectedTitles) {
         var url = '/bcms-api/pages/',
             result,

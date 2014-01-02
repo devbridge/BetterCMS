@@ -10,7 +10,6 @@ using BetterCms.Module.Api.Infrastructure.Enums;
 using BetterCms.Module.Api.Operations.Users.Users;
 using BetterCms.Module.MediaManager.Services;
 
-using ServiceStack.OrmLite;
 using ServiceStack.ServiceInterface;
 
 using PredicateBuilder = ServiceStack.OrmLite.PredicateBuilder;

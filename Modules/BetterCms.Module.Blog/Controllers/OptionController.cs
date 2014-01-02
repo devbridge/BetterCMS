@@ -3,6 +3,7 @@
 using BetterCms.Core.Security;
 using BetterCms.Module.Blog.Commands.GetTemplatesList;
 using BetterCms.Module.Blog.Commands.SaveDefaultTemplate;
+using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 
@@ -32,12 +33,14 @@ namespace BetterCms.Module.Blog.Controllers
         /// <summary>
         /// Saves the default template.
         /// </summary>
-        /// <param name="id">The id.</param>
+        /// <param name="templateId">The id.</param>
         /// <returns>Json result</returns>
         [HttpPost]
-        public ActionResult SaveDefaultTemplate(string id)
+        public ActionResult SaveDefaultTemplate(string templateId, string masterPageId)
         {
-            var response = GetCommand<SaveDefaultTemplateCommand>().ExecuteCommand(id.ToGuidOrDefault());
+            var request = new DefaultTemplateViewModel { TemplateId = templateId.ToGuidOrDefault(), MasterPageId = masterPageId.ToGuidOrDefault() };
+
+            var response = GetCommand<SaveDefaultTemplateCommand>().ExecuteCommand(request);
 
             return WireJson(response);
         }

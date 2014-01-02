@@ -24,6 +24,8 @@
 
         public virtual string HiddenFieldName { get; set; }
 
+        public virtual string CustomBinding { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="EditableGridColumn" /> class.
         /// </summary>

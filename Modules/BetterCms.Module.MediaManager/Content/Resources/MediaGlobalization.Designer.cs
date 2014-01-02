@@ -394,7 +394,7 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed! Can upload only gif, jpg, jpeg or png..
+        ///   Looks up a localized string similar to Failed! Can upload only gif, jpg, jpeg, png or bmp..
         /// </summary>
         public static string FileUpload_Failed_ImageFormatNotSuported {
             get {

@@ -9,6 +9,7 @@ using BetterCms.Core.Services.Caching;
 
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.ViewModels.Autocomplete;
 
 using Common.Logging;
 
@@ -17,7 +18,7 @@ namespace BetterCms.Module.Root.Commands.Authentication.SearchUsers
     /// <summary>
     /// A command to get user list by filter.
     /// </summary>
-    public class SearchUsersCommand : CommandBase, ICommand<string, List<LookupKeyValue>>
+    public class SearchUsersCommand : CommandBase, ICommand<SuggestionViewModel, List<LookupKeyValue>>
     {
         /// <summary>
         /// The cache key.
@@ -53,16 +54,23 @@ namespace BetterCms.Module.Root.Commands.Authentication.SearchUsers
         /// <summary>
         /// Executes this command.
         /// </summary>
-        /// <param name="userName">Name of the user.</param>
+        /// <param name="model">The model.</param>
         /// <returns>
         /// A list of users.
         /// </returns>
-        public List<LookupKeyValue> Execute(string userName)
+        public List<LookupKeyValue> Execute(SuggestionViewModel model)
         {
             var allUserNames = cacheService.Get(CacheKey, TimeSpan.FromSeconds(30), GetAllUserNames);
 
-            return allUserNames
-                .Where(user => user.ToLower().Contains(userName.ToLower()))
+            var query = allUserNames
+                .Where(user => user.ToLower().Contains(model.Query.ToLower()));
+
+            if (model.ExistingItemsArray.Length > 0)
+            {
+                query = query.Where(user => !model.ExistingItems.Contains(user));
+            }
+
+            return query
                 .Select(user => new LookupKeyValue { Key = user, Value = user })
                 .ToList();
         }

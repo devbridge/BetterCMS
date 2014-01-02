@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Globalization;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Models;
+
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -92,6 +91,14 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         public bool IsMasterPage { get; set; }
 
         /// <summary>
+        /// Gets or sets the language id.
+        /// </summary>
+        /// <value>
+        /// The language id.
+        /// </value>
+        public Guid? LanguageId { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SavePageResponse" /> class.
         /// </summary>
         /// <param name="page">The page.</param>
@@ -106,6 +113,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             PageUrl = page.PageUrl;
             IsArchived = page.IsArchived;
             IsMasterPage = page.IsMasterPage;
+            LanguageId = page.Language != null ? page.Language.Id : (Guid?)null;
         }
     }
 }

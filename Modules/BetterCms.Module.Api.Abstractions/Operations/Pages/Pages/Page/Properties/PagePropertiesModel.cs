@@ -159,5 +159,23 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// </value>
         [DataMember]
         public bool IsMasterPage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language id.
+        /// </summary>
+        /// <value>
+        /// The language id.
+        /// </value>
+        [DataMember]
+        public System.Guid? LanguageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language group identifier.
+        /// </summary>
+        /// <value>
+        /// The language group identifier.
+        /// </value>
+        [DataMember]
+        public System.Guid? LanguageGroupIdentifier { get; set; }
     }
 }
