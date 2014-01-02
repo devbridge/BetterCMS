@@ -147,14 +147,17 @@ bettercms.define('bcms.security', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', '
     security.createUserAccessViewModel = function (accessList) {
         var roles = [],
             users = [];
-        $.each(accessList, function (i, item) {
-            if (item.IsForRole) {
-                roles.push(item.Identity);
-            } else {
-                users.push(item.Identity);
-            }
-        });
-        
+
+        if (accessList) {
+            $.each(accessList, function(i, item) {
+                if (item.IsForRole) {
+                    roles.push(item.Identity);
+                } else {
+                    users.push(item.Identity);
+                }
+            });
+        }
+
         var messageBox =
                 messages.box({
                 container: $(".bcms-modal")
