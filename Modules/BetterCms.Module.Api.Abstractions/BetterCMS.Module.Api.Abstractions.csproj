@@ -205,6 +205,11 @@
     <Compile Include="Operations\Pages\Pages\Page\Properties\PagePropertiesModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PageTranslationModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\TagModel.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Translations\GetPageTranslationsRequest.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Translations\GetPageTranslationsRequestValidator.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Translations\GetPageTranslationsResponse.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Translations\IPageTranslationsService.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Translations\PageTranslationModel.cs" />
     <Compile Include="Operations\Pages\Redirects\GetRedirectsRequest.cs" />
     <Compile Include="Operations\Pages\Redirects\GetRedirectsResponse.cs" />
     <Compile Include="Operations\Pages\Redirects\IRedirectsService.cs" />

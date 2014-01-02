@@ -251,7 +251,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         private System.Collections.Generic.List<PageContentModel> LoadPageContents(Guid blogPostId)
         {
             var results = repository
-                 .AsQueryable<Module.Root.Models.PageContent>(pageContent => pageContent.Page.Id == blogPostId && !pageContent.Content.IsDeleted)
+                 .AsQueryable<PageContent>(pageContent => pageContent.Page.Id == blogPostId && !pageContent.Content.IsDeleted)
                  .OrderBy(pageContent => pageContent.Order)
                  .Select(pageContent => new
                     {
