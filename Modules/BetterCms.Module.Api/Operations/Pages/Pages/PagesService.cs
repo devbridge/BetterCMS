@@ -7,6 +7,8 @@ using BetterCms.Core.DataContracts.Enums;
 
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Infrastructure.Enums;
+
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
@@ -55,9 +57,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
                 query = query.Where(b => !b.IsMasterPage);
             }
 
-            query = query.ApplyTagsFilter(
-                request.Data,
-                tagName => { return page => page.PageTags.Any(pageTag => pageTag.Tag.Name == tagName && !pageTag.IsDeleted && !pageTag.Tag.IsDeleted); });
+            query = query.ApplyPageTagsFilter(request.Data);
 
             var includeMetadata = request.Data.IncludeMetadata;
             var listResponse = query

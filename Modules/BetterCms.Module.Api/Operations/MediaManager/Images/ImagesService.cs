@@ -55,9 +55,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
                 query = query.Where(m => !m.IsArchived);
             }
 
-            query = query.ApplyTagsFilter(
-                request.Data,
-                tagName => { return media => media.MediaTags.Any(mediaTag => mediaTag.Tag.Name == tagName && !mediaTag.Tag.IsDeleted); });
+            query = query.ApplyMediaTagsFilter(request.Data);
 
             var listResponse = query.Select(media =>
                     new MediaModel
