@@ -126,6 +126,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\UsersModuleServiceValidationTest.cs" />
     <Compile Include="MediaManager\CommandTests\DeleteMediaCommandTest.cs" />
     <Compile Include="Pages\CommandTests\EventTests\UpdatingPagePropertiesModelMapTests.cs" />
     <Compile Include="Pages\CommandTests\PageTests\ClonePageCommandTest.cs" />
