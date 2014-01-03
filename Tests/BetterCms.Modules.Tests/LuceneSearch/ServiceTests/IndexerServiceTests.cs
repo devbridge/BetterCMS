@@ -5,8 +5,6 @@ using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 
 using HtmlAgilityPack;
 
-using Moq;
-
 using NUnit.Framework;
 
 namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
@@ -38,7 +36,7 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
             var results = service.Search("test");
 
             Assert.IsTrue(results.Count == 1);
-            Assert.IsTrue(results[0] == page1.AbsolutePath);
+            Assert.IsTrue(results[0].Link == page1.AbsolutePath);
         }
     }
 }

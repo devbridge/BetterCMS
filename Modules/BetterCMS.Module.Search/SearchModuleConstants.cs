@@ -17,5 +17,7 @@
             public const string FormMethod = "GET";
             public const string QueryParameterName = "Query";
         }
+
+        public const int DefaultSearchResultsCount = 10;
     }
 }

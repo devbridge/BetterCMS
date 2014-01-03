@@ -2,6 +2,7 @@
 
 using Autofac;
 
+using BetterCMS.Module.LuceneSearch.Services;
 using BetterCMS.Module.LuceneSearch.Services.IndexerService;
 using BetterCMS.Module.LuceneSearch.Services.ScrapeService;
 using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
@@ -9,6 +10,7 @@ using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 using BetterCms.Core.Modules;
 using BetterCMS.Module.LuceneSearch.Workers;
 
+using BetterCms.Module.Search.Services;
 
 namespace BetterCms.Module.LuceneSearch
 {
@@ -63,6 +65,7 @@ namespace BetterCms.Module.LuceneSearch
             containerBuilder.RegisterType<DefaultIndexerService>().As<IIndexerService>().SingleInstance();
             containerBuilder.RegisterType<DefaultScrapeService>().As<IScrapeService>().InstancePerDependency();
             containerBuilder.RegisterType<DefaultWebCrawlerService>().As<IWebCrawlerService>().InstancePerDependency();
+            containerBuilder.RegisterType<LuceneSearchService>().As<ISearchService>().InstancePerDependency();
         }
     }
 }

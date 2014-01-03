@@ -8,7 +8,7 @@ namespace BetterCms.Module.Search.Models
 
         public string Query { get; set; }
 
-        public List<SearchResultItem> Items { get; set; }
+        public IList<SearchResultItem> Items { get; set; }
 
         public SearchResults()
         {

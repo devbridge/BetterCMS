@@ -5,6 +5,9 @@ using System.Threading;
 
 using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 
+using BetterCms.Module.Search;
+using BetterCms.Module.Search.Models;
+
 using HtmlAgilityPack;
 
 using Lucene.Net.Analysis.Standard;
@@ -21,36 +24,32 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 {
     public class DefaultIndexerService : IIndexerService
     {
-        private IndexWriter Writer;
+        private IndexWriter writer;
 
-        private IndexReader Reader;
+        private IndexReader reader;
 
-        private readonly StandardAnalyzer Analyzer;
+        private readonly StandardAnalyzer analyzer;
 
-        private readonly QueryParser Parser;
+        private readonly QueryParser parser;
 
-        private readonly Directory Index;
+        private readonly Directory index;
 
-        //private string directory = "C:\\LuceneWorkFolder5";
-
-        private string directory = "C:\\Lucene\\Test";
-
-        private readonly int ResultCount = 10;
+        private const string directory = "C:\\Lucene\\Test";
 
         public DefaultIndexerService()
         {
-            Index = FSDirectory.Open(directory);
+            index = FSDirectory.Open(directory);
 
-            Analyzer = new StandardAnalyzer(Version.LUCENE_30);
-            Parser = new QueryParser(Version.LUCENE_30, "content", Analyzer);
+            analyzer = new StandardAnalyzer(Version.LUCENE_30);
+            parser = new QueryParser(Version.LUCENE_30, "content", analyzer);
             
-            if (!IndexReader.IndexExists(Index))
+            if (!IndexReader.IndexExists(index))
             {
                 Open(true);
                 Close();
             }
 
-            Reader = IndexReader.Open(Index, true);
+            reader = IndexReader.Open(index, true);
         }
 
         public void Open(bool create = false)
@@ -60,7 +59,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
                 Thread.Sleep(1000);
             }
 
-            Writer = new IndexWriter(Index, Analyzer, create, IndexWriter.MaxFieldLength.LIMITED);
+            writer = new IndexWriter(index, analyzer, create, IndexWriter.MaxFieldLength.LIMITED);
         }
 
         public void AddHtmlDocument(PageData pageData)
@@ -73,20 +72,20 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             doc.Add(new Field("title", GetTitle(pageData.Content), Field.Store.YES, Field.Index.ANALYZED));
             doc.Add(new Field("content", GetBody(pageData.Content), Field.Store.YES, Field.Index.ANALYZED));
 
-            Writer.UpdateDocument(path, doc, Analyzer);
+            writer.UpdateDocument(path, doc, analyzer);
         }
 
-        public IList<string> Search(string searchString)
+        public IList<SearchResultItem> Search(string searchString, int resultCount = SearchModuleConstants.DefaultSearchResultsCount)
         {
-            if (!Reader.IsCurrent())
+            if (!reader.IsCurrent())
             {
-                Reader = Reader.Reopen();
+                reader = reader.Reopen();
             }
 
-            var result = new List<string>();
-            var searcher = new IndexSearcher(Reader);
-            TopScoreDocCollector collector = TopScoreDocCollector.Create(ResultCount, true);
-            var query = Parser.Parse(searchString);
+            var result = new List<SearchResultItem>();
+            var searcher = new IndexSearcher(reader);
+            TopScoreDocCollector collector = TopScoreDocCollector.Create(resultCount, true);
+            var query = parser.Parse(searchString);
             
             searcher.Search(query, collector);
             ScoreDoc[] hits = collector.TopDocs().ScoreDocs;
@@ -95,13 +94,16 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             {
                 int docId = hits[i].Doc;
                 Document d = searcher.Doc(docId);
-                result.Add(d.Get("path"));
+                result.Add(new SearchResultItem
+                               {
+                                   FormattedUrl = d.Get("path"),
+                                   Link = d.Get("path"),
+                                   Title = d.Get("title")
+                               });
             }
             
             return result;
         }
-
-
 
         private static string GetTitle(HtmlDocument html)
         {
@@ -136,8 +138,8 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         public void Close()
         {
-            Writer.Optimize();
-            Writer.Dispose();
+            writer.Optimize();
+            writer.Dispose();
         }
     }
 }

@@ -98,6 +98,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Sandbox.Mvc4", "Sandbox\BetterCms.Sandbox.Mvc4\BetterCms.Sandbox.Mvc4.csproj", "{5ABF44DC-EE5E-4EDE-B1FF-E5FE65BA7CC1}"
 	ProjectSection(ProjectDependencies) = postProject
 		{B935DD58-18EC-4340-B236-F1DAE4509CC8} = {B935DD58-18EC-4340-B236-F1DAE4509CC8}
+		{5255ABED-2111-497F-A94C-6AA89862D814} = {5255ABED-2111-497F-A94C-6AA89862D814}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Module.GoogleSiteSearch", "Modules\BetterCMS.Module.GoogleSiteSearch\BetterCms.Module.GoogleSiteSearch.csproj", "{EC53AC56-C1A7-4752-8152-B4559827DD91}"

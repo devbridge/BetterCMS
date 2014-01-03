@@ -48,7 +48,7 @@ namespace BetterCMS.Module.LuceneSearch.Workers
                                 break;
                             }
                             
-                            case HttpStatusCode.InternalServerError:
+                        case HttpStatusCode.InternalServerError:
                             {
                                 bool success = false;
 

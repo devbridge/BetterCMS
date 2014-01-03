@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using BetterCMS.Module.LuceneSearch.Models;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
+
+using BetterCMS.Module.LuceneSearch.Models;
+
 using BetterCms.Module.Root.Models;
 
 namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
@@ -70,7 +70,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
 
             var unprocessedUrls =
                 Repository.AsQueryOver(() => indexSourceAlias)
-                          .Where(() => indexSourceAlias.StartTime == null)
+                          .Where(() => indexSourceAlias.StartTime == null || indexSourceAlias.EndTime == null)
                           .OrderByAlias(() => indexSourceAlias.Id)
                           .Asc.Lock(() => indexSourceAlias)
                           .Read.Take(limit)
