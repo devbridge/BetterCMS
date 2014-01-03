@@ -8,13 +8,15 @@ using Newtonsoft.Json;
 
 namespace BetterCMS.Module.GoogleSiteSearch.Services.Search
 {
-    public class DefaultSearchService : ISearchService
+    public class GoogleSiteSearchService : ISearchService
     {
+        private const string GoogleSiteSearchUrl = "https://www.googleapis.com/customsearch/v1?key={0}&cx={1}&q={2}";
+
         private readonly IWebClient webClient;
 
         private readonly ICmsConfiguration configuration;
 
-        public DefaultSearchService(IWebClient webClient, ICmsConfiguration configuration)
+        public GoogleSiteSearchService(IWebClient webClient, ICmsConfiguration configuration)
         {
             this.configuration = configuration;
             this.webClient = webClient;
@@ -27,7 +29,7 @@ namespace BetterCMS.Module.GoogleSiteSearch.Services.Search
                 return new SearchResults();
             }
 
-            var url = string.Format("https://www.googleapis.com/customsearch/v1?key={0}&cx={1}&q={2}", 
+            var url = string.Format(GoogleSiteSearchUrl, 
                 configuration.Search.GetValue("GoogleSiteSearchApiKey"), 
                 configuration.Search.GetValue("GoogleSiteSearchEngineKey"), 
                 HttpUtility.UrlEncode(request.Query));

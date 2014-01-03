@@ -1,0 +1,5 @@
+﻿@model BetterCms.Module.Root.ViewModels.Cms.RenderWidgetViewModel
+
+@{
+    Html.RenderAction("Results", "Search", new { Area = "bcms-search", WidgetModel = Model });
+}

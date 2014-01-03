@@ -2,7 +2,7 @@
 
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Search.Command.SearchQuery;
-using BetterCms.Module.Search.Models;
+using BetterCms.Module.Search.ViewModels;
 
 using Microsoft.Web.Mvc;
 
@@ -14,11 +14,11 @@ namespace BetterCms.Module.Search.Controllers
     [ActionLinkArea(SearchModuleDescriptor.SearchAreaName)]
     public class SearchController : CmsControllerBase
     {
-        public ActionResult Results(string query)
+        public ActionResult Results(SearchResultsViewModel model)
         {
-            var results = GetCommand<SearchQueryCommand>().ExecuteCommand(new SearchRequest(query));
+            var results = GetCommand<SearchQueryCommand>().ExecuteCommand(model);
 
-            return PartialView("SearchResults", results);
+            return PartialView("SearchResultsWidget", results);
         }
     }
 }

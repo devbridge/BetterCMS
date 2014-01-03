@@ -1,0 +1,13 @@
+﻿@model BetterCms.Module.Search.ViewModels.SearchResultsViewModel
+
+@if (Model != null && Model.Results != null && Model.Results.Items != null && Model.Results.Items.Count > 0)
+{
+    foreach (var item in Model.Results.Items)
+    {
+        <article class="bcms-search-result">
+            <h3>@item.Title</h3>            
+            <a href="@item.Link">@item.FormattedUrl</a>
+            <p>@item.Snippet</p>            
+        </article>
+    }
+}

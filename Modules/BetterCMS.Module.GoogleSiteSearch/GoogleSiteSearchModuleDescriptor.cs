@@ -1,7 +1,10 @@
 ﻿using Autofac;
 
+using BetterCMS.Module.GoogleSiteSearch.Services.Search;
+
 using BetterCms;
 using BetterCms.Core.Modules;
+using BetterCms.Module.Search.Services;
 
 namespace BetterCMS.Module.GoogleSiteSearch
 {
@@ -42,7 +45,8 @@ namespace BetterCMS.Module.GoogleSiteSearch
         
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
-        
+            containerBuilder.RegisterType<GoogleSiteSearchService>().As<ISearchService>().SingleInstance();
+            containerBuilder.RegisterType<DefaultWebClient>().As<IWebClient>().SingleInstance();
         }
     }
 }

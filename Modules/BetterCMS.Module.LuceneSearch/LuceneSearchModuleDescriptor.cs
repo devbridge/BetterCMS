@@ -1,14 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Threading;
 
 using Autofac;
 
-using BetterCMS.Module.LuceneSearch.Services;
 using BetterCMS.Module.LuceneSearch.Services.IndexerService;
 using BetterCMS.Module.LuceneSearch.Services.ScrapeService;
 using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 
-using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules;
 using BetterCMS.Module.LuceneSearch.Workers;
 

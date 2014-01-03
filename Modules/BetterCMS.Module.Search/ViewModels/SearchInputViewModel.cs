@@ -1,6 +1,8 @@
-﻿namespace BetterCms.Module.Search.ViewModels
+﻿using BetterCms.Module.Root.ViewModels.Cms;
+
+namespace BetterCms.Module.Search.ViewModels
 {
-    public class SearchInputViewModel
+    public class SearchInputViewModel : RenderWidgetViewModel
     {
         public string Query { get; set; }
     }

@@ -1,11 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-
-using Autofac;
+﻿using Autofac;
 
 using BetterCms.Core.Modules;
-using BetterCms.Core.Modules.Projections;
-using BetterCms.Module.Root;
 
 namespace BetterCms.Module.Search
 {

@@ -251,7 +251,7 @@
   <ItemGroup>
     <Folder Include="Areas\bcms-images-gallery\" />
     <Folder Include="Areas\bcms-media\Views\" />
-    <Folder Include="Areas\bcms-pages\Views\" />
+    <Folder Include="Areas\bcms-search\" />
     <Folder Include="file\bcms-blog\scripts\" />
     <Folder Include="file\bcms-images-gallery\scripts\" />
     <Folder Include="file\bcms-media\scripts\" />
@@ -275,6 +275,10 @@
       <Project>{a66a3046-ef60-4c51-ada7-eb055763419b}</Project>
       <Name>BetterCms.Module.Blog</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCMS.Module.GoogleSiteSearch\BetterCms.Module.GoogleSiteSearch.csproj">
+      <Project>{ec53ac56-c1a7-4752-8152-b4559827dd91}</Project>
+      <Name>BetterCms.Module.GoogleSiteSearch</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.ImagesGallery\BetterCms.Module.ImagesGallery.csproj">
       <Project>{0bb64452-9b66-403e-94c6-e66c6071d12b}</Project>
       <Name>BetterCms.Module.ImagesGallery</Name>
@@ -282,10 +286,6 @@
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Installation\BetterCms.Module.Installation.csproj">
       <Project>{17bf5ca2-23b6-4796-8ef1-cddf6d41a4f7}</Project>
       <Name>BetterCms.Module.Installation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Modules\BetterCMS.Module.LuceneSearch\BetterCms.Module.LuceneSearch.csproj">
-      <Project>{5255abed-2111-497f-a94c-6aa89862d814}</Project>
-      <Name>BetterCms.Module.LuceneSearch</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.MediaManager\BetterCms.Module.MediaManager.csproj">
       <Project>{F3E41793-E8ED-4BA8-A1AB-CBA1E47B0786}</Project>

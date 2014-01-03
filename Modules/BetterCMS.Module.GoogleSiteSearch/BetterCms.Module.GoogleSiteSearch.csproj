@@ -41,7 +41,7 @@
     <Compile Include="GoogleSiteSearchModuleDescriptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Search\IWebClient.cs" />
-    <Compile Include="Services\Search\DefaultSearchService.cs" />
+    <Compile Include="Services\Search\GoogleSiteSearchService.cs" />
     <Compile Include="Services\Search\DefaultWebClient.cs" />
   </ItemGroup>
   <ItemGroup>
