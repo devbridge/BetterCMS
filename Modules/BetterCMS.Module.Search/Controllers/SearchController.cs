@@ -8,9 +8,6 @@ using Microsoft.Web.Mvc;
 
 namespace BetterCms.Module.Search.Controllers
 {
-    /// <summary>
-    /// Newsletter subscribers controller.
-    /// </summary>
     [ActionLinkArea(SearchModuleDescriptor.SearchAreaName)]
     public class SearchController : CmsControllerBase
     {

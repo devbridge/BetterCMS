@@ -2,6 +2,7 @@
 
 using Autofac;
 
+using BetterCMS.Module.LuceneSearch;
 using BetterCMS.Module.LuceneSearch.Services;
 using BetterCMS.Module.LuceneSearch.Services.IndexerService;
 using BetterCMS.Module.LuceneSearch.Services.ScrapeService;
@@ -52,16 +53,28 @@ namespace BetterCms.Module.LuceneSearch
             : base(configuration)
         {
             Events.CoreEvents.Instance.HostStart += x =>
-                {                    
+                {
+                    // Content indexer
+                    int minutes;
+                    if (!int.TryParse(configuration.Search.GetValue(LuceneSearchConstants.ContentIndexerFrequencyConfigurationKey), out minutes))
+                    {
+                        minutes = 30;
+                    }
+                    workers.Add(new DefaultContentIndexingRobot(minutes));
+
+                    // New page URLs watcher
+                    if (!int.TryParse(configuration.Search.GetValue(LuceneSearchConstants.SourcePagesWatcherFrequencyConfigurationKey), out minutes))
+                    {
+                        minutes = 10;
+                    }
+                    workers.Add(new DefaultIndexSourceWatcher(minutes));
+
                     workers.ForEach(f => f.Start());
                 };
         }
         
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
-            workers.Add(new DefaultContentIndexingRobot());
-            workers.Add(new DefaultIndexSourceWatcher());
-
             containerBuilder.RegisterType<DefaultIndexerService>().As<IIndexerService>().SingleInstance();
             containerBuilder.RegisterType<DefaultScrapeService>().As<IScrapeService>().InstancePerDependency();
             containerBuilder.RegisterType<DefaultWebCrawlerService>().As<IWebCrawlerService>().InstancePerDependency();

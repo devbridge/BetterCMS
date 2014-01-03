@@ -1,5 +1,7 @@
 ﻿using System;
 
+using Autofac;
+
 using BetterCMS.Module.LuceneSearch.Services.IndexerService;
 using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 
@@ -26,7 +28,7 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
             var page1 = new PageData { AbsolutePath = "/test1", Content = document1, Id = Guid.NewGuid() };
             var page2 = new PageData { AbsolutePath = "/test2", Content = document2, Id = Guid.NewGuid() };
 
-            var service = new DefaultIndexerService();
+            var service = new DefaultIndexerService(Container.Resolve<ICmsConfiguration>());
             
             service.Open();
             service.AddHtmlDocument(page1);

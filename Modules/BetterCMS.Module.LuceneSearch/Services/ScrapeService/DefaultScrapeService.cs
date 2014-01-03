@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
@@ -18,18 +19,34 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
 
         private IUnitOfWork UnitOfWork { get; set; }
 
-        private const int ResultLimit = 10;
+        private readonly int scrapeLimit;
 
-        // Timeouts in minutes
+        private readonly int pageExpireTimout;
 
-        private const int CrawlFrequency = 1;
+        private readonly int failedPageTimeout;
 
-        private const int EndTimeout = 5;
-
-        public DefaultScrapeService(IRepository repository, IUnitOfWork unitOfWork)
+        public DefaultScrapeService(IRepository repository, IUnitOfWork unitOfWork, ICmsConfiguration cmsConfiguration)
         {
             Repository = repository;
             UnitOfWork = unitOfWork;
+
+            if (!int.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.MaxPagesPerQueryConfigurationKey), out scrapeLimit)
+                || scrapeLimit < 0)
+            {
+                scrapeLimit = 1000;
+            }
+
+            if (!int.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.PageExpireTimeoutConfigurationKey), out pageExpireTimout)
+                || pageExpireTimout < 0)
+            {
+                pageExpireTimout = 10;
+            }
+
+            if (!int.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.FailedPageReindexingTimeoutConfigurationKey), out failedPageTimeout)
+                || failedPageTimeout < 0)
+            {
+                failedPageTimeout = 10;
+            }
         }
 
         public void FetchNewUrls()
@@ -64,109 +81,90 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
             UnitOfWork.Commit();
         }
 
-        public Queue<CrawlLink> GetUnprocessedLinks(int limit = 1000)
+        public Queue<CrawlLink> GetLinksForProcessing(int? limit = null)
+        {
+            if (!limit.HasValue)
+            {
+                limit = scrapeLimit;
+            }
+
+            var queue = new Queue<CrawlLink>();
+
+            var unprocessedLinks = GetUnprocessedLinks(limit.Value);
+            var processed = unprocessedLinks.Count;
+            AddLinksToQueue(queue, unprocessedLinks);
+
+            if (processed < limit)
+            {
+                var expiredLinks = GetExpiredLinks(limit.Value - processed);
+                processed += expiredLinks.Count;
+                AddLinksToQueue(queue, expiredLinks);
+            }
+
+            if (processed < limit)
+            {
+                var failedLinks = GetFailedLinks(limit.Value - processed);
+                AddLinksToQueue(queue, failedLinks);
+            }
+
+            return queue;
+        }
+
+        private void AddLinksToQueue(Queue<CrawlLink> queue, IList<IndexSource> links)
+        {
+            foreach (var url in links)
+            {
+                queue.Enqueue(new CrawlLink { Id = url.Id, Path = url.Path });
+            }
+        }
+
+        private IList<IndexSource> GetUnprocessedLinks(int limit)
         {
             IndexSource indexSourceAlias = null;
 
             var unprocessedUrls =
                 Repository.AsQueryOver(() => indexSourceAlias)
-                          .Where(() => indexSourceAlias.StartTime == null || indexSourceAlias.EndTime == null)
+                          .Where(() => indexSourceAlias.StartTime == null)
                           .OrderByAlias(() => indexSourceAlias.Id)
                           .Asc.Lock(() => indexSourceAlias)
                           .Read.Take(limit)
                           .List();
 
-            var links = new Queue<CrawlLink>();
-
-            foreach (var url in unprocessedUrls)
-            {
-                links.Enqueue(new CrawlLink { Id = url.Id, Path = url.Path });
-            }
-
-            if (links.Count == 0)
-            {
-                links = GetExpiredLinks();
-            }
-
-            if (links.Count == 0)
-            {
-                links = GetFailedLinks();
-            }
-
-            return links;
+            return unprocessedUrls;
         }
- 
 
-        public Queue<CrawlLink> GetExpiredLinks(int limit = 1000)
+        private IList<IndexSource> GetExpiredLinks(int limit)
         {
             IndexSource indexSourceAlias = null;
-
-            var result = new Queue<CrawlLink>();
+            var endDate = DateTime.Now.AddMinutes(pageExpireTimout * -1);
 
             var expiredUrls =
-            Repository.AsQueryOver(() => indexSourceAlias)
-              .Where(() => indexSourceAlias.EndTime != null)
-              .OrderByAlias(() => indexSourceAlias.Id)
-              .Asc.Lock(() => indexSourceAlias)
-              .Read.Take(limit)
-              .List();
+                Repository.AsQueryOver(() => indexSourceAlias)
+                          .Where(() => indexSourceAlias.EndTime != null)
+                          .Where(() => indexSourceAlias.EndTime <= endDate)
+                          .OrderByAlias(() => indexSourceAlias.EndTime)
+                          .Desc.Lock(() => indexSourceAlias)
+                          .Read.Take(limit)
+                          .List();
 
-            var expiredLinks = expiredUrls.Where(url => (DateTime.Now - url.EndTime).Value.TotalMinutes > CrawlFrequency).Take(ResultLimit);
+            return expiredUrls;
+        }
 
-            foreach (var link in expiredLinks)
-            {
-                result.Enqueue(new CrawlLink { Id = link.Id, Path = link.Path });
-            }
-
-            return result;
-        } 
-
-        public Queue<CrawlLink> GetFailedLinks(int limit = 1000)
+        private IList<IndexSource> GetFailedLinks(int limit)
         {
             IndexSource indexSourceAlias = null;
-
-            var result = new Queue<CrawlLink>();
+            var startDate = DateTime.Now.AddMinutes(failedPageTimeout * -1);
 
             var urls =
                 Repository.AsQueryOver(() => indexSourceAlias)
                           .Where(() => indexSourceAlias.StartTime != null && indexSourceAlias.EndTime == null)
-                          .OrderByAlias(() => indexSourceAlias.Id)
-                          .Asc.Lock(() => indexSourceAlias)
+                          .Where(() => indexSourceAlias.StartTime <= startDate)
+                          .OrderByAlias(() => indexSourceAlias.EndTime)
+                          .Desc.Lock(() => indexSourceAlias)
                           .Read.Take(limit)
                           .List();
 
-            var failedLinks = urls.Where(url => (DateTime.Now - url.StartTime).Value.TotalMinutes > EndTimeout).Take(ResultLimit);
-
-            foreach (var link in failedLinks)
-            {
-                result.Enqueue(new CrawlLink { Id = link.Id, Path = link.Path });
-            }
-
-            return result;
-        }
-
-        public Queue<CrawlLink> GetProcessedLinks(int limit = 1000)
-        {
-            IndexSource indexSourceAlias = null;
-
-            var processedUrls =
-                Repository.AsQueryOver(() => indexSourceAlias)
-                          .Where(() => indexSourceAlias.StartTime != null && indexSourceAlias.EndTime != null)
-                          .OrderByAlias(() => indexSourceAlias.Id)
-                          .Asc.Lock(() => indexSourceAlias)
-                          .Read.Take(limit)
-                          .List();
-
-            var links = processedUrls.Where(url => (DateTime.Now - url.EndTime).Value.TotalMinutes < CrawlFrequency).Take(ResultLimit);
-
-            var result = new Queue<CrawlLink>();
-
-            foreach (var url in links)
-            {
-                result.Enqueue(new CrawlLink { Id = url.Id, Path = url.Path });
-            }
-
-            return result;
+            return urls;
         }
 
         public void MarkStarted(Guid id)

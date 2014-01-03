@@ -38,6 +38,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="LuceneSearchConstants.cs" />
     <Compile Include="LuceneSearchModuleDescriptor.cs" />
     <Compile Include="Models\CrawlLink.cs" />
     <Compile Include="Models\IndexSource.cs" />

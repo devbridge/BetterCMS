@@ -16,8 +16,8 @@ namespace BetterCMS.Module.LuceneSearch.Workers
     {
         private const int RetryCount = 10;
 
-        public DefaultContentIndexingRobot()
-            : base(new TimeSpan(0, 0, 10, 0))
+        public DefaultContentIndexingRobot(int minutes)
+            : base(TimeSpan.FromMinutes(minutes))
         {
         }
 
@@ -29,7 +29,7 @@ namespace BetterCMS.Module.LuceneSearch.Workers
                 var scrapeService = lifetimeScope.Resolve<IScrapeService>();
                 var crawlerService = lifetimeScope.Resolve<IWebCrawlerService>();
 
-                var links = scrapeService.GetUnprocessedLinks();
+                var links = scrapeService.GetLinksForProcessing();
 
                 var pages = new List<PageData>();
 

@@ -5,6 +5,7 @@ using System.Threading;
 
 using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 
+using BetterCms;
 using BetterCms.Module.Search;
 using BetterCms.Module.Search.Models;
 
@@ -34,10 +35,12 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         private readonly Directory index;
 
-        private const string directory = "C:\\Lucene\\Test";
+        private readonly string directory;
 
-        public DefaultIndexerService()
+        public DefaultIndexerService(ICmsConfiguration configuration)
         {
+            directory = configuration.Search.GetValue(LuceneSearchConstants.LuceneSearchFileSystemDirectoryConfigurationKey);
+
             index = FSDirectory.Open(directory);
 
             analyzer = new StandardAnalyzer(Version.LUCENE_30);
@@ -98,7 +101,8 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
                                {
                                    FormattedUrl = d.Get("path"),
                                    Link = d.Get("path"),
-                                   Title = d.Get("title")
+                                   Title = d.Get("title"),
+                                   Snippet = d.Get("content").Substring(0, 200) + "..."
                                });
             }
             

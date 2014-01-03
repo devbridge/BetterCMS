@@ -2,6 +2,8 @@
 using System.Threading;
 using System.Web.Hosting;
 
+using BetterCms.Core;
+
 using Common.Logging;
 
 namespace BetterCMS.Module.LuceneSearch.Workers

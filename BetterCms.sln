@@ -43,7 +43,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Sandbox.DataMigra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Modules.Tests", "Tests\BetterCms.Modules.Tests\BetterCms.Modules.Tests.csproj", "{FDB66E62-C630-4055-B3FB-27DAF5B464BB}"
 	ProjectSection(ProjectDependencies) = postProject
-		{B935DD58-18EC-4340-B236-F1DAE4509CC8} = {B935DD58-18EC-4340-B236-F1DAE4509CC8}
 		{5255ABED-2111-497F-A94C-6AA89862D814} = {5255ABED-2111-497F-A94C-6AA89862D814}
 	EndProjectSection
 EndProject

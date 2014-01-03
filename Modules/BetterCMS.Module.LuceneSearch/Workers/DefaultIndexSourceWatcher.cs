@@ -10,8 +10,8 @@ namespace BetterCMS.Module.LuceneSearch.Workers
 {
     public class DefaultIndexSourceWatcher : WorkerBase
     {
-        public DefaultIndexSourceWatcher()
-            : base(new TimeSpan(0, 0, 30, 0))
+        public DefaultIndexSourceWatcher(int minutes)
+            : base(TimeSpan.FromMinutes(minutes))
         {
         }
 
