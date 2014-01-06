@@ -28,7 +28,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
                 .InSchema(SchemaName)
                 .WithCmsBaseColumns()
                 .WithColumn("SitemapId").AsGuid().NotNullable()
-                .WithColumn("ArchivedVersion").AsString(MaxLength.Max).Nullable();
+                .WithColumn("ArchivedVersion").AsString(MaxLength.Max).NotNullable();
 
             Create
                 .ForeignKey("FK_Cms_SitemapArchives_Cms_Sitemaps")

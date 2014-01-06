@@ -13,13 +13,6 @@ namespace BetterCms.Module.Pages.Services
     public interface ISitemapService
     {
         /// <summary>
-        /// Gets the node count.
-        /// </summary>
-        /// <param name="url">The URL.</param>
-        /// <returns>Node count.</returns>
-        int NodesWithUrl(string url);
-
-        /// <summary>
         /// Changes the URL.
         /// </summary>
         /// <param name="oldUrl">The old URL.</param>
@@ -74,5 +67,11 @@ namespace BetterCms.Module.Pages.Services
         /// <param name="sitemapId">The sitemap identifier.</param>
         /// <returns>Sitemap previous archived versions.</returns>
         IList<SitemapArchive> GetSitemapHistory(Guid sitemapId);
+
+        /// <summary>
+        /// Archives the sitemap.
+        /// </summary>
+        /// <param name="sitemapId">The sitemap identifier.</param>
+        void ArchiveSitemap(Guid sitemapId);
     }
 }

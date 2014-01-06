@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Script.Serialization;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Module.Pages.Command.History.GetSitemapHistory;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.ViewModels.Sitemap;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
@@ -30,23 +32,6 @@ namespace BetterCms.Module.Pages.Services
         public DefaultSitemapService(IRepository repository)
         {
             this.repository = repository;
-        }
-
-        /// <summary>
-        /// Gets the node count.
-        /// </summary>
-        /// <param name="url">The URL.</param>
-        /// <returns>Node count.</returns>
-        public int NodesWithUrl(string url)
-        {
-            url = (url ?? string.Empty).ToLower();
-
-            if (string.IsNullOrEmpty(url))
-            {
-                return 0;
-            }
-
-            return repository.AsQueryable<SitemapNode>(n => n.Url.ToLower() == url).Count();
         }
 
         /// <summary>
@@ -164,6 +149,24 @@ namespace BetterCms.Module.Pages.Services
         }
 
         /// <summary>
+        /// Deletes the node.
+        /// </summary>
+        /// <param name="node">The node.</param>
+        /// <param name="deletedNodes">The deleted nodes.</param>
+        public void DeleteNode(SitemapNode node, ref IList<SitemapNode> deletedNodes)
+        {
+            foreach (var childNode in node.ChildNodes)
+            {
+                DeleteNode(childNode, ref deletedNodes);
+            }
+
+            repository.Delete(node);
+            deletedNodes.Add(node);
+        }
+
+        #region History
+
+        /// <summary>
         /// Gets the sitemap history.
         /// </summary>
         /// <param name="sitemapId">The sitemap identifier.</param>
@@ -180,19 +183,64 @@ namespace BetterCms.Module.Pages.Services
         }
 
         /// <summary>
-        /// Deletes the node.
+        /// Archives the sitemap.
         /// </summary>
-        /// <param name="node">The node.</param>
-        /// <param name="deletedNodes">The deleted nodes.</param>
-        public void DeleteNode(SitemapNode node, ref IList<SitemapNode> deletedNodes)
+        /// <param name="sitemapId">The sitemap identifier.</param>
+        public void ArchiveSitemap(Guid sitemapId)
         {
-            foreach (var childNode in node.ChildNodes)
+            var sitemap = repository.AsQueryable<Sitemap>()
+                .Where(map => map.Id == sitemapId)
+                .FetchMany(map => map.Nodes)
+                .ThenFetch(node => node.Page)
+                .Distinct()
+                .ToList()
+                .First();
+
+            var archive = new SitemapArchive()
+                {
+                    Sitemap = sitemap,
+                    ArchivedVersion = ToJson(sitemap)
+                };
+
+            repository.Save(archive);
+        }
+
+        private string ToJson(Sitemap sitemap)
+        {
+            var map = new
+                    {
+                        Title = sitemap.Title,
+                        RootNodes = sitemap.Nodes != null
+                            ? GetSitemapNodesInHierarchy(sitemap.Nodes.Where(f => f.ParentNode == null).ToList(), sitemap.Nodes.ToList())
+                            : new List<dynamic>()
+                    };
+
+            var serializer = new JavaScriptSerializer();
+
+            var serialized = serializer.Serialize(map);
+
+            return serialized;
+        }
+
+        private static List<dynamic> GetSitemapNodesInHierarchy(IList<SitemapNode> sitemapNodes, IList<SitemapNode> allNodes)
+        {
+            var nodeList = new List<dynamic>();
+
+            foreach (var node in sitemapNodes)
             {
-                DeleteNode(childNode, ref deletedNodes);
+                nodeList.Add(new 
+                {
+                    Title = node.Title,
+                    Url = node.Page != null ? node.Page.PageUrl : node.Url,
+                    PageId = node.Page != null ? node.Page.Id : Guid.Empty,
+                    DisplayOrder = node.DisplayOrder,
+                    ChildNodes = GetSitemapNodesInHierarchy(allNodes.Where(f => f.ParentNode == node).ToList(), allNodes)
+                });
             }
 
-            repository.Delete(node);
-            deletedNodes.Add(node);
+            return nodeList.OrderBy(n => n.DisplayOrder).ToList();
         }
+
+        #endregion
     }
 }

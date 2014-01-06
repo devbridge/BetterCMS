@@ -87,6 +87,11 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
 
             UnitOfWork.BeginTransaction();
 
+            if (!createNew)
+            {
+                SitemapService.ArchiveSitemap(request.Id);
+            }
+
             if (CmsConfiguration.Security.AccessControlEnabled)
             {
                 sitemap.AccessRules.RemoveDuplicateEntities();

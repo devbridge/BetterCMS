@@ -134,6 +134,7 @@
     <Compile Include="Pages\CommandTests\PageTests\CreatePageCommandTest.cs" />
     <Compile Include="Pages\CommandTests\PageTests\GetPagesListCommandTest.cs" />
     <Compile Include="Pages\ModelTests\MapTests\SitemapMapTest.cs" />
+    <Compile Include="Pages\ServiceTests\SitemapServiceTests.cs" />
     <Compile Include="Pages\ServiceTests\UrlServiceTests.cs" />
     <Compile Include="Root\AccessControl\AccessControlServiceTests.cs" />
     <Compile Include="Root\HelperTests\PageHtmlRendererTests.cs" />
