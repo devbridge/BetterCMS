@@ -21,7 +21,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
 
         private readonly int scrapeLimit;
 
-        private readonly int pageExpireTimout;
+        private readonly int pageExpireTimeout;
 
         private readonly int failedPageTimeout;
 
@@ -36,10 +36,10 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
                 scrapeLimit = 1000;
             }
 
-            if (!int.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.PageExpireTimeoutConfigurationKey), out pageExpireTimout)
-                || pageExpireTimout < 0)
+            if (!int.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.PageExpireTimeoutConfigurationKey), out pageExpireTimeout)
+                || pageExpireTimeout < 0)
             {
-                pageExpireTimout = 10;
+                pageExpireTimeout = 10;
             }
 
             if (!int.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.FailedPageReindexingTimeoutConfigurationKey), out failedPageTimeout)
@@ -136,7 +136,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
         private IList<IndexSource> GetExpiredLinks(int limit)
         {
             IndexSource indexSourceAlias = null;
-            var endDate = DateTime.Now.AddMinutes(pageExpireTimout * -1);
+            var endDate = DateTime.Now.AddMinutes(pageExpireTimeout * -1);
 
             var expiredUrls =
                 Repository.AsQueryOver(() => indexSourceAlias)

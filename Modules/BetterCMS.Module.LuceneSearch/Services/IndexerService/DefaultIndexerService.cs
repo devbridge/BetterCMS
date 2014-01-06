@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -17,9 +18,9 @@ using Lucene.Net.Index;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
 using Lucene.Net.Store;
-using Lucene.Net.Util;
 
 using Directory = Lucene.Net.Store.Directory;
+using Version = Lucene.Net.Util.Version;
 
 namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 {
@@ -40,10 +41,22 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
         public DefaultIndexerService(ICmsConfiguration configuration)
         {
             directory = configuration.Search.GetValue(LuceneSearchConstants.LuceneSearchFileSystemDirectoryConfigurationKey);
-
             index = FSDirectory.Open(directory);
 
-            analyzer = new StandardAnalyzer(Version.LUCENE_30);
+            bool excludeStopWordsFromIndexing;
+            if (!bool.TryParse(configuration.Search.GetValue(LuceneSearchConstants.ExcludeStopWordsConfigurationKey), out excludeStopWordsFromIndexing))
+            {
+                excludeStopWordsFromIndexing = false;
+            }
+            if (excludeStopWordsFromIndexing)
+            {
+                analyzer = new StandardAnalyzer(Version.LUCENE_30);
+            }
+            else
+            {
+                analyzer = new StandardAnalyzer(Version.LUCENE_30, new HashSet<string>());   
+            }
+            
             parser = new QueryParser(Version.LUCENE_30, "content", analyzer);
             
             if (!IndexReader.IndexExists(index))
@@ -102,7 +115,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
                                    FormattedUrl = d.Get("path"),
                                    Link = d.Get("path"),
                                    Title = d.Get("title"),
-                                   Snippet = d.Get("content").Substring(0, 200) + "..."
+                                   Snippet = GetSnippet(d.Get("content"), searchString)
                                });
             }
             
@@ -144,6 +157,110 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
         {
             writer.Optimize();
             writer.Dispose();
+        }
+
+        private static string GetSnippet(string text, string fullSearchString)
+        {
+            const int beforeStart = 100;
+            const int afterEnd = 100;
+
+            if (text.Length <= afterEnd + beforeStart)
+            {
+                return text;
+            }
+
+            var searchString = fullSearchString.Trim().Split(' ')[0].Trim('\'').Trim('"');
+            var index = text.IndexOf(searchString, StringComparison.InvariantCulture);
+            var textLength = text.Length;
+
+            var takeFromEnd = (index + afterEnd < textLength) ? 0 : afterEnd - (textLength - index); 
+            var startFrom = index - beforeStart - takeFromEnd;
+            var addToEnd = 0;
+            if (startFrom < 0)
+            {
+                startFrom = 0;
+            }
+            if (startFrom < beforeStart)
+            {
+                addToEnd = beforeStart - startFrom;
+            }
+
+            var endWith = index + afterEnd + addToEnd;
+            if (endWith > textLength)
+            {
+                endWith = textLength;
+            }
+
+            if (startFrom > 0)
+            {
+                var spaceIndex = text.LastIndexOf(" ", startFrom, StringComparison.InvariantCulture);
+                if (spaceIndex > 0)
+                {
+                    startFrom = spaceIndex;
+                }
+            }
+            if (endWith < textLength)
+            {
+                var spaceIndex = text.IndexOf(" ", endWith, StringComparison.InvariantCulture);
+                if (spaceIndex > 0)
+                {
+                    endWith = spaceIndex;
+                }
+            }
+
+            var snippet = text.Substring(startFrom, endWith - startFrom);
+
+            if (startFrom > 0)
+            {
+                snippet = string.Concat("...", snippet);
+            }
+            if (endWith < textLength)
+            {
+                snippet = string.Concat(snippet, "...");
+            }
+            
+            return snippet;
+
+            /*var searchString = fullSearchString.Trim().Split(' ')[0].Trim('\'').Trim('"');
+            var index = text.IndexOf(searchString, StringComparison.InvariantCulture);
+            bool addPrefix = false, addSuffix = false;
+
+            if (beforeStart < index)
+            {
+                start = text.LastIndexOf(" ", index - beforeStart, StringComparison.InvariantCulture);
+                if (start < 0)
+                {
+                    start = 0;
+                }
+                addPrefix = true;
+            }
+
+            if (index + afterEnd < text.Length)
+            {
+                var end = text.IndexOf(" ", index + afterEnd, StringComparison.InvariantCulture);
+                if (end < 0)
+                {
+                    end = index + afterEnd;
+                }
+                else
+                {
+                    end++;
+                }
+                length = end - start;
+                addSuffix = true;
+            }
+
+            var textLength = text.Length;
+            var snippet = text.Substring(start, textLength - start < length ? textLength - start : length);
+            if (addPrefix)
+            {
+                snippet = string.Concat("...", snippet);
+            }
+            if (addSuffix)
+            {
+                snippet = string.Concat(snippet, "...");
+            }
+            return snippet;*/
         }
     }
 }

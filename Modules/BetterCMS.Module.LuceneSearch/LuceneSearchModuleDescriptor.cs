@@ -19,8 +19,6 @@ namespace BetterCms.Module.LuceneSearch
     {
         internal const string ModuleName = "lucene";        
 
-        internal static readonly string HostUrl = "http://bettercms.sandbox.mvc4.local/";
-
         private static List<IWorker> workers = new List<IWorker>();
 
         /// <summary>
