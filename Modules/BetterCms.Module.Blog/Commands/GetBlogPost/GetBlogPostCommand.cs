@@ -103,8 +103,8 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                                     BlogUrl = bp.PageUrl,
                                     UseCanonicalUrl = bp.UseCanonicalUrl,
                                     IntroText = bp.Description,
-                                    AuthorId = bp.Author.Id,
-                                    CategoryId = bp.Category.Id,
+                                    AuthorId = bp.Author != null ? bp.Author.Id : (Guid?)null,
+                                    CategoryId = bp.Category != null ? bp.Category.Id : (Guid?)null,
                                     EnableInsertDynamicRegion = bp.IsMasterPage,
                                     Image = bp.Image == null || bp.Image.IsDeleted ? null :
                                         new ImageSelectorViewModel
@@ -131,8 +131,7 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                     }
 
                     var pageContentId = Repository.AsQueryable<PageContent>()
-                        .Where(pageContent => pageContent.Page.Id == id && !pageContent.Page.IsDeleted)
-                        .OrderBy(pageContent => pageContent.CreatedOn)
+                        .Where(pageContent => pageContent.Page.Id == id && !pageContent.Page.IsDeleted && pageContent.Content is BlogPostContent)
                         .Select(pageContent => pageContent.Id)
                         .FirstOrDefault();
 

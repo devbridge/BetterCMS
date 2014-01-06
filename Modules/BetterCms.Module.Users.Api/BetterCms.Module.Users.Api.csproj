@@ -152,6 +152,14 @@
       <Project>{f3e41793-e8ed-4ba8-a1ab-cba1e47b0786}</Project>
       <Name>BetterCms.Module.MediaManager</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BetterCms.Module.Pages\BetterCms.Module.Pages.csproj">
+      <Project>{fc04d4c2-8688-498f-b546-292c7e3688a9}</Project>
+      <Name>BetterCms.Module.Pages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BetterCms.Module.Root\BetterCms.Module.Root.csproj">
+      <Project>{66e7e4df-eeea-4b1e-8663-a1b430eb7375}</Project>
+      <Name>BetterCms.Module.Root</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BetterCms.Module.Users\BetterCms.Module.Users.csproj">
       <Project>{c530025b-8ab7-402d-b60c-000c9a5d0446}</Project>
       <Name>BetterCms.Module.Users</Name>

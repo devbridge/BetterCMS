@@ -133,13 +133,17 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             var rectangle = $(this),
                 contentViewModel = rectangle.data('target'),
                 width = contentViewModel.width + 'px',
-                height = contentViewModel.height + 'px',
+                height = contentViewModel.height,
                 top = contentViewModel.top + 'px',
                 left = contentViewModel.left + 'px';
 
+            if (height < 20) {
+                height = 20;
+            }
+
             rectangle.css({
                 'width': width,
-                'height': height,
+                'height': height + 'px',
                 'top': top,
                 'left': left,
                 'opacity': 0

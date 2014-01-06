@@ -6,6 +6,7 @@ using BetterCms.Core.DataContracts.Enums;
 
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Infrastructure.Enums;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Pages.Models;
 
@@ -42,9 +43,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
                 query = query.Where(b => b.Status == PageStatus.Published);
             }
 
-            query = query.ApplyTagsFilter(
-                request.Data,
-                tagName => { return b => b.PageTags.Any(pageTag => pageTag.Tag.Name == tagName && !pageTag.IsDeleted && !pageTag.Tag.IsDeleted); });
+            query = query.ApplyPageTagsFilter(request.Data);
 
             var listResponse = query
                 .Select(blogPost => new BlogPostModel

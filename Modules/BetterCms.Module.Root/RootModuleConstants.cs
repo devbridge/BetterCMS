@@ -46,6 +46,11 @@
         public const string EditableGridTopBlockTemplate = "~/Areas/bcms-root/Views/Shared/EditableGrid/Partial/TopBlock.cshtml";
         
         /// <summary>
+        /// The editable grid top block add item template.
+        /// </summary>
+        public const string EditableGridTopBlockAddItemTemplate = "~/Areas/bcms-root/Views/Shared/EditableGrid/Partial/TopBlockAddItem.cshtml";
+        
+        /// <summary>
         /// The editable grid paging template.
         /// </summary>
         public const string EditableGridPagingTemplate = "~/Areas/bcms-root/Views/Shared/Partial/Paging.cshtml";

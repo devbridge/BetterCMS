@@ -100,8 +100,8 @@ a.cke_dialog_tab {
     color: #000;
     border: 1px solid #c6c6c6;
     background: #e5e5e5;
-    transition: all 0.1s ease-in-out;
     -webkit-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
 }
 
 .cke_rtl a.cke_dialog_tab {
@@ -285,9 +285,8 @@ a.cke_dialog_ui_button_ok {
     color: #fff;
     border: 1px solid #24597e;
     background: #1890E6;
-    background: linear-gradient(to bottom, #1890E6 0, #0D7BC9 100%);
-    background: -moz-linear-gradient(top, #1890E6 0, #0D7BC9 100%);
     background: -webkit-linear-gradient(top, #1890E6 0, #0D7BC9 100%);
+    background: linear-gradient(to bottom, #1890E6 0, #0D7BC9 100%);
 }
 
     a.cke_dialog_ui_button_ok:hover {

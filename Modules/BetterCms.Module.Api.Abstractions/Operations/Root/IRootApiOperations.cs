@@ -1,5 +1,7 @@
 ﻿using BetterCms.Module.Api.Operations.Root.Categories;
 using BetterCms.Module.Api.Operations.Root.Categories.Category;
+using BetterCms.Module.Api.Operations.Root.Languages;
+using BetterCms.Module.Api.Operations.Root.Languages.Language;
 using BetterCms.Module.Api.Operations.Root.Layouts;
 using BetterCms.Module.Api.Operations.Root.Layouts.Layout;
 using BetterCms.Module.Api.Operations.Root.Tags;
@@ -21,6 +23,10 @@ namespace BetterCms.Module.Api.Operations.Root
         ICategoriesService Categories { get; }
 
         ICategoryService Category { get; }
+        
+        ILanguagesService Languages { get; }
+
+        ILanguageService Language { get; }
 
         IVersionService Version { get; }
     }

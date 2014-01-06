@@ -18,9 +18,11 @@ namespace BetterCms.Module.Root.Models.Maps
             Map(x => x.MetaKeywords).Length(MaxLength.Max);
             Map(x => x.MetaDescription).Length(MaxLength.Max);
             Map(x => x.IsMasterPage).Not.Nullable();
+            Map(x => x.LanguageGroupIdentifier).Nullable();
 
             References(x => x.Layout).Nullable().Cascade.SaveUpdate().LazyLoad();
             References(x => x.MasterPage).Nullable().Cascade.SaveUpdate().LazyLoad();
+            References(x => x.Language).Nullable().Cascade.SaveUpdate().LazyLoad();
             
             HasMany(x => x.PageContents).Inverse().Cascade.SaveUpdate().LazyLoad().Where("IsDeleted = 0");
             HasMany(x => x.Options).KeyColumn("PageId").Cascade.SaveUpdate().Inverse().LazyLoad().Where("IsDeleted = 0");

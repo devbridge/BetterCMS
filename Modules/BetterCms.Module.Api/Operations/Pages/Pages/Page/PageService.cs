@@ -9,6 +9,8 @@ using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Exists;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties;
+using BetterCms.Module.Api.Operations.Pages.Pages.Page.Translations;
+
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Mvc.Helpers;
@@ -26,6 +28,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
         private readonly IPageContentsService pageContentsService;
 
         private readonly IPageContentService pageContentService;
+        
+        private readonly IPageTranslationsService pageTranslationsService;
 
         private readonly IRepository repository;
 
@@ -34,7 +38,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
         private readonly IMediaFileUrlResolver fileUrlResolver;
 
         public PageService(IRepository repository, IPagePropertiesService pagePropertiesService, IPageExistsService pageExistsService, 
-            IPageContentsService pageContentsService, IPageContentService pageContentService, IUrlService urlService, IMediaFileUrlResolver fileUrlResolver)
+            IPageContentsService pageContentsService, IPageContentService pageContentService, IUrlService urlService, IMediaFileUrlResolver fileUrlResolver,
+            IPageTranslationsService pageTranslationsService)
         {
             this.pageContentsService = pageContentsService;
             this.pageContentService = pageContentService;
@@ -43,6 +48,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
             this.repository = repository;
             this.urlService = urlService;
             this.fileUrlResolver = fileUrlResolver;
+            this.pageTranslationsService = pageTranslationsService;
         }
 
         public GetPageResponse Get(GetPageRequest request)
@@ -82,7 +88,10 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
                         MainImageThumbnauilUrl = page.Image != null && !page.Image.IsDeleted ? page.Image.PublicThumbnailUrl : null,
                         MainImageCaption = page.Image != null && !page.Image.IsDeleted ? page.Image.Caption : null,
                         IsArchived = page.IsArchived,
-                        IsMasterPage = page.IsMasterPage
+                        IsMasterPage = page.IsMasterPage,
+                        LanguageId = page.Language != null ? page.Language.Id : (Guid?)null,
+                        LanguageCode = page.Language != null ? page.Language.Code : null,
+                        LanguageGroupIdentifier = page.LanguageGroupIdentifier
                     })
                 .FirstOne();
 
@@ -118,6 +127,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
             get
             {
                 return pageContentService;
+            }
+        }
+
+        IPageTranslationsService IPageService.Translations
+        {
+            get
+            {
+                return pageTranslationsService;
             }
         }
     }

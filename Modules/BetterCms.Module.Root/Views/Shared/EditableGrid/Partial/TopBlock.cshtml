@@ -10,7 +10,7 @@
 
     @if (Model.CanAddNewItems)
     {
-        <div class="bcms-btn-links-main" data-bind="click: addNewItem">@Model.AddNewTitle</div>
+        @Html.Partial(Model.TopBlockAddItemView, Model)
     }
     
     @if (Model.ShowSearch)

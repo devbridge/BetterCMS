@@ -9,14 +9,18 @@ using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Command.Layout.GetLayoutOptions;
 using BetterCms.Module.Pages.Command.Page.AddNewPage;
 using BetterCms.Module.Pages.Command.Page.ClonePage;
+using BetterCms.Module.Pages.Command.Page.ClonePageWithLanguage;
 using BetterCms.Module.Pages.Command.Page.CreatePage;
 using BetterCms.Module.Pages.Command.Page.DeletePage;
 using BetterCms.Module.Pages.Command.Page.GetPageForCloning;
+using BetterCms.Module.Pages.Command.Page.GetPageForCloningWithLanguage;
 using BetterCms.Module.Pages.Command.Page.GetPageForDelete;
 using BetterCms.Module.Pages.Command.Page.GetPageProperties;
 using BetterCms.Module.Pages.Command.Page.GetPagesList;
+using BetterCms.Module.Pages.Command.Page.GetUntranslatedPagesList;
 using BetterCms.Module.Pages.Command.Page.SavePageProperties;
 using BetterCms.Module.Pages.Command.Page.SavePagePublishStatus;
+using BetterCms.Module.Pages.Command.Page.SuggestPages;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Filter;
@@ -67,6 +71,29 @@ namespace BetterCms.Module.Pages.Controllers
             var success = model != null;
 
             var view = RenderView("Pages", model);
+            var json = new
+            {
+                Tags = request.Tags,
+                IncludeArchived = request.IncludeArchived,
+                IncludeMasterPages = request.IncludeMasterPages
+            };
+
+            return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Opens dialog for selecting the page.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>Rendered pages list</returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.DeleteContent)]
+        public ActionResult SelectPage(PagesFilter request)
+        {
+            request.SetDefaultPaging();
+            var model = GetCommand<GetPagesListCommand>().ExecuteCommand(request);
+            var success = model != null;
+
+            var view = RenderView("SelectPage", model);
             var json = new
             {
                 Tags = request.Tags,
@@ -137,8 +164,7 @@ namespace BetterCms.Module.Pages.Controllers
             var success = model != null;
 
             var view = RenderView("EditPageProperties", model);
-            var json = new
-                           {
+            var json = new {
                                Tags = success ? model.Tags : null,
                                Image = success ? model.Image : new ImageSelectorViewModel(),
                                SecondaryImage = success ? model.SecondaryImage : new ImageSelectorViewModel(),
@@ -146,7 +172,11 @@ namespace BetterCms.Module.Pages.Controllers
                                OptionValues = success ? model.OptionValues : null,
                                CustomOptions = success ? model.CustomOptions : null,
                                UserAccessList = success ? model.UserAccessList : new List<UserAccessViewModel>(),
-                               IsMasterPage = success && model.IsMasterPage
+                               IsMasterPage = success && model.IsMasterPage,
+                               Languages = success ? model.Languages : null,
+                               LanguageId = success ? model.LanguageId : null,
+                               Translations = success ? model.Translations : null,
+                               ShowTranslationsTab = success && model.ShowTranslationsTab
                            };
 
             return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);
@@ -231,6 +261,39 @@ namespace BetterCms.Module.Pages.Controllers
         }
 
         /// <summary>
+        /// Clones the page with language id.
+        /// </summary>
+        /// <param name="pageId">The page id.</param>
+        /// <returns>
+        /// Json result status.
+        /// </returns>
+        [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
+        public ActionResult ClonePageWithLanguage(string pageId)
+        {
+            var request = new GetPageForCloningWithLanguageCommandRequest
+                              {
+                                  PageId = pageId.ToGuidOrDefault()
+                              };
+            var model = GetCommand<GetPageForCloningWithLanguageCommand>().ExecuteCommand(request);
+            if (model != null && model.Languages.Count == 0)
+            {
+                if (model.ShowWarningAboutNoCultures)
+                {
+                    Messages.AddInfo(PagesGlobalization.ClonePageWithLanguage_NoLanguagesCreated_Message);
+                }
+                else
+                {
+                    Messages.AddInfo(PagesGlobalization.ClonePageWithLanguage_PageHasAllTranslations_Message);
+                }
+            }
+
+            var view = RenderView("ClonePageWithLanguage", model ?? new ClonePageWithLanguageViewModel());
+
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
         /// Clones the page.
         /// </summary>
         /// <param name="model">The model.</param>
@@ -242,6 +305,27 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult ClonePage(ClonePageViewModel model)
         {
             model = GetCommand<ClonePageCommand>().ExecuteCommand(model);
+            if (model != null)
+            {
+                Messages.AddSuccess(string.Format(PagesGlobalization.ClonePage_Dialog_Success, model.PageUrl));
+                return Json(new WireJson { Success = true, Data = model });
+            }
+
+            return Json(new WireJson { Success = false });
+        }
+        
+        /// <summary>
+        /// Clones the page with language.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>
+        /// Json result status.
+        /// </returns>
+        [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
+        public ActionResult ClonePageWithLanguage(ClonePageWithLanguageViewModel model)
+        {
+            model = GetCommand<ClonePageWithLanguageCommand>().ExecuteCommand(model);
             if (model != null)
             {
                 Messages.AddSuccess(string.Format(PagesGlobalization.ClonePage_Dialog_Success, model.PageUrl));
@@ -311,7 +395,47 @@ namespace BetterCms.Module.Pages.Controllers
                 Id = id.ToGuidOrDefault(),
                 IsMasterPage = isMasterPage.ToBoolOrDefault()
             });
+
             return WireJson(model != null, model, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Suggests untranslated pages.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>Suggested untranslated pages list</returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
+        public ActionResult SuggestUntranslatedPages(PageSuggestionViewModel model)
+        {
+            model.OnlyUntranslatedPages = true;
+            var suggestedPages = GetCommand<SuggestPagesCommand>().ExecuteCommand(model);
+
+            return Json(new { suggestions = suggestedPages });
+        }
+
+        /// <summary>
+        /// Searches within untranslated pages.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        /// Search result with untranslated pages list
+        /// </returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
+        public ActionResult SearchUntranslatedPages(UntranslatedPagesFilter request)
+        {
+            request.SetDefaultPaging();
+            var model = GetCommand<GetUntranslatedPagesListCommand>().ExecuteCommand(request);
+            var success = model != null;
+
+            var view = RenderView("SearchUntranslatedPages", model);
+            var json = new
+            {
+                Tags = request.Tags,
+                IncludeArchived = request.IncludeArchived,
+                IncludeMasterPages = request.IncludeMasterPages
+            };
+
+            return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);
         }
     }
 }

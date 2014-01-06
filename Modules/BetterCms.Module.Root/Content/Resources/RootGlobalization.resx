@@ -540,4 +540,43 @@
   <data name="Message_NoItemToSelect" xml:space="preserve">
     <value>No item to select.</value>
   </data>
+  <data name="SiteSettings_LanguagesMenuItem" xml:space="preserve">
+    <value>Languages</value>
+  </data>
+  <data name="CreateLanguage_CreatedSuccessfully_Message" xml:space="preserve">
+    <value>Language created successfully</value>
+  </data>
+  <data name="DeleteLanguage_Confirmation_Message" xml:space="preserve">
+    <value>Are you sure you want to delete the language {0}?</value>
+  </data>
+  <data name="DeleteLanguage_DeletedSuccessfully_Message" xml:space="preserve">
+    <value>Language deleted successfully</value>
+  </data>
+  <data name="SaveLanguageCommand_CodeAlreadyExists_Message" xml:space="preserve">
+    <value>Language with code {0} already exists.</value>
+  </data>
+  <data name="SaveLanguageCommand_NameAlreadyExists_Message" xml:space="preserve">
+    <value>Language with name {0} already exists.</value>
+  </data>
+  <data name="SiteSettings_Languages_Code_Title" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="SiteSettings_Languages_Name_Title" xml:space="preserve">
+    <value>Custom name</value>
+  </data>
+  <data name="SiteSettings_Languages_Title" xml:space="preserve">
+    <value>Languages</value>
+  </data>
+  <data name="Button_Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="SaveLanguageCommand_LanguageNotExists_Message" xml:space="preserve">
+    <value>Language {0} doesn't exist.</value>
+  </data>
+  <data name="DeleteLanguageCommand_PagesAreUsingLanguage_Message" xml:space="preserve">
+    <value>Cannot delete language {0}, because it's used in pages.</value>
+  </data>
+  <data name="InvariantLanguage_Title" xml:space="preserve">
+    <value>Default language</value>
+  </data>
 </root>

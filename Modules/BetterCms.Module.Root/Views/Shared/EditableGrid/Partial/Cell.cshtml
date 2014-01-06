@@ -1,4 +1,5 @@
-﻿@model BetterCms.Module.Root.Mvc.Grids.EditableGridColumn
+﻿@using BetterCms.Module.Root.Mvc.Grids
+@model EditableGridColumn
 
 <td @Html.Raw(Model.Attributes)>
     <div class="bcms-input-box">
@@ -19,7 +20,8 @@
                 escPress: onCancelEdit, 
                 afterRender: initInput($element, @Model.ValueBind),
                 event: {blur: onBlurField, focus: onStopEvent, click: onStopEvent}
-                @(Model.AutoFocus ? ", hasfocus: isActive() && hasFocus" : "") " />
+                @(!string.IsNullOrWhiteSpace(Model.CustomBinding) ? string.Format(", {0}", Model.CustomBinding) : string.Empty)
+                @(Model.AutoFocus ? ", hasfocus: isActive() && hasFocus" : string.Empty) " />
             <!-- ko if: !isNew() &&  @(Model.ValueBind).hasError && @(Model.ValueBind).hasError() -->
             <span class="bcms-field-validation-error">
                 <span data-bind="html: @(Model.ValueBind).validationMessage()"></span>

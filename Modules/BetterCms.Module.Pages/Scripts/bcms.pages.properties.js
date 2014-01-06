@@ -2,8 +2,8 @@
 /*global bettercms */
 
 bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.dynamicContent', 'bcms.tags', 'bcms.ko.extenders',
-        'bcms.media', 'bcms.redirect', 'bcms.options', 'bcms.security', 'bcms.messages', 'bcms.codeEditor'],
-    function ($, bcms, modal, forms, dynamicContent, tags, ko, media, redirect, options, security, messages, codeEditor) {
+        'bcms.media', 'bcms.redirect', 'bcms.options', 'bcms.security', 'bcms.messages', 'bcms.codeEditor', 'bcms.pages.languages'],
+    function ($, bcms, modal, forms, dynamicContent, tags, ko, media, redirect, options, security, messages, codeEditor, pageLanguages) {
         'use strict';
 
         var page = {},
@@ -31,6 +31,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 pagePropertiesPageIsMasterCheckbox: '#IsMasterPage',
 
                 optionsTab: '#bcms-tab-4',
+                translationsTabContent: '#bcms-tab-5 .bcms-padded-content',
                 javascriptCssTabOpener: '.bcms-tab[data-name="#bcms-tab-2"]'
             },
             links = {
@@ -64,7 +65,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         /**
         * Page view model
         */
-        function PageViewModel(image, secondaryImage, featuredImage, tagsViewModel, optionListViewModel, accessControlViewModel) {
+        function PageViewModel(image, secondaryImage, featuredImage, tagsViewModel, optionListViewModel, accessControlViewModel, translationsViewModel) {
             var self = this;
 
             self.tags = tagsViewModel;
@@ -73,6 +74,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             self.secondaryImage = ko.observable(new media.ImageSelectorViewModel(secondaryImage));
             self.featuredImage = ko.observable(new media.ImageSelectorViewModel(featuredImage));
             self.accessControl = accessControlViewModel;
+            self.translations = translationsViewModel;
         }
 
         /**
@@ -83,7 +85,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 optionListViewModel = options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues, content.Data.CustomOptions),
                 tagsViewModel = new tags.TagsListViewModel(content.Data.Tags),
                 accessControlViewModel = security.createUserAccessViewModel(content.Data.UserAccessList),
-                pageViewModel = new PageViewModel(content.Data.Image, content.Data.SecondaryImage, content.Data.FeaturedImage, tagsViewModel, optionListViewModel, accessControlViewModel),
+                translationsViewModel = content.Data.Languages ? new pageLanguages.PageTranslationsListViewModel(content.Data.Translations, content.Data.Languages, content.Data.LanguageId) : null,
+                pageViewModel = new PageViewModel(content.Data.Image, content.Data.SecondaryImage, content.Data.FeaturedImage, tagsViewModel, optionListViewModel, accessControlViewModel, translationsViewModel),
                 form = dialog.container.find(selectors.pagePropertiesForm);
 
             ko.applyBindings(pageViewModel, form.get(0));
@@ -165,6 +168,11 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 }, 20);
             });
             
+            // Translations tab
+            if (content.Data.ShowTranslationsTab && (!content.Data.Languages || content.Data.Languages.length == 0)) {
+                dialog.container.find(selectors.translationsTabContent).addClass(classes.inactive);
+            }
+
             return pageViewModel;
         };
 
@@ -344,7 +352,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         /**
         * Opens modal window for given page with page properties
         */
-        page.openEditPageDialog = function (id, postSuccess, title) {
+        page.openEditPageDialog = function (id, postSuccess, title, onLoad) {
             var pageViewModel,
                 canEdit = security.IsAuthorized(["BcmsEditContent"]),
                 canEditMaster = security.IsAuthorized(["BcmsAdministration"]),
@@ -378,6 +386,10 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                             pageViewModel = page.initEditPagePropertiesDialogEvents(childDialog, content);
                             if (content.Data && content.Data.IsMasterPage === true) {
                                 childDialog.setTitle(globalization.editMasterPagePropertiesModalTitle);
+                            }
+                            
+                            if ($.isFunction(onLoad)) {
+                                onLoad(childDialog, content);
                             }
                         },
 
@@ -433,13 +445,13 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
         /**
         * Opens modal window for current page with page properties
         */
-        page.editPageProperties = function () {
+        page.editPageProperties = function (onLoad) {
             page.openEditPageDialog(bcms.pageId, function (data) {
                 // Redirect
                 if (data.Data && data.Data.PageUrl) {
                     redirect.RedirectWithAlert(data.Data.PageUrl);
                 }
-            }, globalization.editPagePropertiesModalTitle);
+            }, globalization.editPagePropertiesModalTitle, onLoad);
         };
         
         /**

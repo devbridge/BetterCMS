@@ -130,6 +130,11 @@
     <Compile Include="Command\Layout\GetLayoutOptions\GetLayoutOptionsCommandRequest.cs" />
     <Compile Include="Command\Page\AddNewPage\AddNewPageCommand.cs" />
     <Compile Include="Command\Page\AddNewPage\AddNewPageCommandRequest.cs" />
+    <Compile Include="Command\Page\ClonePageWithLanguage\ClonePageWithLanguageCommand.cs" />
+    <Compile Include="Command\Page\GetPageForCloningWithLanguage\GetPageForCloningWithLanguageCommandRequest.cs" />
+    <Compile Include="Command\Page\GetPageForCloningWithLanguage\GetPageForCloningWithLanguageCommand.cs" />
+    <Compile Include="Command\Page\GetUntranslatedPagesList\GetUntranslatedPagesListCommand.cs" />
+    <Compile Include="Command\Page\SuggestPages\SuggestPagesCommand.cs" />
     <Compile Include="Command\Sitemap\DeleteSitemap\DeleteSitemapCommand.cs" />
     <Compile Include="Command\Sitemap\GetSitemapsForNewPage\GetSitemapsForNewPageCommand.cs" />
     <Compile Include="Command\Sitemap\GetSitemapsList\GetSitemapsListCommand.cs" />
@@ -271,6 +276,7 @@
     <Compile Include="Accessors\HtmlContentWidgetAccessor.cs" />
     <Compile Include="Accessors\HtmlContentAccessor.cs" />
     <Compile Include="Accessors\ServerControlWidgetAccessor.cs" />
+    <Compile Include="Registration\PagesLanguagesJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\MasterPagesJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\HistoryJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\SitemapJsModuleIncludeDescriptor.cs" />
@@ -280,6 +286,7 @@
     <Compile Include="Services\DefaultHistoryService.cs" />
     <Compile Include="Services\DefaultLayoutService.cs" />
     <Compile Include="Services\DefaultMasterPageService.cs" />
+    <Compile Include="Services\DefaultPageCloneService.cs" />
     <Compile Include="Services\DefaultPreviewService.cs" />
     <Compile Include="Services\DefaultSitemapService.cs" />
     <Compile Include="Services\DefaultTagService.cs" />
@@ -287,6 +294,7 @@
     <Compile Include="Services\IHistoryService.cs" />
     <Compile Include="Services\ILayoutService.cs" />
     <Compile Include="Services\IMasterPageService.cs" />
+    <Compile Include="Services\IPageCloneService.cs" />
     <Compile Include="Services\IPageService.cs" />
     <Compile Include="Services\IPreviewService.cs" />
     <Compile Include="Services\ISitemapService.cs" />
@@ -305,8 +313,14 @@
     <Compile Include="ViewModels\Filter\SitemapsGridViewModel.cs" />
     <Compile Include="ViewModels\Filter\PagesGridViewModel.cs" />
     <Compile Include="ViewModels\Filter\PagesFilter.cs" />
+    <Compile Include="ViewModels\Filter\UntranslatedPagesFilter.cs" />
+    <Compile Include="ViewModels\Filter\UntranslatedPagesGridViewModel.cs" />
     <Compile Include="ViewModels\History\ContentHistoryItem.cs" />
     <Compile Include="ViewModels\History\ContentHistoryViewModel.cs" />
+    <Compile Include="ViewModels\Page\ClonePageWithLanguageViewModel.cs" />
+    <Compile Include="ViewModels\Page\PageLookupKeyValue.cs" />
+    <Compile Include="ViewModels\Page\PageSuggestionViewModel.cs" />
+    <Compile Include="ViewModels\Page\PageTranslationViewModel.cs" />
     <Compile Include="ViewModels\History\SitemapHistoryItem.cs" />
     <Compile Include="ViewModels\History\SitemapHistoryViewModel.cs" />
     <Compile Include="ViewModels\Page\RenderPageCategoryViewModel.cs" />
@@ -410,6 +424,7 @@
     <EmbeddedResource Include="Scripts\bcms.pages.properties.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.masterpage.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.languages.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -441,33 +456,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\History\ContentVersion.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Page\AddNewPage.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Page\ClonePage.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Page\DeletePageConfirmation.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Page\EditPageProperties.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Page\Partial\AddNewPageEditPermalink.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Page\Partial\ClonePageEditUrl.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Page\Partial\PagePropertiesEditPermalink.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Page\Partial\Template.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Page\Partial\TemplatesList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Redirect\Redirects.cshtml" />
@@ -527,9 +515,6 @@
     <EmbeddedResource Include="Views\Filter\PagesFilterTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\Pages.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Option\EditOptions.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -546,6 +531,51 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Shared\Partial\InfoMessageAboutMasterPage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\AddNewPage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\ClonePage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\ClonePageWithLanguage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\DeletePageConfirmation.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\EditPageProperties.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\Pages.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\Partial\AddNewPageEditPermalink.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\Partial\ClonePageEditUrl.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\Partial\PagePropertiesEditPermalink.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\Partial\Template.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\Partial\TemplatesList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\Partial\TranslationsGrid.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\SelectPage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\Partial\SiteSettingsPagesList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\SearchUntranslatedPages.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Sitemap\Sitemaps.cshtml" />

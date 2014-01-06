@@ -27,7 +27,7 @@ namespace BetterCms.Module.Root.Commands.Tag.SearchTags
 
             if (model.ExistingItemsArray.Length > 0)
             {
-                query = query.Where(tag => !model.ExistingItems.Contains(tag.Name));
+                query = query.Where(tag => !model.ExistingItems.Contains(tag.Name) && !model.ExistingItems.Contains(tag.Id.ToString().ToUpper()));
             }
 
             return query.OrderBy(tag => tag.Name)

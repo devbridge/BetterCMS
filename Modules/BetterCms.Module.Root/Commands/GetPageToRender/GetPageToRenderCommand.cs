@@ -141,7 +141,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 renderPageViewModel.Options = GetMergedOptionValues(new List<IOption>(), page.Options, childrenList);
                 renderPageViewModel.Regions = allPageContents
                     .Where(pc => pc.Page == page.MasterPage)
-                    .SelectMany(pc => pc.Content.ContentRegions)
+                    .SelectMany(pc => pc.Content.ContentRegions.Distinct())
                     .Select(cr => new PageRegionViewModel
                     {
                         RegionId = cr.Region.Id,

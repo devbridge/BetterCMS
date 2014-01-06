@@ -68,7 +68,7 @@ namespace BetterCms.Module.Users.Api
         {
             get
             {
-                return int.MaxValue - 400;
+                return int.MaxValue - 50;
             }
         }
 

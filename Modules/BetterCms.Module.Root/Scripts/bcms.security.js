@@ -101,7 +101,7 @@ bettercms.define('bcms.security', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', '
     var AccessControlViewModel = (function (_super) {
         bcms.extendsClass(AccessControlViewModel, _super);
 
-        function AccessControlViewModel(identities, isRole, addMode, autoCompleteUrl) {
+        function AccessControlViewModel(identities, isRole, addMode, autoCompleteUrl, initialValues) {
             var options = {
                 serviceUrl: autoCompleteUrl
             };
@@ -134,7 +134,7 @@ bettercms.define('bcms.security', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', '
                 }
             };
             
-            _super.call(self, [], options);
+            _super.call(self, initialValues, options);
             
             self.items.subscribe(function (newValue) {
                 self.clickPlus();
@@ -145,6 +145,19 @@ bettercms.define('bcms.security', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', '
     })(autocomplete.AutocompleteListViewModel);
 
     security.createUserAccessViewModel = function (accessList) {
+        var roles = [],
+            users = [];
+
+        if (accessList) {
+            $.each(accessList, function(i, item) {
+                if (item.IsForRole) {
+                    roles.push(item.Identity);
+                } else {
+                    users.push(item.Identity);
+                }
+            });
+        }
+
         var messageBox =
                 messages.box({
                 container: $(".bcms-modal")
@@ -153,8 +166,8 @@ bettercms.define('bcms.security', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', '
             addMode = ko.observable('none'),
             model = {
                 UserAccessList: identities,
-                userAccessControl: new AccessControlViewModel(identities, false, addMode, links.usersSuggestionServiceUrl),
-                roleAccessControl: new AccessControlViewModel(identities, true, addMode, links.rolesSuggestionServiceUrl),
+                userAccessControl: new AccessControlViewModel(identities, false, addMode, links.usersSuggestionServiceUrl, users),
+                roleAccessControl: new AccessControlViewModel(identities, true, addMode, links.rolesSuggestionServiceUrl, roles),
                 removeUser: function(userAccessViewModel) {
                     model.UserAccessList.remove(userAccessViewModel);
                 },
@@ -165,7 +178,7 @@ bettercms.define('bcms.security', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', '
         };
 
         if (accessList) {
-            $.each(accessList, function(i, item) {
+            $.each(accessList, function (i, item) {
                 model.UserAccessList.push(new UserAccessViewModel(item));
             });
         }

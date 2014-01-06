@@ -27,7 +27,7 @@ namespace BetterCms.Module.Users.Commands.Role.SearchRoles
 
             if (model.ExistingItemsArray.Length > 0)
             {
-                query = query.Where(role => !model.ExistingItems.Contains(role.Name));
+                query = query.Where(role => !model.ExistingItems.Contains(role.Name) && !model.ExistingItems.Contains(role.Id.ToString().ToUpper()));
             }
 
             return query.OrderBy(role => role.Name)

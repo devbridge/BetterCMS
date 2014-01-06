@@ -1,0 +1,16 @@
+﻿@using BetterCms.Module.Pages.Controllers
+@using BetterCms.Module.Pages.ViewModels.SiteSettings
+@using Microsoft.Web.Mvc
+
+@model BetterCms.Module.Pages.ViewModels.Filter.UntranslatedPagesGridViewModel<SiteSettingPageViewModel>
+
+<div class="bcms-scroll-window">
+    @using (Html.BeginForm<PageController>(controller => controller.SearchUntranslatedPages(null), FormMethod.Post, new { @id = "bcms-pages-form", @class = "bcms-ajax-form" }))
+    {
+        @Html.HiddenFor(m => m.ExcplicitlyIncludedPages, new {@id = "bcms-pages-included-pages"})
+        @Html.HiddenFor(m => m.ExcludedLanguageId, new {@id = "bcms-pages-excluded-language"})
+        @Html.HiddenFor(m => m.ExistingItems, new {@id = "bcms-pages-excluded-pages"})
+        
+        @Html.Partial("Pages")
+    }
+</div>

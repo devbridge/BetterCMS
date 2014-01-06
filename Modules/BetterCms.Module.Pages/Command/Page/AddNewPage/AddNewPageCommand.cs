@@ -28,6 +28,8 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
         private readonly IMasterPageService masterPageService;
 
         private readonly IRepository repository;
+        
+        private readonly ILanguageService languageService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AddNewPageCommand" /> class.
@@ -38,9 +40,10 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
         /// <param name="optionService">The option service.</param>
         /// <param name="masterPageService">The master page service.</param>
         /// <param name="repository">The repository.</param>
+        /// <param name="languageService">The language service.</param>
         public AddNewPageCommand(ILayoutService LayoutService, ICmsConfiguration cmsConfiguration,
             ISecurityService securityService, IOptionService optionService,
-            IMasterPageService masterPageService, IRepository repository)
+            IMasterPageService masterPageService, IRepository repository, ILanguageService languageService)
         {
             layoutService = LayoutService;
             this.cmsConfiguration = cmsConfiguration;
@@ -48,6 +51,7 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
             this.optionService = optionService;
             this.masterPageService = masterPageService;
             this.repository = repository;
+            this.languageService = languageService;
         }
 
         /// <summary>
@@ -66,6 +70,9 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
                 AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent);
             }
 
+            var showLanguages = cmsConfiguration.EnableMultilanguage && !request.CreateMasterPage;
+            var languagesFuture = (showLanguages) ? languageService.GetLanguages() : null;
+
             var principal = securityService.GetCurrentPrincipal();
             var model = new AddNewPageViewModel
                 {
@@ -73,8 +80,14 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
                     Templates = layoutService.GetAvailableLayouts().ToList(),
                     AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled,
                     UserAccessList = AccessControlService.GetDefaultAccessList(principal).Select(f => new UserAccessViewModel(f)).ToList(),
-                    CreateMasterPage = request.CreateMasterPage
+                    CreateMasterPage = request.CreateMasterPage,
+                    ShowLanguages = showLanguages
                 };
+
+            if (showLanguages)
+            {
+                model.Languages = languagesFuture.ToList();
+            }
 
             if (model.Templates.Count > 0)
             {
