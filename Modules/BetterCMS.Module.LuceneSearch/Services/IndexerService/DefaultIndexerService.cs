@@ -220,47 +220,6 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             }
             
             return snippet;
-
-            /*var searchString = fullSearchString.Trim().Split(' ')[0].Trim('\'').Trim('"');
-            var index = text.IndexOf(searchString, StringComparison.InvariantCulture);
-            bool addPrefix = false, addSuffix = false;
-
-            if (beforeStart < index)
-            {
-                start = text.LastIndexOf(" ", index - beforeStart, StringComparison.InvariantCulture);
-                if (start < 0)
-                {
-                    start = 0;
-                }
-                addPrefix = true;
-            }
-
-            if (index + afterEnd < text.Length)
-            {
-                var end = text.IndexOf(" ", index + afterEnd, StringComparison.InvariantCulture);
-                if (end < 0)
-                {
-                    end = index + afterEnd;
-                }
-                else
-                {
-                    end++;
-                }
-                length = end - start;
-                addSuffix = true;
-            }
-
-            var textLength = text.Length;
-            var snippet = text.Substring(start, textLength - start < length ? textLength - start : length);
-            if (addPrefix)
-            {
-                snippet = string.Concat("...", snippet);
-            }
-            if (addSuffix)
-            {
-                snippet = string.Concat(snippet, "...");
-            }
-            return snippet;*/
         }
     }
 }

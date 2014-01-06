@@ -1,0 +1,7 @@
+﻿<?xml version="1.0"?>
+<cms>
+  <search>
+    <add key="GoogleSiteSearchApiKey" value="[BETTERCMS_GOOGLE_SEARCH_API_KEY]" />
+    <add key="GoogleSiteSearchEngineKey" value="[BETTERCMS_GOOGLE_SEARCH_ENGINE_KEY]" />
+  </search>
+</cms>

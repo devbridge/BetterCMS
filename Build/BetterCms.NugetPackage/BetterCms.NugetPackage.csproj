@@ -57,7 +57,19 @@
     <None Include="Packages\BetterCms.Module.Api\BetterCms.Module.Api.nuspec.template">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Packages\BetterCms.Module.GoogleSiteSearch\cms.config.transform">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Packages\BetterCms.Module.ImagesGallery\BetterCms.Module.ImagesGallery.nuspec.template">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Packages\BetterCms.Module.LuceneSearch\cms.config.transform">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Packages\BetterCms.Module.Search\cms.config.transform">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Packages\BetterCms.Module.Search\BetterCms.Module.Search.nuspec.template">
       <SubType>Designer</SubType>
     </None>
     <None Include="Packages\BetterCMS.Module.Users\BetterCms.Module.Users.nuspec.template">
@@ -109,6 +121,12 @@
     <None Include="Packages\BetterCMS.Module.Users.Api\BetterCms.Module.Users.Api.nuspec.template">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Packages\BetterCms.Module.LuceneSearch\BetterCms.Module.LuceneSearch.nuspec.template">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Packages\BetterCms.Module.GoogleSiteSearch\BetterCms.Module.GoogleSiteSearch.nuspec.template">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
@@ -143,9 +161,17 @@
       <Project>{a66a3046-ef60-4c51-ada7-eb055763419b}</Project>
       <Name>BetterCms.Module.Blog</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCMS.Module.GoogleSiteSearch\BetterCms.Module.GoogleSiteSearch.csproj">
+      <Project>{ec53ac56-c1a7-4752-8152-b4559827dd91}</Project>
+      <Name>BetterCms.Module.GoogleSiteSearch</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.ImagesGallery\BetterCms.Module.ImagesGallery.csproj">
       <Project>{0bb64452-9b66-403e-94c6-e66c6071d12b}</Project>
       <Name>BetterCms.Module.ImagesGallery</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCMS.Module.LuceneSearch\BetterCms.Module.LuceneSearch.csproj">
+      <Project>{5255abed-2111-497f-a94c-6aa89862d814}</Project>
+      <Name>BetterCms.Module.LuceneSearch</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.MediaManager\BetterCms.Module.MediaManager.csproj">
       <Project>{f3e41793-e8ed-4ba8-a1ab-cba1e47b0786}</Project>
@@ -162,6 +188,10 @@
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Installation\BetterCms.Module.Installation.csproj">
       <Project>{17bf5ca2-23b6-4796-8ef1-cddf6d41a4f7}</Project>
       <Name>BetterCms.Module.Installation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Search\BetterCms.Module.Search.csproj">
+      <Project>{b935dd58-18ec-4340-b236-f1dae4509cc8}</Project>
+      <Name>BetterCms.Module.Search</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Users.Api\BetterCms.Module.Users.Api.csproj">
       <Project>{fcc9127a-74d2-41b1-8dee-0415db7a6c76}</Project>
@@ -182,7 +212,6 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir "$(ProjectDir)$(OutDir)packages"
-
 
 rem --- Creating BetterCms.Core package -------------------------------------------------------------------------------
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Core"
@@ -385,6 +414,52 @@ mkdir "$(ProjectDir)$(OutDir)packages\BetterCMS"
 "$(ProjectDir)$(OutDir)BetterCms.NugetPackage.exe" "$(ProjectDir)Packages\BetterCMS\BetterCMS.nuspec.template" "$(ProjectDir)$(OutDir)packages\BetterCMS\BetterCMS.nuspec"
 "$(SolutionDir).nuget\nuget.exe" pack "$(ProjectDir)$(OutDir)packages\BetterCMS\BetterCMS.nuspec" -OutputDirectory "$(ProjectDir)$(OutDir)\" -NoPackageAnalysis
 
+
+rem --- Creating BetterCms.Module.Search package ------------------------------------------------------------------
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search"
+
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search\content"
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search\content\net40"
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search\content\net40\Config"
+copy "$(ProjectDir)Packages\BetterCms.Module.Search\cms.config.transform" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search\content\net40\Config\cms.config.transform" /Y
+
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search\lib"
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search\lib\net40"
+xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.Search.dll" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search\lib\net40\" /Y /Q
+
+"$(ProjectDir)$(OutDir)BetterCms.NugetPackage.exe" "$(ProjectDir)Packages\BetterCms.Module.Search\BetterCms.Module.Search.nuspec.template" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search\BetterCms.Module.Search.nuspec"
+"$(SolutionDir).nuget\nuget.exe" pack "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search\BetterCms.Module.Search.nuspec" -OutputDirectory "$(ProjectDir)$(OutDir)\" -NoPackageAnalysis
+
+
+rem --- Creating BetterCms.Module.LuceneSearch package ------------------------------------------------------------------
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.LuceneSearch"
+
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.LuceneSearch\content"
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.LuceneSearch\content\net40"
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.LuceneSearch\content\net40\Config"
+copy "$(ProjectDir)Packages\BetterCms.Module.LuceneSearch\cms.config.transform" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.LuceneSearch\content\net40\Config\cms.config.transform" /Y
+
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.LuceneSearch\lib"
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.LuceneSearch\lib\net40"
+xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.LuceneSearch.dll" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.LuceneSearch\lib\net40\" /Y /Q
+
+"$(ProjectDir)$(OutDir)BetterCms.NugetPackage.exe" "$(ProjectDir)Packages\BetterCms.Module.LuceneSearch\BetterCms.Module.LuceneSearch.nuspec.template" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.LuceneSearch\BetterCms.Module.LuceneSearch.nuspec"
+"$(SolutionDir).nuget\nuget.exe" pack "$(ProjectDir)$(OutDir)packages\BetterCms.Module.LuceneSearch\BetterCms.Module.LuceneSearch.nuspec" -OutputDirectory "$(ProjectDir)$(OutDir)\" -NoPackageAnalysis
+
+rem --- Creating BetterCms.Module.GoogleSiteSearch package ------------------------------------------------------------------
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleSiteSearch"
+
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleSiteSearch\content"
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleSiteSearch\content\net40"
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleSiteSearch\content\net40\Config"
+copy "$(ProjectDir)Packages\BetterCms.Module.GoogleSiteSearch\cms.config.transform" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleSiteSearch\content\net40\Config\cms.config.transform" /Y
+
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleSiteSearch\lib"
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleSiteSearch\lib\net40"
+xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.GoogleSiteSearch.dll" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleSiteSearch\lib\net40\" /Y /Q
+
+"$(ProjectDir)$(OutDir)BetterCms.NugetPackage.exe" "$(ProjectDir)Packages\BetterCms.Module.GoogleSiteSearch\BetterCms.Module.GoogleSiteSearch.nuspec.template" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleSiteSearch\BetterCms.Module.GoogleSiteSearch.nuspec"
+"$(SolutionDir).nuget\nuget.exe" pack "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleSiteSearch\BetterCms.Module.GoogleSiteSearch.nuspec" -OutputDirectory "$(ProjectDir)$(OutDir)\" -NoPackageAnalysis
 
 rem --- Cleanup -------------------------------------------------------------------------------------------------------
 rmdir "$(ProjectDir)$(OutDir)packages" /S /Q
