@@ -30,6 +30,15 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
         private const string EndText = "... section of UI that should update dynamically (e.g., changing depending on the user’s actions "
             + "or when an external data source changes) with Knockout can be handled more simply and in a maintainable fashion.";
 
+        const string FullTextForOneLetterSearch = "Any section of UI that should update dynamically with Knockout can be handled more simply and in[...]"
+            + "Any section of UI that should update dynamically with Knockout can be handled more simply and in[...]"
+            + "Any section of UI that should update dynamically with Knockout can be handled more simply and in a maintainable fashion."
+            + "Any section of UI that should update dynamically with Knockout can be handled more simply and in[...]"
+            + "Any section of UI that should update dynamically with Knockout can be handled more simply and in[...]";
+
+        private const string FullTextForOneLetterSearchResult = "... in[...]Any section of UI that should update dynamically with Knockout can be handled "
+            + "more simply and in a maintainable fashion.Any section of UI that should update dynamically with Knockout can be handled...";
+
         [Test]
         public void Should_Return_Correct_Search_Results()
         {
@@ -75,6 +84,7 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
             var results = service.Search("section");
 
             Assert.IsTrue(results.Count == 1);
+            // Should be found the middle of the string, because the key word is in the middle of long text
             Assert.AreEqual(results[0].Snippet, MiddleText);
         }
         
@@ -96,6 +106,7 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
             var results = service.Search("extensible");
 
             Assert.IsTrue(results.Count == 1);
+            // Should be found the start of the string, because the start word is in the start
             Assert.AreEqual(results[0].Snippet, StartText);
         }
         
@@ -117,6 +128,7 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
             var results = service.Search("maintainable");
 
             Assert.IsTrue(results.Count == 1);
+            // Should be found the end of the string, because the key word is in the end
             Assert.AreEqual(results[0].Snippet, EndText);
         }
         
@@ -138,7 +150,30 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
             var results = service.Search("dynamically");
 
             Assert.IsTrue(results.Count == 1);
+            // Should be found whole string, because it's too short for crop
             Assert.AreEqual(results[0].Snippet, FullShortText);
+        }
+        
+        [Test]
+        public void Should_Return_Correct_Snippet_FullWord()
+        {
+            var document1 = new HtmlDocument();
+            document1.DocumentNode.AppendChild(HtmlNode.CreateNode("<title>Test title</title>"));
+            document1.DocumentNode.AppendChild(HtmlNode.CreateNode("<body>" + FullTextForOneLetterSearch + "</body>"));
+            
+            var page1 = new PageData { AbsolutePath = "/test1", Content = document1, Id = Guid.NewGuid() };
+
+            var service = new DefaultIndexerService(Container.Resolve<ICmsConfiguration>());
+
+            service.Open();
+            service.AddHtmlDocument(page1);
+            service.Close();
+
+            var results = service.Search("a");
+
+            Assert.IsTrue(results.Count == 1);
+            // Should be found separate word "a" excluding "a" in another words
+            Assert.AreEqual(results[0].Snippet, FullTextForOneLetterSearchResult);
         }
     }
 }

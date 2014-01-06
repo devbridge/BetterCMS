@@ -169,10 +169,28 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
                 return text;
             }
 
-            var searchString = fullSearchString.Trim().Split(' ')[0].Trim('\'').Trim('"');
-            var index = text.IndexOf(searchString, StringComparison.InvariantCulture);
+            var searchString = fullSearchString.Trim().Split(' ')[0].Trim('\'').Trim('"').Trim('*');
+
+            // Find first position of the keyword
+            int index;
+            var pattern = string.Format("\\b{0}\\b", searchString);
+            var match = Regex.Match(text, pattern);
+            if (match.Success)
+            {
+                index = match.Index;
+            }
+            else
+            {
+                index = text.IndexOf(searchString, StringComparison.InvariantCulture);
+            }
+            if (index < 0)
+            {
+                index = 0;
+            }
+
             var textLength = text.Length;
 
+            // Crop snippet from the whole search text
             var takeFromEnd = (index + afterEnd < textLength) ? 0 : afterEnd - (textLength - index); 
             var startFrom = index - beforeStart - takeFromEnd;
             var addToEnd = 0;
