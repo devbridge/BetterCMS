@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
+using BetterCms.Module.Pages.Command.History.GetSitemapHistory;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -160,6 +161,22 @@ namespace BetterCms.Module.Pages.Services
             }
 
             return node;
+        }
+
+        /// <summary>
+        /// Gets the sitemap history.
+        /// </summary>
+        /// <param name="sitemapId">The sitemap identifier.</param>
+        /// <returns>
+        /// Sitemap previous archived versions.
+        /// </returns>
+        public IList<SitemapArchive> GetSitemapHistory(Guid sitemapId)
+        {
+            return repository
+                .AsQueryable<SitemapArchive>()
+                .Where(archive => archive.Sitemap.Id == sitemapId)
+                .OrderBy(archive => archive.CreatedOn)
+                .ToList();
         }
 
         /// <summary>
