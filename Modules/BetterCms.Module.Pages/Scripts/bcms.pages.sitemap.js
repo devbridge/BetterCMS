@@ -24,7 +24,19 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 siteSettingsSitemapDeleteButton: '.bcms-grid-item-delete-button',
                 siteSettingsSitemapRowTemplate: '#bcms-sitemap-list-row-template',
                 siteSettingsSitemapRowTemplateFirstRow: 'tr:first',
-                siteSettingsSitemapsTableFirstRow: 'table.bcms-tables > tbody > tr:first'
+                siteSettingsSitemapsTableFirstRow: 'table.bcms-tables > tbody > tr:first',
+
+                gridRestoreLinks: '#bcms-sitemaphistory-form .bcms-history-cell a.bcms-icn-restore',
+                gridCells: '#bcms-sitemaphistory-form .bcms-history-cell tbody td',
+                gridRowPreviewLink: 'a.bcms-icn-preview:first',
+                firstRow: 'tr:first',
+                gridRows: '#bcms-sitemaphistory-form .bcms-history-cell tbody tr',
+                versionPreviewContainer: '#bcms-history-preview',
+                versionPreviewLoaderContainer: '.bcms-history-preview',
+                versionPreviewTemplate: '#bcms-history-preview-template',
+                sitemapHistoryForm: '#bcms-sitemaphistory-form',
+                sitemapHistorySearchButton: '.bcms-btn-search',
+                modalContent: '.bcms-modal-content-padded'
             },
             links = {
                 loadSiteSettingsSitemapsListUrl: null,
@@ -40,14 +52,17 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             globalization = {
                 sitemapCreatorDialogTitle: null,
                 sitemapEditorDialogTitle: null,
-                sitemapHistoryDialogTitle: null,
                 sitemapEditorDialogCustomLinkTitle: null,
                 sitemapAddNewPageDialogTitle: null,
                 sitemapDeleteNodeConfirmationMessage: null,
                 sitemapDeleteConfirmMessage: null,
                 sitemapSomeNodesAreInEditingState: null,
                 sitemapNodeSaveButton: null,
-                sitemapNodeOkButton: null
+                sitemapNodeOkButton: null,
+                
+                sitemapHistoryDialogTitle: null,
+                restoreButtonTitle: null,
+                closeButtonTitle: null
             },
             defaultIdValue = '00000000-0000-0000-0000-000000000000',
             DropZoneTypes = {
@@ -269,28 +284,23 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         sitemap.showSitemapHistoryDialog = function(id, onClose, dialogTitle) {
             modal.open({
                 title: dialogTitle || globalization.sitemapHistoryDialogTitle,
-                onLoad: function(dialog) {
-                    dynamicContent.setContentFromUrl(dialog, $.format(links.sitemapHistoryDialogUrl, id), {
-                        done: function(content) {
-                            // TODO: implement: ...Controller.initialize(content, dialog);
+                cancelTitle: globalization.closeButtonTitle,
+                disableAccept: true,
+                onLoad: function (dialog) {
+                    dynamicContent.bindDialog(dialog, $.format(links.sitemapHistoryDialogUrl, id), {
+                        contentAvailable: function () {
+                            initSitemapHistoryDialogEvents(dialog);
+                        },
+
+                        beforePost: function () {
+                            dialog.container.showLoading();
+                        },
+
+                        postComplete: function () {
+                            dialog.container.hideLoading();
                         }
                     });
                 },
-                onAccept: function (dialog) {
-// TODO: implement: ...
-//                    addNodeController.save(function (json) {
-//                        if (json.Success) {
-//                            dialog.close();
-//                            if (onClose && $.isFunction(onClose)) {
-//                                onClose(json);
-//                            }
-//                            messages.refreshBox(selectors.siteSettingsSitemapsForm, json);
-//                        } else {
-//                            sitemap.showMessage(json);
-//                        }
-//                    });
-                    return false;
-                }
             });
         };
 
@@ -1272,6 +1282,51 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         }
         // --------------------------------------------------------------------
 
+        /**
+        * Initializes sitemap history dialog events.
+        */
+        function initSitemapHistoryDialogEvents(dialog) {
+            dialog.maximizeHeight();
+
+            var container = dialog.container.find(selectors.modalContent);
+
+            container.find(selectors.gridRestoreLinks).on('click', function (event) {
+                bcms.stopEventPropagation(event);
+                alert("TODO: implement restoration.");
+                // TODO: implement: restoreVersion(container, $(this).data('id'));
+            });
+
+            container.find(selectors.gridCells).on('click', function () {
+                var self = $(this),
+                    row = self.parents(selectors.firstRow),
+                    previewLink = row.find(selectors.gridRowPreviewLink),
+                    id = previewLink.data('id');
+
+                container.find(selectors.gridRows).removeClass(classes.tableActiveRow);
+                row.addClass(classes.tableActiveRow);
+
+                alert("TODO: implement preview.");
+                // TODO: implement: previewVersion(container, id);
+            });
+
+            var form = container.find(selectors.sitemapHistoryForm);
+            grid.bindGridForm(form, function (data) {
+                container.html(data);
+                initSitemapHistoryDialogEvents(dialog);
+            });
+
+            form.on('submit', function (event) {
+                bcms.stopEventPropagation(event);
+                alert("TODO: implement search.");
+                // TODO: implement: searchPageContentHistory(dialog, container, form);
+                return false;
+            });
+
+            form.find(selectors.sitemapHistorySearchButton).on('click', function () {
+                alert("TODO: implement search.");
+                // TODO: implement: searchPageContentHistory(dialog, container, form);
+            });
+        };
 
         /**
         * Initializes module.

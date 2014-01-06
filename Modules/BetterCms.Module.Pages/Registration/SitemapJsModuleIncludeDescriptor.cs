@@ -35,14 +35,17 @@ namespace BetterCms.Module.Pages.Registration
                 {
                     new JavaScriptModuleGlobalization(this, "sitemapCreatorDialogTitle", () => NavigationGlobalization.Sitemap_CreatorDialog_Title),
                     new JavaScriptModuleGlobalization(this, "sitemapEditorDialogTitle", () => NavigationGlobalization.Sitemap_EditorDialog_Title),
-                    new JavaScriptModuleGlobalization(this, "sitemapHistoryDialogTitle", () => NavigationGlobalization.Sitemap_HistoryDialog_Title),
                     new JavaScriptModuleGlobalization(this, "sitemapEditorDialogCustomLinkTitle", () => NavigationGlobalization.Sitemap_EditorDialog_CustomLinkTitle),
                     new JavaScriptModuleGlobalization(this, "sitemapAddNewPageDialogTitle", () => NavigationGlobalization.Sitemap_AddNewPageDialog_Title),
                     new JavaScriptModuleGlobalization(this, "sitemapDeleteNodeConfirmationMessage", () => NavigationGlobalization.Sitemap_DeleteNode_Confirmation_Message),
                     new JavaScriptModuleGlobalization(this, "sitemapDeleteConfirmMessage", () => NavigationGlobalization.Sitemap_Delete_Confirmation_Message),
                     new JavaScriptModuleGlobalization(this, "sitemapSomeNodesAreInEditingState", () => NavigationGlobalization.Sitemap_EditDialog_SomeNodesAreInEditingState),
                     new JavaScriptModuleGlobalization(this, "sitemapNodeSaveButton", () => RootGlobalization.Button_Save),
-                    new JavaScriptModuleGlobalization(this, "sitemapNodeOkButton", () => RootGlobalization.Button_Ok)
+                    new JavaScriptModuleGlobalization(this, "sitemapNodeOkButton", () => RootGlobalization.Button_Ok),
+
+                    new JavaScriptModuleGlobalization(this, "sitemapHistoryDialogTitle", () => NavigationGlobalization.Sitemap_HistoryDialog_Title),
+                    new JavaScriptModuleGlobalization(this, "restoreButtonTitle", () => RootGlobalization.Button_Restore),
+                    new JavaScriptModuleGlobalization(this, "closeButtonTitle", () => RootGlobalization.Button_Close)
                 };
         }
     }
