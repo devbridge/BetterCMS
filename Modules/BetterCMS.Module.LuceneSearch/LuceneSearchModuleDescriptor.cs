@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using Autofac;
 
@@ -53,19 +54,20 @@ namespace BetterCms.Module.LuceneSearch
             Events.CoreEvents.Instance.HostStart += x =>
                 {
                     // Content indexer
-                    int minutes;
-                    if (!int.TryParse(configuration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneIndexerFrequency), out minutes))
+                    TimeSpan indexerFrequency;
+                    if (!TimeSpan.TryParse(configuration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneIndexerFrequency), out indexerFrequency))
                     {
-                        minutes = 30;
+                        indexerFrequency = new TimeSpan(0, 30, 0);
                     }
-                    workers.Add(new DefaultContentIndexingRobot(minutes));
+                    workers.Add(new DefaultContentIndexingRobot(indexerFrequency));
 
                     // New page URLs watcher
-                    if (!int.TryParse(configuration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LucenePagesWatcherFrequency), out minutes))
+                    TimeSpan watcherFrequency;
+                    if (!TimeSpan.TryParse(configuration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LucenePagesWatcherFrequency), out watcherFrequency))
                     {
-                        minutes = 10;
+                        indexerFrequency = new TimeSpan(0, 10, 0);
                     }
-                    workers.Add(new DefaultIndexSourceWatcher(minutes));
+                    workers.Add(new DefaultIndexSourceWatcher(indexerFrequency));
 
                     workers.ForEach(f => f.Start());
                 };

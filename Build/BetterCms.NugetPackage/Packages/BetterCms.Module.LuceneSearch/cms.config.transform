@@ -3,11 +3,11 @@
   <search>
     <add key="LuceneWebSiteUrl" value="http://localhost/" />
     <add key="LuceneFileSystemDirectory" value="C:\Lucene\BetterCms\" />
-    <add key="LuceneIndexerFrequency" value="10" />
-    <add key="LucenePagesWatcherFrequency" value="30" />
+    <add key="LuceneIndexerFrequency" value="00:10:00" />
+    <add key="LucenePagesWatcherFrequency" value="00:30:00" />
     <add key="LuceneMaxPagesPerQuery" value="1000" />
-    <add key="LucenePageExpireTimeout" value="10" />
-    <add key="LuceneFailedPageReindexingTimeout" value="10" />
+    <add key="LucenePageExpireTimeout" value="00:10:00" />
+    <add key="LuceneFailedPageReindexingTimeout" value="00:10:00" />
     <add key="LuceneDisableStopWords" value="true" />
   </search>
 </cms>

@@ -21,9 +21,9 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
 
         private readonly int scrapeLimit;
 
-        private readonly int pageExpireTimeout;
+        private readonly TimeSpan pageExpireTimeout;
 
-        private readonly int failedPageTimeout;
+        private readonly TimeSpan failedPageTimeout;
 
         public DefaultScrapeService(IRepository repository, IUnitOfWork unitOfWork, ICmsConfiguration cmsConfiguration)
         {
@@ -36,16 +36,14 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
                 scrapeLimit = 1000;
             }
 
-            if (!int.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LucenePageExpireTimeout), out pageExpireTimeout)
-                || pageExpireTimeout < 0)
+            if (!TimeSpan.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LucenePageExpireTimeout), out pageExpireTimeout))
             {
-                pageExpireTimeout = 10;
+                pageExpireTimeout = TimeSpan.FromMinutes(10);
             }
 
-            if (!int.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneFailedPageReindexingTimeout), out failedPageTimeout)
-                || failedPageTimeout < 0)
+            if (!TimeSpan.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneFailedPageReindexingTimeout), out failedPageTimeout))
             {
-                failedPageTimeout = 10;
+                failedPageTimeout = TimeSpan.FromMinutes(10);
             }
         }
 
@@ -136,7 +134,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
         private IList<IndexSource> GetExpiredLinks(int limit)
         {
             IndexSource indexSourceAlias = null;
-            var endDate = DateTime.Now.AddMinutes(pageExpireTimeout * -1);
+            var endDate =  DateTime.Now.Subtract(pageExpireTimeout);
 
             var expiredUrls =
                 Repository.AsQueryOver(() => indexSourceAlias)
@@ -153,7 +151,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
         private IList<IndexSource> GetFailedLinks(int limit)
         {
             IndexSource indexSourceAlias = null;
-            var startDate = DateTime.Now.AddMinutes(failedPageTimeout * -1);
+            var startDate = DateTime.Now.Subtract(failedPageTimeout);
 
             var urls =
                 Repository.AsQueryOver(() => indexSourceAlias)

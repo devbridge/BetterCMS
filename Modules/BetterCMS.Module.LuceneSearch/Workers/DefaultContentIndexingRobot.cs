@@ -16,8 +16,8 @@ namespace BetterCMS.Module.LuceneSearch.Workers
     {
         private const int RetryCount = 10;
 
-        public DefaultContentIndexingRobot(int minutes)
-            : base(TimeSpan.FromMinutes(minutes))
+        public DefaultContentIndexingRobot(TimeSpan timespan)
+            : base(timespan)
         {
         }
 
