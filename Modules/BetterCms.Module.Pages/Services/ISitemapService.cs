@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using BetterCms.Module.Pages.Command.History.GetSitemapHistory;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 
@@ -73,5 +72,12 @@ namespace BetterCms.Module.Pages.Services
         /// </summary>
         /// <param name="sitemapId">The sitemap identifier.</param>
         void ArchiveSitemap(Guid sitemapId);
+
+        /// <summary>
+        /// Gets the archived sitemap version for preview.
+        /// </summary>
+        /// <param name="archiveId">The archive identifier.</param>
+        /// <returns>Sitemap entity.</returns>
+        Sitemap GetArchivedSitemapVersionForPreview(Guid archiveId);
     }
 }

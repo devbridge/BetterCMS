@@ -205,14 +205,23 @@ namespace BetterCms.Module.Pages.Services
             repository.Save(archive);
         }
 
+        public Sitemap GetArchivedSitemapVersionForPreview(Guid archiveId)
+        {
+            var archive = repository
+                .AsQueryable<SitemapArchive>()
+                .First(map => map.Id == archiveId);
+
+            return FromJson(archive.ArchivedVersion);
+        }
+
         private string ToJson(Sitemap sitemap)
         {
-            var map = new
+            var map = new ArchivedSitemap
                     {
                         Title = sitemap.Title,
                         RootNodes = sitemap.Nodes != null
                             ? GetSitemapNodesInHierarchy(sitemap.Nodes.Where(f => f.ParentNode == null).ToList(), sitemap.Nodes.ToList())
-                            : new List<dynamic>()
+                            : new List<ArchivedNode>()
                     };
 
             var serializer = new JavaScriptSerializer();
@@ -222,19 +231,78 @@ namespace BetterCms.Module.Pages.Services
             return serialized;
         }
 
-        private static List<dynamic> GetSitemapNodesInHierarchy(IList<SitemapNode> sitemapNodes, IList<SitemapNode> allNodes)
+        class ArchivedNode
         {
-            var nodeList = new List<dynamic>();
+            public string Title { get; set; }
+            public string Url { get; set; }
+            public Guid PageId { get; set; }
+            public int DisplayOrder { get; set; }
+            public List<ArchivedNode> Nodes { get; set; }
+        }
+        class ArchivedSitemap
+        {
+            public string Title { get; set; }
+            public List<ArchivedNode> RootNodes { get; set; }
+        }
+
+        private Sitemap FromJson(string archivedVersion)
+        {
+            var serializer = new JavaScriptSerializer();
+
+            var deserialized = serializer.Deserialize<ArchivedSitemap>(archivedVersion);
+
+            if (deserialized != null)
+            {
+                var sitemap = new Sitemap()
+                    {
+                        Title = deserialized.Title,
+                        Nodes = new List<SitemapNode>()
+                    };
+                AddNodes(sitemap, deserialized.RootNodes);
+                return sitemap;
+            }
+
+            return null;
+        }
+
+        private static List<SitemapNode> AddNodes(Sitemap sitemap, List<ArchivedNode> archivedNodes)
+        {
+            var nodes = new List<SitemapNode>();
+            foreach (var archivedNode in archivedNodes)
+            {
+                nodes.Add(new SitemapNode()
+                    {
+                        Title = archivedNode.Title,
+                        Url = archivedNode.Url,
+                        Page = !archivedNode.PageId.HasDefaultValue()
+                            ? new PageProperties()
+                                {
+                                    Id = archivedNode.PageId,
+                                    PageUrl = archivedNode.Url
+                                }
+                            : null,
+                        DisplayOrder = archivedNode.DisplayOrder,
+                        ChildNodes = AddNodes(sitemap, archivedNode.Nodes)
+                    });
+            }
+
+            nodes.ForEach(sitemap.Nodes.Add);
+            return nodes;
+        }
+
+        private static List<ArchivedNode> GetSitemapNodesInHierarchy(IList<SitemapNode> sitemapNodes, IList<SitemapNode> allNodes)
+        {
+            var nodeList = new List<ArchivedNode>();
 
             foreach (var node in sitemapNodes)
             {
-                nodeList.Add(new 
+                nodeList.Add(new ArchivedNode
                 {
                     Title = node.Title,
                     Url = node.Page != null ? node.Page.PageUrl : node.Url,
                     PageId = node.Page != null ? node.Page.Id : Guid.Empty,
                     DisplayOrder = node.DisplayOrder,
-                    ChildNodes = GetSitemapNodesInHierarchy(allNodes.Where(f => f.ParentNode == node).ToList(), allNodes)
+                    Nodes = GetSitemapNodesInHierarchy(allNodes.Where(f => f.ParentNode == node).ToList(), allNodes)
                 });
             }
 

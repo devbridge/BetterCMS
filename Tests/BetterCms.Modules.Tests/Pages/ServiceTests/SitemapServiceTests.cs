@@ -14,20 +14,21 @@ namespace BetterCms.Test.Module.Pages.ServiceTests
     {
         [Ignore] // Fails because of .FetchMany() usage inside service.ArchiveSitemap() method.
         [Test]
-        public void Should_Return_Templates_List_Successfully()
+        public void Should_Archive_Unarchive_Sitemap_Successfully()
         {
             var sitemap = TestDataProvider.CreateNewSitemap();
             sitemap.Nodes = new List<SitemapNode>
                 {
                     TestDataProvider.CreateNewSitemapNode(sitemap),
-                    TestDataProvider.CreateNewSitemapNode(sitemap)
-                };
-            sitemap.Nodes[0].ChildNodes = new List<SitemapNode>
-                {
-                    TestDataProvider.CreateNewSitemapNode(sitemap),
                     TestDataProvider.CreateNewSitemapNode(sitemap),
                     TestDataProvider.CreateNewSitemapNode(sitemap)
                 };
+            var rootNode = TestDataProvider.CreateNewSitemapNode(sitemap);
+            foreach (var node in sitemap.Nodes)
+            {
+                node.ParentNode = rootNode;
+            }
+            sitemap.Nodes.Add(rootNode);
 
             Mock<IRepository> repositoryMock = new Mock<IRepository>();
             repositoryMock
@@ -39,12 +40,33 @@ namespace BetterCms.Test.Module.Pages.ServiceTests
                 .Setup(f => f.Save(It.IsAny<SitemapArchive>()))
                 .Callback<SitemapArchive>(savedMaps.Add);
 
+            repositoryMock
+                .Setup(f => f.AsQueryable<SitemapArchive>())
+                .Returns(savedMaps.AsQueryable);
+
             var service = new DefaultSitemapService(repositoryMock.Object);
             service.ArchiveSitemap(sitemap.Id);
 
             Assert.AreEqual(savedMaps.Count, 1);
             Assert.AreEqual(savedMaps[0].Sitemap.Id, sitemap.Id);
             Assert.IsNotEmpty(savedMaps[0].ArchivedVersion);
+
+            var unarchivedSitemap = service.GetArchivedSitemapVersionForPreview(savedMaps[0].Id);
+            Assert.IsNotNull(unarchivedSitemap);
+            Assert.AreEqual(sitemap.Nodes.Count, unarchivedSitemap.Nodes.Count);
+
+            unarchivedSitemap.Nodes = unarchivedSitemap.Nodes.OrderBy(node => node.Title).ToList();
+            sitemap.Nodes = sitemap.Nodes.OrderBy(node => node.Title).ToList();
+
+            for (var i = 0; i < sitemap.Nodes.Count; i++)
+            {
+                var orig = sitemap.Nodes[i];
+                var unarchived = unarchivedSitemap.Nodes[i];
+
+                Assert.AreEqual(orig.Title, unarchived.Title);
+                Assert.AreEqual(orig.Url, unarchived.Url);
+                Assert.AreEqual(orig.UrlHash, unarchived.UrlHash);
+            }
         }
     }
 }
