@@ -83,6 +83,7 @@
             @Html.HiddenFor(model => model.SitemapId)
             <div class="bcms-history-table-top">
                 <div class="bcms-large-titles">@PagesGlobalization.ContentHistory_OlderVersions</div>
+@* NOTE: uncomment bellow and implement search in archived sitemaps if needed. *@
 @*                <div class="bcms-search-block">*@
 @*                    @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box", @placeholder = RootGlobalization.WaterMark_Search })*@
 @*                    <div class="bcms-btn-search" id="bcms-sitemaphistory-search-btn">@RootGlobalization.Button_Search</div>*@
@@ -97,6 +98,3 @@
         }
     </div>
 </div>
-<script type="text/html" id="bcms-history-preview-template">
-    <iframe src="" style="width: 100%; height: 100%; border: 0;"></iframe>
-</script>

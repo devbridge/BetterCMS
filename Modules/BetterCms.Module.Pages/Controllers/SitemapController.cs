@@ -8,6 +8,7 @@ using BetterCms.Module.Pages.Command.Sitemap.DeleteSitemap;
 using BetterCms.Module.Pages.Command.Sitemap.DeleteSitemapNode;
 using BetterCms.Module.Pages.Command.Sitemap.GetPageLinks;
 using BetterCms.Module.Pages.Command.Sitemap.GetSitemap;
+using BetterCms.Module.Pages.Command.Sitemap.GetSitemapVersion;
 using BetterCms.Module.Pages.Command.Sitemap.GetSitemapsForNewPage;
 using BetterCms.Module.Pages.Command.Sitemap.GetSitemapsList;
 using BetterCms.Module.Pages.Command.Sitemap.SaveMultipleSitemaps;
@@ -88,6 +89,14 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult ShowSitemapHistory(string sitemapId)
         {
             return ShowSitemapHistory(new GetSitemapHistoryRequest() { SitemapId = sitemapId.ToGuidOrDefault() });
+        }
+
+        [HttpGet]
+        public ActionResult SitemapVersion(string versionId)
+        {
+            var model = GetCommand<GetSitemapVersionCommand>().ExecuteCommand(versionId.ToGuidOrDefault());
+            var view = RenderView("Preview", model);
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

@@ -138,6 +138,7 @@
     <Compile Include="Command\Sitemap\DeleteSitemap\DeleteSitemapCommand.cs" />
     <Compile Include="Command\Sitemap\GetSitemapsForNewPage\GetSitemapsForNewPageCommand.cs" />
     <Compile Include="Command\Sitemap\GetSitemapsList\GetSitemapsListCommand.cs" />
+    <Compile Include="Command\Sitemap\GetSitemapVersion\GetSitemapVersionCommand.cs" />
     <Compile Include="Command\Sitemap\SaveMultipleSitemaps\SaveMultipleSitemapsCommand.cs" />
     <Compile Include="Command\Widget\PreviewWidget\PreviewWidgetCommand.cs" />
     <Compile Include="Command\Widget\PreviewWidget\PreviewWidgetCommandRequest.cs" />
@@ -585,6 +586,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Sitemap\History.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Sitemap\Preview.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

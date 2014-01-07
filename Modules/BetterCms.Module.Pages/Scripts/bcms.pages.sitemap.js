@@ -33,7 +33,6 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 gridRows: '#bcms-sitemaphistory-form .bcms-history-cell tbody tr',
                 versionPreviewContainer: '#bcms-history-preview',
                 versionPreviewLoaderContainer: '.bcms-history-preview',
-                versionPreviewTemplate: '#bcms-history-preview-template',
                 sitemapHistoryForm: '#bcms-sitemaphistory-form',
                 sitemapHistorySearchButton: '.bcms-btn-search',
                 modalContent: '.bcms-modal-content-padded'
@@ -45,10 +44,11 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 deleteSitemapUrl: null,
                 deleteSitemapNodeUrl: null,
                 sitemapEditDialogUrl: null,
-                sitemapHistoryDialogUrl: null,
                 sitemapAddNewPageDialogUrl: null,
-                saveMultipleSitemapsUrl: null
-            },
+                saveMultipleSitemapsUrl: null,
+                sitemapHistoryDialogUrl: null,
+                loadSitemapVersionPreviewUrl: null
+                },
             globalization = {
                 sitemapCreatorDialogTitle: null,
                 sitemapEditorDialogTitle: null,
@@ -1283,6 +1283,23 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 self.activateTab(self);
             };
         }
+
+        /**
+        * Responsible for sitemap preview.
+        */
+        function VersionViewModel(jsonSitemap) {
+            var self = this;
+            self.sitemap = new SitemapViewModel(jsonSitemap);
+            self.sitemap.parseJsonNodes(jsonSitemap.RootNodes);
+
+            // Setup settings.
+            self.sitemap.settings.canEditNode = false;
+            self.sitemap.settings.canDeleteNode = false;
+            self.sitemap.settings.canDragNode = false;
+            self.sitemap.settings.canDropNode = false;
+//            self.sitemap.settings.nodeSaveButtonTitle = globalization.sitemapNodeSaveButton;
+            self.sitemap.settings.nodeSaveAfterUpdate = false;
+        }
         // --------------------------------------------------------------------
 
         /**
@@ -1307,9 +1324,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
                 container.find(selectors.gridRows).removeClass(classes.tableActiveRow);
                 row.addClass(classes.tableActiveRow);
-
-                alert("TODO: implement preview.");
-                // TODO: implement: previewVersion(container, id);
+                previewVersion(dialog, id);
             });
 
             var form = container.find(selectors.sitemapHistoryForm);
@@ -1330,6 +1345,49 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 // TODO: implement: searchPageContentHistory(dialog, container, form);
             });
         };
+
+        /**
+        * Preview specified sitemap version.
+        */
+        function previewVersion(dialog, id) {
+            var url = $.format(links.loadSitemapVersionPreviewUrl, id),
+                previewContainer = dialog.container.find(selectors.versionPreviewContainer),
+                loaderContainer = dialog.container.find(selectors.versionPreviewLoaderContainer),
+                onSuccess = function (html, json) {
+                    previewContainer.html(html);
+                    if (json && json.Success) {
+                        initializeSitemapPreview(previewContainer, json.Data);
+                    }
+                    loaderContainer.hideLoading();
+                };
+            loaderContainer.showLoading();
+            $.ajax({
+                type: 'GET',
+                cache: false,
+                url: url,
+                error: function () {
+                    loaderContainer.hideLoading();
+                },
+                success: function (data, status, response) {
+                    if (response.getResponseHeader('Content-Type').indexOf('application/json') === 0 && data.Html) {
+                        messages.refreshBox(dialog.container, data);
+                        onSuccess(data.Html, data);
+                    } else {
+                        onSuccess(data, null);
+                    }
+                }
+            });
+        }
+
+        function initializeSitemapPreview(container, json) {
+            if (json) {
+                var context = container.get(0),
+                    model = new VersionViewModel(json);
+                if (context) {
+                    ko.applyBindings(model, context);
+                }
+            }
+        }
 
         /**
         * Initializes module.
