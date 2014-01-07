@@ -27,7 +27,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
             var response = new PageData();
             HttpWebResponse httpWebResponse = null;
 
-            var webServer = cmsConfiguration.Search.GetValue(LuceneSearchConstants.WebSiteUrlConfigurationKey) ?? string.Empty;
+            var webServer = cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneWebSiteUrl) ?? string.Empty;
             var fullUrl = string.Concat(webServer.TrimEnd('/'), "/", url.TrimStart('/'));
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(fullUrl);
             httpWebRequest.AllowAutoRedirect = true;

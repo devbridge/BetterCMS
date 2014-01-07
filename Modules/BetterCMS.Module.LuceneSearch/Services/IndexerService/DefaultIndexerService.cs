@@ -40,21 +40,21 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         public DefaultIndexerService(ICmsConfiguration configuration)
         {
-            directory = configuration.Search.GetValue(LuceneSearchConstants.LuceneSearchFileSystemDirectoryConfigurationKey);
+            directory = configuration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneFileSystemDirectory);
             index = FSDirectory.Open(directory);
 
-            bool excludeStopWordsFromIndexing;
-            if (!bool.TryParse(configuration.Search.GetValue(LuceneSearchConstants.ExcludeStopWordsConfigurationKey), out excludeStopWordsFromIndexing))
+            bool disableStopWords;
+            if (!bool.TryParse(configuration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneDisableStopWords), out disableStopWords))
             {
-                excludeStopWordsFromIndexing = false;
+                disableStopWords = false;
             }
-            if (excludeStopWordsFromIndexing)
+            if (disableStopWords)
             {
-                analyzer = new StandardAnalyzer(Version.LUCENE_30);
+                analyzer = new StandardAnalyzer(Version.LUCENE_30, new HashSet<string>());
             }
             else
             {
-                analyzer = new StandardAnalyzer(Version.LUCENE_30, new HashSet<string>());   
+                analyzer = new StandardAnalyzer(Version.LUCENE_30);
             }
             
             parser = new QueryParser(Version.LUCENE_30, "content", analyzer);

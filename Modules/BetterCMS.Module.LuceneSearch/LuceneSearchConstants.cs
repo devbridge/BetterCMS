@@ -2,20 +2,23 @@
 {
     public static class LuceneSearchConstants
     {
-        public const string WebSiteUrlConfigurationKey = "WebSiteUrl";
-        
-        public const string SourcePagesWatcherFrequencyConfigurationKey = "SourcePagesWatcherFrequency";
+        public static class ConfigurationKeys
+        {
+            public const string LuceneWebSiteUrl = "LuceneWebSiteUrl";
 
-        public const string ContentIndexerFrequencyConfigurationKey = "ContentIndexerFrequency";
+            public const string LucenePagesWatcherFrequency = "LucenePagesWatcherFrequency";
 
-        public const string LuceneSearchFileSystemDirectoryConfigurationKey = "LuceneSearchFileSystemDirectory";
+            public const string LuceneIndexerFrequency = "LuceneIndexerFrequency";
 
-        public const string MaxPagesPerQueryConfigurationKey = "MaxPagesPerQuery";
-        
-        public const string PageExpireTimeoutConfigurationKey = "PageExpireTimeout";
+            public const string LuceneFileSystemDirectory = "LuceneFileSystemDirectory";
 
-        public const string FailedPageReindexingTimeoutConfigurationKey = "FailedPageReindexingTimeout";
+            public const string LuceneMaxPagesPerQuery = "LuceneMaxPagesPerQuery";
 
-        public const string ExcludeStopWordsConfigurationKey = "ExcludeStopWordsFromIndex";
+            public const string LucenePageExpireTimeout = "LucenePageExpireTimeout";
+
+            public const string LuceneFailedPageReindexingTimeout = "LuceneFailedPageReindexingTimeout";
+
+            public const string LuceneDisableStopWords = "LuceneDisableStopWords";
+        }
     }
 }

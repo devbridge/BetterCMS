@@ -54,14 +54,14 @@ namespace BetterCms.Module.LuceneSearch
                 {
                     // Content indexer
                     int minutes;
-                    if (!int.TryParse(configuration.Search.GetValue(LuceneSearchConstants.ContentIndexerFrequencyConfigurationKey), out minutes))
+                    if (!int.TryParse(configuration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneIndexerFrequency), out minutes))
                     {
                         minutes = 30;
                     }
                     workers.Add(new DefaultContentIndexingRobot(minutes));
 
                     // New page URLs watcher
-                    if (!int.TryParse(configuration.Search.GetValue(LuceneSearchConstants.SourcePagesWatcherFrequencyConfigurationKey), out minutes))
+                    if (!int.TryParse(configuration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LucenePagesWatcherFrequency), out minutes))
                     {
                         minutes = 10;
                     }

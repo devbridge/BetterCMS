@@ -30,19 +30,19 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
             Repository = repository;
             UnitOfWork = unitOfWork;
 
-            if (!int.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.MaxPagesPerQueryConfigurationKey), out scrapeLimit)
+            if (!int.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneMaxPagesPerQuery), out scrapeLimit)
                 || scrapeLimit < 0)
             {
                 scrapeLimit = 1000;
             }
 
-            if (!int.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.PageExpireTimeoutConfigurationKey), out pageExpireTimeout)
+            if (!int.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LucenePageExpireTimeout), out pageExpireTimeout)
                 || pageExpireTimeout < 0)
             {
                 pageExpireTimeout = 10;
             }
 
-            if (!int.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.FailedPageReindexingTimeoutConfigurationKey), out failedPageTimeout)
+            if (!int.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneFailedPageReindexingTimeout), out failedPageTimeout)
                 || failedPageTimeout < 0)
             {
                 failedPageTimeout = 10;
