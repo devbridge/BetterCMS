@@ -210,6 +210,10 @@
     <Compile Include="Operations\Pages\Pages\Page\Translations\GetPageTranslationsResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Translations\IPageTranslationsService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Translations\PageTranslationModel.cs" />
+    <Compile Include="Operations\Pages\Pages\Search\ISearchPagesService.cs" />
+    <Compile Include="Operations\Pages\Pages\Search\SearchPagesRequest.cs" />
+    <Compile Include="Operations\Pages\Pages\Search\SearchPagesResponse.cs" />
+    <Compile Include="Operations\Pages\Pages\Search\SearchResultModel.cs" />
     <Compile Include="Operations\Pages\Redirects\GetRedirectsRequest.cs" />
     <Compile Include="Operations\Pages\Redirects\GetRedirectsResponse.cs" />
     <Compile Include="Operations\Pages\Redirects\IRedirectsService.cs" />

@@ -7,8 +7,7 @@ using BetterCms.Core.DataContracts.Enums;
 
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
-using BetterCms.Module.Api.Infrastructure.Enums;
-
+using BetterCms.Module.Api.Operations.Pages.Pages.Search;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
@@ -27,12 +26,16 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         private readonly IOptionService optionService;
 
         private readonly IMediaFileUrlResolver fileUrlResolver;
+        
+        private readonly ISearchPagesService searchPagesService;
 
-        public PagesService(IRepository repository, IOptionService optionService, IMediaFileUrlResolver fileUrlResolver)
+        public PagesService(IRepository repository, IOptionService optionService, IMediaFileUrlResolver fileUrlResolver,
+            ISearchPagesService searchPagesService)
         {
             this.repository = repository;
             this.optionService = optionService;
             this.fileUrlResolver = fileUrlResolver;
+            this.searchPagesService = searchPagesService;
         }
 
         public GetPagesResponse Get(GetPagesRequest request)
@@ -191,6 +194,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
             public Guid PageId { get; set; }
 
             public PageOption Option { get; set; }
+        }
+
+        public ISearchPagesService Search
+        {
+            get
+            {
+                return searchPagesService;
+            }
         }
     }
 }
