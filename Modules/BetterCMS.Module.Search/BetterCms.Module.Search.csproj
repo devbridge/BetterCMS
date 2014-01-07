@@ -128,7 +128,6 @@
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
     <Compile Include="Models\RequestData.cs" />
-    <Compile Include="Models\SearchInformation.cs" />
     <Compile Include="Models\SearchRequest.cs" />
     <Compile Include="Models\SearchResultItem.cs" />
     <Compile Include="Models\SearchResults.cs" />
@@ -137,7 +136,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ISearchService.cs" />
     <Compile Include="ViewModels\SearchInputViewModel.cs" />
-    <Compile Include="ViewModels\SearchResultsViewModel.cs" />
+    <Compile Include="ViewModels\SearchRequestViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
@@ -174,9 +173,6 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Web.config" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Search\SearchInputWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +180,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Search\SearchResultsWidgetInvoker.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Web.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

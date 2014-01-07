@@ -11,7 +11,7 @@ namespace BetterCms.Module.Search.Controllers
     [ActionLinkArea(SearchModuleDescriptor.SearchAreaName)]
     public class SearchController : CmsControllerBase
     {
-        public ActionResult Results(SearchResultsViewModel model)
+        public ActionResult Results(SearchRequestViewModel model)
         {
             var results = GetCommand<SearchQueryCommand>().ExecuteCommand(model);
 

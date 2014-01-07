@@ -1,8 +1,8 @@
-﻿@model BetterCms.Module.Search.ViewModels.SearchResultsViewModel
+﻿@model BetterCms.Module.Search.Models.SearchResults
 
-@if (Model != null && Model.Results != null && Model.Results.Items != null && Model.Results.Items.Count > 0)
+@if (Model != null && Model.Items.Count > 0)
 {
-    foreach (var item in Model.Results.Items)
+    foreach (var item in Model.Items)
     {
         <article class="bcms-search-result">
             <h3>@item.Title</h3>            

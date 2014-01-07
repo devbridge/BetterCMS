@@ -11,7 +11,7 @@ using BetterCms.Module.Search.ViewModels;
 
 namespace BetterCms.Module.Search.Command.SearchQuery
 {
-    public class SearchQueryCommand : CommandBase, ICommand<SearchResultsViewModel, SearchResultsViewModel>
+    public class SearchQueryCommand : CommandBase, ICommand<SearchRequestViewModel, SearchResults>
     {
         private readonly ISearchService searchService;
 
@@ -28,9 +28,10 @@ namespace BetterCms.Module.Search.Command.SearchQuery
         /// </summary>
         /// <param name="model">The request.</param>
         /// <returns></returns>
-        public SearchResultsViewModel Execute(SearchResultsViewModel model)
+        public SearchResults Execute(SearchRequestViewModel model)
         {
-            model.Query = model.WidgetModel.GetSearchQueryParameter(httpContextAccessor.GetCurrent().Request, model.Query);
+            var query = model.WidgetModel.GetSearchQueryParameter(httpContextAccessor.GetCurrent().Request, model.Query);
+            SearchResults results;
 
             if (searchService == null)
             {
@@ -39,10 +40,14 @@ namespace BetterCms.Module.Search.Command.SearchQuery
 
             if (!string.IsNullOrWhiteSpace(model.Query))
             {
-                model.Results = searchService.Search(new SearchRequest(model.Query));
+                results = searchService.Search(new SearchRequest(query, model.Take, model.Skip));
+            }
+            else
+            {
+                results = new SearchResults();
             }
 
-            return model;
+            return results;
         }
     }
 }

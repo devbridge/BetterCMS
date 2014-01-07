@@ -4,16 +4,15 @@ namespace BetterCms.Module.Search.Models
 {
     public class SearchResults
     {
-        public SearchInformation SearchInformation { get; set; }
+        public SearchResults()
+        {
+            Items = new List<SearchResultItem>();
+        }
+
+        public int TotalResults { get; set; }
 
         public string Query { get; set; }
 
         public IList<SearchResultItem> Items { get; set; }
-
-        public SearchResults()
-        {
-            Items = new List<SearchResultItem>();
-            SearchInformation = new SearchInformation();
-        }
     }
 }
