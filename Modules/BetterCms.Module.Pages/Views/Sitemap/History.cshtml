@@ -1,5 +1,4 @@
-﻿@using BetterCms.Core.DataContracts.Enums
-@using BetterCms.Module.Pages.Command.History.GetContentHistory
+﻿@using BetterCms.Module.Pages.Command.History.GetSitemapHistory
 @using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.History
@@ -78,17 +77,16 @@
         </div>
     </div>
     <div class="bcms-history-table-holder">
-        @using (Html.BeginForm<HistoryController>(f => f.ContentHistory((GetContentHistoryRequest)null), FormMethod.Post, new { @id = "bcms-sitemaphistory-form", @class = "bcms-ajax-form" }))
+        @using (Html.BeginForm<SitemapController>(f => f.ShowSitemapHistory((GetSitemapHistoryRequest)null), FormMethod.Post, new { @id = "bcms-sitemaphistory-form", @class = "bcms-ajax-form" }))
         {                        
             @Html.HiddenGridOptions(Model.GridOptions)
             @Html.HiddenFor(model => model.SitemapId)
-
             <div class="bcms-history-table-top">
                 <div class="bcms-large-titles">@PagesGlobalization.ContentHistory_OlderVersions</div>
-                <div class="bcms-search-block">
-                    @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box", @placeholder = RootGlobalization.WaterMark_Search })
-                    <div class="bcms-btn-search" id="bcms-sitemaphistory-search-btn">@RootGlobalization.Button_Search</div>
-                </div>
+@*                <div class="bcms-search-block">*@
+@*                    @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box", @placeholder = RootGlobalization.WaterMark_Search })*@
+@*                    <div class="bcms-btn-search" id="bcms-sitemaphistory-search-btn">@RootGlobalization.Button_Search</div>*@
+@*                </div>*@
             </div>                        
             @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<SitemapHistoryItem>()
                                                                                                                                  {
@@ -100,5 +98,5 @@
     </div>
 </div>
 <script type="text/html" id="bcms-history-preview-template">
-    <iframe src="" style="width: 100%; height: 100%; border: 0px;"></iframe>
+    <iframe src="" style="width: 100%; height: 100%; border: 0;"></iframe>
 </script>

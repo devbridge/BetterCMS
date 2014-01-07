@@ -151,6 +151,11 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveMultipleSitemaps
         /// <param name="model">The model.</param>
         private void SaveIt(Models.Sitemap sitemap, SitemapViewModel model, out IList<Tag> newTags)
         {
+            if (!sitemap.Id.HasDefaultValue())
+            {
+                SitemapService.ArchiveSitemap(sitemap.Id);
+            }
+
             if (CmsConfiguration.Security.AccessControlEnabled)
             {
                 sitemap.AccessRules.RemoveDuplicateEntities();

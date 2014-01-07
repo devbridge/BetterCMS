@@ -171,6 +171,10 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
             IList<SitemapNode> deletedNodes = new List<SitemapNode>();
             if (sitemapNodes != null)
             {
+                // Archive sitemaps before update.
+                sitemapNodes.Select(node => node.Sitemap).Distinct().ToList()
+                    .ForEach(sitemap => sitemapService.ArchiveSitemap(sitemap.Id));
+
                 if (request.UpdateSitemap)
                 {
                     // Delete sitemapNodes.

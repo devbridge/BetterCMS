@@ -4,9 +4,7 @@ using System.Linq;
 using System.Web.Script.Serialization;
 
 using BetterCms.Core.DataAccess;
-using BetterCms.Module.Pages.Command.History.GetSitemapHistory;
 using BetterCms.Module.Pages.Models;
-using BetterCms.Module.Pages.ViewModels.Sitemap;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
@@ -35,47 +33,6 @@ namespace BetterCms.Module.Pages.Services
         }
 
         /// <summary>
-        /// Changes the URL.
-        /// </summary>
-        /// <param name="oldUrl">The old URL.</param>
-        /// <param name="newUrl">The new URL.</param>
-        /// <returns>
-        /// Node with new url count.
-        /// </returns>
-        public IList<SitemapNode> ChangeUrlsInAllSitemapsNodes(string oldUrl, string newUrl)
-        {
-            var oldUrlHash = (oldUrl ?? string.Empty).UrlHash();
-            newUrl = newUrl ?? string.Empty;
-
-            var updatedNodes = new List<SitemapNode>();
-            var nodes = repository.AsQueryable<SitemapNode>().Where(n => n.UrlHash == oldUrlHash).ToList();
-            foreach (var node in nodes)
-            {
-                node.Url = newUrl;
-                node.UrlHash = newUrl.UrlHash();
-                repository.Save(node);
-                updatedNodes.Add(node);
-            }
-
-            return updatedNodes;
-        }
-
-        /// <summary>
-        /// Deletes the node.
-        /// </summary>
-        /// <param name="id">The id.</param>
-        /// <param name="version">The version.</param>
-        /// <param name="deletedNodes">The deleted nodes.</param>
-        public void DeleteNode(Guid id, int version, out IList<SitemapNode> deletedNodes)
-        {
-            deletedNodes = new List<SitemapNode>();
-
-            var node = repository.First<SitemapNode>(id);
-            node.Version = version;
-            DeleteNode(node, ref deletedNodes);
-        }
-
-        /// <summary>
         /// Gets the nodes by URL.
         /// </summary>
         /// <param name="page">The page.</param>
@@ -88,20 +45,82 @@ namespace BetterCms.Module.Pages.Services
             return repository
                 .AsQueryable<SitemapNode>()
                 .Where(n => (n.Page != null && n.Page.Id == page.Id) || (n.UrlHash == urlHash))
+                .Fetch(node => node.Sitemap)
                 .Fetch(node => node.ChildNodes)
                 .Distinct()
                 .ToList();
         }
 
         /// <summary>
-        /// Saves the node.
+        /// Changes the URL in all nodes for all sitemaps (creates sitemap archives).
+        /// </summary>
+        /// <param name="oldUrl">The old URL.</param>
+        /// <param name="newUrl">The new URL.</param>
+        /// <returns>
+        /// Node with new url count.
+        /// </returns>
+        public IList<SitemapNode> ChangeUrlsInAllSitemapsNodes(string oldUrl, string newUrl)
+        {
+            var oldUrlHash = (oldUrl ?? string.Empty).UrlHash();
+            newUrl = newUrl ?? string.Empty;
+
+            var updatedNodes = new List<SitemapNode>();
+
+            var nodes = repository.AsQueryable<SitemapNode>()
+                .Where(n => n.UrlHash == oldUrlHash)
+                .Fetch(node => node.Sitemap)
+                .Distinct()
+                .ToList();
+
+            var sitemaps = nodes
+                .Select(node => node.Sitemap)
+                .Distinct()
+                .ToList();
+
+            sitemaps.ForEach(sitemap => ArchiveSitemap(sitemap.Id));
+
+            foreach (var node in nodes)
+            {
+                node.Url = newUrl;
+                node.UrlHash = newUrl.UrlHash();
+                repository.Save(node);
+                updatedNodes.Add(node);
+            }
+
+            return updatedNodes;
+        }
+
+        /// <summary>
+        /// Archives sitemap and deletes the node.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="version">The version.</param>
+        /// <param name="deletedNodes">The deleted nodes.</param>
+        public void DeleteNode(Guid id, int version, out IList<SitemapNode> deletedNodes)
+        {
+            deletedNodes = new List<SitemapNode>();
+
+            var node = repository.AsQueryable<SitemapNode>()
+                .Where(sitemapNode => sitemapNode.Id == id)
+                .Fetch(sitemapNode => sitemapNode.Sitemap)
+                .Distinct()
+                .First();
+
+            ArchiveSitemap(node.Sitemap.Id);
+
+            node.Version = version;
+            DeleteNode(node, ref deletedNodes);
+        }
+
+        /// <summary>
+        /// Saves the node (does not archive sitemap).
         /// </summary>
         /// <param name="sitemap">The sitemap.</param>
         /// <param name="nodeId">The id.</param>
         /// <param name="version">The version.</param>
         /// <param name="url">The URL.</param>
         /// <param name="title">The title.</param>
-        /// <param name="pageId"></param>
+        /// <param name="pageId">The page identifier.</param>
         /// <param name="displayOrder">The display order.</param>
         /// <param name="parentId">The parent id.</param>
         /// <param name="isDeleted">if set to <c>true</c> node is deleted.</param>
@@ -149,7 +168,7 @@ namespace BetterCms.Module.Pages.Services
         }
 
         /// <summary>
-        /// Deletes the node.
+        /// Deletes the node (does not archive sitemap).
         /// </summary>
         /// <param name="node">The node.</param>
         /// <param name="deletedNodes">The deleted nodes.</param>
@@ -196,7 +215,7 @@ namespace BetterCms.Module.Pages.Services
                 .ToList()
                 .First();
 
-            var archive = new SitemapArchive()
+            var archive = new SitemapArchive
                 {
                     Sitemap = sitemap,
                     ArchivedVersion = ToJson(sitemap)
@@ -205,6 +224,13 @@ namespace BetterCms.Module.Pages.Services
             repository.Save(archive);
         }
 
+        /// <summary>
+        /// Gets the archived sitemap version for preview.
+        /// </summary>
+        /// <param name="archiveId">The archive identifier.</param>
+        /// <returns>
+        /// Sitemap entity.
+        /// </returns>
         public Sitemap GetArchivedSitemapVersionForPreview(Guid archiveId)
         {
             var archive = repository
@@ -214,15 +240,20 @@ namespace BetterCms.Module.Pages.Services
             return FromJson(archive.ArchivedVersion);
         }
 
-        private string ToJson(Sitemap sitemap)
+        /// <summary>
+        /// To the json.
+        /// </summary>
+        /// <param name="sitemap">The sitemap.</param>
+        /// <returns>json representation of the sitemap.</returns>
+        private static string ToJson(Sitemap sitemap)
         {
             var map = new ArchivedSitemap
-                    {
-                        Title = sitemap.Title,
-                        RootNodes = sitemap.Nodes != null
-                            ? GetSitemapNodesInHierarchy(sitemap.Nodes.Where(f => f.ParentNode == null).ToList(), sitemap.Nodes.ToList())
-                            : new List<ArchivedNode>()
-                    };
+            {
+                Title = sitemap.Title,
+                RootNodes = sitemap.Nodes != null
+                    ? GetSitemapNodesInHierarchy(sitemap.Nodes.Where(f => f.ParentNode == null).OrderBy(sitemapNode => sitemapNode.DisplayOrder).ToList(), sitemap.Nodes.ToList())
+                    : new List<ArchivedNode>()
+            };
 
             var serializer = new JavaScriptSerializer();
 
@@ -231,21 +262,12 @@ namespace BetterCms.Module.Pages.Services
             return serialized;
         }
 
-        class ArchivedNode
-        {
-            public string Title { get; set; }
-            public string Url { get; set; }
-            public Guid PageId { get; set; }
-            public int DisplayOrder { get; set; }
-            public List<ArchivedNode> Nodes { get; set; }
-        }
-        class ArchivedSitemap
-        {
-            public string Title { get; set; }
-            public List<ArchivedNode> RootNodes { get; set; }
-        }
-
-        private Sitemap FromJson(string archivedVersion)
+        /// <summary>
+        /// From the json forms sitemap.
+        /// </summary>
+        /// <param name="archivedVersion">The archived version.</param>
+        /// <returns>the sitemap made from json.</returns>
+        private static Sitemap FromJson(string archivedVersion)
         {
             var serializer = new JavaScriptSerializer();
 
@@ -254,10 +276,10 @@ namespace BetterCms.Module.Pages.Services
             if (deserialized != null)
             {
                 var sitemap = new Sitemap()
-                    {
-                        Title = deserialized.Title,
-                        Nodes = new List<SitemapNode>()
-                    };
+                {
+                    Title = deserialized.Title,
+                    Nodes = new List<SitemapNode>()
+                };
                 AddNodes(sitemap, deserialized.RootNodes);
                 return sitemap;
             }
@@ -265,12 +287,18 @@ namespace BetterCms.Module.Pages.Services
             return null;
         }
 
-        private static List<SitemapNode> AddNodes(Sitemap sitemap, List<ArchivedNode> archivedNodes)
+        /// <summary>
+        /// Adds the nodes.
+        /// </summary>
+        /// <param name="sitemap">The sitemap.</param>
+        /// <param name="archivedNodes">The archived nodes.</param>
+        /// <returns>Sitemap node list.</returns>
+        private static List<SitemapNode> AddNodes(Sitemap sitemap, IEnumerable<ArchivedNode> archivedNodes)
         {
             var nodes = new List<SitemapNode>();
             foreach (var archivedNode in archivedNodes)
             {
-                nodes.Add(new SitemapNode()
+                nodes.Add(new SitemapNode
                     {
                         Title = archivedNode.Title,
                         Url = archivedNode.Url,
@@ -290,7 +318,13 @@ namespace BetterCms.Module.Pages.Services
             return nodes;
         }
 
-        private static List<ArchivedNode> GetSitemapNodesInHierarchy(IList<SitemapNode> sitemapNodes, IList<SitemapNode> allNodes)
+        /// <summary>
+        /// Gets the sitemap nodes in hierarchy.
+        /// </summary>
+        /// <param name="sitemapNodes">The sitemap nodes.</param>
+        /// <param name="allNodes">All nodes.</param>
+        /// <returns>Archived node list.</returns>
+        private static List<ArchivedNode> GetSitemapNodesInHierarchy(IEnumerable<SitemapNode> sitemapNodes, IList<SitemapNode> allNodes)
         {
             var nodeList = new List<ArchivedNode>();
 
@@ -302,11 +336,32 @@ namespace BetterCms.Module.Pages.Services
                     Url = node.Page != null ? node.Page.PageUrl : node.Url,
                     PageId = node.Page != null ? node.Page.Id : Guid.Empty,
                     DisplayOrder = node.DisplayOrder,
-                    Nodes = GetSitemapNodesInHierarchy(allNodes.Where(f => f.ParentNode == node).ToList(), allNodes)
+                    Nodes = GetSitemapNodesInHierarchy(allNodes.Where(f => f.ParentNode == node).OrderBy(sitemapNode => sitemapNode.DisplayOrder).ToList(), allNodes)
                 });
             }
 
             return nodeList.OrderBy(n => n.DisplayOrder).ToList();
+        }
+
+        /// <summary>
+        /// Class for archived sitemap node representation.
+        /// </summary>
+        private class ArchivedNode
+        {
+            public string Title { get; set; }
+            public string Url { get; set; }
+            public Guid PageId { get; set; }
+            public int DisplayOrder { get; set; }
+            public List<ArchivedNode> Nodes { get; set; }
+        }
+
+        /// <summary>
+        /// Class for archived sitemap representation.
+        /// </summary>
+        private class ArchivedSitemap
+        {
+            public string Title { get; set; }
+            public List<ArchivedNode> RootNodes { get; set; }
         }
 
         #endregion

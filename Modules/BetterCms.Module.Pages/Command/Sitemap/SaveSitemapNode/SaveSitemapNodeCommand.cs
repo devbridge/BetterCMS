@@ -27,6 +27,11 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemapNode
         {
             UnitOfWork.BeginTransaction();
 
+            if (!request.SitemapId.HasDefaultValue())
+            {
+                SitemapService.ArchiveSitemap(request.SitemapId);
+            }
+
             var node = SitemapService.SaveNode(Repository.AsProxy<Models.Sitemap>(request.SitemapId), request.Id, request.Version, request.Url, request.Title, request.PageId, request.DisplayOrder, request.ParentId);
 
             UnitOfWork.Commit();

@@ -12,6 +12,15 @@ namespace BetterCms.Module.Pages.Services
     public interface ISitemapService
     {
         /// <summary>
+        /// Gets the nodes by URL.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <returns>
+        /// Node list.
+        /// </returns>
+        IList<SitemapNode> GetNodesByPage(Page page);
+
+        /// <summary>
         /// Changes the URL.
         /// </summary>
         /// <param name="oldUrl">The old URL.</param>
@@ -35,15 +44,6 @@ namespace BetterCms.Module.Pages.Services
         void DeleteNode(SitemapNode node, ref IList<SitemapNode> deletedNodes);
 
         /// <summary>
-        /// Gets the nodes by URL.
-        /// </summary>
-        /// <param name="page">The page.</param>
-        /// <returns>
-        /// Node list.
-        /// </returns>
-        IList<SitemapNode> GetNodesByPage(Page page);
-
-        /// <summary>
         /// Saves the node.
         /// </summary>
         /// <param name="sitemap">The sitemap.</param>
@@ -51,6 +51,7 @@ namespace BetterCms.Module.Pages.Services
         /// <param name="version">The version.</param>
         /// <param name="url">The URL.</param>
         /// <param name="title">The title.</param>
+        /// <param name="pageId">The page identifier.</param>
         /// <param name="displayOrder">The display order.</param>
         /// <param name="parentId">The parent id.</param>
         /// <param name="isDeleted">if set to <c>true</c> [is deleted].</param>

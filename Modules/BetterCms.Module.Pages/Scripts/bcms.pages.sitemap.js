@@ -64,6 +64,9 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 restoreButtonTitle: null,
                 closeButtonTitle: null
             },
+            classes = {
+                tableActiveRow: 'bcms-table-row-active'
+            },
             defaultIdValue = '00000000-0000-0000-0000-000000000000',
             DropZoneTypes = {
                 None: 'none',

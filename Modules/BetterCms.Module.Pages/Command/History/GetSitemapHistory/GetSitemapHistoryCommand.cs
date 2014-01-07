@@ -54,7 +54,7 @@ namespace BetterCms.Module.Pages.Command.History.GetSitemapHistory
 
             // TODO: recalculate DisplayedFor field.
 
-            return new SitemapHistoryViewModel(history, request, 0, request.SitemapId);
+            return new SitemapHistoryViewModel(history, request, history.Count, request.SitemapId);
         }
     }
 }

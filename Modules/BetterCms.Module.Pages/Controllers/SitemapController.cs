@@ -55,7 +55,10 @@ namespace BetterCms.Module.Pages.Controllers
         /// <summary>
         /// Edits the sitemap.
         /// </summary>
-        /// <returns>Rendered sitemap container.</returns>
+        /// <param name="sitemapId">The sitemap identifier.</param>
+        /// <returns>
+        /// Rendered sitemap container.
+        /// </returns>
         [HttpGet]
         public ActionResult EditSitemap(string sitemapId)
         {
@@ -78,8 +81,23 @@ namespace BetterCms.Module.Pages.Controllers
         /// Shows the sitemap history.
         /// </summary>
         /// <param name="sitemapId">The sitemap identifier.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// Rendered sitemap history view.
+        /// </returns>
         [HttpGet]
+        public ActionResult ShowSitemapHistory(string sitemapId)
+        {
+            return ShowSitemapHistory(new GetSitemapHistoryRequest() { SitemapId = sitemapId.ToGuidOrDefault() });
+        }
+
+        /// <summary>
+        /// Shows the sitemap history.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        /// Rendered sitemap history view.
+        /// </returns>
+        [HttpPost]
         public ActionResult ShowSitemapHistory(GetSitemapHistoryRequest request)
         {
             var model = GetCommand<GetSitemapHistoryCommand>().ExecuteCommand(request);
