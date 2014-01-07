@@ -29,6 +29,14 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemapVersion
         public ICmsConfiguration CmsConfiguration { get; set; }
 
         /// <summary>
+        /// Gets or sets the sitemap service.
+        /// </summary>
+        /// <value>
+        /// The sitemap service.
+        /// </value>
+        public ISitemapService SitemapService { get; set; }
+
+        /// <summary>
         /// Executes the specified request.
         /// </summary>
         /// <param name="versionId">The sitemap version identifier.</param>
@@ -39,12 +47,12 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemapVersion
         {
             // Return current version.
             var sitemap = Repository.AsQueryable<Models.Sitemap>()
-// TODO:                .Where(map => map.Id == versionId)
+                .Where(map => map.Id == versionId)
                 .FetchMany(map => map.Nodes)
                 .ThenFetch(node => node.Page)
                 .Distinct()
                 .ToList()
-                .FirstOrDefault();
+                .FirstOrDefault() ?? SitemapService.GetArchivedSitemapVersionForPreview(versionId);
 
             if (sitemap != null)
             {
@@ -61,8 +69,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemapVersion
                 return model;
             }
 
-            // TODO: return archived version.
-            return new SitemapViewModel();
+            return null;
         }
 
         /// <summary>

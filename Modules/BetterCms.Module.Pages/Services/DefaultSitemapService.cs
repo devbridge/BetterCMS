@@ -281,7 +281,7 @@ namespace BetterCms.Module.Pages.Services
                     Title = deserialized.Title,
                     Nodes = new List<SitemapNode>()
                 };
-                AddNodes(sitemap, deserialized.RootNodes);
+                AddNodes(sitemap, deserialized.RootNodes, null);
                 return sitemap;
             }
 
@@ -293,30 +293,36 @@ namespace BetterCms.Module.Pages.Services
         /// </summary>
         /// <param name="sitemap">The sitemap.</param>
         /// <param name="archivedNodes">The archived nodes.</param>
-        /// <returns>Sitemap node list.</returns>
-        private static List<SitemapNode> AddNodes(Sitemap sitemap, IEnumerable<ArchivedNode> archivedNodes)
+        /// <param name="parentNode">The parent node.</param>
+        /// <returns>
+        /// Sitemap node list.
+        /// </returns>
+        private static List<SitemapNode> AddNodes(Sitemap sitemap, IEnumerable<ArchivedNode> archivedNodes, SitemapNode parentNode)
         {
             var nodes = new List<SitemapNode>();
             foreach (var archivedNode in archivedNodes)
             {
-                nodes.Add(new SitemapNode
+                var node = new SitemapNode
                     {
                         Title = archivedNode.Title,
                         Url = archivedNode.Url,
                         Page = !archivedNode.PageId.HasDefaultValue()
-                            ? new PageProperties()
-                                {
-                                    Id = archivedNode.PageId,
-                                    PageUrl = archivedNode.Url
-                                }
-                            : null,
+                                ? new PageProperties()
+                                        {
+                                            Id = archivedNode.PageId,
+                                            PageUrl = archivedNode.Url
+                                        }
+                                : null,
                         DisplayOrder = archivedNode.DisplayOrder,
-                        ChildNodes = AddNodes(sitemap, archivedNode.Nodes)
-                    });
+                        ParentNode = parentNode
+                    };
+
+                node.ChildNodes = AddNodes(sitemap, archivedNode.Nodes, node);
+                nodes.Add(node);
             }
 
             nodes.ForEach(sitemap.Nodes.Add);
-            return nodes;
+            return nodes.OrderBy(node => node.DisplayOrder).ToList();
         }
 
         /// <summary>
