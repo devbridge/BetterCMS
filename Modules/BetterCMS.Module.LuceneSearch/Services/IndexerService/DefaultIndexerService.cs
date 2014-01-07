@@ -243,7 +243,26 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         private static string GetLuceneDirectory(string directoryRelative)
         {
-            var appDomainPath = HttpRuntime.AppDomainAppPath;
+            if (Path.IsPathRooted(directoryRelative))
+            {
+                return directoryRelative;
+            }
+            
+            string appDomainPath;
+                
+            try
+            {
+                appDomainPath = HttpRuntime.AppDomainAppPath;
+            }
+            catch
+            {
+                appDomainPath = null;
+            }
+            if (string.IsNullOrWhiteSpace(appDomainPath))
+            {
+                // Fix for tests / console applications
+                appDomainPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            }
             if (directoryRelative.StartsWith("~"))
             {
                 directoryRelative = directoryRelative.TrimStart('~').TrimStart('/').TrimStart('\\');
