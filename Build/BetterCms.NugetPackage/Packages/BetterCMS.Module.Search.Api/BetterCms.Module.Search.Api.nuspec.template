@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>BetterCms.Module.Search.Api</id>
+    <version>@BetterCMSVersion@</version>
+    <authors>Devbridge</authors>
+    <owners>Devbridge</owners>
+    <licenseUrl>http://www.bettercms.com/license.txt</licenseUrl>
+    <projectUrl>http://www.bettercms.com</projectUrl>
+    <iconUrl>http://www.bettercms.com/nuget-logo.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Search API module for BetterCMS. Better CMS is publishing focused and developer friendly .NET Open source CMS.</description>
+    <copyright>Better CMS is licensed under BETTER CMS LICENSE AGREEMENT (http://www.bettercms.com/license.txt).</copyright>
+    <dependencies>
+      <dependency id="BetterCms.Core" version="[@BetterCMSVersion@]" />
+      <dependency id="BetterCms.Module.Search" version="[@BetterCMSVersion@]" />
+      <dependency id="BetterCms.Module.Api" version="[@BetterCMSVersion@]" />
+    </dependencies>
+  </metadata>
+</package>

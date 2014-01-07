@@ -127,6 +127,9 @@
     <None Include="Packages\BetterCms.Module.GoogleSiteSearch\BetterCms.Module.GoogleSiteSearch.nuspec.template">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Packages\BetterCMS.Module.Search.Api\BetterCms.Module.Search.Api.nuspec.template">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
@@ -188,6 +191,10 @@
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Installation\BetterCms.Module.Installation.csproj">
       <Project>{17bf5ca2-23b6-4796-8ef1-cddf6d41a4f7}</Project>
       <Name>BetterCms.Module.Installation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCMS.Module.Search.Api\BetterCms.Module.Search.Api.csproj">
+      <Project>{99a5e4e9-de5a-4276-ac38-ff003f19bfe6}</Project>
+      <Name>BetterCms.Module.Search.Api</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Search\BetterCms.Module.Search.csproj">
       <Project>{b935dd58-18ec-4340-b236-f1dae4509cc8}</Project>
@@ -460,6 +467,20 @@ xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.GoogleSiteSearch.dll" "$(ProjectDi
 
 "$(ProjectDir)$(OutDir)BetterCms.NugetPackage.exe" "$(ProjectDir)Packages\BetterCms.Module.GoogleSiteSearch\BetterCms.Module.GoogleSiteSearch.nuspec.template" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleSiteSearch\BetterCms.Module.GoogleSiteSearch.nuspec"
 "$(SolutionDir).nuget\nuget.exe" pack "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleSiteSearch\BetterCms.Module.GoogleSiteSearch.nuspec" -OutputDirectory "$(ProjectDir)$(OutDir)\" -NoPackageAnalysis
+
+rem --- Creating BetterCms.Module.Search.Api package ------------------------------------------------------------------
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search.Api"
+
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search.Api\content"
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search.Api\content\net40"
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search.Api\content\net40\Config"
+
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search.Api\lib"
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search.Api\lib\net40"
+xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.Search.Api.dll" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search.Api\lib\net40\" /Y /Q
+
+"$(ProjectDir)$(OutDir)BetterCms.NugetPackage.exe" "$(ProjectDir)Packages\BetterCms.Module.Search.Api\BetterCms.Module.Search.Api.nuspec.template" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search.Api\BetterCms.Module.Search.Api.nuspec"
+"$(SolutionDir).nuget\nuget.exe" pack "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search.Api\BetterCms.Module.Search.Api.nuspec" -OutputDirectory "$(ProjectDir)$(OutDir)\" -NoPackageAnalysis
 
 rem --- Cleanup -------------------------------------------------------------------------------------------------------
 rmdir "$(ProjectDir)$(OutDir)packages" /S /Q
