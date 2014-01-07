@@ -40,7 +40,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         public DefaultIndexerService(ICmsConfiguration configuration)
         {
-            directory = configuration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneFileSystemDirectory);
+            directory = GetLuceneDirectory(configuration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneFileSystemDirectory));
             index = FSDirectory.Open(directory);
 
             bool disableStopWords;
@@ -238,6 +238,17 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             }
             
             return snippet;
+        }
+
+        private static string GetLuceneDirectory(string directoryRelative)
+        {
+            var appDomainPath = System.Web.HttpRuntime.AppDomainAppPath;
+            if (directoryRelative.StartsWith("~"))
+            {
+                directoryRelative = directoryRelative.TrimStart('~').TrimStart('/').TrimStart('\\');
+            }
+
+            return Path.Combine(appDomainPath, directoryRelative);
         }
     }
 }
