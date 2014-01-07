@@ -15,11 +15,11 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
     {
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
-        private readonly ICmsConfiguration cmsConfiguration;
+        private readonly string webServer;
 
         public DefaultWebCrawlerService(ICmsConfiguration cmsConfiguration)
         {
-            this.cmsConfiguration = cmsConfiguration;
+            webServer = cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneWebSiteUrl) ?? string.Empty;
         }
 
         public PageData FetchPage(string url)
@@ -27,7 +27,6 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
             var response = new PageData();
             HttpWebResponse httpWebResponse = null;
 
-            var webServer = cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneWebSiteUrl) ?? string.Empty;
             var fullUrl = string.Concat(webServer.TrimEnd('/'), "/", url.TrimStart('/'));
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(fullUrl);
             httpWebRequest.AllowAutoRedirect = true;
@@ -72,6 +71,18 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
             }
 
             return response;
+        }
+
+        public bool IsConfigured(out string message)
+        {
+            if (string.IsNullOrWhiteSpace(webServer))
+            {
+                message = "LuceneWebSiteUrl is not set in the cms.config's search section.";
+                return false;
+            }
+
+            message = null;
+            return true;
         }
     }
 }

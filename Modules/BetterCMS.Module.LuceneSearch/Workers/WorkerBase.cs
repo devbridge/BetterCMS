@@ -2,15 +2,13 @@
 using System.Threading;
 using System.Web.Hosting;
 
-using BetterCms.Core;
-
 using Common.Logging;
 
 namespace BetterCMS.Module.LuceneSearch.Workers
 {
     public abstract class WorkerBase : IRegisteredObject, IWorker
     {    
-        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+        protected static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
         private readonly object lockObject = new object();        
 

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <cms>
   <search>
-    <add key="LuceneWebSiteUrl" value="http://localhost/" />
+    <add key="LuceneWebSiteUrl" value="" />
     <add key="LuceneFileSystemDirectory" value="../../Lucene.BetterCms" />
     <add key="LuceneIndexerFrequency" value="00:10:00" />
     <add key="LucenePagesWatcherFrequency" value="00:30:00" />

@@ -1,6 +1,10 @@
-﻿@using BetterCms.Module.Root.Mvc.Helpers
+﻿@using Autofac
+@using BetterCms.Core.Dependencies
+@using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Search
+@using BetterCms.Module.Search.Content.Resources
 @using BetterCms.Module.Search.Helpers
+@using BetterCms.Module.Search.Services
 
 @model BetterCms.Module.Search.ViewModels.SearchInputViewModel
 
@@ -23,15 +27,23 @@
     {
         queryParameterName = SearchModuleConstants.WidgetOptionDefaultValues.QueryParameterName;
     }
+    bool hasImplementation;
+    using (var container = ContextScopeProvider.CreateChildContainer())
+    {
+        hasImplementation = container.IsRegistered<ISearchService>();
+    }
 }
 
-<form action="@searchResultsUrl" class="bcms-search-input-form" method="@formMethod">
-    @Html.LabelFor(f => f.Query, labelTitle, new { @for = queryParameterName, @class = "bcms-search-input-label" })
-    @Html.TextBoxFor(m => m.Query, 
-                                       new {
-                                               @class = "bcms-search-input required",
-                                               @placeholder = inputPlaceholder,
-                                               @Name = queryParameterName
-                                           })
-    <button type="submit" class="bcms-search-submit">@submitTitle</button>    
-</form>
+@if (!hasImplementation)
+{
+    <h3 style="color: red;">@SearchGlobalization.Search_Module_Has_No_Service_Implementations</h3>
+}
+else 
+{
+
+    <form action="@searchResultsUrl" class="bcms-search-input-form" method="@formMethod">
+        @Html.LabelFor(f => f.Query, labelTitle, new { @for = queryParameterName, @class = "bcms-search-input-label" })
+        @Html.TextBoxFor(m => m.Query, new { @class = "bcms-search-input required", @placeholder = inputPlaceholder, @Name = queryParameterName })
+        <button type="submit" class="bcms-search-submit">@submitTitle</button>    
+    </form>
+}

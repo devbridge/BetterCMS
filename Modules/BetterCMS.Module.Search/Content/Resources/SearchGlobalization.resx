@@ -123,4 +123,7 @@
   <data name="SearchForm_SubmitButton_Title" xml:space="preserve">
     <value>Search</value>
   </data>
+  <data name="Search_Module_Has_No_Service_Implementations" xml:space="preserve">
+    <value>Search module has no search service implementations. Please install Lucene search or Google site search module.</value>
+  </data>
 </root>

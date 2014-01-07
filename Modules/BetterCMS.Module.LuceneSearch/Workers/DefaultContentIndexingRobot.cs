@@ -29,6 +29,13 @@ namespace BetterCMS.Module.LuceneSearch.Workers
                 var scrapeService = lifetimeScope.Resolve<IScrapeService>();
                 var crawlerService = lifetimeScope.Resolve<IWebCrawlerService>();
 
+                string message;
+                if (!crawlerService.IsConfigured(out message))
+                {
+                    Log.ErrorFormat("Cannot start Lucene web crawler: {0}", message);
+                    return;
+                }
+
                 var links = scrapeService.GetLinksForProcessing();
 
                 var pages = new List<PageData>();

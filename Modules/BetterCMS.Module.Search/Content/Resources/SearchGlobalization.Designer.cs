@@ -61,6 +61,15 @@ namespace BetterCms.Module.Search.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search module has no search service implementations. Please install Lucene search or Google site search module..
+        /// </summary>
+        public static string Search_Module_Has_No_Service_Implementations {
+            get {
+                return ResourceManager.GetString("Search_Module_Has_No_Service_Implementations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter search query ....
         /// </summary>
         public static string SearchForm_InputPlaceholder_Title {

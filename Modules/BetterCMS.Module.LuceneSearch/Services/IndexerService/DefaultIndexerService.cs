@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Web;
 
 using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 
@@ -237,12 +238,12 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
                 snippet = string.Concat(snippet, "...");
             }
             
-            return snippet;
+            return HttpUtility.HtmlDecode(snippet);
         }
 
         private static string GetLuceneDirectory(string directoryRelative)
         {
-            var appDomainPath = System.Web.HttpRuntime.AppDomainAppPath;
+            var appDomainPath = HttpRuntime.AppDomainAppPath;
             if (directoryRelative.StartsWith("~"))
             {
                 directoryRelative = directoryRelative.TrimStart('~').TrimStart('/').TrimStart('\\');
