@@ -11,6 +11,7 @@ namespace BetterCms.Module.Pages.Models.Maps
         {
             Table("SitemapArchives");
 
+            Map(x => x.Title).Not.Nullable().Length(MaxLength.Name);
             Map(x => x.ArchivedVersion).Not.Nullable().Length(MaxLength.Max);
 
             References(x => x.Sitemap).Cascade.None().LazyLoad();

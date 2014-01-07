@@ -1297,7 +1297,6 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.sitemap.settings.canDeleteNode = false;
             self.sitemap.settings.canDragNode = false;
             self.sitemap.settings.canDropNode = false;
-//            self.sitemap.settings.nodeSaveButtonTitle = globalization.sitemapNodeSaveButton;
             self.sitemap.settings.nodeSaveAfterUpdate = false;
         }
         // --------------------------------------------------------------------

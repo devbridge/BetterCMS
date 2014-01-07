@@ -219,4 +219,22 @@
   <data name="Sitemap_HistoryDialog_Title" xml:space="preserve">
     <value>Site Map History</value>
   </data>
+  <data name="SitemapHistory_Column_ArchivedBy" xml:space="preserve">
+    <value>Archived By</value>
+  </data>
+  <data name="SitemapHistory_Column_ArchivedOn" xml:space="preserve">
+    <value>Archived On</value>
+  </data>
+  <data name="SitemapHistory_Column_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="SitemapHistory_Column_Title" xml:space="preserve">
+    <value>Site Map Title</value>
+  </data>
+  <data name="SitemapStatus_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="SitemapStatus_Archived" xml:space="preserve">
+    <value>Archived</value>
+  </data>
 </root>

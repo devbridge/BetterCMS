@@ -331,6 +331,60 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Archived By.
+        /// </summary>
+        public static string SitemapHistory_Column_ArchivedBy {
+            get {
+                return ResourceManager.GetString("SitemapHistory_Column_ArchivedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Archived On.
+        /// </summary>
+        public static string SitemapHistory_Column_ArchivedOn {
+            get {
+                return ResourceManager.GetString("SitemapHistory_Column_ArchivedOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string SitemapHistory_Column_Status {
+            get {
+                return ResourceManager.GetString("SitemapHistory_Column_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Site Map Title.
+        /// </summary>
+        public static string SitemapHistory_Column_Title {
+            get {
+                return ResourceManager.GetString("SitemapHistory_Column_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active.
+        /// </summary>
+        public static string SitemapStatus_Active {
+            get {
+                return ResourceManager.GetString("SitemapStatus_Active", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Archived.
+        /// </summary>
+        public static string SitemapStatus_Archived {
+            get {
+                return ResourceManager.GetString("SitemapStatus_Archived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Site Maps.
         /// </summary>
         public static string SiteSettings_SitemapMenuItem {

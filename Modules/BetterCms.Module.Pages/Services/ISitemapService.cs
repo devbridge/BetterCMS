@@ -65,7 +65,9 @@ namespace BetterCms.Module.Pages.Services
         /// Gets the sitemap history.
         /// </summary>
         /// <param name="sitemapId">The sitemap identifier.</param>
-        /// <returns>Sitemap previous archived versions.</returns>
+        /// <returns>
+        /// Sitemap previous archived versions.
+        /// </returns>
         IList<SitemapArchive> GetSitemapHistory(Guid sitemapId);
 
         /// <summary>

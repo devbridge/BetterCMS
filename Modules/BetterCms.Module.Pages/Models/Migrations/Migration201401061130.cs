@@ -28,6 +28,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
                 .InSchema(SchemaName)
                 .WithCmsBaseColumns()
                 .WithColumn("SitemapId").AsGuid().NotNullable()
+                .WithColumn("Title").AsString(MaxLength.Name).NotNullable()
                 .WithColumn("ArchivedVersion").AsString(MaxLength.Max).NotNullable();
 
             Create

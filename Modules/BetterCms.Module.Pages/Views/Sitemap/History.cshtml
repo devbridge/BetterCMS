@@ -32,38 +32,38 @@
                .Encode(false)
                .Named("&nbsp;")
                .Sortable(false)
-               .HeaderAttributes(@style => "width: 40px; padding: 10px;", @class => "bcms-tables-nohover");
+               .HeaderAttributes(@style => "width: 40px; padding: 10px;", @class => "bcms-tables-nohover")
+               .Attributes(@style => "width: 40px;");
 
-        column.For(m => m.PublishedOn.ToFormattedDateString())
-               .Named(PagesGlobalization.ContentHistory_Column_PublishedOn)
-               .SortColumnName("PublishedOn")
-               .HeaderAttributes(@style => "width: 95px;")
-               .Attributes(@style => "width: 100px;");
-
-        column.For(m => m.PublishedByUser)
-               .Named(PagesGlobalization.ContentHistory_Column_PublishedByUser)
-               .SortColumnName("PublishedByUser")
-               .HeaderAttributes(@style => "width: 304px;")
-               .Attributes(@style => "width: 304px;");
+        column.For(m => m.SitemapTitle)
+               .Named(NavigationGlobalization.SitemapHistory_Column_Title)
+               .SortColumnName("SitemapTitle")
+               .HeaderAttributes(@style => "width: 410px;")
+               .Attributes(@style => "width: 410px;");
 
         column.For(m => m.ArchivedOn.ToFormattedDateString())
-               .Named(PagesGlobalization.ContentHistory_Column_ArchivedOn)
+               .Named(NavigationGlobalization.SitemapHistory_Column_ArchivedOn)
                .SortColumnName("ArchivedOn")
                .HeaderAttributes(@style => "width: 100px;")
                .Attributes(@style => "width: 100px;");
 
-        column.For(m => m.DisplayedFor.ToFormatedTimeString())
-               .Named(PagesGlobalization.ContentHistory_Column_DisplayedFor)
-               .SortColumnName("DisplayedFor")
-               .HeaderAttributes(@style => "width: 105px;")
-               .Attributes(@style => "width: 105px;");
+        column.For(m => m.ArchivedByUser)
+               .Named(NavigationGlobalization.SitemapHistory_Column_ArchivedBy)
+               .SortColumnName("ArchivedByUser")
+               .HeaderAttributes(@style => "width: 100px;")
+               .Attributes(@style => "width: 100px;");
+
+        column.For(m => m.StatusName)
+               .Named(NavigationGlobalization.SitemapHistory_Column_Status)
+               .SortColumnName("StatusName")
+               .Encode(false)
+               .HeaderAttributes(@style => "width: 90px;");
 
         column.For(f => RestoreLink(f))
                .Encode(false)
                .Named("&nbsp;")
                .Sortable(false)
-               .HeaderAttributes(@style => "width: 170px;", @class => "bcms-tables-nohover")
-               .Attributes(@style => "width: 144px;");
+               .HeaderAttributes(@style => "width: 80px;", @class => "bcms-tables-nohover");
     };
 }
 <div class="bcms-scroll-window">

@@ -26,22 +26,6 @@ namespace BetterCms.Module.Pages.ViewModels.History
         public int Version { get; set; }
 
         /// <summary>
-        /// Gets or sets the published on.
-        /// </summary>
-        /// <value>
-        /// The published on.
-        /// </value>
-        public DateTime? PublishedOn { get; set; }
-
-        /// <summary>
-        /// Gets or sets the published by user.
-        /// </summary>
-        /// <value>
-        /// The published by user.
-        /// </value>
-        public string PublishedByUser { get; set; }
-
-        /// <summary>
         /// Gets or sets the archived on.
         /// </summary>
         /// <value>
@@ -58,20 +42,20 @@ namespace BetterCms.Module.Pages.ViewModels.History
         public string ArchivedByUser { get; set; }
 
         /// <summary>
-        /// Gets or sets the displayed for.
-        /// </summary>
-        /// <value>
-        /// The displayed for.
-        /// </value>
-        public TimeSpan? DisplayedFor { get; set; }
-
-        /// <summary>
         /// Gets or sets the name of the status.
         /// </summary>
         /// <value>
         /// The name of the status.
         /// </value>
         public string StatusName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the title.
+        /// </summary>
+        /// <value>
+        /// The title.
+        /// </value>
+        public string SitemapTitle { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether current user can restore it.

@@ -91,14 +91,6 @@ namespace BetterCms.Module.Pages.Controllers
             return ShowSitemapHistory(new GetSitemapHistoryRequest() { SitemapId = sitemapId.ToGuidOrDefault() });
         }
 
-        [HttpGet]
-        public ActionResult SitemapVersion(string versionId)
-        {
-            var model = GetCommand<GetSitemapVersionCommand>().ExecuteCommand(versionId.ToGuidOrDefault());
-            var view = RenderView("Preview", model);
-            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
-        }
-
         /// <summary>
         /// Shows the sitemap history.
         /// </summary>
@@ -112,6 +104,21 @@ namespace BetterCms.Module.Pages.Controllers
             var model = GetCommand<GetSitemapHistoryCommand>().ExecuteCommand(request);
             var view = RenderView("History", model);
 
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Sitemaps the version.
+        /// </summary>
+        /// <param name="versionId">The version identifier.</param>
+        /// <returns>
+        /// Sitemap preview.
+        /// </returns>
+        [HttpGet]
+        public ActionResult SitemapVersion(string versionId)
+        {
+            var model = GetCommand<GetSitemapVersionCommand>().ExecuteCommand(versionId.ToGuidOrDefault());
+            var view = RenderView("Preview", model);
             return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
 

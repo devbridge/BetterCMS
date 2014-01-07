@@ -197,7 +197,7 @@ namespace BetterCms.Module.Pages.Services
             return repository
                 .AsQueryable<SitemapArchive>()
                 .Where(archive => archive.Sitemap.Id == sitemapId)
-                .OrderBy(archive => archive.CreatedOn)
+                .OrderByDescending(archive => archive.CreatedOn)
                 .ToList();
         }
 
@@ -218,6 +218,7 @@ namespace BetterCms.Module.Pages.Services
             var archive = new SitemapArchive
                 {
                     Sitemap = sitemap,
+                    Title = sitemap.Title,
                     ArchivedVersion = ToJson(sitemap)
                 };
 
