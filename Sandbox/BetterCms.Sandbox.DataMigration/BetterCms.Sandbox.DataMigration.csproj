@@ -102,7 +102,7 @@
       <Name>BetterCms.Configuration</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\BetterCMS.Core\BetterCms.Core.csproj">
-      <Project>{694CA5CA-A0E2-4578-A249-648498B058D7}</Project>
+      <Project>{694ca5ca-a0e2-4578-a249-648498b058d7}</Project>
       <Name>BetterCms.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCMS.Module.Blog\BetterCms.Module.Blog.csproj">
@@ -132,6 +132,10 @@
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Installation\BetterCms.Module.Installation.csproj">
       <Project>{17BF5CA2-23B6-4796-8EF1-CDDF6D41A4F7}</Project>
       <Name>BetterCms.Module.Installation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Search\BetterCms.Module.Search.csproj">
+      <Project>{b935dd58-18ec-4340-b236-f1dae4509cc8}</Project>
+      <Name>BetterCms.Module.Search</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Users\BetterCms.Module.Users.csproj">
       <Project>{C530025B-8AB7-402D-B60C-000C9A5D0446}</Project>

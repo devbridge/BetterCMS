@@ -209,6 +209,7 @@
     <Content Include="Scripts\jasmine.phantomjs.xml-runner.js" />
     <Content Include="spec\blog.authors.api.behavior.js" />
     <Content Include="spec\blog.blogPosts.api.behavior.js" />
+    <Content Include="spec\search.api.behavior.js" />
     <Content Include="spec\root.languages.api.behavior.js" />
     <Content Include="spec\users.roles.api.behavior.js" />
     <Content Include="spec\users.users.api.behavior.js" />
@@ -271,6 +272,10 @@
       <Project>{17bf5ca2-23b6-4796-8ef1-cddf6d41a4f7}</Project>
       <Name>BetterCms.Module.Installation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCMS.Module.LuceneSearch\BetterCms.Module.LuceneSearch.csproj">
+      <Project>{5255abed-2111-497f-a94c-6aa89862d814}</Project>
+      <Name>BetterCms.Module.LuceneSearch</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.MediaManager\BetterCms.Module.MediaManager.csproj">
       <Project>{f3e41793-e8ed-4ba8-a1ab-cba1e47b0786}</Project>
       <Name>BetterCms.Module.MediaManager</Name>
@@ -286,6 +291,14 @@
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Root\BetterCms.Module.Root.csproj">
       <Project>{66e7e4df-eeea-4b1e-8663-a1b430eb7375}</Project>
       <Name>BetterCms.Module.Root</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCMS.Module.Search.Api\BetterCms.Module.Search.Api.csproj">
+      <Project>{99a5e4e9-de5a-4276-ac38-ff003f19bfe6}</Project>
+      <Name>BetterCms.Module.Search.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Search\BetterCms.Module.Search.csproj">
+      <Project>{b935dd58-18ec-4340-b236-f1dae4509cc8}</Project>
+      <Name>BetterCms.Module.Search</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Users.Api\BetterCms.Module.Users.Api.csproj">
       <Project>{fcc9127a-74d2-41b1-8dee-0415db7a6c76}</Project>

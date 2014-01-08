@@ -1,0 +1,24 @@
+﻿namespace BetterCMS.Module.LuceneSearch
+{
+    public static class LuceneSearchConstants
+    {
+        public static class ConfigurationKeys
+        {
+            public const string LuceneWebSiteUrl = "LuceneWebSiteUrl";
+
+            public const string LucenePagesWatcherFrequency = "LucenePagesWatcherFrequency";
+
+            public const string LuceneIndexerFrequency = "LuceneIndexerFrequency";
+
+            public const string LuceneFileSystemDirectory = "LuceneFileSystemDirectory";
+
+            public const string LuceneMaxPagesPerQuery = "LuceneMaxPagesPerQuery";
+
+            public const string LucenePageExpireTimeout = "LucenePageExpireTimeout";
+
+            public const string LuceneFailedPageReindexingTimeout = "LuceneFailedPageReindexingTimeout";
+
+            public const string LuceneDisableStopWords = "LuceneDisableStopWords";
+        }
+    }
+}

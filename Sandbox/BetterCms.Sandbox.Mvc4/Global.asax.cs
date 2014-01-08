@@ -45,6 +45,8 @@ namespace BetterCms.Sandbox.Mvc4
 
             cmsHost.OnApplicationStart(this);
             
+
+
             AddPageEvents();
             AddSitemapEvents();
             AddRedirectEvents();

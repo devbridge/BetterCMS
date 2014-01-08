@@ -1,0 +1,22 @@
+﻿@using Autofac
+@using BetterCms.Core.Dependencies
+@using BetterCms.Module.Search.Content.Resources
+@using BetterCms.Module.Search.Services
+@model BetterCms.Module.Root.ViewModels.Cms.RenderWidgetViewModel
+
+@{
+    bool hasImplementation;
+    using (var container = ContextScopeProvider.CreateChildContainer())
+    {
+        hasImplementation = container.IsRegistered<ISearchService>();
+    }
+
+    if (!hasImplementation)
+    {
+        <h3 style="color: red;">@SearchGlobalization.Search_Module_Has_No_Service_Implementations</h3>
+    }
+    else
+    {
+        Html.RenderAction("Results", "Search", new { Area = "bcms-search", WidgetModel = Model });
+    }
+}

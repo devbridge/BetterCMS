@@ -251,7 +251,7 @@
   <ItemGroup>
     <Folder Include="Areas\bcms-images-gallery\" />
     <Folder Include="Areas\bcms-media\Views\" />
-    <Folder Include="Areas\bcms-pages\Views\" />
+    <Folder Include="Areas\bcms-search\" />
     <Folder Include="file\bcms-blog\scripts\" />
     <Folder Include="file\bcms-images-gallery\scripts\" />
     <Folder Include="file\bcms-media\scripts\" />
@@ -283,6 +283,10 @@
       <Project>{17bf5ca2-23b6-4796-8ef1-cddf6d41a4f7}</Project>
       <Name>BetterCms.Module.Installation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCMS.Module.LuceneSearch\BetterCms.Module.LuceneSearch.csproj">
+      <Project>{5255abed-2111-497f-a94c-6aa89862d814}</Project>
+      <Name>BetterCms.Module.LuceneSearch</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.MediaManager\BetterCms.Module.MediaManager.csproj">
       <Project>{F3E41793-E8ED-4BA8-A1AB-CBA1E47B0786}</Project>
       <Name>BetterCms.Module.MediaManager</Name>
@@ -298,6 +302,10 @@
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Root\BetterCms.Module.Root.csproj">
       <Project>{66e7e4df-eeea-4b1e-8663-a1b430eb7375}</Project>
       <Name>BetterCms.Module.Root</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Search\BetterCms.Module.Search.csproj">
+      <Project>{b935dd58-18ec-4340-b236-f1dae4509cc8}</Project>
+      <Name>BetterCms.Module.Search</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Users\BetterCms.Module.Users.csproj">
       <Project>{c530025b-8ab7-402d-b60c-000c9a5d0446}</Project>
@@ -361,6 +369,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\Layouts\EmptyLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

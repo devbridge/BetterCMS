@@ -87,6 +87,8 @@ function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete) {
             self.code(item.Code);
 
             self.autocompleteViewModel = new LanguageAutocompleteListViewModel(function (suggestionItem) {
+                self.isSelected = true;
+
                 var name = self.name(),
                     suggestedName = suggestionItem.name();
 

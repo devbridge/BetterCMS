@@ -100,6 +100,16 @@ namespace BetterCms.Core.DataAccess
             return UnitOfWork.Session.QueryOver<TEntity>().Where(f => !f.IsDeleted);
         }
 
+        public IQueryOver<TEntity, TEntity> AsQueryOver<TEntity>(Expression<Func<TEntity>> alias = null) where TEntity : class
+        {
+            if (alias != null)
+            {
+                return UnitOfWork.Session.QueryOver(alias);
+            }
+
+            return UnitOfWork.Session.QueryOver<TEntity>();
+        }
+
         public virtual IQueryable<TEntity> AsQueryable<TEntity>(Expression<Func<TEntity, bool>> filter) where TEntity : IEntity
         {
             return AsQueryable<TEntity>().Where(filter);
@@ -150,6 +160,6 @@ namespace BetterCms.Core.DataAccess
         public void Refresh<TEntity>(TEntity entity) where TEntity : IEntity
         {
             UnitOfWork.Session.Refresh(entity);
-        }
+        }        
     }
 }

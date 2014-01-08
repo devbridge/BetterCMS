@@ -179,6 +179,7 @@
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\Options\PageContentOptionsService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\PageContentService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Translations\PageTranslationsService.cs" />
+    <Compile Include="Operations\Pages\Pages\Search\DefaultSearchPagesService.cs" />
     <Compile Include="Operations\Pages\Redirects\RedirectsService.cs" />
     <Compile Include="Operations\Pages\Redirects\Redirect\RedirectService.cs" />
     <Compile Include="Operations\Pages\Sitemap\Nodes\NodesService.cs" />

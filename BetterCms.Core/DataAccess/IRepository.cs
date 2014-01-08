@@ -26,6 +26,8 @@ namespace BetterCms.Core.DataAccess
 
         IQueryOver<TEntity, TEntity> AsQueryOver<TEntity>() where TEntity : class, IEntity;
 
+        IQueryOver<TEntity, TEntity> AsQueryOver<TEntity>(Expression<Func<TEntity>> alias) where TEntity : class;
+
         IQueryable<TEntity> AsQueryable<TEntity>() where TEntity : IEntity;
 
         IQueryable<TEntity> AsQueryable<TEntity>(Expression<Func<TEntity, bool>> filter) where TEntity : IEntity;

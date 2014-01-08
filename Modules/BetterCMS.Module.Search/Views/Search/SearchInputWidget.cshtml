@@ -1,0 +1,49 @@
+﻿@using Autofac
+@using BetterCms.Core.Dependencies
+@using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Search
+@using BetterCms.Module.Search.Content.Resources
+@using BetterCms.Module.Search.Helpers
+@using BetterCms.Module.Search.Services
+
+@model BetterCms.Module.Search.ViewModels.SearchInputViewModel
+
+@{
+    // Bind query from URL parameters
+    Model.Query = Model.GetSearchQueryParameter(Request, Model.Query);
+    
+    string labelTitle = Model.GetOptionValue<string>(SearchModuleConstants.WidgetOptionNames.LabelTitle) ?? string.Empty;
+    string submitTitle = Model.GetOptionValue<string>(SearchModuleConstants.WidgetOptionNames.SubmitTitle);
+    string inputPlaceholder = Model.GetOptionValue<string>(SearchModuleConstants.WidgetOptionNames.InputPlaceholder);
+    string searchResultsUrl = Model.GetOptionValue<string>(SearchModuleConstants.WidgetOptionNames.SearchResultsUrl);
+    string queryParameterName = Model.GetOptionValue<string>(SearchModuleConstants.WidgetOptionNames.QueryParameterName);
+    string formMethod = Model.GetOptionValue<string>(SearchModuleConstants.WidgetOptionNames.FormMethod);
+    
+    if (string.IsNullOrWhiteSpace(formMethod))
+    {
+        formMethod = SearchModuleConstants.WidgetOptionDefaultValues.FormMethod;
+    }
+    if (string.IsNullOrWhiteSpace(queryParameterName))
+    {
+        queryParameterName = SearchModuleConstants.WidgetOptionDefaultValues.QueryParameterName;
+    }
+    bool hasImplementation;
+    using (var container = ContextScopeProvider.CreateChildContainer())
+    {
+        hasImplementation = container.IsRegistered<ISearchService>();
+    }
+}
+
+@if (!hasImplementation)
+{
+    <h3 style="color: red;">@SearchGlobalization.Search_Module_Has_No_Service_Implementations</h3>
+}
+else 
+{
+
+    <form action="@searchResultsUrl" class="bcms-search-input-form" method="@formMethod">
+        @Html.LabelFor(f => f.Query, labelTitle, new { @for = queryParameterName, @class = "bcms-search-input-label" })
+        @Html.TextBoxFor(m => m.Query, new { @class = "bcms-search-input required", @placeholder = inputPlaceholder, @Name = queryParameterName })
+        <button type="submit" class="bcms-search-submit">@submitTitle</button>    
+    </form>
+}

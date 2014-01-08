@@ -109,6 +109,7 @@
     <Compile Include="Configuration\CmsInstallationConfigurationElement.cs" />
     <Compile Include="Configuration\AccessControlCollection.cs" />
     <Compile Include="Configuration\CmsUsersConfigurationElement.cs" />
+    <Compile Include="Configuration\CmsSearchConfigurationElement.cs" />
     <Compile Include="Configuration\CustomRoleElement.cs" />
     <Compile Include="Configuration\CustomRolesCollection.cs" />
     <Compile Include="Configuration\DatabaseType.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="Configuration\StorageServiceType.cs" />
     <Compile Include="Configuration\TrailingSlashBehaviorType.cs" />
     <Compile Include="Configuration\UrlPatternsCollection.cs" />
+    <Compile Include="ICmsSearchConfiguration.cs" />
     <Compile Include="ICmsUsersConfiguration.cs" />
     <Compile Include="ICmsInstallationConfiguration.cs" />
     <Compile Include="ICmsCacheConfiguration.cs" />

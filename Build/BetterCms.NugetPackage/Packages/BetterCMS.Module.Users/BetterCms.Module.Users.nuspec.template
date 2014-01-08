@@ -15,7 +15,6 @@
       <dependency id="BetterCms.Core" version="[@BetterCMSVersion@]" />
       <dependency id="BetterCms.Module.Root" version="[@BetterCMSVersion@]" />
       <dependency id="BetterCms.Module.Pages" version="[@BetterCMSVersion@]" />
-      <dependency id="BetterCms.Module.MediaManager" version="[@BetterCMSVersion@]" />
     </dependencies>
   </metadata>
 </package>
