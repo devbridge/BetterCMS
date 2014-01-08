@@ -48,7 +48,7 @@ namespace BetterCms.Module.Pages.Models
         protected virtual PageProperties CopyDataToDuplicate(PageProperties duplicate)
         {
             duplicate.Language = Language;
-            duplicate.LanguageGroupIdentifier = Guid.NewGuid();
+            duplicate.LanguageGroupIdentifier = null;
             duplicate.MetaTitle = MetaTitle;
             duplicate.MetaKeywords = MetaKeywords;
             duplicate.MetaDescription = MetaDescription;
