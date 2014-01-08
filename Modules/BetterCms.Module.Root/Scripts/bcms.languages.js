@@ -115,9 +115,10 @@ function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete) {
         LanguageViewModel.prototype.onAfterItemSaved = function (json) {
             _super.prototype.onAfterItemSaved.call(this, json);
             
-            if (!this.code.editingIsDisabled) {
+            if (json.Success === true && !this.code.editingIsDisabled) {
                 this.code.editingIsDisabled = ko.observable(true);
                 this.hasNameFocus(true);
+                this.code(json.Data.Code);
             }
         };
 
