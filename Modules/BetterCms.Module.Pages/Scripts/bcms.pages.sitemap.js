@@ -286,7 +286,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Loads a sitemap history dialog.
         */
-        sitemap.showSitemapHistoryDialog = function(id, onClose, dialogTitle) {
+        sitemap.showSitemapHistoryDialog = function(id, afterSitemapRestored, dialogTitle) {
             modal.open({
                 title: dialogTitle || globalization.sitemapHistoryDialogTitle,
                 cancelTitle: globalization.closeButtonTitle,
@@ -294,7 +294,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 onLoad: function (dialog) {
                     dynamicContent.bindDialog(dialog, $.format(links.sitemapHistoryDialogUrl, id), {
                         contentAvailable: function () {
-                            initSitemapHistoryDialogEvents(dialog);
+                            initSitemapHistoryDialogEvents(dialog, afterSitemapRestored);
                         },
 
                         beforePost: function () {
@@ -1306,14 +1306,19 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Initializes sitemap history dialog events.
         */
-        function initSitemapHistoryDialogEvents(dialog) {
+        function initSitemapHistoryDialogEvents(dialog, afterSitemapRestored) {
             dialog.maximizeHeight();
 
             var container = dialog.container.find(selectors.modalContent);
 
             container.find(selectors.gridRestoreLinks).on('click', function (event) {
                 bcms.stopEventPropagation(event);
-                restoreVersion(dialog, $(this).data('id'));
+                restoreVersion(dialog, $(this).data('id'), function (json) {
+                    if ($.isFunction(afterSitemapRestored)) {
+                        afterSitemapRestored(json);
+                    }
+                    searchSitemapHistory(dialog, container, form, afterSitemapRestored);
+                });
             });
 
             container.find(selectors.gridCells).on('click', function () {
@@ -1330,19 +1335,17 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             var form = container.find(selectors.sitemapHistoryForm);
             grid.bindGridForm(form, function (data) {
                 container.html(data);
-                initSitemapHistoryDialogEvents(dialog);
+                initSitemapHistoryDialogEvents(dialog, afterSitemapRestored);
             });
 
             form.on('submit', function (event) {
                 bcms.stopEventPropagation(event);
-                alert("TODO: implement search.");
-                // TODO: implement: searchPageContentHistory(dialog, container, form);
+                searchSitemapHistory(dialog, container, form, afterSitemapRestored);
                 return false;
             });
 
             form.find(selectors.sitemapHistorySearchButton).on('click', function () {
-                alert("TODO: implement search.");
-                // TODO: implement: searchPageContentHistory(dialog, container, form);
+                searchSitemapHistory(dialog, container, form, afterSitemapRestored);
             });
         };
 
@@ -1392,13 +1395,13 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Restores specified version from history.
         */
-        function restoreVersion(dialog, id) {
+        function restoreVersion(dialog, id, afterSitemapRestored) {
             var submitRestoreIt = function (isConfirmed) {
                 var url = $.format(links.restoreSitemapVersionUrl, id, isConfirmed),
                     onComplete = function (json) {
                         if (json.Success) {
                             messages.refreshBox(dialog.container, json);
-                            // TODO: redirect.ReloadWithAlert();
+                            afterSitemapRestored(json);
                         } else {
                             if (json.Data && json.Data.ConfirmationMessage) {
                                 modal.confirm({
@@ -1430,6 +1433,16 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 onAccept: function () {
                     submitRestoreIt(0);
                 }
+            });
+        }
+
+        /**
+        * Posts sitemap history form with search query.
+        */
+        function searchSitemapHistory(dialog, container, form, afterSitemapRestored) {
+            grid.submitGridForm(form, function (data) {
+                container.html(data);
+                initSitemapHistoryDialogEvents(dialog, data, afterSitemapRestored);
             });
         }
 

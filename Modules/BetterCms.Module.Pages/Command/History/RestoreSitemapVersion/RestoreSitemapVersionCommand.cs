@@ -1,16 +1,12 @@
 ﻿using System.Linq;
 
-using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
-using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
-using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Pages.ViewModels.History;
-using BetterCms.Module.Root;
+using BetterCms.Module.Pages.ViewModels.SiteSettings;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.Services;
 
 using NHibernate.Linq;
 
@@ -19,7 +15,7 @@ namespace BetterCms.Module.Pages.Command.History.RestoreSitemapVersion
     /// <summary>
     /// Command for restoring sitemap version.
     /// </summary>
-    public class RestoreSitemapVersionCommand : CommandBase, ICommand<SitemapRestoreViewModel, bool>
+    public class RestoreSitemapVersionCommand : CommandBase, ICommand<SitemapRestoreViewModel, SiteSettingSitemapViewModel>
     {
         /// <summary>
         /// Gets or sets the CMS configuration.
@@ -42,9 +38,9 @@ namespace BetterCms.Module.Pages.Command.History.RestoreSitemapVersion
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>
-        /// <c>true</c>, if successfully restored.
+        ///   <c>true</c>, if successfully restored.
         /// </returns>
-        public bool Execute(SitemapRestoreViewModel request)
+        public SiteSettingSitemapViewModel Execute(SitemapRestoreViewModel request)
         {
             var archive =
                 Repository.AsQueryable<SitemapArchive>()
@@ -79,11 +75,16 @@ namespace BetterCms.Module.Pages.Command.History.RestoreSitemapVersion
             UnitOfWork.BeginTransaction();
 
             SitemapService.ArchiveSitemap(archive.Sitemap);
-            SitemapService.RestoreSitemapFromArchive(archive);
+            var restoredSitemap = SitemapService.RestoreSitemapFromArchive(archive);
 
             UnitOfWork.Commit();
 
-            return true;
+            return new SiteSettingSitemapViewModel
+                {
+                    Id = restoredSitemap.Id,
+                    Title = restoredSitemap.Title,
+                    Version = restoredSitemap.Version
+                };
         }
     }
 }

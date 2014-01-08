@@ -93,6 +93,7 @@ namespace BetterCms.Module.Pages.Services
         /// Restores the sitemap from archive.
         /// </summary>
         /// <param name="archive">The archive.</param>
-        void RestoreSitemapFromArchive(SitemapArchive archive);
+        /// <returns>Restored sitemap.</returns>
+        Sitemap RestoreSitemapFromArchive(SitemapArchive archive);
     }
 }

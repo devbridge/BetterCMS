@@ -254,7 +254,10 @@ namespace BetterCms.Module.Pages.Services
         /// Restores the sitemap from archive.
         /// </summary>
         /// <param name="archive">The archive.</param>
-        public void RestoreSitemapFromArchive(SitemapArchive archive)
+        /// <returns>
+        /// Restored sitemap.
+        /// </returns>
+        public Sitemap RestoreSitemapFromArchive(SitemapArchive archive)
         {
             var sitemap = archive.Sitemap;
             var archivedSitemap = FromJson(archive.ArchivedVersion);
@@ -268,6 +271,8 @@ namespace BetterCms.Module.Pages.Services
             repository.Save(sitemap);
 
             RestoreTheNodes(sitemap, null, archivedSitemap.Nodes.Where(node => node.ParentNode == null).OrderBy(node => node.DisplayOrder).ToList());
+
+            return sitemap;
         }
 
         /// <summary>

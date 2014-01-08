@@ -128,18 +128,21 @@ namespace BetterCms.Module.Pages.Controllers
         /// Restores the sitemap version.
         /// </summary>
         /// <param name="id">The id.</param>
-        /// <returns>Json result.</returns>
+        /// <param name="isUserConfirmed">The is user confirmed.</param>
+        /// <returns>
+        /// Json result.
+        /// </returns>
         [HttpPost]
         public ActionResult RestoreSitemapVersion(string id, string isUserConfirmed)
         {
             try
             {
-                var result = GetCommand<RestoreSitemapVersionCommand>().ExecuteCommand(new SitemapRestoreViewModel
+                var model = GetCommand<RestoreSitemapVersionCommand>().ExecuteCommand(new SitemapRestoreViewModel
                     {
                         SitemapVersionId = id.ToGuidOrDefault(),
                         IsUserConfirmed = isUserConfirmed.ToBoolOrDefault()
                     });
-                return WireJson(result);
+                return WireJson(model != null, model);
             }
             catch (ConfirmationRequestException exc)
             {
