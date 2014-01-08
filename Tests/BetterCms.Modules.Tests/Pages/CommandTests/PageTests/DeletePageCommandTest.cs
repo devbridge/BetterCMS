@@ -45,7 +45,13 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
                     var urlService = new Mock<IUrlService>();
                     urlService.Setup(f => f.FixUrl(It.IsAny<string>())).Returns((string a) => a);
 
-                    var command = new DeletePageCommand(null, sitemapService.Object, urlService.Object);
+                    var securityService = new Mock<ICmsSecurityConfiguration>();
+                    securityService.Setup(f => f.AccessControlEnabled).Returns(false);
+
+                    var configurationService = new Mock<ICmsConfiguration>();
+                    configurationService.Setup(f => f.Security).Returns(securityService.Object);
+
+                    var command = new DeletePageCommand(null, sitemapService.Object, urlService.Object, configurationService.Object);
                     command.Repository = repository;
                     command.UnitOfWork = uow;
 
