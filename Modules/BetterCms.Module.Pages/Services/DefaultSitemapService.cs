@@ -45,8 +45,9 @@ namespace BetterCms.Module.Pages.Services
             return repository
                 .AsQueryable<SitemapNode>()
                 .Where(n => (n.Page != null && n.Page.Id == page.Id) || (n.UrlHash == urlHash))
-                .Fetch(node => node.Sitemap)
                 .Fetch(node => node.ChildNodes)
+                .Fetch(node => node.Sitemap)
+                .ThenFetch(sitemap => sitemap.AccessRules)
                 .Distinct()
                 .ToList();
         }
