@@ -2,6 +2,8 @@
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Sitemap
 @using BetterCms.Module.Root
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Models
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.ViewModels.Tags
 @using Microsoft.Web.Mvc
@@ -19,7 +21,11 @@
 <div class="bcms-scroll-window" id="bcms-sitemap-addnode">
     @Html.TabbedContentMessagesBox()
     @* Form is required for unobtrusive validation. *@
-    @using (Html.BeginForm<SitemapController>(f => f.EditSitemap(null), FormMethod.Post, new { @class = "bcms-sitemap-form bcms-ajax-form" }))
+    @using (Html.BeginForm<SitemapController>(f => f.EditSitemap(null), FormMethod.Post, new
+    {
+        @class = "bcms-sitemap-form bcms-ajax-form",
+        data_readonly = Model.IsReadOnly.ToString().ToLower()
+    }))
     {
         <div id="bcms-tab-1" class="bcms-tab-single">
             <div class="bcms-padded-content">
@@ -49,7 +55,7 @@
                 </div>
                 <div class="bcms-rightcol">
                     <div class="bcms-sitemap-holder">
-                        <div class="bcms-addnode-placement-holder">
+                        <div class="@(Model.IsReadOnly ? "" : "bcms-addnode-placement-holder")">
                             @Html.Partial("Partial/Sitemap", new SitemapNodeViewModel())
                         </div>
                     </div>

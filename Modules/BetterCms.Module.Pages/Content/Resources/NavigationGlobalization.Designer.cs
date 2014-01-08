@@ -142,6 +142,24 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Collapse All.
+        /// </summary>
+        public static string Sitemap_Button_CollapseAll {
+            get {
+                return ResourceManager.GetString("Sitemap_Button_CollapseAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expand All.
+        /// </summary>
+        public static string Sitemap_Button_ExpandAll {
+            get {
+                return ResourceManager.GetString("Sitemap_Button_ExpandAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New Site Map.
         /// </summary>
         public static string Sitemap_CreatorDialog_Title {

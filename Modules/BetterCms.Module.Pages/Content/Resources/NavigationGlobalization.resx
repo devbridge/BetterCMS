@@ -243,4 +243,10 @@
   <data name="Sitemap_SitemapIsEmpty_Message" xml:space="preserve">
     <value>Site map has no nodes.</value>
   </data>
+  <data name="Sitemap_Button_CollapseAll" xml:space="preserve">
+    <value>Collapse All</value>
+  </data>
+  <data name="Sitemap_Button_ExpandAll" xml:space="preserve">
+    <value>Expand All</value>
+  </data>
 </root>

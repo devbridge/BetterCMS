@@ -35,7 +35,10 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 versionPreviewLoaderContainer: '.bcms-history-preview',
                 sitemapHistoryForm: '#bcms-sitemaphistory-form',
                 sitemapHistorySearchButton: '.bcms-btn-search',
-                modalContent: '.bcms-modal-content-padded'
+                modalContent: '.bcms-modal-content-padded',
+                firstTab: '#bcms-tab-1',
+                secondTab: '#bcms-tab-2',
+                leftColumn: '.bcms-leftcol'
             },
             links = {
                 loadSiteSettingsSitemapsListUrl: null,
@@ -391,21 +394,30 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 sitemap.activeMessageContainer = self.container;
                 sitemap.activeLoadingContainer = self.container.find(selectors.sitemapAddNodeDataBind);
 
-                sitemap.showMessage(content);
                 if (content.Success) {
                     // Create data models.
-                    var sitemapModel = new SitemapViewModel(content.Data.Sitemap);
-                    // TODO: update sitemap editing for read only mode.
+                    var sitemapModel = new SitemapViewModel(content.Data.Sitemap),
+                        isReadOnly = content.Data.Sitemap.IsReadOnly;
+                    
+                    if (!isReadOnly) {
+                        sitemap.showMessage(content);
+                    } else {
+                        // Allow user navigate in sitemap.
+                        dialog.container.find(modal.selectors.readonly).removeClass(modal.classes.inactive);
+                        dialog.container.find(selectors.firstTab).addClass(modal.classes.inactive);
+                        dialog.container.find(selectors.secondTab).find(selectors.leftColumn).addClass(modal.classes.inactive);
+                    }
+
                     sitemapModel.parseJsonNodes(content.Data.Sitemap.RootNodes);
                     self.pageLinksModel = new SearchPageLinksViewModel(sitemapModel);
                     self.pageLinksModel.parseJsonLinks(content.Data.PageLinks);
                     sitemap.activeMapModel = sitemapModel;
 
                     // Setup settings.
-                    sitemapModel.settings.canEditNode = true;
-                    sitemapModel.settings.canDeleteNode = true;
-                    sitemapModel.settings.canDragNode = true;
-                    sitemapModel.settings.canDropNode = true;
+                    sitemapModel.settings.canEditNode = !isReadOnly;
+                    sitemapModel.settings.canDeleteNode = !isReadOnly;
+                    sitemapModel.settings.canDragNode = !isReadOnly;
+                    sitemapModel.settings.canDropNode = !isReadOnly;
                     sitemapModel.settings.nodeSaveButtonTitle = globalization.sitemapNodeOkButton;
                     sitemapModel.settings.nodeSaveAfterUpdate = false;
 
@@ -415,6 +427,8 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         ko.applyBindings(self.pageLinksModel, context);
                         updateValidation();
                     }
+                } else {
+                    sitemap.showMessage(content);
                 }
             };
             self.save = function (onDoneCallback) {
