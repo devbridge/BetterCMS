@@ -1408,8 +1408,9 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             var submitRestoreIt = function (isConfirmed) {
                 var url = $.format(links.restoreSitemapVersionUrl, id, isConfirmed),
                     onComplete = function (json) {
+                        dialog.container.hideLoading();
+                        messages.refreshBox(dialog.container, json);
                         if (json.Success) {
-                            messages.refreshBox(dialog.container, json);
                             afterSitemapRestored(json);
                         } else {
                             if (json.Data && json.Data.ConfirmationMessage) {
@@ -1422,7 +1423,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             }
                         }
                     };
-
+                dialog.container.showLoading();
                 $.ajax({
                     type: 'POST',
                     cache: false,

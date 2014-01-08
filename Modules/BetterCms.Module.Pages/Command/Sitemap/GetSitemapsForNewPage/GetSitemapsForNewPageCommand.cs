@@ -50,7 +50,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemapsForNewPage
                         Id = sitemap.Id,
                         Version = sitemap.Version,
                         Title = sitemap.Title,
-                        RootNodes = GetSitemapNodesInHierarchy(sitemap.Nodes.Where(f => f.ParentNode == null).ToList(), sitemap.Nodes.ToList()),
+                        RootNodes = GetSitemapNodesInHierarchy(sitemap.Nodes.Where(f => f.ParentNode == null).Distinct().ToList(), sitemap.Nodes.Distinct().ToList()),
                         AccessControlEnabled = CmsConfiguration.Security.AccessControlEnabled
                     };
 

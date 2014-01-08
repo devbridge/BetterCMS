@@ -2,11 +2,14 @@
 using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.History;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
+
+using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Command.History.GetSitemapHistory
 {
@@ -21,12 +24,18 @@ namespace BetterCms.Module.Pages.Command.History.GetSitemapHistory
         private readonly ISitemapService sitemapService;
 
         /// <summary>
+        /// The CMS configuration.
+        /// </summary>
+        private readonly ICmsConfiguration cmsConfiguration;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GetSitemapHistoryCommand" /> class.
         /// </summary>
         /// <param name="sitemapService">The sitemap service.</param>
-        public GetSitemapHistoryCommand(ISitemapService sitemapService)
+        public GetSitemapHistoryCommand(ISitemapService sitemapService, ICmsConfiguration cmsConfiguration)
         {
             this.sitemapService = sitemapService;
+            this.cmsConfiguration = cmsConfiguration;
         }
 
         /// <summary>
@@ -36,7 +45,21 @@ namespace BetterCms.Module.Pages.Command.History.GetSitemapHistory
         /// <returns>The view model with list of history view models.</returns>
         public SitemapHistoryViewModel Execute(GetSitemapHistoryRequest request)
         {
-            var currentVersion = Repository.First<Models.Sitemap>(request.SitemapId);
+            var currentVersionQuery = Repository.AsQueryable<Models.Sitemap>()
+                      .Where(map => map.Id == request.SitemapId);
+
+            if (cmsConfiguration.Security.AccessControlEnabled)
+            {
+                currentVersionQuery = currentVersionQuery.FetchMany(f => f.AccessRules);
+            }
+
+            var currentVersion = currentVersionQuery.Distinct().ToList().First();
+
+            if (cmsConfiguration.Security.AccessControlEnabled)
+            {
+                AccessControlService.DemandAccess(currentVersion, Context.Principal, AccessLevel.Read);
+            }
+
             var history = new List<SitemapHistoryItem>
                 {
                     new SitemapHistoryItem

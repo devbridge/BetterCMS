@@ -76,25 +76,24 @@
             </div>
         </div>
     </div>
-    <div class="bcms-history-table-holder">
-        @using (Html.BeginForm<SitemapController>(f => f.ShowSitemapHistory((GetSitemapHistoryRequest)null), FormMethod.Post, new { @id = "bcms-sitemaphistory-form", @class = "bcms-ajax-form" }))
-        {                        
-            @Html.HiddenGridOptions(Model.GridOptions)
-            @Html.HiddenFor(model => model.SitemapId)
-            <div class="bcms-history-table-top">
-                <div class="bcms-large-titles">@PagesGlobalization.ContentHistory_OlderVersions</div>
+    @if (Model != null)
+    {
+        <div class="bcms-history-table-holder">
+            @using (Html.BeginForm<SitemapController>(f => f.ShowSitemapHistory((GetSitemapHistoryRequest)null), FormMethod.Post, new { @id = "bcms-sitemaphistory-form", @class = "bcms-ajax-form" }))
+            {
+                @Html.HiddenGridOptions(Model.GridOptions)
+                @Html.HiddenFor(model => model.SitemapId)
+                <div class="bcms-history-table-top">
+                    <div class="bcms-large-titles">@PagesGlobalization.ContentHistory_OlderVersions</div>
 @* NOTE: uncomment bellow and implement search in archived sitemaps if needed. *@
-@*                <div class="bcms-search-block">*@
-@*                    @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box", @placeholder = RootGlobalization.WaterMark_Search })*@
-@*                    <div class="bcms-btn-search" id="bcms-sitemaphistory-search-btn">@RootGlobalization.Button_Search</div>*@
-@*                </div>*@
-            </div>                        
-            @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<SitemapHistoryItem>()
-                                                                                                                                 {
-                                                                                                                                     InternalTableCssClass = "bcms-history-cell"
-
-                                                                                                                                 })
-            @Html.HiddenSubmit()
-        }
-    </div>
+@*                    <div class="bcms-search-block">*@
+@*                        @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box", @placeholder = RootGlobalization.WaterMark_Search })*@
+@*                        <div class="bcms-btn-search" id="bcms-sitemaphistory-search-btn">@RootGlobalization.Button_Search</div>*@
+@*                    </div>*@
+                </div>
+                @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables bcms-history-grid").RenderUsing(new ScrollableEditableHtmlTableGridRenderer<SitemapHistoryItem>() { InternalTableCssClass = "bcms-history-cell" })
+                @Html.HiddenSubmit()
+            }
+        </div>
+    }
 </div>

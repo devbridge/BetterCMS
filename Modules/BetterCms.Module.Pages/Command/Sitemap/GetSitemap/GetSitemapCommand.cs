@@ -50,7 +50,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemap
                 return new SitemapViewModel()
                     {
                         AccessControlEnabled = CmsConfiguration.Security.AccessControlEnabled,
-                        // UserAccessList // TODO: updated.
+                        UserAccessList = AccessControlService.GetDefaultAccessList(SecurityService.GetCurrentPrincipal()).Select(f => new UserAccessViewModel(f)).ToList()
                     };
             }
 
