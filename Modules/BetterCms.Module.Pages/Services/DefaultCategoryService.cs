@@ -34,14 +34,13 @@ namespace BetterCms.Module.Pages.Services
         /// <returns>
         /// List of category lookup values
         /// </returns>
-        /// <exception cref="System.NotImplementedException"></exception>
         public IEnumerable<LookupKeyValue> GetCategories()
         {
             return repository
                 .AsQueryable<Category>()
                 .Select(c => new LookupKeyValue
                                  {
-                                     Key = c.Id.ToString(),
+                                     Key = c.Id.ToString().ToLowerInvariant(),
                                      Value = c.Name
                                  })
                 .ToFuture();

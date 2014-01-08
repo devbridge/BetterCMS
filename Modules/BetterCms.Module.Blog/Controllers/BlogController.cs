@@ -50,17 +50,12 @@ namespace BetterCms.Module.Blog.Controllers
         public ActionResult Index(BlogsFilter request)
         {
             request.SetDefaultPaging();
+
             var model = GetCommand<GetBlogPostListCommand>().ExecuteCommand(request);
             var success = model != null;
-
             var view = RenderView("Index", model);
-            var json = new
-            {
-                Tags = request.Tags,
-                IncludeArchived = request.IncludeArchived
-            };
 
-            return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);
+            return ComboWireJson(success, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

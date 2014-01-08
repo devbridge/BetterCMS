@@ -10,6 +10,7 @@ namespace BetterCms.Module.Blog.ViewModels.Filter
     {
         public List<LookupKeyValue> Tags { get; set; }
         public Guid? CategoryId { get; set; }
+        public Guid? LanguageId { get; set; }
         public bool IncludeArchived { get; set; }
     }
 }

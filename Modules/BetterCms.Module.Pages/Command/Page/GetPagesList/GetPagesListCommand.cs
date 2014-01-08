@@ -109,8 +109,8 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
 
             if (languagesFuture != null)
             {
-                model.Languages = languagesFuture.ToList();
-                model.Languages.Insert(0, languageService.GetInvariantLanguageModel());
+                    model.Languages = languagesFuture.ToList();
+                    model.Languages.Insert(0, languageService.GetInvariantLanguageModel());
             }
 
             return model;
