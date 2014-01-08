@@ -240,4 +240,7 @@
   <data name="Sitemap_HistoryDialog_RestoreConfirmationMessage" xml:space="preserve">
     <value>Are you sure you want to restore to older version? Restored sitemap will be immediately active.</value>
   </data>
+  <data name="Sitemap_SitemapIsEmpty_Message" xml:space="preserve">
+    <value>Site map has no nodes.</value>
+  </data>
 </root>

@@ -45,6 +45,9 @@ namespace BetterCms.Module.Pages.Registration
                     new JavaScriptModuleGlobalization(this, "sitemapNodeSaveButton", () => RootGlobalization.Button_Save),
                     new JavaScriptModuleGlobalization(this, "sitemapNodeOkButton", () => RootGlobalization.Button_Ok),
 
+                    new JavaScriptModuleGlobalization(this, "sitemapIsEmpty", () => NavigationGlobalization.Sitemap_SitemapIsEmpty_Message),
+                    new JavaScriptModuleGlobalization(this, "sitemapPlaceLinkHere", () => NavigationGlobalization.Sitemap_NodeEdit_PlaceLinkHere),
+
                     new JavaScriptModuleGlobalization(this, "sitemapHistoryDialogTitle", () => NavigationGlobalization.Sitemap_HistoryDialog_Title),
                     new JavaScriptModuleGlobalization(this, "sitemapVersionRestoreConfirmation", () => NavigationGlobalization.Sitemap_HistoryDialog_RestoreConfirmationMessage),
                     new JavaScriptModuleGlobalization(this, "restoreButtonTitle", () => RootGlobalization.Button_Restore),

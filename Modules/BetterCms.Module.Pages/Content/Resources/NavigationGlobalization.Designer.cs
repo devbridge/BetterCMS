@@ -340,6 +340,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Site map has no nodes..
+        /// </summary>
+        public static string Sitemap_SitemapIsEmpty_Message {
+            get {
+                return ResourceManager.GetString("Sitemap_SitemapIsEmpty_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Archived By.
         /// </summary>
         public static string SitemapHistory_Column_ArchivedBy {

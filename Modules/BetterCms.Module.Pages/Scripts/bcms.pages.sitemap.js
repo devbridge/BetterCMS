@@ -61,6 +61,9 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 sitemapNodeSaveButton: null,
                 sitemapNodeOkButton: null,
                 
+                sitemapPlaceLinkHere: null,
+                sitemapIsEmpty: null,
+                
                 sitemapHistoryDialogTitle: null,
                 sitemapVersionRestoreConfirmation: null,
                 restoreButtonTitle: null,
@@ -745,6 +748,12 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             self.getSitemap = function () {
                 return self;
+            };
+            self.getNoDataMessage = function () {
+                if (self.settings.canDeleteNode || self.settings.canDropNode) {
+                    return globalization.sitemapPlaceLinkHere;
+                }
+                return globalization.sitemapIsEmpty;
             };
 
             // Expanding or collapsing nodes.

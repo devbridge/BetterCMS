@@ -21,7 +21,7 @@
 <script type="text/html" id="bcms-navigation-sitemapnode-template">
     <!-- ko if: !hasChildNodes() -->
     <div class="bcms-nodes-dropzone bcms-nodes-dropzone-active" data-bind="droppable: 'emptyListZone'">
-        <div class="bcms-node-infotext">@NavigationGlobalization.Sitemap_NodeEdit_PlaceLinkHere</div>
+        <div class="bcms-node-infotext" data-bind="text: getNoDataMessage()">@NavigationGlobalization.Sitemap_NodeEdit_PlaceLinkHere</div>
     </div>
     <!-- /ko -->
 
