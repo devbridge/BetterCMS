@@ -92,20 +92,23 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             writer.UpdateDocument(path, doc, analyzer);
         }
 
-        public IList<SearchResultItem> Search(string searchString, int resultCount = SearchModuleConstants.DefaultSearchResultsCount)
+        public SearchResults Search(SearchRequest request)
         {
             if (!reader.IsCurrent())
             {
                 reader = reader.Reopen();
             }
 
+            var take = request.Take > 0 ? request.Take : SearchModuleConstants.DefaultSearchResultsCount;
+            var skip = request.Skip > 0 ? request.Skip : 0;
+
             var result = new List<SearchResultItem>();
             var searcher = new IndexSearcher(reader);
-            TopScoreDocCollector collector = TopScoreDocCollector.Create(resultCount, true);
-            var query = parser.Parse(searchString);
+            TopScoreDocCollector collector = TopScoreDocCollector.Create(take + skip, true);
+            var query = parser.Parse(request.Query);
             
             searcher.Search(query, collector);
-            ScoreDoc[] hits = collector.TopDocs().ScoreDocs;
+            ScoreDoc[] hits = collector.TopDocs(skip, take).ScoreDocs;
             
             for (int i = 0; i < hits.Length; i++)
             {
@@ -116,11 +119,16 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
                                    FormattedUrl = d.Get("path"),
                                    Link = d.Get("path"),
                                    Title = d.Get("title"),
-                                   Snippet = GetSnippet(d.Get("content"), searchString)
+                                   Snippet = GetSnippet(d.Get("content"), request.Query)
                                });
             }
             
-            return result;
+            return new SearchResults
+                       {
+                           Items = result,
+                           Query = request.Query,
+                           TotalResults = collector.TotalHits
+                       };
         }
 
         private static string GetTitle(HtmlDocument html)
