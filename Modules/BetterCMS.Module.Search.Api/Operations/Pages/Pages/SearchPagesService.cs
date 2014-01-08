@@ -2,6 +2,7 @@
 
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Pages.Pages.Search;
+
 using BetterCms.Module.Search.Models;
 using BetterCms.Module.Search.Services;
 
@@ -20,8 +21,11 @@ namespace BetterCms.Module.Search.Api.Operations.Pages.Pages
 
         public SearchPagesResponse Get(SearchPagesRequest request)
         {
+            var take = request.Data.Take ?? 10;
+            var skip = request.Data.Skip > 0 ? request.Data.Skip : 0; 
+
             var results = searchService
-                .Search(new SearchRequest(request.SearchString))
+                .Search(new SearchRequest(request.SearchString, take, skip))
                 .Items
                 .Select(r => new SearchResultModel
                                  {
