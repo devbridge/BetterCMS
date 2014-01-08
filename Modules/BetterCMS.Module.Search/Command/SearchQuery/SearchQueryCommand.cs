@@ -3,7 +3,7 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Web;
 
 using BetterCms.Module.Root.Mvc;
-
+using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Search.Helpers;
 using BetterCms.Module.Search.Models;
 using BetterCms.Module.Search.Services;
@@ -11,7 +11,7 @@ using BetterCms.Module.Search.ViewModels;
 
 namespace BetterCms.Module.Search.Command.SearchQuery
 {
-    public class SearchQueryCommand : CommandBase, ICommand<SearchRequestViewModel, SearchResults>
+    public class SearchQueryCommand : CommandBase, ICommand<SearchRequestViewModel, SearchResultsViewModel>
     {
         private readonly ISearchService searchService;
 
@@ -28,7 +28,7 @@ namespace BetterCms.Module.Search.Command.SearchQuery
         /// </summary>
         /// <param name="model">The request.</param>
         /// <returns></returns>
-        public SearchResults Execute(SearchRequestViewModel model)
+        public SearchResultsViewModel Execute(SearchRequestViewModel model)
         {
             var query = model.WidgetModel.GetSearchQueryParameter(httpContextAccessor.GetCurrent().Request, model.Query);
             SearchResults results;
@@ -40,14 +40,23 @@ namespace BetterCms.Module.Search.Command.SearchQuery
 
             if (!string.IsNullOrWhiteSpace(model.Query))
             {
-                results = searchService.Search(new SearchRequest(query, model.Take, model.Skip));
+                var take = model.WidgetModel.GetOptionValue<int>(SearchModuleConstants.WidgetOptionNames.ResultsCount);
+                if (take <= 0)
+                {
+                    take = SearchModuleConstants.DefaultSearchResultsCount;
+                }
+                results = searchService.Search(new SearchRequest(query, take, model.Skip));
             }
             else
             {
                 results = new SearchResults();
             }
 
-            return results;
+            return new SearchResultsViewModel
+                       {
+                           Results = results,
+                           WidgetViewModel = model.WidgetModel
+                       };
         }
     }
 }

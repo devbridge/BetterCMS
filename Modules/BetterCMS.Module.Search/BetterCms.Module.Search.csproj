@@ -125,6 +125,7 @@
     </Compile>
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Helpers\RenderWidgetViewModelExtensions.cs" />
+    <Compile Include="Models\Migrations\Migration201401080830.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
     <Compile Include="Models\RequestData.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="Services\ISearchService.cs" />
     <Compile Include="ViewModels\SearchInputViewModel.cs" />
     <Compile Include="ViewModels\SearchRequestViewModel.cs" />
+    <Compile Include="ViewModels\SearchResultsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">

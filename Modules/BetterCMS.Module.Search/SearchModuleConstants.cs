@@ -10,6 +10,8 @@
             public const string SubmitTitle = "Submit.Title";
             public const string InputPlaceholder = "Input.Placeholder";
             public const string SearchResultsUrl = "SearchResults.Url";
+            public const string ShowTotalResults = "SearchResults.Show.Total.Count";
+            public const string ResultsCount = "SearchResults.Count";
         }
 
         public static class WidgetOptionDefaultValues
