@@ -126,6 +126,7 @@
     <Compile Include="Command\Content\GetInsertHtmlContent\InsertHtmlContentRequest.cs" />
     <Compile Include="Command\History\GetSitemapHistory\GetSitemapHistoryCommand.cs" />
     <Compile Include="Command\History\GetSitemapHistory\GetSitemapHistoryRequest.cs" />
+    <Compile Include="Command\History\RestoreSitemapVersion\RestoreSitemapVersionCommand.cs" />
     <Compile Include="Command\Layout\GetLayoutOptions\GetLayoutOptionsCommand.cs" />
     <Compile Include="Command\Layout\GetLayoutOptions\GetLayoutOptionsCommandRequest.cs" />
     <Compile Include="Command\Page\AddNewPage\AddNewPageCommand.cs" />
@@ -321,6 +322,7 @@
     <Compile Include="ViewModels\Filter\UntranslatedPagesGridViewModel.cs" />
     <Compile Include="ViewModels\History\ContentHistoryItem.cs" />
     <Compile Include="ViewModels\History\ContentHistoryViewModel.cs" />
+    <Compile Include="ViewModels\History\SitemapRestoreViewModel.cs" />
     <Compile Include="ViewModels\Page\ClonePageWithLanguageViewModel.cs" />
     <Compile Include="ViewModels\Page\PageLookupKeyValue.cs" />
     <Compile Include="ViewModels\Page\PageSuggestionViewModel.cs" />

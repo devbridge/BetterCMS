@@ -27,6 +27,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemapNode
         {
             UnitOfWork.BeginTransaction();
 
+            // TODO: demand write access to sitemap.
             if (!request.SitemapId.HasDefaultValue())
             {
                 SitemapService.ArchiveSitemap(request.SitemapId);

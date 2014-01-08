@@ -30,6 +30,7 @@ namespace BetterCms.Module.Pages.Registration
                     new JavaScriptModuleLinkTo<SitemapController>(this, "saveMultipleSitemapsUrl", c => c.SaveMultipleSitemaps(null)),
                     new JavaScriptModuleLinkTo<SitemapController>(this, "sitemapHistoryDialogUrl", c => c.ShowSitemapHistory("{0}")),
                     new JavaScriptModuleLinkTo<SitemapController>(this, "loadSitemapVersionPreviewUrl", c => c.SitemapVersion("{0}")),
+                    new JavaScriptModuleLinkTo<SitemapController>(this, "restoreSitemapVersionUrl", c => c.RestoreSitemapVersion("{0}", "{1}")),
                 };
 
             Globalization = new IActionProjection[]
@@ -45,6 +46,7 @@ namespace BetterCms.Module.Pages.Registration
                     new JavaScriptModuleGlobalization(this, "sitemapNodeOkButton", () => RootGlobalization.Button_Ok),
 
                     new JavaScriptModuleGlobalization(this, "sitemapHistoryDialogTitle", () => NavigationGlobalization.Sitemap_HistoryDialog_Title),
+                    new JavaScriptModuleGlobalization(this, "sitemapVersionRestoreConfirmation", () => NavigationGlobalization.Sitemap_HistoryDialog_RestoreConfirmationMessage),
                     new JavaScriptModuleGlobalization(this, "restoreButtonTitle", () => RootGlobalization.Button_Restore),
                     new JavaScriptModuleGlobalization(this, "closeButtonTitle", () => RootGlobalization.Button_Close)
                 };

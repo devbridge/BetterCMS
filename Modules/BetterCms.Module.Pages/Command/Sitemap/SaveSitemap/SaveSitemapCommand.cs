@@ -74,10 +74,9 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
 
                 sitemap = sitemapQuery.ToList().First();
 
-                var roles = new[] { RootModuleConstants.UserRoles.EditContent };
                 if (CmsConfiguration.Security.AccessControlEnabled)
                 {
-                    AccessControlService.DemandAccess(sitemap, Context.Principal, AccessLevel.ReadWrite, roles);
+                    AccessControlService.DemandAccess(sitemap, Context.Principal, AccessLevel.ReadWrite);
                 }
             }
             else

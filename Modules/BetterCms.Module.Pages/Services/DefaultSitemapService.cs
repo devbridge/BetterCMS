@@ -215,12 +215,21 @@ namespace BetterCms.Module.Pages.Services
                 .ToList()
                 .First();
 
+            ArchiveSitemap(sitemap);
+        }
+
+        /// <summary>
+        /// Archives the sitemap.
+        /// </summary>
+        /// <param name="sitemap">The sitemap.</param>
+        public void ArchiveSitemap(Sitemap sitemap)
+        {
             var archive = new SitemapArchive
-                {
-                    Sitemap = sitemap,
-                    Title = sitemap.Title,
-                    ArchivedVersion = ToJson(sitemap)
-                };
+            {
+                Sitemap = sitemap,
+                Title = sitemap.Title,
+                ArchivedVersion = ToJson(sitemap)
+            };
 
             repository.Save(archive);
         }
@@ -239,6 +248,26 @@ namespace BetterCms.Module.Pages.Services
                 .First(map => map.Id == archiveId);
 
             return FromJson(archive.ArchivedVersion);
+        }
+
+        /// <summary>
+        /// Restores the sitemap from archive.
+        /// </summary>
+        /// <param name="archive">The archive.</param>
+        public void RestoreSitemapFromArchive(SitemapArchive archive)
+        {
+            var sitemap = archive.Sitemap;
+            var archivedSitemap = FromJson(archive.ArchivedVersion);
+
+            foreach (var sitemapNode in sitemap.Nodes)
+            {
+                repository.Delete(sitemapNode);
+            }
+
+            sitemap.Title = archive.Title;
+            repository.Save(sitemap);
+
+            RestoreTheNodes(sitemap, null, archivedSitemap.Nodes.Where(node => node.ParentNode == null).OrderBy(node => node.DisplayOrder).ToList());
         }
 
         /// <summary>
@@ -307,7 +336,7 @@ namespace BetterCms.Module.Pages.Services
                         Title = archivedNode.Title,
                         Url = archivedNode.Url,
                         Page = !archivedNode.PageId.HasDefaultValue()
-                                ? new PageProperties()
+                                ? new PageProperties
                                         {
                                             Id = archivedNode.PageId,
                                             PageUrl = archivedNode.Url
@@ -348,6 +377,43 @@ namespace BetterCms.Module.Pages.Services
             }
 
             return nodeList.OrderBy(n => n.DisplayOrder).ToList();
+        }
+
+        /// <summary>
+        /// Restores the nodes.
+        /// </summary>
+        /// <param name="sitemap">The sitemap.</param>
+        /// <param name="parentNode">The parent node.</param>
+        /// <param name="childNodes">The child nodes.</param>
+        private void RestoreTheNodes(Sitemap sitemap, SitemapNode parentNode, IEnumerable<SitemapNode> childNodes)
+        {
+            foreach (var node in childNodes)
+            {
+                var restoredNode = new SitemapNode
+                {
+                    Sitemap = sitemap,
+                    ParentNode = parentNode,
+                    Title = node.Title,
+                };
+
+                if (node.Page != null)
+                {
+                    var node1 = node;
+                    var page = repository.FirstOrDefault<PageProperties>(properties => properties.Id == node1.Page.Id && !properties.IsDeleted);
+                    restoredNode.Page = page;
+                    restoredNode.Url = page != null ? null : node.Url;
+                    restoredNode.UrlHash = page != null ? null : node.UrlHash;
+                }
+                else
+                {
+                    restoredNode.Page = null;
+                    restoredNode.Url = node.Url;
+                    restoredNode.UrlHash = node.UrlHash;
+                }
+
+                repository.Save(restoredNode);
+                RestoreTheNodes(sitemap, restoredNode, node.ChildNodes);
+            }
         }
 
         /// <summary>

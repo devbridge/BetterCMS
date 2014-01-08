@@ -47,8 +47,9 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 sitemapAddNewPageDialogUrl: null,
                 saveMultipleSitemapsUrl: null,
                 sitemapHistoryDialogUrl: null,
-                loadSitemapVersionPreviewUrl: null
-                },
+                loadSitemapVersionPreviewUrl: null,
+                restoreSitemapVersionUrl: null
+            },
             globalization = {
                 sitemapCreatorDialogTitle: null,
                 sitemapEditorDialogTitle: null,
@@ -61,6 +62,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 sitemapNodeOkButton: null,
                 
                 sitemapHistoryDialogTitle: null,
+                sitemapVersionRestoreConfirmation: null,
                 restoreButtonTitle: null,
                 closeButtonTitle: null
             },
@@ -1311,8 +1313,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             container.find(selectors.gridRestoreLinks).on('click', function (event) {
                 bcms.stopEventPropagation(event);
-                alert("TODO: implement restoration.");
-                // TODO: implement: restoreVersion(container, $(this).data('id'));
+                restoreVersion(dialog, $(this).data('id'));
             });
 
             container.find(selectors.gridCells).on('click', function () {
@@ -1386,6 +1387,50 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     ko.applyBindings(model, context);
                 }
             }
+        }
+
+        /**
+        * Restores specified version from history.
+        */
+        function restoreVersion(dialog, id) {
+            var submitRestoreIt = function (isConfirmed) {
+                var url = $.format(links.restoreSitemapVersionUrl, id, isConfirmed),
+                    onComplete = function (json) {
+                        if (json.Success) {
+                            messages.refreshBox(dialog.container, json);
+                            // TODO: redirect.ReloadWithAlert();
+                        } else {
+                            if (json.Data && json.Data.ConfirmationMessage) {
+                                modal.confirm({
+                                    content: json.Data.ConfirmationMessage,
+                                    onAccept: function () {
+                                        submitRestoreIt(1);
+                                    }
+                                });
+                            }
+                        }
+                    };
+
+                $.ajax({
+                    type: 'POST',
+                    cache: false,
+                    url: url
+                })
+                    .done(function (result) {
+                        onComplete(result);
+                    })
+                    .fail(function (response) {
+                        onComplete(bcms.parseFailedResponse(response));
+                    });
+            };
+
+            modal.confirm({
+                content: globalization.sitemapVersionRestoreConfirmation,
+                acceptTitle: globalization.restoreButtonTitle,
+                onAccept: function () {
+                    submitRestoreIt(0);
+                }
+            });
         }
 
         /**

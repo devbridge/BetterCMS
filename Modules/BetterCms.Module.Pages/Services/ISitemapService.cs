@@ -77,10 +77,22 @@ namespace BetterCms.Module.Pages.Services
         void ArchiveSitemap(Guid sitemapId);
 
         /// <summary>
+        /// Archives the sitemap.
+        /// </summary>
+        /// <param name="sitemap">The sitemap.</param>
+        void ArchiveSitemap(Sitemap sitemap);
+
+        /// <summary>
         /// Gets the archived sitemap version for preview.
         /// </summary>
         /// <param name="archiveId">The archive identifier.</param>
         /// <returns>Sitemap entity.</returns>
         Sitemap GetArchivedSitemapVersionForPreview(Guid archiveId);
+
+        /// <summary>
+        /// Restores the sitemap from archive.
+        /// </summary>
+        /// <param name="archive">The archive.</param>
+        void RestoreSitemapFromArchive(SitemapArchive archive);
     }
 }

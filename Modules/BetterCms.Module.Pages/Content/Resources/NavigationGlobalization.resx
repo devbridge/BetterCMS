@@ -237,4 +237,7 @@
   <data name="SitemapStatus_Archived" xml:space="preserve">
     <value>Archived</value>
   </data>
+  <data name="Sitemap_HistoryDialog_RestoreConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to restore to older version? Restored sitemap will be immediately active.</value>
+  </data>
 </root>

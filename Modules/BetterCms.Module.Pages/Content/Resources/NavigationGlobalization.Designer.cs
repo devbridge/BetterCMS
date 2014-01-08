@@ -259,6 +259,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to restore to older version? Restored sitemap will be immediately active..
+        /// </summary>
+        public static string Sitemap_HistoryDialog_RestoreConfirmationMessage {
+            get {
+                return ResourceManager.GetString("Sitemap_HistoryDialog_RestoreConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Site Map History.
         /// </summary>
         public static string Sitemap_HistoryDialog_Title {

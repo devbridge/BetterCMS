@@ -1,21 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Command.History.GetSitemapHistory;
+using BetterCms.Module.Pages.Command.History.RestoreSitemapVersion;
 using BetterCms.Module.Pages.Command.Sitemap.DeleteSitemap;
 using BetterCms.Module.Pages.Command.Sitemap.DeleteSitemapNode;
 using BetterCms.Module.Pages.Command.Sitemap.GetPageLinks;
 using BetterCms.Module.Pages.Command.Sitemap.GetSitemap;
-using BetterCms.Module.Pages.Command.Sitemap.GetSitemapVersion;
 using BetterCms.Module.Pages.Command.Sitemap.GetSitemapsForNewPage;
 using BetterCms.Module.Pages.Command.Sitemap.GetSitemapsList;
+using BetterCms.Module.Pages.Command.Sitemap.GetSitemapVersion;
 using BetterCms.Module.Pages.Command.Sitemap.SaveMultipleSitemaps;
 using BetterCms.Module.Pages.Command.Sitemap.SaveSitemap;
 using BetterCms.Module.Pages.Command.Sitemap.SaveSitemapNode;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.ViewModels.Filter;
+using BetterCms.Module.Pages.ViewModels.History;
 using BetterCms.Module.Pages.ViewModels.Sitemap;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
@@ -88,7 +90,7 @@ namespace BetterCms.Module.Pages.Controllers
         [HttpGet]
         public ActionResult ShowSitemapHistory(string sitemapId)
         {
-            return ShowSitemapHistory(new GetSitemapHistoryRequest() { SitemapId = sitemapId.ToGuidOrDefault() });
+            return ShowSitemapHistory(new GetSitemapHistoryRequest { SitemapId = sitemapId.ToGuidOrDefault() });
         }
 
         /// <summary>
@@ -120,6 +122,29 @@ namespace BetterCms.Module.Pages.Controllers
             var model = GetCommand<GetSitemapVersionCommand>().ExecuteCommand(versionId.ToGuidOrDefault());
             var view = RenderView("Preview", model);
             return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Restores the sitemap version.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>Json result.</returns>
+        [HttpPost]
+        public ActionResult RestoreSitemapVersion(string id, string isUserConfirmed)
+        {
+            try
+            {
+                var result = GetCommand<RestoreSitemapVersionCommand>().ExecuteCommand(new SitemapRestoreViewModel
+                    {
+                        SitemapVersionId = id.ToGuidOrDefault(),
+                        IsUserConfirmed = isUserConfirmed.ToBoolOrDefault()
+                    });
+                return WireJson(result);
+            }
+            catch (ConfirmationRequestException exc)
+            {
+                return Json(new WireJson { Success = false, Data = new { ConfirmationMessage = exc.Resource() } });
+            }
         }
 
         /// <summary>
@@ -251,9 +276,10 @@ namespace BetterCms.Module.Pages.Controllers
         [HttpPost]
         public ActionResult DeleteSitemap(string id, string version)
         {
-            var success = GetCommand<DeleteSitemapCommand>().ExecuteCommand(new SitemapViewModel()
+            var success = GetCommand<DeleteSitemapCommand>().ExecuteCommand(new SitemapViewModel
                 {
-                    Id = id.ToGuidOrDefault(), Version = version.ToIntOrDefault()
+                    Id = id.ToGuidOrDefault(),
+                    Version = version.ToIntOrDefault()
                 });
 
             if (success)
