@@ -37,10 +37,9 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemapsForNewPage
             var sitemaps = new List<SitemapViewModel>();
 
             var allSitmaps = Repository.AsQueryable<Models.Sitemap>()
-                .Fetch(map => map.AccessRules)
+                .FetchMany(map => map.AccessRules)
                 .FetchMany(map => map.Nodes)
                 .ThenFetch(node => node.Page)
-                .Distinct()
                 .ToList();
 
             foreach (var sitemap in allSitmaps)
@@ -56,7 +55,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemapsForNewPage
 
                 if (CmsConfiguration.Security.AccessControlEnabled)
                 {
-                    model.UserAccessList = sitemap.AccessRules.Select(x => new UserAccessViewModel(x)).ToList();
+                    model.UserAccessList = sitemap.AccessRules.Distinct().Select(x => new UserAccessViewModel(x)).ToList();
                     var rules = model.UserAccessList.Cast<IAccessRule>().ToList();
                     SetIsReadOnly(model, rules);
                 }

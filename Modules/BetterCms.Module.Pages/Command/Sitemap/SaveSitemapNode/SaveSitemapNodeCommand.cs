@@ -41,9 +41,9 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemapNode
             var sitemap =
                 Repository.AsQueryable<Models.Sitemap>()
                           .Where(map => map.Id == request.SitemapId)
+                          .FetchMany(f => f.AccessRules)
                           .FetchMany(map => map.Nodes)
                           .ThenFetch(mapNode => mapNode.Page)
-                          .FetchMany(f => f.AccessRules)
                           .Distinct()
                           .ToList()
                           .First();

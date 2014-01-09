@@ -144,7 +144,11 @@ namespace BetterCms.Module.Pages.Services
             }
             else
             {
-                node.Sitemap = sitemap;
+                if (node.Sitemap == null)
+                {
+                    node.Sitemap = sitemap;
+                }
+
                 node.Version = version;
                 node.Title = title;
                 node.Page = !pageId.HasDefaultValue() ? repository.AsProxy<PageProperties>(pageId) : null;
@@ -287,7 +291,9 @@ namespace BetterCms.Module.Pages.Services
             {
                 Title = sitemap.Title,
                 RootNodes = sitemap.Nodes != null
-                    ? GetSitemapNodesInHierarchy(sitemap.Nodes.Where(f => f.ParentNode == null).OrderBy(sitemapNode => sitemapNode.DisplayOrder).ToList(), sitemap.Nodes.ToList())
+                    ? GetSitemapNodesInHierarchy(
+                        sitemap.Nodes.Distinct().Where(f => f.ParentNode == null).OrderBy(sitemapNode => sitemapNode.DisplayOrder).ToList(),
+                        sitemap.Nodes.Distinct().ToList())
                     : new List<ArchivedNode>()
             };
 

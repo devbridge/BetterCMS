@@ -42,10 +42,9 @@ namespace BetterCms.Module.Pages.Command.Sitemap.DeleteSitemap
             var sitemap = Repository
                 .AsQueryable<Models.Sitemap>()
                 .Where(map => map.Id == request.Id)
-                .FetchMany(map => map.Nodes)
-                .ThenFetch(node => node.Page)
-                .Fetch(map => map.AccessRules)
+                .FetchMany(map => map.AccessRules)
                 .Distinct()
+                .ToList()
                 .First();
 
             var roles = new[] { RootModuleConstants.UserRoles.EditContent };
