@@ -7,9 +7,7 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
 
         var filter = {},
             selectors = {
-                filterTemplate: '#bcms-filter-template',
-                filterCategory: '#bcms-filter-category-selection',
-                filterLanguage: '#bcms-filter-language-selection',
+                filterTemplate: '#bcms-filter-template'
             },
             links = {},
             globalization = {};
@@ -20,38 +18,20 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         filter.links = links;
         filter.globalization = globalization;
 
-        function FilterViewModel(tagsViewModel, container, onSearchClick) {
+        function FilterViewModel(tagsViewModel, container, onSearchClick, jsonData) {
             var self = this;
 
             self.isVisible = ko.observable(false);
             self.tags = tagsViewModel;
             self.includeArchived = ko.observable(false);
             self.includeMasterPages = ko.observable(false);
-            
-            // Initialize categories drop down
-            self.categoryDropDown = container.find(selectors.filterCategory).get(0);
-            var categoryDropDownValue = 0;
-            if ($(self.categoryDropDown).get(0) && $(self.categoryDropDown).get(0).selectedIndex) {
-                categoryDropDownValue = $(self.categoryDropDown).get(0).selectedIndex;
-            }
-            self.categoryDropDownValue = ko.observable(categoryDropDownValue);
-            $(self.categoryDropDown).change(function () {
-                self.categoryDropDownValue(this.selectedIndex);
-            });
+            self.languageId = ko.observable(jsonData.LanguageId);
+            self.languages = jsonData.Languages || [];
+            self.categoryId = ko.observable(jsonData.CategoryId);
+            self.categories = jsonData.Categories || [];
 
-            // Initialize languages drop down
-            self.languageDropDown = container.find(selectors.filterLanguage).get(0);
-            self.languageDropDownValue = ko.observable(0);
-            if (self.languageDropDown) {
-                var languageDropDownValue = 0;
-                if ($(self.languageDropDown).get(0) && $(self.languageDropDown).get(0).selectedIndex) {
-                    languageDropDownValue = $(self.languageDropDown).get(0).selectedIndex;
-                }
-                self.languageDropDownValue = ko.observable(languageDropDownValue);
-                $(self.languageDropDown).change(function() {
-                    self.languageDropDownValue(this.selectedIndex);
-                });
-            }
+            self.categories.unshift({ Key: '', Value: '' });
+            self.languages.unshift({ Key: '', Value: '' });
 
             self.isEdited = ko.computed(function () {
                 if (self.includeArchived()) {
@@ -63,10 +43,7 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                 if (self.tags != null && self.tags.items() != null && self.tags.items().length > 0) {
                     return true;
                 }
-                if (self.categoryDropDownValue() != 0) {
-                    return true;
-                }
-                if (self.languageDropDownValue() != 0) {
+                if (self.categoryId() || self.languageId()) {
                     return true;
                 }
                 return false;
@@ -88,14 +65,8 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                 self.tags.items([]);
                 self.includeArchived(false);
                 self.includeMasterPages(false);
-                self.categoryDropDownValue(0);
-                if (self.categoryDropDown) {
-                    self.categoryDropDown.selectedIndex = 0;
-                }
-                self.languageDropDownValue(0);
-                if (self.languageDropDown) {
-                    self.languageDropDown.selectedIndex = 0;
-                }
+                self.languageId('');
+                self.categoryId('');
                 self.searchWithFilter();
             };
             self.changeIncludeArchived = function () {
@@ -108,7 +79,7 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
 
         filter.bind = function (container, jsonData, onSearchClick) {
             var tagsViewModel = new tags.TagsListViewModel(jsonData.Tags),
-                filterViewModel = new FilterViewModel(tagsViewModel, container, onSearchClick);
+                filterViewModel = new FilterViewModel(tagsViewModel, container, onSearchClick, jsonData);
             filterViewModel.includeArchived(jsonData.IncludeArchived ? true : false);
             filterViewModel.includeMasterPages(jsonData.IncludeMasterPages ? true : false);
             ko.applyBindings(filterViewModel, container.find(selectors.filterTemplate).get(0));

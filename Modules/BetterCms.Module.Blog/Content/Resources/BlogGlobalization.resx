@@ -309,4 +309,7 @@
   <data name="EditBlogPost_UseCanonicalUrl" xml:space="preserve">
     <value>Use canonical URL.</value>
   </data>
+  <data name="SiteSettings_Blogs_FilterByLanguage" xml:space="preserve">
+    <value>By Language</value>
+  </data>
 </root>

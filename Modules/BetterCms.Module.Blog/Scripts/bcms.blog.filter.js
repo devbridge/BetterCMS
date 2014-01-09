@@ -7,8 +7,7 @@ bettercms.define('bcms.blog.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders'
 
         var filter = {},
             selectors = {
-                filterTemplate: '#bcms-filter-template',
-                filterCategory: '#bcms-filter-category-selection',
+                filterTemplate: '#bcms-filter-template'
             },
             links = {},
             globalization = {};
@@ -19,21 +18,20 @@ bettercms.define('bcms.blog.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders'
         filter.links = links;
         filter.globalization = globalization;
 
-        function FilterViewModel(tagsViewModel, container, onSearchClick) {
+        function FilterViewModel(tagsViewModel, container, onSearchClick, jsonData) {
             var self = this;
             
             self.isVisible = ko.observable(false);
             self.tags = tagsViewModel;
             self.includeArchived = ko.observable(false);
-            self.dropDown = container.find(selectors.filterCategory).get(0);
-            var dropDownValue = 0;
-            if ($(self.dropDown).get(0) && $(self.dropDown).get(0).selectedIndex) {
-                dropDownValue = $(self.dropDown).get(0).selectedIndex;
-            }
-            self.dropDownValue = ko.observable(dropDownValue);
-            $(self.dropDown).change(function () {
-                self.dropDownValue(this.selectedIndex);
-            });
+            self.languageId = ko.observable(jsonData.LanguageId);
+            self.languages = jsonData.Languages || [];
+            self.categoryId = ko.observable(jsonData.CategoryId);
+            self.categories = jsonData.Categories || [];
+
+            self.categories.unshift({ Key: '', Value: '' });
+            self.languages.unshift({ Key: '', Value: '' });
+
             self.isEdited = ko.computed(function () {
                 if (self.includeArchived()) {
                     return true;
@@ -41,7 +39,7 @@ bettercms.define('bcms.blog.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders'
                 if (self.tags != null && self.tags.items() != null && self.tags.items().length > 0) {
                     return true;
                 }
-                if (self.dropDownValue() != 0) {
+                if (self.categoryId() || self.languageId()) {
                     return true;
                 }
                 return false;
@@ -63,10 +61,8 @@ bettercms.define('bcms.blog.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders'
             self.clearFilter = function () {
                 self.tags.items([]);
                 self.includeArchived(false);
-                self.dropDownValue(0);
-                if (self.dropDown) {
-                    self.dropDown.selectedIndex = 0;
-                }
+                self.languageId('');
+                self.categoryId('');
                 self.searchWithFilter();
             };
 
@@ -77,7 +73,7 @@ bettercms.define('bcms.blog.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders'
 
         filter.bind = function (container, jsonData, onSearchClick) {
             var tagsViewModel = new tags.TagsListViewModel(jsonData.Tags),
-                filterViewModel = new FilterViewModel(tagsViewModel, container, onSearchClick);
+                filterViewModel = new FilterViewModel(tagsViewModel, container, onSearchClick, jsonData);
             filterViewModel.includeArchived(jsonData.IncludeArchived ? true : false);
             ko.applyBindings(filterViewModel, container.find(selectors.filterTemplate).get(0));
         };

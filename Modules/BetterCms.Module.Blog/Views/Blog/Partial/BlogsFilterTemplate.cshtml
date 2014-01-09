@@ -35,8 +35,16 @@
 
                 <div class="bcms-filter-options">
                     <div class="bcms-filter-text">@BlogGlobalization.SiteSettings_Blogs_FilterByCategory</div>
-                    @Html.DropDownListFor(model => model.CategoryId, Model.Categories.ToSelectList(Model.CategoryId), string.Empty, new { id = "bcms-filter-category-selection", @class = "bcms-global-select" })
+                    <select class="bcms-global-select" name="CategoryId" data-bind="options: categories, value: categoryId, optionsText: 'Value', optionsValue: 'Key'" />
                 </div>
+                
+                @if (Model.Languages != null && Model.Languages.Any())
+                {
+                    <div class="bcms-filter-options">
+                        <div class="bcms-filter-text">@BlogGlobalization.SiteSettings_Blogs_FilterByLanguage</div>
+                        <select class="bcms-global-select" name="LanguageId" data-bind="options: languages, value: languageId, optionsText: 'Value', optionsValue: 'Key'" />
+                    </div>
+                }
 
             </div>
 
