@@ -372,11 +372,28 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         page.deleteCurrentPage = function () {
             var id = bcms.pageId;
 
-            page.deletePage(id, function () {
-                redirect.RedirectWithAlert('/', {
-                    title: globalization.pageDeletedTitle,
-                    message: globalization.pageDeletedMessage
-                });
+            page.deletePage(id, function (json) {
+                if (json && json.Messages && json.Messages.length > 1) {
+                    var message = json.Messages[0];
+                    for (var i = 1; i < json.Messages.length; i++) {
+                        message = message + "<br>" + json.Messages[i];
+                    }
+                    modal.info({
+                        title: globalization.pageDeletedTitle,
+                        content: message,
+                        onAcceptClick: function() {
+                            redirect.RedirectWithAlert('/', {
+                                title: globalization.pageDeletedTitle,
+                                message: globalization.pageDeletedMessage
+                            });
+                        }
+                    });
+                } else {
+                    redirect.RedirectWithAlert('/', {
+                        title: globalization.pageDeletedTitle,
+                        message: globalization.pageDeletedMessage
+                    });
+                }
             });
         };
 
