@@ -70,7 +70,9 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 sitemapHistoryDialogTitle: null,
                 sitemapVersionRestoreConfirmation: null,
                 restoreButtonTitle: null,
-                closeButtonTitle: null
+                closeButtonTitle: null,
+                
+                invariantLanguage: null
             },
             classes = {
                 tableActiveRow: 'bcms-table-row-active'
@@ -751,6 +753,9 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.tags = new tags.TagsListViewModel(jsonSitemap.Tags);
             self.accessControl = security.createUserAccessViewModel(jsonSitemap.UserAccessList);
 
+            self.showLanguages = ko.observable(jsonSitemap.ShowLanguages);
+            self.language = jsonSitemap.ShowLanguages ? new LanguageViewModel(jsonSitemap.Languages) : null,
+
             self.settings = {
                 canEditNode: false,
                 canDeleteNode: false,
@@ -1154,6 +1159,27 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 return params;
             };
         }
+
+        /**
+        * Language view model.
+        */
+        function LanguageViewModel (languages, languageId) {
+            var self = this,
+                i, l;
+
+            self.languageId = ko.observable(languageId);
+
+            self.languages = [];
+            self.languages.push({ key: '', value: globalization.invariantLanguage });
+            for (i = 0, l = languages.length; i < l; i++) {
+                self.languages.push({
+                    key: languages[i].Key,
+                    value: languages[i].Value
+                });
+            }
+
+            return self;
+        };
 
         /**
         * Responsible for page searching.

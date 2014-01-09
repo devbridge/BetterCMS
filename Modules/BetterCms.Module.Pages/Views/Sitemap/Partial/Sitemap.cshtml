@@ -1,9 +1,11 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc.Helpers
-
 @model BetterCms.Module.Pages.ViewModels.Sitemap.SitemapNodeViewModel
 <!-- ko with: sitemap -->
+<div style="display: none;" data-bind="visible: showLanguages, with: language">
+    <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
+</div>
 <div class="bcms-expand-link-holder"@* data-bind="droppable: 'emptyListZone'" TODO: check later. NOTE: jQuery error is raised on leave over. *@>
     <div class="bcms-expand-link" data-bind="click: expandAll">@NavigationGlobalization.Sitemap_Button_ExpandAll</div>
     <div class="bcms-expand-link" data-bind="click: collapseAll">@NavigationGlobalization.Sitemap_Button_CollapseAll</div>

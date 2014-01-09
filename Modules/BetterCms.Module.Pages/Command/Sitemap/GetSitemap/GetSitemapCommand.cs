@@ -9,6 +9,7 @@ using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Sitemap;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Security;
 
 using NHibernate.Linq;
@@ -35,6 +36,14 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemap
         /// The tag service.
         /// </value>
         public ITagService TagService { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language service.
+        /// </summary>
+        /// <value>
+        /// The language service.
+        /// </value>
+        public ILanguageService LanguageService { get; set; }
 
         /// <summary>
         /// Executes the specified request.
@@ -71,6 +80,8 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemap
 
             var tagsFuture = TagService.GetSitemapTagNames(sitemapId);
 
+            var languagesFuture = CmsConfiguration.EnableMultilanguage ? LanguageService.GetLanguages() : null;
+
             var sitemap = Repository.AsQueryable<Models.Sitemap>()
                 .Where(map => map.Id == sitemapId)
                 .FetchMany(map => map.Nodes)
@@ -86,7 +97,9 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemap
                     Title = sitemap.Title,
                     RootNodes = GetSitemapNodesInHierarchy(sitemap.Nodes.Distinct().Where(f => f.ParentNode == null).ToList(), sitemap.Nodes.Distinct().ToList()),
                     Tags = tagsFuture.ToList(),
-                    AccessControlEnabled = CmsConfiguration.Security.AccessControlEnabled
+                    AccessControlEnabled = CmsConfiguration.Security.AccessControlEnabled,
+                    ShowLanguages = CmsConfiguration.EnableMultilanguage,
+                    Languages = CmsConfiguration.EnableMultilanguage ? languagesFuture.ToList() : null
                 };
 
             if (userAccessFuture != null)

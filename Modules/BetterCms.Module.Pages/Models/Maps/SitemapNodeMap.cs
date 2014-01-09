@@ -22,6 +22,7 @@ namespace BetterCms.Module.Pages.Models.Maps
             References(x => x.Sitemap).Cascade.SaveUpdate().LazyLoad();
             References(f => f.ParentNode).Cascade.SaveUpdate().Nullable().LazyLoad();
             HasMany(f => f.ChildNodes).Table("SitemapNodes").KeyColumn("ParentNodeId").Inverse().Cascade.SaveUpdate().Where("IsDeleted = 0").LazyLoad();
+            HasMany(f => f.Translations).Table("SitemapNodeTranslations").KeyColumn("NodeId").Inverse().Cascade.SaveUpdate().Where("IsDeleted = 0").LazyLoad();
 
             References(x => x.Page).Cascade.None().LazyLoad();
         }

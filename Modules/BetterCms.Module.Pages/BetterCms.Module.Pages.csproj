@@ -148,6 +148,9 @@
     <Compile Include="Events\SitemapEvents.cs" />
     <Compile Include="Events\TagEvents.cs" />
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
+    <Compile Include="Models\Maps\SitemapNodeTranslationMap.cs" />
+    <Compile Include="Models\Migrations\Migration201401091655.cs" />
+    <Compile Include="Models\SitemapNodeTranslation.cs" />
     <Compile Include="Models\Maps\SitemapArchiveMap.cs" />
     <Compile Include="Models\Migrations\Migration201401061130.cs" />
     <Compile Include="Models\SitemapArchive.cs" />

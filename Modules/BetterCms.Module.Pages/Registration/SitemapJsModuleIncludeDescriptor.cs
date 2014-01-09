@@ -51,7 +51,9 @@ namespace BetterCms.Module.Pages.Registration
                     new JavaScriptModuleGlobalization(this, "sitemapHistoryDialogTitle", () => NavigationGlobalization.Sitemap_HistoryDialog_Title),
                     new JavaScriptModuleGlobalization(this, "sitemapVersionRestoreConfirmation", () => NavigationGlobalization.Sitemap_HistoryDialog_RestoreConfirmationMessage),
                     new JavaScriptModuleGlobalization(this, "restoreButtonTitle", () => RootGlobalization.Button_Restore),
-                    new JavaScriptModuleGlobalization(this, "closeButtonTitle", () => RootGlobalization.Button_Close)
+                    new JavaScriptModuleGlobalization(this, "closeButtonTitle", () => RootGlobalization.Button_Close),
+
+                    new JavaScriptModuleGlobalization(this, "invariantLanguage", () => RootGlobalization.InvariantLanguage_Title)
                 };
         }
     }
