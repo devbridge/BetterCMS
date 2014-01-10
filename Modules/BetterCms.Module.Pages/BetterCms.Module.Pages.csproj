@@ -335,6 +335,7 @@
     <Compile Include="ViewModels\Page\RenderPageCategoryViewModel.cs" />
     <Compile Include="ViewModels\Page\RenderPageImageViewModel.cs" />
     <Compile Include="ViewModels\Page\RenderPagePropertiesViewModel.cs" />
+    <Compile Include="ViewModels\Sitemap\SitemapNodeTranslationViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\PageLinkViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\SitemapViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\SitemapAndPageLinksViewModel.cs" />

@@ -82,13 +82,19 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemap
 
             var languagesFuture = CmsConfiguration.EnableMultilanguage ? LanguageService.GetLanguages() : null;
 
-            var sitemap = Repository.AsQueryable<Models.Sitemap>()
+            IQueryable<Models.Sitemap> sitemapQuery = Repository.AsQueryable<Models.Sitemap>()
                 .Where(map => map.Id == sitemapId)
                 .FetchMany(map => map.Nodes)
-                .ThenFetch(node => node.Page)
-                .Distinct()
-                .ToList()
-                .First();
+                .ThenFetch(node => node.Page);
+
+            if (CmsConfiguration.EnableMultilanguage)
+            {
+                sitemapQuery = sitemapQuery
+                    .FetchMany(map => map.Nodes)
+                    .ThenFetchMany(node => node.Translations);
+            }
+
+            var sitemap = sitemapQuery.Distinct().ToList().First();
 
             var model = new SitemapViewModel
                 {
@@ -120,22 +126,39 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemap
         /// <param name="sitemapNodes">The sitemap nodes.</param>
         /// <param name="allNodes">All nodes.</param>
         /// <returns>The list with all root nodes.</returns>
-        private static List<SitemapNodeViewModel> GetSitemapNodesInHierarchy(IList<SitemapNode> sitemapNodes, IList<SitemapNode> allNodes)
+        private List<SitemapNodeViewModel> GetSitemapNodesInHierarchy(IList<SitemapNode> sitemapNodes, IList<SitemapNode> allNodes)
         {
             var nodeList = new List<SitemapNodeViewModel>();
 
             foreach (var node in sitemapNodes)
             {
-                nodeList.Add(new SitemapNodeViewModel
+                var nodeViewModel = new SitemapNodeViewModel
+                    {
+                        Id = node.Id,
+                        Version = node.Version,
+                        Title = node.Title,
+                        Url = node.Page != null ? node.Page.PageUrl : node.Url,
+                        PageId = node.Page != null ? node.Page.Id : Guid.Empty,
+                        DisplayOrder = node.DisplayOrder,
+                        ChildNodes = GetSitemapNodesInHierarchy(allNodes.Where(f => f.ParentNode == node).ToList(), allNodes)
+                    };
+
+                if (CmsConfiguration.EnableMultilanguage)
                 {
-                    Id = node.Id,
-                    Version = node.Version,
-                    Title = node.Title,
-                    Url = node.Page != null ? node.Page.PageUrl : node.Url,
-                    PageId = node.Page != null ? node.Page.Id : Guid.Empty,
-                    DisplayOrder = node.DisplayOrder,
-                    ChildNodes = GetSitemapNodesInHierarchy(allNodes.Where(f => f.ParentNode == node).ToList(), allNodes)
-                });
+                    nodeViewModel.Translations = node.Translations
+                        .Distinct()
+                        .Select(t => new SitemapNodeTranslationViewModel
+                            {
+                                Id = t.Id,
+                                LanguageId = t.Language.Id,
+                                Title = t.Title,
+                                Url = t.Url,
+                                Version = t.Version
+                            })
+                        .ToList();
+                }
+
+                nodeList.Add(nodeViewModel);
             }
 
             return nodeList.OrderBy(n => n.DisplayOrder).ToList();

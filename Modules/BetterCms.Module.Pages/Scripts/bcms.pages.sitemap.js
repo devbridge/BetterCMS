@@ -753,8 +753,23 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.tags = new tags.TagsListViewModel(jsonSitemap.Tags);
             self.accessControl = security.createUserAccessViewModel(jsonSitemap.UserAccessList);
 
+            self.languageId = ko.observable("");
+            self.onLanguageChanged = function (languageId) {
+                if (languageId != self.languageId()) {
+                    self.languageId(languageId);
+                    self.changeLanguageForNodes(self.childNodes());
+                    bcms.logger.debug('In sitemap language switched to "' + languageId + '".');
+                }
+            };
+            self.changeLanguageForNodes = function (nodes) {
+                for (var i = 0; i < nodes.length; i++) {
+                    var node = nodes[i];
+                    node.activateTranslation(self.languageId());
+                    self.changeLanguageForNodes(node.childNodes());
+                }
+            };
             self.showLanguages = ko.observable(jsonSitemap.ShowLanguages);
-            self.language = jsonSitemap.ShowLanguages ? new LanguageViewModel(jsonSitemap.Languages) : null,
+            self.language = jsonSitemap.ShowLanguages ? new LanguageViewModel(jsonSitemap.Languages, null, self.onLanguageChanged) : null,
 
             self.settings = {
                 canEditNode: false,
@@ -789,7 +804,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     self.expandOrCollapse(node.childNodes(), expand);
                 }
             };
-            
+
             self.hasChildNodes = function () {
                 // Has at least one not deleted child node.
                 var nodes = self.childNodes();
@@ -892,7 +907,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 jsonNodes = jsonNodes || [];
                 for (var i = 0; i < jsonNodes.length; i++) {
                     var node = new NodeViewModel();
-                    node.fromJson(jsonNodes[i]);
+                    node.fromJson(jsonNodes[i], self.showLanguages);
                     node.parentNode(self);
                     nodes.push(node);
                 }
@@ -904,18 +919,9 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.nodesToJson = function(nodes) {
                 var result = [];
                 for (var i = 0; i < nodes.length; i++) {
-                    var node = nodes[i];
-                    result.push({
-                            Id: node.id(),
-                            Version: node.version(),
-                            Title: node.title(),
-                            Url: node.url(),
-                            PageId: node.pageId(),
-                            DisplayOrder: node.displayOrder(),
-                            IsDeleted: node.isDeleted(),
-                            ChildNodes: self.nodesToJson(node.childNodes())
-                        }
-                    );
+                    var nodeToSave = nodes[i].toJson();
+                    nodeToSave.ChildNodes = self.nodesToJson(nodes[i].childNodes());
+                    result.push(nodeToSave);
                 }
                 return result;
             };
@@ -971,6 +977,10 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.childNodes = ko.observableArray([]);
             self.childNodes.subscribe(updateFirstLastNode);
             self.parentNode = ko.observable();
+
+            self.translationsEnabled = false;
+            self.translations = {};
+            self.activeTranslation = ko.observable(null);
             
             // For behavior.
             self.isActive = ko.observable(false);           // If TRUE - show edit fields.
@@ -1119,6 +1129,45 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.callbackAfterSuccessSaving = null;
             self.callbackAfterFailSaving = null;
 
+            self.activateTranslation = function (languageId) {
+                if (!self.translationsEnabled) {
+                    return;
+                }
+
+                if (self.activeTranslation() != null) {
+                    var active = self.activeTranslation(),
+                        isModified = active.isModified();
+
+                    if (active.languageId() == languageId) {
+                        return;
+                    }
+                    if (active.title() != self.title()) {
+                        active.title(self.title());
+                        isModified = true;
+                    }
+                    if (active.url() != self.url()) {
+                        active.url(self.url());
+                        isModified = true;
+                    }
+
+                    active.isModified(isModified);
+                }
+
+                if (self.translations[languageId] == null) {
+                    self.translations[languageId] = new TranslationViewModel(self, languageId);
+                    if (languageId == "") {
+                        self.translations[languageId].version(self.version());
+                        self.translations[languageId].isModified(true);
+                    }
+                }
+
+                self.activeTranslation(self.translations[languageId]);
+
+                self.title(self.translations[languageId].title());
+                self.url(self.translations[languageId].url());
+                self.version(self.translations[languageId].version());
+            };
+
             self.getSitemap = function() {
                 if (self.parentNode() != null) {
                     return self.parentNode().getSitemap();
@@ -1126,35 +1175,70 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 return null;
             };
 
-            self.fromJson = function(jsonNode) {
+            self.fromJson = function(jsonNode, translationsEnabled) {
                 self.id(jsonNode.Id);
                 self.version(jsonNode.Version);
                 self.title(jsonNode.Title);
                 self.url(jsonNode.Url);
                 self.pageId(jsonNode.PageId);
                 self.displayOrder(jsonNode.DisplayOrder);
+                if (translationsEnabled) {
+                    self.translationsEnabled = true;
+                    if (jsonNode.Translations != null) {
+                        for (var j = 0; j < jsonNode.Translations.length; j++) {
+                            var translationJson = jsonNode.Translations[j],
+                                translation = new TranslationViewModel(self, translationJson.LanguageId);
+                            translation.id(translationJson.Id);
+                            translation.title(translationJson.Title);
+                            translation.url(translationJson.Url);
+                            translation.version(translationJson.Version);
+                            self.translations[translationJson.LanguageId] = translation;
+                        }
+                    }
+                    self.activateTranslation("");
+                }
 
                 var nodes = [];
                 if (jsonNode.ChildNodes != null) {
                     for (var i = 0; i < jsonNode.ChildNodes.length; i++) {
                         var node = new NodeViewModel();
-                        node.fromJson(jsonNode.ChildNodes[i]);
+                        node.fromJson(jsonNode.ChildNodes[i], translationsEnabled);
                         node.parentNode(self);
                         nodes.push(node);
                     }
                 }
                 self.childNodes(nodes);
             };
+            self.translationsToJson = function () {
+                if (!self.translationsEnabled) {
+                    return null;
+                }
+                var result = [];
+                for (var i in self.translations) {
+                    var translation = self.translations[i];
+                    if (translation.isModified() && translation.languageId() != "") {
+                        result.push({
+                            Id: translation.id(),
+                            LanguageId: translation.languageId(),
+                            Title: translation.title(),
+                            Url: translation.url(),
+                            Version: translation.version(),
+                        });
+                    }
+                }
+                return result;
+            };
             self.toJson = function () {
                 var params = {
-                    SitemapId: defaultIdValue, // TODO: update.
                     Id: self.id(),
-                    Version: self.version(),
-                    Title: self.title(),
-                    Url: self.url(),
+                    Version: self.translationsEnabled ? self.translations[""].version() : self.version(),
+                    Title: self.translationsEnabled ? self.translations[""].title() : self.title(),
+                    Url: self.translationsEnabled ? self.translations[""].url() : self.url(),
                     PageId: self.pageId(),
                     DisplayOrder: self.displayOrder(),
-                    ParentId: self.parentNode().id()
+                    IsDeleted: self.isDeleted(),
+                    Translations: self.translationsToJson(),
+                    ChildNodes: null
                 };
                 return params;
             };
@@ -1163,7 +1247,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Language view model.
         */
-        function LanguageViewModel (languages, languageId) {
+        function LanguageViewModel(languages, languageId, onLanguageChanged) {
             var self = this,
                 i, l;
 
@@ -1177,9 +1261,29 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     value: languages[i].Value
                 });
             }
+            
+            self.languageId.subscribe(function (newValue) {
+                if ($.isFunction(onLanguageChanged)) {
+                    onLanguageChanged(newValue);
+                }
+            });
 
             return self;
         };
+
+        /*
+        * Sitemap node translation view model.
+        */
+        function TranslationViewModel(node, languageId) {
+            var self = this;
+            self.node = node;
+            self.id = ko.observable();
+            self.languageId = ko.observable(languageId);
+            self.title = ko.observable(node.title());
+            self.url = ko.observable(node.url());
+            self.version = ko.observable(1);
+            self.isModified = ko.observable(false);
+        }
 
         /**
         * Responsible for page searching.

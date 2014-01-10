@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using BetterCms.Core.Models;
@@ -9,18 +8,10 @@ using BetterCms.Module.Root.Content.Resources;
 namespace BetterCms.Module.Pages.ViewModels.Sitemap
 {
     /// <summary>
-    /// View model for sitemap node data.
+    /// View model for sitemap node translation data.
     /// </summary>
-    public class SitemapNodeViewModel
+    public class SitemapNodeTranslationViewModel
     {
-        /// <summary>
-        /// Gets or sets the sitemap identifier.
-        /// </summary>
-        /// <value>
-        /// The sitemap identifier.
-        /// </value>
-        public Guid SitemapId { get; set; }
-
         /// <summary>
         /// Gets or sets the id.
         /// </summary>
@@ -30,12 +21,12 @@ namespace BetterCms.Module.Pages.ViewModels.Sitemap
         public Guid Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the page identifier.
+        /// Gets or sets the language identifier.
         /// </summary>
         /// <value>
-        /// The page identifier.
+        /// The language identifier.
         /// </value>
-        public Guid PageId { get; set; }
+        public Guid LanguageId { get; set; }
 
         /// <summary>
         /// Gets or sets the version.
@@ -65,46 +56,6 @@ namespace BetterCms.Module.Pages.ViewModels.Sitemap
         [Required(AllowEmptyStrings = false, ErrorMessageResourceType = typeof(NavigationGlobalization), ErrorMessageResourceName = "Sitemap_Dialog_NodeUrl_RequiredMessage")]
         [RegularExpression(PagesConstants.SiteMapUrlRegularExpression, ErrorMessageResourceType = typeof(NavigationGlobalization), ErrorMessageResourceName = "Sitemap_Dialog_NodeUrl_InvalidSymbol")]
         public string Url { get; set; }
-
-        /// <summary>
-        /// Gets or sets the display order.
-        /// </summary>
-        /// <value>
-        /// The display order.
-        /// </value>
-        public int DisplayOrder { get; set; }
-
-        /// <summary>
-        /// Gets or sets the parent id.
-        /// </summary>
-        /// <value>
-        /// The parent id.
-        /// </value>
-        public Guid ParentId { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether this instance is deleted.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if this instance is deleted; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsDeleted { get; set; }
-
-        /// <summary>
-        /// Gets or sets the child nodes.
-        /// </summary>
-        /// <value>
-        /// The child nodes.
-        /// </value>
-        public IList<SitemapNodeViewModel> ChildNodes { get; set; }
-
-        /// <summary>
-        /// Gets or sets the translations.
-        /// </summary>
-        /// <value>
-        /// The translations.
-        /// </value>
-        public IList<SitemapNodeTranslationViewModel> Translations { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
