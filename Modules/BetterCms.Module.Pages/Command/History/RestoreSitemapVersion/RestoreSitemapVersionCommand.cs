@@ -50,6 +50,9 @@ namespace BetterCms.Module.Pages.Command.History.RestoreSitemapVersion
                           .Fetch(sitemapArchive => sitemapArchive.Sitemap)
                           .ThenFetchMany(map => map.Nodes)
                           .ThenFetch(node => node.Page)
+                          .Fetch(sitemapArchive => sitemapArchive.Sitemap)
+                          .ThenFetchMany(map => map.Nodes)
+                          .ThenFetchMany(node => node.Translations)
                           .Distinct()
                           .ToList()
                           .First();

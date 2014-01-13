@@ -44,6 +44,8 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemapNode
                           .FetchMany(f => f.AccessRules)
                           .FetchMany(map => map.Nodes)
                           .ThenFetch(mapNode => mapNode.Page)
+                          .FetchMany(map => map.Nodes)
+                          .ThenFetch(mapNode => mapNode.Translations)
                           .Distinct()
                           .ToList()
                           .First();

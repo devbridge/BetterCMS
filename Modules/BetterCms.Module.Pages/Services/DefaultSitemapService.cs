@@ -216,6 +216,8 @@ namespace BetterCms.Module.Pages.Services
                 .Where(map => map.Id == sitemapId)
                 .FetchMany(map => map.Nodes)
                 .ThenFetch(node => node.Page)
+                .FetchMany(map => map.Nodes)
+                .ThenFetch(mapNode => mapNode.Translations)
                 .Distinct()
                 .ToList()
                 .First();
@@ -355,15 +357,41 @@ namespace BetterCms.Module.Pages.Services
                                         }
                                 : null,
                         DisplayOrder = archivedNode.DisplayOrder,
-                        ParentNode = parentNode
+                        ParentNode = parentNode,
                     };
 
                 node.ChildNodes = AddNodes(sitemap, archivedNode.Nodes, node);
+                node.Translations = AddTranslations(archivedNode, node);
                 nodes.Add(node);
             }
 
             nodes.ForEach(sitemap.Nodes.Add);
             return nodes.OrderBy(node => node.DisplayOrder).ToList();
+        }
+
+        /// <summary>
+        /// Adds the translations.
+        /// </summary>
+        /// <param name="archivedNode">The archived node.</param>
+        /// <param name="node">The node.</param>
+        /// <returns>Archived node translation list.</returns>
+        private static IList<SitemapNodeTranslation> AddTranslations(ArchivedNode archivedNode, SitemapNode node)
+        {
+            var translations = new List<SitemapNodeTranslation>();
+            if (archivedNode.Translations != null)
+            {
+                foreach (var translation in archivedNode.Translations)
+                {
+                    translations.Add(new SitemapNodeTranslation
+                    {
+                        Node = node,
+                        Language = new Language() { Id = translation.LanguageId },
+                        Title = translation.Title,
+                        Url = translation.Url
+                    });
+                }
+            }
+            return translations;
         }
 
         /// <summary>
@@ -384,7 +412,17 @@ namespace BetterCms.Module.Pages.Services
                     Url = node.Page != null ? node.Page.PageUrl : node.Url,
                     PageId = node.Page != null ? node.Page.Id : Guid.Empty,
                     DisplayOrder = node.DisplayOrder,
-                    Nodes = GetSitemapNodesInHierarchy(allNodes.Where(f => f.ParentNode == node).OrderBy(sitemapNode => sitemapNode.DisplayOrder).ToList(), allNodes)
+                    Nodes = GetSitemapNodesInHierarchy(allNodes.Where(f => f.ParentNode == node).OrderBy(sitemapNode => sitemapNode.DisplayOrder).ToList(), allNodes),
+                    Translations = node.Translations == null
+                        ? new List<ArchivedNodeTranslation>()
+                        : node.Translations
+                            .Where(t => !t.IsDeleted).Distinct().ToList()
+                            .Select(t => new ArchivedNodeTranslation
+                                {
+                                    LanguageId = t.Language.Id,
+                                    Title = t.Title,
+                                    Url = t.Url
+                                }).ToList()
                 });
             }
 
@@ -424,8 +462,44 @@ namespace BetterCms.Module.Pages.Services
                 }
 
                 repository.Save(restoredNode);
+
+                foreach (var translation in node.Translations)
+                {
+                    var translation1 = translation;
+                    var language = repository.FirstOrDefault<Language>(l => l.Id == translation1.Language.Id && !l.IsDeleted);
+                    if (language == null)
+                    {
+                        continue;
+                    }
+
+                    var restoredTranslation = new SitemapNodeTranslation
+                        {
+                            Node = restoredNode,
+                            Language = language,
+                            Title = translation.Title,
+                        };
+
+                    if (restoredNode.Page == null)
+                    {
+                        restoredTranslation.Url = restoredNode.Url;
+                        restoredTranslation.UrlHash = restoredNode.Url.UrlHash();
+                    }
+
+                    repository.Save(restoredTranslation);
+                }
+
                 RestoreTheNodes(sitemap, restoredNode, node.ChildNodes);
             }
+        }
+
+        /// <summary>
+        /// Class for archived sitemap node translation representation.
+        /// </summary>
+        private class ArchivedNodeTranslation
+        {
+            public Guid LanguageId { get; set; }
+            public string Title { get; set; }
+            public string Url { get; set; }
         }
 
         /// <summary>
@@ -438,6 +512,7 @@ namespace BetterCms.Module.Pages.Services
             public Guid PageId { get; set; }
             public int DisplayOrder { get; set; }
             public List<ArchivedNode> Nodes { get; set; }
+            public List<ArchivedNodeTranslation> Translations { get; set; }
         }
 
         /// <summary>
