@@ -241,11 +241,38 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add tags to this sitemap to identify it..
+        /// </summary>
+        public static string Sitemap_EditDialog_AddTags_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("Sitemap_EditDialog_AddTags_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Drag &amp; Drop your page where you want to place it..
         /// </summary>
         public static string Sitemap_EditDialog_PageLink_Header {
             get {
                 return ResourceManager.GetString("Sitemap_EditDialog_PageLink_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Site Map Name.
+        /// </summary>
+        public static string Sitemap_EditDialog_SitemapTitle_Title {
+            get {
+                return ResourceManager.GetString("Sitemap_EditDialog_SitemapTitle_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit the title of this page..
+        /// </summary>
+        public static string Sitemap_EditDialog_SitemapTitle_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("Sitemap_EditDialog_SitemapTitle_Tooltip_Description", resourceCulture);
             }
         }
         

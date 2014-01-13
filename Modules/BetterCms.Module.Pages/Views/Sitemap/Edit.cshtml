@@ -2,8 +2,6 @@
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.Sitemap
 @using BetterCms.Module.Root
-@using BetterCms.Module.Root.Content.Resources
-@using BetterCms.Module.Root.Models
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.ViewModels.Tags
 @using Microsoft.Web.Mvc
@@ -11,7 +9,7 @@
 @{
     var tagsTemplateViewModel = new TagsTemplateViewModel
     {
-        TooltipDescription = PagesGlobalization.EditPageProperties_BasicPropertiesTab_AddTags_Tooltip_Description // TODO: update
+        TooltipDescription = NavigationGlobalization.Sitemap_EditDialog_AddTags_Tooltip_Description
     };
 }
 <div class="bcms-tab-header">
@@ -30,8 +28,8 @@
         <div id="bcms-tab-1" class="bcms-tab-single">
             <div class="bcms-padded-content">
                 <div class="bcms-input-list-holder">
-                    @Html.Tooltip(PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Tooltip_Description)
-                    <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_PageName_Title</div>
+                    @Html.Tooltip(NavigationGlobalization.Sitemap_EditDialog_SitemapTitle_Tooltip_Description)
+                    <div class="bcms-content-titles">@NavigationGlobalization.Sitemap_EditDialog_SitemapTitle_Title</div>
                     <div class="bcms-input-box">
                         @Html.TextBoxFor(model => model.Title, new { @class = "bcms-editor-field-box", data_bind = "value: title, valueUpdate: 'afterkeydown'" })
                         @Html.BcmsValidationMessageFor(f => f.Title)

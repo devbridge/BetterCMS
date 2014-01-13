@@ -249,4 +249,13 @@
   <data name="Sitemap_Button_ExpandAll" xml:space="preserve">
     <value>Expand All</value>
   </data>
+  <data name="Sitemap_EditDialog_AddTags_Tooltip_Description" xml:space="preserve">
+    <value>Add tags to this sitemap to identify it.</value>
+  </data>
+  <data name="Sitemap_EditDialog_SitemapTitle_Title" xml:space="preserve">
+    <value>Site Map Name</value>
+  </data>
+  <data name="Sitemap_EditDialog_SitemapTitle_Tooltip_Description" xml:space="preserve">
+    <value>Edit the title of this page.</value>
+  </data>
 </root>
