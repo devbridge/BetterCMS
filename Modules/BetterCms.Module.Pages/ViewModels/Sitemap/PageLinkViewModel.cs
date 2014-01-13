@@ -32,6 +32,14 @@ namespace BetterCms.Module.Pages.ViewModels.Sitemap
         public Guid Id { get; set; }
 
         /// <summary>
+        /// Gets or sets the language identifier.
+        /// </summary>
+        /// <value>
+        /// The language identifier.
+        /// </value>
+        public Guid LanguageId { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

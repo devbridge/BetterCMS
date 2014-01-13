@@ -44,7 +44,8 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetPageLinks
                 .SelectList(select => select
                     .Select(() => alias.Id).WithAlias(() => modelAlias.Id)
                     .Select(() => alias.Title).WithAlias(() => modelAlias.Title)
-                    .Select(() => alias.PageUrl).WithAlias(() => modelAlias.Url))
+                    .Select(() => alias.PageUrl).WithAlias(() => modelAlias.Url)
+                    .Select(() => alias.Language.Id).WithAlias(() => modelAlias.LanguageId))
                 .TransformUsing(Transformers.AliasToBean<PageLinkViewModel>());
 
             query.UnderlyingCriteria.AddOrder(new Order("Title", true));

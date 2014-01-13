@@ -8,7 +8,6 @@ using BetterCms.Module.Pages.Command.History.RestoreSitemapVersion;
 using BetterCms.Module.Pages.Command.Sitemap.DeleteSitemap;
 using BetterCms.Module.Pages.Command.Sitemap.DeleteSitemapNode;
 using BetterCms.Module.Pages.Command.Sitemap.GetPageLinks;
-using BetterCms.Module.Pages.Command.Sitemap.GetPageUrl;
 using BetterCms.Module.Pages.Command.Sitemap.GetPageUrlForLanguage;
 using BetterCms.Module.Pages.Command.Sitemap.GetSitemap;
 using BetterCms.Module.Pages.Command.Sitemap.GetSitemapsForNewPage;

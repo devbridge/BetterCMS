@@ -353,7 +353,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         */
         sitemap.loadAddNewPageDialog = function(data) {
             if (data && data.Data && (data.Data.Title || data.Data.PageTitle) && (data.Data.Url || data.Data.PageUrl) && (data.Data.Id || data.Data.PageId) && !data.Data.IsMasterPage) {
-                var addPageController = new AddNewPageMapController(data.Data.Title || data.Data.PageTitle, data.Data.Url || data.Data.PageUrl, data.Data.Id || data.Data.PageId);
+                var addPageController = new AddNewPageMapController(data.Data.Title || data.Data.PageTitle, data.Data.Url || data.Data.PageUrl, data.Data.Id || data.Data.PageId, data.Data.LanguageId || data.Data.PageLanguageId);
                 modal.open({
                     title: globalization.sitemapAddNewPageDialogTitle,
                     onLoad: function(dialog) {
@@ -444,7 +444,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Controller for sitemap add new page dialog.
         */
-        function AddNewPageMapController(title, url, pageId) {
+        function AddNewPageMapController(title, url, pageId, languageId) {
             var self = this;
             self.container = null;
             self.newPageModel = null;
@@ -472,7 +472,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     for (var i = 0; i < content.Data.length; i++) {
                         // Create data models.
                         var sitemapModel = new SitemapViewModel(content.Data[i]),
-                            pageLinkModel = new PageLinkViewModel(title, url, pageId),
+                            pageLinkModel = new PageLinkViewModel(title, url, pageId, languageId),
                             newPageModel = new AddNewPageViewModel(sitemapModel, pageLinkModel, onSkip),
                             tabModel = new TabModel(newPageModel);
                         tabs.push(tabModel);
@@ -653,6 +653,9 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                         node.callbackAfterFailSaving = function (newNode) {
                                             newNode.parentNode().childNodes.remove(newNode);
                                         };
+                                    }
+                                    if(sitemap.activeMapModel.showLanguages()){
+                                        node.updateLanguageOnDrop(dragObject.languageId(), sitemap.activeMapModel.languageId());
                                     }
                                     node.superDraggable(dragObject.superDraggable());
                                     dragObject = node;
@@ -1168,6 +1171,19 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 self.url(self.translations[languageId].url());
                 self.version(self.translations[languageId].version());
             };
+            self.updateLanguageOnDrop = function (pageLanguageId, currentLanguageId) {
+                bcms.logger.debug("NodeViewModel().updateLanguageOnDrop(pageLanguageId=" + pageLanguageId + ", currentLanguageId=" + currentLanguageId + ")");
+                self.translationsEnabled = true;
+                if (pageLanguageId == defaultIdValue || pageLanguageId == "" || pageLanguageId == null) {
+                    self.activateTranslation("");
+                    self.activateTranslation(currentLanguageId);
+                } else {
+                    self.translations[pageLanguageId] = new TranslationViewModel(self, pageLanguageId);
+                    self.translations[pageLanguageId].isModified(true);
+                    self.activateTranslation("");
+                    self.activateTranslation(currentLanguageId);
+                }
+            };
 
             self.getSitemap = function() {
                 if (self.parentNode() != null) {
@@ -1357,11 +1373,12 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Responsible for page link data.
         */
-        function PageLinkViewModel(title, url, pageId) {
+        function PageLinkViewModel(title, url, pageId, languageId) {
             var self = this;
             self.title = ko.observable(title);
             self.url = ko.observable(url);
             self.pageId = ko.observable(pageId);
+            self.languageId = ko.observable(languageId);
             self.isVisible = ko.observable(true);
             self.isCustom = ko.observable(false);
             self.isBeingDragged = ko.observable(false);
@@ -1378,6 +1395,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 self.title(json.Title);
                 self.url(json.Url);
                 self.pageId(json.Id);
+                self.languageId(json.LanguageId);
             };
         }
         
