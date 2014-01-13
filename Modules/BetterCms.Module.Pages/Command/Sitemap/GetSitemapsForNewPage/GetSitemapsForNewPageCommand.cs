@@ -7,6 +7,7 @@ using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Sitemap;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Security;
 
 using NHibernate.Linq;
@@ -27,6 +28,14 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemapsForNewPage
         public ICmsConfiguration CmsConfiguration { get; set; }
 
         /// <summary>
+        /// Gets or sets the language service.
+        /// </summary>
+        /// <value>
+        /// The language service.
+        /// </value>
+        public ILanguageService LanguageService { get; set; }
+
+        /// <summary>
         /// Executes the specified request.
         /// </summary>
         /// <returns>
@@ -35,7 +44,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemapsForNewPage
         public List<SitemapViewModel> Execute()
         {
             var sitemaps = new List<SitemapViewModel>();
-
+            var languagesFuture = CmsConfiguration.EnableMultilanguage ? LanguageService.GetLanguages() : null;
             var allSitmaps = Repository.AsQueryable<Models.Sitemap>()
                 .FetchMany(map => map.AccessRules)
                 .FetchMany(map => map.Nodes)
@@ -50,7 +59,9 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemapsForNewPage
                         Version = sitemap.Version,
                         Title = sitemap.Title,
                         RootNodes = GetSitemapNodesInHierarchy(sitemap.Nodes.Where(f => f.ParentNode == null).Distinct().ToList(), sitemap.Nodes.Distinct().ToList()),
-                        AccessControlEnabled = CmsConfiguration.Security.AccessControlEnabled
+                        AccessControlEnabled = CmsConfiguration.Security.AccessControlEnabled,
+                        ShowLanguages = CmsConfiguration.EnableMultilanguage,
+                        Languages = CmsConfiguration.EnableMultilanguage ? languagesFuture.ToList() : null
                     };
 
                 if (CmsConfiguration.Security.AccessControlEnabled)
