@@ -51,7 +51,8 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 saveMultipleSitemapsUrl: null,
                 sitemapHistoryDialogUrl: null,
                 loadSitemapVersionPreviewUrl: null,
-                restoreSitemapVersionUrl: null
+                restoreSitemapVersionUrl: null,
+                getPageUrlForLanguage: null
             },
             globalization = {
                 sitemapCreatorDialogTitle: null,

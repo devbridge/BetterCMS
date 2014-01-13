@@ -8,6 +8,8 @@ using BetterCms.Module.Pages.Command.History.RestoreSitemapVersion;
 using BetterCms.Module.Pages.Command.Sitemap.DeleteSitemap;
 using BetterCms.Module.Pages.Command.Sitemap.DeleteSitemapNode;
 using BetterCms.Module.Pages.Command.Sitemap.GetPageLinks;
+using BetterCms.Module.Pages.Command.Sitemap.GetPageUrl;
+using BetterCms.Module.Pages.Command.Sitemap.GetPageUrlForLanguage;
 using BetterCms.Module.Pages.Command.Sitemap.GetSitemap;
 using BetterCms.Module.Pages.Command.Sitemap.GetSitemapsForNewPage;
 using BetterCms.Module.Pages.Command.Sitemap.GetSitemapsList;
@@ -220,6 +222,24 @@ namespace BetterCms.Module.Pages.Controllers
             {
                 var data = new SitemapAndPageLinksViewModel { PageLinks = response };
                 return Json(new WireJson { Success = true, Data = data });
+            }
+
+            return Json(new WireJson { Success = false });
+        }
+
+        [HttpGet]
+        public ActionResult GetPageUrlForLanguage(string pageId, string languageId)
+        {
+            var response = GetCommand<GetPageUrlForLanguageCommand>()
+                .ExecuteCommand(new GetPageUrlForLanguageCommandRequest
+                    {
+                        PageId = pageId.ToGuidOrDefault(),
+                        LanguageId = languageId.ToGuidOrDefault(),
+                    });
+
+            if (!string.IsNullOrEmpty(response))
+            {
+                return Json(new WireJson { Success = true, Data = new { Url = response } });
             }
 
             return Json(new WireJson { Success = false });
