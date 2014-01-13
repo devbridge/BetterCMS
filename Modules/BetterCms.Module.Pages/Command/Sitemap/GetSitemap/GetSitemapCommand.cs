@@ -152,7 +152,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemap
                                 Id = t.Id,
                                 LanguageId = t.Language.Id,
                                 Title = t.Title,
-                                Url = t.Url,
+                                Url = GetTranslatedUrl(t, node),
                                 Version = t.Version
                             })
                         .ToList();
@@ -162,6 +162,31 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemap
             }
 
             return nodeList.OrderBy(n => n.DisplayOrder).ToList();
+        }
+
+        private string GetTranslatedUrl(SitemapNodeTranslation sitemapNodeTranslation, SitemapNode node)
+        {
+            if (node.Page != null)
+            {
+                if (node.Page.Language != null && node.Page.Language.Id == sitemapNodeTranslation.Language.Id)
+                {
+                    return node.Page.PageUrl;
+                }
+
+                var pageInLanguage =
+                    Repository.AsQueryable<Root.Models.Page>().FirstOrDefault(page => page.Language != null
+                                                                                      && page.Language.Id == sitemapNodeTranslation.Language.Id
+                                                                                      && page.LanguageGroupIdentifier == node.Page.LanguageGroupIdentifier);
+
+                if (pageInLanguage != null)
+                {
+                    return pageInLanguage.PageUrl;
+                }
+
+                return node.Page.PageUrl;
+            }
+
+            return sitemapNodeTranslation.Url;
         }
     }
 }

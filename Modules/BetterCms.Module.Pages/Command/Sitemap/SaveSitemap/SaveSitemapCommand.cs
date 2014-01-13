@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
+using BetterCms.Core.Exceptions.DataTier;
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Models;
@@ -11,6 +14,7 @@ using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 using NHibernate.Linq;
 
@@ -153,6 +157,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
         /// <summary>
         /// Saves the node list.
         /// </summary>
+        /// <param name="sitemap">The sitemap.</param>
         /// <param name="nodes">The nodes.</param>
         /// <param name="parentNode">The parent node.</param>
         private void SaveNodeList(Models.Sitemap sitemap, IEnumerable<SitemapNodeViewModel> nodes, SitemapNode parentNode)
@@ -171,6 +176,11 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
 
                 var sitemapNode = SitemapService.SaveNode(sitemap, node.Id, node.Version, node.Url, node.Title, node.PageId, node.DisplayOrder, node.ParentId, isDeleted, parentNode);
 
+                if ((create || update) && (node.Translations != null && node.Translations.Count > 0))
+                {
+                    SaveTranslations(sitemapNode, node);
+                }
+
                 if (create)
                 {
                     createdNodes.Add(sitemapNode);
@@ -182,10 +192,97 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
                 else if (delete)
                 {
                     deletedNodes.Add(sitemapNode);
+                    RemoveTranslations(sitemapNode);
                 }
 
                 SaveNodeList(sitemap, node.ChildNodes, sitemapNode);
             }
         }
-   }
+
+        /// <summary>
+        /// Saves the translations.
+        /// </summary>
+        /// <param name="sitemapNode">The sitemap node.</param>
+        /// <param name="node">The node.</param>
+        private void SaveTranslations(SitemapNode sitemapNode, SitemapNodeViewModel node)
+        {
+            var translations = Repository.AsQueryable<SitemapNodeTranslation>().Where(translation => translation.Node.Id == sitemapNode.Id).ToList();
+            foreach (var model in node.Translations)
+            {
+                var saveIt = false;
+                var translation = translations.FirstOrDefault(t => t.Id == model.Id);
+                if (translation == null)
+                {
+                    translation = translations.FirstOrDefault(t => t.Language.Id == model.LanguageId);
+                    if (translation != null)
+                    {
+                        throw new InvalidDataException(string.Format("Node {0} translation to language {1} already exists.", sitemapNode.Id, model.LanguageId));
+                    }
+
+                    saveIt = true;
+                    translation = new SitemapNodeTranslation
+                        {
+                            Node = sitemapNode,
+                            Language = Repository.AsProxy<Language>(model.LanguageId),
+                            Title = model.Title
+                        };
+
+                    if (sitemapNode.Page == null)
+                    {
+                        translation.Url = model.Url;
+                        translation.UrlHash = model.Url.UrlHash();
+                    }
+                }
+                else
+                {
+                    if (translation.Version != model.Version)
+                    {
+                        throw new ConcurrentDataException(translation);
+                    }
+
+                    if (translation.Title != model.Title)
+                    {
+                        saveIt = true;
+                        translation.Title = model.Title;
+                    }
+
+                    if (sitemapNode.Page == null)
+                    {
+                        if (translation.Url != model.Url)
+                        {
+                            saveIt = true;
+                            translation.Url = model.Url;
+                            translation.UrlHash = model.Url.UrlHash();
+                        }
+                    }
+                    else
+                    {
+                        if (translation.Url != null || translation.UrlHash != null)
+                        {
+                            saveIt = true;
+                            translation.Url = null;
+                            translation.UrlHash = null;
+                        }
+                    }
+                }
+
+                if (saveIt)
+                {
+                    Repository.Save(translation);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Removes the translations.
+        /// </summary>
+        /// <param name="sitemapNode">The sitemap node.</param>
+        private void RemoveTranslations(SitemapNode sitemapNode)
+        {
+            Repository.AsQueryable<SitemapNodeTranslation>()
+                .Where(translation => translation.Node.Id == sitemapNode.Id)
+                .ToList()
+                .ForEach(translation => Repository.Delete(translation));
+        }
+    }
 }

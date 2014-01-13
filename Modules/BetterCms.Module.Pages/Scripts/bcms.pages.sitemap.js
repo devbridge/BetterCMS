@@ -1229,6 +1229,13 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 return result;
             };
             self.toJson = function () {
+                var currentTranslation = null;
+                if (self.translationsEnabled) {
+                    currentTranslation = self.activateTranslation();
+                    if (currentTranslation != null) {
+                        self.activateTranslation("");
+                    }
+                }
                 var params = {
                     Id: self.id(),
                     Version: self.translationsEnabled ? self.translations[""].version() : self.version(),
@@ -1240,6 +1247,9 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     Translations: self.translationsToJson(),
                     ChildNodes: null
                 };
+                if (self.translationsEnabled && currentTranslation != null) {
+                    self.activateTranslation(currentTranslation.languageId());
+                }
                 return params;
             };
         }
@@ -1279,8 +1289,14 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.node = node;
             self.id = ko.observable();
             self.languageId = ko.observable(languageId);
-            self.title = ko.observable(node.title());
-            self.url = ko.observable(node.url());
+            var defaultTranslation = node.translations[""];
+            if (defaultTranslation != null) {
+                self.title = ko.observable(defaultTranslation.title());
+                self.url = ko.observable(defaultTranslation.url());
+            } else {
+                self.title = ko.observable(node.title());
+                self.url = ko.observable(node.url());
+            }
             self.version = ko.observable(1);
             self.isModified = ko.observable(false);
         }
