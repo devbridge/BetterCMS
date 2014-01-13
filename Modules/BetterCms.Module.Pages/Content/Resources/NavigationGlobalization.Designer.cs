@@ -259,7 +259,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Site Map Name.
+        ///   Looks up a localized string similar to Title.
         /// </summary>
         public static string Sitemap_EditDialog_SitemapTitle_Title {
             get {
@@ -268,7 +268,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit the title of this page..
+        ///   Looks up a localized string similar to Edit the title of this sitemap..
         /// </summary>
         public static string Sitemap_EditDialog_SitemapTitle_Tooltip_Description {
             get {

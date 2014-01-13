@@ -253,9 +253,9 @@
     <value>Add tags to this sitemap to identify it.</value>
   </data>
   <data name="Sitemap_EditDialog_SitemapTitle_Title" xml:space="preserve">
-    <value>Site Map Name</value>
+    <value>Title</value>
   </data>
   <data name="Sitemap_EditDialog_SitemapTitle_Tooltip_Description" xml:space="preserve">
-    <value>Edit the title of this page.</value>
+    <value>Edit the title of this sitemap.</value>
   </data>
 </root>
