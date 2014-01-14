@@ -531,9 +531,6 @@
     <EmbeddedResource Include="Views\Page\DeletePageConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\EditPageProperties.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Page\Pages.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -552,9 +549,6 @@
     <EmbeddedResource Include="Views\Page\Partial\TemplatesList.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\Partial\TranslationsGrid.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Page\SelectPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -562,6 +556,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Page\SearchUntranslatedPages.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\Partial\TranslationsGrid.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Page\EditPageProperties.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

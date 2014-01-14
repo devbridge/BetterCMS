@@ -1753,7 +1753,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Translation.
+        ///   Looks up a localized string similar to Add Translation +.
         /// </summary>
         public static string EditPageTranslations_AddTranslation_ButtonTitle {
             get {
