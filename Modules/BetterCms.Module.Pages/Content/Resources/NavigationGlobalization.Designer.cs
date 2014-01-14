@@ -88,7 +88,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Drag your page where you want to place it..
+        ///   Looks up a localized string similar to Drag &amp; Drop your page where you want to place it..
         /// </summary>
         public static string Sitemap_AddNewPageDialog_PageNodeHeader {
             get {

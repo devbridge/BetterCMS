@@ -13,11 +13,17 @@
     <div class="bcms-tab-single" style="height: 100%;" data-bind='template: { name: "bcms-sitemap-template" }'></div>
 </div>
 <script type="text/html" id="bcms-sitemap-template">
+    <div class="bcms-sitemap-filter-holder" data-bind="with: sitemap">
+        <div style="display: none;" data-bind="visible: showLanguages, with: language">
+            <div class="bcms-filter-text">Edit sitemap in language:</div>
+            <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
+        </div>
+    </div>
     <div class="bcms-columns-container">
         <div class="bcms-leftcol">
             <div class="bcms-sidebar-info-block">
                 <!-- ko if: !linkIsDropped() -->
-                <div class="bcms-content-titles">@NavigationGlobalization.Sitemap_AddNewPageDialog_PageNodeHeader</div>
+                <div>@NavigationGlobalization.Sitemap_AddNewPageDialog_PageNodeHeader</div>
                 <!-- ko with: pageLink -->
                 <div data-bind="draggable: $parentContext">
                     <div class="bcms-dropable-page-box" style="position: relative; z-index: 0;" data-bind="css: { 'bcms-placement-node-drag': isBeingDragged() }">

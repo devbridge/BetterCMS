@@ -31,6 +31,21 @@
     padding: 20px 20px 0;
 }
 
+.bcms-sitemap-filter-holder {
+    border-bottom: 1px solid #c6c6c6;
+    width: 100%;
+    padding: 10px;
+}
+
+    .bcms-sitemap-filter-holder .bcms-filter-text {
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .bcms-sitemap-filter-holder .bcms-global-select {
+        display: inline-block;
+    }
+
 .bcms-drop-area {
     min-height: 65px;
     padding-top: 20px;
@@ -44,6 +59,7 @@
 .bcms-dropable-page-box {
     position: relative;
     padding: 15px;
+    margin-top: 8px;
     margin-bottom: 8px;
     border: 1px solid #bdbdbd;
     border-radius: 4px;
@@ -197,7 +213,7 @@ a.bcms-expanded-nodes {
 .bcms-expand-link {
     float: right;
     line-height: 16px;
-    padding-left: 7px;
+    padding-left: 11px;
     color: #0383df;
     text-decoration: none;
     cursor: pointer;
@@ -209,6 +225,7 @@ a.bcms-expanded-nodes {
 
 .bcms-placement-dropzone {
     height: 46px;
+    margin-top: 15px;
     margin-bottom: 15px;
     line-height: 46px;
     border: 2px dashed #bdbdbd;

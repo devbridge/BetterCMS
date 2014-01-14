@@ -169,7 +169,7 @@
     <value>You can always place this page later.</value>
   </data>
   <data name="Sitemap_AddNewPageDialog_PageNodeHeader" xml:space="preserve">
-    <value>Drag your page where you want to place it.</value>
+    <value>Drag &amp; Drop your page where you want to place it.</value>
   </data>
   <data name="Sitemap_AddNewPageDialog_PageUrl" xml:space="preserve">
     <value>URL</value>

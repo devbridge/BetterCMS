@@ -1012,8 +1012,11 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 return false;
             };
             self.superDraggable = ko.observable(false);     // Used to force dragging if sitemap settings !canDragNode.
-            self.getReadonlyUrlState = ko.computed(function() {
+            self.isUrlReadonly = ko.computed(function () {
                 return self.pageId() == null || self.pageId() === defaultIdValue ? undefined : 'readonly';
+            });
+            self.getUrlReadonlyState = ko.computed(function () {
+                return self.isUrlReadonly();
             });
 
             // User for validation.

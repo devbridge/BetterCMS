@@ -3,9 +3,6 @@
 @using BetterCms.Module.Root.Mvc.Helpers
 @model BetterCms.Module.Pages.ViewModels.Sitemap.SitemapNodeViewModel
 <!-- ko with: sitemap -->
-<div style="display: none;" data-bind="visible: showLanguages, with: language">
-    <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
-</div>
 <div class="bcms-expand-link-holder"@* data-bind="droppable: 'emptyListZone'" TODO: check later. NOTE: jQuery error is raised on leave over. *@>
     <div class="bcms-expand-link" data-bind="click: expandAll">@NavigationGlobalization.Sitemap_Button_ExpandAll</div>
     <div class="bcms-expand-link" data-bind="click: collapseAll">@NavigationGlobalization.Sitemap_Button_CollapseAll</div>
@@ -32,14 +29,15 @@
     <div class="bcms-tree-holder">
         <!-- ko if: isFirstNode() -->
         <div class="bcms-nodes-dropzone"
-            data-bind="css: { 'bcms-nodes-dropzone-active': activeZone() == 'topZone'  }, droppable: 'topZone'">
+             data-bind="css: { 'bcms-nodes-dropzone-active': activeZone() == 'topZone'  }, droppable: 'topZone'">
             <div class="bcms-node-infotext">@NavigationGlobalization.Sitemap_NodeEdit_PlaceLinkHere</div>
         </div>
         <!-- /ko -->
         <div data-bind="draggable: $parentContext.$index, style: { zIndex: !isBeingDragged() ? '0' : '9999' }">
             <div class="bcms-placement-node" data-bind="
                         attr: { id: containerId }, 
-                        css: { 'bcms-placement-node-drag': isBeingDragged(), 'bcms-placement-node-edit': isActive(), 'bcms-placement-one-active': !isBeingDragged() && superDraggable() }">
+                        css: { 'bcms-placement-node-drag': isBeingDragged(), 'bcms-placement-node-edit': isActive(), 'bcms-placement-one-active': !isBeingDragged() && superDraggable() },
+                        style: { height: isActive() ? isUrlReadonly() ? '54px' : '101px' : '' }">
                 <!-- ko if: hasChildNodes() -->
                 <a class="bcms-expand-collapse-node" data-bind="click: toggleExpand, css: { 'bcms-expanded-nodes': isExpanded() }">&nbsp;</a>
                 <!-- /ko -->
@@ -63,7 +61,7 @@
                 <div class="bcms-edit-node">
                     <div class="bcms-edit-node-holder">
                         @Html.Tooltip(NavigationGlobalization.Sitemap_NodeEdit_Title_Tooltip_Message)
-                        <div class="bcms-input-box" style="width: 65%;">
+                        <div class="bcms-custom-input-box" style="width: 50%;">
                             @Html.TextBoxFor(m => m.Title, new
                             {
                                 data_bind = "value: title, valueUpdate: 'afterkeydown', enterPress: saveSitemapNodeWithValidation, escPress: cancelEditSitemapNode, hasfocus: isActive()",
@@ -72,21 +70,34 @@
                             })
                             @Html.BcmsValidationMessageFor(m => m.Title)
                         </div>
+                        <!-- ko if: isUrlReadonly -->
+                        <div class="bcms-btn-small" data-bind="click: saveSitemapNodeWithValidation, text: getSitemap().settings.nodeSaveButtonTitle">@RootGlobalization.Button_Ok</div>
+                        <div class="bcms-btn-links-small" data-bind="click: cancelEditSitemapNode">@RootGlobalization.Button_Cancel</div>
+                        <!-- /ko -->
                     </div>
                     <div class="bcms-edit-node-holder">
+                        <!-- ko if: isUrlReadonly -->
+                        <div class="bcms-placement-path" data-bind="text: url"></div>
+                        <!-- /ko -->
+                        <!-- ko ifnot: isUrlReadonly -->
                         @Html.Tooltip(NavigationGlobalization.Sitemap_NodeEdit_Url_Tooltip_Message)
-                        <div class="bcms-custom-input-box" style="width: 65%;">
+                        <div class="bcms-input-box">
                             @Html.TextBoxFor(m => m.Url, new
                             {
-                                data_bind = "value: url, valueUpdate: 'afterkeydown', enterPress: saveSitemapNodeWithValidation, escPress: cancelEditSitemapNode, attr: { 'readonly': getReadonlyUrlState() }",
+                                data_bind = "value: url, valueUpdate: 'afterkeydown', enterPress: saveSitemapNodeWithValidation, escPress: cancelEditSitemapNode, attr: { 'readonly': getUrlReadonlyState() }",
                                 @class = "bcms-editor-field-box",
                                 Url = (string)null,
                             })
                             @Html.BcmsValidationMessageFor(m => m.Url)
                         </div>
+                        <!-- /ko -->
+                    </div>
+                    <!-- ko ifnot: isUrlReadonly -->
+                    <div class="bcms-edit-node-holder">
                         <div class="bcms-btn-small" data-bind="click: saveSitemapNodeWithValidation, text: getSitemap().settings.nodeSaveButtonTitle">@RootGlobalization.Button_Ok</div>
                         <div class="bcms-btn-links-small" data-bind="click: cancelEditSitemapNode">@RootGlobalization.Button_Cancel</div>
                     </div>
+                    <!-- /ko -->
                 </div>
                 <!-- /ko -->
                 <div class="bcms-node-controls">
