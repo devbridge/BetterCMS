@@ -4,6 +4,7 @@ using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
+using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Sitemap;
 using BetterCms.Module.Root.Mvc;
@@ -45,11 +46,17 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemapsForNewPage
         {
             var sitemaps = new List<SitemapViewModel>();
             var languagesFuture = CmsConfiguration.EnableMultilanguage ? LanguageService.GetLanguages() : null;
-            var allSitmaps = Repository.AsQueryable<Models.Sitemap>()
-                .FetchMany(map => map.AccessRules)
-                .FetchMany(map => map.Nodes)
-                .ThenFetch(node => node.Page)
-                .ToList();
+            IQueryable<Models.Sitemap> sitemapQuery =
+                Repository.AsQueryable<Models.Sitemap>().FetchMany(map => map.AccessRules).FetchMany(map => map.Nodes).ThenFetch(node => node.Page);
+
+            if (CmsConfiguration.EnableMultilanguage)
+            {
+                sitemapQuery = sitemapQuery
+                    .FetchMany(map => map.Nodes)
+                    .ThenFetchMany(node => node.Translations);
+            }
+
+            var allSitmaps = sitemapQuery.Distinct().ToList();
 
             foreach (var sitemap in allSitmaps)
             {
@@ -58,7 +65,12 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemapsForNewPage
                         Id = sitemap.Id,
                         Version = sitemap.Version,
                         Title = sitemap.Title,
-                        RootNodes = GetSitemapNodesInHierarchy(sitemap.Nodes.Where(f => f.ParentNode == null).Distinct().ToList(), sitemap.Nodes.Distinct().ToList()),
+                        RootNodes =
+                            SitemapHelper.GetSitemapNodesInHierarchy(
+                                Repository,
+                                CmsConfiguration.EnableMultilanguage,
+                                sitemap.Nodes.Distinct().Where(f => f.ParentNode == null).ToList(),
+                                sitemap.Nodes.Distinct().ToList()),
                         AccessControlEnabled = CmsConfiguration.Security.AccessControlEnabled,
                         ShowLanguages = CmsConfiguration.EnableMultilanguage,
                         Languages = CmsConfiguration.EnableMultilanguage ? languagesFuture.ToList() : null
@@ -78,33 +90,6 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemapsForNewPage
             }
 
             return sitemaps.Count > 0 ? sitemaps : null;
-        }
-
-        /// <summary>
-        /// Gets the sitemap nodes in hierarchy.
-        /// </summary>
-        /// <param name="sitemapNodes">The sitemap nodes.</param>
-        /// <param name="allNodes">All nodes.</param>
-        /// <returns>The list with all root nodes.</returns>
-        private static List<SitemapNodeViewModel> GetSitemapNodesInHierarchy(IList<SitemapNode> sitemapNodes, IList<SitemapNode> allNodes)
-        {
-            var nodeList = new List<SitemapNodeViewModel>();
-
-            foreach (var node in sitemapNodes)
-            {
-                nodeList.Add(new SitemapNodeViewModel
-                {
-                    Id = node.Id,
-                    Version = node.Version,
-                    Title = node.Title,
-                    Url = node.Page != null ? node.Page.PageUrl : node.Url,
-                    PageId = node.Page != null ? node.Page.Id : Guid.Empty,
-                    DisplayOrder = node.DisplayOrder,
-                    ChildNodes = GetSitemapNodesInHierarchy(allNodes.Where(f => f.ParentNode == node).ToList(), allNodes)
-                });
-            }
-
-            return nodeList.OrderBy(n => n.DisplayOrder).ToList();
         }
     }
 }
