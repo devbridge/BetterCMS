@@ -615,4 +615,19 @@
   <data name="MediaManager_Search_TrySearchInHistory" xml:space="preserve">
     <value>Try searching again in older versions of media items.</value>
   </data>
+  <data name="FileEditor_Dialog_Reupload_Title" xml:space="preserve">
+    <value>Re-upload</value>
+  </data>
+  <data name="ImageEditor_Dialog_Reupload_Title" xml:space="preserve">
+    <value>Re-upload</value>
+  </data>
+  <data name="FileEditor_HasChanges_Message" xml:space="preserve">
+    <value>File properies have changed. Do you want to save a file before continue?</value>
+  </data>
+  <data name="ImageEditor_HasChanges_Message" xml:space="preserve">
+    <value>Image properies have changed. Do you want to save an image before continue?</value>
+  </data>
+  <data name="FileEditor_Dialog_Title_Title" xml:space="preserve">
+    <value>File title</value>
+  </data>
 </root>

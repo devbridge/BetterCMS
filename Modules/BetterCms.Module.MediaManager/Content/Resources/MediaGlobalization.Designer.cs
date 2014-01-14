@@ -313,6 +313,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Re-upload.
+        /// </summary>
+        public static string FileEditor_Dialog_Reupload_Title {
+            get {
+                return ResourceManager.GetString("FileEditor_Dialog_Reupload_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File Properties.
         /// </summary>
         public static string FileEditor_Dialog_Title {
@@ -322,11 +331,29 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File title.
+        /// </summary>
+        public static string FileEditor_Dialog_Title_Title {
+            get {
+                return ResourceManager.GetString("FileEditor_Dialog_Title_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit the title of this file..
         /// </summary>
         public static string FileEditor_Dialog_Title_Tooltip_Description {
             get {
                 return ResourceManager.GetString("FileEditor_Dialog_Title_Tooltip_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File properies have changed. Do you want to save a file before continue?.
+        /// </summary>
+        public static string FileEditor_HasChanges_Message {
+            get {
+                return ResourceManager.GetString("FileEditor_HasChanges_Message", resourceCulture);
             }
         }
         
@@ -646,6 +673,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Re-upload.
+        /// </summary>
+        public static string ImageEditor_Dialog_Reupload_Title {
+            get {
+                return ResourceManager.GetString("ImageEditor_Dialog_Reupload_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Image Information.
         /// </summary>
         public static string ImageEditor_Dialog_SubTitle {
@@ -669,6 +705,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         public static string ImageEditor_Dialog_Title {
             get {
                 return ResourceManager.GetString("ImageEditor_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image properies have changed. Do you want to save an image before continue?.
+        /// </summary>
+        public static string ImageEditor_HasChanges_Message {
+            get {
+                return ResourceManager.GetString("ImageEditor_HasChanges_Message", resourceCulture);
             }
         }
         

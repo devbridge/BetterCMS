@@ -27,6 +27,7 @@ namespace BetterCms.Module.MediaManager.Registration
                     new JavaScriptModuleGlobalization(this, "fileEditorDialogTitle", () => MediaGlobalization.FileEditor_Dialog_Title),
                     new JavaScriptModuleGlobalization(this, "fileEditorUpdateFailureMessageTitle", () => MediaGlobalization.FileEditor_UpdateFailureMessage_Title),
                     new JavaScriptModuleGlobalization(this, "fileEditorUpdateFailureMessageMessage", () => MediaGlobalization.FileEditor_UpdateFailureMessage_Message),
+                    new JavaScriptModuleGlobalization(this, "fileEditorHasChangesMessage", () => MediaGlobalization.FileEditor_HasChanges_Message)
                 };
         }
     }

@@ -208,6 +208,14 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         public IList<string> Tags { get; set; }
 
         /// <summary>
+        /// Gets or sets the folder id.
+        /// </summary>
+        /// <value>
+        /// The folder id.
+        /// </value>
+        public System.Guid? FolderId { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

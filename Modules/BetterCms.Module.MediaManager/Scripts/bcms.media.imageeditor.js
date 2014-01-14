@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.jquery.jcrop', 'bcms.ko.extenders', 'bcms.tags'],
-    function($, bcms, modal, siteSettings, forms, dynamicContent, jcrop, ko, tags) {
+bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.jquery.jcrop', 'bcms.ko.extenders', 'bcms.tags', 'bcms.media.upload'],
+    function($, bcms, modal, siteSettings, forms, dynamicContent, jcrop, ko, tags, mediaUpload) {
         'use strict';
 
         var imageEditor = {},
@@ -38,7 +38,8 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 imageEditorInsertDialogAcceptButton: null,
                 imageEditorUpdateFailureMessageTitle: null,
                 imageEditorUpdateFailureMessageMessage: null,
-                closeButtonTitle: null
+                closeButtonTitle: null,
+                imageEditorHasChangesMessage: null
             },
             constants = {
                 maxHeightToFit: 557,
@@ -76,7 +77,9 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 onLoad: function (dialog) {
                     var url = $.format(links.imageEditorDialogUrl, imageId);
                     dynamicContent.bindDialog(dialog, url, {
-                        contentAvailable: initImageEditorDialogEvents,
+                        contentAvailable: function (childDialog, content) {
+                            initImageEditorDialogEvents(childDialog, content, callback);
+                        },
                         beforePost: function () {
                             var newVersion = $(selectors.imageToEdit).data('version');
                             if (newVersion > 0) {
@@ -505,34 +508,88 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
         /**
         * Image edit form view model
         */
-        function ImageEditViewModel(titleEditorViewModel, imageEditorViewModel, tagsViewModel) {
-            var self = this;
+        function ImageEditViewModel(dialog, data, onSaveCallback) {
+            var self = this,
+                titleEditorViewModel = new TitleEditorViewModel(dialog, data.Title),
+                imageEditorViewModel = new ImageEditorViewModel(dialog, data, true),
+                tagsViewModel = new tags.TagsListViewModel(data.Tags);
 
             self.titleEditorViewModel = titleEditorViewModel;
             self.imageEditorViewModel = imageEditorViewModel;
             self.tags = tagsViewModel;
+
+            // Track form changes
+            self.imageAlign = ko.observable(data.ImageAlign);
+            self.modelChanged = false;
+            self.onValueChange = function() {
+                self.modelChanged = true;
+            };
+
+            imageEditorViewModel.cropCoordX1.subscribe(self.onValueChange);
+            imageEditorViewModel.cropCoordX2.subscribe(self.onValueChange);
+            imageEditorViewModel.cropCoordY1.subscribe(self.onValueChange);
+            imageEditorViewModel.cropCoordY2.subscribe(self.onValueChange);
+            imageEditorViewModel.oldWidth.subscribe(self.onValueChange);
+            imageEditorViewModel.oldHeight.subscribe(self.onValueChange);
+            tagsViewModel.items.subscribe(self.onValueChange);
+            self.imageAlign.subscribe(self.onValueChange);
+            
+            self.reupload = function () {
+                var reupload = function () {
+                    mediaUpload.openReuploadFilesDialog(data.Id, data.FolderId || '', 1, function (filesData) {
+                        imageEditor.showImageEditorDialog(data.Id, onSaveCallback);
+
+                        if (filesData && filesData.Data && filesData.Data.Medias && filesData.Data.Medias.length > 0) {
+                            onSaveCallback(filesData.Data.Medias[0]);
+                        }
+                    }, function() {
+                        imageEditor.showImageEditorDialog(data.Id, onSaveCallback);
+                    });
+                };
+                
+                if (self.modelChanged) {
+                    modal.confirmWithDecline({
+                        content: globalization.imageEditorHasChangesMessage,
+                        onAccept: function () {
+                            if ($.isFunction(dialog.options.onAccept)) {
+                                var delegate = dialog.options.onAccept;
+                                dialog.options.onAccept = function (closingDialog) {
+                                    delegate(closingDialog);
+                                    reupload();
+                                };
+                            } else {
+                                dialog.options.onAccept = function () {
+                                    reupload();
+                                };
+                            }
+                            dialog.container.find(selectors.imageEditorForm).submit();
+                        },
+                        onDecline: function() {
+                            reupload();
+                            dialog.close();
+                            return true;
+                        }
+                    });
+                } else {
+                    dialog.close();
+                    reupload();
+                }
+            };
         }
 
         /**
         * Initializes ImageEditor dialog events.
         */
-        function initImageEditorDialogEvents(dialog, content) {
+        function initImageEditorDialogEvents(dialog, content, callback) {
 
             var data = content.Data ? content.Data : { };
 
-            // Create view models for editor boxes and for form
-            var titleEditorViewModel = new TitleEditorViewModel(dialog, data.Title);
-            
-            var imageEditorViewModel = new ImageEditorViewModel(dialog, data, true);
-
-            var tagsEditorViewModel = new tags.TagsListViewModel(content.Data.Tags);
-            
-            var viewModel = new ImageEditViewModel(titleEditorViewModel, imageEditorViewModel, tagsEditorViewModel);
+            var viewModel = new ImageEditViewModel(dialog, data, callback);
             ko.applyBindings(viewModel, dialog.container.find(selectors.imageEditorForm).get(0));
 
             // Image alignment
             dialog.container.find(selectors.imageAlignmentControls).children().each(function () {
-                setImageAlignment(this, dialog);
+                setImageAlignment(this, dialog, viewModel);
             });
 
             dialog.container.find(selectors.selectableInputs).on('click', function () {
@@ -546,7 +603,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
         function initInsertImageWithOptionsDialogEvents(dialog) {
             // Image alignment
             dialog.container.find(selectors.imageAlignmentControls).children().each(function() {
-                setImageAlignment(this, dialog);
+                setImageAlignment(this, dialog, null);
             });
             
             // Select publis URL
@@ -558,7 +615,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
         /**
         * Changes CSS class for selected image alignment type
         */
-        function setImageAlignment(item, dialog) {
+        function setImageAlignment(item, dialog, viewModel) {
             $(item).on('click', function() {
                 dialog.container.find(selectors.imageAlignmentControls).children().each(function() {
                     $(this).attr('class', $(this).attr('class').replace('-active', ''));
@@ -566,6 +623,10 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 });
                 $(item).attr('class', $(item).attr('class') + '-active');
                 $('input', item).attr('checked', 'true');
+                
+                if (viewModel && $.isFunction(viewModel.imageAlign)) {
+                    viewModel.imageAlign($('input', item).val());
+                }
             });
         }
 

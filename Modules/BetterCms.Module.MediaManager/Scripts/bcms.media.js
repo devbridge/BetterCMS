@@ -892,15 +892,16 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             if (security.IsAuthorized(["BcmsEditContent"])) {
                 var self = this;
                 imageEditor.onEditImage(self.id(), function (json) {
+                    // Accepts json from reupload and/or from save properties
                     self.version(json.Version);
-                    self.tooltip(json.Caption);
+                    self.tooltip(json.Caption || json.Tooltip);
                     self.thumbnailUrl(json.ThumbnailUrl);
-                    self.publicUrl(json.Url);
-                    self.name(json.Title);
-                    self.oldName = json.Title;
-                    self.sizeText = json.FileSize;
-                    self.width = json.CroppedWidth;
-                    self.height = json.CroppedHeight;
+                    self.publicUrl(json.Url || json.PublicUrl);
+                    self.name(json.Title || json.Name);
+                    self.oldName = json.Title || json.Name;
+                    self.sizeText = json.FileSize || json.SizeText;
+                    self.width = json.CroppedWidth || json.Width;
+                    self.height = json.CroppedHeight || json.Height;
                 });
             }
         };
@@ -1005,15 +1006,16 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             if (security.IsAuthorized(["BcmsEditContent"])) {
                 var self = this;
                 fileEditor.onEditFile(self.id(), function (json) {
+                    // Accepts json from reupload and/or from save properties
                     self.version(json.Version);
-                    self.name(json.Title);
-                    self.oldName = json.Title;
+                    self.name(json.Title || json.Name);
+                    self.oldName = json.Title || json.Name;
                     if (json.Image) {
                         self.tooltip(json.Image.ImageTooltip);
                         self.thumbnailUrl(json.Image.ThumbnailUrl);
                     } else {
-                        self.tooltip(null);
-                        self.thumbnailUrl(null);
+                        self.thumbnailUrl(json.ThumbnailUrl);
+                        self.tooltip(json.Tooltip);
                     }
                 });
             }
