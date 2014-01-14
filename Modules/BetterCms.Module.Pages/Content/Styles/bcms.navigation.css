@@ -32,9 +32,11 @@
 }
 
 .bcms-sitemap-filter-holder {
-    border-bottom: 1px solid #c6c6c6;
+    /*border-bottom: 1px solid #c6c6c6;
     width: 100%;
-    padding: 10px;
+    padding: 10px;*/
+    display: table-caption;
+    height: 50px;
 }
 
     .bcms-sitemap-filter-holder .bcms-filter-text {

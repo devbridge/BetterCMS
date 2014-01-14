@@ -47,13 +47,17 @@
             </div>
         </div>
         <div id="bcms-tab-2" class="bcms-tab-single">
-            <div class="bcms-sitemap-filter-holder" data-bind="with: sitemap">
-                <div style="display: none;" data-bind="visible: showLanguages, with: language">
-                    <div class="bcms-filter-text">Edit sitemap in language:</div>
-                    <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
-                </div>
-            </div>
             <div class="bcms-columns-container">
+                <div class="bcms-sitemap-filter-holder" data-bind="with: sitemap">
+                    <div style="display: none;" data-bind="visible: showLanguages, with: language">
+                        <div class="bcms-filter-text">Edit sitemap in language:</div>
+                        <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
+                    </div>
+                    <div class="bcms-expand-link-holder"@* data-bind="droppable: 'emptyListZone'" TODO: check later. NOTE: jQuery error is raised on leave over. *@>
+                        <div class="bcms-expand-link" data-bind="click: expandAll">@NavigationGlobalization.Sitemap_Button_ExpandAll</div>
+                        <div class="bcms-expand-link" data-bind="click: collapseAll">@NavigationGlobalization.Sitemap_Button_CollapseAll</div>
+                    </div>
+                </div>
                 <div class="bcms-leftcol bcms-add-node-col">
                     <div class="bcms-sitemap-links-holder" data-bind="template: { name: 'bcms-navigation-pagelinks-template' }"></div>
                 </div>

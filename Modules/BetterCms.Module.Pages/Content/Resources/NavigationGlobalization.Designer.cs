@@ -106,15 +106,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page Placement.
-        /// </summary>
-        public static string Sitemap_AddNewPageDialog_SitemapHeader {
-            get {
-                return ResourceManager.GetString("Sitemap_AddNewPageDialog_SitemapHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Skip.
         /// </summary>
         public static string Sitemap_AddNewPageDialog_SkipButton {

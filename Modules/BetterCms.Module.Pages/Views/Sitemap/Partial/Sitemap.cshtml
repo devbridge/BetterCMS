@@ -3,20 +3,13 @@
 @using BetterCms.Module.Root.Mvc.Helpers
 @model BetterCms.Module.Pages.ViewModels.Sitemap.SitemapNodeViewModel
 <!-- ko with: sitemap -->
-<div class="bcms-expand-link-holder"@* data-bind="droppable: 'emptyListZone'" TODO: check later. NOTE: jQuery error is raised on leave over. *@>
-    <div class="bcms-expand-link" data-bind="click: expandAll">@NavigationGlobalization.Sitemap_Button_ExpandAll</div>
-    <div class="bcms-expand-link" data-bind="click: collapseAll">@NavigationGlobalization.Sitemap_Button_CollapseAll</div>
-</div>
-
 <!-- ko if: hasChildNodes() && showHasNoDataMessage() -->
 <div class="bcms-nodes-dropzone bcms-nodes-dropzone-active">
     <div class="bcms-node-infotext">@RootGlobalization.Grid_NoDataAvailable_Message</div>
 </div>
 <!-- /ko -->
-
 <div data-bind='template: { name: "bcms-navigation-sitemapnode-template" }'></div>
 <!-- /ko -->
-
 <script type="text/html" id="bcms-navigation-sitemapnode-template">
     <!-- ko if: !hasChildNodes() -->
     <div class="bcms-nodes-dropzone bcms-nodes-dropzone-active" data-bind="droppable: 'emptyListZone'">
