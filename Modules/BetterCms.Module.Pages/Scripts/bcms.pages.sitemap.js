@@ -1140,7 +1140,9 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 if (!self.translationsEnabled) {
                     return;
                 }
-
+                if (self.isActive()) {
+                    self.cancelEditSitemapNode();
+                }
                 if (self.activeTranslation() != null) {
                     var active = self.activeTranslation(),
                         isModified = active.isModified();
