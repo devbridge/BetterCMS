@@ -31,6 +31,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
                 .WithColumn("NodeId").AsGuid().NotNullable()
                 .WithColumn("LanguageId").AsGuid().NotNullable()
                 .WithColumn("Title").AsString(MaxLength.Name).NotNullable()
+                .WithColumn("UsePageTitleAsNodeTitle").AsBoolean().NotNullable()
                 .WithColumn("Url").AsString(MaxLength.Url).Nullable()
                 .WithColumn("UrlHash").AsAnsiString(MaxLength.UrlHash).Nullable();
 

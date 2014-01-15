@@ -53,6 +53,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemapVersion
         public SitemapViewModel Execute(Guid versionId)
         {
             var languagesFuture = CmsConfiguration.EnableMultilanguage ? LanguageService.GetLanguages() : null;
+            var pagesToFuture = SitemapHelper.GetPagesToFuture(CmsConfiguration.EnableMultilanguage, Repository);
 
             // Return current or old version.
             var sitemap = Repository.AsQueryable<Models.Sitemap>()
@@ -62,6 +63,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemapVersion
                 .FetchMany(map => map.Nodes)
                 .ThenFetchMany(node => node.Translations)
                 .Distinct()
+                .ToFuture()
                 .ToList()
                 .FirstOrDefault() ?? SitemapService.GetArchivedSitemapVersionForPreview(versionId);
 
@@ -75,11 +77,11 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemapVersion
                         Title = sitemap.Title,
                         RootNodes =
                             SitemapHelper.GetSitemapNodesInHierarchy(
-                                Repository,
                                 CmsConfiguration.EnableMultilanguage,
                                 sitemap.Nodes.Distinct().Where(f => f.ParentNode == null).ToList(),
                                 sitemap.Nodes.Distinct().ToList(),
-                                languages.Select(l => l.Key.ToGuidOrDefault()).ToList()),
+                                languages.Select(l => l.Key.ToGuidOrDefault()).ToList(),
+                                (pagesToFuture ?? new List<SitemapHelper.PageData>()).ToList()),
                         AccessControlEnabled = CmsConfiguration.Security.AccessControlEnabled,
                         ShowLanguages = CmsConfiguration.EnableMultilanguage,
                         Languages = languages,

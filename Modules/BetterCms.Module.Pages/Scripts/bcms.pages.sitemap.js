@@ -640,6 +640,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                     node.title(dragObject.title());
                                     node.url(dragObject.url());
                                     node.pageId(dragObject.pageId());
+                                    node.usePageTitleAsNodeTitle(dragObject.pageId() != null && dragObject.pageId() != defaultIdValue ? true : false);
                                     if (dropZoneType == DropZoneTypes.EmptyListZone || dropZoneType == DropZoneTypes.MiddleZone) {
                                         node.parentNode(dropZoneObject);
                                     } else {
@@ -971,6 +972,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.title = ko.observable();
             self.url = ko.observable();
             self.pageId = ko.observable(defaultIdValue);
+            self.usePageTitleAsNodeTitle = ko.observable(false);
             self.displayOrder = ko.observable(0);
             self.isDeleted = ko.observable(false);
             self.isDeleted.subscribe(function () {
@@ -1191,6 +1193,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                         translation = new TranslationViewModel(self, languageId);
                                     translation.title(translationJson.Title);
                                     translation.url(translationJson.PageUrl);
+                                    translation.usePageTitleAsNodeTitle(self.usePageTitleAsNodeTitle());
                                     translation.isModified(true);
                                     self.translations[languageId] = translation;
                                     if (languageId === "") {
@@ -1236,6 +1239,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 self.title(jsonNode.Title);
                 self.url(jsonNode.Url);
                 self.pageId(jsonNode.PageId);
+                self.usePageTitleAsNodeTitle(jsonNode.UsePageTitleAsNodeTitle);
                 self.displayOrder(jsonNode.DisplayOrder);
                 if (translationsEnabled) {
                     self.translationsEnabled = true;
@@ -1245,6 +1249,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                 translation = new TranslationViewModel(self, translationJson.LanguageId);
                             translation.id(translationJson.Id);
                             translation.title(translationJson.Title);
+                            translation.usePageTitleAsNodeTitle(translationJson.UsePageTitleAsNodeTitle);
                             translation.url(translationJson.Url);
                             translation.version(translationJson.Version);
                             self.translations[translationJson.LanguageId] = translation;
@@ -1276,6 +1281,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             Id: translation.id(),
                             LanguageId: translation.languageId(),
                             Title: translation.title(),
+                            UsePageTitleAsNodeTitle: translation.usePageTitleAsNodeTitle(),
                             Url: translation.url(),
                             Version: translation.version(),
                         });
@@ -1295,6 +1301,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     Id: self.id(),
                     Version: self.translationsEnabled ? self.translations[""].version() : self.version(),
                     Title: self.translationsEnabled ? self.translations[""].title() : self.title(),
+                    UsePageTitleAsNodeTitle: self.usePageTitleAsNodeTitle(),
                     Url: self.translationsEnabled ? self.translations[""].url() : self.url(),
                     PageId: self.pageId(),
                     DisplayOrder: self.displayOrder(),
@@ -1343,6 +1350,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             var self = this;
             self.node = node;
             self.id = ko.observable();
+            self.usePageTitleAsNodeTitle = ko.observable(false);
             self.languageId = ko.observable(languageId == null ? "" : languageId);
             var defaultTranslation = node.translations[""];
             if (defaultTranslation != null) {

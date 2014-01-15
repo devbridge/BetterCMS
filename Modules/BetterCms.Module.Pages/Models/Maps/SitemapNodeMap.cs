@@ -15,6 +15,7 @@ namespace BetterCms.Module.Pages.Models.Maps
             Table("SitemapNodes");
 
             Map(x => x.Title).Not.Nullable().Length(MaxLength.Name);
+            Map(x => x.UsePageTitleAsNodeTitle).Not.Nullable();
             Map(x => x.Url).Nullable().Length(MaxLength.Url);
             Map(x => x.UrlHash).Nullable().Length(MaxLength.UrlHash);
             Map(x => x.DisplayOrder).Not.Nullable();

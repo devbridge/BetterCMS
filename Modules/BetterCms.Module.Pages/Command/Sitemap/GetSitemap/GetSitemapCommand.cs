@@ -80,8 +80,8 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemap
             }
 
             var tagsFuture = TagService.GetSitemapTagNames(sitemapId);
-
             var languagesFuture = CmsConfiguration.EnableMultilanguage ? LanguageService.GetLanguages() : null;
+            var pagesToFuture = SitemapHelper.GetPagesToFuture(CmsConfiguration.EnableMultilanguage, Repository);
 
             IQueryable<Models.Sitemap> sitemapQuery = Repository.AsQueryable<Models.Sitemap>()
                 .Where(map => map.Id == sitemapId)
@@ -95,7 +95,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemap
                     .ThenFetchMany(node => node.Translations);
             }
 
-            var sitemap = sitemapQuery.Distinct().ToList().First();
+            var sitemap = sitemapQuery.Distinct().ToFuture().ToList().First();
             var languages = CmsConfiguration.EnableMultilanguage ? languagesFuture.ToList() : new List<LookupKeyValue>();
             var model = new SitemapViewModel
                 {
@@ -104,11 +104,11 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemap
                     Title = sitemap.Title,
                     RootNodes =
                         SitemapHelper.GetSitemapNodesInHierarchy(
-                            Repository,
                             CmsConfiguration.EnableMultilanguage,
                             sitemap.Nodes.Distinct().Where(f => f.ParentNode == null).ToList(),
                             sitemap.Nodes.Distinct().ToList(),
-                            languages.Select(l => l.Key.ToGuidOrDefault()).ToList()),
+                            languages.Select(l => l.Key.ToGuidOrDefault()).ToList(),
+                            (pagesToFuture ?? new List<SitemapHelper.PageData>()).ToList()),
                     Tags = tagsFuture.ToList(),
                     AccessControlEnabled = CmsConfiguration.Security.AccessControlEnabled,
                     ShowLanguages = CmsConfiguration.EnableMultilanguage,

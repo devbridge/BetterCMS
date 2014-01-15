@@ -191,7 +191,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveMultipleSitemaps
                 var update = !node.Id.HasDefaultValue() && !isDeleted;
                 var delete = !node.Id.HasDefaultValue() && isDeleted;
 
-                var sitemapNode = SitemapService.SaveNode(sitemap, node.Id, node.Version, node.Url, node.Title, node.PageId, node.DisplayOrder, node.ParentId, isDeleted, parentNode);
+                var sitemapNode = SitemapService.SaveNode(sitemap, node.Id, node.Version, node.Url, node.Title, node.PageId, node.UsePageTitleAsNodeTitle, node.DisplayOrder, node.ParentId, isDeleted, parentNode);
 
                 if (create)
                 {

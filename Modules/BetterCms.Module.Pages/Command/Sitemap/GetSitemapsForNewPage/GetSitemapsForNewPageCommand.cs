@@ -47,6 +47,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemapsForNewPage
         {
             var sitemaps = new List<SitemapViewModel>();
             var languagesFuture = CmsConfiguration.EnableMultilanguage ? LanguageService.GetLanguages() : null;
+            var pagesToFuture = SitemapHelper.GetPagesToFuture(CmsConfiguration.EnableMultilanguage, Repository);
             IQueryable<Models.Sitemap> sitemapQuery =
                 Repository.AsQueryable<Models.Sitemap>().FetchMany(map => map.AccessRules).FetchMany(map => map.Nodes).ThenFetch(node => node.Page);
 
@@ -57,7 +58,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemapsForNewPage
                     .ThenFetchMany(node => node.Translations);
             }
 
-            var allSitmaps = sitemapQuery.Distinct().ToList();
+            var allSitmaps = sitemapQuery.Distinct().ToFuture().ToList();
             var languages = CmsConfiguration.EnableMultilanguage ? languagesFuture.ToList() : new List<LookupKeyValue>();
             foreach (var sitemap in allSitmaps)
             {
@@ -68,11 +69,11 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemapsForNewPage
                         Title = sitemap.Title,
                         RootNodes =
                             SitemapHelper.GetSitemapNodesInHierarchy(
-                                Repository,
                                 CmsConfiguration.EnableMultilanguage,
                                 sitemap.Nodes.Distinct().Where(f => f.ParentNode == null).ToList(),
                                 sitemap.Nodes.Distinct().ToList(),
-                                languages.Select(l => l.Key.ToGuidOrDefault()).ToList()),
+                                languages.Select(l => l.Key.ToGuidOrDefault()).ToList(),
+                                (pagesToFuture ?? new List<SitemapHelper.PageData>()).ToList()),
                         AccessControlEnabled = CmsConfiguration.Security.AccessControlEnabled,
                         ShowLanguages = CmsConfiguration.EnableMultilanguage,
                         Languages = languages

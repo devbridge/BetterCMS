@@ -53,6 +53,14 @@ namespace BetterCms.Module.Pages.Models
         public virtual PageProperties Page { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether use page title as node title.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if use page title as node title; otherwise, <c>false</c>.
+        /// </value>
+        public virtual bool UsePageTitleAsNodeTitle { get; set; }
+
+        /// <summary>
         /// Gets or sets the display order.
         /// </summary>
         /// <value>

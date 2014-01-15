@@ -129,7 +129,7 @@ namespace BetterCms.Module.Pages.Services
         /// <returns>
         /// Updated or newly created sitemap node.
         /// </returns>
-        public SitemapNode SaveNode(Sitemap sitemap, Guid nodeId, int version, string url, string title, Guid pageId, int displayOrder, Guid parentId, bool isDeleted = false, SitemapNode parentNode = null)
+        public SitemapNode SaveNode(Sitemap sitemap, Guid nodeId, int version, string url, string title, Guid pageId, bool usePageTitleAsNodeTitle, int displayOrder, Guid parentId, bool isDeleted = false, SitemapNode parentNode = null)
         {
             var node = nodeId.HasDefaultValue()
                 ? new SitemapNode()
@@ -152,6 +152,7 @@ namespace BetterCms.Module.Pages.Services
                 node.Version = version;
                 node.Title = title;
                 node.Page = !pageId.HasDefaultValue() ? repository.AsProxy<PageProperties>(pageId) : null;
+                node.UsePageTitleAsNodeTitle = !pageId.HasDefaultValue() && usePageTitleAsNodeTitle;
                 node.Url = node.Page != null ? null : url;
                 node.UrlHash = node.Page != null ? null : url.UrlHash();
                 node.DisplayOrder = displayOrder;
@@ -356,6 +357,7 @@ namespace BetterCms.Module.Pages.Services
                                             PageUrl = archivedNode.Url
                                         }
                                 : null,
+                        UsePageTitleAsNodeTitle = archivedNode.UsePageTitleAsNodeTitle,
                         DisplayOrder = archivedNode.DisplayOrder,
                         ParentNode = parentNode,
                     };
@@ -411,6 +413,7 @@ namespace BetterCms.Module.Pages.Services
                     Title = node.Title,
                     Url = node.Page != null ? node.Page.PageUrl : node.Url,
                     PageId = node.Page != null ? node.Page.Id : Guid.Empty,
+                    UsePageTitleAsNodeTitle = node.UsePageTitleAsNodeTitle,
                     DisplayOrder = node.DisplayOrder,
                     Nodes = GetSitemapNodesInHierarchy(allNodes.Where(f => f.ParentNode == node).OrderBy(sitemapNode => sitemapNode.DisplayOrder).ToList(), allNodes),
                     Translations = node.Translations == null
@@ -510,6 +513,7 @@ namespace BetterCms.Module.Pages.Services
             public string Title { get; set; }
             public string Url { get; set; }
             public Guid PageId { get; set; }
+            public bool UsePageTitleAsNodeTitle { get; set; }
             public int DisplayOrder { get; set; }
             public List<ArchivedNode> Nodes { get; set; }
             public List<ArchivedNodeTranslation> Translations { get; set; }

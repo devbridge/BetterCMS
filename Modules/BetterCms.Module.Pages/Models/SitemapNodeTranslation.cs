@@ -50,5 +50,13 @@ namespace BetterCms.Module.Pages.Models
         /// The URL hash.
         /// </value>
         public virtual string UrlHash { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether use page title as node title.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if use page title as node title; otherwise, <c>false</c>.
+        /// </value>
+        public virtual bool UsePageTitleAsNodeTitle { get; set; }
     }
 }

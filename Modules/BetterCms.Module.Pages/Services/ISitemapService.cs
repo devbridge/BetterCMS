@@ -59,7 +59,7 @@ namespace BetterCms.Module.Pages.Services
         /// <returns>
         /// Updated or newly created sitemap node.
         /// </returns>
-        SitemapNode SaveNode(Sitemap sitemap, Guid nodeId, int version, string url, string title, Guid pageId, int displayOrder, Guid parentId, bool isDeleted = false, SitemapNode parentNode = null);
+        SitemapNode SaveNode(Sitemap sitemap, Guid nodeId, int version, string url, string title, Guid pageId, bool usePageTitleAsNodeTitle, int displayOrder, Guid parentId, bool isDeleted = false, SitemapNode parentNode = null);
 
         /// <summary>
         /// Gets the sitemap history.

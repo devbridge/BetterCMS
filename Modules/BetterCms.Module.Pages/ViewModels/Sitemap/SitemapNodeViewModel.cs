@@ -107,6 +107,14 @@ namespace BetterCms.Module.Pages.ViewModels.Sitemap
         public IList<SitemapNodeTranslationViewModel> Translations { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether use page title as node title.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if use page title as node title; otherwise, <c>false</c>.
+        /// </value>
+        public bool UsePageTitleAsNodeTitle { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

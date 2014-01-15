@@ -6,6 +6,8 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Sitemap;
 
+using NHibernate.Linq;
+
 namespace BetterCms.Module.Pages.Helpers
 {
     /// <summary>
@@ -13,72 +15,153 @@ namespace BetterCms.Module.Pages.Helpers
     /// </summary>
     internal static class SitemapHelper
     {
+        public class PageData
+        {
+            public Guid Id { get; set; }
+            public string Title { get; set; }
+            public string Url { get; set; }
+            public Guid? LanguageId { get; set; }
+            public Guid? LanguageGroupIdentifier { get; set; }
+        }
+
+        public static IEnumerable<PageData> GetPagesToFuture(bool enableMultilanguage, IRepository repository)
+        {
+            return enableMultilanguage ? repository
+                .AsQueryable<Root.Models.Page>()
+                .Select(p => new PageData
+                {
+                    Id = p.Id,
+                    Title = p.Title,
+                    Url = p.PageUrl,
+                    LanguageId = p.Language != null ? p.Language.Id : Guid.Empty,
+                    LanguageGroupIdentifier = p.LanguageGroupIdentifier
+                })
+                .ToFuture() : null;
+        }
+
         /// <summary>
         /// Gets the sitemap nodes in hierarchy.
         /// </summary>
-        /// <param name="repository">The repository.</param>
         /// <param name="enableMultilanguage">if set to <c>true</c> multi-language is enabled.</param>
         /// <param name="sitemapNodes">The sitemap nodes.</param>
         /// <param name="allNodes">All nodes.</param>
-        /// <param name="languages">The languages.</param>
+        /// <param name="languageIds">The languages.</param>
+        /// <param name="pages">The pages.</param>
         /// <returns>
         /// The list with all root nodes.
         /// </returns>
-        public static List<SitemapNodeViewModel> GetSitemapNodesInHierarchy(IRepository repository, bool enableMultilanguage, IList<SitemapNode> sitemapNodes, IList<SitemapNode> allNodes, List<Guid> languages)
+        public static List<SitemapNodeViewModel> GetSitemapNodesInHierarchy(
+            bool enableMultilanguage, IList<SitemapNode> sitemapNodes, IList<SitemapNode> allNodes, List<Guid> languageIds, List<PageData> pages)
         {
             var nodeList = new List<SitemapNodeViewModel>();
-
             foreach (var node in sitemapNodes)
             {
+                var pageLinked = node.Page != null;
                 var nodeViewModel = new SitemapNodeViewModel
                 {
                     Id = node.Id,
                     Version = node.Version,
-                    Title = node.Title,
-                    Url = node.Page != null ? node.Page.PageUrl : node.Url,
-                    PageId = node.Page != null ? node.Page.Id : Guid.Empty,
+                    Title = pageLinked && node.UsePageTitleAsNodeTitle ? node.Page.Title : node.Title,
+                    UsePageTitleAsNodeTitle = node.UsePageTitleAsNodeTitle,
+                    Url = pageLinked ? node.Page.PageUrl : node.Url,
+                    PageId = pageLinked ? node.Page.Id : Guid.Empty,
                     DisplayOrder = node.DisplayOrder,
-                    ChildNodes = GetSitemapNodesInHierarchy(repository, enableMultilanguage, allNodes.Where(f => f.ParentNode == node).ToList(), allNodes, languages)
+                    ChildNodes = GetSitemapNodesInHierarchy(enableMultilanguage, allNodes.Where(f => f.ParentNode == node).ToList(), allNodes, languageIds, pages)
                 };
 
                 if (enableMultilanguage)
                 {
-                    nodeViewModel.Translations = node.Translations
-                        .Distinct()
+                    nodeViewModel.Translations = new List<SitemapNodeTranslationViewModel>();
+
+                    node.Translations.Distinct()
                         .Select(t => new SitemapNodeTranslationViewModel
                         {
                             Id = t.Id,
                             LanguageId = t.Language.Id,
                             Title = t.Title,
-                            Url = GetUrl(repository, node, t),
+                            Url = t.Url,
                             Version = t.Version
                         })
-                        .ToList();  
-
-                    if (node.Page != null && node.Page.Language != null && nodeViewModel.Translations.All(t => t.LanguageId != node.Page.Language.Id))
+                        .ToList()
+                        .ForEach(nodeViewModel.Translations.Add);
+                    
+                    if (pageLinked)
                     {
-                        nodeViewModel.Translations.Add(new SitemapNodeTranslationViewModel
+                        // Setup default language.
+                        if (node.Page.Language == null)
                         {
-                            Id = Guid.Empty,
-                            LanguageId = node.Page.Language.Id,
-                            Title = node.Title,
-                            Url = node.Page.PageUrl,
-                            Version = 1
-                        });
-                    }
-
-                    foreach (var languageId in languages)
-                    {
-                        if (nodeViewModel.Translations.All(model => model.Id != languageId))
-                        {
-                            nodeViewModel.Translations.Add(new SitemapNodeTranslationViewModel
+                            nodeViewModel.Url = node.Page.PageUrl;
+                            if (nodeViewModel.UsePageTitleAsNodeTitle)
                             {
-                                Id = Guid.Empty,
-                                LanguageId = languageId,
-                                Title = node.Title,
-                                Url = GetUrl(repository, node, languageId),
-                                Version = 1
-                            });
+                                nodeViewModel.Title = node.Page.Title;
+                            }
+                        }
+                        else if (node.Page.LanguageGroupIdentifier.HasValue)
+                        {
+                            var pageTranslation = pages.FirstOrDefault(p => p.LanguageGroupIdentifier.HasValue
+                                                                            && p.LanguageGroupIdentifier.Value == node.Page.LanguageGroupIdentifier.Value
+                                                                            && !p.LanguageId.HasValue);
+                            if (pageTranslation != null)
+                            {
+                                nodeViewModel.Url = pageTranslation.Url;
+                                if (nodeViewModel.UsePageTitleAsNodeTitle)
+                                {
+                                    nodeViewModel.Title = pageTranslation.Title;
+                                }
+                            }
+                        }
+
+                        // Setup other languages.
+                        foreach (var languageId in languageIds)
+                        {
+                            var translationViewModel = nodeViewModel.Translations.FirstOrDefault(t => t.LanguageId == languageId);
+                            if (translationViewModel == null)
+                            {
+                                translationViewModel = new SitemapNodeTranslationViewModel
+                                    {
+                                        Id = Guid.Empty,
+                                        LanguageId = languageId,
+                                        Title = string.Empty,
+                                        Url = string.Empty,
+                                        UsePageTitleAsNodeTitle = true,
+                                        Version = 0
+                                    };
+                                nodeViewModel.Translations.Add(translationViewModel);
+                            }
+
+                            var title = string.Empty;
+                            var url = string.Empty;
+
+                            if (node.Page.Language != null && node.Page.Language.Id == languageId)
+                            {
+                                title = node.Page.Title;
+                                url = node.Page.PageUrl;
+                            }
+                            else if (node.Page.LanguageGroupIdentifier.HasValue)
+                            {
+                                var pageTranslation = pages.FirstOrDefault(p => p.LanguageGroupIdentifier.HasValue
+                                                                                && p.LanguageGroupIdentifier.Value == node.Page.LanguageGroupIdentifier.Value
+                                                                                && p.LanguageId.HasValue
+                                                                                && p.LanguageId.Value == languageId);
+                                if (pageTranslation != null)
+                                {
+                                    title = pageTranslation.Title;
+                                    url = pageTranslation.Url;
+                                }
+                            }
+
+                            translationViewModel.Url = url;
+                            if (translationViewModel.UsePageTitleAsNodeTitle)
+                            {
+                                translationViewModel.Title = title;
+                            }
+
+                            if (string.IsNullOrEmpty(translationViewModel.Title) || string.IsNullOrEmpty(translationViewModel.Url))
+                            {
+                                translationViewModel.Title = nodeViewModel.Title;
+                                translationViewModel.Url = nodeViewModel.Url;
+                            }
+
                         }
                     }
                 }
@@ -86,102 +169,7 @@ namespace BetterCms.Module.Pages.Helpers
                 nodeList.Add(nodeViewModel);
             }
 
-            return nodeList.OrderBy(n => n.DisplayOrder).ToList();
-        }
-
-        /// <summary>
-        /// Gets the URL.
-        /// </summary>
-        /// <param name="repository">The repository.</param>
-        /// <param name="node">The node.</param>
-        /// <param name="languageId">The language identifier.</param>
-        /// <returns>
-        /// Language dependent URL.
-        /// </returns>
-        private static string GetUrl(IRepository repository, SitemapNode node, Guid languageId)
-        {
-            // Get default url.
-            if (node.Page == null)
-            {
-                return node.Url;
-            }
-
-            if (node.Page.Language != null && node.Page.Language.Id == languageId)
-            {
-                return node.Page.PageUrl;
-            }
-
-            var pageWithLanguage =
-                repository.AsQueryable<Root.Models.Page>()
-                          .FirstOrDefault(
-                              page => page.Language != null && page.Language.Id == languageId && page.LanguageGroupIdentifier == node.Page.LanguageGroupIdentifier);
-
-            if (pageWithLanguage != null)
-            {
-                return pageWithLanguage.PageUrl;
-            }
-
-            return node.Page.PageUrl;
-        }
-
-        /// <summary>
-        /// Gets the URL.
-        /// </summary>
-        /// <param name="repository">The repository.</param>
-        /// <param name="node">The node.</param>
-        /// <param name="translation">The translation.</param>
-        /// <returns>
-        /// Language dependent URL.
-        /// </returns>
-        private static string GetUrl(IRepository repository, SitemapNode node, SitemapNodeTranslation translation = null)
-        {
-            if (translation == null)
-            {
-                // Get default url.
-                if (node.Page == null)
-                {
-                    return node.Url;
-                }
-
-                if (node.Page.Language == null)
-                {
-                    return node.Page.PageUrl;
-                }
-
-                var pageWithoutLanguage =
-                    repository.AsQueryable<Root.Models.Page>()
-                              .FirstOrDefault(page => page.Language == null && page.LanguageGroupIdentifier == node.Page.LanguageGroupIdentifier);
-
-                if (pageWithoutLanguage != null)
-                {
-                    return pageWithoutLanguage.PageUrl;
-                }
-
-                return node.Page.PageUrl;
-            }
-
-            // Get url by language.
-            if (node.Page == null)
-            {
-                return translation.Url;
-            }
-
-            if (node.Page.Language != null && translation.Language.Id == node.Page.Language.Id)
-            {
-                return node.Page.PageUrl;
-            }
-
-            var pageInLanguage =
-                repository.AsQueryable<Root.Models.Page>().FirstOrDefault(page => page.Language != null
-                                                                                  && page.Language.Id == translation.Language.Id
-                                                                                  && page.LanguageGroupIdentifier == node.Page.LanguageGroupIdentifier);
-
-            if (pageInLanguage != null)
-            {
-                return pageInLanguage.PageUrl;
-            }
-
-            return node.Page.PageUrl;
+            return nodeList;
         }
     }
 }

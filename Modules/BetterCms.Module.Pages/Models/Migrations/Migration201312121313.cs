@@ -196,6 +196,17 @@ namespace BetterCms.Module.Pages.Models.Migrations
             Create
                 .Index("IX_Cms_SitemapNodes_SitemapId")
                 .OnTable("SitemapNodes").InSchema(SchemaName).OnColumn("SitemapId");
+
+            Create
+                .Column("UsePageTitleAsNodeTitle")
+                .OnTable("SitemapNodes").InSchema(SchemaName)
+                .AsBoolean().NotNullable().WithDefaultValue(false);
+
+            Alter
+                .Table("SitemapNodes")
+                .InSchema(SchemaName)
+                .AlterColumn("UsePageTitleAsNodeTitle")
+                .AsBoolean().NotNullable();
         }
 
         /// <summary>
