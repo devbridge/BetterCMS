@@ -490,8 +490,10 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 page.searchSiteSettingsPages(form, container, opts);
             });
 
-            // Select search.
-            dialog.setFocus();
+            // Select search (timeout is required to work on IE11)
+            setTimeout(function() {
+                grid.focusSearchInput(dialog.container.find(selectors.siteSettingsPagesSearchField));
+            }, 200);
         };
 
         /**
@@ -537,10 +539,11 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         */
         page.searchSiteSettingsPages = function (form, container, opts) {
             grid.submitGridForm(form, function (htmlContent, data) {
+                // Blur seargh field - IE11 fix
+                container.find(selectors.siteSettingsPagesSearchField).blur();
+                
                 opts.dialogContainer.setContent(htmlContent);
                 page.initializeSiteSettingsPagesList(htmlContent, data, opts);
-                var searchInput = container.find(selectors.siteSettingsPagesSearchField);
-                grid.focusSearchInput(searchInput);
             });
         };
 
