@@ -52,7 +52,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 sitemapHistoryDialogUrl: null,
                 loadSitemapVersionPreviewUrl: null,
                 restoreSitemapVersionUrl: null,
-                getPageUrlForLanguage: null
+                getPageTranslations: null
             },
             globalization = {
                 sitemapCreatorDialogTitle: null,
@@ -655,7 +655,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                         };
                                     }
                                     if(sitemap.activeMapModel.showLanguages()){
-                                        node.updateLanguageOnDrop(dragObject.languageId(), sitemap.activeMapModel.languageId());
+                                        node.updateLanguageOnDropNewNode(dragObject.languageId(), sitemap.activeMapModel.languageId());
                                     }
                                     node.superDraggable(dragObject.superDraggable());
                                     dragObject = node;
@@ -1137,6 +1137,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.callbackAfterFailSaving = null;
 
             self.activateTranslation = function (languageId) {
+                languageId = languageId == null ? "" : languageId;
                 if (!self.translationsEnabled) {
                     return;
                 }
@@ -1176,18 +1177,50 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 self.url(self.translations[languageId].url());
                 self.version(self.translations[languageId].version());
             };
-            self.updateLanguageOnDrop = function (pageLanguageId, currentLanguageId) {
-                bcms.logger.debug("NodeViewModel().updateLanguageOnDrop(pageLanguageId=" + pageLanguageId + ", currentLanguageId=" + currentLanguageId + ")");
+            self.updateLanguageOnDropNewNode = function (pageLanguageId, currentLanguageId) {
+                sitemap.showLoading(true);
+                bcms.logger.debug("NodeViewModel().updateLanguageOnDropNewNode(pageLanguageId=" + pageLanguageId + ", currentLanguageId=" + currentLanguageId + ")");
                 self.translationsEnabled = true;
-                if (pageLanguageId == defaultIdValue || pageLanguageId == "" || pageLanguageId == null) {
-                    self.activateTranslation("");
-                    self.activateTranslation(currentLanguageId);
-                } else {
-                    self.translations[pageLanguageId] = new TranslationViewModel(self, pageLanguageId);
-                    self.translations[pageLanguageId].isModified(true);
-                    self.activateTranslation("");
-                    self.activateTranslation(currentLanguageId);
-                }
+                var onSaveCompleted = function(json) {
+                        sitemap.showMessage(json);
+                        if (json.Success) {
+                            if (json.Data != null && json.Data != null) {
+                                for (var i = 0; i < json.Data.length; i++) {
+                                    var translationJson = json.Data[i],
+                                        languageId = translationJson.LanguageId == null ? "" : translationJson.LanguageId,
+                                        translation = new TranslationViewModel(self, languageId);
+                                    translation.title(translationJson.Title);
+                                    translation.url(translationJson.PageUrl);
+                                    translation.isModified(true);
+                                    self.translations[languageId] = translation;
+                                    if (languageId === "") {
+                                        self.title(translationJson.Title);
+                                        self.url(translationJson.PageUrl);
+                                    }
+                                }
+                                if (self.translations[""] == null) {
+                                    self.activateTranslation("");
+                                }
+                                self.activateTranslation(currentLanguageId);
+                            }
+                        } else {
+                            self.isDeleted(true);
+                        }
+                        sitemap.showLoading(false);
+                    };
+                $.ajax({
+                    url: $.format(links.getPageTranslations, self.pageId()),
+                    type: 'GET',
+                    dataType: 'json',
+                    cache: false,
+                })
+                    .done(function(json) {
+                        onSaveCompleted(json);
+                    })
+                    .fail(function(response) {
+                        onSaveCompleted(bcms.parseFailedResponse(response));
+                    });
+
             };
 
             self.getSitemap = function() {
@@ -1310,7 +1343,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             var self = this;
             self.node = node;
             self.id = ko.observable();
-            self.languageId = ko.observable(languageId);
+            self.languageId = ko.observable(languageId == null ? "" : languageId);
             var defaultTranslation = node.translations[""];
             if (defaultTranslation != null) {
                 self.title = ko.observable(defaultTranslation.title());
@@ -1319,7 +1352,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 self.title = ko.observable(node.title());
                 self.url = ko.observable(node.url());
             }
-            self.version = ko.observable(1);
+            self.version = ko.observable(0);
             self.isModified = ko.observable(false);
         }
 

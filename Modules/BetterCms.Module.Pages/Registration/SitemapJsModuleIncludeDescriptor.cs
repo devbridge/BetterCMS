@@ -31,7 +31,7 @@ namespace BetterCms.Module.Pages.Registration
                     new JavaScriptModuleLinkTo<SitemapController>(this, "sitemapHistoryDialogUrl", c => c.ShowSitemapHistory("{0}")),
                     new JavaScriptModuleLinkTo<SitemapController>(this, "loadSitemapVersionPreviewUrl", c => c.SitemapVersion("{0}")),
                     new JavaScriptModuleLinkTo<SitemapController>(this, "restoreSitemapVersionUrl", c => c.RestoreSitemapVersion("{0}", "{1}")),
-                    new JavaScriptModuleLinkTo<SitemapController>(this, "getPageUrlForLanguage", c => c.GetPageUrlForLanguage("{0}", "{1}")),
+                    new JavaScriptModuleLinkTo<SitemapController>(this, "getPageTranslations", c => c.GetPageTranslations("{0}")),
                 };
 
             Globalization = new IActionProjection[]

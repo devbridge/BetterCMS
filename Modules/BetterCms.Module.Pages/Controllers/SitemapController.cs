@@ -8,7 +8,7 @@ using BetterCms.Module.Pages.Command.History.RestoreSitemapVersion;
 using BetterCms.Module.Pages.Command.Sitemap.DeleteSitemap;
 using BetterCms.Module.Pages.Command.Sitemap.DeleteSitemapNode;
 using BetterCms.Module.Pages.Command.Sitemap.GetPageLinks;
-using BetterCms.Module.Pages.Command.Sitemap.GetPageUrlForLanguage;
+using BetterCms.Module.Pages.Command.Sitemap.GetPageTranslations;
 using BetterCms.Module.Pages.Command.Sitemap.GetSitemap;
 using BetterCms.Module.Pages.Command.Sitemap.GetSitemapsForNewPage;
 using BetterCms.Module.Pages.Command.Sitemap.GetSitemapsList;
@@ -227,21 +227,10 @@ namespace BetterCms.Module.Pages.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetPageUrlForLanguage(string pageId, string languageId)
+        public ActionResult GetPageTranslations(string pageId)
         {
-            var response = GetCommand<GetPageUrlForLanguageCommand>()
-                .ExecuteCommand(new GetPageUrlForLanguageCommandRequest
-                    {
-                        PageId = pageId.ToGuidOrDefault(),
-                        LanguageId = languageId.ToGuidOrDefault(),
-                    });
-
-            if (!string.IsNullOrEmpty(response))
-            {
-                return Json(new WireJson { Success = true, Data = new { Url = response } });
-            }
-
-            return Json(new WireJson { Success = false });
+            var response = GetCommand<GetPageTranslationsCommand>().ExecuteCommand(pageId.ToGuidOrDefault());
+            return ComboWireJson(response != null, null, response, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
