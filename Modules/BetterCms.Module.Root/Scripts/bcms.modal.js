@@ -146,6 +146,10 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
 
         this.container = $(template);
         this.model = model;
+        
+        if (bcms.language) {
+            this.container.attr('lang', bcms.language);
+        }
 
         /* Accept action button:*/
         var acceptButton = new ButtonViewModel();

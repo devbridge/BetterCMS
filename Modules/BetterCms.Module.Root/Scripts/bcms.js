@@ -61,6 +61,11 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
     app.pageId = null;
 
     /**
+    * Current page language.
+    */
+    app.language = null;
+
+    /**
     * Indicates if error trace output is enabled.
     */
     app.errorTrace = errorTrace;
