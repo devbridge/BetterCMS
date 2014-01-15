@@ -29,6 +29,12 @@
                 </td>
             </tr>
             <!-- /ko -->
+            
+            <!-- ko if: items().length == 0 && !isInAddMode() -->
+            <tr>
+                <td colspan="5">@RootGlobalization.Grid_NoDataAvailable_Message</td>
+            </tr>
+            <!-- /ko -->
 
             <!-- ko if: isInAddMode() -->
             <tr class="bcms-table-row-active">
