@@ -45,7 +45,7 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
     mediaUpload.links = links;
     mediaUpload.globalization = globalization;    
 
-    mediaUpload.openUploadFilesDialog = function (rootFolderId, rootFolderType, onSaveCallback, reuploadMediaId) {
+    mediaUpload.openUploadFilesDialog = function (rootFolderId, rootFolderType, onSaveCallback, reuploadMediaId, onCloseCallback) {
         reuploadMediaId = reuploadMediaId || constants.defaultReuploadMediaId;
         var options = {
                 uploads: new UploadsViewModel(),
@@ -98,6 +98,10 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
                 onCloseClick: function () {
                     options.uploads.removeAllUploads();
                     options.uploads.stopStatusChecking();
+                    
+                    if (onCloseCallback && $.isFunction(onCloseCallback)) {
+                        onCloseCallback();
+                    }
                 },
                 onAcceptClick: function() {
                     // IE10 fix: remove accept tag from upload box.
@@ -151,13 +155,17 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
                 onCloseClick: function () {
                     options.uploads.removeAllUploads();
                     options.uploads.stopStatusChecking();
+                    
+                    if (onCloseCallback && $.isFunction(onCloseCallback)) {
+                        onCloseCallback();
+                    }
                 }
             });
         }
     };
 
-    mediaUpload.openReuploadFilesDialog = function (mediaId, rootFolderId, rootFolderType, onSaveCallback) {
-        mediaUpload.openUploadFilesDialog(rootFolderId, rootFolderType, onSaveCallback, mediaId);
+    mediaUpload.openReuploadFilesDialog = function (mediaId, rootFolderId, rootFolderType, onSaveCallback, onCloseCallback) {
+        mediaUpload.openUploadFilesDialog(rootFolderId, rootFolderType, onSaveCallback, mediaId, onCloseCallback);
     };
 
     function SingleFileUpload(dialog, options) {

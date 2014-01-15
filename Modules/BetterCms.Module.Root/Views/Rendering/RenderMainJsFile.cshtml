@@ -33,6 +33,7 @@ bettercms.requirejs(['bcms.jquery', 'bcms', 'bcms.processor'],
 
         $(function () {
             bcms.pageId = $('body').data("pageId");
+            bcms.language = $('body').data("language");
             bcms.errorTrace = @(Model.IsDebugMode ? "true" : "false");
             processor.init();
             bcms.init();

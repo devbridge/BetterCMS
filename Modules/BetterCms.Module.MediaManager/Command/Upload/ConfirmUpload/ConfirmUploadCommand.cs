@@ -163,6 +163,12 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                 {
                     SetIsReadOnly(model, ((IAccessSecuredObject)file).AccessRules);
                 }
+
+                if (file.Image != null)
+                {
+                    model.ThumbnailUrl = file.Image.PublicThumbnailUrl;
+                    model.Tooltip = file.Image.Caption ?? file.Image.Title;
+                }
             }
             else if (file.Type == MediaType.Audio)
             {
@@ -178,10 +184,9 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                 model = new MediaImageViewModel
                 {
                     ThumbnailUrl = imageFile.PublicThumbnailUrl,
-                    Tooltip = imageFile.Title,
+                    Tooltip = imageFile.Caption,
                     Width = imageFile.Width,
                     Height = imageFile.Height
-                    
                 };
                 isProcessing = isProcessing || !imageFile.IsOriginalUploaded.HasValue || !imageFile.IsThumbnailUploaded.HasValue;
                 isFailed = isFailed
@@ -202,6 +207,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
             model.FileExtension = file.OriginalFileExtension;
             model.IsProcessing = isProcessing;
             model.IsFailed = isFailed;
+            model.SizeText = file.SizeAsText();
 
             return model;
         }

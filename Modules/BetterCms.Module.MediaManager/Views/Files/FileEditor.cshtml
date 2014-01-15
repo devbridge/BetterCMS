@@ -32,9 +32,9 @@
 
             <div class="bcms-input-list-holder">
                 @Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Title_Tooltip_Description)
-                <div class="bcms-content-titles">@MediaGlobalization.FileEditor_Dialog_Title</div>
+                <div class="bcms-content-titles">@MediaGlobalization.FileEditor_Dialog_Title_Title</div>
                 <div class="bcms-input-box">
-                    @Html.TextBoxFor(f => f.Title, new { @class = "bcms-editor-field-box", @id = "Title" })
+                    @Html.TextBoxFor(f => f.Title, new { @class = "bcms-editor-field-box", @id = "Title", data_bind="event: {change: onValueChange}" })
                     @Html.BcmsValidationMessageFor(f => f.Title)
                 </div>
             </div>
@@ -56,7 +56,7 @@
                 @Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Description_Tooltip_Description)
                 <div class="bcms-content-titles">@MediaGlobalization.FileEditor_Dialog_Description</div>
                 <div class="bcms-textarea-box">
-                    @Html.TextAreaFor(f => f.Description, new { @class = "bcms-editor-field-area", @id = "Description" })
+                    @Html.TextAreaFor(f => f.Description, new { @class = "bcms-editor-field-area", @id = "Description", data_bind="event: {change: onValueChange}" })
                     @Html.BcmsValidationMessageFor(f => f.Description)
                 </div>
             </div>
@@ -85,6 +85,8 @@
                     <div class="bcms-btn-small" data-bind="click: image().select.bind(image())">@MediaGlobalization.FileEditor_Dialog_Image_SelectButtonTitle</div>
                 </div>
             </div>
+            
+            <div class="bcms-media-reupload" data-bind="click: reupload">@MediaGlobalization.FileEditor_Dialog_Reupload_Title</div>
             
             @Html.HiddenSubmit()
         }

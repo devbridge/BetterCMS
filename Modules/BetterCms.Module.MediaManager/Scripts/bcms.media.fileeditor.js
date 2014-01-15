@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.ko.extenders', 'bcms.tags', 'bcms.security'],
-    function ($, bcms, modal, siteSettings, forms, dynamicContent, ko, tags, security) {
+bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.ko.extenders', 'bcms.tags', 'bcms.security', 'bcms.media.upload'],
+    function ($, bcms, modal, siteSettings, forms, dynamicContent, ko, tags, security, mediaUpload) {
         'use strict';
 
         var editor = {},
@@ -24,7 +24,8 @@ bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 
             globalization = {
                 fileEditorDialogTitle: null,
                 fileEditorUpdateFailureMessageTitle: null,
-                fileEditorUpdateFailureMessageMessage: null
+                fileEditorUpdateFailureMessageMessage: null,
+                fileEditorHasChangesMessage: null
             },
             media = null;
 
@@ -53,7 +54,9 @@ bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 onLoad: function (dialog) {
                     var url = $.format(links.fileEditorDialogUrl, fileId);
                     dynamicContent.bindDialog(dialog, url, {
-                        contentAvailable: initFileEditorDialogEvents,
+                        contentAvailable: function (childDialog, content) {
+                            initFileEditorDialogEvents(childDialog, content, callback);
+                        },
                         beforePost: function () {
                             var newVersion = $(selectors.fileToEdit).data('version');
                             if (newVersion > 0) {
@@ -74,21 +77,80 @@ bettercms.define('bcms.media.fileeditor', ['bcms.jquery', 'bcms', 'bcms.modal', 
         /**
         * File edit form view model
         */
-        function FileEditViewModel(tagsViewModel, image, accessControl) {
-            var self = this;
+        function FileEditViewModel(dialog, data, onSaveCallback) {
+            var self = this,
+                tagsViewModel = new tags.TagsListViewModel(data.Tags),
+                accessControl = security.createUserAccessViewModel(data.UserAccessList),
+                image = data.Image,
+                userAccessList = accessControl.UserAccessList(),
+                l = userAccessList.length,
+                i;
+            
             self.tags = tagsViewModel;
             self.image = ko.observable(new media.ImageSelectorViewModel(image));
             self.accessControl = accessControl;
+
+            // Track form changes
+            self.modelChanged = false;
+            self.onValueChange = function () {
+                self.modelChanged = true;
+            };
+            self.image().id.subscribe(self.onValueChange);
+            tagsViewModel.items.subscribe(self.onValueChange);
+            accessControl.UserAccessList.subscribe(self.onValueChange);
+            for (i = 0; i < l; i++) {
+                userAccessList[i].AccessLevel.subscribe(self.onValueChange);
+            }
+
+            self.reupload = function () {
+                var reupload = function () {
+                    mediaUpload.openReuploadFilesDialog(data.Id, data.FolderId || '', 4, function (filesData) {
+                        editor.showFileEditorDialog(data.Id, onSaveCallback);
+
+                        if (filesData && filesData.Data && filesData.Data.Medias && filesData.Data.Medias.length > 0) {
+                            onSaveCallback(filesData.Data.Medias[0]);
+                        }
+                    }, function () {
+                        editor.showFileEditorDialog(data.Id, onSaveCallback);
+                    });
+                };
+
+                if (self.modelChanged) {
+                    modal.confirmWithDecline({
+                        content: globalization.fileEditorHasChangesMessage,
+                        onAccept: function () {
+                            if ($.isFunction(dialog.options.onAccept)) {
+                                var delegate = dialog.options.onAccept;
+                                dialog.options.onAccept = function (closingDialog) {
+                                    delegate(closingDialog);
+                                    reupload();
+                                };
+                            } else {
+                                dialog.options.onAccept = function () {
+                                    reupload();
+                                };
+                            }
+                            dialog.container.find(selectors.fileEditorForm).submit();
+                        },
+                        onDecline: function () {
+                            reupload();
+                            dialog.close();
+                            return true;
+                        }
+                    });
+                } else {
+                    dialog.close();
+                    reupload();
+                }
+            };
         }
 
         /**
         * Initializes dialog events.
         */
-        function initFileEditorDialogEvents(dialog, content) {
+        function initFileEditorDialogEvents(dialog, content, onSaveCallback) {
 
-            var tagsViewModel = new tags.TagsListViewModel(content.Data.Tags),
-                accessControl = security.createUserAccessViewModel(content.Data.UserAccessList),
-                viewModel = new FileEditViewModel(tagsViewModel, content.Data.Image, accessControl);
+            var viewModel = new FileEditViewModel(dialog, content.Data, onSaveCallback);
 
             ko.applyBindings(viewModel, dialog.container.find(selectors.fileEditorForm).get(0));
 

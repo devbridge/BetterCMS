@@ -43,6 +43,11 @@ namespace BetterCms.Module.Root.ViewModels.Cms
             ModifiedOn = page.ModifiedOn;
             ModifiedByUser = page.ModifiedByUser;
             IsMasterPage = page.IsMasterPage;
+
+            if (rootPage != null && rootPage.Language != null)
+            {
+                LanguageCode = rootPage.Language.Code;
+            }
         }
 
         /// <summary>
@@ -228,6 +233,14 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// The options as dictionary.
         /// </value>
         public IDictionary<string, IOptionValue> OptionsAsDictionary { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language code.
+        /// </summary>
+        /// <value>
+        /// The language code.
+        /// </value>
+        public string LanguageCode { get; set; }
 
         /// <summary>
         /// Gets or sets the list of meta data projections.

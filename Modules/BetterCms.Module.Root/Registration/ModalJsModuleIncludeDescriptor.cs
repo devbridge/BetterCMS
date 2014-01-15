@@ -22,6 +22,8 @@ namespace BetterCms.Module.Root.Registration
                     new JavaScriptModuleGlobalization(this, "saveDraft", () => RootGlobalization.Button_SaveDraft),
                     new JavaScriptModuleGlobalization(this, "saveAndPublish", () => RootGlobalization.Button_SaveAndPublish),
                     new JavaScriptModuleGlobalization(this, "preview", () => RootGlobalization.Button_Preview),
+                    new JavaScriptModuleGlobalization(this, "yes", () => RootGlobalization.Button_Yes),
+                    new JavaScriptModuleGlobalization(this, "no", () => RootGlobalization.Button_No),
                 };
         }
     }

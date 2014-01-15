@@ -5,6 +5,7 @@ using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.SiteSettings;
+
 using BetterCms.Module.Root.Services;
 
 using NHibernate.Criterion;
@@ -32,7 +33,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetUntranslatedPagesList
         /// <returns>
         /// Result model.
         /// </returns>
-        public override PagesGridViewModel<ViewModels.SiteSettings.SiteSettingPageViewModel> Execute(PagesFilter request)
+        public override PagesGridViewModel<SiteSettingPageViewModel> Execute(PagesFilter request)
         {
             var model = base.Execute(request);
             if (model != null)

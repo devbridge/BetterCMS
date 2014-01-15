@@ -57,7 +57,7 @@ namespace BetterCms.Module.Root.Commands.Language.SaveLanguage
                     Id = language.Id,
                     Version = language.Version,
                     Name = language.Name,
-                    Code = CultureInfo.GetCultures(CultureTypes.AllCultures).First(c => c.Name == request.Code).GetFullName(),
+                    Code = CultureInfo.GetCultures(CultureTypes.AllCultures).First(c => c.Name == language.Code).GetFullName(),
                 };
         }
 

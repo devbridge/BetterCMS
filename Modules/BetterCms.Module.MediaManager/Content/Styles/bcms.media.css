@@ -193,7 +193,7 @@ div.bcms-align-right-active {
         max-width: 400px;
     }
 
-.bcms-media-reload {
+.bcms-media-reupload {
     float: right;
     position: relative;
     padding-left: 18px;
@@ -203,7 +203,7 @@ div.bcms-align-right-active {
     cursor: pointer;
 }
 
-    .bcms-media-reload:after {
+    .bcms-media-reupload:after {
         content: "";
         position: absolute;
         left: 0;
