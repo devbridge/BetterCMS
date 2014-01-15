@@ -20,10 +20,11 @@ namespace BetterCms.Module.Pages.Helpers
         /// <param name="enableMultilanguage">if set to <c>true</c> multi-language is enabled.</param>
         /// <param name="sitemapNodes">The sitemap nodes.</param>
         /// <param name="allNodes">All nodes.</param>
+        /// <param name="languages">The languages.</param>
         /// <returns>
         /// The list with all root nodes.
         /// </returns>
-        public static List<SitemapNodeViewModel> GetSitemapNodesInHierarchy(IRepository repository, bool enableMultilanguage, IList<SitemapNode> sitemapNodes, IList<SitemapNode> allNodes)
+        public static List<SitemapNodeViewModel> GetSitemapNodesInHierarchy(IRepository repository, bool enableMultilanguage, IList<SitemapNode> sitemapNodes, IList<SitemapNode> allNodes, List<Guid> languages)
         {
             var nodeList = new List<SitemapNodeViewModel>();
 
@@ -37,7 +38,7 @@ namespace BetterCms.Module.Pages.Helpers
                     Url = node.Page != null ? node.Page.PageUrl : node.Url,
                     PageId = node.Page != null ? node.Page.Id : Guid.Empty,
                     DisplayOrder = node.DisplayOrder,
-                    ChildNodes = GetSitemapNodesInHierarchy(repository, enableMultilanguage, allNodes.Where(f => f.ParentNode == node).ToList(), allNodes)
+                    ChildNodes = GetSitemapNodesInHierarchy(repository, enableMultilanguage, allNodes.Where(f => f.ParentNode == node).ToList(), allNodes, languages)
                 };
 
                 if (enableMultilanguage)
@@ -52,7 +53,7 @@ namespace BetterCms.Module.Pages.Helpers
                             Url = GetUrl(repository, node, t),
                             Version = t.Version
                         })
-                        .ToList();
+                        .ToList();  
 
                     if (node.Page != null && node.Page.Language != null && nodeViewModel.Translations.All(t => t.LanguageId != node.Page.Language.Id))
                     {
@@ -65,12 +66,62 @@ namespace BetterCms.Module.Pages.Helpers
                             Version = 1
                         });
                     }
+
+                    foreach (var languageId in languages)
+                    {
+                        if (nodeViewModel.Translations.All(model => model.Id != languageId))
+                        {
+                            nodeViewModel.Translations.Add(new SitemapNodeTranslationViewModel
+                            {
+                                Id = Guid.Empty,
+                                LanguageId = languageId,
+                                Title = node.Title,
+                                Url = GetUrl(repository, node, languageId),
+                                Version = 1
+                            });
+                        }
+                    }
                 }
 
                 nodeList.Add(nodeViewModel);
             }
 
             return nodeList.OrderBy(n => n.DisplayOrder).ToList();
+        }
+
+        /// <summary>
+        /// Gets the URL.
+        /// </summary>
+        /// <param name="repository">The repository.</param>
+        /// <param name="node">The node.</param>
+        /// <param name="languageId">The language identifier.</param>
+        /// <returns>
+        /// Language dependent URL.
+        /// </returns>
+        private static string GetUrl(IRepository repository, SitemapNode node, Guid languageId)
+        {
+            // Get default url.
+            if (node.Page == null)
+            {
+                return node.Url;
+            }
+
+            if (node.Page.Language != null && node.Page.Language.Id == languageId)
+            {
+                return node.Page.PageUrl;
+            }
+
+            var pageWithLanguage =
+                repository.AsQueryable<Root.Models.Page>()
+                          .FirstOrDefault(
+                              page => page.Language != null && page.Language.Id == languageId && page.LanguageGroupIdentifier == node.Page.LanguageGroupIdentifier);
+
+            if (pageWithLanguage != null)
+            {
+                return pageWithLanguage.PageUrl;
+            }
+
+            return node.Page.PageUrl;
         }
 
         /// <summary>

@@ -96,7 +96,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemap
             }
 
             var sitemap = sitemapQuery.Distinct().ToList().First();
-
+            var languages = CmsConfiguration.EnableMultilanguage ? languagesFuture.ToList() : new List<LookupKeyValue>();
             var model = new SitemapViewModel
                 {
                     Id = sitemap.Id,
@@ -107,11 +107,12 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemap
                             Repository,
                             CmsConfiguration.EnableMultilanguage,
                             sitemap.Nodes.Distinct().Where(f => f.ParentNode == null).ToList(),
-                            sitemap.Nodes.Distinct().ToList()),
+                            sitemap.Nodes.Distinct().ToList(),
+                            languages.Select(l => l.Key.ToGuidOrDefault()).ToList()),
                     Tags = tagsFuture.ToList(),
                     AccessControlEnabled = CmsConfiguration.Security.AccessControlEnabled,
                     ShowLanguages = CmsConfiguration.EnableMultilanguage,
-                    Languages = CmsConfiguration.EnableMultilanguage ? languagesFuture.ToList() : null
+                    Languages = languages
                 };
 
             if (userAccessFuture != null)
