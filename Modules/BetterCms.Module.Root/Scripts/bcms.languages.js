@@ -74,7 +74,6 @@ function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete) {
 
             var self = this;
 
-            self.hasCodeFocus = ko.observable(false);
             self.hasNameFocus = ko.observable(false);
             self.name = ko.observable().extend({ required: "", maxLength: { maxLength: ko.maxLength.name } });
             self.code = ko.observable().extend({ required: "", maxLength: { maxLength: ko.maxLength.name } });
@@ -103,8 +102,6 @@ function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete) {
             if (!self.isNew()) {
                 self.code.editingIsDisabled = ko.observable(true);
                 self.hasNameFocus(true);
-            } else {
-                self.hasCodeFocus(true);
             }
         }
 
