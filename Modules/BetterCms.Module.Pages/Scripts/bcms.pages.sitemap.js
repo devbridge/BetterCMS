@@ -1155,6 +1155,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     }
                     if (active.title() != self.title()) {
                         active.title(self.title());
+                        active.usePageTitleAsNodeTitle(false);
                         isModified = true;
                     }
                     if (active.url() != self.url()) {

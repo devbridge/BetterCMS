@@ -224,11 +224,13 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
                         {
                             Node = sitemapNode,
                             Language = Repository.AsProxy<Language>(model.LanguageId),
-                            Title = model.Title
+                            Title = model.Title,
+                            UsePageTitleAsNodeTitle = model.UsePageTitleAsNodeTitle
                         };
 
                     if (sitemapNode.Page == null)
                     {
+                        translation.UsePageTitleAsNodeTitle = false;
                         translation.Url = model.Url;
                         translation.UrlHash = model.Url.UrlHash();
                     }
@@ -248,9 +250,10 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
 
                     if (sitemapNode.Page == null)
                     {
-                        if (translation.Url != model.Url)
+                        if (translation.Url != model.Url || translation.UsePageTitleAsNodeTitle)
                         {
                             saveIt = true;
+                            translation.UsePageTitleAsNodeTitle = false;
                             translation.Url = model.Url;
                             translation.UrlHash = model.Url.UrlHash();
                         }
@@ -262,6 +265,11 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
                             saveIt = true;
                             translation.Url = null;
                             translation.UrlHash = null;
+                        }
+                        if (translation.UsePageTitleAsNodeTitle != model.UsePageTitleAsNodeTitle)
+                        {
+                            saveIt = true;
+                            translation.UsePageTitleAsNodeTitle = model.UsePageTitleAsNodeTitle;
                         }
                     }
                 }

@@ -5,6 +5,7 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Sitemap;
+using BetterCms.Module.Root.Mvc;
 
 using NHibernate.Linq;
 
@@ -79,6 +80,7 @@ namespace BetterCms.Module.Pages.Helpers
                             Id = t.Id,
                             LanguageId = t.Language.Id,
                             Title = t.Title,
+                            UsePageTitleAsNodeTitle = t.UsePageTitleAsNodeTitle,
                             Url = t.Url,
                             Version = t.Version
                         })
@@ -100,7 +102,7 @@ namespace BetterCms.Module.Pages.Helpers
                         {
                             var pageTranslation = pages.FirstOrDefault(p => p.LanguageGroupIdentifier.HasValue
                                                                             && p.LanguageGroupIdentifier.Value == node.Page.LanguageGroupIdentifier.Value
-                                                                            && !p.LanguageId.HasValue);
+                                                                            && (!p.LanguageId.HasValue || p.LanguageId.Value.HasDefaultValue()));
                             if (pageTranslation != null)
                             {
                                 nodeViewModel.Url = pageTranslation.Url;
