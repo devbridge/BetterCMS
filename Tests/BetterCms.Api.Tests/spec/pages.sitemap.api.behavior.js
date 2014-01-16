@@ -6,6 +6,7 @@ describe('pages.sitemap.api.behavior', function () {
 
     var constants = {
         sitemapId: '17abfee95ae6470c92e1c2905036574b',
+        languageId: '00000000000000000000000000000000',
         rootId: '316138d8b3ff478981d6a20500a389f3',
         rootTitle: '_Tree_Root_',
         rootUrl: '/root/',
@@ -138,7 +139,57 @@ describe('pages.sitemap.api.behavior', function () {
         });
     });
 
-    it('01403: Should get a list of sitemap nodes.', function () {
+    it('01403: Should get sitemap tree, filtered by language.', function () {
+        var url = '/bcms-api/sitemap-tree/' + constants.sitemapId,
+            result,
+            ready = false,
+            data = {
+                languageId: constants.languageId
+            };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.length).toBeGreaterThan(0);
+
+            var rootFound = false;
+            for (var i = 0; i < result.data.length; i++) {
+                if (result.data[i].title == constants.rootTitle) {
+                    var rootNode = result.data[i];
+                    rootFound = true;
+
+                    api.expectBasePropertiesAreNotNull(rootNode);
+                    expect(rootNode.parentId).toBeNull('parentId should be null.');
+                    expect(rootNode.url).toBe(constants.rootUrl, 'Correctly filtered root node url should be retrieved.');
+                    expect(rootNode.displayOrder).toBeDefinedAndNotNull('displayOrder should be retrieved.');
+                    expect(rootNode.childrenNodes).toBeDefinedAndNotNull('childrenNodes should be retrieved.');
+                    expect(rootNode.childrenNodes.length).toBe(2, 'Returned childrenNodes array length should be 2.');
+
+                    // /root/1/
+                    var child1 = findTreeChild(rootNode.childrenNodes, rootNode.id, constants.child1Title, constants.child1Url, 3);
+                    // /root/1/1/
+                    var child11 = findTreeChild(child1.childrenNodes, child1.id, constants.child11Title, constants.child11Url, 1);
+                    // /root/1/1/1/
+                    findTreeChild(child11.childrenNodes, child11.id, constants.child111Title, constants.child111Url, 0);
+                }
+            }
+
+            expect(rootFound).toBe(true, 'Root node should be retrieved.');
+        });
+    });
+
+    it('01404: Should get a list of sitemap nodes.', function () {
         var url = '/bcms-api/sitemap-nodes/',
             result,
             ready = false,
@@ -185,7 +236,7 @@ describe('pages.sitemap.api.behavior', function () {
         });
     });
 
-    it('01404: Should get a sitemap node by id.', function () {
+    it('01405: Should get a sitemap node by id.', function () {
         var url = '/bcms-api/sitemap-nodes/' + constants.child11Id,
             result,
             ready = false;
@@ -214,7 +265,7 @@ describe('pages.sitemap.api.behavior', function () {
         });
     });
     
-    it('01405: Should get a list with one sitemap node, filtered by all available columns.', function () {
+    it('01406: Should get a list with one sitemap node, filtered by all available columns.', function () {
         var url = '/bcms-api/sitemap-nodes/',
             result,
             ready = false;

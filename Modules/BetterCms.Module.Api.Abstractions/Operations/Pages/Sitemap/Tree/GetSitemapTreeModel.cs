@@ -13,5 +13,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
         /// </value>
         [DataMember]
         public System.Guid? NodeId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language identifier.
+        /// </summary>
+        /// <value>
+        /// The language identifier.
+        /// </value>
+        [DataMember]
+        public System.Guid? LanguageId { get; set; }
     }
 }

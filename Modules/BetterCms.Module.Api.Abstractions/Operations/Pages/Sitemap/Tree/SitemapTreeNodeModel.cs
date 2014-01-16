@@ -61,5 +61,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
         /// </value>
         [DataMember]
         public IList<SitemapTreeNodeModel> ChildrenNodes { get; set; }
+
+        public bool UsePageTitleAsNodeTitle { get; set; }
     }
 }

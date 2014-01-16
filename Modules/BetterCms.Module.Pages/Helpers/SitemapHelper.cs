@@ -14,7 +14,7 @@ namespace BetterCms.Module.Pages.Helpers
     /// <summary>
     /// Helper class for sitemap related tasks.
     /// </summary>
-    internal static class SitemapHelper
+    public static class SitemapHelper
     {
         public class PageData
         {
