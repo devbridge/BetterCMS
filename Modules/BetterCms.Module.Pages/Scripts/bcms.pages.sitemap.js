@@ -1045,6 +1045,9 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.saveSitemapNodeWithValidation = function () {
                 var inputFields = $('input', '#' + self.containerId);
                 if (inputFields.valid()) {
+                    if (self.usePageTitleAsNodeTitle() && self.titleOldValue != self.title()) {
+                        self.usePageTitleAsNodeTitle(false);
+                    }
                     self.saveSitemapNode();
                     inputFields.blur();
                     self.isActive(false);

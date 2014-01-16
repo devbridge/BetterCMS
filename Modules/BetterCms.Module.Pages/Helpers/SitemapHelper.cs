@@ -55,7 +55,7 @@ namespace BetterCms.Module.Pages.Helpers
             bool enableMultilanguage, IList<SitemapNode> sitemapNodes, IList<SitemapNode> allNodes, List<Guid> languageIds, List<PageData> pages)
         {
             var nodeList = new List<SitemapNodeViewModel>();
-            foreach (var node in sitemapNodes)
+            foreach (var node in sitemapNodes.OrderBy(node => node.DisplayOrder))
             {
                 var pageLinked = node.Page != null;
                 var nodeViewModel = new SitemapNodeViewModel
