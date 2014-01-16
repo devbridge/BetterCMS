@@ -315,6 +315,9 @@
                                     addTranslation(item);
 
                                     return true;
+                                },
+                                onClose: function () {
+                                    self.hasFocus(true);
                                 }
                             });
 
