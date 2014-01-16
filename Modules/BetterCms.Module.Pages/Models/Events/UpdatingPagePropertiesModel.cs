@@ -28,7 +28,7 @@ namespace BetterCms.Module.Pages.Models.Events
             IsMasterPage = pageProperties.IsMasterPage;
             IsArchived = pageProperties.IsArchived;
 
-            NodeCountInSitemap = pageProperties.NodeCountInSitemap;
+            IsInSitemap = pageProperties.IsInSitemap;
 
             LayoutId = pageProperties.Layout != null ? pageProperties.Layout.Id : (Guid?)null;
             MasterPageId = pageProperties.MasterPage != null ? pageProperties.MasterPage.Id : (Guid?)null;
@@ -58,7 +58,7 @@ namespace BetterCms.Module.Pages.Models.Events
         public bool IsMasterPage { get; private set; }
         public bool IsArchived { get; private set; }
 
-        public int NodeCountInSitemap { get; private set; }
+        public bool IsInSitemap { get; private set; }
 
         public Guid? LayoutId { get; private set; }
         public Guid? MasterPageId { get; private set; }

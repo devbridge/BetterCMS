@@ -124,13 +124,7 @@
     <value>Url is required.</value>
   </data>
   <data name="SiteSettings_SitemapMenuItem" xml:space="preserve">
-    <value>Site Map</value>
-  </data>
-  <data name="Sitemap_Dialog_Edit" xml:space="preserve">
-    <value>Edit</value>
-  </data>
-  <data name="Sitemap_Dialog_Search" xml:space="preserve">
-    <value>Search...</value>
+    <value>Site Maps</value>
   </data>
   <data name="Sitemap_Dialog_Title" xml:space="preserve">
     <value>Sitemap</value>
@@ -175,13 +169,10 @@
     <value>You can always place this page later.</value>
   </data>
   <data name="Sitemap_AddNewPageDialog_PageNodeHeader" xml:space="preserve">
-    <value>Drag your page where you want to place it.</value>
+    <value>Drag &amp; Drop your page where you want to place it.</value>
   </data>
   <data name="Sitemap_AddNewPageDialog_PageUrl" xml:space="preserve">
     <value>URL</value>
-  </data>
-  <data name="Sitemap_AddNewPageDialog_SitemapHeader" xml:space="preserve">
-    <value>Page Placement</value>
   </data>
   <data name="Sitemap_AddNewPageDialog_SkipButton" xml:space="preserve">
     <value>Skip</value>
@@ -200,5 +191,68 @@
   </data>
   <data name="Sitemap_Dialog_NodeUrl_InvalidSymbol" xml:space="preserve">
     <value>Invalid &lt;,&gt;,*,&amp;,? symbols.</value>
+  </data>
+  <data name="SiteSettings_Sitemaps_TitleColumn" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="SiteSettings_Sitemaps_AddNew" xml:space="preserve">
+    <value>Add New+</value>
+  </data>
+  <data name="SiteSettings_Sitemaps_Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Sitemap_CreatorDialog_Title" xml:space="preserve">
+    <value>Add New Site Map</value>
+  </data>
+  <data name="Sitemap_SitemapCreatedSuccessfully_Message" xml:space="preserve">
+    <value>Site map created successfully.</value>
+  </data>
+  <data name="Sitemap_SitemapDeletedSuccessfully_Message" xml:space="preserve">
+    <value>Site map deleted successfully.</value>
+  </data>
+  <data name="Sitemap_Delete_Confirmation_Message" xml:space="preserve">
+    <value>Are you sure you want to delete the site map?</value>
+  </data>
+  <data name="Sitemap_HistoryDialog_Title" xml:space="preserve">
+    <value>Site Map History</value>
+  </data>
+  <data name="SitemapHistory_Column_ArchivedBy" xml:space="preserve">
+    <value>Archived By</value>
+  </data>
+  <data name="SitemapHistory_Column_ArchivedOn" xml:space="preserve">
+    <value>Archived On</value>
+  </data>
+  <data name="SitemapHistory_Column_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="SitemapHistory_Column_Title" xml:space="preserve">
+    <value>Site Map Title</value>
+  </data>
+  <data name="SitemapStatus_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="SitemapStatus_Archived" xml:space="preserve">
+    <value>Archived</value>
+  </data>
+  <data name="Sitemap_HistoryDialog_RestoreConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to restore to older version? Restored sitemap will be immediately active.</value>
+  </data>
+  <data name="Sitemap_SitemapIsEmpty_Message" xml:space="preserve">
+    <value>Site map has no nodes.</value>
+  </data>
+  <data name="Sitemap_Button_CollapseAll" xml:space="preserve">
+    <value>Collapse All</value>
+  </data>
+  <data name="Sitemap_Button_ExpandAll" xml:space="preserve">
+    <value>Expand All</value>
+  </data>
+  <data name="Sitemap_EditDialog_AddTags_Tooltip_Description" xml:space="preserve">
+    <value>Add tags to this sitemap to identify it.</value>
+  </data>
+  <data name="Sitemap_EditDialog_SitemapTitle_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Sitemap_EditDialog_SitemapTitle_Tooltip_Description" xml:space="preserve">
+    <value>Edit the title of this sitemap.</value>
   </data>
 </root>

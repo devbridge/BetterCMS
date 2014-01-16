@@ -110,7 +110,7 @@ namespace BetterCms.Module.Root.Services
             StringBuilder accessRulesHasher = new StringBuilder();
             if (accessRules != null && accessRules.Count > 0)
             {
-                foreach (var rule in accessRules)
+                foreach (var rule in accessRules.Distinct())
                 {
                     accessRulesHasher.Append(rule.Identity);
                     accessRulesHasher.Append("-");

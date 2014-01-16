@@ -21,7 +21,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
                 UseCanonicalUrl = page.UseCanonicalUrl;
                 UseNoFollow = page.UseNoFollow;
                 UseNoIndex = page.UseNoIndex;
-                NodeCountInSitemap = page.NodeCountInSitemap;
+                IsInSitemap = page.IsInSitemap;
                 MetaKeywords = page.MetaKeywords;
                 MetaDescription = page.MetaDescription;
                 IsArchived = page.IsArchived;
@@ -68,7 +68,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
 
         public bool UseNoIndex { get; set; }
 
-        public int NodeCountInSitemap { get; set; }
+        public bool IsInSitemap { get; set; }
 
         public string MetaKeywords { get; set; }
 
