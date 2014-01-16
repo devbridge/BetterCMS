@@ -5,6 +5,8 @@ using Autofac;
 using BetterCMS.Module.LuceneSearch.Services.IndexerService;
 using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 
+using BetterCms.Module.Search.Models;
+
 using HtmlAgilityPack;
 
 using NUnit.Framework;
@@ -60,10 +62,11 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
             service.AddHtmlDocument(page2);
             service.Close();
 
-            var results = service.Search("test");
+            var results = service.Search(new SearchRequest("test"));
 
-            Assert.IsTrue(results.Count == 1);
-            Assert.IsTrue(results[0].Link == page1.AbsolutePath);
+            Assert.IsNotNull(results.Items);
+            Assert.IsTrue(results.Items.Count == 1);
+            Assert.IsTrue(results.Items[0].Link == page1.AbsolutePath);
         }
 
         [Test]
@@ -81,11 +84,12 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
             service.AddHtmlDocument(page1);
             service.Close();
 
-            var results = service.Search("section");
+            var results = service.Search(new SearchRequest("section"));
 
-            Assert.IsTrue(results.Count == 1);
+            Assert.IsNotNull(results.Items);
+            Assert.IsTrue(results.Items.Count == 1);
             // Should be found the middle of the string, because the key word is in the middle of long text
-            Assert.AreEqual(results[0].Snippet, MiddleText);
+            Assert.AreEqual(results.Items[0].Snippet, MiddleText);
         }
         
         [Test]
@@ -103,11 +107,12 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
             service.AddHtmlDocument(page1);
             service.Close();
 
-            var results = service.Search("extensible");
+            var results = service.Search(new SearchRequest("extensible"));
 
-            Assert.IsTrue(results.Count == 1);
+            Assert.IsNotNull(results.Items);
+            Assert.IsTrue(results.Items.Count == 1);
             // Should be found the start of the string, because the start word is in the start
-            Assert.AreEqual(results[0].Snippet, StartText);
+            Assert.AreEqual(results.Items[0].Snippet, StartText);
         }
         
         [Test]
@@ -125,11 +130,12 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
             service.AddHtmlDocument(page1);
             service.Close();
 
-            var results = service.Search("maintainable");
+            var results = service.Search(new SearchRequest("maintainable"));
 
-            Assert.IsTrue(results.Count == 1);
+            Assert.IsNotNull(results.Items);
+            Assert.IsTrue(results.Items.Count == 1);
             // Should be found the end of the string, because the key word is in the end
-            Assert.AreEqual(results[0].Snippet, EndText);
+            Assert.AreEqual(results.Items[0].Snippet, EndText);
         }
         
         [Test]
@@ -147,11 +153,12 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
             service.AddHtmlDocument(page1);
             service.Close();
 
-            var results = service.Search("dynamically");
+            var results = service.Search(new SearchRequest("dynamically"));
 
-            Assert.IsTrue(results.Count == 1);
+            Assert.IsNotNull(results.Items);
+            Assert.IsTrue(results.Items.Count == 1);
             // Should be found whole string, because it's too short for crop
-            Assert.AreEqual(results[0].Snippet, FullShortText);
+            Assert.AreEqual(results.Items[0].Snippet, FullShortText);
         }
         
         [Test]
@@ -169,11 +176,12 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
             service.AddHtmlDocument(page1);
             service.Close();
 
-            var results = service.Search("a");
+            var results = service.Search(new SearchRequest("a"));
 
-            Assert.IsTrue(results.Count == 1);
+            Assert.IsNotNull(results.Items);
+            Assert.IsTrue(results.Items.Count == 1);
             // Should be found separate word "a" excluding "a" in another words
-            Assert.AreEqual(results[0].Snippet, FullTextForOneLetterSearchResult);
+            Assert.AreEqual(results.Items[0].Snippet, FullTextForOneLetterSearchResult);
         }
     }
 }

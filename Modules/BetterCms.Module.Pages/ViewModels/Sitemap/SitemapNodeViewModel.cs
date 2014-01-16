@@ -14,12 +14,28 @@ namespace BetterCms.Module.Pages.ViewModels.Sitemap
     public class SitemapNodeViewModel
     {
         /// <summary>
+        /// Gets or sets the sitemap identifier.
+        /// </summary>
+        /// <value>
+        /// The sitemap identifier.
+        /// </value>
+        public Guid SitemapId { get; set; }
+
+        /// <summary>
         /// Gets or sets the id.
         /// </summary>
         /// <value>
         /// The id.
         /// </value>
         public Guid Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page identifier.
+        /// </summary>
+        /// <value>
+        /// The page identifier.
+        /// </value>
+        public Guid PageId { get; set; }
 
         /// <summary>
         /// Gets or sets the version.
@@ -81,6 +97,22 @@ namespace BetterCms.Module.Pages.ViewModels.Sitemap
         /// The child nodes.
         /// </value>
         public IList<SitemapNodeViewModel> ChildNodes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the translations.
+        /// </summary>
+        /// <value>
+        /// The translations.
+        /// </value>
+        public IList<SitemapNodeTranslationViewModel> Translations { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether use page title as node title.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if use page title as node title; otherwise, <c>false</c>.
+        /// </value>
+        public bool UsePageTitleAsNodeTitle { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

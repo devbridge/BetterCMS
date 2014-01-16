@@ -372,11 +372,28 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         page.deleteCurrentPage = function () {
             var id = bcms.pageId;
 
-            page.deletePage(id, function () {
-                redirect.RedirectWithAlert('/', {
-                    title: globalization.pageDeletedTitle,
-                    message: globalization.pageDeletedMessage
-                });
+            page.deletePage(id, function (json) {
+                if (json && json.Messages && json.Messages.length > 1) {
+                    var message = json.Messages[0];
+                    for (var i = 1; i < json.Messages.length; i++) {
+                        message = message + "<br>" + json.Messages[i];
+                    }
+                    modal.info({
+                        title: globalization.pageDeletedTitle,
+                        content: message,
+                        onAcceptClick: function() {
+                            redirect.RedirectWithAlert('/', {
+                                title: globalization.pageDeletedTitle,
+                                message: globalization.pageDeletedMessage
+                            });
+                        }
+                    });
+                } else {
+                    redirect.RedirectWithAlert('/', {
+                        title: globalization.pageDeletedTitle,
+                        message: globalization.pageDeletedMessage
+                    });
+                }
             });
         };
 
@@ -490,8 +507,10 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 page.searchSiteSettingsPages(form, container, opts);
             });
 
-            // Select search.
-            dialog.setFocus();
+            // Select search (timeout is required to work on IE11)
+            setTimeout(function() {
+                grid.focusSearchInput(dialog.container.find(selectors.siteSettingsPagesSearchField));
+            }, 200);
         };
 
         /**
@@ -537,10 +556,11 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         */
         page.searchSiteSettingsPages = function (form, container, opts) {
             grid.submitGridForm(form, function (htmlContent, data) {
+                // Blur seargh field - IE11 fix
+                container.find(selectors.siteSettingsPagesSearchField).blur();
+                
                 opts.dialogContainer.setContent(htmlContent);
                 page.initializeSiteSettingsPagesList(htmlContent, data, opts);
-                var searchInput = container.find(selectors.siteSettingsPagesSearchField);
-                grid.focusSearchInput(searchInput);
             });
         };
 

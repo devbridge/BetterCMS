@@ -76,9 +76,9 @@ namespace BetterCms.Module.LuceneSearch
         public override void RegisterModuleTypes(ModuleRegistrationContext context, ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterType<DefaultIndexerService>().As<IIndexerService>().SingleInstance();
+            containerBuilder.RegisterType<DefaultIndexerService>().As<ISearchService>().InstancePerDependency();
             containerBuilder.RegisterType<DefaultScrapeService>().As<IScrapeService>().InstancePerDependency();
             containerBuilder.RegisterType<DefaultWebCrawlerService>().As<IWebCrawlerService>().InstancePerDependency();
-            containerBuilder.RegisterType<LuceneSearchService>().As<ISearchService>().InstancePerDependency();
         }
     }
 }

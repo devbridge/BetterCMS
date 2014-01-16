@@ -262,9 +262,19 @@ namespace BetterCms.Sandbox.Mvc4
                 Log.Info("SitemapNodeDeleted: " + args.Item.ToString());
             };
 
+            BetterCms.Events.SitemapEvents.Instance.SitemapCreated += args =>
+            {
+                Log.Info("SitemapCreated: " + args.Item.Title);
+            };
+
             BetterCms.Events.SitemapEvents.Instance.SitemapUpdated += args =>
             {
-                Log.Info("SitemapUpdated.");
+                Log.Info("SitemapUpdated: " + args.Item.Title);
+            };
+
+            BetterCms.Events.SitemapEvents.Instance.SitemapDeleted += args =>
+            {
+                Log.Info("SitemapDeleted: " + args.Item.Title);
             };
         }
 

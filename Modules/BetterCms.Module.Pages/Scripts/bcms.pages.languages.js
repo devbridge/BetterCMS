@@ -218,14 +218,15 @@
 
             self.language.languageId.subscribe(onLanguageChange);
 
-            self.clickPlus = function () {
-                var isInAddMode = !self.isInAddMode();
-                if (!isInAddMode) {
-                    closeAddMode();
-                } else {
+            self.startEditMode = function () {
+                if (!self.isInAddMode()) {
                     self.hasFocus(true);
                     self.isInAddMode(true);
                 }
+            };
+
+            self.endEditMode = function () {
+                closeAddMode();
             };
 
             self.selectPage = function() {
@@ -314,6 +315,9 @@
                                     addTranslation(item);
 
                                     return true;
+                                },
+                                onClose: function () {
+                                    self.hasFocus(true);
                                 }
                             });
 

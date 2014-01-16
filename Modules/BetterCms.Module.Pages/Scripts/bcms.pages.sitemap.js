@@ -1,35 +1,82 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'bcms.ko.extenders'],
-    function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, ko) {
+bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'bcms.ko.extenders', 'bcms.grid', 'bcms.security', 'bcms.tags'],
+    function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, ko, grid, security, tags) {
         'use strict';
 
         var sitemap = {},
             selectors = {
-                sitemapSearchDataBind: "#bcms-sitemap-form",
-                sitemapSearchInput: "bcms-search-input",
                 sitemapAddNodeDataBind: "#bcms-sitemap-addnode",
                 sitemapAddNewPageDataBind: "#bcms-sitemap-addnewpage",
                 sitemapForm: ".bcms-sitemap-form",
-                sitemapMessagesContainer: '#bcms-site-settings-placeholder'
+                
+                searchField: '.bcms-search-query',
+                searchButton: '#bcms-sitemaps-search-btn',
+
+                siteSettingsSitemapsForm: "#bcms-sitemaps-form",
+                siteSettingsSitemapCreateButton: '#bcms-create-sitemap-button',
+                siteSettingsSitemapTitleCell: '.bcms-sitemap-title',
+                siteSettingsRowCells: 'td',
+                siteSettingsSitemapParentRow: 'tr:first',
+                siteSettingsSitemapEditButton: '.bcms-grid-item-edit-button',
+                siteSettingsSitemapHistoryButton: '.bcms-grid-item-history-button',
+                siteSettingsSitemapDeleteButton: '.bcms-grid-item-delete-button',
+                siteSettingsSitemapRowTemplate: '#bcms-sitemap-list-row-template',
+                siteSettingsSitemapRowTemplateFirstRow: 'tr:first',
+                siteSettingsSitemapsTableFirstRow: 'table.bcms-tables > tbody > tr:first',
+
+                gridRestoreLinks: '#bcms-sitemaphistory-form .bcms-history-cell a.bcms-icn-restore',
+                gridCells: '#bcms-sitemaphistory-form .bcms-history-cell tbody td',
+                gridRowPreviewLink: 'a.bcms-icn-preview:first',
+                firstRow: 'tr:first',
+                gridRows: '#bcms-sitemaphistory-form .bcms-history-cell tbody tr',
+                versionPreviewContainer: '#bcms-history-preview',
+                versionPreviewLoaderContainer: '.bcms-history-preview',
+                sitemapHistoryForm: '#bcms-sitemaphistory-form',
+                sitemapHistorySearchButton: '.bcms-btn-search',
+                modalContent: '.bcms-modal-content-padded',
+                firstTab: '#bcms-tab-1',
+                secondTab: '#bcms-tab-2',
+                leftColumn: '.bcms-leftcol'
             },
             links = {
-                loadSiteSettingsSitemapUrl: null,
+                loadSiteSettingsSitemapsListUrl: null,
                 saveSitemapUrl: null,
                 saveSitemapNodeUrl: null,
+                deleteSitemapUrl: null,
                 deleteSitemapNodeUrl: null,
                 sitemapEditDialogUrl: null,
-                sitemapAddNewPageDialogUrl: null
+                sitemapAddNewPageDialogUrl: null,
+                saveMultipleSitemapsUrl: null,
+                sitemapHistoryDialogUrl: null,
+                loadSitemapVersionPreviewUrl: null,
+                restoreSitemapVersionUrl: null,
+                getPageTranslations: null
             },
             globalization = {
+                sitemapCreatorDialogTitle: null,
                 sitemapEditorDialogTitle: null,
                 sitemapEditorDialogCustomLinkTitle: null,
                 sitemapAddNewPageDialogTitle: null,
                 sitemapDeleteNodeConfirmationMessage: null,
+                sitemapDeleteConfirmMessage: null,
                 sitemapSomeNodesAreInEditingState: null,
                 sitemapNodeSaveButton: null,
-                sitemapNodeOkButton: null
+                sitemapNodeOkButton: null,
+                
+                sitemapPlaceLinkHere: null,
+                sitemapIsEmpty: null,
+                
+                sitemapHistoryDialogTitle: null,
+                sitemapVersionRestoreConfirmation: null,
+                restoreButtonTitle: null,
+                closeButtonTitle: null,
+                
+                invariantLanguage: null
+            },
+            classes = {
+                tableActiveRow: 'bcms-table-row-active'
             },
             defaultIdValue = '00000000-0000-0000-0000-000000000000',
             DropZoneTypes = {
@@ -53,23 +100,175 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Loads a sitemap view to the site settings container.
         */
-        sitemap.loadSiteSettingsSitemap = function () {
-            var sitemapController = new SiteSettingsMapController();
-            
-            dynamicContent.bindSiteSettings(siteSettings, links.loadSiteSettingsSitemapUrl, {
-                contentAvailable: sitemapController.initialize
+        sitemap.loadSiteSettingsSitemapList = function () {
+            dynamicContent.bindSiteSettings(siteSettings, links.loadSiteSettingsSitemapsListUrl, {
+                contentAvailable: function() {
+                    sitemap.initializeSitemapsList(siteSettings.getMainContainer());
+                }
             });
+        };
+
+        /**
+        * Initializes site settings master pages list.
+        */
+        sitemap.initializeSitemapsList = function (container) {
+            var dialog = siteSettings.getModalDialog(),
+                form = container.find(selectors.siteSettingsSitemapsForm);
+
+            grid.bindGridForm(form, function (htmlContent, data) {
+                container.html(htmlContent);
+                sitemap.initializeSitemapsList(container);
+            });
+
+            form.on('submit', function (event) {
+                bcms.stopEventPropagation(event);
+                searchSitemaps(form, container);
+                return false;
+            });
+
+            form.find(selectors.searchField).keypress(function (event) {
+                if (event.which == 13) {
+                    bcms.stopEventPropagation(event);
+                    searchSitemaps(form, container);
+                }
+            });
+
+            form.find(selectors.searchButton).on('click', function (event) {
+                bcms.stopEventPropagation(event);
+                searchSitemaps(form, container);
+            });
+
+            initializeListItems(container);
+
+            // Select search.
+            dialog.setFocus();
+        };
+        
+        /*
+        * Submit sitemap form to force search.
+        */
+        function searchSitemaps(form, container) {
+            grid.submitGridForm(form, function (htmlContent, data) {
+                container.html(htmlContent);
+                sitemap.initializeSitemapsList(container);
+                var searchInput = container.find(selectors.searchField);
+                grid.focusSearchInput(searchInput);
+            });
+        };
+
+        /*
+        * Attach the sitemap grid events.
+        */
+        function initializeListItems(container, masterContainer) {
+            container.find(selectors.siteSettingsSitemapCreateButton).on('click', function (event) {
+                bcms.stopEventPropagation(event);
+                addSitemap(masterContainer || container);
+            });
+
+            container.find(selectors.siteSettingsSitemapEditButton).on('click', function (event) {
+                bcms.stopEventPropagation(event);
+                editSitemap($(this), masterContainer || container);
+            });
+
+            container.find(selectors.siteSettingsSitemapHistoryButton).on('click', function (event) {
+                bcms.stopEventPropagation(event);
+                viewSitemapHistory($(this), masterContainer || container);
+            });
+            
+            container.find(selectors.siteSettingsSitemapDeleteButton).on('click', function (event) {
+                bcms.stopEventPropagation(event);
+                deleteSitemap($(this), masterContainer || container);
+            });
+        };
+
+        /*
+        * Create the sitemap and add it to the list.
+        */
+        function addSitemap(container) {
+            sitemap.openCreateSitemapDialog(function (data) {
+                if (data.Data != null) {
+                    var template = $(selectors.siteSettingsSitemapRowTemplate),
+                        newRow = $(template.html()).find(selectors.siteSettingsSitemapRowTemplateFirstRow);
+
+                    newRow.find(selectors.siteSettingsSitemapTitleCell).html(data.Data.Title);
+                    newRow.find(selectors.siteSettingsSitemapEditButton).data('id', data.Data.Id);
+                    newRow.find(selectors.siteSettingsSitemapHistoryButton).data('id', data.Data.Id);
+                    newRow.find(selectors.siteSettingsSitemapDeleteButton).data('id', data.Data.Id);
+                    newRow.find(selectors.siteSettingsSitemapDeleteButton).data('version', data.Data.Version);
+
+                    newRow.insertBefore($(selectors.siteSettingsSitemapsTableFirstRow, container));
+
+                    initializeListItems(newRow, container);
+
+                    grid.showHideEmptyRow(container);
+                }
+            }, true);
+        };
+
+        /*
+        * Edit the sitemap.
+        */
+        function editSitemap(self, container) {
+            var id = self.data('id');
+
+            sitemap.loadAddNodeDialog(id, function (data) {
+                if (data.Data != null) {
+                    var row = self.parents(selectors.siteSettingsSitemapParentRow),
+                        cell = row.find(selectors.siteSettingsSitemapTitleCell);
+                    cell.html(data.Data.Title);
+                    row.find(selectors.siteSettingsSitemapDeleteButton).data('version', data.Data.Version);
+                }
+            }, globalization.sitemapEditorDialogTitle);
+        };
+
+        /*
+        * View sitemap history.
+        */
+        function viewSitemapHistory(self, container) {
+            var id = self.data('id');
+
+            sitemap.showSitemapHistoryDialog(id, function (data) {
+                if (data.Data != null) {
+                    var row = self.parents(selectors.siteSettingsSitemapParentRow),
+                        cell = row.find(selectors.siteSettingsSitemapTitleCell);
+                    cell.html(data.Data.Title);
+                    row.find(selectors.siteSettingsSitemapDeleteButton).data('version', data.Data.Version);
+                }
+            }, globalization.sitemapHistoryDialogTitle);
+        };
+
+        /*
+        * Delete the sitemap and remove it form the list.
+        */
+        function deleteSitemap(self, container) {
+            var id = self.data('id'),
+                version = self.data('version');
+
+            sitemap.deleteSitemap(id, version, function (json) {
+                messages.refreshBox(selectors.siteSettingsSitemapsForm, json);
+                if (json.Success) {
+                    self.parents(selectors.siteSettingsSitemapParentRow).remove();
+                    grid.showHideEmptyRow(container);
+                }
+            });
+        };
+
+        /*
+        * Shows sitemap creation form.
+        */
+        sitemap.openCreateSitemapDialog = function (callBackOnSuccess) {
+            sitemap.loadAddNodeDialog(defaultIdValue, callBackOnSuccess, globalization.sitemapCreatorDialogTitle);
         };
 
         /**
         * Loads a sitemap view to the add node dialog container.
         */
-        sitemap.loadAddNodeDialog = function () {
+        sitemap.loadAddNodeDialog = function (id, onClose, dialogTitle) {
             var addNodeController = new AddNodeMapController();
             modal.open({
-                title: globalization.sitemapEditorDialogTitle,
+                title: dialogTitle || globalization.sitemapEditorDialogTitle,
                 onLoad: function (dialog) {
-                    dynamicContent.setContentFromUrl(dialog, links.sitemapEditDialogUrl, {
+                    dynamicContent.setContentFromUrl(dialog, $.format(links.sitemapEditDialogUrl, id), {
                         done: function (content) {
                             addNodeController.initialize(content, dialog);
                         }
@@ -79,11 +278,72 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     addNodeController.save(function (json) {
                         if (json.Success) {
                             dialog.close();
-                            sitemap.loadSiteSettingsSitemap();
+                            if (onClose && $.isFunction(onClose)) {
+                                onClose(json);
+                            }
+                            messages.refreshBox(selectors.siteSettingsSitemapsForm, json);
+                        } else {
+                            sitemap.showMessage(json);
                         }
-                        sitemap.showMessage(json);
                     });
                     return false;
+                }
+            });
+        };
+
+
+        /**
+        * Loads a sitemap history dialog.
+        */
+        sitemap.showSitemapHistoryDialog = function(id, afterSitemapRestored, dialogTitle) {
+            modal.open({
+                title: dialogTitle || globalization.sitemapHistoryDialogTitle,
+                cancelTitle: globalization.closeButtonTitle,
+                disableAccept: true,
+                onLoad: function (dialog) {
+                    dynamicContent.bindDialog(dialog, $.format(links.sitemapHistoryDialogUrl, id), {
+                        contentAvailable: function () {
+                            initSitemapHistoryDialogEvents(dialog, afterSitemapRestored);
+                        },
+
+                        beforePost: function () {
+                            dialog.container.showLoading();
+                        },
+
+                        postComplete: function () {
+                            dialog.container.hideLoading();
+                        }
+                    });
+                },
+            });
+        };
+
+        /*
+        * Deletes the sitemap if user confirms.
+        */
+        sitemap.deleteSitemap = function (id, version, callBack) {
+            var url = $.format(links.deleteSitemapUrl, id, version),
+                onDeleteCompleted = function (json) {
+                if ($.isFunction(callBack)) {
+                    callBack(json);
+                }
+            };
+            modal.confirm({
+                content: globalization.sitemapDeleteConfirmMessage,
+                onAccept: function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: url,
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        cache: false
+                    })
+                    .done(function (json) {
+                        onDeleteCompleted(json);
+                    })
+                    .fail(function (response) {
+                        onDeleteCompleted(bcms.parseFailedResponse(response));
+                    });
                 }
             });
         };
@@ -92,8 +352,8 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Shows add new page to sitemap dialog.
         */
         sitemap.loadAddNewPageDialog = function(data) {
-            if (data && data.Data && (data.Data.Title || data.Data.PageTitle) && (data.Data.Url || data.Data.PageUrl) && !data.Data.IsMasterPage) {
-                var addPageController = new AddNewPageMapController(data.Data.Title || data.Data.PageTitle, data.Data.Url || data.Data.PageUrl);
+            if (data && data.Data && (data.Data.Title || data.Data.PageTitle) && (data.Data.Url || data.Data.PageUrl) && (data.Data.Id || data.Data.PageId) && !data.Data.IsMasterPage) {
+                var addPageController = new AddNewPageMapController(data.Data.Title || data.Data.PageTitle, data.Data.Url || data.Data.PageUrl, data.Data.Id || data.Data.PageId, data.Data.LanguageId || data.Data.PageLanguageId);
                 modal.open({
                     title: globalization.sitemapAddNewPageDialogTitle,
                     onLoad: function(dialog) {
@@ -125,49 +385,6 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
         // --- Controllers ----------------------------------------------------
         /**
-        * Controller for sitemap in site settings dialog.
-        */
-        function SiteSettingsMapController() {
-            var self = this;
-            self.container = null;
-            self.sitemapSearchModel = null;
-
-            self.initialize = function(content) {
-                var dialog = siteSettings.getModalDialog();
-                self.container = dialog.container;
-                sitemap.activeMessageContainer = self.container.find(selectors.sitemapMessagesContainer);
-                sitemap.activeLoadingContainer = self.container.find(selectors.sitemapSearchDataBind);
-                    
-                sitemap.showMessage(content);
-                if (content.Success) {
-                    // Create data models.
-                    var sitemapModel = new SitemapViewModel();
-                    sitemapModel.parseJsonNodes(content.Data.RootNodes);
-                    self.sitemapSearchModel = new SearchSitemapViewModel(sitemapModel);
-                    sitemap.activeMapModel = sitemapModel;
-
-                    // Setup settings.
-                    sitemapModel.settings.canEditNode = true;
-                    sitemapModel.settings.canDeleteNode = true;
-                    sitemapModel.settings.canDragNode = false;
-                    sitemapModel.settings.canDropNode = false;
-                    sitemapModel.settings.nodeSaveButtonTitle = globalization.sitemapNodeSaveButton;
-                    sitemapModel.settings.nodeSaveAfterUpdate = true;
-
-                    // Bind models.
-                    var context = self.container.find(selectors.sitemapSearchDataBind).get(0);
-                    if (context) {
-                        ko.applyBindings(self.sitemapSearchModel, context);
-                        updateValidation();
-                    }
-                }
-
-                // Select search.
-                dialog.setFocus();
-            };
-        }
-        
-        /**
         * Controller for sitemap add node dialog.
         */
         function AddNodeMapController() {
@@ -180,20 +397,30 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 sitemap.activeMessageContainer = self.container;
                 sitemap.activeLoadingContainer = self.container.find(selectors.sitemapAddNodeDataBind);
 
-                sitemap.showMessage(content);
                 if (content.Success) {
                     // Create data models.
-                    var sitemapModel = new SitemapViewModel();
-                    sitemapModel.parseJsonNodes(content.Data.RootNodes);
+                    var sitemapModel = new SitemapViewModel(content.Data.Sitemap),
+                        isReadOnly = content.Data.Sitemap.IsReadOnly;
+                    
+                    if (!isReadOnly) {
+                        sitemap.showMessage(content);
+                    } else {
+                        // Allow user navigate in sitemap.
+                        dialog.container.find(modal.selectors.readonly).removeClass(modal.classes.inactive);
+                        dialog.container.find(selectors.firstTab).addClass(modal.classes.inactive);
+                        dialog.container.find(selectors.secondTab).find(selectors.leftColumn).addClass(modal.classes.inactive);
+                    }
+
+                    sitemapModel.parseJsonNodes(content.Data.Sitemap.RootNodes);
                     self.pageLinksModel = new SearchPageLinksViewModel(sitemapModel);
                     self.pageLinksModel.parseJsonLinks(content.Data.PageLinks);
                     sitemap.activeMapModel = sitemapModel;
 
                     // Setup settings.
-                    sitemapModel.settings.canEditNode = true;
-                    sitemapModel.settings.canDeleteNode = true;
-                    sitemapModel.settings.canDragNode = true;
-                    sitemapModel.settings.canDropNode = true;
+                    sitemapModel.settings.canEditNode = !isReadOnly;
+                    sitemapModel.settings.canDeleteNode = !isReadOnly;
+                    sitemapModel.settings.canDragNode = !isReadOnly;
+                    sitemapModel.settings.canDropNode = !isReadOnly;
                     sitemapModel.settings.nodeSaveButtonTitle = globalization.sitemapNodeOkButton;
                     sitemapModel.settings.nodeSaveAfterUpdate = false;
 
@@ -203,6 +430,8 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         ko.applyBindings(self.pageLinksModel, context);
                         updateValidation();
                     }
+                } else {
+                    sitemap.showMessage(content);
                 }
             };
             self.save = function (onDoneCallback) {
@@ -215,51 +444,103 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Controller for sitemap add new page dialog.
         */
-        function AddNewPageMapController(title, url) {
+        function AddNewPageMapController(title, url, pageId, languageId) {
             var self = this;
             self.container = null;
             self.newPageModel = null;
+            self.tabsModel = null;
             
-            self.pageLinkModel = new PageLinkViewModel();
-            self.pageLinkModel.title(title);
-            self.pageLinkModel.url(url);
-
             self.initialize = function (content, dialog) {
+                if (!(content != null && content.Data != null && content.Data.length > 0)) {
+                    // No sitemaps to place the new page.
+                    dialog.close();
+                    return;
+                }
+
                 self.container = dialog.container;
                 sitemap.activeMessageContainer = self.container;
                 sitemap.activeLoadingContainer = self.container.find(selectors.sitemapAddNewPageDataBind);
 
                 sitemap.showMessage(content);
                 if (content.Success) {
-                    var onSkip = function () {
-                        dialog.close();
-                    };
+                    var tabs = [],
+                        onSkip = function() {
+                            dialog.close();
+                        };
                     
-                    // Create data models.
-                    var sitemapModel = new SitemapViewModel();
-                    sitemapModel.parseJsonNodes(content.Data.RootNodes);
-                    self.newPageModel = new AddNewPageViewModel(sitemapModel, self.pageLinkModel, onSkip);
-                    sitemap.activeMapModel = sitemapModel;
+                    // Create all the tabs.
+                    for (var i = 0; i < content.Data.length; i++) {
+                        // Create data models.
+                        var sitemapModel = new SitemapViewModel(content.Data[i]),
+                            pageLinkModel = new PageLinkViewModel(title, url, pageId, languageId),
+                            newPageModel = new AddNewPageViewModel(sitemapModel, pageLinkModel, onSkip),
+                            tabModel = new TabModel(newPageModel);
+                        tabs.push(tabModel);
+                        sitemapModel.parseJsonNodes(content.Data[i].RootNodes);
 
-                    // Setup settings.
-                    sitemapModel.settings.canEditNode = false;
-                    sitemapModel.settings.canDeleteNode = false;
-                    sitemapModel.settings.canDragNode = false;
-                    sitemapModel.settings.canDropNode = true;
-                    sitemapModel.settings.nodeSaveButtonTitle = globalization.sitemapNodeSaveButton;
-                    sitemapModel.settings.nodeSaveAfterUpdate = false;
+                        // Setup settings.
+                        sitemapModel.settings.canEditNode = false;
+                        sitemapModel.settings.canDeleteNode = false;
+                        sitemapModel.settings.canDragNode = false;
+                        sitemapModel.settings.canDropNode = true;
+                        sitemapModel.settings.nodeSaveButtonTitle = globalization.sitemapNodeSaveButton;
+                        sitemapModel.settings.nodeSaveAfterUpdate = false;
+                    }
+
+                    self.tabsModel = new TabsModel(tabs);
 
                     // Bind models.
-                    var context = self.container.find(selectors.sitemapAddNewPageDataBind).get(0);
+                    var context = self.container.find(selectors.sitemapAddNewPageDataBind).parent().get(0);
                     if (context) {
-                        ko.applyBindings(self.newPageModel, context);
+                        ko.applyBindings(self.tabsModel, context);
                         updateValidation();
                     }
                 }
             };
             self.save = function (onDoneCallback) {
-                if (sitemap.activeMapModel) {
-                    sitemap.activeMapModel.save(onDoneCallback);
+                var tabs = self.tabsModel.tabs(),
+                    sitemapsToSave = [],
+                    onSaveCompleted = function (json) {
+                        messages.refreshBox(sitemap.activeMessageContainer, json);
+                        sitemap.showLoading(false);
+                        if (json.Success) {
+                            if (onDoneCallback && $.isFunction(onDoneCallback)) {
+                                if (json.Data == null) {
+                                    json.Data = {
+                                        Title: title,
+                                        PageUrl: url,
+                                        PageId: pageId
+                                    };
+                                }
+                                onDoneCallback(json);
+                            }
+                        }
+                    };
+                
+                for (var i = 0; i < tabs.length; i++) {
+                    if (tabs[i].newPageViewModel.linkIsDropped()) {
+                        sitemapsToSave.push(tabs[i].newPageViewModel.sitemap.getModelToSave());
+                    }
+                }
+                
+                if (sitemapsToSave.length > 0) {
+                    $.ajax({
+                        url: links.saveMultipleSitemapsUrl,
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        cache: false,
+                        data: JSON.stringify(sitemapsToSave),
+                        beforeSend: function() {
+                            sitemap.showLoading(true);
+                        }
+                    })
+                        .done(function (json) {
+                            onSaveCompleted(json);
+                        })
+                        .fail(function (response) {
+                            onSaveCompleted(bcms.parseFailedResponse(response));
+                        });
                 }
             };
         }
@@ -358,6 +639,8 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                     var node = new NodeViewModel();
                                     node.title(dragObject.title());
                                     node.url(dragObject.url());
+                                    node.pageId(dragObject.pageId());
+                                    node.usePageTitleAsNodeTitle(dragObject.pageId() != null && dragObject.pageId() != defaultIdValue ? true : false);
                                     if (dropZoneType == DropZoneTypes.EmptyListZone || dropZoneType == DropZoneTypes.MiddleZone) {
                                         node.parentNode(dropZoneObject);
                                     } else {
@@ -371,6 +654,9 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                         node.callbackAfterFailSaving = function (newNode) {
                                             newNode.parentNode().childNodes.remove(newNode);
                                         };
+                                    }
+                                    if(sitemap.activeMapModel.showLanguages()){
+                                        node.updateLanguageOnDropNewNode(dragObject.languageId(), sitemap.activeMapModel.languageId());
                                     }
                                     node.superDraggable(dragObject.superDraggable());
                                     dragObject = node;
@@ -454,66 +740,41 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
         // --- View Models ----------------------------------------------------
         /**
-        * Responsible for searching in sitemap.
-        */
-        function SearchSitemapViewModel(sitemapViewModel) {
-            var self = this;
-            self.searchQuery = ko.observable("");
-            self.sitemap = sitemapViewModel;
-
-            self.searchForNodes = function() {
-                if (self.sitemap && self.sitemap.hasChildNodes()) {
-                    var showAll = $.trim(self.searchQuery()).length === 0,
-                        searchQuery = self.searchQuery().toLowerCase();
-
-                    var hasResult = self.searchInNodes(self.sitemap.childNodes(), searchQuery, showAll);
-                    self.sitemap.showHasNoDataMessage(!(hasResult || showAll));
-                }
-                document.getElementById(selectors.sitemapSearchInput).focus();
-            };
-            self.searchInNodes = function (nodes, searchQuery, showAll) {
-                var hasResult = false;
-                for (var i = 0; i < nodes.length; i++) {
-                    var node = nodes[i];
-                    if (showAll) {
-                        node.isVisible(true);
-                        self.searchInNodes(node.childNodes(), searchQuery, showAll);
-                    } else {
-                        node.isVisible(false);
-                        node.isExpanded(false);
-                        if (node.title().toLowerCase().indexOf(searchQuery) !== -1 || node.url().toLowerCase().indexOf(searchQuery) !== -1) {
-                            node.isVisible(true);
-                            self.searchInNodes(node.childNodes(), "", true);
-                            hasResult = true;
-                        } else {
-                            if (self.searchInNodes(node.childNodes(), searchQuery, showAll)) {
-                                node.isVisible(true);
-                                node.isExpanded(true);
-                                hasResult = true;
-                            }
-                        }
-                    }
-                }
-                return hasResult;
-            };
-
-            self.editSitemapClicked = function() {
-                sitemap.loadAddNodeDialog();
-            };
-        }
-        
-        /**
         * Responsible for sitemap structure.
         */
-        function SitemapViewModel() {
+        function SitemapViewModel(jsonSitemap) {
             var self = this;
-            self.id = function() { return defaultIdValue; };
+            
+            self.id = function () { return jsonSitemap.Id; };
             self.childNodes = ko.observableArray([]);
             self.childNodes.subscribe(updateFirstLastNode);
             self.someNodeIsOver = ko.observable(false);     // Someone is dragging some node over the sitemap, but not over the particular node.
             self.activeZone = ko.observable(DropZoneTypes.None);
             self.showHasNoDataMessage = ko.observable(false);
             self.savingInProgress = false;                  // To prevent multiple saving.
+
+            self.version = jsonSitemap.Version;
+            self.title = ko.observable(jsonSitemap.Title);
+            self.tags = new tags.TagsListViewModel(jsonSitemap.Tags);
+            self.accessControl = security.createUserAccessViewModel(jsonSitemap.UserAccessList);
+
+            self.languageId = ko.observable("");
+            self.onLanguageChanged = function (languageId) {
+                if (languageId != self.languageId()) {
+                    self.languageId(languageId);
+                    self.changeLanguageForNodes(self.childNodes());
+                    bcms.logger.debug('In sitemap language switched to "' + languageId + '".');
+                }
+            };
+            self.changeLanguageForNodes = function (nodes) {
+                for (var i = 0; i < nodes.length; i++) {
+                    var node = nodes[i];
+                    node.activateTranslation(self.languageId());
+                    self.changeLanguageForNodes(node.childNodes());
+                }
+            };
+            self.showLanguages = ko.observable(jsonSitemap.ShowLanguages);
+            self.language = jsonSitemap.ShowLanguages ? new LanguageViewModel(jsonSitemap.Languages, null, self.onLanguageChanged) : null,
 
             self.settings = {
                 canEditNode: false,
@@ -526,6 +787,12 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             self.getSitemap = function () {
                 return self;
+            };
+            self.getNoDataMessage = function () {
+                if (self.settings.canDeleteNode || self.settings.canDropNode) {
+                    return globalization.sitemapPlaceLinkHere;
+                }
+                return globalization.sitemapIsEmpty;
             };
 
             // Expanding or collapsing nodes.
@@ -542,7 +809,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     self.expandOrCollapse(node.childNodes(), expand);
                 }
             };
-            
+
             self.hasChildNodes = function () {
                 // Has at least one not deleted child node.
                 var nodes = self.childNodes();
@@ -602,12 +869,17 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     return;
                 }
 
-                var dataToSend = JSON.stringify(self.composeJsonNodes()),
+                var dataToSend = JSON.stringify(self.getModelToSave()),
                     onSaveCompleted = function (json) {
                         messages.refreshBox(sitemap.activeMessageContainer, json);
                         sitemap.showLoading(false);
                         if (json.Success) {
                             if (onDoneCallback && $.isFunction(onDoneCallback)) {
+                                if (json.Data == null) {
+                                    json.Data = {
+                                        Title: self.title()
+                                    };
+                                }
                                 onDoneCallback(json);
                             }
                         }
@@ -637,9 +909,10 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             // Parsing / composing.
             self.parseJsonNodes = function (jsonNodes) {
                 var nodes = [];
+                jsonNodes = jsonNodes || [];
                 for (var i = 0; i < jsonNodes.length; i++) {
                     var node = new NodeViewModel();
-                    node.fromJson(jsonNodes[i]);
+                    node.fromJson(jsonNodes[i], self.showLanguages);
                     node.parentNode(self);
                     nodes.push(node);
                 }
@@ -651,19 +924,39 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.nodesToJson = function(nodes) {
                 var result = [];
                 for (var i = 0; i < nodes.length; i++) {
-                    var node = nodes[i];
-                    result.push({
-                            Id: node.id(),
-                            Version: node.version(),
-                            Title: node.title(),
-                            Url: node.url(),
-                            DisplayOrder: node.displayOrder(),
-                            IsDeleted: node.isDeleted(),
-                            ChildNodes: self.nodesToJson(node.childNodes())
-                        }
-                    );
+                    var nodeToSave = nodes[i].toJson();
+                    nodeToSave.ChildNodes = self.nodesToJson(nodes[i].childNodes());
+                    result.push(nodeToSave);
                 }
                 return result;
+            };
+            self.getModelToSave = function () {
+                var tagList = [],
+                    tagModels = self.tags.items(),
+                    userAccessList = [],
+                    accessModels = self.accessControl.UserAccessList(),
+                    i;
+                
+                for (i = 0; i < tagModels.length; i++) {
+                    tagList.push(tagModels[i].name());
+                }
+
+                for (i = 0; i < accessModels.length; i++) {
+                    userAccessList.push({
+                        Identity: accessModels[i].Identity(),
+                        AccessLevel: accessModels[i].AccessLevel(),
+                        IsForRole: accessModels[i].IsForRole(),
+                    });
+                }
+
+                return {
+                    Id: self.id(),
+                    Version: self.version,
+                    Title: self.title(),
+                    RootNodes: self.composeJsonNodes(),
+                    Tags: tagList,
+                    UserAccessList: userAccessList
+                };
             };
         }
         
@@ -678,6 +971,8 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.version = ko.observable(0);
             self.title = ko.observable();
             self.url = ko.observable();
+            self.pageId = ko.observable(defaultIdValue);
+            self.usePageTitleAsNodeTitle = ko.observable(false);
             self.displayOrder = ko.observable(0);
             self.isDeleted = ko.observable(false);
             self.isDeleted.subscribe(function () {
@@ -688,6 +983,10 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.childNodes = ko.observableArray([]);
             self.childNodes.subscribe(updateFirstLastNode);
             self.parentNode = ko.observable();
+
+            self.translationsEnabled = false;
+            self.translations = {};
+            self.activeTranslation = ko.observable(null);
             
             // For behavior.
             self.isActive = ko.observable(false);           // If TRUE - show edit fields.
@@ -715,6 +1014,12 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 return false;
             };
             self.superDraggable = ko.observable(false);     // Used to force dragging if sitemap settings !canDragNode.
+            self.isUrlReadonly = ko.computed(function () {
+                return self.pageId() == null || self.pageId() === defaultIdValue ? undefined : 'readonly';
+            });
+            self.getUrlReadonlyState = ko.computed(function () {
+                return self.isUrlReadonly();
+            });
 
             // User for validation.
             self.containerId = 'node-' + nodeId++;
@@ -740,6 +1045,9 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.saveSitemapNodeWithValidation = function () {
                 var inputFields = $('input', '#' + self.containerId);
                 if (inputFields.valid()) {
+                    if (self.usePageTitleAsNodeTitle() && self.titleOldValue != self.title()) {
+                        self.usePageTitleAsNodeTitle(false);
+                    }
                     self.saveSitemapNode();
                     inputFields.blur();
                     self.isActive(false);
@@ -833,6 +1141,95 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.callbackAfterSuccessSaving = null;
             self.callbackAfterFailSaving = null;
 
+            self.activateTranslation = function (languageId) {
+                languageId = languageId == null ? "" : languageId;
+                if (!self.translationsEnabled) {
+                    return;
+                }
+                if (self.isActive()) {
+                    self.cancelEditSitemapNode();
+                }
+                if (self.activeTranslation() != null) {
+                    var active = self.activeTranslation(),
+                        isModified = active.isModified();
+
+                    if (active.languageId() == languageId) {
+                        return;
+                    }
+                    if (active.title() != self.title()) {
+                        active.title(self.title());
+                        active.usePageTitleAsNodeTitle(false);
+                        isModified = true;
+                    }
+                    if (active.url() != self.url()) {
+                        active.url(self.url());
+                        isModified = true;
+                    }
+
+                    active.isModified(isModified);
+                }
+
+                if (self.translations[languageId] == null) {
+                    self.translations[languageId] = new TranslationViewModel(self, languageId);
+                    if (languageId == "") {
+                        self.translations[languageId].version(self.version());
+                        self.translations[languageId].isModified(true);
+                    }
+                }
+
+                self.activeTranslation(self.translations[languageId]);
+
+                self.title(self.translations[languageId].title());
+                self.url(self.translations[languageId].url());
+                self.version(self.translations[languageId].version());
+            };
+            self.updateLanguageOnDropNewNode = function (pageLanguageId, currentLanguageId) {
+                sitemap.showLoading(true);
+                bcms.logger.debug("NodeViewModel().updateLanguageOnDropNewNode(pageLanguageId=" + pageLanguageId + ", currentLanguageId=" + currentLanguageId + ")");
+                self.translationsEnabled = true;
+                var onSaveCompleted = function(json) {
+                        sitemap.showMessage(json);
+                        if (json.Success) {
+                            if (json.Data != null && json.Data != null) {
+                                for (var i = 0; i < json.Data.length; i++) {
+                                    var translationJson = json.Data[i],
+                                        languageId = translationJson.LanguageId == null ? "" : translationJson.LanguageId,
+                                        translation = new TranslationViewModel(self, languageId);
+                                    translation.title(translationJson.Title);
+                                    translation.url(translationJson.PageUrl);
+                                    translation.usePageTitleAsNodeTitle(self.usePageTitleAsNodeTitle());
+                                    translation.isModified(true);
+                                    self.translations[languageId] = translation;
+                                    if (languageId === "") {
+                                        self.title(translationJson.Title);
+                                        self.url(translationJson.PageUrl);
+                                    }
+                                }
+                                if (self.translations[""] == null) {
+                                    self.activateTranslation("");
+                                }
+                                self.activateTranslation(currentLanguageId);
+                            }
+                        } else {
+                            self.isDeleted(true);
+                        }
+                        sitemap.showLoading(false);
+                    };
+                $.ajax({
+                    url: $.format(links.getPageTranslations, self.pageId()),
+                    type: 'GET',
+                    dataType: 'json',
+                    cache: false,
+                })
+                    .done(function(json) {
+                        onSaveCompleted(json);
+                    })
+                    .fail(function(response) {
+                        onSaveCompleted(bcms.parseFailedResponse(response));
+                    });
+
+            };
+
             self.getSitemap = function() {
                 if (self.parentNode() != null) {
                     return self.parentNode().getSitemap();
@@ -840,35 +1237,135 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 return null;
             };
 
-            self.fromJson = function(jsonNode) {
+            self.fromJson = function(jsonNode, translationsEnabled) {
                 self.id(jsonNode.Id);
                 self.version(jsonNode.Version);
                 self.title(jsonNode.Title);
                 self.url(jsonNode.Url);
+                self.pageId(jsonNode.PageId);
+                self.usePageTitleAsNodeTitle(jsonNode.UsePageTitleAsNodeTitle);
                 self.displayOrder(jsonNode.DisplayOrder);
+                if (translationsEnabled) {
+                    self.translationsEnabled = true;
+                    if (jsonNode.Translations != null) {
+                        for (var j = 0; j < jsonNode.Translations.length; j++) {
+                            var translationJson = jsonNode.Translations[j],
+                                translation = new TranslationViewModel(self, translationJson.LanguageId);
+                            translation.id(translationJson.Id);
+                            translation.title(translationJson.Title);
+                            translation.usePageTitleAsNodeTitle(translationJson.UsePageTitleAsNodeTitle);
+                            translation.url(translationJson.Url);
+                            translation.version(translationJson.Version);
+                            self.translations[translationJson.LanguageId] = translation;
+                        }
+                    }
+                    self.activateTranslation("");
+                }
 
                 var nodes = [];
                 if (jsonNode.ChildNodes != null) {
                     for (var i = 0; i < jsonNode.ChildNodes.length; i++) {
                         var node = new NodeViewModel();
-                        node.fromJson(jsonNode.ChildNodes[i]);
+                        node.fromJson(jsonNode.ChildNodes[i], translationsEnabled);
                         node.parentNode(self);
                         nodes.push(node);
                     }
                 }
                 self.childNodes(nodes);
             };
+            self.translationsToJson = function () {
+                if (!self.translationsEnabled) {
+                    return null;
+                }
+                var result = [];
+                for (var i in self.translations) {
+                    var translation = self.translations[i];
+                    if (translation.isModified() && translation.languageId() != "") {
+                        result.push({
+                            Id: translation.id(),
+                            LanguageId: translation.languageId(),
+                            Title: translation.title(),
+                            UsePageTitleAsNodeTitle: translation.usePageTitleAsNodeTitle(),
+                            Url: translation.url(),
+                            Version: translation.version(),
+                        });
+                    }
+                }
+                return result;
+            };
             self.toJson = function () {
+                var currentTranslation = null;
+                if (self.translationsEnabled) {
+                    currentTranslation = self.activateTranslation();
+                    if (currentTranslation != null) {
+                        self.activateTranslation("");
+                    }
+                }
                 var params = {
                     Id: self.id(),
-                    Version: self.version(),
-                    Title: self.title(),
-                    Url: self.url(),
+                    Version: self.translationsEnabled ? self.translations[""].version() : self.version(),
+                    Title: self.translationsEnabled ? self.translations[""].title() : self.title(),
+                    UsePageTitleAsNodeTitle: self.usePageTitleAsNodeTitle(),
+                    Url: self.translationsEnabled ? self.translations[""].url() : self.url(),
+                    PageId: self.pageId(),
                     DisplayOrder: self.displayOrder(),
-                    ParentId: self.parentNode().id()
+                    IsDeleted: self.isDeleted(),
+                    Translations: self.translationsToJson(),
+                    ChildNodes: null
                 };
+                if (self.translationsEnabled && currentTranslation != null) {
+                    self.activateTranslation(currentTranslation.languageId());
+                }
                 return params;
             };
+        }
+
+        /**
+        * Language view model.
+        */
+        function LanguageViewModel(languages, languageId, onLanguageChanged) {
+            var self = this,
+                i, l;
+
+            self.languageId = ko.observable(languageId);
+
+            self.languages = [];
+            self.languages.push({ key: '', value: globalization.invariantLanguage });
+            for (i = 0, l = languages.length; i < l; i++) {
+                self.languages.push({
+                    key: languages[i].Key,
+                    value: languages[i].Value
+                });
+            }
+            
+            self.languageId.subscribe(function (newValue) {
+                if ($.isFunction(onLanguageChanged)) {
+                    onLanguageChanged(newValue);
+                }
+            });
+
+            return self;
+        };
+
+        /*
+        * Sitemap node translation view model.
+        */
+        function TranslationViewModel(node, languageId) {
+            var self = this;
+            self.node = node;
+            self.id = ko.observable();
+            self.usePageTitleAsNodeTitle = ko.observable(false);
+            self.languageId = ko.observable(languageId == null ? "" : languageId);
+            var defaultTranslation = node.translations[""];
+            if (defaultTranslation != null) {
+                self.title = ko.observable(defaultTranslation.title());
+                self.url = ko.observable(defaultTranslation.url());
+            } else {
+                self.title = ko.observable(node.title());
+                self.url = ko.observable(node.url());
+            }
+            self.version = ko.observable(0);
+            self.isModified = ko.observable(false);
         }
 
         /**
@@ -906,6 +1403,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 
                 customLink.title(globalization.sitemapEditorDialogCustomLinkTitle);
                 customLink.url('/../');
+                customLink.pageId(defaultIdValue);
                 customLink.isCustom(true);
                 pageLinks.push(customLink);
                 
@@ -916,15 +1414,21 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 }
                 self.pageLinks(pageLinks);
             };
+            
+            self.title = sitemapViewModel.title;
+            self.tags = sitemapViewModel.tags;
+            self.accessControl = sitemapViewModel.accessControl;
         }
         
         /**
         * Responsible for page link data.
         */
-        function PageLinkViewModel() {
+        function PageLinkViewModel(title, url, pageId, languageId) {
             var self = this;
-            self.title = ko.observable();
-            self.url = ko.observable();
+            self.title = ko.observable(title);
+            self.url = ko.observable(url);
+            self.pageId = ko.observable(pageId);
+            self.languageId = ko.observable(languageId);
             self.isVisible = ko.observable(true);
             self.isCustom = ko.observable(false);
             self.isBeingDragged = ko.observable(false);
@@ -940,6 +1444,8 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 self.isVisible(true);
                 self.title(json.Title);
                 self.url(json.Url);
+                self.pageId(json.Id);
+                self.languageId(json.LanguageId);
             };
         }
         
@@ -976,8 +1482,208 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 self.linkIsDropped(false);
             };
         }
+        
+        /**
+        * Responsible for tabs handling for new page placement into multiple sitemaps.
+        */
+        function TabsModel(tabs) {
+            var self = this;
+            self.activeTab = ko.observable();
+            self.activeNewPageViewModel = ko.observable();
+            self.activateTab = function(tabModel) {
+                var active = self.activeTab();
+                if (active) {
+                    active.isActive(false);
+                }
+                tabModel.isActive(true);
+                sitemap.activeMapModel = tabModel.newPageViewModel.sitemap;
+                self.activeTab(tabModel);
+                self.activeNewPageViewModel(tabModel.newPageViewModel);
+            };
+
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].activateTab = self.activateTab;
+            }
+            
+            self.tabs = ko.observableArray(tabs);
+
+            // Activate first tab.
+            self.tabs()[0].activate();
+        }
+        
+        /**
+        * Responsible for single tab behavior for new page placement into sitemap.
+        */
+        function TabModel(newPageViewModel) {
+            var self = this;
+            self.newPageViewModel = newPageViewModel;
+            self.isActive = ko.observable(false);
+            self.activateTab = null;
+            self.activate = function() {
+                self.activateTab(self);
+            };
+        }
+
+        /**
+        * Responsible for sitemap preview.
+        */
+        function VersionViewModel(jsonSitemap) {
+            var self = this;
+            self.sitemap = new SitemapViewModel(jsonSitemap);
+            self.sitemap.parseJsonNodes(jsonSitemap.RootNodes);
+
+            // Setup settings.
+            self.sitemap.settings.canEditNode = false;
+            self.sitemap.settings.canDeleteNode = false;
+            self.sitemap.settings.canDragNode = false;
+            self.sitemap.settings.canDropNode = false;
+            self.sitemap.settings.nodeSaveAfterUpdate = false;
+        }
         // --------------------------------------------------------------------
 
+        /**
+        * Initializes sitemap history dialog events.
+        */
+        function initSitemapHistoryDialogEvents(dialog, afterSitemapRestored) {
+            dialog.maximizeHeight();
+
+            var container = dialog.container.find(selectors.modalContent);
+
+            container.find(selectors.gridRestoreLinks).on('click', function (event) {
+                bcms.stopEventPropagation(event);
+                restoreVersion(dialog, $(this).data('id'), function (json) {
+                    if ($.isFunction(afterSitemapRestored)) {
+                        afterSitemapRestored(json);
+                    }
+                    searchSitemapHistory(dialog, container, form, afterSitemapRestored);
+                });
+            });
+
+            container.find(selectors.gridCells).on('click', function () {
+                var self = $(this),
+                    row = self.parents(selectors.firstRow),
+                    previewLink = row.find(selectors.gridRowPreviewLink),
+                    id = previewLink.data('id');
+
+                container.find(selectors.gridRows).removeClass(classes.tableActiveRow);
+                row.addClass(classes.tableActiveRow);
+                previewVersion(dialog, id);
+            });
+
+            var form = container.find(selectors.sitemapHistoryForm);
+            grid.bindGridForm(form, function (data) {
+                container.html(data);
+                initSitemapHistoryDialogEvents(dialog, afterSitemapRestored);
+            });
+
+            form.on('submit', function (event) {
+                bcms.stopEventPropagation(event);
+                searchSitemapHistory(dialog, container, form, afterSitemapRestored);
+                return false;
+            });
+
+            form.find(selectors.sitemapHistorySearchButton).on('click', function () {
+                searchSitemapHistory(dialog, container, form, afterSitemapRestored);
+            });
+        };
+
+        /**
+        * Preview specified sitemap version.
+        */
+        function previewVersion(dialog, id) {
+            var url = $.format(links.loadSitemapVersionPreviewUrl, id),
+                previewContainer = dialog.container.find(selectors.versionPreviewContainer),
+                loaderContainer = dialog.container.find(selectors.versionPreviewLoaderContainer),
+                onSuccess = function (html, json) {
+                    previewContainer.html(html);
+                    if (json && json.Success) {
+                        initializeSitemapPreview(previewContainer, json.Data);
+                    }
+                    loaderContainer.hideLoading();
+                };
+            loaderContainer.showLoading();
+            $.ajax({
+                type: 'GET',
+                cache: false,
+                url: url,
+                error: function () {
+                    loaderContainer.hideLoading();
+                },
+                success: function (data, status, response) {
+                    if (response.getResponseHeader('Content-Type').indexOf('application/json') === 0 && data.Html) {
+                        messages.refreshBox(dialog.container, data);
+                        onSuccess(data.Html, data);
+                    } else {
+                        onSuccess(data, null);
+                    }
+                }
+            });
+        }
+
+        function initializeSitemapPreview(container, json) {
+            if (json) {
+                var context = container.get(0),
+                    model = new VersionViewModel(json);
+                if (context) {
+                    ko.applyBindings(model, context);
+                }
+            }
+        }
+
+        /**
+        * Restores specified version from history.
+        */
+        function restoreVersion(dialog, id, afterSitemapRestored) {
+            var submitRestoreIt = function (isConfirmed) {
+                var url = $.format(links.restoreSitemapVersionUrl, id, isConfirmed),
+                    onComplete = function (json) {
+                        dialog.container.hideLoading();
+                        messages.refreshBox(dialog.container, json);
+                        if (json.Success) {
+                            afterSitemapRestored(json);
+                        } else {
+                            if (json.Data && json.Data.ConfirmationMessage) {
+                                modal.confirm({
+                                    content: json.Data.ConfirmationMessage,
+                                    onAccept: function () {
+                                        submitRestoreIt(1);
+                                    }
+                                });
+                            }
+                        }
+                    };
+                dialog.container.showLoading();
+                $.ajax({
+                    type: 'POST',
+                    cache: false,
+                    url: url
+                })
+                    .done(function (result) {
+                        onComplete(result);
+                    })
+                    .fail(function (response) {
+                        onComplete(bcms.parseFailedResponse(response));
+                    });
+            };
+
+            modal.confirm({
+                content: globalization.sitemapVersionRestoreConfirmation,
+                acceptTitle: globalization.restoreButtonTitle,
+                onAccept: function () {
+                    submitRestoreIt(0);
+                }
+            });
+        }
+
+        /**
+        * Posts sitemap history form with search query.
+        */
+        function searchSitemapHistory(dialog, container, form, afterSitemapRestored) {
+            grid.submitGridForm(form, function (data) {
+                container.html(data);
+                initSitemapHistoryDialogEvents(dialog, data, afterSitemapRestored);
+            });
+        }
 
         /**
         * Initializes module.

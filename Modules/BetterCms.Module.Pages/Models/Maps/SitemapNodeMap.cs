@@ -15,11 +15,17 @@ namespace BetterCms.Module.Pages.Models.Maps
             Table("SitemapNodes");
 
             Map(x => x.Title).Not.Nullable().Length(MaxLength.Name);
-            Map(x => x.Url).Not.Nullable().Length(MaxLength.Url);
+            Map(x => x.UsePageTitleAsNodeTitle).Not.Nullable();
+            Map(x => x.Url).Nullable().Length(MaxLength.Url);
+            Map(x => x.UrlHash).Nullable().Length(MaxLength.UrlHash);
             Map(x => x.DisplayOrder).Not.Nullable();
 
-            References(f => f.ParentNode).Cascade.SaveUpdate().Nullable();
-            HasMany(f => f.ChildNodes).Table("SitemapNodes").KeyColumn("ParentNodeId").Inverse().Cascade.SaveUpdate().Where("IsDeleted = 0");
+            References(x => x.Sitemap).Cascade.SaveUpdate().LazyLoad();
+            References(f => f.ParentNode).Cascade.SaveUpdate().Nullable().LazyLoad();
+            HasMany(f => f.ChildNodes).Table("SitemapNodes").KeyColumn("ParentNodeId").Inverse().Cascade.SaveUpdate().Where("IsDeleted = 0").LazyLoad();
+            HasMany(f => f.Translations).Table("SitemapNodeTranslations").KeyColumn("NodeId").Inverse().Cascade.SaveUpdate().Where("IsDeleted = 0").LazyLoad();
+
+            References(x => x.Page).Cascade.None().LazyLoad();
         }
     }
 }

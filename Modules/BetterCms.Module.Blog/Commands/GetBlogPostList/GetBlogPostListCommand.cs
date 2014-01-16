@@ -1,14 +1,20 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Blog.ViewModels.Filter;
+
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
+
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
+using BetterCms.Module.Root.Services;
 
 using NHibernate.Criterion;
 using NHibernate.Transform;
@@ -26,12 +32,26 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPostList
         private readonly ICategoryService categoryService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetBlogPostListCommand"/> class.
+        /// The configuration
+        /// </summary>
+        private readonly ICmsConfiguration configuration;
+
+        /// <summary>
+        /// The languages service
+        /// </summary>
+        private readonly ILanguageService languageService;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetBlogPostListCommand" /> class.
         /// </summary>
         /// <param name="categoryService">The category service.</param>
-        public GetBlogPostListCommand(ICategoryService categoryService)
+        /// <param name="configuration">The configuration.</param>
+        /// <param name="languageService">The language service.</param>
+        public GetBlogPostListCommand(ICategoryService categoryService, ICmsConfiguration configuration, ILanguageService languageService)
         {
             this.categoryService = categoryService;
+            this.configuration = configuration;
+            this.languageService = languageService;
         }
 
         /// <summary>
@@ -66,6 +86,18 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPostList
                 query = query.Where(Restrictions.Eq(Projections.Property(() => alias.Category.Id), request.CategoryId.Value));
             }
 
+            if (request.LanguageId.HasValue)
+            {
+                if (request.LanguageId.Value.HasDefaultValue())
+                {
+                    query = query.Where(Restrictions.IsNull(Projections.Property(() => alias.Language.Id)));
+                }
+                else
+                {
+                    query = query.Where(Restrictions.Eq(Projections.Property(() => alias.Language.Id), request.LanguageId.Value));
+                }
+            }
+
             if (request.Tags != null)
             {
                 foreach (var tagKeyValue in request.Tags)
@@ -90,8 +122,16 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPostList
             var count = query.ToRowCountFutureValue();
 
             var blogPosts = query.AddSortingAndPaging(request).Future<SiteSettingBlogPostViewModel>();
+            IEnumerable<LookupKeyValue> languagesFuture = configuration.EnableMultilanguage ? languageService.GetLanguages() : null;
 
-            return new BlogsGridViewModel<SiteSettingBlogPostViewModel>(blogPosts.ToList(), request, count.Value, categoryService.GetCategories());
+            var model = new BlogsGridViewModel<SiteSettingBlogPostViewModel>(blogPosts.ToList(), request, count.Value, categoryService.GetCategories());
+            if (languagesFuture != null)
+            {
+                model.Languages = languagesFuture.ToList();
+                model.Languages.Insert(0, languageService.GetInvariantLanguageModel());
+            }
+
+            return model;
         }
     }
 }

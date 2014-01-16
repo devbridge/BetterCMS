@@ -207,6 +207,8 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                 existingChildrenMasterPages = null;
             }
 
+            IList<SitemapNode> updatedNodes = null;
+
             // Start transaction, only when everything is already loaded
             UnitOfWork.BeginTransaction();
 
@@ -228,7 +230,10 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                     }
                 }
 
-                page.NodeCountInSitemap = request.UpdateSitemap ? sitemapService.ChangeUrl(page.PageUrl, request.PageUrl) : sitemapService.NodesWithUrl(request.PageUrl);
+                if (request.UpdateSitemap)
+                {
+                    updatedNodes = sitemapService.ChangeUrlsInAllSitemapsNodes(page.PageUrl, request.PageUrl);
+                }
 
                 page.PageUrl = request.PageUrl;
             }
@@ -357,6 +362,25 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
 
             // Notify about new tags.
             Events.RootEvents.Instance.OnTagCreated(newTags);
+
+            // Notify about updated sitemap nodes.
+            if (updatedNodes != null)
+            {
+                var updatedSitemaps = new List<Models.Sitemap>();
+                foreach (var node in updatedNodes)
+                {
+                    Events.SitemapEvents.Instance.OnSitemapNodeUpdated(node);
+                    if (!updatedSitemaps.Contains(node.Sitemap))
+                    {
+                        updatedSitemaps.Add(node.Sitemap);
+                    }
+                }
+
+                foreach (var updatedSitemap in updatedSitemaps)
+                {
+                    Events.SitemapEvents.Instance.OnSitemapUpdated(updatedSitemap);
+                }
+            }
 
             return new SavePageResponse(page);
         }

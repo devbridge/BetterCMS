@@ -61,6 +61,11 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
     app.pageId = null;
 
     /**
+    * Current page language.
+    */
+    app.language = null;
+
+    /**
     * Indicates if error trace output is enabled.
     */
     app.errorTrace = errorTrace;
@@ -272,7 +277,7 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
         $(inputElement).on('keydown', function (e) {
             e = e || event;
             var code = e.keyCode || event.which || event.charCode || 0;
-            if (code === 13 || code === 27) {
+            if ((code === 13 && $.isFunction(options.preventedEnter)) || (code === 27 && $.isFunction(options.preventedEsc))) {
                 e.returnValue = false;
                 if (e.stopPropagation) {
                     e.stopPropagation();

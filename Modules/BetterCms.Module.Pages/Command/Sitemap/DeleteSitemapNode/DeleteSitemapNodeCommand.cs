@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Models;
@@ -35,12 +36,20 @@ namespace BetterCms.Module.Pages.Command.Sitemap.DeleteSitemapNode
 
             UnitOfWork.Commit();
 
+            var updatedSitemaps = new List<Models.Sitemap>();
             foreach (var node in deletedNodes)
             {
                 Events.SitemapEvents.Instance.OnSitemapNodeDeleted(node);
+                if (!updatedSitemaps.Contains(node.Sitemap))
+                {
+                    updatedSitemaps.Add(node.Sitemap);
+                }
             }
 
-            Events.SitemapEvents.Instance.OnSitemapUpdated();
+            foreach (var sitemap in updatedSitemaps)
+            {
+                Events.SitemapEvents.Instance.OnSitemapUpdated(sitemap);
+            }
 
             return true;
         }

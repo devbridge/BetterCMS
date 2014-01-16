@@ -1261,7 +1261,7 @@
     <value>There is already translation with current language. If you change current page's language to {0}, translation will be removed from list. Are you sure you want to continue?</value>
   </data>
   <data name="EditPageTranslations_AddTranslation_ButtonTitle" xml:space="preserve">
-    <value>Add Translation</value>
+    <value>Add Translation +</value>
   </data>
   <data name="EditPageTranslations_Language_Title" xml:space="preserve">
     <value>Language</value>
@@ -1292,5 +1292,8 @@
   </data>
   <data name="EditPageProperties_TranslationsTab_PageSelectionPlaceholder" xml:space="preserve">
     <value>Type page title here ...</value>
+  </data>
+  <data name="DeletePage_SitemapSkipped_Message" xml:space="preserve">
+    <value>The page was not removed from some site map or maps, because you do not have permission to modified it or them.</value>
   </data>
 </root>

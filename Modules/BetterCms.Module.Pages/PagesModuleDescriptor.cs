@@ -426,7 +426,7 @@ namespace BetterCms.Module.Pages
                             AccessRole = RootModuleConstants.UserRoles.EditContent
                         },
 
-                    new LinkActionProjection(sitemapJsModuleIncludeDescriptor, page => "loadSiteSettingsSitemap")
+                    new LinkActionProjection(sitemapJsModuleIncludeDescriptor, page => "loadSiteSettingsSitemapList")
                         {
                             Order = 4500,
                             Title = page => NavigationGlobalization.SiteSettings_SitemapMenuItem,

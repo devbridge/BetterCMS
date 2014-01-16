@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using BetterCms.Core.Models;
+using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Pages.Models
 {
@@ -11,6 +12,14 @@ namespace BetterCms.Module.Pages.Models
     [Serializable]
     public class SitemapNode : EquatableEntity<SitemapNode>
     {
+        /// <summary>
+        /// Gets or sets the sitemap.
+        /// </summary>
+        /// <value>
+        /// The sitemap.
+        /// </value>
+        public virtual Sitemap Sitemap { get; set; }
+
         /// <summary>
         /// Gets or sets the title.
         /// </summary>
@@ -26,6 +35,30 @@ namespace BetterCms.Module.Pages.Models
         /// The URL.
         /// </value>
         public virtual string Url { get; set; }
+
+        /// <summary>
+        /// Gets or sets the URL hash.
+        /// </summary>
+        /// <value>
+        /// The URL hash.
+        /// </value>
+        public virtual string UrlHash { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page.
+        /// </summary>
+        /// <value>
+        /// The page.
+        /// </value>
+        public virtual PageProperties Page { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether use page title as node title.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if use page title as node title; otherwise, <c>false</c>.
+        /// </value>
+        public virtual bool UsePageTitleAsNodeTitle { get; set; }
 
         /// <summary>
         /// Gets or sets the display order.
@@ -50,5 +83,7 @@ namespace BetterCms.Module.Pages.Models
         /// The children.
         /// </value>
         public virtual IList<SitemapNode> ChildNodes { get; set; }
+
+        public virtual IList<SitemapNodeTranslation> Translations { get; set; }
     }
 }

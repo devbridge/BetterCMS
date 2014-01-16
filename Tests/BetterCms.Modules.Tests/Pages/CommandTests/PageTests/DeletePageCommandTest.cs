@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
@@ -36,10 +37,21 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
                     pageService.Setup(f => f.ValidatePageUrl(It.IsAny<string>(), It.IsAny<Guid?>()));
                     pageService.Setup(f => f.CreatePagePermalink(It.IsAny<string>(), It.IsAny<string>())).Returns(url);
 
+                    var sitemapService = new Mock<ISitemapService>();
+                    sitemapService
+                        .Setup(service => service.GetNodesByPage(It.IsAny<PageProperties>()))
+                        .Returns(() => new List<SitemapNode>());
+
                     var urlService = new Mock<IUrlService>();
                     urlService.Setup(f => f.FixUrl(It.IsAny<string>())).Returns((string a) => a);
 
-                    var command = new DeletePageCommand(null, null, urlService.Object);
+                    var securityService = new Mock<ICmsSecurityConfiguration>();
+                    securityService.Setup(f => f.AccessControlEnabled).Returns(false);
+
+                    var configurationService = new Mock<ICmsConfiguration>();
+                    configurationService.Setup(f => f.Security).Returns(securityService.Object);
+
+                    var command = new DeletePageCommand(null, sitemapService.Object, urlService.Object, configurationService.Object);
                     command.Repository = repository;
                     command.UnitOfWork = uow;
 

@@ -125,6 +125,10 @@ namespace BetterCms.Module.Pages.Services
             {
                 newPage.LanguageGroupIdentifier = languageGroupIdentifier.Value;
             }
+            else
+            {
+                newPage.LanguageGroupIdentifier = null;
+            }
             repository.Save(newPage);
 
             // Clone contents.
@@ -139,6 +143,7 @@ namespace BetterCms.Module.Pages.Services
             // Clone master pages
             masterPages.ForEach(masterPage => CloneMasterPages(masterPage, newPage));
 
+            // Set language identifier for parent page, if it hasn't and child is cloned from the parent.
             if (languageGroupIdentifier.HasValue && !page.LanguageGroupIdentifier.HasValue)
             {
                 page.LanguageGroupIdentifier = languageGroupIdentifier.Value;
@@ -189,7 +194,7 @@ namespace BetterCms.Module.Pages.Services
             newPage.PageUrlHash = newPageUrl.UrlHash();
             newPage.Status = PageStatus.Unpublished;
 
-            if (!newPage.IsMasterPage && cloneAsMasterPage)
+            if (cloneAsMasterPage)
             {
                 newPage.IsMasterPage = true;
                 newPage.Status = PageStatus.Published;

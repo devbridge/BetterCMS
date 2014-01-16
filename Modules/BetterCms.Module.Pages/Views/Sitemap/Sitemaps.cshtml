@@ -1,0 +1,41 @@
+﻿@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Pages.Controllers
+@using BetterCms.Module.Pages.ViewModels.SiteSettings
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc.Grids.Extensions
+@using BetterCms.Module.Root.Mvc.Grids.TableRenderers
+@using BetterCms.Module.Root.Mvc.Helpers
+@using Microsoft.Web.Mvc
+@using MvcContrib.UI.Grid
+@model BetterCms.Module.Pages.ViewModels.Filter.SitemapsGridViewModel<SiteSettingSitemapViewModel>
+@{
+    Action<ColumnBuilder<SiteSettingSitemapViewModel>> columns = column =>
+    {
+        column.EditButtonColumn();
+        column.For(m => m.Title)
+            .Named(NavigationGlobalization.SiteSettings_Sitemaps_TitleColumn)
+            .SortColumnName("Title")
+            .Attributes(@class => "bcms-sitemap-title");
+        column.HistoryButtonColumn();
+        column.DeleteButtonColumn();
+    };
+}
+@using (Html.BeginForm<SitemapController>(f => f.Sitemaps(null), FormMethod.Post, new { @id = "bcms-sitemaps-form", @class = "bcms-ajax-form" }))
+{
+    @Html.HiddenGridOptions(Model.GridOptions)
+    <div class="bcms-twocols-title-block">
+        <div class="bcms-btn-links-main" id="bcms-create-sitemap-button">@NavigationGlobalization.SiteSettings_Sitemaps_AddNew</div>
+        <div class="bcms-search-block">
+            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
+            <div class="bcms-btn-search" id="bcms-sitemaps-search-btn">@NavigationGlobalization.SiteSettings_Sitemaps_Search</div>
+        </div>
+        <div class="bcms-featured-grid bcms-clearfix">
+            @Html.RenderPaging(Model)
+        </div>
+    </div>
+    @Html.SiteSettingsMessagesBox()
+    @Html.Grid(Model.Items).Sort(Model.GridOptions).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new EditableHtmlTableGridRenderer<SiteSettingSitemapViewModel>())
+}
+<script type="text/html" id="bcms-sitemap-list-row-template">
+    @Html.Grid(new List<SiteSettingSitemapViewModel> { new SiteSettingSitemapViewModel() }).Columns(columns).Attributes(@class => "bcms-tables").RenderUsing(new HtmlTableGridSingleRowRenderer<SiteSettingSitemapViewModel>())
+</script>

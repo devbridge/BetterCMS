@@ -6,6 +6,7 @@ using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Root.Content.Resources;
+using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Language;
 
@@ -56,7 +57,7 @@ namespace BetterCms.Module.Root.Commands.Language.SaveLanguage
                     Id = language.Id,
                     Version = language.Version,
                     Name = language.Name,
-                    Code = language.Code,
+                    Code = CultureInfo.GetCultures(CultureTypes.AllCultures).First(c => c.Name == language.Code).GetFullName(),
                 };
         }
 
@@ -89,7 +90,7 @@ namespace BetterCms.Module.Root.Commands.Language.SaveLanguage
                 if (!CultureInfo.GetCultures(CultureTypes.AllCultures).Any(c => c.Name == request.Code))
                 {
                     var logMessage = string.Format("Language with code {0} doesn't exist. Id: {1}, Name: {2}", request.Code, request.Id, request.Name);
-                    var message = string.Format(RootGlobalization.SaveLanguageCommand_LanguageNotExists_Message, request.Name);
+                    var message = string.Format(RootGlobalization.SaveLanguageCommand_LanguageNotExists_Message, request.Code);
 
                     throw new ValidationException(() => message, logMessage);
                 }

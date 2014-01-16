@@ -74,7 +74,6 @@ function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete) {
 
             var self = this;
 
-            self.hasCodeFocus = ko.observable(false);
             self.hasNameFocus = ko.observable(false);
             self.name = ko.observable().extend({ required: "", maxLength: { maxLength: ko.maxLength.name } });
             self.code = ko.observable().extend({ required: "", maxLength: { maxLength: ko.maxLength.name } });
@@ -87,6 +86,8 @@ function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete) {
             self.code(item.Code);
 
             self.autocompleteViewModel = new LanguageAutocompleteListViewModel(function (suggestionItem) {
+                self.isSelected = true;
+
                 var name = self.name(),
                     suggestedName = suggestionItem.name();
 
@@ -101,8 +102,6 @@ function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete) {
             if (!self.isNew()) {
                 self.code.editingIsDisabled = ko.observable(true);
                 self.hasNameFocus(true);
-            } else {
-                self.hasCodeFocus(true);
             }
         }
 
@@ -113,9 +112,10 @@ function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete) {
         LanguageViewModel.prototype.onAfterItemSaved = function (json) {
             _super.prototype.onAfterItemSaved.call(this, json);
             
-            if (!this.code.editingIsDisabled) {
+            if (json.Success === true && !this.code.editingIsDisabled) {
                 this.code.editingIsDisabled = ko.observable(true);
                 this.hasNameFocus(true);
+                this.code(json.Data.Code);
             }
         };
 

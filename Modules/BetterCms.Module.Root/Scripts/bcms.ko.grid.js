@@ -245,6 +245,7 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 });
                 this.items.unshift(newItem);
                 this.isSelected = true;
+                bcms.logger.trace('ko.grid.addNewItem: isSelected = true');
 
                 this.onAfterNewItemAdded(newItem);
             }
@@ -333,6 +334,7 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             self.hasFocus = ko.observable(true);
             self.hasError = ko.observable(false);
             self.isSelected = false;
+            bcms.logger.trace('ko.grid.ItemViewModel.constructor: isSelected = false');
             self.registeredFields = [];
             self.savePressed = false;
             self.deletingIsDisabled = ko.observable(false);
@@ -347,6 +349,7 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
             self.hasFocus.subscribe(function(value) {
                 self.isSelected = value;
+                bcms.logger.trace('ko.grid.hasfocus.subscribe: isSelected = value [' + value + ']');
             });
 
             self.onOpen = function (data, event) {
@@ -382,17 +385,20 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
             self.onStopEvent = function (data, event) {
                 self.isSelected = true;
+                bcms.logger.trace('ko.grid.onStopEvent: isSelected = true');
                 bcms.stopEventPropagation(event);
             };
 
             self.onItemSelect = function (data, event) {
                 self.isSelected = true;
+                bcms.logger.trace('ko.grid.onItemSelect: isSelected = true');
                 
                 return true;
             };
 
             self.onBlurField = function (data, event) {
                 self.isSelected = false;
+                bcms.logger.trace('ko.grid.onBlurField: iSelected = false');
                 self.blurField();
             };
 
@@ -604,6 +610,8 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             if (canSave) {
                 var params = self.getSaveParams();
                 if (url) {
+                    bcms.logger.trace('ko.grid.saveItem: starting to save item');
+                    
                     // Save to server if URL is specified
                     $.ajax({
                         url: url,
@@ -614,14 +622,18 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                         data: JSON.stringify(params)
                     })
                         .done(function (json) {
+                            bcms.logger.trace('ko.grid.saveItem: save is done');
                             self.onAfterItemSaved(json);
                             self.saving(false);
 
                             if (json.Success) {
                                 self.wasSaved = true;
+                            } else {
+                                self.parent.rowAdded = true;
                             }
                         })
-                        .fail(function(response) {
+                        .fail(function (response) {
+                            bcms.logger.trace('ko.grid.saveItem: save has failed');
                             self.onAfterItemSaved(bcms.parseFailedResponse(response));
                             self.saving(false);
                         });
@@ -661,6 +673,7 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
             if (json.Success) {
                 self.isSelected = false;
+                bcms.logger.trace('ko.grid.onAfterItemSaved.onSuccess: isSelected = false');
                 if (json.Data) {
                     self.version(json.Data.Version);
                     self.id(json.Data.Id);
@@ -677,6 +690,7 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             } else {
                 self.hasFocus(true);
                 self.isSelected = true;
+                bcms.logger.trace('ko.grid.onAfterItemSaved.onFailed: isSelected = true');
             }
         };
 

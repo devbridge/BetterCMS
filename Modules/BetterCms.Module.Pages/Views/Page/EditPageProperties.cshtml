@@ -209,8 +209,13 @@
                         <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
                     </div>
                     
-                    @Html.Partial("Partial/TranslationsGrid")
+                    <div class="bcms-input-list-holder">
+                        @Html.Tooltip(PagesGlobalization.EditPageTranslations_OtherLanguages_Tooltip)
+                        <div class="bcms-content-titles">@PagesGlobalization.EditPageTranslations_OtherLanguages_Title</div> 
+                    </div>
                 </div>
+                
+                @Html.Partial("Partial/TranslationsGrid")
             </div>
         }
 

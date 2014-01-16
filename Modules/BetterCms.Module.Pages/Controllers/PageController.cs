@@ -67,18 +67,12 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult Pages(PagesFilter request)
         {
             request.SetDefaultPaging();
+
             var model = GetCommand<GetPagesListCommand>().ExecuteCommand(request);
             var success = model != null;
-
             var view = RenderView("Pages", model);
-            var json = new
-            {
-                Tags = request.Tags,
-                IncludeArchived = request.IncludeArchived,
-                IncludeMasterPages = request.IncludeMasterPages
-            };
 
-            return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);
+            return ComboWireJson(success, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -94,14 +88,8 @@ namespace BetterCms.Module.Pages.Controllers
             var success = model != null;
 
             var view = RenderView("SelectPage", model);
-            var json = new
-            {
-                Tags = request.Tags,
-                IncludeArchived = request.IncludeArchived,
-                IncludeMasterPages = request.IncludeMasterPages
-            };
 
-            return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);
+            return ComboWireJson(success, view, model, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -425,17 +413,10 @@ namespace BetterCms.Module.Pages.Controllers
         {
             request.SetDefaultPaging();
             var model = GetCommand<GetUntranslatedPagesListCommand>().ExecuteCommand(request);
-            var success = model != null;
 
             var view = RenderView("SearchUntranslatedPages", model);
-            var json = new
-            {
-                Tags = request.Tags,
-                IncludeArchived = request.IncludeArchived,
-                IncludeMasterPages = request.IncludeMasterPages
-            };
 
-            return ComboWireJson(success, view, json, JsonRequestBehavior.AllowGet);
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
     }
 }

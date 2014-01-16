@@ -192,7 +192,28 @@ namespace BetterCms.Module.Root.Mvc.Helpers
 
             if (model != null && model.CanManageContent)
             {
-                attributes = string.Format(@" data-page-id = ""{0}""", model.Id);
+                // Set page id
+                attributes = string.Format(@" data-page-id=""{0}""", model.Id);
+
+                // Set culture
+                if (!string.IsNullOrWhiteSpace(model.LanguageCode))
+                {
+                    var culture = System.Globalization.CultureInfo
+                        .GetCultures(System.Globalization.CultureTypes.AllCultures)
+                        .FirstOrDefault(c => c.Name == model.LanguageCode);
+                    
+                    string cultureCode;
+                    if (culture != null && !culture.IsNeutralCulture)
+                    {
+                        cultureCode = culture.Parent.Name;
+                    }
+                    else
+                    {
+                        cultureCode = model.LanguageCode;
+                    }
+
+                    attributes = string.Format(@"{0} data-language=""{1}""", attributes, cultureCode);
+                }
             }
 
             return new MvcHtmlString(attributes);

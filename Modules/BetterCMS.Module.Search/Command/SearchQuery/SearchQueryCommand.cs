@@ -3,7 +3,7 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Web;
 
 using BetterCms.Module.Root.Mvc;
-
+using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Search.Helpers;
 using BetterCms.Module.Search.Models;
 using BetterCms.Module.Search.Services;
@@ -11,7 +11,7 @@ using BetterCms.Module.Search.ViewModels;
 
 namespace BetterCms.Module.Search.Command.SearchQuery
 {
-    public class SearchQueryCommand : CommandBase, ICommand<SearchResultsViewModel, SearchResultsViewModel>
+    public class SearchQueryCommand : CommandBase, ICommand<SearchRequestViewModel, SearchResultsViewModel>
     {
         private readonly ISearchService searchService;
 
@@ -28,9 +28,10 @@ namespace BetterCms.Module.Search.Command.SearchQuery
         /// </summary>
         /// <param name="model">The request.</param>
         /// <returns></returns>
-        public SearchResultsViewModel Execute(SearchResultsViewModel model)
+        public SearchResultsViewModel Execute(SearchRequestViewModel model)
         {
-            model.Query = model.WidgetModel.GetSearchQueryParameter(httpContextAccessor.GetCurrent().Request, model.Query);
+            var query = model.WidgetModel.GetSearchQueryParameter(httpContextAccessor.GetCurrent().Request, model.Query);
+            SearchResults results;
 
             if (searchService == null)
             {
@@ -39,10 +40,23 @@ namespace BetterCms.Module.Search.Command.SearchQuery
 
             if (!string.IsNullOrWhiteSpace(model.Query))
             {
-                model.Results = searchService.Search(new SearchRequest(model.Query));
+                var take = model.WidgetModel.GetOptionValue<int>(SearchModuleConstants.WidgetOptionNames.ResultsCount);
+                if (take <= 0)
+                {
+                    take = SearchModuleConstants.DefaultSearchResultsCount;
+                }
+                results = searchService.Search(new SearchRequest(query, take, model.Skip));
+            }
+            else
+            {
+                results = new SearchResults();
             }
 
-            return model;
+            return new SearchResultsViewModel
+                       {
+                           Results = results,
+                           WidgetViewModel = model.WidgetModel
+                       };
         }
     }
 }

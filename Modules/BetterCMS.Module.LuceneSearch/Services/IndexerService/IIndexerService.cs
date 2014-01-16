@@ -1,17 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 
-using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
-
-using BetterCms.Module.Search;
-using BetterCms.Module.Search.Models;
+using BetterCms.Module.Search.Services;
 
 namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 {
-    public interface IIndexerService
+    public interface IIndexerService : ISearchService
     {
         void AddHtmlDocument(PageData pageData);
-
-        IList<SearchResultItem> Search(string searchString, int resultCount = SearchModuleConstants.DefaultSearchResultsCount);
 
         void Open(bool create = false);
 

@@ -1,7 +1,18 @@
-﻿@model BetterCms.Module.Search.ViewModels.SearchResultsViewModel
+﻿@using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Search
+@model BetterCms.Module.Search.ViewModels.SearchResultsViewModel
 
-@if (Model != null && Model.Results != null && Model.Results.Items != null && Model.Results.Items.Count > 0)
+@if (Model != null && Model.Results != null && !string.IsNullOrWhiteSpace(Model.Results.Query) && Model.Results.Items != null)
 {
+    var showTotalResults = Model.WidgetViewModel.GetOptionValue<bool>(SearchModuleConstants.WidgetOptionNames.ShowTotalResults);
+
+    if (showTotalResults)
+    {
+        <div class="bcms-total-search-results">
+            @string.Format("{0} results found for", Model.Results.TotalResults) <span class="bcms-total-search-results-query">"@Model.Results.Query"</span>
+        </div>
+    }
+
     foreach (var item in Model.Results.Items)
     {
         <article class="bcms-search-result">

@@ -1,4 +1,6 @@
-﻿namespace BetterCms.Module.Pages.ViewModels.Sitemap
+﻿using System;
+
+namespace BetterCms.Module.Pages.ViewModels.Sitemap
 {
     /// <summary>
     /// View model for page links data.
@@ -20,6 +22,22 @@
         /// The URL.
         /// </value>
         public string Url { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public Guid Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language identifier.
+        /// </summary>
+        /// <value>
+        /// The language identifier.
+        /// </value>
+        public Guid LanguageId { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
