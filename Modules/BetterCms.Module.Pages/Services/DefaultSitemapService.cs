@@ -232,6 +232,8 @@ namespace BetterCms.Module.Pages.Services
         /// <param name="sitemap">The sitemap.</param>
         public void ArchiveSitemap(Sitemap sitemap)
         {
+            return; // TODO: enable sitemap history.
+
             var archive = new SitemapArchive
             {
                 Sitemap = sitemap,
