@@ -20,6 +20,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
         {
             var allNodes = repository
                 .AsQueryable<Module.Pages.Models.SitemapNode>()
+                .Where(node => node.Sitemap.Id == request.SitemapId)
                 .OrderBy(node => node.Title)
                 .Select(node => new SitemapTreeNodeModel
                     {
@@ -33,6 +34,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
                         ParentId = node.ParentNode != null && !node.ParentNode.IsDeleted ? node.ParentNode.Id : (System.Guid?)null,
                         Title = node.Title,
                         Url = node.Url,
+                        PageId = node.Page != null ? node.Page.Id : (System.Guid?)null,
                         DisplayOrder = node.DisplayOrder
                     })
                 .ToList();

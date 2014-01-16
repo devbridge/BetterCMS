@@ -451,7 +451,7 @@ describe('pages.pages.api.behavior', function () {
         });
     });
     
-    it('01014: Should throw validation exception for filterting by ContentType, when getting page contents.', function () {
+    it('01014: Should throw validation exception for filtering by ContentType, when getting page contents.', function () {
         var url = '/bcms-api/pages/' + api.emptyGuid + '/contents/',
             result,
             ready = false,
