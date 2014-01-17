@@ -190,13 +190,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
                 return page;
             }
 
-            if (page.LanguageGroupIdentifier.HasValue && !page.LanguageId.Value.HasDefaultValue())
+            if (page.LanguageGroupIdentifier.HasValue)
             {
                 var pageByLanguage =
                     pages.FirstOrDefault(
                         p =>
                         p.LanguageGroupIdentifier.HasValue && !p.LanguageGroupIdentifier.Value.HasDefaultValue()
-                        && p.LanguageGroupIdentifier.Value == page.LanguageGroupIdentifier.Value && (!p.LanguageId.HasValue || p.LanguageId.Value.HasDefaultValue()));
+                        && p.LanguageGroupIdentifier.Value == page.LanguageGroupIdentifier.Value
+                        && p.LanguageId.HasValue && p.LanguageId.Value == languageId.Value);
 
                 if (pageByLanguage != null)
                 {
