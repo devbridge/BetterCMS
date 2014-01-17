@@ -54,5 +54,28 @@ namespace BetterCms.Module.Api.Helpers
 
             return query;
         }
+
+        public static IQueryable<TModel> ApplySitemapTagsFilter<TModel>(this IQueryable<TModel> query, IFilterByTags tagsFilter)
+            where TModel : Sitemap
+        {
+            if (tagsFilter != null && tagsFilter.FilterByTags != null)
+            {
+                var tags = tagsFilter.FilterByTags.Where(tag => !string.IsNullOrWhiteSpace(tag)).Distinct().ToArray();
+
+                if (tags.Length > 0)
+                {
+                    if (tagsFilter.FilterByTagsConnector == FilterConnector.And)
+                    {
+                        query = query.Where(page => page.SitemapTags.Count(pageTag => tags.Contains(pageTag.Tag.Name) && !pageTag.IsDeleted && !pageTag.Tag.IsDeleted) == tags.Length);
+                    }
+                    else
+                    {
+                        query = query.Where(page => page.SitemapTags.Any(pageTag => tags.Contains(pageTag.Tag.Name) && !pageTag.IsDeleted && !pageTag.Tag.IsDeleted));
+                    }
+                }
+            }
+
+            return query;
+        }
     }
 }
