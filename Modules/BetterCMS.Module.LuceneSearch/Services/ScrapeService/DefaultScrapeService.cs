@@ -62,7 +62,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
                 query = query.Where(page => page.Status == PageStatus.Published);
             }
 
-            var newSources = query
+            var sourcesTosave = query
                           .Select(page =>
                                     new IndexSource
                                     {
@@ -71,12 +71,22 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
                                         IsPublished = page.Status == PageStatus.Published
                                     })
                           .ToList();
-                          
             
+            // Change publish status where status has changed
+            Repository.AsQueryable<IndexSource>()
+                .Where(source => Repository.AsQueryable<Page>().Any(p => p.Id == source.SourceId &&
+                                                ((source.IsPublished && p.Status != PageStatus.Published) || (!source.IsPublished && p.Status == PageStatus.Published))))
+                .ToList()
+                .ForEach(source =>
+                             {
+                                 source.IsPublished = !source.IsPublished;
+                                 sourcesTosave.Add(source);
+                             });
+
             UnitOfWork.BeginTransaction();
 
             int i = 0;
-            foreach (var source in newSources)
+            foreach (var source in sourcesTosave)
             {
                 Repository.Save(source);
 

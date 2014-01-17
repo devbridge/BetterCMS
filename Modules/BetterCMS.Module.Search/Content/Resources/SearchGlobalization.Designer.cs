@@ -86,5 +86,14 @@ namespace BetterCms.Module.Search.Content.Resources {
                 return ResourceManager.GetString("SearchForm_SubmitButton_Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} result(s) found for &quot;{1}&quot;..
+        /// </summary>
+        public static string SearchResults_TotalCount_Message {
+            get {
+                return ResourceManager.GetString("SearchResults_TotalCount_Message", resourceCulture);
+            }
+        }
     }
 }

@@ -33,6 +33,7 @@ namespace BetterCms.Module.Search.Api.Operations.Pages.Pages
                                      Link = r.Link,
                                      FormattedUrl = r.FormattedUrl,
                                      Snippet = r.Snippet,
+                                     IsDenied = r.IsDenied
                                  })
                 .ToList();
 

@@ -40,5 +40,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Search
         /// </value>
         [DataMember]
         public string Snippet { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether page is denied to current principal.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if page is denied to current principal; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool IsDenied { get; set; }
     }
 }

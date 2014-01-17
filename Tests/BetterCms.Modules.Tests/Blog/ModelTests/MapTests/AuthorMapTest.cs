@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Linq;
 
+using Autofac;
+
+using BetterCMS.Module.LuceneSearch.Models;
+using BetterCMS.Module.LuceneSearch.Services.ScrapeService;
+
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.Api.Operations.Blog.Authors;
 using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Root.Models;
 
 using NUnit.Framework;
 
@@ -18,6 +24,26 @@ namespace BetterCms.Test.Module.Blog.ModelTests.MapTests
         {
             var content = TestDataProvider.CreateNewAuthor();
             RunEntityMapTestsInTransaction(content);  
+        }
+
+        [Test]
+        public void Scrap()
+        {
+            RunActionInTransaction(
+                session =>
+                {
+                    var unitOfWork = new DefaultUnitOfWork(session);
+                    var repository = new DefaultRepository(unitOfWork);
+                    var indexSourceQuery = repository.AsQueryable<IndexSource>();
+ 
+                    var query = repository.AsQueryable<Page>().Where(page => !page.IsDeleted && !page.IsMasterPage);
+
+                    query = query.Where(page => !indexSourceQuery.Any(crawlUrl => crawlUrl.SourceId == page.Id));
+
+                    var pages = query.ToList();
+
+                    var test = pages;
+                });
         }
 
         [Test]

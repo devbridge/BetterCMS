@@ -11,13 +11,10 @@ using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 
 using BetterCms;
 using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext.Fetching;
-using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
-using BetterCms.Module.Root.ViewModels.Security;
 using BetterCms.Module.Search;
 using BetterCms.Module.Search.Models;
 
@@ -360,7 +357,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
                         if (p.IsDenied)
                         {
                             p.Link = string.Empty;
-                            p.FormattedUrl = string.Empty;
+                            p.FormattedUrl = LuceneGlobalization.SearchResults_Secured_LinkTitle;
                             p.Title = LuceneGlobalization.SearchResults_Secured_Title;
                             p.Snippet = LuceneGlobalization.SearchResults_Secured_Snippet;
                         }
