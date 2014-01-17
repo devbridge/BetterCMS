@@ -14,6 +14,7 @@ namespace BetterCMS.Module.LuceneSearch.Models.Maps
             Map(x => x.Path).Not.Nullable();
             Map(x => x.StartTime).Nullable();
             Map(x => x.EndTime).Nullable();
+            Map(x => x.IsPublished).Not.Nullable();
         }
     }
 }

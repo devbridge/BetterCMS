@@ -45,6 +45,7 @@ namespace BetterCMS.Module.LuceneSearch.Workers
                     scrapeService.MarkStarted(link.Id);
 
                     var response = crawlerService.FetchPage(link.Path);
+                    response.IsPublished = link.IsPublished;
                     response.Id = link.Id;
 
                     switch (response.StatusCode)
