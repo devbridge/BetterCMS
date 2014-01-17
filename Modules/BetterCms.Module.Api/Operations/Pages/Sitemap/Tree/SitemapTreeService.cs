@@ -14,19 +14,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
 {
     public class SitemapTreeService : Service, ISitemapTreeService
     {
-        private class TranslationData
-        {
-            public Guid NodeId { get; set; }
-
-            public Guid LanguageId { get; set; }
-
-            public string Title { get; set; }
-
-            public string Url { get; set; }
-
-            public bool UsePageTitleAsNodeTitle { get; set; }
-        }
-
         private readonly IRepository repository;
 
         private readonly ICmsConfiguration cmsConfiguration;
@@ -43,13 +30,20 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
             var translationsToFuture = cmsConfiguration.EnableMultilanguage && request.Data.LanguageId.HasValue
                                            ? repository.AsQueryable<Module.Pages.Models.SitemapNodeTranslation>()
                                                        .Where(t => t.Node.Sitemap.Id == request.SitemapId && t.Language.Id == request.Data.LanguageId.Value)
-                                                       .Select(p => new TranslationData
+                                                       .Select(t => new SitemapTreeNodeTranslationModel
                                                            {
-                                                               NodeId = p.Node.Id,
-                                                               LanguageId = p.Language.Id,
-                                                               Title = p.Title,
-                                                               Url = p.Url,
-                                                               UsePageTitleAsNodeTitle = p.UsePageTitleAsNodeTitle
+                                                               Id = t.Id,
+                                                               Version = t.Version,
+                                                               CreatedBy = t.CreatedByUser,
+                                                               CreatedOn = t.CreatedOn,
+                                                               LastModifiedBy = t.ModifiedByUser,
+                                                               LastModifiedOn = t.ModifiedOn,
+
+                                                               NodeId = t.Node.Id,
+                                                               LanguageId = t.Language.Id,
+                                                               Title = t.Title,
+                                                               Url = t.Url,
+                                                               UsePageTitleAsNodeTitle = t.UsePageTitleAsNodeTitle
                                                            })
                                                        .ToFuture()
                                            : null;
@@ -87,129 +81,120 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
             return new GetSitemapTreeResponse { Data = nodes };
         }
 
-        private static void Translate(IList<SitemapTreeNodeModel> nodes, Guid? languageId, IList<TranslationData> translations, IList<SitemapHelper.PageData> pages)
+        private static void Translate(IList<SitemapTreeNodeModel> nodes, Guid? languageId, IList<SitemapTreeNodeTranslationModel> translations, IList<SitemapHelper.PageData> pages)
         {
             foreach (var node in nodes)
             {
-                if (!node.PageId.HasValue || node.PageId.Value.HasDefaultValue())
+                if (!languageId.HasValue)
                 {
-                    TranslateNodeWithoutPage(node, languageId, translations);
+                    // Get all translations.
+                    node.Translations = translations
+                        .Where(t => t.NodeId == node.Id)
+                        .ToList();
+                    if (node.PageId.HasValue)
+                    {
+                        // Translate page Ids.
+                        var linkedPage = pages.FirstOrDefault(p => p.Id == node.PageId.Value);
+                        if (linkedPage == null)
+                        {
+                            continue;
+                        }
+
+                        var pageTranslations = linkedPage.LanguageGroupIdentifier.HasValue && !linkedPage.LanguageGroupIdentifier.Value.HasDefaultValue()
+                                                   ? pages.Where(p => p.LanguageGroupIdentifier.HasValue && p.LanguageGroupIdentifier.Value == linkedPage.LanguageGroupIdentifier.Value).ToList()
+                                                   : new List<SitemapHelper.PageData> { linkedPage };
+
+                        var defaultPage = pageTranslations.FirstOrDefault(p => !p.LanguageId.HasValue || p.LanguageId.Value.HasDefaultValue()) ?? linkedPage;
+                        node.PageId = defaultPage.Id;
+                        node.Url = defaultPage.Url;
+                        node.Title = node.UsePageTitleAsNodeTitle ? defaultPage.Title : node.Title;
+
+                        foreach (var translationModel in node.Translations)
+                        {
+                            var languagePage =
+                                pageTranslations.FirstOrDefault(
+                                    p => p.LanguageId.HasValue && !p.LanguageId.Value.HasDefaultValue() && p.LanguageId.Value == translationModel.LanguageId);
+
+                            if (languagePage != null)
+                            {
+                                translationModel.Url = languagePage.Url;
+                                translationModel.Title = translationModel.UsePageTitleAsNodeTitle ? languagePage.Title : translationModel.Title;
+                            }
+                        }
+                    }
                 }
                 else
                 {
-                    TranslateNodeWithPage(node, languageId, translations, pages);
+                    if (languageId.Value.HasDefaultValue())
+                    {
+                        // Get translated to the default language.
+                        if (node.PageId.HasValue)
+                        {
+                            var linkedPage = pages.FirstOrDefault(p => p.Id == node.PageId.Value);
+                            if (linkedPage == null)
+                            {
+                                continue;
+                            }
+
+                            var pageTranslations = linkedPage.LanguageGroupIdentifier.HasValue && !linkedPage.LanguageGroupIdentifier.Value.HasDefaultValue()
+                                                       ? pages.Where(p => p.LanguageGroupIdentifier.HasValue && p.LanguageGroupIdentifier.Value == linkedPage.LanguageGroupIdentifier.Value).ToList()
+                                                       : new List<SitemapHelper.PageData> { linkedPage };
+
+                            var defaultPage = pageTranslations.FirstOrDefault(p => !p.LanguageId.HasValue || p.LanguageId.Value.HasDefaultValue()) ?? linkedPage;
+                            node.PageId = defaultPage.Id;
+                            node.Url = defaultPage.Url;
+                            node.Title = node.UsePageTitleAsNodeTitle ? defaultPage.Title : node.Title;
+                        }
+                    }
+                    else
+                    {
+                        // Get translated to specified language.
+                        var translation = translations.FirstOrDefault(t => t.NodeId == node.Id && t.LanguageId == languageId.Value);
+                        if (translation != null)
+                        {
+                            node.Title = translation.Title;
+                            node.Url = translation.Url;
+                            node.UsePageTitleAsNodeTitle = translation.UsePageTitleAsNodeTitle;
+                        }
+
+                        if (node.PageId.HasValue)
+                        {
+                            var linkedPage = pages.FirstOrDefault(p => p.Id == node.PageId.Value);
+                            if (linkedPage == null)
+                            {
+                                continue;
+                            }
+
+                            var pageTranslations = linkedPage.LanguageGroupIdentifier.HasValue && !linkedPage.LanguageGroupIdentifier.Value.HasDefaultValue()
+                                                       ? pages.Where(p => p.LanguageGroupIdentifier.HasValue && p.LanguageGroupIdentifier.Value == linkedPage.LanguageGroupIdentifier.Value).ToList()
+                                                       : new List<SitemapHelper.PageData> { linkedPage };
+
+                            var languagePage =
+                                pageTranslations.FirstOrDefault(
+                                    p => p.LanguageId.HasValue && !p.LanguageId.Value.HasDefaultValue() && p.LanguageId.Value == languageId.Value);
+
+                            if (languagePage != null)
+                            {
+                                node.PageId = languagePage.Id;
+                                node.Url = languagePage.Url;
+                                node.Title = node.UsePageTitleAsNodeTitle ? languagePage.Title : node.Title;
+                            }
+                            else
+                            {
+                                var defaultPage = pageTranslations.FirstOrDefault(p => !p.LanguageId.HasValue || p.LanguageId.Value.HasDefaultValue()) ?? linkedPage;
+                                node.PageId = defaultPage.Id;
+                                node.Url = defaultPage.Url;
+                                node.Title = node.UsePageTitleAsNodeTitle ? defaultPage.Title : node.Title;
+                            }
+                        }
+                    }
                 }
 
                 Translate(node.ChildrenNodes, languageId, translations, pages);
             }
         }
 
-        private static void TranslateNodeWithoutPage(SitemapTreeNodeModel node, Guid? languageId, IList<TranslationData> translations)
-        {
-            if (!languageId.HasValue || languageId.Value.HasDefaultValue())
-            {
-                // Do nothing - node is already in default translation.
-            }
-            else
-            {
-                var translation = translations.FirstOrDefault(t => t.NodeId == node.Id && t.LanguageId == languageId.Value);
-                if (translation != null)
-                {
-                    node.Title = translation.Title;
-                    node.Url = translation.Url;
-                }
-            }
-        }
-
-        private static void TranslateNodeWithPage(SitemapTreeNodeModel node, Guid? languageId, IList<TranslationData> translations, IList<SitemapHelper.PageData> pages)
-        {
-            // Get page by language.
-            var page = GetPageByLanguage(node.PageId.Value, languageId, pages);
-            
-            if (!languageId.HasValue || languageId.Value.HasDefaultValue())
-            {
-                if (page != null)
-                {
-                    node.Url = page.Url;
-                    if (node.UsePageTitleAsNodeTitle)
-                    {
-                        node.Title = page.Title;
-                    }
-                }
-            }
-            else
-            {
-                // Get translation by language.
-                var translation = translations.FirstOrDefault(t => t.NodeId == node.Id && t.LanguageId == languageId.Value);
-                if (translation != null)
-                {
-                    node.Title = page != null && translation.UsePageTitleAsNodeTitle ? page.Title : translation.Title;
-                    if (page != null)
-                    {
-                        node.Url = page.Url;
-                    }
-                }
-                else
-                {
-                    if (page != null)
-                    {
-                        node.Title = page.Title;
-                        node.Url = page.Url;
-                    }
-                }
-            }
-        }
-
-        private static SitemapHelper.PageData GetPageByLanguage(Guid pageId, Guid? languageId, IList<SitemapHelper.PageData> pages)
-        {
-            var page = pages.First(p => p.Id == pageId);
-            if (!languageId.HasValue || languageId.Value.HasDefaultValue())
-            {
-                // Default page is needed.
-                if (!page.LanguageId.HasValue || page.LanguageId.Value.HasDefaultValue())
-                {
-                    // Page is default.
-                    return page;
-                }
-
-                if (!page.LanguageGroupIdentifier.HasValue || page.LanguageId.Value.HasDefaultValue())
-                {
-                    // Default page translation does not exist.
-                    return null;
-                }
-
-                return pages.FirstOrDefault(p => p.LanguageGroupIdentifier.HasValue && !p.LanguageGroupIdentifier.Value.HasDefaultValue()
-                        && p.LanguageGroupIdentifier.Value == page.LanguageGroupIdentifier.Value
-                        && (!p.LanguageId.HasValue || p.LanguageId.Value.HasDefaultValue()));
-            }
-
-            // Translation is needed.
-            if (page.LanguageId.HasValue && page.LanguageId.Value == languageId.Value)
-            {
-                // Page is in required language.
-                return page;
-            }
-
-            if (page.LanguageGroupIdentifier.HasValue)
-            {
-                var pageByLanguage =
-                    pages.FirstOrDefault(
-                        p =>
-                        p.LanguageGroupIdentifier.HasValue && !p.LanguageGroupIdentifier.Value.HasDefaultValue()
-                        && p.LanguageGroupIdentifier.Value == page.LanguageGroupIdentifier.Value
-                        && p.LanguageId.HasValue && p.LanguageId.Value == languageId.Value);
-
-                if (pageByLanguage != null)
-                {
-                    return pageByLanguage;
-                }
-            }
-
-            // Page translation does not exist return default.
-            return GetPageByLanguage(pageId, null, pages);
-        }
-
-        private static List<SitemapTreeNodeModel> GetChildren(List<SitemapTreeNodeModel> allItems, System.Guid? parentId)
+        private static List<SitemapTreeNodeModel> GetChildren(List<SitemapTreeNodeModel> allItems, Guid? parentId)
         {
             var childItems = allItems.Where(item => item.ParentId == parentId && item.Id != parentId).OrderBy(node => node.DisplayOrder).ToList();
 

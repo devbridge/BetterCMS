@@ -235,6 +235,7 @@
     <Compile Include="Operations\Pages\Sitemap\Nodes\Node\INodeService.cs" />
     <Compile Include="Operations\Pages\Sitemap\Nodes\SitemapNodeModel.cs" />
     <Compile Include="Operations\Pages\Sitemap\SitemapModel.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Tree\SitemapTreeNodeTranslationModel.cs" />
     <Compile Include="Operations\Pages\Sitemap\Tree\GetSitemapTreeRequestValidator.cs" />
     <Compile Include="Operations\Pages\Sitemap\Tree\GetSitemapTreeModel.cs" />
     <Compile Include="Operations\Pages\Sitemap\Tree\GetSitemapTreeRequest.cs" />

@@ -6,8 +6,6 @@ describe('pages.sitemap.api.behavior', function () {
 
     var constants = {
         defaultSitemapId: '17abfee95ae6470c92e1c2905036574b',
-        sitemapId: 'c993894775fe4e64bca1a2b600b45019',
-        languageId: '5dc9f98f97894201b73ba2b600b5e2f9',
         rootId: '316138d8b3ff478981d6a20500a389f3',
         rootTitle: '_Tree_Root_',
         rootUrl: '/root/',
@@ -20,7 +18,13 @@ describe('pages.sitemap.api.behavior', function () {
         child111Title: '_Tree_1_1_1_',
         child111Url: '/root/1/1/1/',
         child2Title: '_Tree_2_',
-        child2Url: '/root/2/'
+        child2Url: '/root/2/',
+        
+        sitemapId: 'c993894775fe4e64bca1a2b600b45019',
+        languageId: '5dc9f98f97894201b73ba2b600b5e2f9',
+        nodeTitleInLanguage: '_014xx_1 in language 1',
+        nodeUrlInLanguage: '/014xx-1-in-language-1/',
+        pageIdWithLanguage: '9ea01e0b6a5d44d88478a2b600b65f34',
     };
 
     it('01400: Should get a list of sitemaps.', function () {
@@ -166,29 +170,21 @@ describe('pages.sitemap.api.behavior', function () {
 
             var rootFound = false;
             for (var i = 0; i < result.data.length; i++) {
-                if (result.data[i].title == constants.rootTitle) {
+                if (result.data[i].title == constants.nodeTitleInLanguage) {
                     var rootNode = result.data[i];
                     rootFound = true;
-// TODO:
+
                     api.expectBasePropertiesAreNotNull(rootNode);
                     expect(rootNode.parentId).toBeNull('parentId should be null.');
-                    expect(rootNode.pageId).toBeNull('parentId should be null.');
+                    expect(rootNode.pageId).toBeDefinedAndNotNull('pageId should be not null.');
+                    expect(rootNode.pageId).toBe(constants.pageIdWithLanguage, 'pageId should be not null.');
                     expect(rootNode.title).toBeDefinedAndNotNull('title should be retrieved.');
-//                    expect(rootNode.url).toBe(constants.rootUrl, 'Correctly filtered root node url should be retrieved.');
+                    expect(rootNode.url).toBe(constants.nodeUrlInLanguage, 'Correctly filtered root node url should be retrieved.');
                     expect(rootNode.displayOrder).toBeDefinedAndNotNull('displayOrder should be retrieved.');
-//                    expect(rootNode.childrenNodes).toBeDefinedAndNotNull('childrenNodes should be retrieved.');
-//                    expect(rootNode.childrenNodes.length).toBe(0, 'Returned childrenNodes array length should be 0.');
-
-//                    // /root/1/
-//                    var child1 = findTreeChild(rootNode.childrenNodes, rootNode.id, constants.child1Title, constants.child1Url, 3);
-//                    // /root/1/1/
-//                    var child11 = findTreeChild(child1.childrenNodes, child1.id, constants.child11Title, constants.child11Url, 1);
-//                    // /root/1/1/1/
-//                    findTreeChild(child11.childrenNodes, child11.id, constants.child111Title, constants.child111Url, 0);
                 }
             }
 
-//            expect(rootFound).toBe(true, 'Root node should be retrieved.');
+            expect(rootFound).toBe(true, 'Root node should be retrieved.');
         });
     });
 
