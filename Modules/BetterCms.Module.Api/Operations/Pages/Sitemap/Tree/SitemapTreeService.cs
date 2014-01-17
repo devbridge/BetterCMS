@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -68,7 +67,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
                         LastModifiedBy = node.ModifiedByUser,
                         LastModifiedOn = node.ModifiedOn,
 
-                        ParentId = node.ParentNode != null && !node.ParentNode.IsDeleted ? node.ParentNode.Id : (System.Guid?)null,
+                        ParentId = node.ParentNode != null && !node.ParentNode.IsDeleted ? node.ParentNode.Id : (Guid?)null,
                         Title = node.Page != null && node.UsePageTitleAsNodeTitle ? node.Page.Title : node.Title,
                         Url = node.Page != null ? node.Page.PageUrl : node.Url,
                         PageId = node.Page != null ? node.Page.Id : (Guid?)null,
@@ -88,7 +87,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
             return new GetSitemapTreeResponse { Data = nodes };
         }
 
-        private void Translate(IList<SitemapTreeNodeModel> nodes, Guid? languageId, IList<TranslationData> translations, IList<SitemapHelper.PageData> pages)
+        private static void Translate(IList<SitemapTreeNodeModel> nodes, Guid? languageId, IList<TranslationData> translations, IList<SitemapHelper.PageData> pages)
         {
             foreach (var node in nodes)
             {
@@ -105,7 +104,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
             }
         }
 
-        private void TranslateNodeWithoutPage(SitemapTreeNodeModel node, Guid? languageId, IList<TranslationData> translations)
+        private static void TranslateNodeWithoutPage(SitemapTreeNodeModel node, Guid? languageId, IList<TranslationData> translations)
         {
             if (!languageId.HasValue || languageId.Value.HasDefaultValue())
             {
@@ -122,29 +121,94 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
             }
         }
 
-        private void TranslateNodeWithPage(SitemapTreeNodeModel node, Guid? languageId, IList<TranslationData> translations, IList<SitemapHelper.PageData> pages)
+        private static void TranslateNodeWithPage(SitemapTreeNodeModel node, Guid? languageId, IList<TranslationData> translations, IList<SitemapHelper.PageData> pages)
         {
-            var nodePage = pages.First(p => p.Id == node.PageId.Value);
+            // Get page by language.
+            var page = GetPageByLanguage(node.PageId.Value, languageId, pages);
+            
             if (!languageId.HasValue || languageId.Value.HasDefaultValue())
             {
-                // Node is already in default translation.
-                if (!nodePage.LanguageId.HasValue)
+                if (page != null)
                 {
-                    // TODO: implement.
+                    node.Url = page.Url;
+                    if (node.UsePageTitleAsNodeTitle)
+                    {
+                        node.Title = page.Title;
+                    }
                 }
             }
             else
             {
+                // Get translation by language.
                 var translation = translations.FirstOrDefault(t => t.NodeId == node.Id && t.LanguageId == languageId.Value);
                 if (translation != null)
                 {
-                    node.Title = translation.Title;
-                    node.Url = translation.Url;
+                    node.Title = page != null && translation.UsePageTitleAsNodeTitle ? page.Title : translation.Title;
+                    if (page != null)
+                    {
+                        node.Url = page.Url;
+                    }
+                }
+                else
+                {
+                    if (page != null)
+                    {
+                        node.Title = page.Title;
+                        node.Url = page.Url;
+                    }
                 }
             }
         }
 
-        private List<SitemapTreeNodeModel> GetChildren(List<SitemapTreeNodeModel> allItems, System.Guid? parentId)
+        private static SitemapHelper.PageData GetPageByLanguage(Guid pageId, Guid? languageId, IList<SitemapHelper.PageData> pages)
+        {
+            var page = pages.First(p => p.Id == pageId);
+            if (!languageId.HasValue || languageId.Value.HasDefaultValue())
+            {
+                // Default page is needed.
+                if (!page.LanguageId.HasValue || page.LanguageId.Value.HasDefaultValue())
+                {
+                    // Page is default.
+                    return page;
+                }
+
+                if (!page.LanguageGroupIdentifier.HasValue || page.LanguageId.Value.HasDefaultValue())
+                {
+                    // Default page translation does not exist.
+                    return null;
+                }
+
+                return pages.FirstOrDefault(p => p.LanguageGroupIdentifier.HasValue && !p.LanguageGroupIdentifier.Value.HasDefaultValue()
+                        && p.LanguageGroupIdentifier.Value == page.LanguageGroupIdentifier.Value
+                        && (!p.LanguageId.HasValue || p.LanguageId.Value.HasDefaultValue()));
+            }
+
+            // Translation is needed.
+            if (page.LanguageId.HasValue && page.LanguageId.Value == languageId.Value)
+            {
+                // Page is in required language.
+                return page;
+            }
+
+            if (page.LanguageGroupIdentifier.HasValue && !page.LanguageId.Value.HasDefaultValue())
+            {
+                var pageByLanguage =
+                    pages.FirstOrDefault(
+                        p =>
+                        p.LanguageGroupIdentifier.HasValue && !p.LanguageGroupIdentifier.Value.HasDefaultValue()
+                        && p.LanguageGroupIdentifier.Value == page.LanguageGroupIdentifier.Value && (!p.LanguageId.HasValue || p.LanguageId.Value.HasDefaultValue()));
+
+                if (pageByLanguage != null)
+                {
+                    return pageByLanguage;
+                }
+            }
+
+            // Page translation does not exist return default.
+            return GetPageByLanguage(pageId, null, pages);
+        }
+
+        private static List<SitemapTreeNodeModel> GetChildren(List<SitemapTreeNodeModel> allItems, System.Guid? parentId)
         {
             var childItems = allItems.Where(item => item.ParentId == parentId && item.Id != parentId).OrderBy(node => node.DisplayOrder).ToList();
 
