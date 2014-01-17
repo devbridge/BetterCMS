@@ -19,6 +19,12 @@
             public const string LuceneFailedPageReindexingTimeout = "LuceneFailedPageReindexingTimeout";
 
             public const string LuceneDisableStopWords = "LuceneDisableStopWords";
+
+            public const string LuceneIndexPrivatePages = "LuceneIndexPrivatePages";
+
+            public const string LuceneAuthorizationUrl = "LuceneAuthorizationUrl";
+
+            public const string LuceneAuthorizationFormFieldPrefix = "LuceneAuthorizationForm.";
         }
     }
 }

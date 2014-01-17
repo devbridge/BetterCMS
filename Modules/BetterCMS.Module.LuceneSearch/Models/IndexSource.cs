@@ -10,6 +10,8 @@ namespace BetterCMS.Module.LuceneSearch.Models
         public virtual Guid SourceId { get; set; }
 
         public virtual string Path { get; set; }
+        
+        public virtual bool IsPublished { get; set; }
 
         public virtual DateTime? StartTime { get; set; }
 

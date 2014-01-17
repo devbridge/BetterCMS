@@ -1,13 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
 
+using BetterCMS.Module.LuceneSearch.Content.Resources;
 using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 
 using BetterCms;
+using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext.Fetching;
+using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Security;
+using BetterCms.Core.Services;
+using BetterCms.Module.Root;
+using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.ViewModels.Security;
 using BetterCms.Module.Search;
 using BetterCms.Module.Search.Models;
 
@@ -31,6 +41,14 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         private IndexReader reader;
 
+        private readonly IRepository repository;
+
+        private readonly ICmsConfiguration cmsConfiguration;
+
+        private readonly ISecurityService securityService;
+
+        private readonly IAccessControlService accessControlService;
+
         private readonly StandardAnalyzer analyzer;
 
         private readonly QueryParser parser;
@@ -39,13 +57,18 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         private readonly string directory;
 
-        public DefaultIndexerService(ICmsConfiguration configuration)
+        public DefaultIndexerService(ICmsConfiguration cmsConfiguration, IRepository repository, ISecurityService securityService, IAccessControlService accessControlService)
         {
-            directory = GetLuceneDirectory(configuration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneFileSystemDirectory));
+            this.repository = repository;
+            this.cmsConfiguration = cmsConfiguration;
+            this.securityService = securityService;
+            this.accessControlService = accessControlService;
+
+            directory = GetLuceneDirectory(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneFileSystemDirectory));
             index = FSDirectory.Open(directory);
 
             bool disableStopWords;
-            if (!bool.TryParse(configuration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneDisableStopWords), out disableStopWords))
+            if (!bool.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneDisableStopWords), out disableStopWords))
             {
                 disableStopWords = false;
             }
@@ -88,6 +111,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             doc.Add(new Field("path", pageData.AbsolutePath, Field.Store.YES, Field.Index.NOT_ANALYZED));
             doc.Add(new Field("title", GetTitle(pageData.Content), Field.Store.YES, Field.Index.ANALYZED));
             doc.Add(new Field("content", GetBody(pageData.Content), Field.Store.YES, Field.Index.ANALYZED));
+            doc.Add(new Field("isPublished", pageData.IsPublished.ToString(), Field.Store.YES, Field.Index.ANALYZED));
 
             writer.UpdateDocument(path, doc, analyzer);
         }
@@ -106,8 +130,21 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             var searcher = new IndexSearcher(reader);
             TopScoreDocCollector collector = TopScoreDocCollector.Create(take + skip, true);
             var query = parser.Parse(request.Query);
+
+            if (!RetrieveUnpublishedPages())
+            {
+                // Exclude unpublished pages
+                var isPublishedQuery = new TermQuery(new Term("isPublished", "true"));
+                Filter isPublishedFilter = new QueryWrapperFilter(isPublishedQuery);
+
+                searcher.Search(query, isPublishedFilter, collector);
+            }
+            else
+            {
+                // Search within all the pages
+                searcher.Search(query, collector);
+            }
             
-            searcher.Search(query, collector);
             ScoreDoc[] hits = collector.TopDocs(skip, take).ScoreDocs;
             
             for (int i = 0; i < hits.Length; i++)
@@ -122,7 +159,9 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
                                    Snippet = GetSnippet(d.Get("content"), request.Query)
                                });
             }
-            
+
+            CheckAvailability(result);
+
             return new SearchResults
                        {
                            Items = result,
@@ -277,6 +316,68 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             }
 
             return Path.Combine(appDomainPath, directoryRelative);
+        }
+
+        private void CheckAvailability(List<SearchResultItem> results)
+        {
+            if (results.Count == 0)
+            {
+                return;
+            }
+
+            if (!cmsConfiguration.Security.AccessControlEnabled)
+            {
+                // If security is not enabled, all content is available
+                return;
+            }
+
+            // Create query
+            var principal = securityService.GetCurrentPrincipal();
+            var urls = results.Select(r => r.Link).ToArray();
+            var query = repository.AsQueryable<Page>(p => urls.Contains(p.PageUrl));
+            var pages = query
+                .SelectMany(c => c.AccessRules, (page, accessRule) => new
+                    {
+                        PageUrl = page.PageUrl,
+                        AccessRule = accessRule
+                    })
+                .ToList();
+
+            foreach (var pageUrl in pages.Select(p => p.PageUrl).Distinct())
+            {
+                var page = pages.First(p => p.PageUrl == pageUrl);
+                IList<IAccessRule> accessRules = pages.Where(p => p.PageUrl == pageUrl).Select(p => p.AccessRule).Cast<IAccessRule>().ToList();
+
+                var level = accessControlService.GetAccessLevel(accessRules, principal);
+                if (level < AccessLevel.Read)
+                {
+                    results.Where(r => r.Link == page.PageUrl).ToList().ForEach(r => r.IsDenied = true);
+                }
+            }
+
+            results.ForEach(p =>
+                    {
+                        if (p.IsDenied)
+                        {
+                            p.Link = string.Empty;
+                            p.FormattedUrl = string.Empty;
+                            p.Title = LuceneGlobalization.SearchResults_Secured_Title;
+                            p.Snippet = LuceneGlobalization.SearchResults_Secured_Snippet;
+                        }
+                    });
+        }
+
+        private bool RetrieveUnpublishedPages()
+        {
+            // Check if user can manage content
+            var allRoles = new List<string>(RootModuleConstants.UserRoles.AllRoles);
+            if (!string.IsNullOrEmpty(cmsConfiguration.Security.FullAccessRoles))
+            {
+                allRoles.Add(cmsConfiguration.Security.FullAccessRoles);
+            }
+
+            var retrieveUnpublishedPages = securityService.IsAuthorized(RootModuleConstants.UserRoles.MultipleRoles(allRoles.ToArray()));
+            return retrieveUnpublishedPages;
         }
     }
 }

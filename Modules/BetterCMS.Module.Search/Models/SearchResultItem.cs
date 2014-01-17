@@ -9,5 +9,7 @@
         public string FormattedUrl { get; set; }
 
         public string Snippet { get; set; }
+
+        public bool IsDenied { get; set; }
     }
 }

@@ -20,6 +20,8 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
         private IUnitOfWork UnitOfWork { get; set; }
 
         private readonly int scrapeLimit;
+        
+        private readonly bool scrapePrivatePages;
 
         private readonly TimeSpan pageExpireTimeout;
 
@@ -45,18 +47,28 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
             {
                 failedPageTimeout = TimeSpan.FromMinutes(10);
             }
+
+            bool.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneIndexPrivatePages), out scrapePrivatePages);
         }
 
         public void FetchNewUrls()
         {
-            var newSources = Repository.AsQueryable<Page>()
-                          .Where(page => !page.IsDeleted && !page.IsMasterPage && page.Status == PageStatus.Published)
-                          .Where(page => !Repository.AsQueryable<IndexSource>().Any(crawlUrl => crawlUrl.SourceId == page.Id))
+            var query = Repository.AsQueryable<Page>()
+                          .Where(page => !page.IsDeleted && !page.IsMasterPage)
+                          .Where(page => !Repository.AsQueryable<IndexSource>().Any(crawlUrl => crawlUrl.SourceId == page.Id));
+
+            if (!scrapePrivatePages)
+            {
+                query = query.Where(page => page.Status == PageStatus.Published);
+            }
+
+            var newSources = query
                           .Select(page =>
                                     new IndexSource
                                     {
                                         Path = page.PageUrl,
-                                        SourceId = page.Id                                       
+                                        SourceId = page.Id,
+                                        IsPublished = page.Status == PageStatus.Published
                                     })
                           .ToList();
                           
@@ -112,7 +124,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
         {
             foreach (var url in links)
             {
-                queue.Enqueue(new CrawlLink { Id = url.Id, Path = url.Path });
+                queue.Enqueue(new CrawlLink { Id = url.Id, Path = url.Path, IsPublished = url.IsPublished });
             }
         }
 

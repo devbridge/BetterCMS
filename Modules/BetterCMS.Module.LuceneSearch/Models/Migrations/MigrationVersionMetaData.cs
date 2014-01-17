@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using FluentMigrator.VersionTableInfo;
+﻿using FluentMigrator.VersionTableInfo;
 
 namespace BetterCms.Module.LuceneSearch.Models.Migrations
 {
     [VersionTableMetaData]
-    public class PageVersionMetaData : IVersionTableMetaData
+    public class MigrationVersionMetaData : IVersionTableMetaData
     {
         public string SchemaName
         {
@@ -38,7 +32,7 @@ namespace BetterCms.Module.LuceneSearch.Models.Migrations
         {
             get
             {
-                return "uc_VersionInfo_Verion_" + LuceneSearchModuleDescriptor.ModuleName;
+                return "uc_VersionInfo_Version_" + LuceneSearchModuleDescriptor.ModuleName;
             }
         }
     }

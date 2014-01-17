@@ -17,7 +17,10 @@
     {
         <article class="bcms-search-result">
             <h3>@item.Title</h3>            
-            <a href="@item.Link">@item.FormattedUrl</a>
+            @if (!item.IsDenied)
+            {
+                <a href="@item.Link">@item.FormattedUrl</a>
+            }
             <p>@item.Snippet</p>            
         </article>
     }
