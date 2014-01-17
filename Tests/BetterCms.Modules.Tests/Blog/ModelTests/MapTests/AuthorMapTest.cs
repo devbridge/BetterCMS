@@ -25,27 +25,7 @@ namespace BetterCms.Test.Module.Blog.ModelTests.MapTests
             var content = TestDataProvider.CreateNewAuthor();
             RunEntityMapTestsInTransaction(content);  
         }
-
-        [Test]
-        public void Scrap()
-        {
-            RunActionInTransaction(
-                session =>
-                {
-                    var unitOfWork = new DefaultUnitOfWork(session);
-                    var repository = new DefaultRepository(unitOfWork);
-                    var indexSourceQuery = repository.AsQueryable<IndexSource>();
- 
-                    var query = repository.AsQueryable<Page>().Where(page => !page.IsDeleted && !page.IsMasterPage);
-
-                    query = query.Where(page => !indexSourceQuery.Any(crawlUrl => crawlUrl.SourceId == page.Id));
-
-                    var pages = query.ToList();
-
-                    var test = pages;
-                });
-        }
-
+        
         [Test]
         public void Should_Retrieve_AllField_If_Image_Is_Null()
         {
