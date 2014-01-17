@@ -124,6 +124,9 @@
     <Compile Include="Accessors\PageJavaScriptAccessor.cs" />
     <Compile Include="Command\Content\GetInsertHtmlContent\GetInsertHtmlContentCommand.cs" />
     <Compile Include="Command\Content\GetInsertHtmlContent\InsertHtmlContentRequest.cs" />
+    <Compile Include="Command\History\GetSitemapHistory\GetSitemapHistoryCommand.cs" />
+    <Compile Include="Command\History\GetSitemapHistory\GetSitemapHistoryRequest.cs" />
+    <Compile Include="Command\History\RestoreSitemapVersion\RestoreSitemapVersionCommand.cs" />
     <Compile Include="Command\Layout\GetLayoutOptions\GetLayoutOptionsCommand.cs" />
     <Compile Include="Command\Layout\GetLayoutOptions\GetLayoutOptionsCommandRequest.cs" />
     <Compile Include="Command\Page\AddNewPage\AddNewPageCommand.cs" />
@@ -133,19 +136,37 @@
     <Compile Include="Command\Page\GetPageForCloningWithLanguage\GetPageForCloningWithLanguageCommand.cs" />
     <Compile Include="Command\Page\GetUntranslatedPagesList\GetUntranslatedPagesListCommand.cs" />
     <Compile Include="Command\Page\SuggestPages\SuggestPagesCommand.cs" />
+    <Compile Include="Command\Sitemap\DeleteSitemap\DeleteSitemapCommand.cs" />
+    <Compile Include="Command\Sitemap\GetPageTranslations\GetPageTranslationsCommand.cs" />
+    <Compile Include="Command\Sitemap\GetSitemapsForNewPage\GetSitemapsForNewPageCommand.cs" />
+    <Compile Include="Command\Sitemap\GetSitemapsList\GetSitemapsListCommand.cs" />
+    <Compile Include="Command\Sitemap\GetSitemapVersion\GetSitemapVersionCommand.cs" />
+    <Compile Include="Command\Sitemap\SaveMultipleSitemaps\SaveMultipleSitemapsCommand.cs" />
     <Compile Include="Command\Widget\PreviewWidget\PreviewWidgetCommand.cs" />
     <Compile Include="Command\Widget\PreviewWidget\PreviewWidgetCommandRequest.cs" />
     <Compile Include="Events\CategoryEvents.cs" />
     <Compile Include="Events\PagePropertiesChangingEventArgs.cs" />
     <Compile Include="Events\SitemapEvents.cs" />
     <Compile Include="Events\TagEvents.cs" />
+    <Compile Include="Helpers\SitemapHelper.cs" />
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
+    <Compile Include="Models\Maps\SitemapNodeTranslationMap.cs" />
+    <Compile Include="Models\Migrations\Migration201401091655.cs" />
+    <Compile Include="Models\SitemapNodeTranslation.cs" />
+    <Compile Include="Models\Maps\SitemapArchiveMap.cs" />
+    <Compile Include="Models\Migrations\Migration201401061130.cs" />
+    <Compile Include="Models\SitemapArchive.cs" />
+    <Compile Include="Models\Maps\SitemapTagMap.cs" />
+    <Compile Include="Models\SitemapTag.cs" />
+    <Compile Include="Models\Migrations\Migration201312121313.cs" />
     <Compile Include="Models\Events\UpdatingPagePropertiesModel.cs" />
+    <Compile Include="Models\Maps\SitemapMap.cs" />
     <Compile Include="Models\Migrations\Migration201307301145.cs" />
     <Compile Include="Models\Migrations\Migration201307220940.cs" />
     <Compile Include="Models\Migrations\Migration201306260946.cs" />
     <Compile Include="Models\Migrations\Migration201306140841.cs" />
     <Compile Include="Models\Migrations\Migration201305281700.cs" />
+    <Compile Include="Models\Sitemap.cs" />
     <Compile Include="Mvc\Attributes\ValidVirtualPathValidationAttribute.cs" />
     <Compile Include="Events\WidgetEvents.cs" />
     <Compile Include="Events\RedirectEvents.cs" />
@@ -298,23 +319,30 @@
     <Compile Include="ViewModels\Content\RestorePageContentViewModel.cs" />
     <Compile Include="ViewModels\Content\IDraftDestroy.cs" />
     <Compile Include="ViewModels\Content\PageContentSortViewModel.cs" />
+    <Compile Include="ViewModels\Filter\SitemapsFilter.cs" />
+    <Compile Include="ViewModels\Filter\SitemapsGridViewModel.cs" />
     <Compile Include="ViewModels\Filter\PagesGridViewModel.cs" />
     <Compile Include="ViewModels\Filter\PagesFilter.cs" />
     <Compile Include="ViewModels\Filter\UntranslatedPagesFilter.cs" />
     <Compile Include="ViewModels\Filter\UntranslatedPagesGridViewModel.cs" />
     <Compile Include="ViewModels\History\ContentHistoryItem.cs" />
     <Compile Include="ViewModels\History\ContentHistoryViewModel.cs" />
+    <Compile Include="ViewModels\History\SitemapRestoreViewModel.cs" />
     <Compile Include="ViewModels\Page\ClonePageWithLanguageViewModel.cs" />
     <Compile Include="ViewModels\Page\PageLookupKeyValue.cs" />
     <Compile Include="ViewModels\Page\PageSuggestionViewModel.cs" />
     <Compile Include="ViewModels\Page\PageTranslationViewModel.cs" />
+    <Compile Include="ViewModels\History\SitemapHistoryItem.cs" />
+    <Compile Include="ViewModels\History\SitemapHistoryViewModel.cs" />
     <Compile Include="ViewModels\Page\RenderPageCategoryViewModel.cs" />
     <Compile Include="ViewModels\Page\RenderPageImageViewModel.cs" />
     <Compile Include="ViewModels\Page\RenderPagePropertiesViewModel.cs" />
+    <Compile Include="ViewModels\Sitemap\SitemapNodeTranslationViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\PageLinkViewModel.cs" />
-    <Compile Include="ViewModels\Sitemap\SearchableSitemapViewModel.cs" />
+    <Compile Include="ViewModels\Sitemap\SitemapViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\SitemapAndPageLinksViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\SitemapNodeViewModel.cs" />
+    <Compile Include="ViewModels\SiteSettings\SiteSettingSitemapViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingTemplateItemViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingTemplateListViewModel.cs" />
     <Compile Include="ViewModels\Templates\TemplateEditViewModel.cs" />
@@ -388,6 +416,7 @@
     <EmbeddedResource Include="Content\Styles\Images\sprite-base-2.png" />
     <EmbeddedResource Include="Content\Styles\bcms.navigation.css" />
     <Content Include="BuildConfiguration.xml" />
+    <EmbeddedResource Include="Models\Migrations\Migration201312121313.sqlserver.sql" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
@@ -486,9 +515,6 @@
     <EmbeddedResource Include="Views\Sitemap\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Sitemap\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Sitemap\NewPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -562,6 +588,15 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Page\EditPageProperties.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Sitemap\Sitemaps.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Sitemap\History.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Sitemap\Preview.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

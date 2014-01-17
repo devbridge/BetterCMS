@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Pages.Services
 {
@@ -11,22 +12,24 @@ namespace BetterCms.Module.Pages.Services
     public interface ISitemapService
     {
         /// <summary>
-        /// Gets the node count.
+        /// Gets the nodes by URL.
         /// </summary>
-        /// <param name="url">The URL.</param>
-        /// <returns>Node count.</returns>
-        int NodesWithUrl(string url);
+        /// <param name="page">The page.</param>
+        /// <returns>
+        /// Node list.
+        /// </returns>
+        IList<SitemapNode> GetNodesByPage(Page page);
 
         /// <summary>
         /// Changes the URL.
         /// </summary>
         /// <param name="oldUrl">The old URL.</param>
         /// <param name="newUrl">The new URL.</param>
-        /// <returns>Node with new url count.</returns>
-        int ChangeUrl(string oldUrl, string newUrl);
+        /// <returns>Updated nodes.</returns>
+        IList<SitemapNode> ChangeUrlsInAllSitemapsNodes(string oldUrl, string newUrl);
 
         /// <summary>
-        /// Deletes the node.
+        /// Deletes the node and child nodes.
         /// </summary>
         /// <param name="id">The id.</param>
         /// <param name="version">The version.</param>
@@ -34,25 +37,21 @@ namespace BetterCms.Module.Pages.Services
         void DeleteNode(Guid id, int version, out IList<SitemapNode> deletedNodes);
 
         /// <summary>
-        /// Deletes the node without page update.
+        /// Deletes the node and child nodes.
         /// </summary>
         /// <param name="node">The node.</param>
-        void DeleteNodeWithoutPageUpdate(SitemapNode node);
-
-        /// <summary>
-        /// Gets the nodes by URL.
-        /// </summary>
-        /// <param name="url">The URL.</param>
-        /// <returns>Node list.</returns>
-        IList<SitemapNode> GetNodesByUrl(string url);
+        /// <param name="deletedNodes">The deleted nodes.</param>
+        void DeleteNode(SitemapNode node, ref IList<SitemapNode> deletedNodes);
 
         /// <summary>
         /// Saves the node.
         /// </summary>
-        /// <param name="id">The id.</param>
+        /// <param name="sitemap">The sitemap.</param>
+        /// <param name="nodeId">The node identifier.</param>
         /// <param name="version">The version.</param>
         /// <param name="url">The URL.</param>
         /// <param name="title">The title.</param>
+        /// <param name="pageId">The page identifier.</param>
         /// <param name="displayOrder">The display order.</param>
         /// <param name="parentId">The parent id.</param>
         /// <param name="isDeleted">if set to <c>true</c> [is deleted].</param>
@@ -60,6 +59,41 @@ namespace BetterCms.Module.Pages.Services
         /// <returns>
         /// Updated or newly created sitemap node.
         /// </returns>
-        SitemapNode SaveNode(Guid id, int version, string url, string title, int displayOrder, Guid parentId, bool isDeleted = false, SitemapNode parentNode = null);
+        SitemapNode SaveNode(Sitemap sitemap, Guid nodeId, int version, string url, string title, Guid pageId, bool usePageTitleAsNodeTitle, int displayOrder, Guid parentId, bool isDeleted = false, SitemapNode parentNode = null);
+
+        /// <summary>
+        /// Gets the sitemap history.
+        /// </summary>
+        /// <param name="sitemapId">The sitemap identifier.</param>
+        /// <returns>
+        /// Sitemap previous archived versions.
+        /// </returns>
+        IList<SitemapArchive> GetSitemapHistory(Guid sitemapId);
+
+        /// <summary>
+        /// Archives the sitemap.
+        /// </summary>
+        /// <param name="sitemapId">The sitemap identifier.</param>
+        void ArchiveSitemap(Guid sitemapId);
+
+        /// <summary>
+        /// Archives the sitemap.
+        /// </summary>
+        /// <param name="sitemap">The sitemap.</param>
+        void ArchiveSitemap(Sitemap sitemap);
+
+        /// <summary>
+        /// Gets the archived sitemap version for preview.
+        /// </summary>
+        /// <param name="archiveId">The archive identifier.</param>
+        /// <returns>Sitemap entity.</returns>
+        Sitemap GetArchivedSitemapVersionForPreview(Guid archiveId);
+
+        /// <summary>
+        /// Restores the sitemap from archive.
+        /// </summary>
+        /// <param name="archive">The archive.</param>
+        /// <returns>Restored sitemap.</returns>
+        Sitemap RestoreSitemapFromArchive(SitemapArchive archive);
     }
 }

@@ -67,11 +67,17 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
 
             query = FilterQuery(query, request);
 
+            var nodesSubQuery = QueryOver.Of<SitemapNode>()
+                .Where(x => x.Page.Id == alias.Id || x.UrlHash == alias.PageUrlHash)
+                .Select(s => 1)
+                .Take(1);
+
             IProjection hasSeoProjection = Projections.Conditional(
                 Restrictions.Disjunction()
                     .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaTitle)))
                     .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaKeywords)))
-                    .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaDescription))),
+                    .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaDescription)))
+                    .Add(Restrictions.IsNull(Projections.SubQuery(nodesSubQuery))),
                 Projections.Constant(false, NHibernateUtil.Boolean),
                 Projections.Constant(true, NHibernateUtil.Boolean));
 

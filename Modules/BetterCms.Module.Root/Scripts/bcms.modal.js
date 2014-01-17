@@ -63,6 +63,7 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
     modal.selectors = selectors;
     modal.links = links;
     modal.globalization = globalization;
+    modal.classes = classes;
     var isResized = false;
     /**
     * Returns count of currently open modal windows.

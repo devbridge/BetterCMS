@@ -3,13 +3,31 @@
 @using BetterCms.Module.Pages.ViewModels.Sitemap
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
-
-<div class="bcms-scroll-window" id="bcms-sitemap-addnewpage">
+<div class="bcms-tab-header">
+    <!-- ko foreach: tabs -->
+    <a class="bcms-tab" data-bind="text: newPageViewModel.sitemap.title(), css: { 'bcms-tab-active': isActive }, click: activate"></a>
+    <!-- /ko -->
+</div>
+<div class="bcms-scroll-window" id="bcms-sitemap-addnewpage" data-bind="with: activeNewPageViewModel">
+    @Html.SiteSettingsMessagesBox()
+    <div class="bcms-tab-single" style="height: 100%;" data-bind='template: { name: "bcms-sitemap-template" }'></div>
+</div>
+<script type="text/html" id="bcms-sitemap-template">
     <div class="bcms-columns-container">
+        <div class="bcms-sitemap-filter-holder" data-bind="with: sitemap">
+            <div style="display: none;" data-bind="visible: showLanguages, with: language">
+                <div class="bcms-filter-text">Edit sitemap in language:</div>
+                <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
+            </div>
+            <div class="bcms-expand-link-holder"@* data-bind="droppable: 'emptyListZone'" TODO: check later. NOTE: jQuery error is raised on leave over. *@>
+                <div class="bcms-expand-link" data-bind="click: expandAll">@NavigationGlobalization.Sitemap_Button_ExpandAll</div>
+                <div class="bcms-expand-link" data-bind="click: collapseAll">@NavigationGlobalization.Sitemap_Button_CollapseAll</div>
+            </div>
+        </div>
         <div class="bcms-leftcol">
             <div class="bcms-sidebar-info-block">
                 <!-- ko if: !linkIsDropped() -->
-                <div class="bcms-content-titles">@NavigationGlobalization.Sitemap_AddNewPageDialog_PageNodeHeader</div>
+                <div>@NavigationGlobalization.Sitemap_AddNewPageDialog_PageNodeHeader</div>
                 <!-- ko with: pageLink -->
                 <div data-bind="draggable: $parentContext">
                     <div class="bcms-dropable-page-box" style="position: relative; z-index: 0;" data-bind="css: { 'bcms-placement-node-drag': isBeingDragged() }">
@@ -31,19 +49,13 @@
             </div>
         </div>
         <div class="bcms-rightcol">
-            <div class="bcms-twocols-title-block">
-                <div class="bcms-large-titles">@NavigationGlobalization.Sitemap_AddNewPageDialog_SitemapHeader</div>
-            </div>
-            
-            @Html.SiteSettingsMessagesBox()
-
             <div class="bcms-placement-holder">
                 @* Form is required for unobtrusive validation. *@
-                @using (Html.BeginForm<SitemapController>(f => f.Index(null), FormMethod.Post, new { @class = "bcms-sitemap-form bcms-ajax-form" }))
+                @using (Html.BeginForm<SitemapController>(f => f.SaveSitemap(null), FormMethod.Post, new { @class = "bcms-sitemap-form bcms-ajax-form" }))
                 {
                     @Html.Partial("Partial/Sitemap", new SitemapNodeViewModel())
                 }
             </div>
         </div>
     </div>
-</div>
+</script>

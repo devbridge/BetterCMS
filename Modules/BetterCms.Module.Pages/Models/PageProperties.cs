@@ -17,13 +17,13 @@ namespace BetterCms.Module.Pages.Models
         public virtual bool UseNoFollow { get; set; }
         public virtual bool UseNoIndex { get; set; }
 
-        public virtual int NodeCountInSitemap { get; set; }
+        public virtual bool IsInSitemap { get; set; }
 
         public override bool HasSEO
         {
             get
             {
-                return base.HasSEO && NodeCountInSitemap > 0;
+                return base.HasSEO && IsInSitemap;
             }
         }
 

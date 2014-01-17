@@ -5,7 +5,7 @@ using System.Linq;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
-
+using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -32,6 +32,11 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
         private readonly IUrlService urlService;
 
         /// <summary>
+        /// The CMS configuration.
+        /// </summary>
+        private readonly ICmsConfiguration cmsConfiguration;
+
+        /// <summary>
         /// The sitemap service.
         /// </summary>
         private readonly ISitemapService sitemapService;
@@ -42,12 +47,13 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
         /// <param name="redirectService">The redirect service.</param>
         /// <param name="sitemapService">The sitemap service.</param>
         /// <param name="urlService">The URL service.</param>
-        public DeletePageCommand(IRedirectService redirectService,
-            ISitemapService sitemapService, IUrlService urlService)
+        /// <param name="cmsConfiguration">The CMS configuration.</param>
+        public DeletePageCommand(IRedirectService redirectService, ISitemapService sitemapService, IUrlService urlService, ICmsConfiguration cmsConfiguration)
         {
             this.redirectService = redirectService;
             this.sitemapService = sitemapService;
             this.urlService = urlService;
+            this.cmsConfiguration = cmsConfiguration;
         }
 
         /// <summary>
@@ -55,6 +61,9 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
+        /// <exception cref="ConcurrentDataException"></exception>
+        /// <exception cref="System.ComponentModel.DataAnnotations.ValidationException">
+        /// </exception>
         public virtual bool Execute(DeletePageViewModel request)
         {
             var page = Repository.First<PageProperties>(request.PageId);
@@ -72,27 +81,66 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
 
             request.RedirectUrl = urlService.FixUrl(request.RedirectUrl);
 
-            IList<SitemapNode> sitemapNodes = null;
-
             if (request.UpdateSitemap)
             {
                 AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent);
             }
 
-            if (request.UpdateSitemap && page.NodeCountInSitemap > 0)
+            var sitemaps = new Dictionary<Models.Sitemap, bool>();
+            var sitemapNodes = sitemapService.GetNodesByPage(page);
+            if (request.UpdateSitemap)
             {
-                sitemapNodes = sitemapService.GetNodesByUrl(page.PageUrl);
+                sitemapNodes.Select(node => node.Sitemap)
+                            .Distinct()
+                            .ToList()
+                            .ForEach(
+                                sitemap =>
+                                sitemaps.Add(
+                                    sitemap,
+                                    !cmsConfiguration.Security.AccessControlEnabled || AccessControlService.GetAccessLevel(sitemap, Context.Principal) == AccessLevel.ReadWrite));
+
                 foreach (var node in sitemapNodes)
                 {
-                    if (node.ChildNodes.Count > 0)
+                    if (sitemaps[node.Sitemap] && node.ChildNodes.Count > 0)
                     {
-                        var logMessage = string.Format("Sitemap node {0} has {1} child nodes.", node.Id, node.ChildNodes.Count);
+                        var logMessage = string.Format("In {0} sitemap node {1} has {2} child nodes.", node.Sitemap.Id, node.Id, node.ChildNodes.Count);
                         throw new ValidationException(() => PagesGlobalization.DeletePageCommand_SitemapNodeHasChildNodes_Message, logMessage);
                     }
                 }
             }
 
             UnitOfWork.BeginTransaction();
+
+            IList<SitemapNode> updatedNodes = new List<SitemapNode>();
+            IList<SitemapNode> deletedNodes = new List<SitemapNode>();
+            if (sitemapNodes != null)
+            {
+                // Archive sitemaps before update.
+                sitemaps.Select(pair => pair.Key).ToList().ForEach(sitemap => sitemapService.ArchiveSitemap(sitemap.Id));
+                foreach (var node in sitemapNodes)
+                {
+                    if (!node.IsDeleted)
+                    {
+                        if (request.UpdateSitemap && sitemaps[node.Sitemap])
+                        {
+                            // Delete sitemap node.
+                            sitemapService.DeleteNode(node, ref deletedNodes);
+                        }
+                        else
+                        {
+                            // Unlink sitemap node.
+                            if (node.Page != null && node.Page.Id == page.Id)
+                            {
+                                node.Page = null;
+                                node.Url = page.PageUrl;
+                                node.UrlHash = page.PageUrlHash;
+                                Repository.Save(node);
+                                updatedNodes.Add(node);
+                            }
+                        }
+                    }
+                }
+            }
 
             if (!string.IsNullOrWhiteSpace(request.RedirectUrl))
             {
@@ -140,6 +188,7 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
                     Repository.Delete(pageTag);
                 }
             }
+
             if (page.PageContents != null)
             {
                 foreach (var pageContent in page.PageContents)
@@ -147,6 +196,7 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
                     Repository.Delete(pageContent);
                 }
             }
+
             if (page.Options != null)
             {
                 foreach (var option in page.Options)
@@ -154,11 +204,13 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
                     Repository.Delete(option);
                 }
             }
+
             if (page.AccessRules != null)
             {
                 var rules = page.AccessRules.ToList();
                 rules.ForEach(page.RemoveRule);
             }
+
             if (page.MasterPages != null)
             {
                 foreach (var master in page.MasterPages)
@@ -167,35 +219,44 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
                 }
             }
 
-            // Delete sitemapNodes.
-            if (sitemapNodes != null)
-            {
-                foreach (var node in sitemapNodes)
-                {
-                    sitemapService.DeleteNodeWithoutPageUpdate(node);
-                }
-
-                page.NodeCountInSitemap -= sitemapNodes.Count;
-                Repository.Save(page);
-            }
-
             // Delete page
             Repository.Delete<Root.Models.Page>(request.PageId, request.Version);
 
             // Commit
             UnitOfWork.Commit();
 
-            if (sitemapNodes != null && sitemapNodes.Count > 0)
+            var updatedSitemaps = new List<Models.Sitemap>();
+            foreach (var node in updatedNodes)
             {
-                foreach (var node in sitemapNodes)
+                Events.SitemapEvents.Instance.OnSitemapNodeUpdated(node);
+                if (!updatedSitemaps.Contains(node.Sitemap))
                 {
-                    Events.SitemapEvents.Instance.OnSitemapNodeUpdated(node);
+                    updatedSitemaps.Add(node.Sitemap);
                 }
-                Events.SitemapEvents.Instance.OnSitemapUpdated();
+            }
+
+            foreach (var node in deletedNodes)
+            {
+                Events.SitemapEvents.Instance.OnSitemapNodeDeleted(node);
+                if (!updatedSitemaps.Contains(node.Sitemap))
+                {
+                    updatedSitemaps.Add(node.Sitemap);
+                }
+            }
+
+            foreach (var updatedSitemap in updatedSitemaps)
+            {
+                Events.SitemapEvents.Instance.OnSitemapUpdated(updatedSitemap);
             }
 
             // Notifying, that page is deleted.
             Events.PageEvents.Instance.OnPageDeleted(page);
+
+            if (sitemaps.Any(tuple => !tuple.Value))
+            {
+                // Some sitemaps where skipped, because user has no permission to edit.
+                Context.Messages.AddSuccess(PagesGlobalization.DeletePage_SitemapSkipped_Message);
+            }
 
             return true;
         }
