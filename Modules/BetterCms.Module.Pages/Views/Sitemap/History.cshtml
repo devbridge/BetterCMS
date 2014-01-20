@@ -70,13 +70,6 @@
 <div class="bcms-scroll-window">
     <div class="bcms-history-preview-holder">
         @Html.TabbedContentMessagesBox()
-        @*// TODO: enable sitemap history.*@
-        @{
-            var message = new UserMessages();
-            message.AddInfo("Site map history is disabled in this Better CMS version.");
-        }
-        @*// TODO: enable sitemap history.*@
-        @Html.TabbedContentCustomMessagesBox(message)
         <div class="bcms-history-preview">
             <div id="bcms-history-preview" class="bcms-sitemap-history">
                 <div class="bcms-history-info" style="display: block;">@PagesGlobalization.ContentHistory_SelectVersionToPreviewMessage</div>
