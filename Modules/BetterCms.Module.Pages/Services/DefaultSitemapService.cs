@@ -232,8 +232,6 @@ namespace BetterCms.Module.Pages.Services
         /// <param name="sitemap">The sitemap.</param>
         public void ArchiveSitemap(Sitemap sitemap)
         {
-            return; // TODO: enable sitemap history.
-
             var archive = new SitemapArchive
             {
                 Sitemap = sitemap,
@@ -391,7 +389,8 @@ namespace BetterCms.Module.Pages.Services
                         Node = node,
                         Language = new Language() { Id = translation.LanguageId },
                         Title = translation.Title,
-                        Url = translation.Url
+                        Url = translation.Url,
+                        UsePageTitleAsNodeTitle = translation.UsePageTitleAsNodeTitle
                     });
                 }
             }
@@ -426,7 +425,8 @@ namespace BetterCms.Module.Pages.Services
                                 {
                                     LanguageId = t.Language.Id,
                                     Title = t.Title,
-                                    Url = t.Url
+                                    Url = t.Url,
+                                    UsePageTitleAsNodeTitle = t.UsePageTitleAsNodeTitle
                                 }).ToList()
                 });
             }
@@ -505,6 +505,7 @@ namespace BetterCms.Module.Pages.Services
             public Guid LanguageId { get; set; }
             public string Title { get; set; }
             public string Url { get; set; }
+            public bool UsePageTitleAsNodeTitle { get; set; }
         }
 
         /// <summary>
