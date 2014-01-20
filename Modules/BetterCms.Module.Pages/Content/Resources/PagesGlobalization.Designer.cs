@@ -1150,7 +1150,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to delete {0} widget?.
+        ///   Looks up a localized string similar to Are you sure you want to delete &quot;{0}&quot; widget?.
         /// </summary>
         public static string DeleteWidget_Confirmation_Message {
             get {
@@ -1807,7 +1807,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page {0} cannot be selected as current page translation, because it has assigned the same language as the current page..
+        ///   Looks up a localized string similar to Page &quot;{0}&quot; cannot be selected as current page translation, because it has assigned the same language as the current page..
         /// </summary>
         public static string EditPageTranslations_PageHasSameCulture_Message {
             get {
@@ -1816,7 +1816,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There is already translation with current language. If you change current page&apos;s language to {0}, translation will be removed from list. Are you sure you want to continue?.
+        ///   Looks up a localized string similar to There is already translation with current language. If you change current page&apos;s language to &quot;{0}&quot;, translation will be removed from list. Are you sure you want to continue?.
         /// </summary>
         public static string EditPageTranslations_ReplaceTranslationWithCurrentLanguage_ConfirmationMessage {
             get {
@@ -2599,7 +2599,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page {0} cannot be assigned as translation, because it has assigned another language..
+        ///   Looks up a localized string similar to Page &quot;{0}&quot; cannot be assigned as translation, because it has assigned another language..
         /// </summary>
         public static string SavePagePropertiesCommand_PageTranslationsHasDifferentLanguage_Message {
             get {
@@ -2608,7 +2608,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page {0} cannot be assigned as translation, because it&apos;s already assigned to another page..
+        ///   Looks up a localized string similar to Page &quot;{0}&quot; cannot be assigned as translation, because it&apos;s already assigned to another page..
         /// </summary>
         public static string SavePagePropertiesCommand_PageTranslationsIsAlreadyAssigned_Message {
             get {
@@ -3139,7 +3139,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A tag {0} was saved..
+        ///   Looks up a localized string similar to A tag &quot;{0}&quot; was saved..
         /// </summary>
         public static string SiteSettings_Tags_NewTagCreatedMessage {
             get {
@@ -3148,7 +3148,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A tag {0} was removed..
+        ///   Looks up a localized string similar to A tag &quot;{0}&quot; was removed..
         /// </summary>
         public static string SiteSettings_Tags_TagRemovedMessage {
             get {
@@ -3166,7 +3166,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to delete the {0} template?.
+        ///   Looks up a localized string similar to Are you sure you want to delete the &quot;{0}&quot; template?.
         /// </summary>
         public static string SiteSettings_Template_DeleteCategoryMessage {
             get {
@@ -3535,7 +3535,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to render a preview of the &apos;{0}&apos; widget. {1}. Please contact your system administrator..
+        ///   Looks up a localized string similar to Failed to render a preview of the &quot;{0}&quot; widget. {1}. Please contact your system administrator..
         /// </summary>
         public static string WidgetPreview_Failed {
             get {
@@ -3589,7 +3589,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot remove {0} widget because it is in use..
+        ///   Looks up a localized string similar to Cannot remove &quot;{0}&quot; widget because it is in use..
         /// </summary>
         public static string Widgets_CanNotDeleteWidgetIsInUse_Message {
             get {

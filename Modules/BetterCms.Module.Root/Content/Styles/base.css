@@ -874,8 +874,7 @@ a.bcms-remove-image {
 /* Modal Dialog */
 .bcms-scroll-window {
     position: relative;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: auto;
 }
 
 .bcms-padded-content {
