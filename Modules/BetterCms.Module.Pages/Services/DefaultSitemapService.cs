@@ -449,6 +449,7 @@ namespace BetterCms.Module.Pages.Services
                     Sitemap = sitemap,
                     ParentNode = parentNode,
                     Title = node.Title,
+                    UsePageTitleAsNodeTitle = node.UsePageTitleAsNodeTitle,
                 };
 
                 if (node.Page != null)
@@ -482,6 +483,7 @@ namespace BetterCms.Module.Pages.Services
                             Node = restoredNode,
                             Language = language,
                             Title = translation.Title,
+                            UsePageTitleAsNodeTitle = translation.UsePageTitleAsNodeTitle
                         };
 
                     if (restoredNode.Page == null)
