@@ -28,25 +28,46 @@
     }
 
 .bcms-sitemap-holder {
-    padding: 20px 20px 0;
+    padding: 0 20px;
+    margin-top: -8px;
 }
 
 .bcms-sitemap-filter-holder {
-    /*border-bottom: 1px solid #c6c6c6;
-    width: 100%;
-    padding: 10px;*/
+    position: relative;
     display: table-caption;
-    height: 50px;
+    height: 62px;
 }
 
-    .bcms-sitemap-filter-holder .bcms-filter-text {
-        display: inline-block;
-        margin-right: 10px;
+.bcms-language-bar {
+    display: table;
+    height: 63px;
+}
+
+.bcms-sitemap-filter-holder .bcms-table-middle-box {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 0 10px;
+}
+
+.bcms-sitemap-filter-holder .bcms-expand-link-holder {
+    position: absolute;
+    top: 25px;
+    right: 20px;
+    width: auto;
+}
+
+.bcms-sitemap-history {
+    height: 100%;
+    overflow: auto;
+}
+
+    .bcms-sitemap-history .bcms-sitemap-filter-holder {
+        display: block;
     }
 
-    .bcms-sitemap-filter-holder .bcms-global-select {
-        display: inline-block;
-    }
+.bcms-add-node-col {
+    border-top: 1px solid #C6C6C6;
+}
 
 .bcms-drop-area {
     min-height: 65px;
