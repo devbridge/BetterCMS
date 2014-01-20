@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 
 using BetterCMS.Module.LuceneSearch.Services.IndexerService;
@@ -39,6 +40,7 @@ namespace BetterCMS.Module.LuceneSearch.Workers
                 var links = scrapeService.GetLinksForProcessing();
 
                 var pages = new List<PageData>();
+                var idsToDelete = new List<Guid>();
 
                 foreach (var link in links)
                 {
@@ -75,6 +77,7 @@ namespace BetterCMS.Module.LuceneSearch.Workers
                                 }
                                 else
                                 {
+                                    idsToDelete.Add(link.Id);
                                     scrapeService.Delete(link.Id);
                                 }
                                 break;
@@ -82,6 +85,7 @@ namespace BetterCMS.Module.LuceneSearch.Workers
 
                         case HttpStatusCode.NotFound:
                             {
+                                idsToDelete.Add(link.Id);
                                 scrapeService.Delete(link.Id);
                                 break;
                             }
@@ -93,6 +97,10 @@ namespace BetterCMS.Module.LuceneSearch.Workers
                 {
                     indexerService.AddHtmlDocument(page);
                     scrapeService.MarkVisited(page.Id);
+                }
+                if (idsToDelete.Any())
+                {
+                    indexerService.DeleteDocuments(idsToDelete.Distinct().ToArray());
                 }
                 indexerService.Close();
             }

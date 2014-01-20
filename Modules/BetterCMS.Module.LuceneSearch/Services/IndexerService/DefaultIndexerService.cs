@@ -34,6 +34,15 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 {
     public class DefaultIndexerService : IIndexerService
     {
+        private static class LuceneIndexDocumentKeys
+        {
+            public const string Path = "path";
+            public const string Content = "content";
+            public const string IsPublished = "isPublished";
+            public const string Title = "title";
+            public const string Id = "id";
+        }
+
         private IndexWriter writer;
 
         private IndexReader reader;
@@ -103,14 +112,24 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
         {
             var doc = new Document();
 
-            var path = new Term("path", pageData.AbsolutePath);
+            var path = new Term(LuceneIndexDocumentKeys.Path, pageData.AbsolutePath);
 
-            doc.Add(new Field("path", pageData.AbsolutePath, Field.Store.YES, Field.Index.NOT_ANALYZED));
-            doc.Add(new Field("title", GetTitle(pageData.Content), Field.Store.YES, Field.Index.ANALYZED));
-            doc.Add(new Field("content", GetBody(pageData.Content), Field.Store.YES, Field.Index.ANALYZED));
-            doc.Add(new Field("isPublished", pageData.IsPublished.ToString(), Field.Store.YES, Field.Index.ANALYZED));
+            doc.Add(new Field(LuceneIndexDocumentKeys.Path, pageData.AbsolutePath, Field.Store.YES, Field.Index.NOT_ANALYZED));
+            doc.Add(new Field(LuceneIndexDocumentKeys.Title, GetTitle(pageData.Content), Field.Store.YES, Field.Index.ANALYZED));
+            doc.Add(new Field(LuceneIndexDocumentKeys.Content, GetBody(pageData.Content), Field.Store.YES, Field.Index.ANALYZED));
+            doc.Add(new Field(LuceneIndexDocumentKeys.Id, pageData.Id.ToString(), Field.Store.YES, Field.Index.ANALYZED));
+            doc.Add(new Field(LuceneIndexDocumentKeys.IsPublished, pageData.IsPublished.ToString(), Field.Store.YES, Field.Index.ANALYZED));
 
             writer.UpdateDocument(path, doc, analyzer);
+        }
+
+        public void DeleteDocuments(Guid[] ids)
+        {
+            foreach (var id in ids)
+            {
+                var term = new Term(LuceneIndexDocumentKeys.Id, id.ToString().ToLower());
+                writer.DeleteDocuments(term);
+            }
         }
 
         public SearchResults Search(SearchRequest request)
@@ -131,7 +150,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             if (!RetrieveUnpublishedPages())
             {
                 // Exclude unpublished pages
-                var isPublishedQuery = new TermQuery(new Term("isPublished", "true"));
+                var isPublishedQuery = new TermQuery(new Term(LuceneIndexDocumentKeys.IsPublished, "true"));
                 Filter isPublishedFilter = new QueryWrapperFilter(isPublishedQuery);
 
                 searcher.Search(query, isPublishedFilter, collector);
@@ -150,10 +169,10 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
                 Document d = searcher.Doc(docId);
                 result.Add(new SearchResultItem
                                {
-                                   FormattedUrl = d.Get("path"),
-                                   Link = d.Get("path"),
-                                   Title = d.Get("title"),
-                                   Snippet = GetSnippet(d.Get("content"), request.Query)
+                                   FormattedUrl = d.Get(LuceneIndexDocumentKeys.Path),
+                                   Link = d.Get(LuceneIndexDocumentKeys.Path),
+                                   Title = d.Get(LuceneIndexDocumentKeys.Title),
+                                   Snippet = GetSnippet(d.Get(LuceneIndexDocumentKeys.Content), request.Query)
                                });
             }
 

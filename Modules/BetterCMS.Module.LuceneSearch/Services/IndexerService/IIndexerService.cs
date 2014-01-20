@@ -8,6 +8,8 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
     {
         void AddHtmlDocument(PageData pageData);
 
+        void DeleteDocuments(System.Guid[] ids);
+
         void Open(bool create = false);
 
         void Close();
