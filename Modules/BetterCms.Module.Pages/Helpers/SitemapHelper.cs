@@ -57,15 +57,15 @@ namespace BetterCms.Module.Pages.Helpers
             var nodeList = new List<SitemapNodeViewModel>();
             foreach (var node in sitemapNodes.OrderBy(node => node.DisplayOrder))
             {
-                var pageLinked = node.Page != null;
+                var linkedPage = node.Page != null ? pages.FirstOrDefault(p => p.Id == node.Page.Id) : null;
                 var nodeViewModel = new SitemapNodeViewModel
                 {
                     Id = node.Id,
                     Version = node.Version,
-                    Title = pageLinked && node.UsePageTitleAsNodeTitle ? node.Page.Title : node.Title,
+                    Title = linkedPage != null && node.UsePageTitleAsNodeTitle ? linkedPage.Title : node.Title,
                     UsePageTitleAsNodeTitle = node.UsePageTitleAsNodeTitle,
-                    Url = pageLinked ? node.Page.PageUrl : node.Url,
-                    PageId = pageLinked ? node.Page.Id : Guid.Empty,
+                    Url = linkedPage != null ? linkedPage.Url : node.Url,
+                    PageId = linkedPage != null ? linkedPage.Id : Guid.Empty,
                     DisplayOrder = node.DisplayOrder,
                     ChildNodes = GetSitemapNodesInHierarchy(enableMultilanguage, allNodes.Where(f => f.ParentNode == node).ToList(), allNodes, languageIds, pages)
                 };
@@ -87,21 +87,21 @@ namespace BetterCms.Module.Pages.Helpers
                         .ToList()
                         .ForEach(nodeViewModel.Translations.Add);
                     
-                    if (pageLinked)
+                    if (linkedPage != null)
                     {
                         // Setup default language.
-                        if (node.Page.Language == null)
+                        if (!linkedPage.LanguageId.HasValue)
                         {
-                            nodeViewModel.Url = node.Page.PageUrl;
+                            nodeViewModel.Url = linkedPage.Url;
                             if (nodeViewModel.UsePageTitleAsNodeTitle)
                             {
-                                nodeViewModel.Title = node.Page.Title;
+                                nodeViewModel.Title = linkedPage.Title;
                             }
                         }
-                        else if (node.Page.LanguageGroupIdentifier.HasValue)
+                        else if (linkedPage.LanguageGroupIdentifier.HasValue)
                         {
                             var pageTranslation = pages.FirstOrDefault(p => p.LanguageGroupIdentifier.HasValue
-                                                                            && p.LanguageGroupIdentifier.Value == node.Page.LanguageGroupIdentifier.Value
+                                                                            && p.LanguageGroupIdentifier.Value == linkedPage.LanguageGroupIdentifier.Value
                                                                             && (!p.LanguageId.HasValue || p.LanguageId.Value.HasDefaultValue()));
                             if (pageTranslation != null)
                             {
@@ -134,15 +134,15 @@ namespace BetterCms.Module.Pages.Helpers
                             var title = string.Empty;
                             var url = string.Empty;
 
-                            if (node.Page.Language != null && node.Page.Language.Id == languageId)
+                            if (linkedPage.LanguageId != null && linkedPage.LanguageId == languageId)
                             {
-                                title = node.Page.Title;
-                                url = node.Page.PageUrl;
+                                title = linkedPage.Title;
+                                url = linkedPage.Url;
                             }
-                            else if (node.Page.LanguageGroupIdentifier.HasValue)
+                            else if (linkedPage.LanguageGroupIdentifier.HasValue)
                             {
                                 var pageTranslation = pages.FirstOrDefault(p => p.LanguageGroupIdentifier.HasValue
-                                                                                && p.LanguageGroupIdentifier.Value == node.Page.LanguageGroupIdentifier.Value
+                                                                                && p.LanguageGroupIdentifier.Value == linkedPage.LanguageGroupIdentifier.Value
                                                                                 && p.LanguageId.HasValue
                                                                                 && p.LanguageId.Value == languageId);
                                 if (pageTranslation != null)

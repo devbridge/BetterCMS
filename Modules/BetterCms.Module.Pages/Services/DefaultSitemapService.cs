@@ -354,7 +354,8 @@ namespace BetterCms.Module.Pages.Services
                                 ? new PageProperties
                                         {
                                             Id = archivedNode.PageId,
-                                            PageUrl = archivedNode.Url
+//                                            Title = archivedNode.Title,
+//                                            PageUrl = archivedNode.Url
                                         }
                                 : null,
                         UsePageTitleAsNodeTitle = archivedNode.UsePageTitleAsNodeTitle,
