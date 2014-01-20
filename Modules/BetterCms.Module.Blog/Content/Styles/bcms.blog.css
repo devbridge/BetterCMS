@@ -1,11 +1,22 @@
 ﻿/*sidebar buttons*/
 div.bcms-btn-blog-add {
+    position: relative;
     padding-right: 35px;
     margin-bottom: 20px;
     background: url('images/sprite-blog.png') no-repeat right 8px #1892E4;
-    background: url('images/sprite-blog.png') no-repeat right 8px, -webkit-linear-gradient(top, #1892E4 0, #0C7FC7 100%);
-    background: url('images/sprite-blog.png') no-repeat right 8px, linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
+    background-image: linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
 }
+
+    div.bcms-btn-blog-add:after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 50%;
+        width: 28px;
+        height: 26px;
+        margin-top: -13px;
+        background: url('images/sprite-blog.png') no-repeat right 8px;
+    }
 
     div.bcms-btn-blog-add:active {
         background: url('images/sprite-blog.png') no-repeat right 8px #0C7FC7;
