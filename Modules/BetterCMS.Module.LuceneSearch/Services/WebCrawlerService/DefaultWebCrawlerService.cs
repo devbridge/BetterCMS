@@ -41,10 +41,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
             {
                 TryAuthenticate();
             }
-
-            var response = new PageData();
-            HttpWebResponse httpWebResponse = null;
-
+            
             var fullUrl = string.Concat(webServer.TrimEnd('/'), "/", url.TrimStart('/'));
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(fullUrl);
             httpWebRequest.AllowAutoRedirect = true;
@@ -58,6 +55,11 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
                     httpWebRequest.CookieContainer.Add(cookie);
                 }
             }
+
+            HttpWebResponse httpWebResponse = null;
+            var response = new PageData();
+            response.AbsoluteUri = httpWebRequest.RequestUri.AbsoluteUri;
+            response.AbsolutePath = httpWebRequest.RequestUri.AbsolutePath;
 
             try
             {
