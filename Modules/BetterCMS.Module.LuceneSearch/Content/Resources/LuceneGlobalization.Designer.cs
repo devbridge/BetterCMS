@@ -61,6 +61,15 @@ namespace BetterCMS.Module.LuceneSearch.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Secured content..
+        /// </summary>
+        internal static string SearchResults_Secured_LinkTitle {
+            get {
+                return ResourceManager.GetString("SearchResults_Secured_LinkTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current page is inaccessible to your account..
         /// </summary>
         internal static string SearchResults_Secured_Snippet {

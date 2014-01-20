@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Linq;
 
+using Autofac;
+
+using BetterCMS.Module.LuceneSearch.Models;
+using BetterCMS.Module.LuceneSearch.Services.ScrapeService;
+
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.Api.Operations.Blog.Authors;
 using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Root.Models;
 
 using NUnit.Framework;
 
@@ -19,7 +25,7 @@ namespace BetterCms.Test.Module.Blog.ModelTests.MapTests
             var content = TestDataProvider.CreateNewAuthor();
             RunEntityMapTestsInTransaction(content);  
         }
-
+        
         [Test]
         public void Should_Retrieve_AllField_If_Image_Is_Null()
         {
