@@ -1185,8 +1185,15 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             };
             self.updateLanguageOnDropNewNode = function (pageLanguageId, currentLanguageId) {
                 sitemap.showLoading(true);
-                bcms.logger.debug("NodeViewModel().updateLanguageOnDropNewNode(pageLanguageId=" + pageLanguageId + ", currentLanguageId=" + currentLanguageId + ")");
+                var isActive = self.isActive();
                 self.translationsEnabled = true;
+                if (self.pageId() == null || self.pageId() == defaultIdValue) {
+                    self.activateTranslation("");
+                    self.activateTranslation(currentLanguageId);
+                    self.isActive(isActive);
+                    sitemap.showLoading(false);
+                    return;
+                }
                 var onSaveCompleted = function(json) {
                         sitemap.showMessage(json);
                         if (json.Success) {
@@ -1209,8 +1216,10 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                     self.activateTranslation("");
                                 }
                                 self.activateTranslation(currentLanguageId);
+                                self.isActive(isActive);
                             }
                         } else {
+                            self.isActive(false);
                             self.isDeleted(true);
                         }
                         sitemap.showLoading(false);
