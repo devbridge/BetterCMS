@@ -266,7 +266,7 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                 };
 
             var form = dialog.container.find(selectors.templatesListForm);
-            grid.bindGridForm(form, function (html, data) {
+            grid.bindGridForm(form, function (html) {
                 container.html(html);
                 initializeTemplatesList();
             });
@@ -287,19 +287,17 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
 
             initializeTemplateListEvents(container);
 
-            // Select search.
-            dialog.setFocus();
+            // Select search (timeout is required to work on IE11)
+            grid.focusSearchInput(dialog.container.find(selectors.templateSearchField), true);
         };
 
         /**
         * Search site settings template.
         */
         function searchTemplates(form, container) {
-            grid.submitGridForm(form, function (htmlContent, data) {
+            grid.submitGridForm(form, function (htmlContent) {
                 container.html(htmlContent);
                 initializeTemplatesList();
-                var searchInput = container.find(selectors.templateSearchField);
-                grid.focusSearchInput(searchInput);
             });
         };
 

@@ -126,11 +126,10 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 return false;
             });
 
-            form.find(selectors.searchField).keypress(function (event) {
-                if (event.which == 13) {
-                    bcms.stopEventPropagation(event);
+            bcms.preventInputFromSubmittingForm(form.find(selectors.searchField), {
+                preventedEnter: function () {
                     searchSitemaps(form, container);
-                }
+                },
             });
 
             form.find(selectors.searchButton).on('click', function (event) {
@@ -140,19 +139,17 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             initializeListItems(container);
 
-            // Select search.
-            dialog.setFocus();
+            // Select search (timeout is required to work on IE11)
+            grid.focusSearchInput(dialog.container.find(selectors.searchField), true);
         };
         
         /*
         * Submit sitemap form to force search.
         */
         function searchSitemaps(form, container) {
-            grid.submitGridForm(form, function (htmlContent, data) {
+            grid.submitGridForm(form, function (htmlContent) {
                 container.html(htmlContent);
                 sitemap.initializeSitemapsList(container);
-                var searchInput = container.find(selectors.searchField);
-                grid.focusSearchInput(searchInput);
             });
         };
 
