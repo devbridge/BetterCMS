@@ -2,6 +2,7 @@
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Infrastructure.Attributes;
 
 namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
 {
@@ -71,6 +72,13 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
         [DataMember]
         public IList<SitemapTreeNodeTranslationModel> Translations { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to use page title as node title.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if to use page title as node title; otherwise, <c>false</c>.
+        /// </value>
+        [DataMemberIgnore]
         public bool UsePageTitleAsNodeTitle { get; set; }
     }
 }

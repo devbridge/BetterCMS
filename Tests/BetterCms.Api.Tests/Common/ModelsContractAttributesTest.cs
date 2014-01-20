@@ -48,7 +48,7 @@ namespace BetterCms.Api.Tests.Common
                 foreach (var property in properties)
                 {
                     var propertyAttributes = property.GetCustomAttributes(false);
-                    if (!propertyAttributes.Any(attr => attr.GetType().Name == "DataMemberAttribute"))
+                    if (!propertyAttributes.Any(attr => attr.GetType().Name == "DataMemberAttribute") && !propertyAttributes.Any(attr => attr.GetType().Name == "DataMemberIgnoreAttribute"))
                     {
                         Console.WriteLine("Property {0}.{1} has no DataMemberAttribute", type.Name, property.Name);
                         anyErrors = true;
