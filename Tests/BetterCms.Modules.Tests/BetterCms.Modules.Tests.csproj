@@ -239,6 +239,7 @@
     <Compile Include="Users\ModelTests\MapTests\UserMapTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Contents\Documents\page.authorized.htm" />
     <EmbeddedResource Include="Contents\Images\logo.big.png" />
     <EmbeddedResource Include="Contents\Images\logo.png" />
     <None Include="App.config" />

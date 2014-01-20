@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
 
 using Autofac;
 
@@ -43,6 +45,10 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
 
         private const string FullTextForOneLetterSearchResult = "... in[...]Any section of UI that should update dynamically with Knockout can be handled "
             + "more simply and in a maintainable fashion.Any section of UI that should update dynamically with Knockout can be handled...";
+
+        private const string AuthorizedDocumentPath = "BetterCms.Test.Module.Contents.Documents.page.authorized.htm";
+
+        private bool authorizedDocumentAdded;
 
         [Test]
         public void Should_Return_Correct_Search_Results()
@@ -229,6 +235,49 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
 
             Assert.IsNotNull(results.Items);
             Assert.AreEqual(results.Items.Count, 1, "Should return one item.");
+            Assert.AreEqual(results.Items[0].Link, page3.AbsolutePath);
+        }
+
+        [Test]
+        public void Should_Return_Correctly_SavedHtmlDocument()
+        {
+            var service = new DefaultIndexerService(Container.Resolve<ICmsConfiguration>(), Container.Resolve<IRepository>(),
+                    Container.Resolve<ISecurityService>(), Container.Resolve<IAccessControlService>());
+
+            AddAuthorizedDocumentToIndex(service);
+
+            var results = service.Search(new SearchRequest("\"Test page HTML content\""));
+
+            Assert.IsNotNull(results.Items);
+            Assert.AreEqual(results.Items.Count, 1, "Should return one item.");
+            // Should be found separate word "a" excluding "a" in another words
+            Assert.AreEqual(results.Items[0].Snippet, "authorized-html-example Test page HTML content.");
+        }
+
+        private void AddAuthorizedDocumentToIndex(DefaultIndexerService service)
+        {
+            if (!authorizedDocumentAdded)
+            {
+                string html;
+                using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(AuthorizedDocumentPath))
+                {
+                    using (var reader = new StreamReader(stream))
+                    {
+                        html = reader.ReadToEnd();
+                    }
+                }
+
+                var document = new HtmlDocument();
+                document.LoadHtml(html);
+
+                var page = new PageData { AbsolutePath = "/test-authorized-document", Content = document, Id = Guid.NewGuid(), IsPublished = true };
+
+                service.Open();
+                service.AddHtmlDocument(page);
+                service.Close();
+
+                authorizedDocumentAdded = true;
+            }
         }
 
         private string ReplaceStringWithNumber(string text, int suffix)
