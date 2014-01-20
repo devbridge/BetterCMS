@@ -24,6 +24,7 @@
 {
     @Html.HiddenGridOptions(Model.GridOptions)
     <div class="bcms-twocols-title-block">
+        <div class="bcms-large-titles">@NavigationGlobalization.SiteSettings_Sitemaps_Title</div>
         <div class="bcms-btn-links-main" id="bcms-create-sitemap-button">@NavigationGlobalization.SiteSettings_Sitemaps_AddNew</div>
         <div class="bcms-search-block">
             @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })

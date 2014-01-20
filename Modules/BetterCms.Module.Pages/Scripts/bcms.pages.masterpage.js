@@ -55,11 +55,10 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
                 return false;
             });
             
-            form.find(selectors.searchField).keypress(function (event) {
-                if (event.which == 13) {
-                    bcms.stopEventPropagation(event);
+            bcms.preventInputFromSubmittingForm(form.find(selectors.searchField), {
+                preventedEnter: function () {
                     searchMasterPages(form, container);
-                }
+                },
             });
 
             form.find(selectors.searchButton).on('click', function () {
@@ -68,16 +67,14 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
 
             initializeListItems(container);
             
-            // Select search.
-            dialog.setFocus();
+            // Select search (timeout is required to work on IE11)
+            grid.focusSearchInput(container.find(selectors.searchField), true);
         };
 
         function searchMasterPages(form, container) {
             grid.submitGridForm(form, function (htmlContent, data) {
                 container.html(htmlContent);
                 module.initializeMasterPagesList(container);
-                var searchInput = container.find(selectors.searchField);
-                grid.focusSearchInput(searchInput);
             });
         };
 

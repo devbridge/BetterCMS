@@ -508,9 +508,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             });
 
             // Select search (timeout is required to work on IE11)
-            setTimeout(function() {
-                grid.focusSearchInput(dialog.container.find(selectors.siteSettingsPagesSearchField));
-            }, 200);
+            grid.focusSearchInput(dialog.container.find(selectors.siteSettingsPagesSearchField), true);
         };
 
         /**
@@ -556,7 +554,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         */
         page.searchSiteSettingsPages = function (form, container, opts) {
             grid.submitGridForm(form, function (htmlContent, data) {
-                // Blur seargh field - IE11 fix
+                // Blur searh field - IE11 fix
                 container.find(selectors.siteSettingsPagesSearchField).blur();
                 
                 opts.dialogContainer.setContent(htmlContent);

@@ -255,4 +255,7 @@
   <data name="Sitemap_EditDialog_SitemapTitle_Tooltip_Description" xml:space="preserve">
     <value>Edit the title of this sitemap.</value>
   </data>
+  <data name="SiteSettings_Sitemaps_Title" xml:space="preserve">
+    <value>Site Maps</value>
+  </data>
 </root>

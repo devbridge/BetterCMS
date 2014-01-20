@@ -709,7 +709,7 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image properies have changed. Do you want to save an image before continue?.
+        ///   Looks up a localized string similar to Image properties have changed. Do you want to save an image before continue?.
         /// </summary>
         public static string ImageEditor_HasChanges_Message {
             get {

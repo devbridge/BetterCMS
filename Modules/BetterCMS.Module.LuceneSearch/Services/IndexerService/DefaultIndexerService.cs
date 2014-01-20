@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
@@ -42,6 +43,10 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             public const string Title = "title";
             public const string Id = "id";
         }
+
+        private static string[] excludedNodeTypes = new[] { "noscript", "script" };
+        private static string[] excludedIds = new[] { "bcms-browser-info", "bcms-sidemenu" };
+        private static string[] excludedClasses = new[] { "bcms-layout-path" };
 
         private IndexWriter writer;
 
@@ -201,26 +206,50 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         private static string GetBody(HtmlDocument html)
         {
-            var contentText = string.Empty;
+            var contentText = new StringBuilder();
             var content = html.DocumentNode.SelectSingleNode("//body");
 
             if (content != null)
             {
-                contentText = content.InnerText;
+                foreach (var childNode in content.ChildNodes)
+                {
+                    if (CanIncludeNodeToResults(childNode))
+                    {
+                        contentText.Append(childNode.InnerText);
+                    }
+                }
+
+                // contentText = content.InnerText;
             }
 
-            return RemoveDuplicateWhitespace(contentText);
+            return RemoveDuplicateWhitespace(contentText.ToString());
         }
 
         private static string RemoveDuplicateWhitespace(string html)
         {
-            return Regex.Replace(html, "\\s+", " ");
+            return Regex.Replace(html, "\\s+", " ").Trim();
         }
 
         public void Close()
         {
             writer.Optimize();
             writer.Dispose();
+        }
+
+        private static bool CanIncludeNodeToResults(HtmlNode node)
+        {
+            if (excludedNodeTypes.Contains(node.Name))
+            {
+                return false;
+            }
+
+            if (node.Attributes.Any(a => (a.Name == "id" && excludedIds.Contains(a.Value))
+                || (a.Name == "class" && excludedClasses.Contains(a.Value))))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private static string GetSnippet(string text, string fullSearchString)

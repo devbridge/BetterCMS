@@ -318,11 +318,10 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             return false;
         });
         
-        form.find(selectors.siteSettingsBlogsSearchInput).keypress(function (event) {
-            if (event.which == 13) {
-                bcms.stopEventPropagation(event);
+        bcms.preventInputFromSubmittingForm(form.find(selectors.siteSettingsBlogsSearchInput), {
+            preventedEnter: function () {
                 searchSiteSettingsBlogs(container, form);
-            }
+            },
         });
 
         form.find(selectors.siteSettingsBlogTitleCell).on('click', function (event) {
@@ -351,6 +350,9 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         filter.bind(container, ((content.Data) ? content.Data : jsonData), function () {
             searchSiteSettingsBlogs(container, form);
         });
+        
+        // Select search (timeout is required to work on IE11)
+        grid.focusSearchInput(container.find(selectors.siteSettingsBlogsSearchInput), true);
     }
      
     /**
@@ -394,8 +396,6 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         grid.submitGridForm(form, function (htmlContent, data) {
             container.html(htmlContent);
             initializeSiteSettingsBlogsList(container, htmlContent, data);
-            var searchInput = container.find(selectors.siteSettingsBlogsSearchInput);
-            grid.focusSearchInput(searchInput);
         });
     }
 

@@ -454,12 +454,12 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             form.on('submit', function(event) {
                 event.preventDefault();
-                searchSiteSettingsWidgets(form, container);
+                searchSiteSettingsWidgets(form);
                 return false;
             });
 
             form.find(selectors.widgetsSearchButton).on('click', function() {
-                searchSiteSettingsWidgets(form, container);
+                searchSiteSettingsWidgets(form);
             });
 
             container.find(selectors.widgetCreateButton).on('click', function () {
@@ -472,19 +472,17 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             
             initializeSiteSettingsWidgetListEvents(container);
 
-            // Select search.
-            dialog.setFocus();
+            // Select search (timeout is required to work on IE11)
+            grid.focusSearchInput(dialog.container.find(selectors.widgetsSearchField), true);
         };
 
         /**
         * Search site settings widgets.
         */
-        function searchSiteSettingsWidgets(form, container) {
+        function searchSiteSettingsWidgets(form) {
             grid.submitGridForm(form, function(data) {
                 siteSettings.setContent(data);
                 initializeSiteSettingsWidgetsList();                
-                var searchInput = container.find(selectors.widgetsSearchField);
-                grid.focusSearchInput(searchInput);
             });
         };
 
