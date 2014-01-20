@@ -395,5 +395,26 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             var retrieveUnpublishedPages = securityService.IsAuthorized(RootModuleConstants.UserRoles.MultipleRoles(allRoles.ToArray()));
             return retrieveUnpublishedPages;
         }
+
+        public void Dispose()
+        {
+            if (writer != null)
+            {
+                writer.Dispose();
+            }
+            if (reader != null)
+            {
+                reader.Dispose();
+            }
+            if (index != null)
+            {
+                index.Dispose();
+            }
+            if (analyzer != null)
+            {
+                analyzer.Close();
+                analyzer.Dispose();
+            }
+        }
     }
 }
