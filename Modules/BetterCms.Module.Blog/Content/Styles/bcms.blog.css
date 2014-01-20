@@ -3,23 +3,23 @@ div.bcms-btn-blog-add {
     position: relative;
     padding-right: 35px;
     margin-bottom: 20px;
-    background: url('images/sprite-blog.png') no-repeat right 8px #1892E4;
+    background-color: #1892E4;
     background-image: linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
 }
+
+    div.bcms-btn-blog-add:active {
+        background-color: #0C7FC7;
+    }
 
     div.bcms-btn-blog-add:after {
         content: "";
         position: absolute;
-        right: 0;
+        right: 6px;
         top: 50%;
-        width: 28px;
-        height: 26px;
-        margin-top: -13px;
-        background: url('images/sprite-blog.png') no-repeat right 8px;
-    }
-
-    div.bcms-btn-blog-add:active {
-        background: url('images/sprite-blog.png') no-repeat right 8px #0C7FC7;
+        width: 20px;
+        height: 20px;
+        margin-top: -10px;
+        background: url('images/sprite-blog.png') no-repeat -7px 1px;
     }
 
 /*blog templates grid*/
