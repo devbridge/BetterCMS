@@ -322,7 +322,7 @@
     <value>Redirect deleted successfully.</value>
   </data>
   <data name="DeleteWidget_Confirmation_Message" xml:space="preserve">
-    <value>Are you sure you want to delete {0} widget?</value>
+    <value>Are you sure you want to delete "{0}" widget?</value>
   </data>
   <data name="DeleteWidget_DeletedSuccessfully_Message" xml:space="preserve">
     <value>Widget deleted successfully</value>
@@ -619,10 +619,10 @@
     <value>Tags</value>
   </data>
   <data name="SiteSettings_Tags_NewTagCreatedMessage" xml:space="preserve">
-    <value>A tag {0} was saved.</value>
+    <value>A tag "{0}" was saved.</value>
   </data>
   <data name="SiteSettings_Tags_TagRemovedMessage" xml:space="preserve">
-    <value>A tag {0} was removed.</value>
+    <value>A tag "{0}" was removed.</value>
   </data>
   <data name="SiteSettings_WidgetsMenuItem" xml:space="preserve">
     <value>Widgets</value>
@@ -649,7 +649,7 @@
     <value>Page with entered URL already exists. Please update URL (path) and try again.</value>
   </data>
   <data name="WidgetPreview_Failed" xml:space="preserve">
-    <value>Failed to render a preview of the '{0}' widget. {1}. Please contact your system administrator.</value>
+    <value>Failed to render a preview of the "{0}" widget. {1}. Please contact your system administrator.</value>
   </data>
   <data name="WidgetPreview_Title" xml:space="preserve">
     <value>Widget Preview</value>
@@ -817,7 +817,7 @@
     <value>Template created succesfully.</value>
   </data>
   <data name="SiteSettings_Template_DeleteCategoryMessage" xml:space="preserve">
-    <value>Are you sure you want to delete the {0} template?</value>
+    <value>Are you sure you want to delete the "{0}" template?</value>
   </data>
   <data name="SiteSettings_Template_RegisterNew" xml:space="preserve">
     <value>Register +</value>
@@ -904,7 +904,7 @@
     <value>Status</value>
   </data>
   <data name="Widgets_CanNotDeleteWidgetIsInUse_Message" xml:space="preserve">
-    <value>Cannot remove {0} widget because it is in use.</value>
+    <value>Cannot remove "{0}" widget because it is in use.</value>
   </data>
   <data name="ContentStatus_Archived" xml:space="preserve">
     <value>Archived</value>
@@ -1234,10 +1234,10 @@
     <value>Page cannot contain two or more translations to the same language.</value>
   </data>
   <data name="SavePagePropertiesCommand_PageTranslationsHasDifferentLanguage_Message" xml:space="preserve">
-    <value>Page {0} cannot be assigned as translation, because it has assigned another language.</value>
+    <value>Page "{0}" cannot be assigned as translation, because it has assigned another language.</value>
   </data>
   <data name="SavePagePropertiesCommand_PageTranslationsIsAlreadyAssigned_Message" xml:space="preserve">
-    <value>Page {0} cannot be assigned as translation, because it's already assigned to another page.</value>
+    <value>Page "{0}" cannot be assigned as translation, because it's already assigned to another page.</value>
   </data>
   <data name="ClonePageWithLanguage_Dialog_Language_Title" xml:space="preserve">
     <value>New Page Language</value>
@@ -1258,7 +1258,7 @@
     <value>There is already an item with selected language. Are you sure you want to replace it?</value>
   </data>
   <data name="EditPageTranslations_ReplaceTranslationWithCurrentLanguage_ConfirmationMessage" xml:space="preserve">
-    <value>There is already translation with current language. If you change current page's language to {0}, translation will be removed from list. Are you sure you want to continue?</value>
+    <value>There is already translation with current language. If you change current page's language to "{0}", translation will be removed from list. Are you sure you want to continue?</value>
   </data>
   <data name="EditPageTranslations_AddTranslation_ButtonTitle" xml:space="preserve">
     <value>Add Translation +</value>
@@ -1288,7 +1288,7 @@
     <value>There are no languages created yet. To create a language, go to Site Settings -&gt; Languages or contact your system administrator.</value>
   </data>
   <data name="EditPageTranslations_PageHasSameCulture_Message" xml:space="preserve">
-    <value>Page {0} cannot be selected as current page translation, because it has assigned the same language as the current page.</value>
+    <value>Page "{0}" cannot be selected as current page translation, because it has assigned the same language as the current page.</value>
   </data>
   <data name="EditPageProperties_TranslationsTab_PageSelectionPlaceholder" xml:space="preserve">
     <value>Type page title here ...</value>

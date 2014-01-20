@@ -280,7 +280,7 @@
     <value>Category deleted successfully.</value>
   </data>
   <data name="DeleteOption_Confirmation_Message" xml:space="preserve">
-    <value>Are you sure you want to delete option {0}?</value>
+    <value>Are you sure you want to delete option "{0}"?</value>
   </data>
   <data name="DeleteTag_DeletedSuccessfully_Message" xml:space="preserve">
     <value>Tag removed successfully.</value>
@@ -385,7 +385,7 @@
     <value>Option "{0}" specified more than once. Option names should be unique.</value>
   </data>
   <data name="Option_Invalid_Message" xml:space="preserve">
-    <value>Option {0} value is invalid. Should be of type: {1}.</value>
+    <value>Option "{0}" value is invalid. Should be of type: {1}.</value>
   </data>
   <data name="Paging_Page_Title" xml:space="preserve">
     <value>Page</value>
@@ -406,7 +406,7 @@
     <value>Category already exists. </value>
   </data>
   <data name="SaveOptions_CannotDeleteOption_Message" xml:space="preserve">
-    <value>Cannot delete option {0}, because it's marked as non-deletable.</value>
+    <value>Cannot delete option "{0}", because it's marked as non-deletable.</value>
   </data>
   <data name="SaveTag_TagExists_Message" xml:space="preserve">
     <value>Tag already exists.</value>
@@ -451,7 +451,7 @@
     <value>Add New +</value>
   </data>
   <data name="SiteSettings_Categories_DeleteCategoryMessage" xml:space="preserve">
-    <value>Are you sure you want to delete the {0} category?</value>
+    <value>Are you sure you want to delete the "{0}" category?</value>
   </data>
   <data name="SiteSettings_Categories_NameColumn" xml:space="preserve">
     <value>Category</value>
@@ -469,7 +469,7 @@
     <value>Add New +</value>
   </data>
   <data name="SiteSettings_Tags_DeleteTagMessage" xml:space="preserve">
-    <value>Are you sure you want to delete the {0} tag?</value>
+    <value>Are you sure you want to delete the "{0}" tag?</value>
   </data>
   <data name="SiteSettings_Tags_Search" xml:space="preserve">
     <value>Search</value>
@@ -496,7 +496,7 @@
     <value>Publish / Unpublish Content, Restore Content from History</value>
   </data>
   <data name="Validation_CurrentUserHasNoRightsToUpdateOrDelete_Message" xml:space="preserve">
-    <value>Current user {0} has no access rights to update or delete the '{1}' secured record.</value>
+    <value>Current user "{0}" has no access rights to update or delete the "{1}" secured record.</value>
   </data>
   <data name="Validation_Email_Message" xml:space="preserve">
     <value>Invalid email address.</value>
@@ -547,7 +547,7 @@
     <value>Language created successfully</value>
   </data>
   <data name="DeleteLanguage_Confirmation_Message" xml:space="preserve">
-    <value>Are you sure you want to delete the language {0}?</value>
+    <value>Are you sure you want to delete the language "{0}"?</value>
   </data>
   <data name="DeleteLanguage_DeletedSuccessfully_Message" xml:space="preserve">
     <value>Language deleted successfully</value>
@@ -574,7 +574,7 @@
     <value>Language "{0}" doesn't exist.</value>
   </data>
   <data name="DeleteLanguageCommand_PagesAreUsingLanguage_Message" xml:space="preserve">
-    <value>Cannot delete language {0}, because it's used in pages.</value>
+    <value>Cannot delete language "{0}", because it's used in pages.</value>
   </data>
   <data name="InvariantLanguage_Title" xml:space="preserve">
     <value>Default language</value>
