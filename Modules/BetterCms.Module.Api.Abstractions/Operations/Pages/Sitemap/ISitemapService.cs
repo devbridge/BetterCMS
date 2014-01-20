@@ -6,6 +6,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap
 {
     public interface ISitemapService
     {
+        GetSitemapsResponse Get(GetSitemapsRequest request);
+
         ISitemapTreeService Tree { get; }
         
         INodesService Nodes { get; }
