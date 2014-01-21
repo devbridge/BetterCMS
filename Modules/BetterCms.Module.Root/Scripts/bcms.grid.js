@@ -13,8 +13,9 @@ bettercms.define('bcms.grid', ['bcms.jquery', 'bcms'], function ($, bcms) {
             hiddenSortColumnField: '#bcms-grid-sort-column',
             hiddenSortDirectionField: '#bcms-grid-sort-direction',
             hiddenPageNumberField: '#bcms-grid-page-number',
-            formLoaderContainer: '.bcms-rightcol',
-            pageNumbers: '.bcms-pager-no, .bcms-pager-prev, .bcms-pager-next'
+            formLoaderContainer: '.bcms-rightcol:first',
+            pageNumbers: '.bcms-pager-no, .bcms-pager-prev, .bcms-pager-next',
+            scrollWindow: '.bcms-scroll-window:first'
         },
         links = {
             
@@ -87,6 +88,9 @@ bettercms.define('bcms.grid', ['bcms.jquery', 'bcms'], function ($, bcms) {
     */
     function submitGridForm(form, onSuccess) {
         var container = form.parents(selectors.formLoaderContainer);
+        if (container.length == 0) {
+            container = form.parents(selectors.scrollWindow);
+        }
         if (container.length == 0) {
             container = form;
         }
