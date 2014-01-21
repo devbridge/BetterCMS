@@ -148,8 +148,8 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         */
         function searchSitemaps(form, container) {
             grid.submitGridForm(form, function (htmlContent) {
-                container.html(htmlContent);
-                sitemap.initializeSitemapsList(container);
+                siteSettings.setContent(htmlContent);
+                sitemap.initializeSitemapsList(siteSettings.getModalDialog().container);
             });
         };
 
