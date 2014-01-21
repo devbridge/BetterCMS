@@ -108,14 +108,14 @@
     <None Include="Packages\BetterCms.Module.Pages\BetterCms.Module.Pages.nuspec.template">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Packages\BetterCms.Module.Root\cms.config">
+    <None Include="Packages\BetterCMS\cms.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="Packages\BetterCms.Module.Root\install.ps1" />
     <None Include="Packages\BetterCms.Module.Root\BetterCms.Module.Root.nuspec.template">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Packages\BetterCms.Module.Root\web.config.transform">
+    <None Include="Packages\BetterCMS\web.config.transform">
       <SubType>Designer</SubType>
     </None>
     <None Include="Packages\BetterCMS.Module.Users.Api\BetterCms.Module.Users.Api.nuspec.template">
@@ -238,12 +238,6 @@ xcopy "$(ProjectDir)$(OutDir)BetterCms.Configuration.dll" "$(ProjectDir)$(OutDir
 
 rem --- Creating BetterCms.Module.Root package ------------------------------------------------------------------------
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Root"
-
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Root\content"
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Root\content\net40"
-copy "$(ProjectDir)Packages\BetterCms.Module.Root\web.config.transform" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Root\content\net40\web.config.transform" /Y
-mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Root\content\net40\Config"
-copy "$(ProjectDir)Packages\BetterCms.Module.Root\cms.config" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Root\content\net40\Config\cms.config" /Y
 
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Root\lib"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Root\lib\net40"
@@ -418,9 +412,14 @@ xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.Users.Api.dll" "$(ProjectDir)$(Out
 rem --- Creating BetterCMS package ------------------------------------------------------------------------------------
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCMS"
 
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCMS\content"
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCMS\content\net40"
+copy "$(ProjectDir)Packages\BetterCMS\web.config.transform" "$(ProjectDir)$(OutDir)packages\BetterCMS\content\net40\web.config.transform" /Y
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCMS\content\net40\Config"
+copy "$(ProjectDir)Packages\BetterCMS\cms.config" "$(ProjectDir)$(OutDir)packages\BetterCMS\content\net40\Config\cms.config" /Y
+
 "$(ProjectDir)$(OutDir)BetterCms.NugetPackage.exe" "$(ProjectDir)Packages\BetterCMS\BetterCMS.nuspec.template" "$(ProjectDir)$(OutDir)packages\BetterCMS\BetterCMS.nuspec"
 "$(SolutionDir).nuget\nuget.exe" pack "$(ProjectDir)$(OutDir)packages\BetterCMS\BetterCMS.nuspec" -OutputDirectory "$(ProjectDir)$(OutDir)\" -NoPackageAnalysis
-
 
 rem --- Creating BetterCms.Module.Search package ------------------------------------------------------------------
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search"
