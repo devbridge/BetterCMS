@@ -10,7 +10,7 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
         initialized = false,
         // Selectors used in the module to locate DOM elements:
         selectors = {
-            zIndexLayers: '.bcms-layer',
+            zIndexLayers: '.bcms-layer, .cke_maximized',
             browserInfo: '#bcms-browser-info',
             browserInfoClose: '.bcms-msg-message-close'
         },
