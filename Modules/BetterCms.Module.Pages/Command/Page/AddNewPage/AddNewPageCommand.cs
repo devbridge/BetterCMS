@@ -87,6 +87,7 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
             if (showLanguages)
             {
                 model.Languages = languagesFuture.ToList();
+                model.ShowLanguages = model.Languages.Any();
             }
 
             if (model.Templates.Count > 0)
