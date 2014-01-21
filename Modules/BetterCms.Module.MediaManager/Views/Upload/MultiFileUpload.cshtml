@@ -96,7 +96,7 @@
                     <!-- ko if: !isProgressVisible() -->
                     <div class="bcms-uploaded-info">&nbsp;</div>
                     <!-- /ko -->
-                    <div class="bcms-upload-size-info"><b>@MediaGlobalization.MultiFileUpload_FileSize</b><span data-bind="text: fileSizeFormated"></span></div>
+                    <div class="bcms-upload-size-info"><b>@MediaGlobalization.MultiFileUpload_FileSize</b> <span data-bind="text: fileSizeFormated"></span></div>
                     <div class="bcms-media-delete-holder">
                         <a class="bcms-icn-delete" data-bind="click: function() { $root.removeUpload($data); }, text: uploadCompleted() || uploadFailed() ? '@RootGlobalization.Button_Remove' : '@RootGlobalization.Button_Cancel'"></a>
                     </div>

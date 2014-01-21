@@ -95,7 +95,7 @@
                     </div>
                     <!-- ko if: uploadCompleted() && !uploadFailed() -->
                     <div class="bcms-uploaded-info" data-bind="text: uploadProgress() + '%'"></div>
-                    <div class="bcms-upload-size-info"><b>@MediaGlobalization.MultiFileUpload_FileSize</b><span data-bind="text: fileSizeFormated"></span></div>
+                    <div class="bcms-upload-size-info"><b>@MediaGlobalization.MultiFileUpload_FileSize</b> <span data-bind="text: fileSizeFormated"></span></div>
                     <div class="bcms-media-delete-holder">
                         <a class="bcms-icn-delete" data-bind="click: function() { $root.removeUpload($data); }">@RootGlobalization.Button_Remove</a>
                     </div>
