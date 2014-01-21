@@ -4,7 +4,7 @@ using FluentMigrator;
 
 namespace BetterCms.Module.Blog.Models.Migrations
 {
-    [Migration(201805271258)]
+    [Migration(201305271258)]
     public class Migration201305271258 : DefaultMigration
     {
         /// <summary>
