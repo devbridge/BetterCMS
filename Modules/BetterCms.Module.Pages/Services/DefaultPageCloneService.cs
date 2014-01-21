@@ -197,6 +197,10 @@ namespace BetterCms.Module.Pages.Services
             if (cloneAsMasterPage)
             {
                 newPage.IsMasterPage = true;
+            }
+
+            if (newPage.IsMasterPage)
+            {
                 newPage.Status = PageStatus.Published;
                 newPage.Language = null;
             }
