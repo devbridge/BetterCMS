@@ -5,7 +5,6 @@ using System.Linq;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Helpers;
-using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Sitemap;
 using BetterCms.Module.Root.Models;
@@ -57,10 +56,14 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemap
         {
             if (sitemapId.HasDefaultValue())
             {
+                var langs = CmsConfiguration.EnableMultilanguage ? LanguageService.GetLanguages().ToList() : new List<LookupKeyValue>();
                 return new SitemapViewModel()
                     {
                         AccessControlEnabled = CmsConfiguration.Security.AccessControlEnabled,
-                        UserAccessList = AccessControlService.GetDefaultAccessList(SecurityService.GetCurrentPrincipal()).Select(f => new UserAccessViewModel(f)).ToList()
+                        UserAccessList = AccessControlService.GetDefaultAccessList(SecurityService.GetCurrentPrincipal()).Select(f => new UserAccessViewModel(f)).ToList(),
+                        ShowLanguages = CmsConfiguration.EnableMultilanguage && langs.Any(),
+                        Languages = langs,
+                        ShowMacros = CmsConfiguration.EnableMacros
                     };
             }
 
@@ -112,7 +115,8 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemap
                     Tags = tagsFuture.ToList(),
                     AccessControlEnabled = CmsConfiguration.Security.AccessControlEnabled,
                     ShowLanguages = CmsConfiguration.EnableMultilanguage && languages.Any(),
-                    Languages = languages
+                    Languages = languages,
+                    ShowMacros = CmsConfiguration.EnableMacros
                 };
 
             if (userAccessFuture != null)

@@ -30,7 +30,7 @@
             <div class="bcms-placement-node" data-bind="
                         attr: { id: containerId }, 
                         css: { 'bcms-placement-node-drag': isBeingDragged(), 'bcms-placement-node-edit': isActive(), 'bcms-placement-one-active': !isBeingDragged() && superDraggable() },
-                        style: { height: isActive() ? isUrlReadonly() ? '54px' : '101px' : '' }">
+                        style: { height: getNodeHeight() }">
                 <!-- ko if: hasChildNodes() -->
                 <a class="bcms-expand-collapse-node" data-bind="click: toggleExpand, css: { 'bcms-expanded-nodes': isExpanded() }">&nbsp;</a>
                 <!-- /ko -->
@@ -68,6 +68,20 @@
                         <div class="bcms-btn-links-small" data-bind="click: cancelEditSitemapNode">@RootGlobalization.Button_Cancel</div>
                         <!-- /ko -->
                     </div>
+                    <!-- ko if: getSitemap().showMacros -->
+                    <div class="bcms-edit-node-holder">
+                        @Html.Tooltip(NavigationGlobalization.Sitemap_NodeEdit_Title_Tooltip_Message)
+                        <div class="bcms-custom-input-box" style="width: 100%;">
+                            @Html.TextBoxFor(m => m.Macro, new
+                            {
+                                data_bind = "value: macro, valueUpdate: 'afterkeydown', enterPress: saveSitemapNodeWithValidation, escPress: cancelEditSitemapNode, hasfocus: isActive()",
+                                @class = "bcms-editor-field-box",
+                                Title = (string)null,
+                            })
+                            @Html.BcmsValidationMessageFor(m => m.Macro)
+                        </div>
+                    </div>
+                    <!-- /ko -->
                     <div class="bcms-edit-node-holder">
                         <!-- ko if: isUrlReadonly -->
                         <div class="bcms-placement-path" data-bind="text: url"></div>

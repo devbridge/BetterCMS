@@ -62,7 +62,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemapNode
                 SitemapService.ArchiveSitemap(sitemap);
             }
 
-            var node = SitemapService.SaveNode(sitemap, request.Id, request.Version, request.Url, request.Title, request.PageId, request.UsePageTitleAsNodeTitle, request.DisplayOrder, request.ParentId);
+            var node = SitemapService.SaveNode(sitemap, request.Id, request.Version, request.Url, request.Title, request.Macro, request.PageId, request.UsePageTitleAsNodeTitle, request.DisplayOrder, request.ParentId);
 
             UnitOfWork.Commit();
 

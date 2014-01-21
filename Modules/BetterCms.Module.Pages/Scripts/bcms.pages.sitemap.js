@@ -770,6 +770,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     self.changeLanguageForNodes(node.childNodes());
                 }
             };
+            self.showMacros = ko.observable(jsonSitemap.ShowMacros);
             self.showLanguages = ko.observable(jsonSitemap.ShowLanguages);
             self.language = jsonSitemap.ShowLanguages ? new LanguageViewModel(jsonSitemap.Languages, null, self.onLanguageChanged) : null,
 
@@ -967,6 +968,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.id = ko.observable(defaultIdValue);
             self.version = ko.observable(0);
             self.title = ko.observable();
+            self.macro = ko.observable();
             self.url = ko.observable();
             self.pageId = ko.observable(defaultIdValue);
             self.usePageTitleAsNodeTitle = ko.observable(false);
@@ -1017,6 +1019,15 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.getUrlReadonlyState = ko.computed(function () {
                 return self.isUrlReadonly();
             });
+            self.getNodeHeight = ko.computed(function () {
+                if (self.isActive()) {
+                    if (self.getSitemap().showMacros) {
+                        return self.isUrlReadonly() ? '89px' : '136px';
+                    }
+                    return self.isUrlReadonly() ? '54px' : '101px';
+                }
+                return '';
+            });
 
             // User for validation.
             self.containerId = 'node-' + nodeId++;
@@ -1029,12 +1040,14 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.startEditSitemapNode = function () {
                 self.titleOldValue = self.title();
                 self.urlOldValue = self.url();
+                self.macroOldValue = self.macro();
                 self.isActive(true);
             };
             self.cancelEditSitemapNode = function () {
                 self.isActive(false);
                 self.title(self.titleOldValue);
                 self.url(self.urlOldValue);
+                self.macro(self.macroOldValue);
                 if (self.id() == defaultIdValue) {
                     self.parentNode().childNodes.remove(self);
                 }
@@ -1150,9 +1163,6 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     var active = self.activeTranslation(),
                         isModified = active.isModified();
 
-                    if (active.languageId() == languageId) {
-                        return;
-                    }
                     if (active.title() != self.title()) {
                         active.title(self.title());
                         active.usePageTitleAsNodeTitle(false);
@@ -1162,13 +1172,21 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         active.url(self.url());
                         isModified = true;
                     }
+                    if (active.macro() != self.macro()) {
+                        active.macro(self.macro());
+                        isModified = true;
+                    }
 
                     active.isModified(isModified);
+                    if (active.languageId() == languageId) {
+                        return;
+                    }
                 }
 
                 if (self.translations[languageId] == null) {
                     self.translations[languageId] = new TranslationViewModel(self, languageId);
                     if (languageId == "") {
+                        self.translations[languageId].macro(self.macro());
                         self.translations[languageId].version(self.version());
                         self.translations[languageId].isModified(true);
                     }
@@ -1179,6 +1197,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 self.title(self.translations[languageId].title());
                 self.url(self.translations[languageId].url());
                 self.version(self.translations[languageId].version());
+                self.macro(self.translations[languageId].macro());
             };
             self.updateLanguageOnDropNewNode = function (pageLanguageId, currentLanguageId) {
                 sitemap.showLoading(true);
@@ -1247,6 +1266,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 self.id(jsonNode.Id);
                 self.version(jsonNode.Version);
                 self.title(jsonNode.Title);
+                self.macro(jsonNode.Macro);
                 self.url(jsonNode.Url);
                 self.pageId(jsonNode.PageId);
                 self.usePageTitleAsNodeTitle(jsonNode.UsePageTitleAsNodeTitle);
@@ -1262,6 +1282,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             translation.usePageTitleAsNodeTitle(translationJson.UsePageTitleAsNodeTitle);
                             translation.url(translationJson.Url);
                             translation.version(translationJson.Version);
+                            translation.macro(translationJson.Macro);
                             self.translations[translationJson.LanguageId] = translation;
                         }
                     }
@@ -1291,6 +1312,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             Id: translation.id(),
                             LanguageId: translation.languageId(),
                             Title: translation.title(),
+                            Macro: translation.macro(),
                             UsePageTitleAsNodeTitle: translation.usePageTitleAsNodeTitle(),
                             Url: translation.url(),
                             Version: translation.version(),
@@ -1302,15 +1324,14 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.toJson = function () {
                 var currentTranslation = null;
                 if (self.translationsEnabled) {
-                    currentTranslation = self.activateTranslation();
-                    if (currentTranslation != null) {
-                        self.activateTranslation("");
-                    }
+                    currentTranslation = self.activeTranslation();
+                    self.activateTranslation("");
                 }
                 var params = {
                     Id: self.id(),
                     Version: self.translationsEnabled ? self.translations[""].version() : self.version(),
                     Title: self.translationsEnabled ? self.translations[""].title() : self.title(),
+                    Macro: self.translationsEnabled ? self.translations[""].macro() : self.macro(),
                     UsePageTitleAsNodeTitle: self.usePageTitleAsNodeTitle(),
                     Url: self.translationsEnabled ? self.translations[""].url() : self.url(),
                     PageId: self.pageId(),
@@ -1360,6 +1381,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             var self = this;
             self.node = node;
             self.id = ko.observable();
+            self.macro = ko.observable();
             self.usePageTitleAsNodeTitle = ko.observable(false);
             self.languageId = ko.observable(languageId == null ? "" : languageId);
             var defaultTranslation = node.translations[""];

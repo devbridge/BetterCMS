@@ -58,5 +58,13 @@ namespace BetterCms.Module.Pages.Models
         /// <c>true</c> if use page title as node title; otherwise, <c>false</c>.
         /// </value>
         public virtual bool UsePageTitleAsNodeTitle { get; set; }
+
+        /// <summary>
+        /// Gets or sets the macro.
+        /// </summary>
+        /// <value>
+        /// The macro.
+        /// </value>
+        public virtual string Macro { get; set; }
     }
 }

@@ -27,6 +27,7 @@ namespace BetterCms.Configuration
         private const string RenderContentEndingDivAttribute = "renderContentEndingDiv";
         private const string ContentEndingDivCssClassNameAttribute = "contentEndingDivCssClassName";
         private const string EnableMultilanguageAttribute = "enableMultilanguage";
+        private const string EnableMacrosAttribute = "enableMacros";
 
         /// <summary>
         /// The version backing field.
@@ -212,6 +213,19 @@ namespace BetterCms.Configuration
         {
             get { return (bool)this[EnableMultilanguageAttribute]; }
             set { this[EnableMultilanguageAttribute] = value; }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether macros are enabled.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if macros are enabled; otherwise, <c>false</c>.
+        /// </value>
+        [ConfigurationProperty(EnableMacrosAttribute, IsRequired = false, DefaultValue = false)]
+        public bool EnableMacros
+        {
+            get { return (bool)this[EnableMacrosAttribute]; }
+            set { this[EnableMacrosAttribute] = value; }
         }
 
         /// <summary>

@@ -24,12 +24,18 @@ namespace BetterCms.Module.Pages.Services
         private readonly IRepository repository;
 
         /// <summary>
+        /// The CMS configuration.
+        /// </summary>
+        private readonly ICmsConfiguration cmsConfiguration;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DefaultSitemapService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
-        public DefaultSitemapService(IRepository repository)
+        public DefaultSitemapService(IRepository repository, ICmsConfiguration cmsConfiguration)
         {
             this.repository = repository;
+            this.cmsConfiguration = cmsConfiguration;
         }
 
         /// <summary>
@@ -121,7 +127,9 @@ namespace BetterCms.Module.Pages.Services
         /// <param name="version">The version.</param>
         /// <param name="url">The URL.</param>
         /// <param name="title">The title.</param>
+        /// <param name="macro">The macro.</param>
         /// <param name="pageId">The page identifier.</param>
+        /// <param name="usePageTitleAsNodeTitle">if set to <c>true</c> [use page title as node title].</param>
         /// <param name="displayOrder">The display order.</param>
         /// <param name="parentId">The parent id.</param>
         /// <param name="isDeleted">if set to <c>true</c> node is deleted.</param>
@@ -129,7 +137,7 @@ namespace BetterCms.Module.Pages.Services
         /// <returns>
         /// Updated or newly created sitemap node.
         /// </returns>
-        public SitemapNode SaveNode(Sitemap sitemap, Guid nodeId, int version, string url, string title, Guid pageId, bool usePageTitleAsNodeTitle, int displayOrder, Guid parentId, bool isDeleted = false, SitemapNode parentNode = null)
+        public SitemapNode SaveNode(Sitemap sitemap, Guid nodeId, int version, string url, string title, string macro, Guid pageId, bool usePageTitleAsNodeTitle, int displayOrder, Guid parentId, bool isDeleted = false, SitemapNode parentNode = null)
         {
             var node = nodeId.HasDefaultValue()
                 ? new SitemapNode()
@@ -156,6 +164,7 @@ namespace BetterCms.Module.Pages.Services
                 node.Url = node.Page != null ? null : url;
                 node.UrlHash = node.Page != null ? null : url.UrlHash();
                 node.DisplayOrder = displayOrder;
+
                 if (parentNode != null && !parentNode.Id.HasDefaultValue())
                 {
                     node.ParentNode = parentNode;
@@ -165,6 +174,11 @@ namespace BetterCms.Module.Pages.Services
                     node.ParentNode = parentId.HasDefaultValue()
                         ? null
                         : repository.First<SitemapNode>(parentId);
+                }
+
+                if (cmsConfiguration.EnableMacros && node.Macro != macro)
+                {
+                    node.Macro = macro;
                 }
 
                 repository.Save(node);
@@ -353,14 +367,13 @@ namespace BetterCms.Module.Pages.Services
                         Page = !archivedNode.PageId.HasDefaultValue()
                                 ? new PageProperties
                                         {
-                                            Id = archivedNode.PageId,
-//                                            Title = archivedNode.Title,
-//                                            PageUrl = archivedNode.Url
+                                            Id = archivedNode.PageId
                                         }
                                 : null,
                         UsePageTitleAsNodeTitle = archivedNode.UsePageTitleAsNodeTitle,
                         DisplayOrder = archivedNode.DisplayOrder,
                         ParentNode = parentNode,
+                        Macro = archivedNode.Macro
                     };
 
                 node.ChildNodes = AddNodes(sitemap, archivedNode.Nodes, node);
@@ -391,7 +404,8 @@ namespace BetterCms.Module.Pages.Services
                         Language = new Language() { Id = translation.LanguageId },
                         Title = translation.Title,
                         Url = translation.Url,
-                        UsePageTitleAsNodeTitle = translation.UsePageTitleAsNodeTitle
+                        UsePageTitleAsNodeTitle = translation.UsePageTitleAsNodeTitle,
+                        Macro = translation.Macro
                     });
                 }
             }
@@ -418,6 +432,7 @@ namespace BetterCms.Module.Pages.Services
                     UsePageTitleAsNodeTitle = node.UsePageTitleAsNodeTitle,
                     DisplayOrder = node.DisplayOrder,
                     Nodes = GetSitemapNodesInHierarchy(allNodes.Where(f => f.ParentNode == node).OrderBy(sitemapNode => sitemapNode.DisplayOrder).ToList(), allNodes),
+                    Macro = node.Macro,
                     Translations = node.Translations == null
                         ? new List<ArchivedNodeTranslation>()
                         : node.Translations
@@ -427,7 +442,8 @@ namespace BetterCms.Module.Pages.Services
                                     LanguageId = t.Language.Id,
                                     Title = t.Title,
                                     Url = t.Url,
-                                    UsePageTitleAsNodeTitle = t.UsePageTitleAsNodeTitle
+                                    UsePageTitleAsNodeTitle = t.UsePageTitleAsNodeTitle,
+                                    Macro = t.Macro
                                 }).ToList()
                 });
             }
@@ -451,6 +467,7 @@ namespace BetterCms.Module.Pages.Services
                     ParentNode = parentNode,
                     Title = node.Title,
                     UsePageTitleAsNodeTitle = node.UsePageTitleAsNodeTitle,
+                    Macro = node.Macro,
                 };
 
                 if (node.Page != null)
@@ -484,7 +501,8 @@ namespace BetterCms.Module.Pages.Services
                             Node = restoredNode,
                             Language = language,
                             Title = translation.Title,
-                            UsePageTitleAsNodeTitle = translation.UsePageTitleAsNodeTitle
+                            UsePageTitleAsNodeTitle = translation.UsePageTitleAsNodeTitle,
+                            Macro = translation.Macro
                         };
 
                     if (restoredNode.Page == null)
@@ -508,6 +526,7 @@ namespace BetterCms.Module.Pages.Services
             public Guid LanguageId { get; set; }
             public string Title { get; set; }
             public string Url { get; set; }
+            public string Macro { get; set; }
             public bool UsePageTitleAsNodeTitle { get; set; }
         }
 
@@ -521,6 +540,7 @@ namespace BetterCms.Module.Pages.Services
             public Guid PageId { get; set; }
             public bool UsePageTitleAsNodeTitle { get; set; }
             public int DisplayOrder { get; set; }
+            public string Macro { get; set; }
             public List<ArchivedNode> Nodes { get; set; }
             public List<ArchivedNodeTranslation> Translations { get; set; }
         }

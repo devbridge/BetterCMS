@@ -150,5 +150,13 @@ namespace BetterCms
         ///   <c>true</c> if to enable multilanguage; otherwise, <c>false</c>.
         /// </value>
         bool EnableMultilanguage { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether macros are enabled.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if macros are enabled; otherwise, <c>false</c>.
+        /// </value>
+        bool EnableMacros { get; }
     }
 }

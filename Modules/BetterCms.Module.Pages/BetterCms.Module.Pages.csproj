@@ -151,6 +151,7 @@
     <Compile Include="Helpers\SitemapHelper.cs" />
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
     <Compile Include="Models\Maps\SitemapNodeTranslationMap.cs" />
+    <Compile Include="Models\Migrations\Migration201401211353.cs" />
     <Compile Include="Models\Migrations\Migration201401091655.cs" />
     <Compile Include="Models\SitemapNodeTranslation.cs" />
     <Compile Include="Models\Maps\SitemapArchiveMap.cs" />
