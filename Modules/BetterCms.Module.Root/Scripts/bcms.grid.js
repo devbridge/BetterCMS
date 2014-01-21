@@ -116,10 +116,19 @@ bettercms.define('bcms.grid', ['bcms.jquery', 'bcms'], function ($, bcms) {
     /**
     * Focuses search input and puts cursor to end of input
     */
-    grid.focusSearchInput = function(searchInput) {
-        var val = searchInput.val();
-        searchInput.focus().val("");
-        searchInput.val(val);
+    grid.focusSearchInput = function (searchInput, withTimeout) {
+        var focusInput = function() {
+            var val = searchInput.val();
+            searchInput.focus().val("");
+            searchInput.val(val);
+        };
+
+        // Timeout is required to work on IE11
+        if (!withTimeout) {
+            focusInput();
+        } else {
+            setTimeout(focusInput, 200);
+        }
     };
 
     /**

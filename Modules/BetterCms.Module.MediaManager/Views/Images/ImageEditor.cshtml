@@ -16,7 +16,7 @@
 }
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
-    <div class="bcms-file-manager-inner">
+    <div class="bcms-file-manager-inner bcms-clearfix">
         @using (Html.BeginForm<ImagesController>(f => f.ImageEditor((ImageViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form", @enctype = "multipart/form-data" }))
         {
             @Html.HiddenFor(model => model.Id)
@@ -56,7 +56,7 @@
                     @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Caption_Tooltip_Description)
                     <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Caption</div>
                     <div class="bcms-input-box">
-                        @Html.TextBoxFor(f => f.Caption, new { @class = "bcms-editor-field-box", @id = "Caption", data_bind="event: {change: onValueChange}" })
+                        @Html.TextBoxFor(f => f.Caption, new { @class = "bcms-editor-field-box", @id = "Caption", data_bind = "event: {change: onValueChange}" })
                         @Html.BcmsValidationMessageFor(f => f.Caption)
                     </div>
                 </div>
@@ -144,7 +144,7 @@
                     @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Description_Tooltip_Description)
                     <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Description</div>
                     <div class="bcms-textarea-box">
-                        @Html.TextAreaFor(f => f.Description, new { @class = "bcms-editor-field-area", @id = "Description", @style = "width: 380px;", data_bind="event: {change: onValueChange}" })
+                        @Html.TextAreaFor(f => f.Description, new { @class = "bcms-editor-field-area", @id = "Description", @style = "width: 380px;", data_bind = "event: {change: onValueChange}" })
                         @Html.BcmsValidationMessageFor(f => f.Description)
                     </div>
                 </div>
@@ -154,9 +154,9 @@
             <div class="bcms-media-tags-box-holder bcms-clearfix" data-bind="with: tags">
                 @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
             </div>
-            
+
             <div class="bcms-media-reupload" data-bind="click: reupload">@MediaGlobalization.ImageEditor_Dialog_Reupload_Title</div>
-            
+
             @Html.HiddenSubmit()
         }
     </div>

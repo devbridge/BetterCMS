@@ -70,6 +70,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Infrastructure\Attributes\DataMemberIgnoreAttribute.cs" />
     <Compile Include="Infrastructure\DataFilter.cs" />
     <Compile Include="Infrastructure\DataListResponse.cs" />
     <Compile Include="Infrastructure\DataOptions.cs" />
@@ -222,6 +223,10 @@
     <Compile Include="Operations\Pages\Redirects\Redirect\GetRedirectRequest.cs" />
     <Compile Include="Operations\Pages\Redirects\Redirect\GetRedirectResponse.cs" />
     <Compile Include="Operations\Pages\Redirects\Redirect\IRedirectService.cs" />
+    <Compile Include="Operations\Pages\Sitemap\GetSitemapsRequestValidator.cs" />
+    <Compile Include="Operations\Pages\Sitemap\GetSitemapsResponse.cs" />
+    <Compile Include="Operations\Pages\Sitemap\GetSitemapsRequest.cs" />
+    <Compile Include="Operations\Pages\Sitemap\GetSitemapsModel.cs" />
     <Compile Include="Operations\Pages\Sitemap\ISitemapService.cs" />
     <Compile Include="Operations\Pages\Sitemap\Nodes\GetSitemapNodesRequest.cs" />
     <Compile Include="Operations\Pages\Sitemap\Nodes\GetSitemapNodesResponse.cs" />
@@ -230,6 +235,9 @@
     <Compile Include="Operations\Pages\Sitemap\Nodes\Node\GetSitemapNodeResponse.cs" />
     <Compile Include="Operations\Pages\Sitemap\Nodes\Node\INodeService.cs" />
     <Compile Include="Operations\Pages\Sitemap\Nodes\SitemapNodeModel.cs" />
+    <Compile Include="Operations\Pages\Sitemap\SitemapModel.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Tree\SitemapTreeNodeTranslationModel.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Tree\GetSitemapTreeRequestValidator.cs" />
     <Compile Include="Operations\Pages\Sitemap\Tree\GetSitemapTreeModel.cs" />
     <Compile Include="Operations\Pages\Sitemap\Tree\GetSitemapTreeRequest.cs" />
     <Compile Include="Operations\Pages\Sitemap\Tree\GetSitemapTreeResponse.cs" />

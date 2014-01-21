@@ -113,6 +113,10 @@
       <Project>{0bb64452-9b66-403e-94c6-e66c6071d12b}</Project>
       <Name>BetterCms.Module.ImagesGallery</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCMS.Module.LuceneSearch\BetterCms.Module.LuceneSearch.csproj">
+      <Project>{5255ABED-2111-497F-A94C-6AA89862D814}</Project>
+      <Name>BetterCms.Module.LuceneSearch</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.MediaManager\BetterCms.Module.MediaManager.csproj">
       <Project>{f3e41793-e8ed-4ba8-a1ab-cba1e47b0786}</Project>
       <Name>BetterCms.Module.MediaManager</Name>

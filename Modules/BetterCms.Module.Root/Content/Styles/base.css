@@ -184,49 +184,93 @@ div.bcms-btn-warn {
     }
 
 div.bcms-btn-add {
+    position: relative;
     padding-right: 35px;
     margin-bottom: 20px;
-    background: url('images/sprite-base-1.png') no-repeat right 8px #1892E4;
-    background: url('images/sprite-base-1.png') no-repeat right 8px, -webkit-linear-gradient(top, #1892E4 0, #0C7FC7 100%);
-    background: url('images/sprite-base-1.png') no-repeat right 8px, linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
+    background-color: #1892E4;
+    background-image: linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
 }
 
     div.bcms-btn-add:active {
-        background: url('images/sprite-base-1.png') no-repeat right 8px #0C7FC7;
+        background-color: #0C7FC7;
+    }
+
+    div.bcms-btn-add:after {
+        content: "";
+        position: absolute;
+        right: 6px;
+        top: 50%;
+        width: 20px;
+        height: 20px;
+        margin-top: -10px;
+        background: url('images/sprite-base-1.png') no-repeat -7px 1px;
     }
 
 div.bcms-btn-clone {
+    position: relative;
     padding-right: 35px;
-    background: url('images/sprite-base-1.png') no-repeat right -212px #1892E4;
-    background: url('images/sprite-base-1.png') no-repeat right -212px, -webkit-linear-gradient(top, #1892E4 0, #0C7FC7 100%);
-    background: url('images/sprite-base-1.png') no-repeat right -212px, linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
+    background-color: #1892E4;
+    background-image: linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
 }
 
     div.bcms-btn-clone:active {
-        background: url('images/sprite-base-1.png') no-repeat right -212px #0C7FC7;
+        background-color: #0C7FC7;
+    }
+
+    div.bcms-btn-clone:after {
+        content: "";
+        position: absolute;
+        right: 6px;
+        top: 50%;
+        width: 20px;
+        height: 20px;
+        margin-top: -10px;
+        background: url('images/sprite-base-1.png') no-repeat -6px -219px;
     }
 
 div.bcms-btn-settings {
+    position: relative;
     padding-right: 35px;
     margin-bottom: 20px;
-    background: url('images/sprite-base-1.png') no-repeat right -51px, #8E8E8E;
-    background: url('images/sprite-base-1.png') no-repeat right -51px, -webkit-linear-gradient(top, #8E8E8E 0, #787878 100%);
-    background: url('images/sprite-base-1.png') no-repeat right -51px, linear-gradient(to bottom, #8E8E8E 0, #787878 100%);
+    background-color: #8E8E8E;
+    background-image: linear-gradient(to bottom, #8E8E8E 0, #787878 100%);
 }
 
     div.bcms-btn-settings:active {
-        background: url('images/sprite-base-1.png') no-repeat right -51px #787878;
+        background-color: #787878;
+    }
+
+    div.bcms-btn-settings:after {
+        content: "";
+        position: absolute;
+        right: 6px;
+        top: 50%;
+        width: 20px;
+        height: 20px;
+        margin-top: -10px;
+        background: url('images/sprite-base-1.png') no-repeat -7px -57px;
     }
 
 .bcms-btn-delete {
+    position: relative;
     padding-right: 35px;
-    background: url('images/sprite-base-1.png') no-repeat right -107px #A63333;
-    background: url('images/sprite-base-1.png') no-repeat right -107px, -webkit-linear-gradient(top, #A63333 0, #8E2626 100%);
-    background: url('images/sprite-base-1.png') no-repeat right -107px, linear-gradient(to bottom, #A63333 0, #8E2626 100%);
+    background-color: #A63333;
+    background-image: linear-gradient(to bottom, #A63333 0, #8E2626 100%);
 }
 
     .bcms-btn-delete:active {
-        background: url('images/sprite-base-1.png') no-repeat right -107px #8E2626;
+        background-color: #8E2626;
+    }
+
+    .bcms-btn-delete:after {
+        content: "";
+        position: absolute;
+        right: 6px;
+        top: 50%;
+        width: 20px;
+        height: 20px;
+        margin-top: -10px;
+        background: url('images/sprite-base-1.png') no-repeat -7px -114px;
     }
 
 .bcms-btn-plus {
@@ -874,8 +918,7 @@ a.bcms-remove-image {
 /* Modal Dialog */
 .bcms-scroll-window {
     position: relative;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: auto;
 }
 
 .bcms-padded-content {
@@ -1470,15 +1513,7 @@ a.bcms-btn-close {
 .bcms-global-select {
     display: block;
     padding: 5px;
-    -webkit-appearance: button;
-    -webkit-padding-end: 34px;
-    -webkit-padding-start: 5px;
-    -webkit-user-select: none;
-    -moz-padding-start: 5px;
-    -moz-padding-end: 5px;
-    -moz-user-select: none;
     background-color: #f3f3f3;
-    background: url('images/sprite-base-1.png') no-repeat right -1025px, -webkit-linear-gradient(top, #ffffff 0, #f3f3f3 100%);
     border: 1px solid #b8b8b8;
     color: #000;
     cursor: pointer;

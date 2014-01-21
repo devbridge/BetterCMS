@@ -126,11 +126,10 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 return false;
             });
 
-            form.find(selectors.searchField).keypress(function (event) {
-                if (event.which == 13) {
-                    bcms.stopEventPropagation(event);
+            bcms.preventInputFromSubmittingForm(form.find(selectors.searchField), {
+                preventedEnter: function () {
                     searchSitemaps(form, container);
-                }
+                },
             });
 
             form.find(selectors.searchButton).on('click', function (event) {
@@ -140,19 +139,17 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             initializeListItems(container);
 
-            // Select search.
-            dialog.setFocus();
+            // Select search (timeout is required to work on IE11)
+            grid.focusSearchInput(dialog.container.find(selectors.searchField), true);
         };
         
         /*
         * Submit sitemap form to force search.
         */
         function searchSitemaps(form, container) {
-            grid.submitGridForm(form, function (htmlContent, data) {
-                container.html(htmlContent);
-                sitemap.initializeSitemapsList(container);
-                var searchInput = container.find(selectors.searchField);
-                grid.focusSearchInput(searchInput);
+            grid.submitGridForm(form, function (htmlContent) {
+                siteSettings.setContent(htmlContent);
+                sitemap.initializeSitemapsList(siteSettings.getModalDialog().container);
             });
         };
 
@@ -1185,8 +1182,15 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             };
             self.updateLanguageOnDropNewNode = function (pageLanguageId, currentLanguageId) {
                 sitemap.showLoading(true);
-                bcms.logger.debug("NodeViewModel().updateLanguageOnDropNewNode(pageLanguageId=" + pageLanguageId + ", currentLanguageId=" + currentLanguageId + ")");
+                var isActive = self.isActive();
                 self.translationsEnabled = true;
+                if (self.pageId() == null || self.pageId() == defaultIdValue) {
+                    self.activateTranslation("");
+                    self.activateTranslation(currentLanguageId);
+                    self.isActive(isActive);
+                    sitemap.showLoading(false);
+                    return;
+                }
                 var onSaveCompleted = function(json) {
                         sitemap.showMessage(json);
                         if (json.Success) {
@@ -1209,8 +1213,10 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                     self.activateTranslation("");
                                 }
                                 self.activateTranslation(currentLanguageId);
+                                self.isActive(isActive);
                             }
                         } else {
+                            self.isActive(false);
                             self.isDeleted(true);
                         }
                         sitemap.showLoading(false);

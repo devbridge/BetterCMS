@@ -16,11 +16,11 @@
 }
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
-    <div class="bcms-padded-content" id="bcms-file-manager-inner" style="margin-top: 30px;">
-        @using (Html.BeginForm<FilesController>(f => f.FileEditor((FileViewModel)null), FormMethod.Post, 
+    <div class="bcms-padded-content bcms-clearfix" id="bcms-file-manager-inner" style="margin-top: 30px;">
+        @using (Html.BeginForm<FilesController>(f => f.FileEditor((FileViewModel)null), FormMethod.Post,
             new
                 {
-                    @class = "bcms-ajax-form", 
+                    @class = "bcms-ajax-form",
                     @enctype = "multipart/form-data",
                     data_readonly = @Model.IsReadOnly.ToString().ToLower()
                 }))
@@ -34,7 +34,7 @@
                 @Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Title_Tooltip_Description)
                 <div class="bcms-content-titles">@MediaGlobalization.FileEditor_Dialog_Title_Title</div>
                 <div class="bcms-input-box">
-                    @Html.TextBoxFor(f => f.Title, new { @class = "bcms-editor-field-box", @id = "Title", data_bind="event: {change: onValueChange}" })
+                    @Html.TextBoxFor(f => f.Title, new { @class = "bcms-editor-field-box", @id = "Title", data_bind = "event: {change: onValueChange}" })
                     @Html.BcmsValidationMessageFor(f => f.Title)
                 </div>
             </div>
@@ -56,20 +56,20 @@
                 @Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Description_Tooltip_Description)
                 <div class="bcms-content-titles">@MediaGlobalization.FileEditor_Dialog_Description</div>
                 <div class="bcms-textarea-box">
-                    @Html.TextAreaFor(f => f.Description, new { @class = "bcms-editor-field-area", @id = "Description", data_bind="event: {change: onValueChange}" })
+                    @Html.TextAreaFor(f => f.Description, new { @class = "bcms-editor-field-area", @id = "Description", data_bind = "event: {change: onValueChange}" })
                     @Html.BcmsValidationMessageFor(f => f.Description)
                 </div>
             </div>
-            
+
             <div class="bcms-tags-box-holder" data-bind="with: tags">
                 @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)
             </div>
-            
+
             if (Model.AccessControlEnabled)
             {
                 @Html.Partial(RootModuleConstants.AccessControlTemplate)
             }
-            
+
             <div class="bcms-page-images-holder">
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(MediaGlobalization.FileEditor_Dialog_Image_Tooltip_Description)
@@ -85,9 +85,9 @@
                     <div class="bcms-btn-small" data-bind="click: image().select.bind(image())">@MediaGlobalization.FileEditor_Dialog_Image_SelectButtonTitle</div>
                 </div>
             </div>
-            
+
             <div class="bcms-media-reupload" data-bind="click: reupload">@MediaGlobalization.FileEditor_Dialog_Reupload_Title</div>
-            
+
             @Html.HiddenSubmit()
         }
     </div>

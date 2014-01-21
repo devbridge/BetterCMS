@@ -20,6 +20,8 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
         private IUnitOfWork UnitOfWork { get; set; }
 
         private readonly int scrapeLimit;
+        
+        private readonly bool scrapePrivatePages;
 
         private readonly TimeSpan pageExpireTimeout;
 
@@ -45,26 +47,46 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
             {
                 failedPageTimeout = TimeSpan.FromMinutes(10);
             }
+
+            bool.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneIndexPrivatePages), out scrapePrivatePages);
         }
 
         public void FetchNewUrls()
         {
-            var newSources = Repository.AsQueryable<Page>()
-                          .Where(page => !page.IsDeleted && !page.IsMasterPage && page.Status == PageStatus.Published)
-                          .Where(page => !Repository.AsQueryable<IndexSource>().Any(crawlUrl => crawlUrl.SourceId == page.Id))
+            var query = Repository.AsQueryable<Page>()
+                          .Where(page => !page.IsDeleted && !page.IsMasterPage)
+                          .Where(page => !Repository.AsQueryable<IndexSource>().Any(crawlUrl => crawlUrl.SourceId == page.Id));
+
+            if (!scrapePrivatePages)
+            {
+                query = query.Where(page => page.Status == PageStatus.Published);
+            }
+
+            var sourcesTosave = query
                           .Select(page =>
                                     new IndexSource
                                     {
                                         Path = page.PageUrl,
-                                        SourceId = page.Id                                       
+                                        SourceId = page.Id,
+                                        IsPublished = page.Status == PageStatus.Published
                                     })
                           .ToList();
-                          
             
+            // Change publish status where status has changed
+            Repository.AsQueryable<IndexSource>()
+                .Where(source => Repository.AsQueryable<Page>().Any(p => p.Id == source.SourceId &&
+                                                ((source.IsPublished && p.Status != PageStatus.Published) || (!source.IsPublished && p.Status == PageStatus.Published))))
+                .ToList()
+                .ForEach(source =>
+                             {
+                                 source.IsPublished = !source.IsPublished;
+                                 sourcesTosave.Add(source);
+                             });
+
             UnitOfWork.BeginTransaction();
 
             int i = 0;
-            foreach (var source in newSources)
+            foreach (var source in sourcesTosave)
             {
                 Repository.Save(source);
 
@@ -112,7 +134,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
         {
             foreach (var url in links)
             {
-                queue.Enqueue(new CrawlLink { Id = url.Id, Path = url.Path });
+                queue.Enqueue(new CrawlLink { Id = url.Id, Path = url.Path, IsPublished = url.IsPublished });
             }
         }
 

@@ -271,6 +271,14 @@
       <Project>{694ca5ca-a0e2-4578-a249-648498b058d7}</Project>
       <Name>BetterCms.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Api.Abstractions\BetterCMS.Module.Api.Abstractions.csproj">
+      <Project>{073e257b-a6a0-42fc-9102-8e920bf54e50}</Project>
+      <Name>BetterCMS.Module.Api.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.Api\BetterCms.Module.Api.csproj">
+      <Project>{5FF9D100-CF25-4899-8D23-8EB9F0C0E102}</Project>
+      <Name>BetterCms.Module.Api</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCMS.Module.Blog\BetterCms.Module.Blog.csproj">
       <Project>{a66a3046-ef60-4c51-ada7-eb055763419b}</Project>
       <Name>BetterCms.Module.Blog</Name>
@@ -302,6 +310,10 @@
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Root\BetterCms.Module.Root.csproj">
       <Project>{66e7e4df-eeea-4b1e-8663-a1b430eb7375}</Project>
       <Name>BetterCms.Module.Root</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCMS.Module.Search.Api\BetterCms.Module.Search.Api.csproj">
+      <Project>{99a5e4e9-de5a-4276-ac38-ff003f19bfe6}</Project>
+      <Name>BetterCms.Module.Search.Api</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Search\BetterCms.Module.Search.csproj">
       <Project>{b935dd58-18ec-4340-b236-f1dae4509cc8}</Project>

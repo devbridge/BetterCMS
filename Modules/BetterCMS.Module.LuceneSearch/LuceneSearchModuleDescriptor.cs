@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Autofac;
 
 using BetterCMS.Module.LuceneSearch;
-using BetterCMS.Module.LuceneSearch.Services;
 using BetterCMS.Module.LuceneSearch.Services.IndexerService;
 using BetterCMS.Module.LuceneSearch.Services.ScrapeService;
 using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;

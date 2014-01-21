@@ -1,37 +1,19 @@
-﻿@model BetterCms.Module.Root.ViewModels.Cms.RenderWidgetViewModel
-@if (Model != null)
-{
-    <h2>Widget Name: @Model.Widget.Name</h2>
-    <h3>Current Page: @Model.Page.PageUrl</h3>
-    
-    <p>Some widget content...</p>
-}
-else
-{
-    <p>Widget Preview...</p>
-}
-
-@if (Model != null)
-{
-    if (Model.Options != null)
+﻿@using BetterCms.Module.Api
+@using BetterCms.Module.Api.Operations.Pages.Pages.Search
+@{
+    using (var container = ApiFactory.Create())
     {
-        foreach (var option in Model.Options)
-        {
-            <p>
-                <strong>Widget Option "@option.Key" Type:</strong> @(option.Value != null ? option.Value.GetType().ToString() : string.Empty)
-                <strong>Value</strong>: @option.Value
-            </p>
-        }
-    }
+        var results = container.Pages.Pages.Search.Get(new SearchPagesRequest {SearchString = "unpublished"});
 
-    if (Model.Page != null && Model.Page.Options != null)
-    {
-        foreach (var option in Model.Page.Options)
+        foreach (var item in results.Data.Items)
         {
-            <p>
-                <strong>Page Option "@option.Key" Type:</strong> @(option.Value != null ? option.Value.GetType().ToString() : string.Empty)
-                <strong>Value</strong>: @option.Value
-            </p>
+            var cssClass = item.IsDenied ? "bcms-search-result" : "bcms-search-result bcms-denied-search-result";
+        
+            <article class="@cssClass">
+                <h3>@item.Title</h3>            
+                <a href="@(item.Link ?? "#")">@item.FormattedUrl</a>
+                <p>@item.Snippet</p>            
+            </article>
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Root.Content.Resources
-@using BetterCms.Module.Root.Mvc.Helpers
 
 @model BetterCms.Module.Pages.ViewModels.Filter.PagesGridViewModel<BetterCms.Module.Pages.ViewModels.SiteSettings.SiteSettingPageViewModel>
 
@@ -11,7 +10,7 @@
             <div class="bcms-filter-modified" data-bind="style: { display: isEdited() ? 'inline-block' : 'none' }">@PagesGlobalization.SiteSettings_Pages_FilterIsModified</div>
         </div>
     </div>
-    <div class="bcms-tags-block" style="display: none;" data-bind="visible: isVisible()">
+    <div class="bcms-tags-block" style="display: none;" data-bind="visible: isVisible(), enterPress: searchWithFilter">
         <div class="bcms-featured-tags">
             <div class="bcms-clearfix">
 
@@ -68,11 +67,12 @@
                     @Html.CheckBoxFor(model => model.IncludeMasterPages, new { data_bind = "checked: includeMasterPages" })
                     <span class="bcms-pointer" data-bind="click: changeIncludeMasterPages">@PagesGlobalization.SiteSettings_Pages_FilterIncludeMasterPages</span>
                 </div>
-                <div class="bcms-btn-field-holder">
-                    <div class="bcms-btn-links-small" data-bind="click: clearFilter">@PagesGlobalization.SiteSettings_Pages_FilterClear</div>
-                    <div class="bcms-btn-small" data-bind="click: searchWithFilter">@PagesGlobalization.SiteSettings_Pages_FilterSearch</div>
-                </div>
             }
+            
+            <div class="bcms-btn-field-holder">
+                <div class="bcms-btn-links-small" data-bind="click: clearFilter">@PagesGlobalization.SiteSettings_Pages_FilterClear</div>
+                <div class="bcms-btn-small" data-bind="click: searchWithFilter">@PagesGlobalization.SiteSettings_Pages_FilterSearch</div>
+            </div>
         </div>
     </div>
 </div>

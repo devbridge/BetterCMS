@@ -466,6 +466,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Site Maps.
+        /// </summary>
+        public static string SiteSettings_Sitemaps_Title {
+            get {
+                return ResourceManager.GetString("SiteSettings_Sitemaps_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Title.
         /// </summary>
         public static string SiteSettings_Sitemaps_TitleColumn {

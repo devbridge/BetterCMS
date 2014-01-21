@@ -133,8 +133,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LuceneSearch\ServiceTests\IndexerServiceTests.cs" />
-    <Compile Include="LuceneSearch\ServiceTests\ScrapeServiceTests.cs" />
-    <Compile Include="LuceneSearch\ServiceTests\WebCrawlerServiceTests.cs" />
     <Compile Include="Api\UsersModuleServiceValidationTest.cs" />
     <Compile Include="MediaManager\CommandTests\DeleteMediaCommandTest.cs" />
     <Compile Include="Pages\CommandTests\EventTests\UpdatingPagePropertiesModelMapTests.cs" />
@@ -241,6 +239,7 @@
     <Compile Include="Users\ModelTests\MapTests\UserMapTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Contents\Documents\page.authorized.htm" />
     <EmbeddedResource Include="Contents\Images\logo.big.png" />
     <EmbeddedResource Include="Contents\Images\logo.png" />
     <None Include="App.config" />

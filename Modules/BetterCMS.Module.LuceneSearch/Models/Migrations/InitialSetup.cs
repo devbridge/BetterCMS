@@ -22,7 +22,8 @@ namespace BetterCms.Module.LuceneSearch.Models.Migrations
                 .WithColumn("SourceId").AsGuid().NotNullable()
                 .WithColumn("Path").AsString(MaxLength.Url).NotNullable()
                 .WithColumn("StartTime").AsDateTime().Nullable()
-                .WithColumn("EndTime").AsDateTime().Nullable();
+                .WithColumn("EndTime").AsDateTime().Nullable()
+                .WithColumn("IsPublished").AsBoolean().NotNullable().WithDefaultValue(false);
 
             Create
                 .Index("IX_Cms_IndexSources_SourceId")

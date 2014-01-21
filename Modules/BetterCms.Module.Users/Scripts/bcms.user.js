@@ -51,9 +51,6 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             grid.submitGridForm(form, function (htmlContent) {
                 usersContainer.html(htmlContent);
                 initializeSiteSettingsUsersList();
-
-                var searchInput = usersContainer.find(selectors.usersSearchField);
-                grid.focusSearchInput(searchInput);
             });
         }
 
@@ -74,11 +71,10 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 return false;
             });
 
-            form.find(selectors.usersSearchField).keypress(function (event) {
-                if (event.which == 13) {
-                    bcms.stopEventPropagation(event);
+            bcms.preventInputFromSubmittingForm(form.find(selectors.usersSearchField), {
+                preventedEnter: function () {
                     searchSiteSettingsUsers(form);
-                }
+                },
             });
 
             form.find(selectors.usersSearchButton).on('click', function () {
@@ -91,6 +87,9 @@ bettercms.define('bcms.user', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             });
 
             initializeSiteSettingsUsersListItem(usersContainer);
+            
+            // Select search (timeout is required to work on IE11)
+            grid.focusSearchInput(form.find(selectors.usersSearchField), true);
         }
 
         /**

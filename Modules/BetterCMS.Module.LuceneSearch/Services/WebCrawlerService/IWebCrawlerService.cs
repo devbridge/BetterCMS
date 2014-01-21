@@ -6,8 +6,11 @@
         /// Fetches the page.
         /// </summary>
         /// <param name="url">The URL.</param>
-        /// <returns>Fetched page data</returns>
-        PageData FetchPage(string url);
+        /// <param name="reauthenticateOnFailure">if set to <c>true</c> re-authenticate on failure.</param>
+        /// <returns>
+        /// Fetched page data
+        /// </returns>
+        PageData FetchPage(string url, bool reauthenticateOnFailure = true);
 
         /// <summary>
         /// Gets a value indicating whether web crawler is correctly configured.
