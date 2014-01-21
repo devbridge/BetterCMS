@@ -31,7 +31,7 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 pagePropertiesPageIsMasterCheckbox: '#IsMasterPage',
 
                 optionsTab: '#bcms-tab-4',
-                translationsTabContent: '#bcms-tab-5 .bcms-padded-content',
+                translationsTabContent: '#bcms-tab-5 .bcms-page-translations-content',
                 javascriptCssTabOpener: '.bcms-tab[data-name="#bcms-tab-2"]'
             },
             links = {
