@@ -9,7 +9,7 @@
            
 <div class="bcms-scroll-window" style="height: 942px;">
     @Html.TabbedContentMessagesBox()
-    <div class="bcms-file-manager-inner">
+    <div class="bcms-file-manager-inner bcms-clearfix">
         @using (Html.BeginForm<ImagesController>(f => f.ImageEditor((ImageViewModel)null), FormMethod.Post, new { @class = "bcms-ajax-form", @enctype = "multipart/form-data" }))
         {
             @Html.HiddenFor(model => model.Id)
@@ -18,11 +18,11 @@
             <div class="bcms-input-list-holder">
                 <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_SubTitle</div>
             </div>
-            
+
             <div class="bcms-croped-block">
                 <img class="bcms-crop-image" src="@Model.Url" data-id="@Model.Id" data-version="@Model.Version" />
             </div>
-            
+
             <div class="bcms-edit-file-info">
                 <div class="bcms-file-info-text">
                     <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_PublicUrl</div>
@@ -38,9 +38,9 @@
                 </div>
 
                 <div class="bcms-file-info-text"><b>@MediaGlobalization.ImageEditor_Dialog_FileName:</b> <span id="image-file-name">@(Model.FileName).@Model.FileExtension</span></div>
-                
+
                 <div class="bcms-file-info-text"><b>@MediaGlobalization.ImageEditor_Dialog_FileSize:</b> <span id="image-file-size">@Model.FileSize</span></div>
-                
+
                 <div class="bcms-file-info-text">
                     @if (Model.CroppedWidth != Model.OriginalImageWidth || Model.CroppedHeight != Model.OriginalImageHeight)
                     {
@@ -53,7 +53,7 @@
                     <span id="image-dimensions">@Model.CroppedWidth x @Model.CroppedHeight</span>
                 </div>
             </div>
-            
+
             <div class="bcms-file-alignment">
                 <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_AligmentTitle:</div>
                 <div class="bcms-alignment-controls">
@@ -67,15 +67,15 @@
                         <input type="radio" id="alignright" name="ImageAlign" value="@((int)MediaImageAlign.Right)" @(Model.ImageAlign == MediaImageAlign.Right ? "checked" : string.Empty)>
                     </div>
                 </div>
-                
+
                 <div class="bcms-input-list-holder">
                     @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Description_Tooltip_Description)
                     <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Description</div>
                     <div class="bcms-textarea-box">
                         @Html.TextAreaFor(f => f.Description, new
                                                                   {
-                                                                      @class = "bcms-editor-field-area", 
-                                                                      @id = "Description", 
+                                                                      @class = "bcms-editor-field-area",
+                                                                      @id = "Description",
                                                                       @style = "width: 380px;",
                                                                       @readonly = "readonly"
                                                                   })
@@ -97,4 +97,5 @@
             }
         }
     </div>
+
 </div>
