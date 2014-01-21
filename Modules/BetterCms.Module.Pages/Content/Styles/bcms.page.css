@@ -306,6 +306,18 @@ a.bcms-slider-next {
         padding-top: 5px;
     }
 
+.bcms-title-show-helper {
+    position: relative;
+}
+
+.bcms-add-language-button {
+    padding: 0 0 10px 50px;
+}
+
+    .bcms-add-language-button .bcms-btn-links-main {
+        padding-left: 0;
+    }
+
 .bcms-preview-module-image {
     float: left;
     width: 521px;
