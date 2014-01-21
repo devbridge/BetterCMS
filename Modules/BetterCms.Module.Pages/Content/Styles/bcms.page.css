@@ -196,7 +196,7 @@ a.bcms-slider-next {
     }
 
 .bcms-page-images-holder {
-    width: 875px;
+    width: 840px;
 }
 
     .bcms-page-images-holder .bcms-input-list-holder {
@@ -304,6 +304,18 @@ a.bcms-slider-next {
     .bcms-top-block-holder .bcms-large-titles {
         float: left;
         padding-top: 5px;
+    }
+
+.bcms-title-show-helper {
+    position: relative;
+}
+
+.bcms-add-language-button {
+    padding: 0 0 10px 50px;
+}
+
+    .bcms-add-language-button .bcms-btn-links-main {
+        padding-left: 0;
     }
 
 .bcms-preview-module-image {

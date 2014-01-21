@@ -328,7 +328,7 @@ namespace BetterCms.Module.Pages
                         {
                             Title = page => PagesGlobalization.Sidebar_TranslatePageButtonTitle,
                             CssClass = page => "bcms-sidemenu-btn bcms-btn-clone",
-                            Order = 600,
+                            Order = 400,
                             ShouldBeRendered = page => CmsContext.Config.EnableMultilanguage && !page.IsMasterPage
                         },
 

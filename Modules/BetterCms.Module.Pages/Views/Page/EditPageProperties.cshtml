@@ -37,11 +37,12 @@
     {
         @Html.Partial("Partial/InfoMessageAboutMasterPage")
     }
-    @using (Html.BeginForm<PageController>(f => f.EditPageProperties((EditPagePropertiesViewModel)null), FormMethod.Post, 
-            new {
-                    @class = "bcms-ajax-form", 
-                    data_readonly=Model.IsReadOnly.ToString().ToLower()
-                }))
+    @using (Html.BeginForm<PageController>(f => f.EditPageProperties((EditPagePropertiesViewModel)null), FormMethod.Post,
+            new
+            {
+                @class = "bcms-ajax-form",
+                data_readonly = Model.IsReadOnly.ToString().ToLower()
+            }))
     {
         <div id="bcms-tab-1" class="bcms-tab-single">
             <div class="bcms-padded-content">
@@ -65,7 +66,8 @@
                             <!-- ko if: image().url() -->
                             <a class="bcms-remove-image" data-bind="click: image().remove.bind(image())">@RootGlobalization.Button_Remove</a>
                             <a data-bind="click: image().preview.bind(image())">
-                                <img data-bind="attr: { src: image().thumbnailUrl(), alt: image().tooltip() }" /></a>
+                                <img data-bind="attr: { src: image().thumbnailUrl(), alt: image().tooltip() }" />
+                            </a>
                             <!-- /ko -->
                         </div>
                         <div class="bcms-btn-small" data-bind="click: image().select.bind(image())">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle</div>
@@ -78,7 +80,8 @@
                             <!-- ko if: featuredImage().url() -->
                             <a class="bcms-remove-image" data-bind="click: featuredImage().remove.bind(featuredImage())">@RootGlobalization.Button_Remove</a>
                             <a data-bind="click: featuredImage().preview.bind(featuredImage())">
-                                <img data-bind="attr: { src: featuredImage().thumbnailUrl(), alt: featuredImage().tooltip() }" /></a>
+                                <img data-bind="attr: { src: featuredImage().thumbnailUrl(), alt: featuredImage().tooltip() }" />
+                            </a>
                             <!-- /ko -->
                         </div>
                         <div class="bcms-btn-small" data-bind="click: featuredImage().select.bind(featuredImage())">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle</div>
@@ -91,7 +94,8 @@
                             <!-- ko if: secondaryImage().url() -->
                             <a class="bcms-remove-image" data-bind="click: secondaryImage().remove.bind(secondaryImage())">@RootGlobalization.Button_Remove</a>
                             <a data-bind="click: secondaryImage().preview.bind(secondaryImage())">
-                                <img data-bind="attr: { src: secondaryImage().thumbnailUrl(), alt: secondaryImage().tooltip() }" /></a>
+                                <img data-bind="attr: { src: secondaryImage().thumbnailUrl(), alt: secondaryImage().tooltip() }" />
+                            </a>
                             <!-- /ko -->
                         </div>
                         <div class="bcms-btn-small" data-bind="click: secondaryImage().select.bind(secondaryImage())">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_SelectImage_ButtonTitle</div>
@@ -120,11 +124,11 @@
                         <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_Properties_Title</div>
                         <div class="bcms-checkbox-holder">
                             @{
-                                object options = null;
-                                if (!Model.CanPublishPage)
-                                {
-                                    options = new { disabled = "disabled" };
-                                }
+                    object options = null;
+                    if (!Model.CanPublishPage)
+                    {
+                        options = new { disabled = "disabled" };
+                    }
                             }
                             @Html.CheckBoxFor(model => model.IsPagePublished, options)
                             <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_Privacy_VisibleToEveryone</div>
@@ -180,7 +184,7 @@
                     @Html.Tooltip(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_Layout_Tooltip_Description)
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_LayoutPropertiesTab_ChooseLayout_Title</div>
                 </div>
-                
+
                 <div class="bcms-info-message-box">
                     <a class="bcms-btn-close">@RootGlobalization.Button_Close</a>
                     @Html.Raw(PagesGlobalization.EditPageProperties_LayoutPropertiesTab_InfoMessage)
@@ -189,7 +193,7 @@
                 @Html.Partial("Partial/TemplatesList", Model.Templates)
             </div>
         </div>
-            
+
         <div id="bcms-tab-4" class="bcms-tab-single" data-bind="with: options">
             @Html.Partial(PagesConstants.OptionValuesGridTemplate)
         </div>
@@ -197,25 +201,27 @@
         if (Model.ShowTranslationsTab)
         {
             <div id="bcms-tab-5" class="bcms-tab-single">
-                @if (Model.TranslationMessages!= null)
+
+                @if (Model.TranslationMessages != null)
                 {
                     @Html.TabbedContentCustomMessagesBox(Model.TranslationMessages)
                 }
 
-                <div class="bcms-padded-content">
+                <div class="bcms-padded-content bcms-page-translations-content">
                     <div class="bcms-input-list-holder" data-bind="with: translations.language">
                         @Html.Tooltip(PagesGlobalization.EditPageProperties_TranslationsTab_Language_Tooltip_Description)
                         <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_TranslationsTab_Language</div>
                         <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>
                     </div>
-                    
-                    <div class="bcms-input-list-holder">
+
+                    <div class="bcms-title-show-helper">
                         @Html.Tooltip(PagesGlobalization.EditPageTranslations_OtherLanguages_Tooltip)
-                        <div class="bcms-content-titles">@PagesGlobalization.EditPageTranslations_OtherLanguages_Title</div> 
+                        <div class="bcms-content-titles">@PagesGlobalization.EditPageTranslations_OtherLanguages_Title</div>
                     </div>
                 </div>
-                
+
                 @Html.Partial("Partial/TranslationsGrid")
+
             </div>
         }
 

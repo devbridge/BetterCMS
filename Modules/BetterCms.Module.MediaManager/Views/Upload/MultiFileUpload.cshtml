@@ -66,10 +66,10 @@
             </div>
             <div data-bind="foreach: uploads">
                 <div data-bind="css: {
-                     'bcms-upload-block' true,
-                     'bcms-upload-success' uploadcompleted() && !uploadprocessing() && !uploadfailed(),
-                     'bcms-upload-failed' uploadfailed(),
-                     'bcms-single-tag-active' isactive() @* TODO: style is needed. *@
+                     'bcms-upload-block': true,
+                     'bcms-upload-success': uploadCompleted() && !uploadProcessing() && !uploadFailed(),
+                     'bcms-upload-failed': uploadFailed(),
+                     'bcms-single-tag-active': isActive()
                      }">
                     <div class="bcms-upload-file-titles" data-bind="text: fileName"></div>
                     <!-- ko if: !uploadFailed() -->

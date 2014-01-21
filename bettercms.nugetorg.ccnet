@@ -203,6 +203,30 @@
       <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.ImagesGallery.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
       <buildTimeoutSeconds>300</buildTimeoutSeconds>
     </exec>
+    
+    <exec description="Publish BetterCms.Module.Search to NuGet.org">
+      <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
+      <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.Search.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
+      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+    </exec>
+
+    <exec description="Publish BetterCms.Module.LuceneSearch to NuGet.org">
+      <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
+      <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.LuceneSearch.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
+      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+    </exec>
+
+    <exec description="Publish BetterCms.Module.GoogleSiteSearch to NuGet.org">
+      <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
+      <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.GoogleSiteSearch.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
+      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+    </exec>
+
+    <exec description="Publish BetterCms.Module.Search.Api to NuGet.org">
+      <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
+      <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.Search.Api.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
+      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+    </exec>
 
     <exec description="Clean up project.">
       <executable>$(msbuild4Path)</executable>

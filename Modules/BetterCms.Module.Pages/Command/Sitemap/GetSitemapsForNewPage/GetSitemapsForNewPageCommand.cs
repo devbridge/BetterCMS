@@ -75,7 +75,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemapsForNewPage
                                 languages.Select(l => l.Key.ToGuidOrDefault()).ToList(),
                                 (pagesToFuture ?? new List<SitemapHelper.PageData>()).ToList()),
                         AccessControlEnabled = CmsConfiguration.Security.AccessControlEnabled,
-                        ShowLanguages = CmsConfiguration.EnableMultilanguage,
+                        ShowLanguages = CmsConfiguration.EnableMultilanguage && languages.Any(),
                         Languages = languages
                     };
 

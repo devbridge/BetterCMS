@@ -353,6 +353,8 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             });
 
             self.onOpen = function (data, event) {
+                self.isSelected = true;
+                bcms.logger.trace('ko.grid.onOpen: isSelected = true');
                 if (!this.isActive()) {
                     bcms.stopEventPropagation(event);
                     self.openItem();
@@ -362,16 +364,22 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             };
 
             self.onEdit = function (data, event) {
+                self.isSelected = true;
+                bcms.logger.trace('ko.grid.onEdit: isSelected = true');
                 bcms.stopEventPropagation(event);
                 self.editItem();
             };
 
             self.onDelete = function (data, event) {
+                self.isSelected = true;
+                bcms.logger.trace('ko.grid.onDelete: isSelected = true');
                 bcms.stopEventPropagation(event);
                 self.deleteItem();
             };
 
             self.onCancelEdit = function (data, event) {
+                self.isSelected = true;
+                bcms.logger.trace('ko.grid.onCancelEdit: isSelected = true');
                 bcms.stopEventPropagation(event);
                 self.cancelEditItem();
             };
