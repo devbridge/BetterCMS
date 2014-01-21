@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
@@ -10,6 +11,7 @@ using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 using NHibernate.Linq;
 
@@ -106,9 +108,8 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveMultipleSitemaps
             var createdTags = new List<Tag>();
             foreach (var item in sitemapsToSave)
             {
-                IList<Tag> newTags;
-                SaveIt(item.Entity, item.Model, out newTags);
-                createdTags.AddRange(newTags);
+                // Save/update only sitemap nodes.
+                SaveNodeList(item.Entity, item.Model.RootNodes, null);
             }
 
             UnitOfWork.Commit();
@@ -144,35 +145,6 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveMultipleSitemaps
         }
 
         /// <summary>
-        /// Saves it.
-        /// </summary>
-        /// <param name="sitemap">The sitemap.</param>
-        /// <param name="model">The model.</param>
-        private void SaveIt(Models.Sitemap sitemap, SitemapViewModel model, out IList<Tag> newTags)
-        {
-            if (!sitemap.Id.HasDefaultValue())
-            {
-                SitemapService.ArchiveSitemap(sitemap.Id);
-            }
-
-            if (CmsConfiguration.Security.AccessControlEnabled)
-            {
-                sitemap.AccessRules.RemoveDuplicateEntities();
-
-                var accessRules = model.UserAccessList != null ? model.UserAccessList.Cast<IAccessRule>().ToList() : null;
-                AccessControlService.UpdateAccessControl(sitemap, accessRules);
-            }
-
-            sitemap.Title = model.Title;
-            sitemap.Version = model.Version;
-            Repository.Save(sitemap);
-
-            SaveNodeList(sitemap, model.RootNodes, null);
-
-            TagService.SaveTags(sitemap, model.Tags, out newTags);
-        }
-
-        /// <summary>
         /// Saves the node list.
         /// </summary>
         /// <param name="nodes">The nodes.</param>
@@ -191,17 +163,18 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveMultipleSitemaps
                 var update = !node.Id.HasDefaultValue() && !isDeleted;
                 var delete = !node.Id.HasDefaultValue() && isDeleted;
 
-                var sitemapNode = SitemapService.SaveNode(sitemap, node.Id, node.Version, node.Url, node.Title, node.PageId, node.UsePageTitleAsNodeTitle, node.DisplayOrder, node.ParentId, isDeleted, parentNode);
+                bool updatedInDB;
+                var sitemapNode = SaveNodeIfUpdated(out updatedInDB, sitemap, node.Id, node.Version, node.Url, node.Title, node.PageId, node.UsePageTitleAsNodeTitle, node.DisplayOrder, node.ParentId, isDeleted, parentNode);
 
-                if (create)
+                if (create && updatedInDB)
                 {
                     createdNodes.Add(sitemapNode);
                 }
-                else if (update)
+                else if (update && updatedInDB)
                 {
                     updatedNodes.Add(sitemapNode);
                 }
-                else if (delete)
+                else if (delete && updatedInDB)
                 {
                     deletedNodes.Add(sitemapNode);
                 }
@@ -209,5 +182,88 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveMultipleSitemaps
                 SaveNodeList(sitemap, node.ChildNodes, sitemapNode);
             }
         }
-   }
+
+        private SitemapNode SaveNodeIfUpdated(out bool nodeUpdated, Models.Sitemap sitemap, Guid nodeId, int version, string url, string title, Guid pageId, bool usePageTitleAsNodeTitle, int displayOrder, Guid parentId, bool isDeleted = false, SitemapNode parentNode = null)
+        {
+            nodeUpdated = false;
+            var node = nodeId.HasDefaultValue()
+                ? new SitemapNode()
+                : Repository.First<SitemapNode>(nodeId);
+
+            if (isDeleted)
+            {
+                if (!node.Id.HasDefaultValue())
+                {
+                    Repository.Delete(node);
+                    nodeUpdated = true;
+                }
+            }
+            else
+            {
+                var updated = false;
+                if (node.Sitemap == null)
+                {
+                    node.Sitemap = sitemap;
+                }
+
+                if (node.Title != title)
+                {
+                    updated = true;
+                    node.Title = title;
+                }
+
+                if (node.Page != (!pageId.HasDefaultValue() ? Repository.AsProxy<PageProperties>(pageId) : null))
+                {
+                    updated = true;
+                    node.Page = !pageId.HasDefaultValue() ? Repository.AsProxy<PageProperties>(pageId) : null;
+                }
+
+                if (node.UsePageTitleAsNodeTitle != (!pageId.HasDefaultValue() && usePageTitleAsNodeTitle))
+                {
+                    updated = true;
+                    node.UsePageTitleAsNodeTitle = !pageId.HasDefaultValue() && usePageTitleAsNodeTitle;
+                }
+
+                if (node.Url != (node.Page != null ? null : url))
+                {
+                    updated = true;
+                    node.Url = node.Page != null ? null : url;
+                    node.UrlHash = node.Page != null ? null : url.UrlHash();
+                }
+
+                if (node.DisplayOrder != displayOrder)
+                {
+                    updated = true;
+                    node.DisplayOrder = displayOrder;
+                }
+
+                SitemapNode newParent;
+                if (parentNode != null && !parentNode.Id.HasDefaultValue())
+                {
+                    newParent = parentNode;
+                }
+                else
+                {
+                    newParent = parentId.HasDefaultValue()
+                        ? null
+                        : Repository.First<SitemapNode>(parentId);
+                }
+
+                if (node.ParentNode != newParent)
+                {
+                    updated = true;
+                    node.ParentNode = newParent;
+                }
+
+                if (updated)
+                {
+                    node.Version = version;
+                    Repository.Save(node);
+                    nodeUpdated = true;
+                }
+            }
+
+            return node;
+        }
+    }
 }
