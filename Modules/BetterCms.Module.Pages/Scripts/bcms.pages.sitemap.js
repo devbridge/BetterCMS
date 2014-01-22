@@ -679,7 +679,8 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                     dropZoneObject.parentNode().childNodes.splice(index + 1, 0, dragObject);
                                 }
                                 dropZoneObject.activeZone(DropZoneTypes.None);
-                                
+
+                                dragObject.displayOrder(0);
                                 sitemap.activeMapModel.updateNodesOrderAndParent();
 
                                 // Fix for jQuery drag object.
@@ -823,14 +824,32 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.updateNodesOrderAndParent = function () {
                 self.updateNodes(self.childNodes(), self);
             };
+            self.getOrderNumber = function(currentNode, prevNode, nextNode, next2Node) {
+                var currentNo = currentNode.displayOrder(),
+                    prevNo = prevNode != null ? prevNode.displayOrder() : 0,
+                    nextNo = nextNode != null ? nextNode.displayOrder() : 2147483647,
+                    next2No = next2Node != null ? next2Node.displayOrder() : 2147483647;
+                
+                if (prevNo < currentNo && currentNo < (nextNo != 0 ? nextNo : next2No)) {
+                    return currentNo;
+                }
+
+                var midNo = Math.ceil(((nextNo != 0 ? nextNo : next2No) - prevNo) / 2) + prevNo;
+                if (prevNo < midNo) {
+                    return midNo;
+                }
+
+                return prevNo + 1;
+            };
             self.updateNodes = function (nodes, parent) {
                 for (var i = 0; i < nodes.length; i++) {
                     var node = nodes[i],
-                        saveIt = false;
+                        saveIt = false,
+                        no = self.getOrderNumber(node, nodes[i - 1], nodes[i + 1], nodes[i + 2]);
                     
-                    if (node.displayOrder() != i) {
+                    if (node.displayOrder() != no) {
                         saveIt = true;
-                        node.displayOrder(i);
+                        node.displayOrder(no);
                     }
 
                     if (node.parentNode() != parent) {

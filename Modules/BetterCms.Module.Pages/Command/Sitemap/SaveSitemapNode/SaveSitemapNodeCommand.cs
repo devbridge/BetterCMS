@@ -62,20 +62,24 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemapNode
                 SitemapService.ArchiveSitemap(sitemap);
             }
 
-            var node = SitemapService.SaveNode(sitemap, request.Id, request.Version, request.Url, request.Title, request.Macro, request.PageId, request.UsePageTitleAsNodeTitle, request.DisplayOrder, request.ParentId);
+            bool updatedInDB;
+            var node = SitemapService.SaveNode(out updatedInDB, sitemap, request.Id, request.Version, request.Url, request.Title, request.Macro, request.PageId, request.UsePageTitleAsNodeTitle, request.DisplayOrder, request.ParentId);
 
             UnitOfWork.Commit();
 
-            if (request.Id.HasDefaultValue())
+            if (updatedInDB)
             {
-                Events.SitemapEvents.Instance.OnSitemapNodeCreated(node);
-            }
-            else
-            {
-                Events.SitemapEvents.Instance.OnSitemapNodeUpdated(node);
-            }
+                if (request.Id.HasDefaultValue())
+                {
+                    Events.SitemapEvents.Instance.OnSitemapNodeCreated(node);
+                }
+                else
+                {
+                    Events.SitemapEvents.Instance.OnSitemapNodeUpdated(node);
+                }
 
-            Events.SitemapEvents.Instance.OnSitemapUpdated(node.Sitemap);
+                Events.SitemapEvents.Instance.OnSitemapUpdated(node.Sitemap);
+            }
 
             return new SitemapNodeViewModel
                 {

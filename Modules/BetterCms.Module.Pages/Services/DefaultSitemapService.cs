@@ -137,8 +137,9 @@ namespace BetterCms.Module.Pages.Services
         /// <returns>
         /// Updated or newly created sitemap node.
         /// </returns>
-        public SitemapNode SaveNode(Sitemap sitemap, Guid nodeId, int version, string url, string title, string macro, Guid pageId, bool usePageTitleAsNodeTitle, int displayOrder, Guid parentId, bool isDeleted = false, SitemapNode parentNode = null)
+        public SitemapNode SaveNode(out bool nodeUpdated, Sitemap sitemap, Guid nodeId, int version, string url, string title, string macro, Guid pageId, bool usePageTitleAsNodeTitle, int displayOrder, Guid parentId, bool isDeleted = false, SitemapNode parentNode = null)
         {
+            nodeUpdated = false;
             var node = nodeId.HasDefaultValue()
                 ? new SitemapNode()
                 : repository.First<SitemapNode>(nodeId);
@@ -148,40 +149,78 @@ namespace BetterCms.Module.Pages.Services
                 if (!node.Id.HasDefaultValue())
                 {
                     repository.Delete(node);
+                    nodeUpdated = true;
                 }
             }
             else
             {
+                var updated = false;
                 if (node.Sitemap == null)
                 {
                     node.Sitemap = sitemap;
                 }
 
-                node.Version = version;
-                node.Title = title;
-                node.Page = !pageId.HasDefaultValue() ? repository.AsProxy<PageProperties>(pageId) : null;
-                node.UsePageTitleAsNodeTitle = !pageId.HasDefaultValue() && usePageTitleAsNodeTitle;
-                node.Url = node.Page != null ? null : url;
-                node.UrlHash = node.Page != null ? null : url.UrlHash();
-                node.DisplayOrder = displayOrder;
+                if (node.Title != title)
+                {
+                    updated = true;
+                    node.Title = title;
+                }
 
+                if (node.Page != (!pageId.HasDefaultValue() ? repository.AsProxy<PageProperties>(pageId) : null))
+                {
+                    updated = true;
+                    node.Page = !pageId.HasDefaultValue() ? repository.AsProxy<PageProperties>(pageId) : null;
+                }
+
+                if (node.UsePageTitleAsNodeTitle != (!pageId.HasDefaultValue() && usePageTitleAsNodeTitle))
+                {
+                    updated = true;
+                    node.UsePageTitleAsNodeTitle = !pageId.HasDefaultValue() && usePageTitleAsNodeTitle;
+                }
+
+                if (node.Url != (node.Page != null ? null : url))
+                {
+                    updated = true;
+                    node.Url = node.Page != null ? null : url;
+                    node.UrlHash = node.Page != null ? null : url.UrlHash();
+                }
+
+                if (node.DisplayOrder != displayOrder)
+                {
+                    updated = true;
+                    node.DisplayOrder = displayOrder;
+                }
+
+                SitemapNode newParent;
                 if (parentNode != null && !parentNode.Id.HasDefaultValue())
                 {
-                    node.ParentNode = parentNode;
+                    newParent = parentNode;
                 }
                 else
                 {
-                    node.ParentNode = parentId.HasDefaultValue()
+                    newParent = parentId.HasDefaultValue()
                         ? null
                         : repository.First<SitemapNode>(parentId);
+                }
+
+                if (node.ParentNode != newParent)
+                {
+                    updated = true;
+                    node.ParentNode = newParent;
                 }
 
                 if (cmsConfiguration.EnableMacros && node.Macro != macro)
                 {
                     node.Macro = macro;
+                    updated = true;
                 }
 
-                repository.Save(node);
+                if (updated)
+                {
+                    node.Version = version;
+                    repository.Save(node);
+                    nodeUpdated = true;
+                }
             }
 
             return node;
