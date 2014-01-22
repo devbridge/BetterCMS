@@ -52,5 +52,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
         /// </value>
         [DataMemberIgnore]
         public bool UsePageTitleAsNodeTitle { get; set; }
+
+        /// <summary>
+        /// Gets or sets the macro.
+        /// </summary>
+        /// <value>
+        /// The macro.
+        /// </value>
+        [DataMember]
+        public string Macro { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
@@ -42,5 +43,23 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Nodes
         /// </value>
         [DataMember]
         public int DisplayOrder { get; set; }
+
+        /// <summary>
+        /// Gets or sets the macro.
+        /// </summary>
+        /// <value>
+        /// The macro.
+        /// </value>
+        [DataMember]
+        public string Macro { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page identifier.
+        /// </summary>
+        /// <value>
+        /// The page identifier.
+        /// </value>
+        [DataMember]
+        public Guid? PageId { get; set; }
     }
 }

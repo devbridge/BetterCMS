@@ -230,6 +230,7 @@
     <Compile Include="Operations\Pages\Sitemap\ISitemapService.cs" />
     <Compile Include="Operations\Pages\Sitemap\Nodes\GetSitemapNodesRequest.cs" />
     <Compile Include="Operations\Pages\Sitemap\Nodes\GetSitemapNodesResponse.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Nodes\GetSitemapNodesRequestValidator.cs" />
     <Compile Include="Operations\Pages\Sitemap\Nodes\INodesService.cs" />
     <Compile Include="Operations\Pages\Sitemap\Nodes\Node\GetSitemapNodeRequest.cs" />
     <Compile Include="Operations\Pages\Sitemap\Nodes\Node\GetSitemapNodeResponse.cs" />

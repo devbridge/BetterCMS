@@ -30,9 +30,11 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Nodes.Node
                         LastModifiedOn = node.ModifiedOn,
 
                         ParentId = node.ParentNode != null && !node.ParentNode.IsDeleted ? node.ParentNode.Id : (System.Guid?)null,
+                        PageId = node.Page != null && !node.Page.IsDeleted ? node.Page.Id : (System.Guid?)null,
                         Title = node.Title,
                         Url = node.Url,
-                        DisplayOrder = node.DisplayOrder
+                        DisplayOrder = node.DisplayOrder,
+                        Macro = node.Macro
                     })
                 .FirstOne();
 

@@ -61,7 +61,7 @@ namespace BetterCms.Module.Pages.Services
         /// <returns>
         /// Updated or newly created sitemap node.
         /// </returns>
-        SitemapNode SaveNode(Sitemap sitemap, Guid nodeId, int version, string url, string title, string macro, Guid pageId, bool usePageTitleAsNodeTitle, int displayOrder, Guid parentId, bool isDeleted = false, SitemapNode parentNode = null);
+        SitemapNode SaveNode(out bool nodeUpdated, Sitemap sitemap, Guid nodeId, int version, string url, string title, string macro, Guid pageId, bool usePageTitleAsNodeTitle, int displayOrder, Guid parentId, bool isDeleted = false, SitemapNode parentNode = null);
 
         /// <summary>
         /// Gets the sitemap history.
