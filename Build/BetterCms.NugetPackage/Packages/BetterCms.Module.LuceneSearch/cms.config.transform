@@ -7,7 +7,6 @@
     <add key="LucenePagesWatcherFrequency" value="00:30:00" />
     <add key="LuceneMaxPagesPerQuery" value="1000" />
     <add key="LucenePageExpireTimeout" value="00:10:00" />
-    <add key="LuceneFailedPageReindexingTimeout" value="00:10:00" />
     <add key="LuceneDisableStopWords" value="true" />
     <add key="LuceneIndexPrivatePages" value="false" />
     <add key="LuceneAuthorizationUrl" value="[yourserver]/login" />

@@ -15,8 +15,6 @@ namespace BetterCMS.Module.LuceneSearch.Workers
 {
     public class DefaultContentIndexingRobot : WorkerBase
     {
-        private const int RetryCount = 10;
-
         public DefaultContentIndexingRobot(TimeSpan timespan)
             : base(timespan)
         {
@@ -57,36 +55,39 @@ namespace BetterCMS.Module.LuceneSearch.Workers
                                 pages.Add(response);
                                 break;
                             }
-                            
-                        case HttpStatusCode.InternalServerError:
-                            {
-                                bool success = false;
-
-                                for (int i = 0; !success && i < RetryCount; i++)
-                                {
-                                    response = crawlerService.FetchPage(link.Path);
-                                    if (response.StatusCode == HttpStatusCode.OK)
-                                    {
-                                        success = true;
-                                    }
-                                }
-
-                                if (success)
-                                {
-                                    pages.Add(response);
-                                }
-                                else
-                                {
-                                    idsToDelete.Add(link.Id);
-                                    scrapeService.Delete(link.Id);
-                                }
-                                break;
-                            }
 
                         case HttpStatusCode.NotFound:
                             {
                                 idsToDelete.Add(link.Id);
                                 scrapeService.Delete(link.Id);
+                                break;
+                            }
+
+                        default:
+                            {
+                                scrapeService.MarkFailed(link.Id);
+                                // +2 hours (2, 4, 6, 8, 12)
+
+//                                bool success = false;
+//
+//                                for (int i = 0; !success && i < RetryCount; i++)
+//                                {
+//                                    response = crawlerService.FetchPage(link.Path);
+//                                    if (response.StatusCode == HttpStatusCode.OK)
+//                                    {
+//                                        success = true;
+//                                    }
+//                                }
+//
+//                                if (success)
+//                                {
+//                                    pages.Add(response);
+//                                }
+//                                else
+//                                {
+//                                    idsToDelete.Add(link.Id);
+//                                    scrapeService.Delete(link.Id);
+//                                }
                                 break;
                             }
                     }

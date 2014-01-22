@@ -25,8 +25,6 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
 
         private readonly TimeSpan pageExpireTimeout;
 
-        private readonly TimeSpan failedPageTimeout;
-
         public DefaultScrapeService(IRepository repository, IUnitOfWork unitOfWork, ICmsConfiguration cmsConfiguration)
         {
             Repository = repository;
@@ -41,11 +39,6 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
             if (!TimeSpan.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LucenePageExpireTimeout), out pageExpireTimeout))
             {
                 pageExpireTimeout = TimeSpan.FromMinutes(10);
-            }
-
-            if (!TimeSpan.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneFailedPageReindexingTimeout), out failedPageTimeout))
-            {
-                failedPageTimeout = TimeSpan.FromMinutes(10);
             }
 
             bool.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneIndexPrivatePages), out scrapePrivatePages);
@@ -160,8 +153,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
 
             var expiredUrls =
                 Repository.AsQueryOver(() => indexSourceAlias)
-                          .Where(() => indexSourceAlias.EndTime != null)
-                          .Where(() => indexSourceAlias.EndTime <= endDate)
+                          .Where(() => indexSourceAlias.EndTime <= endDate && indexSourceAlias.FailedCount == 0)
                           .OrderByAlias(() => indexSourceAlias.EndTime)
                           .Desc.Lock(() => indexSourceAlias)
                           .Read.Take(limit)
@@ -173,12 +165,10 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
         private IList<IndexSource> GetFailedLinks(int limit)
         {
             IndexSource indexSourceAlias = null;
-            var startDate = DateTime.Now.Subtract(failedPageTimeout);
 
             var urls =
                 Repository.AsQueryOver(() => indexSourceAlias)
-                          .Where(() => indexSourceAlias.StartTime != null && indexSourceAlias.EndTime == null)
-                          .Where(() => indexSourceAlias.StartTime <= startDate)
+                          .Where(() => indexSourceAlias.FailedCount > 0 && indexSourceAlias.NextRetryTime <= DateTime.Now)
                           .OrderByAlias(() => indexSourceAlias.EndTime)
                           .Desc.Lock(() => indexSourceAlias)
                           .Read.Take(limit)
@@ -201,6 +191,40 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
         {
             var url = Repository.First<IndexSource>(x => x.Id == id);
             url.EndTime = DateTime.Now;
+            url.NextRetryTime = null;
+            url.FailedCount = 0;
+
+            UnitOfWork.BeginTransaction();
+            Repository.Save(url);
+            UnitOfWork.Commit();
+        }
+
+        public void MarkFailed(Guid id)
+        {
+            var url = Repository.First<IndexSource>(x => x.Id == id);
+            url.EndTime = DateTime.Now;
+            url.FailedCount++;
+
+            int addHours;
+            switch (url.FailedCount)
+            {
+                case 1:
+                    addHours = 1;
+                    break;
+                case 2:
+                    addHours = 4;
+                    break;
+                case 3:
+                    addHours = 6;
+                    break;
+                case 4:
+                    addHours = 8;
+                    break;
+                default:
+                    addHours = 12;
+                    break;
+            }
+            url.NextRetryTime = DateTime.Now.AddHours(addHours);
 
             UnitOfWork.BeginTransaction();
             Repository.Save(url);
