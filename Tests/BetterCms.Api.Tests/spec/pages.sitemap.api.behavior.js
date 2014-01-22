@@ -235,7 +235,56 @@ describe('pages.sitemap.api.behavior', function () {
         });
     });
 
-    it('01405: Should get a sitemap node by id.', function () {
+    it('01405: Should get a list with one sitemap node, filtered by all available columns.', function () {
+        var url = '/bcms-api/sitemap-nodes/' + constants.defaultSitemapId,
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [
+                    { field: 'Id', value: '390d4ac846804fa4ab18a20700aae5e6' },
+                    { field: 'CreatedOn', value: '2013-07-26 10:22:13.000' },
+                    { field: 'CreatedBy', value: 'Better CMS test user' },
+                    { field: 'LastModifiedOn', value: '2013-07-26 10:22:13.000' },
+                    { field: 'LastModifiedBy', value: 'Better CMS test user' },
+                    { field: 'Version', value: '1' },
+
+                    { field: 'ParentId', value: '4f32940497ce4df199d1a20700aae5d8' },
+                    { field: 'Title', value: '01404' },
+                    { field: 'Url', value: '/01404/01404/' },
+                    { field: 'DisplayOrder', value: 0 },
+                    { field: 'PageId', value: null },
+                    { field: 'Macro', value: null }
+                ]
+            }
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
+
+            expect(result.data.items[0].id).toBe('390d4ac846804fa4ab18a20700aae5e6', 'Correctly filtered id should be retrieved.');
+
+            // Check if model properties count didn't changed. If so - update current test filter and another tests.
+            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties count should be equal to filter parameters count.');
+        });
+    });
+
+    it('01406: Should get a sitemap node by id.', function () {
         var url = '/bcms-api/sitemap-node/' + constants.child11Id,
             result,
             ready = false;
@@ -261,53 +310,6 @@ describe('pages.sitemap.api.behavior', function () {
             expect(node.parentId).toBe(constants.child1Id, 'Correctly filtered parentId should be retrieved.');
             expect(node.url).toBe(constants.child11Url, 'Correctly filtered url should be retrieved.');
             expect(node.displayOrder).toBeDefinedAndNotNull('displayOrder should be retrieved.');
-        });
-    });
-    
-    it('01406: Should get a list with one sitemap node, filtered by all available columns.', function () {
-        var url = '/bcms-api/sitemap-nodes/' + constants.defaultSitemapId,
-            result,
-            ready = false;
-
-        var data = {
-            filter: {
-                where: [
-                    { field: 'Id', value: '390d4ac846804fa4ab18a20700aae5e6' },
-                    { field: 'CreatedOn', value: '2013-07-26 10:22:13.000' },
-                    { field: 'CreatedBy', value: 'Better CMS test user' },
-                    { field: 'LastModifiedOn', value: '2013-07-26 10:22:13.000' },
-                    { field: 'LastModifiedBy', value: 'Better CMS test user' },
-                    { field: 'Version', value: '1' },
-
-                    { field: 'ParentId', value: '4f32940497ce4df199d1a20700aae5d8' },
-                    { field: 'Title', value: '01404' },
-                    { field: 'Url', value: '/01404/01404/' },
-                    { field: 'DisplayOrder', value: 0 }
-                ]
-            }
-        };
-
-        runs(function () {
-            api.get(url, data, function (json) {
-                result = json;
-                ready = true;
-            });
-        });
-
-        waitsFor(function () {
-            return ready;
-        }, 'The ' + url + ' timeout.');
-
-        runs(function () {
-            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
-            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
-            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
-            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
-
-            expect(result.data.items[0].id).toBe('390d4ac846804fa4ab18a20700aae5e6', 'Correctly filtered id should be retrieved.');
-
-            // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
         });
     });
 
