@@ -42,5 +42,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Nodes
         /// </value>
         [DataMember]
         public int DisplayOrder { get; set; }
+
+        /// <summary>
+        /// Gets or sets the macro.
+        /// </summary>
+        /// <value>
+        /// The macro.
+        /// </value>
+        [DataMember]
+        public string Macro { get; set; }
     }
 }
