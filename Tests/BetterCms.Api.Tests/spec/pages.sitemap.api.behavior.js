@@ -189,7 +189,7 @@ describe('pages.sitemap.api.behavior', function () {
     });
 
     it('01404: Should get a list of sitemap nodes.', function () {
-        var url = '/bcms-api/sitemap-nodes/',
+        var url = '/bcms-api/sitemap-nodes/' + constants.defaultSitemapId,
             result,
             ready = false,
             data = {
@@ -236,7 +236,7 @@ describe('pages.sitemap.api.behavior', function () {
     });
 
     it('01405: Should get a sitemap node by id.', function () {
-        var url = '/bcms-api/sitemap-nodes/' + constants.child11Id,
+        var url = '/bcms-api/sitemap-node/' + constants.child11Id,
             result,
             ready = false;
 
@@ -265,7 +265,7 @@ describe('pages.sitemap.api.behavior', function () {
     });
     
     it('01406: Should get a list with one sitemap node, filtered by all available columns.', function () {
-        var url = '/bcms-api/sitemap-nodes/',
+        var url = '/bcms-api/sitemap-nodes/' + constants.defaultSitemapId,
             result,
             ready = false;
 

@@ -23,6 +23,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Nodes
 
             var listResponse = repository
                 .AsQueryable<Module.Pages.Models.SitemapNode>()
+                .Where(node => node.Sitemap.Id == request.SitemapId)
                 .Select(node => new SitemapNodeModel
                     {
                         Id = node.Id,
@@ -33,6 +34,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Nodes
                         LastModifiedOn = node.ModifiedOn,
 
                         ParentId = node.ParentNode != null && !node.ParentNode.IsDeleted ? node.ParentNode.Id : (System.Guid?)null,
+                        PageId = node.Page != null && !node.Page.IsDeleted ? node.Page.Id : (System.Guid?)null,
                         Title = node.Title,
                         Url = node.Url,
                         DisplayOrder = node.DisplayOrder,
