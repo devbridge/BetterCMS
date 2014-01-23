@@ -22,6 +22,8 @@ namespace BetterCMS.Module.LuceneSearch.Workers
 
         protected override void DoWork()
         {
+            Log.Trace("Starting Lucene Content Indexing Robot.");
+
             using (var lifetimeScope = ContextScopeProvider.CreateChildContainer())
             {
                 var indexerService = lifetimeScope.Resolve<IIndexerService>();
@@ -66,28 +68,6 @@ namespace BetterCMS.Module.LuceneSearch.Workers
                         default:
                             {
                                 scrapeService.MarkFailed(link.Id);
-                                // +2 hours (2, 4, 6, 8, 12)
-
-//                                bool success = false;
-//
-//                                for (int i = 0; !success && i < RetryCount; i++)
-//                                {
-//                                    response = crawlerService.FetchPage(link.Path);
-//                                    if (response.StatusCode == HttpStatusCode.OK)
-//                                    {
-//                                        success = true;
-//                                    }
-//                                }
-//
-//                                if (success)
-//                                {
-//                                    pages.Add(response);
-//                                }
-//                                else
-//                                {
-//                                    idsToDelete.Add(link.Id);
-//                                    scrapeService.Delete(link.Id);
-//                                }
                                 break;
                             }
                     }
@@ -106,6 +86,7 @@ namespace BetterCMS.Module.LuceneSearch.Workers
                 indexerService.Close();
             }
 
+            Log.Trace("Lucene Content Indexing Robot finished indexing.");
         }
     }
 }

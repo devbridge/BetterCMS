@@ -16,7 +16,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
 {
     public class DefaultWebCrawlerService : IWebCrawlerService
     {
-        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+        private static readonly ILog Log = LogManager.GetLogger("LuceneSearchModule");
 
         private readonly ICmsConfiguration cmsConfiguration;
         
@@ -161,7 +161,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
                 var cookies = httpWebResponse.Cookies;
                 authorizationCookies = cookies;
 
-                foreach (HttpCookie cookie in authorizationCookies)
+                foreach (Cookie cookie in authorizationCookies)
                 {
                     cookie.Expires = DateTime.Now.AddYears(1);
                 }
