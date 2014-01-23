@@ -33,6 +33,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 widgetName: '.bcms-title-holder > .bcms-content-titles',
                 widgetIFramePreview: ".bcms-preview-box[data-as-image='False'] .bcms-zoom-overlay",
                 widgetImagePreview: ".bcms-preview-box[data-as-image='True'] .bcms-zoom-overlay",
+                anyTab: '.bcms-tab',
 
                 widgetsContent: '.bcms-widgets',
 
@@ -226,6 +227,12 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 preventedEnter: function () {                    
                     pagesContent.updateWidgetCategoryList(dialog);
                 }
+            });
+            
+            dialog.container.find(selectors.anyTab).click(function () {
+                setTimeout(function() {
+                    dialog.setFocus();
+                }, 100);
             });
 
             pagesContent.initializeWidgets(dialog.container, dialog);
