@@ -102,54 +102,53 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         */
         sitemap.loadSiteSettingsSitemapList = function () {
             dynamicContent.bindSiteSettings(siteSettings, links.loadSiteSettingsSitemapsListUrl, {
-                contentAvailable: function() {
-                    sitemap.initializeSitemapsList(siteSettings.getMainContainer());
-                }
+                contentAvailable: sitemap.initializeSitemapsList
             });
         };
 
         /**
         * Initializes site settings master pages list.
         */
-        sitemap.initializeSitemapsList = function (container) {
+        sitemap.initializeSitemapsList = function () {
             var dialog = siteSettings.getModalDialog(),
+                container = dialog.container,
                 form = container.find(selectors.siteSettingsSitemapsForm);
 
-            grid.bindGridForm(form, function (htmlContent, data) {
-                container.html(htmlContent);
-                sitemap.initializeSitemapsList(container);
+            grid.bindGridForm(form, function (data) {
+                siteSettings.setContent(data);
+                sitemap.initializeSitemapsList();
             });
 
             form.on('submit', function (event) {
                 bcms.stopEventPropagation(event);
-                searchSitemaps(form, container);
+                searchSitemaps(form);
                 return false;
             });
 
             bcms.preventInputFromSubmittingForm(form.find(selectors.searchField), {
                 preventedEnter: function () {
-                    searchSitemaps(form, container);
+                    searchSitemaps(form);
                 },
             });
 
             form.find(selectors.searchButton).on('click', function (event) {
                 bcms.stopEventPropagation(event);
-                searchSitemaps(form, container);
+                searchSitemaps(form);
             });
 
             initializeListItems(container);
 
             // Select search (timeout is required to work on IE11)
-            grid.focusSearchInput(dialog.container.find(selectors.searchField), true);
+            grid.focusSearchInput(container.find(selectors.searchField), true);
         };
         
         /*
         * Submit sitemap form to force search.
         */
-        function searchSitemaps(form, container) {
+        function searchSitemaps(form) {
             grid.submitGridForm(form, function (htmlContent) {
                 siteSettings.setContent(htmlContent);
-                sitemap.initializeSitemapsList(siteSettings.getModalDialog().container);
+                sitemap.initializeSitemapsList();
             });
         };
 
