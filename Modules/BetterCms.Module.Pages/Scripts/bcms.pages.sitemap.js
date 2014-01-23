@@ -38,6 +38,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 modalContent: '.bcms-modal-content-padded',
                 firstTab: '#bcms-tab-1',
                 secondTab: '#bcms-tab-2',
+                secondTabButton: '.bcms-tab[data-name="#bcms-tab-2"]',
                 leftColumn: '.bcms-leftcol'
             },
             links = {
@@ -412,7 +413,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     }
 
                     sitemapModel.parseJsonNodes(content.Data.Sitemap.RootNodes);
-                    self.pageLinksModel = new SearchPageLinksViewModel(sitemapModel);
+                    self.pageLinksModel = new SearchPageLinksViewModel(sitemapModel, dialog.container);
                     self.pageLinksModel.parseJsonLinks(content.Data.PageLinks);
                     sitemap.activeMapModel = sitemapModel;
 
@@ -1421,12 +1422,16 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Responsible for page searching.
         */
-        function SearchPageLinksViewModel(sitemapViewModel) {
+        function SearchPageLinksViewModel(sitemapViewModel, container) {
             var self = this;
             self.searchQuery = ko.observable("");
             self.pageLinks = ko.observableArray([]);
             self.sitemap = sitemapViewModel;
-            self.hasfocus = ko.observable(true);
+            self.hasfocus = ko.observable(false);
+
+            container.find(selectors.secondTabButton).on('click', function () {
+                self.hasfocus(true);
+            });
 
             self.searchForPageLinks = function () {
                 var showAll = $.trim(self.searchQuery()).length === 0;
@@ -1443,7 +1448,11 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     }
                 }
                 
+                // IE8 fix
+                var val = self.searchQuery();
                 self.hasfocus(true);
+                self.searchQuery("");
+                self.searchQuery(val);
             };
             
             // Parse.
