@@ -271,17 +271,21 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     });
                 },
                 onAccept: function (dialog) {
-                    addNodeController.save(function (json) {
-                        if (json.Success) {
-                            dialog.close();
-                            if (onClose && $.isFunction(onClose)) {
-                                onClose(json);
+                    var canContinue = forms.valid(dialog.container.find(selectors.sitemapForm));
+                    
+                    if (canContinue) {
+                        addNodeController.save(function (json) {
+                            if (json.Success) {
+                                dialog.close();
+                                if (onClose && $.isFunction(onClose)) {
+                                    onClose(json);
+                                }
+                                messages.refreshBox(selectors.siteSettingsSitemapsForm, json);
+                            } else {
+                                sitemap.showMessage(json);
                             }
-                            messages.refreshBox(selectors.siteSettingsSitemapsForm, json);
-                        } else {
-                            sitemap.showMessage(json);
-                        }
-                    });
+                        });
+                    }
                     return false;
                 }
             });
