@@ -331,6 +331,24 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Type custom application data (macro) ....
+        /// </summary>
+        public static string Sitemap_NodeEdit_Macro_Placeholder_Message {
+            get {
+                return ResourceManager.GetString("Sitemap_NodeEdit_Macro_Placeholder_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit the field dedicated to application developers for specific / custom functionality..
+        /// </summary>
+        public static string Sitemap_NodeEdit_Macro_Tooltip_Message {
+            get {
+                return ResourceManager.GetString("Sitemap_NodeEdit_Macro_Tooltip_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Place your page link here..
         /// </summary>
         public static string Sitemap_NodeEdit_PlaceLinkHere {

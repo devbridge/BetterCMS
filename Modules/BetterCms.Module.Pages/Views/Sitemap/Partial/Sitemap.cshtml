@@ -35,20 +35,8 @@
                 <a class="bcms-expand-collapse-node" data-bind="click: toggleExpand, css: { 'bcms-expanded-nodes': isExpanded() }">&nbsp;</a>
                 <!-- /ko -->
                 <div class="bcms-node-info" data-bind="droppable: 'middleZone'">
-                    <!-- ko if: getSitemap().settings.canEditNode && !getSitemap().settings.canDragNode -->
-                    <a class="bcms-placement-title bcms-content-titles" data-bind="text: title, click: startEditSitemapNode"></a>
-                    <div class="bcms-placement-path"><a data-bind="text: url, attr:{href: url}" href="" target="_blank"></a></div>
-                    <!-- /ko -->
-                    <!-- ko ifnot: getSitemap().settings.canEditNode && !getSitemap().settings.canDragNode -->
-                    <!-- ko if: getSitemap().settings.canEditNode -->
                     <div class="bcms-placement-title" data-bind="text: title"></div>
-                    <div class="bcms-placement-path"><a data-bind="text: url, click: startEditSitemapNode"></a></div>
-                    <!-- /ko -->
-                    <!-- ko ifnot: getSitemap().settings.canEditNode -->
-                    <div class="bcms-placement-title" data-bind="text: title"></div>
-                    <div class="bcms-placement-path" data-bind="text: url"></div>
-                    <!-- /ko -->
-                    <!-- /ko -->
+                    <div class="bcms-placement-path"><a data-bind="text: url, attr: { href: url }" href="" target="_blank"></a></div>
                 </div>
                 <!-- ko if: getSitemap().settings.canEditNode -->
                 <div class="bcms-edit-node">
@@ -70,13 +58,14 @@
                     </div>
                     <!-- ko if: getSitemap().showMacros -->
                     <div class="bcms-edit-node-holder">
-                        @Html.Tooltip(NavigationGlobalization.Sitemap_NodeEdit_Title_Tooltip_Message)
+                        @Html.Tooltip(NavigationGlobalization.Sitemap_NodeEdit_Macro_Tooltip_Message)
                         <div class="bcms-custom-input-box" style="width: 100%;">
                             @Html.TextBoxFor(m => m.Macro, new
                             {
-                                data_bind = "value: macro, valueUpdate: 'afterkeydown', enterPress: saveSitemapNodeWithValidation, escPress: cancelEditSitemapNode, hasfocus: isActive()",
+                                data_bind = "value: macro, valueUpdate: 'afterkeydown', enterPress: saveSitemapNodeWithValidation, escPress: cancelEditSitemapNode",
                                 @class = "bcms-editor-field-box",
                                 Title = (string)null,
+                                placeholder = NavigationGlobalization.Sitemap_NodeEdit_Macro_Placeholder_Message
                             })
                             @Html.BcmsValidationMessageFor(m => m.Macro)
                         </div>
@@ -84,7 +73,7 @@
                     <!-- /ko -->
                     <div class="bcms-edit-node-holder">
                         <!-- ko if: isUrlReadonly -->
-                        <div class="bcms-placement-path" data-bind="text: url"></div>
+                        <div class="bcms-placement-path"><a data-bind="text: url, attr: { href: url }" href="" target="_blank"></a></div>
                         <!-- /ko -->
                         <!-- ko ifnot: isUrlReadonly -->
                         @Html.Tooltip(NavigationGlobalization.Sitemap_NodeEdit_Url_Tooltip_Message)
@@ -108,7 +97,6 @@
                 </div>
                 <!-- /ko -->
                 <div class="bcms-node-controls">
-                    <a class="bcms-icn-restore" data-bind="attr: { href: url }" href="" target="_blank">@RootGlobalization.Button_Preview</a>
                     <!-- ko if: getSitemap().settings.canEditNode -->
                     <a class="bcms-icn-edit" data-bind="click: startEditSitemapNode">@RootGlobalization.Button_Edit</a>
                     <!-- /ko -->
