@@ -43,7 +43,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
                                                                LanguageId = t.Language.Id,
                                                                Title = t.Title,
                                                                Url = t.Url,
-                                                               UsePageTitleAsNodeTitle = t.UsePageTitleAsNodeTitle
+                                                               UsePageTitleAsNodeTitle = t.UsePageTitleAsNodeTitle,
+                                                               Macro = t.Macro
                                                            })
                                                        .ToFuture()
                                            : null;
@@ -66,7 +67,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
                         Url = node.Page != null ? node.Page.PageUrl : node.Url,
                         PageId = node.Page != null ? node.Page.Id : (Guid?)null,
                         UsePageTitleAsNodeTitle = node.UsePageTitleAsNodeTitle,
-                        DisplayOrder = node.DisplayOrder
+                        DisplayOrder = node.DisplayOrder,
+                        Macro = node.Macro
                     })
                 .ToFuture()
                 .ToList();
@@ -155,6 +157,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
                             node.Title = translation.Title;
                             node.Url = translation.Url;
                             node.UsePageTitleAsNodeTitle = translation.UsePageTitleAsNodeTitle;
+                            node.Macro = translation.Macro;
                         }
 
                         if (node.PageId.HasValue)

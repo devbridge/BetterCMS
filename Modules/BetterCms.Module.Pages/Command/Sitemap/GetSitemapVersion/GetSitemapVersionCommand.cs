@@ -85,7 +85,8 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemapVersion
                         AccessControlEnabled = CmsConfiguration.Security.AccessControlEnabled,
                         ShowLanguages = CmsConfiguration.EnableMultilanguage && languages.Any(),
                         Languages = languages,
-                        IsReadOnly = true
+                        IsReadOnly = true,
+                        ShowMacros = false
                     };
 
                 return model;

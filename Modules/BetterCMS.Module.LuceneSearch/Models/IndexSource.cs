@@ -16,5 +16,9 @@ namespace BetterCMS.Module.LuceneSearch.Models
         public virtual DateTime? StartTime { get; set; }
 
         public virtual DateTime? EndTime { get; set; }
+        
+        public virtual DateTime? NextRetryTime { get; set; }
+        
+        public virtual int FailedCount { get; set; }
     }
 }

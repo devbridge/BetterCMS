@@ -99,6 +99,14 @@ namespace BetterCms.Module.Pages.ViewModels.Sitemap
         public bool ShowLanguages { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to show macros.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to show macros; otherwise, <c>false</c>.
+        /// </value>
+        public bool ShowMacros { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

@@ -7,8 +7,8 @@ using Common.Logging;
 namespace BetterCMS.Module.LuceneSearch.Workers
 {
     public abstract class WorkerBase : IRegisteredObject, IWorker
-    {    
-        protected static readonly ILog Log = LogManager.GetCurrentClassLogger();
+    {
+        protected static readonly ILog Log = LogManager.GetLogger("LuceneSearchModule");
 
         private readonly object lockObject = new object();        
 
@@ -62,7 +62,7 @@ namespace BetterCMS.Module.LuceneSearch.Workers
                         }
                         catch (Exception ex)
                         {
-                            Log.WarnFormat("Lucene Search worker {0} failed. Retry in 60 seconds.", ex, GetType().Name);
+                            Log.WarnFormat("Lucene Search worker {0} failed. Retry in {1} seconds.", ex, GetType().Name, sleep.TotalSeconds);
                         }
                         
                         // Sleep before next run.

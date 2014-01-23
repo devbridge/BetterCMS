@@ -189,7 +189,7 @@ describe('pages.sitemap.api.behavior', function () {
     });
 
     it('01404: Should get a list of sitemap nodes.', function () {
-        var url = '/bcms-api/sitemap-nodes/',
+        var url = '/bcms-api/sitemap-nodes/' + constants.defaultSitemapId,
             result,
             ready = false,
             data = {
@@ -235,37 +235,8 @@ describe('pages.sitemap.api.behavior', function () {
         });
     });
 
-    it('01405: Should get a sitemap node by id.', function () {
-        var url = '/bcms-api/sitemap-nodes/' + constants.child11Id,
-            result,
-            ready = false;
-
-        runs(function () {
-            api.get(url, null, function (json) {
-                result = json;
-                ready = true;
-            });
-        });
-
-        waitsFor(function () {
-            return ready;
-        }, 'The ' + url + ' timeout.');
-
-        runs(function () {
-            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
-
-            var node = result.data;
-            expect(node).toBeDefinedAndNotNull('JSON data object should be retrieved.');
-            api.expectBasePropertiesAreNotNull(node);
-            expect(node.title).toBe(constants.child11Title, 'Correctly filtered title should be retrieved.');
-            expect(node.parentId).toBe(constants.child1Id, 'Correctly filtered parentId should be retrieved.');
-            expect(node.url).toBe(constants.child11Url, 'Correctly filtered url should be retrieved.');
-            expect(node.displayOrder).toBeDefinedAndNotNull('displayOrder should be retrieved.');
-        });
-    });
-    
-    it('01406: Should get a list with one sitemap node, filtered by all available columns.', function () {
-        var url = '/bcms-api/sitemap-nodes/',
+    it('01405: Should get a list with one sitemap node, filtered by all available columns.', function () {
+        var url = '/bcms-api/sitemap-nodes/' + constants.defaultSitemapId,
             result,
             ready = false;
 
@@ -282,7 +253,9 @@ describe('pages.sitemap.api.behavior', function () {
                     { field: 'ParentId', value: '4f32940497ce4df199d1a20700aae5d8' },
                     { field: 'Title', value: '01404' },
                     { field: 'Url', value: '/01404/01404/' },
-                    { field: 'DisplayOrder', value: 0 }
+                    { field: 'DisplayOrder', value: 0 },
+                    { field: 'PageId', value: null },
+                    { field: 'Macro', value: null }
                 ]
             }
         };
@@ -307,7 +280,36 @@ describe('pages.sitemap.api.behavior', function () {
             expect(result.data.items[0].id).toBe('390d4ac846804fa4ab18a20700aae5e6', 'Correctly filtered id should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
+            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties count should be equal to filter parameters count.');
+        });
+    });
+
+    it('01406: Should get a sitemap node by id.', function () {
+        var url = '/bcms-api/sitemap-node/' + constants.child11Id,
+            result,
+            ready = false;
+
+        runs(function () {
+            api.get(url, null, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+
+            var node = result.data;
+            expect(node).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            api.expectBasePropertiesAreNotNull(node);
+            expect(node.title).toBe(constants.child11Title, 'Correctly filtered title should be retrieved.');
+            expect(node.parentId).toBe(constants.child1Id, 'Correctly filtered parentId should be retrieved.');
+            expect(node.url).toBe(constants.child11Url, 'Correctly filtered url should be retrieved.');
+            expect(node.displayOrder).toBeDefinedAndNotNull('displayOrder should be retrieved.');
         });
     });
 

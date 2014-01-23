@@ -16,7 +16,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
 {
     public class DefaultWebCrawlerService : IWebCrawlerService
     {
-        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+        private static readonly ILog Log = LogManager.GetLogger("LuceneSearchModule");
 
         private readonly ICmsConfiguration cmsConfiguration;
         
@@ -35,7 +35,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
             bool.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneIndexPrivatePages), out indexPrivatePages);
         }
 
-        public PageData FetchPage(string url, bool reauthenticateOnFailure = true)
+        public PageData FetchPage(string url)
         {
             if (indexPrivatePages && authorizationCookies == null)
             {
@@ -89,15 +89,6 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
                 {
                     var webException = (WebException)ex;
                     response.StatusCode = ((HttpWebResponse)webException.Response).StatusCode;
-                }
-
-                if (reauthenticateOnFailure && indexPrivatePages)
-                {
-                    Log.InfoFormat("Lucene web crawler: Trying to re-authenticate and re-fetch page {0}.", ex, url);
-                    if (TryAuthenticate())
-                    {
-                        return FetchPage(url, false);
-                    }
                 }
             }
             finally
@@ -169,6 +160,11 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
                 httpWebResponse = (HttpWebResponse)requestLogin.GetResponse();
                 var cookies = httpWebResponse.Cookies;
                 authorizationCookies = cookies;
+
+                foreach (Cookie cookie in authorizationCookies)
+                {
+                    cookie.Expires = DateTime.Now.AddYears(1);
+                }
             }
             catch (Exception exc)
             {

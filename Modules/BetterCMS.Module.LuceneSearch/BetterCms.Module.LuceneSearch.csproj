@@ -48,6 +48,7 @@
     <Compile Include="Models\CrawlLink.cs" />
     <Compile Include="Models\IndexSource.cs" />
     <Compile Include="Models\Maps\IndexSourceMap.cs" />
+    <Compile Include="Models\Migrations\Migration201401221300.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -17,12 +17,16 @@ namespace BetterCMS.Module.LuceneSearch.Workers
 
         protected override void DoWork()
         {
+            Log.Trace("Starting Lucene Index Source Watcher.");
+
             using (var lifetimeScope = ContextScopeProvider.CreateChildContainer())
             {
                 var scrapeService = lifetimeScope.Resolve<IScrapeService>();
 
                 scrapeService.FetchNewUrls();
             }
+
+            Log.Trace("Lucene Index Source Watcher finished looking for new sources.");
         }
     }
 }

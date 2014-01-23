@@ -67,7 +67,8 @@ namespace BetterCms.Module.Pages.Helpers
                     Url = linkedPage != null ? linkedPage.Url : node.Url,
                     PageId = linkedPage != null ? linkedPage.Id : Guid.Empty,
                     DisplayOrder = node.DisplayOrder,
-                    ChildNodes = GetSitemapNodesInHierarchy(enableMultilanguage, allNodes.Where(f => f.ParentNode == node).ToList(), allNodes, languageIds, pages)
+                    ChildNodes = GetSitemapNodesInHierarchy(enableMultilanguage, allNodes.Where(f => f.ParentNode == node).ToList(), allNodes, languageIds, pages),
+                    Macro = node.Macro
                 };
 
                 if (enableMultilanguage)
@@ -82,7 +83,8 @@ namespace BetterCms.Module.Pages.Helpers
                             Title = t.Title,
                             UsePageTitleAsNodeTitle = t.UsePageTitleAsNodeTitle,
                             Url = t.Url,
-                            Version = t.Version
+                            Version = t.Version,
+                            Macro = t.Macro
                         })
                         .ToList()
                         .ForEach(nodeViewModel.Translations.Add);
@@ -126,7 +128,8 @@ namespace BetterCms.Module.Pages.Helpers
                                         Title = string.Empty,
                                         Url = string.Empty,
                                         UsePageTitleAsNodeTitle = true,
-                                        Version = 0
+                                        Version = 0,
+                                        Macro = string.Empty
                                     };
                                 nodeViewModel.Translations.Add(translationViewModel);
                             }

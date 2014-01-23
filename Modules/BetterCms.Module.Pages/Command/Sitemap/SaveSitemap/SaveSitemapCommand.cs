@@ -174,22 +174,23 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
                 var update = !node.Id.HasDefaultValue() && !isDeleted;
                 var delete = !node.Id.HasDefaultValue() && isDeleted;
 
-                var sitemapNode = SitemapService.SaveNode(sitemap, node.Id, node.Version, node.Url, node.Title, node.PageId, node.UsePageTitleAsNodeTitle, node.DisplayOrder, node.ParentId, isDeleted, parentNode);
+                bool updatedInDB;
+                var sitemapNode = SitemapService.SaveNode(out updatedInDB, sitemap, node.Id, node.Version, node.Url, node.Title, node.Macro, node.PageId, node.UsePageTitleAsNodeTitle, node.DisplayOrder, node.ParentId, isDeleted, parentNode);
 
                 if ((create || update) && (node.Translations != null && node.Translations.Count > 0))
                 {
                     SaveTranslations(sitemapNode, node);
                 }
 
-                if (create)
+                if (create && updatedInDB)
                 {
                     createdNodes.Add(sitemapNode);
                 }
-                else if (update)
+                else if (update && updatedInDB)
                 {
                     updatedNodes.Add(sitemapNode);
                 }
-                else if (delete)
+                else if (delete && updatedInDB)
                 {
                     deletedNodes.Add(sitemapNode);
                     RemoveTranslations(sitemapNode);
@@ -225,6 +226,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
                             Node = sitemapNode,
                             Language = Repository.AsProxy<Language>(model.LanguageId),
                             Title = model.Title,
+                            Macro = CmsConfiguration.EnableMacros ? model.Macro : null,
                             UsePageTitleAsNodeTitle = model.UsePageTitleAsNodeTitle
                         };
 
@@ -246,6 +248,12 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
                     {
                         saveIt = true;
                         translation.Title = model.Title;
+                    }
+
+                    if (CmsConfiguration.EnableMacros && translation.Macro != model.Macro)
+                    {
+                        saveIt = true;
+                        translation.Macro = model.Macro;
                     }
 
                     if (sitemapNode.Page == null)

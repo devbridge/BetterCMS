@@ -16,8 +16,6 @@
 
             public const string LucenePageExpireTimeout = "LucenePageExpireTimeout";
 
-            public const string LuceneFailedPageReindexingTimeout = "LuceneFailedPageReindexingTimeout";
-
             public const string LuceneDisableStopWords = "LuceneDisableStopWords";
 
             public const string LuceneIndexPrivatePages = "LuceneIndexPrivatePages";

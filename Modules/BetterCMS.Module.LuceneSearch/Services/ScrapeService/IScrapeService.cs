@@ -13,6 +13,8 @@ namespace BetterCMS.Module.LuceneSearch.Services.ScrapeService
 
         void MarkVisited(Guid id);
 
+        void MarkFailed(Guid id);
+
         void FetchNewUrls();
 
         void Delete(Guid id);

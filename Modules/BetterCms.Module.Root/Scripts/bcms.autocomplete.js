@@ -145,11 +145,14 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
                 self.pattern = options.pattern;
 
                 self.isExpanded = ko.observable(true);
+                self.hasfocus = ko.observable(false);
                 self.items = ko.observableArray();
                 self.newItem = ko.observable().extend({ maxLength: { maxLength: ko.maxLength.name } });
 
-                self.expandCollapse = function() {
-                    self.isExpanded(!self.isExpanded());
+                self.expandCollapse = function () {
+                    var isExpanded = !self.isExpanded();
+                    self.isExpanded(isExpanded);
+                    self.hasfocus(isExpanded);
                     self.clearItem();
                 };
 
