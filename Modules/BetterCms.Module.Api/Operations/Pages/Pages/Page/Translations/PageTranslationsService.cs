@@ -67,7 +67,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Translations
                 query = query.Where(p => p.PageUrl == url);
             }
             
-            return query.Select(p => p.LanguageGroupIdentifier).FirstOne();
+            return query.Select(p => p.LanguageGroupIdentifier).FirstOrDefault();
         }
     }
 }
