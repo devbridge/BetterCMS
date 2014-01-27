@@ -61,5 +61,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Nodes
         /// </value>
         [DataMember]
         public Guid? PageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page language identifier.
+        /// </summary>
+        /// <value>
+        /// The page language identifier.
+        /// </value>
+        [DataMember]
+        public Guid? PageLanguageId { get; set; }
     }
 }
