@@ -649,6 +649,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                         node.parentNode(dropZoneObject.parentNode());
                                     }
                                     if (dragObject.isCustom()) {
+                                        node.dropOnCancel = true;
                                         node.startEditSitemapNode();
                                         node.callbackAfterSuccessSaving = function () {
                                             sitemap.activeMapModel.updateNodesOrderAndParent();
@@ -1052,6 +1053,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 }
                 return '';
             });
+            self.dropOnCancel = false;
 
             // User for validation.
             self.containerId = 'node-' + nodeId++;
@@ -1072,11 +1074,12 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 self.title(self.titleOldValue);
                 self.url(self.urlOldValue);
                 self.macro(self.macroOldValue);
-                if (self.id() == defaultIdValue) {
+                if (self.dropOnCancel) {
                     self.parentNode().childNodes.remove(self);
                 }
             };
             self.saveSitemapNodeWithValidation = function () {
+                self.dropOnCancel = false;
                 var inputFields = $('input', '#' + self.containerId);
                 if (inputFields.valid()) {
                     if (self.usePageTitleAsNodeTitle() && self.titleOldValue != self.title()) {
