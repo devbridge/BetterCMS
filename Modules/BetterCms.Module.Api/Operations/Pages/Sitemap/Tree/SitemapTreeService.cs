@@ -108,6 +108,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
 
                         var defaultPage = pageTranslations.FirstOrDefault(p => !p.LanguageId.HasValue || p.LanguageId.Value.HasDefaultValue()) ?? linkedPage;
                         node.PageId = defaultPage.Id;
+                        node.PageLanguageId = defaultPage.LanguageId.ToNullOrValue();
                         node.Url = defaultPage.Url;
                         node.Title = node.UsePageTitleAsNodeTitle ? defaultPage.Title : node.Title;
 
@@ -144,6 +145,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
 
                             var defaultPage = pageTranslations.FirstOrDefault(p => !p.LanguageId.HasValue || p.LanguageId.Value.HasDefaultValue()) ?? linkedPage;
                             node.PageId = defaultPage.Id;
+                            node.PageLanguageId = defaultPage.LanguageId.ToNullOrValue();
                             node.Url = defaultPage.Url;
                             node.Title = node.UsePageTitleAsNodeTitle ? defaultPage.Title : node.Title;
                         }
@@ -179,6 +181,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
                             if (languagePage != null)
                             {
                                 node.PageId = languagePage.Id;
+                                node.PageLanguageId = languagePage.LanguageId.ToNullOrValue();
                                 node.Url = languagePage.Url;
                                 node.Title = node.UsePageTitleAsNodeTitle ? languagePage.Title : node.Title;
                             }
@@ -186,6 +189,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
                             {
                                 var defaultPage = pageTranslations.FirstOrDefault(p => !p.LanguageId.HasValue || p.LanguageId.Value.HasDefaultValue()) ?? linkedPage;
                                 node.PageId = defaultPage.Id;
+                                node.PageLanguageId = defaultPage.LanguageId.ToNullOrValue();
                                 node.Url = defaultPage.Url;
                                 node.Title = node.UsePageTitleAsNodeTitle ? defaultPage.Title : node.Title;
                             }

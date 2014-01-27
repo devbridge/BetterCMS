@@ -55,6 +55,21 @@ namespace BetterCms.Module.Root.Mvc
         }
 
         /// <summary>
+        /// Gets the value or null.
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <returns><c>null</c> if is null or has empty value; otherwise, value.</returns>
+        public static Guid? ToNullOrValue(this Guid? source)
+        {
+            if (source.HasValue && source.Value.HasDefaultValue())
+            {
+                return null;
+            }
+
+            return source;
+        }
+
+        /// <summary>
         /// Converts string source to the value on integer type or zero.
         /// </summary>
         /// <param name="source">The source.</param>

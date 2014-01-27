@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
@@ -16,7 +17,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
         /// The parent node id.
         /// </value>
         [DataMember]
-        public System.Guid? ParentId { get; set; }
+        public Guid? ParentId { get; set; }
 
         /// <summary>
         /// Gets or sets the node title.
@@ -31,7 +32,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
         /// Gets or sets the node URL.
         /// </summary>
         /// <value>
-        /// The ndoe URL.
+        /// The node URL.
         /// </value>
         [DataMember]
         public string Url { get; set; }
@@ -43,7 +44,16 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
         /// The page identifier.
         /// </value>
         [DataMember]
-        public System.Guid? PageId { get; set; }
+        public Guid? PageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page language identifier.
+        /// </summary>
+        /// <value>
+        /// The page language identifier.
+        /// </value>
+        [DataMember]
+        public Guid? PageLanguageId { get; set; }
 
         /// <summary>
         /// Gets or sets the node display order.

@@ -35,6 +35,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Nodes
 
                         ParentId = node.ParentNode != null && !node.ParentNode.IsDeleted ? node.ParentNode.Id : (System.Guid?)null,
                         PageId = node.Page != null && !node.Page.IsDeleted ? node.Page.Id : (System.Guid?)null,
+                        PageLanguageId = node.Page != null && !node.Page.IsDeleted && node.Page.Language != null ? node.Page.Language.Id : (System.Guid?)null,
                         Title = node.Title,
                         Url = node.Url,
                         DisplayOrder = node.DisplayOrder,
