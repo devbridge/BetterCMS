@@ -102,6 +102,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             audio: 3,
             file: 4
         },
+        classes = {
+            customImageLeftAlign: 'content-image-left',
+            customImageRightAlign: 'content-image-right'
+        },
         contentTypes = {
             file: 1,
             folder: 2
@@ -659,49 +663,49 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             };
 
             self.rowClassNames = ko.computed(function () {
-                var classes = '';
+                var rowClasses = '';
                 if (self.isFolder()) {
-                    classes += ' bcms-folder-box';
+                    rowClasses += ' bcms-folder-box';
                     if (self.isActive()) {
-                        classes += ' bcms-folder-box-active';
+                        rowClasses += ' bcms-folder-box-active';
                     }
                 }
                 if (self.isFile() && !self.isImage()) {
-                    classes += ' bcms-file-box';
+                    rowClasses += ' bcms-file-box';
                 }
                 if (self.isImage()) {
-                    classes += ' bcms-image-box';
+                    rowClasses += ' bcms-image-box';
                 }
                 if (self.isFile() && self.isActive()) {
                     if (!self.isImage()) {
-                        classes += ' bcms-file-box-active';
+                        rowClasses += ' bcms-file-box-active';
                     } else {
-                        classes += ' bcms-image-box-active';
+                        rowClasses += ' bcms-image-box-active';
                     }
                 }
                 if (self.isSelected()) {
-                    classes += ' bcms-media-click-active';
+                    rowClasses += ' bcms-media-click-active';
                 }
-                return $.trim(classes);
+                return $.trim(rowClasses);
             });
 
             self.iconClassNames = ko.computed(function () {
-                var classes = '';
+                var iconClasses = '';
 
                 if (self.isFolder()) {
-                    classes += ' bcms-system-folder';
+                    iconClasses += ' bcms-system-folder';
                 }
                 if (self.isImage()) {
-                    classes += ' bcms-media-file-holder';
+                    iconClasses += ' bcms-media-file-holder';
                 }
                 if (self.isFile() && !self.isImage()) {
-                    classes += ' bcms-system-file';
+                    iconClasses += ' bcms-system-file';
                 }
                 if (!self.isImage() && self.extension) {
-                    classes += getFileExtensionCssClassName(self.extension);
+                    iconClasses += getFileExtensionCssClassName(self.extension);
                 }
 
-                return $.trim(classes);
+                return $.trim(iconClasses);
             });
 
             self.archiveMedia = function (folderViewModel, data, event) {
@@ -1433,17 +1437,22 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     function addImageToEditor(imageUrl, caption, imageAlign, version) {
         caption = caption || '';
         if (contentEditor != null) {
-            var align = "left";
+            var align = "left",
+                cssClass = classes.customImageLeftAlign,
+                img;
+            
             if (imageAlign == 2) {
-                align = "center";
+                align = "";
+                cssClass = "";
             } else if (imageAlign == 3) {
+                cssClass = classes.customImageRightAlign,
                 align = "right";
             }
-            var img = "";
+
             if (imageAlign == 2) {
                 img = '<img src="' + imageUrl + '" alt="' + caption + '"/>';
             } else {
-                img = '<img src="' + imageUrl + '" alt="' + caption + '" style="float:' + align + '"/>';
+                img = '<img src="' + imageUrl + '" alt="' + caption + '" style="float:' + align + '" class="' + cssClass + '" />';
             }
 
             contentEditor.addHtml(img);
