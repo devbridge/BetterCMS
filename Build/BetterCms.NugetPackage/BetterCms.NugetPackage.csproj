@@ -57,16 +57,7 @@
     <None Include="Packages\BetterCms.Module.Api\BetterCms.Module.Api.nuspec.template">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Packages\BetterCms.Module.GoogleSiteSearch\cms.config.transform">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Packages\BetterCms.Module.ImagesGallery\BetterCms.Module.ImagesGallery.nuspec.template">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Packages\BetterCms.Module.LuceneSearch\cms.config.transform">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Packages\BetterCms.Module.Search\cms.config.transform">
       <SubType>Designer</SubType>
     </None>
     <None Include="Packages\BetterCms.Module.Search\BetterCms.Module.Search.nuspec.template">
@@ -443,7 +434,7 @@ mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.LuceneSearch"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.LuceneSearch\content"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.LuceneSearch\content\net40"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.LuceneSearch\content\net40\Config"
-copy "$(ProjectDir)Packages\BetterCms.Module.LuceneSearch\cms.config.transform" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.LuceneSearch\content\net40\Config\cms.config.transform" /Y
+copy "$(ProjectDir)Packages\BetterCms.Module.LuceneSearch\cms.config.install.xdt" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.LuceneSearch\content\net40\Config\cms.config.install.xdt" /Y
 
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.LuceneSearch\lib"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.LuceneSearch\lib\net40"
