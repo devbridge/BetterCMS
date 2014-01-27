@@ -255,6 +255,7 @@ describe('pages.sitemap.api.behavior', function () {
                     { field: 'Url', value: '/01404/01404/' },
                     { field: 'DisplayOrder', value: 0 },
                     { field: 'PageId', value: null },
+                    { field: 'PageLanguageId', value: null },
                     { field: 'Macro', value: null }
                 ]
             }
