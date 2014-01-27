@@ -10,6 +10,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 sitemapAddNodeDataBind: "#bcms-sitemap-addnode",
                 sitemapAddNewPageDataBind: "#bcms-sitemap-addnewpage",
                 sitemapForm: ".bcms-sitemap-form",
+                scrollDiv: "#bcms-scroll-window",
                 
                 searchField: '.bcms-search-query',
                 searchButton: '#bcms-sitemaps-search-btn',
@@ -579,8 +580,8 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             revertDuration: 0,
                             refreshPositions: true,
                             scroll: true,
-                            containment: $(selectors.sitemapAddNodeDataBind).get(0) || $(selectors.sitemapAddNewPageDataBind).get(0),
-                            appendTo: $(selectors.sitemapAddNodeDataBind).get(0) || $(selectors.sitemapAddNewPageDataBind).get(0),
+                            containment: $($(selectors.sitemapAddNodeDataBind).get(0) || $(selectors.sitemapAddNewPageDataBind).get(0)).find(selectors.scrollDiv).get(0),
+                            appendTo: $($(selectors.sitemapAddNodeDataBind).get(0) || $(selectors.sitemapAddNewPageDataBind).get(0)).find(selectors.scrollDiv).get(0),
                             helper: function () {
                                 if (dragObject.isExpanded) {
                                     dragObject.isExpanded(false);
