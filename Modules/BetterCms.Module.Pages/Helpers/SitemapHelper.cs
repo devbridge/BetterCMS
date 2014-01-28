@@ -125,8 +125,8 @@ namespace BetterCms.Module.Pages.Helpers
                                     {
                                         Id = Guid.Empty,
                                         LanguageId = languageId,
-                                        Title = string.Empty,
-                                        Url = string.Empty,
+                                        Title = nodeViewModel.Title,
+                                        Url = nodeViewModel.Url,
                                         UsePageTitleAsNodeTitle = true,
                                         Version = 0,
                                         Macro = string.Empty
@@ -134,8 +134,8 @@ namespace BetterCms.Module.Pages.Helpers
                                 nodeViewModel.Translations.Add(translationViewModel);
                             }
 
-                            var title = string.Empty;
-                            var url = string.Empty;
+                            var title = nodeViewModel.Title;
+                            var url = nodeViewModel.Url;
 
                             if (linkedPage.LanguageId != null && linkedPage.LanguageId == languageId)
                             {
@@ -160,13 +160,6 @@ namespace BetterCms.Module.Pages.Helpers
                             {
                                 translationViewModel.Title = title;
                             }
-
-                            if (string.IsNullOrEmpty(translationViewModel.Title) || string.IsNullOrEmpty(translationViewModel.Url))
-                            {
-                                translationViewModel.Title = nodeViewModel.Title;
-                                translationViewModel.Url = nodeViewModel.Url;
-                            }
-
                         }
                     }
                 }
