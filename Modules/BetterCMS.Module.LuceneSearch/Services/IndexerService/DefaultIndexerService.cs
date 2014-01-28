@@ -143,21 +143,35 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             return true;
         }
 
-        public bool OpenWriter(bool create = false)
+        private bool OpenWriter(bool create)
+        {
+            var tryNumber = 0;
+            while (File.Exists(IndexWriter.WRITE_LOCK_NAME))
+            {
+                Thread.Sleep(1000);
+
+                tryNumber++;
+                if (tryNumber <= 10)
+                {
+                    Log.Error("Failed to open Lucene index writer. Write lock file is locked.");
+
+                    return false;
+                }
+            }
+
+            writer = new IndexWriter(index, analyzer, create, IndexWriter.MaxFieldLength.LIMITED);
+
+            return true;
+        }
+
+        public bool OpenWriter()
         {
             if (!Initialize())
             {
                 return false;
             }
 
-            while (File.Exists(IndexWriter.WRITE_LOCK_NAME))
-            {
-                Thread.Sleep(1000);
-            }
-
-            writer = new IndexWriter(index, analyzer, create, IndexWriter.MaxFieldLength.LIMITED);
-
-            return true;
+            return OpenWriter(false);
         }
 
         private bool OpenReader()

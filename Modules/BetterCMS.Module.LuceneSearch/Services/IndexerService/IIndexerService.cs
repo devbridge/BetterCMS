@@ -10,7 +10,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         void DeleteDocuments(System.Guid[] ids);
 
-        bool OpenWriter(bool create = false);
+        bool OpenWriter();
 
         void CloseWriter();
     }
