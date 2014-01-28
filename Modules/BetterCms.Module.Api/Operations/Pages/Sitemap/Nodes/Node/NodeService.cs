@@ -19,7 +19,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Nodes.Node
         public GetSitemapNodeResponse Get(GetSitemapNodeRequest request)
         {
             var model = repository
-                .AsQueryable<Module.Pages.Models.SitemapNode>(node => node.Id == request.NodeId)
+                .AsQueryable<Module.Pages.Models.SitemapNode>()
+                .Where(node => node.Id == request.NodeId && !node.IsDeleted)
                 .Select(node => new SitemapNodeModel
                     {
                         Id = node.Id,

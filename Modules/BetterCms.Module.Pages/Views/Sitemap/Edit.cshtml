@@ -94,7 +94,7 @@
     <!-- ko if: isVisible() || isCustom() -->
     <div class="bcms-placement-node" data-bind="draggable: $parentContext.$index, css: { 'bcms-placement-node-drag': isBeingDragged() }">
         <div class="bcms-placement-title" data-bind="text: title()"></div>
-        <div class="bcms-placement-path" data-bind="text: url()"></div>
+        <div class="bcms-placement-path"><a data-bind="text: url, attr: { href: url }" href="" target="_blank"></a></div>
     </div>
     <!-- ko if: isBeingDragged() -->
     <div class="bcms-placement-dropzone"></div>

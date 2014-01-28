@@ -29,7 +29,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
             var pagesToFuture = SitemapHelper.GetPagesToFuture(cmsConfiguration.EnableMultilanguage, repository);
             var translationsToFuture = cmsConfiguration.EnableMultilanguage && request.Data.LanguageId.HasValue
                                            ? repository.AsQueryable<Module.Pages.Models.SitemapNodeTranslation>()
-                                                       .Where(t => t.Node.Sitemap.Id == request.SitemapId && t.Language.Id == request.Data.LanguageId.Value)
+                                                       .Where(t => t.Node.Sitemap.Id == request.SitemapId && t.Language.Id == request.Data.LanguageId.Value && !t.IsDeleted && !t.Node.IsDeleted)
                                                        .Select(t => new SitemapTreeNodeTranslationModel
                                                            {
                                                                Id = t.Id,
@@ -51,7 +51,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
             
             var allNodes = repository
                 .AsQueryable<Module.Pages.Models.SitemapNode>()
-                .Where(node => node.Sitemap.Id == request.SitemapId)
+                .Where(node => node.Sitemap.Id == request.SitemapId && !node.IsDeleted)
                 .OrderBy(node => node.DisplayOrder)
                 .Select(node => new SitemapTreeNodeModel
                     {

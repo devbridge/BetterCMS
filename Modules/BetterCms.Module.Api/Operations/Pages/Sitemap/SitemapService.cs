@@ -66,6 +66,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap
             query = query.ApplySitemapTagsFilter(request.Data);
 
             var listResponse = query
+                .Where(map => !map.IsDeleted)
                 .Select(map => new SitemapModel
                 {
                     Id = map.Id,

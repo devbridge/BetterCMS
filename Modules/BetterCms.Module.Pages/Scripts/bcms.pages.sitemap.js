@@ -10,6 +10,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 sitemapAddNodeDataBind: "#bcms-sitemap-addnode",
                 sitemapAddNewPageDataBind: "#bcms-sitemap-addnewpage",
                 sitemapForm: ".bcms-sitemap-form",
+                scrollDiv: "#bcms-scroll-window",
                 
                 searchField: '.bcms-search-query',
                 searchButton: '#bcms-sitemaps-search-btn',
@@ -579,8 +580,8 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             revertDuration: 0,
                             refreshPositions: true,
                             scroll: true,
-                            containment: $(selectors.sitemapAddNodeDataBind).get(0) || $(selectors.sitemapAddNewPageDataBind).get(0),
-                            appendTo: $(selectors.sitemapAddNodeDataBind).get(0) || $(selectors.sitemapAddNewPageDataBind).get(0),
+                            containment: $($(selectors.sitemapAddNodeDataBind).get(0) || $(selectors.sitemapAddNewPageDataBind).get(0)).find(selectors.scrollDiv).get(0),
+                            appendTo: $($(selectors.sitemapAddNodeDataBind).get(0) || $(selectors.sitemapAddNewPageDataBind).get(0)).find(selectors.scrollDiv).get(0),
                             helper: function () {
                                 if (dragObject.isExpanded) {
                                     dragObject.isExpanded(false);
@@ -648,6 +649,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                         node.parentNode(dropZoneObject.parentNode());
                                     }
                                     if (dragObject.isCustom()) {
+                                        node.dropOnCancel = true;
                                         node.startEditSitemapNode();
                                         node.callbackAfterSuccessSaving = function () {
                                             sitemap.activeMapModel.updateNodesOrderAndParent();
@@ -1051,6 +1053,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 }
                 return '';
             });
+            self.dropOnCancel = false;
 
             // User for validation.
             self.containerId = 'node-' + nodeId++;
@@ -1071,11 +1074,12 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 self.title(self.titleOldValue);
                 self.url(self.urlOldValue);
                 self.macro(self.macroOldValue);
-                if (self.id() == defaultIdValue) {
+                if (self.dropOnCancel) {
                     self.parentNode().childNodes.remove(self);
                 }
             };
             self.saveSitemapNodeWithValidation = function () {
+                self.dropOnCancel = false;
                 var inputFields = $('input', '#' + self.containerId);
                 if (inputFields.valid()) {
                     if (self.usePageTitleAsNodeTitle() && self.titleOldValue != self.title()) {
