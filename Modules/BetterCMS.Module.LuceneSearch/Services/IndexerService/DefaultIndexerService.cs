@@ -19,6 +19,8 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Search;
 using BetterCms.Module.Search.Models;
 
+using Common.Logging;
+
 using HtmlAgilityPack;
 
 using Lucene.Net.Analysis.Standard;
@@ -44,6 +46,8 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             public const string Id = "id";
         }
 
+        private static readonly ILog Log = LogManager.GetLogger("LuceneSearchModule");
+
         private static string[] excludedNodeTypes = new[] { "noscript", "script" };
         private static string[] excludedIds = new[] { "bcms-browser-info", "bcms-sidemenu" };
         private static string[] excludedClasses = new[] { "bcms-layout-path" };
@@ -60,13 +64,17 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         private readonly IAccessControlService accessControlService;
 
-        private readonly StandardAnalyzer analyzer;
+        private bool failedToInitialize;
 
-        private readonly QueryParser parser;
+        private bool initialized;
 
-        private readonly Directory index;
+        private StandardAnalyzer analyzer;
 
-        private readonly string directory;
+        private QueryParser parser;
+
+        private Directory index;
+
+        private string directory;
 
         public DefaultIndexerService(ICmsConfiguration cmsConfiguration, IRepository repository, ISecurityService securityService, IAccessControlService accessControlService)
         {
@@ -74,47 +82,123 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             this.cmsConfiguration = cmsConfiguration;
             this.securityService = securityService;
             this.accessControlService = accessControlService;
-
-            directory = GetLuceneDirectory(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneFileSystemDirectory));
-            index = FSDirectory.Open(directory);
-
-            bool disableStopWords;
-            if (!bool.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneDisableStopWords), out disableStopWords))
-            {
-                disableStopWords = false;
-            }
-            if (disableStopWords)
-            {
-                analyzer = new StandardAnalyzer(Version.LUCENE_30, new HashSet<string>());
-            }
-            else
-            {
-                analyzer = new StandardAnalyzer(Version.LUCENE_30);
-            }
-            
-            parser = new QueryParser(Version.LUCENE_30, "content", analyzer);
-            
-            if (!IndexReader.IndexExists(index))
-            {
-                Open(true);
-                Close();
-            }
-
-            reader = IndexReader.Open(index, true);
         }
 
-        public void Open(bool create = false)
+        private bool Initialize()
         {
+            if (initialized)
+            {
+                return true;
+            }
+
+            if (failedToInitialize)
+            {
+                return false;
+            }
+
+            var fileSystemPath = cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneFileSystemDirectory);
+            if (string.IsNullOrWhiteSpace(fileSystemPath))
+            {
+                Log.Error("Cannot Initialize Lucene indexer. Lucene file system path is not set.");
+                failedToInitialize = true;
+
+                return false;
+            }
+            directory = GetLuceneDirectory(fileSystemPath);
+            index = FSDirectory.Open(directory);
+
+            try
+            {
+                bool disableStopWords;
+                if (!bool.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneDisableStopWords), out disableStopWords))
+                {
+                    disableStopWords = false;
+                }
+                if (disableStopWords)
+                {
+                    analyzer = new StandardAnalyzer(Version.LUCENE_30, new HashSet<string>());
+                }
+                else
+                {
+                    analyzer = new StandardAnalyzer(Version.LUCENE_30);
+                }
+
+                parser = new QueryParser(Version.LUCENE_30, "content", analyzer);
+
+                if (!IndexReader.IndexExists(index))
+                {
+                    OpenWriter(true);
+                    CloseWriter();
+                }
+            }
+            catch (Exception exc)
+            {
+                Log.Error("Failed to initialize Lucene search engine.", exc);
+                failedToInitialize = true;
+
+                return false;
+            }
+
+            initialized = true;
+            return true;
+        }
+
+        private bool OpenWriter(bool create)
+        {
+            var tryNumber = 0;
             while (File.Exists(IndexWriter.WRITE_LOCK_NAME))
             {
                 Thread.Sleep(1000);
+
+                tryNumber++;
+                if (tryNumber <= 10)
+                {
+                    Log.Error("Failed to open Lucene index writer. Write lock file is locked.");
+
+                    return false;
+                }
             }
 
             writer = new IndexWriter(index, analyzer, create, IndexWriter.MaxFieldLength.LIMITED);
+
+            return true;
+        }
+
+        public bool OpenWriter()
+        {
+            if (!Initialize())
+            {
+                return false;
+            }
+
+            return OpenWriter(false);
+        }
+
+        private bool OpenReader()
+        {
+            if (!Initialize())
+            {
+                return false;
+            }
+
+            if (reader != null)
+            {
+                return true;
+            }
+
+            reader = IndexReader.Open(index, true);
+
+            return true;
         }
 
         public void AddHtmlDocument(PageData pageData)
         {
+            if (!Initialize())
+            {
+                Log.ErrorFormat("Cannot add document. Lucene search engine is not initialized.");
+                return;
+            }
+
             var doc = new Document();
 
             var path = new Term(LuceneIndexDocumentKeys.Path, pageData.AbsolutePath);
@@ -130,6 +214,12 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         public void DeleteDocuments(Guid[] ids)
         {
+            if (!Initialize())
+            {
+                Log.ErrorFormat("Cannot delete documents. Lucene search engine is not initialized.");
+                return;
+            }
+
             foreach (var id in ids)
             {
                 var term = new Term(LuceneIndexDocumentKeys.Id, id.ToString().ToLower());
@@ -139,6 +229,11 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         public SearchResults Search(SearchRequest request)
         {
+            if (!OpenReader())
+            {
+                return new SearchResults { Query = request.Query };
+            }
+
             if (!reader.IsCurrent())
             {
                 reader = reader.Reopen();
@@ -230,10 +325,23 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             return Regex.Replace(html, "\\s+", " ").Trim();
         }
 
-        public void Close()
+        public void CloseWriter()
         {
-            writer.Optimize();
-            writer.Dispose();
+            if (writer != null)
+            {
+                writer.Optimize();
+                writer.Dispose();
+                writer = null;
+            }
+        }
+        
+        private void CloseReader()
+        {
+            if (reader != null)
+            {
+                reader.Dispose();
+                reader = null;
+            }
         }
 
         private static bool CanIncludeNodeToResults(HtmlNode node)
@@ -427,14 +535,9 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         public void Dispose()
         {
-            if (writer != null)
-            {
-                writer.Dispose();
-            }
-            if (reader != null)
-            {
-                reader.Dispose();
-            }
+            CloseWriter();
+            CloseReader();
+            
             if (index != null)
             {
                 index.Dispose();

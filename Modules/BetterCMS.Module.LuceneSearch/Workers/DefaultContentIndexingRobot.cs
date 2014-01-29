@@ -37,6 +37,12 @@ namespace BetterCMS.Module.LuceneSearch.Workers
                     return;
                 }
 
+                if (!indexerService.OpenWriter())
+                {
+                    Log.Error("Lucene Content Indexing Robot cannot continue. Failed to open writer.");
+                    return;
+                }
+
                 var links = scrapeService.GetLinksForProcessing();
 
                 var pages = new List<PageData>();
@@ -73,7 +79,6 @@ namespace BetterCMS.Module.LuceneSearch.Workers
                     }
                 }
 
-                indexerService.Open();
                 foreach (var page in pages)
                 {
                     indexerService.AddHtmlDocument(page);
@@ -83,7 +88,7 @@ namespace BetterCMS.Module.LuceneSearch.Workers
                 {
                     indexerService.DeleteDocuments(idsToDelete.Distinct().ToArray());
                 }
-                indexerService.Close();
+                indexerService.CloseWriter();
             }
 
             Log.Trace("Lucene Content Indexing Robot finished indexing.");

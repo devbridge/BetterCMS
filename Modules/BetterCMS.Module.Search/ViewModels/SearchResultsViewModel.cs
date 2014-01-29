@@ -8,5 +8,7 @@ namespace BetterCms.Module.Search.ViewModels
         public SearchResults Results { get; set; }
 
         public RenderWidgetViewModel WidgetViewModel { get; set; }
+
+        public string ErrorMessage { get; set; }
     }
 }
