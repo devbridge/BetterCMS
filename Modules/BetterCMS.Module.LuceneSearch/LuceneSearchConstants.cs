@@ -24,5 +24,7 @@
 
             public const string LuceneAuthorizationFormFieldPrefix = "LuceneAuthorizationForm.";
         }
+
+        public const string LuceneSearchModuleLoggerNamespace = "LuceneSearchModule";
     }
 }

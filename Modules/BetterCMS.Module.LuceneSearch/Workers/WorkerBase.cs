@@ -8,7 +8,7 @@ namespace BetterCMS.Module.LuceneSearch.Workers
 {
     public abstract class WorkerBase : IRegisteredObject, IWorker
     {
-        protected static readonly ILog Log = LogManager.GetLogger("LuceneSearchModule");
+        protected static readonly ILog Log = LogManager.GetLogger(LuceneSearchConstants.LuceneSearchModuleLoggerNamespace);
 
         private readonly object lockObject = new object();        
 
