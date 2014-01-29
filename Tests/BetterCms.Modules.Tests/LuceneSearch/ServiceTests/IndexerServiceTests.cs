@@ -269,7 +269,7 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
             // Should be found separate word "a" excluding "a" in another words
             Assert.AreEqual(results.Items[0].Snippet, "authorized-html-example Test page HTML content.");
         }
-
+        
         private void AddAuthorizedDocumentToIndex(DefaultIndexerService service)
         {
             if (!authorizedDocumentAdded)

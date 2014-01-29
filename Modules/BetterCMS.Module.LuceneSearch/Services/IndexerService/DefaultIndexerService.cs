@@ -24,6 +24,7 @@ using Common.Logging;
 
 using HtmlAgilityPack;
 
+using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
@@ -68,6 +69,8 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
         private bool failedToInitialize;
 
         private bool initialized;
+        
+        private bool searchForPartOfWords;
 
         private StandardAnalyzer analyzer;
 
@@ -110,6 +113,8 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
             try
             {
+                bool.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneSearchForPartOfWordsPrefix), out searchForPartOfWords);
+                
                 bool disableStopWords;
                 if (!bool.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneDisableStopWords), out disableStopWords))
                 {
@@ -124,7 +129,15 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
                     analyzer = new StandardAnalyzer(Version.LUCENE_30);
                 }
 
-                parser = new QueryParser(Version.LUCENE_30, "content", analyzer);
+                if (searchForPartOfWords)
+                {
+                    parser = new PartialWordTermQueryParser(Version.LUCENE_30, "content", analyzer);
+                }
+                else
+                {
+                    parser = new QueryParser(Version.LUCENE_30, "content", analyzer);
+                }
+                parser.AllowLeadingWildcard = true;
 
                 if (!IndexReader.IndexExists(index))
                 {
