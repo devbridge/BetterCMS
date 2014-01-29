@@ -12,6 +12,7 @@ using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 
 using BetterCms;
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 using BetterCms.Module.Root;
@@ -245,7 +246,25 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             var result = new List<SearchResultItem>();
             var searcher = new IndexSearcher(reader);
             TopScoreDocCollector collector = TopScoreDocCollector.Create(take + skip, true);
-            var query = parser.Parse(request.Query);
+
+            var searchQuery = request.Query;
+            Query query;
+            try
+            {
+                query = parser.Parse(searchQuery);
+            }
+            catch (ParseException)
+            {
+                try
+                {
+                    searchQuery = QueryParser.Escape(searchQuery);
+                    query = parser.Parse(searchQuery);
+                }
+                catch (ParseException exc)
+                {
+                    throw new ValidationException(() => exc.Message, exc.Message, exc);
+                }
+            }
 
             if (!RetrieveUnpublishedPages())
             {

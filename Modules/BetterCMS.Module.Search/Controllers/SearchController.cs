@@ -15,7 +15,7 @@ namespace BetterCms.Module.Search.Controllers
     {
         public ActionResult Results(SearchRequestViewModel model)
         {
-            SearchResultsViewModel results;
+            SearchResultsViewModel results = null;
             if (ModelState.IsValid)
             {
                 results = GetCommand<SearchQueryCommand>().ExecuteCommand(model);
@@ -29,7 +29,12 @@ namespace BetterCms.Module.Search.Controllers
                     errorMessage = string.Concat(errorMessage, " ", modelError);
                 }
 
-                results = new SearchResultsViewModel { ErrorMessage = errorMessage };
+                Messages.AddError(errorMessage);
+            }
+
+            if (results == null && Messages.Error != null && Messages.Error.Count > 0)
+            {
+                results = new SearchResultsViewModel { ErrorMessage = Messages.Error[0] };
             }
 
             return PartialView("SearchResultsWidget", results);

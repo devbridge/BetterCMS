@@ -43,7 +43,13 @@ else
 
     <form action="@searchResultsUrl" class="bcms-search-input-form" method="@formMethod">
         @Html.LabelFor(f => f.Query, labelTitle, new { @for = queryParameterName, @class = "bcms-search-input-label" })
-        @Html.TextBoxFor(m => m.Query, new { @class = "bcms-search-input required", @placeholder = inputPlaceholder, @Name = queryParameterName })
+        @Html.TextBoxFor(m => m.Query, new
+                                           {
+                                               @class = "bcms-search-input required", 
+                                               @placeholder = inputPlaceholder, @Name = queryParameterName,
+                                               maxlength = SearchModuleConstants.SearchQueryMaximumLength
+                                           })
+        @Html.ValidationMessageFor(m => m.Query)
         <button type="submit" class="bcms-search-submit">@submitTitle</button>    
     </form>
 }
