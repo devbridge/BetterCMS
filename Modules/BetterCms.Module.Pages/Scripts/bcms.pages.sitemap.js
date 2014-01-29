@@ -688,7 +688,6 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                 dropZoneObject.activeZone(DropZoneTypes.None);
 
                                 sitemap.activeMapModel.updateNodesOrderAndParent();
-                                bcms.logger.info("dragObject.displayOrder(" + dragObject.displayOrder() + ").");
 
                                 // Fix for jQuery drag object.
                                 $(ui.draggable).data('draggable', forFix);
