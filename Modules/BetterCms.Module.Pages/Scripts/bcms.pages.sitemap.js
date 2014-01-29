@@ -80,6 +80,10 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             classes = {
                 tableActiveRow: 'bcms-table-row-active'
             },
+            events = {
+                sitemapNodeAdded: 'sitemapNodeAdded',
+                sitemapNodeRemoved: 'sitemapNodeRemoved'
+            },
             defaultIdValue = '00000000-0000-0000-0000-000000000000',
             DropZoneTypes = {
                 None: 'none',
@@ -656,6 +660,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                         };
                                         node.callbackAfterFailSaving = function (newNode) {
                                             newNode.parentNode().childNodes.remove(newNode);
+                                            bcms.trigger(events.sitemapNodeRemoved, self);
                                         };
                                     }
                                     if(sitemap.activeMapModel.showLanguages()){
@@ -666,7 +671,8 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                 }
                                 
                                 dragObject.isBeingDragged(false);
-                                
+                                dragObject.displayOrder(0);
+
                                 // Add node to tree.
                                 var index;
                                 if (dropZoneType == DropZoneTypes.EmptyListZone) {
@@ -686,7 +692,6 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                 }
                                 dropZoneObject.activeZone(DropZoneTypes.None);
 
-                                dragObject.displayOrder(0);
                                 sitemap.activeMapModel.updateNodesOrderAndParent();
 
                                 // Fix for jQuery drag object.
@@ -697,6 +702,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                 }
                                 
                                 updateValidation();
+                                bcms.trigger(events.sitemapNodeAdded, dragObject);
                             }
                         };
                     if (dropZoneObject.getSitemap && !dropZoneObject.getSitemap().settings.canDropNode) {
@@ -830,44 +836,102 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.updateNodesOrderAndParent = function () {
                 self.updateNodes(self.childNodes(), self);
             };
-            self.getOrderNumber = function(currentNode, prevNode, nextNode, next2Node) {
-                var currentNo = currentNode.displayOrder(),
-                    prevNo = prevNode != null ? prevNode.displayOrder() : 0,
-                    nextNo = nextNode != null ? nextNode.displayOrder() : 2147483647,
-                    next2No = next2Node != null ? next2Node.displayOrder() : 2147483647;
-                
-                if (prevNo < currentNo && currentNo < (nextNo != 0 ? nextNo : next2No)) {
-                    return currentNo;
-                }
-
-                var midNo = Math.ceil(((nextNo != 0 ? nextNo : next2No) - prevNo) / 2) + prevNo;
-                if (prevNo < midNo) {
-                    return midNo;
-                }
-
-                return prevNo + 1;
-            };
             self.updateNodes = function (nodes, parent) {
-                for (var i = 0; i < nodes.length; i++) {
-                    var node = nodes[i],
-                        saveIt = false,
-                        no = self.getOrderNumber(node, nodes[i - 1], nodes[i + 1], nodes[i + 2]);
+                if (nodes.length === 0) {
+                    return;
+                }
+
+                for (var h = 0; h < nodes.length; h++) {
+                    self.updateNodes(nodes[h].childNodes(), nodes[h]);
+                }
+                
+                var isFullReorderNeeded = false,
+                    zeroNoCount = 0,
+                    zeroNoPlace = -1,
+                    maxNo = 5000 + nodes.length * 50;
+                
+                // Analyze if full reordering is needed.
+                for (var j = 0; j < nodes.length; j++) {
+                    if (j == 0 && nodes[j].displayOrder() > 0 && nodes[j].displayOrder() < 100) {
+                        isFullReorderNeeded = true;
+                        break;
+                    }
+                    if (j == 1 && nodes[j - 1].displayOrder() == 0 && nodes[j].displayOrder() < 10) {
+                        isFullReorderNeeded = true;
+                        break;
+                    }
+                    if (nodes[j].displayOrder() > maxNo) {
+                        isFullReorderNeeded = true;
+                        break;
+                    }
+                    if (nodes[j].displayOrder() == 0) {
+                        zeroNoCount++;
+                        zeroNoPlace = j;
+                        if (zeroNoCount > 1) {
+                            isFullReorderNeeded = true;
+                            break;
+                        }
+                    }
+                }
+                
+                if (!isFullReorderNeeded) {
+                    if (zeroNoCount == 0) {
+                        return;
+                    }
                     
-                    if (node.displayOrder() != no) {
-                        saveIt = true;
-                        node.displayOrder(no);
+                    isFullReorderNeeded = true;
+                    var nodeToUpdate = nodes[zeroNoPlace],
+                            prevNode = nodes[zeroNoPlace - 1],
+                            nextNode = nodes[zeroNoPlace + 1];
+                    
+                    if (nodeToUpdate != null) {
+                        // Is first.
+                        if (prevNode == null && nextNode != null) {
+                            if (nextNode.displayOrder() - 50 > 0) {
+                                self.updateNode(nodeToUpdate, nextNode.displayOrder() - 50, parent);
+                                return;
+                            }
+                        }
+                        // Is last.
+                        if (prevNode != null && nextNode == null) {
+                            if (prevNode.displayOrder() + 50 < 2147483647) {
+                                self.updateNode(nodeToUpdate, prevNode.displayOrder() + 50, parent);
+                                return;
+                            }
+                        }
+                        // Is in between.
+                        if (prevNode != null && nextNode != null) {
+                            var middleNo = Math.ceil((nextNode.displayOrder() - prevNode.displayOrder()) / 2) + prevNode.displayOrder();
+                            if (prevNode.displayOrder() < middleNo && middleNo < nextNode.displayOrder()) {
+                                self.updateNode(nodeToUpdate, middleNo, parent);
+                                return;
+                            }
+                        }
                     }
-
-                    if (node.parentNode() != parent) {
-                        saveIt = true;
-                        node.parentNode(parent);
+                }
+                
+                if (isFullReorderNeeded) {
+                    for (var k = 0; k < nodes.length; k++) {
+                        var node = nodes[k],
+                            no = k == 0 ? 5000 : nodes[k - 1].displayOrder() + 50;
+                        self.updateNode(node, no, parent);
                     }
+                }
+            };
+            self.updateNode = function(node, orderNo, parent) {
+                var saveIt = false;
+                if (node.displayOrder() != orderNo) {
+                    saveIt = true;
+                    node.displayOrder(orderNo);
+                }
 
-                    if (saveIt || node.id() == defaultIdValue) {
-                        node.saveSitemapNode();
-                    }
+                if (node.parentNode() != parent) {
+                    saveIt = true;
+                    node.parentNode(parent);
+                }
 
-                    self.updateNodes(node.childNodes(), node);
+                if (saveIt || node.id() == defaultIdValue) {
+                    node.saveSitemapNode();
                 }
             };
 
@@ -1076,6 +1140,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 self.macro(self.macroOldValue);
                 if (self.dropOnCancel) {
                     self.parentNode().childNodes.remove(self);
+                    bcms.trigger(events.sitemapNodeRemoved, self);
                 }
             };
             self.saveSitemapNodeWithValidation = function () {
@@ -1138,6 +1203,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             if (self.getSitemap() == null || !self.getSitemap().settings.nodeSaveAfterUpdate) {
                                 self.isDeleted(true);
                                 confirmDialog.close();
+                                bcms.trigger(events.sitemapNodeRemoved, self);
                                 return false;
                             }
                             if (!deleting) {
@@ -1150,6 +1216,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                             if (json.Success) {
                                                 self.isDeleted(true);
                                                 self.parentNode().childNodes.remove(self);
+                                                bcms.trigger(events.sitemapNodeRemoved, self);
                                             }
                                             sitemap.showLoading(false);
                                         } finally {
@@ -1476,11 +1543,37 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     pageLinks.push(link);
                 }
                 self.pageLinks(pageLinks);
+                self.updateStatusOfLinks();
             };
             
             self.title = sitemapViewModel.title;
             self.tags = sitemapViewModel.tags;
             self.accessControl = sitemapViewModel.accessControl;
+
+            self.updateStatusOfLinks = function () {
+                var pagesInSitemap = [],
+                    getAllPages = function(nodes) {
+                        for (var i = 0; i < nodes.length; i++) {
+                            var pageId = nodes[i].pageId();
+                            if (pageId != null && pageId != defaultIdValue && !nodes[i].isDeleted()) {
+                                pagesInSitemap[pageId] = true;
+                            }
+                            getAllPages(nodes[i].childNodes());
+                        }
+                    };
+                getAllPages(self.sitemap.childNodes());
+                var pageLinks = self.pageLinks();
+                for (var j = 0; j < pageLinks.length; j++) {
+                    var link = pageLinks[j],
+                        onSitemap = pagesInSitemap[link.pageId()] === true;
+                    if (link.isOnSitemap() != onSitemap) {
+                        link.isOnSitemap(onSitemap);
+                    }
+                }
+            };
+            
+            bcms.on(events.sitemapNodeAdded, self.updateStatusOfLinks);
+            bcms.on(events.sitemapNodeRemoved, self.updateStatusOfLinks);
         }
         
         /**
@@ -1496,6 +1589,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.isCustom = ko.observable(false);
             self.isBeingDragged = ko.observable(false);
             self.superDraggable = ko.observable(false); // Used to force dragging if sitemap settings !canDragNode.
+            self.isOnSitemap = ko.observable(false);
 
             self.onDrop = null;
             self.dropped = function (droppedSitemapNode) {
