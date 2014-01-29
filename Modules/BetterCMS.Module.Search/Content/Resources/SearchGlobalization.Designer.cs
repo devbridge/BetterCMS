@@ -79,11 +79,29 @@ namespace BetterCms.Module.Search.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search query is too long. Maximum allowed search query length is {1} symbols..
+        /// </summary>
+        public static string SearchForm_Query_MaximumLengthMessage {
+            get {
+                return ResourceManager.GetString("SearchForm_Query_MaximumLengthMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string SearchForm_SubmitButton_Title {
             get {
                 return ResourceManager.GetString("SearchForm_SubmitButton_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to get search results..
+        /// </summary>
+        public static string SearchResults_FailedToGetResults {
+            get {
+                return ResourceManager.GetString("SearchResults_FailedToGetResults", resourceCulture);
             }
         }
         

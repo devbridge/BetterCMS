@@ -21,5 +21,7 @@
         }
 
         public const int DefaultSearchResultsCount = 10;
+
+        public const int SearchQueryMaximumLength = 1000;
     }
 }
