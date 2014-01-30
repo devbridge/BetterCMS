@@ -13,6 +13,10 @@ using BetterCMS.Module.LuceneSearch.Workers;
 
 using BetterCms.Module.Search.Services;
 
+using Common.Logging;
+
+using HtmlAgilityPack;
+
 namespace BetterCms.Module.LuceneSearch
 {
     public class LuceneSearchModuleDescriptor : ModuleDescriptor
@@ -20,6 +24,8 @@ namespace BetterCms.Module.LuceneSearch
         internal const string ModuleName = "lucene";        
 
         private static List<IWorker> workers = new List<IWorker>();
+
+        private static readonly ILog Log = LogManager.GetLogger(LuceneSearchConstants.LuceneSearchModuleLoggerNamespace);
 
         /// <summary>
         /// Gets the name.
@@ -54,19 +60,23 @@ namespace BetterCms.Module.LuceneSearch
                 {
                     // Content indexer
                     TimeSpan indexerFrequency;
-                    if (!TimeSpan.TryParse(configuration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneIndexerFrequency), out indexerFrequency))
+                    if (TimeSpan.TryParse(configuration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneIndexerFrequency), out indexerFrequency))
                     {
-                        indexerFrequency = new TimeSpan(0, 30, 0);
+                        if (indexerFrequency > TimeSpan.FromSeconds(0))
+                        {
+                            workers.Add(new DefaultContentIndexingRobot(indexerFrequency));
+                        }
                     }
-                    workers.Add(new DefaultContentIndexingRobot(indexerFrequency));
 
                     // New page URLs watcher
                     TimeSpan watcherFrequency;
-                    if (!TimeSpan.TryParse(configuration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LucenePagesWatcherFrequency), out watcherFrequency))
+                    if (TimeSpan.TryParse(configuration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LucenePagesWatcherFrequency), out watcherFrequency))
                     {
-                        indexerFrequency = new TimeSpan(0, 10, 0);
+                        if (watcherFrequency > TimeSpan.FromSeconds(0))
+                        {
+                            workers.Add(new DefaultIndexSourceWatcher(watcherFrequency));
+                        }
                     }
-                    workers.Add(new DefaultIndexSourceWatcher(indexerFrequency));
 
                     workers.ForEach(f => f.Start());
                 };

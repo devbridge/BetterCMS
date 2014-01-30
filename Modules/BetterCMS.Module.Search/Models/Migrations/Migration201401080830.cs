@@ -6,9 +6,6 @@ using FluentMigrator;
 
 namespace BetterCms.Module.Search.Models.Migrations
 {
-    /// <summary>
-    /// Module initial database structure creation.
-    /// </summary>
     [Migration(201401080830)]
     public class Migration201401080830 : DefaultMigration
     {

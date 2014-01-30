@@ -120,11 +120,17 @@
   <data name="SearchForm_InputPlaceholder_Title" xml:space="preserve">
     <value>Enter search query ...</value>
   </data>
+  <data name="SearchForm_Query_MaximumLengthMessage" xml:space="preserve">
+    <value>Search query is too long. Maximum allowed search query length is {1} symbols.</value>
+  </data>
   <data name="SearchForm_SubmitButton_Title" xml:space="preserve">
     <value>Search</value>
   </data>
+  <data name="SearchResults_FailedToGetResults" xml:space="preserve">
+    <value>Failed to get search results.</value>
+  </data>
   <data name="SearchResults_TotalCount_Message" xml:space="preserve">
-    <value>{0} result(s) found for "{1}".</value>
+    <value>Showing {0} of {1} result(s) found for "{2}".</value>
   </data>
   <data name="Search_Module_Has_No_Service_Implementations" xml:space="preserve">
     <value>Search module has no search service implementations. Please install Lucene search or Google site search module.</value>

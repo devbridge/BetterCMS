@@ -125,6 +125,7 @@
     </Compile>
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Helpers\RenderWidgetViewModelExtensions.cs" />
+    <Compile Include="Models\Migrations\Migration201401301000.cs" />
     <Compile Include="Models\Migrations\Migration201401080830.cs" />
     <Compile Include="Models\Migrations\InitialSetup.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />

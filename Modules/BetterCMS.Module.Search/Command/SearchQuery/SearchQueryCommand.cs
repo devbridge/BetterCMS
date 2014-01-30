@@ -38,7 +38,7 @@ namespace BetterCms.Module.Search.Command.SearchQuery
                 throw new CmsException("The Better CMS Search Service is not found. Please install BetterCms.Module.GoogleSiteSearch or BetterCms.Module.LuceneSearch module.");
             }
 
-            if (!string.IsNullOrWhiteSpace(model.Query))
+            if (!string.IsNullOrWhiteSpace(query))
             {
                 var take = model.WidgetModel.GetOptionValue<int>(SearchModuleConstants.WidgetOptionNames.ResultsCount);
                 if (take <= 0)

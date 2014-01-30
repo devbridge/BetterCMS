@@ -23,6 +23,10 @@
             public const string LuceneAuthorizationUrl = "LuceneAuthorizationUrl";
 
             public const string LuceneAuthorizationFormFieldPrefix = "LuceneAuthorizationForm.";
+
+            public const string LuceneSearchForPartOfWordsPrefix = "LuceneSearchForPartOfWords";
         }
+
+        public const string LuceneSearchModuleLoggerNamespace = "LuceneSearchModule";
     }
 }

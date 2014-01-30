@@ -11,6 +11,7 @@
             public const string InputPlaceholder = "Input.Placeholder";
             public const string SearchResultsUrl = "SearchResults.Url";
             public const string ShowTotalResults = "SearchResults.Show.Total.Count";
+            public const string TotalCountMessage = "SearchResults.Total.Count.Message";
             public const string ResultsCount = "SearchResults.Count";
         }
 
@@ -21,5 +22,7 @@
         }
 
         public const int DefaultSearchResultsCount = 10;
+
+        public const int SearchQueryMaximumLength = 1000;
     }
 }

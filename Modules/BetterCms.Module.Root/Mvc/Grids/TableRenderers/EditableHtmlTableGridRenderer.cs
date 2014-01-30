@@ -110,7 +110,7 @@ namespace BetterCms.Module.Root.Mvc.Grids.TableRenderers
         private void RenderEmptyRow(bool isHidden)
         {
             var hidden = isHidden ? " style=\"display: none;\"" : string.Empty;
-            RenderText(string.Format("<tr class=\"bcms-grid-empty-row\"{0}><td colspan=\"{1}\">{2}</td></tr>", hidden, VisibleColumns().Count(), RootGlobalization.Grid_NoDataAvailable_Message));
+            RenderText(string.Format("<tr class=\"bcms-grid-empty-row\"{0}><td colspan=\"{1}\"><span class=\"bcms-table-no-data\">{2}</span></td></tr>", hidden, VisibleColumns().Count(), RootGlobalization.Grid_NoDataAvailable_Message));
         }
     }
 }

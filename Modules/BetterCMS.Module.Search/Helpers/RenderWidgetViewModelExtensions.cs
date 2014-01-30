@@ -12,7 +12,7 @@ namespace BetterCms.Module.Search.Helpers
             var queryParameterName = model.GetOptionValue<string>(SearchModuleConstants.WidgetOptionNames.QueryParameterName);
             if (!string.IsNullOrEmpty(queryParameterName))
             {
-                requestQuery = request.Params[queryParameterName];
+                requestQuery = System.Web.Helpers.Validation.Unvalidated(request, queryParameterName);
             }
 
             return requestQuery;

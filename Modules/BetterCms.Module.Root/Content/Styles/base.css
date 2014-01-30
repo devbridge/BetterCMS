@@ -2086,6 +2086,10 @@ table.bcms-tables td:first-child {
     text-decoration: none;
 }
 
+.bcms-table-no-data {
+    margin-left: 37px;
+}
+
 .bcms-sort-arrow {
     display: inline-block;
     width: 100%;

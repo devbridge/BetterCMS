@@ -66,11 +66,13 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
 
             var service = new DefaultIndexerService(Container.Resolve<ICmsConfiguration>(), Container.Resolve<IRepository>(),
                 Container.Resolve<ISecurityService>(), Container.Resolve<IAccessControlService>());
-            
-            service.Open();
-            service.AddHtmlDocument(page1);
-            service.AddHtmlDocument(page2);
-            service.Close();
+
+            if (service.OpenWriter())
+            {
+                service.AddHtmlDocument(page1);
+                service.AddHtmlDocument(page2);
+                service.CloseWriter();
+            }
 
             var results = service.Search(new SearchRequest("test"));
 
@@ -91,9 +93,11 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
             var service = new DefaultIndexerService(Container.Resolve<ICmsConfiguration>(), Container.Resolve<IRepository>(),
                 Container.Resolve<ISecurityService>(), Container.Resolve<IAccessControlService>());
 
-            service.Open();
-            service.AddHtmlDocument(page1);
-            service.Close();
+            if (service.OpenWriter())
+            {
+                service.AddHtmlDocument(page1);
+                service.CloseWriter();
+            }
 
             var results = service.Search(new SearchRequest("section3"));
 
@@ -115,9 +119,11 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
             var service = new DefaultIndexerService(Container.Resolve<ICmsConfiguration>(), Container.Resolve<IRepository>(),
                 Container.Resolve<ISecurityService>(), Container.Resolve<IAccessControlService>());
 
-            service.Open();
-            service.AddHtmlDocument(page1);
-            service.Close();
+            if (service.OpenWriter())
+            {
+                service.AddHtmlDocument(page1);
+                service.CloseWriter();
+            }
 
             var results = service.Search(new SearchRequest("extensible4"));
 
@@ -139,9 +145,11 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
             var service = new DefaultIndexerService(Container.Resolve<ICmsConfiguration>(), Container.Resolve<IRepository>(),
                 Container.Resolve<ISecurityService>(), Container.Resolve<IAccessControlService>());
 
-            service.Open();
-            service.AddHtmlDocument(page1);
-            service.Close();
+            if (service.OpenWriter())
+            {
+                service.AddHtmlDocument(page1);
+                service.CloseWriter();
+            }
 
             var results = service.Search(new SearchRequest("maintainable5"));
 
@@ -163,9 +171,11 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
             var service = new DefaultIndexerService(Container.Resolve<ICmsConfiguration>(), Container.Resolve<IRepository>(),
                 Container.Resolve<ISecurityService>(), Container.Resolve<IAccessControlService>());
 
-            service.Open();
-            service.AddHtmlDocument(page1);
-            service.Close();
+            if (service.OpenWriter())
+            {
+                service.AddHtmlDocument(page1);
+                service.CloseWriter();
+            }
 
             var results = service.Search(new SearchRequest("dynamically6"));
 
@@ -187,9 +197,11 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
             var service = new DefaultIndexerService(Container.Resolve<ICmsConfiguration>(), Container.Resolve<IRepository>(),
                 Container.Resolve<ISecurityService>(), Container.Resolve<IAccessControlService>());
 
-            service.Open();
-            service.AddHtmlDocument(page1);
-            service.Close();
+            if (service.OpenWriter())
+            {
+                service.AddHtmlDocument(page1);
+                service.CloseWriter();
+            }
 
             var results = service.Search(new SearchRequest("a"));
 
@@ -213,11 +225,13 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
             var service = new DefaultIndexerService(Container.Resolve<ICmsConfiguration>(), Container.Resolve<IRepository>(),
                 Container.Resolve<ISecurityService>(), Container.Resolve<IAccessControlService>());
 
-            service.Open();
-            service.AddHtmlDocument(page1);
-            service.AddHtmlDocument(page2);
-            service.AddHtmlDocument(page3);
-            service.Close();
+            if (service.OpenWriter())
+            {
+                service.AddHtmlDocument(page1);
+                service.AddHtmlDocument(page2);
+                service.AddHtmlDocument(page3);
+                service.CloseWriter();
+            }
 
             // Search result should return 3 objects
             var results = service.Search(new SearchRequest("deleted"));
@@ -226,9 +240,11 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
             Assert.AreEqual(results.Items.Count, 3, "Should return 3 items.");
 
             // Delete 2 objects
-            service.Open();
-            service.DeleteDocuments(new [] { page1.Id, page2.Id });
-            service.Close();
+            if (service.OpenWriter())
+            {
+                service.DeleteDocuments(new[] { page1.Id, page2.Id });
+                service.CloseWriter();
+            }
 
             // Search result should return 1 object
             results = service.Search(new SearchRequest("deleted"));
@@ -252,8 +268,9 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
             Assert.AreEqual(results.Items.Count, 1, "Should return one item.");
             // Should be found separate word "a" excluding "a" in another words
             Assert.AreEqual(results.Items[0].Snippet, "authorized-html-example Test page HTML content.");
+            Assert.AreEqual(results.Items[0].Title, "Title with <> HTML entities");
         }
-
+        
         private void AddAuthorizedDocumentToIndex(DefaultIndexerService service)
         {
             if (!authorizedDocumentAdded)
@@ -272,10 +289,11 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
 
                 var page = new PageData { AbsolutePath = "/test-authorized-document", Content = document, Id = Guid.NewGuid(), IsPublished = true };
 
-                service.Open();
-                service.AddHtmlDocument(page);
-                service.Close();
-
+                if (service.OpenWriter())
+                {
+                    service.AddHtmlDocument(page);
+                    service.CloseWriter();
+                }
                 authorizedDocumentAdded = true;
             }
         }
