@@ -5,7 +5,7 @@
         <html>
     <head>
         
-    <title>authorized-htnml-example</title>
+    <title>Title with &lt;&gt; HTML entities</title>
 
             
 <meta name="X-UA-Compatible" content="IE=edge,chrome=1" /><link rel="canonical" href="/authorized-html-example/" /><meta name="test-metadata" content="hello world!" />
@@ -120,13 +120,18 @@
 
 
 
-<div class="page">
+            <div class="page">
 
-    <header class="page-header">
+<header class="page-header">
         <div class="page-frame clearfix">
             <div>
                 
-
+                <form action="/search-results/" class="bcms-search-input-form" method="GET">
+        
+        <input Name="Query" class="bcms-search-input required" data-val="true" data-val-length="Search query is too long. Maximum allowed search query length is 1000 symbols." data-val-length-max="1000" id="Query" maxlength="1000" name="Query" placeholder="Enter search query ..." type="text" value="" />
+        <span class="field-validation-valid" data-valmsg-for="Query" data-valmsg-replace="true"></span>
+        <button type="submit" class="bcms-search-submit">GET</button>    
+    </form>
 
 <div class="bcms-clearfix custom-clearfix"></div>
 <h1>authorized-html-example</h1>

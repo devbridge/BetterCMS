@@ -15,6 +15,8 @@ using BetterCms.Module.Search.Services;
 
 using Common.Logging;
 
+using HtmlAgilityPack;
+
 namespace BetterCms.Module.LuceneSearch
 {
     public class LuceneSearchModuleDescriptor : ModuleDescriptor
@@ -68,7 +70,7 @@ namespace BetterCms.Module.LuceneSearch
 
                     // New page URLs watcher
                     TimeSpan watcherFrequency;
-                    if (!TimeSpan.TryParse(configuration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LucenePagesWatcherFrequency), out watcherFrequency))
+                    if (TimeSpan.TryParse(configuration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LucenePagesWatcherFrequency), out watcherFrequency))
                     {
                         if (watcherFrequency > TimeSpan.FromSeconds(0))
                         {

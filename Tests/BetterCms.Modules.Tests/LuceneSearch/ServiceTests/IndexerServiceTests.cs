@@ -268,6 +268,7 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
             Assert.AreEqual(results.Items.Count, 1, "Should return one item.");
             // Should be found separate word "a" excluding "a" in another words
             Assert.AreEqual(results.Items[0].Snippet, "authorized-html-example Test page HTML content.");
+            Assert.AreEqual(results.Items[0].Title, "Title with <> HTML entities");
         }
         
         private void AddAuthorizedDocumentToIndex(DefaultIndexerService service)

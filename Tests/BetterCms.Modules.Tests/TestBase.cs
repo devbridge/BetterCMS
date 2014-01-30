@@ -3,6 +3,8 @@ using System.Reflection;
 
 using Autofac;
 
+using BetterCMS.Module.LuceneSearch.Helpers;
+
 using BetterCms.Core;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
@@ -45,6 +47,8 @@ namespace BetterCms.Test.Module
                                                          typeof(ImagesGalleryModuleDescriptor).Assembly
                                                      });
             CreateContainer();
+
+            HtmlAgilityPackHelper.FixMissingTagClosings();
         }
 
         public ILifetimeScope Container
