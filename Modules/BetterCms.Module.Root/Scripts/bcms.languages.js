@@ -97,6 +97,8 @@ function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete) {
 
                 self.oldAutocompleteValue = suggestedName;
                 self.shortCode(suggestionItem.id());
+                self.code(suggestedName);
+                self.hasNameFocus(true);
             });
 
             if (!self.isNew()) {
