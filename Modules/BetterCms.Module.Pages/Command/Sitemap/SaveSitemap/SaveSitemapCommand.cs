@@ -88,6 +88,8 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
                 sitemap = new Models.Sitemap() { AccessRules = new List<AccessRule>() };
             }
 
+            var nodeList = !createNew ? Repository.AsQueryable<SitemapNode>().Where(node => node.Sitemap.Id == sitemap.Id).ToList() : new List<SitemapNode>();
+
             UnitOfWork.BeginTransaction();
 
             if (!createNew)
@@ -107,7 +109,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
             sitemap.Version = request.Version;
             Repository.Save(sitemap);
 
-            SaveNodeList(sitemap, request.RootNodes, null);
+            SaveNodeList(sitemap, request.RootNodes, null, nodeList);
 
             IList<Tag> newTags;
             TagService.SaveTags(sitemap, request.Tags, out newTags);
@@ -160,7 +162,8 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
         /// <param name="sitemap">The sitemap.</param>
         /// <param name="nodes">The nodes.</param>
         /// <param name="parentNode">The parent node.</param>
-        private void SaveNodeList(Models.Sitemap sitemap, IEnumerable<SitemapNodeViewModel> nodes, SitemapNode parentNode)
+        /// <param name="nodeList"></param>
+        private void SaveNodeList(Models.Sitemap sitemap, IEnumerable<SitemapNodeViewModel> nodes, SitemapNode parentNode, List<SitemapNode> nodeList)
         {
             if (nodes == null)
             {
@@ -175,7 +178,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
                 var delete = !node.Id.HasDefaultValue() && isDeleted;
 
                 bool updatedInDB;
-                var sitemapNode = SitemapService.SaveNode(out updatedInDB, sitemap, node.Id, node.Version, node.Url, node.Title, node.Macro, node.PageId, node.UsePageTitleAsNodeTitle, node.DisplayOrder, node.ParentId, isDeleted, parentNode);
+                var sitemapNode = SitemapService.SaveNode(out updatedInDB, sitemap, node.Id, node.Version, node.Url, node.Title, node.Macro, node.PageId, node.UsePageTitleAsNodeTitle, node.DisplayOrder, node.ParentId, isDeleted, parentNode, nodeList);
 
                 if ((create || update) && (node.Translations != null && node.Translations.Count > 0))
                 {
@@ -196,7 +199,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
                     RemoveTranslations(sitemapNode);
                 }
 
-                SaveNodeList(sitemap, node.ChildNodes, sitemapNode);
+                SaveNodeList(sitemap, node.ChildNodes, sitemapNode, nodeList);
             }
         }
 

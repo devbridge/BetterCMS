@@ -122,6 +122,7 @@ namespace BetterCms.Module.Pages.Services
         /// <summary>
         /// Saves the node (does not archive sitemap).
         /// </summary>
+        /// <param name="nodeUpdated"></param>
         /// <param name="sitemap">The sitemap.</param>
         /// <param name="nodeId">The id.</param>
         /// <param name="version">The version.</param>
@@ -134,15 +135,16 @@ namespace BetterCms.Module.Pages.Services
         /// <param name="parentId">The parent id.</param>
         /// <param name="isDeleted">if set to <c>true</c> node is deleted.</param>
         /// <param name="parentNode">The parent node.</param>
+        /// <param name="nodeList"></param>
         /// <returns>
         /// Updated or newly created sitemap node.
         /// </returns>
-        public SitemapNode SaveNode(out bool nodeUpdated, Sitemap sitemap, Guid nodeId, int version, string url, string title, string macro, Guid pageId, bool usePageTitleAsNodeTitle, int displayOrder, Guid parentId, bool isDeleted = false, SitemapNode parentNode = null)
+        public SitemapNode SaveNode(out bool nodeUpdated, Sitemap sitemap, Guid nodeId, int version, string url, string title, string macro, Guid pageId, bool usePageTitleAsNodeTitle, int displayOrder, Guid parentId, bool isDeleted = false, SitemapNode parentNode = null, List<SitemapNode> nodeList = null)
         {
             nodeUpdated = false;
             var node = nodeId.HasDefaultValue()
                 ? new SitemapNode()
-                : repository.First<SitemapNode>(nodeId);
+                : nodeList != null ? nodeList.First(n => n.Id == nodeId) : repository.First<SitemapNode>(nodeId);
 
             if (isDeleted)
             {
@@ -200,7 +202,7 @@ namespace BetterCms.Module.Pages.Services
                 {
                     newParent = parentId.HasDefaultValue()
                         ? null
-                        : repository.First<SitemapNode>(parentId);
+                        : repository.AsProxy<SitemapNode>(parentId);
                 }
 
                 if (node.ParentNode != newParent)
