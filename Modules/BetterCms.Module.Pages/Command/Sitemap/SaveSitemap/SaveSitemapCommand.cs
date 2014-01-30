@@ -88,7 +88,16 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
                 sitemap = new Models.Sitemap() { AccessRules = new List<AccessRule>() };
             }
 
-            var nodeList = !createNew ? Repository.AsQueryable<SitemapNode>().Where(node => node.Sitemap.Id == sitemap.Id).ToList() : new List<SitemapNode>();
+            var nodeList = !createNew ? Repository.AsQueryable<SitemapNode>()
+                                            .Where(node => node.Sitemap.Id == sitemap.Id)
+                                            .ToFuture()
+                                      : new List<SitemapNode>();
+            var translationList = !createNew
+                                      ? Repository.AsQueryable<SitemapNodeTranslation>()
+                                            .Where(t => t.Node.Sitemap.Id == sitemap.Id)
+                                            .Fetch(t => t.Node)
+                                            .ToFuture()
+                                      : new List<SitemapNodeTranslation>();
 
             UnitOfWork.BeginTransaction();
 
@@ -109,7 +118,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
             sitemap.Version = request.Version;
             Repository.Save(sitemap);
 
-            SaveNodeList(sitemap, request.RootNodes, null, nodeList);
+            SaveNodeList(sitemap, request.RootNodes, null, nodeList.ToList(), translationList.ToList());
 
             IList<Tag> newTags;
             TagService.SaveTags(sitemap, request.Tags, out newTags);
@@ -163,7 +172,8 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
         /// <param name="nodes">The nodes.</param>
         /// <param name="parentNode">The parent node.</param>
         /// <param name="nodeList"></param>
-        private void SaveNodeList(Models.Sitemap sitemap, IEnumerable<SitemapNodeViewModel> nodes, SitemapNode parentNode, List<SitemapNode> nodeList)
+        /// <param name="translationList"></param>
+        private void SaveNodeList(Models.Sitemap sitemap, IEnumerable<SitemapNodeViewModel> nodes, SitemapNode parentNode, List<SitemapNode> nodeList, List<SitemapNodeTranslation> translationList)
         {
             if (nodes == null)
             {
@@ -182,7 +192,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
 
                 if ((create || update) && (node.Translations != null && node.Translations.Count > 0))
                 {
-                    SaveTranslations(sitemapNode, node);
+                    SaveTranslations(sitemapNode, node, translationList);
                 }
 
                 if (create && updatedInDB)
@@ -199,7 +209,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
                     RemoveTranslations(sitemapNode);
                 }
 
-                SaveNodeList(sitemap, node.ChildNodes, sitemapNode, nodeList);
+                SaveNodeList(sitemap, node.ChildNodes, sitemapNode, nodeList, translationList);
             }
         }
 
@@ -208,9 +218,13 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
         /// </summary>
         /// <param name="sitemapNode">The sitemap node.</param>
         /// <param name="node">The node.</param>
-        private void SaveTranslations(SitemapNode sitemapNode, SitemapNodeViewModel node)
+        /// <param name="translationList"></param>
+        private void SaveTranslations(SitemapNode sitemapNode, SitemapNodeViewModel node, List<SitemapNodeTranslation> translationList)
         {
-            var translations = Repository.AsQueryable<SitemapNodeTranslation>().Where(translation => translation.Node.Id == sitemapNode.Id).ToList();
+            var translations = translationList == null
+                                    ? Repository.AsQueryable<SitemapNodeTranslation>().Where(translation => translation.Node.Id == sitemapNode.Id).ToList()
+                                    : translationList.Where(translation => translation.Node.Id == sitemapNode.Id).ToList();
+
             foreach (var model in node.Translations)
             {
                 var saveIt = false;
