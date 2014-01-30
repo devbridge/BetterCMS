@@ -93,7 +93,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemapsForNewPage
                 }
             }
 
-            return sitemaps.Count > 0 ? sitemaps : null;
+            return sitemaps.Count > 0 ? sitemaps.OrderBy(map => map.Title).ToList() : null;
         }
     }
 }
