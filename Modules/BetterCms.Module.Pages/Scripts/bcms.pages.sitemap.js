@@ -414,7 +414,6 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         // Allow user navigate in sitemap.
                         dialog.container.find(modal.selectors.readonly).removeClass(modal.classes.inactive);
                         dialog.container.find(selectors.firstTab).addClass(modal.classes.inactive);
-                        dialog.container.find(selectors.secondTab).find(selectors.leftColumn).addClass(modal.classes.inactive);
                     }
 
                     sitemapModel.parseJsonNodes(content.Data.Sitemap.RootNodes);

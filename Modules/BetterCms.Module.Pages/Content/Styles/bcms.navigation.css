@@ -27,6 +27,12 @@
         cursor: move;
     }
 
+    .bcms-addnode-placement-holder-readonly {
+        min-height: 52px;
+        display: block;
+        padding: 0 0 4px;
+    }
+
 .bcms-sitemap-holder {
     padding: 0 20px;
     margin-top: -8px;
