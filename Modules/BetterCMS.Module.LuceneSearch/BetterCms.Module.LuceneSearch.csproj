@@ -43,6 +43,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LuceneGlobalization.resx</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\HtmlAgilityPackHelper.cs" />
     <Compile Include="LuceneSearchConstants.cs" />
     <Compile Include="LuceneSearchModuleDescriptor.cs" />
     <Compile Include="Models\CrawlLink.cs" />

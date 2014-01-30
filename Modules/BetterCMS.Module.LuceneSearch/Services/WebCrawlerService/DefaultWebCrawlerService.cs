@@ -5,6 +5,8 @@ using System.Net;
 using System.Text;
 using System.Web;
 
+using BetterCMS.Module.LuceneSearch.Helpers;
+
 using BetterCms;
 using BetterCms.Configuration;
 
@@ -33,6 +35,8 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
             webServer = cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneWebSiteUrl) ?? string.Empty;
             
             bool.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneIndexPrivatePages), out indexPrivatePages);
+
+            HtmlAgilityPackHelper.FixMissingTagClosings();
         }
 
         public PageData FetchPage(string url)

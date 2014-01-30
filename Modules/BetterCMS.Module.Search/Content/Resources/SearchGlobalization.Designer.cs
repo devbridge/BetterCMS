@@ -106,7 +106,7 @@ namespace BetterCms.Module.Search.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} result(s) found for &quot;{1}&quot;..
+        ///   Looks up a localized string similar to Showing {0} of {1} result(s) found for &quot;{2}&quot;..
         /// </summary>
         public static string SearchResults_TotalCount_Message {
             get {

@@ -50,7 +50,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         private static readonly ILog Log = LogManager.GetLogger("LuceneSearchModule");
 
-        private static string[] excludedNodeTypes = new[] { "noscript", "script" };
+        private static string[] excludedNodeTypes = new[] { "noscript", "script", "button" };
         private static string[] excludedIds = new[] { "bcms-browser-info", "bcms-sidemenu" };
         private static string[] excludedClasses = new[] { "bcms-layout-path" };
 
@@ -217,9 +217,11 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
             var path = new Term(LuceneIndexDocumentKeys.Path, pageData.AbsolutePath);
 
+            var body = GetBody(pageData.Content);
+            var title = GetTitle(pageData.Content);
             doc.Add(new Field(LuceneIndexDocumentKeys.Path, pageData.AbsolutePath, Field.Store.YES, Field.Index.NOT_ANALYZED));
-            doc.Add(new Field(LuceneIndexDocumentKeys.Title, GetTitle(pageData.Content), Field.Store.YES, Field.Index.ANALYZED));
-            doc.Add(new Field(LuceneIndexDocumentKeys.Content, GetBody(pageData.Content), Field.Store.YES, Field.Index.ANALYZED));
+            doc.Add(new Field(LuceneIndexDocumentKeys.Title, title, Field.Store.YES, Field.Index.ANALYZED));
+            doc.Add(new Field(LuceneIndexDocumentKeys.Content, body, Field.Store.YES, Field.Index.ANALYZED));
             doc.Add(new Field(LuceneIndexDocumentKeys.Id, pageData.Id.ToString(), Field.Store.YES, Field.Index.ANALYZED));
             doc.Add(new Field(LuceneIndexDocumentKeys.IsPublished, pageData.IsPublished.ToString(), Field.Store.YES, Field.Index.ANALYZED));
 
@@ -326,9 +328,34 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             if (title != null)
             {
                 titleText = title.InnerText;
+                if (!string.IsNullOrWhiteSpace(titleText))
+                {
+                    titleText = HttpUtility.HtmlDecode(titleText);
+                }
             }
 
             return titleText;
+        }
+
+        private static void CollectChildrenNodesInnerHtml(HtmlNodeCollection nodesCollection, StringBuilder contentText)
+        {
+            foreach (var childNode in nodesCollection)
+            {
+                if (CanIncludeNodeToResults(childNode))
+                {
+                    if (childNode.ChildNodes != null && childNode.ChildNodes.Count > 0)
+                    {
+                        CollectChildrenNodesInnerHtml(childNode.ChildNodes, contentText);
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(childNode.InnerText))
+                        {
+                            contentText.Append(childNode.InnerText);
+                        }
+                    }
+                }
+            }
         }
 
         private static string GetBody(HtmlDocument html)
@@ -338,15 +365,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
             if (content != null)
             {
-                foreach (var childNode in content.ChildNodes)
-                {
-                    if (CanIncludeNodeToResults(childNode))
-                    {
-                        contentText.Append(childNode.InnerText);
-                    }
-                }
-
-                // contentText = content.InnerText;
+                CollectChildrenNodesInnerHtml(content.ChildNodes, contentText);
             }
 
             return RemoveDuplicateWhitespace(contentText.ToString());
@@ -407,7 +426,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             // Find first position of the keyword
             int index;
             var pattern = string.Format("\\b{0}\\b", searchString);
-            var match = Regex.Match(text, pattern);
+            var match = Regex.Match(text, pattern, RegexOptions.IgnoreCase);
             if (match.Success)
             {
                 index = match.Index;
