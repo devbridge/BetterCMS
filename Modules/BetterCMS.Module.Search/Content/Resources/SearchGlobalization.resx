@@ -130,7 +130,7 @@
     <value>Failed to get search results.</value>
   </data>
   <data name="SearchResults_TotalCount_Message" xml:space="preserve">
-    <value>{0} result(s) found for "{1}".</value>
+    <value>Showing {0} of {1} result(s) found for "{2}".</value>
   </data>
   <data name="Search_Module_Has_No_Service_Implementations" xml:space="preserve">
     <value>Search module has no search service implementations. Please install Lucene search or Google site search module.</value>

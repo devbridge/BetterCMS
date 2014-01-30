@@ -17,8 +17,19 @@
 
         if (showTotalResults)
         {
+            var message = Model.WidgetViewModel.GetOptionValue<string>(SearchModuleConstants.WidgetOptionNames.TotalCountMessage);
+            if (string.IsNullOrWhiteSpace(message))
+            {
+                message = SearchGlobalization.SearchResults_TotalCount_Message;
+            }
+            message = string.Format(message, 
+                Model.Results.Items.Count, 
+                Model.Results.TotalResults, 
+                string.Format("<span class=\"bcms-total-search-results-query\">{0}</span>", HttpUtility.HtmlEncode(Model.Results.Query)));
+            
             <div class="bcms-total-search-results">
-                @Html.Raw(string.Format(SearchGlobalization.SearchResults_TotalCount_Message, Model.Results.TotalResults, string.Format("<span class=\"bcms-total-search-results-query\">{0}</span>", HttpUtility.HtmlEncode(Model.Results.Query)))) 
+                @Html.Raw(message)
+                @*@Html.Raw(string.Format(SearchGlobalization.SearchResults_TotalCount_Message, Model.Results.TotalResults, string.Format("<span class=\"bcms-total-search-results-query\">{0}</span>", HttpUtility.HtmlEncode(Model.Results.Query))))*@ 
             </div>
         }
 
