@@ -32,6 +32,8 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
                 for (param in additionalParams) {
                     params[param] = additionalParams[param];
                 }
+            }, onBeforeSearchStart = function (params, autocompleteViewModel) {
+                return autocompleteViewModel.onBeforeSearchStart(params);
             };
 
             ko.bindingHandlers.autocomplete = {
@@ -50,6 +52,9 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
                             },
                             onSearchStart: function (params) {
                                 onSearchStart(params, autocompleteViewModel);
+                            },
+                            onBeforeSearchStart: function(params) {
+                                onBeforeSearchStart(params, autocompleteViewModel);
                             }
                         });
                     
@@ -82,6 +87,9 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
                             },
                             onSearchStart: function (params) {
                                 onSearchStart(params, autocompleteViewModel);
+                            },
+                            onBeforeSearchStart: function (params) {
+                                onBeforeSearchStart(params, autocompleteViewModel);
                             }
                         });
                     
@@ -122,6 +130,10 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
 
             autocomplete.AutocompleteViewModel.prototype.getAdditionalParameters = function () {
                 return {};
+            };
+
+            autocomplete.AutocompleteViewModel.prototype.onBeforeSearchStart = function (params) {
+                return true;
             };
 
             return autocomplete.AutocompleteViewModel;
@@ -243,6 +255,10 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
                 return {
                     ExistingItems: this.getExistingItems()
                 };
+            };
+            
+            autocomplete.AutocompleteViewModel.prototype.onBeforeSearchStart = function (params) {
+                return true;
             };
 
             return autocomplete.AutocompleteListViewModel;

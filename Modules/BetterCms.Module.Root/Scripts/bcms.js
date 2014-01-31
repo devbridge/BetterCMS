@@ -285,9 +285,9 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
                 }
 
                 if (code === 13 && $.isFunction(options.preventedEnter)) {
-                    options.preventedEnter($(this));
+                    options.preventedEnter($(this), e);
                 } else if (code === 27 && $.isFunction(options.preventedEsc)) {
-                    options.preventedEsc($(this));
+                    options.preventedEsc($(this), e);
                 }
 
                 return false;
