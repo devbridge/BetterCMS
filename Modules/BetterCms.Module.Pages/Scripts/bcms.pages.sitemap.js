@@ -1962,22 +1962,6 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             
             // Subscribe to events.
             bcms.on(bcms.events.pageCreated, sitemap.loadAddNewPageDialog);
-            
-            sitemap.loadAddNewPageDialog({
-                Data: {
-                    CreatedOn: "Jan 30, 2014",
-                    HasSEO: false,
-                    IsArchived: false,
-                    IsMasterPage: false,
-                    LanguageId: null,
-                    ModifiedOn: "2014-01-30",
-                    PageId: "4e285243-2459-4f72-965d-a2c300e7f3a3",
-                    PageStatus: 4,
-                    PageUrl: "/articles/cant-sleep-go-for-a-run/test/",
-                    Title: "TEST",
-                    Version: 1
-                }
-            });
         };
     
         /**
