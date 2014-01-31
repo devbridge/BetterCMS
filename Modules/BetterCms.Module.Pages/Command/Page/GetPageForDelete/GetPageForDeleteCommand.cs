@@ -25,7 +25,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageForDelete
         /// <returns>Delete confirmation view model.</returns>
         public DeletePageViewModel Execute(Guid request)
         {
-            var inSitemapFuture = Repository.AsQueryable<SitemapNode>().Where(node => node.Page.Id == request).Select(node => node.Id).ToFuture();
+            var inSitemapFuture = Repository.AsQueryable<SitemapNode>().Where(node => node.Page.Id == request && !node.IsDeleted && !node.Sitemap.IsDeleted).Select(node => node.Id).ToFuture();
             var page = Repository.First<PageProperties>(request);
             string message = null;
 
@@ -39,7 +39,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageForDelete
                 {
                     PageId = page.Id,
                     Version = page.Version,
-                    IsInSitemap = inSitemapFuture.Any() || Repository.AsQueryable<SitemapNode>().Any(node => node.UrlHash == urlHash),
+                    IsInSitemap = inSitemapFuture.Any() || Repository.AsQueryable<SitemapNode>().Any(node => node.UrlHash == urlHash && !node.IsDeleted && !node.Sitemap.IsDeleted),
                     ValidationMessage = message
                 };
         }
