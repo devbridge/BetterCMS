@@ -426,7 +426,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             // Find first position of the keyword
             int index;
             var pattern = string.Format("\\b{0}\\b", searchString);
-            var match = Regex.Match(text, pattern);
+            var match = Regex.Match(text, pattern, RegexOptions.IgnoreCase);
             if (match.Success)
             {
                 index = match.Index;

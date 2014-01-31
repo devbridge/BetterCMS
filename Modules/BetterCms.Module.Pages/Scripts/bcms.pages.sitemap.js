@@ -40,7 +40,11 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 firstTab: '#bcms-tab-1',
                 secondTab: '#bcms-tab-2',
                 secondTabButton: '.bcms-tab[data-name="#bcms-tab-2"]',
-                leftColumn: '.bcms-leftcol'
+                leftColumn: '.bcms-leftcol',
+                
+                tabsSlider: '.bcms-tab-header:first',
+                tabsSliderLeftArrow: '.bcms-sitemaps-arrow-left',
+                tabsSliderRightArrow: '.bcms-sitemaps-arrow-right'
             },
             links = {
                 loadSiteSettingsSitemapsListUrl: null,
@@ -92,7 +96,8 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 MiddleZone: 'middleZone',
                 BottomZone: 'bottomZone'
             },
-            nodeId = 0;
+            nodeId = 0,
+            tabId = 0;
 
         /**
         * Assign objects to module.
@@ -414,7 +419,6 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         // Allow user navigate in sitemap.
                         dialog.container.find(modal.selectors.readonly).removeClass(modal.classes.inactive);
                         dialog.container.find(selectors.firstTab).addClass(modal.classes.inactive);
-                        dialog.container.find(selectors.secondTab).find(selectors.leftColumn).addClass(modal.classes.inactive);
                     }
 
                     sitemapModel.parseJsonNodes(content.Data.Sitemap.RootNodes);
@@ -469,10 +473,12 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
                 sitemap.showMessage(content);
                 if (content.Success) {
-                    var tabs = [],
+                    var tabsArray = [],
                         onSkip = function() {
                             dialog.close();
                         };
+
+                    tabId = 0;
                     
                     // Create all the tabs.
                     for (var i = 0; i < content.Data.length; i++) {
@@ -481,7 +487,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             pageLinkModel = new PageLinkViewModel(title, url, pageId, languageId),
                             newPageModel = new AddNewPageViewModel(sitemapModel, pageLinkModel, onSkip),
                             tabModel = new TabModel(newPageModel);
-                        tabs.push(tabModel);
+                        tabsArray.push(tabModel);
                         sitemapModel.parseJsonNodes(content.Data[i].RootNodes);
 
                         // Setup settings.
@@ -493,7 +499,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         sitemapModel.settings.nodeSaveAfterUpdate = false;
                     }
 
-                    self.tabsModel = new TabsModel(tabs);
+                    self.tabsModel = new TabsModel(tabsArray, self.container);
 
                     // Bind models.
                     var context = self.container.find(selectors.sitemapAddNewPageDataBind).parent().get(0);
@@ -501,10 +507,12 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         ko.applyBindings(self.tabsModel, context);
                         updateValidation();
                     }
+
+                    self.tabsModel.slider.initialize();
                 }
             };
             self.save = function (onDoneCallback) {
-                var tabs = self.tabsModel.tabs(),
+                var tabsArray = self.tabsModel.tabs(),
                     sitemapsToSave = [],
                     onSaveCompleted = function (json) {
                         messages.refreshBox(sitemap.activeMessageContainer, json);
@@ -523,9 +531,9 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         }
                     };
                 
-                for (var i = 0; i < tabs.length; i++) {
-                    if (tabs[i].newPageViewModel.linkIsDropped()) {
-                        sitemapsToSave.push(tabs[i].newPageViewModel.sitemap.getModelToSave());
+                for (var i = 0; i < tabsArray.length; i++) {
+                    if (tabsArray[i].newPageViewModel.linkIsDropped()) {
+                        sitemapsToSave.push(tabsArray[i].newPageViewModel.sitemap.getModelToSave());
                     }
                 }
                 
@@ -1641,13 +1649,103 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         }
         
         /**
+        * View model for controling horizontal slider
+        */
+        function TabsSliderViewModel(container, parent) {
+            
+            var self = this,
+                sliderContainer = container.find(selectors.tabsSlider),
+                leftSlider = sliderContainer.find(selectors.tabsSliderLeftArrow),
+                rightSlider = sliderContainer.find(selectors.tabsSliderRightArrow),
+                items = parent.tabs(),
+                currentItem = 0,
+                maxWidth = 0,
+                maxItem = 0;
+
+            self.canSlideLeft = ko.observable(false);
+            self.canSlideRight = ko.observable(false);
+            self.showSliders = ko.observable(true);
+
+            self.slideLeft = function () {
+                if (self.canSlideLeft()) {
+                    slide(-1);
+                }
+            };
+            self.slideRight = function () {
+                if (self.canSlideRight()) {
+                    slide(1);
+                }
+            };
+
+            self.initialize = function () {
+                var sum = 0;
+                
+                maxWidth = sliderContainer.width() - leftSlider.outerWidth(true) - rightSlider.outerWidth(true) - 20;
+
+                for (var i = 0; i < items.length; i++) {
+                    items[i].width = sliderContainer.find('#' + items[i].tabId).outerWidth(true);
+                    sum += items[i].width;
+                }
+
+                if (sum < maxWidth) {
+                    self.showSliders(false);
+                }
+
+                slide(0);
+            };
+
+            function slide(step) {
+                var length = items.length,
+                    sum = 0,
+                    activeItem = 0,
+                    visible,
+                    i;
+
+                currentItem += step;
+                for (i = 0; i < length; i++) {
+                    visible = true;
+                        
+                    if (items[i].isActive()) {
+                        activeItem = i;
+                    }
+                    if (i < currentItem) {
+                        visible = false;
+                    } else {
+                        sum += items[i].width;
+                        if (sum > maxWidth) {
+                            visible = false;
+                        } else {
+                            maxItem = i;
+                        }
+                    }
+                        
+                    items[i].isVisible(visible);
+                }
+                
+                if (activeItem < currentItem || activeItem > maxItem) {
+                    if (step > 0) {
+                        items[currentItem].activate();
+                    } else {
+                        items[maxItem].activate();
+                    }
+                }
+
+                self.canSlideLeft(currentItem > 0);
+                self.canSlideRight(maxItem < items.length - 1);
+            }
+
+            return self;
+        }
+
+        /**
         * Responsible for tabs handling for new page placement into multiple sitemaps.
         */
-        function TabsModel(tabs) {
+        function TabsModel(tabsArray, container) {
             var self = this;
             self.activeTab = ko.observable();
             self.activeNewPageViewModel = ko.observable();
-            self.activateTab = function(tabModel) {
+
+            self.activateTab = function (tabModel) {
                 var active = self.activeTab();
                 if (active) {
                     active.isActive(false);
@@ -1658,14 +1756,16 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 self.activeNewPageViewModel(tabModel.newPageViewModel);
             };
 
-            for (var i = 0; i < tabs.length; i++) {
-                tabs[i].activateTab = self.activateTab;
+            for (var i = 0; i < tabsArray.length; i++) {
+                tabsArray[i].activateTab = self.activateTab;
             }
             
-            self.tabs = ko.observableArray(tabs);
+            self.tabs = ko.observableArray(tabsArray);
 
             // Activate first tab.
             self.tabs()[0].activate();
+            
+            self.slider = new TabsSliderViewModel(container, self);
         }
         
         /**
@@ -1676,9 +1776,13 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.newPageViewModel = newPageViewModel;
             self.isActive = ko.observable(false);
             self.activateTab = null;
+            self.width = 0;
+            self.isVisible = ko.observable(false);
             self.activate = function() {
                 self.activateTab(self);
             };
+            self.tabId = 'bms-sitemaps-tab-' + tabId;
+            tabId++;
         }
 
         /**

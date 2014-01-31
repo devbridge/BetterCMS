@@ -70,7 +70,7 @@
 
                     <div class="bcms-rightcol">
                         <div class="bcms-sitemap-holder">
-                            <div class="@(Model.IsReadOnly ? "" : "bcms-addnode-placement-holder")">
+                            <div class="bcms-addnode-placement-holder@(Model.IsReadOnly ? "-readonly" : string.Empty)">
                                 @Html.Partial("Partial/Sitemap", new SitemapNodeViewModel())
                             </div>
                         </div>
@@ -89,11 +89,11 @@
                data-bind="hasfocus: hasfocus, value: searchQuery, valueUpdate: 'afterkeydown', enterPress: searchForPageLinks" />
         <div class="bcms-btn-search" data-bind="click: searchForPageLinks">@NavigationGlobalization.Sitemap_EditDialog_AddPageLink_SearchButton</div>
     </div>
-    <div class="bcms-addnode-placement-holder" data-bind="template: { name: 'bcms-navigation-pagelink-template', foreach: pageLinks }"></div>
+    <div class="bcms-addnode-placement-holder@(Model.IsReadOnly ? "-readonly" : string.Empty)" data-bind="template: { name: 'bcms-navigation-pagelink-template', foreach: pageLinks }"></div>
 </script>
 <script type="text/html" id="bcms-navigation-pagelink-template">
     <!-- ko if: isVisible() || isCustom() -->
-    <div class="bcms-placement-node" data-bind="draggable: $parentContext.$index, css: { 'bcms-placement-node-drag': isBeingDragged() }, style: { borderColor: isOnSitemap() == true ? '#0383df' : '' }">
+    <div class="bcms-placement-node" data-bind="@(!Model.IsReadOnly ? "draggable: $parentContext.$index, " : string.Empty)css: { 'bcms-placement-node-drag': isBeingDragged() }, style: { borderColor: isOnSitemap() == true ? '#0383df' : '' }">
         <div class="bcms-placement-title" data-bind="text: title()"></div>
         <div class="bcms-placement-path"><a data-bind="text: url, attr: { href: url }" href="" target="_blank"></a></div>
     </div>
