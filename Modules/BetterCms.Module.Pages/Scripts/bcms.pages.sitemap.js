@@ -1681,14 +1681,10 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 var sum = 0;
                 
                 maxWidth = sliderContainer.width() - leftSlider.outerWidth(true) - rightSlider.outerWidth(true) - 20;
-                
-                console.log('MaxWidth: ' + maxWidth);
 
                 for (var i = 0; i < items.length; i++) {
                     items[i].width = sliderContainer.find('#' + items[i].tabId).outerWidth(true);
                     sum += items[i].width;
-                    
-                    console.log('%s: %s, sum: %s', i+1, items[i].width, sum);
                 }
 
                 if (sum < maxWidth) {
@@ -1962,22 +1958,6 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             
             // Subscribe to events.
             bcms.on(bcms.events.pageCreated, sitemap.loadAddNewPageDialog);
-            
-            sitemap.loadAddNewPageDialog({
-                Data: {
-                    CreatedOn: "Jan 30, 2014",
-                    HasSEO: false,
-                    IsArchived: false,
-                    IsMasterPage: false,
-                    LanguageId: null,
-                    ModifiedOn: "2014-01-30",
-                    PageId: "4e285243-2459-4f72-965d-a2c300e7f3a3",
-                    PageStatus: 4,
-                    PageUrl: "/articles/cant-sleep-go-for-a-run/test/",
-                    Title: "TEST",
-                    Version: 1
-                }
-            });
         };
     
         /**
