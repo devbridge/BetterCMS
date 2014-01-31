@@ -368,7 +368,9 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
                 CollectChildrenNodesInnerHtml(content.ChildNodes, contentText);
             }
 
-            return RemoveDuplicateWhitespace(contentText.ToString());
+            var body = contentText.ToString();
+            body = HttpUtility.HtmlDecode(body);
+            return RemoveDuplicateWhitespace(body);
         }
 
         private static string RemoveDuplicateWhitespace(string html)
