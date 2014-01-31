@@ -163,7 +163,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                     })
                 .ToFuture();
 
-            var inSitemapFuture = Repository.AsQueryable<SitemapNode>().Where(node => node.Page.Id == id).Select(node => node.Id).ToFuture();
+            var inSitemapFuture = Repository.AsQueryable<SitemapNode>().Where(node => node.Page.Id == id && !node.IsDeleted && !node.Sitemap.IsDeleted).Select(node => node.Id).ToFuture();
             var tagsFuture = tagService.GetPageTagNames(id);
             var categories = categoryService.GetCategories();
             var customOptionsFuture = optionService.GetCustomOptionsFuture();
@@ -200,7 +200,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 model.Model.RedirectFromOldUrl = true;
                 model.Model.Categories = categories;
                 var urlHash = model.Model.PageUrl.UrlHash();
-                model.Model.IsInSitemap = inSitemapFuture.Any() || Repository.AsQueryable<SitemapNode>().Any(node => node.UrlHash == urlHash);
+                model.Model.IsInSitemap = inSitemapFuture.Any() || Repository.AsQueryable<SitemapNode>().Any(node => node.UrlHash == urlHash && !node.IsDeleted && !node.Sitemap.IsDeleted);
                 model.Model.UpdateSitemap = true;
                 model.Model.CustomOptions = customOptionsFuture.ToList();
                 model.Model.ShowTranslationsTab = cmsConfiguration.EnableMultilanguage && !model.Model.IsMasterPage;
