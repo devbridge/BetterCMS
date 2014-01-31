@@ -174,7 +174,13 @@
     border-radius: 2px;
     background-color: #f5f5f5;
 }
+    .bcms-sitemap-newpage .bcms-placement-node {
+        width: 621px;
+    }
 
+    .bcms-sitemap-edit .bcms-placement-node {
+        width: 584px;
+    }
     .bcms-placement-node:hover .bcms-node-controls {
         display: block;
     }
