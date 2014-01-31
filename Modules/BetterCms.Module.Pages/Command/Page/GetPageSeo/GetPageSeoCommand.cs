@@ -40,7 +40,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageSeo
                 return new EditSeoViewModel();
             }
 
-            var inSitemapFuture = Repository.AsQueryable<SitemapNode>().Where(node => node.Page.Id == pageId).Select(node => node.Id).ToFuture();
+            var inSitemapFuture = Repository.AsQueryable<SitemapNode>().Where(node => node.Page.Id == pageId && !node.IsDeleted && !node.Sitemap.IsDeleted).Select(node => node.Id).ToFuture();
             var page = Repository
                 .AsQueryable<PageProperties>()
                 .Where(f => f.Id == pageId)
@@ -71,8 +71,8 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageSeo
                 model.MetaKeywords = page.MetaKeywords;
                 model.MetaDescription = page.MetaDescription;
                 model.UseCanonicalUrl = page.UseCanonicalUrl;
-                var urlHash = page.PageUrl.UrlHash(); 
-                model.IsInSitemap = inSitemapFuture.Any() || Repository.AsQueryable<SitemapNode>().Any(node => node.UrlHash == urlHash);
+                var urlHash = page.PageUrl.UrlHash();
+                model.IsInSitemap = inSitemapFuture.Any() || Repository.AsQueryable<SitemapNode>().Any(node => node.UrlHash == urlHash && !node.IsDeleted && !node.Sitemap.IsDeleted);
                 model.UpdateSitemap = true;
 
                 if (cmsConfiguration.Security.AccessControlEnabled)

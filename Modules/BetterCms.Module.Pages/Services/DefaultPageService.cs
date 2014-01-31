@@ -77,7 +77,7 @@ namespace BetterCms.Module.Pages.Services
             }
 
             // NOTE: if GetPageQuery() and CachePage() is used properly below code should not be executed.
-            var inSitemapFuture = repository.AsQueryable<SitemapNode>().Where(node => node.UrlHash == trimmed).Select(node => node.Id).ToFuture();
+            var inSitemapFuture = repository.AsQueryable<SitemapNode>().Where(node => node.UrlHash == trimmed && !node.IsDeleted && !node.Sitemap.IsDeleted).Select(node => node.Id).ToFuture();
             var page = repository
                 .AsQueryable<PageProperties>(p => p.PageUrlHash == trimmed)
                 .Fetch(p => p.Layout)
@@ -85,7 +85,7 @@ namespace BetterCms.Module.Pages.Services
 
             if (page != null)
             {
-                page.IsInSitemap = inSitemapFuture.Any() || repository.AsQueryable<SitemapNode>().Any(node => node.Page.Id == page.Id);
+                page.IsInSitemap = inSitemapFuture.Any() || repository.AsQueryable<SitemapNode>().Any(node => node.Page.Id == page.Id && !node.IsDeleted && !node.Sitemap.IsDeleted);
                 temporaryPageCache.Add(trimmed, page);
             }
 
@@ -110,7 +110,7 @@ namespace BetterCms.Module.Pages.Services
             var pageProperties = page as PageProperties;
             if (pageProperties != null)
             {
-                pageProperties.IsInSitemap = repository.AsQueryable<SitemapNode>().Any(node => node.Page.Id == pageProperties.Id || node.UrlHash == pageProperties.PageUrlHash);
+                pageProperties.IsInSitemap = repository.AsQueryable<SitemapNode>().Any(node => (node.Page.Id == pageProperties.Id || node.UrlHash == pageProperties.PageUrlHash) && !node.IsDeleted && !node.Sitemap.IsDeleted);
                 temporaryPageCache.Add(pageProperties.PageUrlHash, pageProperties);
             }
         }
