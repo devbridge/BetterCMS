@@ -10,7 +10,7 @@
 /*jslint browser: true, white: true, plusplus: true, unparam: true, devel: true */
 /*global bettercms, window, document */
 
-bettercms.define('bcms.jquery.autocomplete', ['bcms.jquery'], function ($) {
+bettercms.define('bcms.jquery.autocomplete', ['bcms.jquery', 'bcms'], function ($, bcms) {
     'use strict';
 
     var
@@ -58,6 +58,7 @@ bettercms.define('bcms.jquery.autocomplete', ['bcms.jquery'], function ($) {
                 type: 'GET',
                 noCache: false,
                 onSearchStart: noop,
+                onBeforeSearchStart: noop,
                 onSearchComplete: noop,
                 containerClass: 'autocomplete-suggestions',
                 tabDisabled: false,
@@ -272,6 +273,7 @@ bettercms.define('bcms.jquery.autocomplete', ['bcms.jquery'], function ($) {
                     break;
                 case keys.TAB:
                 case keys.RETURN:
+                    
                     if (that.selectedIndex === -1) {
                         that.hide();
                         return;
@@ -369,10 +371,15 @@ bettercms.define('bcms.jquery.autocomplete', ['bcms.jquery'], function ($) {
         },
 
         getSuggestions: function (q) {
+            
             var response,
                 that = this,
                 options = that.options,
                 serviceUrl = options.serviceUrl;
+
+            if (options.onBeforeSearchStart.call(that.element, options.params) === false) {
+                return;
+            }
 
             response = that.isLocal ? that.getSuggestionsLocal(q) : that.cachedResponse[q];
 
