@@ -3,8 +3,10 @@
 @{
     using (var container = ApiFactory.Create())
     {
-        var results = container.Pages.Pages.Search.Get(new SearchPagesRequest {SearchString = "unpublished"});
+        var results = container.Pages.Pages.Search(new SearchPagesRequest {SearchString = "test"});
 
+        <div>Showing @results.Data.Items.Count results of @results.Data.TotalCount</div>
+        
         foreach (var item in results.Data.Items)
         {
             var cssClass = item.IsDenied ? "bcms-search-result" : "bcms-search-result bcms-denied-search-result";

@@ -6,6 +6,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
     {
         GetPagesResponse Get(GetPagesRequest request);
 
-        ISearchPagesService Search { get; }
+        SearchPagesResponse Search(SearchPagesRequest request);
     }
 }

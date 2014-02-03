@@ -196,12 +196,9 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
             public PageOption Option { get; set; }
         }
 
-        public ISearchPagesService Search
+        SearchPagesResponse IPagesService.Search(SearchPagesRequest request)
         {
-            get
-            {
-                return searchPagesService;
-            }
+            return searchPagesService.Get(request);
         }
     }
 }
