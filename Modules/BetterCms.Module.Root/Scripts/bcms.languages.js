@@ -95,7 +95,13 @@ function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete) {
                     self.shortCode(suggestionItem.id());
                     self.code(suggestedName);
                     self.hasNameFocus(true);
-                }, onBeforeSearchStart = function() {
+                }, onBeforeSearchStart = function () {
+                    
+                    if (this.autocompleteInstance
+                        && this.autocompleteInstance.options) {
+                        this.autocompleteInstance.options.tabDisabled = true;
+                    }
+
                     self.shortCode('');
                 };
 
