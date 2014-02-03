@@ -377,20 +377,6 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.deleteItem();
             };
 
-            self.onCancelEdit = function (data, event) {
-                self.isSelected = true;
-                bcms.logger.trace('ko.grid.onCancelEdit: isSelected = true');
-                bcms.stopEventPropagation(event);
-                self.cancelEditItem();
-            };
-
-            self.onSave = function (data, event) {
-                bcms.stopEventPropagation(event);
-                self.hasFocus(!self.hasFocus(!self.hasFocus())); // Hack for IE.
-                self.savePressed = true;
-                self.saveItem();
-            };
-
             self.onStopEvent = function (data, event) {
                 self.isSelected = true;
                 bcms.logger.trace('ko.grid.onStopEvent: isSelected = true');
@@ -468,6 +454,20 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     }
                 }
             };
+        };
+
+        grid.ItemViewModel.prototype.onCancelEdit = function (data, event) {
+            this.isSelected = true;
+            bcms.logger.trace('ko.grid.onCancelEdit: isSelected = true');
+            bcms.stopEventPropagation(event);
+            this.cancelEditItem();
+        };
+
+        grid.ItemViewModel.prototype.onSave = function (data, event) {
+            bcms.stopEventPropagation(event);
+            this.hasFocus(!this.hasFocus(!this.hasFocus())); // Hack for IE.
+            this.savePressed = true;
+            this.saveItem();
         };
 
         grid.ItemViewModel.prototype.hasChanges = function () {

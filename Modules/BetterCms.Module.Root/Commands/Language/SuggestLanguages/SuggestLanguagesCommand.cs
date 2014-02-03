@@ -31,7 +31,7 @@ namespace BetterCms.Module.Root.Commands.Language.SuggestLanguages
 
             return System.Globalization.CultureInfo
                 .GetCultures(System.Globalization.CultureTypes.AllCultures)
-                .Where(culture => culture.Name.ToLower().Contains(query) || culture.EnglishName.ToLower().Contains(query) || culture.NativeName.ToLower().Contains(query))
+                .Where(culture => culture.GetFullName().ToLowerInvariant().Contains(query))
                 .Where(cullture => !alreadyAdded.Contains(cullture.Name))
                 .OrderBy(culture => culture.Name)
                 .Select(culture => new LookupKeyValue { Key = culture.Name, Value = culture.GetFullName() })

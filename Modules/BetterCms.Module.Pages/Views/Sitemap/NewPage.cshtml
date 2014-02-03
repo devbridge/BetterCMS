@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div class="bcms-rightcol">
-                <div class="bcms-placement-holder">
+                <div class="bcms-placement-holder bcms-sitemap-newpage">
                     @* Form is required for unobtrusive validation. *@
                     @using (Html.BeginForm<SitemapController>(f => f.SaveSitemap(null), FormMethod.Post, new { @class = "bcms-sitemap-form bcms-ajax-form" }))
                     {

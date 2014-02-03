@@ -153,6 +153,7 @@ namespace BetterCms.Module.Pages.Controllers
 
             var view = RenderView("EditPageProperties", model);
             var json = new {
+                               PageId = success ? model.Id : (System.Guid?)null,
                                Tags = success ? model.Tags : null,
                                Image = success ? model.Image : new ImageSelectorViewModel(),
                                SecondaryImage = success ? model.SecondaryImage : new ImageSelectorViewModel(),

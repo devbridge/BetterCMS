@@ -30,14 +30,22 @@ function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete) {
     var LanguageAutocompleteListViewModel = (function (_super) {
         bcms.extendsClass(LanguageAutocompleteListViewModel, _super);
 
-        function LanguageAutocompleteListViewModel(onItemSelect) {
+        function LanguageAutocompleteListViewModel(onItemSelect, onBeforeSearchStart) {
             var options = {
                 serviceUrl: links.languageSuggestionUrl,
                 onItemSelect: onItemSelect
             };
 
             _super.call(this, options);
+
+            this.onBeforeSearchStartCallback = onBeforeSearchStart;
         }
+
+        LanguageAutocompleteListViewModel.prototype.onBeforeSearchStart = function () {
+            if ($.isFunction(this.onBeforeSearchStartCallback)) {
+                this.onBeforeSearchStartCallback();
+            }
+        };
             
         return LanguageAutocompleteListViewModel;
     })(autocomplete.AutocompleteViewModel);
@@ -72,7 +80,30 @@ function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete) {
         function LanguageViewModel(parent, item) {
             _super.call(this, parent, item);
 
-            var self = this;
+            var self = this,
+                onSelectItem = function (suggestionItem) {
+                    self.isSelected = true;
+
+                    var name = self.name(),
+                        suggestedName = suggestionItem.name();
+
+                    if (!name || self.oldAutocompleteValue == self.name()) {
+                        self.name(suggestedName);
+                    }
+
+                    self.oldAutocompleteValue = suggestedName;
+                    self.shortCode(suggestionItem.id());
+                    self.code(suggestedName);
+                    self.hasNameFocus(true);
+                }, onBeforeSearchStart = function () {
+                    
+                    if (this.autocompleteInstance
+                        && this.autocompleteInstance.options) {
+                        this.autocompleteInstance.options.tabDisabled = true;
+                    }
+
+                    self.shortCode('');
+                };
 
             self.hasNameFocus = ko.observable(false);
             self.name = ko.observable().extend({ required: "", maxLength: { maxLength: ko.maxLength.name } });
@@ -85,21 +116,7 @@ function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete) {
             self.name(item.Name);
             self.code(item.Code);
 
-            self.autocompleteViewModel = new LanguageAutocompleteListViewModel(function (suggestionItem) {
-                self.isSelected = true;
-
-                var name = self.name(),
-                    suggestedName = suggestionItem.name();
-
-                if (!name || self.oldAutocompleteValue == self.name()) {
-                    self.name(suggestedName);
-                }
-
-                self.oldAutocompleteValue = suggestedName;
-                self.shortCode(suggestionItem.id());
-                self.code(suggestedName);
-                self.hasNameFocus(true);
-            });
+            self.autocompleteViewModel = new LanguageAutocompleteListViewModel(onSelectItem, onBeforeSearchStart);
 
             if (!self.isNew()) {
                 self.code.editingIsDisabled = ko.observable(true);
@@ -127,6 +144,32 @@ function ($, bcms, dynamicContent, siteSettings, ko, kogrid, autocomplete) {
             params.Code = this.shortCode() || this.code();
 
             return params;
+        };
+
+        LanguageViewModel.prototype.onSave = function (data, event) {
+            if (event.type
+                && event.type == "keydown"
+                && this.autocompleteViewModel
+                && this.autocompleteViewModel.autocompleteInstance
+                && this.autocompleteViewModel.autocompleteInstance.visible) {
+                // If autocomplete is visible, cancel enter press event
+                return;
+            }
+
+            _super.prototype.onSave.call(this, data, event);
+        };
+
+        LanguageViewModel.prototype.onCancelEdit = function (data, event) {
+            if (event.type
+                && event.type == "keydown"
+                && this.autocompleteViewModel
+                && this.autocompleteViewModel.autocompleteInstance
+                && this.autocompleteViewModel.autocompleteInstance.visible) {
+                // If autocomplete is visible, cancel esc press event
+                return;
+            }
+
+            _super.prototype.onCancelEdit.call(this, data, event);
         };
 
         return LanguageViewModel;

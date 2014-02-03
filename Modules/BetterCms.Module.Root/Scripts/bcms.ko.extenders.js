@@ -25,8 +25,8 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], funct
             var allBindings = allBindingsAccessor();
            
             bcms.preventInputFromSubmittingForm($(element), {
-                preventedEnter: function () {
-                    allBindings.enterPress.call(viewModel, element);
+                preventedEnter: function (el, e) {
+                    allBindings.enterPress.call(viewModel, viewModel, e);
                 }
             });
         }
@@ -40,8 +40,8 @@ bettercms.define('bcms.ko.extenders', ['bcms.jquery', 'bcms', 'knockout'], funct
             var allBindings = allBindingsAccessor();
             
             bcms.preventInputFromSubmittingForm($(element), {
-                preventedEsc: function () {
-                    allBindings.escPress.call(viewModel, element);
+                preventedEsc: function (el, e) {
+                    allBindings.escPress.call(viewModel, viewModel, e);
                 }
             });
         }
