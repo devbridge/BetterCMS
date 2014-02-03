@@ -35,7 +35,7 @@
 
         foreach (var item in Model.Results.Items)
         {
-            var cssClass = item.IsDenied ? "bcms-search-result" : "bcms-search-result bcms-denied-search-result";
+            var cssClass = !item.IsDenied ? "bcms-search-result" : "bcms-search-result bcms-denied-search-result";
 
             <article class="@cssClass">
                 <h3>@item.Title</h3>            
