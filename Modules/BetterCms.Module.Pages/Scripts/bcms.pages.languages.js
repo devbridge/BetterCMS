@@ -81,7 +81,7 @@
         /**
         * Page translations list view model
         */
-        pageLanguages.PageTranslationsListViewModel = function (items, languages, languageId) {
+        pageLanguages.PageTranslationsListViewModel = function (items, languages, languageId, pageId) {
             var self = this;
 
             self.language = new pageLanguages.PageLanguageViewModel(languages, languageId);
@@ -93,6 +93,7 @@
             self.addPageTitle = ko.observable();
 
             self.oldCurrentPageLanguageId = languageId;
+            self.currentPageId = pageId;
             self.pageLanguageId = null;
             self.pageUrl = null;
             self.originalItems = [];
@@ -146,7 +147,7 @@
             function getAdditionalParameters() {
                 var params = {},
                     include = '',
-                    exclude = bcms.pageId,
+                    exclude = self.currentPageId,
                     il = self.originalItems.length,
                     jl = self.items().length,
                     i, j, exists, id;
@@ -352,7 +353,7 @@
                         }
                     }
 
-                    if (translation && translation.Id != bcms.pageId) {
+                    if (translation && translation.Id != self.currentPageId) {
                         viewModel = new pageLanguages.PageTranslationViewModel(self);
                         viewModel.id(translation.Id);
                         viewModel.title(translation.Title);
