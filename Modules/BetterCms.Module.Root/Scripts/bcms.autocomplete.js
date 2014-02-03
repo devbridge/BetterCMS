@@ -257,7 +257,7 @@ bettercms.define('bcms.autocomplete', ['bcms.jquery', 'bcms', 'bcms.jquery.autoc
                 };
             };
             
-            autocomplete.AutocompleteViewModel.prototype.onBeforeSearchStart = function (params) {
+            autocomplete.AutocompleteListViewModel.prototype.onBeforeSearchStart = function (params) {
                 return true;
             };
 
