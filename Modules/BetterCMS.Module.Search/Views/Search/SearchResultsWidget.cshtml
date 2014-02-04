@@ -29,13 +29,12 @@
             
             <div class="bcms-total-search-results">
                 @Html.Raw(message)
-                @*@Html.Raw(string.Format(SearchGlobalization.SearchResults_TotalCount_Message, Model.Results.TotalResults, string.Format("<span class=\"bcms-total-search-results-query\">{0}</span>", HttpUtility.HtmlEncode(Model.Results.Query))))*@ 
             </div>
         }
 
         foreach (var item in Model.Results.Items)
         {
-            var cssClass = item.IsDenied ? "bcms-search-result" : "bcms-search-result bcms-denied-search-result";
+            var cssClass = !item.IsDenied ? "bcms-search-result" : "bcms-search-result bcms-denied-search-result";
 
             <article class="@cssClass">
                 <h3>@item.Title</h3>            
