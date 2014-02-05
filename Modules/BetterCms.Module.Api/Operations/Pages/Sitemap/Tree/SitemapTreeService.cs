@@ -178,6 +178,11 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
                                 pageTranslations.FirstOrDefault(
                                     p => p.LanguageId.HasValue && !p.LanguageId.Value.HasDefaultValue() && p.LanguageId.Value == languageId.Value);
 
+                            if (translation == null)
+                            {
+                                node.UsePageTitleAsNodeTitle = true;
+                            }
+
                             if (languagePage != null)
                             {
                                 node.PageId = languagePage.Id;
