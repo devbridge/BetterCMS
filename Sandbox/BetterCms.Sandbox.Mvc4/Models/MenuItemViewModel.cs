@@ -6,6 +6,8 @@
 
         public string Url { get; set; }
 
+        public bool IsPublished { get; set; }
+
         public override string ToString()
         {
             return string.Format("Caption: {0}, Url: {1}", Caption, Url);

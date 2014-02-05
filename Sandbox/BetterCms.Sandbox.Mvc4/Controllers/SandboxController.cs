@@ -109,7 +109,7 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
                     var response = api.Pages.Sitemap.Tree.Get(request);
                     if (response.Data.Count > 0)
                     {
-                        menuItems = response.Data.Select(mi => new MenuItemViewModel { Caption = mi.Title, Url = mi.Url }).ToList();
+                        menuItems = response.Data.Select(mi => new MenuItemViewModel { Caption = mi.Title, Url = mi.Url, IsPublished = mi.PageIsPublished}).ToList();
                     }
                 }
             }

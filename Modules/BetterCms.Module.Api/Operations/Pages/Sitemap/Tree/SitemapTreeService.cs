@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Root.Mvc;
 
@@ -66,6 +67,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
                         Title = node.Page != null && node.UsePageTitleAsNodeTitle ? node.Page.Title : node.Title,
                         Url = node.Page != null ? node.Page.PageUrl : node.Url,
                         PageId = node.Page != null ? node.Page.Id : (Guid?)null,
+                        PageIsPublished = node.Page != null && node.Page.Status == PageStatus.Published,
                         UsePageTitleAsNodeTitle = node.UsePageTitleAsNodeTitle,
                         DisplayOrder = node.DisplayOrder,
                         Macro = node.Macro
@@ -108,6 +110,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
 
                         var defaultPage = pageTranslations.FirstOrDefault(p => !p.LanguageId.HasValue || p.LanguageId.Value.HasDefaultValue()) ?? linkedPage;
                         node.PageId = defaultPage.Id;
+                        node.PageIsPublished = defaultPage.IsPublished;
                         node.PageLanguageId = defaultPage.LanguageId.ToNullOrValue();
                         node.Url = defaultPage.Url;
                         node.Title = node.UsePageTitleAsNodeTitle ? defaultPage.Title : node.Title;
@@ -145,6 +148,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
 
                             var defaultPage = pageTranslations.FirstOrDefault(p => !p.LanguageId.HasValue || p.LanguageId.Value.HasDefaultValue()) ?? linkedPage;
                             node.PageId = defaultPage.Id;
+                            node.PageIsPublished = defaultPage.IsPublished;
                             node.PageLanguageId = defaultPage.LanguageId.ToNullOrValue();
                             node.Url = defaultPage.Url;
                             node.Title = node.UsePageTitleAsNodeTitle ? defaultPage.Title : node.Title;
@@ -186,6 +190,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
                             if (languagePage != null)
                             {
                                 node.PageId = languagePage.Id;
+                                node.PageIsPublished = languagePage.IsPublished;
                                 node.PageLanguageId = languagePage.LanguageId.ToNullOrValue();
                                 node.Url = languagePage.Url;
                                 node.Title = node.UsePageTitleAsNodeTitle ? languagePage.Title : node.Title;
@@ -194,6 +199,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
                             {
                                 var defaultPage = pageTranslations.FirstOrDefault(p => !p.LanguageId.HasValue || p.LanguageId.Value.HasDefaultValue()) ?? linkedPage;
                                 node.PageId = defaultPage.Id;
+                                node.PageIsPublished = defaultPage.IsPublished;
                                 node.PageLanguageId = defaultPage.LanguageId.ToNullOrValue();
                                 node.Url = defaultPage.Url;
                                 node.Title = node.UsePageTitleAsNodeTitle ? defaultPage.Title : node.Title;
