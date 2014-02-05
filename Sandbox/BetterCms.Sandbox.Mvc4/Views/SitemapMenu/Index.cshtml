@@ -1,0 +1,6 @@
+﻿@model IList<BetterCms.Sandbox.Mvc4.Models.MenuItemViewModel>
+
+@foreach (var item in Model)
+{
+     <a href="@item.Url">@item.Caption <span>(@item.Url)</span></a><br/>
+}
