@@ -67,7 +67,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
                         Title = node.Page != null && node.UsePageTitleAsNodeTitle ? node.Page.Title : node.Title,
                         Url = node.Page != null ? node.Page.PageUrl : node.Url,
                         PageId = node.Page != null ? node.Page.Id : (Guid?)null,
-                        PageIsPublished = node.Page != null && node.Page.Status == PageStatus.Published,
+                        PageIsPublished = node.Page != null && !node.Page.IsDeleted && node.Page.Status == PageStatus.Published,
                         UsePageTitleAsNodeTitle = node.UsePageTitleAsNodeTitle,
                         DisplayOrder = node.DisplayOrder,
                         Macro = node.Macro
