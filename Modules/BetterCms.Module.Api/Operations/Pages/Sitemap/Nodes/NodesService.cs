@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 
@@ -35,9 +36,10 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Nodes
 
                         ParentId = node.ParentNode != null && !node.ParentNode.IsDeleted ? node.ParentNode.Id : (System.Guid?)null,
                         PageId = node.Page != null && !node.Page.IsDeleted ? node.Page.Id : (System.Guid?)null,
+                        PageIsPublished = node.Page != null && !node.Page.IsDeleted && node.Page.Status == PageStatus.Published,
                         PageLanguageId = node.Page != null && !node.Page.IsDeleted && node.Page.Language != null ? node.Page.Language.Id : (System.Guid?)null,
-                        Title = node.Title,
-                        Url = node.Url,
+                        Title = node.Page != null && node.UsePageTitleAsNodeTitle ? node.Page.Title : node.Title,
+                        Url = node.Page != null ? node.Page.PageUrl : node.Url,
                         DisplayOrder = node.DisplayOrder,
                         Macro = node.Macro
                     })

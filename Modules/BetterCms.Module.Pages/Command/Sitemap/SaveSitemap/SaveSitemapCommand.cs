@@ -188,18 +188,19 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
                 var delete = !node.Id.HasDefaultValue() && isDeleted;
 
                 bool updatedInDB;
+                var translationUpdatedInDB = false;
                 var sitemapNode = SitemapService.SaveNode(out updatedInDB, sitemap, node.Id, node.Version, node.Url, node.Title, node.Macro, node.PageId, node.UsePageTitleAsNodeTitle, node.DisplayOrder, node.ParentId, isDeleted, parentNode, nodeList);
 
                 if ((create || update) && (node.Translations != null && node.Translations.Count > 0))
                 {
-                    SaveTranslations(sitemapNode, node, translationList);
+                    SaveTranslations(out translationUpdatedInDB, sitemapNode, node, translationList);
                 }
 
-                if (create && updatedInDB)
+                if (create && (updatedInDB || translationUpdatedInDB))
                 {
                     createdNodes.Add(sitemapNode);
                 }
-                else if (update && updatedInDB)
+                else if (update && (updatedInDB || translationUpdatedInDB))
                 {
                     updatedNodes.Add(sitemapNode);
                 }
@@ -216,11 +217,13 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
         /// <summary>
         /// Saves the translations.
         /// </summary>
+        /// <param name="translationUpdatedInDb"></param>
         /// <param name="sitemapNode">The sitemap node.</param>
         /// <param name="node">The node.</param>
         /// <param name="translationList"></param>
-        private void SaveTranslations(SitemapNode sitemapNode, SitemapNodeViewModel node, List<SitemapNodeTranslation> translationList)
+        private void SaveTranslations(out bool translationUpdatedInDb, SitemapNode sitemapNode, SitemapNodeViewModel node, List<SitemapNodeTranslation> translationList)
         {
+            translationUpdatedInDb = false;
             var translations = translationList == null
                                     ? Repository.AsQueryable<SitemapNodeTranslation>().Where(translation => translation.Node.Id == sitemapNode.Id).ToList()
                                     : translationList.Where(translation => translation.Node.Id == sitemapNode.Id).ToList();
@@ -302,6 +305,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveSitemap
                 if (saveIt)
                 {
                     Repository.Save(translation);
+                    translationUpdatedInDb = true;
                 }
             }
         }
