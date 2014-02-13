@@ -47,6 +47,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
         public Guid? PageId { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether page is published.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if page is published; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool PageIsPublished { get; set; }
+
+        /// <summary>
         /// Gets or sets the page language identifier.
         /// </summary>
         /// <value>

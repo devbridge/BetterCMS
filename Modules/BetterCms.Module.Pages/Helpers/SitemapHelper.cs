@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Sitemap;
 using BetterCms.Module.Root.Mvc;
@@ -19,6 +20,7 @@ namespace BetterCms.Module.Pages.Helpers
         public class PageData
         {
             public Guid Id { get; set; }
+            public bool IsPublished { get; set; }
             public string Title { get; set; }
             public string Url { get; set; }
             public Guid? LanguageId { get; set; }
@@ -35,7 +37,8 @@ namespace BetterCms.Module.Pages.Helpers
                     Title = p.Title,
                     Url = p.PageUrl,
                     LanguageId = p.Language != null ? p.Language.Id : Guid.Empty,
-                    LanguageGroupIdentifier = p.LanguageGroupIdentifier
+                    LanguageGroupIdentifier = p.LanguageGroupIdentifier,
+                    IsPublished = p.Status == PageStatus.Published
                 })
                 .ToFuture() : null;
         }

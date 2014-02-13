@@ -1,0 +1,16 @@
+﻿@using BetterCms.Sandbox.Mvc4.Helpers
+@{
+//    var languageCode = OptionsHelper.GetValue(Model.Options, "languageCode");
+//    Html.RenderAction("SitemapMenu", "Sandbox", new { area = string.Empty, languageCode = languageCode });
+
+    <strong>Sitemap API test:</strong>
+    <p>Lithuanian:</p>
+    Html.RenderAction("SitemapMenu", "Sandbox", new { area = string.Empty, languageCode = "lt" });
+    <p>English:</p>
+    Html.RenderAction("SitemapMenu", "Sandbox", new { area = string.Empty, languageCode = "en" });
+    <p>Default:</p>
+    Html.RenderAction("SitemapMenu", "Sandbox", new { area = string.Empty, languageCode = "default" });
+    
+    <p>As inserted to the sitemap:</p>
+    Html.RenderAction("SitemapMenu", "Sandbox", new { area = string.Empty });
+}

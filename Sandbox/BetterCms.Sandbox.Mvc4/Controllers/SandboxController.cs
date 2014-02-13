@@ -1,9 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
+using BetterCms.Module.Api;
+using BetterCms.Module.Api.Operations.Pages.Sitemap;
+using BetterCms.Module.Api.Operations.Pages.Sitemap.Tree;
+using BetterCms.Module.Api.Operations.Root.Languages;
+using BetterCms.Module.Api.Operations.Root.Languages.Language;
 using BetterCms.Module.Users.Provider;
 using BetterCms.Sandbox.Mvc4.Helpers;
 using BetterCms.Sandbox.Mvc4.Models;
@@ -14,6 +21,8 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
 {
     public class SandboxController : Controller
     {
+        private static Guid defaultSitemapId = new Guid("17ABFEE9-5AE6-470C-92E1-C2905036574B");
+
         public ActionResult Content()
         {
             return Content("Hello from the web project controller.");
@@ -82,6 +91,62 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
         public ActionResult NotFound()
         {
             return View("NotFound");
+        }
+
+
+        public ActionResult SitemapMenu(string languageCode)
+        {
+            var menuItems = new List<MenuItemViewModel>();
+
+            using (var api = ApiFactory.Create())
+            {
+                var languageId = GetLanguageId(api, languageCode);
+                var sitemapId = GetSitemapId(api);
+                if (sitemapId.HasValue)
+                {
+                    var request = new GetSitemapTreeRequest { SitemapId = sitemapId.Value };
+                    request.Data.LanguageId = languageId;
+                    var response = api.Pages.Sitemap.Tree.Get(request);
+                    if (response.Data.Count > 0)
+                    {
+                        menuItems = response.Data.Select(mi => new MenuItemViewModel { Caption = mi.Title, Url = mi.Url, IsPublished = mi.PageIsPublished}).ToList();
+                    }
+                }
+            }
+
+            return View("~/Views/SitemapMenu/Index.cshtml", menuItems);
+        }
+
+        private Guid? GetLanguageId(IApiFacade api, string languageCode)
+        {
+            if (string.IsNullOrEmpty(languageCode))
+            {
+                return null;
+            }
+
+            try
+            {
+                var request = new GetLanguageRequest { LanguageCode = languageCode };
+                var response = api.Root.Language.Get(request);
+                return response.Data.Id;
+            }
+            catch
+            {
+            }
+
+            return Guid.Empty;
+        }
+
+        private Guid? GetSitemapId(IApiFacade api)
+        {
+            var allSitemaps = api.Pages.Sitemap.Get(new GetSitemapsRequest());
+            if (allSitemaps.Data.Items.Count > 0)
+            {
+                var sitemap = allSitemaps.Data.Items.FirstOrDefault(map => map.Id == defaultSitemapId) ?? allSitemaps.Data.Items.First();
+                return sitemap.Id;
+            }
+
+            return null;
         }
     }
 }

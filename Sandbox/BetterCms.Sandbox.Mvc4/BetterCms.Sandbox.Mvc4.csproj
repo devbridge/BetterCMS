@@ -229,6 +229,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AuthenticationHelper.cs" />
+    <Compile Include="Helpers\OptionsHelper.cs" />
+    <Compile Include="Models\MenuItemViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
   </ItemGroup>
@@ -384,6 +386,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Widgets\MenuWidget.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\SitemapMenu\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
