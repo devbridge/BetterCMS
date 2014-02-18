@@ -73,6 +73,13 @@ namespace BetterCms.Module.Root.Controllers
             {
                 model = GetRequestModel(virtualPath);
 
+                // When URL rewrite occurs, checking child absolute path
+                if (model == null && Request.Url != null && Request.RawUrl != Request.Url.PathAndQuery)
+                {
+                    virtualPath = HttpUtility.UrlDecode(Http.GetAbsolutePath(Request.Url.AbsolutePath));
+                    model = GetRequestModel(virtualPath);
+                }
+
                 if (!string.IsNullOrWhiteSpace(cmsConfiguration.PageNotFoundUrl) && model == null)
                 {
                     model = GetRequestModel(HttpUtility.UrlDecode(cmsConfiguration.PageNotFoundUrl));
