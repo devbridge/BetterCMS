@@ -119,6 +119,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             newModel.MetaTitle = pageModel.MetaTitle;
             newModel.RenderingPage = pageModel;
             newModel.Metadata = pageModel.Metadata;
+            newModel.IsReadOnly = pageModel.IsReadOnly;
 
             PopulateCollections(newModel, pageModel);
 

@@ -38,6 +38,14 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
             return PartialView("~/Views/Widgets/05.cshtml");
         }
 
+        public ActionResult TestRewrite(string url)
+        {
+            url = string.Concat("/", url.Trim('/'), "/");
+            Server.TransferRequest(url);
+
+            return new EmptyResult();
+        }
+
         [AllowAnonymous]
         [HttpGet]
         public ActionResult Login(string roles)
