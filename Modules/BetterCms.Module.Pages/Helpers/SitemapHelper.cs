@@ -60,7 +60,19 @@ namespace BetterCms.Module.Pages.Helpers
             var nodeList = new List<SitemapNodeViewModel>();
             foreach (var node in sitemapNodes.OrderBy(node => node.DisplayOrder))
             {
-                var linkedPage = node.Page != null ? pages.FirstOrDefault(p => p.Id == node.Page.Id) : null;
+                var linkedPage = node.Page != null && !node.Page.IsDeleted
+                                     ? pages.FirstOrDefault(p => p.Id == node.Page.Id)
+                                       ?? new PageData
+                                           {
+                                               Id = node.Page.Id,
+                                               Title = node.Page.Title,
+                                               Url = node.Page.PageUrl,
+                                               IsPublished = node.Page.Status == PageStatus.Published,
+                                               LanguageId = node.Page.Language != null ? node.Page.Language.Id : (Guid?)null,
+                                               LanguageGroupIdentifier = node.Page.LanguageGroupIdentifier
+                                           }
+                                     : null;
+
                 var nodeViewModel = new SitemapNodeViewModel
                 {
                     Id = node.Id,
