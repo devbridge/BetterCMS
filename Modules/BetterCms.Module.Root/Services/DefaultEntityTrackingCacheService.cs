@@ -22,7 +22,7 @@ namespace BetterCms.Module.Root.Services
             if (context != null)
             {
                 entity = context.Items[key];
-                return true;
+                return entity != null;
             }
 
             return false;
