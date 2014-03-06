@@ -75,15 +75,30 @@ namespace BetterCms.Module.Users.Services
         /// </returns>
         public bool ValidateUser(string username, string password)
         {
+            var userId = GetUserIdIfValid(username, password);
+            return userId.HasValue && userId.Value != Guid.Empty;
+        }
+
+        /// <summary>
+        /// Gets the user identifier if valid.
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>
+        /// User Id if user is valid.
+        /// </returns>
+        public Guid? GetUserIdIfValid(string username, string password)
+        {
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
             {
-                return false;
+                return null;
             }
 
             var user = repository
                .AsQueryable<Models.User>(u => u.UserName == username)
                    .Select(u => new
                    {
+                       Id = u.Id,
                        Salt = u.Salt,
                        Password = u.Password
                    })
@@ -91,10 +106,13 @@ namespace BetterCms.Module.Users.Services
 
             if (user != null)
             {
-                return CheckPassword(password, user.Password, user.Salt);
+                if (CheckPassword(password, user.Password, user.Salt))
+                {
+                    return user.Id;
+                }
             }
 
-            return false;
+            return null;
         }
 
         /// <summary>

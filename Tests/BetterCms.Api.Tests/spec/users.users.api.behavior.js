@@ -323,7 +323,8 @@ describe('users.users.api.behavior', function () {
 
         runs(function () {
             expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
-            expect(result.data).toBeTruthy('JSON data should be boolean true.');
+            expect(result.data.valid).toBeTruthy('JSON data should be boolean true.');
+            expect(result.data.userId).toBe('d0e5aa68dad146429db1a22e0101eb42', 'Correct user id should be retrieved.');
         });
     });
 
@@ -350,7 +351,7 @@ describe('users.users.api.behavior', function () {
 
         runs(function () {
             expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
-            expect(result.data).toBeFalsy('JSON data should be boolean false.');
+            expect(result.data.valid).toBeFalsy('JSON data should be boolean false.');
         });
     });
 });
