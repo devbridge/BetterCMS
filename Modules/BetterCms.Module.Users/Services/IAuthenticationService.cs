@@ -1,4 +1,6 @@
-﻿namespace BetterCms.Module.Users.Services
+﻿using System;
+
+namespace BetterCms.Module.Users.Services
 {
     public interface IAuthenticationService
     {
@@ -25,6 +27,14 @@
         ///   <c>true</c>, if username and password are equal.
         /// </returns>
         bool ValidateUser(string username, string password);
+
+        /// <summary>
+        /// Gets the user identifier if valid.
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>User Id if user is valid.</returns>
+        Guid? GetUserIdIfValid(string username, string password);
 
         /// <summary>
         /// Processes a request to update the password for a membership user.
