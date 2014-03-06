@@ -54,11 +54,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac">
-      <HintPath>..\..\packages\Autofac.3.0.0\lib\net40\Autofac.dll</HintPath>
-    </Reference>
-    <Reference Include="Autofac.Configuration">
-      <HintPath>..\..\packages\Autofac.3.0.0\lib\net40\Autofac.Configuration.dll</HintPath>
+    <Reference Include="Autofac, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Autofac.3.1.5\lib\net40\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -74,7 +72,7 @@
     </Reference>
     <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
+      <HintPath>..\..\packages\Iesi.Collections.3.3.1.4000\lib\Net35\Iesi.Collections.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Mvc, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
