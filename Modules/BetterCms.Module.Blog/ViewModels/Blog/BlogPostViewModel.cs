@@ -67,6 +67,7 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// <value>
         /// The blog intro text.
         /// </value>
+        [AllowHtml]
         [StringLength(MaxLength.Text, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public virtual string IntroText { get; set; }
 
