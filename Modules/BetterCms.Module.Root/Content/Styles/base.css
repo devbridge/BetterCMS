@@ -228,6 +228,28 @@ div.bcms-btn-clone {
         background: url('images/sprite-base-1.png') no-repeat -6px -219px;
     }
 
+div.bcms-btn-translate {
+    position: relative;
+    padding-right: 35px;
+    background-color: #1892E4;
+    background-image: linear-gradient(to bottom, #1892E4 0, #0C7FC7 100%);
+}
+
+    div.bcms-btn-translate:active {
+        background-color: #0C7FC7;
+    }
+
+    div.bcms-btn-translate:after {
+        content: "";
+        position: absolute;
+        right: 6px;
+        top: 50%;
+        width: 30px;
+        height: 23px;
+        margin-top: -11px;
+        background: url('images/sprite-base-1.png') no-repeat 0 -1183px;
+    }
+
 div.bcms-btn-settings {
     position: relative;
     padding-right: 35px;
@@ -509,6 +531,11 @@ a.bcms-remove-image {
     }
 
     .bcms-buttons-block > .bcms-btn-clone {
+        float: right;
+        margin-bottom: 10px;
+    }
+
+    .bcms-buttons-block > .bcms-btn-translate {
         float: right;
         margin-bottom: 10px;
     }
