@@ -71,11 +71,18 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
 
             var sitemapNodesFuture = Repository.AsQueryable<SitemapNode>().Where(n => !n.IsDeleted).ToFuture();
 
+            // NOTE: below does not work - need to find out how to rewrite it.
+            // var nodesSubQuery = QueryOver.Of<SitemapNode>()
+            //     .Where(x => x.Page.Id == alias.Id || x.UrlHash == alias.PageUrlHash)
+            //     .Select(s => 1)
+            //     .Take(1);
+
             var hasSeoProjection = Projections.Conditional(
                 Restrictions.Disjunction()
                     .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaTitle)))
                     .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaKeywords)))
                     .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaDescription))),
+            //.Add(Restrictions.IsNull(Projections.SubQuery(nodesSubQuery))),
                 Projections.Constant(false, NHibernateUtil.Boolean),
                 Projections.Constant(true, NHibernateUtil.Boolean));
 
