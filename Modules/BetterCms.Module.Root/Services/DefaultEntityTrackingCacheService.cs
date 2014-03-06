@@ -30,11 +30,21 @@ namespace BetterCms.Module.Root.Services
 
         public void AddEntity(System.Type type, System.Guid id, object entity)
         {
+            if (entity == null)
+            {
+                return;
+            }
+
             var context = GetCurrentContext();
             var key = CreateKey(type, id);
 
             if (context != null)
             {
+                if (context.Items.Contains(key))
+                {
+                    context.Items.Remove(key);
+                }
+
                 context.Items.Add(key, entity);
             }
         }
