@@ -13,10 +13,12 @@ using BetterCms.Module.Pages.ViewModels.SiteSettings;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
+using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
 
 using NHibernate;
 using NHibernate.Criterion;
+using NHibernate.Linq;
 using NHibernate.Transform;
 
 namespace BetterCms.Module.Pages.Command.Page.GetPagesList
@@ -67,17 +69,13 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
 
             query = FilterQuery(query, request);
 
-            var nodesSubQuery = QueryOver.Of<SitemapNode>()
-                .Where(x => x.Page.Id == alias.Id || x.UrlHash == alias.PageUrlHash)
-                .Select(s => 1)
-                .Take(1);
+            var sitemapNodesFuture = Repository.AsQueryable<SitemapNode>().Where(n => !n.IsDeleted).ToFuture();
 
-            IProjection hasSeoProjection = Projections.Conditional(
+            var hasSeoProjection = Projections.Conditional(
                 Restrictions.Disjunction()
                     .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaTitle)))
                     .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaKeywords)))
-                    .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaDescription)))
-                    .Add(Restrictions.IsNull(Projections.SubQuery(nodesSubQuery))),
+                    .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaDescription))),
                 Projections.Constant(false, NHibernateUtil.Boolean),
                 Projections.Constant(true, NHibernateUtil.Boolean));
 
@@ -117,6 +115,17 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
             {
                 model.Languages = languagesFuture.ToList();
                 model.Languages.Insert(0, languageService.GetInvariantLanguageModel());
+            }
+
+            // NOTE: Query over with subquery in CASE statement and paging des not work.
+            if (sitemapNodesFuture != null)
+            {
+                var nodes = sitemapNodesFuture.ToList();
+                foreach (var pageViewModel in model.Items)
+                {
+                    var hash = pageViewModel.Url.UrlHash();
+                    pageViewModel.HasSEO = pageViewModel.HasSEO && nodes.Any(n => n.UrlHash == hash || (n.Page != null && n.Page.Id == pageViewModel.Id));
+                }
             }
 
             return model;
