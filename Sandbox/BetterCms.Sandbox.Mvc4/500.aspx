@@ -8,7 +8,7 @@ void Page_Load(object sender, System.EventArgs e)
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>OOPS ERROR OCCURED</title>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:800' rel='stylesheet' type='text/css' />
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:800' rel='stylesheet' type='text/css' async />
     <style type="text/css">
         .error-page {
             position: absolute;

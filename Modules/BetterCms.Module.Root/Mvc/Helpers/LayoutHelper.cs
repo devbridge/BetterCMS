@@ -53,10 +53,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                 }
                 var html = pageHtmlHelper.GetReplacedHtml().ToString();
 
-                if (!string.IsNullOrWhiteSpace(html))
-                {
-                    RenderSectionAsLayoutRegion(webPage, html, region.RegionIdentifier);
-                }                
+                RenderSectionAsLayoutRegion(webPage, html, region.RegionIdentifier);
             }
         }
 

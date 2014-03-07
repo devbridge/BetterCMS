@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts;
 
@@ -15,6 +16,7 @@ namespace BetterCms.Module.Root.ViewModels.Option
         /// <value>
         /// The option default value.
         /// </value>
+        [AllowHtml]
         public string OptionDefaultValue { get; set; }
 
         /// <summary>
