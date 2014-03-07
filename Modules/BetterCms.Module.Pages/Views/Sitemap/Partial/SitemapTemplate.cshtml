@@ -30,7 +30,7 @@
                     <div class="bcms-placement-title" data-bind="text: title"></div>
                     <div class="bcms-placement-path"><a data-bind="text: url, attr: { href: url }" href="" target="_blank"></a></div>
                 </div>
-                <!-- ko if: getSitemap().settings.canEditNode -->
+                <!-- ko if: getSitemap().settings.canEditNode && isActive() -->
                 <div class="bcms-edit-node">
                     <div class="bcms-edit-node-holder">
                         @Html.Tooltip(NavigationGlobalization.Sitemap_NodeEdit_Title_Tooltip_Message)
