@@ -7,6 +7,7 @@ using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -23,12 +24,26 @@ namespace BetterCms.Module.Blog.Commands.GetTemplatesList
         private readonly IOptionService optionService;
 
         /// <summary>
+        /// The configuration.
+        /// </summary>
+        private readonly ICmsConfiguration configuration;
+
+        /// <summary>
+        /// The page service.
+        /// </summary>
+        private readonly IPageService pageService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GetTemplatesCommand" /> class.
         /// </summary>
         /// <param name="optionService">The option service.</param>
-        public GetTemplatesCommand(IOptionService optionService)
+        /// <param name="configuration">The configuration.</param>
+        /// <param name="pageService">The page service.</param>
+        public GetTemplatesCommand(IOptionService optionService, ICmsConfiguration configuration, IPageService pageService)
         {
             this.optionService = optionService;
+            this.configuration = configuration;
+            this.pageService = pageService;
         }
 
         /// <summary>
@@ -68,9 +83,22 @@ namespace BetterCms.Module.Blog.Commands.GetTemplatesList
                     .ForEach(t => t.IsCompatible = true);
             }
 
-            Repository.AsQueryable<PageProperties>()
-                      .Where(page => page.IsMasterPage && !page.IsDeleted)
-                      .Select(
+            var masterPagesQuery = Repository
+                .AsQueryable<PageProperties>()
+                .Where(page => page.IsMasterPage && !page.IsDeleted);
+
+            if (configuration.Security.AccessControlEnabled)
+            {
+                var deniedPages = pageService.GetDeniedPages();
+                foreach (var deniedPageId in deniedPages)
+                {
+                    var id = deniedPageId;
+                    masterPagesQuery = masterPagesQuery.Where(f => f.Id != id);
+                }
+            }
+
+
+            masterPagesQuery.Select(
                           page =>
                           new BlogTemplateViewModel()
                               {

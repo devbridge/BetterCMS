@@ -23,7 +23,7 @@ namespace BetterCms.Test.Module.Pages.ServiceTests
                 .Setup(f => f.AsQueryable<BetterCms.Module.Root.Models.Layout>())
                 .Returns(new[] { layout1, layout2 }.AsQueryable());
 
-            var service = new DefaultLayoutService(repositoryMock.Object, new Mock<IOptionService>().Object);
+            var service = new DefaultLayoutService(repositoryMock.Object, new Mock<IOptionService>().Object, new Mock<ICmsConfiguration>().Object, new Mock<IPageService>().Object);
             var response = service.GetAvailableLayouts().ToList();
 
             Assert.IsNotNull(response);
@@ -45,7 +45,7 @@ namespace BetterCms.Test.Module.Pages.ServiceTests
                 .Setup(f => f.AsQueryable<BetterCms.Module.Root.Models.Layout>())
                 .Returns(new BetterCms.Module.Root.Models.Layout[] { }.AsQueryable());
 
-            var service = new DefaultLayoutService(repositoryMock.Object, new Mock<IOptionService>().Object);
+            var service = new DefaultLayoutService(repositoryMock.Object, new Mock<IOptionService>().Object, new Mock<ICmsConfiguration>().Object, new Mock<IPageService>().Object);
             var response = service.GetAvailableLayouts().ToList();
 
             Assert.IsNotNull(response);

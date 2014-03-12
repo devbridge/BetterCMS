@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 using BetterCms.Core.DataAccess;
@@ -18,24 +19,36 @@ namespace BetterCms.Module.Pages.Services
     public class DefaultLayoutService : ILayoutService
     {
         /// <summary>
-        /// The repository
+        /// The repository.
         /// </summary>
         private readonly IRepository repository;
 
         /// <summary>
-        /// The option service
+        /// The option service.
         /// </summary>
         private readonly IOptionService optionService;
+
+        /// <summary>
+        /// The configuration.
+        /// </summary>
+        private readonly ICmsConfiguration configuration;
+
+        /// <summary>
+        /// The page service.
+        /// </summary>
+        private readonly IPageService pageService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultLayoutService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="optionService">The option service.</param>
-        public DefaultLayoutService(IRepository repository, IOptionService optionService)
+        public DefaultLayoutService(IRepository repository, IOptionService optionService, ICmsConfiguration configuration, IPageService pageService)
         {
             this.repository = repository;
             this.optionService = optionService;
+            this.configuration = configuration;
+            this.pageService = pageService;
         }
 
         /// <summary>
@@ -61,6 +74,16 @@ namespace BetterCms.Module.Pages.Services
             var masterPagesQuery = repository
                 .AsQueryable<PageProperties>()
                 .Where(p => p.IsMasterPage);
+
+            if (configuration.Security.AccessControlEnabled)
+            {
+                var deniedPages = pageService.GetDeniedPages();
+                foreach (var deniedPageId in deniedPages)
+                {
+                    var id = deniedPageId;
+                    masterPagesQuery = masterPagesQuery.Where(f => f.Id != id);
+                }
+            }
 
             var masterPagesFuture = masterPagesQuery
                 .OrderBy(t => t.Title)
