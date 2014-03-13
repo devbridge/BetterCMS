@@ -27,6 +27,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
                 addNewPageForm: 'form:first',
                 addNewPageOptionsTab: '#bcms-tab-2',
+                addNewPageUserAccess: '#bcms-accesscontrol-context',
 
                 siteSettingsPagesListForm: '#bcms-pages-form',
                 siteSettingsPagesListFormFilterIncludeArchived: "#IncludeArchived",
@@ -155,6 +156,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         page.initAddNewPageDialogEvents = function (dialog, content) {
             var infoMessageClosed = localStorage.getItem(keys.addNewPageInfoMessageClosed),
                 optionsContainer = dialog.container.find(selectors.addNewPageOptionsTab),
+                accessContainer = dialog.container.find(selectors.addNewPageUserAccess),
                 languageViewModel = content.Data.Languages ? new pageLanguages.PageLanguageViewModel(content.Data.Languages) : null,
                 viewModel = {
                     accessControl: security.createUserAccessViewModel(content.Data.UserAccessList),
@@ -176,6 +178,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             dialog.container.find(selectors.addNewPageTemplateSelect).on('click', function () {
                 page.highlightAddNewPageActiveTemplate(dialog, this, function (id, isMasterPage) {
                     pageProperties.loadLayoutOptions(id, isMasterPage, dialog.container, optionsContainer, viewModel.options);
+                    pageProperties.loadLayoutUserAccess(id, isMasterPage, dialog.container, accessContainer, viewModel.accessControl);
                 });
             });
 

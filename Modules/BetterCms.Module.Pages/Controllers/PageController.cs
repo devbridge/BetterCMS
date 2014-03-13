@@ -7,6 +7,7 @@ using BetterCms.Core.Security;
 using BetterCms.Module.MediaManager.ViewModels;
 
 using BetterCms.Module.Pages.Command.Layout.GetLayoutOptions;
+using BetterCms.Module.Pages.Command.Layout.GetLayoutUserAccess;
 using BetterCms.Module.Pages.Command.Page.AddNewPage;
 using BetterCms.Module.Pages.Command.Page.ClonePage;
 using BetterCms.Module.Pages.Command.Page.ClonePageWithLanguage;
@@ -381,6 +382,25 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult LoadLayoutOptions(string id, string isMasterPage)
         {
             var model = GetCommand<GetLayoutOptionsCommand>().ExecuteCommand(new GetLayoutOptionsCommandRequest {
+                Id = id.ToGuidOrDefault(),
+                IsMasterPage = isMasterPage.ToBoolOrDefault()
+            });
+
+            return WireJson(model != null, model, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Loads the layout user access.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="isMasterPage">The is master page.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
+        public ActionResult LoadLayoutUserAccess(string id, string isMasterPage)
+        {
+            var model = GetCommand<GetLayoutUserAccessCommand>().ExecuteCommand(new GetLayoutUserAccessCommandRequest
+            {
                 Id = id.ToGuidOrDefault(),
                 IsMasterPage = isMasterPage.ToBoolOrDefault()
             });

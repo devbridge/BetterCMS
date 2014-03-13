@@ -36,7 +36,8 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             },
             links = {
                 loadEditPropertiesDialogUrl: null,
-                loadLayoutOptionsUrl: null
+                loadLayoutOptionsUrl: null,
+                loadLayoutUserAccessUrl: null
             },
             globalization = {
                 editPagePropertiesModalTitle: null,
@@ -253,6 +254,32 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
             $.ajax({
                 type: 'GET',
                 url: $.format(links.loadLayoutOptionsUrl, id, isMasterPage)
+            })
+            .done(function (result) {
+                onComplete(result);
+            })
+            .fail(function (response) {
+                onComplete(bcms.parseFailedResponse(response));
+            });
+        };
+
+        /**
+        * Loads layout user access: when user changes layout, user access are reloaded.
+        */
+        page.loadLayoutUserAccess = function (id, isMasterPage, mainContainer, accessContainer, accessControlViewModel) {
+            var onComplete = function (json) {
+                accessContainer.hideLoading();
+                if (json.Messages && json.Messages.length > 0) {
+                    messages.refreshBox(mainContainer, json);
+                }
+                if (json.Success) {
+                    security.updateUserAccessViewModel(accessControlViewModel, json.Data);
+                }
+            };
+            accessContainer.showLoading();
+            $.ajax({
+                type: 'GET',
+                url: $.format(links.loadLayoutUserAccessUrl, id, isMasterPage)
             })
             .done(function (result) {
                 onComplete(result);

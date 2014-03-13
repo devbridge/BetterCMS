@@ -127,6 +127,8 @@
     <Compile Include="Command\History\RestoreSitemapVersion\RestoreSitemapVersionCommand.cs" />
     <Compile Include="Command\Layout\GetLayoutOptions\GetLayoutOptionsCommand.cs" />
     <Compile Include="Command\Layout\GetLayoutOptions\GetLayoutOptionsCommandRequest.cs" />
+    <Compile Include="Command\Layout\GetLayoutUserAccess\GetLayoutUserAccessCommand.cs" />
+    <Compile Include="Command\Layout\GetLayoutUserAccess\GetLayoutUserAccessCommandRequest.cs" />
     <Compile Include="Command\Page\AddNewPage\AddNewPageCommand.cs" />
     <Compile Include="Command\Page\AddNewPage\AddNewPageCommandRequest.cs" />
     <Compile Include="Command\Page\ClonePageWithLanguage\ClonePageWithLanguageCommand.cs" />

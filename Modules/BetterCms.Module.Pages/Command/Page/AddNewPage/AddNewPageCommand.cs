@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.Mvc.Commands;
@@ -8,10 +9,13 @@ using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 
 using BetterCms.Module.Root;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Security;
+
+using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Command.Page.AddNewPage
 {
@@ -79,7 +83,6 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
                     ParentPageUrl = request.ParentPageUrl,
                     Templates = layoutService.GetAvailableLayouts().ToList(),
                     AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled,
-                    UserAccessList = AccessControlService.GetDefaultAccessList(principal).Select(f => new UserAccessViewModel(f)).ToList(),
                     CreateMasterPage = request.CreateMasterPage,
                     ShowLanguages = showLanguages
                 };
@@ -141,10 +144,17 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
                     if (active.IsMasterPage)
                     {
                         model.MasterPageId = active.TemplateId;
+                        model.UserAccessList = Repository
+                            .AsQueryable<Root.Models.Page>()
+                            .Where(x => x.Id == model.MasterPageId && !x.IsDeleted)
+                            .SelectMany(x => x.AccessRules)
+                            .OrderBy(x => x.Identity)
+                            .Select(x => new UserAccessViewModel(x)).ToList();
                     }
                     else
                     {
                         model.TemplateId = active.TemplateId;
+                        model.UserAccessList = AccessControlService.GetDefaultAccessList(principal).Select(f => new UserAccessViewModel(f)).ToList();
                     }
                 }
 

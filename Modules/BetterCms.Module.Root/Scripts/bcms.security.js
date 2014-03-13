@@ -158,11 +158,7 @@ bettercms.define('bcms.security', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', '
             });
         }
 
-        var messageBox =
-                messages.box({
-                container: $(".bcms-modal")
-                }),
-            identities = ko.observableArray(),
+        var identities = ko.observableArray(),
             addMode = ko.observable('none'),
             model = {
                 UserAccessList: identities,
@@ -171,7 +167,6 @@ bettercms.define('bcms.security', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', '
                 removeUser: function(userAccessViewModel) {
                     model.UserAccessList.remove(userAccessViewModel);
                 },
-            
                 getPropertyIndexer: function(i, propName) {
                     return 'UserAccessList[' + i + '].' + propName;
                 }                         
@@ -184,6 +179,39 @@ bettercms.define('bcms.security', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', '
         }
 
         return model;
+    };
+
+    security.updateUserAccessViewModel = function (model, accessList) {
+        var roles = [],
+            users = [];
+
+        model.userAccessControl.removeAll();
+        model.roleAccessControl.removeAll();
+        model.UserAccessList.removeAll();
+
+        if (accessList) {
+            $.each(accessList, function (i, item) {
+                if (item.IsForRole) {
+                    roles.push(item.Identity);
+                } else {
+                    users.push(item.Identity);
+                }
+            });
+        }
+        model.userAccessControl.applyItemList(users);
+        model.roleAccessControl.applyItemList(roles);
+        if (accessList) {
+            $.each(accessList, function (i, item) {
+                model.UserAccessList.push(new UserAccessViewModel(item));
+            });
+        }
+        
+        model.userAccessControl.clearItem();
+        model.userAccessControl.isExpanded(false);
+        model.userAccessControl.isInAddMode('none');
+        model.roleAccessControl.clearItem();
+        model.roleAccessControl.isExpanded(false);
+        model.roleAccessControl.isInAddMode('none');
     };
 
     return security;

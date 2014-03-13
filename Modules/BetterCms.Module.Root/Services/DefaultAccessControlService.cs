@@ -212,7 +212,7 @@ namespace BetterCms.Module.Root.Services
                 }
             }
 
-            return list;
+            return list.OrderBy(x => x.IsForRole).ThenBy(x => x.Identity).ToList();
         }       
 
         /// <summary>

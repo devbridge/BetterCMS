@@ -176,7 +176,8 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                     .AsQueryable<Root.Models.Page>()
                     .Where(x => x.Id == id && !x.IsDeleted)
                     .SelectMany(x => x.AccessRules)
-                    .OrderBy(x => x.Identity)
+                    .OrderBy(x => x.IsForRole)
+                    .ThenBy(x => x.Identity)
                     .ToFuture();
             }
             else
