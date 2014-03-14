@@ -329,7 +329,8 @@ namespace BetterCms.Module.Pages
                             Title = page => PagesGlobalization.Sidebar_TranslatePageButtonTitle,
                             CssClass = page => "bcms-sidemenu-btn bcms-btn-translate",
                             Order = 400,
-                            ShouldBeRendered = page => CmsContext.Config.EnableMultilanguage && !page.IsMasterPage
+                            ShouldBeRendered = page => CmsContext.Config.EnableMultilanguage && !page.IsMasterPage,
+                            AccessRole = RootModuleConstants.UserRoles.EditContent
                         },
 
                     new ButtonActionProjection(pagesJsModuleIncludeDescriptor, page => "deleteCurrentPage")

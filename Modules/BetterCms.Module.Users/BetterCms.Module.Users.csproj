@@ -144,6 +144,7 @@
     <Compile Include="Models\Maps\RoleMap.cs" />
     <Compile Include="Models\Maps\UserRoleMap.cs" />
     <Compile Include="Models\Maps\UserMap.cs" />
+    <Compile Include="Models\Migrations\Migration201403141036.cs" />
     <Compile Include="Models\Migrations\Migration201309101400.cs" />
     <Compile Include="Models\Migrations\Migration201309091554.cs" />
     <Compile Include="Models\Migrations\Migration201309060825.cs" />
@@ -213,6 +214,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Models\Migrations\Migration201403141036.sqlserver.sql" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
