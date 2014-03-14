@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Widgets;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 
@@ -15,6 +17,8 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
     {
         public virtual IContentService ContentService { get; set; }
 
+        public virtual IOptionService OptionService { get; set; }
+
         /// <summary>
         /// Executes the specified request.
         /// </summary>
@@ -23,6 +27,11 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
         /// <exception cref="System.NotImplementedException"></exception>
         public override SaveWidgetResponse Execute(EditHtmlContentWidgetViewModel request)
         {
+            if (request.Options != null)
+            {
+                OptionService.ValidateOptionKeysUniqueness(request.Options);
+            }
+
             UnitOfWork.BeginTransaction();
             
             var widgetContent = GetHtmlContentWidgetFromRequest(request);
@@ -84,6 +93,38 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
             else
             {
                 content.Category = null;
+            }
+
+            if (request.Options != null)
+            {
+                content.ContentOptions = new List<ContentOption>();
+
+                // NOTE: Loading custom options before saving.
+                // In other case, when loading custom options from option service, nHibernate updates version number (nHibernate bug)
+                var customOptionsIdentifiers = request.Options
+                    .Where(o => o.Type == OptionType.Custom)
+                    .Select(o => o.CustomOption.Identifier)
+                    .Distinct()
+                    .ToArray();
+                var customOptions = OptionService.GetCustomOptionsById(customOptionsIdentifiers);
+
+                foreach (var requestContentOption in request.Options)
+                {
+                    var contentOption = new ContentOption
+                    {
+                        Content = content,
+                        Key = requestContentOption.OptionKey,
+                        DefaultValue = OptionService.ClearFixValueForSave(requestContentOption.OptionKey, requestContentOption.Type, requestContentOption.OptionDefaultValue),
+                        Type = requestContentOption.Type,
+                        CustomOption = requestContentOption.Type == OptionType.Custom
+                          ? customOptions.First(o => o.Identifier == requestContentOption.CustomOption.Identifier)
+                          : null
+                    };
+
+                    OptionService.ValidateOptionValue(contentOption);
+
+                    content.ContentOptions.Add(contentOption);
+                }
             }
 
             content.Name = request.Name;

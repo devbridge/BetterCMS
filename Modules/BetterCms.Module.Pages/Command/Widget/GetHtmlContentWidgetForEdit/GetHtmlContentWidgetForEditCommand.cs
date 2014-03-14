@@ -8,6 +8,7 @@ using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Widgets;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
+using BetterCms.Module.Root.ViewModels.Option;
 
 namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
 {
@@ -24,14 +25,21 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
         private readonly ICategoryService categoryService;
 
         /// <summary>
+        /// The options service
+        /// </summary>
+        private readonly IOptionService optionService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GetHtmlContentWidgetForEditCommand" /> class.
         /// </summary>
         /// <param name="categoryService">The category service.</param>
         /// <param name="contentService">The content service.</param>
-        public GetHtmlContentWidgetForEditCommand(ICategoryService categoryService, IContentService contentService)
+        /// <param name="optionService">The option service.</param>
+        public GetHtmlContentWidgetForEditCommand(ICategoryService categoryService, IContentService contentService, IOptionService optionService)
         {
             this.categoryService = categoryService;
             this.contentService = contentService;
+            this.optionService = optionService;
         }
 
         /// <summary>
@@ -69,6 +77,22 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
                                     CurrentStatus = htmlContentWidget.Status,
                                     HasPublishedContent = htmlContentWidget.Original != null
                                 };
+
+                    model.Options = htmlContentWidget.ContentOptions.Distinct()
+                        .Select(f =>
+                                new OptionViewModel
+                                    {
+                                        Type = f.Type,
+                                        OptionDefaultValue = optionService.ClearFixValueForEdit(f.Type, f.DefaultValue),
+                                        OptionKey = f.Key,
+                                        CanDeleteOption = f.IsDeletable,
+                                        CustomOption = f.CustomOption != null
+                                           ? new CustomOptionViewModel { Identifier = f.CustomOption.Identifier, Title = f.CustomOption.Title }
+                                           : null
+                                    })
+                        .OrderBy(o => o.OptionKey)
+                        .ToList();
+                    optionService.SetCustomOptionValueTitles(model.Options);
                 }
 
                 if (model == null)
@@ -82,6 +106,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
             }
 
             model.Categories = categories.ToList();
+            model.CustomOptions = optionService.GetCustomOptions();
 
             return model;
         }

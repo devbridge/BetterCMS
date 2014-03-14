@@ -103,7 +103,9 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Opens dialog with a create html content widget form.
         */
-        widgets.openCreateHtmlContentWidgetDialog = function (postSuccess, availablePreviewOnPageContentId) {        
+        widgets.openCreateHtmlContentWidgetDialog = function (postSuccess, availablePreviewOnPageContentId) {
+            var optionsViewModel;
+
             modal.edit({
                 isPreviewAvailable: availablePreviewOnPageContentId != null,
                 title: globalization.createHtmlContentWidgetDialogTitle,
@@ -114,7 +116,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             if (content && content.Data && content.Data.EditInSourceMode) {
                                 editInSourceMode = true;
                             }
-                            initializeEditHtmlContentWidgetForm(dialog, availablePreviewOnPageContentId, postSuccess, editInSourceMode);
+                            optionsViewModel = initializeEditHtmlContentWidgetForm(dialog, availablePreviewOnPageContentId, postSuccess, editInSourceMode, content);
                         },
 
                         beforePost: function() {
@@ -122,6 +124,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             
                             var editInSourceMode = htmlEditor.isSourceMode(selectors.htmlContentWidgetContentHtmlEditor);
                             childDialog.container.find(selectors.editInSourceModeHiddenField).val(editInSourceMode);
+                            
+                            return optionsViewModel.isValid(true);
                         },
 
                         postSuccess: postSuccess
@@ -140,6 +144,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Opens dialog with an edit html content widget form.
         */
         widgets.openEditHtmlContentWidgetDialog = function (id, postSuccess, availablePreviewOnPageContentId, onCloseCallback) {
+            var optionsViewModel;
             
             modal.edit({
                 isPreviewAvailable: availablePreviewOnPageContentId != null,
@@ -151,7 +156,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             if (content && content.Data && content.Data.EditInSourceMode) {
                                 editInSourceMode = true;
                             }
-                            initializeEditHtmlContentWidgetForm(dialog, availablePreviewOnPageContentId, postSuccess, editInSourceMode);
+                            optionsViewModel = initializeEditHtmlContentWidgetForm(dialog, availablePreviewOnPageContentId, postSuccess, editInSourceMode, content);
                         },
 
                         beforePost: function() {
@@ -159,6 +164,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             
                             var editInSourceMode = htmlEditor.isSourceMode(selectors.htmlContentWidgetContentHtmlEditor);
                             childDialog.container.find(selectors.editInSourceModeHiddenField).val(editInSourceMode);
+                            
+                            return optionsViewModel.isValid(true);
                         },
 
                         postSuccess: postSuccess
@@ -233,7 +240,14 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
        /**
        * Initializes 'Edit Html Content Widget' dialog form.
        */
-        function initializeEditHtmlContentWidgetForm(dialog, availablePreviewOnPageContentId, onSaveCallback, editInSourceMode) {
+        function initializeEditHtmlContentWidgetForm(dialog, availablePreviewOnPageContentId, onSaveCallback, editInSourceMode, content) {
+            var optionsContainer = dialog.container.find(selectors.optionsTab),
+                data = content.Data,
+                widgetOptions = data != null ? data.Options : null,
+                customOptions = data != null ? data.CustomOptions : null,
+                optionListViewModel = options.createOptionsViewModel(optionsContainer, widgetOptions, customOptions);
+            ko.applyBindings(optionListViewModel, optionsContainer.get(0));
+
             if (availablePreviewOnPageContentId !== null) {
                 dialog.container.find(selectors.widgetPreviewPageContentId).val(availablePreviewOnPageContentId);
             }
@@ -275,6 +289,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             showHideCustomCssText(dialog);
             showHideCustomJsText(dialog);
             showHideCustomHtmlText(dialog);
+
+            return optionListViewModel;
         };
        
         /**
@@ -687,13 +703,18 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 }
                 
             } else if (contentViewModel.contentType == contentTypes.htmlWidget) {
-                contentViewModel.removeConfigureButton();
-
                 // Edit
                 contentViewModel.onEditContent = function() {
                     widgets.openEditHtmlContentWidgetDialog(contentId, onSave, pageContentId);
                 };
                 
+                // Configure
+                contentViewModel.onConfigureContent = function () {
+                    widgets.configureWidget(pageContentId, function () {
+                        redirect.ReloadWithAlert();
+                    });
+                };
+
                 if (!security.IsAuthorized(["BcmsAdministration"])) {
                     contentViewModel.removeHistoryButton();
                     contentViewModel.removeEditButton();
