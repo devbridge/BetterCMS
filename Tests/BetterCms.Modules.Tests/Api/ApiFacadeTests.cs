@@ -40,7 +40,9 @@ namespace BetterCms.Test.Module.Api
                 Assert.IsNotNull(api.Pages.Redirects);
                 Assert.IsNotNull(api.Pages.Widget);
                 Assert.IsNotNull(api.Pages.Widget.HtmlContent);
+                Assert.IsNotNull(api.Pages.Widget.HtmlContent.Options);
                 Assert.IsNotNull(api.Pages.Widget.ServerControl);
+                Assert.IsNotNull(api.Pages.Widget.ServerControl.Options);
                 Assert.IsNotNull(api.Pages.Widgets);
                 Assert.IsNotNull(api.Pages.Sitemap);
                 Assert.IsNotNull(api.Pages.Sitemap.Node);

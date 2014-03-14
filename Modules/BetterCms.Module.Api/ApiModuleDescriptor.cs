@@ -38,6 +38,7 @@ using BetterCms.Module.Api.Operations.Pages.Sitemap.Tree;
 using BetterCms.Module.Api.Operations.Pages.Widgets;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget;
+using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget.Options;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidget;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidget.Options;
 using BetterCms.Module.Api.Operations.Root;
@@ -171,6 +172,7 @@ namespace BetterCms.Module.Api
             containerBuilder.RegisterType<WidgetService>().As<IWidgetService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);            
             containerBuilder.RegisterType<WidgetsService>().As<IWidgetsService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<HtmlContentWidgetService>().As<IHtmlContentWidgetService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterType<HtmlContentWidgetOptionsService>().As<IHtmlContentWidgetOptionsService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<ServerControlWidgetService>().As<IServerControlWidgetService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<ServerControlWidgetOptionsService>().As<IServerControlWidgetOptionsService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<SitemapTreeService>().As<ISitemapTreeService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);

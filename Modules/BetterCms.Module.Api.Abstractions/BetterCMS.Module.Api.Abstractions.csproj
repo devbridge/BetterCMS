@@ -254,6 +254,10 @@
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\GetHtmlContentWidgetResponse.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\HtmlContentWidgetModel.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\IHtmlContentWidgetService.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\Options\GetHtmlContentWidgetOptionsRequest.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\Options\GetHtmlContentWidgetOptionsResponse.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\Options\IHtmlContentWidgetOptionsService.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\Options\OptionModel.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\IWidgetService.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\GetServerControlWidgetRequest.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\GetServerControlWidgetResponse.cs" />

@@ -4,6 +4,7 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget.Options;
 
 using ServiceStack.ServiceInterface;
 
@@ -13,9 +14,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
     {
         private readonly IRepository repository;
 
-        public HtmlContentWidgetService(IRepository repository)
+        private readonly IHtmlContentWidgetOptionsService optionsService;
+
+        public HtmlContentWidgetService(IRepository repository, IHtmlContentWidgetOptionsService optionsService)
         {
             this.repository = repository;
+            this.optionsService = optionsService;
         }
 
         public GetHtmlContentWidgetResponse Get(GetHtmlContentWidgetRequest request)
@@ -47,6 +51,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
                 .FirstOne();
 
             return new GetHtmlContentWidgetResponse { Data = model };
+        }
+
+        IHtmlContentWidgetOptionsService IHtmlContentWidgetService.Options
+        {
+            get
+            {
+                return optionsService;
+            }
         }
     }
 }
