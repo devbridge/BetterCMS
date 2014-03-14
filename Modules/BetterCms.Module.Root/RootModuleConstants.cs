@@ -109,9 +109,14 @@
             public const string Administration = "BcmsAdministration";            
 
             /// <summary>
+            /// User management permission for creating, editing, deleting users.
+            /// </summary>
+            public const string ManageUsers = "BcmsManageUsers";            
+
+            /// <summary>
             /// All CMS roles
             /// </summary>
-            public static string[] AllRoles = new[] { EditContent, PublishContent, DeleteContent, Administration };
+            public static string[] AllRoles = new[] { EditContent, PublishContent, DeleteContent, Administration, ManageUsers };
 
             /// <summary>
             /// Multiples the roles.

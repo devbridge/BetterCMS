@@ -22,7 +22,7 @@ namespace BetterCms.Module.Users.Controllers
     /// <summary>
     /// User management.
     /// </summary>
-    [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
+    [BcmsAuthorize(RootModuleConstants.UserRoles.ManageUsers)]
     [ActionLinkArea(UsersModuleDescriptor.UsersAreaName)]
     public class UserController : CmsControllerBase
     {

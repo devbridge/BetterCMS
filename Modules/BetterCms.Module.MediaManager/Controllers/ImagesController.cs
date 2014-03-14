@@ -64,7 +64,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <returns>
         /// The view.
         /// </returns>
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration, RootModuleConstants.UserRoles.ManageUsers)]
         public ActionResult ImageInsert(string folderId)
         {
             var request = new MediaManagerViewModel { CurrentFolderId = folderId.ToGuidOrDefault() };
@@ -155,7 +155,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// </summary>
         /// <param name="imageId">The image id.</param>
         /// <returns>Json result.</returns>
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration, RootModuleConstants.UserRoles.ManageUsers)]
         public ActionResult GetImage(string imageId)
         {
             var result = GetCommand<GetImageCommand>().ExecuteCommand(imageId.ToGuidOrDefault());
