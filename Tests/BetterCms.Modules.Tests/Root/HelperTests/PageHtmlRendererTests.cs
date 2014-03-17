@@ -100,7 +100,7 @@ namespace BetterCms.Test.Module.Root.HelperTests
             var model = CreateTestViewModel();
             html = GetReplacedHtml(html, model);
 
-            Assert.AreEqual(html, model.CreatedOn.ToString(CultureInfo.InvariantCulture));
+            Assert.AreEqual(html, model.CreatedOn.ToString(System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern));
         }
         
         [Test]
@@ -120,7 +120,7 @@ namespace BetterCms.Test.Module.Root.HelperTests
             var model = CreateTestViewModel();
             html = GetReplacedHtml(html, model);
 
-            Assert.AreEqual(html, model.ModifiedOn.ToString(CultureInfo.InvariantCulture));
+            Assert.AreEqual(html, model.ModifiedOn.ToString(System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern));
         }
         
         [Test]
@@ -150,7 +150,7 @@ namespace BetterCms.Test.Module.Root.HelperTests
             var model = CreateTestViewModel();
             html = GetReplacedHtml(html, model);
 
-            Assert.AreEqual(html, ((DateTime)model.Options.First(o => o.Key == OptionNames.Date).Value).ToString(CultureInfo.InvariantCulture));
+            Assert.AreEqual(html, ((DateTime)model.Options.First(o => o.Key == OptionNames.Date).Value).ToString(System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern));
         }
         
         [Test]
@@ -290,7 +290,7 @@ namespace BetterCms.Test.Module.Root.HelperTests
             var model = CreateTestViewModel(true);
             html = GetReplacedHtml(html, model);
 
-            Assert.AreEqual(html, model.GetBlogPostModel().ActivationDate.ToString(CultureInfo.InvariantCulture));
+            Assert.AreEqual(html, model.GetBlogPostModel().ActivationDate.ToString(System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern));
         }
         
         [Test]
@@ -320,7 +320,7 @@ namespace BetterCms.Test.Module.Root.HelperTests
             var model = CreateTestViewModel(true);
             html = GetReplacedHtml(html, model);
 
-            Assert.AreEqual(html, model.GetBlogPostModel().ExpirationDate.Value.ToString(CultureInfo.InvariantCulture));
+            Assert.AreEqual(html, model.GetBlogPostModel().ExpirationDate.Value.ToString(System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern));
         }
         
         [Test]
