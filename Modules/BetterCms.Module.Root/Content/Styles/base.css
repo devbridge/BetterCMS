@@ -769,6 +769,7 @@ a.bcms-remove-image {
     display: none;
     min-height: 35px;
     border: 1px solid #fff;
+    z-index: 1990;
 }
 
 .bcms-region-overlay-inner {
