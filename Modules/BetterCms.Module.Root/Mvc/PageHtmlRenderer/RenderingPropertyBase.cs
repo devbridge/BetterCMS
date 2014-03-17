@@ -82,7 +82,7 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
                     }
                     else
                     {
-                        date = replaceWith.Value.ToString(CultureInfo.InvariantCulture);
+                        date = replaceWith.Value.ToString(System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern);
                     }
                 }
                 else

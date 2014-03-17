@@ -53,7 +53,7 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
                             }
                             else
                             {
-                                replaceWith = ((DateTime)option.Value).ToString(CultureInfo.InvariantCulture);
+                                replaceWith = ((DateTime)option.Value).ToString(System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern);
                             }
                         }
                         else if (option.Value is decimal)
