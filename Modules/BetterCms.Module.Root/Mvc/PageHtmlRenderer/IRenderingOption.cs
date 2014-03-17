@@ -1,19 +1,20 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
+using System.Text;
 
-using BetterCms.Module.Root.ViewModels.Cms;
+using BetterCms.Core.DataContracts;
 
 namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
 {
-    public interface IRenderingPageProperty : IRenderingProperty
+    public interface IRenderingOption
     {
         /// <summary>
         /// Gets the string builder with replaced HTML.
         /// </summary>
         /// <param name="stringBuilder">The string builder.</param>
-        /// <param name="model">The render page view model.</param>
+        /// <param name="options">The options.</param>
         /// <returns>
         /// The string builder with replaced HTML.
         /// </returns>
-        StringBuilder GetReplacedHtml(StringBuilder stringBuilder, RenderPageViewModel model);
+        StringBuilder GetReplacedHtml(StringBuilder stringBuilder, IEnumerable<IOptionValue> options);
     }
 }

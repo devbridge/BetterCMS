@@ -13,6 +13,7 @@
             tags.push(["{{CmsPageCreatedOn:yyyy-MM-dd}}", "Page creation date", "Page creation date"]);
             tags.push(["{{CmsPageModifiedOn:yyyy-MM-dd}}", "Page last modification date", "Page last modification date"]);
             tags.push(["{{CmsPageOption:OptionKey}}", "Page option", "Page option"]);
+            tags.push(["{{CmsWidgetOption:OptionKey}}", "Widget option", "Widget option"]);
             tags.push(["{{CmsPageMetaTitle}}", "Meta title", "Meta title"]);
             tags.push(["{{CmsPageMetaKeywords}}", "Meta keywords", "Meta keywords"]);
             tags.push(["{{CmsPageMetaDescription}}", "Meta description", "Meta description"]);

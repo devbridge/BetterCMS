@@ -176,6 +176,13 @@
     <Compile Include="Models\Migrations\Migration201310170919.cs" />
     <Compile Include="Models\Migrations\Migration201310160818.cs" />
     <Compile Include="Models\Migrations\Migration201310180900.cs" />
+    <Compile Include="Mvc\PageHtmlRenderer\PageContentHtmlRenderer.cs" />
+    <Compile Include="Mvc\PageHtmlRenderer\RenderingContentOptionProperty.cs" />
+    <Compile Include="Mvc\PageHtmlRenderer\IRenderingOption.cs" />
+    <Compile Include="Mvc\PageHtmlRenderer\RenderingPageContentProperties.cs" />
+    <Compile Include="Mvc\PageHtmlRenderer\RenderingOptionPropertyBase.cs" />
+    <Compile Include="Mvc\PageHtmlRenderer\RenderingPropertyBase.cs" />
+    <Compile Include="Mvc\PageHtmlRenderer\IRenderingProperty.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\RenderingPageIdProperty.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\RenderingPageModifiedOnProperty.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\RenderingPageCreatedOnProperty.cs" />

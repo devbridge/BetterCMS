@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 
 namespace BetterCms.Module.Pages.Accessors
 {
@@ -26,10 +28,12 @@ namespace BetterCms.Module.Pages.Accessors
 
         public override string GetHtml(HtmlHelper html)
         {
-
             if (Content.UseHtml && !string.IsNullOrWhiteSpace(Content.Html))
             {
-                return Content.Html;
+                var builder = new StringBuilder(Content.Html);
+                builder = PageContentHtmlRenderer.GetReplacedHtml(builder, Options);
+
+                return builder.ToString();
             }
 
             return "&nbsp;";
