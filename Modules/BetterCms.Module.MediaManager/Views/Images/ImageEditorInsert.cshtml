@@ -37,7 +37,7 @@
                     @Html.TextBoxFor(f => f.Caption, new { @class = "bcms-editor-field-box", @id = "Caption" })
                 </div>
 
-                <div class="bcms-file-info-text"><b>@MediaGlobalization.ImageEditor_Dialog_FileName:</b> <span id="image-file-name">@(Model.FileName).@Model.FileExtension</span></div>
+                <div class="bcms-file-info-text"><b>@MediaGlobalization.ImageEditor_Dialog_FileName:</b> <span id="image-file-name">@Model.Title</span></div>
 
                 <div class="bcms-file-info-text"><b>@MediaGlobalization.ImageEditor_Dialog_FileSize:</b> <span id="image-file-size">@Model.FileSize</span></div>
 
