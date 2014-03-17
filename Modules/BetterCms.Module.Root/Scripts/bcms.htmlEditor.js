@@ -41,7 +41,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
         if (instance) {
             instance.destroy(true);
         }
-        
+
         if (window.location.href.slice(-1) === '#') {
             window.location.hash = '#-';
         }
@@ -51,11 +51,11 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
         CKEDITOR.instances[id].InsertImageClicked = function (editor) {
             bcms.trigger(htmlEditor.events.insertImage, editor);
         };
-        
+
         CKEDITOR.instances[id].InsertFileClicked = function (editor) {
             bcms.trigger(htmlEditor.events.insertFile, editor);
         };
-        
+
         CKEDITOR.instances[id].InsertDynamicRegion = function (editor) {
             bcms.trigger(htmlEditor.events.insertDynamicRegion, editor);
         };
@@ -83,18 +83,28 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
         });
     };
 
+    function closeMaximizedMode(instance) {
+        if (instance && instance.commands && instance.commands.maximize && instance.commands.maximize.state == 1) {
+            instance.execCommand('maximize');
+        }
+    }
+
     htmlEditor.destroyAllHtmlEditorInstances = function () {
+        var instance;
         for (name in CKEDITOR.instances) {
-            CKEDITOR.instances[name].destroy();
+            instance = CKEDITOR.instances[name];
+            closeMaximizedMode(instance);
+            instance.destroy();
         }
         if (window.location.href.slice(-2) === '#-') {
             window.location.hash = '';
         }
     };
-    
+
     htmlEditor.destroyHtmlEditorInstance = function () {
         var editor = CKEDITOR.instances[htmlEditor.id];
         if (editor) {
+            closeMaximizedMode(editor);
             editor.destroy();
         }
         if (window.location.href.slice(-2) === '#-') {
@@ -110,12 +120,12 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
             instance.setMode('source');
         });
     };
-    
+
     htmlEditor.enableInsertDynamicRegion = function (textareaId) {
         var id = textareaId ? textareaId : htmlEditor.id;
         CKEDITOR.instances[id].DynamicRegionsEnabled = true;
     };
-    
+
     htmlEditor.isSourceMode = function (textareaId) {
         var id = textareaId ? textareaId : htmlEditor.id;
 
