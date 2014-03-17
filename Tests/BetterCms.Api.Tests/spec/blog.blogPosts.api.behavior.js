@@ -275,7 +275,7 @@ describe('blog.blogPosts.api.behavior', function () {
         filterByTags('or', 2, ['IFilterByTags Page 1', 'IFilterByTags Page 3']);
     });
     
-    it('02108: Should get a list with one blog post, filtered by all available columns', function () {
+    it('02108: Should get a list with one blog post (with layout), filtered by all available columns', function () {
         var url = '/bcms-api/blog-posts/',
             result,
             ready = false;
@@ -296,6 +296,7 @@ describe('blog.blogPosts.api.behavior', function () {
                     { field: 'IsPublished', value: true },
                     { field: 'PublishedOn', value: '2013-07-25 18:13:56.000' },
                     { field: 'LayoutId', value: '0e991684003a43deb40f0ffeccddc6eb' },
+                    { field: 'MasterPageId' },
                     { field: 'CategoryId', value: '4e2095dbbfa4405e808aa206012c2486' },
                     { field: 'CategoryName', value: '02108' },
                     { field: 'AuthorId', value: '58ee1671c9714f05b45ca206012c210b' },
@@ -440,6 +441,68 @@ describe('blog.blogPosts.api.behavior', function () {
 
         runs(function () {
             api.expectValidationExceptionIsThrown(result, 'Data');
+        });
+    });
+
+    it('02112: Should get a list with one blog post (with master page), filtered by all available columns', function () {
+        var url = '/bcms-api/blog-posts/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [
+                    { field: 'Id', value: '98a7ba1fbadd419db331a2f100b48f93' },
+                    { field: 'CreatedOn', value: '2014-03-17 10:57:24.000' },
+                    { field: 'CreatedBy', value: 'admin' },
+                    { field: 'LastModifiedOn', value: '2014-03-17 10:58:29.000' },
+                    { field: 'LastModifiedBy', value: 'admin' },
+                    { field: 'Version', value: '2' },
+
+                    { field: 'Title', value: '02112' },
+                    { field: 'BlogPostUrl', value: '/articles/02112/' },
+                    { field: 'IntroText', value: '02112' },
+                    { field: 'IsPublished', value: true },
+                    { field: 'PublishedOn', value: '2014-03-17 10:57:24.000' },
+                    { field: 'LayoutId' },
+                    { field: 'MasterPageId', value: '0eb7fcebf60e4227ab76a2f100b4c011' },
+                    { field: 'CategoryId', value: '210e1d69c13442329a85a2f100b40868' },
+                    { field: 'CategoryName', value: '02112' },
+                    { field: 'AuthorId', value: '9c6d8902d39c4fc984b0a2f100b413df' },
+                    { field: 'AuthorName', value: '02112' },
+                    { field: 'MainImageId', value: 'b2e5f87a23834f438e50a2f100b46d79' },
+                    { field: 'MainImageUrl', value: 'http://bettercms.sandbox.mvc4.local/uploads/image/cb58399225854a3285a2c8c081f7ca56/1_1.jpg' },
+                    { field: 'MainImageThumbnauilUrl', value: 'http://bettercms.sandbox.mvc4.local/uploads/image/cb58399225854a3285a2c8c081f7ca56/t_1_1.png' },
+                    { field: 'MainImageCaption', value: '02112 caption' },
+                    { field: 'ActivationDate', value: '2014-03-17 00:00:00.000' },
+                    { field: 'ExpirationDate', value: '2014-03-19 23:59:59.000' },
+                    { field: 'IsArchived', value: false }
+                ]
+            }
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
+
+            expect(result.data.items[0].id).toBe('98a7ba1fbadd419db331a2f100b48f93', 'Correctly filtered id should be retrieved.');
+
+            // Check if model properties count didn't changed. If so - update current test filter and another tests.
+            // data.filter.where.length + 1 <-- Because field Tags cannnot be filtered by
+            expect(data.filter.where.length + 1).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
         });
     });
 

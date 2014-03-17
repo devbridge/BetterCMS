@@ -59,7 +59,16 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         /// The page layout id.
         /// </value>
         [DataMember]
-        public System.Guid LayoutId { get; set; }
+        public System.Guid? LayoutId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the master page id.
+        /// </summary>
+        /// <value>
+        /// The master page id.
+        /// </value>
+        [DataMember]
+        public System.Guid? MasterPageId { get; set; }
 
         /// <summary>
         /// Gets or sets the category id.

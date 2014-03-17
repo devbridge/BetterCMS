@@ -315,7 +315,7 @@ describe('pages.pages.api.behavior', function () {
         filterByTags('or', 2, ['IFilterByTags Page 1', 'IFilterByTags Page 3']);
     });
 
-    it('01011: Should get a list with one page, filtered by all available columns', function () {
+    it('01011: Should get a list with one page (with layout), filtered by all available columns', function () {
         var url = '/bcms-api/pages/',
             result,
             ready = false;
@@ -336,6 +336,7 @@ describe('pages.pages.api.behavior', function () {
                     { field: 'IsPublished', value: true },
                     { field: 'PublishedOn', value: '2013-07-26 07:58:15.000' },
                     { field: 'LayoutId', value: '9ab0bbe1e02a4a3bb842a2070082af10' },
+                    { field: 'MasterPageId' },
                     { field: 'CategoryId', value: '1427628c1e7e4beb9098a2070081d2dc' },
                     { field: 'CategoryName', value: '01011' },
                     { field: 'MainImageId', value: '389e059bcc6c4336a863a2070083436c' },
@@ -514,7 +515,7 @@ describe('pages.pages.api.behavior', function () {
             expect(result.data.items[0].title).toBe('01015 - With Options', 'Correctly filtered items[0].title should be retrieved.');
             expect(result.data.items[1].title).toBe('01015 - Without Options', 'Correctly filtered items[1].title should be retrieved.');
             
-            expect(result.data.items[1].options).toBeNull('Correctly filtered items[1].options should be null.');
+            expect(result.data.items[1].options.length).toBe(0, 'Correctly filtered items[1].options should be null.');
             expect(result.data.items[0].options).toBeDefinedAndNotNull('Correctly filtered items[0].options should be defined and not null.');
             expect(result.data.items[0].options.length).toBe(3, 'Correctly filtered items[0].options.length should be 3.');
             
@@ -804,6 +805,172 @@ describe('pages.pages.api.behavior', function () {
 
         runs(function () {
             api.expectValidationExceptionIsThrown(result, 'PageId');
+        });
+    });
+
+    it('01024: Should get a list with one page (with master page), filtered by all available columns', function () {
+        var url = '/bcms-api/pages/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [
+                    { field: 'Id', value: 'd8f382816bed45d0847ea2f100db58e7' },
+                    { field: 'CreatedOn', value: '2014-03-17 13:18:37.000' },
+                    { field: 'CreatedBy', value: 'admin' },
+                    { field: 'LastModifiedOn', value: '2014-03-17 13:19:30.000' },
+                    { field: 'LastModifiedBy', value: 'admin' },
+                    { field: 'Version', value: '2' },
+
+                    { field: 'PageUrl', value: '/01024/' },
+                    { field: 'Title', value: '01024' },
+                    { field: 'Description' },
+                    { field: 'IsPublished', value: true },
+                    { field: 'PublishedOn', value: '2014-03-17 13:19:30.000' },
+                    { field: 'LayoutId' },
+                    { field: 'MasterPageId', value: '5d5eb2f6dd16420d81fca2f100db32d4' },
+                    { field: 'CategoryId' },
+                    { field: 'CategoryName' },
+                    { field: 'MainImageId' },
+                    { field: 'MainImageUrl' },
+                    { field: 'MainImageThumbnauilUrl' },
+                    { field: 'MainImageCaption' },
+                    { field: 'IsArchived', value: false },
+                    { field: 'IsMasterPage', value: false },
+                    { field: 'LanguageId' },
+                    { field: 'LanguageCode' },
+                    { field: 'LanguageGroupIdentifier' }
+                ]
+            }
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
+
+            expect(result.data.items[0].id).toBe('d8f382816bed45d0847ea2f100db58e7', 'Correctly filtered id should be retrieved.');
+
+            // Check if model properties count didn't changed. If so - update current test filter and another tests.
+            // data.filter.where.length + 3 <-- Because field: {options, tags, metadata} cannnot be filtered by
+            expect(data.filter.where.length + 3).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties count should be equal to filtering parameters count.');
+        });
+    });
+
+    it('01025: Should get filtered page with master page with included option values', function () {
+        var url = '/bcms-api/pages/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [{ field: 'Title', operation: 'StartsWith', value: '01025' }]
+            },
+            order: {
+                by: [{ field: 'Title', direction: 'asc' }]
+            },
+            includeUnpublished: true,
+            includeArchived: true,
+            includePageOptions: true
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
+
+            expect(result.data.items[0].title).toBe('01025', 'Correctly filtered items[0].title should be retrieved.');
+            expect(result.data.items[0].id).toBe('90968e7134494a85bff2a2f100f0e675', 'Correctly filtered items[0].title should be retrieved.');
+
+            expect(result.data.items[0].options).toBeDefinedAndNotNull('Correctly filtered items[0].options should be defined and not null.');
+            expect(result.data.items[0].options.length).toBe(3, 'Correctly filtered items[0].options.length should be 3.');
+
+            expect(result.data.items[0].options[0].key).toBe('O1', 'Correctly filtered items[0].options[0].key should be retrieved.');
+            expect(result.data.items[0].options[0].value).toBe('Layout', 'Correctly filtered items[0].options[0].value should be retrieved.');
+            expect(result.data.items[0].options[0].defaultValue).toBe('Layout', 'Correctly filtered items[0].options[0].defaultValue should be retrieved.');
+            expect(result.data.items[0].options[0].type).toBe('Text', 'Correctly filtered items[0].options[0].type should be retrieved.');
+
+            expect(result.data.items[0].options[1].key).toBe('O2', 'Correctly filtered items[0].options[1].key should be retrieved.');
+            expect(result.data.items[0].options[1].value).toBe('Master', 'Correctly filtered items[0].options[1].value should be retrieved.');
+            expect(result.data.items[0].options[1].defaultValue).toBe('Master', 'Correctly filtered items[0].options[1].defaultValue should be retrieved.');
+            expect(result.data.items[0].options[1].type).toBe('Text', 'Correctly filtered items[0].options[1].type should be retrieved.');
+
+            expect(result.data.items[0].options[2].key).toBe('O3', 'Correctly filtered items[0].options[2].key should be retrieved.');
+            expect(result.data.items[0].options[2].value).toBe('Page', 'Correctly filtered items[0].options[2].value should be retrieved.');
+            expect(result.data.items[0].options[2].defaultValue).toBe('Master', 'Correctly filtered items[0].options[2].defaultValue should be retrieved.');
+            expect(result.data.items[0].options[2].type).toBe('Text', 'Correctly filtered items[0].options[2].type should be retrieved.');
+        });
+    });
+
+    it('01026: Should get filtered page properties with master page with included option values', function () {
+        var url = '/bcms-api/page-properties/90968e7134494a85bff2a2f100f0e675/',
+            result,
+            ready = false;
+
+        var data = {
+            includePageOptions: true
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+
+            expect(result.data.title).toBe('01025', 'Correctly filtered title should be retrieved.');
+            expect(result.data.id).toBe('90968e7134494a85bff2a2f100f0e675', 'Correctly filtered title should be retrieved.');
+
+            expect(result.pageOptions).toBeDefinedAndNotNull('Correctly filtered pageOptions should be defined and not null.');
+            expect(result.pageOptions.length).toBe(3, 'Correctly filtered pageOptions.length should be 3.');
+
+            expect(result.pageOptions[0].key).toBe('O1', 'Correctly filtered pageOptions[0].key should be retrieved.');
+            expect(result.pageOptions[0].value).toBe('Layout', 'Correctly filtered pageOptions[0].value should be retrieved.');
+            expect(result.pageOptions[0].defaultValue).toBe('Layout', 'Correctly filtered pageOptions[0].defaultValue should be retrieved.');
+            expect(result.pageOptions[0].type).toBe('Text', 'Correctly filtered pageOptions[0].type should be retrieved.');
+
+            expect(result.pageOptions[1].key).toBe('O2', 'Correctly filtered pageOptions[1].key should be retrieved.');
+            expect(result.pageOptions[1].value).toBe('Master', 'Correctly filtered pageOptions[1].value should be retrieved.');
+            expect(result.pageOptions[1].defaultValue).toBe('Master', 'Correctly filtered pageOptions[1].defaultValue should be retrieved.');
+            expect(result.pageOptions[1].type).toBe('Text', 'Correctly filtered pageOptions[1].type should be retrieved.');
+
+            expect(result.pageOptions[2].key).toBe('O3', 'Correctly filtered pageOptions[2].key should be retrieved.');
+            expect(result.pageOptions[2].value).toBe('Page', 'Correctly filtered pageOptions[2].value should be retrieved.');
+            expect(result.pageOptions[2].defaultValue).toBe('Master', 'Correctly filtered pageOptions[2].defaultValue should be retrieved.');
+            expect(result.pageOptions[2].type).toBe('Text', 'Correctly filtered pageOptions[2].type should be retrieved.');
         });
     });
 

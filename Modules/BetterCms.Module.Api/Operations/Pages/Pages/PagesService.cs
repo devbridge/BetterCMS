@@ -78,7 +78,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
                         Description = page.Description,
                         IsPublished = page.Status == PageStatus.Published,
                         PublishedOn = page.PublishedOn,
-                        LayoutId = page.Layout != null && !page.Layout.IsDeleted ? page.Layout.Id : Guid.Empty,
+                        LayoutId = page.Layout != null && !page.Layout.IsDeleted ? page.Layout.Id : (Guid?)null,
+                        MasterPageId = page.MasterPage != null && !page.MasterPage.IsDeleted ? page.MasterPage.Id : (Guid?)null,
                         CategoryId = page.Category != null && !page.Category.IsDeleted ? page.Category.Id : (Guid?)null,
                         CategoryName = page.Category != null && !page.Category.IsDeleted ? page.Category.Name : null,
                         MainImageId = page.Image != null && !page.Image.IsDeleted ? page.Image.Id : (Guid?)null,
@@ -123,23 +124,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         {
             var pageIds = response.Items.Select(i => i.Id).Distinct().ToArray();
 
-            IEnumerable<LayoutWithOption> layoutOptionsFuture = null;
-            IEnumerable<PageWithOption> pageOptionsFuture = null;
-
-            if (includeOptions)
-            {
-                var layoutIds = response.Items.Select(i => i.LayoutId).Distinct().ToArray();
-                layoutOptionsFuture = repository
-                    .AsQueryable<LayoutOption>(l => layoutIds.Contains(l.Layout.Id))
-                    .Select(layout => new LayoutWithOption { LayoutId = layout.Layout.Id, Option = layout })
-                    .ToFuture();
-
-                pageOptionsFuture = repository
-                    .AsQueryable<PageOption>(p => pageIds.Contains(p.Page.Id))
-                    .Select(page => new PageWithOption { PageId = page.Page.Id, Option = page })
-                    .ToFuture();
-            }
-
             if (includeTags)
             {
                 var tags = repository
@@ -154,30 +138,19 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
 
             if (includeOptions)
             {
-                var layoutOptions = layoutOptionsFuture.ToList();
-                var pageOptions = pageOptionsFuture.ToList();
-
                 response.Items.ForEach(
                     page =>
                         {
-                            var options = layoutOptions.Where(lo => lo.LayoutId == page.LayoutId).Select(lo => lo.Option).ToList();
-                            var optionValues = pageOptions.Where(po => po.PageId == page.Id).Select(po => po.Option).ToList();
-
-                            if (options.Count > 0 || optionValues.Count > 0)
-                            {
-                                page.Options =
-                                    optionService.GetMergedOptionValuesForEdit(options, optionValues)
-                                                 .Select(
-                                                     o =>
-                                                     new OptionModel
-                                                         {
-                                                             Key = o.OptionKey,
-                                                             Value = o.OptionValue,
-                                                             DefaultValue = o.OptionDefaultValue,
-                                                             Type = ((Root.OptionType)(int)o.Type)
-                                                         })
-                                                 .ToList();
-                            }
+                            page.Options = optionService
+                                .GetMergedMasterPagesOptionValues(page.Id, page.MasterPageId, page.LayoutId)
+                                .Select(o => new OptionModel
+                                    {
+                                        Key = o.OptionKey,
+                                        Value = o.OptionValue,
+                                        DefaultValue = o.OptionDefaultValue,
+                                        Type = ((Root.OptionType)(int)o.Type)
+                                    })
+                                .ToList();
                         });
             }
         }

@@ -65,7 +65,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                                 Description = page.Description,
                                 IsPublished = page.Status == PageStatus.Published,
                                 PublishedOn = page.PublishedOn,
-                                LayoutId = page.Layout != null && !page.Layout.IsDeleted ? page.Layout.Id : Guid.Empty,
+                                LayoutId = page.Layout != null && !page.Layout.IsDeleted ? page.Layout.Id : (Guid?)null,
+                                MasterPageId = page.MasterPage != null && !page.MasterPage.IsDeleted ? page.MasterPage.Id : (Guid?)null,
                                 CategoryId = page.Category != null && !page.Category.IsDeleted ? page.Category.Id : (Guid?)null,
                                 IsArchived = page.IsArchived,
                                 IsMasterPage = page.IsMasterPage,
@@ -191,21 +192,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
             if (request.Data.IncludePageOptions)
             {
                 // Get layout options, page options and merge them
-                var layoutOptions = repository
-                    .AsQueryable<LayoutOption>(lo => lo.Layout.Id == response.Data.LayoutId).ToList();
-                var pageOptions = repository
-                    .AsQueryable<PageOption>(p => p.Page.Id == response.Data.Id)
-                    .ToList();
-
                 response.PageOptions = optionService
-                    .GetMergedOptionValuesForEdit(layoutOptions, pageOptions)
+                    .GetMergedMasterPagesOptionValues(response.Data.Id, response.Data.MasterPageId, response.Data.LayoutId)
                     .Select(o => new OptionModel
-                            {
-                                Key = o.OptionKey,
-                                Value = o.OptionValue,
-                                DefaultValue = o.OptionDefaultValue,
-                                Type = ((Root.OptionType)(int)o.Type)
-                            })
+                        {
+                            Key = o.OptionKey,
+                            Value = o.OptionValue,
+                            DefaultValue = o.OptionDefaultValue,
+                            Type = ((Root.OptionType)(int)o.Type)
+                        })
                     .ToList();
             }
             
