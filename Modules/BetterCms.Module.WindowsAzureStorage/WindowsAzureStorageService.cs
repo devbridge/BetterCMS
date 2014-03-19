@@ -106,16 +106,16 @@ namespace BetterCms.Module.WindowsAzureStorage
                     container.CreateIfNotExists();
                 }
 
-                var permissions = new BlobContainerPermissions();
-                if (accessControlEnabledGlobally && !request.IgnoreAccessControl)
-                {
-                    permissions.PublicAccess = BlobContainerPublicAccessType.Off;
-                }
-                else
-                {
-                    permissions.PublicAccess = BlobContainerPublicAccessType.Blob;
-                }
-                container.SetPermissions(permissions);
+//                var permissions = new BlobContainerPermissions();
+//                if (accessControlEnabledGlobally && !request.IgnoreAccessControl)
+//                {
+//                    permissions.PublicAccess = BlobContainerPublicAccessType.Off;
+//                }
+//                else
+//                {
+//                    permissions.PublicAccess = BlobContainerPublicAccessType.Blob;
+//                }
+//                container.SetPermissions(permissions);
 
                 var blob = container.GetBlockBlobReference(request.Uri.AbsoluteUri);
 
