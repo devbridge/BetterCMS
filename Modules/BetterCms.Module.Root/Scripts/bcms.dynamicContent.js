@@ -19,7 +19,8 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
         globalization = {
             failedLoadDialogMessage: null,
             dialogLoadingCancelledMessage: null,
-            forbiddenDialogMessage: null
+            forbiddenDialogMessage: null,
+            unauthorizedDialogMessage: null,
         },
         lastDialogId = null;
 
@@ -122,19 +123,29 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                 options.done(content);
             }
         })
-        .fail(function (request, status, error) {
+        .fail(function (response, status, error) {
             logError(error);
 
             dynamicConent.hideLoading(dialog);
 
             if ($.isFunction(options.fail)) {
                 var errorMessage = globalization.failedLoadDialogMessage;
-                if (error === "" && request.status === 0) {
+                if (error === "" && response.status === 0) {
                     errorMessage = globalization.dialogLoadingCancelledMessage;
+                } else if (response.status === 401) {
+                    errorMessage = globalization.unauthorizedDialogMessage;
+                    try {
+                        var redirectUrl = response.getResponseHeader(bcms.constants.loginRedirectHeader);
+                        if (redirectUrl) {
+                            window.location.href = redirectUrl;
+                        }
+                    } catch (err) {
+                        bcms.logger.error(err);
+                    }
                 } else if (error == "Forbidden") {
                     errorMessage = globalization.forbiddenDialogMessage;
                 }
-                options.fail(dialog, errorMessage, request);
+                options.fail(dialog, errorMessage, response);
             }
         });
     };

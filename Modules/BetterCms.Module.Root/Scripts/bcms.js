@@ -36,7 +36,8 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
             loggerLevel: 'bcms.loggerLevel',
         },
         constants = {
-            emptyGuid: '00000000-0000-0000-0000-000000000000'
+            emptyGuid: '00000000-0000-0000-0000-000000000000',
+            loginRedirectHeader: 'Bcms-Redirect-To'
         },
         errorTrace = !!true;
 
@@ -300,7 +301,7 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
     app.parseFailedResponse = function (response) {
         var success = 200,
             contentType = response.getResponseHeader('Content-Type'),
-            isJson = contentType.indexOf('application/json') !== -1,
+            isJson = contentType && contentType.indexOf('application/json') !== -1,
             message;
 
         // If response status is success and content type is not JSON
@@ -358,6 +359,19 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
         return guid === constants.emptyGuid || guid === '00000000000000000000000000000000';
     };
 
+    function handleUnauthorizedAjaxError(event, xhr) {
+        if (xhr && xhr.status === 401) {
+            try {
+                var redirectUrl = xhr.getResponseHeader(app.constants.loginRedirectHeader);
+                if (redirectUrl) {
+                    window.location.href = redirectUrl;
+                }
+            } catch (err) {
+                app.logger.error(err);
+            }
+        }
+    }
+
     /**
     * Initiliazes web page: checks browser version
     */
@@ -371,6 +385,9 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
             });
             browserInfo.css('display', 'block');
         }
+
+        // Handle unauthorized ajax errors
+        $(document).ajaxError(handleUnauthorizedAjaxError);
     }
 
     // Init logger

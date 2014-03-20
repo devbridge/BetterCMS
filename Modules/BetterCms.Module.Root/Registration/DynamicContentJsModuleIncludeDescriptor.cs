@@ -21,7 +21,8 @@ namespace BetterCms.Module.Root.Registration
                 {                    
                     new JavaScriptModuleGlobalization(this, "failedLoadDialogMessage", () => RootGlobalization.DynamicContent_FailedLoadDialog_Message), 
                     new JavaScriptModuleGlobalization(this, "dialogLoadingCancelledMessage", () => RootGlobalization.DynamicContent_DialogLoadingCancelled_Message), 
-                    new JavaScriptModuleGlobalization(this, "forbiddenDialogMessage", () => RootGlobalization.DynamicContent_DialogForbidden_Message)
+                    new JavaScriptModuleGlobalization(this, "forbiddenDialogMessage", () => RootGlobalization.DynamicContent_DialogForbidden_Message),
+                    new JavaScriptModuleGlobalization(this, "unauthorizedDialogMessage", () => RootGlobalization.DynamicContent_DialogUnauthorized_Message),
                 };
         }
     }

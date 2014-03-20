@@ -579,4 +579,7 @@
   <data name="InvariantLanguage_Title" xml:space="preserve">
     <value>Default language</value>
   </data>
+  <data name="DynamicContent_DialogUnauthorized_Message" xml:space="preserve">
+    <value>Your session is expired. Please re-login to continue.</value>
+  </data>
 </root>

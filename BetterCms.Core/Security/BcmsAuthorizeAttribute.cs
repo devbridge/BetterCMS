@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Net;
 using System.Web;
+using System.Web.Mvc;
 
 using Autofac;
 
@@ -12,7 +14,7 @@ namespace BetterCms.Core.Security
     /// Authorization attribute.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
-    public class BcmsAuthorizeAttribute : System.Web.Mvc.AuthorizeAttribute
+    public class BcmsAuthorizeAttribute : AuthorizeAttribute
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BcmsAuthorizeAttribute"/> class.
@@ -52,11 +54,21 @@ namespace BetterCms.Core.Security
         /// Processes HTTP requests that fail authorization.
         /// </summary>
         /// <param name="filterContext">Encapsulates the information for using <see cref="T:System.Web.Mvc.AuthorizeAttribute" />. The <paramref name="filterContext" /> object contains the controller, HTTP context, request context, action result, and route data.</param>
-        protected override void HandleUnauthorizedRequest(System.Web.Mvc.AuthorizationContext filterContext)
+        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
             if (filterContext.HttpContext.Request.IsAuthenticated)
             {
-                filterContext.Result = new System.Web.Mvc.HttpStatusCodeResult((int)System.Net.HttpStatusCode.Forbidden);
+                filterContext.Result = new HttpStatusCodeResult((int)HttpStatusCode.Forbidden);
+            }
+            else if (filterContext.HttpContext.Request.IsAjaxRequest())
+            {
+                filterContext.HttpContext.Response.AddHeader("Bcms-Redirect-To", System.Web.Security.FormsAuthentication.LoginUrl);
+                filterContext.HttpContext.SkipAuthorization = true;
+                filterContext.HttpContext.Response.Clear();
+                filterContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                filterContext.Result = new HttpUnauthorizedResult();
+                filterContext.Result.ExecuteResult(filterContext.Controller.ControllerContext);
+                filterContext.HttpContext.Response.End();
             }
             else
             {
