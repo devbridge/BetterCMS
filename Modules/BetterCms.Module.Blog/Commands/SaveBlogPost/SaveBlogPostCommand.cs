@@ -154,11 +154,10 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                     .ToFuture();
                 
                 content = Repository
-                    .AsQueryable<BlogPostContent>(c => c.PageContents.Any(x => x.Page.Id == request.Id 
-                        && x.Region == region && !x.IsDeleted))
+                    .AsQueryable<BlogPostContent>(c => c.PageContents.Any(x => x.Page.Id == request.Id && !x.IsDeleted))
                     .ToFuture()
                     .FirstOrDefault();
-
+                
                 blogPost = blogPostFuture.FirstOne();
 
                 if (cmsConfiguration.Security.AccessControlEnabled)
@@ -181,7 +180,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                         }
                     }
 
-                    pageContent = Repository.FirstOrDefault<PageContent>(c => c.Page == blogPost && c.Region == region && !c.IsDeleted && c.Content == content);
+                    pageContent = Repository.FirstOrDefault<PageContent>(c => c.Page == blogPost && !c.IsDeleted && c.Content == content);
                 }
 
                 if (userCanEdit && !string.Equals(blogPost.PageUrl, request.BlogUrl) && request.BlogUrl != null)
