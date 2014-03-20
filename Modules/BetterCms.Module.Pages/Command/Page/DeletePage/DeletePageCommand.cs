@@ -132,6 +132,7 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
                             if (node.Page != null && node.Page.Id == page.Id)
                             {
                                 node.Page = null;
+                                node.Title = node.UsePageTitleAsNodeTitle ? page.Title : node.Title;
                                 node.Url = page.PageUrl;
                                 node.UrlHash = page.PageUrlHash;
                                 Repository.Save(node);
