@@ -5,6 +5,8 @@ using System.Web.Security;
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Environment.ApplicationStart;
 using BetterCms.Core.Exceptions;
+using BetterCms.Core.Security;
+
 using Common.Logging;
 
 [assembly: PreApplicationStartMethod(typeof(BetterCmsEntrypoint), "PreApplicationStart")]
@@ -74,6 +76,19 @@ namespace BetterCms.Core.Environment.ApplicationStart
             catch (Exception ex)
             {
                 string message = "Failed to register per web request lifetime manager module.";
+                logger.Fatal(message, ex);
+
+                throw new CmsException(message, ex);
+            }
+            
+            try
+            {
+                logger.Info("Registering forms authentication redirect suppress module...");
+                SuppressFormsAuthenticationRedirectModule.DynamicModuleRegistration();
+            }
+            catch (Exception ex)
+            {
+                string message = "Failed to register forms authentication redirect suppress module.";
                 logger.Fatal(message, ex);
 
                 throw new CmsException(message, ex);

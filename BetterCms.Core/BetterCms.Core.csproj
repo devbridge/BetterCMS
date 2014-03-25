@@ -176,6 +176,7 @@
     <Compile Include="Exceptions\Mvc\ConfirmationRequestException.cs" />
     <Compile Include="Modules\CssIncludeDescriptor.cs" />
     <Compile Include="Modules\Projections\JavaScriptModuleLink.cs" />
+    <Compile Include="Security\SuppressFormsAuthenticationRedirectModule.cs" />
     <Compile Include="Mvc\Attributes\NoCacheAttribute.cs" />
     <Compile Include="Mvc\Extensions\VirtualPath.cs" />
     <Compile Include="Security\AccessLevel.cs" />

@@ -60,16 +60,6 @@ namespace BetterCms.Core.Security
             {
                 filterContext.Result = new HttpStatusCodeResult((int)HttpStatusCode.Forbidden);
             }
-            else if (filterContext.HttpContext.Request.IsAjaxRequest())
-            {
-                filterContext.HttpContext.Response.AddHeader("Bcms-Redirect-To", System.Web.Security.FormsAuthentication.LoginUrl);
-                filterContext.HttpContext.SkipAuthorization = true;
-                filterContext.HttpContext.Response.Clear();
-                filterContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                filterContext.Result = new HttpUnauthorizedResult();
-                filterContext.Result.ExecuteResult(filterContext.Controller.ControllerContext);
-                filterContext.HttpContext.Response.End();
-            }
             else
             {
                 base.HandleUnauthorizedRequest(filterContext);
