@@ -8,10 +8,14 @@ namespace BetterCms.Module.Api.Infrastructure
         protected RequestBase()
         {
             Data = new TData();
+            User = new ApiIdentity();
         }
 
         [DataMember]
         public TData Data { get; set; }
+        
+        [DataMember]
+        public ApiIdentity User { get; set; }
 
         object IRequest.Data
         {
