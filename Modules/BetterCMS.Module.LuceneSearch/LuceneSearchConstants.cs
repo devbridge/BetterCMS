@@ -10,6 +10,8 @@
 
             public const string LuceneIndexerFrequency = "LuceneIndexerFrequency";
 
+            public const string LuceneIndexerPageFetchTimeout = "LuceneIndexerPageFetchTimeout";
+
             public const string LuceneFileSystemDirectory = "LuceneFileSystemDirectory";
 
             public const string LuceneMaxPagesPerQuery = "LuceneMaxPagesPerQuery";

@@ -52,30 +52,48 @@ namespace BetterCMS.Module.LuceneSearch.Workers
                 {
                     scrapeService.MarkStarted(link.Id);
 
-                    var response = crawlerService.FetchPage(link.Path);
-                    response.IsPublished = link.IsPublished;
-                    response.Id = link.Id;
+                    PageData response;
 
-                    switch (response.StatusCode)
+                    try
                     {
-                        case (HttpStatusCode.OK):
-                            {
-                                pages.Add(response);
-                                break;
-                            }
+                        response = crawlerService.FetchPage(link.Path);
+                    }
+                    catch (Exception exc)
+                    {
+                        Log.Error("Unhandled excpetion occured while fetching a page.", exc);
+                        response = null;
+                    }
 
-                        case HttpStatusCode.NotFound:
-                            {
-                                idsToDelete.Add(link.Id);
-                                scrapeService.Delete(link.Id);
-                                break;
-                            }
+                    if (response != null)
+                    {
+                        response.IsPublished = link.IsPublished;
+                        response.Id = link.Id;
 
-                        default:
-                            {
-                                scrapeService.MarkFailed(link.Id);
-                                break;
-                            }
+                        switch (response.StatusCode)
+                        {
+                            case (HttpStatusCode.OK):
+                                {
+                                    pages.Add(response);
+                                    break;
+                                }
+
+                            case HttpStatusCode.NotFound:
+                                {
+                                    idsToDelete.Add(link.Id);
+                                    scrapeService.Delete(link.Id);
+                                    break;
+                                }
+
+                            default:
+                                {
+                                    scrapeService.MarkFailed(link.Id);
+                                    break;
+                                }
+                        }
+                    }
+                    else
+                    {
+                        scrapeService.MarkFailed(link.Id);
                     }
                 }
 
