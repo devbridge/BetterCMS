@@ -21,10 +21,12 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
         private static readonly ILog Log = LogManager.GetLogger(LuceneSearchConstants.LuceneSearchModuleLoggerNamespace);
 
         private readonly ICmsConfiguration cmsConfiguration;
-        
+
         private readonly string webServer;
 
         private readonly bool indexPrivatePages;
+
+        private readonly TimeSpan fetchTimeout = TimeSpan.FromMinutes(1);
 
         private CookieCollection authorizationCookies;
 
@@ -33,10 +35,17 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
             this.cmsConfiguration = cmsConfiguration;
 
             webServer = cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneWebSiteUrl) ?? string.Empty;
-            
+
             bool.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneIndexPrivatePages), out indexPrivatePages);
 
             HtmlAgilityPackHelper.FixMissingTagClosings();
+
+            TimeSpan timeout;
+            if (TimeSpan.TryParse(cmsConfiguration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneIndexerPageFetchTimeout), out timeout)
+                && timeout > TimeSpan.FromSeconds(0))
+            {
+                fetchTimeout = timeout;
+            }
         }
 
         public PageData FetchPage(string url)
@@ -45,11 +54,11 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
             {
                 TryAuthenticate();
             }
-            
+
             var fullUrl = string.Concat(webServer.TrimEnd('/'), "/", url.TrimStart('/'));
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(fullUrl);
             httpWebRequest.AllowAutoRedirect = true;
-            httpWebRequest.Timeout = 60 * 1000;
+            httpWebRequest.Timeout = (int)fetchTimeout.TotalMilliseconds;
             httpWebRequest.CookieContainer = new CookieContainer();
             if (authorizationCookies != null)
             {
@@ -98,7 +107,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
             finally
             {
                 if (httpWebResponse != null)
-                {                    
+                {
                     httpWebResponse.Close();
                 }
             }
@@ -173,7 +182,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
             catch (Exception exc)
             {
                 Log.ErrorFormat("Lucene web crawler: Failed to authenticate user.", exc);
-                
+
                 return false;
             }
             finally

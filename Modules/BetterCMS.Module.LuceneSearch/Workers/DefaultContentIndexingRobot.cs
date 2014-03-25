@@ -52,7 +52,18 @@ namespace BetterCMS.Module.LuceneSearch.Workers
                 {
                     scrapeService.MarkStarted(link.Id);
 
-                    var response = crawlerService.FetchPage(link.Path);
+                    PageData response;
+
+                    try
+                    {
+                        response = crawlerService.FetchPage(link.Path);
+                    }
+                    catch (Exception exc)
+                    {
+                        Log.Error("Unhandled excpetion occured while fetching a page.", exc);
+                        response = null;
+                    }
+
                     if (response != null)
                     {
                         response.IsPublished = link.IsPublished;
@@ -61,23 +72,23 @@ namespace BetterCMS.Module.LuceneSearch.Workers
                         switch (response.StatusCode)
                         {
                             case (HttpStatusCode.OK):
-                            {
-                                pages.Add(response);
-                                break;
-                            }
+                                {
+                                    pages.Add(response);
+                                    break;
+                                }
 
                             case HttpStatusCode.NotFound:
-                            {
-                                idsToDelete.Add(link.Id);
-                                scrapeService.Delete(link.Id);
-                                break;
-                            }
+                                {
+                                    idsToDelete.Add(link.Id);
+                                    scrapeService.Delete(link.Id);
+                                    break;
+                                }
 
                             default:
-                            {
-                                scrapeService.MarkFailed(link.Id);
-                                break;
-                            }
+                                {
+                                    scrapeService.MarkFailed(link.Id);
+                                    break;
+                                }
                         }
                     }
                     else
