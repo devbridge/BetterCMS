@@ -974,6 +974,133 @@ describe('pages.pages.api.behavior', function () {
         });
     });
 
+    it('01027.1: Should get list of pages for user admin with roles: [role1, role2]', function () {
+        var url = '/bcms-api/pages/',
+            result,
+            ready = false;
+
+        var data = {
+                filter: {
+                    where: [{ field: 'Title', operation: 'StartsWith', value: '01027' }]
+                },
+                order: {
+                    by: [{ field: 'Title' }]
+                },
+                includeUnpublished: true,
+                includeArchived: true
+            },
+            user = {
+                name: 'admin',
+                roles: ['role1', 'role2']
+            };
+
+        runs(function () {
+            api.getSecured(url, data, user, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(3, 'Total count should be 3.');
+            expect(result.data.items.length).toBe(3, 'Returned array length should be 3.');
+
+            expect(result.data.items[0].title).toBe('01027: for all', 'Correctly filtered date.items[0].title should be retrieved.');
+            expect(result.data.items[1].title).toBe('01027: only for role1', 'Correctly filtered date.items[1].title should be retrieved.');
+            expect(result.data.items[2].title).toBe('01027: only for role2', 'Correctly filtered date.items[2].title should be retrieved.');
+        });
+    });
+
+    it('01027.2: Should get list of pages for user admin without roles', function () {
+        var url = '/bcms-api/pages/',
+            result,
+            ready = false;
+
+        var data = {
+                filter: {
+                    where: [{ field: 'Title', operation: 'StartsWith', value: '01027' }]
+                },
+                order: {
+                    by: [{ field: 'Title' }]
+                },
+                includeUnpublished: true,
+                includeArchived: true
+            },
+            user = {
+                name: 'admin'
+            };
+
+        runs(function () {
+            api.getSecured(url, data, user, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
+
+            expect(result.data.items[0].title).toBe('01027: for all', 'Correctly filtered date.items[0].title should be retrieved.');
+        });
+    });
+
+    it('01027.3: Should get list of pages for user admin2 with [role1]', function () {
+        var url = '/bcms-api/pages/',
+            result,
+            ready = false;
+
+        var data = {
+                filter: {
+                    where: [{ field: 'Title', operation: 'StartsWith', value: '01027' }]
+                },
+                order: {
+                    by: [{ field: 'Title' }]
+                },
+                includeUnpublished: true,
+                includeArchived: true
+            },
+            user = {
+                name: 'admin2',
+                roles: ['role1']
+            };
+
+        runs(function () {
+            api.getSecured(url, data, user, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(4, 'Total count should be 4.');
+            expect(result.data.items.length).toBe(4, 'Returned array length should be 4.');
+
+            expect(result.data.items[0].title).toBe('01027: dienied for admin', 'Correctly filtered date.items[0].title should be retrieved.');
+            expect(result.data.items[1].title).toBe('01027: for all', 'Correctly filtered date.items[1].title should be retrieved.');
+            expect(result.data.items[2].title).toBe('01027: only for admin2', 'Correctly filtered date.items[2].title should be retrieved.');
+            expect(result.data.items[3].title).toBe('01027: only for role1', 'Correctly filtered date.items[3].title should be retrieved.');
+        });
+    });
+
     function expectPageListItemPropertiesAreNotNull(page) {
         api.expectBasePropertiesAreNotNull(page);
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Principal;
 
 using BetterCms.Module.Pages.ViewModels.Page;
 
@@ -40,5 +41,13 @@ namespace BetterCms.Module.Pages.Services
         /// </summary>
         /// <returns>Enumerable list of denied pages ids</returns>
         IEnumerable<Guid> GetDeniedPages(bool useCache = true);
+
+        /// <summary>
+        /// Gets the principal denied pages.
+        /// </summary>
+        /// <param name="principal">The principal.</param>
+        /// <param name="useCache">if set to <c>true</c> use cache.</param>
+        /// <returns></returns>
+        IEnumerable<Guid> GetPrincipalDeniedPages(IPrincipal principal, bool useCache = true);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Web;
 
 using BetterCms.Core.DataAccess;
@@ -266,8 +267,20 @@ namespace BetterCms.Module.Pages.Services
         /// </returns>
         public IEnumerable<Guid> GetDeniedPages(bool useCache = true)
         {
-            IEnumerable<Root.Models.Page> list;
             var principal = securityService.GetCurrentPrincipal();
+
+            return GetPrincipalDeniedPages(principal, useCache);
+        }
+
+        /// <summary>
+        /// Gets the principal denied pages.
+        /// </summary>
+        /// <param name="principal">The principal.</param>
+        /// <param name="useCache">if set to <c>true</c> use cache.</param>
+        /// <returns></returns>
+        public IEnumerable<Guid> GetPrincipalDeniedPages(IPrincipal principal, bool useCache = true)
+        {
+            IEnumerable<Root.Models.Page> list;
 
             if (useCache)
             {
@@ -281,7 +294,7 @@ namespace BetterCms.Module.Pages.Services
 
             foreach (var page in list)
             {
-                var accessLevel = accessControlService.GetAccessLevel(page, principal);
+                var accessLevel = accessControlService.GetAccessLevel(page, principal, useCache);
                 if (accessLevel == AccessLevel.Deny)
                 {
                     yield return page.Id;

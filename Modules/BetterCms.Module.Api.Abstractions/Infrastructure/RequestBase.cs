@@ -33,5 +33,7 @@ namespace BetterCms.Module.Api.Infrastructure
     public interface IRequest
     {
         object Data { get; set; }
+
+        ApiIdentity User { get; set; }
     }
 }

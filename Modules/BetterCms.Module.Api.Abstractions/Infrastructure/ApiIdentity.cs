@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace BetterCms.Module.Api.Infrastructure
 {
+    [DataContract]
     public class ApiIdentity
     {
         public ApiIdentity()
@@ -26,8 +28,10 @@ namespace BetterCms.Module.Api.Infrastructure
             }
         }
 
+        [DataMember]
         public string Name { get; set; }
-        
+
+        [DataMember]
         public IList<string> Roles { get; set; }
     }
 }

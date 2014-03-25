@@ -71,6 +71,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Infrastructure\ApiIdentity.cs" />
+    <Compile Include="Infrastructure\ApiPrincipal.cs" />
     <Compile Include="Infrastructure\Attributes\DataMemberIgnoreAttribute.cs" />
     <Compile Include="Infrastructure\DataFilter.cs" />
     <Compile Include="Infrastructure\DataListResponse.cs" />

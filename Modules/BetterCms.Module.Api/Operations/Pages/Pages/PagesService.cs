@@ -10,6 +10,7 @@ using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Pages.Pages.Search;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
 
@@ -29,13 +30,16 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         
         private readonly ISearchPagesService searchPagesService;
 
+        private readonly IPageService pageService;
+
         public PagesService(IRepository repository, IOptionService optionService, IMediaFileUrlResolver fileUrlResolver,
-            ISearchPagesService searchPagesService)
+            ISearchPagesService searchPagesService, IPageService pageService)
         {
             this.repository = repository;
             this.optionService = optionService;
             this.fileUrlResolver = fileUrlResolver;
             this.searchPagesService = searchPagesService;
+            this.pageService = pageService;
         }
 
         public GetPagesResponse Get(GetPagesRequest request)
@@ -61,6 +65,17 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
             }
 
             query = query.ApplyPageTagsFilter(request.Data);
+
+            if (request.User != null && !string.IsNullOrWhiteSpace(request.User.Name))
+            {
+                var principal = new ApiPrincipal(request.User);
+                IEnumerable<Guid> deniedPages = pageService.GetPrincipalDeniedPages(principal, false);
+                foreach (var deniedPageId in deniedPages)
+                {
+                    var id = deniedPageId;
+                    query = query.Where(f => f.Id != id);
+                }
+            }
 
             var includeMetadata = request.Data.IncludeMetadata;
             var listResponse = query

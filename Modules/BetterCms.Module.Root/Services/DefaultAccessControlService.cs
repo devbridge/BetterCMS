@@ -82,12 +82,16 @@ namespace BetterCms.Module.Root.Services
         /// <summary>
         /// Gets the access level.
         /// </summary>
+        /// <typeparam name="TAccessSecuredObject">The type of the access secured object.</typeparam>
         /// <param name="obj">The secured object.</param>
         /// <param name="principal">The principal.</param>
-        /// <returns>Access level for current principal</returns>
-        public AccessLevel GetAccessLevel<TAccessSecuredObject>(TAccessSecuredObject obj, IPrincipal principal) where TAccessSecuredObject : IAccessSecuredObject
+        /// <param name="useCache">if set to <c>true</c> use cache.</param>
+        /// <returns>
+        /// Access level for current principal
+        /// </returns>
+        public AccessLevel GetAccessLevel<TAccessSecuredObject>(TAccessSecuredObject obj, IPrincipal principal, bool useCache = true) where TAccessSecuredObject : IAccessSecuredObject
         {
-            return GetAccessLevel(obj.AccessRules, principal);
+            return GetAccessLevel(obj.AccessRules, principal, useCache);
         }
 
         /// <summary>
@@ -95,9 +99,17 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <param name="accessRules">The access list.</param>
         /// <param name="principal">The principal.</param>
-        /// <returns>Access level for current principal</returns>
-        public AccessLevel GetAccessLevel(IList<IAccessRule> accessRules, IPrincipal principal)
+        /// <param name="useCache">if set to <c>true</c> use cache.</param>
+        /// <returns>
+        /// Access level for current principal
+        /// </returns>
+        public AccessLevel GetAccessLevel(IList<IAccessRule> accessRules, IPrincipal principal, bool useCache = true)
         {
+            if (!useCache)
+            {
+                return GetAccessLevelInternal(accessRules, principal);
+            }
+            
             StringBuilder cacheKeyBuilder = new StringBuilder();
 
             cacheKeyBuilder.Append(AccessLevelCacheKeyPrefix);

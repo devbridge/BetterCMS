@@ -19,11 +19,16 @@ namespace BetterCms.Module.Api.Filters
             if (requestDto != null && req.GetHttpMethodOverride() == "GET" &&  IsJson(req))
             {
                 var data = req.GetParam("data");
-
                 if (data != null)
                 {
                     var requestModelType = dto.GetType().BaseType.GetGenericArguments()[0];
                     requestDto.Data = ServiceStack.Text.JsonSerializer.DeserializeFromString(data, requestModelType);
+                }
+
+                var user = req.GetParam("user");
+                if (user != null)
+                {
+                    requestDto.User = ServiceStack.Text.JsonSerializer.DeserializeFromString(user, typeof(ApiIdentity)) as ApiIdentity;
                 }
             }
         }

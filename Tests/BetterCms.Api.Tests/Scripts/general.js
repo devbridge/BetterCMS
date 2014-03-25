@@ -6,6 +6,10 @@ var api = (function() {
     obj.emptyGuid = '00000000000000000000000000000000';
 
     obj.get = function (url, data, onSuccess, onError) {
+        obj.getSecured(url, data, null, onSuccess, onError);
+    };
+
+    obj.getSecured = function (url, data, user, onSuccess, onError) {
         var options = {
             type: 'GET',
             data: {},
@@ -23,8 +27,15 @@ var api = (function() {
 
         if (data != null) {
             options.data = "data=" + JSON.stringify(data);
+
+            if (user != null) {
+                if (options.data) {
+                    options.data = options.data + "&";
+                }
+                options.data += "user=" + JSON.stringify(user);
+            }
         }
-        
+
         $.ajax(url, options);
     };
 
