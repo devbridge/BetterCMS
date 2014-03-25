@@ -794,9 +794,16 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
                 content += json.Messages[i];
             }
 
-            modal.alert({
-                content: content
-            });
+            if (json.Success === true) {
+                modal.info({
+                    content: content,
+                    disableAccept: true
+                });
+            } else {
+                modal.alert({
+                    content: content
+                });
+            }
         }
     };
 
