@@ -53,29 +53,36 @@ namespace BetterCMS.Module.LuceneSearch.Workers
                     scrapeService.MarkStarted(link.Id);
 
                     var response = crawlerService.FetchPage(link.Path);
-                    response.IsPublished = link.IsPublished;
-                    response.Id = link.Id;
-
-                    switch (response.StatusCode)
+                    if (response != null)
                     {
-                        case (HttpStatusCode.OK):
+                        response.IsPublished = link.IsPublished;
+                        response.Id = link.Id;
+
+                        switch (response.StatusCode)
+                        {
+                            case (HttpStatusCode.OK):
                             {
                                 pages.Add(response);
                                 break;
                             }
 
-                        case HttpStatusCode.NotFound:
+                            case HttpStatusCode.NotFound:
                             {
                                 idsToDelete.Add(link.Id);
                                 scrapeService.Delete(link.Id);
                                 break;
                             }
 
-                        default:
+                            default:
                             {
                                 scrapeService.MarkFailed(link.Id);
                                 break;
                             }
+                        }
+                    }
+                    else
+                    {
+                        scrapeService.MarkFailed(link.Id);
                     }
                 }
 

@@ -85,7 +85,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.WebCrawlerService
                     }
                 }
             }
-            catch (SystemException ex)
+            catch (Exception ex)
             {
                 Log.ErrorFormat("Lucene web crawler: Failed to fetch page by url {0}.", ex, url);
 
