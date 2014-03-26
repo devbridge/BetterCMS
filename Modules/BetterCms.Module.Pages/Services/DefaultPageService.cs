@@ -124,7 +124,7 @@ namespace BetterCms.Module.Pages.Services
         public void ValidatePageUrl(string url, Guid? pageId = null)
         {
             // Validate url
-            if (!urlService.ValidateUrl(url))
+            if (!urlService.ValidateInternalUrl(url))
             {
                 var logMessage = string.Format("Invalid page url {0}.", url);
                 throw new ValidationException(() => PagesGlobalization.ValidatePageUrlCommand_InvalidUrlPath_Message, logMessage);

@@ -30,7 +30,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// The redirect URL.
         /// </value>
-        [RegularExpression(PagesConstants.PageUrlRegularExpression, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "RedirectUrl_InvalidMessage")]
+        [RegularExpression(PagesConstants.ExternalUrlRegularExpression, ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "RedirectUrl_InvalidMessage")]
         public string RedirectUrl { get; set; }
 
         /// <summary>

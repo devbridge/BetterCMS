@@ -3,15 +3,15 @@
     public static class PagesConstants
     {
         /// <summary>
-        /// The page URL regular expression
+        /// The intenal URL regular expression (used in page naming)
         /// </summary>
         // NOTE: After changing this regexp please run BetterCms.Test.Module.Pages.ServiceTests.UrlServiceTests test.
-        public const string PageUrlRegularExpression = @"^\/?([^\\:?#[\]@!$&'()*+,;= \/%]{1,260}\/)*([^\\:?#[\]@!$&'()*+,;= \/%]{1,260})?$";
+        public const string InternalUrlRegularExpression = @"^\/?([^\\:?#[\]@!$&'()*+,;= \/%]{1,260}\/)*([^\\:?#[\]@!$&'()*+,;= \/%]{1,260})?$";
 
         /// <summary>
-        /// The site map URL regular expression
+        /// The external URL regular expression (used in sitemaps, external URLs)
         /// </summary>
-        public const string SiteMapUrlRegularExpression = @"^[^<>*&?]*((\?|#).*)?$";
+        public const string ExternalUrlRegularExpression = @"^[^<>*&?]*((\?|#).*)?$";
 
         /// <summary>
         /// The options grid template.

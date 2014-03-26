@@ -11,11 +11,18 @@
         string AddPageUrlPostfix(string url, string prefixPattern);
 
         /// <summary>
-        /// Validates the URL.
+        /// Validates the internal URL.
         /// </summary>
         /// <param name="url">The URL.</param>
-        /// <returns> true, if url is valid </returns>
-        bool ValidateUrl(string url);
+        /// <returns>true, if url is valid for internal use (without http:// and other prefixes and any suffixes, such as ?# etc.)</returns>
+        bool ValidateInternalUrl(string url);
+        
+        /// <summary>
+        /// Validates the external URL.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <returns>true, if url is valid for external links (can contain http://, ftp://  and other prefixes and any suffixes, such as ?# etc.)</returns>
+        bool ValidateExternalUrl(string url);
 
         /// <summary>
         /// Validates URL using URL validation patterns from cms.config.

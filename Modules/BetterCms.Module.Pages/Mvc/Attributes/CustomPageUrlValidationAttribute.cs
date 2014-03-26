@@ -18,7 +18,7 @@ namespace BetterCms.Module.Pages.Mvc.Attributes
             var pageUrl = value as string;
             if (!string.IsNullOrWhiteSpace(pageUrl))
             {
-                var regExpAttribute = new RegularExpressionAttribute(PagesConstants.PageUrlRegularExpression);
+                var regExpAttribute = new RegularExpressionAttribute(PagesConstants.InternalUrlRegularExpression);
                 if (!regExpAttribute.IsValid(pageUrl))
                 {
                     return new ValidationResult(errorMessage);
@@ -35,7 +35,7 @@ namespace BetterCms.Module.Pages.Mvc.Attributes
                 ErrorMessage = errorMessage,
                 ValidationType = clientValidationRule,
             };
-            rule.ValidationParameters.Add("pattern", PagesConstants.PageUrlRegularExpression);
+            rule.ValidationParameters.Add("pattern", PagesConstants.InternalUrlRegularExpression);
 
             yield return rule;
         }
