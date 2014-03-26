@@ -79,7 +79,19 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
                 throw new ValidationException(() => message, logMessage);
             }
 
-            request.RedirectUrl = urlService.FixUrl(request.RedirectUrl);
+            var isRedirectInternal = false;
+            if (!string.IsNullOrWhiteSpace(request.RedirectUrl))
+            {
+                isRedirectInternal = urlService.ValidateInternalUrl(request.RedirectUrl);
+                if (!isRedirectInternal && urlService.ValidateInternalUrl(urlService.FixUrl(request.RedirectUrl)))
+                {
+                    isRedirectInternal = true;
+                }
+                if (isRedirectInternal)
+                {
+                    request.RedirectUrl = urlService.FixUrl(request.RedirectUrl);
+                }
+            }
 
             if (request.UpdateSitemap)
             {
@@ -152,14 +164,14 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
                 }
 
                 // Validate url
-                if (!urlService.ValidateUrl(request.RedirectUrl))
+                if (!urlService.ValidateExternalUrl(request.RedirectUrl))
                 {
                     var logMessage = string.Format("Invalid redirect url {0}.", request.RedirectUrl);
                     throw new ValidationException(() => PagesGlobalization.ValidatePageUrlCommand_InvalidUrlPath_Message, logMessage);
                 }
 
                 string patternsValidationMessage;
-                if (!urlService.ValidateUrlPatterns(request.RedirectUrl, out patternsValidationMessage, PagesGlobalization.DeletePage_RedirectUrl_Name))
+                if (isRedirectInternal && !urlService.ValidateUrlPatterns(request.RedirectUrl, out patternsValidationMessage, PagesGlobalization.DeletePage_RedirectUrl_Name))
                 {
                     var logMessage = string.Format("{0}. URL: {1}.", patternsValidationMessage, request.RedirectUrl);
                     throw new ValidationException(() => patternsValidationMessage, logMessage);

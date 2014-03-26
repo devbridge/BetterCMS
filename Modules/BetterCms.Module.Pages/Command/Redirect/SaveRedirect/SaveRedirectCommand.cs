@@ -5,6 +5,8 @@ using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.SiteSettings;
 using BetterCms.Module.Root.Mvc;
 
+using FluentNHibernate.Conventions.AcceptanceCriteria;
+
 namespace BetterCms.Module.Pages.Command.Redirect.SaveRedirect
 {
     public class SaveRedirectCommand : CommandBase, ICommand<SiteSettingRedirectViewModel, SiteSettingRedirectViewModel>
@@ -41,17 +43,26 @@ namespace BetterCms.Module.Pages.Command.Redirect.SaveRedirect
         {
             Models.Redirect redirect;
 
+            var isRedirectInternal = urlService.ValidateInternalUrl(request.RedirectUrl);
+            if (!isRedirectInternal && urlService.ValidateInternalUrl(urlService.FixUrl(request.RedirectUrl)))
+            {
+                isRedirectInternal = true;
+            }
+
             request.PageUrl = urlService.FixUrl(request.PageUrl);
-            request.RedirectUrl = urlService.FixUrl(request.RedirectUrl);
+            if (isRedirectInternal)
+            {
+                request.RedirectUrl = urlService.FixUrl(request.RedirectUrl);
+            }
 
             // Validate request
-            if (!urlService.ValidateUrl(request.PageUrl))
+            if (!urlService.ValidateInternalUrl(request.PageUrl))
             {
                 var message = PagesGlobalization.SaveRedirect_InvalidPageUrl_Message;
                 var logMessage = string.Format("Invalid page url {0}.", request.PageUrl);
                 throw new ValidationException(() => message, logMessage);
             }
-            if (!urlService.ValidateUrl(request.RedirectUrl))
+            if (!urlService.ValidateExternalUrl(request.RedirectUrl))
             {
                 var message = PagesGlobalization.SaveRedirect_InvalidRedirectUrl_Message;
                 var logMessage = string.Format("Invalid redirect url {0}.", request.RedirectUrl);
@@ -65,7 +76,7 @@ namespace BetterCms.Module.Pages.Command.Redirect.SaveRedirect
                 var logMessage = string.Format("{0}. URL: {1}.", patternsValidationMessage, request.PageUrl);
                 throw new ValidationException(() => patternsValidationMessage, logMessage);
             }
-            if (!urlService.ValidateUrlPatterns(request.RedirectUrl, out patternsValidationMessage, PagesGlobalization.SaveRedirect_RedirectUrl_Name))
+            if (isRedirectInternal && !urlService.ValidateUrlPatterns(request.RedirectUrl, out patternsValidationMessage, PagesGlobalization.SaveRedirect_RedirectUrl_Name))
             {
                 var logMessage = string.Format("{0}. URL: {1}.", patternsValidationMessage, request.PageUrl);
                 throw new ValidationException(() => patternsValidationMessage, logMessage);

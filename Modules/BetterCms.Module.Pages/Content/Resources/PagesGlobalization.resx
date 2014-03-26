@@ -1015,7 +1015,7 @@
     <value>Type word DELETE to confirm deletion.</value>
   </data>
   <data name="RedirectUrl_InvalidMessage" xml:space="preserve">
-    <value>Redirect url is invalid. Link can contain only following characters: '0-9', 'a-z', '-', '/', '_' and no more than 260 alphanumeric characters between the '/'.</value>
+    <value>Redirect url is invalid. Link cannot contain characters: &lt;,&gt;,*,&amp;,?.</value>
   </data>
   <data name="DeletePage_RedirectUrl_Name" xml:space="preserve">
     <value>Redirect URL</value>

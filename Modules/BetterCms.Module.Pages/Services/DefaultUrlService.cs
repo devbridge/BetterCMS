@@ -152,13 +152,23 @@ namespace BetterCms.Module.Pages.Services
         }
 
         /// <summary>
-        /// Validates the URL.
+        /// Validates the internal URL.
         /// </summary>
         /// <param name="url">The URL.</param>
-        /// <returns>true, if url is valid</returns>
-        public bool ValidateUrl(string url)
+        /// <returns>true, if url is valid for internal use (without http:// and other prefixes and any suffixes, such as ?# etc.)</returns>
+        public bool ValidateInternalUrl(string url)
         {
-            return Regex.IsMatch(url, PagesConstants.PageUrlRegularExpression);
+            return Regex.IsMatch(url, PagesConstants.InternalUrlRegularExpression);
+        }
+        
+        /// <summary>
+        /// Validates the internal URL.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <returns>true, if url is valid for internal use (without http:// and other prefixes and any suffixes, such as ?# etc.)</returns>
+        public bool ValidateExternalUrl(string url)
+        {
+            return Regex.IsMatch(url, PagesConstants.ExternalUrlRegularExpression);
         }
 
         /// <summary>
