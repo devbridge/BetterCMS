@@ -15,13 +15,15 @@ describe('media.files.api.behavior', function () {
             includeFolders: true,
             includeFiles: false,
             includeArchived: false,
+            includeAccessRules: true,
             take: 1
         },
             results =
             {
                 totalCount: 2,
                 title: '_0000_Files_Folder_1',
-                isArchived: false
+                isArchived: false,
+                accessRules: false
             };
 
         runFilesListTests(data, results);
@@ -38,13 +40,15 @@ describe('media.files.api.behavior', function () {
             includeFolders: false,
             includeFiles: true,
             includeArchived: false,
+            includeAccessRules: true,
             take: 1
         },
             results =
             {
                 totalCount: 2,
                 title: '_0000_File_1',
-                isArchived: false
+                isArchived: false,
+                accessRules: true
             };
 
         runFilesListTests(data, results);
@@ -61,13 +65,15 @@ describe('media.files.api.behavior', function () {
             includeFolders: true,
             includeFiles: true,
             includeArchived: false,
+            includeAccessRules: true,
             take: 1
         },
             results =
             {
                 totalCount: 4,
                 title: '_0000_File_1',
-                isArchived: false
+                isArchived: false,
+                accessRules: true
             };
 
         runFilesListTests(data, results);
@@ -84,13 +90,15 @@ describe('media.files.api.behavior', function () {
             includeFolders: true,
             includeFiles: true,
             includeArchived: true,
+            includeAccessRules: true,
             take: 1
         },
             results =
             {
                 totalCount: 6,
                 title: '_0000_File_1',
-                isArchived: false
+                isArchived: false,
+                accessRules: true
             };
 
         runFilesListTests(data, results);
@@ -110,13 +118,15 @@ describe('media.files.api.behavior', function () {
             includeFolders: true,
             includeFiles: true,
             includeArchived: true,
+            includeAccessRules: true,
             take: 1
         },
             results =
             {
                 totalCount: 2,
                 title: '_0000_File_3_Archived',
-                isArchived: true
+                isArchived: true,
+                accessRules: false
             };
 
         runFilesListTests(data, results);
@@ -212,7 +222,8 @@ describe('media.files.api.behavior', function () {
             result,
             ready = false,
             data = {
-                includeTags: true
+                includeTags: true,
+                includeAccessRules: true
             };
 
         runs(function () {
@@ -256,6 +267,39 @@ describe('media.files.api.behavior', function () {
             api.expectBasePropertiesAreNotNull(tags[0]);
             expect(tags[0].name).toBe('tag1_0001_File_For_Tests', 'Correctly filtered tags[0].name should be retrieved.');
             expect(tags[1].name).toBe('tag2_0001_File_For_Tests', 'Correctly filtered tags[1].name should be retrieved.');
+
+            // Access rules
+            var rules = result.accessRules;
+            expect(rules).toBeDefinedAndNotNull('JSON AccessRules object should be retrieved.');
+            expect(rules.length).toBe(6, 'Returned array length should be 6.');
+
+            var rule1 = rules[0],
+                rule2 = rules[1],
+                rule3 = rules[2],
+                rule4 = rules[3],
+                rule5 = rules[4],
+                rule6 = rules[5];
+
+            expect(rule1.isForRole).toBe(false, 'Correctly filtered accessRules[0].isForRole should be false.');
+            expect(rule2.isForRole).toBe(false, 'Correctly filtered accessRules[1].isForRole should be false.');
+            expect(rule3.isForRole).toBe(false, 'Correctly filtered accessRules[2].isForRole should be false.');
+            expect(rule4.isForRole).toBe(true, 'Correctly filtered accessRules[3].isForRole should be true.');
+            expect(rule5.isForRole).toBe(true, 'Correctly filtered accessRules[4].isForRole should be true.');
+            expect(rule6.isForRole).toBe(true, 'Correctly filtered accessRules[5].isForRole should be true.');
+
+            expect(rule1.accessLevel).toBe('ReadWrite', 'Correctly filtered accessRules[0].accessLevel should be ReadWrite.');
+            expect(rule2.accessLevel).toBe('Deny', 'Correctly filtered accessRules[1].accessLevel should be Deny.');
+            expect(rule3.accessLevel).toBe('Read', 'Correctly filtered accessRules[2].accessLevel should be Read.');
+            expect(rule4.accessLevel).toBe('ReadWrite', 'Correctly filtered accessRules[3].accessLevel should be ReadWrite.');
+            expect(rule5.accessLevel).toBe('Read', 'Correctly filtered accessRules[4].accessLevel should be Read.');
+            expect(rule6.accessLevel).toBe('Deny', 'Correctly filtered accessRules[5].accessLevel should be Deny.');
+
+            expect(rule1.identity).toBe('user1', 'Correctly filtered accessRules[0].identity should be user1.');
+            expect(rule2.identity).toBe('user2', 'Correctly filtered accessRules[1].identity should be user2.');
+            expect(rule3.identity).toBe('user3', 'Correctly filtered accessRules[2].identity should be user3.');
+            expect(rule4.identity).toBe('Authenticated Users', 'Correctly filtered accessRules[3].identity should be Authenticated Users.');
+            expect(rule5.identity).toBe('Everyone', 'Correctly filtered accessRules[4].identity should be Everyone.');
+            expect(rule6.identity).toBe('role1', 'Correctly filtered accessRules[5].identity should be role1.');
         });
     });
 
@@ -315,7 +359,8 @@ describe('media.files.api.behavior', function () {
             expect(result.data.items[0].id).toBe('7f753def7d2647aaa36ca2070078465e', 'Correctly filtered id should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
+            // data.filter.where.length + 1 <-- Because field: {accessRules} cannnot be filtered by
+            expect(data.filter.where.length + 1).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
         });
     });
     
@@ -368,6 +413,40 @@ describe('media.files.api.behavior', function () {
             expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
             expect(result.data.items[0].title).toBe(expectingResults.title, 'Correctly filtered title should be retrieved.');
             expect(result.data.items[0].isArchived).toBe(expectingResults.isArchived, 'Correctly filtered isArchived should be retrieved.');
+
+            if (expectingResults.accessRules) {
+                expect(result.data.items[0].accessRules).toBeDefinedAndNotNull('JSON object accessRules should be retrieved.');
+                expect(result.data.items[0].accessRules.length).toBe(6, 'Returned accessRules array length should be 6.');
+
+                var rules = result.data.items[0].accessRules,
+                    rule1 = rules[0],
+                    rule2 = rules[1],
+                    rule3 = rules[2],
+                    rule4 = rules[3],
+                    rule5 = rules[4],
+                    rule6 = rules[5];
+
+                expect(rule1.isForRole).toBe(false, 'Correctly filtered accessRules[0].isForRole should be false.');
+                expect(rule2.isForRole).toBe(false, 'Correctly filtered accessRules[1].isForRole should be false.');
+                expect(rule3.isForRole).toBe(false, 'Correctly filtered accessRules[2].isForRole should be false.');
+                expect(rule4.isForRole).toBe(true, 'Correctly filtered accessRules[3].isForRole should be true.');
+                expect(rule5.isForRole).toBe(true, 'Correctly filtered accessRules[4].isForRole should be true.');
+                expect(rule6.isForRole).toBe(true, 'Correctly filtered accessRules[5].isForRole should be true.');
+
+                expect(rule1.accessLevel).toBe('ReadWrite', 'Correctly filtered accessRules[0].accessLevel should be ReadWrite.');
+                expect(rule2.accessLevel).toBe('Deny', 'Correctly filtered accessRules[1].accessLevel should be Deny.');
+                expect(rule3.accessLevel).toBe('Read', 'Correctly filtered accessRules[2].accessLevel should be Read.');
+                expect(rule4.accessLevel).toBe('ReadWrite', 'Correctly filtered accessRules[3].accessLevel should be ReadWrite.');
+                expect(rule5.accessLevel).toBe('Read', 'Correctly filtered accessRules[4].accessLevel should be Read.');
+                expect(rule6.accessLevel).toBe('Deny', 'Correctly filtered accessRules[5].accessLevel should be Deny.');
+
+                expect(rule1.identity).toBe('user1', 'Correctly filtered accessRules[0].identity should be user1.');
+                expect(rule2.identity).toBe('user2', 'Correctly filtered accessRules[1].identity should be user2.');
+                expect(rule3.identity).toBe('user3', 'Correctly filtered accessRules[2].identity should be user3.');
+                expect(rule4.identity).toBe('Authenticated Users', 'Correctly filtered accessRules[3].identity should be Authenticated Users.');
+                expect(rule5.identity).toBe('Everyone', 'Correctly filtered accessRules[4].identity should be Everyone.');
+                expect(rule6.identity).toBe('role1', 'Correctly filtered accessRules[5].identity should be role1.');
+            }
         });
     }
     

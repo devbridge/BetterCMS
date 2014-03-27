@@ -4,8 +4,11 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
+
+using NHibernate.Linq;
 
 using ServiceStack.ServiceInterface;
 
@@ -60,10 +63,10 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
             model.FileUrl = fileService.GetDownloadFileUrl(MediaType.File, model.Id, model.FileUrl);
             model.ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(model.ThumbnailUrl);
 
-            IList<TagModel> tags;
-            if (request.Data.IncludeTags)
+            IEnumerable<TagModel> tagsFuture;
+            if (request.Data.IncludeAccessRules)
             {
-                tags =
+                tagsFuture =
                     repository.AsQueryable<MediaTag>(mediaTag => mediaTag.Media.Id == request.FileId && !mediaTag.Tag.IsDeleted)                               
                               .OrderBy(mediaTag => mediaTag.Tag.Name)                             
                               .Select(media => new TagModel
@@ -77,18 +80,40 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
 
                                         Name = media.Tag.Name
                                     })
-                              .ToList();
+                              .ToFuture();
             }
             else
             {
-                tags = null;
+                tagsFuture = null;
+            }
+            
+            IEnumerable<AccessRuleModel> accessRulesFuture;
+            if (request.Data.IncludeTags)
+            {
+                accessRulesFuture = (from file in repository.AsQueryable<MediaFile>()
+                    from accessRule in file.AccessRules
+                    where file.Id == request.FileId
+                    orderby accessRule.IsForRole, accessRule.Identity
+                    select
+                        new AccessRuleModel
+                        {
+                            AccessLevel = (AccessLevel)(int)accessRule.AccessLevel, 
+                            Identity = accessRule.Identity, 
+                            IsForRole = accessRule.IsForRole
+                        })
+                    .ToList();
+            }
+            else
+            {
+                accessRulesFuture = null;
             }
 
             return new GetFileResponse
-                       {
-                           Data = model,
-                           Tags = tags
-                       };
+                   {
+                       Data = model,
+                       Tags = tagsFuture != null ? tagsFuture.ToList() : null,
+                       AccessRules = accessRulesFuture != null ? accessRulesFuture.ToList() : null
+                   };
         }
     }
 }

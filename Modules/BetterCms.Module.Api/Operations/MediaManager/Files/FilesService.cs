@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
+
+using NHibernate.Mapping;
 
 using ServiceStack.ServiceInterface;
 
@@ -83,20 +87,63 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
                         })
                         .ToDataListResponse(request);
 
+            var ids = new List<Guid>();
+
             listResponse.Items.ToList().ForEach(media =>
                 {
                     if (media.MediaContentType == MediaContentType.File)
                     {
                         media.FileUrl = fileService.GetDownloadFileUrl(MediaType.File, media.Id, media.FileUrl);
+                        ids.Add(media.Id);
                     }
                     media.FileUrl = fileUrlResolver.EnsureFullPathUrl(media.FileUrl);
                     media.ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(media.ThumbnailUrl);
                 });
 
+            if (request.Data.IncludeAccessRules)
+            {
+                (from file in repository.AsQueryable<MediaFile>()
+                from accessRule in file.AccessRules
+                where ids.Contains(file.Id)
+                orderby accessRule.IsForRole, accessRule.Identity
+                select new AccessRuleModelEx
+                {
+                    AccessRule = new AccessRuleModel
+                    {
+                        AccessLevel = (AccessLevel)(int)accessRule.AccessLevel,
+                        Identity = accessRule.Identity,
+                        IsForRole = accessRule.IsForRole
+                    },
+                    FileId = file.Id
+                }).ToList()
+                .ForEach(
+                    rule => listResponse
+                            .Items
+                            .Where(file => file.Id == rule.FileId)
+                            .ToList()
+                            .ForEach(
+                                file =>
+                                {
+                                    if (file.AccessRules == null)
+                                    {
+                                        file.AccessRules = new List<AccessRuleModel>();
+                                    }
+                                    file.AccessRules.Add(rule.AccessRule);
+                                })
+                    );
+            }
+
             return new GetFilesResponse
                        {
                            Data = listResponse
                        };
+        }
+
+        private class AccessRuleModelEx
+        {
+            public AccessRuleModel AccessRule { get; set; }
+
+            public Guid FileId { get; set; }
         }
     }
 }

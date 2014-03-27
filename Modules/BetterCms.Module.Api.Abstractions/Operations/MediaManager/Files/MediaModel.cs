@@ -1,6 +1,8 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Root;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.Files
 {
@@ -87,5 +89,14 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
         /// </value>
         [DataMember]
         public bool IsArchived { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of access rule models.
+        /// </summary>
+        /// <value>
+        /// The list of access rule models.
+        /// </value>
+        [DataMember]
+        public IList<AccessRuleModel> AccessRules { get; set; }
     }
 }

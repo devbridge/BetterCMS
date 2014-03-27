@@ -1230,11 +1230,11 @@ describe('pages.pages.api.behavior', function () {
         expect(accessRules.length).toBe(6, 'Returned accessRules array length should be 6.');
         
         var rule1 = accessRules[0],
-                rule2 = accessRules[1],
-                rule3 = accessRules[2],
-                rule4 = accessRules[3],
-                rule5 = accessRules[4],
-                rule6 = accessRules[5];
+            rule2 = accessRules[1],
+            rule3 = accessRules[2],
+            rule4 = accessRules[3],
+            rule5 = accessRules[4],
+            rule6 = accessRules[5];
 
         expect(rule1.isForRole).toBe(false, 'Correctly filtered accessRules[0].isForRole should be false.');
         expect(rule2.isForRole).toBe(false, 'Correctly filtered accessRules[1].isForRole should be false.');
