@@ -6,6 +6,7 @@ using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 
 using BetterCms.Module.Api.Helpers;
+using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
@@ -204,6 +205,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                     .ToList();
             }
             
+            if (request.Data.IncludeAccessRules)
+            {
+                // Get layout options, page options and merge them
+                response.AccessRules = LoadAccessRules(response.Data.Id);
+            }
+            
             if (request.Data.IncludePageTranslations 
                 && response.Data.LanguageGroupIdentifier.HasValue)
             {
@@ -226,10 +233,10 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
             return response;
         }
 
-        private System.Collections.Generic.List<TagModel> LoadTags(Guid blogPostId)
+        private System.Collections.Generic.List<TagModel> LoadTags(Guid pageId)
         {
             return repository
-                .AsQueryable<Module.Pages.Models.PageTag>(pageTag => pageTag.Page.Id == blogPostId && !pageTag.Tag.IsDeleted)
+                .AsQueryable<Module.Pages.Models.PageTag>(pageTag => pageTag.Page.Id == pageId && !pageTag.Tag.IsDeleted)
                 .Select(media => new TagModel
                     {
                         Id = media.Tag.Id,
@@ -242,11 +249,26 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                         Name = media.Tag.Name
                     }).ToList();
         }
+
+        private System.Collections.Generic.List<AccessRuleModel> LoadAccessRules(Guid pageId)
+        {
+            return (from page in repository.AsQueryable<Module.Root.Models.Page>()
+                    from accessRule in page.AccessRules
+                    where page.Id == pageId
+                    orderby accessRule.IsForRole, accessRule.Identity
+                    select new AccessRuleModel
+                    {
+                        AccessLevel = (AccessLevel)(int)accessRule.AccessLevel,
+                        Identity = accessRule.Identity,
+                        IsForRole = accessRule.IsForRole
+                    })
+                    .ToList();
+        }
         
-        private System.Collections.Generic.List<PageContentModel> LoadPageContents(Guid blogPostId)
+        private System.Collections.Generic.List<PageContentModel> LoadPageContents(Guid pageId)
         {
             var results = repository
-                 .AsQueryable<PageContent>(pageContent => pageContent.Page.Id == blogPostId && !pageContent.Content.IsDeleted)
+                 .AsQueryable<PageContent>(pageContent => pageContent.Page.Id == pageId && !pageContent.Content.IsDeleted)
                  .OrderBy(pageContent => pageContent.Order)
                  .Select(pageContent => new
                     {

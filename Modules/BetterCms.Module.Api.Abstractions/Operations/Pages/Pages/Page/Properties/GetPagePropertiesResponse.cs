@@ -1,6 +1,7 @@
 ﻿using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Root;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
 {
@@ -104,6 +105,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// The list of page translations.
         /// </value>
         [DataMember]
-        public System.Collections.Generic.IList<PageTranslationModel> PageTranslations { get; set; }   
+        public System.Collections.Generic.IList<PageTranslationModel> PageTranslations { get; set; }
+
+        /// <summary>
+        /// Gets or sets the access rules.
+        /// </summary>
+        /// <value>
+        /// The access rules.
+        /// </value>
+        [DataMember]
+        public System.Collections.Generic.IList<AccessRuleModel> AccessRules { get; set; }   
     }
 }

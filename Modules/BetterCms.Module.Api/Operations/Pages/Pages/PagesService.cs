@@ -160,7 +160,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
             IEnumerable<AccessRuleModelEx> rulesFuture;
             if (includeAccessRules)
             {
-                rulesFuture = (from page in repository.AsQueryable<Module.Root.Models.Page>(p => pageIds.Contains(p.Id))
+                rulesFuture = (from page in repository.AsQueryable<Module.Root.Models.Page>()
                     from accessRule in page.AccessRules
                     where pageIds.Contains(page.Id)
                     orderby accessRule.IsForRole, accessRule.Identity

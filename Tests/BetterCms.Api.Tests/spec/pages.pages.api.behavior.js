@@ -141,7 +141,8 @@ describe('pages.pages.api.behavior', function () {
             includePageContents: true,
             includePageOptions: true,
             includeLanguage: true,
-            includePageTranslations: true
+            includePageTranslations: true,
+            includeAccessRules: true
         };
 
         runs(function () {
@@ -177,7 +178,8 @@ describe('pages.pages.api.behavior', function () {
             includePageContents: true,
             includePageOptions: true,
             includeLanguage: true,
-            includePageTranslations: true
+            includePageTranslations: true,
+            includeAccessRules: true
         };
 
         runs(function () {
@@ -1221,7 +1223,40 @@ describe('pages.pages.api.behavior', function () {
 
         api.expectBasePropertiesAreNotNull(tags[1]);
         expect(tags[1].name).toBe('tag2', 'Correctly filtered tags[1].name should be retrieved.');
+
+        // access rules
+        var accessRules = response.accessRules;
+        expect(accessRules).toBeDefinedAndNotNull('JSON accessRules object should be retrieved.');
+        expect(accessRules.length).toBe(6, 'Returned accessRules array length should be 6.');
         
+        var rule1 = accessRules[0],
+                rule2 = accessRules[1],
+                rule3 = accessRules[2],
+                rule4 = accessRules[3],
+                rule5 = accessRules[4],
+                rule6 = accessRules[5];
+
+        expect(rule1.isForRole).toBe(false, 'Correctly filtered accessRules[0].isForRole should be false.');
+        expect(rule2.isForRole).toBe(false, 'Correctly filtered accessRules[1].isForRole should be false.');
+        expect(rule3.isForRole).toBe(false, 'Correctly filtered accessRules[2].isForRole should be false.');
+        expect(rule4.isForRole).toBe(true, 'Correctly filtered accessRules[3].isForRole should be true.');
+        expect(rule5.isForRole).toBe(true, 'Correctly filtered accessRules[4].isForRole should be true.');
+        expect(rule6.isForRole).toBe(true, 'Correctly filtered accessRules[5].isForRole should be true.');
+
+        expect(rule1.accessLevel).toBe('ReadWrite', 'Correctly filtered accessRules[0].accessLevel should be ReadWrite.');
+        expect(rule2.accessLevel).toBe('Deny', 'Correctly filtered accessRules[1].accessLevel should be Deny.');
+        expect(rule3.accessLevel).toBe('Read', 'Correctly filtered accessRules[2].accessLevel should be Read.');
+        expect(rule4.accessLevel).toBe('ReadWrite', 'Correctly filtered accessRules[3].accessLevel should be ReadWrite.');
+        expect(rule5.accessLevel).toBe('Read', 'Correctly filtered accessRules[4].accessLevel should be Read.');
+        expect(rule6.accessLevel).toBe('Deny', 'Correctly filtered accessRules[5].accessLevel should be Deny.');
+
+        expect(rule1.identity).toBe('user1', 'Correctly filtered accessRules[0].identity should be user1.');
+        expect(rule2.identity).toBe('user2', 'Correctly filtered accessRules[1].identity should be user2.');
+        expect(rule3.identity).toBe('user3', 'Correctly filtered accessRules[2].identity should be user3.');
+        expect(rule4.identity).toBe('Authenticated Users', 'Correctly filtered accessRules[3].identity should be Authenticated Users.');
+        expect(rule5.identity).toBe('Everyone', 'Correctly filtered accessRules[4].identity should be Everyone.');
+        expect(rule6.identity).toBe('role1', 'Correctly filtered accessRules[5].identity should be role1.');
+
         // images
         expectImagePropertiesAreNotNull(response.mainImage, 'mainImage');
         expectImagePropertiesAreNotNull(response.featuredImage, 'featuredImage');
