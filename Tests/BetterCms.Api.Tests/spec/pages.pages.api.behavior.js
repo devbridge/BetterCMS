@@ -372,8 +372,8 @@ describe('pages.pages.api.behavior', function () {
             expect(result.data.items[0].id).toBe('e81a87022bf4419688b4a2070081a57e', 'Correctly filtered id should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            // data.filter.where.length + 3 <-- Because field: {options, tags, metadata} cannnot be filtered by
-            expect(data.filter.where.length + 3).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties count should be equal to filtering parameters count.');
+            // data.filter.where.length + 4 <-- Because field: {options, tags, metadata, accessRules} cannnot be filtered by
+            expect(data.filter.where.length + 4).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties count should be equal to filtering parameters count.');
         });
     });
     
@@ -478,7 +478,7 @@ describe('pages.pages.api.behavior', function () {
         });
     });
     
-    it('01015: Should get filtered pages list with included option values', function () {
+    it('01015: Should get filtered pages list with included option values and with access rules', function () {
         var url = '/bcms-api/pages/',
             result,
             ready = false;
@@ -492,7 +492,8 @@ describe('pages.pages.api.behavior', function () {
             },
             includeUnpublished: true,
             includeArchived: true,
-            includePageOptions: true
+            includePageOptions: true,
+            includeAccessRules: true
         };
 
         runs(function () {
@@ -512,7 +513,7 @@ describe('pages.pages.api.behavior', function () {
             expect(result.data.totalCount).toBe(2, 'Total count should be 2.');
             expect(result.data.items.length).toBe(2, 'Returned array length should be 2.');
 
-            expect(result.data.items[0].title).toBe('01015 - With Options', 'Correctly filtered items[0].title should be retrieved.');
+            expect(result.data.items[0].title).toBe('01015 - With Options And Rules', 'Correctly filtered items[0].title should be retrieved.');
             expect(result.data.items[1].title).toBe('01015 - Without Options', 'Correctly filtered items[1].title should be retrieved.');
             
             expect(result.data.items[1].options.length).toBe(0, 'Correctly filtered items[1].options should be null.');
@@ -533,6 +534,37 @@ describe('pages.pages.api.behavior', function () {
             expect(result.data.items[0].options[2].value).toBe('Custom Value', 'Correctly filtered items[0].options[2].value should be retrieved.');
             expect(result.data.items[0].options[2].defaultValue).toBeNull('Correctly filtered items[0].options[2].defaultValue should be retrieved.');
             expect(result.data.items[0].options[2].type).toBe('Text', 'Correctly filtered items[0].options[2].type should be retrieved.');
+
+            expect(result.data.items[1].accessRules.length).toBe(0, 'Correctly filtered items[0].accessRules.length should be 0.');
+            expect(result.data.items[0].accessRules.length).toBe(6, 'Correctly filtered items[0].accessRules.length should be 6.');
+
+            var rule1 = result.data.items[0].accessRules[0],
+                rule2 = result.data.items[0].accessRules[1],
+                rule3 = result.data.items[0].accessRules[2],
+                rule4 = result.data.items[0].accessRules[3],
+                rule5 = result.data.items[0].accessRules[4],
+                rule6 = result.data.items[0].accessRules[5];
+
+            expect(rule1.isForRole).toBe(false, 'Correctly filtered accessRules[0].isForRole should be false.');
+            expect(rule2.isForRole).toBe(false, 'Correctly filtered accessRules[1].isForRole should be false.');
+            expect(rule3.isForRole).toBe(false, 'Correctly filtered accessRules[2].isForRole should be false.');
+            expect(rule4.isForRole).toBe(true, 'Correctly filtered accessRules[3].isForRole should be true.');
+            expect(rule5.isForRole).toBe(true, 'Correctly filtered accessRules[4].isForRole should be true.');
+            expect(rule6.isForRole).toBe(true, 'Correctly filtered accessRules[5].isForRole should be true.');
+
+            expect(rule1.accessLevel).toBe('ReadWrite', 'Correctly filtered accessRules[0].accessLevel should be ReadWrite.');
+            expect(rule2.accessLevel).toBe('Deny', 'Correctly filtered accessRules[1].accessLevel should be Deny.');
+            expect(rule3.accessLevel).toBe('Read', 'Correctly filtered accessRules[2].accessLevel should be Read.');
+            expect(rule4.accessLevel).toBe('ReadWrite', 'Correctly filtered accessRules[3].accessLevel should be ReadWrite.');
+            expect(rule5.accessLevel).toBe('Read', 'Correctly filtered accessRules[4].accessLevel should be Read.');
+            expect(rule6.accessLevel).toBe('Deny', 'Correctly filtered accessRules[5].accessLevel should be Deny.');
+
+            expect(rule1.identity).toBe('user1', 'Correctly filtered accessRules[0].identity should be user1.');
+            expect(rule2.identity).toBe('user2', 'Correctly filtered accessRules[1].identity should be user2.');
+            expect(rule3.identity).toBe('user3', 'Correctly filtered accessRules[2].identity should be user3.');
+            expect(rule4.identity).toBe('Authenticated Users', 'Correctly filtered accessRules[3].identity should be Authenticated Users.');
+            expect(rule5.identity).toBe('Everyone', 'Correctly filtered accessRules[4].identity should be Everyone.');
+            expect(rule6.identity).toBe('role1', 'Correctly filtered accessRules[5].identity should be role1.');
         });
     });
     
@@ -865,8 +897,8 @@ describe('pages.pages.api.behavior', function () {
             expect(result.data.items[0].id).toBe('d8f382816bed45d0847ea2f100db58e7', 'Correctly filtered id should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            // data.filter.where.length + 3 <-- Because field: {options, tags, metadata} cannnot be filtered by
-            expect(data.filter.where.length + 3).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties count should be equal to filtering parameters count.');
+            // data.filter.where.length + 4 <-- Because field: {options, tags, metadata, accessRules} cannnot be filtered by
+            expect(data.filter.where.length + 4).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties count should be equal to filtering parameters count.');
         });
     });
 

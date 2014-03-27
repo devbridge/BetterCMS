@@ -87,5 +87,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         /// </value>
         [DataMember]
         public bool IncludeMasterPages { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to include access rules.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to include access rules; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool IncludeAccessRules { get; set; }
     }
 }

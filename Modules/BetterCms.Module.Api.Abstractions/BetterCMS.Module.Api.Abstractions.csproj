@@ -85,6 +85,8 @@
     <Compile Include="Infrastructure\OrderItem.cs" />
     <Compile Include="Infrastructure\RequestBase.cs" />
     <Compile Include="Infrastructure\ResponseBase.cs" />
+    <Compile Include="Operations\Root\AccessLevel.cs" />
+    <Compile Include="Operations\Root\AccessRuleModel.cs" />
     <Compile Include="Operations\Blog\Authors\AuthorModel.cs" />
     <Compile Include="Operations\Blog\Authors\Author\GetAuthorRequest.cs" />
     <Compile Include="Operations\Blog\Authors\Author\GetAuthorResponse.cs" />

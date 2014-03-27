@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.UI.WebControls.Expressions;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
@@ -8,6 +9,7 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Pages.Pages.Search;
+using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -17,6 +19,8 @@ using BetterCms.Module.Root.Services;
 using NHibernate.Linq;
 
 using ServiceStack.ServiceInterface;
+
+using AccessLevel = BetterCms.Module.Api.Operations.Root.AccessLevel;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages
 {
@@ -124,9 +128,10 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
                 model.MainImageThumbnauilUrl = fileUrlResolver.EnsureFullPathUrl(model.MainImageThumbnauilUrl);
             }
 
-            if (listResponse.Items.Count > 0 && (request.Data.IncludePageOptions || request.Data.IncludeTags))
+            if (listResponse.Items.Count > 0
+                && (request.Data.IncludePageOptions || request.Data.IncludeTags || request.Data.IncludeAccessRules))
             {
-                LoadOptionsAndTags(listResponse, request.Data.IncludePageOptions, request.Data.IncludeTags);
+                LoadInnerCollections(listResponse, request.Data.IncludePageOptions, request.Data.IncludeTags, request.Data.IncludeAccessRules);
             }
 
             return new GetPagesResponse
@@ -135,20 +140,69 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
             };
         }
 
-        private void LoadOptionsAndTags(DataListResponse<PageModel> response, bool includeOptions, bool includeTags)
+        private void LoadInnerCollections(DataListResponse<PageModel> response, bool includeOptions, bool includeTags, bool includeAccessRules)
         {
             var pageIds = response.Items.Select(i => i.Id).Distinct().ToArray();
 
+            IEnumerable<TagModel> tagsFuture;
             if (includeTags)
             {
-                var tags = repository
-                    .AsQueryable<PageTag>(pt => pageIds.Contains(pt.Page.Id))
-                    .Select(pt => new { PageId = pt.Page.Id, TagName = pt.Tag.Name })
-                    .OrderBy(o => o.TagName)
-                    .ToFuture()
-                    .ToList();
+                tagsFuture = repository.AsQueryable<PageTag>(pt => pageIds.Contains(pt.Page.Id))
+                        .Select(pt => new TagModel { PageId = pt.Page.Id, Tag = pt.Tag.Name })
+                        .OrderBy(o => o.Tag)
+                        .ToFuture();
+            }
+            else
+            {
+                tagsFuture = null;
+            }
 
-                response.Items.ToList().ForEach(page => { page.Tags = tags.Where(tag => tag.PageId == page.Id).Select(tag => tag.TagName).ToList(); });
+            IEnumerable<AccessRuleModelEx> rulesFuture;
+            if (includeAccessRules)
+            {
+                rulesFuture = (from page in repository.AsQueryable<Module.Root.Models.Page>(p => pageIds.Contains(p.Id))
+                    from accessRule in page.AccessRules
+                    where pageIds.Contains(page.Id)
+                    orderby accessRule.IsForRole, accessRule.Identity
+                    select new AccessRuleModelEx
+                           {
+                               AccessRule = new AccessRuleModel
+                               {
+                                   AccessLevel = (AccessLevel)(int)accessRule.AccessLevel,
+                                   Identity = accessRule.Identity,
+                                   IsForRole = accessRule.IsForRole
+                               },
+                               PageId = page.Id
+                           })
+                    .ToFuture();
+            }
+            else
+            {
+                rulesFuture = null;
+            }
+
+            if (tagsFuture != null)
+            {
+                var tags = tagsFuture.ToList();
+                response.Items.ToList().ForEach(page => 
+                { 
+                    page.Tags = tags
+                        .Where(tag => tag.PageId == page.Id)
+                        .Select(tag => tag.Tag)
+                        .ToList();
+                });
+            }
+
+            if (rulesFuture != null)
+            {
+                var rules = rulesFuture.ToList();
+                response.Items.ToList().ForEach(page => 
+                {
+                    page.AccessRules = rules
+                        .Where(rule => rule.PageId == page.Id)
+                        .Select(rule => rule.AccessRule)
+                        .ToList();
+                });
             }
 
             if (includeOptions)
@@ -182,6 +236,19 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
             public Guid PageId { get; set; }
 
             public PageOption Option { get; set; }
+        }
+
+        private class TagModel
+        {
+            public Guid PageId { get; set; }
+
+            public string Tag { get; set; }
+        }
+
+        private class AccessRuleModelEx
+        {
+            public AccessRuleModel AccessRule { get; set; }
+            public Guid PageId { get; set; }
         }
 
         SearchPagesResponse IPagesService.Search(SearchPagesRequest request)

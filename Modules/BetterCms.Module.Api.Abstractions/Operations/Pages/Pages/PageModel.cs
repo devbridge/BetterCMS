@@ -1,6 +1,7 @@
 ﻿using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Root;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages
 {
@@ -150,6 +151,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         /// </value>
         [DataMember]
         public System.Collections.Generic.List<string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of access rule models.
+        /// </summary>
+        /// <value>
+        /// The list of access rule models.
+        /// </value>
+        [DataMember]
+        public System.Collections.Generic.List<AccessRuleModel> AccessRules { get; set; }
 
         /// <summary>
         /// Gets or sets the page metadata.

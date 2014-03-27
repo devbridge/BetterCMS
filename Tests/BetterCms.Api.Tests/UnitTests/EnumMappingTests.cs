@@ -9,6 +9,9 @@ using ApiMediaContentType = BetterCms.Module.Api.Operations.MediaManager.MediaCo
 using CoreOptionType = BetterCms.Core.DataContracts.Enums.OptionType;
 using ApiOptionType = BetterCms.Module.Api.Operations.Root.OptionType;
 
+using CoreAccessLevel = BetterCms.Core.Security.AccessLevel;
+using ApiAccessLevel = BetterCms.Module.Api.Operations.Root.AccessLevel;
+
 using NUnit.Framework;
 
 namespace BetterCms.Api.Tests.UnitTests
@@ -51,8 +54,19 @@ namespace BetterCms.Api.Tests.UnitTests
             Assert.AreEqual((int)CoreOptionType.CssUrl, (int)ApiOptionType.CssUrl);
             Assert.AreEqual((int)CoreOptionType.JavaScriptUrl, (int)ApiOptionType.JavaScriptUrl);
 
-            Assert.AreEqual(Enum.GetValues(typeof(MediaManagerMediaContentType)).Length, 2, "Not all MediaManager.MediaContentType values are mapped.");
-            Assert.AreEqual(Enum.GetValues(typeof(ApiMediaContentType)).Length, 2, "Not all Api.MediaContentTypevalues are mapped.");
+            Assert.AreEqual(Enum.GetValues(typeof(CoreOptionType)).Length, 8, "Not all CoreOptionType values are mapped.");
+            Assert.AreEqual(Enum.GetValues(typeof(ApiOptionType)).Length, 8, "Not all ApiOptionType are mapped.");
+        }
+        
+        [Test]
+        public void ShouldMapAccessLevelValues()
+        {
+            Assert.AreEqual((int)CoreAccessLevel.Deny, (int)ApiAccessLevel.Deny);
+            Assert.AreEqual((int)CoreAccessLevel.Read, (int)ApiAccessLevel.Read);
+            Assert.AreEqual((int)CoreAccessLevel.ReadWrite, (int)ApiAccessLevel.ReadWrite);
+
+            Assert.AreEqual(Enum.GetValues(typeof(CoreAccessLevel)).Length, 2, "Not all CoreAccessLevel values are mapped.");
+            Assert.AreEqual(Enum.GetValues(typeof(ApiAccessLevel)).Length, 2, "Not all ApiAccessLevel are mapped.");
         }
     }
 }
