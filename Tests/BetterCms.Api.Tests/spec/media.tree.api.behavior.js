@@ -10,7 +10,8 @@ describe('media.tree.api.behavior', function () {
             includeImagesTree: true,
             includeFilesTree: false,
             includeImages: false,
-            includeFiles: false
+            includeFiles: false,
+            includeAccessRules: false
         },
             results = {
                 imagesTreeCount: 2,
@@ -27,7 +28,8 @@ describe('media.tree.api.behavior', function () {
             includeImagesTree: true,
             includeFilesTree: false,
             includeImages: true,
-            includeFiles: false
+            includeFiles: false,
+            includeAccessRules: false
         },
             results = {
                 imagesTreeCount: 4,
@@ -44,7 +46,8 @@ describe('media.tree.api.behavior', function () {
             includeImagesTree: false,
             includeFilesTree: true,
             includeImages: false,
-            includeFiles: false
+            includeFiles: false,
+            includeAccessRules: false
         },
             results = {
                 filesTreeCount: 2,
@@ -61,12 +64,14 @@ describe('media.tree.api.behavior', function () {
             includeImagesTree: false,
             includeFilesTree: true,
             includeImages: false,
-            includeFiles: true
+            includeFiles: true,
+            includeAccessRules: true
         },
             results = {
                 filesTreeCount: 4,
                 filesFoldersCount: 2,
-                firstFilesFolderChildrenCount: 3
+                firstFilesFolderChildrenCount: 3,
+                includeAccessRules: true
             };
         
         runTreeTests(data, results);
@@ -78,7 +83,8 @@ describe('media.tree.api.behavior', function () {
             includeImagesTree: true,
             includeFilesTree: true,
             includeImages: true,
-            includeFiles: true
+            includeFiles: true,
+            includeAccessRules: true
         },
             results = {
                 imagesTreeCount: 4,
@@ -86,7 +92,8 @@ describe('media.tree.api.behavior', function () {
                 filesTreeCount: 4,
                 filesFoldersCount: 2,
                 firstImagesFolderChildrenCount: 3,
-                firstFilesFolderChildrenCount: 3
+                firstFilesFolderChildrenCount: 3,
+                includeAccessRules: true
             };
         
         runTreeTests(data, results);
@@ -98,7 +105,8 @@ describe('media.tree.api.behavior', function () {
             includeImagesTree: true,
             includeFilesTree: true,
             includeImages: true,
-            includeFiles: true
+            includeFiles: true,
+            includeAccessRules: true
         },
             results = {
                 imagesTreeCount: 6,
@@ -106,7 +114,8 @@ describe('media.tree.api.behavior', function () {
                 filesTreeCount: 6,
                 filesFoldersCount: 3,
                 firstImagesFolderChildrenCount: 5,
-                firstFilesFolderChildrenCount: 5
+                firstFilesFolderChildrenCount: 5,
+                includeAccessRules: true
             };
         
         runTreeTests(data, results);
@@ -175,7 +184,7 @@ describe('media.tree.api.behavior', function () {
                 expect(testResult.folder.children.length).toBe(expectingResults.firstFilesFolderChildrenCount, 'Correct first files folder children count should be retrieved.');
             }
             if (testResult.file) {
-                testFile(testResult.file);
+                testFile(testResult.file, expectingResults.includeAccessRules);
             }
 
             testResult = runListTest(tree.imagesTree, data.includeImagesTree, data.includeImages, expectingResults.imagesTreeCount, expectingResults.imagesFoldersCount);
@@ -258,11 +267,45 @@ describe('media.tree.api.behavior', function () {
         expect(folder.isArchived).toBe(false, 'Correctly filtered isArchived should be retrieved.');
     }
     
-    function testFile(file) {
+    function testFile(file, includeAccessRules) {
         testFileBase(file);
         
         expect(file.title).toBe('_0000_File_1', 'Correctly filtered title should be retrieved.');
         expect(file.isArchived).toBe(false, 'Correctly filtered isArchived should be retrieved.');
+
+        if (includeAccessRules) {
+            var rules = file.accessRules;
+            expect(rules).toBeDefinedAndNotNull('JSON AccessRules object should be retrieved.');
+            expect(rules.length).toBe(6, 'Returned array length should be 6.');
+
+            var rule1 = rules[0],
+                rule2 = rules[1],
+                rule3 = rules[2],
+                rule4 = rules[3],
+                rule5 = rules[4],
+                rule6 = rules[5];
+
+            expect(rule1.isForRole).toBe(false, 'Correctly filtered accessRules[0].isForRole should be false.');
+            expect(rule2.isForRole).toBe(false, 'Correctly filtered accessRules[1].isForRole should be false.');
+            expect(rule3.isForRole).toBe(false, 'Correctly filtered accessRules[2].isForRole should be false.');
+            expect(rule4.isForRole).toBe(true, 'Correctly filtered accessRules[3].isForRole should be true.');
+            expect(rule5.isForRole).toBe(true, 'Correctly filtered accessRules[4].isForRole should be true.');
+            expect(rule6.isForRole).toBe(true, 'Correctly filtered accessRules[5].isForRole should be true.');
+
+            expect(rule1.accessLevel).toBe('ReadWrite', 'Correctly filtered accessRules[0].accessLevel should be ReadWrite.');
+            expect(rule2.accessLevel).toBe('Deny', 'Correctly filtered accessRules[1].accessLevel should be Deny.');
+            expect(rule3.accessLevel).toBe('Read', 'Correctly filtered accessRules[2].accessLevel should be Read.');
+            expect(rule4.accessLevel).toBe('ReadWrite', 'Correctly filtered accessRules[3].accessLevel should be ReadWrite.');
+            expect(rule5.accessLevel).toBe('Read', 'Correctly filtered accessRules[4].accessLevel should be Read.');
+            expect(rule6.accessLevel).toBe('Deny', 'Correctly filtered accessRules[5].accessLevel should be Deny.');
+
+            expect(rule1.identity).toBe('user1', 'Correctly filtered accessRules[0].identity should be user1.');
+            expect(rule2.identity).toBe('user2', 'Correctly filtered accessRules[1].identity should be user2.');
+            expect(rule3.identity).toBe('user3', 'Correctly filtered accessRules[2].identity should be user3.');
+            expect(rule4.identity).toBe('Authenticated Users', 'Correctly filtered accessRules[3].identity should be Authenticated Users.');
+            expect(rule5.identity).toBe('Everyone', 'Correctly filtered accessRules[4].identity should be Everyone.');
+            expect(rule6.identity).toBe('role1', 'Correctly filtered accessRules[5].identity should be role1.');
+        }
     }
 
     function testFileFolder(folder) {

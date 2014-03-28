@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
+using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 
@@ -34,17 +35,17 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
 
             if (request.Data.IncludeFilesTree)
             {
-                response.Data.FilesTree = LoadMediaTree<MediaFile>(MediaType.File, request.Data.IncludeArchived, request.Data.IncludeFiles);
+                response.Data.FilesTree = LoadMediaTree<MediaFile>(MediaType.File, request.Data.IncludeArchived, request.Data.IncludeFiles, request.Data.IncludeAccessRules);
             }
             if (request.Data.IncludeImagesTree)
             {
-                response.Data.ImagesTree = LoadMediaTree<MediaImage>(MediaType.Image, request.Data.IncludeArchived, request.Data.IncludeImages);
+                response.Data.ImagesTree = LoadMediaTree<MediaImage>(MediaType.Image, request.Data.IncludeArchived, request.Data.IncludeImages, false);
             }
 
             return response;
         }
 
-        private IList<MediaItemModel> LoadMediaTree<TEntity>(MediaType mediaType, bool includeArchived, bool loadFiles)
+        private IList<MediaItemModel> LoadMediaTree<TEntity>(MediaType mediaType, bool includeArchived, bool loadFiles, bool includeAccessRules)
             where TEntity: Media
         {
             var query = repository
@@ -94,13 +95,47 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
                                      IsArchived = media.IsArchived
                                  }).ToList();
 
+            var ids = new List<Guid>();
             mediaItems.ForEach(media =>
                                    {
                                        if (media.MediaContentType == MediaContentType.File)
                                        {
                                            media.Url = fileService.GetDownloadFileUrl(mediaType, media.Id, media.Url);
+                                           ids.Add(media.Id);
                                        }
                                    });
+
+            if (includeAccessRules)
+            {
+                (from file in repository.AsQueryable<MediaFile>()
+                    from accessRule in file.AccessRules
+                    where ids.Contains(file.Id)
+                    orderby accessRule.IsForRole, accessRule.Identity
+                    select
+                        new AccessRuleModelEx
+                            {
+                                AccessRule =
+                                    new AccessRuleModel
+                                    {
+                                        AccessLevel = (AccessLevel)(int)accessRule.AccessLevel,
+                                        Identity = accessRule.Identity,
+                                        IsForRole = accessRule.IsForRole
+                                    },
+                                FileId = file.Id
+                            })
+                        .ToList()
+                        .ForEach(rule => mediaItems
+                            .Where(file => file.Id == rule.FileId)
+                            .ToList()
+                            .ForEach(file =>
+                                {
+                                    if (file.AccessRules == null)
+                                    {
+                                        file.AccessRules = new List<AccessRuleModel>();
+                                    }
+                                    file.AccessRules.Add(rule.AccessRule);
+                                }));
+            }
 
             return GetChildren(mediaItems, null);
         }
@@ -115,6 +150,13 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
             }
 
             return childItems;
+        }
+
+        private class AccessRuleModelEx
+        {
+            public AccessRuleModel AccessRule { get; set; }
+
+            public Guid FileId { get; set; }
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Root;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
 {
@@ -61,5 +62,14 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
         /// </value>
         [DataMember]
         public IList<MediaItemModel> Children { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of access rule models.
+        /// </summary>
+        /// <value>
+        /// The list of access rule models.
+        /// </value>
+        [DataMember]
+        public IList<AccessRuleModel> AccessRules { get; set; }
     }
 }
