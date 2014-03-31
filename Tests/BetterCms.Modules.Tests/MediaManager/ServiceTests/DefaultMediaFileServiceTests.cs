@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Security.Principal;
 
+using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Module.MediaManager.Models;
@@ -66,10 +68,16 @@ namespace BetterCms.Test.Module.MediaManager.ServiceTests
             var urlResolver = new Mock<IMediaFileUrlResolver>();
             urlResolver.Setup(x => x.GetMediaFileFullUrl(It.IsAny<Guid>(), It.IsAny<string>())).Returns(SecuredUrl1);
 
+            var accessControlService = new Mock<IAccessControlService>();
+            accessControlService
+                .Setup(x => x.GetAccessLevel(It.IsAny<MediaFile>(), It.IsAny<IPrincipal>(), It.IsAny<bool>()))
+                .Returns(AccessLevel.Read);
+
             var securityService = new Mock<ISecurityService>();
             securityService.Setup(x => x.CurrentPrincipalName).Returns("Test User");
 
-            return new DefaultMediaFileService(storageService.Object, null, null, cmsConfiguration.Object, null, null, urlResolver.Object, securityService.Object);
+            return new DefaultMediaFileService(storageService.Object, null, null, cmsConfiguration.Object, null,
+                null, urlResolver.Object, securityService.Object, null, accessControlService.Object);
         }
     }
 }
