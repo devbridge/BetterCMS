@@ -9,8 +9,6 @@ using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 
-using NHibernate.Mapping;
-
 using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.Files
@@ -63,6 +61,17 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
             }
 
             query = query.ApplyMediaTagsFilter(request.Data);
+
+            if (request.User != null && !string.IsNullOrWhiteSpace(request.User.Name))
+            {
+                var principal = new ApiPrincipal(request.User);
+                IEnumerable<Guid> deniedPages = fileService.GetPrincipalDeniedFiles(principal, false);
+                foreach (var deniedPageId in deniedPages)
+                {
+                    var id = deniedPageId;
+                    query = query.Where(f => f.Id != id);
+                }
+            }
 
             var listResponse = query.Select(media => new MediaModel
                         {

@@ -1,20 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Web;
-using System.Web.Mvc;
 
 using BetterCms.Configuration;
-using BetterCms.Core;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
+using BetterCms.Core.Services.Caching;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Core.Web;
-using BetterCms.Module.MediaManager.Controllers;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -42,6 +43,10 @@ namespace BetterCms.Module.MediaManager.Services
         private readonly IMediaFileUrlResolver mediaFileUrlResolver;
 
         private readonly ISecurityService securityService;
+        
+        private readonly ICacheService cacheService;
+
+        private readonly IAccessControlService accessControlService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultMediaFileService" /> class.
@@ -53,9 +58,13 @@ namespace BetterCms.Module.MediaManager.Services
         /// <param name="httpContextAccessor">The HTTP context accessor.</param>
         /// <param name="sessionFactoryProvider">The session factory provider.</param>
         /// <param name="mediaFileUrlResolver">The media file URL resolver.</param>
+        /// <param name="securityService">The security service.</param>
+        /// <param name="cacheService">The cache service.</param>
+        /// <param name="accessControlService">The access control service.</param>
         public DefaultMediaFileService(IStorageService storageService, IRepository repository, IUnitOfWork unitOfWork,
             ICmsConfiguration configuration, IHttpContextAccessor httpContextAccessor, ISessionFactoryProvider sessionFactoryProvider,
-            IMediaFileUrlResolver mediaFileUrlResolver, ISecurityService securityService)
+            IMediaFileUrlResolver mediaFileUrlResolver, ISecurityService securityService, ICacheService cacheService,
+            IAccessControlService accessControlService)
         {
             this.sessionFactoryProvider = sessionFactoryProvider;
             this.httpContextAccessor = httpContextAccessor;
@@ -65,6 +74,8 @@ namespace BetterCms.Module.MediaManager.Services
             this.repository = repository;
             this.mediaFileUrlResolver = mediaFileUrlResolver;
             this.securityService = securityService;
+            this.cacheService = cacheService;
+            this.accessControlService = accessControlService;
         }
 
         public virtual void RemoveFile(Guid fileId, int version, bool doNotCheckVersion = false)
@@ -304,6 +315,64 @@ namespace BetterCms.Module.MediaManager.Services
             }
 
             return mediaFileUrlResolver.GetMediaFileFullUrl(id, fileUrl);
+        }
+
+        /// <summary>
+        /// Gets the list of denied pages ids.
+        /// </summary>
+        /// <param name="useCache"></param>
+        /// <returns>
+        /// Enumerable list of denied pages ids
+        /// </returns>
+        public IEnumerable<Guid> GetDeniedFiles(bool useCache = true)
+        {
+            var principal = securityService.GetCurrentPrincipal();
+
+            return GetPrincipalDeniedFiles(principal, useCache);
+        }
+
+        /// <summary>
+        /// Gets the principal denied files.
+        /// </summary>
+        /// <param name="principal">The principal.</param>
+        /// <param name="useCache">if set to <c>true</c> use cache.</param>
+        /// <returns></returns>
+        public IEnumerable<Guid> GetPrincipalDeniedFiles(IPrincipal principal, bool useCache = true)
+        {
+            IEnumerable<MediaFile> list;
+
+            if (useCache)
+            {
+                var cacheKey = string.Format("CMS_DeniedFiles_{0}_C9E7517250F64F84ADC8-B991C8391306", principal.Identity.Name);
+                list = cacheService.Get(cacheKey, new TimeSpan(0, 0, 0, 30), LoadDeniedFiles);
+            }
+            else
+            {
+                list = LoadDeniedFiles();
+            }
+
+            foreach (var file in list)
+            {
+                var accessLevel = accessControlService.GetAccessLevel(file, principal, useCache);
+                if (accessLevel == AccessLevel.Deny)
+                {
+                    yield return file.Id;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Loads the list of denied files.
+        /// </summary>
+        /// <returns>The list of denied files</returns>
+        private IEnumerable<MediaFile> LoadDeniedFiles()
+        {
+            return repository
+                .AsQueryable<MediaFile>()
+                .Where(f => f.AccessRules.Any(b => b.AccessLevel == AccessLevel.Deny))
+                .FetchMany(f => f.AccessRules)
+                .ToList()
+                .Distinct();
         }
     }
 }

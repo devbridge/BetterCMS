@@ -125,7 +125,6 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
             return null;
         }
 
-
         /// <summary>
         /// Gets all items list.
         /// </summary>

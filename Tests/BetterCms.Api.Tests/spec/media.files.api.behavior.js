@@ -389,6 +389,121 @@ describe('media.files.api.behavior', function () {
         });
     });
 
+    it('03112.1: Should get list of files for user admin with roles: [role1, role2]', function () {
+        var url = '/bcms-api/files/',
+            result,
+            ready = false,
+            data = {
+                filter: {
+                    where: [{ field: 'Title', value: '03112', operation: 'StartsWith' }]
+                },
+                folderId: '22c03f8220b446edbb15a2fc00fe2f2f'
+            },
+            user = {
+                name: 'admin',
+                roles: ['role1', 'role2']
+            };
+
+        runs(function () {
+            api.getSecured(url, data, user, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved.');
+            expect(result.data.totalCount).toBe(3, 'Total count should be 3.');
+            expect(result.data.items.length).toBe(3, 'Returned array length should be 3.');
+
+            expect(result.data.items[0].title).toBe('03112: for all', 'Correctly filtered data.items[0].title should be retrieved.');
+            expect(result.data.items[1].title).toBe('03112: only for role role1', 'Correctly filtered data.items[1].title should be retrieved.');
+            expect(result.data.items[2].title).toBe('03112: only for role role2', 'Correctly filtered data.items[2].title should be retrieved.');
+        });
+    });
+
+    it('03112.2: Should get list of pages for user admin without roles', function () {
+        var url = '/bcms-api/files/',
+            result,
+            ready = false,
+            data = {
+                filter: {
+                    where: [{ field: 'Title', value: '03112', operation: 'StartsWith' }]
+                },
+                folderId: '22c03f8220b446edbb15a2fc00fe2f2f'
+            },
+            user = {
+                name: 'admin'
+            };
+
+        runs(function () {
+            api.getSecured(url, data, user, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved.');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
+
+            expect(result.data.items[0].title).toBe('03112: for all', 'Correctly filtered data.items[0].title should be retrieved.');
+        });
+    });
+
+    it('03112.3: Should get list of pages for user admin2 with [role1]', function () {
+        var url = '/bcms-api/files/',
+            result,
+            ready = false,
+            data = {
+                filter: {
+                    where: [{ field: 'Title', value: '03112', operation: 'StartsWith' }]
+                },
+                folderId: '22c03f8220b446edbb15a2fc00fe2f2f'
+            },
+            user = {
+                name: 'admin2',
+                roles: ['role1']
+            };
+
+        runs(function () {
+            api.getSecured(url, data, user, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved.');
+            expect(result.data.totalCount).toBe(4, 'Total count should be 4.');
+            expect(result.data.items.length).toBe(4, 'Returned array length should be 4.');
+
+            expect(result.data.items[0].title).toBe('03112: denied for admin', 'Correctly filtered data.items[0].title should be retrieved.');
+            expect(result.data.items[1].title).toBe('03112: for all', 'Correctly filtered data.items[1].title should be retrieved.');
+            expect(result.data.items[2].title).toBe('03112: only for admin 2', 'Correctly filtered data.items[2].title should be retrieved.');
+            expect(result.data.items[3].title).toBe('03112: only for role role1', 'Correctly filtered data.items[3].title should be retrieved.');
+        });
+    });
+
     function runFilesListTests(data, expectingResults) {
         var url = '/bcms-api/files/',
             result,

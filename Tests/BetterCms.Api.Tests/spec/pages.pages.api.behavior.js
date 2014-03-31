@@ -1045,9 +1045,9 @@ describe('pages.pages.api.behavior', function () {
             expect(result.data.totalCount).toBe(3, 'Total count should be 3.');
             expect(result.data.items.length).toBe(3, 'Returned array length should be 3.');
 
-            expect(result.data.items[0].title).toBe('01027: for all', 'Correctly filtered date.items[0].title should be retrieved.');
-            expect(result.data.items[1].title).toBe('01027: only for role1', 'Correctly filtered date.items[1].title should be retrieved.');
-            expect(result.data.items[2].title).toBe('01027: only for role2', 'Correctly filtered date.items[2].title should be retrieved.');
+            expect(result.data.items[0].title).toBe('01027: for all', 'Correctly filtered data.items[0].title should be retrieved.');
+            expect(result.data.items[1].title).toBe('01027: only for role1', 'Correctly filtered data.items[1].title should be retrieved.');
+            expect(result.data.items[2].title).toBe('01027: only for role2', 'Correctly filtered data.items[2].title should be retrieved.');
         });
     });
 
@@ -1087,7 +1087,7 @@ describe('pages.pages.api.behavior', function () {
             expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
             expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
-            expect(result.data.items[0].title).toBe('01027: for all', 'Correctly filtered date.items[0].title should be retrieved.');
+            expect(result.data.items[0].title).toBe('01027: for all', 'Correctly filtered data.items[0].title should be retrieved.');
         });
     });
 
@@ -1128,10 +1128,10 @@ describe('pages.pages.api.behavior', function () {
             expect(result.data.totalCount).toBe(4, 'Total count should be 4.');
             expect(result.data.items.length).toBe(4, 'Returned array length should be 4.');
 
-            expect(result.data.items[0].title).toBe('01027: dienied for admin', 'Correctly filtered date.items[0].title should be retrieved.');
-            expect(result.data.items[1].title).toBe('01027: for all', 'Correctly filtered date.items[1].title should be retrieved.');
-            expect(result.data.items[2].title).toBe('01027: only for admin2', 'Correctly filtered date.items[2].title should be retrieved.');
-            expect(result.data.items[3].title).toBe('01027: only for role1', 'Correctly filtered date.items[3].title should be retrieved.');
+            expect(result.data.items[0].title).toBe('01027: dienied for admin', 'Correctly filtered data.items[0].title should be retrieved.');
+            expect(result.data.items[1].title).toBe('01027: for all', 'Correctly filtered data.items[1].title should be retrieved.');
+            expect(result.data.items[2].title).toBe('01027: only for admin2', 'Correctly filtered data.items[2].title should be retrieved.');
+            expect(result.data.items[3].title).toBe('01027: only for role1', 'Correctly filtered data.items[3].title should be retrieved.');
         });
     });
 
