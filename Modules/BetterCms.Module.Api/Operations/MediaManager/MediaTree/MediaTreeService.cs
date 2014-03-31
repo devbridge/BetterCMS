@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
+using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
@@ -35,17 +36,25 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
 
             if (request.Data.IncludeFilesTree)
             {
-                response.Data.FilesTree = LoadMediaTree<MediaFile>(MediaType.File, request.Data.IncludeArchived, request.Data.IncludeFiles, request.Data.IncludeAccessRules);
+                IEnumerable<Guid> deniedPages = null;
+                if (request.User != null && !string.IsNullOrWhiteSpace(request.User.Name))
+                {
+                    var principal = new ApiPrincipal(request.User);
+                    deniedPages = fileService.GetPrincipalDeniedFiles(principal, false);
+                }
+
+                response.Data.FilesTree = LoadMediaTree<MediaFile>(MediaType.File, deniedPages, request.Data.IncludeArchived, request.Data.IncludeFiles, request.Data.IncludeAccessRules);
             }
             if (request.Data.IncludeImagesTree)
             {
-                response.Data.ImagesTree = LoadMediaTree<MediaImage>(MediaType.Image, request.Data.IncludeArchived, request.Data.IncludeImages, false);
+                response.Data.ImagesTree = LoadMediaTree<MediaImage>(MediaType.Image, null, request.Data.IncludeArchived, request.Data.IncludeImages, false);
             }
 
             return response;
         }
 
-        private IList<MediaItemModel> LoadMediaTree<TEntity>(MediaType mediaType, bool includeArchived, bool loadFiles, bool includeAccessRules)
+        private IList<MediaItemModel> LoadMediaTree<TEntity>(MediaType mediaType, IEnumerable<Guid> deniedPages,
+            bool includeArchived, bool loadFiles, bool includeAccessRules)
             where TEntity: Media
         {
             var query = repository
@@ -74,6 +83,15 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
             else
             {
                 query = query.Where(f => f is MediaFolder);
+            }
+
+            if (deniedPages != null)
+            {
+                foreach (var deniedPageId in deniedPages)
+                {
+                    var id = deniedPageId;
+                    query = query.Where(f => f.Id != id);
+                }
             }
 
             var mediaItems = query

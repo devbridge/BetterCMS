@@ -155,6 +155,60 @@ describe('media.tree.api.behavior', function () {
         });
     });
 
+    it('03007.1: Should get a media tree: including everything (folders / files / images / archived items)', function () {
+        var url = '/bcms-api/media-tree/',
+            result,
+            ready = false,
+            data = {
+                includeArchived: true,
+                includeImagesTree: false,
+                includeFilesTree: true,
+                includeImages: false,
+                includeFiles: true,
+                includeAccessRules: false
+            },
+            user = {
+                name: 'admin',
+                roles: ['role1', 'role2']
+            };
+
+        runs(function () {
+            api.getSecured(url, data, user, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.filesTree).not.toBeNull('JSON data.items object should be retrieved.');
+
+            var folder = null,
+                i;
+
+            for (i = 0; i < result.data.filesTree.length; i++) {
+                if (result.data.filesTree[i].id == '22c03f8220b446edbb15a2fc00fe2f2f') {
+                    folder = result.data.filesTree[i];
+                    break;
+                }
+            }
+
+            expect(folder).not.toBeNull('JSON data.items[id="22c03f8220b446edbb15a2fc00fe2f2f"] object should be retrieved.');
+            expect(folder.children).not.toBeNull('JSON data.items[id="22c03f8220b446edbb15a2fc00fe2f2f"].children object should be retrieved.');
+
+            expect(folder.children.length).toBe(3, 'Returned files array length should be 3.');
+
+            expect(folder.children[0].title).toBe('03112: for all', 'Correctly filtered folder.children[0].title should be retrieved.');
+            expect(folder.children[1].title).toBe('03112: only for role role1', 'Correctly filtered folder.children[1].title should be retrieved.');
+            expect(folder.children[2].title).toBe('03112: only for role role2', 'Correctly filtered folder.children[2].title should be retrieved.');
+        });
+    });
+
     function runTreeTests(data, expectingResults) {
         var url = '/bcms-api/media-tree/',
             result,
