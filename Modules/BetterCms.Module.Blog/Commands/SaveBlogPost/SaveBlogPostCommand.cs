@@ -254,8 +254,11 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                 }
                 UpdateStatus(blogPost, request.DesirableStatus);
             }
-            else if (request.DesirableStatus == ContentStatus.Published)
+            else if (request.DesirableStatus == ContentStatus.Published
+                || blogPost.Status == PageStatus.Preview)
             {
+                // Update only if publishing or current status is preview.
+                // Else do not change, because it may change from published to draft status 
                 UpdateStatus(blogPost, request.DesirableStatus);
             }
 
