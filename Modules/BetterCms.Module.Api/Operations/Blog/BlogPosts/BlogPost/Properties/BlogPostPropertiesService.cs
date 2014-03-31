@@ -5,6 +5,7 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.MediaManager.Services;
 
@@ -170,6 +171,12 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
                 response.Tags = LoadTags(request.BlogPostId);
             }
 
+            if (request.Data.IncludeAccessRules)
+            {
+                // Get layout options, page options and merge them
+                response.AccessRules = LoadAccessRules(response.Data.Id);
+            }
+
             return response;
         }
 
@@ -198,6 +205,21 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
                         Name = media.Tag.Name
                     })
                 .ToList();
+        }
+
+        private List<AccessRuleModel> LoadAccessRules(Guid blogPostId)
+        {
+            return (from page in repository.AsQueryable<Module.Blog.Models.BlogPost>()
+                    from accessRule in page.AccessRules
+                    where page.Id == blogPostId
+                    orderby accessRule.IsForRole, accessRule.Identity
+                    select new AccessRuleModel
+                    {
+                        AccessLevel = (AccessLevel)(int)accessRule.AccessLevel,
+                        Identity = accessRule.Identity,
+                        IsForRole = accessRule.IsForRole
+                    })
+                    .ToList();
         }
     }
 }

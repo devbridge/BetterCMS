@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Pages.Models;
-using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
-using NHibernate.Criterion;
 using NHibernate.Transform;
 
 namespace BetterCms.Module.Blog.Commands.GetTemplatesList
@@ -29,21 +25,14 @@ namespace BetterCms.Module.Blog.Commands.GetTemplatesList
         private readonly ICmsConfiguration configuration;
 
         /// <summary>
-        /// The page service.
-        /// </summary>
-        private readonly IPageService pageService;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="GetTemplatesCommand" /> class.
         /// </summary>
         /// <param name="optionService">The option service.</param>
         /// <param name="configuration">The configuration.</param>
-        /// <param name="pageService">The page service.</param>
-        public GetTemplatesCommand(IOptionService optionService, ICmsConfiguration configuration, IPageService pageService)
+        public GetTemplatesCommand(IOptionService optionService, ICmsConfiguration configuration)
         {
             this.optionService = optionService;
             this.configuration = configuration;
-            this.pageService = pageService;
         }
 
         /// <summary>
@@ -89,14 +78,13 @@ namespace BetterCms.Module.Blog.Commands.GetTemplatesList
 
             if (configuration.Security.AccessControlEnabled)
             {
-                var deniedPages = pageService.GetDeniedPages();
+                var deniedPages = AccessControlService.GetDeniedObjects<PageProperties>();
                 foreach (var deniedPageId in deniedPages)
                 {
                     var id = deniedPageId;
                     masterPagesQuery = masterPagesQuery.Where(f => f.Id != id);
                 }
             }
-
 
             masterPagesQuery.Select(
                           page =>

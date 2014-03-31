@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Principal;
 using System.Web;
 
 using BetterCms.Core.DataAccess;
@@ -256,64 +255,6 @@ namespace BetterCms.Module.Pages.Services
                     LanguageId = p.Language.Id
                 })
                 .ToFuture();
-        }
-
-        /// <summary>
-        /// Gets the list of denied pages ids.
-        /// </summary>
-        /// <param name="useCache"></param>
-        /// <returns>
-        /// Enumerable list of denied pages ids
-        /// </returns>
-        public IEnumerable<Guid> GetDeniedPages(bool useCache = true)
-        {
-            var principal = securityService.GetCurrentPrincipal();
-
-            return GetPrincipalDeniedPages(principal, useCache);
-        }
-
-        /// <summary>
-        /// Gets the principal denied pages.
-        /// </summary>
-        /// <param name="principal">The principal.</param>
-        /// <param name="useCache">if set to <c>true</c> use cache.</param>
-        /// <returns></returns>
-        public IEnumerable<Guid> GetPrincipalDeniedPages(IPrincipal principal, bool useCache = true)
-        {
-            IEnumerable<Root.Models.Page> list;
-
-            if (useCache)
-            {
-                var cacheKey = string.Format("CMS_DeniedPages_{0}_C9E7517250F64F84ADC8-B991C8391306", principal.Identity.Name);
-                list = cacheService.Get(cacheKey, new TimeSpan(0, 0, 0, 30), LoadDeniedPages);
-            }
-            else
-            {
-                list = LoadDeniedPages();
-            }
-
-            foreach (var page in list)
-            {
-                var accessLevel = accessControlService.GetAccessLevel(page, principal, useCache);
-                if (accessLevel == AccessLevel.Deny)
-                {
-                    yield return page.Id;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Loads the list of denied pages.
-        /// </summary>
-        /// <returns>The list of denied page</returns>
-        private IEnumerable<Root.Models.Page> LoadDeniedPages()
-        {
-            return repository
-                .AsQueryable<Root.Models.Page>()
-                .Where(f => f.AccessRules.Any(b => b.AccessLevel == AccessLevel.Deny))
-                .FetchMany(f => f.AccessRules)
-                .ToList()
-                .Distinct();
         }
     }
 }

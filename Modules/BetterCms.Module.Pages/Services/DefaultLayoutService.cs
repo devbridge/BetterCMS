@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 
 using BetterCms.Core.DataAccess;
-
+using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Page;
 
@@ -34,21 +34,24 @@ namespace BetterCms.Module.Pages.Services
         private readonly ICmsConfiguration configuration;
 
         /// <summary>
-        /// The page service.
+        /// The access control service
         /// </summary>
-        private readonly IPageService pageService;
+        private readonly IAccessControlService accessControlService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultLayoutService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="optionService">The option service.</param>
-        public DefaultLayoutService(IRepository repository, IOptionService optionService, ICmsConfiguration configuration, IPageService pageService)
+        /// <param name="configuration">The configuration.</param>
+        /// <param name="accessControlService">The access control service.</param>
+        public DefaultLayoutService(IRepository repository, IOptionService optionService, ICmsConfiguration configuration,
+            IAccessControlService accessControlService)
         {
             this.repository = repository;
             this.optionService = optionService;
             this.configuration = configuration;
-            this.pageService = pageService;
+            this.accessControlService = accessControlService;
         }
 
         /// <summary>
@@ -57,7 +60,7 @@ namespace BetterCms.Module.Pages.Services
         /// <returns>
         /// The future query for the list of layout view models
         /// </returns>
-        public IList<TemplateViewModel> GetAvailableLayouts(System.Guid? currentPageId = null)
+        public IList<TemplateViewModel> GetAvailableLayouts(Guid? currentPageId = null)
         {
             // Load layouts
             var templatesFuture = repository
@@ -77,7 +80,7 @@ namespace BetterCms.Module.Pages.Services
 
             if (configuration.Security.AccessControlEnabled)
             {
-                var deniedPages = pageService.GetDeniedPages();
+                var deniedPages = accessControlService.GetDeniedObjects<PageProperties>();
                 foreach (var deniedPageId in deniedPages)
                 {
                     var id = deniedPageId;

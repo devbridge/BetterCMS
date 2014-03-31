@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Security.Principal;
+
+using BetterCms.Core.DataContracts;
 
 namespace BetterCms.Core.Security
 {
@@ -60,5 +63,25 @@ namespace BetterCms.Core.Security
         /// </summary>
         /// <returns></returns>
         IList<IAccessRule> GetDefaultAccessList(IPrincipal principal = null);
+
+        /// <summary>
+        /// Gets the list of denied object ids.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of the entity.</typeparam>
+        /// <param name="useCache">if set to <c>true</c> use cache.</param>
+        /// <returns>
+        /// Enumerable list of denied object ids
+        /// </returns>
+        IEnumerable<Guid> GetDeniedObjects<TEntity>(bool useCache = true) 
+            where TEntity : IEntity, IAccessSecuredObject;
+
+        /// <summary>
+        /// Gets the principal denied object.
+        /// </summary>
+        /// <param name="principal">The principal.</param>
+        /// <param name="useCache">if set to <c>true</c> use cache.</param>
+        /// <returns></returns>
+        IEnumerable<Guid> GetPrincipalDeniedObjects<TEntity>(IPrincipal principal, bool useCache = true)
+            where TEntity : IEntity, IAccessSecuredObject;
     }
 }

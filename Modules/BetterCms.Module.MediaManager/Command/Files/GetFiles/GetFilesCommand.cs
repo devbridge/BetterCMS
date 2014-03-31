@@ -23,7 +23,7 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFiles
 
         protected override System.Collections.Generic.IEnumerable<Guid> GetDeniedMedias(ViewModels.MediaManager.MediaManagerViewModel request)
         {
-            return FileService.GetDeniedFiles();
+            return AccessControlService.GetDeniedObjects<MediaFile>();
         }
 
         /// <summary>

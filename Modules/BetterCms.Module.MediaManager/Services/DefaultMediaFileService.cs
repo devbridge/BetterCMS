@@ -1,21 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Web;
 
 using BetterCms.Configuration;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 using BetterCms.Core.Services.Caching;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Core.Web;
+
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -315,64 +313,6 @@ namespace BetterCms.Module.MediaManager.Services
             }
 
             return mediaFileUrlResolver.GetMediaFileFullUrl(id, fileUrl);
-        }
-
-        /// <summary>
-        /// Gets the list of denied pages ids.
-        /// </summary>
-        /// <param name="useCache"></param>
-        /// <returns>
-        /// Enumerable list of denied pages ids
-        /// </returns>
-        public IEnumerable<Guid> GetDeniedFiles(bool useCache = true)
-        {
-            var principal = securityService.GetCurrentPrincipal();
-
-            return GetPrincipalDeniedFiles(principal, useCache);
-        }
-
-        /// <summary>
-        /// Gets the principal denied files.
-        /// </summary>
-        /// <param name="principal">The principal.</param>
-        /// <param name="useCache">if set to <c>true</c> use cache.</param>
-        /// <returns></returns>
-        public IEnumerable<Guid> GetPrincipalDeniedFiles(IPrincipal principal, bool useCache = true)
-        {
-            IEnumerable<MediaFile> list;
-
-            if (useCache)
-            {
-                var cacheKey = string.Format("CMS_DeniedFiles_{0}_C9E7517250F64F84ADC8-B991C8391306", principal.Identity.Name);
-                list = cacheService.Get(cacheKey, new TimeSpan(0, 0, 0, 30), LoadDeniedFiles);
-            }
-            else
-            {
-                list = LoadDeniedFiles();
-            }
-
-            foreach (var file in list)
-            {
-                var accessLevel = accessControlService.GetAccessLevel(file, principal, useCache);
-                if (accessLevel == AccessLevel.Deny)
-                {
-                    yield return file.Id;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Loads the list of denied files.
-        /// </summary>
-        /// <returns>The list of denied files</returns>
-        private IEnumerable<MediaFile> LoadDeniedFiles()
-        {
-            return repository
-                .AsQueryable<MediaFile>()
-                .Where(f => f.AccessRules.Any(b => b.AccessLevel == AccessLevel.Deny))
-                .FetchMany(f => f.AccessRules)
-                .ToList()
-                .Distinct();
         }
     }
 }

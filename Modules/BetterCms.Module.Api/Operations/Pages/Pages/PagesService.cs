@@ -4,6 +4,7 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Security;
 
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
@@ -11,7 +12,6 @@ using BetterCms.Module.Api.Operations.Pages.Pages.Search;
 using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Pages.Models;
-using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
 
@@ -32,17 +32,17 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         private readonly IMediaFileUrlResolver fileUrlResolver;
         
         private readonly ISearchPagesService searchPagesService;
-
-        private readonly IPageService pageService;
+        
+        private readonly IAccessControlService accessControlService;
 
         public PagesService(IRepository repository, IOptionService optionService, IMediaFileUrlResolver fileUrlResolver,
-            ISearchPagesService searchPagesService, IPageService pageService)
+            ISearchPagesService searchPagesService, IAccessControlService accessControlService)
         {
             this.repository = repository;
             this.optionService = optionService;
             this.fileUrlResolver = fileUrlResolver;
             this.searchPagesService = searchPagesService;
-            this.pageService = pageService;
+            this.accessControlService = accessControlService;
         }
 
         public GetPagesResponse Get(GetPagesRequest request)
@@ -72,7 +72,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
             if (request.User != null && !string.IsNullOrWhiteSpace(request.User.Name))
             {
                 var principal = new ApiPrincipal(request.User);
-                IEnumerable<Guid> deniedPages = pageService.GetPrincipalDeniedPages(principal, false);
+                IEnumerable<Guid> deniedPages = accessControlService.GetPrincipalDeniedObjects<PageProperties>(principal, false);
                 foreach (var deniedPageId in deniedPages)
                 {
                     var id = deniedPageId;

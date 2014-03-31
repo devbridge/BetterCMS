@@ -63,7 +63,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
 
                         command.UnitOfWork = uow;
                         command.Repository = repository;
-                        command.AccessControlService = new DefaultAccessControlService(Container.Resolve<ISecurityService>(), new HttpRuntimeCacheService(), config);
+                        command.AccessControlService = new DefaultAccessControlService(Container.Resolve<ISecurityService>(), new HttpRuntimeCacheService(), config, repository);
 
                         var contextMock = new Mock<ICommandContext>();
                         contextMock.Setup(c => c.Principal).Returns(new GenericPrincipal(new GenericIdentity("John Doe"), new[] { RootModuleConstants.UserRoles.EditContent }));

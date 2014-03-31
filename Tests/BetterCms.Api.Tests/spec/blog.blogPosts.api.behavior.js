@@ -184,7 +184,8 @@ describe('blog.blogPosts.api.behavior', function () {
             includeAuthor: true,
             includeImages: true,
             includeMetaData: true,
-            includeHtmlContent: true
+            includeHtmlContent: true,
+            includeAccessRules: true
         };
 
         runs(function () {
@@ -264,6 +265,39 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(metadata.metaTitle).toBe('Test meta title', 'Correctly filtered metaTitle should be retrieved.');
             expect(metadata.metaKeywords).toBe('Test meta keywords', 'Correctly filtered metaKeywords should be retrieved.');
             expect(metadata.metaDescription).toBe('Test meta description', 'Correctly filtered metaDescription should be retrieved.');
+
+            // access rules
+            var accessRules = result.accessRules;
+            expect(accessRules).toBeDefinedAndNotNull('JSON accessRules object should be retrieved.');
+            expect(accessRules.length).toBe(6, 'Returned accessRules array length should be 6.');
+
+            var rule1 = accessRules[0],
+                rule2 = accessRules[1],
+                rule3 = accessRules[2],
+                rule4 = accessRules[3],
+                rule5 = accessRules[4],
+                rule6 = accessRules[5];
+
+            expect(rule1.isForRole).toBe(false, 'Correctly filtered accessRules[0].isForRole should be false.');
+            expect(rule2.isForRole).toBe(false, 'Correctly filtered accessRules[1].isForRole should be false.');
+            expect(rule3.isForRole).toBe(false, 'Correctly filtered accessRules[2].isForRole should be false.');
+            expect(rule4.isForRole).toBe(true, 'Correctly filtered accessRules[3].isForRole should be true.');
+            expect(rule5.isForRole).toBe(true, 'Correctly filtered accessRules[4].isForRole should be true.');
+            expect(rule6.isForRole).toBe(true, 'Correctly filtered accessRules[5].isForRole should be true.');
+
+            expect(rule1.accessLevel).toBe('ReadWrite', 'Correctly filtered accessRules[0].accessLevel should be ReadWrite.');
+            expect(rule2.accessLevel).toBe('Deny', 'Correctly filtered accessRules[1].accessLevel should be Deny.');
+            expect(rule3.accessLevel).toBe('Read', 'Correctly filtered accessRules[2].accessLevel should be Read.');
+            expect(rule4.accessLevel).toBe('ReadWrite', 'Correctly filtered accessRules[3].accessLevel should be ReadWrite.');
+            expect(rule5.accessLevel).toBe('Read', 'Correctly filtered accessRules[4].accessLevel should be Read.');
+            expect(rule6.accessLevel).toBe('Deny', 'Correctly filtered accessRules[5].accessLevel should be Deny.');
+
+            expect(rule1.identity).toBe('user1', 'Correctly filtered accessRules[0].identity should be user1.');
+            expect(rule2.identity).toBe('user2', 'Correctly filtered accessRules[1].identity should be user2.');
+            expect(rule3.identity).toBe('user3', 'Correctly filtered accessRules[2].identity should be user3.');
+            expect(rule4.identity).toBe('Authenticated Users', 'Correctly filtered accessRules[3].identity should be Authenticated Users.');
+            expect(rule5.identity).toBe('Everyone', 'Correctly filtered accessRules[4].identity should be Everyone.');
+            expect(rule6.identity).toBe('role1', 'Correctly filtered accessRules[5].identity should be role1.');
         });
     });
     
@@ -332,8 +366,8 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(result.data.items[0].id).toBe('c1efcb1107ed4901abb3a206012b0b87', 'Correctly filtered ____ should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            // data.filter.where.length + 1 <-- Because field Tags cannnot be filtered by
-            expect(data.filter.where.length + 1).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
+            // data.filter.where.length + 2 <-- Because fields [Tags, AccessRules] cannnot be filtered by
+            expect(data.filter.where.length + 2).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
         });
     });
 
@@ -501,8 +535,201 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(result.data.items[0].id).toBe('98a7ba1fbadd419db331a2f100b48f93', 'Correctly filtered id should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            // data.filter.where.length + 1 <-- Because field Tags cannnot be filtered by
-            expect(data.filter.where.length + 1).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
+            // data.filter.where.length + 2 <-- Because fields [Tags, AccessRules] cannnot be filtered by
+            expect(data.filter.where.length + 2).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
+        });
+    });
+
+    it('02113.1: Should get list of blog posts for user admin with roles: [role1, role2]', function () {
+        var url = '/bcms-api/blog-posts/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [{ field: 'Title', operation: 'StartsWith', value: '02113' }]
+            },
+            order: {
+                by: [{ field: 'Title' }]
+            },
+            includeUnpublished: true,
+            includeArchived: true
+        },
+            user = {
+                name: 'admin',
+                roles: ['role1', 'role2']
+            };
+
+        runs(function () {
+            api.getSecured(url, data, user, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(3, 'Total count should be 3.');
+            expect(result.data.items.length).toBe(3, 'Returned array length should be 3.');
+
+            expect(result.data.items[0].title).toBe('02113: for all', 'Correctly filtered data.items[0].title should be retrieved.');
+            expect(result.data.items[1].title).toBe('02113: only for role role1', 'Correctly filtered data.items[1].title should be retrieved.');
+            expect(result.data.items[2].title).toBe('02113: only for role role2', 'Correctly filtered data.items[2].title should be retrieved.');
+        });
+    });
+
+    it('02113.2: Should get list of blog posts for user admin without roles', function () {
+        var url = '/bcms-api/blog-posts/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [{ field: 'Title', operation: 'StartsWith', value: '02113' }]
+            },
+            order: {
+                by: [{ field: 'Title' }]
+            },
+            includeUnpublished: true,
+            includeArchived: true
+        },
+            user = {
+                name: 'admin'
+            };
+
+        runs(function () {
+            api.getSecured(url, data, user, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
+
+            expect(result.data.items[0].title).toBe('02113: for all', 'Correctly filtered data.items[0].title should be retrieved.');
+        });
+    });
+
+    it('02113.3: Should get list of blog posts for user admin2 with [role1]', function () {
+        var url = '/bcms-api/blog-posts/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [{ field: 'Title', operation: 'StartsWith', value: '02113' }]
+            },
+            order: {
+                by: [{ field: 'Title' }]
+            },
+            includeUnpublished: true,
+            includeArchived: true
+        },
+            user = {
+                name: 'admin2',
+                roles: ['role1']
+            };
+
+        runs(function () {
+            api.getSecured(url, data, user, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(4, 'Total count should be 4.');
+            expect(result.data.items.length).toBe(4, 'Returned array length should be 4.');
+
+            expect(result.data.items[0].title).toBe('02113: denied for admin', 'Correctly filtered data.items[0].title should be retrieved.');
+            expect(result.data.items[1].title).toBe('02113: for all', 'Correctly filtered data.items[1].title should be retrieved.');
+            expect(result.data.items[2].title).toBe('02113: only for admin 2', 'Correctly filtered data.items[2].title should be retrieved.');
+            expect(result.data.items[3].title).toBe('02113: only for role role1', 'Correctly filtered data.items[3].title should be retrieved.');
+        });
+    });
+
+    it('02114: Should get list of blog pots with access rules', function () {
+        var url = '/bcms-api/blog-posts/',
+            result,
+            ready = false;
+
+        var data = {
+            filter: {
+                where: [{ field: 'Title', value: '02114' }]
+            },
+            order: {
+                by: [{ field: 'Title' }]
+            },
+            includeUnpublished: true,
+            includeArchived: true,
+            includeAccessRules: true
+        };
+
+        runs(function () {
+            api.get(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
+            expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
+
+            expect(result.data.items[0].accessRules.length).toBe(6, 'Correctly filtered items[0].accessRules.length should be 6.');
+
+            var rule1 = result.data.items[0].accessRules[0],
+                rule2 = result.data.items[0].accessRules[1],
+                rule3 = result.data.items[0].accessRules[2],
+                rule4 = result.data.items[0].accessRules[3],
+                rule5 = result.data.items[0].accessRules[4],
+                rule6 = result.data.items[0].accessRules[5];
+
+            expect(rule1.isForRole).toBe(false, 'Correctly filtered accessRules[0].isForRole should be false.');
+            expect(rule2.isForRole).toBe(false, 'Correctly filtered accessRules[1].isForRole should be false.');
+            expect(rule3.isForRole).toBe(false, 'Correctly filtered accessRules[2].isForRole should be false.');
+            expect(rule4.isForRole).toBe(true, 'Correctly filtered accessRules[3].isForRole should be true.');
+            expect(rule5.isForRole).toBe(true, 'Correctly filtered accessRules[4].isForRole should be true.');
+            expect(rule6.isForRole).toBe(true, 'Correctly filtered accessRules[5].isForRole should be true.');
+
+            expect(rule1.accessLevel).toBe('ReadWrite', 'Correctly filtered accessRules[0].accessLevel should be ReadWrite.');
+            expect(rule2.accessLevel).toBe('Deny', 'Correctly filtered accessRules[1].accessLevel should be Deny.');
+            expect(rule3.accessLevel).toBe('Read', 'Correctly filtered accessRules[2].accessLevel should be Read.');
+            expect(rule4.accessLevel).toBe('ReadWrite', 'Correctly filtered accessRules[3].accessLevel should be ReadWrite.');
+            expect(rule5.accessLevel).toBe('Read', 'Correctly filtered accessRules[4].accessLevel should be Read.');
+            expect(rule6.accessLevel).toBe('Deny', 'Correctly filtered accessRules[5].accessLevel should be Deny.');
+
+            expect(rule1.identity).toBe('user1', 'Correctly filtered accessRules[0].identity should be user1.');
+            expect(rule2.identity).toBe('user2', 'Correctly filtered accessRules[1].identity should be user2.');
+            expect(rule3.identity).toBe('user3', 'Correctly filtered accessRules[2].identity should be user3.');
+            expect(rule4.identity).toBe('Authenticated Users', 'Correctly filtered accessRules[3].identity should be Authenticated Users.');
+            expect(rule5.identity).toBe('Everyone', 'Correctly filtered accessRules[4].identity should be Everyone.');
+            expect(rule6.identity).toBe('role1', 'Correctly filtered accessRules[5].identity should be role1.');
         });
     });
 

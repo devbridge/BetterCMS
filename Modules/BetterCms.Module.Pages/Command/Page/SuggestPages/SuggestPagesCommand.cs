@@ -4,8 +4,8 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Models;
-using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 
 using BetterCms.Module.Root.Mvc;
@@ -23,19 +23,19 @@ namespace BetterCms.Module.Pages.Command.Page.SuggestPages
         private readonly ICmsConfiguration configuration;
 
         /// <summary>
-        /// The page service
+        /// The access control service
         /// </summary>
-        private readonly IPageService pageService;
+        private readonly IAccessControlService accessControlService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SuggestPagesCommand" /> class.
         /// </summary>
         /// <param name="configuration">The configuration.</param>
-        /// <param name="pageService">The page service.</param>
-        public SuggestPagesCommand(ICmsConfiguration configuration, IPageService pageService)
+        /// <param name="accessControlService">The access control service.</param>
+        public SuggestPagesCommand(ICmsConfiguration configuration, IAccessControlService accessControlService)
         {
             this.configuration = configuration;
-            this.pageService = pageService;
+            this.accessControlService = accessControlService;
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace BetterCms.Module.Pages.Command.Page.SuggestPages
 
             if (configuration.Security.AccessControlEnabled)
             {
-                IEnumerable<Guid> deniedPages = pageService.GetDeniedPages();
+                IEnumerable<Guid> deniedPages = accessControlService.GetDeniedObjects<PageProperties>();
                 foreach (var deniedPageId in deniedPages)
                 {
                     query = query.Where(f => f.Id != deniedPageId);

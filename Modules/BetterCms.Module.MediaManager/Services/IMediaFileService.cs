@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Security.Principal;
 using System.Threading.Tasks;
 
 using BetterCms.Module.MediaManager.Models;
@@ -36,19 +34,5 @@ namespace BetterCms.Module.MediaManager.Services
         Task UploadMediaFileToStorage<TMedia>(Stream sourceStream, Uri fileUri, Guid mediaId, Action<TMedia> updateMediaAfterUpload, Action<TMedia> updateMediaAfterFail, bool ignoreAccessControl) where TMedia : MediaFile;
 
         string GetDownloadFileUrl(MediaType type, Guid id, string fileUrl);
-
-        /// <summary>
-        /// Gets the list of denied files ids.
-        /// </summary>
-        /// <returns>Enumerable list of denied files ids</returns>
-        IEnumerable<Guid> GetDeniedFiles(bool useCache = true);
-
-        /// <summary>
-        /// Gets the principal denied files.
-        /// </summary>
-        /// <param name="principal">The principal.</param>
-        /// <param name="useCache">if set to <c>true</c> use cache.</param>
-        /// <returns></returns>
-        IEnumerable<Guid> GetPrincipalDeniedFiles(IPrincipal principal, bool useCache = true);
     }
 }

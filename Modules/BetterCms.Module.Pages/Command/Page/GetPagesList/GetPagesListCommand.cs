@@ -4,7 +4,7 @@ using System.Linq;
 
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
-
+using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Filter;
@@ -34,7 +34,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
 
         private readonly ICmsConfiguration configuration;
         
-        private readonly IPageService pageService;
+        private readonly IAccessControlService accessControlService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetPagesListCommand" /> class.
@@ -42,13 +42,14 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
         /// <param name="categoryService">The category service.</param>
         /// <param name="configuration">The configuration.</param>
         /// <param name="languageService">The language service.</param>
-        /// <param name="pageService">The page service.</param>
-        public GetPagesListCommand(ICategoryService categoryService, ICmsConfiguration configuration, ILanguageService languageService, IPageService pageService)
+        /// <param name="accessControlService">The access control service.</param>
+        public GetPagesListCommand(ICategoryService categoryService, ICmsConfiguration configuration,
+            ILanguageService languageService, IAccessControlService accessControlService)
         {
             this.configuration = configuration;
             this.categoryService = categoryService;
             this.languageService = languageService;
-            this.pageService = pageService;
+            this.accessControlService = accessControlService;
         }
 
         /// <summary>
@@ -101,7 +102,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
 
             if (configuration.Security.AccessControlEnabled)
             {
-                IEnumerable<Guid> deniedPages = pageService.GetDeniedPages();
+                IEnumerable<Guid> deniedPages = accessControlService.GetDeniedObjects<PageProperties>();
                 foreach (var deniedPageId in deniedPages)
                 {
                     var id = deniedPageId;

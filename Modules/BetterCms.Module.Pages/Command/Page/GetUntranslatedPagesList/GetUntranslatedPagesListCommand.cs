@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 
+using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Command.Page.GetPagesList;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -20,9 +21,9 @@ namespace BetterCms.Module.Pages.Command.Page.GetUntranslatedPagesList
         /// <param name="categoryService">The category service.</param>
         /// <param name="configuration">The configuration.</param>
         /// <param name="languageService">The language service.</param>
-        /// <param name="pageService">The page service.</param>
-        public GetUntranslatedPagesListCommand(ICategoryService categoryService, ICmsConfiguration configuration, ILanguageService languageService, IPageService pageService)
-            : base(categoryService, configuration, languageService, pageService)
+        /// <param name="accessControlService">The access control service.</param>
+        public GetUntranslatedPagesListCommand(ICategoryService categoryService, ICmsConfiguration configuration, ILanguageService languageService, IAccessControlService accessControlService)
+            : base(categoryService, configuration, languageService, accessControlService)
         {
         }
 

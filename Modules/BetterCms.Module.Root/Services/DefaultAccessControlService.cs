@@ -5,6 +5,9 @@ using System.Security.Principal;
 using System.Text;
 
 using BetterCms.Configuration;
+using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext.Fetching;
+using BetterCms.Core.DataContracts;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Exceptions.Service;
@@ -29,6 +32,8 @@ namespace BetterCms.Module.Root.Services
         private readonly ICmsConfiguration configuration;
 
         private readonly ISecurityService securityService;
+        
+        private readonly IRepository repository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultAccessControlService" /> class.
@@ -36,11 +41,14 @@ namespace BetterCms.Module.Root.Services
         /// <param name="securityService">The security service.</param>
         /// <param name="cacheService">The cache service.</param>
         /// <param name="configuration">The CMS configuration.</param>
-        public DefaultAccessControlService(ISecurityService securityService, ICacheService cacheService, ICmsConfiguration configuration)
+        /// <param name="repository">The repository.</param>
+        public DefaultAccessControlService(ISecurityService securityService, ICacheService cacheService,
+            ICmsConfiguration configuration, IRepository repository)
         {
             this.securityService = securityService;
             this.cacheService = cacheService;
             this.configuration = configuration;
+            this.repository = repository;
         }
 
         /// <summary>
@@ -332,6 +340,67 @@ namespace BetterCms.Module.Root.Services
             }
 
             return accessLevel;
+        }
+
+        /// <summary>
+        /// Gets the denied objects.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of the entity.</typeparam>
+        /// <param name="useCache">if set to <c>true</c> use cache.</param>
+        /// <returns></returns>
+        public IEnumerable<Guid> GetDeniedObjects<TEntity>(bool useCache = true)
+            where TEntity : IEntity, IAccessSecuredObject
+        {
+            var principal = securityService.GetCurrentPrincipal();
+
+            return GetPrincipalDeniedObjects<TEntity>(principal, useCache);
+        }
+
+        /// <summary>
+        /// Gets the principal denied objects.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of the entity.</typeparam>
+        /// <param name="principal">The principal.</param>
+        /// <param name="useCache">if set to <c>true</c> use cache.</param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public IEnumerable<Guid> GetPrincipalDeniedObjects<TEntity>(IPrincipal principal, bool useCache = true)
+             where TEntity : IEntity, IAccessSecuredObject
+        {
+            IEnumerable<TEntity> list;
+
+            if (useCache)
+            {
+                var cacheKey = string.Format("CMS_{1}_{0}_C9E7517250F64F84ADC8-B991C8391306", principal.Identity.Name, typeof(TEntity));
+                list = cacheService.Get(cacheKey, new TimeSpan(0, 0, 0, 30), LoadDeniedObjects<TEntity>);
+            }
+            else
+            {
+                list = LoadDeniedObjects<TEntity>();
+            }
+
+            foreach (var entity in list)
+            {
+                var accessLevel = GetAccessLevel(entity, principal, useCache);
+                if (accessLevel == AccessLevel.Deny)
+                {
+                    yield return ((IEntity)entity).Id;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Loads the list of denied objects.
+        /// </summary>
+        /// <returns>The list of denied page</returns>
+        private IEnumerable<TModel> LoadDeniedObjects<TModel>() where TModel : IEntity, IAccessSecuredObject
+        {
+            return repository
+                .AsQueryable<TModel>()
+                .Where(f => f.AccessRules.Any(b => b.AccessLevel == AccessLevel.Deny))
+                .FetchMany(f => f.AccessRules)
+                .ToList()
+                .Distinct();
         }
     }
 }

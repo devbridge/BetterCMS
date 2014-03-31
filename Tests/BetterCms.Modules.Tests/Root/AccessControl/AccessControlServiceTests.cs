@@ -5,8 +5,6 @@ using System.Security.Principal;
 using Autofac;
 
 using BetterCms.Configuration;
-using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 using BetterCms.Core.Services.Caching;
@@ -24,7 +22,7 @@ namespace BetterCms.Test.Module.Root.AccessControl
     {
         private IAccessControlService CreateAccessControlService()
         {
-            return new DefaultAccessControlService(Container.Resolve<ISecurityService>() , Container.Resolve<ICacheService>(), Container.Resolve<ICmsConfiguration>());
+            return new DefaultAccessControlService(Container.Resolve<ISecurityService>() , Container.Resolve<ICacheService>(), Container.Resolve<ICmsConfiguration>(), null);
         }
 
         [Test]
@@ -298,7 +296,7 @@ namespace BetterCms.Test.Module.Root.AccessControl
 
                     var cmsConfig = GetCmsConfigurationMock(collection);
 
-                    var service = new DefaultAccessControlService(Container.Resolve<ISecurityService>(), Container.Resolve<ICacheService>(), cmsConfig.Object);
+                    var service = new DefaultAccessControlService(Container.Resolve<ISecurityService>(), Container.Resolve<ICacheService>(), cmsConfig.Object, null);
 
                     var accessLevels = service.GetDefaultAccessList();
 
@@ -322,7 +320,7 @@ namespace BetterCms.Test.Module.Root.AccessControl
 
                 var cmsConfig = GetCmsConfigurationMock(collection);
 
-                var service = new DefaultAccessControlService(Container.Resolve<ISecurityService>(), Container.Resolve<ICacheService>(), cmsConfig.Object);
+                var service = new DefaultAccessControlService(Container.Resolve<ISecurityService>(), Container.Resolve<ICacheService>(), cmsConfig.Object, null);
 
                 var principal = new GenericPrincipal(new GenericIdentity("John Doe"), new string[] { });
                 var accessLevels = service.GetDefaultAccessList(principal);
@@ -348,7 +346,7 @@ namespace BetterCms.Test.Module.Root.AccessControl
 
                 var cmsConfig = GetCmsConfigurationMock(collection);
 
-                var service = new DefaultAccessControlService(Container.Resolve<ISecurityService>(), Container.Resolve<ICacheService>(), cmsConfig.Object);
+                var service = new DefaultAccessControlService(Container.Resolve<ISecurityService>(), Container.Resolve<ICacheService>(), cmsConfig.Object, null);
 
                 var principal = new GenericPrincipal(new GenericIdentity("John Doe"), new string[] { });
                 var accessLevels = service.GetDefaultAccessList(principal);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.Security;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Root;
@@ -10,6 +11,8 @@ using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 
 using ServiceStack.ServiceInterface;
+
+using AccessLevel = BetterCms.Module.Api.Operations.Root.AccessLevel;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.Files
 {
@@ -20,12 +23,16 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
         private readonly IMediaFileService fileService;
 
         private readonly IMediaFileUrlResolver fileUrlResolver;
+        
+        private readonly IAccessControlService accessControlService;
 
-        public FilesService(IRepository repository, IMediaFileService fileService, IMediaFileUrlResolver fileUrlResolver)
+        public FilesService(IRepository repository, IMediaFileService fileService,
+            IMediaFileUrlResolver fileUrlResolver, IAccessControlService accessControlService)
         {
             this.repository = repository;
             this.fileService = fileService;
             this.fileUrlResolver = fileUrlResolver;
+            this.accessControlService = accessControlService;
         }
 
         public GetFilesResponse Get(GetFilesRequest request)
@@ -65,7 +72,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
             if (request.User != null && !string.IsNullOrWhiteSpace(request.User.Name))
             {
                 var principal = new ApiPrincipal(request.User);
-                IEnumerable<Guid> deniedPages = fileService.GetPrincipalDeniedFiles(principal, false);
+                IEnumerable<Guid> deniedPages = accessControlService.GetPrincipalDeniedObjects<MediaFile>(principal, false);
                 foreach (var deniedPageId in deniedPages)
                 {
                     var id = deniedPageId;

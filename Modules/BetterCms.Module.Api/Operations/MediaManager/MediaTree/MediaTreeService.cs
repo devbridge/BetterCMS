@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.Security;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 
 using ServiceStack.ServiceInterface;
+
+using AccessLevel = BetterCms.Module.Api.Operations.Root.AccessLevel;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
 {
@@ -19,12 +22,16 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
         private readonly IMediaFileService fileService;
 
         private readonly IMediaFileUrlResolver fileUrlResolver;
+        
+        private readonly IAccessControlService accessControlService;
 
-        public MediaTreeService(IRepository repository, IMediaFileService fileService, IMediaFileUrlResolver fileUrlResolver)
+        public MediaTreeService(IRepository repository, IMediaFileService fileService,
+            IMediaFileUrlResolver fileUrlResolver, IAccessControlService accessControlService)
         {
             this.repository = repository;
             this.fileService = fileService;
             this.fileUrlResolver = fileUrlResolver;
+            this.accessControlService = accessControlService;
         }
 
         public GetMediaTreeResponse Get(GetMediaTreeRequest request)
@@ -40,7 +47,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
                 if (request.User != null && !string.IsNullOrWhiteSpace(request.User.Name))
                 {
                     var principal = new ApiPrincipal(request.User);
-                    deniedPages = fileService.GetPrincipalDeniedFiles(principal, false);
+                    deniedPages = accessControlService.GetPrincipalDeniedObjects<MediaFile>(principal, false);
                 }
 
                 response.Data.FilesTree = LoadMediaTree<MediaFile>(MediaType.File, deniedPages, request.Data.IncludeArchived, request.Data.IncludeFiles, request.Data.IncludeAccessRules);
