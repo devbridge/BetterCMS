@@ -37,8 +37,11 @@
             var cssClass = !item.IsDenied ? "bcms-search-result" : "bcms-search-result bcms-denied-search-result";
 
             <article class="@cssClass">
-                <h3>@item.Title</h3>            
-                <a href="@(item.Link ?? "#")">@item.FormattedUrl</a>
+                <h3>@item.Title</h3>
+                @if (!item.IsDenied)
+                {
+                    <a href="@(item.Link ?? "#")">@item.FormattedUrl</a>
+                }
                 <p>@item.Snippet</p>            
             </article>
         }
