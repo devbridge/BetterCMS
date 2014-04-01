@@ -26,6 +26,11 @@ namespace BetterCms.Events
         public event DefaultEventHandler<SingleItemEventArgs<PageContent>> PageContentSorted;
         
         /// <summary>
+        /// Occurs when any content is configured.
+        /// </summary>        
+        public event DefaultEventHandler<SingleItemEventArgs<PageContent>> PageContentConfigured;
+        
+        /// <summary>
         /// Occurs when HTML content is created.
         /// </summary>        
         public event DefaultEventHandler<SingleItemEventArgs<HtmlContent>> HtmlContentCreated;
@@ -61,6 +66,14 @@ namespace BetterCms.Events
             if (PageContentSorted != null)
             {
                 PageContentSorted(new SingleItemEventArgs<PageContent>(pageContent));
+            }
+        }
+        
+        public void OnPageContentConfigured(PageContent pageContent)
+        {
+            if (PageContentConfigured != null)
+            {
+                PageContentConfigured(new SingleItemEventArgs<PageContent>(pageContent));
             }
         }
 

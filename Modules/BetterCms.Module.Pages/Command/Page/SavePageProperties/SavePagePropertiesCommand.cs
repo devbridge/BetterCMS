@@ -289,6 +289,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                 }
             }
 
+            IList<PageOption> pageOptions = page.Options.Distinct().ToList();
             if (canEdit)
             {
                 if (!page.IsMasterPage)
@@ -309,8 +310,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                                          ? Repository.AsProxy<MediaImage>(request.FeaturedImage.ImageId.Value)
                                          : null;
 
-                var optionValues = page.Options.Distinct();
-                optionService.SaveOptionValues(request.OptionValues, optionValues, () => new PageOption { Page = page });
+                pageOptions = optionService.SaveOptionValues(request.OptionValues, pageOptions, () => new PageOption { Page = page });
 
                 if (cmsConfiguration.Security.AccessControlEnabled)
                 {
@@ -346,6 +346,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             UnitOfWork.Commit();
 
             // Notify about page properties change.
+            page.Options = pageOptions;
             Events.PageEvents.Instance.OnPagePropertiesChanged(page);
 
             // Notify about redirect creation.

@@ -45,9 +45,11 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageContentOptions
 
                     var optionValues = pageContent.Options.Distinct();
 
-                    OptionService.SaveOptionValues(model.OptionValues, optionValues, () => new PageContentOption { PageContent = pageContent });
+                    pageContent.Options = OptionService.SaveOptionValues(model.OptionValues, optionValues, () => new PageContentOption { PageContent = pageContent });
 
-                    UnitOfWork.Commit();   
+                    UnitOfWork.Commit();
+
+                    Events.PageEvents.Instance.OnPageContentConfigured(pageContent);
                 }                
             }
 

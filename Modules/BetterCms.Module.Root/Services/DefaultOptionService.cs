@@ -192,13 +192,15 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <typeparam name="TEntity">The type of the entity.</typeparam>
         /// <param name="optionViewModels">The option view models.</param>
-        /// <param name="savedOptionValues">The saved options.</param>
+        /// <param name="optionValues">The saved options.</param>
         /// <param name="entityCreator">The entity creator.</param>
-        public void SaveOptionValues<TEntity>(
+        public IList<TEntity> SaveOptionValues<TEntity>(
             IEnumerable<OptionValueEditViewModel> optionViewModels,
-            IEnumerable<TEntity> savedOptionValues,
+            IEnumerable<TEntity> optionValues,
             Func<TEntity> entityCreator) where TEntity : Entity, IOption
         {
+            var savedOptionValues = new List<TEntity>();
+
             if (optionViewModels == null)
             {
                 optionViewModels = new List<OptionValueEditViewModel>();
@@ -208,47 +210,50 @@ namespace BetterCms.Module.Root.Services
 
             var customOptions = LoadAndValidateCustomOptions(optionViewModels);
 
-            if (savedOptionValues != null)
+            if (optionValues != null)
             {
-                savedOptionValues.Where(sov => optionViewModels.All(ovm => ovm.OptionKey != sov.Key)).ToList().ForEach(del => repository.Delete(del));
+                optionValues.Where(sov => optionViewModels.All(ovm => ovm.OptionKey != sov.Key)).ToList().ForEach(del => repository.Delete(del));
             }
 
             foreach (var optionViewModel in optionViewModels)
             {
-                TEntity savedOptionValue = null;
-                if (savedOptionValues != null)
+                TEntity optionValue = null;
+                if (optionValues != null)
                 {
-                    savedOptionValue = savedOptionValues.FirstOrDefault(f => f.Key.Trim().Equals(optionViewModel.OptionKey.Trim(), StringComparison.OrdinalIgnoreCase));
+                    optionValue = optionValues.FirstOrDefault(f => f.Key.Trim().Equals(optionViewModel.OptionKey.Trim(), StringComparison.OrdinalIgnoreCase));
                 }
 
                 if (!optionViewModel.UseDefaultValue)
                 {
-                    if (savedOptionValue == null)
+                    if (optionValue == null)
                     {
-                        savedOptionValue = entityCreator();
-                        savedOptionValue.Key = optionViewModel.OptionKey;
+                        optionValue = entityCreator();
+                        optionValue.Key = optionViewModel.OptionKey;
                     }
-                    savedOptionValue.Value = ClearFixValueForSave(optionViewModel.OptionKey, optionViewModel.Type, optionViewModel.OptionValue);
-                    savedOptionValue.Type = optionViewModel.Type;
+                    optionValue.Value = ClearFixValueForSave(optionViewModel.OptionKey, optionViewModel.Type, optionViewModel.OptionValue);
+                    optionValue.Type = optionViewModel.Type;
 
-                    ValidateOptionValue(savedOptionValue);
+                    ValidateOptionValue(optionValue);
 
                     if (optionViewModel.Type == OptionType.Custom)
                     {
-                        savedOptionValue.CustomOption = customOptions.First(co => co.Identifier == optionViewModel.CustomOption.Identifier);
+                        optionValue.CustomOption = customOptions.First(co => co.Identifier == optionViewModel.CustomOption.Identifier);
                     }
                     else
                     {
-                        savedOptionValue.CustomOption = null;
+                        optionValue.CustomOption = null;
                     }
 
-                    repository.Save(savedOptionValue);
+                    savedOptionValues.Add(optionValue);
+                    repository.Save(optionValue);
                 }
-                else if (savedOptionValue != null)
+                else if (optionValue != null)
                 {
-                    repository.Delete(savedOptionValue);
+                    repository.Delete(optionValue);
                 }
             }
+
+            return savedOptionValues;
         }
 
         public string ClearFixValueForSave(string title, OptionType type, string value)

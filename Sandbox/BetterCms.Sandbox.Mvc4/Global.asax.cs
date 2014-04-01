@@ -62,6 +62,7 @@ namespace BetterCms.Sandbox.Mvc4
             BetterCms.Events.PageEvents.Instance.PageContentInserted += args => Log.Info("PageContentInserted:" + args.Item.ToString());
             BetterCms.Events.PageEvents.Instance.PageContentDeleted += args => Log.Info("PageContentDeleted:" + args.Item.ToString());
             BetterCms.Events.PageEvents.Instance.PageContentSorted += args => Log.Info("PageContentSorted:" + args.Item.ToString());
+            BetterCms.Events.PageEvents.Instance.PageContentConfigured += args => Log.Info("PageContentConfigured:" + args.Item.ToString());
             BetterCms.Events.PageEvents.Instance.HtmlContentCreated += args => Log.Info("HtmlContentCreated:" + args.Item.ToString());
             BetterCms.Events.PageEvents.Instance.HtmlContentUpdated += args => Log.Info("HtmlContentUpdated:" + args.Item.ToString());
             BetterCms.Events.PageEvents.Instance.HtmlContentDeleted += args => Log.Info("HtmlContentDeleted:" + args.Item.ToString());

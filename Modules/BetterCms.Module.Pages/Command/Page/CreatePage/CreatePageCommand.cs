@@ -135,7 +135,7 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
                 }
             }
 
-            optionService.SaveOptionValues(request.OptionValues, null, () => new PageOption { Page = page });
+            page.Options = optionService.SaveOptionValues(request.OptionValues, null, () => new PageOption { Page = page });
 
             Repository.Save(page);
 
