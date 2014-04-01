@@ -65,8 +65,8 @@ namespace BetterCms.Api.Tests.UnitTests
             Assert.AreEqual((int)CoreAccessLevel.Read, (int)ApiAccessLevel.Read);
             Assert.AreEqual((int)CoreAccessLevel.ReadWrite, (int)ApiAccessLevel.ReadWrite);
 
-            Assert.AreEqual(Enum.GetValues(typeof(CoreAccessLevel)).Length, 2, "Not all CoreAccessLevel values are mapped.");
-            Assert.AreEqual(Enum.GetValues(typeof(ApiAccessLevel)).Length, 2, "Not all ApiAccessLevel are mapped.");
+            Assert.AreEqual(Enum.GetValues(typeof(CoreAccessLevel)).Length, 3, "Not all CoreAccessLevel values are mapped.");
+            Assert.AreEqual(Enum.GetValues(typeof(ApiAccessLevel)).Length, 3, "Not all ApiAccessLevel are mapped.");
         }
     }
 }
