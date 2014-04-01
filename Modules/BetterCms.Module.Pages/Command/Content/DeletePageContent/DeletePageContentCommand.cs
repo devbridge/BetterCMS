@@ -49,7 +49,8 @@ namespace BetterCms.Module.Pages.Command.Content.DeletePageContent
                                     .Fetch(f => f.Page)
                                     .FirstOne();
 
-            if (pageContent.Content is HtmlContent)
+            var htmlContent = pageContent.Content as HtmlContent;
+            if (htmlContent != null)
             {
                 // Check if user has confirmed the deletion of content
                 if (!request.IsUserConfirmed && pageContent.Page.IsMasterPage)
@@ -86,6 +87,13 @@ namespace BetterCms.Module.Pages.Command.Content.DeletePageContent
 
             Repository.Delete<PageContent>(pageContent.Id, request.PageContentVersion);
             UnitOfWork.Commit();
+
+            // Notify
+            Events.PageEvents.Instance.OnPageContentDeleted(pageContent);
+            if (htmlContent != null)
+            {
+                Events.PageEvents.Instance.OnHtmlContentDeleted(htmlContent);
+            }
 
             return true;
         }

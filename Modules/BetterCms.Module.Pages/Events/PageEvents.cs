@@ -1,7 +1,5 @@
-﻿using BetterCms.Core.Mvc;
-using BetterCms.Module.Pages.Models;
+﻿using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Models.Events;
-using BetterCms.Module.Root.Models;
 
 // ReSharper disable CheckNamespace
 namespace BetterCms.Events
@@ -46,11 +44,6 @@ namespace BetterCms.Events
         /// Occurs when a page SEO status is changed.
         /// </summary>
         public event DefaultEventHandler<SingleItemEventArgs<PageProperties>> PageSeoStatusChanged;
-
-        /// <summary>
-        /// Occurs when a widget is inserted.
-        /// </summary>        
-        public event DefaultEventHandler<SingleItemEventArgs<PageContent>> PageContentInserted;
          
         /// <summary>
         /// Called when page is created.
@@ -115,14 +108,6 @@ namespace BetterCms.Events
             if (PageSeoStatusChanged != null)
             {
                 PageSeoStatusChanged(new SingleItemEventArgs<PageProperties>(page));
-            }
-        }
-        
-        public void OnPageContentInserted(PageContent pageContent)
-        {
-            if (PageContentInserted != null)
-            {
-                PageContentInserted(new SingleItemEventArgs<PageContent>(pageContent));
             }
         }
     }

@@ -32,7 +32,8 @@ namespace BetterCms.Module.Pages.Command.Layout.SaveTemplate
 
             UnitOfWork.BeginTransaction();
 
-            var template = !request.Id.HasDefaultValue()
+            var isNew = request.Id.HasDefaultValue();
+            var template = !isNew
                                ? Repository.AsQueryable<Root.Models.Layout>()
                                            .Where(f => f.Id == request.Id)
                                            .FetchMany(f => f.LayoutRegions)
@@ -126,6 +127,16 @@ namespace BetterCms.Module.Pages.Command.Layout.SaveTemplate
 
             Repository.Save(template);
             UnitOfWork.Commit();
+
+            // Notify
+            if (isNew)
+            {
+                Events.PageEvents.Instance.OnLayoutCreated(template);
+            }
+            else
+            {
+                Events.PageEvents.Instance.OnLayoutUpdated(template);
+            }
 
             return new SaveTemplateResponse
             {

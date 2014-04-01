@@ -42,6 +42,10 @@ namespace BetterCms.Module.Pages.Command.Layout.DeleteTemplate
             }
 
             UnitOfWork.Commit();
+
+            // Notify
+            Events.PageEvents.Instance.OnLayoutDeleted(layout);
+
             return true;
         }
     }

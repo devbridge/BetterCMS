@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Mvc.Commands;
@@ -26,11 +27,17 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager.UnarchiveMedia
             media.Version = request.Version;
             media.IsArchived = false;
             Repository.Save(media);
-            UnarchiveSubMedias(media);
+
+            var unarchivedMedias = new List<Media> { media };
+            UnarchiveSubMedias(media, unarchivedMedias);
 
             UnitOfWork.Commit();
 
-            Events.MediaManagerEvents.Instance.OnMediaUnarchived(media);
+            // Notify
+            foreach (var archivedMedia in unarchivedMedias.Distinct())
+            {
+                Events.MediaManagerEvents.Instance.OnMediaUnarchived(archivedMedia);
+            }
 
             return new MediaViewModel
             {
@@ -39,7 +46,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager.UnarchiveMedia
             };
         }
 
-        private void UnarchiveSubMedias(IEntity media)
+        private void UnarchiveSubMedias(IEntity media, List<Media> unarchivedMedias)
         {
             var subItems = Repository.AsQueryable<Media>().Where(m => m.Folder != null && m.Folder.Id == media.Id).ToList();
             foreach (var subItem in subItems)
@@ -47,9 +54,11 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager.UnarchiveMedia
                 if (subItem.IsArchived)
                 {
                     subItem.IsArchived = false;
+                    unarchivedMedias.Add(subItem);
+
                     Repository.Save(subItem);
                 }
-                UnarchiveSubMedias(subItem);
+                UnarchiveSubMedias(subItem, unarchivedMedias);
             }
         }
     }

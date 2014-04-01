@@ -145,8 +145,10 @@
     <Compile Include="Command\Widget\PreviewWidget\PreviewWidgetCommand.cs" />
     <Compile Include="Command\Widget\PreviewWidget\PreviewWidgetCommandRequest.cs" />
     <Compile Include="Events\CategoryEvents.cs" />
+    <Compile Include="Events\ContentEvents.cs" />
     <Compile Include="Events\PagePropertiesChangingEventArgs.cs" />
     <Compile Include="Events\SitemapEvents.cs" />
+    <Compile Include="Events\LayoutEvents.cs" />
     <Compile Include="Events\TagEvents.cs" />
     <Compile Include="Helpers\SitemapHelper.cs" />
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />

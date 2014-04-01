@@ -44,8 +44,9 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                 AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent);
             }
 
-            PageContent pageContent;            
-            if (!request.Id.HasDefaultValue())
+            PageContent pageContent;
+            var isNew = request.Id.HasDefaultValue();
+            if (!isNew)
             {
                 var query = Repository
                     .AsQueryable<PageContent>()
@@ -157,7 +158,15 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
             // Notify.
             if (request.DesirableStatus != ContentStatus.Preview)
             {
-                Events.PageEvents.Instance.OnPageContentInserted(pageContent);
+                if (isNew)
+                {
+                    Events.PageEvents.Instance.OnPageContentInserted(pageContent);
+                    Events.PageEvents.Instance.OnHtmlContentCreated((HtmlContent)pageContent.Content);
+                }
+                else
+                {
+                    Events.PageEvents.Instance.OnHtmlContentUpdated((HtmlContent)pageContent.Content);
+                }
             }
 
             return new SavePageHtmlContentResponse {

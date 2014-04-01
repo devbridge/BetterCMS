@@ -155,6 +155,7 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
                 }
             }
 
+            Models.Redirect redirect;
             if (!string.IsNullOrWhiteSpace(request.RedirectUrl))
             {
                 if (string.Equals(page.PageUrl, request.RedirectUrl, StringComparison.OrdinalIgnoreCase))
@@ -171,26 +172,31 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
                 }
 
                 string patternsValidationMessage;
-                if (isRedirectInternal && !urlService.ValidateUrlPatterns(request.RedirectUrl, out patternsValidationMessage, PagesGlobalization.DeletePage_RedirectUrl_Name))
+                if (isRedirectInternal
+                    && !urlService.ValidateUrlPatterns(request.RedirectUrl, out patternsValidationMessage, PagesGlobalization.DeletePage_RedirectUrl_Name))
                 {
                     var logMessage = string.Format("{0}. URL: {1}.", patternsValidationMessage, request.RedirectUrl);
                     throw new ValidationException(() => patternsValidationMessage, logMessage);
                 }
 
-                var redirect = redirectService.GetPageRedirect(page.PageUrl);
+                redirect = redirectService.GetPageRedirect(page.PageUrl);
                 if (redirect != null)
                 {
                     redirect.RedirectUrl = request.RedirectUrl;
                 }
                 else
                 {
-                    redirect = redirectService.CreateRedirectEntity(page.PageUrl, request.RedirectUrl);    
+                    redirect = redirectService.CreateRedirectEntity(page.PageUrl, request.RedirectUrl);
                 }
-                
+
                 if (redirect != null)
                 {
                     Repository.Save(redirect);
                 }
+            }
+            else
+            {
+                redirect = null;
             }
 
             // Delete child entities.            
@@ -260,6 +266,12 @@ namespace BetterCms.Module.Pages.Command.Page.DeletePage
             foreach (var updatedSitemap in updatedSitemaps)
             {
                 Events.SitemapEvents.Instance.OnSitemapUpdated(updatedSitemap);
+            }
+
+            // Notifying about redirect created
+            if (redirect != null)
+            {
+                Events.PageEvents.Instance.OnRedirectCreated(redirect);
             }
 
             // Notifying, that page is deleted.

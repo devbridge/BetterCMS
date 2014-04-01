@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 
-using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Root.Mvc;
@@ -56,6 +55,9 @@ namespace BetterCms.Module.Users.Commands.Registration
             
             Repository.Save(user);
             UnitOfWork.Commit();
+
+            // Notify
+            Events.UserEvents.Instance.OnUserCreated(user);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
