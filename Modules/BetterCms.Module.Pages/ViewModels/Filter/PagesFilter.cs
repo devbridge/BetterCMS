@@ -14,5 +14,7 @@ namespace BetterCms.Module.Pages.ViewModels.Filter
         public bool IncludeArchived { get; set; }
         public bool OnlyMasterPages { get; set; }
         public bool IncludeMasterPages { get; set; }
+        public PageStatusFilterType? Status { get; set; }
+        public SeoStatusFilterType? SeoStatus { get; set; }
     }
 }

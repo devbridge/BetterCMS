@@ -2419,6 +2419,33 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Containing unpublished contents.
+        /// </summary>
+        public static string PageStatusFilterType_ContainingUnpublishedContents {
+            get {
+                return ResourceManager.GetString("PageStatusFilterType_ContainingUnpublishedContents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Published.
+        /// </summary>
+        public static string PageStatusFilterType_Published {
+            get {
+                return ResourceManager.GetString("PageStatusFilterType_Published", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unpublished.
+        /// </summary>
+        public static string PageStatusFilterType_Unpublished {
+            get {
+                return ResourceManager.GetString("PageStatusFilterType_Unpublished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Assign.
         /// </summary>
         public static string PageTranslations_Assign_ButtonTitle {
@@ -2770,6 +2797,24 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hasn&apos;t SEO.
+        /// </summary>
+        public static string SeoStatusFilterType_HasNotSEO {
+            get {
+                return ResourceManager.GetString("SeoStatusFilterType_HasNotSEO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Has SEO.
+        /// </summary>
+        public static string SeoStatusFilterType_HasSEO {
+            get {
+                return ResourceManager.GetString("SeoStatusFilterType_HasSEO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New page.
         /// </summary>
         public static string Sidebar_AddNewPageButtonTitle {
@@ -2955,6 +3000,24 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string SiteSettings_Pages_FilterByLanguage {
             get {
                 return ResourceManager.GetString("SiteSettings_Pages_FilterByLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SEO.
+        /// </summary>
+        public static string SiteSettings_Pages_FilterBySEO {
+            get {
+                return ResourceManager.GetString("SiteSettings_Pages_FilterBySEO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string SiteSettings_Pages_FilterByStatus {
+            get {
+                return ResourceManager.GetString("SiteSettings_Pages_FilterByStatus", resourceCulture);
             }
         }
         

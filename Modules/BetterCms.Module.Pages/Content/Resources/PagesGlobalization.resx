@@ -1296,4 +1296,25 @@
   <data name="DeletePage_SitemapSkipped_Message" xml:space="preserve">
     <value>The page was not removed from some site map or maps, because you do not have permission to modified it or them.</value>
   </data>
+  <data name="PageStatusFilterType_ContainingUnpublishedContents" xml:space="preserve">
+    <value>Containing unpublished contents</value>
+  </data>
+  <data name="PageStatusFilterType_Published" xml:space="preserve">
+    <value>Published</value>
+  </data>
+  <data name="PageStatusFilterType_Unpublished" xml:space="preserve">
+    <value>Unpublished</value>
+  </data>
+  <data name="SeoStatusFilterType_HasNotSEO" xml:space="preserve">
+    <value>Hasn't SEO</value>
+  </data>
+  <data name="SeoStatusFilterType_HasSEO" xml:space="preserve">
+    <value>Has SEO</value>
+  </data>
+  <data name="SiteSettings_Pages_FilterBySEO" xml:space="preserve">
+    <value>SEO</value>
+  </data>
+  <data name="SiteSettings_Pages_FilterByStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
 </root>

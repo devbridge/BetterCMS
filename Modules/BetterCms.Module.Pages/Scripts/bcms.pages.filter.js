@@ -29,9 +29,15 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             self.languages = jsonData.Languages || [];
             self.categoryId = ko.observable(jsonData.CategoryId);
             self.categories = jsonData.Categories || [];
+            self.status = ko.observable(jsonData.Status);
+            self.statuses = jsonData.Statuses || [];
+            self.seoStatus = ko.observable(jsonData.SeoStatus);
+            self.seoStatuses = jsonData.SeoStatuses || [];
 
             self.categories.unshift({ Key: '', Value: '' });
             self.languages.unshift({ Key: '', Value: '' });
+            self.statuses.unshift({ Key: '', Value: '' });
+            self.seoStatuses.unshift({ Key: '', Value: '' });
 
             self.isEdited = ko.computed(function () {
                 if (self.includeArchived()) {
@@ -43,7 +49,7 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                 if (self.tags != null && self.tags.items() != null && self.tags.items().length > 0) {
                     return true;
                 }
-                if (self.categoryId() || self.languageId()) {
+                if (self.categoryId() || self.languageId() || self.seoStatus() || self.status()) {
                     return true;
                 }
                 return false;

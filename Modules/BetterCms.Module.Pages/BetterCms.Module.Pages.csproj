@@ -322,6 +322,8 @@
     <Compile Include="ViewModels\Content\RestorePageContentViewModel.cs" />
     <Compile Include="ViewModels\Content\IDraftDestroy.cs" />
     <Compile Include="ViewModels\Content\PageContentSortViewModel.cs" />
+    <Compile Include="ViewModels\Filter\PageStatusFilterType.cs" />
+    <Compile Include="ViewModels\Filter\SeoStatusFilterType.cs" />
     <Compile Include="ViewModels\Filter\SitemapsFilter.cs" />
     <Compile Include="ViewModels\Filter\SitemapsGridViewModel.cs" />
     <Compile Include="ViewModels\Filter\PagesGridViewModel.cs" />

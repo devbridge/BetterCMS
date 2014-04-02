@@ -16,6 +16,8 @@ using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
 
+using FluentNHibernate.Utils;
+
 using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Linq;
@@ -68,24 +70,25 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
                 .QueryOver(() => alias)
                 .Where(() => !alias.IsDeleted && alias.Status != PageStatus.Preview);
 
-            query = FilterQuery(query, request);
-
-            var sitemapNodesFuture = Repository.AsQueryable<SitemapNode>().Where(n => !n.IsDeleted).ToFuture();
-
             // NOTE: below does not work - need to find out how to rewrite it.
             // var nodesSubQuery = QueryOver.Of<SitemapNode>()
             //     .Where(x => x.Page.Id == alias.Id || x.UrlHash == alias.PageUrlHash)
             //     .Select(s => 1)
             //     .Take(1);
-
-            var hasSeoProjection = Projections.Conditional(
+            var hasSeoDisjunction =
                 Restrictions.Disjunction()
                     .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaTitle)))
                     .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaKeywords)))
-                    .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaDescription))),
-            //.Add(Restrictions.IsNull(Projections.SubQuery(nodesSubQuery))),
+                    .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaDescription)));
+
+            var hasSeoProjection = Projections.Conditional(hasSeoDisjunction,
+                //.Add(Restrictions.IsNull(Projections.SubQuery(nodesSubQuery))),
                 Projections.Constant(false, NHibernateUtil.Boolean),
                 Projections.Constant(true, NHibernateUtil.Boolean));
+
+            query = FilterQuery(query, request, hasSeoDisjunction);
+
+            var sitemapNodesFuture = Repository.AsQueryable<SitemapNode>().Where(n => !n.IsDeleted).ToFuture();
 
             query = query
                 .SelectList(select => select
@@ -149,7 +152,8 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
                 categoriesFuture.ToList());
         }
 
-        protected virtual IQueryOver<PageProperties, PageProperties> FilterQuery(IQueryOver<PageProperties, PageProperties> query, PagesFilter request)
+        protected virtual IQueryOver<PageProperties, PageProperties> FilterQuery(IQueryOver<PageProperties, PageProperties> query, 
+            PagesFilter request, Junction hasSeoDisjunction)
         {
             PageProperties alias = null;
 
@@ -201,6 +205,55 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
                 {
                     var id = tagKeyValue.Key.ToGuidOrDefault();
                     query = query.WithSubquery.WhereExists(QueryOver.Of<PageTag>().Where(tag => tag.Tag.Id == id && tag.Page.Id == alias.Id).Select(tag => 1));
+                }
+            }
+
+            if (request.Status.HasValue)
+            {
+                if (request.Status.Value == PageStatusFilterType.OnlyPublished)
+                {
+                    query = query.Where(() => alias.Status == PageStatus.Published);
+                }
+                else if (request.Status.Value == PageStatusFilterType.OnlyUnpublished)
+                {
+                    query = query.Where(() => alias.Status != PageStatus.Published);
+                }
+                else if (request.Status.Value == PageStatusFilterType.ContainingUnpublishedContents)
+                {
+                    const ContentStatus draft = ContentStatus.Draft;
+                    Root.Models.Content contentAlias = null;
+                    var subQuery = QueryOver.Of<PageContent>()
+                        .JoinAlias(p => p.Content, () => contentAlias)
+                        .Where(pageContent => pageContent.Page.Id == alias.Id)
+                        .And(() => contentAlias.Status == draft)
+                        .And(() => !contentAlias.IsDeleted)
+                        .Select(pageContent => 1);
+
+                    query = query.WithSubquery.WhereExists(subQuery);
+                }
+            }
+
+            if (request.SeoStatus.HasValue)
+            {
+                var subQuery = QueryOver.Of<SitemapNode>()
+                    .Where(x => x.Page.Id == alias.Id || x.UrlHash == alias.PageUrlHash)
+                    .And(x => !x.IsDeleted)
+                    .Select(s => 1);
+
+                if (request.SeoStatus.Value == SeoStatusFilterType.HasSeo)
+                {
+                    // NOT(seo disjunction) AND EXISTS(subquery)
+                    query = query
+                        .Where(Restrictions.Not(hasSeoDisjunction))
+                        .WithSubquery.WhereExists(subQuery);
+                }
+                else
+                {
+                    // seo disjunction OR NOT EXISTS(subquery)
+                    var disjunction = hasSeoDisjunction
+                        .DeepClone()
+                        .Add(Subqueries.WhereNotExists(subQuery));
+                    query = query.Where(disjunction);
                 }
             }
 

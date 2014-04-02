@@ -77,10 +77,14 @@ namespace BetterCms.Module.Pages.Command.Page.GetUntranslatedPagesList
         /// </summary>
         /// <param name="query">The query.</param>
         /// <param name="request">The request.</param>
-        /// <returns>Query, filtered with specified filter parameters</returns>
-        protected override NHibernate.IQueryOver<PageProperties, PageProperties> FilterQuery(NHibernate.IQueryOver<PageProperties, PageProperties> query, PagesFilter request)
+        /// <param name="hasSeoDisjunction">The has seo disjunction.</param>
+        /// <returns>
+        /// Query, filtered with specified filter parameters
+        /// </returns>
+        protected override NHibernate.IQueryOver<PageProperties, PageProperties> FilterQuery(NHibernate.IQueryOver<PageProperties, PageProperties> query,
+            PagesFilter request, Junction hasSeoDisjunction)
         {
-            query = base.FilterQuery(query, request);
+            query = base.FilterQuery(query, request, hasSeoDisjunction);
 
             var filter = request as UntranslatedPagesFilter;
             if (filter != null)
