@@ -16,5 +16,6 @@ namespace BetterCms.Module.Pages.ViewModels.Filter
         public bool IncludeMasterPages { get; set; }
         public PageStatusFilterType? Status { get; set; }
         public SeoStatusFilterType? SeoStatus { get; set; }
+        public string Layout { get; set; }
     }
 }

@@ -22,8 +22,10 @@ namespace BetterCms.Module.Pages.Command.Page.GetUntranslatedPagesList
         /// <param name="configuration">The configuration.</param>
         /// <param name="languageService">The language service.</param>
         /// <param name="accessControlService">The access control service.</param>
-        public GetUntranslatedPagesListCommand(ICategoryService categoryService, ICmsConfiguration configuration, ILanguageService languageService, IAccessControlService accessControlService)
-            : base(categoryService, configuration, languageService, accessControlService)
+        /// <param name="layoutService">The layout service.</param>
+        public GetUntranslatedPagesListCommand(ICategoryService categoryService, ICmsConfiguration configuration, 
+            ILanguageService languageService, IAccessControlService accessControlService, ILayoutService layoutService)
+            : base(categoryService, configuration, languageService, accessControlService, layoutService)
         {
         }
 
@@ -62,14 +64,22 @@ namespace BetterCms.Module.Pages.Command.Page.GetUntranslatedPagesList
         /// <param name="request">The request.</param>
         /// <param name="count">The count.</param>
         /// <param name="categoriesFuture">The categories future.</param>
-        /// <returns>Model</returns>
-        protected override PagesGridViewModel<SiteSettingPageViewModel> CreateModel(System.Collections.Generic.IEnumerable<SiteSettingPageViewModel> pages, PagesFilter request, NHibernate.IFutureValue<int> count, System.Collections.Generic.IEnumerable<Root.Models.LookupKeyValue> categoriesFuture)
-        {
+        /// <param name="layouts">The layouts.</param>
+        /// <returns>
+        /// Model
+        /// </returns>
+        protected override PagesGridViewModel<SiteSettingPageViewModel> CreateModel(System.Collections.Generic.IEnumerable<SiteSettingPageViewModel> pages, 
+            PagesFilter request, NHibernate.IFutureValue<int> count, 
+            System.Collections.Generic.IEnumerable<Root.Models.LookupKeyValue> categoriesFuture,
+            System.Collections.Generic.IList<Root.Models.LookupKeyValue> layouts) {
             return new UntranslatedPagesGridViewModel<SiteSettingPageViewModel>(
                 pages.ToList(),
                 request as UntranslatedPagesFilter,
                 count.Value,
-                categoriesFuture.ToList());
+                categoriesFuture.ToList())
+                   {
+                       Layouts = layouts
+                   };
         }
 
         /// <summary>

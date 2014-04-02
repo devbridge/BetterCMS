@@ -33,11 +33,14 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             self.statuses = jsonData.Statuses || [];
             self.seoStatus = ko.observable(jsonData.SeoStatus);
             self.seoStatuses = jsonData.SeoStatuses || [];
+            self.layout = ko.observable(jsonData.Layout);
+            self.layouts = jsonData.Layouts || [];
 
             self.categories.unshift({ Key: '', Value: '' });
             self.languages.unshift({ Key: '', Value: '' });
             self.statuses.unshift({ Key: '', Value: '' });
             self.seoStatuses.unshift({ Key: '', Value: '' });
+            self.layouts.unshift({ Key: '', Value: '' });
 
             self.isEdited = ko.computed(function () {
                 if (self.includeArchived()) {
@@ -49,7 +52,7 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                 if (self.tags != null && self.tags.items() != null && self.tags.items().length > 0) {
                     return true;
                 }
-                if (self.categoryId() || self.languageId() || self.seoStatus() || self.status()) {
+                if (self.categoryId() || self.languageId() || self.seoStatus() || self.status() || self.layout()) {
                     return true;
                 }
                 return false;
@@ -73,6 +76,10 @@ bettercms.define('bcms.pages.filter', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                 self.includeMasterPages(false);
                 self.languageId('');
                 self.categoryId('');
+                self.status('');
+                self.seoStatus('');
+                self.layout('');
+
                 self.searchWithFilter();
             };
             self.changeIncludeArchived = function () {

@@ -3004,7 +3004,16 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SEO.
+        ///   Looks up a localized string similar to By Layout.
+        /// </summary>
+        public static string SiteSettings_Pages_FilterByLayout {
+            get {
+                return ResourceManager.GetString("SiteSettings_Pages_FilterByLayout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By SEO status.
         /// </summary>
         public static string SiteSettings_Pages_FilterBySEO {
             get {
@@ -3013,7 +3022,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Status.
+        ///   Looks up a localized string similar to By page status.
         /// </summary>
         public static string SiteSettings_Pages_FilterByStatus {
             get {

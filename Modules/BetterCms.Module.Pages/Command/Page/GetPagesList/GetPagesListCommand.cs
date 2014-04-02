@@ -33,6 +33,8 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
         private readonly ICategoryService categoryService;
 
         private readonly ILanguageService languageService;
+        
+        private readonly ILayoutService layoutService;
 
         private readonly ICmsConfiguration configuration;
         
@@ -45,13 +47,15 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
         /// <param name="configuration">The configuration.</param>
         /// <param name="languageService">The language service.</param>
         /// <param name="accessControlService">The access control service.</param>
+        /// <param name="layoutService">The layout service.</param>
         public GetPagesListCommand(ICategoryService categoryService, ICmsConfiguration configuration,
-            ILanguageService languageService, IAccessControlService accessControlService)
+            ILanguageService languageService, IAccessControlService accessControlService, ILayoutService layoutService)
         {
             this.configuration = configuration;
             this.categoryService = categoryService;
             this.languageService = languageService;
             this.accessControlService = accessControlService;
+            this.layoutService = layoutService;
         }
 
         /// <summary>
@@ -120,7 +124,14 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
 
             var pages = query.AddSortingAndPaging(request).Future<SiteSettingPageViewModel>();
             
-            var model = CreateModel(pages, request, count, categoriesFuture);
+            var layouts = layoutService
+                        .GetAvailableLayouts()
+                        .Select(l => new LookupKeyValue(
+                            string.Format("{0}-{1}", l.IsMasterPage ? "m" : "l", l.TemplateId), 
+                            l.Title))
+                        .ToList();
+
+            var model = CreateModel(pages, request, count, categoriesFuture, layouts);
 
             if (languagesFuture != null)
             {
@@ -143,13 +154,16 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
         }
 
         protected virtual PagesGridViewModel<SiteSettingPageViewModel> CreateModel(IEnumerable<SiteSettingPageViewModel> pages, 
-            PagesFilter request, IFutureValue<int> count, IEnumerable<LookupKeyValue> categoriesFuture)
+            PagesFilter request, IFutureValue<int> count, IEnumerable<LookupKeyValue> categoriesFuture, IList<LookupKeyValue> layouts)
         {
             return new PagesGridViewModel<SiteSettingPageViewModel>(
                 pages.ToList(),
                 request,
                 count.Value,
-                categoriesFuture.ToList());
+                categoriesFuture.ToList())
+                   {
+                       Layouts = layouts
+                   };
         }
 
         protected virtual IQueryOver<PageProperties, PageProperties> FilterQuery(IQueryOver<PageProperties, PageProperties> query, 
@@ -254,6 +268,21 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
                         .DeepClone()
                         .Add(Subqueries.WhereNotExists(subQuery));
                     query = query.Where(disjunction);
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.Layout))
+            {
+                Guid id;
+                var length = request.Layout.Length - 2;
+                if (request.Layout.StartsWith("m-") && Guid.TryParse(request.Layout.Substring(2, length), out id))
+                {
+                    query = query.Where(() => alias.MasterPage.Id == id);
+                }
+
+                if (request.Layout.StartsWith("l-") && Guid.TryParse(request.Layout.Substring(2, length), out id))
+                {
+                    query = query.Where(() => alias.Layout.Id == id);
                 }
             }
 

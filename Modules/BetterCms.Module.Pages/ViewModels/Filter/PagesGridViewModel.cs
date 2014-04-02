@@ -19,11 +19,13 @@ namespace BetterCms.Module.Pages.ViewModels.Filter
         public IList<LookupKeyValue> Languages { get; set; }
         public IList<LookupKeyValue> Statuses { get; set; }
         public IList<LookupKeyValue> SeoStatuses { get; set; }
+        public IList<LookupKeyValue> Layouts { get; set; }
         public bool IncludeArchived { get; set; }
         public bool IncludeMasterPages { get; set; }
         public bool HideMasterPagesFiltering { get; set; }
         public PageStatusFilterType? Status { get; set; }
         public SeoStatusFilterType? SeoStatus { get; set; }
+        public string Layout { get; set; }
 
         public PagesGridViewModel(IEnumerable<TModel> items, PagesFilter filter, int totalCount, IEnumerable<LookupKeyValue> categories) : base(items, filter, totalCount)
         {
@@ -32,6 +34,7 @@ namespace BetterCms.Module.Pages.ViewModels.Filter
             LanguageId = filter.LanguageId;
             Status = filter.Status;
             SeoStatus = filter.SeoStatus;
+            Layout = filter.Layout;
             Categories = categories;
             IncludeArchived = filter.IncludeArchived;
             IncludeMasterPages = filter.IncludeMasterPages;

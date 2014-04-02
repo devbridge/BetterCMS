@@ -406,7 +406,7 @@ a.bcms-slider-next {
     position: absolute;
     top: 29px;
     left: 0;
-    width: 440px;
+    width: 450px;
     padding: 15px;
     background: #f5f5f5;
     border: 1px solid #c6c6c6;
@@ -423,6 +423,7 @@ a.bcms-slider-next {
 .bcms-filter-options {
     float: left;
     padding-bottom: 5px;
+    padding-right: 5px;
 }
 
     .bcms-filter-options:first-child {

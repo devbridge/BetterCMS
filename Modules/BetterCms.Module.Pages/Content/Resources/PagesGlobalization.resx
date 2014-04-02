@@ -1312,9 +1312,12 @@
     <value>Has SEO</value>
   </data>
   <data name="SiteSettings_Pages_FilterBySEO" xml:space="preserve">
-    <value>SEO</value>
+    <value>By SEO status</value>
   </data>
   <data name="SiteSettings_Pages_FilterByStatus" xml:space="preserve">
-    <value>Status</value>
+    <value>By page status</value>
+  </data>
+  <data name="SiteSettings_Pages_FilterByLayout" xml:space="preserve">
+    <value>By Layout</value>
   </data>
 </root>
