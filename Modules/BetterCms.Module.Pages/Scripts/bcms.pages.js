@@ -87,6 +87,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 selectPageDialogTitle: null,
                 selectPageSelectButtonTitle: null,
                 pageNotSelectedMessage: null,
+                pagesListTitle: null
             },
             keys = {
                 addNewPageInfoMessageClosed: 'bcms.addNewPageInfoBoxClosed'
@@ -463,7 +464,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         /**
         * Loads site settings page list.
         */
-        page.loadSiteSettingsPageList = function () {
+        page.loadSiteSettingsPageList = function (sender) {
             dynamicContent.bindSiteSettings(siteSettings, page.links.loadSiteSettingsPageListUrl, {
                 contentAvailable: page.initializeSiteSettingsPagesList
             });
@@ -480,9 +481,9 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             }, opts);
 
             var dialog = opts.dialog,
-                container = dialog.container;
+                container = dialog.container,
+                form = dialog.container.find(selectors.siteSettingsPagesListForm);
 
-            var form = dialog.container.find(selectors.siteSettingsPagesListForm);
             grid.bindGridForm(form, function (content, data) {
                 opts.dialogContainer.setContent(content);
                 page.initializeSiteSettingsPagesList(content, data, opts);
@@ -508,7 +509,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
             filter.bind(container, ((content.Data) ? content.Data : jsonData), function () {
                 page.searchSiteSettingsPages(form, container, opts);
-            });
+            }, opts);
 
             // Select search (timeout is required to work on IE11)
             grid.focusSearchInput(dialog.container.find(selectors.siteSettingsPagesSearchField), true);
@@ -802,7 +803,10 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 onAccept: function () { return true; },
                 onClose: function () { return true; },
                 url: links.loadSelectPageUrl,
-                params: {}
+                params: {},
+                canBeSelected: true,
+                title: globalization.selectPageDialogTitle,
+                disableAccept: false
             }, opts);
 
             var url = opts.params
@@ -811,53 +815,55 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                         : opts.url + '?' + $.param(opts.params))
                     : links.loadSelectPageUrl,
                 selectDialog = modal.open({
-                title: globalization.selectPageDialogTitle,
-                acceptTitle: globalization.selectPageSelectButtonTitle,
-                onClose: function () {
-                    var result = true;
-                    if ($.isFunction(opts.onClose)) {
-                        result = opts.onClose();
-                    }
-                    return result;
-                },
-                onLoad: function (dialog) {
-                    dynamicContent.setContentFromUrl(dialog, url, {
-                        done: function (content) {
-                            page.initializeSiteSettingsPagesList(content.Html, content.Data, $.extend({
-                                dialog: dialog,
-                                dialogContainer: selectDialog,
-                                canBeSelected: true
-                            }, pageGridOptions));
+                    title: opts.title,
+                    acceptTitle: globalization.selectPageSelectButtonTitle,
+                    disableAccept: opts.disableAccept,
+                    onClose: function() {
+                        var result = true;
+                        if ($.isFunction(opts.onClose)) {
+                            result = opts.onClose();
                         }
-                    });
-                },
-                onAcceptClick: function () {
-                    var result = true,
-                        selectedItem = selectDialog.container.find(selectors.siteSettingsPagesTableActiveRow),
-                        id = selectedItem.find(selectors.siteSettingsPageEditButton).data('id'),
-                        titleLink = selectedItem.find(selectors.siteSettingPageTitleCell);
-
-                    if (selectedItem.length == 0) {
-                        modal.info({
-                            content: globalization.pageNotSelectedMessage,
-                            disableCancel: true
+                        return result;
+                    },
+                    onLoad: function(dialog) {
+                        dynamicContent.setContentFromUrl(dialog, url, {
+                            done: function(content) {
+                                page.initializeSiteSettingsPagesList(content.Html, content.Data, $.extend({
+                                    dialog: dialog,
+                                    dialogContainer: selectDialog,
+                                    canBeSelected: opts.canBeSelected
+                                }, pageGridOptions));
+                            }
                         });
+                    },
+                    onAcceptClick: function () {
+                        var selectedItem = selectDialog.container.find(selectors.siteSettingsPagesTableActiveRow),
+                            id = selectedItem.find(selectors.siteSettingsPageEditButton).data('id'),
+                            titleLink = selectedItem.find(selectors.siteSettingPageTitleCell);
 
-                        result = false;
-                    } else {
+                        if (opts.canBeSelected) {
+                            if (selectedItem.length == 0) {
+                                modal.info({
+                                    content: globalization.pageNotSelectedMessage,
+                                    disableCancel: true
+                                });
+
+                                return false;
+                            }
+                        }
+
                         if ($.isFunction(opts.onAccept)) {
-                            result = opts.onAccept({
+                            return opts.onAccept({
                                 Id: id,
                                 Title: titleLink.html(),
                                 PageUrl: titleLink.data('url'),
                                 LanguageId: titleLink.data('languageId')
                             });
                         }
-                    }
 
-                    return result;
-                }
-            });
+                        return true;
+                    }
+                });
 
             return selectDialog;
         };

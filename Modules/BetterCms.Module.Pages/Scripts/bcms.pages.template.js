@@ -2,8 +2,8 @@
 /*global bettercms */
 
 bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages',
-        'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery', 'bcms.options', 'bcms.ko.extenders', 'bcms.pages.masterpage'],
-    function ($, bcms, modal, datepicker, dynamicContent, siteSettings, messages, preview, grid, editor, slides, options, ko, masterpage) {
+        'bcms.preview', 'bcms.grid', 'bcms.inlineEdit', 'bcms.slides.jquery', 'bcms.options', 'bcms.ko.extenders', 'bcms.pages.masterpage', 'bcms.pages'],
+    function ($, bcms, modal, datepicker, dynamicContent, siteSettings, messages, preview, grid, editor, slides, options, ko, masterpage, pages) {
         'use strict';
 
         var template = {},
@@ -41,6 +41,7 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
 
                 templatesRowDeleteButtons: '.bcms-grid-item-delete-button',
                 templatesRowDeleteMessage: '.bcms-grid-item-message',
+                templatesRowUsageLinks: '.bcms-template-usage',
                 templatesRowDeleteElementsToHide: '.bcms-grid-item-delete-button, .bcms-grid-item-edit-button',
                 templateParentRow: 'tr:first',
                 templateNameCell: '.bcms-template-name',
@@ -312,6 +313,12 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             container.find(selectors.templatesRowDeleteButtons).on('click', function () {
                 deleteTemplates(container, $(this));
             });
+
+            container.find(selectors.templatesRowUsageLinks).on('click', function (e) {
+                bcms.stopEventPropagation(e);
+
+                filterPagesByTemplate($(this));
+            });
         };
 
         /**
@@ -343,6 +350,22 @@ bettercms.define('bcms.pages.template', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                 }
             });
         };
+
+        /*
+        * Opens pages list, filtered by template
+        */
+        function filterPagesByTemplate(self) {
+            var id = self.data('id');
+
+            pages.openPageSelectDialog({
+                params: {
+                    Layout: 'l-' + id
+                },
+                canBeSelected: false,
+                title: pages.globalization.pagesListTitle,
+                disableAccept: true
+            });
+        }
 
         /**
         * Set values, returned from server to row fields

@@ -45,7 +45,8 @@ namespace BetterCms.Module.Pages.Registration
                     new JavaScriptModuleGlobalization(this, "pageStatusChangeConfirmationMessageUnPublish", () => PagesGlobalization.EditPageProperties_PageStatusChange_ConfirmationMessage_UnPublish),
                     new JavaScriptModuleGlobalization(this, "selectPageDialogTitle", () => PagesGlobalization.SelectPage_Dialog_Title),
                     new JavaScriptModuleGlobalization(this, "selectPageSelectButtonTitle", () => PagesGlobalization.SelectPage_Select_ButtonTitle),
-                    new JavaScriptModuleGlobalization(this, "pageNotSelectedMessage", () => PagesGlobalization.SelectPage_PageIsNotSelected_Message)
+                    new JavaScriptModuleGlobalization(this, "pageNotSelectedMessage", () => PagesGlobalization.SelectPage_PageIsNotSelected_Message),
+                    new JavaScriptModuleGlobalization(this, "pagesListTitle", () => PagesGlobalization.Pages_List_Title),
                 };
         }
     }

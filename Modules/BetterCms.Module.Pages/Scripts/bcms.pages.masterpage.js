@@ -23,6 +23,7 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
                 siteSettingsPageTitleCell: '.bcms-page-title',
                 siteSettingsPageEditButton: '.bcms-grid-item-edit-button',
                 siteSettingsPageDeleteButton: '.bcms-grid-item-delete-button',
+                siteSettingsPageUsageLink: '.bcms-master-page-usage',
                 siteSettingsPagesListFormFilterIncludeArchived: "#IncludeArchived",
                 
                 siteSettingsPageRowTemplate: '#bcms-pages-list-row-template',
@@ -100,6 +101,11 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
                 bcms.stopEventPropagation(event);
                 deleteMasterPage($(this), container);
             });
+
+            container.find(selectors.siteSettingsPageUsageLink).on('click', function (event) {
+                bcms.stopEventPropagation(event);
+                filterPagesByMasterPage($(this), container);
+            });
         };
         
         function addMasterPage(container) {
@@ -146,6 +152,19 @@ bettercms.define('bcms.pages.masterpage', ['bcms.jquery', 'bcms', 'bcms.siteSett
                 }
             }, globalization.editMasterPagePropertiesModalTitle);
         };
+
+        function filterPagesByMasterPage(self) {
+            var id = self.data('id');
+
+            page.openPageSelectDialog({
+                params: {
+                    Layout: 'm-' + id
+                },
+                canBeSelected: false,
+                title: page.globalization.pagesListTitle,
+                disableAccept: true
+            });
+        }
 
         function deleteMasterPage(self, container) {
             var id = self.data('id');
