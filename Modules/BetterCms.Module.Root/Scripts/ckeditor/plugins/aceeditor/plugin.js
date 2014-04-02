@@ -125,7 +125,7 @@ Edited by the Devbridge Better CMS team.
                                 bcms.logger.trace('resizing ace');
                                 // Make the editor container fill the space.
                                 $('#aceEditor_container_' + editorID).css(holderElement.position()).width(holderElement.width()).height(holderElement.height());
-                                aceEditor.resize();
+                                aceEditor.resize(true);
                             };
 
                             // Update
