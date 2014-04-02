@@ -39,18 +39,8 @@ namespace BetterCms.Module.Pages.ViewModels.Filter
             IncludeArchived = filter.IncludeArchived;
             IncludeMasterPages = filter.IncludeMasterPages;
 
-            Statuses = new []
-                       {
-                           new LookupKeyValue(((int)PageStatusFilterType.OnlyPublished).ToString(CultureInfo.InvariantCulture), PagesGlobalization.PageStatusFilterType_Published),
-                           new LookupKeyValue(((int)PageStatusFilterType.OnlyUnpublished).ToString(CultureInfo.InvariantCulture), PagesGlobalization.PageStatusFilterType_Unpublished),
-                           new LookupKeyValue(((int)PageStatusFilterType.ContainingUnpublishedContents).ToString(CultureInfo.InvariantCulture), PagesGlobalization.PageStatusFilterType_ContainingUnpublishedContents)
-                       };
-            
-            SeoStatuses = new []
-                       {
-                           new LookupKeyValue(((int)SeoStatusFilterType.HasSeo).ToString(CultureInfo.InvariantCulture), PagesGlobalization.SeoStatusFilterType_HasSEO),
-                           new LookupKeyValue(((int)SeoStatusFilterType.HasNotSeo).ToString(CultureInfo.InvariantCulture), PagesGlobalization.SeoStatusFilterType_HasNotSEO),
-                       };
+            Statuses = PagesFilter.PageStatuses;
+            SeoStatuses = PagesFilter.SeoStatuses;
         }
     }
 }

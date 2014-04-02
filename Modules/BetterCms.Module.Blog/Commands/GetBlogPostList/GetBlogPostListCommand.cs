@@ -10,7 +10,7 @@ using BetterCms.Module.Blog.ViewModels.Filter;
 
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
-
+using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
@@ -104,6 +104,55 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPostList
                 {
                     var id = tagKeyValue.Key.ToGuidOrDefault();
                     query = query.WithSubquery.WhereExists(QueryOver.Of<PageTag>().Where(tag => tag.Tag.Id == id && tag.Page.Id == alias.Id).Select(tag => 1));
+                }
+            }
+
+            if (request.Status.HasValue)
+            {
+                if (request.Status.Value == PageStatusFilterType.OnlyPublished)
+                {
+                    query = query.Where(() => alias.Status == PageStatus.Published);
+                }
+                else if (request.Status.Value == PageStatusFilterType.OnlyUnpublished)
+                {
+                    query = query.Where(() => alias.Status != PageStatus.Published);
+                }
+                else if (request.Status.Value == PageStatusFilterType.ContainingUnpublishedContents)
+                {
+                    const ContentStatus draft = ContentStatus.Draft;
+                    Root.Models.Content contentAlias = null;
+                    var subQuery = QueryOver.Of<PageContent>()
+                        .JoinAlias(p => p.Content, () => contentAlias)
+                        .Where(pageContent => pageContent.Page.Id == alias.Id)
+                        .And(() => contentAlias.Status == draft)
+                        .And(() => !contentAlias.IsDeleted)
+                        .Select(pageContent => 1);
+
+                    query = query.WithSubquery.WhereExists(subQuery);
+                }
+            }
+
+            if (request.SeoStatus.HasValue)
+            {
+                var subQuery = QueryOver.Of<SitemapNode>()
+                    .Where(x => x.Page.Id == alias.Id || x.UrlHash == alias.PageUrlHash)
+                    .And(x => !x.IsDeleted)
+                    .Select(s => 1);
+
+                var hasSeoDisjunction =
+                Restrictions.Disjunction()
+                    .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaTitle)))
+                    .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaKeywords)))
+                    .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaDescription)))
+                    .Add(Subqueries.WhereNotExists(subQuery));
+
+                if (request.SeoStatus.Value == SeoStatusFilterType.HasSeo)
+                {
+                    query = query.Where(Restrictions.Not(hasSeoDisjunction));
+                }
+                else
+                {
+                    query = query.Where(hasSeoDisjunction);
                 }
             }
 
