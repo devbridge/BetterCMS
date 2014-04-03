@@ -2,7 +2,6 @@
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Blog.ViewModels.Blog
 @using BetterCms.Module.Blog.ViewModels.Filter
-@using BetterCms.Module.Root.Mvc.Helpers
 
 @model BlogsGridViewModel<SiteSettingBlogPostViewModel>
 <div id="bcms-filter-template">
@@ -38,6 +37,24 @@
                     <select class="bcms-global-select" name="CategoryId" data-bind="options: categories, value: categoryId, optionsText: 'Value', optionsValue: 'Key'" />
                 </div>
                 
+                <div class="bcms-filter-options">
+                    <div class="bcms-filter-text">@BlogGlobalization.SiteSettings_Blogs_FilterByStatus</div>
+                    @Html.DropDownListFor(m => m.Status, new List<SelectListItem>(), new
+                                                                      {
+                                                                          data_bind = "options: statuses, value: status, optionsText: 'Value', optionsValue: 'Key'",
+                                                                          @class = "bcms-global-select"
+                                                                      })
+                </div>
+
+                <div class="bcms-filter-options">
+                    <div class="bcms-filter-text">@BlogGlobalization.SiteSettings_Blogs_FilterBySEO</div>
+                    @Html.DropDownListFor(m => m.SeoStatus, new List<SelectListItem>(), new
+                                                                                            {
+                                                                                                data_bind = "options: seoStatuses, value: seoStatus, optionsText: 'Value', optionsValue: 'Key'",
+                                                                                                @class = "bcms-global-select"
+                                                                                            })
+                </div>
+
                 @if (Model.Languages != null && Model.Languages.Any())
                 {
                     <div class="bcms-filter-options">

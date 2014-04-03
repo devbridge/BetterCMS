@@ -19,8 +19,14 @@
             .Named(PagesGlobalization.SiteSettings_Templates_NameColumn)
             .SortColumnName("TemplateName")
             .Encode(false);
+
+        column.For(f => string.Format("<a class=\"bcms-tables-link bcms-template-usage\" data-id=\"{0}\">{1}</a>", f.Id, PagesGlobalization.SiteSettings_Templates_Usage))
+            .HeaderAttributes(@style => "width: 80px;")
+            .Named("")
+            .Sortable(false)
+            .Encode(false);
             
-        column.DeleteButtonColumn(renderId:false);
+        column.DeleteButtonColumn(false);
     };
 }
 

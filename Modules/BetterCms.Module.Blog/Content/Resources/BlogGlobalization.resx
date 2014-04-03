@@ -312,4 +312,10 @@
   <data name="SiteSettings_Blogs_FilterByLanguage" xml:space="preserve">
     <value>By Language</value>
   </data>
+  <data name="SiteSettings_Blogs_FilterBySEO" xml:space="preserve">
+    <value>By SEO status</value>
+  </data>
+  <data name="SiteSettings_Blogs_FilterByStatus" xml:space="preserve">
+    <value>By page status</value>
+  </data>
 </root>

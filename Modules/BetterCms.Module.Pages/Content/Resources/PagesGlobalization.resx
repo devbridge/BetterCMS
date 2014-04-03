@@ -1320,4 +1320,13 @@
   <data name="SiteSettings_Pages_FilterByLayout" xml:space="preserve">
     <value>By Layout</value>
   </data>
+  <data name="SiteSettings_MasterPages_Usage" xml:space="preserve">
+    <value>Usage</value>
+  </data>
+  <data name="SiteSettings_Templates_Usage" xml:space="preserve">
+    <value>Usage</value>
+  </data>
+  <data name="Pages_List_Title" xml:space="preserve">
+    <value>Pages</value>
+  </data>
 </root>

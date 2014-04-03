@@ -2419,6 +2419,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pages.
+        /// </summary>
+        public static string Pages_List_Title {
+            get {
+                return ResourceManager.GetString("Pages_List_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Containing unpublished contents.
         /// </summary>
         public static string PageStatusFilterType_ContainingUnpublishedContents {
@@ -2959,6 +2968,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Usage.
+        /// </summary>
+        public static string SiteSettings_MasterPages_Usage {
+            get {
+                return ResourceManager.GetString("SiteSettings_MasterPages_Usage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New +.
         /// </summary>
         public static string SiteSettings_Pages_AddNew {
@@ -3279,6 +3297,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string SiteSettings_Templates_Title {
             get {
                 return ResourceManager.GetString("SiteSettings_Templates_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usage.
+        /// </summary>
+        public static string SiteSettings_Templates_Usage {
+            get {
+                return ResourceManager.GetString("SiteSettings_Templates_Usage", resourceCulture);
             }
         }
         
