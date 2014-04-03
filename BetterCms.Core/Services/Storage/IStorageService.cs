@@ -19,5 +19,7 @@ namespace BetterCms.Core.Services.Storage
         string GetSecuredUrl(Uri uri);
         
         bool SecuredUrlsEnabled { get; }
+
+        string SecuredContainerIssueWarning { get; }
     }
 }

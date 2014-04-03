@@ -2,7 +2,9 @@
 using System.IO;
 using System.Net;
 
+using BetterCms.Core.Services.Caching;
 using BetterCms.Core.Services.Storage;
+using BetterCms.Module.WindowsAzureStorage.Content.Resources;
 
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
@@ -25,6 +27,8 @@ namespace BetterCms.Module.WindowsAzureStorage
         private readonly TimeSpan tokenExpiryTime;
 
         private TimeSpan timeout;
+
+        private string securedContainerIssue;
 
         // Allow resource to be cached by any cache for 7 days:
         private const string CacheControl = "public, max-age=604800";
@@ -243,6 +247,36 @@ namespace BetterCms.Module.WindowsAzureStorage
         public bool SecuredUrlsEnabled
         {
             get { return true; }
+        }
+
+        public string SecuredContainerIssueWarning
+        {
+            get
+            {
+                if (securedContainerIssue == null)
+                {
+                    securedContainerIssue = string.Empty;
+                    if (accessControlEnabledGlobally)
+                    {
+                        try
+                        {
+                            var client = cloudStorageAccount.CreateCloudBlobClient();
+                            var container = client.GetContainerReference(securedContainerName);
+                            var permission = container.GetPermissions();
+                            if (permission.PublicAccess == BlobContainerPublicAccessType.Container)
+                            {
+                                securedContainerIssue = AzureGlobalization.TokenBasedSecurity_HasSecuredContainerIssue_Message;
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            throw new StorageException(string.Format("Failed to check container permissions."), e);
+                        }
+                    }
+                }
+
+                return !string.IsNullOrWhiteSpace(securedContainerIssue) ? securedContainerIssue : null;
+            }
         }
 
         public string GetSecuredUrl(Uri uri)

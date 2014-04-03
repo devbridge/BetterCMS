@@ -111,6 +111,12 @@ namespace BetterCms.Module.MediaManager.Controllers
             {
                 Messages.AddWarn(MediaGlobalization.TokenBasedSecurity_NotSupported_Message);
             }
+            if (CmsConfiguration.Security.AccessControlEnabled
+                && StorageService.SecuredUrlsEnabled
+                && StorageService.SecuredContainerIssueWarning != null)
+            {
+                Messages.AddWarn(StorageService.SecuredContainerIssueWarning);
+            }
 
             var files = GetCommand<GetFilesCommand>().ExecuteCommand(new MediaManagerViewModel());
             var success = files != null;

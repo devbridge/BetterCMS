@@ -105,6 +105,11 @@ namespace BetterCms.Core.Services.Storage
             get { return false; }
         }
 
+        public string SecuredContainerIssueWarning
+        {
+            get { return null; }
+        }
+
         public string GetSecuredUrl(Uri uri)
         {
             throw new CmsException("File system storage doesn't support token based security.");

@@ -56,6 +56,16 @@ namespace BetterCms.Module.MediaManager.Controllers
                 viewModel.CustomFilesMessages = new UserMessages();
                 viewModel.CustomFilesMessages.AddWarn(MediaGlobalization.TokenBasedSecurity_NotSupported_Message);
             }
+            if (CmsConfiguration.Security.AccessControlEnabled
+                && StorageService.SecuredUrlsEnabled
+                && StorageService.SecuredContainerIssueWarning != null)
+            {
+                if (viewModel.CustomFilesMessages == null)
+                {
+                    viewModel.CustomFilesMessages = new UserMessages();
+                }
+                viewModel.CustomFilesMessages.AddWarn(StorageService.SecuredContainerIssueWarning);
+            }
 
             var images = GetCommand<GetImagesCommand>().ExecuteCommand(new MediaManagerViewModel());
             var success = images != null;

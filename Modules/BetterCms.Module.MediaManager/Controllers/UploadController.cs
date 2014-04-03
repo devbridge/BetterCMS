@@ -65,6 +65,13 @@ namespace BetterCms.Module.MediaManager.Controllers
             {
                 Messages.AddWarn(MediaGlobalization.TokenBasedSecurity_NotSupported_Message);
             }
+            if (type != MediaType.Image
+                && CmsConfiguration.Security.AccessControlEnabled
+                && StorageService.SecuredUrlsEnabled
+                && StorageService.SecuredContainerIssueWarning != null)
+            {
+                Messages.AddWarn(StorageService.SecuredContainerIssueWarning);
+            }
 
             var model = GetCommand<GetMultiFileUploadCommand>().ExecuteCommand(
                 new GetMultiFileUploadRequest
@@ -98,6 +105,13 @@ namespace BetterCms.Module.MediaManager.Controllers
             if (type != MediaType.Image && CmsConfiguration.Security.AccessControlEnabled && !StorageService.SecuredUrlsEnabled)
             {
                 Messages.AddWarn(MediaGlobalization.TokenBasedSecurity_NotSupported_Message);
+            }
+            if (type != MediaType.Image 
+                && CmsConfiguration.Security.AccessControlEnabled
+                && StorageService.SecuredUrlsEnabled
+                && StorageService.SecuredContainerIssueWarning != null)
+            {
+                Messages.AddWarn(StorageService.SecuredContainerIssueWarning);
             }
 
             var model = GetCommand<GetMultiFileUploadCommand>().ExecuteCommand(
