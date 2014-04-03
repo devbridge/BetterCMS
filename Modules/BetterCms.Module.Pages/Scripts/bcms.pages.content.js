@@ -237,10 +237,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             pagesContent.initializeWidgets(dialog.container, dialog);
 
-            htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
-            if (editInSourceMode) {
-                htmlEditor.setSourceMode(selectors.htmlEditor);
-            }
+            htmlEditor.initializeHtmlEditor(selectors.htmlEditor, {}, editInSourceMode);
             if (enableInsertDynamicRegion) {
                 htmlEditor.enableInsertDynamicRegion(selectors.htmlEditor);
             }
@@ -258,11 +255,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 canPublish = security.IsAuthorized(["BcmsPublishContent"]),
                 form = dialog.container.find(selectors.firstForm);
 
-            htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
-
-            if (editInSourceMode) {
-                htmlEditor.setSourceMode(selectors.htmlEditor);
-            }
+            htmlEditor.initializeHtmlEditor(selectors.htmlEditor, {}, editInSourceMode);
             if (enableInsertDynamicRegion) {
                 htmlEditor.enableInsertDynamicRegion(selectors.htmlEditor);
             }

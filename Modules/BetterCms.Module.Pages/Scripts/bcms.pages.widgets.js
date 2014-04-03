@@ -279,10 +279,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 });
             });
             
-            htmlEditor.initializeHtmlEditor(selectors.htmlContentWidgetContentHtmlEditor);
-            if (editInSourceMode) {
-                htmlEditor.setSourceMode(selectors.htmlContentWidgetContentHtmlEditor);
-            }
+            htmlEditor.initializeHtmlEditor(selectors.htmlContentWidgetContentHtmlEditor, {}, editInSourceMode);
 
             codeEditor.initialize(dialog.container);
 
