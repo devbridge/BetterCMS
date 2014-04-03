@@ -7,8 +7,12 @@ namespace BetterCms.Configuration
     public class CmsStorageConfigurationElement : ConfigurationElementCollection, ICmsStorageConfiguration
     {
         private const string ContentRootAttribute = "contentRoot";
+        
+        private const string SecuredContentRootAttribute = "securedContentRoot";
 
         private const string PublicContentUrlRootAttribute = "contentRootUrl";
+        
+        private const string PublicSecuredContentUrlRootAttribute = "securedContentRootUrl";
 
         private const string ServiceTypeAttribute = "serviceType";
 
@@ -37,6 +41,44 @@ namespace BetterCms.Configuration
             set
             {
                 this[PublicContentUrlRootAttribute] = value;
+            }
+        }
+
+        [ConfigurationProperty(SecuredContentRootAttribute, IsRequired = false, DefaultValue = null)]
+        public string SecuredContentRoot
+        {
+            get
+            {
+                string urlRoot = (string)this[SecuredContentRootAttribute];
+                if (string.IsNullOrEmpty(urlRoot))
+                {
+                    return ContentRoot;
+                }
+
+                return ParseEnvironmentValue(urlRoot);
+            }
+            set
+            {
+                this[SecuredContentRootAttribute] = value;
+            }
+        }
+
+        [ConfigurationProperty(PublicSecuredContentUrlRootAttribute, IsRequired = false, DefaultValue = null)]
+        public string PublicSecuredContentUrlRoot
+        {
+            get
+            {
+                string urlRoot = (string)this[PublicSecuredContentUrlRootAttribute];                
+                if (string.IsNullOrEmpty(urlRoot))
+                {
+                    return PublicContentUrlRootAttribute;
+                }
+
+                return ParseEnvironmentValue(urlRoot);
+            }
+            set
+            {
+                this[PublicSecuredContentUrlRootAttribute] = value;
             }
         }
 

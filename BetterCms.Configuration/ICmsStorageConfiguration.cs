@@ -9,6 +9,10 @@ namespace BetterCms
 
         string ContentRoot { get; set; }
 
+        string PublicSecuredContentUrlRoot { get; set; }
+
+        string SecuredContentRoot { get; set; }
+
         StorageServiceType ServiceType { get; set; }
 
         TimeSpan ProcessTimeout { get; set; }

@@ -17,6 +17,8 @@ namespace BetterCms.Module.WindowsAzureStorage
         private readonly CloudStorageAccount cloudStorageAccount;
 
         private readonly string containerName;
+        
+        private readonly string securedContainerName;
 
         private readonly bool accessControlEnabledGlobally;
         
@@ -51,6 +53,11 @@ namespace BetterCms.Module.WindowsAzureStorage
                 
                 accessControlEnabledGlobally = config.Security.AccessControlEnabled;
                 containerName = serviceSection.GetValue("AzureContainerName");
+                securedContainerName = serviceSection.GetValue("AzureSecuredContainerName");
+                if (string.IsNullOrWhiteSpace(securedContainerName))
+                {
+                    securedContainerName = containerName;
+                }
 
                 cloudStorageAccount = new CloudStorageAccount(new StorageCredentials(accountName, secretKey), useHttps);
             }
@@ -100,22 +107,27 @@ namespace BetterCms.Module.WindowsAzureStorage
                 var client = cloudStorageAccount.CreateCloudBlobClient();
                 client.ParallelOperationThreadCount = 1;
 
-                var container = client.GetContainerReference(containerName);
+                var securityEnabled = accessControlEnabledGlobally && !request.IgnoreAccessControl;
+                var currentContainerName = securityEnabled ? securedContainerName : containerName;
+
+                // Create container with specified security level 
+                var container = client.GetContainerReference(currentContainerName);
                 if (request.CreateDirectory)
                 {
-                    container.CreateIfNotExists();
+                    if (container.CreateIfNotExists())
+                    {
+                        var permissions = new BlobContainerPermissions();
+                        if (securityEnabled)
+                        {
+                            permissions.PublicAccess = BlobContainerPublicAccessType.Off;
+                        }
+                        else
+                        {
+                            permissions.PublicAccess = BlobContainerPublicAccessType.Blob;
+                        }
+                        container.SetPermissions(permissions);
+                    }
                 }
-
-//                var permissions = new BlobContainerPermissions();
-//                if (accessControlEnabledGlobally && !request.IgnoreAccessControl)
-//                {
-//                    permissions.PublicAccess = BlobContainerPublicAccessType.Off;
-//                }
-//                else
-//                {
-//                    permissions.PublicAccess = BlobContainerPublicAccessType.Blob;
-//                }
-//                container.SetPermissions(permissions);
 
                 var blob = container.GetBlockBlobReference(request.Uri.AbsoluteUri);
 

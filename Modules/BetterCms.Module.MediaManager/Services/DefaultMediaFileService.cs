@@ -7,6 +7,7 @@ using System.Web;
 using BetterCms.Configuration;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
@@ -78,14 +79,10 @@ namespace BetterCms.Module.MediaManager.Services
 
         public virtual void RemoveFile(Guid fileId, int version, bool doNotCheckVersion = false)
         {
-            var file = repository.AsQueryable<MediaFile>()
-                          .Where(f => f.Id == fileId)
-                          .Select(f => new
-                                           {
-                                               IsUploaded = f.IsUploaded,
-                                               FileUri = f.FileUri
-                                           })
-                          .FirstOrDefault();
+            var file = repository
+                .AsQueryable<MediaFile>(f => f.Id == fileId)
+                .FetchMany(f => f.AccessRules)
+                .FirstOrDefault();
 
             if (file == null)
             {
@@ -96,7 +93,7 @@ namespace BetterCms.Module.MediaManager.Services
             {
                 if (file.IsUploaded.HasValue && file.IsUploaded.Value)
                 {
-                    Task removeFile = 
+                    /*Task removeFile = 
                             new Task(() =>
                             {
                                 storageService.RemoveObject(file.FileUri);
@@ -106,20 +103,28 @@ namespace BetterCms.Module.MediaManager.Services
                                 storageService.RemoveFolder(file.FileUri);
                             });
 
-                    removeFile.Start();
+                    removeFile.Start();*/
+
+                    Task.Factory
+                        .StartNew(() => {})
+                        .ContinueWith(task =>
+                            {
+                                storageService.RemoveObject(file.FileUri);
+                            })
+                        .ContinueWith(task =>
+                            {
+                                storageService.RemoveFolder(file.FileUri);
+                            });
                 }
             }
             finally
             {
-                if (doNotCheckVersion)
+                if (!doNotCheckVersion)
                 {
-                    var media = repository.AsQueryable<MediaFile>().FirstOrDefault(f => f.Id == fileId);
-                    repository.Delete(media);
+                    file.Version = version;
                 }
-                else
-                {
-                    repository.Delete<MediaFile>(fileId, version);
-                }
+                file.AccessRules.ToList().ForEach(file.RemoveRule);
+                repository.Delete(file);
                 unitOfWork.Commit();   
             }
         }
@@ -179,7 +184,16 @@ namespace BetterCms.Module.MediaManager.Services
 
         public virtual Uri GetFileUri(MediaType type, string folderName, string fileName)
         {
-            return new Uri(Path.Combine(GetContentRoot(configuration.Storage.ContentRoot), type.ToString().ToLower(), folderName, fileName));
+            string contentRoot;
+            if (configuration.Security.AccessControlEnabled && type == MediaType.File)
+            {
+                contentRoot = configuration.Storage.SecuredContentRoot;
+            }
+            else
+            {
+                contentRoot = configuration.Storage.ContentRoot;
+            }
+            return new Uri(Path.Combine(GetContentRoot(contentRoot), type.ToString().ToLower(), folderName, fileName));
         }
 
         public virtual string GetPublicFileUrl(MediaType type, string folderName, string fileName)
