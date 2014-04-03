@@ -2968,7 +2968,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Usage.
+        ///   Looks up a localized string similar to Find usages.
         /// </summary>
         public static string SiteSettings_MasterPages_Usage {
             get {
@@ -3301,7 +3301,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Usage.
+        ///   Looks up a localized string similar to Find usages.
         /// </summary>
         public static string SiteSettings_Templates_Usage {
             get {

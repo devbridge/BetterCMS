@@ -6,6 +6,7 @@
 @using BetterCms.Module.Root.Mvc.Grids.TableRenderers
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
+
 @using MvcContrib.UI.Grid
 
 @model SiteSettingTemplateListViewModel
@@ -20,8 +21,8 @@
             .SortColumnName("TemplateName")
             .Encode(false);
 
-        column.For(f => string.Format("<a class=\"bcms-tables-link bcms-template-usage\" data-id=\"{0}\">{1}</a>", f.Id, PagesGlobalization.SiteSettings_Templates_Usage))
-            .HeaderAttributes(@style => "width: 80px;")
+        column.For(f => string.Format("<a class=\"bcms-template-usage\" data-id=\"{0}\">{1}</a>", f.Id, PagesGlobalization.SiteSettings_Templates_Usage))
+            .HeaderAttributes(@style => "width: 100px;")
             .Named("")
             .Sortable(false)
             .Encode(false);

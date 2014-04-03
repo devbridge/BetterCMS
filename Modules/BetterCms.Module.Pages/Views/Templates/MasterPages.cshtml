@@ -21,9 +21,9 @@
             .Attributes()
             .Encode(false);
 
-        column.For(f => string.Format("<a class=\"bcms-tables-link bcms-master-page-usage\" data-id=\"{0}\">{1}</a>", f.Id, PagesGlobalization.SiteSettings_MasterPages_Usage))
+        column.For(f => string.Format("<a class=\"bcms-template-usage\" data-id=\"{0}\">{1}</a>", f.Id, PagesGlobalization.SiteSettings_MasterPages_Usage))
            .Named("")
-           .HeaderAttributes(@style => "width: 80px;")
+           .HeaderAttributes(@style => "width: 100px;")
            .Sortable(false)
            .Encode(false);
         

@@ -601,3 +601,33 @@ a.bcms-slider-next {
     .bcms-sitemaps-arrow-right.bcms-sitemaps-arrow-inactive {
         background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAMCAYAAABfnvydAAAAdElEQVQY02Pw9PScDcT/gfglEMsAMQMM////nwHEYAPi41BFJ6F8FAUMUJ0voIrmYlMAwjZA/BOqKAObAhDOgSoAKbTCpgCEL0AVncGmIBvJBGt8bshEd4M0ED/H5QuQv49BJU8BMTu6AlhIvsIakiACHwYAa26Xa0spcakAAAAASUVORK5CYII=");
     }
+
+.bcms-template-usage {
+    display: inline-block;
+    position: relative;
+    padding-right: 22px;
+    color: #C0C0C0;
+    font-size: 12px;
+    font-weight: 600;
+}
+    .bcms-template-usage:hover {
+        color: #303030;
+    }
+    .bcms-template-usage:after {
+        width: 18px;
+        height: 12px;
+        background: url('images/sprite-base-2.png') no-repeat -60px -107px;
+        cursor: pointer;
+        overflow: hidden;
+        text-indent: 9999px;
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 50%;
+        margin-top: -6px;
+        transition: all 0.1s ease-in-out 0s;
+    }
+    .bcms-template-usage:hover:after {
+        background-position: -60px -133px;
+    }
+       
