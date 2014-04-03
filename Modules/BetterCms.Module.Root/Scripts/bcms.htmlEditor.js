@@ -29,7 +29,8 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
     */
     htmlEditor.id = null;
 
-    htmlEditor.initializeHtmlEditor = function (id, options) {
+    htmlEditor.initializeHtmlEditor = function (id, options, startInSourceMode) {
+        var editMode = startInSourceMode;
         if (!CKEDITOR) {
             alert('Failed to load HTML editor.');
         }
@@ -44,6 +45,11 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
 
         if (window.location.href.slice(-1) === '#') {
             window.location.hash = '#-';
+        }
+
+        if (editMode === true) {
+            var text = $("#" + id).val();
+            $("#" + id).val("");
         }
 
         CKEDITOR.replace(id, options);
@@ -78,8 +84,13 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
         CKEDITOR.instances[id].on('instanceReady', function () {
             $(selectors.imageButtonContainer).hide();
             var element = $('#' + id),
-                isReadOnly = element.attr('readonly') === 'readonly' || element.attr('disabled') === 'disabled';
-            CKEDITOR.instances[id].setReadOnly(isReadOnly);
+                isReadOnly = element.attr('readonly') === 'readonly' || element.attr('disabled') === 'disabled',
+                instance = CKEDITOR.instances[id];
+            instance.setReadOnly(isReadOnly);
+            if (editMode === true) {
+                instance.setMode('source');
+                instance.addHtml(text);
+            }
         });
     };
 

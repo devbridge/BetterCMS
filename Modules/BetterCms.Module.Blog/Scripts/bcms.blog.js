@@ -178,10 +178,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             canPublish = security.IsAuthorized(["BcmsPublishContent"]),
             form = dialog.container.find(selectors.firstForm);
         
-        htmlEditor.initializeHtmlEditor(selectors.htmlEditor);
-        if (data.EditInSourceMode) {
-            htmlEditor.setSourceMode();
-        }
+        htmlEditor.initializeHtmlEditor(selectors.htmlEditor, {}, data.EditInSourceMode);
         if (data.EnableInsertDynamicRegion) {
             htmlEditor.enableInsertDynamicRegion();
         }
