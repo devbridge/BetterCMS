@@ -169,7 +169,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select a template.
+        ///   Looks up a localized string similar to Select page layout.
         /// </summary>
         public static string AddNewPage_Template {
             get {
@@ -3310,7 +3310,7 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Templates.
+        ///   Looks up a localized string similar to Page layouts.
         /// </summary>
         public static string SiteSettings_TemplatesMenuItem {
             get {

@@ -250,13 +250,13 @@
     <value>Search</value>
   </data>
   <data name="SiteSettings_Blogs_TemplatesTab_Title" xml:space="preserve">
-    <value>Templates</value>
+    <value>Layouts</value>
   </data>
   <data name="SiteSettings_Blogs_TitleColumn" xml:space="preserve">
     <value>Posts Title</value>
   </data>
   <data name="SiteSettings_Templates_DefaultTemplate" xml:space="preserve">
-    <value>Default Template</value>
+    <value>Default Layout</value>
   </data>
   <data name="SiteSettings_Templates_IncompatibleTemplate" xml:space="preserve">
     <value>Not Compatible</value>
@@ -265,7 +265,7 @@
     <value>Select</value>
   </data>
   <data name="SiteSettings_Templates_Title" xml:space="preserve">
-    <value>Select Default Blog Template</value>
+    <value>Select Default Blog Layout</value>
   </data>
   <data name="CreatePost_CreatedSuccessfully_Message" xml:space="preserve">
     <value>Post created successfully</value>

@@ -157,7 +157,7 @@
     <value>Create a unique page URL for your new page.</value>
   </data>
   <data name="AddNewPage_Template" xml:space="preserve">
-    <value>Select a template</value>
+    <value>Select page layout</value>
   </data>
   <data name="AddNewPage_Template_InfoMessage_Text" xml:space="preserve">
     <value>&lt;b&gt;The layout of this page is based on a template.&lt;/b&gt; Select a template from options below. &#x3;If you need an additional template contact your system administrator to create a custom template.</value>
@@ -757,7 +757,7 @@
     <value>Preview</value>
   </data>
   <data name="SiteSettings_TemplatesMenuItem" xml:space="preserve">
-    <value>Templates</value>
+    <value>Page layouts</value>
   </data>
   <data name="SiteSettings_Templates_NameColumn" xml:space="preserve">
     <value>Name</value>

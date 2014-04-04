@@ -601,7 +601,7 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Templates.
+        ///   Looks up a localized string similar to Layouts.
         /// </summary>
         public static string SiteSettings_Blogs_TemplatesTab_Title {
             get {
@@ -628,7 +628,7 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Default Template.
+        ///   Looks up a localized string similar to Default Layout.
         /// </summary>
         public static string SiteSettings_Templates_DefaultTemplate {
             get {
@@ -655,7 +655,7 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select Default Blog Template.
+        ///   Looks up a localized string similar to Select Default Blog Layout.
         /// </summary>
         public static string SiteSettings_Templates_Title {
             get {
