@@ -18,6 +18,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 siteSettingsSitemapsForm: "#bcms-sitemaps-form",
                 siteSettingsSitemapCreateButton: '#bcms-create-sitemap-button',
                 siteSettingsSitemapTitleCell: '.bcms-sitemap-title',
+                siteSettingsSitemapRow: 'tr',
                 siteSettingsRowCells: 'td',
                 siteSettingsSitemapParentRow: 'tr:first',
                 siteSettingsSitemapEditButton: '.bcms-grid-item-edit-button',
@@ -172,9 +173,12 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 addSitemap(masterContainer || container);
             });
 
-            container.find(selectors.siteSettingsSitemapEditButton).on('click', function (event) {
+            container.find(selectors.siteSettingsRowCells).on('click', function (event) {
                 bcms.stopEventPropagation(event);
-                editSitemap($(this), masterContainer || container);
+                var editButton = $(this).parents(selectors.siteSettingsSitemapRow).find(selectors.siteSettingsSitemapEditButton);
+                if (editButton.length > 0) {
+                    editSitemap(editButton, masterContainer || container);
+                }
             });
 
             container.find(selectors.siteSettingsSitemapHistoryButton).on('click', function (event) {
