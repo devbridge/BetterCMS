@@ -1,0 +1,19 @@
+﻿@model BetterCms.Module.Root.ViewModels.Cms.RenderWidgetViewModel
+@if (Model != null)
+{
+    <h2>Widget Name: @Model.Widget.Name</h2>
+    <h3>Current Page: @Model.Page.PageUrl</h3>
+}
+else
+{
+    <p>Widget Preview...</p>
+}
+
+@if (Model != null && Model.Options != null)
+{
+    foreach (var option in Model.Options)
+    {
+        <strong>Option "@option.Key" Type:</strong> @(option.Value != null ? option.Value.GetType().ToString() : string.Empty)
+        <strong>; Value: </strong> @option.Value <br />
+    }
+}
