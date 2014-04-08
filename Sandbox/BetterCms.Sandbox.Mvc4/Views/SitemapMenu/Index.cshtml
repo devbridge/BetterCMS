@@ -1,6 +1,0 @@
-﻿@model IList<BetterCms.Sandbox.Mvc4.Models.MenuItemViewModel>
-
-@foreach (var item in Model)
-{
-     @item.Caption <a href="@item.Url"><span>@item.Url</span></a> @(item.IsPublished ? "(Live)" : "")<br/>
-}

@@ -16,7 +16,6 @@
       <dependency id="Microsoft.AspNet.Mvc" version="5.1.2.0" />
       <dependency id="Microsoft.AspNet.Razor" version="3.1.2.0" />
       <dependency id="Microsoft.AspNet.WebPages" version="3.1.2.0" />
-      <dependency id="Microsoft.Net.Http" version="2.0.20505.0" />
       <dependency id="Mvc3Futures" version="3.0.20105.0" />
       <dependency id="Newtonsoft.Json" version="5.0.8" />
     </dependencies>
