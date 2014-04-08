@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
 
 using BetterCms.Core.Models;
 
@@ -85,7 +84,7 @@ namespace BetterCms.Module.Users.ViewModels.User
         /// <value>
         /// The retyped password.
         /// </value>
-        [Compare("Password", ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_ShouldMatchMessage")]
+        [System.Web.Mvc.Compare("Password", ErrorMessageResourceType = typeof(UsersGlobalization), ErrorMessageResourceName = "User_Password_ShouldMatchMessage")]
         public string RetypedPassword { get; set; }
 
         /// <summary>
