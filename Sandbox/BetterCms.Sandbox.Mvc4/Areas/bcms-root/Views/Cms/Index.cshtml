@@ -1,0 +1,35 @@
+﻿@using BetterCms.Module.Root.Mvc
+@using BetterCms.Module.Root.Mvc.Helpers
+
+@model BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+@if (Model.RenderAdminMode)
+{
+    Layout = "~/Areas/bcms-Root/Views/Shared/CmsLayout.cshtml";
+    
+    <iframe id="bcms-content-frame" style="border: 1px solid black; position: absolute; width: 90%; height: 90%; padding: 0; margin: 0;" src="http://bettercms.sandbox.mvc4.local/"></iframe>
+
+    var privateModel = Model.Clone();
+    privateModel.RenderAdminMode = false;
+
+    var pageSource = ViewRenderingExtensions.RenderPageToString(this.ViewContext.Controller as CmsControllerBase, privateModel);
+    <script type="text/html" id="bcms-content-html">@pageSource</script>
+}
+else
+{
+    if (Model.LayoutPath != null && !string.IsNullOrEmpty(Model.LayoutPath))
+    {
+        Layout = Model.LayoutPath;
+    }
+    else
+    {
+        Layout = "~/Areas/bcms-Root/Views/Shared/BaseLayout.cshtml";
+    }
+
+    // Render regions and contents.
+    Html.RenderSectionContents(this, Model);
+}

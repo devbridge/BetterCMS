@@ -1,0 +1,83 @@
+﻿@using BetterCms.Module.Root.Mvc.Helpers
+@model BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <style type="text/css">
+            .bcms-clearfix:after {
+                content: ".";
+                visibility: hidden;
+                display: block;
+                height: 0;
+                clear: both;
+            }
+        </style>
+        <link href='//fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css' async />
+        @Html.Action("RenderStyleSheetIncludes", "Rendering")
+
+        <script type="text/javascript">
+            function loadBetterCmsScriptAsync(url, callback) {
+                var head = document.getElementsByTagName("head")[0];
+                var scriptTag = document.createElement("script");
+                scriptTag.type = 'text/javascript';
+                scriptTag.src = url;
+                scriptTag.async = true;
+
+                // Attach handlers for all browsers
+                var done = false;
+                scriptTag.onload = scriptTag.onreadystatechange = function() {
+                    if (!done && (!this.readyState || this.readyState == "loaded" || this.readyState == "complete")) {
+                        done = true;
+                        try {
+                            if (callback) {
+                                callback();
+                            }
+                        } finally {
+                            scriptTag.onload = scriptTag.onreadystatechange = null;
+                            head.removeChild(scriptTag);
+                        }
+                    }
+                };
+
+                head.appendChild(scriptTag);
+            }
+
+            (function() {
+                if (window.top === window.self) {
+                    loadBetterCmsScriptAsync('@Model.RequireJsPath', function() {
+                        loadBetterCmsScriptAsync('@Model.MainJsPath');
+                    });
+                }
+            })();
+        </script>
+        <!--[if lt IE 9]>
+            <script src="@Model.Html5ShivJsPath"></script>
+        <![endif]-->
+
+    </head>
+
+    <body @Html.RenderBodyAttributes()>
+
+        @Html.Partial("~/Areas/bcms-root/Views/Shared/Partial/SupportBrowser.cshtml")
+        @Html.Partial("~/Areas/bcms-root/Views/Shared/Partial/SupportJavascript.cshtml")
+
+        @RenderBody()
+
+        @Html.Partial("~/Areas/bcms-root/Views/Shared/Partial/MasterPagesPath.cshtml")
+
+        @RenderSection("Scripts", false)
+
+        @Html.Partial("Partial/Region")
+        @Html.Partial("Partial/ContentOverlay")
+        @Html.Action("Container", "Sidebar")
+        @Html.Partial("Partial/Modal")
+        @Html.Partial("Partial/Alert")
+        @Html.Partial("Partial/Confirm")
+        @Html.Partial("Partial/Info")
+        @Html.Partial("Partial/Tooltip")
+        @Html.Partial("Partial/ImagePreview")
+        @Html.Partial("Partial/SiteSettingTab")
+    </body>
+</html>

@@ -283,6 +283,14 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         public bool CanManageContent { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to render admin mode.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to render admin mode; otherwise, <c>false</c>.
+        /// </value>
+        public bool RenderAdminMode { get; set; }
+
+        /// <summary>
         /// Gets or sets the path to a require.js file.
         /// </summary>
         /// <value>
@@ -391,6 +399,7 @@ namespace BetterCms.Module.Root.ViewModels.Cms
                            IsReadOnly = IsReadOnly,
                            HasEditRole = HasEditRole,
                            SaveUnsecured = SaveUnsecured,
+                           RenderAdminMode = RenderAdminMode,
 
                            MasterPage = MasterPage != null ? MasterPage.Clone() : null,
                            RenderingPage = RenderingPage != null ? RenderingPage.Clone() : null,

@@ -111,6 +111,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             RenderPageViewModel renderPageViewModel = new RenderPageViewModel(page);
             renderPageViewModel.CanManageContent = request.CanManageContent;
+            renderPageViewModel.RenderAdminMode = request.CanManageContent;
             renderPageViewModel.AreRegionsEditable = request.CanManageContent && !childrenList.Any();
 
             if (page.Layout != null)

@@ -243,6 +243,8 @@
     <Content Include="404.aspx" />
     <Content Include="500.aspx" />
     <Content Include="favicon.ico" />
+    <EmbeddedResource Include="file\bcms-root\scripts\bcms.content.js" />
+    <EmbeddedResource Include="file\bcms-root\scripts\bcms.sidemenu.js" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\knockout-2.2.1.debug.js" />
     <Content Include="Scripts\knockout-2.2.1.js" />
@@ -261,7 +263,6 @@
     <Folder Include="file\bcms-images-gallery\scripts\" />
     <Folder Include="file\bcms-media\scripts\" />
     <Folder Include="file\bcms-pages\scripts\" />
-    <Folder Include="file\bcms-root\scripts\" />
     <Folder Include="file\bcms-users\scripts\" />
   </ItemGroup>
   <ItemGroup>
@@ -395,6 +396,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\SitemapMenu\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\bcms-root\Views\Shared\BaseLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\bcms-root\Views\Shared\CmsLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\bcms-root\Views\Shared\RootLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\bcms-root\Views\Cms\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
