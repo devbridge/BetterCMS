@@ -13,9 +13,9 @@
     <copyright>Better CMS is licensed under BETTER CMS LICENSE AGREEMENT (http://www.bettercms.com/license.txt).</copyright>
     <dependencies>
       <dependency id="BetterCms.Core" version="[@BetterCMSVersion@]" />
-      <dependency id="Microsoft.AspNet.Mvc" version="4.0.20710.0" />
-      <dependency id="Microsoft.AspNet.Razor" version="2.0.20715.0" />
-      <dependency id="Microsoft.AspNet.WebPages" version="2.0.20505.0" />
+      <dependency id="Microsoft.AspNet.Mvc" version="5.1.2.0" />
+      <dependency id="Microsoft.AspNet.Razor" version="3.1.2.0" />
+      <dependency id="Microsoft.AspNet.WebPages" version="3.1.2.0" />
       <dependency id="Microsoft.Net.Http" version="2.0.20505.0" />
       <dependency id="Mvc3Futures" version="3.0.20105.0" />
       <dependency id="Newtonsoft.Json" version="5.0.8" />
