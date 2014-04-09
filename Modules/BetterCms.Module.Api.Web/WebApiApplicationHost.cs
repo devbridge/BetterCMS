@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Web.Http;
 
 using Autofac;
 
@@ -47,7 +48,23 @@ namespace BetterCms.Module.Api
 
             container.Adapter = new AutofacContainerAdapter(containerProvider);
             container.RegisterValidators(typeof(GetTagRequestValidator).Assembly);
+
+            GlobalConfiguration.Configure(Register);
 		}
+
+        public static void Register(HttpConfiguration config)
+        {
+            // Web API configuration and services
+
+            // Web API routes
+            config.MapHttpAttributeRoutes();
+
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
+        }
 
         private static Assembly[] GetAssembliesWithServices()
         {

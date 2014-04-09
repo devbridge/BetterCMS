@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
@@ -25,18 +26,10 @@ namespace BetterCms.Sandbox.Mvc5
 
         protected void Application_Start()
         {
-            RouteTable.Routes.MapRoute(
-                                 name: "Default",
-                                 url: "demo/{controller}/{action}/{id}",
-                                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-                             ); 
-
             cmsHost = CmsContext.RegisterHost();
 
             AreaRegistration.RegisterAllAreas();
-
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             cmsHost.OnApplicationStart(this);
