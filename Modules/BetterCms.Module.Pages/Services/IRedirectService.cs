@@ -42,7 +42,7 @@ namespace BetterCms.Module.Pages.Services
         string GetRedirect(string url);
 
         /// <summary>
-        /// Gets riderects if such redirect exists.
+        /// Gets redirect if such redirect exists.
         /// </summary>
         /// <param name="pageUrl">The page URL.</param>
         /// <param name="id">The redirect Id.</param>

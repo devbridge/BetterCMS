@@ -51,6 +51,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Autofac.3.1.5\lib\net40\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="BlogML, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\blogml.2.2.0\lib\BlogML.dll</HintPath>
+    </Reference>
     <Reference Include="Common.Logging">
       <HintPath>..\..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
@@ -138,6 +142,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Blog\ServiceTests\BlogMLServiceTests.cs" />
     <Compile Include="LuceneSearch\ServiceTests\IndexerServiceTests.cs" />
     <Compile Include="Api\UsersModuleServiceValidationTest.cs" />
     <Compile Include="LuceneSearch\ServiceTests\PartialWordTermQueryParserTests.cs" />
@@ -246,6 +251,7 @@
     <Compile Include="Users\ModelTests\MapTests\UserMapTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Contents\BlogML\BlogMLImport1.xml" />
     <EmbeddedResource Include="Contents\Documents\page.authorized.htm" />
     <EmbeddedResource Include="Contents\Images\logo.big.png" />
     <EmbeddedResource Include="Contents\Images\logo.png" />
