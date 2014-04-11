@@ -385,6 +385,24 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Import blog posts.
+        /// </summary>
+        public static string ImportBlogPosts_Dialog_Title {
+            get {
+                return ResourceManager.GetString("ImportBlogPosts_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can import only one import file at time..
+        /// </summary>
+        public static string ImportBlogPosts_OnlyOneFileAtTime_Message {
+            get {
+                return ResourceManager.GetString("ImportBlogPosts_OnlyOneFileAtTime_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There are no compatible layouts for blogs..
         /// </summary>
         public static string SaveBlogPost_LayoutNotFound_Message {
@@ -552,6 +570,15 @@ namespace BetterCms.Module.Blog.Content.Resources {
         public static string SiteSettings_Blogs_FilterSearch {
             get {
                 return ResourceManager.GetString("SiteSettings_Blogs_FilterSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import blog posts.
+        /// </summary>
+        public static string SiteSettings_Blogs_Import {
+            get {
+                return ResourceManager.GetString("SiteSettings_Blogs_Import", resourceCulture);
             }
         }
         

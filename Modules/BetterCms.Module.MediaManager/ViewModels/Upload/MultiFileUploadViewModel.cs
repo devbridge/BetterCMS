@@ -9,6 +9,8 @@ namespace BetterCms.Module.MediaManager.ViewModels.Upload
     [Serializable]
     public class MultiFileUploadViewModel
     {
+        public bool IsMedia { get; set; }
+        
         public Guid RootFolderId { get; set; }
 
         public MediaType RootFolderType { get; set; }
@@ -25,9 +27,16 @@ namespace BetterCms.Module.MediaManager.ViewModels.Upload
 
         public bool AccessControlEnabled { get; set; }
 
+        public bool AllowMultiple { get; set; }
+        
+        public bool RenderControls { get; set; }
+
         public MultiFileUploadViewModel()
         {
             UserAccessList = new List<UserAccessViewModel>();
+            IsMedia = true;
+            AllowMultiple = true;
+            RenderControls = true;
         }
 
         /// <summary>

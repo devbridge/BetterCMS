@@ -123,6 +123,9 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Accessors\BlogPostContentAccessor.cs" />
+    <Compile Include="Commands\ImportBlogPosts\ImportBlogPostsCommand.cs" />
+    <Compile Include="Commands\ImportBlogPosts\ImportBlogPostsRequest.cs" />
+    <Compile Include="Commands\ImportBlogPosts\ImportBlogPostsResponse.cs" />
     <Compile Include="Events\BlogEvents.cs" />
     <Compile Include="Events\AuthorEvents.cs" />
     <Compile Include="BlogModuleConstants.cs" />
@@ -259,7 +262,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\Blog\Partial\BlogsFilterTemplate.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Blog\SingleBlogPostsImport.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Blog\MultiBlogPostsImport.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

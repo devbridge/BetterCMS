@@ -28,7 +28,10 @@ namespace BetterCms.Module.Blog.Registration
                             new JavaScriptModuleLinkTo<AuthorController>(this, "saveAuthorsUrl", c => c.SaveAuthor(null)),
                             new JavaScriptModuleLinkTo<OptionController>(this, "loadTemplatesUrl", c => c.Templates()),
                             new JavaScriptModuleLinkTo<OptionController>(this, "saveDefaultTemplateUrl", c => c.SaveDefaultTemplate("{0}", "{1}")),
-                            new JavaScriptModuleLinkTo<BlogController>(this, "convertStringToSlugUrl", c => c.ConvertStringToSlug("{0}", "{1}"))
+                            new JavaScriptModuleLinkTo<BlogController>(this, "convertStringToSlugUrl", c => c.ConvertStringToSlug("{0}", "{1}")),
+                            new JavaScriptModuleLinkTo<BlogController>(this, "singleFileImportUrl", c => c.SingleBlogPostsImport()),
+                            new JavaScriptModuleLinkTo<BlogController>(this, "multiFileImportUrl", c => c.MultiBlogPostsImport()),
+                            new JavaScriptModuleLinkTo<BlogController>(this, "importBlogPostsUrl", c => c.ImportBlogPosts(null, null))
                         };
 
             Globalization = new IActionProjection[]
@@ -40,7 +43,9 @@ namespace BetterCms.Module.Blog.Registration
                             new JavaScriptModuleGlobalization(this, "blogPostsTabTitle", () => BlogGlobalization.SiteSettings_Blogs_PostsTab_Title),
                             new JavaScriptModuleGlobalization(this, "authorsTabTitle", () => BlogGlobalization.SiteSettings_Blogs_AuthorsTab_Title),
                             new JavaScriptModuleGlobalization(this, "templatesTabTitle", () => BlogGlobalization.SiteSettings_Blogs_TemplatesTab_Title),
-                            new JavaScriptModuleGlobalization(this, "datePickerTooltipTitle", () => BlogGlobalization.Date_Picker_Tooltip_Title)
+                            new JavaScriptModuleGlobalization(this, "datePickerTooltipTitle", () => BlogGlobalization.Date_Picker_Tooltip_Title),
+                            new JavaScriptModuleGlobalization(this, "importBlogPostsTitle", () => BlogGlobalization.ImportBlogPosts_Dialog_Title),
+                            new JavaScriptModuleGlobalization(this, "multipleFilesWarningMessage", () => BlogGlobalization.ImportBlogPosts_OnlyOneFileAtTime_Message)
                         };
         }
     }

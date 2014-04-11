@@ -54,20 +54,25 @@ namespace BetterCms.Module.Blog.Services
                 throw new ValidationException(() => message, logMessage, exc);
             }
 
+            return DeserializeXMLStream(fileStream);
+        }
+
+        public BlogMLBlog DeserializeXMLStream(Stream stream)
+        {
             BlogMLBlog blogPosts;
             try
             {
-                blogPosts = BlogMLSerializer.Deserialize(fileStream);
+                blogPosts = BlogMLSerializer.Deserialize(stream);
             }
             catch (Exception exc)
             {
                 var message = "Failed to deserialize XML file";
-                var logMessage = string.Format("Failed to deserialize provided XML file {0}.", filePath);
+                var logMessage = "Failed to deserialize provided XML file.";
                 throw new ValidationException(() => message, logMessage, exc);
             }
 
-            fileStream.Close();
-            fileStream.Dispose();
+            stream.Close();
+            stream.Dispose();
 
             return blogPosts;
         }
@@ -79,10 +84,19 @@ namespace BetterCms.Module.Blog.Services
             {
                 // Import authors and categories
                 unitOfWork.BeginTransaction();
-                var authors = ImportAuthors(blogPosts.Authors);
-                var categories = ImportCategories(blogPosts.Categories);
+
+                var createdCategories = new List<Category>();
+                var createdAuthors = new List<Author>();
+                var authors = ImportAuthors(blogPosts.Authors, createdAuthors);
+                var categories = ImportCategories(blogPosts.Categories, createdCategories);
+
                 unitOfWork.Commit();
 
+                // Notify authors / categories created
+                createdCategories.ForEach(c => Events.RootEvents.Instance.OnCategoryCreated(c));
+                createdAuthors.ForEach(a => Events.BlogEvents.Instance.OnAuthorCreated(a));
+
+                // Import blog posts
                 createdBlogPosts = ImportBlogPosts(principal, authors, categories, blogPosts.Posts, useOriginalUrls, createRedirects);
             }
 
@@ -138,6 +152,7 @@ namespace BetterCms.Module.Blog.Services
                             redirect = redirectService.CreateRedirectEntity(oldUrl, blogPostModel.BlogUrl);
                             repository.Save(redirect);
                             unitOfWork.Commit();
+                            Events.PageEvents.Instance.OnRedirectCreated(redirect);
                         }
                     }
                 }
@@ -160,7 +175,7 @@ namespace BetterCms.Module.Blog.Services
             return url;
         }
 
-        private IDictionary<string, Guid> ImportAuthors(BlogMLBlog.AuthorCollection authors)
+        private IDictionary<string, Guid> ImportAuthors(BlogMLBlog.AuthorCollection authors, IList<Author> createdAuthors)
         {
             var dictionary = new Dictionary<string, Guid>();
             if (authors != null)
@@ -178,6 +193,8 @@ namespace BetterCms.Module.Blog.Services
                         var author = new Author { Name = authorML.Title };
                         repository.Save(author);
 
+                        createdAuthors.Add(author);
+
                         id = author.Id;
                     }
                     
@@ -188,7 +205,7 @@ namespace BetterCms.Module.Blog.Services
             return dictionary;
         }
 
-        private IDictionary<string, Guid> ImportCategories(BlogMLBlog.CategoryCollection categories)
+        private IDictionary<string, Guid> ImportCategories(BlogMLBlog.CategoryCollection categories, IList<Category> createdCategories)
         {
             var dictionary = new Dictionary<string, Guid>();
             if (categories != null)
@@ -205,6 +222,8 @@ namespace BetterCms.Module.Blog.Services
                     {
                         var category = new Category { Name = categoryML.Title };
                         repository.Save(category);
+                        
+                        createdCategories.Add(category);
 
                         id = category.Id;
                     }

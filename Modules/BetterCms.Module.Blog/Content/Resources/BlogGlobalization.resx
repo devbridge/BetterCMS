@@ -318,4 +318,13 @@
   <data name="SiteSettings_Blogs_FilterByStatus" xml:space="preserve">
     <value>By page status</value>
   </data>
+  <data name="SiteSettings_Blogs_Import" xml:space="preserve">
+    <value>Import blog posts</value>
+  </data>
+  <data name="ImportBlogPosts_Dialog_Title" xml:space="preserve">
+    <value>Import blog posts</value>
+  </data>
+  <data name="ImportBlogPosts_OnlyOneFileAtTime_Message" xml:space="preserve">
+    <value>You can import only one import file at time.</value>
+  </data>
 </root>

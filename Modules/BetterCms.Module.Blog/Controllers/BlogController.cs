@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts.Enums;
@@ -7,12 +8,13 @@ using BetterCms.Core.Security;
 
 using BetterCms.Module.Blog.Commands.GetBlogPost;
 using BetterCms.Module.Blog.Commands.GetBlogPostList;
+using BetterCms.Module.Blog.Commands.ImportBlogPosts;
 using BetterCms.Module.Blog.Commands.SaveBlogPost;
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Blog.ViewModels.Filter;
-
+using BetterCms.Module.MediaManager.ViewModels.Upload;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 
@@ -135,6 +137,58 @@ namespace BetterCms.Module.Blog.Controllers
             var slug = blogService.CreateBlogPermalink(text);
 
             return Json(new { Text = text, Url = slug, SenderId = senderId }, JsonRequestBehavior.AllowGet);
+        }
+
+        [BcmsAuthorize(RootModuleConstants.UserRoles.PublishContent)]
+        [HttpGet]
+        public ActionResult SingleBlogPostsImport()
+        {
+            var model = new MultiFileUploadViewModel();
+            model.IsMedia = false;
+            model.AllowMultiple = false;
+            model.RenderControls = false;
+
+            var view = RenderView("SingleBlogPostsImport", model);
+
+            return ComboWireJson(true, view, model, JsonRequestBehavior.AllowGet);
+        }
+        
+        [BcmsAuthorize(RootModuleConstants.UserRoles.PublishContent)]
+        [HttpGet]
+        public ActionResult MultiBlogPostsImport()
+        {
+            var model = new MultiFileUploadViewModel();
+            model.IsMedia = false;
+            model.AllowMultiple = false;
+            model.RenderControls = false;
+
+            var view = RenderView("MultiBlogPostsImport", model);
+
+            return ComboWireJson(true, view, model, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Imports the blog posts.
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        /// Upload results in JSON format
+        /// </returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.PublishContent)]
+        [HttpPost]
+        public ActionResult ImportBlogPosts(HttpPostedFileBase file, ImportBlogPostsRequest request)
+        {
+            if (file != null)
+            {
+                request.FileStream = file.InputStream;
+
+                var response = GetCommand<ImportBlogPostsCommand>().ExecuteCommand(request);
+
+                return WireJson(response != null, response);
+            }
+
+            return WireJson(false);
         }
     }
 }
