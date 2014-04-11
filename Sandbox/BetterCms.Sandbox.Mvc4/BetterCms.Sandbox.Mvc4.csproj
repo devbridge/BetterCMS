@@ -243,9 +243,6 @@
     <Content Include="404.aspx" />
     <Content Include="500.aspx" />
     <Content Include="favicon.ico" />
-    <EmbeddedResource Include="file\bcms-blog\scripts\bcms.blog.js" />
-    <EmbeddedResource Include="file\bcms-media\scripts\bcms.media.upload.js" />
-    <EmbeddedResource Include="file\bcms-media\scripts\bcms.media.js" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\knockout-2.2.1.debug.js" />
     <Content Include="Scripts\knockout-2.2.1.js" />
@@ -260,6 +257,8 @@
     <Folder Include="Areas\bcms-images-gallery\" />
     <Folder Include="Areas\bcms-media\Views\" />
     <Folder Include="Areas\bcms-search\" />
+    <Folder Include="file\bcms-blog\scripts\" />
+    <Folder Include="file\bcms-media\scripts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

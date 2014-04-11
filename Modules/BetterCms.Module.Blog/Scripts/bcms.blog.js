@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'bcms.ko.extenders', 'bcms.media', 'bcms.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect', 'bcms.pages.history', 'bcms.preview', 'bcms.security', 'bcms.blog.filter', 'bcms.sidemenu', 'bcms.forms'],
-    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid, messages, redirect, history, preview, security, filter, sidemenu, forms) {
+bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'bcms.ko.extenders', 'bcms.media', 'bcms.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect', 'bcms.pages.history', 'bcms.preview', 'bcms.security', 'bcms.blog.filter', 'bcms.sidemenu', 'bcms.forms', 'bcms.media.upload'],
+    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid, messages, redirect, history, preview, security, filter, sidemenu, forms, upload) {
     'use strict';
 
     var blog = { },
@@ -46,7 +46,10 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             saveAuthorsUrl: null,
             loadTemplatesUrl: null,
             saveDefaultTemplateUrl: null,
-            convertStringToSlugUrl: null
+            convertStringToSlugUrl: null,
+            singleFileImportUrl: null,
+            multiFileImportUrl: null,
+            importBlogPostsUrl: null
         },
         globalization = {
             createNewPostDialogTitle: null,
@@ -57,7 +60,8 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             authorsTabTitle: null,
             templatesTabTitle: null,
             datePickerTooltipTitle: null,
-            importBlogPostsTitle: null
+            importBlogPostsTitle: null,
+            multipleFilesWarningMessage: null
         },
         classes = {
             inactive: 'bcms-inactive'
@@ -362,7 +366,15 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
     * Opens form for importing blog posts XML
     */
     function openImportBlogPostsForm() {
-
+        upload.openUploadFilesDialog({
+            title: globalization.importBlogPostsTitle,
+            allowMultiple: false,
+            singleFileUploadUrl: links.singleFileImportUrl,
+            multiFileUploadUrl: links.multiFileImportUrl,
+            uploadFileToServerUrl: links.importBlogPostsUrl,
+            multipleFilesWarningMessage: globalization.multipleFilesWarningMessage,
+            disableAccept: true
+        });
     }
 
     /**
