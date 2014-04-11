@@ -45,31 +45,22 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
     mediaUpload.links = links;
     mediaUpload.globalization = globalization;    
 
-    mediaUpload.openUploadFilesDialog = function (opts) {
-        var options = $.extend({
-            title: globalization.uploadFilesDialogTitle,
-            multipleFilesWarningMessage: globalization.multipleFilesWarningMessageOnReupload,
-            uploads: new UploadsViewModel(),
-            rootFolderId: '',
-            rootFolderType: '',
-            reuploadMediaId: constants.defaultReuploadMediaId,
-            onCloseCallback: null,
-            onSaveCallback: null,
-            allowMultiple: true,
-            disableAccept: false,
-            singleFileUploadUrl: links.loadUploadSingleFileDialogUrl,
-            multiFileUploadUrl: links.loadUploadFilesDialogUrl,
-            uploadFileToServerUrl: links.uploadFileToServerUrl
-        }, opts);
+    mediaUpload.openUploadFilesDialog = function (rootFolderId, rootFolderType, onSaveCallback, reuploadMediaId, onCloseCallback) {
+        reuploadMediaId = reuploadMediaId || constants.defaultReuploadMediaId;
+        var options = {
+                uploads: new UploadsViewModel(),
+                rootFolderId: rootFolderId,
+                rootFolderType: rootFolderType,
+                reuploadMediaId: reuploadMediaId
+            };
 
-        options.uploads.filesToAccept(options.rootFolderType == 1 ? 'image/*' : '');
+        options.uploads.filesToAccept(rootFolderType == 1 ? 'image/*' : '');
 
         if (fileApiSupported) {
             modal.open({
-                title: options.title,
-                disableAccept: options.disableAccept,
+                title: globalization.uploadFilesDialogTitle,
                 onLoad: function (dialog) {
-                    var url = $.format(options.multiFileUploadUrl, options.rootFolderId, options.rootFolderType, options.reuploadMediaId);
+                    var url = $.format(links.loadUploadFilesDialogUrl, rootFolderId, rootFolderType, reuploadMediaId);
                     dynamicContent.bindDialog(dialog, url, {
                         contentAvailable: function (dialogRef, content) {
                             initUploadFilesDialogEvents(dialog, options);
@@ -90,8 +81,8 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
                         postSuccess: function (json) {
                             options.uploads.stopStatusChecking();
                             options.uploads.removeFailedUploads();
-                            if (options.onSaveCallback && $.isFunction(options.onSaveCallback)) {
-                                options.onSaveCallback(json);
+                            if (onSaveCallback && $.isFunction(onSaveCallback)) {
+                                onSaveCallback(json);
                             }
                         },
 
@@ -100,7 +91,7 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
                         },
                         
                         postError: function () {
-                            options.uploads.filesToAccept(options.rootFolderType == 1 ? 'image/*' : '');
+                            options.uploads.filesToAccept(rootFolderType == 1 ? 'image/*' : '');
                         }
                     });
                 },
@@ -108,8 +99,8 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
                     options.uploads.removeAllUploads();
                     options.uploads.stopStatusChecking();
                     
-                    if (options.onCloseCallback && $.isFunction(options.onCloseCallback)) {
-                        options.onCloseCallback();
+                    if (onCloseCallback && $.isFunction(onCloseCallback)) {
+                        onCloseCallback();
                     }
                 },
                 onAcceptClick: function() {
@@ -119,10 +110,9 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
             });
         } else {
             modal.open({
-                title: options.title,
-                disableAccept: options.disableAccept,
+                title: globalization.uploadFilesDialogTitle,
                 onLoad: function(dialog) {
-                    var url = $.format(options.singleFileUploadUrl, options.rootFolderId, options.rootFolderType, options.reuploadMediaId);
+                    var url = $.format(links.loadUploadSingleFileDialogUrl, rootFolderId, rootFolderType, reuploadMediaId);
 
                     dynamicContent.setContentFromUrl(dialog, url, {
                         done: function (content) {
@@ -137,8 +127,8 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
                             messages.refreshBox(dialog.container.find(selectors.messageBox), json);
                             if (json.Success) {
                                 try {
-                                    if (options.onSaveCallback && $.isFunction(options.onSaveCallback)) {
-                                        options.onSaveCallback(json);
+                                    if (onSaveCallback && $.isFunction(onSaveCallback)) {
+                                        onSaveCallback(json);
                                     }
                                 } finally {
                                     options.uploads.stopStatusChecking();
@@ -147,7 +137,6 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
                                 }
                             }
                         };
-                    formToSubmit.attr('action', options.uploadFileToServerUrl);
                     $.ajax({
                         type: 'POST',
                         cache: false,
@@ -167,8 +156,8 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
                     options.uploads.removeAllUploads();
                     options.uploads.stopStatusChecking();
                     
-                    if (options.onCloseCallback && $.isFunction(options.onCloseCallback)) {
-                        options.onCloseCallback();
+                    if (onCloseCallback && $.isFunction(onCloseCallback)) {
+                        onCloseCallback();
                     }
                 }
             });
@@ -176,15 +165,7 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
     };
 
     mediaUpload.openReuploadFilesDialog = function (mediaId, rootFolderId, rootFolderType, onSaveCallback, onCloseCallback) {
-        var opts = {
-            rootFolderId: rootFolderId,
-            rootFolderType: rootFolderType,
-            onSaveCallback: onSaveCallback,
-            reuploadMediaId: mediaId,
-            onCloseCallback: onCloseCallback
-        };
-
-        mediaUpload.openUploadFilesDialog(opts);
+        mediaUpload.openUploadFilesDialog(rootFolderId, rootFolderType, onSaveCallback, mediaId, onCloseCallback);
     };
 
     function SingleFileUpload(dialog, options) {
@@ -238,10 +219,16 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
         dialog.container.find(selectors.fileUploadingInput).change(function () {
             var fileName = dialog.container.find(selectors.fileUploadingInput).val();
             if (fileName != null && fileName != "") {
-                if (!canUploadMoreFiles(dialog, options, uploadsModel)) {
+                // Do not allow multiple file upload on re-upload functionality.
+                if (options.reuploadMediaId && options.reuploadMediaId != constants.defaultReuploadMediaId && uploadsModel.uploads().length > 0) {
+                    messageBox.clearMessages();
+                    messageBox.addWarningMessage(globalization.multipleFilesWarningMessageOnReupload);
+                    var uploadedFiles = uploadsModel.uploads();
+                    for (var i = 0; i < uploadedFiles.length; i++) {
+                        uploadedFiles[i].activate();
+                    }
                     return;
                 }
-
                 // Add fake file model for upload indication.
                 uploadFile.uploadCompleted(false);
                 uploadFile.fileName = fileName;
@@ -478,39 +465,11 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
             }, 4000);
         };
     }
-
-    function canUploadMoreFiles(dialog, options, uploadsModel) {
-        var messageBox = messages.box({ container: dialog.container }),
-            allowMultiple = !(options.reuploadMediaId && options.reuploadMediaId != constants.defaultReuploadMediaId);
-
-        if (!options.allowMultiple) {
-            allowMultiple = false;
-        }
-
-        var activeCount = 0;
-        for (var i = 0; i < uploadsModel.uploads().length; i ++) {
-            if (!uploadsModel.uploads()[i].uploadFailed()) {
-                activeCount++;
-                break;
-            }
-        }
-
-        if (!allowMultiple && activeCount > 0) {
-            messageBox.clearMessages();
-            messageBox.addWarningMessage(options.multipleFilesWarningMessage);
-            var uploadedFiles = uploadsModel.uploads();
-            for (i = 0; i < uploadedFiles.length; i++) {
-                uploadedFiles[i].activate();
-            }
-            return false;
-        }
-
-        return true;
-    }
         
     function initUploadFilesDialogEvents(dialog, options) {
         var uploadsModel = options.uploads,
             dragZone = dialog.container.find(selectors.dragZone),
+            messageBox = messages.box({ container: dialog.container }),
             cancelEvent = function (e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -537,17 +496,22 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
             var context = document.getElementById('bcms-media-uploads');
 
             html5Upload.initialize({
-                uploadUrl: options.uploadFileToServerUrl,
+                uploadUrl: links.uploadFileToServerUrl,
                 dropContainer: document.getElementById('bcms-files-dropzone'),
                 inputField: document.getElementById('bcms-files-upload-input'),
                 key: 'File',
                 data: { rootFolderId: options.rootFolderId, rootFolderType: options.rootFolderType, reuploadMediaId: options.reuploadMediaId },
                 maxSimultaneousUploads: 4,
                 onFileAdded: function (file) {
-                    if (!canUploadMoreFiles(dialog, options, uploadsModel)) {
+                    if (options.reuploadMediaId && options.reuploadMediaId != constants.defaultReuploadMediaId && uploadsModel.uploads().length > 0) {
+                        messageBox.clearMessages();
+                        messageBox.addWarningMessage(globalization.multipleFilesWarningMessageOnReupload);
+                        var uploadedFiles = uploadsModel.uploads();
+                        for (var i = 0; i < uploadedFiles.length; i++) {
+                            uploadedFiles[i].activate();
+                        }
                         return;
                     }
-
                     var fileModel = new FileViewModel(file);
                     uploadsModel.activeUploads.push(fileModel);
                     uploadsModel.uploads.push(fileModel);

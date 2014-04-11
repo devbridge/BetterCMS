@@ -19,8 +19,6 @@ using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
-using FluentNHibernate.Conventions.AcceptanceCriteria;
-
 using Microsoft.Web.Mvc;
 
 namespace BetterCms.Module.MediaManager.Controllers

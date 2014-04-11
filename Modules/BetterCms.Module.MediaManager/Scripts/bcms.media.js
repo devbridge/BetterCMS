@@ -368,12 +368,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         };
 
         self.uploadMedia = function () {
-            var opts = {
-                rootFolderId: self.path().currentFolder().id(),
-                rootFolderType: self.path().currentFolder().type,
-                onSaveCallback: onUploadFiles
-            };
-            mediaUpload.openUploadFilesDialog(opts);
+            mediaUpload.openUploadFilesDialog(self.path().currentFolder().id(), self.path().currentFolder().type, onUploadFiles);
             messages.refreshBox($(selectors.fileListMessageBox + self.path().type), {});
         };
 

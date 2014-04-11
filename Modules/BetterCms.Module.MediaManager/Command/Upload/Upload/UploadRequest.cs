@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.MediaManager.Models;
 
 namespace BetterCms.Module.MediaManager.Command.Upload
