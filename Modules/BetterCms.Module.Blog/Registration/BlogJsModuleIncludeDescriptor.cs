@@ -29,8 +29,6 @@ namespace BetterCms.Module.Blog.Registration
                             new JavaScriptModuleLinkTo<OptionController>(this, "loadTemplatesUrl", c => c.Templates()),
                             new JavaScriptModuleLinkTo<OptionController>(this, "saveDefaultTemplateUrl", c => c.SaveDefaultTemplate("{0}", "{1}")),
                             new JavaScriptModuleLinkTo<BlogController>(this, "convertStringToSlugUrl", c => c.ConvertStringToSlug("{0}", "{1}")),
-                            new JavaScriptModuleLinkTo<BlogController>(this, "singleFileImportUrl", c => c.SingleBlogPostsImport()),
-                            new JavaScriptModuleLinkTo<BlogController>(this, "multiFileImportUrl", c => c.MultiBlogPostsImport()),
                             new JavaScriptModuleLinkTo<BlogController>(this, "importBlogPostsUrl", c => c.ImportBlogPosts(null, null))
                         };
 
@@ -45,7 +43,7 @@ namespace BetterCms.Module.Blog.Registration
                             new JavaScriptModuleGlobalization(this, "templatesTabTitle", () => BlogGlobalization.SiteSettings_Blogs_TemplatesTab_Title),
                             new JavaScriptModuleGlobalization(this, "datePickerTooltipTitle", () => BlogGlobalization.Date_Picker_Tooltip_Title),
                             new JavaScriptModuleGlobalization(this, "importBlogPostsTitle", () => BlogGlobalization.ImportBlogPosts_Dialog_Title),
-                            new JavaScriptModuleGlobalization(this, "multipleFilesWarningMessage", () => BlogGlobalization.ImportBlogPosts_OnlyOneFileAtTime_Message)
+                            new JavaScriptModuleGlobalization(this, "pleaseSelectAFile", () => BlogGlobalization.ImportBlogPosts_PleaseSelectAFile_message),
                         };
         }
     }

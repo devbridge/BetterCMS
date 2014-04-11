@@ -14,7 +14,6 @@ using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Blog.ViewModels.Filter;
-using BetterCms.Module.MediaManager.ViewModels.Upload;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 
@@ -141,28 +140,10 @@ namespace BetterCms.Module.Blog.Controllers
 
         [BcmsAuthorize(RootModuleConstants.UserRoles.PublishContent)]
         [HttpGet]
-        public ActionResult SingleBlogPostsImport()
+        public ActionResult ImportBlogPosts()
         {
-            var model = new MultiFileUploadViewModel();
-            model.IsMedia = false;
-            model.AllowMultiple = false;
-            model.RenderControls = false;
-
-            var view = RenderView("SingleBlogPostsImport", model);
-
-            return ComboWireJson(true, view, model, JsonRequestBehavior.AllowGet);
-        }
-        
-        [BcmsAuthorize(RootModuleConstants.UserRoles.PublishContent)]
-        [HttpGet]
-        public ActionResult MultiBlogPostsImport()
-        {
-            var model = new MultiFileUploadViewModel();
-            model.IsMedia = false;
-            model.AllowMultiple = false;
-            model.RenderControls = false;
-
-            var view = RenderView("MultiBlogPostsImport", model);
+            var model = new ImportBlogPostsViewModel();
+            var view = RenderView("ImportBlogPosts", model);
 
             return ComboWireJson(true, view, model, JsonRequestBehavior.AllowGet);
         }
@@ -170,20 +151,20 @@ namespace BetterCms.Module.Blog.Controllers
         /// <summary>
         /// Imports the blog posts.
         /// </summary>
-        /// <param name="file">The file.</param>
-        /// <param name="request">The request.</param>
+        /// <param name="uploadFile">The file.</param>
+        /// <param name="model">The request.</param>
         /// <returns>
         /// Upload results in JSON format
         /// </returns>
         [BcmsAuthorize(RootModuleConstants.UserRoles.PublishContent)]
         [HttpPost]
-        public ActionResult ImportBlogPosts(HttpPostedFileBase file, ImportBlogPostsRequest request)
+        public ActionResult ImportBlogPosts(HttpPostedFileBase uploadFile, ImportBlogPostsViewModel model)
         {
-            if (file != null)
+            if (ModelState.IsValid && uploadFile != null)
             {
-                request.FileStream = file.InputStream;
+                model.FileStream = uploadFile.InputStream;
 
-                var response = GetCommand<ImportBlogPostsCommand>().ExecuteCommand(request);
+                var response = GetCommand<ImportBlogPostsCommand>().ExecuteCommand(model);
 
                 return WireJson(response != null, response);
             }

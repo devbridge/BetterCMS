@@ -324,7 +324,19 @@
   <data name="ImportBlogPosts_Dialog_Title" xml:space="preserve">
     <value>Import blog posts</value>
   </data>
-  <data name="ImportBlogPosts_OnlyOneFileAtTime_Message" xml:space="preserve">
-    <value>You can import only one import file at time.</value>
+  <data name="ImportBlogPosts_CreateRedirects_Title" xml:space="preserve">
+    <value>Create redirects</value>
+  </data>
+  <data name="ImportBlogPosts_File_ButtonTitle" xml:space="preserve">
+    <value>Upload XML file from computer</value>
+  </data>
+  <data name="ImportBlogPosts_File_Description" xml:space="preserve">
+    <value>File to be imported in blog ML format</value>
+  </data>
+  <data name="ImportBlogPosts_UseOriginalUrls_Title" xml:space="preserve">
+    <value>Use Original URLs </value>
+  </data>
+  <data name="ImportBlogPosts_PleaseSelectAFile_message" xml:space="preserve">
+    <value>Please select a file!</value>
   </data>
 </root>

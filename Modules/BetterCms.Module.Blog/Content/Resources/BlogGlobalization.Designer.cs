@@ -385,6 +385,15 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create redirects.
+        /// </summary>
+        public static string ImportBlogPosts_CreateRedirects_Title {
+            get {
+                return ResourceManager.GetString("ImportBlogPosts_CreateRedirects_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Import blog posts.
         /// </summary>
         public static string ImportBlogPosts_Dialog_Title {
@@ -394,11 +403,38 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You can import only one import file at time..
+        ///   Looks up a localized string similar to Upload XML file from computer.
         /// </summary>
-        public static string ImportBlogPosts_OnlyOneFileAtTime_Message {
+        public static string ImportBlogPosts_File_ButtonTitle {
             get {
-                return ResourceManager.GetString("ImportBlogPosts_OnlyOneFileAtTime_Message", resourceCulture);
+                return ResourceManager.GetString("ImportBlogPosts_File_ButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File to be imported in blog ML format.
+        /// </summary>
+        public static string ImportBlogPosts_File_Description {
+            get {
+                return ResourceManager.GetString("ImportBlogPosts_File_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select a file!.
+        /// </summary>
+        public static string ImportBlogPosts_PleaseSelectAFile_message {
+            get {
+                return ResourceManager.GetString("ImportBlogPosts_PleaseSelectAFile_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Original URLs .
+        /// </summary>
+        public static string ImportBlogPosts_UseOriginalUrls_Title {
+            get {
+                return ResourceManager.GetString("ImportBlogPosts_UseOriginalUrls_Title", resourceCulture);
             }
         }
         
