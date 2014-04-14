@@ -234,7 +234,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 model.Model.CanPublishPage = SecurityService.IsAuthorized(Context.Principal, RootModuleConstants.UserRoles.PublishContent);
 
                 // Get templates
-                model.Model.Templates = layoutService.GetAvailableLayouts(id).ToList();
+                model.Model.Templates = layoutService.GetAvailableLayouts(id, model.Model.MasterPageId).ToList();
                 model.Model.Templates
                     .Where(x => x.TemplateId == model.Model.TemplateId || x.TemplateId == model.Model.MasterPageId)
                     .Take(1).ToList()

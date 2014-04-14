@@ -14,6 +14,7 @@ using BetterCms.Core.Exceptions.Service;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 using BetterCms.Core.Services.Caching;
+
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Security;
@@ -25,6 +26,8 @@ namespace BetterCms.Module.Root.Services
     /// </summary>
     public class DefaultAccessControlService : IAccessControlService
     {
+        private const int DefaultCacheTimeoutInSeconds = 30;
+
         private const string AccessLevelCacheKeyPrefix = "bcms-useraccess-";
 
         private readonly ICacheService cacheService;
@@ -144,7 +147,7 @@ namespace BetterCms.Module.Root.Services
             }
             cacheKeyBuilder.Append(accessRulesHasher.ToString().GetHashCode());
 
-            object accessLevel = cacheService.Get(cacheKeyBuilder.ToString(), TimeSpan.FromMinutes(2), () => (object)GetAccessLevelInternal(accessRules, principal));
+            object accessLevel = cacheService.Get(cacheKeyBuilder.ToString(), TimeSpan.FromSeconds(DefaultCacheTimeoutInSeconds), () => (object)GetAccessLevelInternal(accessRules, principal));
 
             return (AccessLevel)accessLevel;
         }
@@ -372,7 +375,7 @@ namespace BetterCms.Module.Root.Services
             if (useCache)
             {
                 var cacheKey = string.Format("CMS_{1}_{0}_C9E7517250F64F84ADC8-B991C8391306", principal.Identity.Name, typeof(TEntity));
-                list = cacheService.Get(cacheKey, new TimeSpan(0, 0, 0, 30), LoadDeniedObjects<TEntity>);
+                list = cacheService.Get(cacheKey, new TimeSpan(0, 0, 0, DefaultCacheTimeoutInSeconds), LoadDeniedObjects<TEntity>);
             }
             else
             {
