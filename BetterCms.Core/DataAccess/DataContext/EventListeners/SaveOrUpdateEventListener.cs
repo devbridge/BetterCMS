@@ -36,7 +36,7 @@ namespace BetterCms.Core.DataAccess.DataContext.EventListeners
         {
             if (evt.Entity is IEntity)
             {
-                Events.CoreEvents.Instance.OnEntitySaving((IEntity)evt.Entity);
+                Events.CoreEvents.Instance.OnEntitySaving((IEntity)evt.Entity, evt.Session);
             } 
 
             if (evt.Session.IsDirtyEntity(evt.Entity))
@@ -69,7 +69,7 @@ namespace BetterCms.Core.DataAccess.DataContext.EventListeners
         {
             if (entity is IEntity)
             {
-                Events.CoreEvents.Instance.OnEntitySaving((IEntity)entity);
+                Events.CoreEvents.Instance.OnEntitySaving((IEntity)entity, null);
             }
 
             eventListenerHelper.OnCreate(entity);
@@ -87,7 +87,7 @@ namespace BetterCms.Core.DataAccess.DataContext.EventListeners
         {
             if (entity is IEntity)
             {
-                Events.CoreEvents.Instance.OnEntitySaving((IEntity)entity);
+                Events.CoreEvents.Instance.OnEntitySaving((IEntity)entity, evt.Session);
             }
 
             if (evt.Session.IsDirtyEntity(entity))
