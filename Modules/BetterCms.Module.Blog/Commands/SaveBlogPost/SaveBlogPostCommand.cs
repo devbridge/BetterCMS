@@ -135,6 +135,18 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             Layout layout;
             Page masterPage;
             LoadLayout(out layout, out masterPage);
+
+            if (masterPage != null)
+            {
+                var level = AccessControlService.GetAccessLevel(masterPage, Context.Principal);
+                if (level < AccessLevel.Read)
+                {
+                    var message = BlogGlobalization.SaveBlogPost_FailedToSave_InaccessibleMasterPage;
+                    const string logMessage = "Failed to save blog post. Selected master page for page layout is inaccessible.";
+                    throw new ValidationException(() => message, logMessage);
+                }
+            }
+
             var region = LoadRegion(layout, masterPage);
             var isNew = request.Id.HasDefaultValue();
             var userCanEdit = SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);
@@ -203,8 +215,6 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
             else
             {
                 blogPost = new BlogPost();
-
-                AddDefaultAccessRules(blogPost);
             }
 
             if (pageContent == null)
@@ -253,6 +263,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                     blogPost.Layout = layout;
                 }
                 UpdateStatus(blogPost, request.DesirableStatus);
+                AddDefaultAccessRules(blogPost, masterPage);
             }
             else if (request.DesirableStatus == ContentStatus.Published
                 || blogPost.Status == PageStatus.Preview)
@@ -452,20 +463,35 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// Adds the default access rules to blog post entity.
         /// </summary>
         /// <param name="blogPost">The blog post.</param>
-        private void AddDefaultAccessRules(BlogPost blogPost)
+        /// <param name="masterPage">The master page.</param>
+        private void AddDefaultAccessRules(BlogPost blogPost, Page masterPage)
         {
             // Set default access rules
             blogPost.AccessRules = new List<AccessRule>();
 
-            var list = AccessControlService.GetDefaultAccessList(Context.Principal);
-            foreach (var rule in list)
+            if (masterPage != null)
             {
-                blogPost.AccessRules.Add(new AccessRule
-                                             {
-                                                 Identity = rule.Identity,
-                                                 AccessLevel = rule.AccessLevel,
-                                                 IsForRole = rule.IsForRole
-                                             });
+                blogPost.AccessRules = masterPage
+                    .AccessRules
+                    .Select(x => new AccessRule
+                        {
+                            Identity = x.Identity,
+                            AccessLevel = x.AccessLevel,
+                            IsForRole = x.IsForRole
+                        })
+                    .ToList();
+            }
+            else { 
+                var list = AccessControlService.GetDefaultAccessList(Context.Principal);
+                foreach (var rule in list)
+                {
+                    blogPost.AccessRules.Add(new AccessRule
+                                                 {
+                                                     Identity = rule.Identity,
+                                                     AccessLevel = rule.AccessLevel,
+                                                     IsForRole = rule.IsForRole
+                                                 });
+                }
             }
         }
     }

@@ -318,4 +318,7 @@
   <data name="SiteSettings_Blogs_FilterByStatus" xml:space="preserve">
     <value>By page status</value>
   </data>
+  <data name="SaveBlogPost_FailedToSave_InaccessibleMasterPage" xml:space="preserve">
+    <value>Cannot save blog post. Master page, which is selected as default blog post layout is inaccessible.</value>
+  </data>
 </root>
