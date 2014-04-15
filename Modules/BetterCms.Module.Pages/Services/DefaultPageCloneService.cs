@@ -97,6 +97,8 @@ namespace BetterCms.Module.Pages.Services
 
             // Detach page to avoid duplicate saving.            
             repository.Detach(page);
+            repository.Detach(page.MasterPage);
+            page.MasterPages.ForEach(mp => repository.Detach(mp.Master));
             page.PageContents.ForEach(repository.Detach);
             page.PageTags.ForEach(repository.Detach);
             page.Options.ForEach(repository.Detach);

@@ -3,6 +3,7 @@
 using Autofac;
 
 using BetterCms.Core;
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules;
@@ -356,12 +357,15 @@ namespace BetterCms.Module.Root
             }
         }
 
-        private void OnEntitySave(SingleItemEventArgs<IEntity> args)
+        private void OnEntitySave(EntitySavingEventArgs args)
         {
             using (var container = ContextScopeProvider.CreateChildContainer())
             {
-                var tracker = container.Resolve<IEntityTrackingService>();
-                tracker.OnEntityUpdate(args.Item);
+                if (args.Session == null || args.Session.IsDirtyEntity(args.Entity))
+                {
+                    var tracker = container.Resolve<IEntityTrackingService>();
+                    tracker.OnEntityUpdate(args.Entity);
+                }
             }
         }
 

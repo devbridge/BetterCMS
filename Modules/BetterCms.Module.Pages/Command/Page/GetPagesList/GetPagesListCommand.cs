@@ -92,7 +92,9 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
 
             query = FilterQuery(query, request, hasSeoDisjunction);
 
-            var sitemapNodesFuture = Repository.AsQueryable<SitemapNode>().Where(n => !n.IsDeleted).ToFuture();
+            var sitemapNodesFuture = Repository
+                .AsQueryable<SitemapNode>()
+                .Where(n => !n.IsDeleted && !n.Sitemap.IsDeleted).ToFuture();
 
             query = query
                 .SelectList(select => select
@@ -251,6 +253,8 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
             {
                 var subQuery = QueryOver.Of<SitemapNode>()
                     .Where(x => x.Page.Id == alias.Id || x.UrlHash == alias.PageUrlHash)
+                    .And(x => !x.IsDeleted)
+                    .JoinQueryOver(s => s.Sitemap)
                     .And(x => !x.IsDeleted)
                     .Select(s => 1);
 

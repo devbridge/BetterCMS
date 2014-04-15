@@ -57,10 +57,12 @@ namespace BetterCms.Module.Pages.Services
         /// <summary>
         /// Gets the future query for the list of layout view models.
         /// </summary>
+        /// <param name="currentPageId">The current page identifier.</param>
+        /// <param name="currentPageMasterPageId">The current page master page identifier.</param>
         /// <returns>
         /// The future query for the list of layout view models
         /// </returns>
-        public IList<TemplateViewModel> GetAvailableLayouts(Guid? currentPageId = null)
+        public IList<TemplateViewModel> GetAvailableLayouts(Guid? currentPageId = null, Guid? currentPageMasterPageId = null)
         {
             // Load layouts
             var templatesFuture = repository
@@ -84,6 +86,10 @@ namespace BetterCms.Module.Pages.Services
                 foreach (var deniedPageId in deniedPages)
                 {
                     var id = deniedPageId;
+                    if (id == currentPageMasterPageId)
+                    {
+                        continue;
+                    }
                     masterPagesQuery = masterPagesQuery.Where(f => f.Id != id);
                 }
             }

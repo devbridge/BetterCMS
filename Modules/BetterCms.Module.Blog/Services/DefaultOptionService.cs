@@ -39,6 +39,7 @@ namespace BetterCms.Module.Blog.Services
 //                .ThenFetch(region => region.Region)
 
                 .Fetch(option => option.DefaultMasterPage)
+                .ThenFetchMany(master => master.AccessRules)
                 .Distinct()
                 .ToList()
                 .FirstOrDefault();

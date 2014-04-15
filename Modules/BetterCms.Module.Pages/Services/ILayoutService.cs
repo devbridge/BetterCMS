@@ -11,10 +11,11 @@ namespace BetterCms.Module.Pages.Services
         /// Gets the future query for the list of layout view models.
         /// </summary>
         /// <param name="currentPageId">The current page id.</param>
+        /// <param name="currentPageMasterPageId">The current page master page identifier.</param>
         /// <returns>
         /// The future query for the list of layout view models
         /// </returns>
-        IList<TemplateViewModel> GetAvailableLayouts(System.Guid? currentPageId = null);
+        IList<TemplateViewModel> GetAvailableLayouts(System.Guid? currentPageId = null, System.Guid? currentPageMasterPageId = null);
 
         /// <summary>
         /// Gets the list of layout option view models.

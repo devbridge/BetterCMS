@@ -502,6 +502,15 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot save blog post. Master page, which is selected as default blog post layout is inaccessible..
+        /// </summary>
+        public static string SaveBlogPost_FailedToSave_InaccessibleMasterPage {
+            get {
+                return ResourceManager.GetString("SaveBlogPost_FailedToSave_InaccessibleMasterPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There are no compatible layouts for blogs..
         /// </summary>
         public static string SaveBlogPost_LayoutNotFound_Message {

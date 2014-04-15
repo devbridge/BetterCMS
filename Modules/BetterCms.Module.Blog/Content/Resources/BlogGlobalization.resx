@@ -321,6 +321,9 @@
   <data name="SiteSettings_Blogs_Import" xml:space="preserve">
     <value>Import blog posts</value>
   </data>
+  <data name="SaveBlogPost_FailedToSave_InaccessibleMasterPage" xml:space="preserve">
+    <value>Cannot save blog post. Master page, which is selected as default blog post layout is inaccessible.</value>
+  </data>
   <data name="ImportBlogPosts_Dialog_Title" xml:space="preserve">
     <value>Import blog posts</value>
   </data>

@@ -3,6 +3,8 @@
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Security;
 
+using NHibernate;
+
 // ReSharper disable CheckNamespace
 namespace BetterCms.Events
 // ReSharper restore CheckNamespace
@@ -20,7 +22,7 @@ namespace BetterCms.Events
 
         public event DefaultEventHandler<SingleItemEventArgs<HttpApplication>> HostAuthenticateRequest;
 
-        public event DefaultEventHandler<SingleItemEventArgs<IEntity>> EntitySaving;
+        public event DefaultEventHandler<EntitySavingEventArgs> EntitySaving;
 
         public event DefaultEventHandler<SingleItemEventArgs<IEntity>> EntityDeleting;
 
@@ -77,11 +79,12 @@ namespace BetterCms.Events
         /// Called before an entity is saved.
         /// </summary>
         /// <param name="accessSecuredObject">The access secured object.</param>
-        public void OnEntitySaving(IEntity accessSecuredObject)
+        /// <param name="nHibernateSession">The n hibernate session.</param>
+        public void OnEntitySaving(IEntity accessSecuredObject, ISession nHibernateSession)
         {
             if (EntitySaving != null)
             {
-                EntitySaving(new SingleItemEventArgs<IEntity>(accessSecuredObject));
+                EntitySaving(new EntitySavingEventArgs(accessSecuredObject, nHibernateSession));
             }
         }
 

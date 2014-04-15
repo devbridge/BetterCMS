@@ -129,6 +129,7 @@
     <Compile Include="DataContracts\IRenderPage.cs" />
     <Compile Include="Events\EventBase.cs" />
     <Compile Include="Events\CoreEvents.cs" />
+    <Compile Include="Events\EntitySavingEventArgs.cs" />
     <Compile Include="Events\SingleItemEventArgs.cs" />
     <Compile Include="CmsContext.cs" />
     <Compile Include="DataAccess\DataContext\Fetching\EagerFetch.cs" />
