@@ -28,7 +28,7 @@ namespace BetterCms.Module.Root.Services
     {
         private const int DefaultCacheTimeoutInSeconds = 30;
 
-        private const string AccessLevelCacheKeyPrefix = "bcms-useraccess-";
+        private const string AccessLevelCacheKeyPrefix = "bcms-useraccess";
 
         private readonly ICacheService cacheService;
 
@@ -138,6 +138,8 @@ namespace BetterCms.Module.Root.Services
                     accessRulesHasher.Append(rule.Identity);
                     accessRulesHasher.Append("-");
                     accessRulesHasher.Append((int)rule.AccessLevel);
+                    accessRulesHasher.Append("-");
+                    accessRulesHasher.Append(rule.IsForRole ? "role" : "user");
                     accessRulesHasher.Append("-");
                 }
             }
