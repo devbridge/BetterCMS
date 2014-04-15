@@ -93,6 +93,10 @@ namespace BetterCms.Module.Root.Mvc
         /// </returns>
         public static string ToFormattedDateString(this DateTime dateTime)
         {
+            if (dateTime == DateTime.MinValue || dateTime == DateTime.MaxValue)
+            {
+                return string.Empty;
+            }
             return dateTime.ToString("MMM dd, yyyy");            
         }
 
