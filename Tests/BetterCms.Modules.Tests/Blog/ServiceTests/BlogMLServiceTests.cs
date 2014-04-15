@@ -37,7 +37,7 @@ namespace BetterCms.Test.Module.Blog.ServiceTests
             var blogService = CreateBlogService();
             blogService
                 .Setup(x => x.SaveBlogPost(It.IsAny<BlogPostViewModel>(), It.IsAny<IPrincipal>()))
-                .Callback<BlogPostViewModel, IPrincipal>((x, principal) =>
+                .Returns((BlogPostViewModel x, IPrincipal principal) =>
                     {
                         AssertBlogPostUrl(x);
                         if (x.BlogUrl == "CS Dev Guide: Send Emails")
@@ -45,6 +45,13 @@ namespace BetterCms.Test.Module.Blog.ServiceTests
                             tested = true;
                             AssertBlogPost(x);
                         }
+
+                        return new BlogPost
+                            {
+                                Title = x.Title,
+                                PageUrl = x.BlogUrl,
+                                Id = Guid.NewGuid()
+                            };
                     });
 
             var importService = GetBlogService(repository.Object, blogService.Object);
@@ -71,16 +78,23 @@ namespace BetterCms.Test.Module.Blog.ServiceTests
             var blogService = CreateBlogService();
             blogService
                 .Setup(x => x.SaveBlogPost(It.IsAny<BlogPostViewModel>(), It.IsAny<IPrincipal>()))
-                .Callback<BlogPostViewModel, IPrincipal>((x, principal) =>
-                {
-                    AssertBlogPostUrl(x);
-
-                    if (x.BlogUrl == "/CS21/blogs/p/archive/2006/09/05/CS-Dev-Guide_3A00_-Send-Emails/")
+                .Returns((BlogPostViewModel x, IPrincipal principal) =>
                     {
-                        tested = true;
-                        AssertBlogPost(x);
-                    }
-                });
+                        AssertBlogPostUrl(x);
+
+                        if (x.BlogUrl == "/CS21/blogs/p/archive/2006/09/05/CS-Dev-Guide_3A00_-Send-Emails/")
+                        {
+                            tested = true;
+                            AssertBlogPost(x);
+                        }
+
+                        return new BlogPost
+                            {
+                                Title = x.Title,
+                                PageUrl = x.BlogUrl,
+                                Id = Guid.NewGuid()
+                            };
+                    });
 
             var importService = GetBlogService(repository.Object, blogService.Object);
             var file = CreateTemporaryFile(BlogMLImportFile);
@@ -107,16 +121,23 @@ namespace BetterCms.Test.Module.Blog.ServiceTests
             var blogService = CreateBlogService();
             blogService
                 .Setup(x => x.SaveBlogPost(It.IsAny<BlogPostViewModel>(), It.IsAny<IPrincipal>()))
-                .Callback<BlogPostViewModel, IPrincipal>((x, principal) =>
-                {
-                    AssertBlogPostUrl(x);
-
-                    if (x.BlogUrl == "CS Dev Guide: Send Emails")
+                .Returns((BlogPostViewModel x, IPrincipal principal) =>
                     {
-                        tested = true;
-                        AssertBlogPost(x);
-                    }
-                });
+                        AssertBlogPostUrl(x);
+
+                        if (x.BlogUrl == "CS Dev Guide: Send Emails")
+                        {
+                            tested = true;
+                            AssertBlogPost(x);
+                        }
+
+                        return new BlogPost
+                               {
+                                   Title = x.Title,
+                                   PageUrl = x.BlogUrl,
+                                   Id = Guid.NewGuid()
+                               };
+                    });
 
             var importService = GetBlogService(repository.Object, blogService.Object);
             var file = CreateTemporaryFile(BlogMLImportFile);
