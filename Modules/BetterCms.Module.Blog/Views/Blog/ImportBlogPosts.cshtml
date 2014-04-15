@@ -9,15 +9,15 @@
 <div class="bcms-scroll-window">
     @Html.TabbedContentMessagesBox()
 
-    @using (Html.BeginForm<BlogController>(c => c.ImportBlogPosts(), FormMethod.Post, new
-                                                                                      {
-                                                                                          @enctype = "multipart/form-data",
-                                                                                          @id = "bcms-import-blog-posts",
-                                                                                          @target = "bcms-import-form-target",
-                                                                                      }))
-    {
-        <div class="bcms-padded-content">
-            <div class="bcms-input-list-holder">
+    <div class="bcms-padded-content">
+        @using (Html.BeginForm<BlogController>(c => c.ImportBlogPosts(), FormMethod.Post, new
+                                                                                          {
+                                                                                              @enctype = "multipart/form-data",
+                                                                                              @id = "bcms-import-blog-posts",
+                                                                                              @target = "bcms-import-form-target",
+                                                                                          }))
+        {
+            <div class="bcms-input-list-holder" data-bind="visible: !done()">
                 <div id="bcms-files-dropzone" class="bcms-dropzone">
                     <div class="bcms-dropzone-infotext">@BlogGlobalization.ImportBlogPosts_File_Description</div>
                     <div class="bcms-btn-upload-files">
@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <iframe id="bcms-import-form-target" name="bcms-import-form-target" style="position: absolute; left: -999em; top: -999em;"></iframe>
-                
+
                 <div class="bcms-edit-check-field">
                     @Html.CheckBoxFor(model => model.UseOriginalUrls, new
                                                                       {
@@ -37,12 +37,34 @@
 
                 <div class="bcms-edit-check-field">
                     @Html.CheckBoxFor(model => model.CreateRedirects, new
-                                                                       {
-                                                                           data_bind = "checked: createRedirects"
-                                                                       })
+                                                                      {
+                                                                          data_bind = "checked: createRedirects"
+                                                                      })
                     <div class="bcms-edit-label">@Html.Raw(BlogGlobalization.ImportBlogPosts_CreateRedirects_Title)</div>
                 </div>
             </div>
-        </div>
-    }
+
+            <!-- ko if: done() -->
+            <p>
+                @BlogGlobalization.ImportBlogPosts_ImportResults_Total_Title: <span data-bind="text: total()"></span>
+                @BlogGlobalization.ImportBlogPosts_ImportResults_Created_Title: <span data-bind="text: created()"></span>
+                @BlogGlobalization.ImportBlogPosts_ImportResults_Failed_Title: <span data-bind="text: failed()"></span>
+            </p>
+
+            <div class="bcms-imported-blogs-holder">
+                <div data-bind="foreach: results()">
+                    <div data-bind="css: { 'bcms-import-block': true, 'bcms-import-success': success, 'bcms-import-failed': !success }">
+                        <div data-bind="html: title, attr: {title: title}" class="bcms-import-blog-titles"></div>
+                        <div data-bind="visible: !success" class="bcms-import-blog-titles bcms-import-description" style="display: none;">
+                            <span data-bind="text: errorMessage, attr: {title: errorMessage}"></span>
+                        </div>
+                        <div data-bind="visible: success" class="bcms-import-blog-titles" style="display: none;">
+                            <a data-bind="text: url, attr: {href: url, title: url}" target="_blank"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /ko -->
+        }
+    </div>
 </div>

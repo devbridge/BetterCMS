@@ -17,9 +17,9 @@ namespace BetterCms.Module.Blog.Commands.ImportBlogPosts
         public ImportBlogPostsResponse Execute(ImportBlogPostsViewModel request)
         {
             var blogs = importService.DeserializeXMLStream(request.FileStream);
-            importService.ImportBlogs(blogs, Context.Principal, request.UseOriginalUrls, request.CreateRedirects);
+            var results = importService.ImportBlogs(blogs, Context.Principal, request.UseOriginalUrls, request.CreateRedirects);
 
-            return new ImportBlogPostsResponse();
+            return new ImportBlogPostsResponse { Results = results };
         }
     }
 }

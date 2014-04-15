@@ -61,6 +61,8 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             templatesTabTitle: null,
             datePickerTooltipTitle: null,
             importBlogPostsTitle: null,
+            closeButtonTitle: null,
+            importButtonTitle: null,
             multipleFilesWarningMessage: null,
             pleaseSelectAFile: null
         },
@@ -742,26 +744,38 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
     * Opens form for importing blog posts XML
     */
     function openImportBlogPostsForm() {
-        var importModel;
+        var importModel, i, item, form;
 
         modal.open({
             title: globalization.importBlogPostsTitle,
+            acceptTitle: globalization.importButtonTitle,
+            cancelTitle: globalization.closeButtonTitle,
             onLoad: function (dialog) {
                 dynamicContent.bindDialog(dialog, links.importBlogPostsUrl, {
                     contentAvailable: function (dialog, json) {
-                        var form = dialog.container.find(selectors.importBlogPostsForm),
-                            iframe = dialog.container.find($(selectors.fileUploadingTarget));
+                        var iframe = dialog.container.find($(selectors.fileUploadingTarget));
+                        form = dialog.container.find(selectors.importBlogPostsForm);
 
                         importModel = {
                             useOriginalIds: ko.observable(json.Data.UseOriginalUrls),
                             createRedirects: ko.observable(json.Data.CreateRedirects),
                             fileName: ko.observable(''),
                             messageBox: messages.box({ container: form }),
-                            form: form
+                            form: form,
+                            results: ko.observableArray(),
+                            done: ko.observable(false),
+                            total: ko.observable(0),
+                            created: ko.observable(0),
+                            failed: ko.observable(0),
+                            dialog: dialog
                         };
 
                         iframe.on('load', function () {
-                            var result = iframe.contents().text();
+                            importModel.started = false;
+                            form.hideLoading();
+                            var result = iframe.contents().text(),
+                                created = 0,
+                                total;
                             if (!result) {
                                 return;
                             }
@@ -769,7 +783,31 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                             try {
                                 json = $.parseJSON(result);
                                 messages.refreshBox(form, json);
-                                console.log(json);
+
+                                if (json.Success) {
+                                    importModel.done(true);
+                                    importModel.dialog.disableAcceptButton();
+
+                                    if (json.Data && $.isArray(json.Data.Results)) {
+                                        total = json.Data.Results.length;
+                                        for (i = 0; i < json.Data.Results.length; i ++) {
+                                            item = json.Data.Results[i];
+                                            importModel.results.push({
+                                                success: item.Success === true,
+                                                id: item.Id,
+                                                title: item.Title || '&nbsp;',
+                                                url: item.PageUrl,
+                                                errorMessage: item.ErrorMessage
+                                            });
+                                            if (item.Success === true) {
+                                                created ++;
+                                            }
+                                        }
+                                        importModel.failed(total - created);
+                                        importModel.total(total);
+                                        importModel.created(created);
+                                    }
+                                }
                             } catch (exc) {
                                 bcms.logger.error(exc);
                             }
@@ -780,12 +818,15 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 });
             },
             onAcceptClick: function () {
-                console.log('Accept clicked');
+                form.showLoading();
                 if (!importModel.fileName()) {
                     importModel.messageBox.clearMessages();
                     importModel.messageBox.addErrorMessage(globalization.pleaseSelectAFile);
                 } else {
-                    importModel.form.submit();
+                    if (!importModel.started) {
+                        importModel.started = true;
+                        importModel.form.submit();
+                    }
                 }
             }
         });

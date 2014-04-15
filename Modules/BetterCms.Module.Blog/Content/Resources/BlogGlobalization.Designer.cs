@@ -61,6 +61,15 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Blog post intro text maximum length ({1}) exceeded..
+        /// </summary>
+        public static string BlogPost_IntroText_MaxLengthMessage {
+            get {
+                return ResourceManager.GetString("BlogPost_IntroText_MaxLengthMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The field Live From must be a date..
         /// </summary>
         public static string BlogPost_LiveFrom_DateNotValidationMessage {
@@ -93,6 +102,24 @@ namespace BetterCms.Module.Blog.Content.Resources {
         public static string BlogPost_LiveTo_ValidationMessage {
             get {
                 return ResourceManager.GetString("BlogPost_LiveTo_ValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Blog post title maximum length ({1}) exceeded..
+        /// </summary>
+        public static string BlogPost_Title_MaxLengthMessage {
+            get {
+                return ResourceManager.GetString("BlogPost_Title_MaxLengthMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Blog post title is required.
+        /// </summary>
+        public static string BlogPost_Title_RequiredMessage {
+            get {
+                return ResourceManager.GetString("BlogPost_Title_RequiredMessage", resourceCulture);
             }
         }
         
@@ -417,6 +444,42 @@ namespace BetterCms.Module.Blog.Content.Resources {
         public static string ImportBlogPosts_File_Description {
             get {
                 return ResourceManager.GetString("ImportBlogPosts_File_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import.
+        /// </summary>
+        public static string ImportBlogPosts_ImportButton_Title {
+            get {
+                return ResourceManager.GetString("ImportBlogPosts_ImportButton_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created.
+        /// </summary>
+        public static string ImportBlogPosts_ImportResults_Created_Title {
+            get {
+                return ResourceManager.GetString("ImportBlogPosts_ImportResults_Created_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed.
+        /// </summary>
+        public static string ImportBlogPosts_ImportResults_Failed_Title {
+            get {
+                return ResourceManager.GetString("ImportBlogPosts_ImportResults_Failed_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total.
+        /// </summary>
+        public static string ImportBlogPosts_ImportResults_Total_Title {
+            get {
+                return ResourceManager.GetString("ImportBlogPosts_ImportResults_Total_Title", resourceCulture);
             }
         }
         

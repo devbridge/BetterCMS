@@ -339,4 +339,25 @@
   <data name="ImportBlogPosts_PleaseSelectAFile_message" xml:space="preserve">
     <value>Please select a file!</value>
   </data>
+  <data name="BlogPost_IntroText_MaxLengthMessage" xml:space="preserve">
+    <value>Blog post intro text maximum length ({1}) exceeded.</value>
+  </data>
+  <data name="BlogPost_Title_MaxLengthMessage" xml:space="preserve">
+    <value>Blog post title maximum length ({1}) exceeded.</value>
+  </data>
+  <data name="BlogPost_Title_RequiredMessage" xml:space="preserve">
+    <value>Blog post title is required</value>
+  </data>
+  <data name="ImportBlogPosts_ImportButton_Title" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="ImportBlogPosts_ImportResults_Created_Title" xml:space="preserve">
+    <value>Created</value>
+  </data>
+  <data name="ImportBlogPosts_ImportResults_Failed_Title" xml:space="preserve">
+    <value>Failed</value>
+  </data>
+  <data name="ImportBlogPosts_ImportResults_Total_Title" xml:space="preserve">
+    <value>Total</value>
+  </data>
 </root>

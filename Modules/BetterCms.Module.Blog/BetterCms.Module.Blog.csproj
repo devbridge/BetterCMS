@@ -150,6 +150,7 @@
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\BlogPost.cs" />
     <Compile Include="Models\BlogPostContent.cs" />
+    <Compile Include="Models\BlogPostImportResult.cs" />
     <Compile Include="Models\Maps\AuthorMap.cs" />
     <Compile Include="Models\Maps\BlogPostContentMap.cs" />
     <Compile Include="Models\Maps\BlogPostMap.cs" />

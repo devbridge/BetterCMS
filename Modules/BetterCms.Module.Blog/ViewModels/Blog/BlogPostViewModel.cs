@@ -57,8 +57,8 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// <value>
         /// The blog title.
         /// </value>
-        [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
-        [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
+        [Required(ErrorMessageResourceType = typeof(BlogGlobalization), ErrorMessageResourceName = "BlogPost_Title_RequiredMessage")]
+        [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(BlogGlobalization), ErrorMessageResourceName = "BlogPost_Title_MaxLengthMessage")]
         public virtual string Title { get; set; }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// The blog intro text.
         /// </value>
         [AllowHtml]
-        [StringLength(MaxLength.Text, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
+        [StringLength(MaxLength.Text, ErrorMessageResourceType = typeof(BlogGlobalization), ErrorMessageResourceName = "BlogPost_IntroText_MaxLengthMessage")]
         public virtual string IntroText { get; set; }
 
         /// <summary>

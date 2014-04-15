@@ -2,6 +2,7 @@
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Controllers;
+using BetterCms.Module.Root.Content.Resources;
 
 namespace BetterCms.Module.Blog.Registration
 {
@@ -44,6 +45,8 @@ namespace BetterCms.Module.Blog.Registration
                             new JavaScriptModuleGlobalization(this, "datePickerTooltipTitle", () => BlogGlobalization.Date_Picker_Tooltip_Title),
                             new JavaScriptModuleGlobalization(this, "importBlogPostsTitle", () => BlogGlobalization.ImportBlogPosts_Dialog_Title),
                             new JavaScriptModuleGlobalization(this, "pleaseSelectAFile", () => BlogGlobalization.ImportBlogPosts_PleaseSelectAFile_message),
+                            new JavaScriptModuleGlobalization(this, "importButtonTitle", () => BlogGlobalization.ImportBlogPosts_ImportButton_Title),
+                            new JavaScriptModuleGlobalization(this, "closeButtonTitle", () => RootGlobalization.Button_Close),
                         };
         }
     }
