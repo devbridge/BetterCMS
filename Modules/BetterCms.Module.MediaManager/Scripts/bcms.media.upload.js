@@ -347,8 +347,8 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
         };
         
         // When one of file status is "Processing", checking file status repeatedly
-        self.timeout = 10000;
-        self.firstTimeout = 500;
+        self.timeout = 5000;
+        self.firstTimeout = 1000;
         self.timer = null;
 
         self.startStatusChecking = function (timeout) {
