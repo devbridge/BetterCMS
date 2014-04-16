@@ -137,6 +137,8 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPostList
                 var subQuery = QueryOver.Of<SitemapNode>()
                     .Where(x => x.Page.Id == alias.Id || x.UrlHash == alias.PageUrlHash)
                     .And(x => !x.IsDeleted)
+                    .JoinQueryOver(s => s.Sitemap)
+                    .And(x => !x.IsDeleted)
                     .Select(s => 1);
 
                 var hasSeoDisjunction =
