@@ -18,6 +18,7 @@ using BlogML.Xml;
 
 using Common.Logging;
 
+using Page = System.Web.UI.Page;
 using ValidationException = BetterCms.Core.Exceptions.Mvc.ValidationException;
 
 namespace BetterCms.Module.Blog.Services
@@ -32,16 +33,19 @@ namespace BetterCms.Module.Blog.Services
         
         private readonly IBlogService blogService;
         
+        private readonly IPageService pageService;
+        
         private readonly IUnitOfWork unitOfWork;
         
         private readonly IRedirectService redirectService;
 
         public DefaultBlogMLService(IRepository repository, IUrlService urlService, IBlogService blogService,
-            IUnitOfWork unitOfWork, IRedirectService redirectService)
+            IUnitOfWork unitOfWork, IRedirectService redirectService, IPageService pageService)
         {
             this.repository = repository;
             this.urlService = urlService;
             this.blogService = blogService;
+            this.pageService = pageService;
             this.unitOfWork = unitOfWork;
             this.redirectService = redirectService;
         }
@@ -83,6 +87,97 @@ namespace BetterCms.Module.Blog.Services
             return blogPosts;
         }
 
+        private BlogPostViewModel MapViewModel(BlogMLPost blogML, bool useOriginalUrls)
+        {
+            var model = new BlogPostViewModel
+                    {
+                        Title = blogML.PostName ?? blogML.Title,
+                        IntroText = blogML.Excerpt != null ? blogML.Excerpt.UncodedText : null,
+                        LiveFromDate = blogML.DateCreated.Date,
+                        LiveToDate = null,
+                        DesirableStatus = ContentStatus.Published,
+                        Content = blogML.Content != null ? blogML.Content.UncodedText : null
+                    };
+
+            if (useOriginalUrls)
+            {
+                model.BlogUrl = FixUrl(blogML.PostUrl);
+            }
+            else
+            {
+                model.BlogUrl = blogService.CreateBlogPermalink(blogML.Title);
+            }
+
+            return model;
+        }
+
+        private bool ValidateModel(BlogPostViewModel blogPostModel, BlogMLPost blogML, out BlogPostImportResult failedResult)
+        {
+            failedResult = null;
+
+            var validationContext = new ValidationContext(blogPostModel, null, null);
+            var validationResults = new List<ValidationResult>();
+            if (!Validator.TryValidateObject(blogPostModel, validationContext, validationResults, true)
+                && validationResults.Count > 0)
+            {
+                failedResult = new BlogPostImportResult
+                    {
+                        Title = blogML.Title,
+                        PageUrl = blogML.PostUrl,
+                        Success = false,
+                        ErrorMessage = validationResults[0].ErrorMessage
+                    };
+                return false;
+            }
+
+            try
+            {
+                pageService.ValidatePageUrl(blogPostModel.BlogUrl);
+            }
+            catch (Exception exc)
+            {
+                failedResult = new BlogPostImportResult
+                {
+                    Title = blogML.Title,
+                    PageUrl = blogML.PostUrl,
+                    Success = false,
+                    ErrorMessage = exc.Message
+                };
+            }
+
+            return true;
+        }
+
+        public List<BlogPostImportResult> ValidateImport(BlogMLBlog blogPosts, bool useOriginalUrls = false)
+        {
+            List<BlogPostImportResult> result = new List<BlogPostImportResult>();
+
+            if (blogPosts != null && blogPosts.Posts != null)
+            {
+                foreach (var blogML in blogPosts.Posts)
+                {
+                    var blogPostModel = MapViewModel(blogML, useOriginalUrls);
+
+                    BlogPostImportResult blogPost;
+                    if (!ValidateModel(blogPostModel, blogML, out blogPost))
+                    {
+                        result.Add(blogPost);
+                        continue;
+                    }
+
+                    blogPost = new BlogPostImportResult
+                        {
+                            Title = blogPostModel.Title,
+                            PageUrl = blogPostModel.BlogUrl,
+                            Success = true
+                        };
+                    result.Add(blogPost);
+                }
+            }
+
+            return result;
+        }
+
         public List<BlogPostImportResult> ImportBlogs(BlogMLBlog blogPosts, IPrincipal principal, bool useOriginalUrls = false, bool createRedirects = false)
         {
             List<BlogPostImportResult> createdBlogPosts = null;
@@ -119,41 +214,14 @@ namespace BetterCms.Module.Blog.Services
                 {
                     try
                     {
-                        var blogPostModel = new BlogPostViewModel
-                                            {
-                                                Title = blogML.PostName ?? blogML.Title,
-                                                IntroText = blogML.PostName != blogML.Title ? blogML.Title : null,
-                                                LiveFromDate = blogML.DateCreated.Date,
-                                                LiveToDate = null,
-                                                DesirableStatus = ContentStatus.Published,
-                                                Content = blogML.Content != null ? blogML.Content.UncodedText : null,
-                                                BlogUrl = null
-                                            };
-
-                        var validationContext = new ValidationContext(blogPostModel, null, null); 
-                        var validationResults = new List<ValidationResult>();
-                        if (!Validator.TryValidateObject(blogPostModel, validationContext, validationResults, true)
-                            && validationResults.Count > 0)
-                        {
-                            var failedBlogPost = new BlogPostImportResult
-                            {
-                                Title = blogML.Title,
-                                PageUrl = blogML.PostUrl,
-                                Success = false,
-                                ErrorMessage = validationResults[0].ErrorMessage
-                            };
-                            createdBlogPosts.Add(failedBlogPost);
-                            continue;
-                        }
-
                         var oldUrl = FixUrl(blogML.PostUrl);
-                        if (useOriginalUrls)
+                        var blogPostModel = MapViewModel(blogML, useOriginalUrls);
+
+                        BlogPostImportResult blogPostResult;
+                        if (!ValidateModel(blogPostModel, blogML, out blogPostResult))
                         {
-                            blogPostModel.BlogUrl = oldUrl;
-                        }
-                        else
-                        {
-                            blogPostModel.BlogUrl = blogService.CreateBlogPermalink(blogPostModel.Title);
+                            createdBlogPosts.Add(blogPostResult);
+                            continue;
                         }
 
                         if (blogML.Authors != null && blogML.Authors.Count > 0)
@@ -166,13 +234,15 @@ namespace BetterCms.Module.Blog.Services
                         }
 
                         var blogPost = blogService.SaveBlogPost(blogPostModel, principal);
-                        createdBlogPosts.Add(new BlogPostImportResult
-                                             {
-                                                 Title = blogPost.Title, 
-                                                 PageUrl = blogPost.PageUrl, 
-                                                 Id = blogPost.Id, 
-                                                 Success = true
-                                             });
+                        
+                        blogPostResult = new BlogPostImportResult
+                                {
+                                    Title = blogPost.Title, 
+                                    PageUrl = blogPost.PageUrl, 
+                                    Id = blogPost.Id, 
+                                    Success = true
+                                };
+                        createdBlogPosts.Add(blogPostResult);
 
                         if (!useOriginalUrls && createRedirects && oldUrl != blogPostModel.BlogUrl)
                         {

@@ -137,39 +137,5 @@ namespace BetterCms.Module.Blog.Controllers
 
             return Json(new { Text = text, Url = slug, SenderId = senderId }, JsonRequestBehavior.AllowGet);
         }
-
-        [BcmsAuthorize(RootModuleConstants.UserRoles.PublishContent)]
-        [HttpGet]
-        public ActionResult ImportBlogPosts()
-        {
-            var model = new ImportBlogPostsViewModel();
-            var view = RenderView("ImportBlogPosts", model);
-
-            return ComboWireJson(true, view, model, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>
-        /// Imports the blog posts.
-        /// </summary>
-        /// <param name="uploadFile">The file.</param>
-        /// <param name="model">The request.</param>
-        /// <returns>
-        /// Upload results in JSON format
-        /// </returns>
-        [BcmsAuthorize(RootModuleConstants.UserRoles.PublishContent)]
-        [HttpPost]
-        public ActionResult ImportBlogPosts(HttpPostedFileBase uploadFile, ImportBlogPostsViewModel model)
-        {
-            if (ModelState.IsValid && uploadFile != null)
-            {
-                model.FileStream = uploadFile.InputStream;
-
-                var response = GetCommand<ImportBlogPostsCommand>().ExecuteCommand(model);
-
-                return WireJson(response != null, response);
-            }
-
-            return WireJson(false);
-        }
     }
 }

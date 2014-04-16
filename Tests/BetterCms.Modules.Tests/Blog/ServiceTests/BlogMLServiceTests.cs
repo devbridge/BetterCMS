@@ -14,6 +14,7 @@ using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 using Moq;
 
@@ -40,7 +41,7 @@ namespace BetterCms.Test.Module.Blog.ServiceTests
                 .Returns((BlogPostViewModel x, IPrincipal principal) =>
                     {
                         AssertBlogPostUrl(x);
-                        if (x.BlogUrl == "CS Dev Guide: Send Emails")
+                        if (x.BlogUrl == "cs-dev-guide-send-emails")
                         {
                             tested = true;
                             AssertBlogPost(x);
@@ -125,7 +126,7 @@ namespace BetterCms.Test.Module.Blog.ServiceTests
                     {
                         AssertBlogPostUrl(x);
 
-                        if (x.BlogUrl == "CS Dev Guide: Send Emails")
+                        if (x.BlogUrl == "cs-dev-guide-send-emails")
                         {
                             tested = true;
                             AssertBlogPost(x);
@@ -143,7 +144,7 @@ namespace BetterCms.Test.Module.Blog.ServiceTests
             var file = CreateTemporaryFile(BlogMLImportFile);
 
             var blogs = importService.DeserializeXMLFile(file);
-            importService.ImportBlogs(blogs, GetPrincipal(), false, true);
+            var result = importService.ImportBlogs(blogs, GetPrincipal(), false, true);
 
             Assert.AreEqual(redirectsCreated, 4);
             Assert.IsTrue(tested);
@@ -179,7 +180,9 @@ namespace BetterCms.Test.Module.Blog.ServiceTests
         private Mock<IBlogService> CreateBlogService()
         {
             var blogService = new Mock<IBlogService>();
-            blogService.Setup(x => x.CreateBlogPermalink(It.IsAny<string>())).Returns<string>(x => x);
+            blogService
+                .Setup(x => x.CreateBlogPermalink(It.IsAny<string>()))
+                .Returns<string>(x => x.Transliterate());
 
             return blogService;
         }
@@ -216,8 +219,10 @@ namespace BetterCms.Test.Module.Blog.ServiceTests
                 redirectService = new Mock<IRedirectService>().Object;
             }
             var unitOfWork = new Mock<IUnitOfWork>().Object;
+            var pageService = new Mock<IPageService>().Object;
             var urlService = new DefaultUrlService(unitOfWork, new CmsConfigurationSection());
-            var importService = new DefaultBlogMLService(repository, urlService, blogService, unitOfWork, redirectService);
+
+            var importService = new DefaultBlogMLService(repository, urlService, blogService, unitOfWork, redirectService, pageService);
 
             return importService;
         }

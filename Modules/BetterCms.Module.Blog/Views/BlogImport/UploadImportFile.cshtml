@@ -10,7 +10,7 @@
     @Html.TabbedContentMessagesBox()
 
     <div class="bcms-padded-content">
-        @using (Html.BeginForm<BlogController>(c => c.ImportBlogPosts(), FormMethod.Post, new
+        @using (Html.BeginForm<BlogImportController>(c => c.UploadImportFile(), FormMethod.Post, new
                                                                                           {
                                                                                               @enctype = "multipart/form-data",
                                                                                               @id = "bcms-import-blog-posts",

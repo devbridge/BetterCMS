@@ -49,7 +49,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             loadTemplatesUrl: null,
             saveDefaultTemplateUrl: null,
             convertStringToSlugUrl: null,
-            importBlogPostsUrl: null
+            uploadBlogPostsImportFileUrl: null
         },
         globalization = {
             createNewPostDialogTitle: null,
@@ -751,7 +751,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             acceptTitle: globalization.importButtonTitle,
             cancelTitle: globalization.closeButtonTitle,
             onLoad: function (dialog) {
-                dynamicContent.bindDialog(dialog, links.importBlogPostsUrl, {
+                dynamicContent.bindDialog(dialog, links.uploadBlogPostsImportFileUrl, {
                     contentAvailable: function (dialog, json) {
                         var iframe = dialog.container.find($(selectors.fileUploadingTarget));
                         form = dialog.container.find(selectors.importBlogPostsForm);

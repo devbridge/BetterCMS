@@ -14,6 +14,8 @@ namespace BetterCms.Module.Blog.Services
         
         BlogMLBlog DeserializeXMLStream(Stream fileStream);
 
+        List<BlogPostImportResult> ValidateImport(BlogMLBlog blogPosts, bool useOriginalUrls = false);
+
         List<BlogPostImportResult> ImportBlogs(BlogMLBlog blogPosts, IPrincipal principal, bool useOriginalUrls = false, bool createRedirects = false);
     }
 }
