@@ -8,6 +8,7 @@ using System.Security.Principal;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Pages.Services;
@@ -18,7 +19,6 @@ using BlogML.Xml;
 
 using Common.Logging;
 
-using Page = System.Web.UI.Page;
 using ValidationException = BetterCms.Core.Exceptions.Mvc.ValidationException;
 
 namespace BetterCms.Module.Blog.Services
@@ -115,6 +115,19 @@ namespace BetterCms.Module.Blog.Services
         {
             failedResult = null;
 
+            if (string.IsNullOrWhiteSpace(blogML.ID))
+            {
+                failedResult = new BlogPostImportResult
+                {
+                    Title = blogML.Title,
+                    PageUrl = blogML.PostUrl,
+                    Success = false,
+                    ErrorMessage = BlogGlobalization.ImportBlogPosts_ImportingBlogPostIdIsNotSet_Message,
+                    Id = blogML.ID
+                };
+                return false;
+            }
+
             var validationContext = new ValidationContext(blogPostModel, null, null);
             var validationResults = new List<ValidationResult>();
             if (!Validator.TryValidateObject(blogPostModel, validationContext, validationResults, true)
@@ -125,7 +138,8 @@ namespace BetterCms.Module.Blog.Services
                         Title = blogML.Title,
                         PageUrl = blogML.PostUrl,
                         Success = false,
-                        ErrorMessage = validationResults[0].ErrorMessage
+                        ErrorMessage = validationResults[0].ErrorMessage,
+                        Id = blogML.ID
                     };
                 return false;
             }
@@ -141,8 +155,10 @@ namespace BetterCms.Module.Blog.Services
                     Title = blogML.Title,
                     PageUrl = blogML.PostUrl,
                     Success = false,
-                    ErrorMessage = exc.Message
+                    ErrorMessage = exc.Message,
+                    Id = blogML.ID
                 };
+                return false;
             }
 
             return true;
@@ -169,7 +185,8 @@ namespace BetterCms.Module.Blog.Services
                         {
                             Title = blogPostModel.Title,
                             PageUrl = blogPostModel.BlogUrl,
-                            Success = true
+                            Success = true,
+                            Id = blogML.ID
                         };
                     result.Add(blogPost);
                 }
@@ -239,7 +256,7 @@ namespace BetterCms.Module.Blog.Services
                                 {
                                     Title = blogPost.Title, 
                                     PageUrl = blogPost.PageUrl, 
-                                    Id = blogPost.Id, 
+                                    Id = blogPost.Id.ToString(), 
                                     Success = true
                                 };
                         createdBlogPosts.Add(blogPostResult);
@@ -263,7 +280,8 @@ namespace BetterCms.Module.Blog.Services
                                                  Title = blogML.Title,
                                                  PageUrl = blogML.PostUrl, 
                                                  Success = false,
-                                                 ErrorMessage = exc.Message
+                                                 ErrorMessage = exc.Message,
+                                                 Id = blogML.ID
                                              };
                         createdBlogPosts.Add(failedBlogPost);
 

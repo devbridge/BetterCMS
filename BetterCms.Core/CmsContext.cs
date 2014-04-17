@@ -239,6 +239,10 @@ namespace BetterCms.Core
                 {
                     HostingEnvironment.RegisterVirtualPathProvider(new EmbeddedResourcesVirtualPathProvider(container.Resolve<IEmbeddedResourcesProvider>()));
                 }
+                else
+                {
+                    throw new CmsException("Failed to register EmbeddedResourcesVirtualPathProvider as a virtual path provider.");
+                }
 
                 ControllerBuilder.Current.SetControllerFactory(container.Resolve<DefaultCmsControllerFactory>());
                 ViewEngines.Engines.Insert(0, new EmbeddedResourcesViewEngine());

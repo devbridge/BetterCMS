@@ -183,6 +183,7 @@
     <Compile Include="ViewModels\Blog\BlogPostViewModel.cs" />
     <Compile Include="ViewModels\Blog\BlogTemplateViewModel.cs" />
     <Compile Include="ViewModels\Blog\DefaultTemplateViewModel.cs" />
+    <Compile Include="ViewModels\Blog\UploadImportFileViewModel.cs" />
     <Compile Include="ViewModels\Blog\ImportBlogPostsViewModel.cs" />
     <Compile Include="ViewModels\Blog\RenderBlogPostViewModel.cs" />
     <Compile Include="ViewModels\Blog\SiteSettingBlogPostViewModel.cs" />
@@ -267,7 +268,7 @@
     <EmbeddedResource Include="Views\Blog\Partial\BlogsFilterTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\BlogImport\UploadImportFile.cshtml" />
+    <EmbeddedResource Include="ViewModels\BlogImport\UploadImportFile.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

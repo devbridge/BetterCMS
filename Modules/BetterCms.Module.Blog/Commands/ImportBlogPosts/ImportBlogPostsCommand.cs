@@ -1,4 +1,7 @@
-﻿using BetterCms.Core.Mvc.Commands;
+﻿using System.Collections.Generic;
+
+using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Root.Mvc;
@@ -16,10 +19,10 @@ namespace BetterCms.Module.Blog.Commands.ImportBlogPosts
 
         public ImportBlogPostsResponse Execute(ImportBlogPostsViewModel request)
         {
-            var blogs = importService.DeserializeXMLStream(request.FileStream);
-            var results = importService.ImportBlogs(blogs, Context.Principal, request.UseOriginalUrls, request.CreateRedirects);
+            //var blogs = importService.DeserializeXMLStream(request.FileStream);
+            //var results = importService.ImportBlogs(blogs, Context.Principal, request.UseOriginalUrls, request.CreateRedirects);
 
-            return new ImportBlogPostsResponse { Results = results };
+            return new ImportBlogPostsResponse { Results = new List<BlogPostImportResult>() };
         }
     }
 }

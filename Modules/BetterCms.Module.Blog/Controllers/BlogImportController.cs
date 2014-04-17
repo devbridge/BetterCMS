@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 
 using BetterCms.Core.Security;
-
+using BetterCms.Module.Blog.Commands.ImportBlogPosts;
 using BetterCms.Module.Blog.Commands.UploadBlogsImportFile;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Root;
@@ -27,7 +27,7 @@ namespace BetterCms.Module.Blog.Controllers
         [HttpGet]
         public ActionResult UploadImportFile()
         {
-            var model = new ImportBlogPostsViewModel();
+            var model = new UploadImportFileViewModel();
             var view = RenderView("UploadImportFile", model);
 
             return ComboWireJson(true, view, model, JsonRequestBehavior.AllowGet);
@@ -43,7 +43,7 @@ namespace BetterCms.Module.Blog.Controllers
         /// </returns>
         [BcmsAuthorize(RootModuleConstants.UserRoles.PublishContent)]
         [HttpPost]
-        public ActionResult UploadImportFile(HttpPostedFileBase uploadFile, ImportBlogPostsViewModel model)
+        public ActionResult UploadImportFile(HttpPostedFileBase uploadFile, UploadImportFileViewModel model)
         {
             if (ModelState.IsValid && uploadFile != null)
             {
@@ -55,6 +55,22 @@ namespace BetterCms.Module.Blog.Controllers
             }
 
             return WireJson(false);
+        }
+
+        /// <summary>
+        /// Starts the blog posts importer.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>
+        /// Import results in JSON format
+        /// </returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.PublishContent)]
+        [HttpPost]
+        public ActionResult StartImport(ImportBlogPostsViewModel model)
+        {
+            var response = GetCommand<ImportBlogPostsCommand>().ExecuteCommand(model);
+
+            return WireJson(response != null, response);
         }
     }
 }

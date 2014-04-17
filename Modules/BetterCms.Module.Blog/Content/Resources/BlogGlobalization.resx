@@ -363,4 +363,13 @@
   <data name="ImportBlogPosts_ImportResults_Total_Title" xml:space="preserve">
     <value>Total</value>
   </data>
+  <data name="ImportBlogPosts_ImportFileHasNoBlogs_Message" xml:space="preserve">
+    <value>Import file contains no blog posts.</value>
+  </data>
+  <data name="ImportBlogPosts_UploadButton_Title" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="ImportBlogPosts_ImportingBlogPostIdIsNotSet_Message" xml:space="preserve">
+    <value>The ID of importing blog post should be set.</value>
+  </data>
 </root>

@@ -457,6 +457,24 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Import file contains no blog posts..
+        /// </summary>
+        public static string ImportBlogPosts_ImportFileHasNoBlogs_Message {
+            get {
+                return ResourceManager.GetString("ImportBlogPosts_ImportFileHasNoBlogs_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The ID of importing blog post should be set..
+        /// </summary>
+        public static string ImportBlogPosts_ImportingBlogPostIdIsNotSet_Message {
+            get {
+                return ResourceManager.GetString("ImportBlogPosts_ImportingBlogPostIdIsNotSet_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Created.
         /// </summary>
         public static string ImportBlogPosts_ImportResults_Created_Title {
@@ -489,6 +507,15 @@ namespace BetterCms.Module.Blog.Content.Resources {
         public static string ImportBlogPosts_PleaseSelectAFile_message {
             get {
                 return ResourceManager.GetString("ImportBlogPosts_PleaseSelectAFile_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload.
+        /// </summary>
+        public static string ImportBlogPosts_UploadButton_Title {
+            get {
+                return ResourceManager.GetString("ImportBlogPosts_UploadButton_Title", resourceCulture);
             }
         }
         

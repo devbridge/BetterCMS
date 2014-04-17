@@ -30,7 +30,8 @@ namespace BetterCms.Module.Blog.Registration
                             new JavaScriptModuleLinkTo<OptionController>(this, "loadTemplatesUrl", c => c.Templates()),
                             new JavaScriptModuleLinkTo<OptionController>(this, "saveDefaultTemplateUrl", c => c.SaveDefaultTemplate("{0}", "{1}")),
                             new JavaScriptModuleLinkTo<BlogController>(this, "convertStringToSlugUrl", c => c.ConvertStringToSlug("{0}", "{1}")),
-                            new JavaScriptModuleLinkTo<BlogImportController>(this, "uploadBlogPostsImportFileUrl", c => c.UploadImportFile(null, null))
+                            new JavaScriptModuleLinkTo<BlogImportController>(this, "uploadBlogPostsImportFileUrl", c => c.UploadImportFile(null, null)),
+                            new JavaScriptModuleLinkTo<BlogImportController>(this, "startImportUrl", c => c.StartImport(null))
                         };
 
             Globalization = new IActionProjection[]
@@ -45,6 +46,7 @@ namespace BetterCms.Module.Blog.Registration
                             new JavaScriptModuleGlobalization(this, "datePickerTooltipTitle", () => BlogGlobalization.Date_Picker_Tooltip_Title),
                             new JavaScriptModuleGlobalization(this, "importBlogPostsTitle", () => BlogGlobalization.ImportBlogPosts_Dialog_Title),
                             new JavaScriptModuleGlobalization(this, "pleaseSelectAFile", () => BlogGlobalization.ImportBlogPosts_PleaseSelectAFile_message),
+                            new JavaScriptModuleGlobalization(this, "uploadButtonTitle", () => BlogGlobalization.ImportBlogPosts_UploadButton_Title),
                             new JavaScriptModuleGlobalization(this, "importButtonTitle", () => BlogGlobalization.ImportBlogPosts_ImportButton_Title),
                             new JavaScriptModuleGlobalization(this, "closeButtonTitle", () => RootGlobalization.Button_Close),
                         };

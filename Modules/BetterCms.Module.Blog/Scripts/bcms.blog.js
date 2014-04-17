@@ -49,7 +49,8 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             loadTemplatesUrl: null,
             saveDefaultTemplateUrl: null,
             convertStringToSlugUrl: null,
-            uploadBlogPostsImportFileUrl: null
+            uploadBlogPostsImportFileUrl: null,
+            startImportUrl: null,
         },
         globalization = {
             createNewPostDialogTitle: null,
@@ -63,6 +64,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             importBlogPostsTitle: null,
             closeButtonTitle: null,
             importButtonTitle: null,
+            uploadButtonTitle: null,
             multipleFilesWarningMessage: null,
             pleaseSelectAFile: null
         },
@@ -748,7 +750,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
 
         modal.open({
             title: globalization.importBlogPostsTitle,
-            acceptTitle: globalization.importButtonTitle,
+            acceptTitle: globalization.uploadButtonTitle,
             cancelTitle: globalization.closeButtonTitle,
             onLoad: function (dialog) {
                 dynamicContent.bindDialog(dialog, links.uploadBlogPostsImportFileUrl, {
@@ -786,7 +788,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
 
                                 if (json.Success) {
                                     importModel.done(true);
-                                    importModel.dialog.disableAcceptButton();
+                                    importModel.dialog.model.buttons()[0].title(globalization.importButtonTitle);
 
                                     if (json.Data && $.isArray(json.Data.Results)) {
                                         total = json.Data.Results.length;
@@ -797,7 +799,14 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                                                 id: item.Id,
                                                 title: item.Title || '&nbsp;',
                                                 url: item.PageUrl,
-                                                errorMessage: item.ErrorMessage
+                                                errorMessage: item.ErrorMessage,
+                                                toJson: function() {
+                                                    return {
+                                                        Id: this.id,
+                                                        Title: this.title,
+                                                        PageUrl: this.url
+                                                    };
+                                                }
                                             });
                                             if (item.Success === true) {
                                                 created ++;
@@ -818,15 +827,56 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 });
             },
             onAcceptClick: function () {
+                var params,
+                    onImportComplete = function (json) {
+                        form.hideLoading();
+                        messages.refreshBox(form, json);
+
+                        if (json.Success == true) {
+                            console.log(json.Data);
+                        }
+                    };
+
                 form.showLoading();
-                if (!importModel.fileName()) {
-                    importModel.messageBox.clearMessages();
-                    importModel.messageBox.addErrorMessage(globalization.pleaseSelectAFile);
-                } else {
-                    if (!importModel.started) {
-                        importModel.started = true;
-                        importModel.form.submit();
+                if (!importModel.done()) {
+                    // Upload file
+                    if (!importModel.fileName()) {
+                        importModel.messageBox.clearMessages();
+                        importModel.messageBox.addErrorMessage(globalization.pleaseSelectAFile);
+                    } else {
+                        if (!importModel.started) {
+                            importModel.started = true;
+                            importModel.form.submit();
+                        }
                     }
+                } else {
+                    params = {
+                        BlogPosts: [],
+                        UseOriginalUrls: importModel.useOriginalIds(),
+                        CreateRedirects: importModel.createRedirects()
+                    };
+
+                    // Start import
+                    for (i = 0; i < importModel.results().length; i ++) {
+                        item = importModel.results()[i];
+                        if (item.success && item.id) {
+                            params.BlogPosts.push(item.toJson());
+                        }
+                    }
+
+                    $.ajax({
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        cache: false,
+                        url: links.startImportUrl,
+                        data: JSON.stringify(params)
+                    })
+                        .done(function (result) {
+                            onImportComplete(result);
+                        })
+                        .fail(function (response) {
+                            onImportComplete(bcms.parseFailedResponse(response));
+                        });
                 }
             }
         });

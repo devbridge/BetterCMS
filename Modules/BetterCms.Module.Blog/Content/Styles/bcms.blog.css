@@ -227,41 +227,11 @@ div.bcms-btn-blog-add {
     }
 
 /* Import blog posts */
-.bcms-imported-blogs-holder .bcms-import-block:first-child {
-    border-top: 1px solid #e3e3e3;
-}
-
-.bcms-import-block {
-    height: 39px;
-    background-color: #eff9fd;
-    border-style: none solid solid solid;
-    border-width: 1px;
-    border-color: #e3e3e3;
-    overflow: hidden;
-}
-
-    .bcms-import-block > div {
-        float: left;
-    }
-
-.bcms-import-blog-titles {
-    width: 380px;
-    padding: 0 15px;
-    line-height: 39px;
-    font-size: 12px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-div.bcms-import-failed {
+.bcms-import-failed {
     background-color: #fcecec;
 }
 
-    div.bcms-import-failed .bcms-import-description {
+    .bcms-import-failed .bcms-import-error {
         color: #d9000d;
+        font-size: 12px;
     }
-
-div.bcms-import-success {
-    background-color: #e8fae5;
-}

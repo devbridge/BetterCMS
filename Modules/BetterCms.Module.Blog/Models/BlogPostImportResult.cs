@@ -1,12 +1,10 @@
-﻿using System;
-
-namespace BetterCms.Module.Blog.Models
+﻿namespace BetterCms.Module.Blog.Models
 {
     public class BlogPostImportResult
     {
         public bool Success { get; set; }
 
-        public Guid? Id { get; set; }
+        public string Id { get; set; }
 
         public string Title { get; set; }
         
