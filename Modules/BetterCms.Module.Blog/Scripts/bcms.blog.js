@@ -742,6 +742,39 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         }
     }
 
+    /**
+    * Updates import results
+    */
+    function updateResults(importModel, results) {
+        var created = 0,
+            total, i, item;
+
+        total = results.length;
+        for (i = 0; i < results.length; i++) {
+            item = results[i];
+            importModel.results.push({
+                success: item.Success === true,
+                id: item.Id,
+                title: item.Title || '&nbsp;',
+                url: item.PageUrl,
+                errorMessage: item.ErrorMessage,
+                toJson: function () {
+                    return {
+                        Id: this.id,
+                        Title: this.title,
+                        PageUrl: this.url
+                    };
+                }
+            });
+            if (item.Success === true) {
+                created++;
+            }
+        }
+        importModel.failed(total - created);
+        importModel.total(total);
+        importModel.created(created);
+    }
+
     /*
     * Opens form for importing blog posts XML
     */
@@ -765,19 +798,19 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                             messageBox: messages.box({ container: form }),
                             form: form,
                             results: ko.observableArray(),
-                            done: ko.observable(false),
+                            uploaded: ko.observable(false),
+                            finished: ko.observable(false),
                             total: ko.observable(0),
                             created: ko.observable(0),
                             failed: ko.observable(0),
-                            dialog: dialog
+                            dialog: dialog,
+                            fileId: ''
                         };
 
                         iframe.on('load', function () {
                             importModel.started = false;
                             form.hideLoading();
-                            var result = iframe.contents().text(),
-                                created = 0,
-                                total;
+                            var result = iframe.contents().text();
                             if (!result) {
                                 return;
                             }
@@ -787,34 +820,12 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                                 messages.refreshBox(form, json);
 
                                 if (json.Success) {
-                                    importModel.done(true);
+                                    importModel.uploaded(true);
                                     importModel.dialog.model.buttons()[0].title(globalization.importButtonTitle);
 
                                     if (json.Data && $.isArray(json.Data.Results)) {
-                                        total = json.Data.Results.length;
-                                        for (i = 0; i < json.Data.Results.length; i ++) {
-                                            item = json.Data.Results[i];
-                                            importModel.results.push({
-                                                success: item.Success === true,
-                                                id: item.Id,
-                                                title: item.Title || '&nbsp;',
-                                                url: item.PageUrl,
-                                                errorMessage: item.ErrorMessage,
-                                                toJson: function() {
-                                                    return {
-                                                        Id: this.id,
-                                                        Title: this.title,
-                                                        PageUrl: this.url
-                                                    };
-                                                }
-                                            });
-                                            if (item.Success === true) {
-                                                created ++;
-                                            }
-                                        }
-                                        importModel.failed(total - created);
-                                        importModel.total(total);
-                                        importModel.created(created);
+                                        updateResults(importModel, json.Data.Results);
+                                        importModel.fileId = json.Data.FileId;
                                     }
                                 }
                             } catch (exc) {
@@ -833,12 +844,15 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                         messages.refreshBox(form, json);
 
                         if (json.Success == true) {
-                            console.log(json.Data);
+                            importModel.finished(true);
+                            importModel.results.removeAll();
+                            importModel.dialog.model.buttons()[0].disabled(true);
+                            updateResults(importModel, json.Data.Results);
                         }
                     };
 
                 form.showLoading();
-                if (!importModel.done()) {
+                if (!importModel.uploaded()) {
                     // Upload file
                     if (!importModel.fileName()) {
                         importModel.messageBox.clearMessages();
@@ -852,8 +866,8 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 } else {
                     params = {
                         BlogPosts: [],
-                        UseOriginalUrls: importModel.useOriginalIds(),
-                        CreateRedirects: importModel.createRedirects()
+                        CreateRedirects: importModel.createRedirects(),
+                        FileId: importModel.fileId
                     };
 
                     // Start import

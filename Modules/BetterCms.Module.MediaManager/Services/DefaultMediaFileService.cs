@@ -93,18 +93,6 @@ namespace BetterCms.Module.MediaManager.Services
             {
                 if (file.IsUploaded.HasValue && file.IsUploaded.Value)
                 {
-                    /*Task removeFile = 
-                            new Task(() =>
-                            {
-                                storageService.RemoveObject(file.FileUri);
-                            })
-                            .ContinueWith(task =>
-                            {
-                                storageService.RemoveFolder(file.FileUri);
-                            });
-
-                    removeFile.Start();*/
-
                     Task.Factory
                         .StartNew(() => {})
                         .ContinueWith(task =>

@@ -430,6 +430,24 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to retrieve blog posts import file from storage..
+        /// </summary>
+        public static string ImportBlogPosts_FailedToRetrieveFileFileStorage_Message {
+            get {
+                return ResourceManager.GetString("ImportBlogPosts_FailedToRetrieveFileFileStorage_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to save blog posts import file to storage..
+        /// </summary>
+        public static string ImportBlogPosts_FailedToSaveFileToStorage_Message {
+            get {
+                return ResourceManager.GetString("ImportBlogPosts_FailedToSaveFileToStorage_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Upload XML file from computer.
         /// </summary>
         public static string ImportBlogPosts_File_ButtonTitle {

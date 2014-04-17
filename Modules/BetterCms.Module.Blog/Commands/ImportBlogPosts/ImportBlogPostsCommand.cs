@@ -1,10 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
-using BetterCms.Module.Blog.Models;
+using BetterCms.Core.Services.Storage;
+using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Root.Mvc;
+
+using BlogML.Xml;
 
 namespace BetterCms.Module.Blog.Commands.ImportBlogPosts
 {
@@ -12,17 +18,32 @@ namespace BetterCms.Module.Blog.Commands.ImportBlogPosts
     {
         private readonly IBlogMLService importService;
 
-        public ImportBlogPostsCommand(IBlogMLService importService)
+        private readonly IStorageService storageService;
+
+        public ImportBlogPostsCommand(IBlogMLService importService, IStorageService storageService)
         {
             this.importService = importService;
+            this.storageService = storageService;
         }
 
         public ImportBlogPostsResponse Execute(ImportBlogPostsViewModel request)
         {
-            //var blogs = importService.DeserializeXMLStream(request.FileStream);
-            //var results = importService.ImportBlogs(blogs, Context.Principal, request.UseOriginalUrls, request.CreateRedirects);
+            var fileUri = importService.ConstructFilePath(request.FileId);
+            DownloadResponse downloadResponse;
+            try
+            {
+                downloadResponse = storageService.DownloadObject(fileUri);
+            }
+            catch (Exception exc)
+            {
+                throw new ValidationException(() => BlogGlobalization.ImportBlogPosts_FailedToRetrieveFileFileStorage_Message,
+                    "Failed to retrieve blog posts import file from storage.", exc);
+            }
 
-            return new ImportBlogPostsResponse { Results = new List<BlogPostImportResult>() };
+            var blogs = importService.DeserializeXMLStream(downloadResponse.ResponseStream);
+            var results = importService.ImportBlogs(blogs, request.BlogPosts, Context.Principal, request.CreateRedirects);
+
+            return new ImportBlogPostsResponse { Results = results };
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Security.Principal;
 
@@ -16,6 +17,8 @@ namespace BetterCms.Module.Blog.Services
 
         List<BlogPostImportResult> ValidateImport(BlogMLBlog blogPosts, bool useOriginalUrls = false);
 
-        List<BlogPostImportResult> ImportBlogs(BlogMLBlog blogPosts, IPrincipal principal, bool useOriginalUrls = false, bool createRedirects = false);
+        List<BlogPostImportResult> ImportBlogs(BlogMLBlog blogPosts, List<BlogPostImportResult> modifications, IPrincipal principal, bool createRedirects);
+
+        Uri ConstructFilePath(Guid guid);
     }
 }

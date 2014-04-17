@@ -235,3 +235,7 @@ div.bcms-btn-blog-add {
         color: #d9000d;
         font-size: 12px;
     }
+    
+.bcms-import-success {
+    background-color: #e8fae5;
+}

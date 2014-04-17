@@ -1,0 +1,95 @@
+﻿@using BetterCms.Module.Blog.Content.Resources
+@using BetterCms.Module.Blog.Controllers
+@using BetterCms.Module.Root.Mvc.Helpers
+
+@using Microsoft.Web.Mvc
+
+@model BetterCms.Module.Blog.ViewModels.Blog.UploadImportFileViewModel
+
+<div class="bcms-scroll-window">
+    @Html.TabbedContentMessagesBox()
+
+
+    @using (Html.BeginForm<BlogImportController>(c => c.UploadImportFile(), FormMethod.Post, new { @enctype = "multipart/form-data", @id = "bcms-import-blog-posts", @target = "bcms-import-form-target", }))
+    {
+        <div class="bcms-padded-content">
+
+            <div class="bcms-input-list-holder">
+                <!-- ko ifnot: uploaded() -->
+                <div id="bcms-files-dropzone" class="bcms-dropzone">
+                    <div class="bcms-dropzone-infotext">@BlogGlobalization.ImportBlogPosts_File_Description</div>
+                    <div class="bcms-btn-upload-files">
+                        <label for="uploadFile" class="bcms-btn-upload-files-text" data-bind="text: fileName() || '@BlogGlobalization.ImportBlogPosts_File_ButtonTitle'"></label>
+                        <input type="file" name="uploadFile" id="uploadFile" style="position: absolute; left: -999em; top: -999em;" data-bind="value: fileName" />
+                    </div>
+                </div>
+                <iframe id="bcms-import-form-target" name="bcms-import-form-target" style="position: absolute; left: -999em; top: -999em;"></iframe>
+
+                <div class="bcms-edit-check-field">
+                    @Html.CheckBoxFor(model => model.UseOriginalUrls, new { data_bind = "checked: useOriginalIds" })
+                    <div class="bcms-edit-label">@Html.Raw(BlogGlobalization.ImportBlogPosts_UseOriginalUrls_Title)</div>
+                </div>
+                <!-- /ko -->
+
+                <!-- ko if: !finished() && uploaded() && !useOriginalIds()  -->
+                <div class="bcms-edit-check-field">
+                    <input type="checkbox" data-bind="checked: createRedirects" />
+                    <div class="bcms-edit-label">@Html.Raw(BlogGlobalization.ImportBlogPosts_CreateRedirects_Title)</div>
+                </div>
+                <!-- /ko -->
+            </div>
+
+            <!-- ko if: uploaded() -->
+            <div class="bcms-add-language-button">
+                @BlogGlobalization.ImportBlogPosts_ImportResults_Total_Title: <span data-bind="text: total()"></span>
+                @BlogGlobalization.ImportBlogPosts_ImportResults_Created_Title: <span data-bind="text: created()"></span>
+                @BlogGlobalization.ImportBlogPosts_ImportResults_Failed_Title: <span data-bind="text: failed()"></span>
+            </div>
+            <!-- /ko -->
+
+        </div>
+
+        <!-- ko if: uploaded() -->
+        <table class="bcms-tables">
+            <thead>
+                <tr>
+                    <th class="bcms-tables-nohover">&nbsp;</th>
+                    <th class="bcms-tables-nohover">Title</th>
+                    <th class="bcms-tables-nohover">Url</th>
+                    <th class="bcms-tables-nohover">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- ko foreach: results() -->
+                <tr data-bind="css: {'bcms-import-failed' : !success, 'bcms-import-success': success && $parent.finished()}">
+                    <td class="bcms-tables-nohover">
+                        <input type="checkbox" data-bind="visible: success && !$parent.finished(), checked: success" />
+                    </td>
+                    <td class="bcms-tables-nohover" data-bind="html: title, attr: {title: title}"></td>
+                    <td class="bcms-tables-nohover">
+                        <!-- ko if: success && !$parent.finished() -->
+                        <span data-bind="text: url, attr: {title: url}"></span>
+                        <!-- /ko -->
+                        <!-- ko if: success && $parent.finished() -->
+                        <a data-bind="text: url, attr: {title: url, href: url}" target="_blank"></a>
+                        <!-- /ko -->
+                        <!-- ko if: !success -->
+                        <span class="bcms-import-error" data-bind="text: errorMessage, attr: {title: errorMessage}"></span>
+                        <!-- /ko -->
+                    </td>
+                    <td class="bcms-tables-nohover">&nbsp;</td>
+                </tr>
+                <!-- /ko -->
+                <!-- ko if: results().length == 0 -->
+                <tr>
+                    <td colspan="4">
+                        <span class="bcms-table-no-data">@BlogGlobalization.ImportBlogPosts_ImportFileHasNoBlogs_Message</span>
+                    </td>
+                </tr>
+                <!-- /ko -->
+            </tbody>
+        </table>
+        <!-- /ko -->
+    }
+
+</div>

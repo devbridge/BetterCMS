@@ -268,7 +268,7 @@
     <EmbeddedResource Include="Views\Blog\Partial\BlogsFilterTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ViewModels\BlogImport\UploadImportFile.cshtml" />
+    <EmbeddedResource Include="Views\BlogImport\UploadImportFile.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

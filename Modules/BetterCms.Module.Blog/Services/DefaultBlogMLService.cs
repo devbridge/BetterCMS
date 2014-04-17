@@ -4,10 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Security.Principal;
+using System.Web;
 
+using BetterCms.Configuration;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Web;
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.ViewModels.Blog;
@@ -18,6 +21,8 @@ using BetterCms.Module.Root.Mvc;
 using BlogML.Xml;
 
 using Common.Logging;
+
+using NHibernate.Util;
 
 using ValidationException = BetterCms.Core.Exceptions.Mvc.ValidationException;
 
@@ -39,8 +44,13 @@ namespace BetterCms.Module.Blog.Services
         
         private readonly IRedirectService redirectService;
 
+        private readonly ICmsConfiguration cmsConfiguration;
+
+        private readonly IHttpContextAccessor httpContextAccessor;
+
         public DefaultBlogMLService(IRepository repository, IUrlService urlService, IBlogService blogService,
-            IUnitOfWork unitOfWork, IRedirectService redirectService, IPageService pageService)
+            IUnitOfWork unitOfWork, IRedirectService redirectService, IPageService pageService, ICmsConfiguration cmsConfiguration,
+            IHttpContextAccessor httpContextAccessor)
         {
             this.repository = repository;
             this.urlService = urlService;
@@ -48,6 +58,8 @@ namespace BetterCms.Module.Blog.Services
             this.pageService = pageService;
             this.unitOfWork = unitOfWork;
             this.redirectService = redirectService;
+            this.cmsConfiguration = cmsConfiguration;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         public BlogMLBlog DeserializeXMLFile(string filePath)
@@ -87,7 +99,7 @@ namespace BetterCms.Module.Blog.Services
             return blogPosts;
         }
 
-        private BlogPostViewModel MapViewModel(BlogMLPost blogML, bool useOriginalUrls)
+        private BlogPostViewModel MapViewModel(BlogMLPost blogML, bool useOriginalUrls, BlogPostImportResult modification = null)
         {
             var model = new BlogPostViewModel
                     {
@@ -99,7 +111,12 @@ namespace BetterCms.Module.Blog.Services
                         Content = blogML.Content != null ? blogML.Content.UncodedText : null
                     };
 
-            if (useOriginalUrls)
+            if (modification != null)
+            {
+                model.BlogUrl = modification.PageUrl;
+                model.Title = modification.Title;
+            }
+            else if (useOriginalUrls)
             {
                 model.BlogUrl = FixUrl(blogML.PostUrl);
             }
@@ -195,18 +212,29 @@ namespace BetterCms.Module.Blog.Services
             return result;
         }
 
-        public List<BlogPostImportResult> ImportBlogs(BlogMLBlog blogPosts, IPrincipal principal, bool useOriginalUrls = false, bool createRedirects = false)
+        public List<BlogPostImportResult> ImportBlogs(BlogMLBlog blogPosts, List<BlogPostImportResult> modifications, 
+            IPrincipal principal, bool createRedirects = false)
         {
             List<BlogPostImportResult> createdBlogPosts = null;
             if (blogPosts != null)
             {
+                var blogs = new List<BlogMLPost>();
+                foreach (var blogML in blogPosts.Posts)
+                {
+                    var requestBlogPost = modifications.FirstOrDefault(rb => rb.Id == blogML.ID);
+                    if (requestBlogPost != null)
+                    {
+                        blogs.Add(blogML);
+                    }
+                }
+
                 // Import authors and categories
                 unitOfWork.BeginTransaction();
 
                 var createdCategories = new List<Category>();
                 var createdAuthors = new List<Author>();
-                var authors = ImportAuthors(blogPosts.Authors, createdAuthors);
-                var categories = ImportCategories(blogPosts.Categories, createdCategories);
+                var authors = ImportAuthors(blogPosts.Authors, createdAuthors, blogs);
+                var categories = ImportCategories(blogPosts.Categories, createdCategories, blogs);
 
                 unitOfWork.Commit();
 
@@ -215,24 +243,24 @@ namespace BetterCms.Module.Blog.Services
                 createdAuthors.ForEach(a => Events.BlogEvents.Instance.OnAuthorCreated(a));
 
                 // Import blog posts
-                createdBlogPosts = ImportBlogPosts(principal, authors, categories, blogPosts.Posts, useOriginalUrls, createRedirects);
+                createdBlogPosts = ImportBlogPosts(principal, authors, categories, blogs, modifications, createRedirects);
             }
 
             return createdBlogPosts ?? new List<BlogPostImportResult>();
         }
 
         private List<BlogPostImportResult> ImportBlogPosts(IPrincipal principal, IDictionary<string, Guid> authors, IDictionary<string, Guid> categories,
-            BlogMLBlog.PostCollection blogsML, bool useOriginalUrls = false, bool createRedirects = false)
+            List<BlogMLPost> blogs, List<BlogPostImportResult> modifications, bool createRedirects = false)
         {
             var createdBlogPosts = new List<BlogPostImportResult>();
-            if (blogsML != null)
+            if (blogs != null)
             {
-                foreach (var blogML in blogsML)
+                foreach (var blogML in blogs)
                 {
                     try
                     {
                         var oldUrl = FixUrl(blogML.PostUrl);
-                        var blogPostModel = MapViewModel(blogML, useOriginalUrls);
+                        var blogPostModel = MapViewModel(blogML, true, modifications.First(m => m.Id == blogML.ID));
 
                         BlogPostImportResult blogPostResult;
                         if (!ValidateModel(blogPostModel, blogML, out blogPostResult))
@@ -261,7 +289,7 @@ namespace BetterCms.Module.Blog.Services
                                 };
                         createdBlogPosts.Add(blogPostResult);
 
-                        if (!useOriginalUrls && createRedirects && oldUrl != blogPostModel.BlogUrl)
+                        if (createRedirects && oldUrl != blogPostModel.BlogUrl)
                         {
                             var redirect = redirectService.GetPageRedirect(oldUrl);
                             if (redirect == null)
@@ -307,13 +335,18 @@ namespace BetterCms.Module.Blog.Services
             return url;
         }
 
-        private IDictionary<string, Guid> ImportAuthors(BlogMLBlog.AuthorCollection authors, IList<Author> createdAuthors)
+        private IDictionary<string, Guid> ImportAuthors(BlogMLBlog.AuthorCollection authors, IList<Author> createdAuthors, List<BlogMLPost> blogs)
         {
             var dictionary = new Dictionary<string, Guid>();
             if (authors != null)
             {
                 foreach (var authorML in authors)
                 {
+                    if (!blogs.Any(b => b.Authors != null && b.Authors.Cast<BlogMLAuthorReference>().Any(c => c.Ref == authorML.ID)))
+                    {
+                        continue;
+                    }
+
                     var id = repository
                         .AsQueryable<Author>()
                         .Where(a => a.Name == authorML.Title)
@@ -337,13 +370,18 @@ namespace BetterCms.Module.Blog.Services
             return dictionary;
         }
 
-        private IDictionary<string, Guid> ImportCategories(BlogMLBlog.CategoryCollection categories, IList<Category> createdCategories)
+        private IDictionary<string, Guid> ImportCategories(BlogMLBlog.CategoryCollection categories, IList<Category> createdCategories, List<BlogMLPost> blogs)
         {
             var dictionary = new Dictionary<string, Guid>();
             if (categories != null)
             {
                 foreach (var categoryML in categories)
                 {
+                    if (!blogs.Any(b => b.Categories != null && b.Categories.Cast<BlogMLCategoryReference>().Any(c => c.Ref == categoryML.ID)))
+                    {
+                        continue;
+                    }
+
                     var id = repository
                         .AsQueryable<Category>()
                         .Where(a => a.Name == categoryML.Title)
@@ -365,6 +403,23 @@ namespace BetterCms.Module.Blog.Services
             }
 
             return dictionary;
+        }
+
+        public Uri ConstructFilePath(Guid guid)
+        {
+            var contentRoot = cmsConfiguration.Storage.ContentRoot;
+
+            return new Uri(Path.Combine(GetContentRoot(contentRoot), "import", guid.ToString().Replace("-", string.Empty).ToLower(), "blog-posts.xml"));
+        }
+
+        private string GetContentRoot(string rootPath)
+        {
+            if (cmsConfiguration.Storage.ServiceType == StorageServiceType.FileSystem && VirtualPathUtility.IsAppRelative(rootPath))
+            {
+                return httpContextAccessor.MapPath(rootPath);
+            }
+
+            return rootPath;
         }
     }
 }
