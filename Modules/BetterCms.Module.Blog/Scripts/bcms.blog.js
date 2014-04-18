@@ -66,7 +66,9 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             importButtonTitle: null,
             uploadButtonTitle: null,
             multipleFilesWarningMessage: null,
-            pleaseSelectAFile: null
+            pleaseSelectAFile: null,
+            blogImportUrlFormattingTypeUseOriginal: null,
+            blogImportUrlFormattingTypeFromTitle: null
         },
         classes = {
             inactive: 'bcms-inactive'
@@ -354,7 +356,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         });
 
         container.find(selectors.siteSettingsBlogImportButton).on('click', function () {
-            openImportBlogPostsForm();
+            openImportBlogPostsForm(container, form);
         });
 
         initializeSiteSettingsBlogsListItems(container);
@@ -746,10 +748,8 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
     * Updates import results
     */
     function updateResults(importModel, results) {
-        var created = 0,
-            total, i, item;
+        var i, item;
 
-        total = results.length;
         for (i = 0; i < results.length; i++) {
             item = results[i];
             importModel.results.push({
@@ -766,19 +766,13 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                     };
                 }
             });
-            if (item.Success === true) {
-                created++;
-            }
         }
-        importModel.failed(total - created);
-        importModel.total(total);
-        importModel.created(created);
     }
 
     /*
     * Opens form for importing blog posts XML
     */
-    function openImportBlogPostsForm() {
+    function openImportBlogPostsForm(parentContainer, parentForm) {
         var importModel, i, item, form;
 
         modal.open({
@@ -800,11 +794,11 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                             results: ko.observableArray(),
                             uploaded: ko.observable(false),
                             finished: ko.observable(false),
-                            total: ko.observable(0),
-                            created: ko.observable(0),
-                            failed: ko.observable(0),
                             dialog: dialog,
-                            fileId: ''
+                            fileId: '',
+                            urlFormattingTypes: [
+                                { id: 'false', value: globalization.blogImportUrlFormattingTypeFromTitle },
+                                { id: 'true', value: globalization.blogImportUrlFormattingTypeUseOriginal }]
                         };
 
                         iframe.on('load', function () {
@@ -851,7 +845,6 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                         }
                     };
 
-                form.showLoading();
                 if (!importModel.uploaded()) {
                     // Upload file
                     if (!importModel.fileName()) {
@@ -859,6 +852,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                         importModel.messageBox.addErrorMessage(globalization.pleaseSelectAFile);
                     } else {
                         if (!importModel.started) {
+                            form.showLoading();
                             importModel.started = true;
                             importModel.form.submit();
                         }
@@ -891,6 +885,11 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                         .fail(function (response) {
                             onImportComplete(bcms.parseFailedResponse(response));
                         });
+                }
+            },
+            onCloseClick: function () {
+                if (importModel.finished()) {
+                    searchSiteSettingsBlogs(parentContainer, parentForm);
                 }
             }
         });

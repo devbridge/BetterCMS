@@ -22,6 +22,7 @@ using BlogML.Xml;
 
 using Common.Logging;
 
+using NHibernate.Hql.Ast.ANTLR.Tree;
 using NHibernate.Util;
 
 using ValidationException = BetterCms.Core.Exceptions.Mvc.ValidationException;
@@ -118,7 +119,7 @@ namespace BetterCms.Module.Blog.Services
             }
             else if (useOriginalUrls)
             {
-                model.BlogUrl = FixUrl(blogML.PostUrl);
+                model.BlogUrl = blogService.CreateBlogPermalink(FixUrl(blogML.PostUrl));
             }
             else
             {
@@ -407,9 +408,10 @@ namespace BetterCms.Module.Blog.Services
 
         public Uri ConstructFilePath(Guid guid)
         {
-            var contentRoot = cmsConfiguration.Storage.ContentRoot;
+            var contentRoot = GetContentRoot(cmsConfiguration.Storage.ContentRoot);
+            var folderId = guid.ToString().Replace("-", string.Empty).ToLower();
 
-            return new Uri(Path.Combine(GetContentRoot(contentRoot), "import", guid.ToString().Replace("-", string.Empty).ToLower(), "blog-posts.xml"));
+            return new Uri(Path.Combine(contentRoot, "import", folderId, "blog-posts.xml"));
         }
 
         private string GetContentRoot(string rootPath)

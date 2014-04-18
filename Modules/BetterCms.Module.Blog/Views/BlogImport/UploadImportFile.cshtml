@@ -15,6 +15,13 @@
         <div class="bcms-padded-content">
 
             <div class="bcms-input-list-holder">
+
+                <!-- ko if: uploaded() && !finished() -->
+                <h2>@BlogGlobalization.ImportBlogPosts_PleaseSelectPostsToImport_Message</h2>
+                <!-- /ko -->
+                <!-- ko if: finished() -->
+                <h2 style="color: green;">@BlogGlobalization.ImportBlogPosts_ImportCompletedSuccessfully_Message</h2>
+                <!-- /ko -->
                 <!-- ko ifnot: uploaded() -->
                 <div id="bcms-files-dropzone" class="bcms-dropzone">
                     <div class="bcms-dropzone-infotext">@BlogGlobalization.ImportBlogPosts_File_Description</div>
@@ -25,27 +32,23 @@
                 </div>
                 <iframe id="bcms-import-form-target" name="bcms-import-form-target" style="position: absolute; left: -999em; top: -999em;"></iframe>
 
-                <div class="bcms-edit-check-field">
-                    @Html.CheckBoxFor(model => model.UseOriginalUrls, new { data_bind = "checked: useOriginalIds" })
-                    <div class="bcms-edit-label">@Html.Raw(BlogGlobalization.ImportBlogPosts_UseOriginalUrls_Title)</div>
-                </div>
-                <!-- /ko -->
+                <div class="bcms-input-list-holder">
+                    <div class="bcms-content-titles">@BlogGlobalization.ImportBlogPosts_UseOriginalUrls_Title</div>
 
-                <!-- ko if: !finished() && uploaded() && !useOriginalIds()  -->
-                <div class="bcms-edit-check-field">
-                    <input type="checkbox" data-bind="checked: createRedirects" />
-                    <div class="bcms-edit-label">@Html.Raw(BlogGlobalization.ImportBlogPosts_CreateRedirects_Title)</div>
+                    <div class="bcms-input-box">
+                        <select name="UseOriginalUrls" class="bcms-global-select" data-bind="options: urlFormattingTypes, optionsText: 'value', optionsValue: 'id', value: useOriginalIds"></select>
+                    </div>
+                </div>
+
+
+                <div class="bcms-input-list-holder">
+                    <div class="bcms-edit-check-field">
+                        <input type="checkbox" data-bind="checked: createRedirects" />
+                        <div class="bcms-edit-label">@Html.Raw(BlogGlobalization.ImportBlogPosts_CreateRedirects_Title)</div>
+                    </div>
                 </div>
                 <!-- /ko -->
             </div>
-
-            <!-- ko if: uploaded() -->
-            <div class="bcms-add-language-button">
-                @BlogGlobalization.ImportBlogPosts_ImportResults_Total_Title: <span data-bind="text: total()"></span>
-                @BlogGlobalization.ImportBlogPosts_ImportResults_Created_Title: <span data-bind="text: created()"></span>
-                @BlogGlobalization.ImportBlogPosts_ImportResults_Failed_Title: <span data-bind="text: failed()"></span>
-            </div>
-            <!-- /ko -->
 
         </div>
 
@@ -54,8 +57,8 @@
             <thead>
                 <tr>
                     <th class="bcms-tables-nohover">&nbsp;</th>
-                    <th class="bcms-tables-nohover">Title</th>
-                    <th class="bcms-tables-nohover">Url</th>
+                    <th class="bcms-tables-nohover">@BlogGlobalization.ImportBlogPosts_Results_Title_Title</th>
+                    <th class="bcms-tables-nohover">@BlogGlobalization.ImportBlogPosts_Results_Url_Title</th>
                     <th class="bcms-tables-nohover">&nbsp;</th>
                 </tr>
             </thead>

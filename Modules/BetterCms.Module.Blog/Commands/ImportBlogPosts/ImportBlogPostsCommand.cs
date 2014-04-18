@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Module.Blog.Content.Resources;
+using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Root.Mvc;
 
-using BlogML.Xml;
+using Common.Logging;
 
 namespace BetterCms.Module.Blog.Commands.ImportBlogPosts
 {
@@ -40,8 +41,41 @@ namespace BetterCms.Module.Blog.Commands.ImportBlogPosts
                     "Failed to retrieve blog posts import file from storage.", exc);
             }
 
-            var blogs = importService.DeserializeXMLStream(downloadResponse.ResponseStream);
-            var results = importService.ImportBlogs(blogs, request.BlogPosts, Context.Principal, request.CreateRedirects);
+            List<BlogPostImportResult> results;
+            if (request.BlogPosts != null && request.BlogPosts.Count > 0)
+            {
+                var blogs = importService.DeserializeXMLStream(downloadResponse.ResponseStream);
+                results = importService.ImportBlogs(blogs, request.BlogPosts, Context.Principal, request.CreateRedirects);
+            }
+            else
+            {
+                results = new List<BlogPostImportResult>();
+            }
+
+            Task.Factory
+                    .StartNew(() => { })
+                    .ContinueWith(task =>
+                    {
+                        try
+                        {
+                            storageService.RemoveObject(fileUri);
+                        }
+                        catch (Exception exc)
+                        {
+                            LogManager.GetCurrentClassLogger().Error("Failed to delete blog posts import file.", exc);
+                        }
+                    })
+                    .ContinueWith(task =>
+                    {
+                        try
+                        {
+                            storageService.RemoveFolder(fileUri);
+                        }
+                        catch (Exception exc)
+                        {
+                            LogManager.GetCurrentClassLogger().Error("Failed to delete blog posts import folder.", exc);
+                        }
+                    });
 
             return new ImportBlogPostsResponse { Results = results };
         }

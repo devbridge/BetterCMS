@@ -448,7 +448,7 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload XML file from computer.
+        ///   Looks up a localized string similar to Select XML file.
         /// </summary>
         public static string ImportBlogPosts_File_ButtonTitle {
             get {
@@ -457,7 +457,7 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File to be imported in blog ML format.
+        ///   Looks up a localized string similar to File to be imported in the Blog ML format.
         /// </summary>
         public static string ImportBlogPosts_File_Description {
             get {
@@ -471,6 +471,15 @@ namespace BetterCms.Module.Blog.Content.Resources {
         public static string ImportBlogPosts_ImportButton_Title {
             get {
                 return ResourceManager.GetString("ImportBlogPosts_ImportButton_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import completed successfully.
+        /// </summary>
+        public static string ImportBlogPosts_ImportCompletedSuccessfully_Message {
+            get {
+                return ResourceManager.GetString("ImportBlogPosts_ImportCompletedSuccessfully_Message", resourceCulture);
             }
         }
         
@@ -493,33 +502,6 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Created.
-        /// </summary>
-        public static string ImportBlogPosts_ImportResults_Created_Title {
-            get {
-                return ResourceManager.GetString("ImportBlogPosts_ImportResults_Created_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed.
-        /// </summary>
-        public static string ImportBlogPosts_ImportResults_Failed_Title {
-            get {
-                return ResourceManager.GetString("ImportBlogPosts_ImportResults_Failed_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Total.
-        /// </summary>
-        public static string ImportBlogPosts_ImportResults_Total_Title {
-            get {
-                return ResourceManager.GetString("ImportBlogPosts_ImportResults_Total_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Please select a file!.
         /// </summary>
         public static string ImportBlogPosts_PleaseSelectAFile_message {
@@ -529,11 +511,56 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please select blog posts to import.
+        /// </summary>
+        public static string ImportBlogPosts_PleaseSelectPostsToImport_Message {
+            get {
+                return ResourceManager.GetString("ImportBlogPosts_PleaseSelectPostsToImport_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string ImportBlogPosts_Results_Title_Title {
+            get {
+                return ResourceManager.GetString("ImportBlogPosts_Results_Title_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Url.
+        /// </summary>
+        public static string ImportBlogPosts_Results_Url_Title {
+            get {
+                return ResourceManager.GetString("ImportBlogPosts_Results_Url_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Upload.
         /// </summary>
         public static string ImportBlogPosts_UploadButton_Title {
             get {
                 return ResourceManager.GetString("ImportBlogPosts_UploadButton_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create URL depending on blog post title..
+        /// </summary>
+        public static string ImportBlogPosts_UrlType_CreateFromTitle {
+            get {
+                return ResourceManager.GetString("ImportBlogPosts_UrlType_CreateFromTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Try create URL using original blog post URLs..
+        /// </summary>
+        public static string ImportBlogPosts_UrlType_TryUseOriginal {
+            get {
+                return ResourceManager.GetString("ImportBlogPosts_UrlType_TryUseOriginal", resourceCulture);
             }
         }
         
@@ -727,7 +754,7 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Import blog posts.
+        ///   Looks up a localized string similar to Import.
         /// </summary>
         public static string SiteSettings_Blogs_Import {
             get {
