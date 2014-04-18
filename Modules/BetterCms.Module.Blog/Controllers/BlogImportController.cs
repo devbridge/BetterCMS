@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 
 using BetterCms.Core.Security;
+using BetterCms.Module.Blog.Commands.DeleteBlogPostImportFile;
 using BetterCms.Module.Blog.Commands.ImportBlogPosts;
 using BetterCms.Module.Blog.Commands.UploadBlogsImportFile;
 using BetterCms.Module.Blog.ViewModels.Blog;
@@ -71,6 +72,19 @@ namespace BetterCms.Module.Blog.Controllers
             var response = GetCommand<ImportBlogPostsCommand>().ExecuteCommand(model);
 
             return WireJson(response != null, response);
+        }
+
+        /// <summary>
+        /// Deletes imported file.
+        /// </summary>
+        /// <returns>JSON result</returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.PublishContent)]
+        [HttpPost]
+        public ActionResult DeleteUploadedFile(string fileId)
+        {
+            var response = GetCommand<DeleteBlogPostImportFileCommand>().ExecuteCommand(fileId.ToGuidOrDefault());
+
+            return WireJson(response);
         }
     }
 }

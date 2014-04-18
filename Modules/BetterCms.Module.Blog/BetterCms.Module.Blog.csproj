@@ -123,6 +123,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Accessors\BlogPostContentAccessor.cs" />
+    <Compile Include="Commands\DeleteBlogPostImportFile\DeleteBlogPostImportFileCommand.cs" />
     <Compile Include="Commands\UploadBlogsImportFile\UploadBlogsImportFileCommand.cs" />
     <Compile Include="Commands\UploadBlogsImportFile\UploadBlogsImportFileResponse.cs" />
     <Compile Include="Commands\ImportBlogPosts\ImportBlogPostsCommand.cs" />

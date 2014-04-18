@@ -51,6 +51,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             convertStringToSlugUrl: null,
             uploadBlogPostsImportFileUrl: null,
             startImportUrl: null,
+            deleteUploadedFileUrl: null
         },
         globalization = {
             createNewPostDialogTitle: null,
@@ -748,7 +749,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
     /**
     * Updates import results
     */
-    function updateResults(importModel, results) {
+    function updateImportResults(importModel, results) {
         var i, item;
 
         for (i = 0; i < results.length; i++) {
@@ -819,7 +820,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                                     importModel.dialog.model.buttons()[0].title(globalization.importButtonTitle);
 
                                     if (json.Data && $.isArray(json.Data.Results)) {
-                                        updateResults(importModel, json.Data.Results);
+                                        updateImportResults(importModel, json.Data.Results);
                                         importModel.fileId = json.Data.FileId;
                                     }
                                 }
@@ -842,7 +843,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                             importModel.finished(true);
                             importModel.results.removeAll();
                             importModel.dialog.model.buttons()[0].disabled(true);
-                            updateResults(importModel, json.Data.Results);
+                            updateImportResults(importModel, json.Data.Results);
                         }
                     };
 
@@ -897,6 +898,13 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             onCloseClick: function () {
                 if (importModel.finished()) {
                     searchSiteSettingsBlogs(parentContainer, parentForm);
+                } else if (importModel.uploaded() && importModel.fileId) {
+                    // Call method for deleting uploaded file
+                    $.ajax({
+                        type: 'POST',
+                        cache: false,
+                        url: $.format(links.deleteUploadedFileUrl, importModel.fileId)
+                    });
                 }
             }
         });
