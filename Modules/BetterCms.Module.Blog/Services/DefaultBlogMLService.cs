@@ -11,6 +11,7 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Web;
+
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.ViewModels.Blog;
@@ -21,9 +22,6 @@ using BetterCms.Module.Root.Mvc;
 using BlogML.Xml;
 
 using Common.Logging;
-
-using NHibernate.Hql.Ast.ANTLR.Tree;
-using NHibernate.Util;
 
 using ValidationException = BetterCms.Core.Exceptions.Mvc.ValidationException;
 
@@ -100,7 +98,7 @@ namespace BetterCms.Module.Blog.Services
             return blogPosts;
         }
 
-        private BlogPostViewModel MapViewModel(BlogMLPost blogML, bool useOriginalUrls, BlogPostImportResult modification = null)
+        private BlogPostViewModel MapViewModel(BlogMLPost blogML, bool useOriginalUrls, BlogPostImportResult modification = null, List<string> unsavedUrls = null)
         {
             var model = new BlogPostViewModel
                     {
@@ -119,11 +117,11 @@ namespace BetterCms.Module.Blog.Services
             }
             else if (useOriginalUrls)
             {
-                model.BlogUrl = blogService.CreateBlogPermalink(FixUrl(blogML.PostUrl));
+                model.BlogUrl = blogService.CreateBlogPermalink(FixUrl(blogML.PostUrl), unsavedUrls);
             }
             else
             {
-                model.BlogUrl = blogService.CreateBlogPermalink(blogML.Title);
+                model.BlogUrl = blogService.CreateBlogPermalink(blogML.Title, unsavedUrls);
             }
 
             return model;
@@ -185,12 +183,14 @@ namespace BetterCms.Module.Blog.Services
         public List<BlogPostImportResult> ValidateImport(BlogMLBlog blogPosts, bool useOriginalUrls = false)
         {
             List<BlogPostImportResult> result = new List<BlogPostImportResult>();
+            var unsavedUrls = new List<string>();
 
             if (blogPosts != null && blogPosts.Posts != null)
             {
                 foreach (var blogML in blogPosts.Posts)
                 {
-                    var blogPostModel = MapViewModel(blogML, useOriginalUrls);
+                    var blogPostModel = MapViewModel(blogML, useOriginalUrls, null, unsavedUrls);
+                    unsavedUrls.Add(blogPostModel.BlogUrl);
 
                     BlogPostImportResult blogPost;
                     if (!ValidateModel(blogPostModel, blogML, out blogPost))

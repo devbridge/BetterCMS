@@ -1,4 +1,5 @@
-﻿using System.Security.Principal;
+﻿using System.Collections.Generic;
+using System.Security.Principal;
 
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.ViewModels.Blog;
@@ -11,8 +12,11 @@ namespace BetterCms.Module.Blog.Services
         /// Creates the blog URL from the given blog title.
         /// </summary>
         /// <param name="title">The title.</param>
-        /// <returns>Created blog URL</returns>
-        string CreateBlogPermalink(string title);
+        /// <param name="unsavedUrls">The list of not saved yet urls.</param>
+        /// <returns>
+        /// Created blog URL
+        /// </returns>
+        string CreateBlogPermalink(string title, List<string> unsavedUrls = null);
 
         /// <summary>
         /// Saves the blog post.

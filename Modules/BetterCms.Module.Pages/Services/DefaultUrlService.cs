@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 using BetterCms.Configuration;
@@ -27,6 +29,7 @@ namespace BetterCms.Module.Pages.Services
         /// Initializes a new instance of the <see cref="DefaultUrlService" /> class.
         /// </summary>
         /// <param name="unitOfWork">The unit of work.</param>
+        /// <param name="configuration">The configuration.</param>
         public DefaultUrlService(IUnitOfWork unitOfWork, ICmsConfiguration configuration)
         {
             this.unitOfWork = unitOfWork;
@@ -38,8 +41,11 @@ namespace BetterCms.Module.Pages.Services
         /// </summary>
         /// <param name="url">The page URL.</param>
         /// <param name="prefixPattern">The prefix pattern.</param>
-        /// <returns>URL with added postfix (if such needed)</returns>
-        public string AddPageUrlPostfix(string url, string prefixPattern)
+        /// <param name="unsavedUrls">The list of not saved yet urls.</param>
+        /// <returns>
+        /// URL with added postfix (if such needed)
+        /// </returns>
+        public string AddPageUrlPostfix(string url, string prefixPattern, List<string> unsavedUrls = null)
         {
             url = (url ?? string.Empty).Trim();
             var endsWithSlash = url.EndsWith("/");
@@ -54,7 +60,8 @@ namespace BetterCms.Module.Pages.Services
             var fullUrl = FixUrl(string.Format(prefixPattern + "/", url).Trim('/'));
 
             // Check, if such record exists
-            var exists = PathExistsInDb(fullUrl);
+            var exists = PathExistsInDb(fullUrl) 
+                || (unsavedUrls != null && PathExistsInUnsavedList(fullUrl, unsavedUrls));
 
             if (exists)
             {
@@ -69,6 +76,14 @@ namespace BetterCms.Module.Pages.Services
                     .Where(Restrictions.InsensitiveLike(Projections.Property(() => alias.PageUrl), urlToSearch))
                     .Select(p => p.PageUrl)
                     .List<string>();
+
+                if (unsavedUrls != null)
+                {
+                    unsavedUrls
+                        .Where(u => u.StartsWith(urlToReplace))
+                        .ToList()
+                        .ForEach(paths.Add);
+                }
 
                 int maxNr = 0;
                 var recheckInDb = false;
@@ -149,6 +164,19 @@ namespace BetterCms.Module.Pages.Services
                 .Select(p => p.Id)
                 .RowCount();
             return exists > 0;
+        }
+
+        /// <summary>
+        /// Checks if path exists in unsaved list.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="unsavedUrls">The unsaved urls.</param>
+        /// <returns>
+        /// Url path.
+        /// </returns>
+        private bool PathExistsInUnsavedList(string url, List<string> unsavedUrls)
+        {
+            return unsavedUrls.Any(u => u == url);
         }
 
         /// <summary>

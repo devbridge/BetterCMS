@@ -91,11 +91,14 @@ namespace BetterCms.Module.Blog.Services
         /// Creates the blog URL from the given blog title.
         /// </summary>
         /// <param name="title">The title.</param>
-        /// <returns>Created blog URL</returns>
-        public string CreateBlogPermalink(string title)
+        /// <param name="unsavedUrls">The unsaved urls.</param>
+        /// <returns>
+        /// Created blog URL
+        /// </returns>
+        public string CreateBlogPermalink(string title, List<string> unsavedUrls = null)
         {
             var url = title.Transliterate(true);
-            url = urlService.AddPageUrlPostfix(url, configuration.ArticleUrlPattern);
+            url = urlService.AddPageUrlPostfix(url, configuration.ArticleUrlPattern, unsavedUrls);
 
             return url;
         }
