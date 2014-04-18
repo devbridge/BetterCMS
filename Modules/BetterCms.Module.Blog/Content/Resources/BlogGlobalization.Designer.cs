@@ -502,6 +502,15 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to At least one blog post should be selected for import to continue..
+        /// </summary>
+        public static string ImportBlogPosts_NoBlogPostSelected_Message {
+            get {
+                return ResourceManager.GetString("ImportBlogPosts_NoBlogPostSelected_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please select a file!.
         /// </summary>
         public static string ImportBlogPosts_PleaseSelectAFile_message {

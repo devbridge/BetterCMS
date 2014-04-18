@@ -68,7 +68,8 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             multipleFilesWarningMessage: null,
             pleaseSelectAFile: null,
             blogImportUrlFormattingTypeUseOriginal: null,
-            blogImportUrlFormattingTypeFromTitle: null
+            blogImportUrlFormattingTypeFromTitle: null,
+            noBlogPostsSelectedToImport: null
         },
         classes = {
             inactive: 'bcms-inactive'
@@ -872,19 +873,25 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                         }
                     }
 
-                    $.ajax({
-                        type: 'POST',
-                        contentType: 'application/json; charset=utf-8',
-                        cache: false,
-                        url: links.startImportUrl,
-                        data: JSON.stringify(params)
-                    })
-                        .done(function (result) {
-                            onImportComplete(result);
-                        })
-                        .fail(function (response) {
-                            onImportComplete(bcms.parseFailedResponse(response));
-                        });
+                    if (params.BlogPosts.length > 0) {
+                        form.showLoading();
+                        $.ajax({
+                                type: 'POST',
+                                contentType: 'application/json; charset=utf-8',
+                                cache: false,
+                                url: links.startImportUrl,
+                                data: JSON.stringify(params)
+                            })
+                            .done(function(result) {
+                                onImportComplete(result);
+                            })
+                            .fail(function(response) {
+                                onImportComplete(bcms.parseFailedResponse(response));
+                            });
+                    } else {
+                        importModel.messageBox.clearMessages();
+                        importModel.messageBox.addWarningMessage(globalization.noBlogPostsSelectedToImport);
+                    }
                 }
             },
             onCloseClick: function () {

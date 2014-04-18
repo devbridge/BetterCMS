@@ -387,4 +387,7 @@
   <data name="ImportBlogPosts_PleaseSelectPostsToImport_Message" xml:space="preserve">
     <value>Please select blog posts to import</value>
   </data>
+  <data name="ImportBlogPosts_NoBlogPostSelected_Message" xml:space="preserve">
+    <value>At least one blog post should be selected for import to continue.</value>
+  </data>
 </root>
