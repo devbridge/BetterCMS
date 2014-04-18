@@ -333,9 +333,6 @@
   <data name="ImportBlogPosts_File_Description" xml:space="preserve">
     <value>File to be imported in the Blog ML format</value>
   </data>
-  <data name="ImportBlogPosts_UseOriginalUrls_Title" xml:space="preserve">
-    <value>Use Original URLs </value>
-  </data>
   <data name="ImportBlogPosts_PleaseSelectAFile_message" xml:space="preserve">
     <value>Please select a file!</value>
   </data>
@@ -374,12 +371,6 @@
   </data>
   <data name="ImportBlogPosts_Results_Url_Title" xml:space="preserve">
     <value>Url</value>
-  </data>
-  <data name="ImportBlogPosts_UrlType_CreateFromTitle" xml:space="preserve">
-    <value>Create URL depending on blog post title.</value>
-  </data>
-  <data name="ImportBlogPosts_UrlType_TryUseOriginal" xml:space="preserve">
-    <value>Try create URL using original blog post URLs.</value>
   </data>
   <data name="ImportBlogPosts_ImportCompletedSuccessfully_Message" xml:space="preserve">
     <value>Import completed successfully</value>

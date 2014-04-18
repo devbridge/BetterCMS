@@ -68,8 +68,6 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             uploadButtonTitle: null,
             multipleFilesWarningMessage: null,
             pleaseSelectAFile: null,
-            blogImportUrlFormattingTypeUseOriginal: null,
-            blogImportUrlFormattingTypeFromTitle: null,
             noBlogPostsSelectedToImport: null
         },
         classes = {
@@ -788,8 +786,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                         form = dialog.container.find(selectors.importBlogPostsForm);
 
                         importModel = {
-                            useOriginalIds: ko.observable(json.Data.UseOriginalUrls),
-                            createRedirects: ko.observable(json.Data.CreateRedirects),
+                            createRedirects: ko.observable(true),
                             fileName: ko.observable(''),
                             messageBox: messages.box({ container: form }),
                             form: form,
@@ -797,10 +794,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                             uploaded: ko.observable(false),
                             finished: ko.observable(false),
                             dialog: dialog,
-                            fileId: '',
-                            urlFormattingTypes: [
-                                { id: 'false', value: globalization.blogImportUrlFormattingTypeFromTitle },
-                                { id: 'true', value: globalization.blogImportUrlFormattingTypeUseOriginal }]
+                            fileId: ''
                         };
 
                         iframe.on('load', function () {

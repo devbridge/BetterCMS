@@ -10,8 +10,6 @@ using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Root.Mvc;
 
-using FluentNHibernate.Utils;
-
 namespace BetterCms.Module.Blog.Commands.UploadBlogsImportFile
 {
     public class UploadBlogsImportFileCommand : CommandBase, ICommand<UploadImportFileViewModel, UploadBlogsImportFileResponse>
@@ -54,7 +52,7 @@ namespace BetterCms.Module.Blog.Commands.UploadBlogsImportFile
 
                 stream.Position = 0;
                 var blogs = importService.DeserializeXMLStream(stream);
-                var results = importService.ValidateImport(blogs, request.UseOriginalUrls);
+                var results = importService.ValidateImport(blogs);
 
                 return new UploadBlogsImportFileResponse { Results = results, FileId = fileId };
             }

@@ -98,7 +98,7 @@ namespace BetterCms.Module.Blog.Services
             return blogPosts;
         }
 
-        private BlogPostViewModel MapViewModel(BlogMLPost blogML, bool useOriginalUrls, BlogPostImportResult modification = null, List<string> unsavedUrls = null)
+        private BlogPostViewModel MapViewModel(BlogMLPost blogML, BlogPostImportResult modification = null, List<string> unsavedUrls = null)
         {
             var model = new BlogPostViewModel
                     {
@@ -114,10 +114,6 @@ namespace BetterCms.Module.Blog.Services
             {
                 model.BlogUrl = modification.PageUrl;
                 model.Title = modification.Title;
-            }
-            else if (useOriginalUrls)
-            {
-                model.BlogUrl = blogService.CreateBlogPermalink(FixUrl(blogML.PostUrl), unsavedUrls);
             }
             else
             {
@@ -180,7 +176,7 @@ namespace BetterCms.Module.Blog.Services
             return true;
         }
 
-        public List<BlogPostImportResult> ValidateImport(BlogMLBlog blogPosts, bool useOriginalUrls = false)
+        public List<BlogPostImportResult> ValidateImport(BlogMLBlog blogPosts)
         {
             List<BlogPostImportResult> result = new List<BlogPostImportResult>();
             var unsavedUrls = new List<string>();
@@ -189,7 +185,7 @@ namespace BetterCms.Module.Blog.Services
             {
                 foreach (var blogML in blogPosts.Posts)
                 {
-                    var blogPostModel = MapViewModel(blogML, useOriginalUrls, null, unsavedUrls);
+                    var blogPostModel = MapViewModel(blogML, null, unsavedUrls);
                     unsavedUrls.Add(blogPostModel.BlogUrl);
 
                     BlogPostImportResult blogPost;
@@ -261,7 +257,7 @@ namespace BetterCms.Module.Blog.Services
                     try
                     {
                         var oldUrl = FixUrl(blogML.PostUrl);
-                        var blogPostModel = MapViewModel(blogML, true, modifications.First(m => m.Id == blogML.ID));
+                        var blogPostModel = MapViewModel(blogML, modifications.First(m => m.Id == blogML.ID));
 
                         BlogPostImportResult blogPostResult;
                         if (!ValidateModel(blogPostModel, blogML, out blogPostResult))

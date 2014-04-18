@@ -15,7 +15,7 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         public override string ToString()
         {
             return string.Format(
-                "{0}, UseOriginalUrls: {1}, CreateRedirects: {2}, BlogPosts.Count: {3}",
+                "{0}, CreateRedirects: {1}, BlogPosts.Count: {2}",
                 base.ToString(),
                 CreateRedirects,
                 BlogPosts != null ? BlogPosts.Count : 0);

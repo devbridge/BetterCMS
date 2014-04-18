@@ -556,33 +556,6 @@ namespace BetterCms.Module.Blog.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create URL depending on blog post title..
-        /// </summary>
-        public static string ImportBlogPosts_UrlType_CreateFromTitle {
-            get {
-                return ResourceManager.GetString("ImportBlogPosts_UrlType_CreateFromTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Try create URL using original blog post URLs..
-        /// </summary>
-        public static string ImportBlogPosts_UrlType_TryUseOriginal {
-            get {
-                return ResourceManager.GetString("ImportBlogPosts_UrlType_TryUseOriginal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Use Original URLs .
-        /// </summary>
-        public static string ImportBlogPosts_UseOriginalUrls_Title {
-            get {
-                return ResourceManager.GetString("ImportBlogPosts_UseOriginalUrls_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Cannot save blog post. Master page, which is selected as default blog post layout is inaccessible..
         /// </summary>
         public static string SaveBlogPost_FailedToSave_InaccessibleMasterPage {
