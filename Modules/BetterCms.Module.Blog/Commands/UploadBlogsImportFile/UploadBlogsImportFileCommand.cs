@@ -31,27 +31,33 @@ namespace BetterCms.Module.Blog.Commands.UploadBlogsImportFile
             var fileId = Guid.NewGuid();
             var fileUri = importService.ConstructFilePath(fileId);
 
-            try
+            using (var stream = new MemoryStream())
             {
-                var upload = new UploadRequest();
-                upload.CreateDirectory = true;
-                upload.Uri = fileUri;
-                upload.InputStream = request.FileStream;
-                upload.IgnoreAccessControl = true;
+                request.FileStream.CopyTo(stream);
 
-                storageService.UploadObject(upload);
+                try
+                {
+                    var upload = new UploadRequest();
+                    upload.CreateDirectory = true;
+                    upload.Uri = fileUri;
+                    upload.InputStream = request.FileStream;
+                    upload.IgnoreAccessControl = true;
+
+                    storageService.UploadObject(upload);
+                }
+                catch (Exception exc)
+                {
+                    throw new ValidationException(() => BlogGlobalization.ImportBlogPosts_FailedToSaveFileToStorage_Message,
+                            "Failed to save blog posts import file to storage.",
+                        exc);
+                }
+
+                stream.Position = 0;
+                var blogs = importService.DeserializeXMLStream(stream);
+                var results = importService.ValidateImport(blogs, request.UseOriginalUrls);
+
+                return new UploadBlogsImportFileResponse { Results = results, FileId = fileId };
             }
-            catch (Exception exc)
-            {
-                throw new ValidationException(() => BlogGlobalization.ImportBlogPosts_FailedToSaveFileToStorage_Message,
-                    "Failed to save blog posts import file to storage.", exc);
-            }
-
-            request.FileStream.Position = 0;
-            var blogs = importService.DeserializeXMLStream(request.FileStream);
-            var results = importService.ValidateImport(blogs, request.UseOriginalUrls);
-
-            return new UploadBlogsImportFileResponse { Results = results, FileId = fileId };
         }
     }
 }
