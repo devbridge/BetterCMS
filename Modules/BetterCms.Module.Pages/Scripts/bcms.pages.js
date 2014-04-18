@@ -96,7 +96,8 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 addNewPageActiveTemplateBox: 'bcms-inner-grid-box-active',
                 gridActiveRow: 'bcms-table-row-active'
             },
-            pageUrlManuallyEdited = false;
+            pageUrlManuallyEdited = false,
+            oldTitleValue = '';
 
         /**
         * Assign objects to module.
@@ -107,6 +108,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
         page.initializePermalinkBox = function (dialog, addPrefix, actionUrl, titleField, autoGenerate) {
             pageUrlManuallyEdited = false;
+            oldTitleValue = '';
 
             dialog.container.find(selectors.editPermalink).on('click', function () {
                 page.showAddNewPageEditPermalinkBox(dialog);
@@ -122,7 +124,11 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
             if (autoGenerate) {
                 dialog.container.find(titleField).on('keyup', function () {
-                    page.changeUrlSlug(dialog, actionUrl, titleField, addPrefix);
+                    var newValue = $(this).val() || '';
+                    if (newValue != oldTitleValue) {
+                        oldTitleValue = newValue;
+                        page.changeUrlSlug(dialog, actionUrl, titleField, addPrefix);
+                    }
                 });
             }
 
