@@ -1,28 +1,43 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Xml;
 
+using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Web;
+using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Root.Models;
 
 using BlogML;
 using BlogML.Xml;
-
 namespace BetterCms.Module.Blog.Services
 {
     public class DefaultBlogMLExportService : BlogMLWriterBase, IBlogMLExportService
     {
-        private List<Models.BlogPost> posts;
+        private List<BlogPost> posts;
+
+        private readonly IHttpContextAccessor httpContextAccessor;
+        
+        private readonly IRepository repository;
+
+        public DefaultBlogMLExportService(IHttpContextAccessor httpContextAccessor, IRepository repository)
+        {
+            this.httpContextAccessor = httpContextAccessor;
+            this.repository = repository;
+        }
 
         /// <summary>
         /// Exports the blog posts.
         /// </summary>
-        /// <param name="posts">The posts.</param>
+        /// <param name="postsToExport">The posts to export.</param>
         /// <returns>
         /// string in blogML format
         /// </returns>
-        public string ExportBlogPosts(List<Models.BlogPost> posts)
+        public string ExportBlogPosts(List<BlogPost> postsToExport)
         {
-            this.posts = posts;
+            this.posts = postsToExport;
 
             var builder = new StringBuilder();
             var xml = XmlWriter.Create(builder);
@@ -34,70 +49,79 @@ namespace BetterCms.Module.Blog.Services
 
         protected override void InternalWriteBlog()
         {
-            //WriteStartBlog("Better CMS", ContentTypes.Text, "Better CMS", ContentTypes.Text, blog.RootUrl, blog.DateCreated);
+            WriteStartBlog("Better CMS", ContentTypes.Text, "Better CMS", ContentTypes.Text, httpContextAccessor.MapPath("/"), GetMinBlogPostDate());
 
-            /*var blog = Source.GetBlog();
-            WriteStartBlog(blog.Title, ContentTypes.Text, blog.SubTitle, ContentTypes.Text, blog.RootUrl, blog.DateCreated);
-
-            WriteAuthors(blog.Authors);
-            WriteExtendedProperties(blog.ExtendedProperties);
-            WriteCategories(blog.Categories);
-            WritePosts(Source.GetBlogPosts(EmbedAttachments));
+            WriteAuthors();
+            WriteCategories();
+            WritePosts();
 
             WriteEndElement();
-            Writer.Flush();*/
+            Writer.Flush();
         }
 
-        private void WriteAuthors(IEnumerable<BlogMLAuthor> authors)
+        private DateTime GetMinBlogPostDate()
+        {
+            var firstBlogPostDate = repository
+                .AsQueryable<BlogPost>()
+                .OrderBy(b => b.CreatedOn)
+                .Select(b => b.CreatedOn)
+                .FirstOrDefault();
+
+            if (firstBlogPostDate != DateTime.MinValue)
+            {
+                return firstBlogPostDate.Date;
+            }
+
+            return DateTime.Now.Date;
+        }
+
+        private void WriteAuthors()
         {
             WriteStartAuthors();
-            foreach (BlogMLAuthor bmlAuthor in authors)
+            foreach (var author in posts.Where(p => p.Author != null).Select(p => p.Author).Distinct())
             {
                 WriteAuthor(
-                    bmlAuthor.ID,
-                    bmlAuthor.Title,
-                    bmlAuthor.Email,
-                    bmlAuthor.DateCreated,
-                    bmlAuthor.DateModified,
-                    bmlAuthor.Approved);
+                    author.Id.ToString(),
+                    author.Name,
+                    null,
+                    author.CreatedOn,
+                    author.ModifiedOn,
+                    true);
             }
             WriteEndElement(); // </authors>
         }
 
-        private void WriteExtendedProperties(ICollection<Pair<string, string>> extendedProperties)
-        {
-            if (extendedProperties.Count > 0)
-            {
-                WriteStartExtendedProperties();
-                foreach (var extProp in extendedProperties)
-                {
-                    WriteExtendedProperty(extProp.Key, extProp.Value);
-                }
-                WriteEndElement();
-            }
-        }
-
-        private void WriteCategories(IEnumerable<BlogMLCategory> categories)
+        private void WriteCategories()
         {
             WriteStartCategories();
-            foreach (BlogMLCategory category in categories)
+            foreach (var category in posts.Where(p => p.Category != null).Select(p => p.Category).Distinct())
             {
-                WriteCategory(category.ID, category.Title, ContentTypes.Text, category.DateCreated, category.DateModified, category.Approved, category.Description, category.ParentRef);
+                WriteCategory(category.Id.ToString(), 
+                    category.Name, 
+                    ContentTypes.Text, 
+                    category.CreatedOn, 
+                    category.ModifiedOn, 
+                    true, 
+                    null, 
+                    null);
             }
             WriteEndElement();
         }
 
-        private void WritePosts(IEnumerable<BlogMLPost> posts)
+        private void WritePosts()
         {
             WriteStartPosts();
             foreach (var post in posts)
             {
                 WriteStartBlogMLPost(post);
-                WritePostCategories(post.Categories);
-                WritePostComments(post.Comments);
-                WritePostTrackbacks(post.Trackbacks);
-                WritePostAttachments(post.Attachments);
-                WritePostAuthors(post.Authors);
+                if (post.Category != null)
+                {
+                    WritePostCategory(post.Category);
+                }
+                if (post.Author != null)
+                {
+                    WritePostAuthor(post.Author);
+                }
 
                 WriteEndElement(); // </post>
                 Writer.Flush();
@@ -105,23 +129,26 @@ namespace BetterCms.Module.Blog.Services
             WriteEndElement();
         }
 
-        protected void WriteStartBlogMLPost(BlogMLPost post)
+        protected void WriteStartBlogMLPost(BlogPost post)
         {
             WriteStartElement("post");
-            WriteNodeAttributes(post.ID, post.DateCreated, post.DateModified, post.Approved);
-            WriteAttributeString("post-url", post.PostUrl);
+            WriteNodeAttributes(post.Id.ToString(), post.CreatedOn, post.ModifiedOn, post.Status == PageStatus.Published);
+            WriteAttributeString("post-url", post.PageUrl);
             WriteAttributeStringRequired("type", "normal");
-            WriteAttributeStringRequired("hasexcerpt", post.HasExcerpt.ToString().ToLowerInvariant());
-            WriteAttributeStringRequired("views", post.Views.ToString());
-            WriteContent("title", BlogMLContent.Create(post.Title, ContentTypes.Text));
-            WriteBlogMLContent("content", post.Content);
-            if (!string.IsNullOrEmpty(post.PostName))
+            WriteAttributeStringRequired("hasexcerpt", (!string.IsNullOrWhiteSpace(post.Description)).ToString());
+            WriteAttributeStringRequired("views", "0");
+            WriteContent("title", BlogMLContent.Create(post.MetaTitle ?? post.Title, ContentTypes.Text));
+            WriteContent("post-name", BlogMLContent.Create(post.Title, ContentTypes.Text));
+
+            if (!string.IsNullOrWhiteSpace(post.Description))
             {
-                WriteContent("post-name", BlogMLContent.Create(post.PostName, ContentTypes.Text));
+                WriteBlogMLContent("excerpt", BlogMLContent.Create(post.Description, ContentTypes.Text));
             }
-            if (post.HasExcerpt)
+
+            var content = post.PageContents.Where(pc => pc.Content is BlogPostContent).Select(pc => pc.Content).FirstOrDefault();
+            if (content != null)
             {
-                WriteBlogMLContent("excerpt", post.Excerpt);
+                WriteBlogMLContent("content", BlogMLContent.Create(((BlogPostContent)content).Html, ContentTypes.Text));
             }
         }
 
@@ -130,83 +157,18 @@ namespace BetterCms.Module.Blog.Services
             WriteContent(elementName, content);
         }
 
-        protected void WritePostCategories(BlogMLPost.CategoryReferenceCollection categoryRefs)
+        protected void WritePostCategory(Category category)
         {
-            if (categoryRefs.Count > 0)
-            {
-                WriteStartCategories();
-                foreach (BlogMLCategoryReference categoryRef in categoryRefs)
-                {
-                    WriteCategoryReference(categoryRef.Ref);
-                }
-                WriteEndElement();
-            }
+            WriteStartCategories();
+            WriteCategoryReference(category.Id.ToString());
+            WriteEndElement();
         }
 
-        private void WritePostComments(BlogMLPost.CommentCollection comments)
+        private void WritePostAuthor(Author author)
         {
-            if (comments.Count > 0)
-            {
-                WriteStartComments();
-                foreach (BlogMLComment comment in comments)
-                {
-                    string userName = string.IsNullOrEmpty(comment.UserName) ? "Anonymous" : comment.UserName;
-                    WriteComment(comment.ID, BlogMLContent.Create(comment.Title, ContentTypes.Text), comment.DateCreated, comment.DateModified,
-                                 comment.Approved, userName, comment.UserEMail, comment.UserUrl,
-                                 comment.Content);
-                }
-                WriteEndElement();
-            }
-        }
-
-        private void WritePostTrackbacks(BlogMLPost.TrackbackCollection trackbacks)
-        {
-            if (trackbacks.Count > 0)
-            {
-                WriteStartTrackbacks();
-                foreach (BlogMLTrackback trackback in trackbacks)
-                {
-                    if (!string.IsNullOrEmpty(trackback.Url))
-                    {
-                        WriteTrackback(trackback.ID, trackback.Title, ContentTypes.Text, trackback.DateCreated, trackback.DateModified, trackback.Approved, trackback.Url);
-                    }
-                }
-                WriteEndElement();
-            }
-        }
-
-        private void WritePostAttachments(BlogMLPost.AttachmentCollection attachments)
-        {
-            if (attachments.Count > 0)
-            {
-                WriteStartAttachments();
-                foreach (BlogMLAttachment attachment in attachments)
-                {
-                    if (attachment.Embedded)
-                    {
-                        WriteAttachment(attachment.Url, attachment.Data.Length, attachment.MimeType, attachment.Path, attachment.Embedded, attachment.Data);
-                    }
-                    else
-                    {
-                        WriteAttachment(attachment.Path, attachment.MimeType, attachment.Url);
-                    }
-                }
-                WriteEndElement(); // End Attachments Element
-                Writer.Flush();
-            }
-        }
-
-        private void WritePostAuthors(BlogMLPost.AuthorReferenceCollection authorsRefs)
-        {
-            if (authorsRefs.Count > 0)
-            {
-                WriteStartAuthors();
-                foreach (BlogMLAuthorReference authorRef in authorsRefs)
-                {
-                    WriteAuthorReference(authorRef.Ref);
-                }
-                WriteEndElement();
-            }
+            WriteStartAuthors();
+            WriteAuthorReference(author.Id.ToString());
+            WriteEndElement();
         }
     }
 }

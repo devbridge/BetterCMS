@@ -176,6 +176,7 @@ namespace BetterCms.Module.Blog
             containerBuilder.RegisterType<DefaultAuthorService>().AsImplementedInterfaces().InstancePerLifetimeScope(); 
             containerBuilder.RegisterType<DefaultBlogService>().AsImplementedInterfaces().InstancePerLifetimeScope();          
             containerBuilder.RegisterType<DefaultBlogMLService>().AsImplementedInterfaces().InstancePerLifetimeScope();          
+            containerBuilder.RegisterType<DefaultBlogMLExportService>().AsImplementedInterfaces().InstancePerLifetimeScope();          
         }
 
         /// <summary>
