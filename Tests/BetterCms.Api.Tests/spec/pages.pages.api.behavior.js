@@ -7,7 +7,8 @@ describe('pages.pages.api.behavior', function () {
     var constants = {
         testPageId: 'f0464c233b67406babe8a20400b4d8b8',
         testPageTitle: '_0000_Page_For_Tests',
-        testPageUrl: '/0000-page-for-tests/'
+        testPageUrl: '/0000-page-for-tests/',
+        testPage2Id: '0a9a85852e4944e4a5d98bcee6d88793'
     };
 
     it('01000: Should get list of pages', function() {
@@ -100,6 +101,79 @@ describe('pages.pages.api.behavior', function () {
             expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
 
             expectPagePropertiesAreNotNull(result.data);
+        });
+    });
+
+    it('11002: Should put page', function() {
+        var url = '/bcms-api/pages/' + constants.testPage2Id,
+            pageData = {
+                categoryId: "ec47e20d16ff4e588dafa20400b92736",
+                categoryName: "Category for _0000_Page_For_Tests",
+                createdBy: "Better CMS test user",
+                createdOn: "2013-07-23T10:58:26.0000000",
+                description: "Test page",
+                id: "f0464c233b67406babe8a20400b4d8b8",
+                isArchived: true,
+                isMasterPage: false,
+                isPublished: true,
+                languageCode: "ar-KW",
+                languageGroupIdentifier: "10e54c92e03643f2b5df656825726ad6",
+                languageId: "5fea841ef108430da6eca2a7009366ec",
+                lastModifiedBy: "Better CMS test user",
+                lastModifiedOn: "2013-08-12T11:01:01.0000000",
+                layoutId: "d2f39fbd2c28401a8625a1fe0114e1eb",
+                mainImageCaption: "Image for _0000_Page_For_Tests",
+                mainImageId: "c9dbfc845a6d49729c8fa20400b9da1f",
+                mainImageThumbnauilUrl: "http://bettercms.sandbox.mvc4.local/uploads/image/d0a6575d96594ce49366817528ea6bca/t___Tapir_1.png",
+                mainImageUrl: "http://bettercms.sandbox.mvc4.local/uploads/image/d0a6575d96594ce49366817528ea6bca/__Tapir_1.png",
+                masterPageId: null,
+                pageUrl: "/0000-page-for-tests2/",
+                publishedOn: "2013-08-12T11:01:00.0000000",
+                title: "_0000_Page_For_Tests2",
+                version: 16,
+            },
+        result,
+            ready = false;
+
+        runs(function () {
+            api.put(url, pageData, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+
+            expectPagePropertiesAreNotNull(result.data);
+        });
+    });
+
+    it('21002: Should delete page', function() {
+        var url = '/bcms-api/pages/' + constants.testPage2Id,
+            result,
+            ready = false;
+
+        runs(function () {
+            api.delete(url, null, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data).toBe(true, 'Success TRUE should be retrieved.');
         });
     });
 

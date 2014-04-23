@@ -6,7 +6,7 @@ using BetterCms.Module.Api.Infrastructure;
 namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
 {
     [DataContract]
-    public class PostTagResponse : ResponseBase<Guid?>
+    public class PutTagResponse : ResponseBase<Guid?>
     {
     }
 }

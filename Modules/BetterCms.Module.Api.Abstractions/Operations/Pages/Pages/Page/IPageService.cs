@@ -18,6 +18,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
 
         GetPageResponse Get(GetPageRequest request);
 
+        PutPageResponse Put(PutPageRequest request);
+
         PageExistsResponse Exists(PageExistsRequest request);
     }
 }

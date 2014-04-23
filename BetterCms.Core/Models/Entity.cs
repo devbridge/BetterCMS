@@ -18,6 +18,8 @@ namespace BetterCms.Core.Models
         /// </value>
         public virtual Guid Id { get; set; }
 
+        public virtual bool AllowCustomId { get; set; }
+
         /// <summary>
         /// Gets or sets a value indicating whether this instance is deleted.
         /// </summary>

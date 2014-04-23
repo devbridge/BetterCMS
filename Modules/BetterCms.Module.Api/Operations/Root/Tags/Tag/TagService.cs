@@ -49,16 +49,16 @@ namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
                        };
         }
 
-        public PostTagResponse Put(PostTagRequest request)
+        public PutTagResponse Put(PutTagRequest request)
         {
             // TODO: implement PUT
-            return new PostTagResponse
+            return new PutTagResponse
             {
                 Data = request.Id,
             };
         }
 
-        PostTagResponse ITagService.Update(PostTagRequest request)
+        PutTagResponse ITagService.Update(PutTagRequest request)
         {
             return Put(request);
         }

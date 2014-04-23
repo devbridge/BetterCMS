@@ -54,7 +54,53 @@ var api = (function() {
 
         return new Date(+parts[1]);// + offset + parts[2] * 3600000 + parts[3] * 60000);
     };
-    
+
+    obj.put = function (url, data, onSuccess, onError) {
+        obj.putSecured(url, data, null, onSuccess, onError);
+    };
+
+    obj.putSecured = function (url, data, user, onSuccess, onError) {
+        var options = {
+            type: 'PUT',
+            data: JSON.stringify({ Data: data || {}, User: user || {} }),
+            cache: false,
+            async: false,
+            contentType: 'application/json',
+            dataType: 'json',
+            success: onSuccess,
+            error: onError,
+            beforeSend: function (request) {
+                // Hack for phantomjs runner (it ignores a regularly provided contentType).
+                request.setRequestHeader("X-Content-Type", "application/json");
+            },
+        };
+
+        $.ajax(url, options);
+    }
+
+    obj.delete = function (url, data, onSuccess, onError) {
+        obj.deleteSecured(url, data, null, onSuccess, onError);
+    };
+
+    obj.deleteSecured = function (url, data, user, onSuccess, onError) {
+        var options = {
+            type: 'DELETE',
+            data: JSON.stringify({ Data: data || {}, User: user || {} }),
+            cache: false,
+            async: false,
+            contentType: 'application/json',
+            dataType: 'json',
+            success: onSuccess,
+            error: onError,
+            beforeSend: function (request) {
+                // Hack for phantomjs runner (it ignores a regularly provided contentType).
+                request.setRequestHeader("X-Content-Type", "application/json");
+            },
+        };
+
+        $.ajax(url, options);
+    }
+
     /**
     * Checks if all properties of base model are not null
     */

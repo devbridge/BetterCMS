@@ -78,5 +78,7 @@ namespace BetterCms.Core.DataContracts
         /// The version.
         /// </value>
         int Version { get; set; }
+
+        bool AllowCustomId { get; set; }
     }
 }

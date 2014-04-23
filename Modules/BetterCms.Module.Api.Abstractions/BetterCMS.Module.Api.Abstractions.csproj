@@ -85,6 +85,11 @@
     <Compile Include="Infrastructure\OrderItem.cs" />
     <Compile Include="Infrastructure\RequestBase.cs" />
     <Compile Include="Infrastructure\ResponseBase.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\DeletePageRequest.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\PutPageRequestValidator.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\DeletePageResponse.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\PutPageResponse.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\PutPageRequest.cs" />
     <Compile Include="Operations\Root\AccessLevel.cs" />
     <Compile Include="Operations\Root\AccessRuleModel.cs" />
     <Compile Include="Operations\Blog\Authors\AuthorModel.cs" />
@@ -340,8 +345,8 @@
     <Compile Include="Operations\Root\Tags\Tag\GetTagRequest.cs" />
     <Compile Include="Operations\Root\Tags\Tag\GetTagResponse.cs" />
     <Compile Include="Operations\Root\Tags\Tag\ITagService.cs" />
-    <Compile Include="Operations\Root\Tags\Tag\PostTagRequest.cs" />
-    <Compile Include="Operations\Root\Tags\Tag\PostTagResponse.cs" />
+    <Compile Include="Operations\Root\Tags\Tag\PutTagRequest.cs" />
+    <Compile Include="Operations\Root\Tags\Tag\PutTagResponse.cs" />
     <Compile Include="Operations\Root\Version\GetVersionModel.cs" />
     <Compile Include="Operations\Root\Version\GetVersionRequest.cs" />
     <Compile Include="Operations\Root\Version\GetVersionResponse.cs" />

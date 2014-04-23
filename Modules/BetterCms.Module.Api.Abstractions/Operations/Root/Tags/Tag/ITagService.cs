@@ -4,6 +4,6 @@
     {
         GetTagResponse Get(GetTagRequest request);
 
-        PostTagResponse Update(PostTagRequest request);
+        PutTagResponse Update(PutTagRequest request);
     }
 }

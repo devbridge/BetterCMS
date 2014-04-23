@@ -177,6 +177,9 @@ namespace BetterCms.Module.Root.ViewModels.Option
                 throw new System.NotSupportedException();
             }
         }
+
+        public bool AllowCustomId { get; set; }
+
         #endregion
     }
 }
