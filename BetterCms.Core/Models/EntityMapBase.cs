@@ -11,8 +11,17 @@ namespace BetterCms.Core.Models
     public abstract class EntityMapBase<TEntity> : ClassMap<TEntity>
         where TEntity : IEntity
     {
-        private string moduleName;
+        /// <summary>
+        /// The module name.
+        /// </summary>
+        private readonly string moduleName;
 
+        /// <summary>
+        /// Gets the name of the schema.
+        /// </summary>
+        /// <value>
+        /// The name of the schema.
+        /// </value>
         protected string SchemaName
         {
             get
