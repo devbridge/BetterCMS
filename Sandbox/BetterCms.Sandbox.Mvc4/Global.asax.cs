@@ -207,6 +207,11 @@ namespace BetterCms.Sandbox.Mvc4
 
         protected void Application_EndRequest()
         {
+            // Redirect to login page example:
+            // if (Response.StatusCode == 403)
+            // {
+            //     Response.Redirect(string.Format(FormsAuthentication.LoginUrl+"?returnUrl={0}", (new UrlHelper(Request.RequestContext)).Encode(Request.RawUrl)));
+            // }
             cmsHost.OnEndRequest(this);
         }
 
