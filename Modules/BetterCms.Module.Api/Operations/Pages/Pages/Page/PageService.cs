@@ -191,6 +191,9 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
                 }
             }
 
+            // TODO: save options.
+            // page.Options = optionService.SaveOptionValues(request.OptionValues, null, () => new PageOption { Page = page });
+
             page.SaveUnsecured = true;
 
             unitOfWork.BeginTransaction();
