@@ -256,7 +256,6 @@ namespace BetterCms.Module.Blog.Services
                 {
                     try
                     {
-                        var oldUrl = FixUrl(blogML.PostUrl);
                         var blogPostModel = MapViewModel(blogML, modifications.First(m => m.Id == blogML.ID));
 
                         BlogPostImportResult blogPostResult;
@@ -286,15 +285,27 @@ namespace BetterCms.Module.Blog.Services
                                 };
                         createdBlogPosts.Add(blogPostResult);
 
-                        if (createRedirects && oldUrl != blogPostModel.BlogUrl)
+                        if (createRedirects)
                         {
-                            var redirect = redirectService.GetPageRedirect(oldUrl);
-                            if (redirect == null)
+                            var oldUrl = TryValidateOldUrl(blogML.PostUrl);
+                            if (oldUrl != null && oldUrl != blogPostModel.BlogUrl)
                             {
-                                redirect = redirectService.CreateRedirectEntity(oldUrl, blogPostModel.BlogUrl);
-                                repository.Save(redirect);
-                                unitOfWork.Commit();
-                                Events.PageEvents.Instance.OnRedirectCreated(redirect);
+                                var redirect = redirectService.GetPageRedirect(oldUrl);
+                                if (redirect == null)
+                                {
+                                    redirect = redirectService.CreateRedirectEntity(oldUrl, blogPostModel.BlogUrl);
+                                    repository.Save(redirect);
+                                    unitOfWork.Commit();
+                                    Events.PageEvents.Instance.OnRedirectCreated(redirect);
+                                }
+                                else
+                                {
+                                    blogPostResult.WarnMessage = string.Format(BlogGlobalization.ImportBlogPosts_RedirectWasAlreadyCreatedFor_Message, blogML.PostUrl);
+                                }
+                            }
+                            else if (oldUrl == null)
+                            {
+                                blogPostResult.WarnMessage = string.Format(BlogGlobalization.ImportBlogPosts_FailedToCreateRedirectFor_Message, blogML.PostUrl);
                             }
                         }
                     }
@@ -318,17 +329,30 @@ namespace BetterCms.Module.Blog.Services
             return createdBlogPosts;
         }
 
-        private string FixUrl(string url)
+        private string TryValidateOldUrl(string url)
         {
-            foreach (var ending in new[] { ".asp", ".aspx", ".php", ".htm", ".html" })
+            if (string.IsNullOrWhiteSpace(url))
             {
-                if (url.EndsWith(ending))
+                return null;
+            }
+
+            if (!urlService.ValidateInternalUrl(url))
+            {
+                var serverPath = httpContextAccessor.MapPublicPath("/").TrimEnd('/');
+                if (url.StartsWith(serverPath) && serverPath != url)
                 {
-                    url = url.Substring(0, url.LastIndexOf(ending, StringComparison.InvariantCulture));
+                    url = url.Substring(serverPath.Length, url.Length - serverPath.Length);
+                    if (!urlService.ValidateInternalUrl(url))
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    return null;
                 }
             }
-            url = urlService.FixUrl(url);
-
+            
             return url;
         }
 

@@ -196,8 +196,8 @@
   <ItemGroup>
     <EmbeddedResource Include="Content\Resources\BlogGlobalization.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>BlogGlobalization.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>BlogGlobalization1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Content\Styles\bcms.blog.css" />
     <EmbeddedResource Include="Content\Styles\Images\sprite-blog.png" />

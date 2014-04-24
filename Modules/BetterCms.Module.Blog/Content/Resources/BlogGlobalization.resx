@@ -381,4 +381,10 @@
   <data name="ImportBlogPosts_NoBlogPostSelected_Message" xml:space="preserve">
     <value>At least one blog post should be selected for import to continue.</value>
   </data>
+  <data name="ImportBlogPosts_FailedToCreateRedirectFor_Message" xml:space="preserve">
+    <value>Failed to create a redirect. Invalid URL "{0}".</value>
+  </data>
+  <data name="ImportBlogPosts_RedirectWasAlreadyCreatedFor_Message" xml:space="preserve">
+    <value>Redirect for URL "{0}" wasn't created, because it already exists.</value>
+  </data>
 </root>
