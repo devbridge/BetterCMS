@@ -758,6 +758,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 title: item.Title || '&nbsp;',
                 url: item.PageUrl,
                 errorMessage: item.ErrorMessage,
+                warnMessage: item.WarnMessage,
                 toJson: function () {
                     return {
                         Id: this.id,

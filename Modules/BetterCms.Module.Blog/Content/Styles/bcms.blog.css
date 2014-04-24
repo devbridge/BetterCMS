@@ -239,3 +239,30 @@ div.bcms-btn-blog-add {
 .bcms-import-success {
     background-color: #e8fae5;
 }
+
+.bcms-icn-import-success {
+    width: 12px;
+    height: 13px;
+    margin: 0 auto;
+    overflow: hidden;
+    text-indent: 9999px;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAANCAYAAAHqLr/UAAAAsklEQVQoz2NQOMvAAMIgggfGABMGDDA5IP4PY1yCq4HipcicELBaKEZRhsqBYhWYyauBuBoqeBiIXyHraIGaF4jPKBAWwib4GWQ8umA+shP/QwWZoWwhmMQ9IL4BxN+AeAW65f+RdKJIqMOMIORcXI5aSkghyKEHoIpBISXKALVyBVQSPYw/QxWvRnbSfKjgTyA2Q3MCCIdg84MlEP+BKviG5AQhdGcic9iA+CTMc7j8BQD3Drtv1DbDeQAAAABJRU5ErkJggg==');
+}
+
+.bcms-icn-import-warn {
+    width: 12px;
+    height: 12px;
+    margin: 0 auto;
+    overflow: hidden;
+    text-indent: 9999px;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAALCAYAAAE8d1zJAAAA+klEQVQoz13RP0tCURjH8asEBRGIDWltCs4J6dKrMME2oa1egbk2NjSka0OQe1ONOeomVITQJi0RQkHY4p/vT35HLg2fw33+3Oece2708ZKJsFySGOmhqmVLyzGG6onceB6CItYwVzBz9Sq0zVHGNp5wpOQZcm4YYB2T8IaCBzyjHt8x412rjpcFBX9I4RDTUNDGB7h2dwk1PUyc2Mct9nCqRAsnLhY8IRk2r/tEj9iInyqBCvr4xLuN8era6rRZvKGHbrjEmE3nNSAbbvkLO24oe8CNL0q5Xfc0In/yL5r/Juc9uY0L/Kg3FPVzOr48Xf2l3eMbd0irdwG2fCIWmRn0SgAAAABJRU5ErkJggg==');
+}
+
+.bcms-icn-import-error {
+    width: 10px;
+    height: 9px;
+    margin: 0 auto;
+    overflow: hidden;
+    text-indent: 9999px;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAJCAYAAAF8oY2FAAAAZElEQVQY02N45uw8DYi/MsAZ////Z0AQQKH/YA6QYYcsuhxD5D8QO0LpTOyCIAtAElBJO5ClIEYmskoUW2ACMDdgqsRlZgtU5Rcg9kZS4A0VA8m1MCBJZEAlkHEG3G6iFRJrNQAfBNhPNe12LwAAAABJRU5ErkJggg==');
+}

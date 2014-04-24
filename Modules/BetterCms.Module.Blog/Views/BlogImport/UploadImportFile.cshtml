@@ -71,7 +71,12 @@
                         <span class="bcms-import-error" data-bind="text: errorMessage, attr: {title: errorMessage}"></span>
                         <!-- /ko -->
                     </td>
-                    <td class="bcms-tables-nohover">&nbsp;</td>
+                    <td class="bcms-tables-nohover">
+                        <div data-bind="attr: { title: errorMessage || warnMessage || '' }, css: {
+                            'bcms-icn-import-success': success && !warnMessage, 
+                            'bcms-icn-import-warn': success && warnMessage, 
+                            'bcms-icn-import-error': !success }"></div>
+                    </td>
                 </tr>
                 <!-- /ko -->
                 <!-- ko if: results().length == 0 -->
