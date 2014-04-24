@@ -57,10 +57,5 @@ namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
                 Data = request.Id,
             };
         }
-
-        PutTagResponse ITagService.Update(PutTagRequest request)
-        {
-            return Put(request);
-        }
     }
 }

@@ -290,6 +290,8 @@
     <Compile Include="Operations\Root\Layouts\Layout\Options\ILayoutOptionsService.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\Options\OptionModel.cs" />
     <Compile Include="Operations\Root\OptionType.cs" />
+    <Compile Include="Operations\Root\Tags\PostTagsRequest.cs" />
+    <Compile Include="Operations\Root\Tags\PostTagsResponse.cs" />
     <Compile Include="Operations\Root\Tags\Tag\GetTagRequestValidator.cs" />
     <Compile Include="Operations\Users\Roles\GetRolesRequest.cs" />
     <Compile Include="Operations\Users\Roles\GetRolesResponse.cs" />

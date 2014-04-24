@@ -8,15 +8,32 @@ using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Root.Tags
 {
+    /// <summary>
+    /// Tags service contract implementation for REST.
+    /// </summary>
     public class TagsService : Service, ITagsService
     {
+        /// <summary>
+        /// The repository.
+        /// </summary>
         private readonly IRepository repository;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TagsService"/> class.
+        /// </summary>
+        /// <param name="repository">The repository.</param>
         public TagsService(IRepository repository)
         {
             this.repository = repository;
         }
 
+        /// <summary>
+        /// Gets the tags list.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        ///   <c>GetTagsResponse</c> with tags list.
+        /// </returns>
         public GetTagsResponse Get(GetTagsRequest request)
         {
             request.Data.SetDefaultOrder("Name");
@@ -40,6 +57,19 @@ namespace BetterCms.Module.Api.Operations.Root.Tags
                        {
                            Data = listResponse
                        };
+        }
+
+        /// <summary>
+        /// Creates a new tag.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        ///   <c>PostTagsResponse</c> with a new tag id.
+        /// </returns>
+        public PostTagsResponse Post(PostTagsRequest request)
+        {
+            // TODO: implement.
+            throw new System.NotImplementedException();
         }
     }
 }
