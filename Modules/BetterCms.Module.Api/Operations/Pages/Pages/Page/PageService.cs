@@ -140,7 +140,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
                 if (request.PageId.HasValue && !request.PageId.Value.HasDefaultValue())
                 {
                     page.Id = request.PageId.Value;
-                    page.AllowCustomId = true;
                 };
             }
 

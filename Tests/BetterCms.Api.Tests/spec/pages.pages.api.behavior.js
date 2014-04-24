@@ -80,7 +80,7 @@ describe('pages.pages.api.behavior', function () {
         });
     });
 
-    it('01002: Should get page by id', function() {
+    it('01002.1: Should get page by id', function() {
         var url = '/bcms-api/pages/' + constants.testPageId,
             result,
             ready = false;
@@ -104,7 +104,7 @@ describe('pages.pages.api.behavior', function () {
         });
     });
 
-    it('11002: Should put page', function() {
+    it('01002.2: Should put page', function () {
         var url = '/bcms-api/pages/' + constants.testPage2Id,
             pageData = {
                 categoryId: "ec47e20d16ff4e588dafa20400b92736",
@@ -154,7 +154,7 @@ describe('pages.pages.api.behavior', function () {
         });
     });
 
-    it('21002: Should delete page', function() {
+    it('01002.3: Should delete page', function () {
         var url = '/bcms-api/pages/' + constants.testPage2Id,
             result,
             ready = false;

@@ -64,8 +64,6 @@ namespace BetterCms.Module.Root.ViewModels.Cms
 
         public int Version { get; set; }
 
-        public bool AllowCustomId { get; set; }
-
         public DateTime CreatedOn { get; set; }
         
         public DateTime ModifiedOn { get; set; }

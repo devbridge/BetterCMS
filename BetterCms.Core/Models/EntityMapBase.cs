@@ -1,39 +1,9 @@
-using System.Collections.Generic;
-
 using BetterCms.Core.DataContracts;
 
 using FluentNHibernate.Mapping;
 
-using NHibernate.Dialect;
-using NHibernate.Engine;
-using NHibernate.Id;
-using NHibernate.Type;
-
 namespace BetterCms.Core.Models
 {
-    class IdentifierGenerator : IIdentifierGenerator, IConfigurable
-    {
-        private readonly Assigned assignedGenerator = new Assigned();
-        private readonly GuidCombGenerator guidCombGenerator = new GuidCombGenerator();
-
-        public object Generate(ISessionImplementor session, object obj)
-        {
-            var entity = obj as IEntity;
-
-            if (entity != null && entity.AllowCustomId)
-            {
-                return assignedGenerator.Generate(session, obj);
-            }
-
-            return guidCombGenerator.Generate(session, obj);
-        }
-
-        public void Configure(IType type, IDictionary<string, string> parms, Dialect dialect)
-        {
-            assignedGenerator.Configure(type, parms, dialect);
-        }
-    }
-
     /// <summary>
     /// Fluent nHibernate entity map base class.
     /// </summary>
@@ -61,8 +31,7 @@ namespace BetterCms.Core.Models
 
             Schema(SchemaName);
 
-//            Id(x => x.Id).GeneratedBy.GuidComb();
-            Id(x => x.Id).GeneratedBy.Custom<IdentifierGenerator>();
+            Id(x => x.Id).GeneratedBy.Custom<EntityIdGenerator>();
 
             Map(x => x.IsDeleted).Not.Nullable();
             

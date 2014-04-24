@@ -178,8 +178,6 @@ namespace BetterCms.Module.Root.ViewModels.Option
             }
         }
 
-        public bool AllowCustomId { get; set; }
-
         #endregion
     }
 }
