@@ -5,10 +5,10 @@ using BetterCms.Module.Api.Infrastructure;
 namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
 {
     /// <summary>
-    /// Response with tag data.
+    /// Response for tag delete operation.
     /// </summary>
     [DataContract]
-    public class GetTagResponse : ResponseBase<TagModel>
+    public class DeleteTagResponse : ResponseBase<bool>
     {
     }
 }

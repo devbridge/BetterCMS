@@ -134,4 +134,162 @@ describe('root.tags.api.behavior', function () {
             api.expectValidationExceptionIsThrown(result, 'TagId');
         });
     });
+
+    it('00204: Should create a tag via POST.', function() {
+        var url = '/bcms-api/tags/',
+            data = {
+                name: "Tag for test 00204",
+            },
+            result,
+            ready = false;
+
+        runs(function () {
+            api.post(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+        });
+    });
+
+    it('00205: Should create a tag via PUT.', function() {
+        var url = '/bcms-api/tags/' + '4890775965af495db5d79a1c3be2ff55',
+            data = {
+                version: 1,
+                name: "Tag for test 00205",
+            },
+            result,
+            ready = false;
+
+        runs(function () {
+            api.put(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data).toEqual('4890775965af495db5d79a1c3be2ff55', 'Updated item id should be retrieved.');
+        });
+    });
+
+    it('00206: Should rename a tag.', function() {
+        var url = '/bcms-api/tags/' + '4890775965af495db5d79a1c3be2ff55',
+            data = {
+                version: 1,
+                name: "Tag for test 00206",
+            },
+            result,
+            ready = false;
+
+        runs(function () {
+            api.put(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data).toEqual('4890775965af495db5d79a1c3be2ff55', 'Updated item id should be retrieved.');
+        });
+    });
+
+    it('00207: Should throw validation exception for a tag rename.', function() {
+        var url = '/bcms-api/tags/' + '4890775965af495db5d79a1c3be2ff55',
+            data = {
+                version: 1,
+                name: "",
+            },
+            result,
+            ready = false;
+
+        runs(function () {
+            api.put(url, data, null, function (response) {
+                result = response.responseJSON;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            api.expectValidationExceptionIsThrown(result, 'Data.Name', null, 'NotEmpty');
+        });
+    });
+
+    it('00208: Should throw validation exception for a tag rename.', function () {
+        var url = '/bcms-api/tags/' + '4890775965af495db5d79a1c3be2ff55',
+            data = {
+                version: 1,
+                name: "Tag for test 00204",
+            },
+            result,
+            ready = false;
+
+        runs(function () {
+            api.put(url, data, null, function (response) {
+                result = response.responseJSON;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.responseStatus).toBeDefinedAndNotNull('JSON responseStatus object should be retrieved.');
+            expect(result.responseStatus.errorCode).toBe('CmsApiValidationException', 'Correct error code \"CmsApiValidationException\" should be retrieved.');
+            expect(result.responseStatus.message).toBe("Failed to rename tag. Tag with the same name already exists. Name: 'Tag for test 00204'.", 'Correct error message \"Failed to rename tag...\" should be retrieved.');
+        });
+    });
+
+    it('00209: Should delete a tag.', function() {
+        var url = '/bcms-api/tags/' + '4890775965af495db5d79a1c3be2ff55',
+            data = {
+                version: 2
+            },
+            result,
+            ready = false;
+
+        runs(function () {
+            api.delete(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data).toEqual(true, 'TRUE should be retrieved.');
+        });
+    });
 });

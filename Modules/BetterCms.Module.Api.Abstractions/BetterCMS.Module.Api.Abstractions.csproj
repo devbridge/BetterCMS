@@ -83,6 +83,7 @@
     <Compile Include="Infrastructure\ListResponseBase.cs" />
     <Compile Include="Infrastructure\ModelBase.cs" />
     <Compile Include="Infrastructure\OrderItem.cs" />
+    <Compile Include="Infrastructure\RequestDeleteModel.cs" />
     <Compile Include="Infrastructure\RequestBase.cs" />
     <Compile Include="Infrastructure\ResponseBase.cs" />
     <Compile Include="Operations\Pages\Pages\Page\DeletePageRequest.cs" />
@@ -292,7 +293,12 @@
     <Compile Include="Operations\Root\OptionType.cs" />
     <Compile Include="Operations\Root\Tags\PostTagsRequest.cs" />
     <Compile Include="Operations\Root\Tags\PostTagsResponse.cs" />
+    <Compile Include="Operations\Root\Tags\PostTagsRequestValidator.cs" />
+    <Compile Include="Operations\Root\Tags\Tag\PutTagRequestValidator.cs" />
+    <Compile Include="Operations\Root\Tags\Tag\DeleteTagRequestValidator.cs" />
     <Compile Include="Operations\Root\Tags\Tag\GetTagRequestValidator.cs" />
+    <Compile Include="Operations\Root\Tags\Tag\DeleteTagRequest.cs" />
+    <Compile Include="Operations\Root\Tags\Tag\DeleteTagResponse.cs" />
     <Compile Include="Operations\Users\Roles\GetRolesRequest.cs" />
     <Compile Include="Operations\Users\Roles\GetRolesResponse.cs" />
     <Compile Include="Operations\Users\Roles\IRolesService.cs" />

@@ -10,15 +10,15 @@ namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
     /// <summary>
     /// Request for tag update or creation.
     /// </summary>
-    [Route("/tags/{TagId}", Verbs = "PUT")]
+    [Route("/tags/{TagId}", Verbs = "DELETE")]
     [DataContract]
-    public class PutTagRequest : RequestBase<TagModel>, IReturn<PutTagResponse>
+    public class DeleteTagRequest : RequestBase<RequestDeleteModel>, IReturn<DeleteTagResponse>
     {
         /// <summary>
-        /// Gets or sets the tag identifier.
+        /// Gets or sets the identifier.
         /// </summary>
         /// <value>
-        /// The tag identifier.
+        /// The identifier.
         /// </value>
         [DataMember]
         public Guid? TagId

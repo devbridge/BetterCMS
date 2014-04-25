@@ -27,6 +27,6 @@
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>DeleteTagResponse</c> with success status.</returns>
-        //TODO: DeleteTagResponse Delete(DeleteTagRequest request);
+        DeleteTagResponse Delete(DeleteTagRequest request);
     }
 }

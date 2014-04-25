@@ -3,11 +3,13 @@
 using BetterCms.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Root.Tags.Tag;
 
 using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Root.Tags
 {
+
     /// <summary>
     /// Tags service contract implementation for REST.
     /// </summary>
@@ -19,12 +21,19 @@ namespace BetterCms.Module.Api.Operations.Root.Tags
         private readonly IRepository repository;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TagsService"/> class.
+        /// The tag service.
+        /// </summary>
+        private readonly ITagService tagService;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TagsService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
-        public TagsService(IRepository repository)
+        /// <param name="tagService">The tag service.</param>
+        public TagsService(IRepository repository, ITagService tagService)
         {
             this.repository = repository;
+            this.tagService = tagService;
         }
 
         /// <summary>
@@ -68,8 +77,15 @@ namespace BetterCms.Module.Api.Operations.Root.Tags
         /// </returns>
         public PostTagsResponse Post(PostTagsRequest request)
         {
-            // TODO: implement.
-            throw new System.NotImplementedException();
+            var result =
+                tagService.Put(
+                    new PutTagRequest
+                        {
+                            Data = request.Data,
+                            User = request.User
+                        });
+
+            return new PostTagsResponse { Data = result.Data };
         }
     }
 }

@@ -55,6 +55,29 @@ var api = (function() {
         return new Date(+parts[1]);// + offset + parts[2] * 3600000 + parts[3] * 60000);
     };
 
+    obj.post = function (url, data, onSuccess, onError) {
+        obj.postSecured(url, data, null, onSuccess, onError);
+    };
+
+    obj.postSecured = function (url, data, user, onSuccess, onError) {
+        var options = {
+            type: 'POST',
+            data: JSON.stringify({ Data: data || {}, User: user || {} }),
+            cache: false,
+            async: false,
+            contentType: 'application/json',
+            dataType: 'json',
+            success: onSuccess,
+            error: onError,
+            beforeSend: function (request) {
+                // Hack for phantomjs runner (it ignores a regularly provided contentType).
+                request.setRequestHeader("X-Content-Type", "application/json");
+            },
+        };
+
+        $.ajax(url, options);
+    }
+
     obj.put = function (url, data, onSuccess, onError) {
         obj.putSecured(url, data, null, onSuccess, onError);
     };
@@ -125,10 +148,10 @@ var api = (function() {
     /**
     * Checks if validation exception is thrown
     */
-    obj.expectValidationExceptionIsThrown = function (result, fieldName, errorMessage) {
+    obj.expectValidationExceptionIsThrown = function (result, fieldName, errorMessage, errorCode) {
         expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
         expect(result.responseStatus).toBeDefinedAndNotNull('JSON responseStatus object should be retrieved.');
-        expect(result.responseStatus.errorCode).toBe('Predicate', 'Correct error code \"Predicate\" should be retrieved.');
+        expect(result.responseStatus.errorCode).toBe(errorCode || 'Predicate', 'Correct error code \"' + (errorCode || 'Predicate') + '\" should be retrieved.');
         expect(result.responseStatus.errors).toBeDefinedAndNotNull('responseStatus.errors should be retrieved.');
         expect(result.responseStatus.errors.length).toBeGreaterThan(0, 'responseStatus.errors should not be empty.');
         expect(result.responseStatus.errors[0].fieldName).toBe(fieldName, errorMessage || fieldName + ' should be invalidated.');
