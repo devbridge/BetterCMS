@@ -47,7 +47,7 @@
         <table class="bcms-tables">
             <thead>
                 <tr>
-                    <th class="bcms-tables-nohover">&nbsp;</th>
+                    <th class="bcms-tables-nohover" style="padding-left: 10px;"><input type="checkbox" data-bind="visible: !finished(), checked: checkedAll" /></th>
                     <th class="bcms-tables-nohover">@BlogGlobalization.ImportBlogPosts_Results_Title_Title</th>
                     <th class="bcms-tables-nohover">@BlogGlobalization.ImportBlogPosts_Results_Url_Title</th>
                     <th class="bcms-tables-nohover">&nbsp;</th>
@@ -55,17 +55,20 @@
             </thead>
             <tbody>
                 <!-- ko foreach: results() -->
-                <tr data-bind="css: {'bcms-import-failed' : !success, 'bcms-import-success': success && $parent.finished()}">
+                <tr data-bind="css: {'bcms-import-failed' : !success, 'bcms-import-success': success && $parent.finished() && !skipped}">
                     <td class="bcms-tables-nohover">
-                        <input type="checkbox" data-bind="visible: success && !$parent.finished(), checked: success" />
+                        <input type="checkbox" data-bind="visible: success && !$parent.finished(), checked: checked" />
                     </td>
                     <td class="bcms-tables-nohover" data-bind="html: title, attr: {title: title}"></td>
                     <td class="bcms-tables-nohover">
                         <!-- ko if: success && !$parent.finished() -->
                         <span data-bind="text: url, attr: {title: url}"></span>
                         <!-- /ko -->
-                        <!-- ko if: success && $parent.finished() -->
+                        <!-- ko if: success && $parent.finished() && !skipped -->
                         <a data-bind="text: url, attr: {title: url, href: url}" target="_blank"></a>
+                        <!-- /ko -->
+                        <!-- ko if: success && $parent.finished() && skipped -->
+                        @BlogGlobalization.ImportBlogPosts_Skipped_Title
                         <!-- /ko -->
                         <!-- ko if: !success -->
                         <span class="bcms-import-error" data-bind="text: errorMessage, attr: {title: errorMessage}"></span>
@@ -73,8 +76,8 @@
                     </td>
                     <td class="bcms-tables-nohover">
                         <div data-bind="attr: { title: errorMessage || warnMessage || '' }, css: {
-                            'bcms-icn-import-success': success && !warnMessage, 
-                            'bcms-icn-import-warn': success && warnMessage, 
+                            'bcms-icn-import-success': success && !warnMessage && !skipped,
+                            'bcms-icn-import-warn': success && warnMessage && !skipped,
                             'bcms-icn-import-error': !success }"></div>
                     </td>
                 </tr>

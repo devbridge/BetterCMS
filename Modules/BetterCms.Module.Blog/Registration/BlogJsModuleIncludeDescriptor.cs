@@ -50,7 +50,7 @@ namespace BetterCms.Module.Blog.Registration
                             new JavaScriptModuleGlobalization(this, "uploadButtonTitle", () => BlogGlobalization.ImportBlogPosts_UploadButton_Title),
                             new JavaScriptModuleGlobalization(this, "importButtonTitle", () => BlogGlobalization.ImportBlogPosts_ImportButton_Title),
                             new JavaScriptModuleGlobalization(this, "closeButtonTitle", () => RootGlobalization.Button_Close),
-                            new JavaScriptModuleGlobalization(this, "noBlogPostsSelectedToImport", () => BlogGlobalization.ImportBlogPosts_NoBlogPostSelected_Message),
+                            new JavaScriptModuleGlobalization(this, "noBlogPostsSelectedToImport", () => BlogGlobalization.ImportBlogPosts_NoBlogPostSelected_Message)
                         };
         }
     }

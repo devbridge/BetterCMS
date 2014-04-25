@@ -686,6 +686,17 @@ namespace BetterCms.Module.Blog.Content.Resources
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Skipped import.
+        /// </summary>
+        public static string ImportBlogPosts_Skipped_Title
+        {
+            get
+            {
+                return ResourceManager.GetString("ImportBlogPosts_Skipped_Title", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Upload.
         /// </summary>
         public static string ImportBlogPosts_UploadButton_Title

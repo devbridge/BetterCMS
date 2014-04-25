@@ -387,4 +387,7 @@
   <data name="ImportBlogPosts_RedirectWasAlreadyCreatedFor_Message" xml:space="preserve">
     <value>Redirect for URL "{0}" wasn't created, because it already exists.</value>
   </data>
+  <data name="ImportBlogPosts_Skipped_Title" xml:space="preserve">
+    <value>Skipped import</value>
+  </data>
 </root>
