@@ -125,6 +125,17 @@ namespace BetterCms.Module.Blog.Content.Resources
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Blog post meta title maximum length ({1}) exceeded..
+        /// </summary>
+        public static string BlogPost_MetaTitle_MaxLengthMessage
+        {
+            get
+            {
+                return ResourceManager.GetString("BlogPost_MetaTitle_MaxLengthMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Blog post title maximum length ({1}) exceeded..
         /// </summary>
         public static string BlogPost_Title_MaxLengthMessage

@@ -103,6 +103,7 @@ namespace BetterCms.Module.Blog.Services
             var model = new BlogPostViewModel
                     {
                         Title = blogML.PostName ?? blogML.Title,
+                        MetaTitle = blogML.Title,
                         IntroText = blogML.Excerpt != null ? blogML.Excerpt.UncodedText : null,
                         LiveFromDate = blogML.DateCreated.Date,
                         LiveToDate = null,
@@ -131,7 +132,7 @@ namespace BetterCms.Module.Blog.Services
             {
                 failedResult = new BlogPostImportResult
                 {
-                    Title = blogML.Title,
+                    Title = blogML.PostName ?? blogML.Title,
                     PageUrl = blogML.PostUrl,
                     Success = false,
                     ErrorMessage = BlogGlobalization.ImportBlogPosts_ImportingBlogPostIdIsNotSet_Message,
@@ -147,7 +148,7 @@ namespace BetterCms.Module.Blog.Services
             {
                 failedResult = new BlogPostImportResult
                     {
-                        Title = blogML.Title,
+                        Title = blogML.PostName ?? blogML.Title,
                         PageUrl = blogML.PostUrl,
                         Success = false,
                         ErrorMessage = validationResults[0].ErrorMessage,
@@ -164,7 +165,7 @@ namespace BetterCms.Module.Blog.Services
             {
                 failedResult = new BlogPostImportResult
                 {
-                    Title = blogML.Title,
+                    Title = blogML.PostName ?? blogML.Title,
                     PageUrl = blogML.PostUrl,
                     Success = false,
                     ErrorMessage = exc.Message,
@@ -197,7 +198,7 @@ namespace BetterCms.Module.Blog.Services
 
                     blogPost = new BlogPostImportResult
                         {
-                            Title = blogPostModel.Title,
+                            Title = blogML.PostName ?? blogML.Title,
                             PageUrl = blogPostModel.BlogUrl,
                             Success = true,
                             Id = blogML.ID
@@ -278,7 +279,7 @@ namespace BetterCms.Module.Blog.Services
                         
                         blogPostResult = new BlogPostImportResult
                                 {
-                                    Title = blogPost.Title, 
+                                    Title = blogML.PostName ?? blogML.Title, 
                                     PageUrl = blogPost.PageUrl, 
                                     Id = blogPost.Id.ToString(), 
                                     Success = true
@@ -313,7 +314,7 @@ namespace BetterCms.Module.Blog.Services
                     {
                         var failedBlogPost = new BlogPostImportResult
                                              {
-                                                 Title = blogML.Title,
+                                                 Title = blogML.PostName ?? blogML.Title,
                                                  PageUrl = blogML.PostUrl, 
                                                  Success = false,
                                                  ErrorMessage = exc.Message,

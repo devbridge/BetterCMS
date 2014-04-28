@@ -245,7 +245,7 @@ namespace BetterCms.Module.Blog.Services
                     blogPost.PageUrl = CreateBlogPermalink(request.Title);
                 }
 
-                blogPost.MetaTitle = request.Title;
+                blogPost.MetaTitle = request.MetaTitle ?? request.Title;
                 if (masterPage != null)
                 {
                     blogPost.MasterPage = masterPage;

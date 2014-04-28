@@ -390,4 +390,7 @@
   <data name="ImportBlogPosts_Skipped_Title" xml:space="preserve">
     <value>Skipped import</value>
   </data>
+  <data name="BlogPost_MetaTitle_MaxLengthMessage" xml:space="preserve">
+    <value>Blog post meta title maximum length ({1}) exceeded.</value>
+  </data>
 </root>
