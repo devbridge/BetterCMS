@@ -26,7 +26,7 @@
                 <div id="bcms-files-dropzone" class="bcms-dropzone">
                     <div class="bcms-dropzone-infotext">@BlogGlobalization.ImportBlogPosts_File_Description</div>
                     <div class="bcms-btn-upload-files">
-                        <label for="uploadFile" class="bcms-btn-upload-files-text" data-bind="text: fileName() || '@BlogGlobalization.ImportBlogPosts_File_ButtonTitle'"></label>
+                        <label for="uploadFile" class="bcms-btn-upload-files-text" data-bind="text: fixedFileName() || '@BlogGlobalization.ImportBlogPosts_File_ButtonTitle'"></label>
                         <input type="file" name="uploadFile" id="uploadFile" style="position: absolute; left: -999em; top: -999em;" data-bind="value: fileName" />
                     </div>
                 </div>
