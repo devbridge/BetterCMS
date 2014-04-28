@@ -145,7 +145,7 @@ namespace BetterCms.Module.Blog.Services
             }
             else
             {
-                model.BlogUrl = blogService.CreateBlogPermalink(blogML.Title, unsavedUrls);
+                model.BlogUrl = blogService.CreateBlogPermalink(blogML.PostName ?? blogML.Title, unsavedUrls);
             }
 
             return model;
