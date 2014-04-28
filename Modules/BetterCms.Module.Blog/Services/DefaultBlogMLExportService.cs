@@ -38,7 +38,7 @@ namespace BetterCms.Module.Blog.Services
         /// </returns>
         public string ExportBlogPosts(List<BlogPost> postsToExport)
         {
-            this.posts = postsToExport;
+            posts = postsToExport;
 
             var builder = new StringBuilder();
             var xml = XmlWriter.Create(builder);
@@ -50,7 +50,7 @@ namespace BetterCms.Module.Blog.Services
 
         protected override void InternalWriteBlog()
         {
-            WriteStartBlog("Better CMS", ContentTypes.Text, "Better CMS", ContentTypes.Text, httpContextAccessor.MapPath("/"), GetMinBlogPostDate());
+            WriteStartBlog("Better CMS", ContentTypes.Text, "Better CMS", ContentTypes.Text, httpContextAccessor.MapPath("/") ?? "/", GetMinBlogPostDate());
 
             WriteAuthors();
             WriteCategories();
