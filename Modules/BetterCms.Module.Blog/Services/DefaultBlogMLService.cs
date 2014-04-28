@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Principal;
+using System.Text;
 using System.Web;
+using System.Xml;
+using System.Xml.Schema;
 
 using BetterCms.Configuration;
 using BetterCms.Core.DataAccess;
@@ -19,10 +23,12 @@ using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
+using BlogML;
 using BlogML.Xml;
 
 using Common.Logging;
 
+using TypeHelperExtensionMethods = NHibernate.Linq.TypeHelperExtensionMethods;
 using ValidationException = BetterCms.Core.Exceptions.Mvc.ValidationException;
 
 namespace BetterCms.Module.Blog.Services
@@ -80,14 +86,35 @@ namespace BetterCms.Module.Blog.Services
 
         public BlogMLBlog DeserializeXMLStream(Stream stream)
         {
+            try
+            {
+                stream.Position = 0;
+
+                XmlReaderSettings readerSettings = new XmlReaderSettings();
+                readerSettings.ConformanceLevel = ConformanceLevel.Document;
+                readerSettings.CheckCharacters = true;
+                readerSettings.ValidationType = ValidationType.None;
+
+                var xmlReader = XmlReader.Create(stream, readerSettings);
+                XmlDocument xdoc = new XmlDocument();
+                xdoc.Load(xmlReader);
+            }
+            catch (Exception exc)
+            {
+                var message = BlogGlobalization.ImportBlogPosts_FileIsNotValidXML_Message;
+                var logMessage = "Provided file is not a valid XML file.";
+                throw new ValidationException(() => message, logMessage, exc);
+            }
+
             BlogMLBlog blogPosts;
             try
             {
+                stream.Position = 0;
                 blogPosts = BlogMLSerializer.Deserialize(stream);
             }
             catch (Exception exc)
             {
-                var message = "Failed to deserialize XML file";
+                var message = BlogGlobalization.ImportBlogPosts_FailedToDeserializeXML_Message;
                 var logMessage = "Failed to deserialize provided XML file.";
                 throw new ValidationException(() => message, logMessage, exc);
             }
@@ -205,6 +232,21 @@ namespace BetterCms.Module.Blog.Services
                         };
                     result.Add(blogPost);
                 }
+
+                // Validate for duplicate IDS
+                result
+                    .Where(bp => bp.Success)
+                    .GroupBy(bp => bp.Id)
+                    .Where(group => group.Count() > 1)
+                    .ToList()
+                    .ForEach(group => group
+                        .ToList()
+                        .ForEach(
+                            bp =>
+                            {
+                                bp.Success = false;
+                                bp.ErrorMessage = string.Format(BlogGlobalization.ImportBlogPosts_DuplicateId_Message, group.Key);
+                            }));
             }
 
             return result;

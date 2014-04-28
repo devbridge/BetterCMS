@@ -532,6 +532,28 @@ namespace BetterCms.Module.Blog.Content.Resources
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Sample import XML file.
+        /// </summary>
+        public static string ImportBlogPosts_DownloadSampleFile_Title
+        {
+            get
+            {
+                return ResourceManager.GetString("ImportBlogPosts_DownloadSampleFile_Title", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Duplicate ID found ({0})!.
+        /// </summary>
+        public static string ImportBlogPosts_DuplicateId_Message
+        {
+            get
+            {
+                return ResourceManager.GetString("ImportBlogPosts_DuplicateId_Message", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Failed to create a redirect. Invalid URL &quot;{0}&quot;..
         /// </summary>
         public static string ImportBlogPosts_FailedToCreateRedirectFor_Message
@@ -539,6 +561,17 @@ namespace BetterCms.Module.Blog.Content.Resources
             get
             {
                 return ResourceManager.GetString("ImportBlogPosts_FailedToCreateRedirectFor_Message", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to deserialize provided XML file..
+        /// </summary>
+        public static string ImportBlogPosts_FailedToDeserializeXML_Message
+        {
+            get
+            {
+                return ResourceManager.GetString("ImportBlogPosts_FailedToDeserializeXML_Message", resourceCulture);
             }
         }
 
@@ -583,6 +616,17 @@ namespace BetterCms.Module.Blog.Content.Resources
             get
             {
                 return ResourceManager.GetString("ImportBlogPosts_File_Description", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Provided file is not a valid XML file..
+        /// </summary>
+        public static string ImportBlogPosts_FileIsNotValidXML_Message
+        {
+            get
+            {
+                return ResourceManager.GetString("ImportBlogPosts_FileIsNotValidXML_Message", resourceCulture);
             }
         }
 

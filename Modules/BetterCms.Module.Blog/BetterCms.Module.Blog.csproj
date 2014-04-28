@@ -211,6 +211,7 @@
     <Content Include="BuildConfiguration.xml" />
     <EmbeddedResource Include="Scripts\bcms.blog.filter.js" />
     <EmbeddedResource Include="Models\Migrations\Migration201305271258.sqlserver.sql" />
+    <EmbeddedResource Include="Content\example.blog.post.import.xml" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
