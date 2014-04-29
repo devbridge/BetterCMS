@@ -862,18 +862,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                             }
                         });
 
-                        // Do not use jQuery - only this way works on IE
-                        // dom = iframe.get(0);
-                        // dom.onload = onLoadCallback;
                         iframe.on('load', onLoadCallback);
-//
-//                        setTimeout(function() {
-//                            if (dom.attachEvent) {
-//                                dom.attachEvent('onload', onLoadCallback);
-//                            } else {
-//                                dom.addEventListener('load', onLoadCallback, true);
-//                            }
-//                        }, 1000);
 
                         ko.applyBindings(importModel, form.get(0));
                     },
@@ -897,7 +886,9 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
 
                                 if (item.success && !item.skipped) {
                                     for (j = 0; j < json.Data.Results.length; j++) {
-                                        if (json.Data.Results[j].PageUrl == item.url) {
+                                        if (json.Data.Results[j].PageUrl == item.url
+                                            // When exception occurs before calculating URL
+                                            || (item.id && (item.id == json.Data.Results[j].Id))) {
                                             item = new ImportResultViewModel(json.Data.Results[j]);
                                             break;
                                         }

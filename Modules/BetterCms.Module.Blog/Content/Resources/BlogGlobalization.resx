@@ -408,4 +408,10 @@
   <data name="SiteSettings_Blogs_Export" xml:space="preserve">
     <value>Export</value>
   </data>
+  <data name="ImportBlogPosts_AuthorByRefNotFound_Message" xml:space="preserve">
+    <value>Author with ID "{0}" wasn't found in the list of importing authors</value>
+  </data>
+  <data name="ImportBlogPosts_CategoryByRefNotFound_Message" xml:space="preserve">
+    <value>Category with ID "{0}" wasn't found in the list of importing categories</value>
+  </data>
 </root>

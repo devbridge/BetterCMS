@@ -510,6 +510,28 @@ namespace BetterCms.Module.Blog.Content.Resources
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Author with ID {0} wasn&apos;t found in the list of importing authors.
+        /// </summary>
+        public static string ImportBlogPosts_AuthorByRefNotFound_Message
+        {
+            get
+            {
+                return ResourceManager.GetString("ImportBlogPosts_AuthorByRefNotFound_Message", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Category with ID {0} wasn&apos;t found in the list of importing categories.
+        /// </summary>
+        public static string ImportBlogPosts_CategoryByRefNotFound_Message
+        {
+            get
+            {
+                return ResourceManager.GetString("ImportBlogPosts_CategoryByRefNotFound_Message", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Create redirects.
         /// </summary>
         public static string ImportBlogPosts_CreateRedirects_Title
