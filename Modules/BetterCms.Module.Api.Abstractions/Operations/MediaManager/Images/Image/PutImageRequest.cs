@@ -4,35 +4,36 @@ using System.Runtime.Serialization;
 using BetterCms.Module.Api.Infrastructure;
 
 using ServiceStack.ServiceHost;
-using ServiceStack.ServiceInterface;
 
-namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
+namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
 {
     /// <summary>
     /// Request for tag update or creation.
     /// </summary>
-    [Route("/tags/{TagId}", Verbs = "PUT")]
+    [Route("/images/{ImageId}", Verbs = "PUT")]
     [DataContract]
-    public class PutTagRequest : RequestBase<TagModel>, IReturn<PutTagResponse>
+    public class PutImageRequest : RequestBase<ImageModel>, IReturn<PutImageResponse>
     {
         /// <summary>
-        /// Gets or sets the tag identifier.
+        /// Gets or sets the image identifier.
         /// </summary>
         /// <value>
-        /// The tag identifier.
+        /// The image identifier.
         /// </value>
         [DataMember]
-        public Guid? TagId
+        public Guid? ImageId
         {
             get
             {
-                return Data.Id;
+                return this.Data.Id;
             }
 
             set
             {
-                Data.Id = value.HasValue ? value.Value : Guid.Empty;
+                this.Data.Id = value.HasValue ? value.Value : Guid.Empty;
             }
         }
+
+        // TODO: add tags.
     }
 }

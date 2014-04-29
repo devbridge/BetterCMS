@@ -349,6 +349,192 @@ describe('media.images.api.behavior', function () {
         });
     });
 
+    it('03212: Should create an image via POST.', function () {
+        var url = '/bcms-api/images/',
+            data = {
+                title: "Road",
+                description: "Road to the future of futures.",
+                caption: "Road to the future.",
+                fileExtension: ".jpg",
+                fileSize: 500,
+                imageUrl: "http://jobtrakr.files.wordpress.com/2011/10/road-map.jpg",
+                width: 1920,
+                height: 1200,
+                thumbnailUrl: "http://alexascordato.com/wp-content/uploads/2009/06/road-to-success-small.jpg",
+                thumbnailWidth: 640,
+                thumbnailHeight: 480,
+                thumbnailSize: 300,
+                isArchived: false,
+                folderId: null,
+                publishedOn: "2013-07-26T11:45:34.0000000",
+                originalFileName: "road-map.jpg",
+                originalFileExtension: ".jpg",
+                originalWidth: 1900,
+                originalHeight: 1200,
+                originalSize: 500,
+                originalUrl: "http://jobtrakr.files.wordpress.com/2011/10/road-map.jpg",
+
+                fileUri: "http://jobtrakr.files.wordpress.com/2011/10/road-map.jpg",
+                isUploaded: true,
+                isTemporary: false,
+                isCanceled: false,
+                ThumbnailUri: "http://alexascordato.com/wp-content/uploads/2009/06/road-to-success-small.jpg",
+                OriginalUri:"http://jobtrakr.files.wordpress.com/2011/10/road-map.jpg",
+            },
+            result,
+            ready = false;
+
+        runs(function () {
+            api.post(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+        });
+    });
+
+    it('03213: Should create an image via PUT.', function () {
+        var url = '/bcms-api/images/' + '0b387bc140ce4829ac35d3a857cbaf4d',
+            data = {
+                version: 1,
+                title: "Road",
+                description: "Road to the future of futures.",
+                caption: "Road to the future.",
+                fileExtension: ".jpg",
+                fileSize: 500,
+                imageUrl: "http://jobtrakr.files.wordpress.com/2011/10/road-map.jpg",
+                width: 1920,
+                height: 1200,
+                thumbnailUrl: "http://alexascordato.com/wp-content/uploads/2009/06/road-to-success-small.jpg",
+                thumbnailWidth: 640,
+                thumbnailHeight: 480,
+                thumbnailSize: 300,
+                isArchived: false,
+                folderId: null,
+                publishedOn: "2013-07-26T11:45:34.0000000",
+                originalFileName: "road-map.jpg",
+                originalFileExtension: ".jpg",
+                originalWidth: 1900,
+                originalHeight: 1200,
+                originalSize: 500,
+                originalUrl: "http://jobtrakr.files.wordpress.com/2011/10/road-map.jpg",
+
+                fileUri: "http://jobtrakr.files.wordpress.com/2011/10/road-map.jpg",
+                isUploaded: true,
+                isTemporary: false,
+                isCanceled: false,
+                ThumbnailUri: "http://alexascordato.com/wp-content/uploads/2009/06/road-to-success-small.jpg",
+                OriginalUri: "http://jobtrakr.files.wordpress.com/2011/10/road-map.jpg",
+            },
+            result,
+            ready = false;
+
+        runs(function () {
+            api.put(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data).toEqual('0b387bc140ce4829ac35d3a857cbaf4d', 'Updated item id should be retrieved.');
+        });
+    });
+
+    it('03214: Should update an image.', function () {
+        var url = '/bcms-api/images/' + '0b387bc140ce4829ac35d3a857cbaf4d',
+            data = {
+                version: 1,
+                title: "Road 2",
+                description: "Road to the future of futures.",
+                caption: "Road to the future.",
+                fileExtension: ".jpg",
+                fileSize: 500,
+                imageUrl: "http://jobtrakr.files.wordpress.com/2011/10/road-map.jpg",
+                width: 1920,
+                height: 1200,
+                thumbnailUrl: "http://alexascordato.com/wp-content/uploads/2009/06/road-to-success-small.jpg",
+                thumbnailWidth: 640,
+                thumbnailHeight: 480,
+                thumbnailSize: 300,
+                isArchived: false,
+                folderId: null,
+                publishedOn: "2013-07-26T11:45:34.0000000",
+                originalFileName: "road-map.jpg",
+                originalFileExtension: ".jpg",
+                originalWidth: 1900,
+                originalHeight: 1200,
+                originalSize: 500,
+                originalUrl: "http://jobtrakr.files.wordpress.com/2011/10/road-map.jpg",
+
+                fileUri: "http://jobtrakr.files.wordpress.com/2011/10/road-map.jpg",
+                isUploaded: true,
+                isTemporary: false,
+                isCanceled: false,
+                ThumbnailUri: "http://alexascordato.com/wp-content/uploads/2009/06/road-to-success-small.jpg",
+                OriginalUri: "http://jobtrakr.files.wordpress.com/2011/10/road-map.jpg",
+            },
+            result,
+            ready = false;
+
+        runs(function () {
+            api.put(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data).toEqual('0b387bc140ce4829ac35d3a857cbaf4d', 'Updated item id should be retrieved.');
+        });
+    });
+
+    it('03215: Should delete an image.', function () {
+        var url = '/bcms-api/images/' + '0b387bc140ce4829ac35d3a857cbaf4d',
+            data = {
+                version: 2
+            },
+            result,
+            ready = false;
+
+        runs(function () {
+            api.delete(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data).toEqual(true, 'TRUE should be retrieved.');
+        });
+    });
+
     function runImagesListTests(data, expectingResults) {
         var url = '/bcms-api/images/',
             result,

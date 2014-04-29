@@ -11,7 +11,7 @@ namespace BetterCms.Module.Api.Operations.Root.Tags
 {
 
     /// <summary>
-    /// Tags service contract implementation for REST.
+    /// Default tags service contract implementation for REST.
     /// </summary>
     public class TagsService : Service, ITagsService
     {

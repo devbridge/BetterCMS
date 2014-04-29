@@ -3,6 +3,7 @@
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Api;
+using BetterCms.Core.Exceptions.Service;
 using BetterCms.Module.Root.Mvc;
 
 using NHibernate.Linq;
@@ -151,8 +152,10 @@ namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
                 return new DeleteTagResponse { Data = false };
             }
 
-            repository.Delete<Module.Root.Models.Tag>(request.Data.Id, request.Data.Version);
+            var tag = repository.Delete<Module.Root.Models.Tag>(request.Data.Id, request.Data.Version);
             unitOfWork.Commit();
+
+            Events.RootEvents.Instance.OnTagDeleted(tag);
 
             return new DeleteTagResponse { Data = true };
         }

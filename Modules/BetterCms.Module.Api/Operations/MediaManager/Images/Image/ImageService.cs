@@ -6,23 +6,52 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
+using BetterCms.Module.Root.Mvc;
 
 using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
 {
+    /// <summary>
+    /// Default image CRUD service.
+    /// </summary>
     public class ImageService : Service, IImageService
     {
+        /// <summary>
+        /// The repository.
+        /// </summary>
         private readonly IRepository repository;
 
+        /// <summary>
+        /// The unit of work.
+        /// </summary>
+        private readonly IUnitOfWork unitOfWork;
+
+        /// <summary>
+        /// The file URL resolver.
+        /// </summary>
         private readonly IMediaFileUrlResolver fileUrlResolver;
 
-        public ImageService(IRepository repository, IMediaFileUrlResolver fileUrlResolver)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageService" /> class.
+        /// </summary>
+        /// <param name="repository">The repository.</param>
+        /// <param name="unitOfWork">The unit of work.</param>
+        /// <param name="fileUrlResolver">The file URL resolver.</param>
+        public ImageService(IRepository repository, IUnitOfWork unitOfWork, IMediaFileUrlResolver fileUrlResolver)
         {
             this.repository = repository;
+            this.unitOfWork = unitOfWork;
             this.fileUrlResolver = fileUrlResolver;
         }
 
+        /// <summary>
+        /// Gets the specified image.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        ///   <c>GetImageRequest</c> with an image.
+        /// </returns>
         public GetImageResponse Get(GetImageRequest request)
         {
             var model = repository
@@ -57,7 +86,14 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
                                          OriginalWidth = media.OriginalWidth,
                                          OriginalHeight = media.OriginalHeight,
                                          OriginalSize = media.OriginalSize,
-                                         OriginalUrl = media.PublicOriginallUrl
+                                         OriginalUrl = media.PublicOriginallUrl,
+
+                                         FileUri = media.FileUri.ToString(),
+                                         IsUploaded = media.IsUploaded,
+                                         IsTemporary = media.IsTemporary,
+                                         IsCanceled = media.IsCanceled,
+                                         OriginalUri = media.OriginalUri.ToString(),
+                                         ThumbnailUri = media.ThumbnailUri.ToString()
                                      })
                 .FirstOne();
 
@@ -94,6 +130,111 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
                            Data = model,
                            Tags = tags
                        };
+        }
+
+        /// <summary>
+        /// Replaces the image or if it doesn't exist, creates it.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        ///   <c>PutImageResponse</c> with a image id.
+        /// </returns>
+        public PutImageResponse Put(PutImageRequest request)
+        {
+            var mediaImage = repository.AsQueryable<MediaImage>().FirstOrDefault(tag1 => tag1.Id == request.Data.Id);
+
+            var createImage = mediaImage == null;
+            if (createImage)
+            {
+                mediaImage = new MediaImage { Id = request.Data.Id, Type = MediaType.Image };
+            }
+            else
+            {
+                mediaImage.Version = request.Data.Version;
+            }
+
+            unitOfWork.BeginTransaction();
+
+            if (!createImage)
+            {
+                var historyitem = mediaImage.Clone();
+                historyitem.Original = mediaImage;
+                repository.Save(historyitem);
+            }
+
+            mediaImage.Title = request.Data.Title;
+            mediaImage.Description = request.Data.Description;
+            mediaImage.Caption = request.Data.Caption;
+            mediaImage.OriginalFileExtension = request.Data.OriginalFileExtension;
+            mediaImage.Size = request.Data.FileSize;
+            mediaImage.PublicUrl = request.Data.ImageUrl;
+            mediaImage.Width = request.Data.Width;
+            mediaImage.Height = request.Data.Height;
+            mediaImage.PublicThumbnailUrl = request.Data.ThumbnailUrl;
+            mediaImage.ThumbnailWidth = request.Data.ThumbnailWidth;
+            mediaImage.ThumbnailHeight = request.Data.ThumbnailHeight;
+            mediaImage.ThumbnailSize = request.Data.ThumbnailSize;
+            mediaImage.IsArchived = request.Data.IsArchived;
+            mediaImage.Folder = request.Data.FolderId.HasValue && !request.Data.FolderId.Value.HasDefaultValue()
+                                    ? repository.AsProxy<MediaFolder>(request.Data.FolderId.Value)
+                                    : null;
+            mediaImage.PublishedOn = request.Data.PublishedOn;
+            mediaImage.OriginalFileName = request.Data.OriginalFileName;
+            mediaImage.OriginalFileExtension = request.Data.OriginalFileExtension;
+            mediaImage.OriginalWidth = request.Data.OriginalWidth;
+            mediaImage.OriginalHeight = request.Data.OriginalHeight;
+            mediaImage.OriginalSize = request.Data.OriginalSize;
+            mediaImage.PublicOriginallUrl = request.Data.OriginalUrl;
+
+            mediaImage.FileUri = new Uri(request.Data.FileUri);
+            mediaImage.IsUploaded = request.Data.IsUploaded;
+            mediaImage.IsTemporary = request.Data.IsTemporary;
+            mediaImage.IsCanceled = request.Data.IsCanceled;
+            mediaImage.OriginalUri = new Uri(request.Data.OriginalUri);
+            mediaImage.ThumbnailUri = new Uri(request.Data.ThumbnailUri);
+
+            repository.Save(mediaImage);
+
+// TODO: implement.
+//            IList<Module.Root.Models.Tag> newTags;
+//            tagService.SaveMediaTags(mediaImage, request.Tags, out newTags);
+
+            unitOfWork.Commit();
+
+            // Fire events.
+            if (createImage)
+            {
+                Events.MediaManagerEvents.Instance.OnMediaFileUploaded(mediaImage);
+            }
+            else
+            {
+                Events.MediaManagerEvents.Instance.OnMediaFileUpdated(mediaImage);
+            }
+
+            return new PutImageResponse
+                       {
+                           Data = mediaImage.Id
+                       };
+        }
+
+        /// <summary>
+        /// Deletes the specified image.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        ///   <c>DeleteImageResponse</c> with success status.
+        /// </returns>
+        public DeleteImageResponse Delete(DeleteImageRequest request)
+        {
+            if (request.Data == null || request.Data.Id.HasDefaultValue())
+            {
+                return new DeleteImageResponse { Data = false };
+            }
+
+            repository.Delete<MediaImage>(request.Data.Id, request.Data.Version);
+            unitOfWork.Commit();
+
+            return new DeleteImageResponse { Data = true };
         }
     }
 }

@@ -86,6 +86,15 @@
     <Compile Include="Infrastructure\RequestDeleteModel.cs" />
     <Compile Include="Infrastructure\RequestBase.cs" />
     <Compile Include="Infrastructure\ResponseBase.cs" />
+    <Compile Include="Operations\MediaManager\Images\Image\DeleteImageRequest.cs" />
+    <Compile Include="Operations\MediaManager\Images\Image\DeleteImageRequestValidator.cs" />
+    <Compile Include="Operations\MediaManager\Images\Image\DeleteImageResponse.cs" />
+    <Compile Include="Operations\MediaManager\Images\Image\PutImageRequest.cs" />
+    <Compile Include="Operations\MediaManager\Images\Image\PutImageRequestValidator.cs" />
+    <Compile Include="Operations\MediaManager\Images\Image\PutImageResponse.cs" />
+    <Compile Include="Operations\MediaManager\Images\PostImagesRequest.cs" />
+    <Compile Include="Operations\MediaManager\Images\PostImagesRequestValidator.cs" />
+    <Compile Include="Operations\MediaManager\Images\PostImagesResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\DeletePageRequest.cs" />
     <Compile Include="Operations\Pages\Pages\Page\PutPageRequestValidator.cs" />
     <Compile Include="Operations\Pages\Pages\Page\DeletePageResponse.cs" />
