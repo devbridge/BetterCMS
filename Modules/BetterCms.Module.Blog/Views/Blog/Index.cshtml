@@ -15,8 +15,7 @@
 @{
     var controller = (CmsControllerBase)ViewContext.Controller;
     var canEdit = controller.SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);
-    var canPublish = controller.SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);
-    
+    var canPublish = controller.SecurityService.IsAuthorized(RootModuleConstants.UserRoles.PublishContent);
     
     Action<ColumnBuilder<SiteSettingBlogPostViewModel>> columns = column =>
     {
