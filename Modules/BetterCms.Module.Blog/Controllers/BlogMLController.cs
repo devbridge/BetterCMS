@@ -8,7 +8,9 @@ using BetterCms.Module.Blog.Commands.ImportBlogPosts;
 using BetterCms.Module.Blog.Commands.UploadBlogsImportFile;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Blog.ViewModels.Filter;
+using BetterCms.Module.MediaManager.Helpers;
 using BetterCms.Module.Root;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
 using Microsoft.Web.Mvc;
@@ -54,10 +56,16 @@ namespace BetterCms.Module.Blog.Controllers
 
                 var response = GetCommand<UploadBlogsImportFileCommand>().ExecuteCommand(model);
 
-                return WireJson(response != null, response);
+                return new WrappedJsonResult
+                    {
+                        Data = new WireJson(response != null, response)
+                    };
             }
 
-            return WireJson(false);
+            return new WrappedJsonResult
+                   {
+                       Data = new WireJson(false)
+                   };
         }
 
         /// <summary>

@@ -36,7 +36,8 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             contentUserConfirmationHiddenField: '#bcms-user-confirmed-region-deletion',
             blogPostFormDatePickers: 'input.bcms-datepicker',
             importBlogPostsForm: '#bcms-import-blog-posts',
-            fileUploadingTarget: '#bcms-import-form-target'
+            fileUploadingTarget: '#bcms-import-form-target',
+            fileUploadingResult: '#jsonResult'
         },
         links = {
             loadSiteSettingsBlogsUrl: null,
@@ -805,7 +806,33 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             onLoad: function (dialog) {
                 dynamicContent.bindDialog(dialog, links.uploadBlogPostsImportFileUrl, {
                     contentAvailable: function (dialog, json) {
-                        var iframe = dialog.container.find($(selectors.fileUploadingTarget));
+                        var iframe = dialog.container.find($(selectors.fileUploadingTarget)),
+                            onLoadCallback = function () {
+                                importModel.started = false;
+                                form.hideLoading();
+                                var result = iframe.contents().find(selectors.fileUploadingResult).get(0);
+                                if (!result) {
+                                    return true;
+                                }
+
+                                try {
+                                    json = $.parseJSON(result.innerHTML);
+                                    messages.refreshBox(form, json);
+
+                                    if (json.Success) {
+                                        importModel.uploaded(true);
+                                        importModel.dialog.model.buttons()[0].title(globalization.importButtonTitle);
+
+                                        if (json.Data && $.isArray(json.Data.Results)) {
+                                            updateImportResults(importModel, json.Data.Results);
+                                            importModel.fileId = json.Data.FileId;
+                                        }
+                                    }
+                                } catch (exc) {
+                                    bcms.logger.error(exc);
+                                }
+                            };
+
                         form = dialog.container.find(selectors.importBlogPostsForm);
 
                         importModel = {
@@ -835,31 +862,18 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                             }
                         });
 
-                        iframe.on('load', function () {
-                            importModel.started = false;
-                            form.hideLoading();
-                            var result = iframe.contents().text();
-                            if (!result) {
-                                return;
-                            }
-
-                            try {
-                                json = $.parseJSON(result);
-                                messages.refreshBox(form, json);
-
-                                if (json.Success) {
-                                    importModel.uploaded(true);
-                                    importModel.dialog.model.buttons()[0].title(globalization.importButtonTitle);
-
-                                    if (json.Data && $.isArray(json.Data.Results)) {
-                                        updateImportResults(importModel, json.Data.Results);
-                                        importModel.fileId = json.Data.FileId;
-                                    }
-                                }
-                            } catch (exc) {
-                                bcms.logger.error(exc);
-                            }
-                        });
+                        // Do not use jQuery - only this way works on IE
+                        // dom = iframe.get(0);
+                        // dom.onload = onLoadCallback;
+                        iframe.on('load', onLoadCallback);
+//
+//                        setTimeout(function() {
+//                            if (dom.attachEvent) {
+//                                dom.attachEvent('onload', onLoadCallback);
+//                            } else {
+//                                dom.addEventListener('load', onLoadCallback, true);
+//                            }
+//                        }, 1000);
 
                         ko.applyBindings(importModel, form.get(0));
                     },
