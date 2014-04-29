@@ -140,7 +140,7 @@ namespace BetterCms.Module.Blog.Services
         protected void WriteStartBlogMLPost(BlogPost post)
         {
             WriteStartElement("post");
-            WriteNodeAttributes(post.Id.ToString(), post.CreatedOn, post.ModifiedOn, post.Status == PageStatus.Published);
+            WriteNodeAttributes(post.Id.ToString(), post.ActivationDate, post.ModifiedOn, post.Status == PageStatus.Published);
             WriteAttributeString("post-url", post.PageUrl);
             WriteAttributeStringRequired("type", "normal");
             WriteAttributeStringRequired("hasexcerpt", (!string.IsNullOrWhiteSpace(post.Description)).ToString().ToLower());

@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Security.Principal;
-using System.Text;
 using System.Web;
 using System.Xml;
-using System.Xml.Schema;
 
 using BetterCms.Configuration;
 using BetterCms.Core.DataAccess;
@@ -23,12 +20,10 @@ using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
-using BlogML;
 using BlogML.Xml;
 
 using Common.Logging;
 
-using TypeHelperExtensionMethods = NHibernate.Linq.TypeHelperExtensionMethods;
 using ValidationException = BetterCms.Core.Exceptions.Mvc.ValidationException;
 
 namespace BetterCms.Module.Blog.Services
@@ -132,7 +127,7 @@ namespace BetterCms.Module.Blog.Services
                         Title = blogML.PostName ?? blogML.Title,
                         MetaTitle = blogML.Title,
                         IntroText = blogML.Excerpt != null ? blogML.Excerpt.UncodedText : null,
-                        LiveFromDate = blogML.DateCreated.Date,
+                        LiveFromDate = blogML.DateCreated.ToLocalTime().Date,
                         LiveToDate = null,
                         DesirableStatus = ContentStatus.Published,
                         Content = blogML.Content != null ? blogML.Content.UncodedText : null
