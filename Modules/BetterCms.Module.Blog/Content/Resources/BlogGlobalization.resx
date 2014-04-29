@@ -405,4 +405,7 @@
   <data name="ImportBlogPosts_DownloadSampleFile_Title" xml:space="preserve">
     <value>Sample import XML file</value>
   </data>
+  <data name="SiteSettings_Blogs_Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
 </root>

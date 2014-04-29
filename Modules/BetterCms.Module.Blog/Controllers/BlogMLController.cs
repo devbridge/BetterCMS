@@ -3,9 +3,11 @@ using System.Web.Mvc;
 
 using BetterCms.Core.Security;
 using BetterCms.Module.Blog.Commands.DeleteBlogPostImportFile;
+using BetterCms.Module.Blog.Commands.ExportBlogPostsCommand;
 using BetterCms.Module.Blog.Commands.ImportBlogPosts;
 using BetterCms.Module.Blog.Commands.UploadBlogsImportFile;
 using BetterCms.Module.Blog.ViewModels.Blog;
+using BetterCms.Module.Blog.ViewModels.Filter;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 
@@ -14,11 +16,11 @@ using Microsoft.Web.Mvc;
 namespace BetterCms.Module.Blog.Controllers
 {
     /// <summary>
-    /// Blogs import controller.
+    /// Blogs import / export controller.
     /// </summary>
     [BcmsAuthorize]
     [ActionLinkArea(BlogModuleDescriptor.BlogAreaName)]
-    public class BlogImportController : CmsControllerBase
+    public class BlogMLController : CmsControllerBase
     {
         /// <summary>
         /// Uploads the blog posts import file.
@@ -85,6 +87,14 @@ namespace BetterCms.Module.Blog.Controllers
             var response = GetCommand<DeleteBlogPostImportFileCommand>().ExecuteCommand(fileId.ToGuidOrDefault());
 
             return WireJson(response);
+        }
+
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.DeleteContent)]
+        public ActionResult Export(BlogsFilter request)
+        {
+            var xml = GetCommand<ExportBlogPostsCommand>().ExecuteCommand(request);
+
+            return File(System.Text.Encoding.UTF8.GetBytes(xml), "text/xml", "blogs.xml");
         }
     }
 }

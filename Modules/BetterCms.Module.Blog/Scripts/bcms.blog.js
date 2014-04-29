@@ -14,6 +14,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             siteSettingsBlogsSearchButton: '#bcms-blogs-search-btn',
             siteSettingsBlogsSearchInput: '.bcms-search-query',
             siteSettingsBlogCreateButton: '#bcms-create-blog-button',
+            siteSettingsBlogExportButton: '#bcms-export-blogs',
             siteSettingsBlogImportButton: '#bcms-import-blogs',
             siteSettingsBlogDeleteButton: '.bcms-grid-item-delete-button',
             siteSettingsBlogParentRow: 'tr:first',
@@ -51,7 +52,8 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             convertStringToSlugUrl: null,
             uploadBlogPostsImportFileUrl: null,
             startImportUrl: null,
-            deleteUploadedFileUrl: null
+            deleteUploadedFileUrl: null,
+            exportBlogPostsUrl: null
         },
         globalization = {
             createNewPostDialogTitle: null,
@@ -353,6 +355,12 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 initializeSiteSettingsBlogsListItems(newRow);
                 grid.showHideEmptyRow(container);
             });
+        });
+
+        container.find(selectors.siteSettingsBlogExportButton).on('click', function () {
+            var url = $.format("{0}?{1}", links.exportBlogPostsUrl, form.serialize());
+
+            window.location.href = url;
         });
 
         container.find(selectors.siteSettingsBlogImportButton).on('click', function () {

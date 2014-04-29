@@ -61,7 +61,7 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// <value>
         /// The page status.
         /// </value>
-        public PageStatus PageStatus { get; set; }
+        public PageStatus Status { get; set; }
 
         /// <summary>
         /// Gets or sets the page url.

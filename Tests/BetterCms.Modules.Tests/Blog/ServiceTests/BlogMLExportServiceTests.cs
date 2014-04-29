@@ -74,8 +74,15 @@ namespace BetterCms.Test.Module.Blog.ServiceTests
 
         private void AssertXml(string xml, List<BlogPost> fakeBlogPosts)
         {
+            byte[] encodedString = Encoding.UTF8.GetBytes(xml);
             var xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(xml);
+            using (MemoryStream ms = new MemoryStream(encodedString))
+            {
+                ms.Flush();
+                ms.Position = 0;
+
+                xmlDoc.Load(ms);
+            }
 
             Assert.AreEqual(xmlDoc.GetElementsByTagName("post").Count, 1);
             Assert.AreEqual(xmlDoc.GetElementsByTagName("blog").Count, 1);

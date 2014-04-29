@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
@@ -40,17 +41,23 @@ namespace BetterCms.Module.Blog.Services
         {
             posts = postsToExport;
 
-            var builder = new StringBuilder();
-            var xml = XmlWriter.Create(builder);
+            var settings = new XmlWriterSettings();
+            settings.Indent = true;
 
-            Write(xml);
+            using (var stream = new MemoryStream())
+            {
+                using (XmlWriter writer = XmlWriter.Create(stream, settings))
+                {
+                    Write(writer);
+                }
 
-            return builder.ToString();
+                return Encoding.UTF8.GetString(stream.ToArray());
+            }
         }
 
         protected override void InternalWriteBlog()
         {
-            WriteStartBlog("Better CMS", ContentTypes.Text, "Better CMS", ContentTypes.Text, httpContextAccessor.MapPath("/") ?? "/", GetMinBlogPostDate());
+            WriteStartBlog("Better CMS", ContentTypes.Text, "Better CMS", ContentTypes.Text, httpContextAccessor.MapPublicPath("/") ?? "/", GetMinBlogPostDate());
 
             WriteAuthors();
             WriteCategories();
@@ -136,7 +143,7 @@ namespace BetterCms.Module.Blog.Services
             WriteNodeAttributes(post.Id.ToString(), post.CreatedOn, post.ModifiedOn, post.Status == PageStatus.Published);
             WriteAttributeString("post-url", post.PageUrl);
             WriteAttributeStringRequired("type", "normal");
-            WriteAttributeStringRequired("hasexcerpt", (!string.IsNullOrWhiteSpace(post.Description)).ToString());
+            WriteAttributeStringRequired("hasexcerpt", (!string.IsNullOrWhiteSpace(post.Description)).ToString().ToLower());
             WriteAttributeStringRequired("views", "0");
             WriteContent("title", BlogMLContent.Create(post.MetaTitle ?? post.Title, ContentTypes.Text));
             WriteContent("post-name", BlogMLContent.Create(post.Title, ContentTypes.Text));

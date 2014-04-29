@@ -30,9 +30,10 @@ namespace BetterCms.Module.Blog.Registration
                             new JavaScriptModuleLinkTo<OptionController>(this, "loadTemplatesUrl", c => c.Templates()),
                             new JavaScriptModuleLinkTo<OptionController>(this, "saveDefaultTemplateUrl", c => c.SaveDefaultTemplate("{0}", "{1}")),
                             new JavaScriptModuleLinkTo<BlogController>(this, "convertStringToSlugUrl", c => c.ConvertStringToSlug("{0}", "{1}")),
-                            new JavaScriptModuleLinkTo<BlogImportController>(this, "uploadBlogPostsImportFileUrl", c => c.UploadImportFile(null, null)),
-                            new JavaScriptModuleLinkTo<BlogImportController>(this, "startImportUrl", c => c.StartImport(null)),
-                            new JavaScriptModuleLinkTo<BlogImportController>(this, "deleteUploadedFileUrl", c => c.DeleteUploadedFile("{0}"))
+                            new JavaScriptModuleLinkTo<BlogMLController>(this, "uploadBlogPostsImportFileUrl", c => c.UploadImportFile(null, null)),
+                            new JavaScriptModuleLinkTo<BlogMLController>(this, "startImportUrl", c => c.StartImport(null)),
+                            new JavaScriptModuleLinkTo<BlogMLController>(this, "deleteUploadedFileUrl", c => c.DeleteUploadedFile("{0}")),
+                            new JavaScriptModuleLinkTo<BlogMLController>(this, "exportBlogPostsUrl", c => c.Export(null)),
                         };
 
             Globalization = new IActionProjection[]

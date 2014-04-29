@@ -862,6 +862,17 @@ namespace BetterCms.Module.Blog.Content.Resources
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Export.
+        /// </summary>
+        public static string SiteSettings_Blogs_Export
+        {
+            get
+            {
+                return ResourceManager.GetString("SiteSettings_Blogs_Export", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Filter.
         /// </summary>
         public static string SiteSettings_Blogs_Filter

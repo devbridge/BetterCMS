@@ -1,22 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Blog.ViewModels.Filter;
 
-using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
-using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Services;
 
-using NHibernate.Criterion;
 using NHibernate.Transform;
 
 namespace BetterCms.Module.Blog.Commands.GetBlogPostList
@@ -42,16 +39,24 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPostList
         private readonly ILanguageService languageService;
 
         /// <summary>
+        /// The blog service
+        /// </summary>
+        private readonly IBlogService blogService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GetBlogPostListCommand" /> class.
         /// </summary>
         /// <param name="categoryService">The category service.</param>
         /// <param name="configuration">The configuration.</param>
         /// <param name="languageService">The language service.</param>
-        public GetBlogPostListCommand(ICategoryService categoryService, ICmsConfiguration configuration, ILanguageService languageService)
+        /// <param name="blogService">The blog service.</param>
+        public GetBlogPostListCommand(ICategoryService categoryService, ICmsConfiguration configuration,
+            ILanguageService languageService, IBlogService blogService)
         {
             this.categoryService = categoryService;
             this.configuration = configuration;
             this.languageService = languageService;
+            this.blogService = blogService;
         }
 
         /// <summary>
@@ -61,102 +66,10 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPostList
         /// <returns>A list of blog posts</returns>
         public BlogsGridViewModel<SiteSettingBlogPostViewModel> Execute(BlogsFilter request)
         {
-            request.SetDefaultSortingOptions("Title");
-
             BlogPost alias = null;
             SiteSettingBlogPostViewModel modelAlias = null;
 
-            var query = UnitOfWork.Session
-                .QueryOver(() => alias)
-                .Where(() => !alias.IsDeleted && alias.Status != PageStatus.Preview);
-
-            if (!request.IncludeArchived)
-            {
-                query = query.Where(() => !alias.IsArchived);
-            }
-
-            if (!string.IsNullOrWhiteSpace(request.SearchQuery))
-            {
-                var searchQuery = string.Format("%{0}%", request.SearchQuery);
-                query = query.Where(Restrictions.InsensitiveLike(Projections.Property(() => alias.Title), searchQuery));
-            }
-
-            if (request.CategoryId.HasValue)
-            {
-                query = query.Where(Restrictions.Eq(Projections.Property(() => alias.Category.Id), request.CategoryId.Value));
-            }
-
-            if (request.LanguageId.HasValue)
-            {
-                if (request.LanguageId.Value.HasDefaultValue())
-                {
-                    query = query.Where(Restrictions.IsNull(Projections.Property(() => alias.Language.Id)));
-                }
-                else
-                {
-                    query = query.Where(Restrictions.Eq(Projections.Property(() => alias.Language.Id), request.LanguageId.Value));
-                }
-            }
-
-            if (request.Tags != null)
-            {
-                foreach (var tagKeyValue in request.Tags)
-                {
-                    var id = tagKeyValue.Key.ToGuidOrDefault();
-                    query = query.WithSubquery.WhereExists(QueryOver.Of<PageTag>().Where(tag => tag.Tag.Id == id && tag.Page.Id == alias.Id).Select(tag => 1));
-                }
-            }
-
-            if (request.Status.HasValue)
-            {
-                if (request.Status.Value == PageStatusFilterType.OnlyPublished)
-                {
-                    query = query.Where(() => alias.Status == PageStatus.Published);
-                }
-                else if (request.Status.Value == PageStatusFilterType.OnlyUnpublished)
-                {
-                    query = query.Where(() => alias.Status != PageStatus.Published);
-                }
-                else if (request.Status.Value == PageStatusFilterType.ContainingUnpublishedContents)
-                {
-                    const ContentStatus draft = ContentStatus.Draft;
-                    Root.Models.Content contentAlias = null;
-                    var subQuery = QueryOver.Of<PageContent>()
-                        .JoinAlias(p => p.Content, () => contentAlias)
-                        .Where(pageContent => pageContent.Page.Id == alias.Id)
-                        .And(() => contentAlias.Status == draft)
-                        .And(() => !contentAlias.IsDeleted)
-                        .Select(pageContent => 1);
-
-                    query = query.WithSubquery.WhereExists(subQuery);
-                }
-            }
-
-            if (request.SeoStatus.HasValue)
-            {
-                var subQuery = QueryOver.Of<SitemapNode>()
-                    .Where(x => x.Page.Id == alias.Id || x.UrlHash == alias.PageUrlHash)
-                    .And(x => !x.IsDeleted)
-                    .JoinQueryOver(s => s.Sitemap)
-                    .And(x => !x.IsDeleted)
-                    .Select(s => 1);
-
-                var hasSeoDisjunction =
-                Restrictions.Disjunction()
-                    .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaTitle)))
-                    .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaKeywords)))
-                    .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaDescription)))
-                    .Add(Subqueries.WhereNotExists(subQuery));
-
-                if (request.SeoStatus.Value == SeoStatusFilterType.HasSeo)
-                {
-                    query = query.Where(Restrictions.Not(hasSeoDisjunction));
-                }
-                else
-                {
-                    query = query.Where(hasSeoDisjunction);
-                }
-            }
+            var query = blogService.GetFilteredBlogPostsQuery(request);
 
             query = query
                 .SelectList(select => select
@@ -165,7 +78,7 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPostList
                     .Select(() => alias.CreatedOn).WithAlias(() => modelAlias.CreatedOn)
                     .Select(() => alias.ModifiedOn).WithAlias(() => modelAlias.ModifiedOn)
                     .Select(() => alias.ModifiedByUser).WithAlias(() => modelAlias.ModifiedByUser)
-                    .Select(() => alias.Status).WithAlias(() => modelAlias.PageStatus)
+                    .Select(() => alias.Status).WithAlias(() => modelAlias.Status)
                     .Select(() => alias.Version).WithAlias(() => modelAlias.Version)
                     .Select(() => alias.PageUrl).WithAlias(() => modelAlias.PageUrl))
                 .TransformUsing(Transformers.AliasToBean<SiteSettingBlogPostViewModel>());
