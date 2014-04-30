@@ -397,6 +397,7 @@ namespace BetterCms.Module.Blog.Services
                 return null;
             }
 
+            url = urlService.FixUrl(url);
             if (!urlService.ValidateInternalUrl(url))
             {
                 var serverPath = httpContextAccessor.MapPublicPath("/").TrimEnd('/');

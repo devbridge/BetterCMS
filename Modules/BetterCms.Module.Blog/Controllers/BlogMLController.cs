@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 using BetterCms.Core.Security;
@@ -50,22 +51,33 @@ namespace BetterCms.Module.Blog.Controllers
         [HttpPost]
         public ActionResult UploadImportFile(HttpPostedFileBase uploadFile, UploadImportFileViewModel model)
         {
+            WireJson result;
             if (ModelState.IsValid && uploadFile != null)
             {
                 model.FileStream = uploadFile.InputStream;
 
                 var response = GetCommand<UploadBlogsImportFileCommand>().ExecuteCommand(model);
 
-                return new WrappedJsonResult
-                    {
-                        Data = new WireJson(response != null, response)
-                    };
+                result = new WireJson(response != null, response);
+            }
+            else
+            {
+                result = new WireJson(false);
+            }
+
+            if (result.Success)
+            {
+                result.Messages = Messages.Success.ToArray();
+            }
+            else
+            {
+                result.Messages = Messages.Error.ToArray();
             }
 
             return new WrappedJsonResult
-                   {
-                       Data = new WireJson(false)
-                   };
+                {
+                    Data = result
+                };
         }
 
         /// <summary>
