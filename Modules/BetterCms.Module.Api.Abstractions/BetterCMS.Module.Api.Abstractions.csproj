@@ -95,6 +95,10 @@
     <Compile Include="Operations\MediaManager\Images\PostImagesRequest.cs" />
     <Compile Include="Operations\MediaManager\Images\PostImagesRequestValidator.cs" />
     <Compile Include="Operations\MediaManager\Images\PostImagesResponse.cs" />
+    <Compile Include="Operations\Pages\Contents\Content\HtmlContent\DeleteHtmlContentRequest.cs" />
+    <Compile Include="Operations\Pages\Contents\Content\HtmlContent\DeleteHtmlContentResponse.cs" />
+    <Compile Include="Operations\Pages\Contents\Content\HtmlContent\PutHtmlContentRequest.cs" />
+    <Compile Include="Operations\Pages\Contents\Content\HtmlContent\PutHtmlContentResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\DeletePageRequest.cs" />
     <Compile Include="Operations\Pages\Pages\Page\PutPageRequestValidator.cs" />
     <Compile Include="Operations\Pages\Pages\Page\DeletePageResponse.cs" />
