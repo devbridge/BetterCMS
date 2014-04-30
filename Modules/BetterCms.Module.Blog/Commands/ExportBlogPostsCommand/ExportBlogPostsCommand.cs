@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Blog.ViewModels.Filter;
 using BetterCms.Module.Root.Mvc;
@@ -22,8 +24,9 @@ namespace BetterCms.Module.Blog.Commands.ExportBlogPostsCommand
 
         public string Execute(BlogsFilter request)
         {
+            // Get all ONLY PUBLISHED blog posts, filtered out by the request filter
             var query = blogService.GetFilteredBlogPostsQuery(request, true);
-            var blogPosts = query.AddOrder(request).List();
+            var blogPosts = query.Where(p => p.Status == PageStatus.Published).AddOrder(request).List().Distinct().ToList();
 
             var xml = exportService.ExportBlogPosts(blogPosts.ToList());
 

@@ -153,7 +153,10 @@ namespace BetterCms.Module.Blog.Services
                 WriteBlogMLContent("excerpt", BlogMLContent.Create(post.Description, ContentTypes.Text));
             }
 
-            var content = post.PageContents.Where(pc => pc.Content is BlogPostContent).Select(pc => pc.Content).FirstOrDefault();
+            var content = post.PageContents
+                .Where(pc => pc.Content is BlogPostContent && pc.Content.Status == ContentStatus.Published)
+                .Select(pc => pc.Content)
+                .FirstOrDefault();
             if (content != null)
             {
                 WriteBlogMLContent("content", BlogMLContent.Create(((BlogPostContent)content).Html, ContentTypes.Text));
