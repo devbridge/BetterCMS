@@ -4,17 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
-using System.Xml.Serialization;
 
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Web;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.Root.Models;
-
-using BlogML.Xml;
-
-using FluentNHibernate.Utils;
 
 using Moq;
 
@@ -95,7 +91,7 @@ namespace BetterCms.Test.Module.Blog.ServiceTests
 
             Assert.AreEqual(childNodes.First(node => node.Name == "title").InnerText, post.MetaTitle);
             Assert.AreEqual(childNodes.First(node => node.Name == "post-name").InnerText, post.Title);
-            Assert.AreEqual(childNodes.First(node => node.Name == "content").InnerText, ((BlogPostContent)post.PageContents[0].Content).Html);
+            Assert.AreEqual(childNodes.First(node => node.Name == "content").InnerText, ((BlogPostContent)post.PageContents[1].Content).Html);
             Assert.AreEqual(attributes.First(attribute => attribute.Name == "post-url").InnerText, post.PageUrl);
 
             if (!string.IsNullOrWhiteSpace(post.Description))
@@ -175,7 +171,15 @@ namespace BetterCms.Test.Module.Blog.ServiceTests
                                               {
                                                    Content = new BlogPostContent
                                                              {
-                                                                 Html = "Test content <p>with HTML</p>"
+                                                                 Html = "Unpbulished content <p>with HTML</p>"
+                                                             }
+                                              },
+                                              new PageContent
+                                              {
+                                                   Content = new BlogPostContent
+                                                             {
+                                                                 Html = "Test content <p>with HTML</p>",
+                                                                 Status = ContentStatus.Published
                                                              }
                                               }
                                           }
