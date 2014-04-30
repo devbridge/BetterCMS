@@ -97,7 +97,12 @@ namespace BetterCms.Module.Blog.Controllers
             return WireJson(response);
         }
 
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.DeleteContent)]
+        /// <summary>
+        /// Exports blog posts, filtered by the requested filter.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>Exported blog posts XML file.</returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.PublishContent)]
         public ActionResult Export(BlogsFilter request)
         {
             var xml = GetCommand<ExportBlogPostsCommand>().ExecuteCommand(request);
