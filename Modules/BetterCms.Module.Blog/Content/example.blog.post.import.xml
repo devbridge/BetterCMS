@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<blog xmlns="http://www.blogml.com/2006/09/BlogML" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <authors>
+    <author id="A1">
+      <title type="text"><![CDATA[Sample Author]]></title>
+    </author>
+  </authors>
+  <categories>
+    <category id="C1">
+      <title type="text"><![CDATA[Sample Category]]></title>
+    </category>
+  </categories>
+  <posts>
+    <post id="34" date-created="2006-09-05T03:19:00" date-modified="2006-09-05T03:19:00" post-url="/CS21/blogs/p/archive/2006/09/05/CS-Dev-Guide_3A00_-Send-Emails.aspx" type="normal" hasexcerpt="true">
+      <title type="text"><![CDATA[Sample Blog Post Meta Title]]></title>
+      <content type="text"><![CDATA[<p>Sample blog post content</p>]]></content>
+      <post-name type="text"><![CDATA[Sample Blog Post Title]]></post-name>
+      <excerpt type="text"><![CDATA[Sample blog post intro text.]]></excerpt>
+      <categories>
+        <category ref="C1" />
+      </categories>
+      <authors>
+        <author ref="A1" />
+      </authors>
+    </post>
+  </posts>
+</blog>

@@ -62,6 +62,15 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         public virtual string Title { get; set; }
 
         /// <summary>
+        /// Gets or sets the meta title.
+        /// </summary>
+        /// <value>
+        /// The meta title.
+        /// </value>
+        [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(BlogGlobalization), ErrorMessageResourceName = "BlogPost_MetaTitle_MaxLengthMessage")]
+        public virtual string MetaTitle { get; set; }
+
+        /// <summary>
         /// Gets or sets the blog intro text.
         /// </summary>
         /// <value>

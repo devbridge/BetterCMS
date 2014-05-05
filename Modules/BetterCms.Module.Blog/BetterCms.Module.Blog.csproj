@@ -124,11 +124,12 @@
     </Compile>
     <Compile Include="Accessors\BlogPostContentAccessor.cs" />
     <Compile Include="Commands\DeleteBlogPostImportFile\DeleteBlogPostImportFileCommand.cs" />
+    <Compile Include="Commands\ExportBlogPostsCommand\ExportBlogPostsCommand.cs" />
     <Compile Include="Commands\UploadBlogsImportFile\UploadBlogsImportFileCommand.cs" />
     <Compile Include="Commands\UploadBlogsImportFile\UploadBlogsImportFileResponse.cs" />
     <Compile Include="Commands\ImportBlogPosts\ImportBlogPostsCommand.cs" />
     <Compile Include="Commands\ImportBlogPosts\ImportBlogPostsResponse.cs" />
-    <Compile Include="Controllers\BlogImportController.cs" />
+    <Compile Include="Controllers\BlogMLController.cs" />
     <Compile Include="Events\BlogEvents.cs" />
     <Compile Include="Events\AuthorEvents.cs" />
     <Compile Include="BlogModuleConstants.cs" />
@@ -196,8 +197,8 @@
   <ItemGroup>
     <EmbeddedResource Include="Content\Resources\BlogGlobalization.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>BlogGlobalization.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>BlogGlobalization1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Content\Styles\bcms.blog.css" />
     <EmbeddedResource Include="Content\Styles\Images\sprite-blog.png" />
@@ -211,6 +212,7 @@
     <Content Include="BuildConfiguration.xml" />
     <EmbeddedResource Include="Scripts\bcms.blog.filter.js" />
     <EmbeddedResource Include="Models\Migrations\Migration201305271258.sqlserver.sql" />
+    <EmbeddedResource Include="Content\example.blog.post.import.xml" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -271,7 +273,7 @@
     <EmbeddedResource Include="Views\Blog\Partial\BlogsFilterTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\BlogImport\UploadImportFile.cshtml" />
+    <EmbeddedResource Include="Views\BlogML\UploadImportFile.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

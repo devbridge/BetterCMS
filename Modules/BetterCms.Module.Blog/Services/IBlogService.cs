@@ -3,6 +3,9 @@ using System.Security.Principal;
 
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.ViewModels.Blog;
+using BetterCms.Module.Blog.ViewModels.Filter;
+
+using NHibernate;
 
 namespace BetterCms.Module.Blog.Services
 {
@@ -27,5 +30,15 @@ namespace BetterCms.Module.Blog.Services
         /// Saved blog post entity
         /// </returns>
         BlogPost SaveBlogPost(BlogPostViewModel model, IPrincipal principal);
+
+        /// <summary>
+        /// Gets the filtered blog posts query.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <param name="joinContents">if set to <c>true</c> join contents tables.</param>
+        /// <returns>
+        /// NHibernate query for getting filtered blog posts
+        /// </returns>
+        IQueryOver<BlogPost, BlogPost> GetFilteredBlogPostsQuery(BlogsFilter filter, bool joinContents = false);
     }
 }

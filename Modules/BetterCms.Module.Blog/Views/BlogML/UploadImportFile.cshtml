@@ -10,7 +10,7 @@
     @Html.TabbedContentMessagesBox()
 
 
-    @using (Html.BeginForm<BlogImportController>(c => c.UploadImportFile(), FormMethod.Post, new { @enctype = "multipart/form-data", @id = "bcms-import-blog-posts", @target = "bcms-import-form-target", }))
+    @using (Html.BeginForm<BlogMLController>(c => c.UploadImportFile(), FormMethod.Post, new { @enctype = "multipart/form-data", @id = "bcms-import-blog-posts", @target = "bcms-import-form-target", }))
     {
         <div class="bcms-padded-content">
 
@@ -26,8 +26,11 @@
                 <div id="bcms-files-dropzone" class="bcms-dropzone">
                     <div class="bcms-dropzone-infotext">@BlogGlobalization.ImportBlogPosts_File_Description</div>
                     <div class="bcms-btn-upload-files">
-                        <label for="uploadFile" class="bcms-btn-upload-files-text" data-bind="text: fileName() || '@BlogGlobalization.ImportBlogPosts_File_ButtonTitle'"></label>
+                        <label for="uploadFile" class="bcms-btn-upload-files-text" data-bind="text: fixedFileName() || '@BlogGlobalization.ImportBlogPosts_File_ButtonTitle'"></label>
                         <input type="file" name="uploadFile" id="uploadFile" style="position: absolute; left: -999em; top: -999em;" data-bind="value: fileName" />
+                    </div>
+                    <div class="bcms-download-sample-file">
+                        <a href="/file/bcms-blog/Content/example.blog.post.import.xml" target="_blank">@BlogGlobalization.ImportBlogPosts_DownloadSampleFile_Title</a>
                     </div>
                 </div>
                 <iframe id="bcms-import-form-target" name="bcms-import-form-target" style="position: absolute; left: -999em; top: -999em;"></iframe>
@@ -47,7 +50,7 @@
         <table class="bcms-tables">
             <thead>
                 <tr>
-                    <th class="bcms-tables-nohover">&nbsp;</th>
+                    <th class="bcms-tables-nohover" style="padding-left: 10px;"><input type="checkbox" data-bind="visible: !finished(), checked: checkedAll" /></th>
                     <th class="bcms-tables-nohover">@BlogGlobalization.ImportBlogPosts_Results_Title_Title</th>
                     <th class="bcms-tables-nohover">@BlogGlobalization.ImportBlogPosts_Results_Url_Title</th>
                     <th class="bcms-tables-nohover">&nbsp;</th>
@@ -55,23 +58,31 @@
             </thead>
             <tbody>
                 <!-- ko foreach: results() -->
-                <tr data-bind="css: {'bcms-import-failed' : !success, 'bcms-import-success': success && $parent.finished()}">
+                <tr data-bind="css: {'bcms-import-failed' : !success, 'bcms-import-success': success && $parent.finished() && !skipped}">
                     <td class="bcms-tables-nohover">
-                        <input type="checkbox" data-bind="visible: success && !$parent.finished(), checked: success" />
+                        <input type="checkbox" data-bind="visible: success && !$parent.finished(), checked: checked" />
                     </td>
                     <td class="bcms-tables-nohover" data-bind="html: title, attr: {title: title}"></td>
                     <td class="bcms-tables-nohover">
                         <!-- ko if: success && !$parent.finished() -->
                         <span data-bind="text: url, attr: {title: url}"></span>
                         <!-- /ko -->
-                        <!-- ko if: success && $parent.finished() -->
+                        <!-- ko if: success && $parent.finished() && !skipped -->
                         <a data-bind="text: url, attr: {title: url, href: url}" target="_blank"></a>
+                        <!-- /ko -->
+                        <!-- ko if: success && $parent.finished() && skipped -->
+                        @BlogGlobalization.ImportBlogPosts_Skipped_Title
                         <!-- /ko -->
                         <!-- ko if: !success -->
                         <span class="bcms-import-error" data-bind="text: errorMessage, attr: {title: errorMessage}"></span>
                         <!-- /ko -->
                     </td>
-                    <td class="bcms-tables-nohover">&nbsp;</td>
+                    <td class="bcms-tables-nohover">
+                        <div data-bind="attr: { title: errorMessage || warnMessage || '' }, css: {
+                            'bcms-icn-import-success': success && !warnMessage && !skipped,
+                            'bcms-icn-import-warn': success && warnMessage && !skipped,
+                            'bcms-icn-import-error': !success }"></div>
+                    </td>
                 </tr>
                 <!-- /ko -->
                 <!-- ko if: results().length == 0 -->

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
+using System.Xml;
 
 using BetterCms.Configuration;
 using BetterCms.Core.DataAccess;
@@ -80,14 +81,35 @@ namespace BetterCms.Module.Blog.Services
 
         public BlogMLBlog DeserializeXMLStream(Stream stream)
         {
+            try
+            {
+                stream.Position = 0;
+
+                XmlReaderSettings readerSettings = new XmlReaderSettings();
+                readerSettings.ConformanceLevel = ConformanceLevel.Document;
+                readerSettings.CheckCharacters = true;
+                readerSettings.ValidationType = ValidationType.None;
+
+                var xmlReader = XmlReader.Create(stream, readerSettings);
+                XmlDocument xdoc = new XmlDocument();
+                xdoc.Load(xmlReader);
+            }
+            catch (Exception exc)
+            {
+                var message = BlogGlobalization.ImportBlogPosts_FileIsNotValidXML_Message;
+                var logMessage = "Provided file is not a valid XML file.";
+                throw new ValidationException(() => message, logMessage, exc);
+            }
+
             BlogMLBlog blogPosts;
             try
             {
+                stream.Position = 0;
                 blogPosts = BlogMLSerializer.Deserialize(stream);
             }
             catch (Exception exc)
             {
-                var message = "Failed to deserialize XML file";
+                var message = BlogGlobalization.ImportBlogPosts_FailedToDeserializeXML_Message;
                 var logMessage = "Failed to deserialize provided XML file.";
                 throw new ValidationException(() => message, logMessage, exc);
             }
@@ -103,8 +125,9 @@ namespace BetterCms.Module.Blog.Services
             var model = new BlogPostViewModel
                     {
                         Title = blogML.PostName ?? blogML.Title,
+                        MetaTitle = blogML.Title,
                         IntroText = blogML.Excerpt != null ? blogML.Excerpt.UncodedText : null,
-                        LiveFromDate = blogML.DateCreated.Date,
+                        LiveFromDate = blogML.DateCreated.ToLocalTime().Date,
                         LiveToDate = null,
                         DesirableStatus = ContentStatus.Published,
                         Content = blogML.Content != null ? blogML.Content.UncodedText : null
@@ -117,7 +140,7 @@ namespace BetterCms.Module.Blog.Services
             }
             else
             {
-                model.BlogUrl = blogService.CreateBlogPermalink(blogML.Title, unsavedUrls);
+                model.BlogUrl = blogService.CreateBlogPermalink(blogML.PostName ?? blogML.Title, unsavedUrls);
             }
 
             return model;
@@ -129,14 +152,9 @@ namespace BetterCms.Module.Blog.Services
 
             if (string.IsNullOrWhiteSpace(blogML.ID))
             {
-                failedResult = new BlogPostImportResult
-                {
-                    Title = blogML.Title,
-                    PageUrl = blogML.PostUrl,
-                    Success = false,
-                    ErrorMessage = BlogGlobalization.ImportBlogPosts_ImportingBlogPostIdIsNotSet_Message,
-                    Id = blogML.ID
-                };
+                failedResult = CreateFailedResult(blogML);
+                failedResult.ErrorMessage = BlogGlobalization.ImportBlogPosts_ImportingBlogPostIdIsNotSet_Message;
+
                 return false;
             }
 
@@ -145,14 +163,9 @@ namespace BetterCms.Module.Blog.Services
             if (!Validator.TryValidateObject(blogPostModel, validationContext, validationResults, true)
                 && validationResults.Count > 0)
             {
-                failedResult = new BlogPostImportResult
-                    {
-                        Title = blogML.Title,
-                        PageUrl = blogML.PostUrl,
-                        Success = false,
-                        ErrorMessage = validationResults[0].ErrorMessage,
-                        Id = blogML.ID
-                    };
+                failedResult = CreateFailedResult(blogML);
+                failedResult.ErrorMessage = validationResults[0].ErrorMessage;
+
                 return false;
             }
 
@@ -162,18 +175,24 @@ namespace BetterCms.Module.Blog.Services
             }
             catch (Exception exc)
             {
-                failedResult = new BlogPostImportResult
-                {
-                    Title = blogML.Title,
-                    PageUrl = blogML.PostUrl,
-                    Success = false,
-                    ErrorMessage = exc.Message,
-                    Id = blogML.ID
-                };
+                failedResult = CreateFailedResult(blogML);
+                failedResult.ErrorMessage = exc.Message;
+
                 return false;
             }
 
             return true;
+        }
+
+        private BlogPostImportResult CreateFailedResult(BlogMLPost blogML)
+        {
+            return new BlogPostImportResult
+                   {
+                       Title = blogML.PostName ?? blogML.Title,
+                       PageUrl = blogML.PostUrl,
+                       Success = false,
+                       Id = blogML.ID
+                   };
         }
 
         public List<BlogPostImportResult> ValidateImport(BlogMLBlog blogPosts)
@@ -185,6 +204,31 @@ namespace BetterCms.Module.Blog.Services
             {
                 foreach (var blogML in blogPosts.Posts)
                 {
+                    // Validate authors
+                    if (blogML.Authors != null &&
+                        blogML.Authors.Count > 0 &&
+                        (blogPosts.Authors == null || blogPosts.Authors.All(a => a.ID != blogML.Authors[0].Ref)))
+                    {
+                        var failedResult = CreateFailedResult(blogML);
+                        failedResult.ErrorMessage = string.Format(BlogGlobalization.ImportBlogPosts_AuthorByRefNotFound_Message, blogML.Authors[0].Ref);
+                        result.Add(failedResult);
+
+                        continue;
+                    }
+                    
+                    // Validate categories
+                    if (blogML.Categories != null &&
+                        blogML.Categories.Count > 0 &&
+                        (blogPosts.Categories == null || blogPosts.Categories.All(c => c.ID != blogML.Categories[0].Ref)))
+                    {
+
+                        var failedResult = CreateFailedResult(blogML);
+                        failedResult.ErrorMessage = string.Format(BlogGlobalization.ImportBlogPosts_CategoryByRefNotFound_Message, blogML.Categories[0].Ref);
+                        result.Add(failedResult);
+
+                        continue;
+                    }
+
                     var blogPostModel = MapViewModel(blogML, null, unsavedUrls);
                     unsavedUrls.Add(blogPostModel.BlogUrl);
 
@@ -197,13 +241,28 @@ namespace BetterCms.Module.Blog.Services
 
                     blogPost = new BlogPostImportResult
                         {
-                            Title = blogPostModel.Title,
+                            Title = blogML.PostName ?? blogML.Title,
                             PageUrl = blogPostModel.BlogUrl,
                             Success = true,
                             Id = blogML.ID
                         };
                     result.Add(blogPost);
                 }
+
+                // Validate for duplicate IDS
+                result
+                    .Where(bp => bp.Success)
+                    .GroupBy(bp => bp.Id)
+                    .Where(group => group.Count() > 1)
+                    .ToList()
+                    .ForEach(group => group
+                        .ToList()
+                        .ForEach(
+                            bp =>
+                            {
+                                bp.Success = false;
+                                bp.ErrorMessage = string.Format(BlogGlobalization.ImportBlogPosts_DuplicateId_Message, group.Key);
+                            }));
             }
 
             return result;
@@ -254,12 +313,13 @@ namespace BetterCms.Module.Blog.Services
             {
                 foreach (var blogML in blogs)
                 {
+                    BlogPostViewModel blogPostModel = null;
+
                     try
                     {
-                        var oldUrl = FixUrl(blogML.PostUrl);
-                        var blogPostModel = MapViewModel(blogML, modifications.First(m => m.Id == blogML.ID));
+                        blogPostModel = MapViewModel(blogML, modifications.First(m => m.Id == blogML.ID));
 
-                        BlogPostImportResult blogPostResult;
+                        BlogPostImportResult blogPostResult = null;
                         if (!ValidateModel(blogPostModel, blogML, out blogPostResult))
                         {
                             createdBlogPosts.Add(blogPostResult);
@@ -279,22 +339,34 @@ namespace BetterCms.Module.Blog.Services
                         
                         blogPostResult = new BlogPostImportResult
                                 {
-                                    Title = blogPost.Title, 
+                                    Title = blogML.PostName ?? blogML.Title, 
                                     PageUrl = blogPost.PageUrl, 
                                     Id = blogPost.Id.ToString(), 
                                     Success = true
                                 };
                         createdBlogPosts.Add(blogPostResult);
 
-                        if (createRedirects && oldUrl != blogPostModel.BlogUrl)
+                        if (createRedirects)
                         {
-                            var redirect = redirectService.GetPageRedirect(oldUrl);
-                            if (redirect == null)
+                            var oldUrl = TryValidateOldUrl(blogML.PostUrl);
+                            if (oldUrl != null && oldUrl != blogPostModel.BlogUrl)
                             {
-                                redirect = redirectService.CreateRedirectEntity(oldUrl, blogPostModel.BlogUrl);
-                                repository.Save(redirect);
-                                unitOfWork.Commit();
-                                Events.PageEvents.Instance.OnRedirectCreated(redirect);
+                                var redirect = redirectService.GetPageRedirect(oldUrl);
+                                if (redirect == null)
+                                {
+                                    redirect = redirectService.CreateRedirectEntity(oldUrl, blogPostModel.BlogUrl);
+                                    repository.Save(redirect);
+                                    unitOfWork.Commit();
+                                    Events.PageEvents.Instance.OnRedirectCreated(redirect);
+                                }
+                                else
+                                {
+                                    blogPostResult.WarnMessage = string.Format(BlogGlobalization.ImportBlogPosts_RedirectWasAlreadyCreatedFor_Message, blogML.PostUrl);
+                                }
+                            }
+                            else if (oldUrl == null)
+                            {
+                                blogPostResult.WarnMessage = string.Format(BlogGlobalization.ImportBlogPosts_FailedToCreateRedirectFor_Message, blogML.PostUrl);
                             }
                         }
                     }
@@ -302,8 +374,8 @@ namespace BetterCms.Module.Blog.Services
                     {
                         var failedBlogPost = new BlogPostImportResult
                                              {
-                                                 Title = blogML.Title,
-                                                 PageUrl = blogML.PostUrl, 
+                                                 Title = blogML.PostName ?? blogML.Title,
+                                                 PageUrl = blogPostModel != null && blogPostModel.BlogUrl != null ? blogPostModel.BlogUrl : blogML.PostUrl, 
                                                  Success = false,
                                                  ErrorMessage = exc.Message,
                                                  Id = blogML.ID
@@ -318,17 +390,31 @@ namespace BetterCms.Module.Blog.Services
             return createdBlogPosts;
         }
 
-        private string FixUrl(string url)
+        private string TryValidateOldUrl(string url)
         {
-            foreach (var ending in new[] { ".asp", ".aspx", ".php", ".htm", ".html" })
+            if (string.IsNullOrWhiteSpace(url))
             {
-                if (url.EndsWith(ending))
+                return null;
+            }
+
+            url = urlService.FixUrl(url);
+            if (!urlService.ValidateInternalUrl(url))
+            {
+                var serverPath = httpContextAccessor.MapPublicPath("/").TrimEnd('/');
+                if (url.StartsWith(serverPath) && serverPath != url)
                 {
-                    url = url.Substring(0, url.LastIndexOf(ending, StringComparison.InvariantCulture));
+                    url = url.Substring(serverPath.Length, url.Length - serverPath.Length);
+                    if (!urlService.ValidateInternalUrl(url))
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    return null;
                 }
             }
-            url = urlService.FixUrl(url);
-
+            
             return url;
         }
 

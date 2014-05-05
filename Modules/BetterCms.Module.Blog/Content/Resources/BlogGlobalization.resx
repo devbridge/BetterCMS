@@ -381,4 +381,37 @@
   <data name="ImportBlogPosts_NoBlogPostSelected_Message" xml:space="preserve">
     <value>At least one blog post should be selected for import to continue.</value>
   </data>
+  <data name="ImportBlogPosts_FailedToCreateRedirectFor_Message" xml:space="preserve">
+    <value>Failed to create a redirect. Invalid URL "{0}".</value>
+  </data>
+  <data name="ImportBlogPosts_RedirectWasAlreadyCreatedFor_Message" xml:space="preserve">
+    <value>Redirect for URL "{0}" wasn't created, because it already exists.</value>
+  </data>
+  <data name="ImportBlogPosts_Skipped_Title" xml:space="preserve">
+    <value>Skipped import</value>
+  </data>
+  <data name="BlogPost_MetaTitle_MaxLengthMessage" xml:space="preserve">
+    <value>Blog post meta title maximum length ({1}) exceeded.</value>
+  </data>
+  <data name="ImportBlogPosts_FailedToDeserializeXML_Message" xml:space="preserve">
+    <value>Failed to deserialize provided XML file.</value>
+  </data>
+  <data name="ImportBlogPosts_FileIsNotValidXML_Message" xml:space="preserve">
+    <value>Provided file is not a valid XML file.</value>
+  </data>
+  <data name="ImportBlogPosts_DuplicateId_Message" xml:space="preserve">
+    <value>Duplicate ID found ({0})!</value>
+  </data>
+  <data name="ImportBlogPosts_DownloadSampleFile_Title" xml:space="preserve">
+    <value>Sample import XML file</value>
+  </data>
+  <data name="SiteSettings_Blogs_Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="ImportBlogPosts_AuthorByRefNotFound_Message" xml:space="preserve">
+    <value>Author with ID "{0}" wasn't found in the list of importing authors</value>
+  </data>
+  <data name="ImportBlogPosts_CategoryByRefNotFound_Message" xml:space="preserve">
+    <value>Category with ID "{0}" wasn't found in the list of importing categories</value>
+  </data>
 </root>

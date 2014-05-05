@@ -18,14 +18,18 @@ using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Helpers;
+using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
+using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
 
+using NHibernate.Criterion;
 using NHibernate.Linq;
+using NHibernate.Mapping;
 
 namespace BetterCms.Module.Blog.Services
 {
@@ -245,7 +249,7 @@ namespace BetterCms.Module.Blog.Services
                     blogPost.PageUrl = CreateBlogPermalink(request.Title);
                 }
 
-                blogPost.MetaTitle = request.Title;
+                blogPost.MetaTitle = request.MetaTitle ?? request.Title;
                 if (masterPage != null)
                 {
                     blogPost.MasterPage = masterPage;
@@ -479,6 +483,124 @@ namespace BetterCms.Module.Blog.Services
                         });
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets the filtered blog posts query.
+        /// </summary>
+        /// <param name="request">The filter.</param>
+        /// <param name="joinContents">if set to <c>true</c> join contents tables.</param>
+        /// <returns>
+        /// NHibernate query for getting filtered blog posts
+        /// </returns>
+        public NHibernate.IQueryOver<BlogPost, BlogPost> GetFilteredBlogPostsQuery(ViewModels.Filter.BlogsFilter request, bool joinContents = false)
+        {
+            request.SetDefaultSortingOptions("Title");
+
+            BlogPost alias = null;
+
+            var query = unitOfWork.Session
+                .QueryOver(() => alias)
+                .Where(() => !alias.IsDeleted && alias.Status != PageStatus.Preview);
+
+            if (!request.IncludeArchived)
+            {
+                query = query.Where(() => !alias.IsArchived);
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.SearchQuery))
+            {
+                var searchQuery = string.Format("%{0}%", request.SearchQuery);
+                query = query.Where(Restrictions.InsensitiveLike(Projections.Property(() => alias.Title), searchQuery));
+            }
+
+            if (request.CategoryId.HasValue)
+            {
+                query = query.Where(Restrictions.Eq(Projections.Property(() => alias.Category.Id), request.CategoryId.Value));
+            }
+
+            if (request.LanguageId.HasValue)
+            {
+                if (request.LanguageId.Value.HasDefaultValue())
+                {
+                    query = query.Where(Restrictions.IsNull(Projections.Property(() => alias.Language.Id)));
+                }
+                else
+                {
+                    query = query.Where(Restrictions.Eq(Projections.Property(() => alias.Language.Id), request.LanguageId.Value));
+                }
+            }
+
+            if (request.Tags != null)
+            {
+                foreach (var tagKeyValue in request.Tags)
+                {
+                    var id = tagKeyValue.Key.ToGuidOrDefault();
+                    query = query.WithSubquery.WhereExists(QueryOver.Of<PageTag>().Where(tag => tag.Tag.Id == id && tag.Page.Id == alias.Id).Select(tag => 1));
+                }
+            }
+
+            if (request.Status.HasValue)
+            {
+                if (request.Status.Value == PageStatusFilterType.OnlyPublished)
+                {
+                    query = query.Where(() => alias.Status == PageStatus.Published);
+                }
+                else if (request.Status.Value == PageStatusFilterType.OnlyUnpublished)
+                {
+                    query = query.Where(() => alias.Status != PageStatus.Published);
+                }
+                else if (request.Status.Value == PageStatusFilterType.ContainingUnpublishedContents)
+                {
+                    const ContentStatus draft = ContentStatus.Draft;
+                    Root.Models.Content contentAlias = null;
+                    var subQuery = QueryOver.Of<PageContent>()
+                        .JoinAlias(p => p.Content, () => contentAlias)
+                        .Where(pageContent => pageContent.Page.Id == alias.Id)
+                        .And(() => contentAlias.Status == draft)
+                        .And(() => !contentAlias.IsDeleted)
+                        .Select(pageContent => 1);
+
+                    query = query.WithSubquery.WhereExists(subQuery);
+                }
+            }
+
+            if (request.SeoStatus.HasValue)
+            {
+                var subQuery = QueryOver.Of<SitemapNode>()
+                    .Where(x => x.Page.Id == alias.Id || x.UrlHash == alias.PageUrlHash)
+                    .And(x => !x.IsDeleted)
+                    .JoinQueryOver(s => s.Sitemap)
+                    .And(x => !x.IsDeleted)
+                    .Select(s => 1);
+
+                var hasSeoDisjunction =
+                Restrictions.Disjunction()
+                    .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaTitle)))
+                    .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaKeywords)))
+                    .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaDescription)))
+                    .Add(Subqueries.WhereNotExists(subQuery));
+
+                if (request.SeoStatus.Value == SeoStatusFilterType.HasSeo)
+                {
+                    query = query.Where(Restrictions.Not(hasSeoDisjunction));
+                }
+                else
+                {
+                    query = query.Where(hasSeoDisjunction);
+                }
+            }
+
+            if (joinContents)
+            {
+                PageContent pcAlias = null;
+                BlogPostContent bcAlias = null;
+
+                query = query.JoinAlias(() => alias.PageContents, () => pcAlias);
+                query = query.JoinAlias(() => pcAlias.Content, () => bcAlias);
+            }
+
+            return query;
         }
     }
 }

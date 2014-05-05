@@ -1,12 +1,17 @@
-﻿using System.Web;
+﻿using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 using BetterCms.Core.Security;
 using BetterCms.Module.Blog.Commands.DeleteBlogPostImportFile;
+using BetterCms.Module.Blog.Commands.ExportBlogPostsCommand;
 using BetterCms.Module.Blog.Commands.ImportBlogPosts;
 using BetterCms.Module.Blog.Commands.UploadBlogsImportFile;
 using BetterCms.Module.Blog.ViewModels.Blog;
+using BetterCms.Module.Blog.ViewModels.Filter;
+using BetterCms.Module.MediaManager.Helpers;
 using BetterCms.Module.Root;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
 using Microsoft.Web.Mvc;
@@ -14,11 +19,11 @@ using Microsoft.Web.Mvc;
 namespace BetterCms.Module.Blog.Controllers
 {
     /// <summary>
-    /// Blogs import controller.
+    /// Blogs import / export controller.
     /// </summary>
     [BcmsAuthorize]
     [ActionLinkArea(BlogModuleDescriptor.BlogAreaName)]
-    public class BlogImportController : CmsControllerBase
+    public class BlogMLController : CmsControllerBase
     {
         /// <summary>
         /// Uploads the blog posts import file.
@@ -46,16 +51,33 @@ namespace BetterCms.Module.Blog.Controllers
         [HttpPost]
         public ActionResult UploadImportFile(HttpPostedFileBase uploadFile, UploadImportFileViewModel model)
         {
+            WireJson result;
             if (ModelState.IsValid && uploadFile != null)
             {
                 model.FileStream = uploadFile.InputStream;
 
                 var response = GetCommand<UploadBlogsImportFileCommand>().ExecuteCommand(model);
 
-                return WireJson(response != null, response);
+                result = new WireJson(response != null, response);
+            }
+            else
+            {
+                result = new WireJson(false);
             }
 
-            return WireJson(false);
+            if (result.Success)
+            {
+                result.Messages = Messages.Success.ToArray();
+            }
+            else
+            {
+                result.Messages = Messages.Error.ToArray();
+            }
+
+            return new WrappedJsonResult
+                {
+                    Data = result
+                };
         }
 
         /// <summary>
@@ -85,6 +107,19 @@ namespace BetterCms.Module.Blog.Controllers
             var response = GetCommand<DeleteBlogPostImportFileCommand>().ExecuteCommand(fileId.ToGuidOrDefault());
 
             return WireJson(response);
+        }
+
+        /// <summary>
+        /// Exports blog posts, filtered by the requested filter.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>Exported blog posts XML file.</returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.PublishContent)]
+        public ActionResult Export(BlogsFilter request)
+        {
+            var xml = GetCommand<ExportBlogPostsCommand>().ExecuteCommand(request);
+
+            return File(System.Text.Encoding.UTF8.GetBytes(xml), "text/xml", "blogs.xml");
         }
     }
 }
