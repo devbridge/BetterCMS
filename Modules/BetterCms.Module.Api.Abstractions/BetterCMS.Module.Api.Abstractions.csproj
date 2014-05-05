@@ -100,6 +100,12 @@
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\PutHtmlContentRequest.cs" />
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\PutHtmlContentResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\DeletePageRequest.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Properties\DeletePagePropertiesRequest.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Properties\DeleteTagRequestValidator.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Properties\DeletePagePropertiesResponse.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Properties\PutPagePropertiesRequest.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Properties\PutPagePropertiesRequestValidator.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Properties\PutPagePropertiesResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\PutPageRequestValidator.cs" />
     <Compile Include="Operations\Pages\Pages\Page\DeletePageResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\PutPageResponse.cs" />

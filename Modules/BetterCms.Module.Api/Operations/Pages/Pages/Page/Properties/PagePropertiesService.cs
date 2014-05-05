@@ -7,9 +7,12 @@ using BetterCms.Core.DataContracts.Enums;
 
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Operations.Root;
+using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
+using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
 
@@ -17,27 +20,63 @@ using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
 {
+    /// <summary>
+    /// Default page properties CRUD service.
+    /// </summary>
     public class PagePropertiesService : Service, IPagePropertiesService
     {
+        /// <summary>
+        /// The repository.
+        /// </summary>
         private readonly IRepository repository;
 
+        /// <summary>
+        /// The unit of work.
+        /// </summary>
+        private readonly IUnitOfWork unitOfWork;
+
+        /// <summary>
+        /// The URL service.
+        /// </summary>
         private readonly IUrlService urlService;
-        
+
+        /// <summary>
+        /// The option service.
+        /// </summary>
         private readonly IOptionService optionService;
 
+        /// <summary>
+        /// The file URL resolver.
+        /// </summary>
         private readonly IMediaFileUrlResolver fileUrlResolver;
 
-        public PagePropertiesService(IRepository repository, IUrlService urlService, IOptionService optionService, IMediaFileUrlResolver fileUrlResolver)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PagePropertiesService" /> class.
+        /// </summary>
+        /// <param name="repository">The repository.</param>
+        /// <param name="unitOfWork">The unit of work.</param>
+        /// <param name="urlService">The URL service.</param>
+        /// <param name="optionService">The option service.</param>
+        /// <param name="fileUrlResolver">The file URL resolver.</param>
+        public PagePropertiesService(IRepository repository, IUnitOfWork unitOfWork, IUrlService urlService, IOptionService optionService, IMediaFileUrlResolver fileUrlResolver)
         {
             this.repository = repository;
+            this.unitOfWork = unitOfWork;
             this.urlService = urlService;
             this.optionService = optionService;
             this.fileUrlResolver = fileUrlResolver;
         }
 
+        /// <summary>
+        /// Gets the specified page properties.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        ///   <c>GetPagePropertiesResponse</c> with a page properties data.
+        /// </returns>
         public GetPagePropertiesResponse Get(GetPagePropertiesRequest request)
         {
-            var query = repository.AsQueryable<Module.Pages.Models.PageProperties>();
+            var query = repository.AsQueryable<PageProperties>();
 
             if (request.PageId.HasValue)
             {
@@ -74,7 +113,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                                 LanguageGroupIdentifier = page.LanguageGroupIdentifier,
                                 LanguageId = page.Language != null ? page.Language.Id : (Guid?)null,
                                 MainImageId = page.Image != null && !page.Image.IsDeleted ? page.Image.Id : (Guid?)null,
-                                FeaturedImageId = page.FeaturedImage != null && !page.FeaturedImage.IsDeleted ?  page.FeaturedImage.Id : (Guid?)null,
+                                FeaturedImageId = page.FeaturedImage != null && !page.FeaturedImage.IsDeleted ? page.FeaturedImage.Id : (Guid?)null,
                                 SecondaryImageId = page.SecondaryImage != null && !page.SecondaryImage.IsDeleted ? page.SecondaryImage.Id : (Guid?)null,
                                 CustomCss = page.CustomCss,
                                 CustomJavaScript = page.CustomJS,
@@ -100,7 +139,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                                 LastModifiedBy = page.Category.ModifiedByUser,
                                 LastModifiedOn = page.Category.ModifiedOn,
                                 Name = page.Category.Name
-                            } : null,
+                            }
+                            : null,
                         Layout = request.Data.IncludeLayout && !page.Layout.IsDeleted 
                             ? new LayoutModel
                             {
@@ -176,7 +216,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
 
                                 Name = page.Language.Name,
                                 Code = page.Language.Code,
-                            } : null,
+                            }
+                            : null,
                     })
                 .FirstOne();
 
@@ -200,7 +241,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                             Key = o.OptionKey,
                             Value = o.OptionValue,
                             DefaultValue = o.OptionDefaultValue,
-                            Type = ((Root.OptionType)(int)o.Type)
+                            Type = (Root.OptionType)(int)o.Type
                         })
                     .ToList();
             }
@@ -216,7 +257,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
             {
                 // Get layout options, page options and merge them
                 response.PageTranslations = repository
-                    .AsQueryable<Module.Pages.Models.PageProperties>()
+                    .AsQueryable<PageProperties>()
                     .Where(p => p.LanguageGroupIdentifier == response.Data.LanguageGroupIdentifier)
                     .OrderBy(p => p.Title)
                     .Select(p => new PageTranslationModel
@@ -224,7 +265,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                             Id = p.Id,
                             Title = p.Title,
                             PageUrl = p.PageUrl,
-                            LanguageId = p.Language != null ? p.Language.Id: (Guid?)null,
+                            LanguageId = p.Language != null ? p.Language.Id : (Guid?)null,
                             LanguageCode = p.Language != null ? p.Language.Code : null,
                         })
                     .ToList();
@@ -233,10 +274,114 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
             return response;
         }
 
+        /// <summary>
+        /// Replaces the page properties or if it doesn't exist, creates it.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        ///   <c>PutPagePropertiesResponse</c> with a page properties id.
+        /// </returns>
+        public PutPagePropertiesResponse Put(PutPagePropertiesRequest request)
+        {
+            var pageProperties = repository.AsQueryable<PageProperties>().FirstOrDefault(e => e.Id == request.PageId);
+
+            var createPageProperties = pageProperties == null;
+            if (createPageProperties)
+            {
+                pageProperties = new PageProperties { Id = request.Data.Id };
+            }
+            else
+            {
+                pageProperties.Version = request.Data.Version;
+            }
+
+            unitOfWork.BeginTransaction();
+
+            pageProperties.PageUrl = request.Data.PageUrl;
+            pageProperties.PageUrlHash = request.Data.PageUrl.UrlHash();
+            pageProperties.Title = request.Data.Title;
+            pageProperties.Description = request.Data.Description;
+            pageProperties.Status = request.Data.IsPublished ? PageStatus.Published : PageStatus.Unpublished;
+            pageProperties.PublishedOn = request.Data.PublishedOn;
+            pageProperties.Layout = request.Data.LayoutId.HasValue && !request.Data.LayoutId.Value.HasDefaultValue()
+                                    ? repository.AsProxy<Layout>(request.Data.LayoutId.Value)
+                                    : null;
+            pageProperties.MasterPage = request.Data.MasterPageId.HasValue && !request.Data.MasterPageId.Value.HasDefaultValue()
+                                    ? repository.AsProxy<Module.Root.Models.Page>(request.Data.MasterPageId.Value)
+                                    : null;
+            pageProperties.Category = request.Data.CategoryId.HasValue && !request.Data.CategoryId.Value.HasDefaultValue()
+                                    ? repository.AsProxy<Category>(request.Data.CategoryId.Value)
+                                    : null;
+            pageProperties.IsArchived = request.Data.IsArchived;
+            pageProperties.IsMasterPage = request.Data.IsMasterPage;
+            pageProperties.LanguageGroupIdentifier = request.Data.LanguageGroupIdentifier;
+            pageProperties.Language = request.Data.LanguageId.HasValue && !request.Data.LanguageId.Value.HasDefaultValue()
+                                    ? repository.AsProxy<Language>(request.Data.LanguageId.Value)
+                                    : null;
+            pageProperties.Image = request.Data.MainImageId.HasValue && !request.Data.MainImageId.Value.HasDefaultValue()
+                                    ? repository.AsProxy<MediaImage>(request.Data.MainImageId.Value)
+                                    : null;
+            pageProperties.FeaturedImage = request.Data.FeaturedImageId.HasValue && !request.Data.FeaturedImageId.Value.HasDefaultValue()
+                                    ? repository.AsProxy<MediaImage>(request.Data.FeaturedImageId.Value)
+                                    : null;
+            pageProperties.SecondaryImage = request.Data.SecondaryImageId.HasValue && !request.Data.SecondaryImageId.Value.HasDefaultValue()
+                                    ? repository.AsProxy<MediaImage>(request.Data.SecondaryImageId.Value)
+                                    : null;
+            pageProperties.CustomCss = request.Data.CustomCss;
+            pageProperties.CustomJS = request.Data.CustomJavaScript;
+            pageProperties.UseCanonicalUrl = request.Data.UseCanonicalUrl;
+            pageProperties.UseNoFollow = request.Data.UseNoFollow;
+            pageProperties.UseNoIndex = request.Data.UseNoIndex;
+
+            repository.Save(pageProperties);
+
+            unitOfWork.Commit();
+
+            // Fire events.
+            if (createPageProperties)
+            {
+                Events.PageEvents.Instance.OnPageCreated(pageProperties);
+            }
+            else
+            {
+                Events.PageEvents.Instance.OnPagePropertiesChanged(pageProperties);
+            }
+
+            return new PutPagePropertiesResponse
+            {
+                Data = pageProperties.Id
+            };
+        }
+
+        /// <summary>
+        /// Deletes the specified page properties.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        ///   <c>DeletePagePropertiesResponse</c> with success status.
+        /// </returns>
+        public DeletePagePropertiesResponse Delete(DeletePagePropertiesRequest request)
+        {
+            if (request.Data == null || request.Data.Id.HasDefaultValue())
+            {
+                return new DeletePagePropertiesResponse { Data = false };
+            }
+
+            repository.Delete<PageProperties>(request.Data.Id, request.Data.Version);
+            unitOfWork.Commit();
+
+            return new DeletePagePropertiesResponse { Data = true };
+        }
+
+        /// <summary>
+        /// Loads the tags.
+        /// </summary>
+        /// <param name="pageId">The page identifier.</param>
+        /// <returns>Page tags collection.</returns>
         private System.Collections.Generic.List<TagModel> LoadTags(Guid pageId)
         {
             return repository
-                .AsQueryable<Module.Pages.Models.PageTag>(pageTag => pageTag.Page.Id == pageId && !pageTag.Tag.IsDeleted)
+                .AsQueryable<PageTag>(pageTag => pageTag.Page.Id == pageId && !pageTag.Tag.IsDeleted)
                 .Select(media => new TagModel
                     {
                         Id = media.Tag.Id,
@@ -250,6 +395,11 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                     }).ToList();
         }
 
+        /// <summary>
+        /// Loads the access rules.
+        /// </summary>
+        /// <param name="pageId">The page identifier.</param>
+        /// <returns>Page access rules collection.</returns>
         private System.Collections.Generic.List<AccessRuleModel> LoadAccessRules(Guid pageId)
         {
             return (from page in repository.AsQueryable<Module.Root.Models.Page>()
@@ -264,7 +414,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                     })
                     .ToList();
         }
-        
+
+        /// <summary>
+        /// Loads the page contents.
+        /// </summary>
+        /// <param name="pageId">The page identifier.</param>
+        /// <returns>Page contents collection.</returns>
         private System.Collections.Generic.List<PageContentModel> LoadPageContents(Guid pageId)
         {
             var results = repository

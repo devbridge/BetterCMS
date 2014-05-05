@@ -238,6 +238,124 @@ describe('pages.pages.api.behavior', function () {
         });
     });
 
+    it('01004.1: Should create page properties via PUT.', function () {
+        var url = '/bcms-api/page-properties/' + '6d28419fde3b4aae8a89559dd2f10f91',
+            data = {
+                version: 1,
+                pageUrl: "/01004.1-page-for-tests/",
+                title: "_01004.1_Page_For_Tests",
+                description: "Test page",
+                isPublished: true,
+                publishedOn: "2013-08-12T11:01:00.0000000",
+                layoutId: "d2f39fbd2c28401a8625a1fe0114e1eb",
+                masterPageId: null,
+                categoryId: "ec47e20d16ff4e588dafa20400b92736",
+                isArchived: true,
+                mainImageId: "c9dbfc845a6d49729c8fa20400b9da1f",
+                featuredImageId: "c9dbfc845a6d49729c8fa20400b9da1f",
+                secondaryImageId: "c9dbfc845a6d49729c8fa20400b9da1f",
+                customCss: "test page custom css",
+                customJavaScript: "console.log(\"test\");",
+                useCanonicalUrl: true,
+                useNoFollow: true,
+                useNoIndex: true,
+                isMasterPage: false,
+                languageId: "5fea841ef108430da6eca2a7009366ec",
+                languageGroupIdentifier: "10e54c92e03643f2b5df656825726ad6"
+            },
+            result,
+            ready = false;
+
+        runs(function () {
+            api.put(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data).toEqual('6d28419fde3b4aae8a89559dd2f10f91', 'Updated item id should be retrieved.');
+        });
+    });
+
+    it('01004.2: Should update page properties.', function () {
+        var url = '/bcms-api/page-properties/' + '6d28419fde3b4aae8a89559dd2f10f91',
+            data = {
+                version: 1,
+                pageUrl: "/01004.2-page-for-tests/",
+                title: "_01004.2_Page_For_Tests",
+                description: "Test page",
+                isPublished: true,
+                publishedOn: "2013-08-12T11:01:00.0000000",
+                layoutId: "d2f39fbd2c28401a8625a1fe0114e1eb",
+                masterPageId: null,
+                categoryId: "ec47e20d16ff4e588dafa20400b92736",
+                isArchived: true,
+                mainImageId: "c9dbfc845a6d49729c8fa20400b9da1f",
+                featuredImageId: "c9dbfc845a6d49729c8fa20400b9da1f",
+                secondaryImageId: "c9dbfc845a6d49729c8fa20400b9da1f",
+                customCss: "test page custom css",
+                customJavaScript: "console.log(\"test\");",
+                useCanonicalUrl: true,
+                useNoFollow: true,
+                useNoIndex: true,
+                isMasterPage: false,
+                languageId: "5fea841ef108430da6eca2a7009366ec",
+                languageGroupIdentifier: "10e54c92e03643f2b5df656825726ad6"
+            },
+            result,
+            ready = false;
+
+        runs(function () {
+            api.put(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data).toEqual('6d28419fde3b4aae8a89559dd2f10f91', 'Updated item id should be retrieved.');
+        });
+    });
+
+    it('01004.3: Should delete page properties.', function () {
+        var url = '/bcms-api/page-properties/' + '6d28419fde3b4aae8a89559dd2f10f91',
+            data = {
+                version: 2
+            },
+            result,
+            ready = false;
+
+        runs(function () {
+            api.delete(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data).toEqual(true, 'TRUE should be retrieved.');
+        });
+    });
+
     it('01005: Should get page properties by url', function () {
         var url = '/bcms-api/page-properties/by-url/' + constants.testPageUrl,
               result,

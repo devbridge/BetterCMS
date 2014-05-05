@@ -5,14 +5,14 @@ using BetterCms.Module.Api.Infrastructure;
 
 using ServiceStack.ServiceHost;
 
-namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
+namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
 {
     /// <summary>
-    /// Request for tag delete operation.
+    /// Request for page properties delete operation.
     /// </summary>
-    [Route("/tags/{TagId}", Verbs = "DELETE")]
+    [Route("/page-properties/{PageId}", Verbs = "DELETE")]
     [DataContract]
-    public class DeleteTagRequest : RequestBase<RequestDeleteModel>, IReturn<DeleteTagResponse>
+    public class DeletePagePropertiesRequest : RequestBase<RequestDeleteModel>, IReturn<DeletePagePropertiesResponse>
     {
         /// <summary>
         /// Gets or sets the identifier.
@@ -21,16 +21,16 @@ namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
         /// The identifier.
         /// </value>
         [DataMember]
-        public Guid? TagId
+        public Guid? PageId
         {
             get
             {
-                return Data.Id;
+                return this.Data.Id;
             }
 
             set
             {
-                Data.Id = value.HasValue ? value.Value : Guid.Empty;
+                this.Data.Id = value.HasValue ? value.Value : Guid.Empty;
             }
         }
     }
