@@ -154,4 +154,104 @@ describe('pages.contents.api.behavior', function () {
             expect(result.data.items[2].type).toBe('Integer', 'Correctly filtered items[2].key should be retrieved.');
         });
     });
+
+    it('01104: Should create html content via PUT.', function () {
+        var url = '/bcms-api/contents/html/' + 'efcd36bb7902410588d0bbe40e30fa00',
+            data = {
+                version: 1,
+                name: "Test content 01104",
+                activationDate: "2014-01-01T00:00:00.0000000",
+                expirationDate: "2020-01-01T00:00:00.0000000",
+                html: "test html",
+                customCss: "",
+                useCustomCss: false,
+                customJavaScript: "",
+                useCustomJavaScript: false,
+                isPublished: true,
+                publishedByUser: "admin",
+                publishedOn: "2014-01-01T11:45:34.0000000"
+            },
+            result,
+            ready = false;
+
+        runs(function () {
+            api.put(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data).toEqual('efcd36bb7902410588d0bbe40e30fa00', 'Updated item id should be retrieved.');
+        });
+    });
+
+    it('01105: Should update html content.', function () {
+        var url = '/bcms-api/contents/html/' + 'efcd36bb7902410588d0bbe40e30fa00',
+            data = {
+                version: 1,
+                name: "Test content 01105",
+                activationDate: "2014-01-01T00:00:00.0000000",
+                expirationDate: "2020-01-01T00:00:00.0000000",
+                html: "test html",
+                customCss: "",
+                useCustomCss: false,
+                customJavaScript: "",
+                useCustomJavaScript: false,
+                isPublished: true,
+                publishedByUser: "admin",
+                publishedOn: "2014-01-01T11:45:34.0000000"
+            },
+            result,
+            ready = false;
+
+        runs(function () {
+            api.put(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data).toEqual('efcd36bb7902410588d0bbe40e30fa00', 'Updated item id should be retrieved.');
+        });
+    });
+
+    it('01106: Should delete html content.', function () {
+        var url = '/bcms-api/contents/html/' + 'efcd36bb7902410588d0bbe40e30fa00',
+            data = {
+                version: 2
+            },
+            result,
+            ready = false;
+
+        runs(function () {
+            api.delete(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data).toEqual(true, 'TRUE should be retrieved.');
+        });
+    });
 });
