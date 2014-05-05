@@ -103,6 +103,7 @@
     <Compile Include="Operations\Pages\Pages\Page\Properties\DeletePagePropertiesRequest.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\DeleteTagRequestValidator.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\DeletePagePropertiesResponse.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Properties\SavePagePropertiesModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PutPagePropertiesRequest.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PutPagePropertiesRequestValidator.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PutPagePropertiesResponse.cs" />

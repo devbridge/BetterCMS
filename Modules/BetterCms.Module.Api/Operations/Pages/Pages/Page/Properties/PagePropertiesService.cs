@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
-
+using BetterCms.Core.Exceptions.DataTier;
+using BetterCms.Core.Security;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.MediaManager.Models;
@@ -12,11 +14,15 @@ using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
 
 using ServiceStack.ServiceInterface;
+
+using AccessLevel = BetterCms.Module.Api.Operations.Root.AccessLevel;
+using ITagService = BetterCms.Module.Pages.Services.ITagService;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
 {
@@ -51,6 +57,16 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         private readonly IMediaFileUrlResolver fileUrlResolver;
 
         /// <summary>
+        /// The tag service.
+        /// </summary>
+        private readonly ITagService tagService;
+
+        /// <summary>
+        /// The access control service.
+        /// </summary>
+        private readonly IAccessControlService accessControlService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PagePropertiesService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
@@ -58,13 +74,24 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// <param name="urlService">The URL service.</param>
         /// <param name="optionService">The option service.</param>
         /// <param name="fileUrlResolver">The file URL resolver.</param>
-        public PagePropertiesService(IRepository repository, IUnitOfWork unitOfWork, IUrlService urlService, IOptionService optionService, IMediaFileUrlResolver fileUrlResolver)
+        /// <param name="tagService">The tag service.</param>
+        /// <param name="accessControlService">The access control service.</param>
+        public PagePropertiesService(
+            IRepository repository,
+            IUnitOfWork unitOfWork,
+            IUrlService urlService,
+            IOptionService optionService,
+            IMediaFileUrlResolver fileUrlResolver,
+            ITagService tagService,
+            IAccessControlService accessControlService)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
             this.urlService = urlService;
             this.optionService = optionService;
             this.fileUrlResolver = fileUrlResolver;
+            this.tagService = tagService;
+            this.accessControlService = accessControlService;
         }
 
         /// <summary>
@@ -288,7 +315,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
             var createPageProperties = pageProperties == null;
             if (createPageProperties)
             {
-                pageProperties = new PageProperties { Id = request.Data.Id };
+                pageProperties = new PageProperties { Id = request.Data.Id, AccessRules = new List<AccessRule>() };
             }
             else
             {
@@ -333,11 +360,36 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
             pageProperties.UseNoFollow = request.Data.UseNoFollow;
             pageProperties.UseNoIndex = request.Data.UseNoIndex;
 
+            if (request.Data.MetaData != null)
+            {
+                pageProperties.MetaTitle = request.Data.MetaData.MetaTitle;
+                pageProperties.MetaDescription = request.Data.MetaData.MetaDescription;
+                pageProperties.MetaKeywords = request.Data.MetaData.MetaKeywords;
+            }
+
+            IList<Tag> newTags = null;
+            if (request.Data.Tags != null)
+            {
+                var tags = request.Data.Tags.Select(t => t.Name).ToList();
+                tagService.SavePageTags(pageProperties, tags, out newTags);
+            }
+
+            if (request.Data.AccessRules != null)
+            {
+                pageProperties.AccessRules.RemoveDuplicateEntities();
+                var accessRules =
+                    request.Data.AccessRules.Select(
+                        r => (IAccessRule)new AccessRule { AccessLevel = (Core.Security.AccessLevel)(int)r.AccessLevel, Identity = r.Identity, IsForRole = r.IsForRole })
+                        .ToList();
+                accessControlService.UpdateAccessControl(pageProperties, accessRules);
+            }
+
             repository.Save(pageProperties);
 
             unitOfWork.Commit();
 
             // Fire events.
+            Events.RootEvents.Instance.OnTagCreated(newTags);
             if (createPageProperties)
             {
                 Events.PageEvents.Instance.OnPageCreated(pageProperties);
@@ -367,32 +419,59 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                 return new DeletePagePropertiesResponse { Data = false };
             }
 
-            repository.Delete<PageProperties>(request.Data.Id, request.Data.Version);
+            var page = repository.First<PageProperties>(request.Data.Id);
+            if (page.Version != request.Data.Version)
+            {
+                throw new ConcurrentDataException(page);
+            }
+
+            unitOfWork.BeginTransaction();
+
+            // Delete child entities.            
+            if (page.PageTags != null)
+            {
+                foreach (var pageTag in page.PageTags)
+                {
+                    repository.Delete(pageTag);
+                }
+            }
+
+            if (page.PageContents != null)
+            {
+                foreach (var pageContent in page.PageContents)
+                {
+                    repository.Delete(pageContent);
+                }
+            }
+
+            if (page.Options != null)
+            {
+                foreach (var option in page.Options)
+                {
+                    repository.Delete(option);
+                }
+            }
+
+            if (page.AccessRules != null)
+            {
+                var rules = page.AccessRules.ToList();
+                rules.ForEach(page.RemoveRule);
+            }
+
+            if (page.MasterPages != null)
+            {
+                foreach (var master in page.MasterPages)
+                {
+                    repository.Delete(master);
+                }
+            }
+
+            // Delete page
+            repository.Delete<Module.Root.Models.Page>(request.Data.Id, request.Data.Version);
+
             unitOfWork.Commit();
 
             return new DeletePagePropertiesResponse { Data = true };
-        }
-
-        /// <summary>
-        /// Loads the tags.
-        /// </summary>
-        /// <param name="pageId">The page identifier.</param>
-        /// <returns>Page tags collection.</returns>
-        private System.Collections.Generic.List<TagModel> LoadTags(Guid pageId)
-        {
-            return repository
-                .AsQueryable<PageTag>(pageTag => pageTag.Page.Id == pageId && !pageTag.Tag.IsDeleted)
-                .Select(media => new TagModel
-                    {
-                        Id = media.Tag.Id,
-                        Version = media.Tag.Version,
-                        CreatedBy = media.Tag.CreatedByUser,
-                        CreatedOn = media.Tag.CreatedOn,
-                        LastModifiedBy = media.Tag.ModifiedByUser,
-                        LastModifiedOn = media.Tag.ModifiedOn,
-
-                        Name = media.Tag.Name
-                    }).ToList();
         }
 
         /// <summary>
@@ -400,7 +479,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// </summary>
         /// <param name="pageId">The page identifier.</param>
         /// <returns>Page access rules collection.</returns>
-        private System.Collections.Generic.List<AccessRuleModel> LoadAccessRules(Guid pageId)
+        private List<AccessRuleModel> LoadAccessRules(Guid pageId)
         {
             return (from page in repository.AsQueryable<Module.Root.Models.Page>()
                     from accessRule in page.AccessRules
@@ -416,11 +495,33 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         }
 
         /// <summary>
+        /// Loads the tags.
+        /// </summary>
+        /// <param name="pageId">The page identifier.</param>
+        /// <returns>Page tags collection.</returns>
+        private List<TagModel> LoadTags(Guid pageId)
+        {
+            return repository
+                .AsQueryable<PageTag>(pageTag => pageTag.Page.Id == pageId && !pageTag.Tag.IsDeleted)
+                .Select(media => new TagModel
+                {
+                    Id = media.Tag.Id,
+                    Version = media.Tag.Version,
+                    CreatedBy = media.Tag.CreatedByUser,
+                    CreatedOn = media.Tag.CreatedOn,
+                    LastModifiedBy = media.Tag.ModifiedByUser,
+                    LastModifiedOn = media.Tag.ModifiedOn,
+
+                    Name = media.Tag.Name
+                }).ToList();
+        }
+
+        /// <summary>
         /// Loads the page contents.
         /// </summary>
         /// <param name="pageId">The page identifier.</param>
         /// <returns>Page contents collection.</returns>
-        private System.Collections.Generic.List<PageContentModel> LoadPageContents(Guid pageId)
+        private List<PageContentModel> LoadPageContents(Guid pageId)
         {
             var results = repository
                  .AsQueryable<PageContent>(pageContent => pageContent.Page.Id == pageId && !pageContent.Content.IsDeleted)

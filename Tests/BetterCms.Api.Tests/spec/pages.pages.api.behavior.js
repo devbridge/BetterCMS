@@ -307,7 +307,30 @@ describe('pages.pages.api.behavior', function () {
                 useNoIndex: true,
                 isMasterPage: false,
                 languageId: "5fea841ef108430da6eca2a7009366ec",
-                languageGroupIdentifier: "10e54c92e03643f2b5df656825726ad6"
+                languageGroupIdentifier: "10e54c92e03643f2b5df656825726ad6",
+                metaData: {
+                    metaTitle: "Meta _01004.2_Page_For_Tests",
+                    metaDescription: "Some description",
+                    metaKeywords: "test 01004"
+                },
+                tags: [
+                    {
+                        name: "Tag_01004.2",
+                        id: "a067849a28464ccc936502c08820fb2f"
+                    }
+                ],
+                accessRules: [
+                    {
+                        AccessLevel: 2,
+                        Identity: "Everyone",
+                        IsForRole: true
+                    },
+                    {
+                        AccessLevel: 3,
+                        Identity: "Authenticated Users",
+                        IsForRole: true
+                    }
+                ]
             },
             result,
             ready = false;
