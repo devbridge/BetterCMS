@@ -3,7 +3,6 @@
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Api;
-using BetterCms.Core.Exceptions.Service;
 using BetterCms.Module.Root.Mvc;
 
 using NHibernate.Linq;
@@ -92,7 +91,7 @@ namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
             var tagsByIdNameFuture = repository.AsQueryable<Module.Root.Models.Tag>().Where(tag1 => tag1.Name == tagName).ToFuture();
             var tagById = tagsByIdFuture.FirstOrDefault();
             var tagByName = tagsByIdNameFuture.FirstOrDefault();
-            
+
             // Validate.
             if (tagById != null && tagByName != null && tagById.Id != tagByName.Id)
             {

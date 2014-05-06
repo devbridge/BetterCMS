@@ -7,6 +7,7 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Security;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost;
 using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Pages.Models;
@@ -26,10 +27,14 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
         private readonly IMediaFileUrlResolver fileUrlResolver;
 
         private readonly IAccessControlService accessControlService;
+        
+        private readonly IBlogPostService blogPostService;
 
-        public BlogPostsService(IRepository repository, IMediaFileUrlResolver fileUrlResolver, IAccessControlService accessControlService)
+        public BlogPostsService(IRepository repository, IBlogPostService blogPostService,
+            IMediaFileUrlResolver fileUrlResolver, IAccessControlService accessControlService)
         {
             this.repository = repository;
+            this.blogPostService = blogPostService;
             this.fileUrlResolver = fileUrlResolver;
             this.accessControlService = accessControlService;
         }
@@ -110,6 +115,20 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
                        {
                            Data = listResponse
                        };
+        }
+
+        public PostBlogPostResponse Put(PostBlogPostRequest request)
+        {
+            var result = 
+                blogPostService.Put(
+                    new PutBlogPostRequest
+                        {
+                            Data = request.Data,
+                            User = request.User,
+                            CreateOnly = true
+                        });
+
+            return new PostBlogPostResponse { Data = result.Data };
         }
 
         private void LoadTags(DataListResponse<BlogPostModel> response, bool includeTags, bool includeAccessRules)

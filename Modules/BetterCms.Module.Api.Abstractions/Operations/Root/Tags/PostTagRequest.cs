@@ -7,11 +7,11 @@ using ServiceStack.ServiceHost;
 namespace BetterCms.Module.Api.Operations.Root.Tags
 {
     /// <summary>
-    /// Request for tag update or creation.
+    /// Request for tag creation.
     /// </summary>
     [Route("/tags", Verbs = "POST")]
     [DataContract]
-    public class PostTagsRequest : RequestBase<TagModel>, IReturn<PostTagsResponse>
+    public class PostTagRequest : RequestBase<TagModel>, IReturn<PostTagResponse>
     {
     }
 }

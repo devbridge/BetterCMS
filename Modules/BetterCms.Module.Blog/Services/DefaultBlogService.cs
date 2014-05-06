@@ -6,6 +6,7 @@ using System.Security.Principal;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
+
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Exceptions.Service;
@@ -15,12 +16,15 @@ using BetterCms.Core.Services;
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.ViewModels.Blog;
+
 using BetterCms.Module.MediaManager.Models;
+
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Filter;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -29,7 +33,6 @@ using BetterCms.Module.Root.Services;
 
 using NHibernate.Criterion;
 using NHibernate.Linq;
-using NHibernate.Mapping;
 
 namespace BetterCms.Module.Blog.Services
 {
@@ -131,7 +134,8 @@ namespace BetterCms.Module.Blog.Services
 
             Layout layout;
             Page masterPage;
-            LoadLayout(out layout, out masterPage);
+            Region region;
+            LoadDefaultLayoutAndRegion(out layout, out masterPage, out region);
 
             if (masterPage != null)
             {
@@ -144,7 +148,6 @@ namespace BetterCms.Module.Blog.Services
                 }
             }
 
-            var region = LoadRegion(layout, masterPage);
             var isNew = request.Id.HasDefaultValue();
             var userCanEdit = securityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);
 
@@ -153,7 +156,7 @@ namespace BetterCms.Module.Blog.Services
             BlogPost blogPost;
             BlogPostContent content = null;
             PageContent pageContent = null;
-            Pages.Models.Redirect redirectCreated = null;
+            Redirect redirectCreated = null;
 
             // Loading blog post and it's content, or creating new, if such not exists
             if (!isNew)
@@ -319,6 +322,9 @@ namespace BetterCms.Module.Blog.Services
             // Commit
             unitOfWork.Commit();
 
+            // Notify about new created tags.
+            Events.RootEvents.Instance.OnTagCreated(newTags);
+
             // Notify about new or updated blog post.
             if (isNew)
             {
@@ -327,11 +333,7 @@ namespace BetterCms.Module.Blog.Services
             else
             {
                 Events.BlogEvents.Instance.OnBlogUpdated(blogPost);
-
             }
-
-            // Notify about new created tags.
-            Events.RootEvents.Instance.OnTagCreated(newTags);
 
             // Notify about redirect creation.
             if (redirectCreated != null)
@@ -370,9 +372,11 @@ namespace BetterCms.Module.Blog.Services
         /// <summary>
         /// Loads the layout.
         /// </summary>
-        /// <returns>Layout for blog post.</returns>
+        /// <param name="layout">The layout.</param>
+        /// <param name="masterPage">The master page.</param>
+        /// <param name="region">The region.</param>
         /// <exception cref="System.ComponentModel.DataAnnotations.ValidationException">If layout was not found.</exception>
-        private void LoadLayout(out Layout layout, out Page masterPage)
+        public void LoadDefaultLayoutAndRegion(out Layout layout, out Page masterPage, out Region region)
         {
             var option = optionService.GetDefaultOption();
 
@@ -386,19 +390,11 @@ namespace BetterCms.Module.Blog.Services
             if (layout == null && masterPage == null)
             {
                 var message = BlogGlobalization.SaveBlogPost_LayoutNotFound_Message;
-                const string logMessage = "Failed to save blog post. No compatible layouts found.";
+                const string logMessage = "No compatible layouts found for blog post.";
                 throw new ValidationException(() => message, logMessage);
             }
-        }
 
-        /// <summary>
-        /// Loads the region.
-        /// </summary>
-        /// <returns>Region for blog post content.</returns>
-        /// <exception cref="System.ComponentModel.DataAnnotations.ValidationException">If no region found.</exception>
-        private Region LoadRegion(Layout layout, Page masterPage)
-        {
-            var regionId = Guid.Empty;
+            Guid regionId;
             if (layout != null)
             {
                 regionId = layout.LayoutRegions.Count(layoutRegion => !layoutRegion.IsDeleted && !layoutRegion.Region.IsDeleted) == 1
@@ -409,10 +405,11 @@ namespace BetterCms.Module.Blog.Services
                                            .Select(layoutRegion => layoutRegion.Region.Id)
                                            .FirstOrDefault();
             }
-            else if (masterPage != null)
+            else
             {
+                var masterPageRef = masterPage;
                 regionId = repository.AsQueryable<PageContent>()
-                          .Where(pageContent => pageContent.Page == masterPage)
+                          .Where(pageContent => pageContent.Page == masterPageRef)
                           .SelectMany(pageContent => pageContent.Content.ContentRegions)
                           .Select(contentRegion => contentRegion.Region.Id)
                           .FirstOrDefault();
@@ -425,9 +422,7 @@ namespace BetterCms.Module.Blog.Services
                 throw new ValidationException(() => message, logMessage);
             }
 
-            var region = repository.AsProxy<Region>(regionId);
-
-            return region;
+            region = repository.AsProxy<Region>(regionId);
         }
 
         /// <summary>
@@ -453,7 +448,7 @@ namespace BetterCms.Module.Blog.Services
         /// <param name="blogPost">The blog post.</param>
         /// <param name="principal">The principal.</param>
         /// <param name="masterPage">The master page.</param>
-        private void AddDefaultAccessRules(BlogPost blogPost, IPrincipal principal, Page masterPage)
+        public void AddDefaultAccessRules(BlogPost blogPost, IPrincipal principal, Page masterPage)
         {
             // Set default access rules
             blogPost.AccessRules = new List<AccessRule>();

@@ -90,6 +90,15 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         public MetadataModel MetaData { get; set; }
 
         /// <summary>
+        /// Gets or sets the technical information (content, page content, region ids).
+        /// </summary>
+        /// <value>
+        /// The technical information (content, page content, region ids).
+        /// </value>
+        [DataMember]
+        public TechnicalInfoModel TechnicalInfo { get; set; }
+
+        /// <summary>
         /// Gets or sets the access rules.
         /// </summary>
         /// <value>

@@ -3,13 +3,13 @@ using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
-namespace BetterCms.Module.Api.Operations.Root.Tags
+namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
 {
     /// <summary>
-    /// Tag creation response.
+    /// Blog post update response.
     /// </summary>
     [DataContract]
-    public class PostTagsResponse : ResponseBase<Guid?>
+    public class PutBlogPostResponse : ResponseBase<Guid?>
     {
     }
 }

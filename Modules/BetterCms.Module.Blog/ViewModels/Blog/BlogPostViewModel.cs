@@ -35,6 +35,14 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         public virtual Guid ContentId { get; set; }
 
         /// <summary>
+        /// Gets or sets the page content identifier.
+        /// </summary>
+        /// <value>
+        /// The page content identifier.
+        /// </value>
+        public virtual Guid? PageContentId { get; set; }
+
+        /// <summary>
         /// Gets or sets the blog post entity version.
         /// </summary>
         /// <value>

@@ -1,11 +1,14 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
+using BetterCms.Module.Api.Operations.Root;
 
 namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
 {
     [DataContract]
-    public class BlogPostModel : ModelBase
+    public class SaveBlogPostModel : ModelBase
     {
         /// <summary>
         /// Gets or sets the blog post URL.
@@ -80,15 +83,6 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
         public System.Guid? CategoryId { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the category.
-        /// </summary>
-        /// <value>
-        /// The name of the category.
-        /// </value>
-        [DataMember]
-        public string CategoryName { get; set; }
-
-        /// <summary>
         /// Gets or sets the blog post author id.
         /// </summary>
         /// <value>
@@ -96,15 +90,6 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
         /// </value>
         [DataMember]
         public System.Guid? AuthorId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the author.
-        /// </summary>
-        /// <value>
-        /// The name of the author.
-        /// </value>
-        [DataMember]
-        public string AuthorName { get; set; }
 
         /// <summary>
         /// Gets or sets the blog posts main image id.
@@ -116,31 +101,22 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
         public System.Guid? MainImageId { get; set; }
 
         /// <summary>
-        /// Gets or sets the main image URL.
+        /// Gets or sets the featured image id.
         /// </summary>
         /// <value>
-        /// The main image URL.
+        /// The featured image id.
         /// </value>
         [DataMember]
-        public string MainImageUrl { get; set; }
+        public System.Guid? FeaturedImageId { get; set; }
 
         /// <summary>
-        /// Gets or sets the main image thumbnail URL.
+        /// Gets or sets the secondary image id.
         /// </summary>
         /// <value>
-        /// The main image thumbnauil URL.
+        /// The secondary image id.
         /// </value>
         [DataMember]
-        public string MainImageThumbnauilUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets the main image caption.
-        /// </summary>
-        /// <value>
-        /// The main image caption.
-        /// </value>
-        [DataMember]
-        public string MainImageCaption { get; set; }
+        public System.Guid? SecondaryImageId { get; set; }
 
         /// <summary>
         /// Gets or sets the blog post activation date.
@@ -177,5 +153,86 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
         /// </value>
         [DataMember]
         public bool UseCanonicalUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to use no follow.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to use no follow; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool UseNoFollow { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to use no index.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to use no index; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool UseNoIndex { get; set; }
+
+        /// <summary>
+        /// Gets or sets the blog post HTML contents.
+        /// </summary>
+        /// <value>
+        /// The blog post HTML content.
+        /// </value>
+        [DataMember]
+        public string HtmlContent { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language identifier.
+        /// </summary>
+        /// <value>
+        /// The language identifier.
+        /// </value>
+        [DataMember]
+        public Guid? LanguageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language group identifier.
+        /// </summary>
+        /// <value>
+        /// The language group identifier.
+        /// </value>
+        [DataMember]
+        public string LanguageGroupIdentifier { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of tags.
+        /// </summary>
+        /// <value>
+        /// The list of tags.
+        /// </value>
+        [DataMember]
+        public System.Collections.Generic.List<string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the meta data.
+        /// </summary>
+        /// <value>
+        /// The meta data.
+        /// </value>
+        [DataMember]
+        public MetadataModel MetaData { get; set; }
+
+        /// <summary>
+        /// Gets or sets the technical information (content, page content, region ids).
+        /// </summary>
+        /// <value>
+        /// The technical information (content, page content, region ids).
+        /// </value>
+        [DataMember]
+        public TechnicalInfoModel TechnicalInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets the access rules.
+        /// </summary>
+        /// <value>
+        /// The access rules.
+        /// </value>
+        [DataMember]
+        public System.Collections.Generic.IList<AccessRuleModel> AccessRules { get; set; }
     }
 }
