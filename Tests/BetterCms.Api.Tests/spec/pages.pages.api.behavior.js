@@ -524,6 +524,29 @@ describe('pages.pages.api.behavior', function () {
         });
     });
 
+    it('01008.1: Should get page content by id', function() {
+        var url = '/bcms-api/pages/contents/' + 'd88b0aa8172149bb86c8a20400fe687e',
+              result,
+              ready = false;
+
+        runs(function () {
+            api.get(url, null, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved.');
+        });
+    });
+
     it('01009: Should get pages list, filtered by tags, using AND connector', function () {
         filterByTags('and', 1, ['IFilterByTags Page 1']);
     });
