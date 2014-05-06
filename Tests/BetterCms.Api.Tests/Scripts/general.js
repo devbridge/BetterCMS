@@ -59,7 +59,7 @@ var api = (function() {
         obj.postSecured(url, data, null, onSuccess, onError);
     };
 
-    obj.postSecured = function (url, data, user, onSuccess, onError) {
+    obj.postSecured = function(url, data, user, onSuccess, onError) {
         var options = {
             type: 'POST',
             data: JSON.stringify({ Data: data || {}, User: user || {} }),
@@ -69,20 +69,20 @@ var api = (function() {
             dataType: 'json',
             success: onSuccess,
             error: onError,
-            beforeSend: function (request) {
+            beforeSend: function(request) {
                 // Hack for phantomjs runner (it ignores a regularly provided contentType).
                 request.setRequestHeader("X-Content-Type", "application/json");
             },
         };
 
         $.ajax(url, options);
-    }
+    };
 
     obj.put = function (url, data, onSuccess, onError) {
         obj.putSecured(url, data, null, onSuccess, onError);
     };
 
-    obj.putSecured = function (url, data, user, onSuccess, onError) {
+    obj.putSecured = function(url, data, user, onSuccess, onError) {
         var options = {
             type: 'PUT',
             data: JSON.stringify({ Data: data || {}, User: user || {} }),
@@ -92,20 +92,20 @@ var api = (function() {
             dataType: 'json',
             success: onSuccess,
             error: onError,
-            beforeSend: function (request) {
+            beforeSend: function(request) {
                 // Hack for phantomjs runner (it ignores a regularly provided contentType).
                 request.setRequestHeader("X-Content-Type", "application/json");
             },
         };
 
         $.ajax(url, options);
-    }
+    };
 
     obj.delete = function (url, data, onSuccess, onError) {
         obj.deleteSecured(url, data, null, onSuccess, onError);
     };
 
-    obj.deleteSecured = function (url, data, user, onSuccess, onError) {
+    obj.deleteSecured = function(url, data, user, onSuccess, onError) {
         var options = {
             type: 'DELETE',
             data: JSON.stringify({ Data: data || {}, User: user || {} }),
@@ -115,14 +115,21 @@ var api = (function() {
             dataType: 'json',
             success: onSuccess,
             error: onError,
-            beforeSend: function (request) {
+            beforeSend: function(request) {
                 // Hack for phantomjs runner (it ignores a regularly provided contentType).
                 request.setRequestHeader("X-Content-Type", "application/json");
             },
         };
 
         $.ajax(url, options);
-    }
+    };
+
+    obj.createGuid = function() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16).toUpperCase();
+        });
+    };
 
     /**
     * Checks if all properties of base model are not null
