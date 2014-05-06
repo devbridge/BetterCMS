@@ -3,7 +3,6 @@
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Api;
-using BetterCms.Core.Exceptions.Service;
 using BetterCms.Module.Root.Mvc;
 
 using NHibernate.Linq;
