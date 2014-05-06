@@ -82,8 +82,7 @@ namespace BetterCms.Module.Api.Operations.Root.Tags
                     new PutTagRequest
                         {
                             Data = request.Data,
-                            User = request.User,
-                            CreateOnly = true
+                            User = request.User
                         });
 
             return new PostTagResponse { Data = result.Data };

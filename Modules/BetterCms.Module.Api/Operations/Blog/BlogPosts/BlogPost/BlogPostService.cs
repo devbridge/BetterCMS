@@ -28,6 +28,7 @@ using BetterCms.Module.Root.Mvc.Helpers;
 
 using NHibernate.Linq;
 
+using ServiceStack.Common.Utils;
 using ServiceStack.ServiceInterface;
 
 using ITagService = BetterCms.Module.Pages.Services.ITagService;
@@ -138,9 +139,9 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
 
         public PutBlogPostResponse Put(PutBlogPostRequest request)
         {
-            Module.Blog.Models.BlogPost blogPost;
-            PageContent pageContent;
-            BlogPostContent content;
+            Module.Blog.Models.BlogPost blogPost = null;
+            PageContent pageContent = null;
+            BlogPostContent content = null;
 
             // Validate technical info
             if (request.Data.TechnicalInfo != null)
@@ -162,7 +163,52 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
                 }
             }
 
-            var isNew = !request.BlogPostId.HasValue || request.BlogPostId.Value.HasDefaultValue() || request.CreateOnly;
+            Guid? id = !request.BlogPostId.HasValue || request.BlogPostId.Value.HasDefaultValue() ? (Guid?)null : request.BlogPostId.Value;
+            var isNew = !id.HasValue;
+
+            if (!isNew)
+            {
+                blogPost = repository
+                    .AsQueryable<Module.Blog.Models.BlogPost>(bp => bp.Id == request.BlogPostId.Value)
+                    .FetchMany(bp => bp.AccessRules)
+                    .FetchMany(bp => bp.PageTags)
+                    .ThenFetch(pt => pt.Tag)
+                    .FetchMany(bp => bp.MasterPages)
+                    .FirstOrDefault();
+
+                if (blogPost != null)
+                {
+                    if (request.Data.TechnicalInfo != null)
+                    {
+                        content = repository
+                            .AsQueryable<BlogPostContent>(c => c.PageContents.Any(x => x.Page.Id == request.BlogPostId
+                                && !x.IsDeleted && x.Id == request.Data.TechnicalInfo.PageContentId.Value
+                                && !x.IsDeleted && c.Id == request.Data.TechnicalInfo.BlogPostContentId.Value))
+                            .ToFuture()
+                            .FirstOrDefault();
+
+                        if (content == null)
+                        {
+                            var message = "Cannot find a blog post content by specified blog post content and Id and page content Id.";
+                            var logMessage = string.Format("{0}. BlogId: {1}, BlogPostContentId: {2}, PageContentId: {3}");
+                            throw new ValidationException(() => message, logMessage);
+                        }
+
+                        pageContent = repository.First<PageContent>(pc => pc.Id == request.Data.TechnicalInfo.PageContentId.Value);
+                    }
+                    else
+                    {
+                        content = repository
+                            .AsQueryable<BlogPostContent>(c => c.PageContents.Any(x => x.Page.Id == request.BlogPostId && !x.IsDeleted) && !c.IsDeleted)
+                            .ToFuture()
+                            .FirstOrDefault();
+
+                        pageContent = repository.FirstOrDefault<PageContent>(c => c.Page.Id == request.BlogPostId && !c.IsDeleted && c.Content == content);
+                    }
+                }
+            }
+
+            isNew = blogPost == null;
             if (isNew)
             {
                 // Create blog post and blog post contents
@@ -172,54 +218,19 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
                     blogPost.Id = request.BlogPostId.Value;
                 }
 
-                pageContent = new PageContent();
                 content = new BlogPostContent();
+                pageContent = new PageContent
+                {
+                    Page = blogPost,
+                    Content = content
+                };
+                content.Name = request.Data.Title;
                 if (request.Data.TechnicalInfo != null)
                 {
                     pageContent.Id = request.Data.TechnicalInfo.PageContentId.Value;
                     content.Id = request.Data.TechnicalInfo.BlogPostContentId.Value;
                     pageContent.Region = repository.AsProxy<Region>(request.Data.TechnicalInfo.RegionId.Value);
                 }
-            }
-            else
-            {
-                var bpFuture = repository
-                    .AsQueryable<Module.Blog.Models.BlogPost>(bp => bp.Id == request.BlogPostId.Value)
-                    .FetchMany(bp => bp.AccessRules)
-                    .FetchMany(bp => bp.PageTags)
-                    .ThenFetch(pt => pt.Tag)
-                    .FetchMany(bp => bp.MasterPages)
-                    .ToFuture();
-                
-                if (request.Data.TechnicalInfo != null)
-                {
-                    content = repository
-                        .AsQueryable<BlogPostContent>(c => c.PageContents.Any(x => x.Page.Id == request.BlogPostId 
-                            && !x.IsDeleted && x.Id == request.Data.TechnicalInfo.PageContentId.Value 
-                            && !x.IsDeleted && c.Id == request.Data.TechnicalInfo.BlogPostContentId.Value))
-                        .ToFuture()
-                        .FirstOrDefault();
-                    
-                    if (content == null)
-                    {
-                        var message = "Cannot find a blog post content by specified blog post content and Id and page content Id.";
-                        var logMessage = string.Format("{0}. BlogId: {1}, BlogPostContentId: {2}, PageContentId: {3}");
-                        throw new ValidationException(() => message, logMessage);
-                    }
-
-                    pageContent = repository.First<PageContent>(pc => pc.Id == request.Data.TechnicalInfo.PageContentId.Value);
-                }
-                else
-                {
-                    content = repository
-                        .AsQueryable<BlogPostContent>(c => c.PageContents.Any(x => x.Page.Id == request.BlogPostId && !x.IsDeleted) && !c.IsDeleted)
-                        .ToFuture()
-                        .FirstOrDefault();
-
-                    pageContent = repository.FirstOrDefault<PageContent>(c => c.Page.Id == request.BlogPostId && !c.IsDeleted && c.Content == content);
-                }
-
-                blogPost = bpFuture.FirstOne();
             }
 
             unitOfWork.BeginTransaction();
@@ -260,6 +271,11 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
                     blogPost.MasterPage = masterPage;
                     masterPageService.SetPageMasterPages(blogPost, masterPage.Id);
                 }
+
+                if (request.Data.TechnicalInfo == null)
+                {
+                    pageContent.Region = region;
+                }
             }
 
             // Set all the properties
@@ -269,7 +285,10 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
                 blogPost.MetaKeywords = request.Data.MetaData.MetaKeywords;
                 blogPost.MetaDescription = request.Data.MetaData.MetaDescription;
             }
-            blogPost.Version = request.Data.Version;
+            if (request.Data.Version > 0)
+            {
+                blogPost.Version = request.Data.Version;
+            }
             blogPost.ActivationDate = request.Data.ActivationDate;
             blogPost.ExpirationDate = TimeHelper.FormatEndDate(request.Data.ExpirationDate);
             blogPost.Description = request.Data.IntroText;
@@ -283,10 +302,18 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
             blogPost.FeaturedImage = request.Data.FeaturedImageId.HasValue ? repository.AsProxy<MediaImage>(request.Data.FeaturedImageId.Value) : null;
             blogPost.IsArchived = request.Data.IsArchived;
             blogPost.PageUrl = urlService.FixUrl(request.Data.BlogPostUrl);
-            blogPost.PageUrlHash = request.Data.BlogPostUrl.UrlHash();
+            if (blogPost.PageUrl != null)
+            {
+                blogPost.PageUrlHash = request.Data.BlogPostUrl.UrlHash();
+            }
             blogPost.Title = request.Data.Title;
             blogPost.Status = request.Data.IsPublished ? PageStatus.Published : PageStatus.Unpublished;
             blogPost.PublishedOn = request.Data.PublishedOn;
+            
+            content.Html = request.Data.HtmlContent ?? string.Empty;
+            content.Status = request.Data.IsPublished ? ContentStatus.Published : ContentStatus.Draft;
+            content.ActivationDate = request.Data.ActivationDate;
+            content.ExpirationDate = request.Data.ExpirationDate;
 
             // Add default access rules if request rules are not set
             if (isNew && request.Data.AccessRules == null)

@@ -83,10 +83,10 @@
     <Compile Include="Infrastructure\ListResponseBase.cs" />
     <Compile Include="Infrastructure\ModelBase.cs" />
     <Compile Include="Infrastructure\OrderItem.cs" />
-    <Compile Include="Infrastructure\PutRequestBase.cs" />
     <Compile Include="Infrastructure\RequestDeleteModel.cs" />
     <Compile Include="Infrastructure\RequestBase.cs" />
     <Compile Include="Infrastructure\ResponseBase.cs" />
+    <Compile Include="Infrastructure\SaveModelBase.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\TechnicalInfoModel.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\SaveBlogPostModel.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\PutBlogPostRequest.cs" />
