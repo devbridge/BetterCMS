@@ -4,6 +4,7 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Security;
@@ -72,6 +73,11 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         private readonly ISitemapService sitemapService;
 
         /// <summary>
+        /// The master page service.
+        /// </summary>
+        private readonly IMasterPageService masterPageService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PagePropertiesService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
@@ -82,6 +88,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// <param name="tagService">The tag service.</param>
         /// <param name="accessControlService">The access control service.</param>
         /// <param name="sitemapService">The sitemap service.</param>
+        /// <param name="masterPageService">The master page service.</param>
         public PagePropertiesService(
             IRepository repository,
             IUnitOfWork unitOfWork,
@@ -90,7 +97,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
             IMediaFileUrlResolver fileUrlResolver,
             ITagService tagService,
             IAccessControlService accessControlService,
-            ISitemapService sitemapService)
+            ISitemapService sitemapService,
+            IMasterPageService masterPageService)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
@@ -100,6 +108,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
             this.tagService = tagService;
             this.accessControlService = accessControlService;
             this.sitemapService = sitemapService;
+            this.masterPageService = masterPageService;
         }
 
         /// <summary>
@@ -318,7 +327,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// </returns>
         public PutPagePropertiesResponse Put(PutPagePropertiesRequest request)
         {
-            var pageProperties = repository.AsQueryable<PageProperties>().FirstOrDefault(e => e.Id == request.PageId);
+            var pageProperties =
+                repository.AsQueryable<PageProperties>(e => e.Id == request.PageId)
+                    .FetchMany(p => p.Options)
+                    .Fetch(p => p.Layout)
+                    .ThenFetchMany(l => l.LayoutOptions)
+                    .FetchMany(p => p.MasterPages)
+                    .FetchMany(f => f.AccessRules)
+                    .ToList()
+                    .FirstOrDefault();
 
             var createPageProperties = pageProperties == null;
             if (createPageProperties)
@@ -330,21 +347,25 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                 pageProperties.Version = request.Data.Version;
             }
 
+            // Load master pages for updating page's master path and page's children master path
+            IList<Guid> newMasterIds;
+            IList<Guid> oldMasterIds;
+            IList<Guid> childrenPageIds;
+            IList<MasterPage> existingChildrenMasterPages;
+            masterPageService.PrepareForUpdateChildrenMasterPages(pageProperties, request.Data.MasterPageId, out newMasterIds, out oldMasterIds, out childrenPageIds, out existingChildrenMasterPages);
+
             unitOfWork.BeginTransaction();
 
             pageProperties.PageUrl = request.Data.PageUrl;
             pageProperties.PageUrlHash = request.Data.PageUrl.UrlHash();
             pageProperties.Title = request.Data.Title;
             pageProperties.Description = request.Data.Description;
-            pageProperties.Status = request.Data.IsPublished ? PageStatus.Published : PageStatus.Unpublished;
+            pageProperties.Status = request.Data.IsMasterPage || request.Data.IsPublished ? PageStatus.Published : PageStatus.Unpublished;
             pageProperties.PublishedOn = request.Data.PublishedOn;
-            pageProperties.Layout = request.Data.LayoutId.HasValue && !request.Data.LayoutId.Value.HasDefaultValue()
-                                    ? repository.AsProxy<Layout>(request.Data.LayoutId.Value)
-                                    : null;
-            pageProperties.MasterPage = request.Data.MasterPageId.HasValue && !request.Data.MasterPageId.Value.HasDefaultValue()
-                                    ? repository.AsProxy<Module.Root.Models.Page>(request.Data.MasterPageId.Value)
-                                    : null;
-            pageProperties.Category = request.Data.CategoryId.HasValue && !request.Data.CategoryId.Value.HasDefaultValue()
+
+            masterPageService.SetMasterOrLayout(pageProperties, request.Data.MasterPageId, request.Data.LayoutId);
+
+            pageProperties.Category = request.Data.CategoryId.HasValue
                                     ? repository.AsProxy<Category>(request.Data.CategoryId.Value)
                                     : null;
             pageProperties.IsArchived = request.Data.IsArchived;
@@ -353,15 +374,17 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
             pageProperties.Language = request.Data.LanguageId.HasValue && !request.Data.LanguageId.Value.HasDefaultValue()
                                     ? repository.AsProxy<Language>(request.Data.LanguageId.Value)
                                     : null;
-            pageProperties.Image = request.Data.MainImageId.HasValue && !request.Data.MainImageId.Value.HasDefaultValue()
+
+            pageProperties.Image = request.Data.MainImageId.HasValue
                                     ? repository.AsProxy<MediaImage>(request.Data.MainImageId.Value)
                                     : null;
-            pageProperties.FeaturedImage = request.Data.FeaturedImageId.HasValue && !request.Data.FeaturedImageId.Value.HasDefaultValue()
+            pageProperties.FeaturedImage = request.Data.FeaturedImageId.HasValue
                                     ? repository.AsProxy<MediaImage>(request.Data.FeaturedImageId.Value)
                                     : null;
-            pageProperties.SecondaryImage = request.Data.SecondaryImageId.HasValue && !request.Data.SecondaryImageId.Value.HasDefaultValue()
+            pageProperties.SecondaryImage = request.Data.SecondaryImageId.HasValue
                                     ? repository.AsProxy<MediaImage>(request.Data.SecondaryImageId.Value)
                                     : null;
+
             pageProperties.CustomCss = request.Data.CustomCss;
             pageProperties.CustomJS = request.Data.CustomJavaScript;
             pageProperties.UseCanonicalUrl = request.Data.UseCanonicalUrl;
@@ -395,6 +418,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
             repository.Save(pageProperties);
 
             unitOfWork.Commit();
+
+            masterPageService.UpdateChildrenMasterPages(existingChildrenMasterPages, oldMasterIds, newMasterIds, childrenPageIds);
 
             // Fire events.
             Events.RootEvents.Instance.OnTagCreated(newTags);

@@ -4,7 +4,7 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
-
+using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
@@ -87,6 +87,114 @@ namespace BetterCms.Module.Pages.Services
                 });
 
             return options;
+        }
+
+        public void PrepareForUpdateChildrenMasterPages(PageProperties page, Guid? masterPageId, out IList<Guid> newMasterIds, out IList<Guid> oldMasterIds, out IList<Guid> childrenPageIds, out IList<MasterPage>  existingChildrenMasterPages)
+        {
+            if ((page.MasterPage != null && page.MasterPage.Id != masterPageId) || (page.MasterPage == null && masterPageId.HasValue))
+            {
+                newMasterIds = masterPageId.HasValue ? GetPageMasterPageIds(masterPageId.Value) : new List<Guid>(0);
+
+                oldMasterIds = page.MasterPage != null && page.MasterPages != null ? page.MasterPages.Select(mp => mp.Master.Id).Distinct().ToList() : new List<Guid>(0);
+
+                var intersectingIds = newMasterIds.Intersect(oldMasterIds).ToArray();
+                foreach (var id in intersectingIds)
+                {
+                    oldMasterIds.Remove(id);
+                    newMasterIds.Remove(id);
+                }
+
+                var updatingIds = newMasterIds.Union(oldMasterIds).Distinct().ToList();
+                existingChildrenMasterPages = GetChildrenMasterPagesToUpdate(page, updatingIds, out childrenPageIds);
+            }
+            else
+            {
+                newMasterIds = null;
+                oldMasterIds = null;
+                childrenPageIds = null;
+                existingChildrenMasterPages = null;
+            }
+        }
+
+        public void SetMasterOrLayout(PageProperties page, Guid? masterPageId, Guid? layoutId)
+        {
+            if (masterPageId.HasValue)
+            {
+                if (page.MasterPage == null || page.MasterPage.Id != masterPageId.Value)
+                {
+                    page.MasterPage = repository.AsProxy<Page>(masterPageId.Value);
+                }
+
+                page.Layout = null;
+            }
+            else if (layoutId.HasValue)
+            {
+                if (page.Layout == null || page.Layout.Id != layoutId.Value)
+                {
+                    page.Layout = repository.AsProxy<Layout>(layoutId.Value);
+                }
+
+                page.MasterPage = null;
+            }
+        }
+
+        /// <summary>
+        /// Updates the master page children: instead of old master page inserts the new one.
+        /// </summary>
+        /// <param name="existingChildrenMasterPages">Already saved children master page assignments.</param>
+        /// <param name="oldMasterIds">The old master ids.</param>
+        /// <param name="newMasterIds">The new master ids.</param>
+        /// <param name="childrenPageIds">The children page ids.</param>
+        public void UpdateChildrenMasterPages(IList<MasterPage> existingChildrenMasterPages, IList<Guid> oldMasterIds, IList<Guid> newMasterIds, IEnumerable<Guid> childrenPageIds)
+        {
+            if (childrenPageIds == null)
+            {
+                return;
+            }
+
+            // Loop in all the distinct master pages
+            foreach (var pageId in childrenPageIds)
+            {
+                // Delete master pages from path
+                existingChildrenMasterPages.Where(mp => mp.Page.Id == pageId && oldMasterIds.Contains(mp.Master.Id)).ToList().ForEach(mp => repository.Delete(mp));
+
+                // Add new ones
+                newMasterIds.Where(masterPageId => !existingChildrenMasterPages.Any(mp => mp.Page.Id == pageId && mp.Master.Id == masterPageId))
+                            .ToList()
+                            .ForEach(
+                                masterPageId =>
+                                {
+                                    var mp = new MasterPage
+                                    {
+                                        Master = repository.AsProxy<Root.Models.Page>(masterPageId),
+                                        Page = repository.AsProxy<Root.Models.Page>(pageId)
+                                    };
+                                    repository.Save(mp);
+                                });
+            }
+        }
+
+        /// <summary>
+        /// Retrieves all the master page children, when master page is changed.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="updatingIds">The updating ids.</param>
+        /// <param name="childrenPageIds">The children page ids.</param>
+        /// <returns>
+        /// List of all the childer master pages, which must be changed.
+        /// </returns>
+        private List<MasterPage> GetChildrenMasterPagesToUpdate(PageProperties page, IList<Guid> updatingIds, out IList<Guid> childrenPageIds)
+        {
+            // Retrieve all master pages, refering old master and master, which include updating page also as master page
+            var query = repository.AsQueryable<MasterPage>().Where(mp => mp.Page.MasterPages.Any(mp1 => mp1.Master == page) || mp.Page == page);
+
+            childrenPageIds = query.Select(mp => mp.Page.Id).Distinct().ToList();
+            if (!childrenPageIds.Contains(page.Id))
+            {
+                childrenPageIds.Add(page.Id);
+            }
+
+            return query.Where(mp => updatingIds.Contains(mp.Master.Id)).ToList();
         }
     }
 }

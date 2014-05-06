@@ -183,29 +183,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             IList<Guid> oldMasterIds;
             IList<Guid> childrenPageIds;
             IList<MasterPage> existingChildrenMasterPages;
-            if ((page.MasterPage != null && page.MasterPage.Id != request.MasterPageId) || (page.MasterPage == null && request.MasterPageId.HasValue))
-            {
-                newMasterIds = request.MasterPageId.HasValue ? masterPageService.GetPageMasterPageIds(request.MasterPageId.Value) : new List<Guid>(0);
-
-                oldMasterIds = page.MasterPage != null && page.MasterPages != null ? page.MasterPages.Select(mp => mp.Master.Id).Distinct().ToList() : new List<Guid>(0);
-
-                var intersectingIds = newMasterIds.Intersect(oldMasterIds).ToArray();
-                foreach (var id in intersectingIds)
-                {
-                    oldMasterIds.Remove(id);
-                    newMasterIds.Remove(id);
-                }
-
-                var updatingIds = newMasterIds.Union(oldMasterIds).Distinct().ToList();
-                existingChildrenMasterPages = GetChildrenMasterPagesToUpdate(page, updatingIds, out childrenPageIds);
-            }
-            else
-            {
-                newMasterIds = null;
-                oldMasterIds = null;
-                childrenPageIds = null;
-                existingChildrenMasterPages = null;
-            }
+            masterPageService.PrepareForUpdateChildrenMasterPages(page, request.MasterPageId, out newMasterIds, out oldMasterIds, out childrenPageIds, out existingChildrenMasterPages);
 
             IList<SitemapNode> updatedNodes = null;
 
@@ -246,22 +224,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                 page.CustomCss = request.PageCSS;
                 page.CustomJS = request.PageJavascript;
 
-                if (request.MasterPageId.HasValue)
-                {
-                    if (page.MasterPage == null || page.MasterPage.Id != request.MasterPageId.Value)
-                    {
-                        page.MasterPage = Repository.AsProxy<Root.Models.Page>(request.MasterPageId.Value);
-                    }
-                    page.Layout = null;
-                }
-                else
-                {
-                    if (page.Layout == null || page.Layout.Id != request.TemplateId.Value)
-                    {
-                        page.Layout = Repository.First<Root.Models.Layout>(request.TemplateId.Value);
-                    }
-                    page.MasterPage = null;
-                }
+                masterPageService.SetMasterOrLayout(page, request.MasterPageId, request.TemplateId);
 
                 if (isMultilanguageEnabled && !page.IsMasterPage)
                 {
@@ -334,7 +297,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             IList<Tag> newTags = null;
             if (canEdit)
             {
-                UpdateChildrenMasterPages(existingChildrenMasterPages, oldMasterIds, newMasterIds, childrenPageIds);
+                masterPageService.UpdateChildrenMasterPages(existingChildrenMasterPages, oldMasterIds, newMasterIds, childrenPageIds);
                 tagService.SavePageTags(page, request.Tags, out newTags);
             }
 
@@ -384,66 +347,6 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             }
 
             return new SavePageResponse(page);
-        }
-
-        /// <summary>
-        /// Retrieves all the master page children, when master page is changed.
-        /// </summary>
-        /// <param name="page">The page.</param>
-        /// <param name="updatingIds">The updating ids.</param>
-        /// <param name="childrenPageIds">The children page ids.</param>
-        /// <returns>
-        /// List of all the childer master pages, which must be changed
-        /// </returns>
-        private List<MasterPage> GetChildrenMasterPagesToUpdate(PageProperties page, IList<Guid> updatingIds, out IList<Guid> childrenPageIds)
-        {
-            // Retrieve all master pages, refering old master and master, which include updating page also as master page
-            var query = Repository.AsQueryable<MasterPage>().Where(mp => mp.Page.MasterPages.Any(mp1 => mp1.Master == page) || mp.Page == page);
-
-            childrenPageIds = query.Select(mp => mp.Page.Id).Distinct().ToList();
-            if (!childrenPageIds.Contains(page.Id))
-            {
-                childrenPageIds.Add(page.Id);
-            }
-
-            return query.Where(mp => updatingIds.Contains(mp.Master.Id)).ToList();
-        }
-
-        /// <summary>
-        /// Updates the master page children: instead of old master page inserts the new one.
-        /// </summary>
-        /// <param name="existingChildrenMasterPages">Already saved children master page assignments.</param>
-        /// <param name="oldMasterIds">The old master ids.</param>
-        /// <param name="newMasterIds">The new master ids.</param>
-        /// <param name="childrenPageIds">The children page ids.</param>
-        private void UpdateChildrenMasterPages(
-            IList<MasterPage> existingChildrenMasterPages, IList<Guid> oldMasterIds, IList<Guid> newMasterIds, IEnumerable<Guid> childrenPageIds)
-        {
-            if (childrenPageIds == null)
-            {
-                return;
-            }
-
-            // Loop in all the distinct master pages
-            foreach (var pageId in childrenPageIds)
-            {
-                // Delete master pages from path
-                existingChildrenMasterPages.Where(mp => mp.Page.Id == pageId && oldMasterIds.Contains(mp.Master.Id)).ToList().ForEach(mp => Repository.Delete(mp));
-
-                // Add new ones
-                newMasterIds.Where(masterPageId => !existingChildrenMasterPages.Any(mp => mp.Page.Id == pageId && mp.Master.Id == masterPageId))
-                            .ToList()
-                            .ForEach(
-                                masterPageId =>
-                                    {
-                                        var mp = new MasterPage
-                                                     {
-                                                         Master = Repository.AsProxy<Root.Models.Page>(masterPageId),
-                                                         Page = Repository.AsProxy<Root.Models.Page>(pageId)
-                                                     };
-                                        Repository.Save(mp);
-                                    });
-            }
         }
 
         /// <summary>
