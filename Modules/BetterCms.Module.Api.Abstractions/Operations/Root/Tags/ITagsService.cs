@@ -20,7 +20,7 @@
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>PostTagsResponse</c> with a new tag id.</returns>
-        PostTagsResponse Post(PostTagsRequest request);
+        PostTagResponse Post(PostTagRequest request);
 
         // NOTE: do not implement: drops all the tags.
         // DeleteTagsResponse Delete(DeleteTagsRequest request);

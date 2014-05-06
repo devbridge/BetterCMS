@@ -35,6 +35,14 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         public virtual Guid ContentId { get; set; }
 
         /// <summary>
+        /// Gets or sets the page content identifier.
+        /// </summary>
+        /// <value>
+        /// The page content identifier.
+        /// </value>
+        public virtual Guid? PageContentId { get; set; }
+
+        /// <summary>
         /// Gets or sets the blog post entity version.
         /// </summary>
         /// <value>
@@ -60,6 +68,15 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         [Required(ErrorMessageResourceType = typeof(BlogGlobalization), ErrorMessageResourceName = "BlogPost_Title_RequiredMessage")]
         [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(BlogGlobalization), ErrorMessageResourceName = "BlogPost_Title_MaxLengthMessage")]
         public virtual string Title { get; set; }
+
+        /// <summary>
+        /// Gets or sets the meta title.
+        /// </summary>
+        /// <value>
+        /// The meta title.
+        /// </value>
+        [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(BlogGlobalization), ErrorMessageResourceName = "BlogPost_MetaTitle_MaxLengthMessage")]
+        public virtual string MetaTitle { get; set; }
 
         /// <summary>
         /// Gets or sets the blog intro text.

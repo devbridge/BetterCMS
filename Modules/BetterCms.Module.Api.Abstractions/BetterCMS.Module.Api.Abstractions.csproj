@@ -83,9 +83,16 @@
     <Compile Include="Infrastructure\ListResponseBase.cs" />
     <Compile Include="Infrastructure\ModelBase.cs" />
     <Compile Include="Infrastructure\OrderItem.cs" />
+    <Compile Include="Infrastructure\PutRequestBase.cs" />
     <Compile Include="Infrastructure\RequestDeleteModel.cs" />
     <Compile Include="Infrastructure\RequestBase.cs" />
     <Compile Include="Infrastructure\ResponseBase.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\TechnicalInfoModel.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\BlogPost\SaveBlogPostModel.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\BlogPost\PutBlogPostRequest.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\BlogPost\PutBlogPostResponse.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\PostBlogPostRequest.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\PostBlogPostResponse.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\DeleteImageRequest.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\DeleteImageRequestValidator.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\DeleteImageResponse.cs" />
@@ -122,7 +129,6 @@
     <Compile Include="Operations\Blog\Authors\IAuthorsService.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPostModel.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\BlogPostModel.cs" />
-    <Compile Include="Operations\Blog\BlogPosts\BlogPost\GetBlogPostModel.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\GetBlogPostRequest.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\GetBlogPostResponse.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\IBlogPostService.cs" />
@@ -311,9 +317,9 @@
     <Compile Include="Operations\Root\Layouts\Layout\Options\ILayoutOptionsService.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\Options\OptionModel.cs" />
     <Compile Include="Operations\Root\OptionType.cs" />
-    <Compile Include="Operations\Root\Tags\PostTagsRequest.cs" />
-    <Compile Include="Operations\Root\Tags\PostTagsResponse.cs" />
-    <Compile Include="Operations\Root\Tags\PostTagsRequestValidator.cs" />
+    <Compile Include="Operations\Root\Tags\PostTagRequest.cs" />
+    <Compile Include="Operations\Root\Tags\PostTagResponse.cs" />
+    <Compile Include="Operations\Root\Tags\PostTagRequestValidator.cs" />
     <Compile Include="Operations\Root\Tags\Tag\PutTagRequestValidator.cs" />
     <Compile Include="Operations\Root\Tags\Tag\DeleteTagRequestValidator.cs" />
     <Compile Include="Operations\Root\Tags\Tag\GetTagRequestValidator.cs" />

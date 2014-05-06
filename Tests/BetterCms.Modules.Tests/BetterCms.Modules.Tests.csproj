@@ -142,6 +142,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Blog\ServiceTests\BlogMLExportServiceTests.cs" />
     <Compile Include="Blog\ServiceTests\BlogMLServiceTests.cs" />
     <Compile Include="LuceneSearch\ServiceTests\IndexerServiceTests.cs" />
     <Compile Include="Api\UsersModuleServiceValidationTest.cs" />

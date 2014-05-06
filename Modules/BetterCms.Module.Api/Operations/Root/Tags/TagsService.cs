@@ -75,17 +75,18 @@ namespace BetterCms.Module.Api.Operations.Root.Tags
         /// <returns>
         ///   <c>PostTagsResponse</c> with a new tag id.
         /// </returns>
-        public PostTagsResponse Post(PostTagsRequest request)
+        public PostTagResponse Post(PostTagRequest request)
         {
             var result =
                 tagService.Put(
                     new PutTagRequest
                         {
                             Data = request.Data,
-                            User = request.User
+                            User = request.User,
+                            CreateOnly = true
                         });
 
-            return new PostTagsResponse { Data = result.Data };
+            return new PostTagResponse { Data = result.Data };
         }
     }
 }

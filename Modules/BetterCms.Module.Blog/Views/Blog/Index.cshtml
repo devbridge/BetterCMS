@@ -15,8 +15,7 @@
 @{
     var controller = (CmsControllerBase)ViewContext.Controller;
     var canEdit = controller.SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);
-    var canPublish = controller.SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);
-    
+    var canPublish = controller.SecurityService.IsAuthorized(RootModuleConstants.UserRoles.PublishContent);
     
     Action<ColumnBuilder<SiteSettingBlogPostViewModel>> columns = column =>
     {
@@ -50,9 +49,9 @@
            .SortColumnName("ModifiedByUser")
            .Attributes(@class => "bcms-blog-ModifiedByUser");
 
-        column.For(m => Html.EditorFor(e => m.PageStatus, "PageStatus"))
+        column.For(m => Html.EditorFor(e => m.Status, "PageStatus"))
            .Named(BlogGlobalization.SiteSettings_Blogs_PageStatusColumn)
-           .SortColumnName("PageStatus")
+           .SortColumnName("Status")
            .HeaderAttributes(@style => "width: 65px; text-align: center")
            .Attributes(@class => "bcms-blog-IsPublished");
 
@@ -82,9 +81,10 @@
                 <div class="bcms-btn-links-main">&nbsp;</div>
             }
 
-            if (canPublish)
+            if (canPublish && canEdit)
             {
                 <div class="bcms-btn-links-main" id="bcms-import-blogs">@BlogGlobalization.SiteSettings_Blogs_Import</div>
+                <div class="bcms-btn-links-main" id="bcms-export-blogs">@BlogGlobalization.SiteSettings_Blogs_Export</div>
             }
         }
 

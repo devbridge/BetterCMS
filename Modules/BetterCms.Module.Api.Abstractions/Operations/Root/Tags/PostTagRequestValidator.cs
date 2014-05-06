@@ -7,12 +7,12 @@ namespace BetterCms.Module.Api.Operations.Root.Tags
     /// <summary>
     /// Post tag request validator.
     /// </summary>
-    public class PostTagsRequestValidator : AbstractValidator<PostTagsRequest>
+    public class PostTagRequestValidator : AbstractValidator<PostTagRequest>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PostTagsRequestValidator"/> class.
+        /// Initializes a new instance of the <see cref="PostTagRequestValidator"/> class.
         /// </summary>
-        public PostTagsRequestValidator()
+        public PostTagRequestValidator()
         {
             RuleFor(request => request.Data).NotNull().WithMessage("Data object with filled Name must be provided.");
             RuleFor(request => request.Data.Name).NotEmpty().WithMessage("Name filed must be provided.");
@@ -25,7 +25,7 @@ namespace BetterCms.Module.Api.Operations.Root.Tags
         /// <param name="request">The request.</param>
         /// <param name="data">The data.</param>
         /// <returns><c>true</c> if version is positive when id is not empty, <c>false</c> otherwise.</returns>
-        private static bool VersionMustBeProvidedIfIdIsSet(PostTagsRequest request, TagModel data)
+        private static bool VersionMustBeProvidedIfIdIsSet(PostTagRequest request, TagModel data)
         {
             return data.Id == default(Guid) || data.Version > 0;
         }
