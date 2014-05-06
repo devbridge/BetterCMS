@@ -28,7 +28,6 @@ using BetterCms.Module.Root.Mvc.Helpers;
 
 using NHibernate.Linq;
 
-using ServiceStack.Common.Utils;
 using ServiceStack.ServiceInterface;
 
 using ITagService = BetterCms.Module.Pages.Services.ITagService;
@@ -58,11 +57,13 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
         private readonly IUrlService urlService;
         
         private readonly IAccessControlService accessControlService;
+        
+        private readonly IPageService pageService;
 
         public BlogPostService(IBlogPostPropertiesService propertiesService, IBlogPostContentService contentService,
             IBlogService blogService, IRepository repository, IMediaFileUrlResolver fileUrlResolver, ISecurityService securityService,
             ITagService tagService, IUnitOfWork unitOfWork, IMasterPageService masterPageService, IUrlService urlService,
-            IAccessControlService accessControlService)
+            IAccessControlService accessControlService, IPageService pageService)
         {
             this.propertiesService = propertiesService;
             this.contentService = contentService;
@@ -75,6 +76,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
             this.masterPageService = masterPageService;
             this.urlService = urlService;
             this.accessControlService = accessControlService;
+            this.pageService = pageService;
         }
 
         public GetBlogPostResponse Get(GetBlogPostRequest request)
@@ -173,7 +175,6 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
                     .FetchMany(bp => bp.AccessRules)
                     .FetchMany(bp => bp.PageTags)
                     .ThenFetch(pt => pt.Tag)
-                    .FetchMany(bp => bp.MasterPages)
                     .FirstOrDefault();
 
                 if (blogPost != null)
@@ -189,7 +190,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
 
                         if (content == null)
                         {
-                            var message = "Cannot find a blog post content by specified blog post content and Id and page content Id.";
+                            const string message = "Cannot find a blog post content by specified blog post content and Id and page content Id.";
                             var logMessage = string.Format("{0}. BlogId: {1}, BlogPostContentId: {2}, PageContentId: {3}");
                             throw new ValidationException(() => message, logMessage);
                         }
@@ -209,8 +210,32 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
             }
 
             isNew = blogPost == null;
+
+            // Validate
+            if (!isNew)
+            {
+                if (request.Data.LayoutId == null && request.Data.MasterPageId == null)
+                {
+                    const string message = "Master page id or layout id should be set when updating blog post.";
+                    throw new ValidationException(() => message, message);
+                }
+
+                if (string.IsNullOrWhiteSpace(request.Data.BlogPostUrl))
+                {
+                    const string message = "Blog post URL cannot be null when updating blog post.";
+                    throw new ValidationException(() => message, message);
+                }
+                request.Data.BlogPostUrl = urlService.FixUrl(request.Data.BlogPostUrl);
+                pageService.ValidatePageUrl(request.Data.BlogPostUrl, request.BlogPostId.Value);
+            }
+
             if (isNew)
             {
+                if (string.IsNullOrWhiteSpace(request.Data.BlogPostUrl))
+                {
+                    request.Data.BlogPostUrl = blogService.CreateBlogPermalink(request.Data.Title);
+                }
+
                 // Create blog post and blog post contents
                 blogPost = new Module.Blog.Models.BlogPost();
                 if (request.BlogPostId.HasValue)
@@ -233,6 +258,13 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
                 }
             }
 
+            // Load master pages for updating page's master path and page's children master path
+            IList<Guid> newMasterIds;
+            IList<Guid> oldMasterIds;
+            IList<Guid> childrenPageIds;
+            IList<MasterPage> existingChildrenMasterPages;
+            masterPageService.PrepareForUpdateChildrenMasterPages(blogPost, request.Data.MasterPageId, out newMasterIds, out oldMasterIds, out childrenPageIds, out existingChildrenMasterPages);
+
             unitOfWork.BeginTransaction();
 
             // Set master page or layout and region
@@ -243,19 +275,12 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
                 masterPage = repository.AsProxy<Page>(request.Data.MasterPageId.Value);
                 blogPost.MasterPage = masterPage;
                 blogPost.Layout = null;
-                masterPageService.SetPageMasterPages(blogPost, request.Data.MasterPageId.Value);
-
-                // TODO: use Simonas service method
             }
             else if (request.Data.LayoutId.HasValue)
             {
                 // Set layout
                 blogPost.Layout = repository.AsProxy<Layout>(request.Data.LayoutId.Value);
                 blogPost.MasterPage = null;
-                if (blogPost.MasterPages != null)
-                {
-                    blogPost.MasterPages.ForEach(mp => repository.Delete(mp));
-                }
             }
             else if (isNew)
             {
@@ -344,6 +369,8 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
             repository.Save(blogPost);
             repository.Save(content);
             repository.Save(pageContent);
+
+            masterPageService.UpdateChildrenMasterPages(existingChildrenMasterPages, oldMasterIds, newMasterIds, childrenPageIds);
 
             unitOfWork.Commit();
 
