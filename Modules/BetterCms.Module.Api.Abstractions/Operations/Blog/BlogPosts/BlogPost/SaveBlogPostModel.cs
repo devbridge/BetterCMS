@@ -8,7 +8,7 @@ using BetterCms.Module.Api.Operations.Root;
 namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
 {
     [DataContract]
-    public class SaveBlogPostModel : ModelBase
+    public class SaveBlogPostModel : SaveModelBase
     {
         /// <summary>
         /// Gets or sets the blog post URL.

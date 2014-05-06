@@ -11,7 +11,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
     /// </summary>
     [Route("/blog-posts/{BlogPostId}", Verbs = "PUT")]
     [DataContract]
-    public class PutBlogPostRequest : PutRequestBase<SaveBlogPostModel>, IReturn<PutBlogPostResponse>
+    public class PutBlogPostRequest : RequestBase<SaveBlogPostModel>, IReturn<PutBlogPostResponse>
     {
         /// <summary>
         /// Gets or sets the blog post identifier.
@@ -20,17 +20,6 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
         /// The blog post identifier.
         /// </value>
         [DataMember]
-        public System.Guid? BlogPostId
-        {
-            get
-            {
-                return Data.Id;
-            }
-
-            set
-            {
-                Data.Id = value.HasValue ? value.Value : System.Guid.Empty;
-            }
-        }
+        public System.Guid? BlogPostId { get; set; }
     }
 }

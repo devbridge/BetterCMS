@@ -417,9 +417,9 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
 
             repository.Save(pageProperties);
 
-            unitOfWork.Commit();
-
             masterPageService.UpdateChildrenMasterPages(existingChildrenMasterPages, oldMasterIds, newMasterIds, childrenPageIds);
+
+            unitOfWork.Commit();
 
             // Fire events.
             Events.RootEvents.Instance.OnTagCreated(newTags);

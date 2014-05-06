@@ -185,7 +185,8 @@ describe('blog.blogPosts.api.behavior', function () {
             includeImages: true,
             includeMetaData: true,
             includeHtmlContent: true,
-            includeAccessRules: true
+            includeAccessRules: true,
+            includeTechnicalInfo: true
         };
 
         runs(function () {
@@ -265,6 +266,13 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(metadata.metaTitle).toBe('Test meta title', 'Correctly filtered metaTitle should be retrieved.');
             expect(metadata.metaKeywords).toBe('Test meta keywords', 'Correctly filtered metaKeywords should be retrieved.');
             expect(metadata.metaDescription).toBe('Test meta description', 'Correctly filtered metaDescription should be retrieved.');
+
+            // technical info
+            var techInfo = result.technicalInfo;
+            expect(techInfo).toBeDefinedAndNotNull('JSON techInfo object should be retrieved.');
+            expect(techInfo.blogPostContentId).toBe('335a518ba9e841eaab84a20500bbe74c', 'Correctly filtered techInfo.blogPostContentId should be retrieved.');
+            expect(techInfo.pageContentId).toBe('2815b2be74314dff96aaa20500bbe74e', 'Correctly filtered techInfo.pageContentId should be retrieved.');
+            expect(techInfo.regionId).toBe('e3e2e7fe62df4ba683216fdcc1691d8a', 'Correctly filtered techInfo.regionId should be retrieved.');
 
             // access rules
             var accessRules = result.accessRules;

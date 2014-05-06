@@ -161,9 +161,9 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
                     })
                 .FirstOne();
 
-            if (request.Data.IncludeHtmlContent)
+            if (request.Data.IncludeHtmlContent || request.Data.IncludeTechnicalInfo)
             {
-                response.HtmlContent = LoadHtml(request.BlogPostId);
+                LoadContents(request.Data.IncludeHtmlContent, request.Data.IncludeTechnicalInfo, request.BlogPostId, response);
             }
 
             if (request.Data.IncludeTags)
@@ -180,12 +180,36 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
             return response;
         }
 
-        private string LoadHtml(Guid blogPostId)
+        private void LoadContents(bool includeHtml, bool includeTechnicalInfo, Guid blogPostId, GetBlogPostPropertiesResponse response)
         {
-            return repository
-                .AsQueryable<Module.Root.Models.PageContent>(pc => pc.Page.Id == blogPostId && !pc.Content.IsDeleted && pc.Content is BlogPostContent)
-                .Select(pc => ((BlogPostContent)pc.Content).Html)
-                .FirstOrDefault();
+            var content =
+                repository.AsQueryable<Module.Root.Models.PageContent>(pc => pc.Page.Id == blogPostId && !pc.Content.IsDeleted && pc.Content is BlogPostContent)
+                    .Select(pc => new
+                                  {
+                                      Html = ((BlogPostContent)pc.Content).Html, 
+                                      ContentId = pc.Content.Id, 
+                                      PageContentId = pc.Id, 
+                                      RegionId = pc.Region.Id
+                                  })
+                    .FirstOrDefault();
+
+            if (content != null)
+            {
+                if (includeHtml)
+                {
+                    response.HtmlContent = content.Html;
+                }
+
+                if (includeTechnicalInfo)
+                {
+                    response.TechnicalInfo = new TechnicalInfoModel
+                                             {
+                                                 BlogPostContentId = content.ContentId,
+                                                 PageContentId = content.PageContentId,
+                                                 RegionId = content.RegionId
+                                             };
+                }
+            }
         }
 
         private List<TagModel> LoadTags(Guid blogPostId)

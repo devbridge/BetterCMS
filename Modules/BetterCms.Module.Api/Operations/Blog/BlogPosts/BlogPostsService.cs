@@ -117,15 +117,13 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
                        };
         }
 
-        public PostBlogPostResponse Put(PostBlogPostRequest request)
+        public PostBlogPostResponse Post(PostBlogPostRequest request)
         {
-            var result = 
-                blogPostService.Put(
+            var result = blogPostService.Put(
                     new PutBlogPostRequest
                         {
                             Data = request.Data,
-                            User = request.User,
-                            CreateOnly = true
+                            User = request.User
                         });
 
             return new PostBlogPostResponse { Data = result.Data };

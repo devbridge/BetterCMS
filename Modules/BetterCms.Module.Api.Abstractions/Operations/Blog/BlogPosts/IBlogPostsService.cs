@@ -4,6 +4,6 @@
     {
         GetBlogPostsResponse Get(GetBlogPostsRequest request);
 
-        PostBlogPostResponse Put(PostBlogPostRequest request);
+        PostBlogPostResponse Post(PostBlogPostRequest request);
     }
 }
