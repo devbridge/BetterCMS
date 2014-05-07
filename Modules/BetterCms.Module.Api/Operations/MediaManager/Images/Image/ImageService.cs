@@ -4,6 +4,7 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root.Mvc;
@@ -148,7 +149,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
             {
                 mediaImage = new MediaImage { Id = request.Data.Id, Type = MediaType.Image };
             }
-            else
+            else if (request.Data.Version > 0)
             {
                 mediaImage.Version = request.Data.Version;
             }
@@ -231,8 +232,20 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
                 return new DeleteImageResponse { Data = false };
             }
 
-            repository.Delete<MediaImage>(request.Data.Id, request.Data.Version);
+            var itemToDelete = repository
+                .AsQueryable<MediaImage>()
+                .Where(p => p.Id == request.Data.Id)
+                .FirstOne();
+
+            if (request.Data.Version > 0 && itemToDelete.Version != request.Data.Version)
+            {
+                throw new ConcurrentDataException(itemToDelete);
+            }
+
+            repository.Delete(itemToDelete);
             unitOfWork.Commit();
+
+            Events.MediaManagerEvents.Instance.OnMediaFileDeleted(itemToDelete);
 
             return new DeleteImageResponse { Data = true };
         }

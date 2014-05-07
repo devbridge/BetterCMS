@@ -5,5 +5,11 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
     public interface IPageContentService
     {
         IPageContentOptionsService Options { get; }
+
+        GetPageContentResponse Get(GetPageContentRequest request);
+
+        PutPageContentResponse Put(PutPageContentRequest request);
+
+        DeletePageContentResponse Delete(DeletePageContentRequest request);
     }
 }

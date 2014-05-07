@@ -1,9 +1,10 @@
 ﻿using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties;
 using BetterCms.Module.Api.Operations.Root;
 
-namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
+namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
 {
     [DataContract]
     public class SavePagePropertiesModel : ModelBase
@@ -195,7 +196,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// The meta data.
         /// </value>
         [DataMember]
-        public MetadataModel MetaData { get; set; }
+        public Properties.MetadataModel MetaData { get; set; }
 
         /// <summary>
         /// Gets or sets the list of tags.

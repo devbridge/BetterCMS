@@ -1,8 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Exceptions.DataTier;
+using BetterCms.Core.Services;
+using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Root.Mvc;
 
 using ServiceStack.ServiceInterface;
@@ -25,14 +29,28 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
         private readonly IUnitOfWork unitOfWork;
 
         /// <summary>
+        /// The content service.
+        /// </summary>
+        private readonly Module.Root.Services.IContentService contentService;
+
+        /// <summary>
+        /// The security service.
+        /// </summary>
+        private readonly ISecurityService securityService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="HtmlContentService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="unitOfWork">The unit of work.</param>
-        public HtmlContentService(IRepository repository, IUnitOfWork unitOfWork)
+        /// <param name="contentService">The content service.</param>
+        /// <param name="securityService">The security service.</param>
+        public HtmlContentService(IRepository repository, IUnitOfWork unitOfWork, Module.Root.Services.IContentService contentService, ISecurityService securityService)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
+            this.contentService = contentService;
+            this.securityService = securityService;
         }
 
         /// <summary>
@@ -81,34 +99,57 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
         /// </returns>
         public PutHtmlContentResponse Put(PutHtmlContentRequest request)
         {
-            var content = repository.AsQueryable<Module.Pages.Models.HtmlContent>().FirstOrDefault(e => e.Id == request.Data.Id);
+            var isNew = !repository.AsQueryable<Module.Root.Models.Content>().Any(e => e.Id == request.Data.Id);
 
-            var createImage = content == null;
-            if (createImage)
+            var contentToSave = new Module.Pages.Models.HtmlContent
             {
-                content = new Module.Pages.Models.HtmlContent { Id = request.Data.Id };
-            }
-            else
-            {
-                content.Version = request.Data.Version;
-            }
+                Id = request.Data.Id,
+                ActivationDate = request.Data.ActivationDate,
+                ExpirationDate = TimeHelper.FormatEndDate(request.Data.ExpirationDate),
+                Name = request.Data.Name,
+                Html = request.Data.Html ?? string.Empty,
+                UseCustomCss = request.Data.UseCustomCss,
+                CustomCss = request.Data.CustomCss,
+                UseCustomJs = request.Data.UseCustomJavaScript,
+                CustomJs = request.Data.CustomJavaScript
+            };
 
             unitOfWork.BeginTransaction();
 
-            content.Name = request.Data.Name;
-            content.ActivationDate = request.Data.ActivationDate;
-            content.ExpirationDate = request.Data.ExpirationDate;
-            content.Html = request.Data.Html;
-            content.CustomCss = request.Data.CustomCss;
-            content.UseCustomCss = request.Data.UseCustomCss;
-            content.CustomJs = request.Data.CustomJavaScript;
-            content.UseCustomJs = request.Data.UseCustomJavaScript;
-            content.Status = request.Data.IsPublished ? ContentStatus.Published : ContentStatus.Draft;
-            content.PublishedByUser = request.Data.PublishedByUser;
-            content.PublishedOn = content.PublishedOn;
+            Module.Pages.Models.HtmlContent content;
+            if (isNew && contentToSave.Id != default(Guid))
+            {
+                if (request.Data.IsPublished)
+                {
+                    contentToSave.PublishedOn = request.Data.PublishedOn.HasValue ? request.Data.PublishedOn.Value : DateTime.Now;
+                    contentToSave.PublishedByUser = !string.IsNullOrEmpty(request.Data.PublishedByUser) ? request.Data.PublishedByUser : securityService.CurrentPrincipalName;
+                }
 
-            repository.Save(content);
+                contentToSave.Status = request.Data.IsPublished ? ContentStatus.Published : ContentStatus.Draft;
+                repository.Save(contentToSave);
+                content = contentToSave;
+            }
+            else
+            {
+                if (request.Data.Version > 0)
+                {
+                    contentToSave.Version = request.Data.Version;
+                }
+
+                content = (Module.Pages.Models.HtmlContent)this.contentService
+                    .SaveContentWithStatusUpdate(contentToSave, request.Data.IsPublished ? ContentStatus.Published : ContentStatus.Draft);
+            }
+
             unitOfWork.Commit();
+
+            if (isNew)
+            {
+                Events.PageEvents.Instance.OnHtmlContentCreated(content);
+            }
+            else
+            {
+                Events.PageEvents.Instance.OnHtmlContentUpdated(content);
+            }
 
             return new PutHtmlContentResponse
             {
@@ -130,8 +171,20 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
                 return new DeleteHtmlContentResponse { Data = false };
             }
 
-            repository.Delete<Module.Pages.Models.HtmlContent>(request.Data.Id, request.Data.Version);
+            var itemToDelete = repository
+                .AsQueryable<Module.Pages.Models.HtmlContent>()
+                .Where(p => p.Id == request.Data.Id)
+                .FirstOne();
+
+            if (request.Data.Version > 0 && itemToDelete.Version != request.Data.Version)
+            {
+                throw new ConcurrentDataException(itemToDelete);
+            }
+
+            repository.Delete(itemToDelete);
             unitOfWork.Commit();
+
+            Events.PageEvents.Instance.OnHtmlContentDeleted(itemToDelete);
 
             return new DeleteHtmlContentResponse { Data = true };
         }
