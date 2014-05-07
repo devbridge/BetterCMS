@@ -111,7 +111,7 @@ namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
             {
                 tagById = new Module.Root.Models.Tag { Id = request.Data.Id };
             }
-            else
+            else if (request.Data.Version > 0)
             {
                 tagById.Version = request.Data.Version;
             }

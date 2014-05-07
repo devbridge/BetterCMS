@@ -4,26 +4,19 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Exceptions.DataTier;
-using BetterCms.Core.Security;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Operations.Root;
-using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
-using BetterCms.Module.Root.Models.Extensions;
-using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
 
 using ServiceStack.ServiceInterface;
 
 using AccessLevel = BetterCms.Module.Api.Operations.Root.AccessLevel;
-using ITagService = BetterCms.Module.Pages.Services.ITagService;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
 {
@@ -36,11 +29,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// The repository.
         /// </summary>
         private readonly IRepository repository;
-
-        /// <summary>
-        /// The unit of work.
-        /// </summary>
-        private readonly IUnitOfWork unitOfWork;
 
         /// <summary>
         /// The URL service.
@@ -58,57 +46,22 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         private readonly IMediaFileUrlResolver fileUrlResolver;
 
         /// <summary>
-        /// The tag service.
-        /// </summary>
-        private readonly ITagService tagService;
-
-        /// <summary>
-        /// The access control service.
-        /// </summary>
-        private readonly IAccessControlService accessControlService;
-
-        /// <summary>
-        /// The sitemap service.
-        /// </summary>
-        private readonly ISitemapService sitemapService;
-
-        /// <summary>
-        /// The master page service.
-        /// </summary>
-        private readonly IMasterPageService masterPageService;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="PagePropertiesService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
-        /// <param name="unitOfWork">The unit of work.</param>
         /// <param name="urlService">The URL service.</param>
         /// <param name="optionService">The option service.</param>
         /// <param name="fileUrlResolver">The file URL resolver.</param>
-        /// <param name="tagService">The tag service.</param>
-        /// <param name="accessControlService">The access control service.</param>
-        /// <param name="sitemapService">The sitemap service.</param>
-        /// <param name="masterPageService">The master page service.</param>
         public PagePropertiesService(
             IRepository repository,
-            IUnitOfWork unitOfWork,
             IUrlService urlService,
             IOptionService optionService,
-            IMediaFileUrlResolver fileUrlResolver,
-            ITagService tagService,
-            IAccessControlService accessControlService,
-            ISitemapService sitemapService,
-            IMasterPageService masterPageService)
+            IMediaFileUrlResolver fileUrlResolver)
         {
             this.repository = repository;
-            this.unitOfWork = unitOfWork;
             this.urlService = urlService;
             this.optionService = optionService;
             this.fileUrlResolver = fileUrlResolver;
-            this.tagService = tagService;
-            this.accessControlService = accessControlService;
-            this.sitemapService = sitemapService;
-            this.masterPageService = masterPageService;
         }
 
         /// <summary>
@@ -316,248 +269,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
             }
 
             return response;
-        }
-
-        /// <summary>
-        /// Replaces the page properties or if it doesn't exist, creates it.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns>
-        ///   <c>PutPagePropertiesResponse</c> with a page properties id.
-        /// </returns>
-        public PutPagePropertiesResponse Put(PutPagePropertiesRequest request)
-        {
-            var pageProperties =
-                repository.AsQueryable<PageProperties>(e => e.Id == request.PageId)
-                    .FetchMany(p => p.Options)
-                    .Fetch(p => p.Layout)
-                    .ThenFetchMany(l => l.LayoutOptions)
-                    .FetchMany(p => p.MasterPages)
-                    .FetchMany(f => f.AccessRules)
-                    .ToList()
-                    .FirstOrDefault();
-
-            var createPageProperties = pageProperties == null;
-            if (createPageProperties)
-            {
-                pageProperties = new PageProperties { Id = request.Data.Id, AccessRules = new List<AccessRule>() };
-            }
-            else
-            {
-                pageProperties.Version = request.Data.Version;
-            }
-
-            // Load master pages for updating page's master path and page's children master path
-            IList<Guid> newMasterIds;
-            IList<Guid> oldMasterIds;
-            IList<Guid> childrenPageIds;
-            IList<MasterPage> existingChildrenMasterPages;
-            masterPageService.PrepareForUpdateChildrenMasterPages(pageProperties, request.Data.MasterPageId, out newMasterIds, out oldMasterIds, out childrenPageIds, out existingChildrenMasterPages);
-
-            unitOfWork.BeginTransaction();
-
-            pageProperties.PageUrl = request.Data.PageUrl;
-            pageProperties.PageUrlHash = request.Data.PageUrl.UrlHash();
-            pageProperties.Title = request.Data.Title;
-            pageProperties.Description = request.Data.Description;
-            pageProperties.Status = request.Data.IsMasterPage || request.Data.IsPublished ? PageStatus.Published : PageStatus.Unpublished;
-            pageProperties.PublishedOn = request.Data.PublishedOn;
-
-            masterPageService.SetMasterOrLayout(pageProperties, request.Data.MasterPageId, request.Data.LayoutId);
-
-            pageProperties.Category = request.Data.CategoryId.HasValue
-                                    ? repository.AsProxy<Category>(request.Data.CategoryId.Value)
-                                    : null;
-            pageProperties.IsArchived = request.Data.IsArchived;
-            pageProperties.IsMasterPage = request.Data.IsMasterPage;
-            pageProperties.LanguageGroupIdentifier = request.Data.LanguageGroupIdentifier;
-            pageProperties.Language = request.Data.LanguageId.HasValue && !request.Data.LanguageId.Value.HasDefaultValue()
-                                    ? repository.AsProxy<Language>(request.Data.LanguageId.Value)
-                                    : null;
-
-            pageProperties.Image = request.Data.MainImageId.HasValue
-                                    ? repository.AsProxy<MediaImage>(request.Data.MainImageId.Value)
-                                    : null;
-            pageProperties.FeaturedImage = request.Data.FeaturedImageId.HasValue
-                                    ? repository.AsProxy<MediaImage>(request.Data.FeaturedImageId.Value)
-                                    : null;
-            pageProperties.SecondaryImage = request.Data.SecondaryImageId.HasValue
-                                    ? repository.AsProxy<MediaImage>(request.Data.SecondaryImageId.Value)
-                                    : null;
-
-            pageProperties.CustomCss = request.Data.CustomCss;
-            pageProperties.CustomJS = request.Data.CustomJavaScript;
-            pageProperties.UseCanonicalUrl = request.Data.UseCanonicalUrl;
-            pageProperties.UseNoFollow = request.Data.UseNoFollow;
-            pageProperties.UseNoIndex = request.Data.UseNoIndex;
-
-            if (request.Data.MetaData != null)
-            {
-                pageProperties.MetaTitle = request.Data.MetaData.MetaTitle;
-                pageProperties.MetaDescription = request.Data.MetaData.MetaDescription;
-                pageProperties.MetaKeywords = request.Data.MetaData.MetaKeywords;
-            }
-
-            IList<Tag> newTags = null;
-            if (request.Data.Tags != null)
-            {
-                var tags = request.Data.Tags.Select(t => t.Name).ToList();
-                tagService.SavePageTags(pageProperties, tags, out newTags);
-            }
-
-            if (request.Data.AccessRules != null)
-            {
-                pageProperties.AccessRules.RemoveDuplicateEntities();
-                var accessRules =
-                    request.Data.AccessRules.Select(
-                        r => (IAccessRule)new AccessRule { AccessLevel = (Core.Security.AccessLevel)(int)r.AccessLevel, Identity = r.Identity, IsForRole = r.IsForRole })
-                        .ToList();
-                accessControlService.UpdateAccessControl(pageProperties, accessRules);
-            }
-
-            repository.Save(pageProperties);
-
-            masterPageService.UpdateChildrenMasterPages(existingChildrenMasterPages, oldMasterIds, newMasterIds, childrenPageIds);
-
-            unitOfWork.Commit();
-
-            // Fire events.
-            Events.RootEvents.Instance.OnTagCreated(newTags);
-            if (createPageProperties)
-            {
-                Events.PageEvents.Instance.OnPageCreated(pageProperties);
-            }
-            else
-            {
-                Events.PageEvents.Instance.OnPagePropertiesChanged(pageProperties);
-            }
-
-            return new PutPagePropertiesResponse
-            {
-                Data = pageProperties.Id
-            };
-        }
-
-        /// <summary>
-        /// Deletes the specified page properties.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns>
-        ///   <c>DeletePagePropertiesResponse</c> with success status.
-        /// </returns>
-        public DeletePagePropertiesResponse Delete(DeletePagePropertiesRequest request)
-        {
-            if (request.Data == null || request.Data.Id.HasDefaultValue())
-            {
-                return new DeletePagePropertiesResponse { Data = false };
-            }
-
-            var page = repository.First<PageProperties>(request.Data.Id);
-            if (page.Version != request.Data.Version)
-            {
-                throw new ConcurrentDataException(page);
-            }
-
-            var sitemaps = new Dictionary<Module.Pages.Models.Sitemap, bool>();
-            var sitemapNodes = sitemapService.GetNodesByPage(page);
-
-            unitOfWork.BeginTransaction();
-
-            IList<SitemapNode> updatedNodes = new List<SitemapNode>();
-            IList<SitemapNode> deletedNodes = new List<SitemapNode>();
-            if (sitemapNodes != null)
-            {
-                // Archive sitemaps before update.
-                sitemaps.Select(pair => pair.Key).ToList().ForEach(sitemap => sitemapService.ArchiveSitemap(sitemap.Id));
-                foreach (var node in sitemapNodes)
-                {
-                    if (!node.IsDeleted)
-                    {
-                        // Unlink sitemap node.
-                        if (node.Page != null && node.Page.Id == page.Id)
-                        {
-                            node.Page = null;
-                            node.Title = node.UsePageTitleAsNodeTitle ? page.Title : node.Title;
-                            node.Url = page.PageUrl;
-                            node.UrlHash = page.PageUrlHash;
-                            repository.Save(node);
-                            updatedNodes.Add(node);
-                        }
-                    }
-                }
-            }
-
-            // Delete child entities.            
-            if (page.PageTags != null)
-            {
-                foreach (var pageTag in page.PageTags)
-                {
-                    repository.Delete(pageTag);
-                }
-            }
-
-            if (page.PageContents != null)
-            {
-                foreach (var pageContent in page.PageContents)
-                {
-                    repository.Delete(pageContent);
-                }
-            }
-
-            if (page.Options != null)
-            {
-                foreach (var option in page.Options)
-                {
-                    repository.Delete(option);
-                }
-            }
-
-            if (page.AccessRules != null)
-            {
-                var rules = page.AccessRules.ToList();
-                rules.ForEach(page.RemoveRule);
-            }
-
-            if (page.MasterPages != null)
-            {
-                foreach (var master in page.MasterPages)
-                {
-                    repository.Delete(master);
-                }
-            }
-
-            // Delete page
-            repository.Delete<Module.Root.Models.Page>(request.Data.Id, request.Data.Version);
-
-            unitOfWork.Commit();
-
-            var updatedSitemaps = new List<Module.Pages.Models.Sitemap>();
-            foreach (var node in updatedNodes)
-            {
-                Events.SitemapEvents.Instance.OnSitemapNodeUpdated(node);
-                if (!updatedSitemaps.Contains(node.Sitemap))
-                {
-                    updatedSitemaps.Add(node.Sitemap);
-                }
-            }
-
-            foreach (var node in deletedNodes)
-            {
-                Events.SitemapEvents.Instance.OnSitemapNodeDeleted(node);
-                if (!updatedSitemaps.Contains(node.Sitemap))
-                {
-                    updatedSitemaps.Add(node.Sitemap);
-                }
-            }
-
-            foreach (var updatedSitemap in updatedSitemaps)
-            {
-                Events.SitemapEvents.Instance.OnSitemapUpdated(updatedSitemap);
-            }
-
-            Events.PageEvents.Instance.OnPageDeleted(page);
-
-            return new DeletePagePropertiesResponse { Data = true };
         }
 
         /// <summary>

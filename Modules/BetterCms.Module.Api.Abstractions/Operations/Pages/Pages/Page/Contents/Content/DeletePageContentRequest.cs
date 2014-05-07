@@ -1,16 +1,38 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
+using BetterCms.Module.Api.Infrastructure;
+
 using ServiceStack.ServiceHost;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
 {
+    /// <summary>
+    /// Page content delete request for REST.
+    /// </summary>
     [Route("/pages/{PageId}/contents/{PageContentId}", Verbs = "DELETE")]
     [DataContract]
-    public class DeletePageContentRequest : IReturn<DeletePageContentResponse>
+    public class DeletePageContentRequest : RequestBase<RequestDeleteModel>,  IReturn<DeletePageContentResponse>
     {
+        /// <summary>
+        /// Gets or sets the page content identifier.
+        /// </summary>
+        /// <value>
+        /// The page content identifier.
+        /// </value>
         [DataMember]
-        public Guid? PageContentId { get; set; }
+        public Guid PageContentId
+        {
+            get
+            {
+                return Data.Id;
+            }
+
+            set
+            {
+                Data.Id = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the page identifier.

@@ -3,7 +3,10 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.Exceptions.DataTier;
+using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content.Options;
+using BetterCms.Module.Root.Mvc;
 
 using ServiceStack.ServiceInterface;
 
@@ -95,7 +98,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
                 repository.AsQueryable<Module.Root.Models.PageContent>()
                     .FirstOrDefault(content => content.Id == request.PageContentId && content.Page.Id == request.Data.PageId);
 
-            if (pageContent == null)
+            var isNew = pageContent == null;
+            if (isNew)
             {
                 pageContent = new Module.Root.Models.PageContent
                                   {
@@ -103,7 +107,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
                                       Page = repository.AsProxy<Module.Root.Models.Page>(request.Data.PageId)
                                   };
             }
-            else
+            else if (request.Data.Version > 0)
             {
                 pageContent.Version = request.Data.Version;
             }
@@ -116,6 +120,11 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
             repository.Save(pageContent);
             unitOfWork.Commit();
 
+            if (isNew)
+            {
+                Events.PageEvents.Instance.OnPageContentInserted(pageContent);
+            }
+
             return new PutPageContentResponse { Data = pageContent.Id };
         }
 
@@ -126,13 +135,25 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
         /// <returns><c>DeletePageContentResponse</c> with success status.</returns>
         public DeletePageContentResponse Delete(DeletePageContentRequest request)
         {
-            var pageContent = repository
+            if (request.Data == null || request.Data.Id.HasDefaultValue())
+            {
+                return new DeletePageContentResponse { Data = false };
+            }
+
+            var itemToDelete = repository
                 .AsQueryable<Module.Root.Models.PageContent>()
                 .Where(p => p.Id == request.PageContentId && p.Page.Id == request.PageId)
                 .FirstOne();
 
-            repository.Delete(pageContent);
+            if (request.Data.Version > 0 && itemToDelete.Version != request.Data.Version)
+            {
+                throw new ConcurrentDataException(itemToDelete);
+            }
+
+            repository.Delete(itemToDelete);
             unitOfWork.Commit();
+
+            Events.PageEvents.Instance.OnPageContentDeleted(itemToDelete);
 
             return new DeletePageContentResponse { Data = true };
         }

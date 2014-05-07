@@ -3,6 +3,7 @@
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Module.Root.Mvc;
 
 using ServiceStack.ServiceInterface;
@@ -83,12 +84,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
         {
             var content = repository.AsQueryable<Module.Pages.Models.HtmlContent>().FirstOrDefault(e => e.Id == request.Data.Id);
 
-            var createImage = content == null;
-            if (createImage)
+            var isNew = content == null;
+            if (isNew)
             {
                 content = new Module.Pages.Models.HtmlContent { Id = request.Data.Id };
             }
-            else
+            else if (request.Data.Version > 0)
             {
                 content.Version = request.Data.Version;
             }
@@ -110,6 +111,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
             repository.Save(content);
             unitOfWork.Commit();
 
+            if (isNew)
+            {
+                Events.PageEvents.Instance.OnHtmlContentCreated(content);
+            }
+            else
+            {
+                Events.PageEvents.Instance.OnHtmlContentUpdated(content);
+            }
+
             return new PutHtmlContentResponse
             {
                 Data = content.Id
@@ -130,8 +140,20 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
                 return new DeleteHtmlContentResponse { Data = false };
             }
 
-            repository.Delete<Module.Pages.Models.HtmlContent>(request.Data.Id, request.Data.Version);
+            var itemToDelete = repository
+                .AsQueryable<Module.Pages.Models.HtmlContent>()
+                .Where(p => p.Id == request.Data.Id)
+                .FirstOne();
+
+            if (request.Data.Version > 0 && itemToDelete.Version != request.Data.Version)
+            {
+                throw new ConcurrentDataException(itemToDelete);
+            }
+
+            repository.Delete(itemToDelete);
             unitOfWork.Commit();
+
+            Events.PageEvents.Instance.OnHtmlContentDeleted(itemToDelete);
 
             return new DeleteHtmlContentResponse { Data = true };
         }

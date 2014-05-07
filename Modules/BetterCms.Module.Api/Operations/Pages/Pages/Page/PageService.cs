@@ -1,51 +1,134 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Api;
+using BetterCms.Core.Exceptions.DataTier;
+using BetterCms.Core.Security;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Exists;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Translations;
-
+using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
+using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
+using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 
+using Microsoft.SqlServer.Server;
+
 using ServiceStack.ServiceInterface;
+
+using ITagService = BetterCms.Module.Pages.Services.ITagService;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
 {
+    /// <summary>
+    /// Default page service for pages API.
+    /// </summary>
     public class PageService : Service, IPageService
     {
+        /// <summary>
+        /// The page properties service.
+        /// </summary>
         private readonly IPagePropertiesService pagePropertiesService;
 
+        /// <summary>
+        /// The page exists service.
+        /// </summary>
         private readonly IPageExistsService pageExistsService;
 
+        /// <summary>
+        /// The page contents service.
+        /// </summary>
         private readonly IPageContentsService pageContentsService;
 
+        /// <summary>
+        /// The page content service.
+        /// </summary>
         private readonly IPageContentService pageContentService;
-        
+
+        /// <summary>
+        /// The page translations service.
+        /// </summary>
         private readonly IPageTranslationsService pageTranslationsService;
 
+        /// <summary>
+        /// The master page service.
+        /// </summary>
         private readonly IMasterPageService masterPageService;
 
+        /// <summary>
+        /// The CMS configuration.
+        /// </summary>
         private readonly ICmsConfiguration cmsConfiguration;
 
+        /// <summary>
+        /// The page service.
+        /// </summary>
         private readonly Module.Pages.Services.IPageService pageService;
 
+        /// <summary>
+        /// The sitemap service.
+        /// </summary>
+        private readonly ISitemapService sitemapService;
+
+        /// <summary>
+        /// The tag service.
+        /// </summary>
+        private readonly ITagService tagService;
+
+        /// <summary>
+        /// The access control service.
+        /// </summary>
+        private readonly IAccessControlService accessControlService;
+
+        /// <summary>
+        /// The repository.
+        /// </summary>
         private readonly IRepository repository;
 
+        /// <summary>
+        /// The unit of work.
+        /// </summary>
         private readonly IUnitOfWork unitOfWork;
 
+        /// <summary>
+        /// The URL service.
+        /// </summary>
         private readonly IUrlService urlService;
 
+        /// <summary>
+        /// The file URL resolver.
+        /// </summary>
         private readonly IMediaFileUrlResolver fileUrlResolver;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PageService" /> class.
+        /// </summary>
+        /// <param name="repository">The repository.</param>
+        /// <param name="unitOfWork">The unit of work.</param>
+        /// <param name="pagePropertiesService">The page properties service.</param>
+        /// <param name="pageExistsService">The page exists service.</param>
+        /// <param name="pageContentsService">The page contents service.</param>
+        /// <param name="pageContentService">The page content service.</param>
+        /// <param name="urlService">The URL service.</param>
+        /// <param name="fileUrlResolver">The file URL resolver.</param>
+        /// <param name="pageTranslationsService">The page translations service.</param>
+        /// <param name="masterPageService">The master page service.</param>
+        /// <param name="cmsConfiguration">The CMS configuration.</param>
+        /// <param name="pageService">The page service.</param>
+        /// <param name="sitemapService">The sitemap service.</param>
+        /// <param name="tagService">The tag service.</param>
+        /// <param name="accessControlService">The access control service.</param>
         public PageService(
             IRepository repository,
             IUnitOfWork unitOfWork,
@@ -58,7 +141,10 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
             IPageTranslationsService pageTranslationsService,
             IMasterPageService masterPageService,
             ICmsConfiguration cmsConfiguration,
-            Module.Pages.Services.IPageService pageService)
+            Module.Pages.Services.IPageService pageService,
+            ISitemapService sitemapService,
+            ITagService tagService,
+            IAccessControlService accessControlService)
         {
             this.pageContentsService = pageContentsService;
             this.pageContentService = pageContentService;
@@ -72,11 +158,75 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
             this.masterPageService = masterPageService;
             this.cmsConfiguration = cmsConfiguration;
             this.pageService = pageService;
+            this.sitemapService = sitemapService;
+            this.tagService = tagService;
+            this.accessControlService = accessControlService;
         }
 
+        /// <summary>
+        /// Gets the properties.
+        /// </summary>
+        /// <value>
+        /// The properties.
+        /// </value>
+        IPagePropertiesService IPageService.Properties
+        {
+            get
+            {
+                return pagePropertiesService;
+            }
+        }
+
+        /// <summary>
+        /// Gets the contents.
+        /// </summary>
+        /// <value>
+        /// The contents.
+        /// </value>
+        IPageContentsService IPageService.Contents
+        {
+            get
+            {
+                return pageContentsService;
+            }
+        }
+
+        /// <summary>
+        /// Gets the content.
+        /// </summary>
+        /// <value>
+        /// The content.
+        /// </value>
+        IPageContentService IPageService.Content
+        {
+            get
+            {
+                return pageContentService;
+            }
+        }
+
+        /// <summary>
+        /// Gets the translations.
+        /// </summary>
+        /// <value>
+        /// The translations.
+        /// </value>
+        IPageTranslationsService IPageService.Translations
+        {
+            get
+            {
+                return pageTranslationsService;
+            }
+        }
+
+        /// <summary>
+        /// Gets the specified request.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns><c>GetPageResponse</c> with page properties.</returns>
         public GetPageResponse Get(GetPageRequest request)
         {
-            var query = repository.AsQueryable<Module.Pages.Models.PageProperties>();
+            var query = repository.AsQueryable<PageProperties>();
             
             if (request.PageId.HasValue)
             {
@@ -125,26 +275,44 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
             return new GetPageResponse { Data = model };
         }
 
+        /// <summary>
+        /// Puts the specified request.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns><c>PutPageResponse</c> with created or updated item id.</returns>
         public PutPageResponse Put(PutPageRequest request)
         {
-            Module.Pages.Models.PageProperties page = null;
-            if (request.PageId.HasValue && !request.PageId.Value.HasDefaultValue())
+            var pageProperties =
+                repository.AsQueryable<PageProperties>(e => e.Id == request.PageId)
+                    .FetchMany(p => p.Options)
+                    .Fetch(p => p.Layout)
+                    .ThenFetchMany(l => l.LayoutOptions)
+                    .FetchMany(p => p.MasterPages)
+                    .FetchMany(f => f.AccessRules)
+                    .ToList()
+                    .FirstOrDefault();
+
+            var isNew = pageProperties == null;
+            if (isNew)
             {
-                page = repository.AsQueryable<Module.Pages.Models.PageProperties>().FirstOrDefault(p => p.Id == request.PageId.Value);
+                pageProperties = new PageProperties { Id = request.Data.Id, AccessRules = new List<AccessRule>() };
+            }
+            else if (request.Data.Version > 0)
+            {
+                pageProperties.Version = request.Data.Version;
             }
 
-            if (page == null)
-            {
-                page = new Module.Pages.Models.PageProperties();
+            // Load master pages for updating page's master path and page's children master path
+            IList<Guid> newMasterIds;
+            IList<Guid> oldMasterIds;
+            IList<Guid> childrenPageIds;
+            IList<MasterPage> existingChildrenMasterPages;
+            masterPageService.PrepareForUpdateChildrenMasterPages(pageProperties, request.Data.MasterPageId, out newMasterIds, out oldMasterIds, out childrenPageIds, out existingChildrenMasterPages);
 
-                if (request.PageId.HasValue && !request.PageId.Value.HasDefaultValue())
-                {
-                    page.Id = request.PageId.Value;
-                }
-            }
+            unitOfWork.BeginTransaction();
 
             var pageUrl = request.Data.PageUrl;
-            if (pageUrl == null && !string.IsNullOrWhiteSpace(request.Data.Title))
+            if (string.IsNullOrEmpty(pageUrl) && !string.IsNullOrWhiteSpace(request.Data.Title))
             {
                 pageUrl = pageService.CreatePagePermalink(request.Data.Title, null);
             }
@@ -154,58 +322,105 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
                 pageService.ValidatePageUrl(pageUrl, request.PageId);
             }
 
-            page.PageUrl = pageUrl;
-            page.PageUrlHash = pageUrl.UrlHash();
-            page.Title = request.Data.Title;
-            page.Description = request.Data.Description;
-            page.Status = request.Data.IsMasterPage || request.Data.IsPublished ? PageStatus.Published : PageStatus.Unpublished;
-            page.PublishedOn = request.Data.PublishedOn;
-            page.IsArchived = request.Data.IsArchived;
-            page.IsMasterPage = request.Data.IsMasterPage;
+            pageProperties.PageUrl = pageUrl;
+            pageProperties.PageUrlHash = pageUrl.UrlHash();
+            pageProperties.Title = request.Data.Title;
+            pageProperties.Description = request.Data.Description;
+            pageProperties.Status = request.Data.IsMasterPage || request.Data.IsPublished ? PageStatus.Published : PageStatus.Unpublished;
+            pageProperties.PublishedOn = request.Data.PublishedOn;
 
-            if (request.Data.MasterPageId.HasValue && !request.Data.MasterPageId.Value.HasDefaultValue())
+            masterPageService.SetMasterOrLayout(pageProperties, request.Data.MasterPageId, request.Data.LayoutId);
+
+            pageProperties.Category = request.Data.CategoryId.HasValue
+                                    ? repository.AsProxy<Category>(request.Data.CategoryId.Value)
+                                    : null;
+            pageProperties.IsArchived = request.Data.IsArchived;
+            pageProperties.IsMasterPage = request.Data.IsMasterPage;
+            pageProperties.LanguageGroupIdentifier = request.Data.LanguageGroupIdentifier;
+            pageProperties.Language = request.Data.LanguageId.HasValue && !request.Data.LanguageId.Value.HasDefaultValue()
+                                    ? repository.AsProxy<Language>(request.Data.LanguageId.Value)
+                                    : null;
+
+            pageProperties.Image = request.Data.MainImageId.HasValue
+                                    ? repository.AsProxy<MediaImage>(request.Data.MainImageId.Value)
+                                    : null;
+            pageProperties.FeaturedImage = request.Data.FeaturedImageId.HasValue
+                                    ? repository.AsProxy<MediaImage>(request.Data.FeaturedImageId.Value)
+                                    : null;
+            pageProperties.SecondaryImage = request.Data.SecondaryImageId.HasValue
+                                    ? repository.AsProxy<MediaImage>(request.Data.SecondaryImageId.Value)
+                                    : null;
+
+            pageProperties.CustomCss = request.Data.CustomCss;
+            pageProperties.CustomJS = request.Data.CustomJavaScript;
+            pageProperties.UseCanonicalUrl = request.Data.UseCanonicalUrl;
+            pageProperties.UseNoFollow = request.Data.UseNoFollow;
+            pageProperties.UseNoIndex = request.Data.UseNoIndex;
+
+            if (request.Data.MetaData != null)
             {
-                page.MasterPage = repository.AsProxy<Module.Root.Models.Page>(request.Data.MasterPageId.Value);
-                masterPageService.SetPageMasterPages(page, request.Data.MasterPageId.Value);
-            }
-            else
-            {
-                page.Layout = repository.AsProxy<Module.Root.Models.Layout>(request.Data.LayoutId.Value);
+                pageProperties.MetaTitle = request.Data.MetaData.MetaTitle;
+                pageProperties.MetaDescription = request.Data.MetaData.MetaDescription;
+                pageProperties.MetaKeywords = request.Data.MetaData.MetaKeywords;
             }
 
-            if (request.Data.CategoryId.HasValue && !request.Data.CategoryId.Value.HasDefaultValue())
+            IList<Tag> newTags = null;
+            if (request.Data.Tags != null)
             {
-                page.Category = repository.AsProxy<Module.Root.Models.Category>(request.Data.CategoryId.Value);
+                var tags = request.Data.Tags.Select(t => t.Name).ToList();
+                tagService.SavePageTags(pageProperties, tags, out newTags);
             }
 
-            if (request.Data.MainImageId.HasValue && !request.Data.MainImageId.Value.HasDefaultValue())
+            if (request.Data.AccessRules != null)
             {
-                page.Image = repository.AsProxy<Module.MediaManager.Models.MediaImage>(request.Data.MainImageId.Value);
-            }
-
-            if (cmsConfiguration.EnableMultilanguage)
-            {
-                if (request.Data.LanguageId.HasValue && !request.Data.LanguageId.Value.HasDefaultValue())
-                {
-                    page.Language = repository.AsProxy<Module.Root.Models.Language>(request.Data.LanguageId.Value);
-                }
+                pageProperties.AccessRules.RemoveDuplicateEntities();
+                var accessRules =
+                    request.Data.AccessRules.Select(
+                        r => (IAccessRule)new AccessRule { AccessLevel = (Core.Security.AccessLevel)(int)r.AccessLevel, Identity = r.Identity, IsForRole = r.IsForRole })
+                        .ToList();
+                accessControlService.UpdateAccessControl(pageProperties, accessRules);
             }
 
             // TODO: save options.
             // page.Options = optionService.SaveOptionValues(request.OptionValues, null, () => new PageOption { Page = page });
 
-            page.SaveUnsecured = true;
+            repository.Save(pageProperties);
 
-            unitOfWork.BeginTransaction();
-            repository.Save(page);
+            masterPageService.UpdateChildrenMasterPages(existingChildrenMasterPages, oldMasterIds, newMasterIds, childrenPageIds);
+
             unitOfWork.Commit();
+
+            // Fire events.
+            Events.RootEvents.Instance.OnTagCreated(newTags);
+            if (isNew)
+            {
+                Events.PageEvents.Instance.OnPageCreated(pageProperties);
+            }
+            else
+            {
+                Events.PageEvents.Instance.OnPagePropertiesChanged(pageProperties);
+            }
 
             return new PutPageResponse { Data = Get(new GetPageRequest { PageId = request.Data.Id }).Data };
         }
 
+        /// <summary>
+        /// Deletes the specified request.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns><c>DeletePageResponse</c> with success status.</returns>
         public DeletePageResponse Delete(DeletePageRequest request)
         {
-            var page = repository.First<Module.Pages.Models.PageProperties>(request.PageId.GetValueOrDefault());
+            if (request.Data == null || request.Data.Id.HasDefaultValue())
+            {
+                return new DeletePageResponse { Data = false };
+            }
+
+            var page = repository.First<PageProperties>(request.Data.Id);
+            if (request.Data.Version > 0 && page.Version != request.Data.Version)
+            {
+                throw new ConcurrentDataException(page);
+            }
 
             if (page.IsMasterPage && repository.AsQueryable<Module.Root.Models.MasterPage>(mp => mp.Master == page).Any())
             {
@@ -213,10 +428,36 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
                 throw new CmsApiValidationException(logMessage);
             }
 
-            page.SaveUnsecured = true;
+            var sitemaps = new Dictionary<Module.Pages.Models.Sitemap, bool>();
+            var sitemapNodes = sitemapService.GetNodesByPage(page);
 
             unitOfWork.BeginTransaction();
 
+            IList<SitemapNode> updatedNodes = new List<SitemapNode>();
+            IList<SitemapNode> deletedNodes = new List<SitemapNode>();
+            if (sitemapNodes != null)
+            {
+                // Archive sitemaps before update.
+                sitemaps.Select(pair => pair.Key).ToList().ForEach(sitemap => sitemapService.ArchiveSitemap(sitemap.Id));
+                foreach (var node in sitemapNodes)
+                {
+                    if (!node.IsDeleted)
+                    {
+                        // Unlink sitemap node.
+                        if (node.Page != null && node.Page.Id == page.Id)
+                        {
+                            node.Page = null;
+                            node.Title = node.UsePageTitleAsNodeTitle ? page.Title : node.Title;
+                            node.Url = page.PageUrl;
+                            node.UrlHash = page.PageUrlHash;
+                            repository.Save(node);
+                            updatedNodes.Add(node);
+                        }
+                    }
+                }
+            }
+
+            // Delete child entities.            
             if (page.PageTags != null)
             {
                 foreach (var pageTag in page.PageTags)
@@ -255,48 +496,48 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
                 }
             }
 
-            repository.Delete<Module.Root.Models.Page>(page);
+            // Delete page
+            repository.Delete<Module.Root.Models.Page>(request.Data.Id, request.Data.Version);
 
             unitOfWork.Commit();
+
+            var updatedSitemaps = new List<Module.Pages.Models.Sitemap>();
+            foreach (var node in updatedNodes)
+            {
+                Events.SitemapEvents.Instance.OnSitemapNodeUpdated(node);
+                if (!updatedSitemaps.Contains(node.Sitemap))
+                {
+                    updatedSitemaps.Add(node.Sitemap);
+                }
+            }
+
+            foreach (var node in deletedNodes)
+            {
+                Events.SitemapEvents.Instance.OnSitemapNodeDeleted(node);
+                if (!updatedSitemaps.Contains(node.Sitemap))
+                {
+                    updatedSitemaps.Add(node.Sitemap);
+                }
+            }
+
+            foreach (var updatedSitemap in updatedSitemaps)
+            {
+                Events.SitemapEvents.Instance.OnSitemapUpdated(updatedSitemap);
+            }
+
+            Events.PageEvents.Instance.OnPageDeleted(page);
 
             return new DeletePageResponse { Data = true };
         }
 
-        IPagePropertiesService IPageService.Properties
-        {
-            get
-            {
-                return pagePropertiesService;
-            }
-        }
-
+        /// <summary>
+        /// Exists the specified request.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns><c>PageExistsResponse</c> with page data.</returns>
         PageExistsResponse IPageService.Exists(PageExistsRequest request)
         {
             return pageExistsService.Get(request);
-        }
-
-        IPageContentsService IPageService.Contents
-        {
-            get
-            {
-                return pageContentsService;
-            }
-        }
-
-        IPageContentService IPageService.Content
-        {
-            get
-            {
-                return pageContentService;
-            }
-        }
-
-        IPageTranslationsService IPageService.Translations
-        {
-            get
-            {
-                return pageTranslationsService;
-            }
         }
     }
 }
