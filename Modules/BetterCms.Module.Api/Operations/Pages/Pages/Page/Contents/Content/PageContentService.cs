@@ -64,7 +64,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
         public GetPageContentResponse Get(GetPageContentRequest request)
         {
             var model =
-                repository.AsQueryable<Module.Root.Models.PageContent>(content => content.Id == request.PageContentId)
+                repository.AsQueryable<Module.Root.Models.PageContent>(content => content.Id == request.PageContentId && content.Page.Id == request.PageId)
                     .Select(
                         pageContent =>
                         new PageContentModel
@@ -93,13 +93,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
         {
             var pageContent =
                 repository.AsQueryable<Module.Root.Models.PageContent>()
-                    .FirstOrDefault(content => content.Id == request.PageContentId);
+                    .FirstOrDefault(content => content.Id == request.PageContentId && content.Page.Id == request.Data.PageId);
 
             if (pageContent == null)
             {
                 pageContent = new Module.Root.Models.PageContent
                                   {
                                       Id = request.PageContentId.HasValue ? request.PageContentId.Value : Guid.Empty,
+                                      Page = repository.AsProxy<Module.Root.Models.Page>(request.Data.PageId)
                                   };
             }
             else
@@ -107,7 +108,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
                 pageContent.Version = request.Data.Version;
             }
 
-            pageContent.Page = repository.AsProxy<Module.Root.Models.Page>(request.Data.PageId);
             pageContent.Content = repository.AsProxy<Module.Root.Models.Content>(request.Data.ContentId);
             pageContent.Region = repository.AsProxy<Module.Root.Models.Region>(request.Data.RegionId);
             pageContent.Order = request.Data.Order;
@@ -128,7 +128,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
         {
             var pageContent = repository
                 .AsQueryable<Module.Root.Models.PageContent>()
-                .Where(p => p.Id == request.PageContentId)
+                .Where(p => p.Id == request.PageContentId && p.Page.Id == request.PageId)
                 .FirstOne();
 
             repository.Delete(pageContent);

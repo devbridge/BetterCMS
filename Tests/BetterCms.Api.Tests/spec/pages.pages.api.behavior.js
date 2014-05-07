@@ -525,7 +525,7 @@ describe('pages.pages.api.behavior', function () {
     });
 
     it('01008.1: Should get page content by id', function() {
-        var url = '/bcms-api/pages/contents/' + 'd88b0aa8172149bb86c8a20400fe687e',
+        var url = '/bcms-api/pages/' + constants.testPageId + '/contents/' + 'd88b0aa8172149bb86c8a20400fe687e',
               result,
               ready = false;
 
@@ -544,6 +544,90 @@ describe('pages.pages.api.behavior', function () {
             expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
             expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
             expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved.');
+        });
+    });
+
+    it('01008.2: Should create a page content via PUT.', function () {
+        var url = '/bcms-api/pages/' + constants.testPageId + '/contents/' + '40c4945782a245e3b98b6e1a1c5f65f8',
+            data = {
+                version: 1,
+                contentId: "6126351028104c6fb7c5a20400fe6877",
+                regionId: "e3e2e7fe62df4ba683216fdcc1691d8a",
+                order: 1
+            },
+            result,
+            ready = false;
+
+        runs(function () {
+            api.put(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data).toEqual('40c4945782a245e3b98b6e1a1c5f65f8', 'Updated item id should be retrieved.');
+        });
+    });
+
+    it('01008.3: Should update a page content via PUT.', function () {
+        var url = '/bcms-api/pages/' + constants.testPageId + '/contents/' + '40c4945782a245e3b98b6e1a1c5f65f8',
+            data = {
+                version: 1,
+                contentId: "6126351028104c6fb7c5a20400fe6877",
+                regionId: "e3e2e7fe62df4ba683216fdcc1691d8a",
+                order: 5
+            },
+            result,
+            ready = false;
+
+        runs(function () {
+            api.put(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data).toEqual('40c4945782a245e3b98b6e1a1c5f65f8', 'Updated item id should be retrieved.');
+        });
+    });
+
+    it('01008.4: Should delete a page content.', function () {
+        var url = '/bcms-api/pages/' + constants.testPageId + '/contents/' + '40c4945782a245e3b98b6e1a1c5f65f8',
+            data = {
+                version: 2
+            },
+            result,
+            ready = false;
+
+        runs(function () {
+            api.delete(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data).toEqual(true, 'TRUE should be retrieved.');
         });
     });
 

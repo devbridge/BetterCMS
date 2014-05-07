@@ -5,7 +5,7 @@ using ServiceStack.ServiceHost;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
 {
-    [Route("/pages/contents/{PageContentId}", Verbs = "GET")]
+    [Route("/pages/{PageId}/contents/{PageContentId}", Verbs = "GET")]
     [DataContract]
     public class GetPageContentRequest : IReturn<GetPageContentResponse>
     {
@@ -17,5 +17,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
         /// </value>
         [DataMember]
         public Guid? PageContentId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page identifier.
+        /// </summary>
+        /// <value>
+        /// The page identifier.
+        /// </value>
+        [DataMember]
+        public Guid PageId { get; set; }
     }
 }
