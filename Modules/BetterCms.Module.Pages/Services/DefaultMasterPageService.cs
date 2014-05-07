@@ -4,6 +4,7 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
@@ -166,8 +167,8 @@ namespace BetterCms.Module.Pages.Services
                                 {
                                     var mp = new MasterPage
                                     {
-                                        Master = repository.AsProxy<Root.Models.Page>(masterPageId),
-                                        Page = repository.AsProxy<Root.Models.Page>(pageId)
+                                        Master = repository.AsProxy<Page>(masterPageId),
+                                        Page = repository.AsProxy<Page>(pageId)
                                     };
                                     repository.Save(mp);
                                 });

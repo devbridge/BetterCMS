@@ -152,6 +152,7 @@
     </Compile>
     <Compile Include="ApiFactory.cs" />
     <Compile Include="DefaultApiFacade.cs" />
+    <Compile Include="Extensions\BlogPosts\BlogPostModelExtensions.cs" />
     <Compile Include="Filters\GetRequestProcessor.cs" />
     <Compile Include="Helpers\ContentTypeExtensions.cs" />
     <Compile Include="Helpers\FilterByTagExtensions.cs" />

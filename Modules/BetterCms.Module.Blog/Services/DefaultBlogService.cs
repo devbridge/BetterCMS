@@ -43,17 +43,16 @@ namespace BetterCms.Module.Blog.Services
         /// </summary>
         private const string RegionIdentifier = BlogModuleConstants.BlogPostMainContentRegionIdentifier;
 
-        private readonly ICmsConfiguration configuration;
+        protected readonly ICmsConfiguration configuration;
         private readonly IUrlService urlService;
-        private readonly IRepository repository;
+        protected readonly IRepository repository;
         private readonly IOptionService optionService;
-        private readonly IAccessControlService accessControlService;
+        protected readonly IAccessControlService accessControlService;
         private readonly ISecurityService securityService;
-        private readonly ICmsConfiguration cmsConfiguration;
         private readonly IContentService contentService;
         private readonly IPageService pageService;
         private readonly IRedirectService redirectService;
-        private readonly IMasterPageService masterPageService;
+        protected readonly IMasterPageService masterPageService;
         private readonly ITagService tagService;
         private readonly IUnitOfWork unitOfWork;
 
@@ -66,7 +65,6 @@ namespace BetterCms.Module.Blog.Services
         /// <param name="optionService">The option service.</param>
         /// <param name="accessControlService">The access control service.</param>
         /// <param name="securityService">The security service.</param>
-        /// <param name="cmsConfiguration">The CMS configuration.</param>
         /// <param name="contentService">The content service.</param>
         /// <param name="tagService">The tag service.</param>
         /// <param name="pageService">The page service.</param>
@@ -75,7 +73,7 @@ namespace BetterCms.Module.Blog.Services
         /// <param name="unitOfWork">The unit of work.</param>
         public DefaultBlogService(ICmsConfiguration configuration, IUrlService urlService, IRepository repository,
             IOptionService optionService, IAccessControlService accessControlService, ISecurityService securityService,
-            ICmsConfiguration cmsConfiguration, IContentService contentService, ITagService tagService,
+            IContentService contentService, ITagService tagService,
             IPageService pageService, IRedirectService redirectService, IMasterPageService masterPageService,
             IUnitOfWork unitOfWork)
         {
@@ -85,7 +83,6 @@ namespace BetterCms.Module.Blog.Services
             this.optionService = optionService;
             this.accessControlService = accessControlService;
             this.securityService = securityService;
-            this.cmsConfiguration = cmsConfiguration;
             this.contentService = contentService;
             this.pageService = pageService;
             this.redirectService = redirectService;
@@ -132,6 +129,17 @@ namespace BetterCms.Module.Blog.Services
                 roles = new[] { RootModuleConstants.UserRoles.EditContent };
             }
 
+            var isNew = request.Id.HasDefaultValue();
+            var userCanEdit = securityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);
+
+            ValidateData(isNew, request);
+
+            BlogPost blogPost;
+            BlogPostContent content;
+            PageContent pageContent;
+            GetBlogPostAndContentEntities(request, principal, roles, ref isNew, out content, out pageContent, out blogPost);
+
+            // Master page / layout
             Layout layout;
             Page masterPage;
             Region region;
@@ -148,83 +156,41 @@ namespace BetterCms.Module.Blog.Services
                 }
             }
 
-            var isNew = request.Id.HasDefaultValue();
-            var userCanEdit = securityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);
+            if (pageContent.Region == null)
+            {
+                pageContent.Region = region;
+            }
 
+            // Load master pages for updating page's master path and page's children master path
+            IList<Guid> newMasterIds;
+            IList<Guid> oldMasterIds;
+            IList<Guid> childrenPageIds;
+            IList<MasterPage> existingChildrenMasterPages;
+            PrepareForUpdateChildrenMasterPages(isNew, blogPost, request, out newMasterIds, out oldMasterIds, out childrenPageIds, out existingChildrenMasterPages);
+
+            // TODO: TEST AND TRY TO FIX IT: TRANSACTION HERE IS REQUIRED!
             // UnitOfWork.BeginTransaction(); // NOTE: this causes concurrent data exception.
 
-            BlogPost blogPost;
-            BlogPostContent content = null;
-            PageContent pageContent = null;
             Redirect redirectCreated = null;
-
-            // Loading blog post and it's content, or creating new, if such not exists
-            if (!isNew)
+            if (!isNew && userCanEdit && !string.Equals(blogPost.PageUrl, request.BlogUrl) && request.BlogUrl != null)
             {
-                var blogPostFuture = repository
-                    .AsQueryable<BlogPost>(b => b.Id == request.Id)
-                    .ToFuture();
-
-                content = repository
-                    .AsQueryable<BlogPostContent>(c => c.PageContents.Any(x => x.Page.Id == request.Id && !x.IsDeleted))
-                    .ToFuture()
-                    .FirstOrDefault();
-
-                blogPost = blogPostFuture.FirstOne();
-
-                if (cmsConfiguration.Security.AccessControlEnabled)
+                request.BlogUrl = urlService.FixUrl(request.BlogUrl);
+                pageService.ValidatePageUrl(request.BlogUrl, request.Id);
+                if (request.RedirectFromOldUrl)
                 {
-                    accessControlService.DemandAccess(blogPost, principal, AccessLevel.ReadWrite, roles);
-                }
-
-                if (content != null)
-                {
-                    // Check if user has confirmed the deletion of content
-                    if (!request.IsUserConfirmed && blogPost.IsMasterPage)
+                    var redirect = redirectService.CreateRedirectEntity(blogPost.PageUrl, request.BlogUrl);
+                    if (redirect != null)
                     {
-                        var hasAnyChildren = contentService.CheckIfContentHasDeletingChildren(blogPost.Id, content.Id, request.Content);
-                        if (hasAnyChildren)
-                        {
-                            var message = PagesGlobalization.SaveContent_ContentHasChildrenContents_RegionDeleteConfirmationMessage;
-                            var logMessage = string.Format("User is trying to delete content regions which has children contents. Confirmation is required. ContentId: {0}, PageId: {1}",
-                                    content.Id, blogPost.Id);
-                            throw new ConfirmationRequestException(() => message, logMessage);
-                        }
+                        repository.Save(redirect);
+                        redirectCreated = redirect;
                     }
-
-                    pageContent = repository.FirstOrDefault<PageContent>(c => c.Page == blogPost && !c.IsDeleted && c.Content == content);
                 }
 
-                if (userCanEdit && !string.Equals(blogPost.PageUrl, request.BlogUrl) && request.BlogUrl != null)
-                {
-                    request.BlogUrl = urlService.FixUrl(request.BlogUrl);
-                    pageService.ValidatePageUrl(request.BlogUrl, request.Id);
-                    if (request.RedirectFromOldUrl)
-                    {
-                        var redirect = redirectService.CreateRedirectEntity(blogPost.PageUrl, request.BlogUrl);
-                        if (redirect != null)
-                        {
-                            repository.Save(redirect);
-                            redirectCreated = redirect;
-                        }
-                    }
-
-                    blogPost.PageUrl = urlService.FixUrl(request.BlogUrl);
-                }
-            }
-            else
-            {
-                blogPost = new BlogPost();
-            }
-
-            if (pageContent == null)
-            {
-                pageContent = new PageContent { Region = region, Page = blogPost };
+                blogPost.PageUrl = urlService.FixUrl(request.BlogUrl);
             }
 
             // Push to change modified data each time.
             blogPost.ModifiedOn = DateTime.Now;
-            blogPost.Version = request.Version;
 
             if (userCanEdit)
             {
@@ -300,15 +266,19 @@ namespace BetterCms.Module.Blog.Services
                 newContent.Html = contentToPublish.Html;
             }
 
-            content = (BlogPostContent)contentService.SaveContentWithStatusUpdate(newContent, request.DesirableStatus);
+            content = SaveContentWithStatusUpdate(isNew, newContent, request, principal);
             pageContent.Content = content;
 
             blogPost.PageUrlHash = blogPost.PageUrl.UrlHash();
             blogPost.UseCanonicalUrl = request.UseCanonicalUrl;
 
+            MapExtraProperties(isNew, blogPost, content, pageContent, request, principal);
+
             repository.Save(blogPost);
             repository.Save(content);
             repository.Save(pageContent);
+
+            masterPageService.UpdateChildrenMasterPages(existingChildrenMasterPages, oldMasterIds, newMasterIds, childrenPageIds);
 
             pageContent.Content = content;
             blogPost.PageContents = new [] {pageContent};
@@ -344,6 +314,86 @@ namespace BetterCms.Module.Blog.Services
             return blogPost;
         }
 
+        protected virtual BlogPostContent SaveContentWithStatusUpdate(bool isNew, BlogPostContent newContent, BlogPostViewModel request, IPrincipal principal)
+        {
+            return (BlogPostContent)contentService.SaveContentWithStatusUpdate(newContent, request.DesirableStatus);
+        }
+
+        protected virtual void PrepareForUpdateChildrenMasterPages(bool isNew, BlogPost entity, BlogPostViewModel model, out IList<Guid> newMasterIds,
+            out IList<Guid> oldMasterIds, out IList<Guid> childrenPageIds, out IList<MasterPage> existingChildrenMasterPages)
+        {
+            newMasterIds = null;
+            oldMasterIds = null;
+            childrenPageIds = null;
+            existingChildrenMasterPages = null;
+        }
+
+        protected virtual void GetBlogPostAndContentEntities(BlogPostViewModel request, IPrincipal principal, string[] roles, 
+            ref bool isNew, out BlogPostContent content, out PageContent pageContent , out BlogPost blogPost)
+        {
+            content = null;
+            pageContent = null;
+
+            // Loading blog post and it's content, or creating new, if such not exists
+            if (!isNew)
+            {
+                var blogPostFuture = repository
+                    .AsQueryable<BlogPost>(b => b.Id == request.Id)
+                    .ToFuture();
+
+                content = repository
+                    .AsQueryable<BlogPostContent>(c => c.PageContents.Any(x => x.Page.Id == request.Id && !x.IsDeleted))
+                    .ToFuture()
+                    .FirstOrDefault();
+
+                blogPost = blogPostFuture.FirstOne();
+
+                if (configuration.Security.AccessControlEnabled)
+                {
+                    accessControlService.DemandAccess(blogPost, principal, AccessLevel.ReadWrite, roles);
+                }
+
+                if (content != null)
+                {
+                    // Check if user has confirmed the deletion of content
+                    if (!request.IsUserConfirmed && blogPost.IsMasterPage)
+                    {
+                        var hasAnyChildren = contentService.CheckIfContentHasDeletingChildren(blogPost.Id, content.Id, request.Content);
+                        if (hasAnyChildren)
+                        {
+                            var message = PagesGlobalization.SaveContent_ContentHasChildrenContents_RegionDeleteConfirmationMessage;
+                            var logMessage = string.Format("User is trying to delete content regions which has children contents. Confirmation is required. ContentId: {0}, PageId: {1}",
+                                    content.Id, blogPost.Id);
+                            throw new ConfirmationRequestException(() => message, logMessage);
+                        }
+                    }
+
+                    var bpRef = blogPost;
+                    var contentRef = content;
+                    pageContent = repository.FirstOrDefault<PageContent>(c => c.Page == bpRef && !c.IsDeleted && c.Content == contentRef);
+                }
+            }
+            else
+            {
+                blogPost = new BlogPost();
+            }
+
+            if (pageContent == null)
+            {
+                pageContent = new PageContent { Page = blogPost };
+            }
+        }
+
+        protected virtual void MapExtraProperties(bool isNew, BlogPost entity, BlogPostContent content, PageContent pageContent, BlogPostViewModel model, IPrincipal principal)
+        {
+            entity.Version = model.Version;
+        }
+
+        protected virtual void ValidateData(bool isNew, BlogPostViewModel model)
+        {
+            // Do nothing
+        }
+
         /// <summary>
         /// Updates the status.
         /// </summary>
@@ -369,14 +419,7 @@ namespace BetterCms.Module.Blog.Services
             }
         }
 
-        /// <summary>
-        /// Loads the layout.
-        /// </summary>
-        /// <param name="layout">The layout.</param>
-        /// <param name="masterPage">The master page.</param>
-        /// <param name="region">The region.</param>
-        /// <exception cref="System.ComponentModel.DataAnnotations.ValidationException">If layout was not found.</exception>
-        public void LoadDefaultLayoutAndRegion(out Layout layout, out Page masterPage, out Region region)
+        private void LoadDefaultLayoutAndRegion(out Layout layout, out Page masterPage, out Region region)
         {
             var option = optionService.GetDefaultOption();
 
@@ -448,7 +491,7 @@ namespace BetterCms.Module.Blog.Services
         /// <param name="blogPost">The blog post.</param>
         /// <param name="principal">The principal.</param>
         /// <param name="masterPage">The master page.</param>
-        public void AddDefaultAccessRules(BlogPost blogPost, IPrincipal principal, Page masterPage)
+        protected void AddDefaultAccessRules(BlogPost blogPost, IPrincipal principal, Page masterPage)
         {
             // Set default access rules
             blogPost.AccessRules = new List<AccessRule>();
