@@ -311,23 +311,27 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
 
             unitOfWork.BeginTransaction();
 
-            var pageUrl = request.Data.PageUrl;
-            if (string.IsNullOrEmpty(pageUrl) && !string.IsNullOrWhiteSpace(request.Data.Title))
+            if (!string.IsNullOrEmpty(request.Data.PageUrl) || string.IsNullOrEmpty(pageProperties.PageUrl))
             {
-                pageUrl = pageService.CreatePagePermalink(request.Data.Title, null);
-            }
-            else
-            {
-                pageUrl = urlService.FixUrl(pageUrl);
-                pageService.ValidatePageUrl(pageUrl, request.PageId);
+                var pageUrl = request.Data.PageUrl;
+                if (string.IsNullOrEmpty(pageUrl) && !string.IsNullOrWhiteSpace(request.Data.Title))
+                {
+                    pageUrl = this.pageService.CreatePagePermalink(request.Data.Title, null);
+                }
+                else
+                {
+                    pageUrl = this.urlService.FixUrl(pageUrl);
+                    this.pageService.ValidatePageUrl(pageUrl, request.PageId);
+                }
+
+                pageProperties.PageUrl = pageUrl;
+                pageProperties.PageUrlHash = pageUrl.UrlHash();
             }
 
-            pageProperties.PageUrl = pageUrl;
-            pageProperties.PageUrlHash = pageUrl.UrlHash();
             pageProperties.Title = request.Data.Title;
             pageProperties.Description = request.Data.Description;
             pageProperties.Status = request.Data.IsMasterPage || request.Data.IsPublished ? PageStatus.Published : PageStatus.Unpublished;
-            pageProperties.PublishedOn = request.Data.PublishedOn;
+            pageProperties.PublishedOn = request.Data.IsPublished && !request.Data.PublishedOn.HasValue ? DateTime.Now : request.Data.PublishedOn;
 
             masterPageService.SetMasterOrLayout(pageProperties, request.Data.MasterPageId, request.Data.LayoutId);
 
@@ -401,7 +405,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
                 Events.PageEvents.Instance.OnPagePropertiesChanged(pageProperties);
             }
 
-            return new PutPageResponse { Data = Get(new GetPageRequest { PageId = request.PageId }).Data };
+            return new PutPageResponse { Data = Get(new GetPageRequest { PageId = pageProperties.Id }).Data };
         }
 
         /// <summary>
