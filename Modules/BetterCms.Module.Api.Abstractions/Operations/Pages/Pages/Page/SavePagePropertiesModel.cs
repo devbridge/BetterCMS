@@ -7,7 +7,7 @@ using BetterCms.Module.Api.Operations.Root;
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
 {
     [DataContract]
-    public class SavePagePropertiesModel : ModelBase
+    public class SavePagePropertiesModel : SaveModelBase
     {
         /// <summary>
         /// Gets or sets the page URL.

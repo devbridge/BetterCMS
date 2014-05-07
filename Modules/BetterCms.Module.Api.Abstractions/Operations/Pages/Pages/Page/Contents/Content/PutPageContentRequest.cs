@@ -12,7 +12,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
     /// </summary>
     [Route("/pages/{PageId}/contents/{PageContentId}", Verbs = "PUT")]
     [DataContract]
-    public class PutPageContentRequest : RequestBase<PageContentModel>, IReturn<PutPageContentResponse>
+    public class PutPageContentRequest : RequestBase<SavePageContentModel>, IReturn<PutPageContentResponse>
     {
         /// <summary>
         /// Gets or sets the page content identifier.
@@ -21,18 +21,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
         /// The page content identifier.
         /// </value>
         [DataMember]
-        public Guid? PageContentId
-        {
-            get
-            {
-                return this.Data.Id;
-            }
-
-            set
-            {
-                this.Data.Id = value.HasValue ? value.Value : Guid.Empty;
-            }
-        }
+        public Guid? PageContentId { get; set; }
 
         /// <summary>
         /// Gets or sets the page identifier.
@@ -41,17 +30,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
         /// The page identifier.
         /// </value>
         [DataMember]
-        public Guid PageId
-        {
-            get
-            {
-                return Data.PageId;
-            }
-
-            set
-            {
-                Data.PageId = value;
-            }
-        }
+        public Guid PageId { get; set; }
     }
 }

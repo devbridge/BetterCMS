@@ -96,7 +96,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
         {
             var pageContent =
                 repository.AsQueryable<Module.Root.Models.PageContent>()
-                    .FirstOrDefault(content => content.Id == request.PageContentId && content.Page.Id == request.Data.PageId);
+                    .FirstOrDefault(content => content.Id == request.PageContentId && content.Page.Id == request.PageId);
 
             var isNew = pageContent == null;
             if (isNew)
@@ -104,7 +104,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
                 pageContent = new Module.Root.Models.PageContent
                                   {
                                       Id = request.PageContentId.HasValue ? request.PageContentId.Value : Guid.Empty,
-                                      Page = repository.AsProxy<Module.Root.Models.Page>(request.Data.PageId)
+                                      Page = repository.AsProxy<Module.Root.Models.Page>(request.PageId)
                                   };
             }
             else if (request.Data.Version > 0)

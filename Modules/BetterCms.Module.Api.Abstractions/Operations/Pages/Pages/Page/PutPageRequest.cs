@@ -21,16 +21,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
         /// The page identifier.
         /// </value>
         [DataMember]
-        public Guid? PageId
-        {
-            get
-            {
-                return Data.Id;
-            }
-            set
-            {
-                Data.Id = value.HasValue ? value.Value : Guid.Empty;
-            }
-        }
+        public Guid? PageId { get; set; }
     }
 }

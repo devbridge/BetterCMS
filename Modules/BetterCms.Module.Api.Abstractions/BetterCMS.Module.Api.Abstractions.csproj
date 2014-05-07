@@ -110,6 +110,7 @@
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\DeletePageContentResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\GetPageContentRequest.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\GetPageContentResponse.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Contents\Content\SavePageContentModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\PageContentModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\PutPageContentRequest.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\PutPageContentResponse.cs" />
@@ -119,6 +120,8 @@
     <Compile Include="Operations\Pages\Pages\Page\PutPageResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\PutPageRequest.cs" />
     <Compile Include="Operations\Pages\Pages\Page\SavePagePropertiesModel.cs" />
+    <Compile Include="Operations\Pages\Pages\PostPageRequest.cs" />
+    <Compile Include="Operations\Pages\Pages\PostPageResponse.cs" />
     <Compile Include="Operations\Root\AccessLevel.cs" />
     <Compile Include="Operations\Root\AccessRuleModel.cs" />
     <Compile Include="Operations\Blog\Authors\AuthorModel.cs" />

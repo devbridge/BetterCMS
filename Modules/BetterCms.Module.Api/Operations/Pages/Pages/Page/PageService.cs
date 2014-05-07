@@ -283,7 +283,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
         public PutPageResponse Put(PutPageRequest request)
         {
             var pageProperties =
-                repository.AsQueryable<PageProperties>(e => e.Id == request.PageId)
+                repository.AsQueryable<PageProperties>(e => e.Id == request.PageId.GetValueOrDefault())
                     .FetchMany(p => p.Options)
                     .Fetch(p => p.Layout)
                     .ThenFetchMany(l => l.LayoutOptions)
@@ -295,7 +295,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
             var isNew = pageProperties == null;
             if (isNew)
             {
-                pageProperties = new PageProperties { Id = request.Data.Id, AccessRules = new List<AccessRule>() };
+                pageProperties = new PageProperties { Id = request.PageId.GetValueOrDefault(), AccessRules = new List<AccessRule>() };
             }
             else if (request.Data.Version > 0)
             {
@@ -401,7 +401,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
                 Events.PageEvents.Instance.OnPagePropertiesChanged(pageProperties);
             }
 
-            return new PutPageResponse { Data = Get(new GetPageRequest { PageId = request.Data.Id }).Data };
+            return new PutPageResponse { Data = Get(new GetPageRequest { PageId = request.PageId }).Data };
         }
 
         /// <summary>

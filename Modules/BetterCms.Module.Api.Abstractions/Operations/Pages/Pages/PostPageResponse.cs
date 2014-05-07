@@ -2,13 +2,13 @@
 
 using BetterCms.Module.Api.Infrastructure;
 
-namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
+namespace BetterCms.Module.Api.Operations.Pages.Pages
 {
     /// <summary>
-    /// Page save response.
+    /// Page creation response.
     /// </summary>
     [DataContract]
-    public class PutPageResponse : ResponseBase<PageModel>
+    public class PostPageResponse : ResponseBase<Page.PageModel>
     {
     }
 }

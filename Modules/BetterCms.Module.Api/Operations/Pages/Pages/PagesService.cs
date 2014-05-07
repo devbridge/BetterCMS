@@ -8,6 +8,7 @@ using BetterCms.Core.Security;
 
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Pages.Pages.Page;
 using BetterCms.Module.Api.Operations.Pages.Pages.Search;
 using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.MediaManager.Services;
@@ -23,28 +24,71 @@ using AccessLevel = BetterCms.Module.Api.Operations.Root.AccessLevel;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages
 {
+    /// <summary>
+    /// Default pages service for CRUD.
+    /// </summary>
     public class PagesService : Service, IPagesService
     {
+        /// <summary>
+        /// The repository.
+        /// </summary>
         private readonly IRepository repository;
-        
+
+        /// <summary>
+        /// The option service.
+        /// </summary>
         private readonly IOptionService optionService;
 
+        /// <summary>
+        /// The file URL resolver.
+        /// </summary>
         private readonly IMediaFileUrlResolver fileUrlResolver;
-        
+
+        /// <summary>
+        /// The search pages service.
+        /// </summary>
         private readonly ISearchPagesService searchPagesService;
-        
+
+        /// <summary>
+        /// The access control service.
+        /// </summary>
         private readonly IAccessControlService accessControlService;
 
-        public PagesService(IRepository repository, IOptionService optionService, IMediaFileUrlResolver fileUrlResolver,
-            ISearchPagesService searchPagesService, IAccessControlService accessControlService)
+        /// <summary>
+        /// The page service.
+        /// </summary>
+        private readonly IPageService pageService;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PagesService"/> class.
+        /// </summary>
+        /// <param name="repository">The repository.</param>
+        /// <param name="optionService">The option service.</param>
+        /// <param name="fileUrlResolver">The file URL resolver.</param>
+        /// <param name="searchPagesService">The search pages service.</param>
+        /// <param name="accessControlService">The access control service.</param>
+        /// <param name="pageService">The page service.</param>
+        public PagesService(
+            IRepository repository,
+            IOptionService optionService,
+            IMediaFileUrlResolver fileUrlResolver,
+            ISearchPagesService searchPagesService,
+            IAccessControlService accessControlService,
+            IPageService pageService)
         {
             this.repository = repository;
             this.optionService = optionService;
             this.fileUrlResolver = fileUrlResolver;
             this.searchPagesService = searchPagesService;
             this.accessControlService = accessControlService;
+            this.pageService = pageService;
         }
 
+        /// <summary>
+        /// Gets the specified request.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns><c>GetPagesResponse</c> with page list.</returns>
         public GetPagesResponse Get(GetPagesRequest request)
         {
             request.Data.SetDefaultOrder("Title");
@@ -137,6 +181,23 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
             {
                 Data = listResponse
             };
+        }
+
+        /// <summary>
+        /// Posts the specified request.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns><c>PostPageResponse</c> with page data.</returns>
+        public PostPageResponse Post(PostPageRequest request)
+        {
+            var result = pageService.Put(
+                    new PutPageRequest
+                    {
+                        Data = request.Data,
+                        User = request.User
+                    });
+
+            return new PostPageResponse { Data = result.Data };
         }
 
         private void LoadInnerCollections(DataListResponse<PageModel> response, bool includeOptions, bool includeTags, bool includeAccessRules)
