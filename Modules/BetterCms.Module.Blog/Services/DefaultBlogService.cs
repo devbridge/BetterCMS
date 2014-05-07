@@ -266,7 +266,7 @@ namespace BetterCms.Module.Blog.Services
                 newContent.Html = contentToPublish.Html;
             }
 
-            content = (BlogPostContent)contentService.SaveContentWithStatusUpdate(newContent, request.DesirableStatus);
+            content = SaveContentWithStatusUpdate(isNew, newContent, request, principal);
             pageContent.Content = content;
 
             blogPost.PageUrlHash = blogPost.PageUrl.UrlHash();
@@ -312,6 +312,11 @@ namespace BetterCms.Module.Blog.Services
             }
 
             return blogPost;
+        }
+
+        protected virtual BlogPostContent SaveContentWithStatusUpdate(bool isNew, BlogPostContent newContent, BlogPostViewModel request, IPrincipal principal)
+        {
+            return (BlogPostContent)contentService.SaveContentWithStatusUpdate(newContent, request.DesirableStatus);
         }
 
         protected virtual void PrepareForUpdateChildrenMasterPages(bool isNew, BlogPost entity, BlogPostViewModel model, out IList<Guid> newMasterIds,

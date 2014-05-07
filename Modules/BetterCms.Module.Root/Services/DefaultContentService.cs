@@ -113,8 +113,8 @@ namespace BetterCms.Module.Root.Services
             {
                 originalContent.ContentOptions = originalContent.ContentOptions.Distinct().ToList();
             }
-            
-            if (originalContent.ContentOptions != null)
+
+            if (originalContent.ContentRegions != null)
             {
                 originalContent.ContentRegions = originalContent.ContentRegions.Distinct().ToList();
             }

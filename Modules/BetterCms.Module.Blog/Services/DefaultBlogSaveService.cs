@@ -19,6 +19,9 @@ using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 
+using FluentNHibernate.Conventions;
+using FluentNHibernate.Conventions.AcceptanceCriteria;
+
 using NHibernate.Linq;
 
 namespace BetterCms.Module.Blog.Services
@@ -164,6 +167,28 @@ namespace BetterCms.Module.Blog.Services
             }
         }
 
+        protected override BlogPostContent SaveContentWithStatusUpdate(bool isNew, BlogPostContent newContent, BlogPostViewModel model, IPrincipal principal)
+        {
+            var modelExt = model as BlogPostViewModelExtender;
+            if (isNew && modelExt != null && !modelExt.ContentId.HasDefaultValue())
+            {
+                if (model.DesirableStatus == ContentStatus.Published)
+                {
+                    newContent.PublishedOn = modelExt.PublishedOn ?? DateTime.Now;
+                    newContent.PublishedByUser = principal.Identity.Name;
+                    // TODO: pass published by user newContent.PublishedByUser = !string.IsNullOrEmpty(request.Data.PublishedByUser) ? request.Data.PublishedByUser : securityService.CurrentPrincipalName;
+                }
+
+                newContent.Status = model.DesirableStatus;
+                newContent.Id = modelExt.ContentId;
+                repository.Save(newContent);
+
+                return newContent;
+            }
+
+            return base.SaveContentWithStatusUpdate(isNew, newContent, model, principal);
+        }
+
         protected override void MapExtraProperties(bool isNew, BlogPost entity, BlogPostContent content, PageContent pageContent, BlogPostViewModel model, IPrincipal principal)
         {
             var currentVersion = entity.Version;
@@ -206,7 +231,6 @@ namespace BetterCms.Module.Blog.Services
                 if (isNew && !model.ContentId.HasDefaultValue() && modelExt.PageContentId.HasValue && modelExt.RegionId.HasValue)
                 {
                     pageContent.Id = modelExt.PageContentId.Value;
-                    content.Id = model.ContentId;
                     pageContent.Region = repository.AsProxy<Region>(modelExt.RegionId.Value);
                 }
 
@@ -235,6 +259,7 @@ namespace BetterCms.Module.Blog.Services
                             .FirstOne();
 
                         AddDefaultAccessRules(entity, principal, entity.MasterPage);
+                        masterPageService.SetPageMasterPages(entity, entity.MasterPage.Id);
                     }
                     else
                     {
