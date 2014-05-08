@@ -124,6 +124,7 @@
     <Compile Include="Operations\Pages\Pages\Page\SavePagePropertiesModel.cs" />
     <Compile Include="Operations\Pages\Pages\PostPageRequest.cs" />
     <Compile Include="Operations\Pages\Pages\PostPageResponse.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\GetSitemapModel.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\PostHtmlContentWidgetRequest.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\PostHtmlContentWidgetResponse.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\PutHtmlContentWidgetRequest.cs" />
