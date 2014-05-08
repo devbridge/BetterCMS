@@ -306,6 +306,7 @@
     <Compile Include="Services\DefaultSitemapService.cs" />
     <Compile Include="Services\DefaultTagService.cs" />
     <Compile Include="Services\DefaultUrlService.cs" />
+    <Compile Include="Services\DefaultWidgetService.cs" />
     <Compile Include="Services\IHistoryService.cs" />
     <Compile Include="Services\ILayoutService.cs" />
     <Compile Include="Services\IMasterPageService.cs" />
@@ -319,6 +320,7 @@
     <Compile Include="Services\DefaultRedirectService.cs" />
     <Compile Include="Services\ICategoryService.cs" />
     <Compile Include="Services\IRedirectService.cs" />
+    <Compile Include="Services\IWidgetService.cs" />
     <Compile Include="ViewModels\Content\ContentViewModel.cs" />
     <Compile Include="ViewModels\Content\ContentSortViewModel.cs" />
     <Compile Include="ViewModels\Content\RestorePageContentViewModel.cs" />

@@ -6,6 +6,10 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
     {
         GetHtmlContentWidgetResponse Get(GetHtmlContentWidgetRequest request);
 
+        PostHtmlContentWidgetResponse Post(PostHtmlContentWidgetRequest request);
+
+        PutHtmlContentWidgetResponse Put(PutHtmlContentWidgetRequest request);
+
         IHtmlContentWidgetOptionsService Options { get; }
     }
 }
