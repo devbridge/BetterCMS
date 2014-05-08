@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
@@ -14,6 +15,7 @@ using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Pages.Sitemap
 {
+    [Obsolete("Use everything from BetterCms.Module.Api.Operations.Pages.Sitemaps name space.")]
     public class SitemapService : Service, ISitemapService
     {
         private readonly IRepository repository;

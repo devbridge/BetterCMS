@@ -5,6 +5,7 @@ using BetterCms.Module.Api.Infrastructure;
 
 namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Nodes
 {
+    [Obsolete("Use everything from BetterCms.Module.Api.Operations.Pages.Sitemaps name space.")]
     [DataContract]
     public class SitemapNodeModel : ModelBase
     {

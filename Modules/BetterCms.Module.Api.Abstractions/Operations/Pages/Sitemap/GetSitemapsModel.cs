@@ -1,10 +1,12 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Infrastructure.Enums;
 
 namespace BetterCms.Module.Api.Operations.Pages.Sitemap
 {
+    [Obsolete("Use everything from BetterCms.Module.Api.Operations.Pages.Sitemaps name space.")]
     [DataContract]
     public class GetSitemapsModel : DataOptions, IFilterByTags
     {

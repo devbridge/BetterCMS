@@ -182,16 +182,23 @@
     <Compile Include="Operations\Pages\Pages\Search\DefaultSearchPagesService.cs" />
     <Compile Include="Operations\Pages\Redirects\RedirectsService.cs" />
     <Compile Include="Operations\Pages\Redirects\Redirect\RedirectService.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Nodes\NodesService.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Nodes\Node\NodeService.cs" />
-    <Compile Include="Operations\Pages\Sitemap\SitemapService.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Tree\SitemapTreeService.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\SitemapsService.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Nodes\NodesService.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Nodes\Node\NodeService.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\SitemapService.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Tree\SitemapTreeService.cs" />
     <Compile Include="Operations\Pages\DefaultPagesApiOperations.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\PageContentsService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Exists\PageExistsService.cs" />
     <Compile Include="Operations\Pages\Pages\PagesService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\PageService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PagePropertiesService.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Nodes\NodesService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Operations\Pages\Sitemap\Nodes\Node\NodeService.cs" />
+    <Compile Include="Operations\Pages\Sitemap\SitemapService.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Tree\SitemapTreeService.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\HtmlContentWidgetService.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\Options\HtmlContentWidgetOptionsService.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\Options\ServerControlWidgetOptionsService.cs" />

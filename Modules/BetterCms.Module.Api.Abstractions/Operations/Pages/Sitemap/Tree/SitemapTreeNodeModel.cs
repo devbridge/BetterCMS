@@ -7,6 +7,7 @@ using BetterCms.Module.Api.Infrastructure.Attributes;
 
 namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
 {
+    [Obsolete("Use everything from BetterCms.Module.Api.Operations.Pages.Sitemaps name space.")]
     [DataContract]
     public class SitemapTreeNodeModel : ModelBase
     {

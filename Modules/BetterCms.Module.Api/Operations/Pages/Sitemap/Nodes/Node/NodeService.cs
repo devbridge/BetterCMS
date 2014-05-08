@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
@@ -8,6 +9,7 @@ using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Nodes.Node
 {
+    [Obsolete("Use everything from BetterCms.Module.Api.Operations.Pages.Sitemaps name space.")]
     public class NodeService : Service, INodeService
     {
         private readonly IRepository repository;

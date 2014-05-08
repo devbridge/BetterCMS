@@ -13,6 +13,7 @@ using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
 {
+    [Obsolete("Use everything from BetterCms.Module.Api.Operations.Pages.Sitemaps name space.")]
     public class SitemapTreeService : Service, ISitemapTreeService
     {
         private readonly IRepository repository;
