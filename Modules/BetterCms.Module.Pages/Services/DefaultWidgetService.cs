@@ -5,9 +5,12 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Exceptions;
 using BetterCms.Core.Services;
+
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Widgets;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
@@ -48,11 +51,9 @@ namespace BetterCms.Module.Pages.Services
             unitOfWork.BeginTransaction();
 
             var widgetContent = GetHtmlContentWidgetFromRequest(model);
-
             widget = GetWidgetForSave(widgetContent, model);
 
             repository.Save(widget);
-
             unitOfWork.Commit();
 
             // Notify.
@@ -79,15 +80,52 @@ namespace BetterCms.Module.Pages.Services
             }
         }
 
-        private HtmlContentWidget GetWidgetForSave(HtmlContentWidget widgetContent, EditHtmlContentWidgetViewModel model)
+        public ServerControlWidget SaveServerControlWidget(EditServerControlWidgetViewModel model)
         {
-            HtmlContentWidget widget;
+            if (model.DesirableStatus == ContentStatus.Draft)
+            {
+                throw new CmsException(string.Format("Server widget does not support Draft state."));
+            }
+
+            if (model.Options != null)
+            {
+                optionService.ValidateOptionKeysUniqueness(model.Options);
+            }
+
+            unitOfWork.BeginTransaction();
+
+            var requestWidget = GetServerControlWidgetFromRequest(model);
+            var widget = GetWidgetForSave(requestWidget, model);
+            
+            repository.Save(widget);
+            unitOfWork.Commit();
+
+            // Notify.
+            if (widget.Status != ContentStatus.Preview)
+            {
+                if (model.Id == default(Guid))
+                {
+                    Events.PageEvents.Instance.OnWidgetCreated(widget);
+                }
+                else
+                {
+                    Events.PageEvents.Instance.OnWidgetUpdated(widget);
+                }
+            }
+
+            return widget;
+        }
+
+        private TEntity GetWidgetForSave<TEntity>(TEntity widgetContent, EditWidgetViewModel model)
+            where TEntity : Widget
+        {
+            TEntity widget;
             var createNewWithId = false;
 
             // Check if entity is created
             if (model.CreateIfNotExists && !model.Id.HasDefaultValue())
             {
-                createNewWithId = !repository.AsQueryable<HtmlContentWidget>().Any(w => w.Id == model.Id);
+                createNewWithId = !repository.AsQueryable<TEntity>().Any(w => w.Id == model.Id);
             }
 
             if (createNewWithId)
@@ -104,7 +142,7 @@ namespace BetterCms.Module.Pages.Services
             }
             else
             {
-                widget = (HtmlContentWidget)contentService.SaveContentWithStatusUpdate(widgetContent, model.DesirableStatus);
+                widget = (TEntity)contentService.SaveContentWithStatusUpdate(widgetContent, model.DesirableStatus);
             }
 
             return widget;
@@ -124,20 +162,61 @@ namespace BetterCms.Module.Pages.Services
                 content.Category = null;
             }
 
-            if (request.Options != null)
+            SetWidgetOptions(request, content);
+
+            content.Name = request.Name;
+            content.Html = request.PageContent ?? string.Empty;
+            content.UseHtml = request.EnableCustomHtml;
+            content.UseCustomCss = request.EnableCustomCSS;
+            content.CustomCss = request.CustomCSS;
+            content.UseCustomJs = request.EnableCustomJS;
+            content.CustomJs = request.CustomJS;
+            content.Version = request.Version;
+            content.EditInSourceMode = request.EditInSourceMode;
+
+            return content;
+        }
+
+        private ServerControlWidget GetServerControlWidgetFromRequest(EditServerControlWidgetViewModel request)
+        {
+            ServerControlWidget widget = new ServerControlWidget();
+            widget.Id = request.Id;
+
+            if (request.CategoryId.HasValue && !request.CategoryId.Value.HasDefaultValue())
+            {
+                widget.Category = repository.AsProxy<CategoryEntity>(request.CategoryId.Value);
+            }
+            else
+            {
+                widget.Category = null;
+            }
+
+            widget.Name = request.Name;
+            widget.Url = request.Url;
+            widget.Version = request.Version;
+            widget.PreviewUrl = request.PreviewImageUrl;
+
+            SetWidgetOptions(request, widget);
+
+            return widget;
+        }
+
+        private void SetWidgetOptions(EditWidgetViewModel model, Widget content)
+        {
+            if (model.Options != null)
             {
                 content.ContentOptions = new List<ContentOption>();
 
                 // NOTE: Loading custom options before saving.
                 // In other case, when loading custom options from option service, nHibernate updates version number (nHibernate bug)
-                var customOptionsIdentifiers = request.Options
+                var customOptionsIdentifiers = model.Options
                     .Where(o => o.Type == OptionType.Custom)
                     .Select(o => o.CustomOption.Identifier)
                     .Distinct()
                     .ToArray();
                 var customOptions = optionService.GetCustomOptionsById(customOptionsIdentifiers);
 
-                foreach (var requestContentOption in request.Options)
+                foreach (var requestContentOption in model.Options)
                 {
                     var contentOption = new ContentOption
                     {
@@ -155,18 +234,6 @@ namespace BetterCms.Module.Pages.Services
                     content.ContentOptions.Add(contentOption);
                 }
             }
-
-            content.Name = request.Name;
-            content.Html = request.PageContent ?? string.Empty;
-            content.UseHtml = request.EnableCustomHtml;
-            content.UseCustomCss = request.EnableCustomCSS;
-            content.CustomCss = request.CustomCSS;
-            content.UseCustomJs = request.EnableCustomJS;
-            content.CustomJs = request.CustomJS;
-            content.Version = request.Version;
-            content.EditInSourceMode = request.EditInSourceMode;
-
-            return content;
         }
     }
 }

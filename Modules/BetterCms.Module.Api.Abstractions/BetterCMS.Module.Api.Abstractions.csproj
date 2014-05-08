@@ -196,6 +196,11 @@
     <Compile Include="Operations\Pages\Sitemap\Tree\ISitemapTreeService.cs" />
     <Compile Include="Operations\Pages\Sitemap\Tree\SitemapTreeNodeModel.cs" />
     <Compile Include="Operations\Pages\Sitemap\Tree\SitemapTreeNodeTranslationModel.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\PostServerControlWidgetRequest.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\PostServerControlWidgetResponse.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\PutServerControlWidgetRequest.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\PutServerControlWidgetResponse.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\SaveServerControlWidgetModel.cs" />
     <Compile Include="Operations\Root\AccessLevel.cs" />
     <Compile Include="Operations\Root\AccessRuleModel.cs" />
     <Compile Include="Operations\Blog\Authors\AuthorModel.cs" />
