@@ -358,6 +358,7 @@
     <Compile Include="ViewModels\Templates\TemplateRegionItemViewModel.cs" />
     <Compile Include="ViewModels\Widgets\EditHtmlContentWidgetViewModel.cs" />
     <Compile Include="ViewModels\Widgets\EditServerControlWidgetViewModel.cs" />
+    <Compile Include="ViewModels\Widgets\EditWidgetViewModel.cs" />
     <Compile Include="ViewModels\Widgets\HtmlContentWidgetViewModel.cs" />
     <Compile Include="ViewModels\Content\PageContentOptionsViewModel.cs" />
     <Compile Include="ViewModels\Page\AddNewPageViewModel.cs" />
