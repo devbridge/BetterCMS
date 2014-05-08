@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
 using BetterCms.Module.Api;
-using BetterCms.Module.Api.Operations.Pages.Sitemap;
-using BetterCms.Module.Api.Operations.Pages.Sitemap.Tree;
-using BetterCms.Module.Api.Operations.Root.Languages;
+using BetterCms.Module.Api.Operations.Pages.Sitemaps;
+using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Tree;
 using BetterCms.Module.Api.Operations.Root.Languages.Language;
 using BetterCms.Module.Users.Provider;
 using BetterCms.Sandbox.Mvc4.Helpers;
@@ -147,7 +145,7 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
 
         private Guid? GetSitemapId(IApiFacade api)
         {
-            var allSitemaps = api.Pages.Sitemap.Get(new GetSitemapsRequest());
+            var allSitemaps = api.Pages.Sitemaps.Get(new GetSitemapsRequest());
             if (allSitemaps.Data.Items.Count > 0)
             {
                 var sitemap = allSitemaps.Data.Items.FirstOrDefault(map => map.Id == defaultSitemapId) ?? allSitemaps.Data.Items.First();

@@ -1,0 +1,25 @@
+﻿using System.Runtime.Serialization;
+
+using BetterCms.Module.Api.Operations.Pages.Pages.Page;
+
+using ServiceStack.ServiceHost;
+
+namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
+{
+    /// <summary>
+    /// Request to get sitemap data.
+    /// </summary>
+    [Route("/sitemaps/{SitemapId}", Verbs = "GET")]
+    [DataContract]
+    public class GetSitemapRequest : IReturn<GetPageResponse>
+    {
+        /// <summary>
+        /// Gets or sets the sitemap identifier.
+        /// </summary>
+        /// <value>
+        /// The sitemap identifier.
+        /// </value>
+        [DataMember]
+        public System.Guid SitemapId { get; set; }
+    }
+}

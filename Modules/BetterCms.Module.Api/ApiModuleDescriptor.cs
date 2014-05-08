@@ -31,10 +31,11 @@ using BetterCms.Module.Api.Operations.Pages.Pages.Page.Translations;
 using BetterCms.Module.Api.Operations.Pages.Pages.Search;
 using BetterCms.Module.Api.Operations.Pages.Redirects;
 using BetterCms.Module.Api.Operations.Pages.Redirects.Redirect;
-using BetterCms.Module.Api.Operations.Pages.Sitemap;
-using BetterCms.Module.Api.Operations.Pages.Sitemap.Nodes;
-using BetterCms.Module.Api.Operations.Pages.Sitemap.Nodes.Node;
-using BetterCms.Module.Api.Operations.Pages.Sitemap.Tree;
+using BetterCms.Module.Api.Operations.Pages.Sitemaps;
+using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap;
+using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes;
+using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node;
+using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Tree;
 using BetterCms.Module.Api.Operations.Pages.Widgets;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget;
@@ -62,6 +63,10 @@ using BetterCms.Module.Api.Operations.Users.Users.User.Validate;
 using BetterCms.Module.Api.Operations.Users.Users.User.ValidateUser;
 
 using ContentService = BetterCms.Module.Api.Operations.Pages.Contents.Content.ContentService;
+using INodeService = BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node.INodeService;
+using INodesService = BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.INodesService;
+using ISitemapService = BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.ISitemapService;
+using ISitemapTreeService = BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Tree.ISitemapTreeService;
 
 namespace BetterCms.Module.Api
 {
@@ -164,7 +169,6 @@ namespace BetterCms.Module.Api
 
             containerBuilder.RegisterType<RedirectsService>().As<IRedirectsService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<RedirectService>().As<IRedirectService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);            
-            containerBuilder.RegisterType<SitemapService>().As<ISitemapService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<ContentService>().As<IContentService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<BlogPostContentService>().As<IBlogPostContentService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<HtmlContentService>().As<IHtmlContentService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
@@ -175,9 +179,16 @@ namespace BetterCms.Module.Api
             containerBuilder.RegisterType<HtmlContentWidgetOptionsService>().As<IHtmlContentWidgetOptionsService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<ServerControlWidgetService>().As<IServerControlWidgetService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<ServerControlWidgetOptionsService>().As<IServerControlWidgetOptionsService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterType<SitemapsService>().As<ISitemapsService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterType<SitemapService>().As<ISitemapService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<SitemapTreeService>().As<ISitemapTreeService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<NodesService>().As<INodesService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<NodeService>().As<INodeService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+
+            containerBuilder.RegisterType<Operations.Pages.Sitemap.SitemapService>().As<Operations.Pages.Sitemap.ISitemapService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterType<Operations.Pages.Sitemap.Tree.SitemapTreeService>().As<Operations.Pages.Sitemap.Tree.ISitemapTreeService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterType<Operations.Pages.Sitemap.Nodes.NodesService>().As<Operations.Pages.Sitemap.Nodes.INodesService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterType<Operations.Pages.Sitemap.Nodes.Node.NodeService>().As<Operations.Pages.Sitemap.Nodes.Node.INodeService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
 
             containerBuilder.RegisterType<DefaultRootApiOperations>().As<IRootApiOperations>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<DefaultPagesApiOperations>().As<IPagesApiOperations>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);

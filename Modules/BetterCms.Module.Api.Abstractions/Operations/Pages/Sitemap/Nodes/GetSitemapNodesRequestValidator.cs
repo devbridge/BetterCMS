@@ -4,6 +4,7 @@ using ServiceStack.FluentValidation;
 
 namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Nodes
 {
+    [Obsolete("Use everything from BetterCms.Module.Api.Operations.Pages.Sitemaps name space.")]
     public class GetSitemapNodesRequestValidator : AbstractValidator<GetSitemapNodesRequest>
     {
         public GetSitemapNodesRequestValidator()

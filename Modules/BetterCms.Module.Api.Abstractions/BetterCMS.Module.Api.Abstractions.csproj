@@ -129,6 +129,72 @@
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\PutHtmlContentWidgetRequest.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\PutHtmlContentWidgetResponse.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\SaveHtmlContentWidgetModel.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\GetSitemapsModel.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\GetSitemapsRequest.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\GetSitemapsRequestValidator.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\GetSitemapsResponse.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\ISitemapsService.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\PostSitemapRequest.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\PostSitemapResponse.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\DeleteSitemapRequest.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\DeleteSitemapResponse.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\GetSitemapRequest.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\GetSitemapResponse.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\ISitemapService.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Nodes\GetSitemapNodesRequest.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Nodes\GetSitemapNodesRequestValidator.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Nodes\GetSitemapNodesResponse.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Nodes\INodesService.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Nodes\Node\GetSitemapNodeRequest.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Nodes\Node\GetSitemapNodeResponse.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Nodes\Node\INodeService.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Nodes\SitemapNodeModel.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\PutSitemapRequest.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\PutSitemapResponse.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\SaveSitemapModel.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\SitemapModel.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Tree\GetSitemapTreeModel.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Tree\GetSitemapTreeRequest.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Tree\GetSitemapTreeRequestValidator.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Tree\GetSitemapTreeResponse.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Tree\ISitemapTreeService.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Tree\SitemapTreeNodeModel.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Tree\SitemapTreeNodeTranslationModel.cs" />
+    <Compile Include="Operations\Pages\Sitemap\GetSitemapsModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Operations\Pages\Sitemap\GetSitemapsRequest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Operations\Pages\Sitemap\GetSitemapsRequestValidator.cs" />
+    <Compile Include="Operations\Pages\Sitemap\GetSitemapsResponse.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Operations\Pages\Sitemap\ISitemapService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Operations\Pages\Sitemap\Nodes\GetSitemapNodesRequest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Operations\Pages\Sitemap\Nodes\GetSitemapNodesRequestValidator.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Nodes\GetSitemapNodesResponse.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Nodes\INodesService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Operations\Pages\Sitemap\Nodes\Node\GetSitemapNodeRequest.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Nodes\Node\GetSitemapNodeResponse.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Nodes\Node\INodeService.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Nodes\SitemapNodeModel.cs" />
+    <Compile Include="Operations\Pages\Sitemap\SitemapModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Operations\Pages\Sitemap\Tree\GetSitemapTreeModel.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Tree\GetSitemapTreeRequest.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Tree\GetSitemapTreeRequestValidator.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Tree\GetSitemapTreeResponse.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Tree\ISitemapTreeService.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Tree\SitemapTreeNodeModel.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Tree\SitemapTreeNodeTranslationModel.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\PostServerControlWidgetRequest.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\PostServerControlWidgetResponse.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\PutServerControlWidgetRequest.cs" />
@@ -275,27 +341,6 @@
     <Compile Include="Operations\Pages\Redirects\Redirect\GetRedirectRequest.cs" />
     <Compile Include="Operations\Pages\Redirects\Redirect\GetRedirectResponse.cs" />
     <Compile Include="Operations\Pages\Redirects\Redirect\IRedirectService.cs" />
-    <Compile Include="Operations\Pages\Sitemap\GetSitemapsRequestValidator.cs" />
-    <Compile Include="Operations\Pages\Sitemap\GetSitemapsResponse.cs" />
-    <Compile Include="Operations\Pages\Sitemap\GetSitemapsRequest.cs" />
-    <Compile Include="Operations\Pages\Sitemap\GetSitemapsModel.cs" />
-    <Compile Include="Operations\Pages\Sitemap\ISitemapService.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Nodes\GetSitemapNodesRequest.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Nodes\GetSitemapNodesResponse.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Nodes\GetSitemapNodesRequestValidator.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Nodes\INodesService.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Nodes\Node\GetSitemapNodeRequest.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Nodes\Node\GetSitemapNodeResponse.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Nodes\Node\INodeService.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Nodes\SitemapNodeModel.cs" />
-    <Compile Include="Operations\Pages\Sitemap\SitemapModel.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Tree\SitemapTreeNodeTranslationModel.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Tree\GetSitemapTreeRequestValidator.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Tree\GetSitemapTreeModel.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Tree\GetSitemapTreeRequest.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Tree\GetSitemapTreeResponse.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Tree\ISitemapTreeService.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Tree\SitemapTreeNodeModel.cs" />
     <Compile Include="Operations\Pages\Widgets\GetWidgetsModel.cs" />
     <Compile Include="Operations\Pages\Widgets\GetWidgetsRequest.cs" />
     <Compile Include="Operations\Pages\Widgets\GetWidgetsRequestValidator.cs" />
