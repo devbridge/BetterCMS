@@ -23,8 +23,6 @@ using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 
-using Microsoft.SqlServer.Server;
-
 using ServiceStack.ServiceInterface;
 
 using ITagService = BetterCms.Module.Pages.Services.ITagService;
@@ -65,11 +63,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
         /// The master page service.
         /// </summary>
         private readonly IMasterPageService masterPageService;
-
-        /// <summary>
-        /// The CMS configuration.
-        /// </summary>
-        private readonly ICmsConfiguration cmsConfiguration;
 
         /// <summary>
         /// The page service.
@@ -124,7 +117,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
         /// <param name="fileUrlResolver">The file URL resolver.</param>
         /// <param name="pageTranslationsService">The page translations service.</param>
         /// <param name="masterPageService">The master page service.</param>
-        /// <param name="cmsConfiguration">The CMS configuration.</param>
         /// <param name="pageService">The page service.</param>
         /// <param name="sitemapService">The sitemap service.</param>
         /// <param name="tagService">The tag service.</param>
@@ -140,7 +132,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
             IMediaFileUrlResolver fileUrlResolver,
             IPageTranslationsService pageTranslationsService,
             IMasterPageService masterPageService,
-            ICmsConfiguration cmsConfiguration,
             Module.Pages.Services.IPageService pageService,
             ISitemapService sitemapService,
             ITagService tagService,
@@ -156,7 +147,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
             this.fileUrlResolver = fileUrlResolver;
             this.pageTranslationsService = pageTranslationsService;
             this.masterPageService = masterPageService;
-            this.cmsConfiguration = cmsConfiguration;
             this.pageService = pageService;
             this.sitemapService = sitemapService;
             this.tagService = tagService;
@@ -380,7 +370,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
                 pageProperties.AccessRules.RemoveDuplicateEntities();
                 var accessRules =
                     request.Data.AccessRules.Select(
-                        r => (IAccessRule)new AccessRule { AccessLevel = (Core.Security.AccessLevel)(int)r.AccessLevel, Identity = r.Identity, IsForRole = r.IsForRole })
+                        r => (IAccessRule)new AccessRule { AccessLevel = (AccessLevel)(int)r.AccessLevel, Identity = r.Identity, IsForRole = r.IsForRole })
                         .ToList();
                 accessControlService.UpdateAccessControl(pageProperties, accessRules);
             }
@@ -501,7 +491,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
             }
 
             // Delete page
-            repository.Delete<Module.Root.Models.Page>(request.Data.Id, request.Data.Version);
+            repository.Delete<Module.Root.Models.Page>(page);
 
             unitOfWork.Commit();
 

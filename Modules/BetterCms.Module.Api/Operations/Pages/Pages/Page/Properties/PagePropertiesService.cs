@@ -245,14 +245,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
             
             if (request.Data.IncludeAccessRules)
             {
-                // Get layout options, page options and merge them
                 response.AccessRules = LoadAccessRules(response.Data.Id);
             }
             
             if (request.Data.IncludePageTranslations 
                 && response.Data.LanguageGroupIdentifier.HasValue)
             {
-                // Get layout options, page options and merge them
                 response.PageTranslations = repository
                     .AsQueryable<PageProperties>()
                     .Where(p => p.LanguageGroupIdentifier == response.Data.LanguageGroupIdentifier)
