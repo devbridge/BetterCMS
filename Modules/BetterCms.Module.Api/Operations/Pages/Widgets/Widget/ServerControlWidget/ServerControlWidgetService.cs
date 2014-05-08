@@ -49,6 +49,18 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidg
             return new GetServerControlWidgetResponse { Data = model };
         }
 
+        public PostServerControlWidgetResponse Post(PostServerControlWidgetRequest request)
+        {
+            var result = Put(new PutServerControlWidgetRequest { Data = request.Data, User = request.User });
+
+            return new PostServerControlWidgetResponse { Data = result.Data };
+        }
+
+        public PutServerControlWidgetResponse Put(PutServerControlWidgetRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
         IServerControlWidgetOptionsService IServerControlWidgetService.Options
         {
             get

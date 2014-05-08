@@ -129,6 +129,11 @@
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\PutHtmlContentWidgetRequest.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\PutHtmlContentWidgetResponse.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\SaveHtmlContentWidgetModel.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\PostServerControlWidgetRequest.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\PostServerControlWidgetResponse.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\PutServerControlWidgetRequest.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\PutServerControlWidgetResponse.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\SaveServerControlWidgetModel.cs" />
     <Compile Include="Operations\Root\AccessLevel.cs" />
     <Compile Include="Operations\Root\AccessRuleModel.cs" />
     <Compile Include="Operations\Blog\Authors\AuthorModel.cs" />
