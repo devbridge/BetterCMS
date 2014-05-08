@@ -70,6 +70,8 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Extensions\Widget\WidgetExtensions.cs" />
+    <Compile Include="Extensions\BlogPost\BlogPostExtensions.cs" />
     <Compile Include="Infrastructure\ApiIdentity.cs" />
     <Compile Include="Infrastructure\ApiPrincipal.cs" />
     <Compile Include="Infrastructure\Attributes\DataMemberIgnoreAttribute.cs" />
@@ -122,6 +124,11 @@
     <Compile Include="Operations\Pages\Pages\Page\SavePagePropertiesModel.cs" />
     <Compile Include="Operations\Pages\Pages\PostPageRequest.cs" />
     <Compile Include="Operations\Pages\Pages\PostPageResponse.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\PostHtmlContentWidgetRequest.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\PostHtmlContentWidgetResponse.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\PutHtmlContentWidgetRequest.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\PutHtmlContentWidgetResponse.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\SaveHtmlContentWidgetModel.cs" />
     <Compile Include="Operations\Pages\Sitemaps\GetSitemapsModel.cs" />
     <Compile Include="Operations\Pages\Sitemaps\GetSitemapsRequest.cs" />
     <Compile Include="Operations\Pages\Sitemaps\GetSitemapsRequestValidator.cs" />

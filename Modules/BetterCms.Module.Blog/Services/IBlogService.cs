@@ -4,7 +4,6 @@ using System.Security.Principal;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Blog.ViewModels.Filter;
-using BetterCms.Module.Root.Models;
 
 using NHibernate;
 

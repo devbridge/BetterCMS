@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
@@ -180,24 +179,6 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
         /// </value>
         [DataMember]
         public string HtmlContent { get; set; }
-
-        /// <summary>
-        /// Gets or sets the language identifier.
-        /// </summary>
-        /// <value>
-        /// The language identifier.
-        /// </value>
-        [DataMember]
-        public Guid? LanguageId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the language group identifier.
-        /// </summary>
-        /// <value>
-        /// The language group identifier.
-        /// </value>
-        [DataMember]
-        public string LanguageGroupIdentifier { get; set; }
 
         /// <summary>
         /// Gets or sets the list of tags.
