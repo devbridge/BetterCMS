@@ -42,5 +42,14 @@ namespace BetterCms.Module.Api.Operations
         /// </value>
         [DataMember]
         public OptionType Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to use default value.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to use default value; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool UseDefaultValue { get; set; }
     }
 }

@@ -304,7 +304,7 @@
         </con:request>
       </con:method>
     </con:resource>
-    <con:resource name="widgets/html-content" path="/bcms-api/widgets/html-content/e034aa85f4404414ba1ca3260081f828">
+    <con:resource name="HTML content widgets" path="/bcms-api/widgets/html-content/e034aa85f4404414ba1ca3260081f828">
       <con:settings/>
       <con:parameters>
         <con:parameter>
@@ -375,7 +375,7 @@
           <con:parameterOrder><con:entry>Cookie</con:entry><con:entry>format</con:entry><con:entry>data</con:entry></con:parameterOrder>
         </con:request>
       </con:method>
-      <con:method name="widgets/html-content/{ID}" method="PUT">
+      <con:method name="Update widget" method="PUT">
         <con:settings/>
         <con:parameters/>
         <con:representation type="REQUEST">
@@ -442,10 +442,10 @@
   <con:entry key="data" value="{includeOptions:true}"/>
   <con:entry key="format" value="json"/>
 </con:parameters><con:parameterOrder><con:entry>Cookie</con:entry><con:entry>format</con:entry><con:entry>data</con:entry></con:parameterOrder></con:request></con:method></con:resource>
-    <con:resource name="/widgets/server-control/" path="/bcms-api/widgets/server-control/">
+    <con:resource name="Server control widgets" path="/bcms-api/widgets/server-control/">
       <con:settings/>
       <con:parameters/>
-      <con:resource name="/widgets/server-control/{ID}" path="2BB877B2-4A88-4CDE-BEA3-A32500E659F2">
+      <con:resource name="Server control widget" path="2BB877B2-4A88-4CDE-BEA3-A32500E659F2">
         <con:settings/>
         <con:parameters><con:parameter><con:name>data</con:name><con:style>QUERY</con:style></con:parameter><con:parameter><con:name>format</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters>
         <con:method name="Update server widget" method="PUT">
@@ -570,7 +570,61 @@
           <con:description xsi:nil="true"/>
         </con:parameter>
       </con:parameters>
-      <con:method name="Get pages" method="GET">
+      <con:resource name="Page" path="C326435C-86C4-4093-BDA8-CC8436A281D4"><con:settings/><con:parameters/><con:method name="Get page by ID" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:c32="http://localhost/bcms-api/pages/C326435C-86C4-4093-BDA8-CC8436A281D4">c32:Response</con:element></con:representation><con:request name="Request 1" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:55558</con:endpoint><con:request/><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="format" value="json" xmlns="http://eviware.com/soapui/config"/></con:parameters></con:request></con:method><con:method name="Update page" method="PUT"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType>text/html</con:mediaType><con:status>200</con:status><con:params/><con:element>html</con:element></con:representation><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:representation type="FAULT"><con:mediaType>text/html</con:mediaType><con:status>500</con:status><con:params/><con:element>html</con:element></con:representation><con:request name="Request 1" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:55558</con:endpoint><con:request>{"data": {
+	"pageUrl": "/test-with-options/",
+	"title": "test",
+	"description": null,
+	"isPublished": true,
+	"publishedOn": null,
+	"layoutId": null,
+	"masterPageId": "9BD095D0-3E75-4BF2-B27A-A2A80108E0D2",
+	"categoryId": null,
+	"categoryName": null,
+	"mainImageId": null,
+	"mainImageUrl": null,
+	"mainImageThumbnauilUrl": null,
+	"mainImageCaption": null,
+	"isArchived": false,
+	"isMasterPage": false,
+	"languageId": null,
+	"languageCode": null,
+	"languageGroupIdentifier": null,
+	"createdOn": "2014-05-07T16:19:31.0000000",
+	"createdBy": "Anonymous",
+	"lastModifiedOn": "2014-05-07T16:19:31.0000000",
+	"lastModifiedBy": "Anonymous",
+	"pageOptions": [
+		{
+	         "key": "01",
+	         "value": "F",
+	         "defaultValue": "A",
+	         "type": "Text",
+	         "useDefaultValue": false
+	      },
+	            {
+	         "key": "02",
+	         "value": "C",
+	         "defaultValue": "C",
+	         "type": "Text",
+	         "useDefaultValue": true
+	      },
+	      {
+	         "key": "03",
+	         "value": "E",
+	         "defaultValue": "E",
+	         "type": "Text",
+	         "useDefaultValue": true
+	      },
+	      {
+	         "key": "04",
+	         "value": "G",
+	         "defaultValue": null,
+	         "type": "Text",
+	         "useDefaultValue": false
+	      }
+	]
+}}
+          </con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource><con:method name="Get pages" method="GET">
         <con:settings/>
         <con:parameters/>
         <con:representation type="RESPONSE">
@@ -596,12 +650,8 @@
           </con:credentials>
           <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
           <con:jmsPropertyConfig/>
-          <con:parameters>
-            <entry key="format" value="json" xmlns="http://eviware.com/soapui/config"/>
-          </con:parameters>
-          <con:parameterOrder>
-            <con:entry>format</con:entry>
-          </con:parameterOrder>
+          <con:parameters><entry key="format" value="json" xmlns="http://eviware.com/soapui/config"/></con:parameters>
+          <con:parameterOrder><con:entry>format</con:entry></con:parameterOrder>
         </con:request>
       </con:method>
       <con:method name="Create page" method="POST">
@@ -625,7 +675,7 @@
         </con:representation>
         <con:representation type="FAULT">
           <con:mediaType>application/json; charset=utf-8</con:mediaType>
-          <con:status>405 500</con:status>
+          <con:status>405 500 400</con:status>
           <con:params/>
           <con:element xmlns:pag="http://localhost/bcms-api/pages/">pag:Fault</con:element>
         </con:representation>
@@ -641,19 +691,19 @@
           <con:params/>
           <con:element>data</con:element>
         </con:representation>
-        <con:request name="Create new page" mediaType="application/json" postQueryString="false">
+        <con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:request name="Create new page" mediaType="application/json" postQueryString="false">
           <con:settings>
             <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
           </con:settings>
           <con:endpoint>http://localhost:55558</con:endpoint>
           <con:request>
             {"data": {
-            "title": "test",
+            "title": "test 85",
             "description": null,
             "isPublished": true,
             "publishedOn": null,
-            "layoutId": "0e991684003a43deb40f0ffeccddc6eb",
-            "masterPageId": null,
+            "_layoutId": "0E991684-003A-43DE-B40F-0FFECCDDC6EB",
+            "masterPageId": "9BD095D0-3E75-4BF2-B27A-A2A80108E0D2",
             "categoryId": null,
             "categoryName": null,
             "mainImageId": null,
@@ -661,7 +711,7 @@
             "mainImageThumbnauilUrl": null,
             "mainImageCaption": null,
             "isArchived": false,
-            "isMasterPage": true,
+            "isMasterPage": false,
             "languageId": null,
             "languageCode": null,
             "languageGroupIdentifier": null,
@@ -669,7 +719,37 @@
             "createdBy": "Anonymous",
             "lastModifiedOn": "2014-05-07T16:19:31.0000000",
             "lastModifiedBy": "Anonymous",
-            "version": 10
+            "version": 0,
+            "pageOptions": [
+		{
+	         "key": "01",
+	         "value": "F",
+	         "defaultValue": "A",
+	         "type": "Text",
+	         "useDefaultValue": false
+	      },
+	            {
+	         "key": "02",
+	         "value": "C",
+	         "defaultValue": "C",
+	         "type": "Text",
+	         "useDefaultValue": true
+	      },
+	      {
+	         "key": "03",
+	         "value": "E",
+	         "defaultValue": "E",
+	         "type": "Text",
+	         "useDefaultValue": true
+	      },
+	      {
+	         "key": "04",
+	         "value": "G",
+	         "defaultValue": null,
+	         "type": "Text",
+	         "useDefaultValue": false
+	      }
+	]
             }}
           </con:request>
           <con:credentials>
@@ -677,79 +757,15 @@
           </con:credentials>
           <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
           <con:jmsPropertyConfig/>
-          <con:parameters>
-            <entry key="format" value="json" xmlns="http://eviware.com/soapui/config"/>
-          </con:parameters>
-        </con:request>
+          <con:parameters><entry key="format" value="json" xmlns="http://eviware.com/soapui/config"/></con:parameters>
+        <con:parameterOrder><con:entry>format</con:entry></con:parameterOrder></con:request>
       </con:method>
-      <con:method name="Update page" method="PUT">
-        <con:settings/>
-        <con:parameters/>
-        <con:representation type="FAULT">
-          <con:mediaType>text/html; charset=utf-8</con:mediaType>
-          <con:status>500</con:status>
-          <con:params/>
-          <con:element>html</con:element>
-        </con:representation>
-        <con:representation type="REQUEST">
-          <con:mediaType>application/json</con:mediaType>
-          <con:params/>
-        </con:representation>
-        <con:representation type="FAULT">
-          <con:mediaType>application/json; charset=utf-8</con:mediaType>
-          <con:status>500</con:status>
-          <con:params/>
-          <con:element xmlns:b95="http://localhost/bcms-api/pages/1061b9553500452f8bbea324010e33d1">b95:Fault</con:element>
-        </con:representation>
-        <con:representation type="RESPONSE">
-          <con:mediaType>application/json; charset=utf-8</con:mediaType>
-          <con:status>200</con:status>
-          <con:params/>
-          <con:element xmlns:b95="http://localhost/bcms-api/pages/1061b9553500452f8bbea324010e33d1">b95:Response</con:element>
-        </con:representation>
-        <con:request name="Request 1" mediaType="application/json" postQueryString="false">
-          <con:settings>
-            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
-          </con:settings>
-          <con:endpoint>http://localhost:55558</con:endpoint>
-          <con:request>
-            {"data": {
-            "pageUrl": "/test13/",
-            "title": "test",
-            "description": null,
-            "isPublished": true,
-            "publishedOn": null,
-            "layoutId": "0e991684003a43deb40f0ffeccddc6eb",
-            "masterPageId": null,
-            "categoryId": null,
-            "categoryName": null,
-            "mainImageId": null,
-            "mainImageUrl": null,
-            "mainImageThumbnauilUrl": null,
-            "mainImageCaption": null,
-            "isArchived": false,
-            "isMasterPage": true,
-            "languageId": null,
-            "languageCode": null,
-            "languageGroupIdentifier": null,
-            "createdOn": "2014-05-07T16:19:31.0000000",
-            "createdBy": "Anonymous",
-            "lastModifiedOn": "2014-05-07T16:19:31.0000000",
-            "lastModifiedBy": "Anonymous",
-            }}
-          </con:request>
-          <con:credentials>
-            <con:authType>Global HTTP Settings</con:authType>
-          </con:credentials>
-          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
-          <con:jmsPropertyConfig/>
-          <con:parameters>
-            <entry key="format" value="json" xmlns="http://eviware.com/soapui/config"/>
-          </con:parameters>
-        </con:request>
-      </con:method>
+      
     </con:resource>
-  </con:interface>
+  <con:resource name="Page properties" path="/bcms-api/page-properties/C326435C-86C4-4093-BDA8-CC8436A281D4"><con:settings/><con:parameters><con:parameter><con:name>format</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>data</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:method name="Get page properties" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType>text/html</con:mediaType><con:status>200</con:status><con:params/><con:element>html</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:c32="http://localhost/bcms-api/page-properties/C326435C-86C4-4093-BDA8-CC8436A281D4">c32:Response</con:element></con:representation><con:request name="With Options" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:55558</con:endpoint><con:request/><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="data" value="{includePageOptions:true}"/>
+  <con:entry key="format" value="json"/>
+</con:parameters><con:parameterOrder><con:entry>format</con:entry><con:entry>data</con:entry></con:parameterOrder></con:request></con:method></con:resource></con:interface>
   <con:properties/>
   <con:wssContainer/>
 </con:soapui-project>

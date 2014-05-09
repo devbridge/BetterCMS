@@ -238,7 +238,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                             Key = o.OptionKey,
                             Value = o.OptionValue,
                             DefaultValue = o.OptionDefaultValue,
-                            Type = (Root.OptionType)(int)o.Type
+                            Type = (Root.OptionType)(int)o.Type,
+                            UseDefaultValue = o.UseDefaultValue
                         })
                     .ToList();
             }
