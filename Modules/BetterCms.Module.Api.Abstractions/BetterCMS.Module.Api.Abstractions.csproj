@@ -70,6 +70,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Extensions\PageExtensions.cs" />
     <Compile Include="Extensions\WidgetExtensions.cs" />
     <Compile Include="Extensions\BlogPostExtensions.cs" />
     <Compile Include="Infrastructure\ApiIdentity.cs" />

@@ -22,6 +22,8 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
+using BetterCms.Module.Root.Services;
+using BetterCms.Module.Root.ViewModels.Option;
 
 using ServiceStack.ServiceInterface;
 
@@ -105,6 +107,11 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
         private readonly IMediaFileUrlResolver fileUrlResolver;
 
         /// <summary>
+        /// The option service
+        /// </summary>
+        private readonly IOptionService optionService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PageService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
@@ -121,6 +128,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
         /// <param name="sitemapService">The sitemap service.</param>
         /// <param name="tagService">The tag service.</param>
         /// <param name="accessControlService">The access control service.</param>
+        /// <param name="optionService">The option service.</param>
         public PageService(
             IRepository repository,
             IUnitOfWork unitOfWork,
@@ -135,7 +143,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
             Module.Pages.Services.IPageService pageService,
             ISitemapService sitemapService,
             ITagService tagService,
-            IAccessControlService accessControlService)
+            IAccessControlService accessControlService,
+            IOptionService optionService)
         {
             this.pageContentsService = pageContentsService;
             this.pageContentService = pageContentService;
@@ -151,6 +160,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
             this.sitemapService = sitemapService;
             this.tagService = tagService;
             this.accessControlService = accessControlService;
+            this.optionService = optionService;
         }
 
         /// <summary>
@@ -285,7 +295,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
             var isNew = pageProperties == null;
             if (isNew)
             {
-                pageProperties = new PageProperties { Id = request.PageId.GetValueOrDefault(), AccessRules = new List<AccessRule>() };
+                pageProperties = new PageProperties { AccessRules = new List<AccessRule>(), Id = request.PageId.GetValueOrDefault() };
             }
             else if (request.Data.Version > 0)
             {
@@ -361,8 +371,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
             IList<Tag> newTags = null;
             if (request.Data.Tags != null)
             {
-                var tags = request.Data.Tags.Select(t => t.Name).ToList();
-                tagService.SavePageTags(pageProperties, tags, out newTags);
+                tagService.SavePageTags(pageProperties, request.Data.Tags, out newTags);
             }
 
             if (request.Data.AccessRules != null)
@@ -375,10 +384,30 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
                 accessControlService.UpdateAccessControl(pageProperties, accessRules);
             }
 
-            // TODO: save options.
-            // page.Options = optionService.SaveOptionValues(request.OptionValues, null, () => new PageOption { Page = page });
+            if (request.Data.PageOptions != null)
+            {
+                var options = request.Data.PageOptions.Select(o => new OptionValueEditViewModel
+                                                                   {
+                                                                       OptionValue = o.Value,
+                                                                       OptionKey = o.Key,
+                                                                       Type = (OptionType)(short)o.Type,
+                                                                       UseDefaultValue = o.UseDefaultValue
+                                                                   }).ToList();
+
+                var pageOptions = pageProperties.Options != null ? pageProperties.Options.Distinct() : null;
+                pageProperties.Options = optionService.SaveOptionValues(options, pageOptions, () => new PageOption { Page = pageProperties });
+            }
 
             repository.Save(pageProperties);
+
+            //
+            // If creating new page, page id is unknown when children pages are loaded, so Guid may be empty
+            // Updating id to saved page's Id manually
+            //
+            if (isNew && childrenPageIds != null && childrenPageIds.Count == 1 && childrenPageIds[0].HasDefaultValue())
+            {
+                childrenPageIds[0] = pageProperties.Id;
+            }
 
             masterPageService.UpdateChildrenMasterPages(existingChildrenMasterPages, oldMasterIds, newMasterIds, childrenPageIds);
 
@@ -395,7 +424,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
                 Events.PageEvents.Instance.OnPagePropertiesChanged(pageProperties);
             }
 
-            return new PutPageResponse { Data = Get(new GetPageRequest { PageId = pageProperties.Id }).Data };
+            return new PutPageResponse { Data = pageProperties.Id };
         }
 
         /// <summary>

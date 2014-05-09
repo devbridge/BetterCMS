@@ -187,7 +187,7 @@ namespace BetterCms.Module.Pages.Services
         private List<MasterPage> GetChildrenMasterPagesToUpdate(PageProperties page, IList<Guid> updatingIds, out IList<Guid> childrenPageIds)
         {
             // Retrieve all master pages, refering old master and master, which include updating page also as master page
-            var query = repository.AsQueryable<MasterPage>().Where(mp => mp.Page.MasterPages.Any(mp1 => mp1.Master == page) || mp.Page == page);
+            var query = repository.AsQueryable<MasterPage>().Where(mp => mp.Page.MasterPages.Any(mp1 => mp1.Master.Id == page.Id) || mp.Page.Id == page.Id);
 
             childrenPageIds = query.Select(mp => mp.Page.Id).Distinct().ToList();
             if (!childrenPageIds.Contains(page.Id))

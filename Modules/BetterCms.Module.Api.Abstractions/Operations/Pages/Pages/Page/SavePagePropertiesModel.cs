@@ -205,7 +205,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
         /// The list of tags.
         /// </value>
         [DataMember]
-        public System.Collections.Generic.List<TagModel> Tags { get; set; }
+        public System.Collections.Generic.List<string> Tags { get; set; }
 
         /// <summary>
         /// Gets or sets the access rules.
@@ -215,5 +215,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
         /// </value>
         [DataMember]
         public System.Collections.Generic.IList<AccessRuleModel> AccessRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of page options.
+        /// </summary>
+        /// <value>
+        /// The list of page options.
+        /// </value>
+        [DataMember]
+        public System.Collections.Generic.IList<OptionValueModel> PageOptions { get; set; }
     }
 }
