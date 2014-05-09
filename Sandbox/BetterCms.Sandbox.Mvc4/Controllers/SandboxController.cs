@@ -110,7 +110,7 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
                 var sitemapId = GetSitemapId(api);
                 if (sitemapId.HasValue)
                 {
-                    var request = new GetSitemapTreeRequest { SitemapId = sitemapId.Value };
+                    var request = new Module.Api.Operations.Pages.Sitemap.Tree.GetSitemapTreeRequest { SitemapId = sitemapId.Value };
                     request.Data.LanguageId = languageId;
                     var response = api.Pages.Sitemap.Tree.Get(request);
                     if (response.Data.Count > 0)

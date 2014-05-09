@@ -62,12 +62,11 @@ describe('pages.sitemaps.api.behavior', function () {
         });
     });
 
-    it('01400: Should get a sitemap.', function () {
+    it('01401: Should get a sitemap.', function () {
         var url = '/bcms-api/sitemaps/' + constants.defaultSitemapId,
             result,
             ready = false,
             data = {
-                includeTags: true,
                 includeAccessRules: true,
             };
 
@@ -89,6 +88,115 @@ describe('pages.sitemaps.api.behavior', function () {
             expect(result.data.tags).not.toBeNull('JSON data.tags object should be retrieved.');
         });
     });
+
+    it('01402: Should create a sitemap via POST.', function () {
+        var url = '/bcms-api/sitemaps/',
+            data = {
+                title: "Sitemap for test 01402",
+                tags: ["_014xx_1", "_01402_2"],
+                accessRules: []
+            },
+            result,
+            ready = false;
+
+        runs(function () {
+            api.post(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+        });
+    });
+
+    it('01403: Should create a sitemap via PUT.', function () {
+        var url = '/bcms-api/sitemaps/' + '0b720c7faf614601867bb9e2878e2002',
+            data = {
+                title: "Sitemap for test 01403",
+                tags: ["_014xx_1", "_01403_2"],
+                accessRules: []
+            },
+            result,
+            ready = false;
+
+        runs(function () {
+            api.put(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data).toEqual('0b720c7faf614601867bb9e2878e2002', 'Updated item id should be retrieved.');
+        });
+    });
+
+    it('01404: Should rename a sitemap via PUT.', function () {
+        var url = '/bcms-api/sitemaps/' + '0b720c7faf614601867bb9e2878e2002',
+            data = {
+                title: "Sitemap for test 01404",
+            },
+            result,
+            ready = false;
+
+        runs(function () {
+            api.put(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data).toEqual('0b720c7faf614601867bb9e2878e2002', 'Updated item id should be retrieved.');
+        });
+    });
+
+    it('00209: Should delete a sitemap.', function () {
+        var url = '/bcms-api/sitemaps/' + '0b720c7faf614601867bb9e2878e2002',
+            data = {
+                version: 2
+            },
+            result,
+            ready = false;
+
+        runs(function () {
+            api.delete(url, data, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data).toEqual(true, 'TRUE should be retrieved.');
+        });
+    });
+
+
 /*
     it('01401: Should get the full sitemap tree.', function () {
         var url = '/bcms-api/sitemap-tree/' + constants.defaultSitemapId,

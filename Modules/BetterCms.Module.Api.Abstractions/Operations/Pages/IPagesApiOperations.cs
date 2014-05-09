@@ -28,6 +28,6 @@ namespace BetterCms.Module.Api.Operations.Pages
         
         ISitemapsService Sitemaps { get; }
 
-        ISitemapService Sitemap { get; }
+        Sitemap.ISitemapService Sitemap { get; }
     }
 }
