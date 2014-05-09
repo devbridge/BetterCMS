@@ -1,7 +1,7 @@
 ﻿using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidget;
 
-namespace BetterCms.Module.Api.Extensions.Widget
+namespace BetterCms.Module.Api.Extensions
 {
     public static class WidgetExtensions
     {
