@@ -54,5 +54,16 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
         ///   <c>true</c> if to create content if not exists; otherwise, <c>false</c>.
         /// </value>
         public bool CreateIfNotExists { get; set; }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("{0}, CurrentStatus: {1}, DesirableStatus: {2}, HasPublishedContent: {3}", base.ToString(), CurrentStatus, DesirableStatus, HasPublishedContent);
+        }
     }
 }

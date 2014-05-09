@@ -2,6 +2,7 @@
 using BetterCms.Module.Api.Operations.Pages.Pages;
 using BetterCms.Module.Api.Operations.Pages.Redirects;
 using BetterCms.Module.Api.Operations.Pages.Sitemaps;
+using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget;
 
 using IPageService = BetterCms.Module.Api.Operations.Pages.Pages.Page.IPageService;
@@ -13,7 +14,7 @@ namespace BetterCms.Module.Api.Operations.Pages
     public class DefaultPagesApiOperations : IPagesApiOperations
     {
         public DefaultPagesApiOperations(IPagesService pages, IPageService page, IContentService content, IWidgetService widget, IWidgetsService widgets,
-            IRedirectsService redirects, IRedirectService redirect, Sitemap.ISitemapService sitemap, ISitemapsService sitemaps)
+            IRedirectsService redirects, IRedirectService redirect, Sitemap.ISitemapService sitemap, ISitemapsService sitemaps, ISitemapService sitemapNew)
         {
             Pages = pages;
             Page = page;
@@ -24,6 +25,7 @@ namespace BetterCms.Module.Api.Operations.Pages
             Redirects = redirects;
             Sitemap = sitemap;
             Sitemaps = sitemaps;
+            SitemapNew = sitemapNew;
         }
 
         public IPagesService Pages
@@ -70,6 +72,12 @@ namespace BetterCms.Module.Api.Operations.Pages
         }
 
         public ISitemapsService Sitemaps
+        {
+            get;
+            private set;
+        }
+
+        public ISitemapService SitemapNew
         {
             get;
             private set;
