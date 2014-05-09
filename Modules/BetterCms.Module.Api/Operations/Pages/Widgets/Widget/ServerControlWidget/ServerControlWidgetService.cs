@@ -5,7 +5,7 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 
-using BetterCms.Module.Api.Extensions.Widgets;
+using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidget.Options;
 
 using ServiceStack.ServiceInterface;
@@ -53,7 +53,13 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidg
                     })
                 .FirstOne();
 
-            return new GetServerControlWidgetResponse { Data = model };
+            var response = new GetServerControlWidgetResponse { Data = model };
+            if (request.Data.IncludeOptions)
+            {
+                response.Options = WidgetOptionsHelper.GetWidgetOptionsList(repository, request.WidgetId);
+            }
+
+            return response;
         }
 
         public PostServerControlWidgetResponse Post(PostServerControlWidgetRequest request)

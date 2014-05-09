@@ -34,7 +34,8 @@ namespace BetterCms.Module.Api.Extensions.Widget
                             Html = response.Data.Html,
                             UseHtml = response.Data.UseHtml,
                             CustomJavaScript = response.Data.CustomJavaScript,
-                            UseCustomJavaScript = response.Data.UseCustomJavaScript
+                            UseCustomJavaScript = response.Data.UseCustomJavaScript,
+                            Options = response.Options
                         };
 
             return model;
@@ -66,6 +67,7 @@ namespace BetterCms.Module.Api.Extensions.Widget
                             CategoryId = response.Data.CategoryId,
                             PreviewUrl = response.Data.PreviewUrl,
                             WidgetUrl = response.Data.WidgetUrl,
+                            Options = response.Options
                         };
 
             return model;

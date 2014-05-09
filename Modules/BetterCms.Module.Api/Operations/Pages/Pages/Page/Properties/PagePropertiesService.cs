@@ -233,7 +233,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                 // Get layout options, page options and merge them
                 response.PageOptions = optionService
                     .GetMergedMasterPagesOptionValues(response.Data.Id, response.Data.MasterPageId, response.Data.LayoutId)
-                    .Select(o => new OptionModel
+                    .Select(o => new OptionValueModel
                         {
                             Key = o.OptionKey,
                             Value = o.OptionValue,

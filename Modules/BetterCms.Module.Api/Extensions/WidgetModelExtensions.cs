@@ -1,9 +1,11 @@
 ﻿using BetterCms.Core.DataContracts.Enums;
+
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidget;
+
 using BetterCms.Module.Pages.ViewModels.Widgets;
 
-namespace BetterCms.Module.Api.Extensions.Widgets
+namespace BetterCms.Module.Api.Extensions
 {
     public static class WidgetModelExtensions
     {
@@ -24,6 +26,11 @@ namespace BetterCms.Module.Api.Extensions.Widgets
             serviceModel.CustomJS = model.CustomJavaScript;
             serviceModel.EnableCustomJS = model.UseCustomJavaScript;
 
+            if (model.Options != null)
+            {
+                serviceModel.Options = model.Options.ToServiceModel();
+            }
+
             return serviceModel;
         }
         
@@ -39,7 +46,12 @@ namespace BetterCms.Module.Api.Extensions.Widgets
             serviceModel.CategoryId = model.CategoryId;
             serviceModel.Url = model.WidgetUrl;
             serviceModel.PreviewImageUrl = model.PreviewUrl;
-    
+
+            if (model.Options != null)
+            {
+                serviceModel.Options = model.Options.ToServiceModel();
+            }
+
             return serviceModel;
         }
     }

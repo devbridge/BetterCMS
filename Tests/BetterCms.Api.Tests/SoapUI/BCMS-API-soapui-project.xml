@@ -304,7 +304,7 @@
         </con:request>
       </con:method>
     </con:resource>
-    <con:resource name="widgets/html-content" path="/bcms-api/widgets/html-content/A974C09A-2E7F-4F24-A5E3-A32500A13970">
+    <con:resource name="widgets/html-content" path="/bcms-api/widgets/html-content/e034aa85f4404414ba1ca3260081f828">
       <con:settings/>
       <con:parameters>
         <con:parameter>
@@ -321,7 +321,7 @@
           <con:default/>
           <con:description xsi:nil="true"/>
         </con:parameter>
-      </con:parameters>
+      <con:parameter><con:name>data</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters>
       <con:method name="Create HTML content widget" method="POST">
         <con:settings/>
         <con:parameters/>
@@ -341,39 +341,38 @@
           <con:params/>
           <con:element>html</con:element>
         </con:representation>
-        <con:request name="Create" mediaType="application/json" postQueryString="false">
+        <con:representation type="FAULT"><con:mediaType>text/plain; charset=utf-8</con:mediaType><con:status>404</con:status><con:params/><con:element>data</con:element></con:representation><con:request name="Create" mediaType="application/json" postQueryString="false">
           <con:settings>
             <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
           </con:settings>
           <con:endpoint>http://localhost:55558</con:endpoint>
           <con:request>
-            {"data": {
-            "version": "",
-            "name": "TEST",
-            "isPublished": "true",
-            "publishedOn": "2014-13-15T01:12:14",
-            "publishedByUser": "soap ui",
-            "categoryId": "41935B58-4E19-436A-A3FF-A2A701190C62",
-            "customCss": ".test{}",
-            "useCustomCss": "true",
-            "html": "this is html",
-            "useHtml": "true",
-            "customJavaScript": "console.log('test');",
-            "useCustomJavaScript": "true"
-            }}
+{"data": {
+	"version": "",
+	"name": "_OP_HTML",
+	"isPublished": "true",
+	"publishedOn": "2014-13-15T01:12:14",
+	"publishedByUser": "soap ui",
+	"categoryId": "41935B58-4E19-436A-A3FF-A2A701190C62",
+	"customCss": ".test{}",
+	"useCustomCss": "true",
+	"html": "this is html",
+	"useHtml": "true",
+	"customJavaScript": "console.log('test');",
+	"useCustomJavaScript": "true",
+	"options": [
+		{"key": "KEY-UNKNOWN-2", "DefaultValue": "18", "type": "Integer"},
+		{"key": "KEY-UNKNOWN-3", "DefaultValue": "AGG", "type": "Text"}
+	]
+}}
           </con:request>
           <con:credentials>
             <con:authType>Global HTTP Settings</con:authType>
           </con:credentials>
           <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
           <con:jmsPropertyConfig/>
-          <con:parameters>
-            <entry key="Cookie" value=".ASPXROLES=zoIXFRNr-fyL7RiIibwVwvGWTjH-Bto5o5h64maqpr52tVAF7BjXGbL1Ds6bV950mtH6yH6vMEsyMAVfGtNxHK6cH3uFb-iDI_OW5NUqeAfwdt5HL0vhMYNX21RBzpLbTBlPIO27gcgtYAk4Wi6qb_kzbDa-712yoQNFd5KNGjGs94C7uP0SqMjetnW0idqhH3v6lpWYO1cQkj4vdPUvkyU7JWAt-PHAQJj1iWZNVBjBdMrwW6FvuTkgYRxcwXIjMIMnM0_DRYLWdLmddzrwvETlbJixaPAqq-6NHsc8a-dowtbbAGPsOF6BHIxiF9K6dMcj-z56mstWstfCY9phofYOBvGBM2e5VZ_kJawWJ5mVD6IJ-ppIJ0JqZQGwwednEfH0Jpqv9mJAumw5wyht1lMaDsyLfuJAUNitK9AwxXC3s7J7L8Et22eoQisfR53CRuOjzTOBZRoGoCTYYWm1EjR_MWGMt1bVZzj5PXI9DZF9ZQORTpFavclsEDkVOoxsuZPLKX_coYHbknVFgsT89UxJUlguWLZOj41mRxQNDKsxQqnzNYKGJBm6J6CsgE-JCuCIShg0acotah7ZtYlChs-J896coYv5PTY--0lJO5gLTxZVYY_WooJh1nCti3a2XVB6pLzBwMooUlh_76aQ-Q2; .ASPXAUTH=AE97FA4DF39664E08B4645772A9A8969053E9BF0D1B7C628A29A037F7BF8A3BC6FDA951D5EB9F998A72AC07E943C040B8CD0A985664B8D6D642FB8BD98EE2510426DCF0AAC51DA0F2C823325D73C02974051D84CD56BA89AC2DB1F2C1B94F1D216BEC1FC68F4D4DCD4B191FF93AF01C045D7F61E3718B181F02347C4DCA0478C" xmlns="http://eviware.com/soapui/config"/>
-          </con:parameters>
-          <con:parameterOrder>
-            <con:entry>Cookie</con:entry>
-            <con:entry>format</con:entry>
-          </con:parameterOrder>
+          <con:parameters><entry key="Cookie" value=".ASPXROLES=zoIXFRNr-fyL7RiIibwVwvGWTjH-Bto5o5h64maqpr52tVAF7BjXGbL1Ds6bV950mtH6yH6vMEsyMAVfGtNxHK6cH3uFb-iDI_OW5NUqeAfwdt5HL0vhMYNX21RBzpLbTBlPIO27gcgtYAk4Wi6qb_kzbDa-712yoQNFd5KNGjGs94C7uP0SqMjetnW0idqhH3v6lpWYO1cQkj4vdPUvkyU7JWAt-PHAQJj1iWZNVBjBdMrwW6FvuTkgYRxcwXIjMIMnM0_DRYLWdLmddzrwvETlbJixaPAqq-6NHsc8a-dowtbbAGPsOF6BHIxiF9K6dMcj-z56mstWstfCY9phofYOBvGBM2e5VZ_kJawWJ5mVD6IJ-ppIJ0JqZQGwwednEfH0Jpqv9mJAumw5wyht1lMaDsyLfuJAUNitK9AwxXC3s7J7L8Et22eoQisfR53CRuOjzTOBZRoGoCTYYWm1EjR_MWGMt1bVZzj5PXI9DZF9ZQORTpFavclsEDkVOoxsuZPLKX_coYHbknVFgsT89UxJUlguWLZOj41mRxQNDKsxQqnzNYKGJBm6J6CsgE-JCuCIShg0acotah7ZtYlChs-J896coYv5PTY--0lJO5gLTxZVYY_WooJh1nCti3a2XVB6pLzBwMooUlh_76aQ-Q2; .ASPXAUTH=AE97FA4DF39664E08B4645772A9A8969053E9BF0D1B7C628A29A037F7BF8A3BC6FDA951D5EB9F998A72AC07E943C040B8CD0A985664B8D6D642FB8BD98EE2510426DCF0AAC51DA0F2C823325D73C02974051D84CD56BA89AC2DB1F2C1B94F1D216BEC1FC68F4D4DCD4B191FF93AF01C045D7F61E3718B181F02347C4DCA0478C" xmlns="http://eviware.com/soapui/config"/></con:parameters>
+          <con:parameterOrder><con:entry>Cookie</con:entry><con:entry>format</con:entry><con:entry>data</con:entry></con:parameterOrder>
         </con:request>
       </con:method>
       <con:method name="widgets/html-content/{ID}" method="PUT">
@@ -391,7 +390,7 @@
         </con:representation>
         <con:representation type="FAULT">
           <con:mediaType>text/html</con:mediaType>
-          <con:status>500</con:status>
+          <con:status>500 405</con:status>
           <con:params/>
           <con:element>html</con:element>
         </con:representation>
@@ -412,39 +411,43 @@
             <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
           </con:settings>
           <con:endpoint>http://localhost:55558</con:endpoint>
-          <con:request>
-            {"data": {
-            "version": "",
-            "name": "TEST",
-            "isPublished": "true",
-            "publishedOn": "2014-13-15T01:12:14",
-            "publishedByUser": "soap ui",
-            "categoryId": "41935B58-4E19-436A-A3FF-A2A701190C62",
-            "customCss": ".test{}",
-            "useCustomCss": "true",
-            "html": "this is html - edited",
-            "useHtml": "true",
-            "customJavaScript": "console.log('test');",
-            "useCustomJavaScript": "true"
-            }}
+          <con:request>{"data": {
+	"version": "",
+	"name": "_OP_HTML_EDIT",
+	"isPublished": "true",
+	"publishedOn": "2014-13-15T01:12:14",
+	"publishedByUser": "soap ui",
+	"categoryId": "41935B58-4E19-436A-A3FF-A2A701190C62",
+	"customCss": ".test{}",
+	"useCustomCss": "true",
+	"html": "this is html",
+	"useHtml": "true",
+	"customJavaScript": "console.log('test');",
+	"useCustomJavaScript": "true",
+	"options": [
+		
+		{"key": "KEY-UNKNOWN-3", "DefaultValue": "AGG", "type": "Text"}
+	]
+}}
           </con:request>
           <con:credentials>
             <con:authType>Global HTTP Settings</con:authType>
           </con:credentials>
           <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
           <con:jmsPropertyConfig/>
-          <con:parameters>
-            <entry key="Cookie" value=".ASPXROLES=zoIXFRNr-fyL7RiIibwVwvGWTjH-Bto5o5h64maqpr52tVAF7BjXGbL1Ds6bV950mtH6yH6vMEsyMAVfGtNxHK6cH3uFb-iDI_OW5NUqeAfwdt5HL0vhMYNX21RBzpLbTBlPIO27gcgtYAk4Wi6qb_kzbDa-712yoQNFd5KNGjGs94C7uP0SqMjetnW0idqhH3v6lpWYO1cQkj4vdPUvkyU7JWAt-PHAQJj1iWZNVBjBdMrwW6FvuTkgYRxcwXIjMIMnM0_DRYLWdLmddzrwvETlbJixaPAqq-6NHsc8a-dowtbbAGPsOF6BHIxiF9K6dMcj-z56mstWstfCY9phofYOBvGBM2e5VZ_kJawWJ5mVD6IJ-ppIJ0JqZQGwwednEfH0Jpqv9mJAumw5wyht1lMaDsyLfuJAUNitK9AwxXC3s7J7L8Et22eoQisfR53CRuOjzTOBZRoGoCTYYWm1EjR_MWGMt1bVZzj5PXI9DZF9ZQORTpFavclsEDkVOoxsuZPLKX_coYHbknVFgsT89UxJUlguWLZOj41mRxQNDKsxQqnzNYKGJBm6J6CsgE-JCuCIShg0acotah7ZtYlChs-J896coYv5PTY--0lJO5gLTxZVYY_WooJh1nCti3a2XVB6pLzBwMooUlh_76aQ-Q2; .ASPXAUTH=AE97FA4DF39664E08B4645772A9A8969053E9BF0D1B7C628A29A037F7BF8A3BC6FDA951D5EB9F998A72AC07E943C040B8CD0A985664B8D6D642FB8BD98EE2510426DCF0AAC51DA0F2C823325D73C02974051D84CD56BA89AC2DB1F2C1B94F1D216BEC1FC68F4D4DCD4B191FF93AF01C045D7F61E3718B181F02347C4DCA0478C" xmlns="http://eviware.com/soapui/config"/>
-          </con:parameters>
-        </con:request>
+          <con:parameters><entry key="Cookie" value=".ASPXROLES=zoIXFRNr-fyL7RiIibwVwvGWTjH-Bto5o5h64maqpr52tVAF7BjXGbL1Ds6bV950mtH6yH6vMEsyMAVfGtNxHK6cH3uFb-iDI_OW5NUqeAfwdt5HL0vhMYNX21RBzpLbTBlPIO27gcgtYAk4Wi6qb_kzbDa-712yoQNFd5KNGjGs94C7uP0SqMjetnW0idqhH3v6lpWYO1cQkj4vdPUvkyU7JWAt-PHAQJj1iWZNVBjBdMrwW6FvuTkgYRxcwXIjMIMnM0_DRYLWdLmddzrwvETlbJixaPAqq-6NHsc8a-dowtbbAGPsOF6BHIxiF9K6dMcj-z56mstWstfCY9phofYOBvGBM2e5VZ_kJawWJ5mVD6IJ-ppIJ0JqZQGwwednEfH0Jpqv9mJAumw5wyht1lMaDsyLfuJAUNitK9AwxXC3s7J7L8Et22eoQisfR53CRuOjzTOBZRoGoCTYYWm1EjR_MWGMt1bVZzj5PXI9DZF9ZQORTpFavclsEDkVOoxsuZPLKX_coYHbknVFgsT89UxJUlguWLZOj41mRxQNDKsxQqnzNYKGJBm6J6CsgE-JCuCIShg0acotah7ZtYlChs-J896coYv5PTY--0lJO5gLTxZVYY_WooJh1nCti3a2XVB6pLzBwMooUlh_76aQ-Q2; .ASPXAUTH=AE97FA4DF39664E08B4645772A9A8969053E9BF0D1B7C628A29A037F7BF8A3BC6FDA951D5EB9F998A72AC07E943C040B8CD0A985664B8D6D642FB8BD98EE2510426DCF0AAC51DA0F2C823325D73C02974051D84CD56BA89AC2DB1F2C1B94F1D216BEC1FC68F4D4DCD4B191FF93AF01C045D7F61E3718B181F02347C4DCA0478C" xmlns="http://eviware.com/soapui/config"/></con:parameters>
+        <con:parameterOrder><con:entry>Cookie</con:entry><con:entry>format</con:entry><con:entry>data</con:entry></con:parameterOrder></con:request>
       </con:method>
-    </con:resource>
+    <con:method name="Get html widget" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType>text/html</con:mediaType><con:status>200</con:status><con:params/><con:element>html</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:e03="http://localhost/bcms-api/widgets/html-content/e034aa85f4404414ba1ca3260081f828">e03:Response</con:element></con:representation><con:request name="Request 1" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:55558</con:endpoint><con:request/><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="data" value="{includeOptions:true}"/>
+  <con:entry key="format" value="json"/>
+</con:parameters><con:parameterOrder><con:entry>Cookie</con:entry><con:entry>format</con:entry><con:entry>data</con:entry></con:parameterOrder></con:request></con:method></con:resource>
     <con:resource name="/widgets/server-control/" path="/bcms-api/widgets/server-control/">
       <con:settings/>
       <con:parameters/>
       <con:resource name="/widgets/server-control/{ID}" path="2BB877B2-4A88-4CDE-BEA3-A32500E659F2">
         <con:settings/>
-        <con:parameters/>
+        <con:parameters><con:parameter><con:name>data</con:name><con:style>QUERY</con:style></con:parameter><con:parameter><con:name>format</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters>
         <con:method name="Update server widget" method="PUT">
           <con:settings/>
           <con:parameters/>
@@ -470,22 +473,26 @@
             <con:params/>
             <con:element>html</con:element>
           </con:representation>
-          <con:request name="Update server widget" mediaType="application/json" postQueryString="false">
+          <con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:request name="Update server widget" mediaType="application/json" postQueryString="false">
             <con:settings>
               <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
             </con:settings>
             <con:endpoint>http://localhost:55558</con:endpoint>
-            <con:request>
-              {"data": {
-              "version": "",
-              "name": "TEST",
-              "widgetUrl": "TEST URL",
-              "previewUrl": "__TEST URL___",
-              "isPublished": "true",
-              "publishedOn": "_____",
-              "publishedByUser": "_____",
-              "categoryId": "_____",
-              }}
+            <con:request>{
+	"data": {
+	"version": "",
+	"name": "_OP_TEST",
+	"widgetUrl": "TEST URL",
+	"previewUrl": "__TEST URL___",
+	"isPublished": "true",
+	"publishedOn": "_____",
+	"publishedByUser": "_____",
+	"categoryId": "_____",
+	"options": [
+		{"key": "KEY-UNKNOWN-2", "DefaultValue": "18", "type": "Integer"},
+		{"key": "KEY-UNKNOWN-3", "DefaultValue": "AGG", "type": "Text"}
+	]
+}}
             </con:request>
             <con:credentials>
               <con:authType>Global HTTP Settings</con:authType>
@@ -493,9 +500,12 @@
             <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
             <con:jmsPropertyConfig/>
             <con:parameters/>
-          </con:request>
+          <con:parameterOrder><con:entry>data</con:entry><con:entry>format</con:entry></con:parameterOrder></con:request>
         </con:method>
-      </con:resource>
+      <con:method name="Get server widget" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:bb8="http://localhost/bcms-api/widgets/server-control/2BB877B2-4A88-4CDE-BEA3-A32500E659F2">bb8:Response</con:element></con:representation><con:request name="Request 1" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:55558</con:endpoint><con:request/><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="data" value="{includeOptions:true}"/>
+  <con:entry key="format" value="json"/>
+</con:parameters><con:parameterOrder><con:entry>data</con:entry><con:entry>format</con:entry></con:parameterOrder></con:request></con:method></con:resource>
       <con:method name="Create server widget" method="POST">
         <con:settings/>
         <con:parameters/>
@@ -521,23 +531,25 @@
           <con:params/>
           <con:element>html</con:element>
         </con:representation>
-        <con:request name="Create Server Widget" mediaType="application/json" postQueryString="false">
+        <con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:request name="Create Server Widget" mediaType="application/json" postQueryString="false">
           <con:settings>
             <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
           </con:settings>
           <con:endpoint>http://localhost:55558</con:endpoint>
-          <con:request>
-            {"data": {
-            "version": "",
-            "name": "TEST",
-            "widgetUrl": "TEST",
-            "previewUrl": "_____",
-            "isPublished": "true",
-            "publishedOn": "_____",
-            "publishedByUser": "_____",
-            "categoryId": "_____",
-            }}
-          </con:request>
+          <con:request>{"data": {
+	"version": "",
+	"name": "WITH OPTIONS",
+	"widgetUrl": "WITH OPTIONS",
+	"previewUrl": "_WITH OPTIONS____",
+	"isPublished": "true",
+	"publishedOn": "__WITH OPTIONS___",
+	"publishedByUser": "_____",
+	"categoryId": "WITH OPTIONS",
+	"options": [
+		{"key": "KEY1", "DefaultValue": "18", "type": "Integer"}
+	]
+}}
+</con:request>
           <con:credentials>
             <con:authType>Global HTTP Settings</con:authType>
           </con:credentials>

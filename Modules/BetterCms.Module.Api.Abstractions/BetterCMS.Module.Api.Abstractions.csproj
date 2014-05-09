@@ -125,6 +125,7 @@
     <Compile Include="Operations\Pages\Pages\PostPageRequest.cs" />
     <Compile Include="Operations\Pages\Pages\PostPageResponse.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\GetSitemapModel.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\GetHtmlContentWidgetModel.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\PostHtmlContentWidgetRequest.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\PostHtmlContentWidgetResponse.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\PutHtmlContentWidgetRequest.cs" />
@@ -196,6 +197,7 @@
     <Compile Include="Operations\Pages\Sitemap\Tree\ISitemapTreeService.cs" />
     <Compile Include="Operations\Pages\Sitemap\Tree\SitemapTreeNodeModel.cs" />
     <Compile Include="Operations\Pages\Sitemap\Tree\SitemapTreeNodeTranslationModel.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\GetServerControlWidgetModel.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\PostServerControlWidgetRequest.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\PostServerControlWidgetResponse.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\PutServerControlWidgetRequest.cs" />
@@ -288,13 +290,12 @@
     <Compile Include="Operations\Pages\Pages\GetPagesResponse.cs" />
     <Compile Include="Operations\Pages\Pages\IPagesService.cs" />
     <Compile Include="Operations\Pages\Pages\MetadataModel.cs" />
-    <Compile Include="Operations\Pages\Pages\OptionModel.cs" />
+    <Compile Include="Operations\OptionValueModel.cs" />
     <Compile Include="Operations\Pages\Pages\PageModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\IPageContentService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\Options\GetPageContentOptionsRequest.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\Options\GetPageContentOptionsResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\Options\IGetPageContentOptionsService.cs" />
-    <Compile Include="Operations\Pages\Pages\Page\Contents\Content\Options\OptionModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\GetPageContentsModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\GetPageContentsRequest.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\GetPageContentsRequestValidator.cs" />
@@ -320,7 +321,6 @@
     <Compile Include="Operations\Pages\Pages\Page\Properties\LanguageModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\LayoutModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\MetadataModel.cs" />
-    <Compile Include="Operations\Pages\Pages\Page\Properties\OptionModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PageContentModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PagePropertiesModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PageTranslationModel.cs" />
@@ -355,7 +355,6 @@
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\Options\GetHtmlContentWidgetOptionsRequest.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\Options\GetHtmlContentWidgetOptionsResponse.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\Options\IHtmlContentWidgetOptionsService.cs" />
-    <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\Options\OptionModel.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\IWidgetService.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\GetServerControlWidgetRequest.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\GetServerControlWidgetResponse.cs" />
@@ -363,7 +362,7 @@
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\Options\GetServerControlWidgetOptionsRequest.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\Options\GetServerControlWidgetOptionsResponse.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\Options\IServerControlWidgetOptionsService.cs" />
-    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\Options\OptionModel.cs" />
+    <Compile Include="Operations\OptionModel.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\ServerControlWidgetModel.cs" />
     <Compile Include="Operations\Root\Categories\Category\GetCategoryRequestValidator.cs" />
     <Compile Include="Operations\Root\Languages\GetLanguagesRequest.cs" />
@@ -377,7 +376,6 @@
     <Compile Include="Operations\Root\Layouts\Layout\Options\GetLayoutOptionsRequest.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\Options\GetLayoutOptionsResponse.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\Options\ILayoutOptionsService.cs" />
-    <Compile Include="Operations\Root\Layouts\Layout\Options\OptionModel.cs" />
     <Compile Include="Operations\Root\OptionType.cs" />
     <Compile Include="Operations\Root\Tags\PostTagRequest.cs" />
     <Compile Include="Operations\Root\Tags\PostTagResponse.cs" />

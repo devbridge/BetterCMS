@@ -2,10 +2,10 @@
 
 using BetterCms.Module.Api.Operations.Root;
 
-namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content.Options
+namespace BetterCms.Module.Api.Operations
 {
     [DataContract]
-    public class OptionModel
+    public class OptionValueModel
     {
         /// <summary>
         /// Gets or sets the option key.
