@@ -3,12 +3,13 @@ using System.Linq;
 
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Security;
+
 using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Root.ViewModels.Security;
 
-namespace BetterCms.Module.Api.Extensions.BlogPosts
+namespace BetterCms.Module.Api.Extensions
 {
     public static class BlogPostModelExtensions
     {

@@ -2,7 +2,7 @@
 
 using BetterCms.Module.Api.Operations.Root;
 
-namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
+namespace BetterCms.Module.Api.Operations
 {
     [DataContract]
     public class OptionModel
@@ -15,15 +15,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// </value>
         [DataMember]
         public string Key { get; set; }
-
-        /// <summary>
-        /// Gets or sets the option value.
-        /// </summary>
-        /// <value>
-        /// The option value.
-        /// </value>
-        [DataMember]
-        public string Value { get; set; }
 
         /// <summary>
         /// Gets or sets the option default value.

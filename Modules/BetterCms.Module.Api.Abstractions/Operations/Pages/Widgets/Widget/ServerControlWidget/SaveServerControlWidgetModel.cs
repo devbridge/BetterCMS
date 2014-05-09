@@ -1,6 +1,8 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidget.Options;
 
 namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidget
 {
@@ -69,5 +71,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidg
         /// </value>
         [DataMember]
         public System.Guid? CategoryId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of options.
+        /// </summary>
+        /// <value>
+        /// The list of options.
+        /// </value>
+        [DataMember]
+        public IList<OptionModel> Options { get; set; }
     }
 }

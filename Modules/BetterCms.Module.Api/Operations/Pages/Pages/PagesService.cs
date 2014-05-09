@@ -272,7 +272,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
                         {
                             page.Options = optionService
                                 .GetMergedMasterPagesOptionValues(page.Id, page.MasterPageId, page.LayoutId)
-                                .Select(o => new OptionModel
+                                .Select(o => new OptionValueModel
                                     {
                                         Key = o.OptionKey,
                                         Value = o.OptionValue,

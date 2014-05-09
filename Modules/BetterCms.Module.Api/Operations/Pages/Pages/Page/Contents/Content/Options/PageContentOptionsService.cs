@@ -35,7 +35,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content.Opti
 
             var results = optionService
                 .GetMergedOptionValuesForEdit(pageContent.Content.ContentOptions, pageContent.Options)
-                .Select(o => new OptionModel
+                .Select(o => new OptionValueModel
                     {
                         Key = o.OptionKey,
                         Value = o.OptionValue,

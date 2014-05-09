@@ -4,7 +4,7 @@ using BetterCms.Module.Api.Operations.Blog.BlogPosts;
 using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost;
 using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
 
-namespace BetterCms.Module.Api.Extensions.BlogPost
+namespace BetterCms.Module.Api.Extensions
 {
     public static class BlogPostExtensions
     {

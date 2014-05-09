@@ -152,8 +152,9 @@
     </Compile>
     <Compile Include="ApiFactory.cs" />
     <Compile Include="DefaultApiFacade.cs" />
-    <Compile Include="Extensions\BlogPosts\BlogPostModelExtensions.cs" />
-    <Compile Include="Extensions\Widgets\WidgetModelExtensions.cs" />
+    <Compile Include="Extensions\BlogPostModelExtensions.cs" />
+    <Compile Include="Extensions\OptionModelExtensions.cs" />
+    <Compile Include="Extensions\WidgetModelExtensions.cs" />
     <Compile Include="Filters\GetRequestProcessor.cs" />
     <Compile Include="Helpers\ContentTypeExtensions.cs" />
     <Compile Include="Helpers\FilterByTagExtensions.cs" />
@@ -205,6 +206,7 @@
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\Options\ServerControlWidgetOptionsService.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\ServerControlWidgetService.cs" />
     <Compile Include="Operations\Pages\Widgets\WidgetsService.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\WidgetOptionsHelper.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\WidgetService.cs" />
     <Compile Include="Operations\Root\Categories\CategoriesService.cs" />
     <Compile Include="Operations\Root\Categories\Category\CategoryService.cs" />
