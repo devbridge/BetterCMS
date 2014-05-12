@@ -129,6 +129,8 @@
     <Compile Include="Operations\Pages\Pages\Page\Properties\PostPagePropertiesRequest.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PostPagePropertiesResponse.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\GetSitemapModel.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\DeleteHtmlContentWidgetRequest.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\DeleteHtmlContentWidgetResponse.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\GetHtmlContentWidgetModel.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\PostHtmlContentWidgetRequest.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\PostHtmlContentWidgetResponse.cs" />
@@ -201,6 +203,8 @@
     <Compile Include="Operations\Pages\Sitemap\Tree\ISitemapTreeService.cs" />
     <Compile Include="Operations\Pages\Sitemap\Tree\SitemapTreeNodeModel.cs" />
     <Compile Include="Operations\Pages\Sitemap\Tree\SitemapTreeNodeTranslationModel.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\DeleteServerControlWidgetRequest.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\DeleteServerControlWidgetResponse.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\GetServerControlWidgetModel.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\PostServerControlWidgetRequest.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\PostServerControlWidgetResponse.cs" />

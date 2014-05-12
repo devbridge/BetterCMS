@@ -6,8 +6,10 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Services;
 
+using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Widgets;
 
@@ -234,6 +236,45 @@ namespace BetterCms.Module.Pages.Services
                     content.ContentOptions.Add(contentOption);
                 }
             }
+        }
+
+        public bool DeleteWidget(Guid widgetId, int widgetVersion)
+        {
+            unitOfWork.BeginTransaction();
+
+            var widget = repository.First<Widget>(widgetId);
+            if (widgetVersion > 0)
+            {
+                widget.Version = widgetVersion;
+            }
+
+            var isWidgetInUse = repository
+                .AsQueryable<PageContent>()
+                .Any(f => f.Content.Id == widgetId && !f.IsDeleted && !f.Page.IsDeleted);
+
+            if (isWidgetInUse)
+            {
+                var message = string.Format(PagesGlobalization.Widgets_CanNotDeleteWidgetIsInUse_Message, widget.Name);
+                var logMessage = string.Format("A widget {0}(id={1}) can't be deleted because it is in use.", widget.Name, widgetId);
+                throw new ValidationException(() => message, logMessage);
+            }
+
+            repository.Delete(widget);
+
+            if (widget.ContentOptions != null)
+            {
+                foreach (var option in widget.ContentOptions)
+                {
+                    repository.Delete(option);
+                }
+            }
+
+            unitOfWork.Commit();
+
+            // Notify.
+            Events.PageEvents.Instance.OnWidgetDeleted(widget);
+
+            return true;
         }
     }
 }

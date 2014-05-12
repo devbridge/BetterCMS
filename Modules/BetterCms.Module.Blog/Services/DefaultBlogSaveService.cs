@@ -19,9 +19,6 @@ using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 
-using FluentNHibernate.Conventions;
-using FluentNHibernate.Conventions.AcceptanceCriteria;
-
 using NHibernate.Linq;
 
 namespace BetterCms.Module.Blog.Services
@@ -211,22 +208,6 @@ namespace BetterCms.Module.Blog.Services
                 entity.MetaKeywords = modelExt.MetaKeywords;
                 entity.MetaDescription = modelExt.MetaDescription;
 
-                // Add access rules from the request
-                if (modelExt.AccessRules != null)
-                {
-                    entity.AccessRules.RemoveDuplicateEntities();
-                    var accessRules = modelExt.AccessRules
-                        .Select(r => (IAccessRule)new AccessRule
-                            {
-                                AccessLevel = (AccessLevel)(int)r.AccessLevel,
-                                Identity = r.Identity,
-                                IsForRole = r.IsForRole
-                            })
-                            .ToList();
-
-                    accessControlService.UpdateAccessControl(entity, accessRules);
-                }
-
                 // If creating new and content / page content / region ids are set, enforce them to be set explicitly
                 if (isNew && !model.ContentId.HasDefaultValue() && modelExt.PageContentId.HasValue && modelExt.RegionId.HasValue)
                 {
@@ -258,7 +239,10 @@ namespace BetterCms.Module.Blog.Services
                             .ToList()
                             .FirstOne();
 
-                        AddDefaultAccessRules(entity, principal, entity.MasterPage);
+                        if (modelExt.AccessRules == null)
+                        {
+                            AddDefaultAccessRules(entity, principal, entity.MasterPage);
+                        }
                         masterPageService.SetPageMasterPages(entity, entity.MasterPage.Id);
                     }
                     else
@@ -270,10 +254,25 @@ namespace BetterCms.Module.Blog.Services
                 {
                     entity.Layout = repository.AsProxy<Layout>(modelExt.LayoutId.Value);
                     entity.MasterPage = null;
-                    if (isNew)
+                    if (isNew && modelExt.AccessRules == null)
                     {
                         AddDefaultAccessRules(entity, principal, null);
                     }
+                }
+
+                // Add access rules from the request
+                if (modelExt.AccessRules != null)
+                {
+                    entity.AccessRules.RemoveDuplicateEntities();
+                    var accessRules = modelExt.AccessRules
+                        .Select(r => (IAccessRule)new AccessRule
+                        {
+                            AccessLevel = (AccessLevel)(int)r.AccessLevel,
+                            Identity = r.Identity,
+                            IsForRole = r.IsForRole
+                        }).ToList();
+
+                    accessControlService.UpdateAccessControl(entity, accessRules);
                 }
             }
         }

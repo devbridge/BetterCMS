@@ -10,6 +10,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
 
         PutHtmlContentWidgetResponse Put(PutHtmlContentWidgetRequest request);
 
+        DeleteHtmlContentWidgetResponse Delete(DeleteHtmlContentWidgetRequest request);
+
         IHtmlContentWidgetOptionsService Options { get; }
     }
 }

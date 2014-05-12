@@ -10,6 +10,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidg
 
         PutServerControlWidgetResponse Put(PutServerControlWidgetRequest request);
 
+        DeleteServerControlWidgetResponse Delete(DeleteServerControlWidgetRequest request);
+
         IServerControlWidgetOptionsService Options { get; }
     }
 }
