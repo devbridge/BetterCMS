@@ -4,6 +4,7 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes;
@@ -169,12 +170,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
         {
             var tagsFuture = repository.AsQueryable<Module.Pages.Models.SitemapTag>().Where(e => e.Sitemap.Id == request.SitemapId).Select(e => e.Tag.Name).ToFuture();
 
-// TODO: implement.
-//            var nodesFuture = 
-//            if (request.Data.IncludeNodes)
-//            {
-//                
-//            }
+            IEnumerable<Module.Pages.Models.SitemapNode> nodesFuture = null;
+            if (request.Data.IncludeNodes)
+            {
+                 nodesFuture =
+                    repository.AsQueryable<Module.Pages.Models.SitemapNode>()
+                        .Where(node => node.Sitemap.Id == request.SitemapId && !node.IsDeleted)
+                        .FetchMany(node => node.Translations)
+                        .ToFuture();
+            }
 
             var response =
                 repository.AsQueryable<Module.Pages.Models.Sitemap>()
@@ -200,11 +204,52 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
 
             response.Data.Tags = tagsFuture.ToList();
 
-// TODO: implement.
-//            if (request.Data.IncludeNodesWithTranslations)
-//            {
-//                response.Nodes = LoadNodes(response.Data.Id);
-//            }
+            if (request.Data.IncludeNodes && nodesFuture != null)
+            {
+                response.Nodes =
+                    nodesFuture.ToList()
+                        .Select(
+                            node =>
+                            new SitemapNodeWithTranslationsModel
+                                {
+                                    Id = node.Id,
+                                    Version = node.Version,
+                                    CreatedBy = node.CreatedByUser,
+                                    CreatedOn = node.CreatedOn,
+                                    LastModifiedBy = node.ModifiedByUser,
+                                    LastModifiedOn = node.ModifiedOn,
+                                    ParentId = node.ParentNode != null && !node.ParentNode.IsDeleted ? node.ParentNode.Id : (Guid?)null,
+                                    PageId = node.Page != null && !node.Page.IsDeleted ? node.Page.Id : (Guid?)null,
+                                    PageIsPublished = node.Page != null && !node.Page.IsDeleted && node.Page.Status == PageStatus.Published,
+                                    PageLanguageId =
+                                        node.Page != null && !node.Page.IsDeleted && node.Page.Language != null
+                                            ? node.Page.Language.Id
+                                            : (Guid?)null,
+                                    Title = node.Page != null && node.UsePageTitleAsNodeTitle ? node.Page.Title : node.Title,
+                                    Url = node.Page != null ? node.Page.PageUrl : node.Url,
+                                    DisplayOrder = node.DisplayOrder,
+                                    Macro = node.Macro,
+                                    Translations =
+                                        node.Translations.Select(
+                                            t =>
+                                            new SitemapNodeTranslation
+                                                {
+                                                    Id = t.Id,
+                                                    Version = t.Version,
+                                                    CreatedBy = t.CreatedByUser,
+                                                    CreatedOn = t.CreatedOn,
+                                                    LastModifiedBy = t.ModifiedByUser,
+                                                    LastModifiedOn = t.ModifiedOn,
+                                                    Title = t.Title,
+                                                    UsePageTitleAsNodeTitle = t.UsePageTitleAsNodeTitle,
+                                                    Url = t.Url,
+                                                    Macro = t.Macro,
+                                                    LanguageId = t.Language.Id
+                                                }).ToList()
+                                })
+                        .Distinct()
+                        .ToList();
+            }
 
             if (request.Data.IncludeAccessRules)
             {

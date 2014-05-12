@@ -129,6 +129,8 @@
     <Compile Include="Operations\Pages\Pages\Page\Properties\PostPagePropertiesRequest.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PostPagePropertiesResponse.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\GetSitemapModel.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\SitemapNodeTranslation.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\SitemapNodeWithTranslationsModel.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\GetHtmlContentWidgetModel.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\PostHtmlContentWidgetRequest.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\PostHtmlContentWidgetResponse.cs" />
