@@ -493,34 +493,18 @@ namespace BetterCms.Module.Blog.Services
         /// <param name="masterPage">The master page.</param>
         protected void AddDefaultAccessRules(BlogPost blogPost, IPrincipal principal, Page masterPage)
         {
-            // Set default access rules
-            blogPost.AccessRules = new List<AccessRule>();
+            IEnumerable<IAccessRule> accessRules;
 
             if (masterPage != null)
             {
-                blogPost.AccessRules = masterPage
-                    .AccessRules
-                    .Select(x => new AccessRule
-                        {
-                            Identity = x.Identity,
-                            AccessLevel = x.AccessLevel,
-                            IsForRole = x.IsForRole
-                        })
-                    .ToList();
+                accessRules = masterPage.AccessRules;
             }
             else
             {
-                var list = accessControlService.GetDefaultAccessList(principal);
-                foreach (var rule in list)
-                {
-                    blogPost.AccessRules.Add(new AccessRule
-                        {
-                            Identity = rule.Identity,
-                            AccessLevel = rule.AccessLevel,
-                            IsForRole = rule.IsForRole
-                        });
-                }
+                accessRules = accessControlService.GetDefaultAccessList(principal);
             }
+
+            accessControlService.UpdateAccessControl(blogPost, accessRules.ToList());
         }
 
         /// <summary>

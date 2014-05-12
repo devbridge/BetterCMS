@@ -13,6 +13,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidg
     public class GetServerControlWidgetRequest : RequestBase<GetServerControlWidgetModel>, IReturn<GetServerControlWidgetResponse>
     {
         [DataMember]
-        public System.Guid WidgetId { get; set; }
+        public Guid WidgetId { get; set; }
     }
 }

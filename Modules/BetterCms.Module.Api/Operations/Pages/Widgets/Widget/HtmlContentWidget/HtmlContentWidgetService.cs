@@ -95,6 +95,13 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
             return new PutHtmlContentWidgetResponse { Data = widget.Id };
         }
 
+        public DeleteHtmlContentWidgetResponse Delete(DeleteHtmlContentWidgetRequest request)
+        {
+            var result = widgetService.DeleteWidget(request.WidgetId, request.Data.Version);
+
+            return new DeleteHtmlContentWidgetResponse { Data = result };
+        }
+
         IHtmlContentWidgetOptionsService IHtmlContentWidgetService.Options
         {
             get
