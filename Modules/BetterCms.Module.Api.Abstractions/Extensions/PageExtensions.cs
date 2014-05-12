@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 
-using BetterCms.Module.Api.Operations.Pages.Pages;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties;
 
@@ -8,18 +7,18 @@ namespace BetterCms.Module.Api.Extensions
 {
     public static class PageExtensions
     {
-        public static PutPageRequest ToPutRequest(this GetPagePropertiesResponse response)
+        public static PutPagePropertiesRequest ToPutRequest(this GetPagePropertiesResponse response)
         {
             var model = MapPageModel(response);
 
-            return new PutPageRequest { Data = model, PageId = response.Data.Id };
+            return new PutPagePropertiesRequest { Data = model, PageId = response.Data.Id };
         }
 
-        public static PostPageRequest ToPostRequest(this GetPagePropertiesResponse response)
+        public static PostPagePropertiesRequest ToPostRequest(this GetPagePropertiesResponse response)
         {
             var model = MapPageModel(response);
 
-            return new PostPageRequest { Data = model };
+            return new PostPagePropertiesRequest { Data = model };
         }
 
         private static SavePagePropertiesModel MapPageModel(GetPagePropertiesResponse response)

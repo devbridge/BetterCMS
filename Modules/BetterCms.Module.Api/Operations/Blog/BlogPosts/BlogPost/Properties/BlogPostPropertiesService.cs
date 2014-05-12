@@ -5,8 +5,13 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Services;
+
+using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Root;
+
 using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Blog.Services;
 using BetterCms.Module.MediaManager.Services;
 
 using ServiceStack.ServiceInterface;
@@ -19,10 +24,17 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
 
         private readonly IMediaFileUrlResolver fileUrlResolver;
 
-        public BlogPostPropertiesService(IRepository repository, IMediaFileUrlResolver fileUrlResolver)
+        private readonly IBlogSaveService blogSaveService;
+
+        private readonly ISecurityService securityService;
+
+        public BlogPostPropertiesService(IRepository repository, IMediaFileUrlResolver fileUrlResolver, 
+            IBlogSaveService blogSaveService, ISecurityService securityService)
         {
             this.repository = repository;
             this.fileUrlResolver = fileUrlResolver;
+            this.blogSaveService = blogSaveService;
+            this.securityService = securityService;
         }
 
         public GetBlogPostPropertiesResponse Get(GetBlogPostPropertiesRequest request)
@@ -244,6 +256,31 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
                         IsForRole = accessRule.IsForRole
                     })
                     .ToList();
+        }
+
+        public PostBlogPostPropertiesResponse Post(PostBlogPostPropertiesRequest request)
+        {
+            var result = Put(
+                    new PutBlogPostPropertiesRequest
+                    {
+                        Data = request.Data,
+                        User = request.User
+                    });
+
+            return new PostBlogPostPropertiesResponse { Data = result.Data };
+        }
+
+        public PutBlogPostPropertiesResponse Put(PutBlogPostPropertiesRequest request)
+        {
+            var serviceModel = request.Data.ToServiceModel();
+            if (request.BlogPostId.HasValue)
+            {
+                serviceModel.Id = request.BlogPostId.Value;
+            }
+
+            var response = blogSaveService.SaveBlogPost(serviceModel, securityService.GetCurrentPrincipal());
+
+            return new PutBlogPostPropertiesResponse { Data = response.Id };
         }
     }
 }

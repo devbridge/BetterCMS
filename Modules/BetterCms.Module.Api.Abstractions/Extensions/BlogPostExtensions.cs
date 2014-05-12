@@ -1,30 +1,28 @@
 ﻿using System.Linq;
 
-using BetterCms.Module.Api.Operations.Blog.BlogPosts;
-using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost;
 using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
 
 namespace BetterCms.Module.Api.Extensions
 {
     public static class BlogPostExtensions
     {
-        public static PutBlogPostRequest ToPutRequest(this GetBlogPostPropertiesResponse response)
+        public static PutBlogPostPropertiesRequest ToPutRequest(this GetBlogPostPropertiesResponse response)
         {
             var model = MapBlogPostModel(response);
 
-            return new PutBlogPostRequest { Data = model, BlogPostId = response.Data.Id };
+            return new PutBlogPostPropertiesRequest { Data = model, BlogPostId = response.Data.Id };
         }
         
-        public static PostBlogPostRequest ToPostRequest(this GetBlogPostPropertiesResponse response)
+        public static PostBlogPostPropertiesRequest ToPostRequest(this GetBlogPostPropertiesResponse response)
         {
             var model = MapBlogPostModel(response);
 
-            return new PostBlogPostRequest { Data = model };
+            return new PostBlogPostPropertiesRequest { Data = model };
         }
 
-        private static SaveBlogPostModel MapBlogPostModel(GetBlogPostPropertiesResponse response)
+        private static SaveBlogPostPropertiesModel MapBlogPostModel(GetBlogPostPropertiesResponse response)
         {
-            var model = new SaveBlogPostModel
+            var model = new SaveBlogPostPropertiesModel
                         {
                             Version = response.Data.Version,
                             BlogPostUrl = response.Data.BlogPostUrl,

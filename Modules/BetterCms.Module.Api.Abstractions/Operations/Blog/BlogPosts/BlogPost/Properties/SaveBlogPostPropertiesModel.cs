@@ -1,13 +1,12 @@
 ﻿using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
-using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
 using BetterCms.Module.Api.Operations.Root;
 
-namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
+namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
 {
     [DataContract]
-    public class SaveBlogPostModel : SaveModelBase
+    public class SaveBlogPostPropertiesModel : SaveModelBase
     {
         /// <summary>
         /// Gets or sets the blog post URL.

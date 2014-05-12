@@ -3,7 +3,5 @@
     public interface IBlogPostsService
     {
         GetBlogPostsResponse Get(GetBlogPostsRequest request);
-
-        PostBlogPostResponse Post(PostBlogPostRequest request);
     }
 }

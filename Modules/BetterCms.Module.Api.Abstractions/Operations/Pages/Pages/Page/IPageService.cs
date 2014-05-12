@@ -51,20 +51,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
         GetPageResponse Get(GetPageRequest request);
 
         /// <summary>
-        /// Puts the page specified in request.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns><c>PutPageResponse</c> with updated page id.</returns>
-        PutPageResponse Put(PutPageRequest request);
-
-        /// <summary>
-        /// Deletes the page specified in request.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns><c>DeletePageResponse</c> with success status.</returns>
-        DeletePageResponse Delete(DeletePageRequest request);
-
-        /// <summary>
         /// Checks if specified page exists.
         /// </summary>
         /// <param name="request">The request.</param>

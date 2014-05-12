@@ -4,13 +4,10 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Services;
 
-using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
 using BetterCms.Module.Api.Operations.Pages.Contents.Content.BlogPostContent;
 
-using BetterCms.Module.Blog.Services;
 using BetterCms.Module.MediaManager.Services;
 
 using ServiceStack.ServiceInterface;
@@ -27,19 +24,13 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
         
         private readonly IBlogPostContentService contentService;
 
-        private readonly IBlogSaveService blogSaveService;
-        
-        private readonly ISecurityService securityService;
-
-        public BlogPostService(IBlogSaveService blogSaveService, IBlogPostPropertiesService propertiesService, IBlogPostContentService contentService,
-            IRepository repository, IMediaFileUrlResolver fileUrlResolver, ISecurityService securityService)
+        public BlogPostService(IBlogPostPropertiesService propertiesService, IBlogPostContentService contentService,
+            IRepository repository, IMediaFileUrlResolver fileUrlResolver)
         {
-            this.blogSaveService = blogSaveService;
             this.propertiesService = propertiesService;
             this.contentService = contentService;
             this.repository = repository;
             this.fileUrlResolver = fileUrlResolver;
-            this.securityService = securityService;
         }
 
         public GetBlogPostResponse Get(GetBlogPostRequest request)
@@ -100,19 +91,6 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
             {
                 return contentService;
             }
-        }
-
-        public PutBlogPostResponse Put(PutBlogPostRequest request)
-        {
-            var serviceModel = request.Data.ToServiceModel();
-            if (request.BlogPostId.HasValue)
-            {
-                serviceModel.Id = request.BlogPostId.Value;
-            }
-
-            var response = blogSaveService.SaveBlogPost(serviceModel, securityService.GetCurrentPrincipal());
-
-            return new PutBlogPostResponse { Data = response.Id };
         }
     }
 }

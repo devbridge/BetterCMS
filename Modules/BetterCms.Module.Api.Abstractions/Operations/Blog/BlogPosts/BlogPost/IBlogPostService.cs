@@ -6,8 +6,6 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
     public interface IBlogPostService
     {
         GetBlogPostResponse Get(GetBlogPostRequest request);
-        
-        PutBlogPostResponse Put(PutBlogPostRequest request);
 
         IBlogPostPropertiesService Properties { get; }
 

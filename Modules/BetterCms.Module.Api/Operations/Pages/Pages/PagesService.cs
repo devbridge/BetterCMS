@@ -11,9 +11,9 @@ using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page;
 using BetterCms.Module.Api.Operations.Pages.Pages.Search;
 using BetterCms.Module.Api.Operations.Root;
+
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Pages.Models;
-using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
 
 using NHibernate.Linq;
@@ -183,23 +183,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
             };
         }
 
-        /// <summary>
-        /// Posts the specified request.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns><c>PostPageResponse</c> with page data.</returns>
-        public PostPageResponse Post(PostPageRequest request)
-        {
-            var result = pageService.Put(
-                    new PutPageRequest
-                    {
-                        Data = request.Data,
-                        User = request.User
-                    });
-
-            return new PostPageResponse { Data = result.Data };
-        }
-
         private void LoadInnerCollections(DataListResponse<PageModel> response, bool includeOptions, bool includeTags, bool includeAccessRules)
         {
             var pageIds = response.Items.Select(i => i.Id).Distinct().ToArray();
@@ -283,20 +266,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
                                 .ToList();
                         });
             }
-        }
-
-        private class LayoutWithOption
-        {
-            public Guid LayoutId { get; set; }
-
-            public LayoutOption Option { get; set; }
-        }
-        
-        private class PageWithOption
-        {
-            public Guid PageId { get; set; }
-
-            public PageOption Option { get; set; }
         }
 
         private class TagModel

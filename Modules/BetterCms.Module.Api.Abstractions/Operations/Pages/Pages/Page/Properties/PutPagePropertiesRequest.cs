@@ -5,14 +5,14 @@ using BetterCms.Module.Api.Infrastructure;
 
 using ServiceStack.ServiceHost;
 
-namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
+namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
 {
     /// <summary>
     /// Page save request for REST.
     /// </summary>
-    [Route("/pages/{PageId}", Verbs = "PUT")]
+    [Route("/page-properties/{PageId}", Verbs = "PUT")]
     [DataContract]
-    public class PutPageRequest : RequestBase<SavePagePropertiesModel>, IReturn<PutPageResponse>
+    public class PutPagePropertiesRequest : RequestBase<SavePagePropertiesModel>, IReturn<PutPagePropertiesResponse>
     {
         /// <summary>
         /// Gets or sets the page identifier.
