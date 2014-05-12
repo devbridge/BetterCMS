@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
@@ -11,6 +12,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidg
     /// </summary>
     [Route("/widgets/server-control/", Verbs = "POST")]
     [DataContract]
+    [Serializable]
     public class PostServerControlWidgetRequest : RequestBase<SaveServerControlWidgetModel>, IReturn<PostServerControlWidgetResponse>
     {
     }

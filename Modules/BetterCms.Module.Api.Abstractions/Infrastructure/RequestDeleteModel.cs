@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace BetterCms.Module.Api.Infrastructure
 {
@@ -6,6 +7,7 @@ namespace BetterCms.Module.Api.Infrastructure
     /// Request base for delete operation.
     /// </summary>
     [DataContract]
+    [Serializable]
     public class RequestDeleteModel
     {
         /// <summary>

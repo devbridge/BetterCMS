@@ -6,6 +6,7 @@ using BetterCms.Module.Api.Infrastructure.Enums;
 namespace BetterCms.Module.Api.Operations.MediaManager.Files
 {
     [DataContract]
+    [System.Serializable]
     public class GetFilesModel : DataOptions, IFilterByTags
     {
         /// <summary>

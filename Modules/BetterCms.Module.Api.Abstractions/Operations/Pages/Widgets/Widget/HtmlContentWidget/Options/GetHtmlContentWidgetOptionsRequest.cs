@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
@@ -8,9 +9,10 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
 {
     [Route("/widgets/html-content/{WidgetId}/options", Verbs = "GET")]
     [DataContract]
+    [Serializable]
     public class GetHtmlContentWidgetOptionsRequest : RequestBase<DataOptions>, IReturn<GetHtmlContentWidgetOptionsResponse>
     {
         [DataMember]
-        public System.Guid WidgetId { get; set; }
+        public Guid WidgetId { get; set; }
     }
 }

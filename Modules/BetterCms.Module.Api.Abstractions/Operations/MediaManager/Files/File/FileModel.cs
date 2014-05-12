@@ -5,6 +5,7 @@ using BetterCms.Module.Api.Infrastructure;
 namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
 {
     [DataContract]
+    [System.Serializable]
     public class FileModel : ModelBase
     {
         /// <summary>

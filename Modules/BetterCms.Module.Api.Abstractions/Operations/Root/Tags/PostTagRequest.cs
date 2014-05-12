@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
@@ -11,6 +12,7 @@ namespace BetterCms.Module.Api.Operations.Root.Tags
     /// </summary>
     [Route("/tags", Verbs = "POST")]
     [DataContract]
+    [Serializable]
     public class PostTagRequest : RequestBase<TagModel>, IReturn<PostTagResponse>
     {
     }

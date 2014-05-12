@@ -1,12 +1,12 @@
 ﻿using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
-using BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties;
 using BetterCms.Module.Api.Operations.Root;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
 {
     [DataContract]
+    [System.Serializable]
     public class SavePagePropertiesModel : SaveModelBase
     {
         /// <summary>

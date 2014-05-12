@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
-using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget.Options;
 
 namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
 {
     [DataContract]
+    [Serializable]
     public class SaveHtmlContentWidgetModel : SaveModelBase
     {
         /// <summary>
@@ -34,7 +35,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
         /// The date widget was published on.
         /// </value>
         [DataMember]
-        public System.DateTime? PublishedOn { get; set; }
+        public DateTime? PublishedOn { get; set; }
 
         /// <summary>
         /// Gets or sets the widget published user name.
@@ -52,7 +53,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
         /// The widget category id.
         /// </value>
         [DataMember]
-        public System.Guid? CategoryId { get; set; }
+        public Guid? CategoryId { get; set; }
 
         /// <summary>
         /// Gets or sets the custom CSS.

@@ -12,6 +12,7 @@ namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
     /// </summary>
     [Route("/tags/{TagId}", Verbs = "DELETE")]
     [DataContract]
+    [Serializable]
     public class DeleteTagRequest : DeleteRequestBase, IReturn<DeleteTagResponse>
     {
         /// <summary>

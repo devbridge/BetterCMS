@@ -12,6 +12,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
     /// </summary>
     [Route("/page-properties/{PageId}", Verbs = "PUT")]
     [DataContract]
+    [Serializable]
     public class PutPagePropertiesRequest : RequestBase<SavePagePropertiesModel>, IReturn<PutPagePropertiesResponse>
     {
         /// <summary>

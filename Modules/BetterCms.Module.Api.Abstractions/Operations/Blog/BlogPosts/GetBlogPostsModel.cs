@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
@@ -7,6 +8,7 @@ using BetterCms.Module.Api.Infrastructure.Enums;
 namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
 {
     [DataContract]
+    [Serializable]
     public class GetBlogPostsModel : DataOptions, IFilterByTags
     {
         /// <summary>

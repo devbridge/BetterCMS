@@ -9,6 +9,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidg
     /// Server control widget creation response.
     /// </summary>
     [DataContract]
+    [Serializable]
     public class PostServerControlWidgetResponse : ResponseBase<Guid?>
     {
     }

@@ -1,8 +1,10 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace BetterCms.Module.Api.Infrastructure
 {
     [DataContract]
+    [Serializable]
     public abstract class RequestBase<TData> : IRequest where TData : new()
     {
         protected RequestBase()

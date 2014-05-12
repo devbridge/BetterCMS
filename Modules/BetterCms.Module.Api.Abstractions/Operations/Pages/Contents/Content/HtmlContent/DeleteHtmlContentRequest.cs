@@ -12,6 +12,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
     /// </summary>
     [Route("/contents/html/{ContentId}", Verbs = "DELETE")]
     [DataContract]
+    [Serializable]
     public class DeleteHtmlContentRequest : DeleteRequestBase, IReturn<DeleteHtmlContentResponse>
     {
         /// <summary>

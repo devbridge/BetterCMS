@@ -12,6 +12,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
     /// </summary>
     [Route("/contents/html/{ContentId}", Verbs = "PUT")]
     [DataContract]
+    [Serializable]
     public class PutHtmlContentRequest : RequestBase<HtmlContentModel>, IReturn<PutHtmlContentResponse>
     {
         /// <summary>

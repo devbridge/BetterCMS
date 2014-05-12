@@ -11,6 +11,7 @@ namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
     [Route("/tags/{TagId}", Verbs = "GET")]
     [Route("/tags/by-name/{TagName}", Verbs = "GET")]
     [DataContract]
+    [Serializable]
     public class GetTagRequest : IReturn<GetTagResponse>
     {
         /// <summary>
