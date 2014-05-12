@@ -12,7 +12,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
     /// </summary>
     [Route("/sitemaps/{SitemapId}", Verbs = "DELETE")]
     [DataContract]
-    public class DeleteSitemapRequest : RequestBase<RequestDeleteModel>, IReturn<DeleteSitemapResponse>
+    public class DeleteSitemapRequest : DeleteRequestBase, IReturn<DeleteSitemapResponse>
     {
         /// <summary>
         /// Gets or sets the identifier.
@@ -21,17 +21,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
         /// The identifier.
         /// </value>
         [DataMember]
-        public Guid SitemapId
-        {
-            get
-            {
-                return this.Data.Id;
-            }
-
-            set
-            {
-                this.Data.Id = value;
-            }
-        }
+        public Guid SitemapId { get; set; }
     }
 }

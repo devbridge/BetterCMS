@@ -9,7 +9,7 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Security;
-
+using BetterCms.Core.Services;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Operations.Root;
 
@@ -17,6 +17,7 @@ using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
+using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
@@ -81,9 +82,9 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         private readonly Module.Pages.Services.IPageService pageService;
 
         /// <summary>
-        /// The sitemap service.
+        /// The security service
         /// </summary>
-        private readonly ISitemapService sitemapService;
+        private readonly ISecurityService securityService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PagePropertiesService" /> class.
@@ -97,18 +98,18 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// <param name="accessControlService">The access control service.</param>
         /// <param name="unitOfWork">The unit of work.</param>
         /// <param name="pageService">The page service.</param>
-        /// <param name="sitemapService">The sitemap service.</param>
+        /// <param name="securityService">The security service.</param>
         public PagePropertiesService(
             IRepository repository,
             IUrlService urlService,
             IOptionService optionService,
             IMediaFileUrlResolver fileUrlResolver,
             IMasterPageService masterPageService,
-            BetterCms.Module.Pages.Services.ITagService tagService,
+            Module.Pages.Services.ITagService tagService,
             IAccessControlService accessControlService,
             IUnitOfWork unitOfWork,
             Module.Pages.Services.IPageService pageService,
-            ISitemapService sitemapService)
+            ISecurityService securityService)
         {
             this.repository = repository;
             this.urlService = urlService;
@@ -118,7 +119,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
             this.tagService = tagService;
             this.accessControlService = accessControlService;
             this.unitOfWork = unitOfWork;
-            this.sitemapService = sitemapService;
+            this.securityService = securityService;
             this.pageService = pageService;
         }
 
@@ -583,123 +584,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// <returns><c>DeletePageResponse</c> with success status.</returns>
         public DeletePagePropertiesResponse Delete(DeletePagePropertiesRequest request)
         {
-            if (request.Data == null || request.Data.Id.HasDefaultValue())
-            {
-                return new DeletePagePropertiesResponse { Data = false };
-            }
-
-            var page = repository.First<PageProperties>(request.Data.Id);
-            if (request.Data.Version > 0 && page.Version != request.Data.Version)
-            {
-                throw new ConcurrentDataException(page);
-            }
-
-            if (page.IsMasterPage && repository.AsQueryable<MasterPage>(mp => mp.Master == page).Any())
-            {
-                var logMessage = string.Format("Failed to delete page. Page is selected as master page. Id: {0} Url: {1}", page.Id, page.PageUrl);
-                throw new CmsApiValidationException(logMessage);
-            }
-
-            var sitemaps = new Dictionary<Module.Pages.Models.Sitemap, bool>();
-            var sitemapNodes = sitemapService.GetNodesByPage(page);
-
-            unitOfWork.BeginTransaction();
-
-            IList<SitemapNode> updatedNodes = new List<SitemapNode>();
-            IList<SitemapNode> deletedNodes = new List<SitemapNode>();
-            if (sitemapNodes != null)
-            {
-                // Archive sitemaps before update.
-                sitemaps.Select(pair => pair.Key).ToList().ForEach(sitemap => sitemapService.ArchiveSitemap(sitemap.Id));
-                foreach (var node in sitemapNodes)
-                {
-                    if (!node.IsDeleted)
+            var model = new DeletePageViewModel
                     {
-                        // Unlink sitemap node.
-                        if (node.Page != null && node.Page.Id == page.Id)
-                        {
-                            node.Page = null;
-                            node.Title = node.UsePageTitleAsNodeTitle ? page.Title : node.Title;
-                            node.Url = page.PageUrl;
-                            node.UrlHash = page.PageUrlHash;
-                            repository.Save(node);
-                            updatedNodes.Add(node);
-                        }
-                    }
-                }
-            }
+                        PageId = request.PageId,
+                        Version = request.Data.Version
+                    };
+            var result = pageService.DeletePage(model, securityService.GetCurrentPrincipal());
 
-            // Delete child entities.            
-            if (page.PageTags != null)
-            {
-                foreach (var pageTag in page.PageTags)
-                {
-                    repository.Delete(pageTag);
-                }
-            }
-
-            if (page.PageContents != null)
-            {
-                foreach (var pageContent in page.PageContents)
-                {
-                    repository.Delete(pageContent);
-                }
-            }
-
-            if (page.Options != null)
-            {
-                foreach (var option in page.Options)
-                {
-                    repository.Delete(option);
-                }
-            }
-
-            if (page.AccessRules != null)
-            {
-                var rules = page.AccessRules.ToList();
-                rules.ForEach(page.RemoveRule);
-            }
-
-            if (page.MasterPages != null)
-            {
-                foreach (var master in page.MasterPages)
-                {
-                    repository.Delete(master);
-                }
-            }
-
-            // Delete page
-            repository.Delete<Module.Root.Models.Page>(page);
-
-            unitOfWork.Commit();
-
-            var updatedSitemaps = new List<Module.Pages.Models.Sitemap>();
-            foreach (var node in updatedNodes)
-            {
-                Events.SitemapEvents.Instance.OnSitemapNodeUpdated(node);
-                if (!updatedSitemaps.Contains(node.Sitemap))
-                {
-                    updatedSitemaps.Add(node.Sitemap);
-                }
-            }
-
-            foreach (var node in deletedNodes)
-            {
-                Events.SitemapEvents.Instance.OnSitemapNodeDeleted(node);
-                if (!updatedSitemaps.Contains(node.Sitemap))
-                {
-                    updatedSitemaps.Add(node.Sitemap);
-                }
-            }
-
-            foreach (var updatedSitemap in updatedSitemaps)
-            {
-                Events.SitemapEvents.Instance.OnSitemapUpdated(updatedSitemap);
-            }
-
-            Events.PageEvents.Instance.OnPageDeleted(page);
-
-            return new DeletePagePropertiesResponse { Data = true };
+            return new DeletePagePropertiesResponse { Data = result };
         }
     }
 }

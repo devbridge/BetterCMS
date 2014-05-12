@@ -13,7 +13,7 @@ namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
         public DeleteTagRequestValidator()
         {
             RuleFor(request => request.Data).NotNull().WithMessage("Data object with filled Id and Version must be provided.");
-            RuleFor(request => request.Data.Id).NotEmpty().WithMessage("Id field must be not null.");
+            RuleFor(request => request.TagId).NotEmpty().WithMessage("Id field must be not null.");
             RuleFor(request => request.Data.Version).GreaterThan(0).WithMessage("Version filed must be not null.");
         }
     }

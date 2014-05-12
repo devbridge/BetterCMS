@@ -12,7 +12,7 @@ namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
     /// </summary>
     [Route("/tags/{TagId}", Verbs = "DELETE")]
     [DataContract]
-    public class DeleteTagRequest : RequestBase<RequestDeleteModel>, IReturn<DeleteTagResponse>
+    public class DeleteTagRequest : DeleteRequestBase, IReturn<DeleteTagResponse>
     {
         /// <summary>
         /// Gets or sets the identifier.
@@ -21,17 +21,6 @@ namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
         /// The identifier.
         /// </value>
         [DataMember]
-        public Guid? TagId
-        {
-            get
-            {
-                return Data.Id;
-            }
-
-            set
-            {
-                Data.Id = value.HasValue ? value.Value : Guid.Empty;
-            }
-        }
+        public Guid TagId { get; set; }
     }
 }

@@ -7,5 +7,7 @@
         PostBlogPostPropertiesResponse Post(PostBlogPostPropertiesRequest request);
 
         PutBlogPostPropertiesResponse Put(PutBlogPostPropertiesRequest request);
+
+        DeleteBlogPostPropertiesResponse Delete(DeleteBlogPostPropertiesRequest request);
     }
 }

@@ -13,6 +13,8 @@ using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.MediaManager.Services;
+using BetterCms.Module.Pages.Services;
+using BetterCms.Module.Pages.ViewModels.Page;
 
 using ServiceStack.ServiceInterface;
 
@@ -27,14 +29,17 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         private readonly IBlogSaveService blogSaveService;
 
         private readonly ISecurityService securityService;
+        
+        private readonly IPageService pageService;
 
-        public BlogPostPropertiesService(IRepository repository, IMediaFileUrlResolver fileUrlResolver, 
-            IBlogSaveService blogSaveService, ISecurityService securityService)
+        public BlogPostPropertiesService(IRepository repository, IMediaFileUrlResolver fileUrlResolver,
+            IBlogSaveService blogSaveService, ISecurityService securityService, IPageService pageService)
         {
             this.repository = repository;
             this.fileUrlResolver = fileUrlResolver;
             this.blogSaveService = blogSaveService;
             this.securityService = securityService;
+            this.pageService = pageService;
         }
 
         public GetBlogPostPropertiesResponse Get(GetBlogPostPropertiesRequest request)
@@ -281,6 +286,18 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
             var response = blogSaveService.SaveBlogPost(serviceModel, securityService.GetCurrentPrincipal());
 
             return new PutBlogPostPropertiesResponse { Data = response.Id };
+        }
+
+        public DeleteBlogPostPropertiesResponse Delete(DeleteBlogPostPropertiesRequest request)
+        {
+            var model = new DeletePageViewModel
+                    {
+                        PageId = request.BlogPostId,
+                        Version = request.Data.Version
+                    };
+            var result = pageService.DeletePage(model, securityService.GetCurrentPrincipal());
+
+            return new DeleteBlogPostPropertiesResponse { Data = result };
         }
     }
 }
