@@ -9,6 +9,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
     /// Page creation response.
     /// </summary>
     [DataContract]
+    [Serializable]
     public class PostPagePropertiesResponse : ResponseBase<Guid?>
     {
     }

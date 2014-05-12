@@ -12,6 +12,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
     /// </summary>
     [Route("/images/{ImageId}", Verbs = "DELETE")]
     [DataContract]
+    [Serializable]
     public class DeleteImageRequest : DeleteRequestBase, IReturn<DeleteImageResponse>
     {
         /// <summary>

@@ -9,6 +9,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
     /// Response after image saving.
     /// </summary>
     [DataContract]
+    [Serializable]
     public class PutImageResponse : ResponseBase<Guid?>
     {
     }

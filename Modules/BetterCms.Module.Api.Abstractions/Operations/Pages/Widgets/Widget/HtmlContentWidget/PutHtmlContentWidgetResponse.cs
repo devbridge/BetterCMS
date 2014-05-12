@@ -9,6 +9,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
     /// HTML content widget update response.
     /// </summary>
     [DataContract]
+    [Serializable]
     public class PutHtmlContentWidgetResponse : ResponseBase<Guid?>
     {
     }

@@ -12,6 +12,7 @@ namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
     /// </summary>
     [Route("/tags/{TagId}", Verbs = "PUT")]
     [DataContract]
+    [Serializable]
     public class PutTagRequest : RequestBase<TagModel>, IReturn<PutTagResponse>
     {
         /// <summary>

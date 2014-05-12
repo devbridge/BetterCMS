@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
-using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidget.Options;
 
 namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidget
 {
     [DataContract]
+    [Serializable]
     public class SaveServerControlWidgetModel : SaveModelBase
     {
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Root;
@@ -6,6 +7,7 @@ using BetterCms.Module.Api.Operations.Root;
 namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
 {
     [DataContract]
+    [Serializable]
     public class GetBlogPostPropertiesResponse : ResponseBase<BlogPostPropertiesModel>
     {
         /// <summary>

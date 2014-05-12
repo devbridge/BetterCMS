@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
@@ -8,6 +9,7 @@ namespace BetterCms.Module.Api.Operations.Root.Version
 {
     [DataContract]
     [Route("/current-version", Verbs = "GET")]
+    [Serializable]
     public class GetVersionRequest : RequestBase<GetVersionModel>, IReturn<GetVersionResponse>
     {
     }

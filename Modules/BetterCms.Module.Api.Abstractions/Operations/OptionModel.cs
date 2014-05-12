@@ -1,10 +1,12 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Operations.Root;
 
 namespace BetterCms.Module.Api.Operations
 {
     [DataContract]
+    [Serializable]
     public class OptionModel
     {
         /// <summary>

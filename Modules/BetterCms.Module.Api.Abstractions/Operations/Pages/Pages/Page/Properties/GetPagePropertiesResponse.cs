@@ -6,6 +6,7 @@ using BetterCms.Module.Api.Operations.Root;
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
 {
     [DataContract]
+    [System.Serializable]
     public class GetPagePropertiesResponse : ResponseBase<PagePropertiesModel>
     {
         /// <summary>

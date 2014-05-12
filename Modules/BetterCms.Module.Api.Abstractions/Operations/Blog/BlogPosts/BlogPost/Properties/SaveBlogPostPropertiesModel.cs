@@ -6,6 +6,7 @@ using BetterCms.Module.Api.Operations.Root;
 namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
 {
     [DataContract]
+    [System.Serializable]
     public class SaveBlogPostPropertiesModel : SaveModelBase
     {
         /// <summary>

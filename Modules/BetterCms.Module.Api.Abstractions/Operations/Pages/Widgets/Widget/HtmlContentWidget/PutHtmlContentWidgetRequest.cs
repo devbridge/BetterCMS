@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
@@ -11,6 +12,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
     /// </summary>
     [Route("/widgets/html-content/{WidgetId}", Verbs = "PUT")]
     [DataContract]
+    [Serializable]
     public class PutHtmlContentWidgetRequest : RequestBase<SaveHtmlContentWidgetModel>, IReturn<PutHtmlContentWidgetResponse>
     {
         /// <summary>

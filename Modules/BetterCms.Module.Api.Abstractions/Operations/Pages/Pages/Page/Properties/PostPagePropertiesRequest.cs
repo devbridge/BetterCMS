@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
@@ -11,6 +12,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
     /// </summary>
     [Route("/page-properties/", Verbs = "POST")]
     [DataContract]
+    [Serializable]
     public class PostPagePropertiesRequest : RequestBase<SavePagePropertiesModel>, IReturn<PostPagePropertiesResponse>
     {
     }

@@ -12,6 +12,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
     /// </summary>
     [Route("/pages/{PageId}/contents/{PageContentId}", Verbs = "PUT")]
     [DataContract]
+    [Serializable]
     public class PutPageContentRequest : RequestBase<SavePageContentModel>, IReturn<PutPageContentResponse>
     {
         /// <summary>

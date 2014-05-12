@@ -12,6 +12,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
     /// </summary>
     [Route("/blog-post-properties/{BlogPostId}", Verbs = "DELETE")]
     [DataContract]
+    [Serializable]
     public class DeleteBlogPostPropertiesRequest : DeleteRequestBase, IReturn<DeleteBlogPostPropertiesResponse>
     {
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
@@ -8,6 +9,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
     /// Response for html content delete operation.
     /// </summary>
     [DataContract]
+    [Serializable]
     public class DeleteHtmlContentResponse : ResponseBase<bool>
     {
     }

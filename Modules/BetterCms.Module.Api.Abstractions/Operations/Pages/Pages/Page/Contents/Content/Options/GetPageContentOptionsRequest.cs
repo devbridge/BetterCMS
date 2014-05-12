@@ -8,6 +8,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content.Opti
 {
     [Route("/pages/contents/{PageContentId}/options")]
     [DataContract]
+    [System.Serializable]
     public class GetPageContentOptionsRequest : RequestBase<DataOptions>, IReturn<GetPageContentOptionsResponse>
     {
         [DataMember]

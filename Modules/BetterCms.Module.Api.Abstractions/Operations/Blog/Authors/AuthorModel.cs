@@ -5,6 +5,7 @@ using BetterCms.Module.Api.Infrastructure;
 namespace BetterCms.Module.Api.Operations.Blog.Authors
 {
     [DataContract]
+    [System.Serializable]
     public class AuthorModel : ModelBase
     {
         /// <summary>

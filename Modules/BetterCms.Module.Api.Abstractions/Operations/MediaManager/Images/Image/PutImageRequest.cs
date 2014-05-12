@@ -12,6 +12,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
     /// </summary>
     [Route("/images/{ImageId}", Verbs = "PUT")]
     [DataContract]
+    [Serializable]
     public class PutImageRequest : RequestBase<ImageModel>, IReturn<PutImageResponse>
     {
         /// <summary>

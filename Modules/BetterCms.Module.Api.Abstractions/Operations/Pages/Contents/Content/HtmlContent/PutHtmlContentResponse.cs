@@ -9,6 +9,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
     /// Response after content saving.
     /// </summary>
     [DataContract]
+    [Serializable]
     public class PutHtmlContentResponse : ResponseBase<Guid?>
     {
     }

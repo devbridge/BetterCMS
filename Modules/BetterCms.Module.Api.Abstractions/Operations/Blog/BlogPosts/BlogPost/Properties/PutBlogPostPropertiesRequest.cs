@@ -11,6 +11,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
     /// </summary>
     [Route("/blog-post-properties/{BlogPostId}", Verbs = "PUT")]
     [DataContract]
+    [System.Serializable]
     public class PutBlogPostPropertiesRequest : RequestBase<SaveBlogPostPropertiesModel>, IReturn<PutBlogPostPropertiesResponse>
     {
         /// <summary>

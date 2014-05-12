@@ -9,6 +9,7 @@ namespace BetterCms.Module.Api.Operations.Root.Tags
     /// Tag creation response.
     /// </summary>
     [DataContract]
+    [Serializable]
     public class PostTagResponse : ResponseBase<Guid?>
     {
     }

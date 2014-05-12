@@ -5,6 +5,7 @@ using BetterCms.Module.Api.Infrastructure;
 namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
 {
     [DataContract]
+    [System.Serializable]
     public class BlogPostModel : ModelBase
     {
         /// <summary>
