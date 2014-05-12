@@ -11,14 +11,17 @@ using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes;
 using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node;
 using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Tree;
 using BetterCms.Module.Api.Operations.Root;
+using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 
 using NHibernate.Linq;
 
+using ServiceStack.Common;
 using ServiceStack.ServiceInterface;
 
 using AccessLevel = BetterCms.Core.Security.AccessLevel;
@@ -168,7 +171,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
         /// </returns>
         public GetSitemapResponse Get(GetSitemapRequest request)
         {
-            var tagsFuture = repository.AsQueryable<Module.Pages.Models.SitemapTag>().Where(e => e.Sitemap.Id == request.SitemapId).Select(e => e.Tag.Name).ToFuture();
+            var tagsFuture = repository.AsQueryable<SitemapTag>().Where(e => e.Sitemap.Id == request.SitemapId).Select(e => e.Tag.Name).ToFuture();
 
             IEnumerable<Module.Pages.Models.SitemapNode> nodesFuture = null;
             if (request.Data.IncludeNodes)
@@ -227,6 +230,9 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
                                             : (Guid?)null,
                                     Title = node.Page != null && node.UsePageTitleAsNodeTitle ? node.Page.Title : node.Title,
                                     Url = node.Page != null ? node.Page.PageUrl : node.Url,
+                                    NodeTitle = node.Title,
+                                    NodeUrl = node.Url,
+                                    UsePageTitleAsNodeTitle = node.UsePageTitleAsNodeTitle,
                                     DisplayOrder = node.DisplayOrder,
                                     Macro = node.Macro,
                                     Translations =
@@ -241,8 +247,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
                                                     LastModifiedBy = t.ModifiedByUser,
                                                     LastModifiedOn = t.ModifiedOn,
                                                     Title = t.Title,
-                                                    UsePageTitleAsNodeTitle = t.UsePageTitleAsNodeTitle,
                                                     Url = t.Url,
+                                                    UsePageTitleAsNodeTitle = t.UsePageTitleAsNodeTitle,
                                                     Macro = t.Macro,
                                                     LanguageId = t.Language.Id
                                                 }).ToList()
@@ -268,9 +274,20 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
         /// </returns>
         public PutSitemapResponse Put(PutSitemapRequest request)
         {
+            IEnumerable<Module.Pages.Models.SitemapNode> nodesFuture = null;
+            if (request.Data.Nodes != null)
+            {
+                nodesFuture =
+                   repository.AsQueryable<Module.Pages.Models.SitemapNode>()
+                       .Where(node => node.Sitemap.Id == request.SitemapId && !node.IsDeleted)
+                       .FetchMany(node => node.Translations)
+                       .ToFuture();
+            }
+
             var sitemap =
                 repository.AsQueryable<Module.Pages.Models.Sitemap>(e => e.Id == request.SitemapId.GetValueOrDefault())
                     .FetchMany(f => f.AccessRules)
+                    .ToFuture()
                     .ToList()
                     .FirstOrDefault();
 
@@ -292,6 +309,11 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
 
             unitOfWork.BeginTransaction();
 
+            if (!isNew)
+            {
+                sitemapService.ArchiveSitemap(sitemap.Id);
+            }
+
             sitemap.Title = request.Data.Title;
 
             IList<Tag> newTags = null;
@@ -311,6 +333,11 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
             }
 
             repository.Save(sitemap);
+
+            if (request.Data.Nodes != null)
+            {
+                SaveNodes(sitemap, request.Data.Nodes, nodesFuture != null ? nodesFuture.ToList() : new List<SitemapNode>());
+            }
 
             unitOfWork.Commit();
 
@@ -365,6 +392,112 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
                         IsForRole = accessRule.IsForRole
                     })
                     .ToList();
+        }
+
+        /// <summary>
+        /// Saves the nodes.
+        /// </summary>
+        /// <param name="sitemap">The sitemap.</param>
+        /// <param name="updatedNodes">The nodes.</param>
+        /// <param name="currentNodes">The existing nodes.</param>
+        private void SaveNodes(Module.Pages.Models.Sitemap sitemap, IList<SaveSitemapNodeModel> updatedNodes, IList<SitemapNode> currentNodes)
+        {
+            var removeAll = updatedNodes.IsEmpty();
+
+            foreach (var existingNode in currentNodes)
+            {
+                if (removeAll || updatedNodes.All(n => n.Id != existingNode.Id))
+                {
+                    repository.Delete(existingNode);
+                }
+            }
+
+            if (removeAll)
+            {
+                return;
+            }
+
+            this.SaveChildNodes(sitemap, null, updatedNodes, updatedNodes, currentNodes);
+        }
+
+        /// <summary>
+        /// Saves the child nodes.
+        /// </summary>
+        /// <param name="sitemap">The sitemap.</param>
+        /// <param name="nodesToSave">The nodes to save.</param>
+        /// <param name="updatedNodes">The updated nodes.</param>
+        /// <param name="currentNodes">The current nodes.</param>
+        private void SaveChildNodes(
+            Module.Pages.Models.Sitemap sitemap,
+            SitemapNode parentNode, 
+            IEnumerable<SaveSitemapNodeModel> nodesToSave,
+            IList<SaveSitemapNodeModel> updatedNodes,
+            IList<SitemapNode> currentNodes)
+        {
+            foreach (var nodeModel in nodesToSave)
+            {
+                var nodeToSave = currentNodes.FirstOrDefault(n => n.Id == nodeModel.Id);
+                var isNew = nodeToSave == null;
+                if (isNew)
+                {
+                    nodeToSave = new SitemapNode
+                                     {
+                                         Id = nodeModel.Id.GetValueOrDefault(),
+                                         Sitemap = sitemap,
+                                         Translations = new List<Module.Pages.Models.SitemapNodeTranslation>()
+                                     };
+                }
+                else if (nodeModel.Version > 0)
+                {
+                    sitemap.Version = nodeModel.Version;
+                }
+
+                nodeToSave.Page = nodeModel.PageId.HasValue ? repository.AsProxy<PageProperties>(nodeModel.PageId.Value) : null;
+                nodeToSave.UsePageTitleAsNodeTitle = nodeModel.UsePageTitleAsNodeTitle;
+                nodeToSave.Title = nodeModel.Title;
+                nodeToSave.Url = nodeModel.Url;
+                nodeToSave.UrlHash = nodeModel.Url.UrlHash();
+                nodeToSave.DisplayOrder = nodeModel.DisplayOrder;
+                nodeToSave.Macro = nodeModel.Macro;
+                nodeToSave.ParentNode = parentNode;
+
+                repository.Save(nodeToSave);
+
+                this.SaveTranslations(nodeModel, nodeToSave);
+
+                this.SaveChildNodes(sitemap, nodeToSave, nodeModel.Nodes, updatedNodes, currentNodes);
+            }
+        }
+
+        private void SaveTranslations(SaveSitemapNodeModel nodeModel, SitemapNode nodeToSave)
+        {
+            foreach (var translationModel in nodeModel.Translations)
+            {
+                var translationToSave = nodeToSave.Translations.FirstOrDefault(t => t.Id == translationModel.Id);
+                var isNewTranslation = translationToSave == null;
+                if (isNewTranslation)
+                {
+                    translationToSave = new Module.Pages.Models.SitemapNodeTranslation { Id = translationModel.Id.GetValueOrDefault(), Node = nodeToSave };
+                }
+                else if (translationModel.Version > 0)
+                {
+                    translationToSave.Version = translationModel.Version;
+                }
+
+                translationToSave.Language = this.repository.AsProxy<Language>(translationModel.LanguageId);
+                translationToSave.Macro = translationModel.Macro;
+                translationToSave.Title = translationModel.Title;
+                translationToSave.UsePageTitleAsNodeTitle = translationModel.UsePageTitleAsNodeTitle;
+                translationToSave.Url = translationModel.Url;
+                translationToSave.UrlHash = translationToSave.Url.UrlHash();
+
+                if (translationToSave.Node != nodeToSave)
+                {
+                    translationToSave.Node = nodeToSave;
+                }
+
+                this.repository.Save(translationToSave);
+            }
         }
     }
 }

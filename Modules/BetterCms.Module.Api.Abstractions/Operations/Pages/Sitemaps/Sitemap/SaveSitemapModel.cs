@@ -33,6 +33,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
         public IList<string> Tags { get; set; }
 
         /// <summary>
+        /// Gets or sets the nodes.
+        /// </summary>
+        /// <value>
+        /// The nodes.
+        /// </value>
+        [DataMember]
+        public IList<SaveSitemapNodeModel> Nodes { get; set; }
+
+        /// <summary>
         /// Gets or sets the access rules.
         /// </summary>
         /// <value>

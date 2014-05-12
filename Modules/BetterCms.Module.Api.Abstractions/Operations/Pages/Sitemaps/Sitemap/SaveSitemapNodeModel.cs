@@ -11,16 +11,16 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
     /// </summary>
     [Serializable]
     [DataContract]
-    public class SitemapNodeWithTranslationsModel : ModelBase
+    public class SaveSitemapNodeModel : SaveModelBase
     {
         /// <summary>
-        /// Gets or sets the parent node id.
+        /// Gets or sets the identifier.
         /// </summary>
         /// <value>
-        /// The parent node id.
+        /// The identifier.
         /// </value>
         [DataMember]
-        public Guid? ParentId { get; set; }
+        public Guid? Id { get; set; }
 
         /// <summary>
         /// Gets or sets the node title.
@@ -68,49 +68,13 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
         public Guid? PageId { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether page is published.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if page is published; otherwise, <c>false</c>.
-        /// </value>
-        [DataMember]
-        public bool PageIsPublished { get; set; }
-
-        /// <summary>
-        /// Gets or sets the page language identifier.
-        /// </summary>
-        /// <value>
-        /// The page language identifier.
-        /// </value>
-        [DataMember]
-        public Guid? PageLanguageId { get; set; }
-
-        /// <summary>
         /// Gets or sets the translations.
         /// </summary>
         /// <value>
         /// The translations.
         /// </value>
         [DataMember]
-        public List<SitemapNodeTranslation> Translations { get; set; }
-
-        /// <summary>
-        /// Gets or sets the node title.
-        /// </summary>
-        /// <value>
-        /// The node title.
-        /// </value>
-        [DataMember]
-        public string NodeTitle { get; set; }
-
-        /// <summary>
-        /// Gets or sets the node URL.
-        /// </summary>
-        /// <value>
-        /// The node URL.
-        /// </value>
-        [DataMember]
-        public string NodeUrl { get; set; }
+        public IList<SaveSitemapNodeTranslation> Translations { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to use page title as node title.
@@ -120,5 +84,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
         /// </value>
         [DataMember]
         public bool UsePageTitleAsNodeTitle { get; set; }
+
+        /// <summary>
+        /// Gets or sets the nodes.
+        /// </summary>
+        /// <value>
+        /// The nodes.
+        /// </value>
+        [DataMember]
+        public IList<SaveSitemapNodeModel> Nodes { get; set; }
     }
 }

@@ -70,6 +70,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Extensions\SitemapExtensions.cs" />
     <Compile Include="Extensions\PageExtensions.cs" />
     <Compile Include="Extensions\WidgetExtensions.cs" />
     <Compile Include="Extensions\BlogPostExtensions.cs" />
@@ -129,6 +130,8 @@
     <Compile Include="Operations\Pages\Pages\Page\Properties\PostPagePropertiesRequest.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PostPagePropertiesResponse.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\GetSitemapModel.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\SaveSitemapNodeTranslation.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\SaveSitemapNodeModel.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\SitemapNodeTranslation.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\SitemapNodeWithTranslationsModel.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\GetHtmlContentWidgetModel.cs" />
