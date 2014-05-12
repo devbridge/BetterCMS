@@ -8,6 +8,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
 {
     [Obsolete("Use everything from BetterCms.Module.Api.Operations.Pages.Sitemaps name space.")]
     [DataContract]
+    [Serializable]
     public class SitemapTreeNodeTranslationModel : ModelBase
     {
         /// <summary>
@@ -17,7 +18,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
         /// The parent node id.
         /// </value>
         [DataMember]
-        public System.Guid LanguageId { get; set; }
+        public Guid LanguageId { get; set; }
 
         /// <summary>
         /// Gets or sets the node title.
@@ -44,7 +45,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
         /// The node id.
         /// </value>
         [DataMemberIgnore]
-        public System.Guid NodeId { get; set; }
+        public Guid NodeId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to use page title as node title.

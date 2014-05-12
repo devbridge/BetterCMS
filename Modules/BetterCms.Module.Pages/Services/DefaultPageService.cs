@@ -30,7 +30,7 @@ using RootPage = BetterCms.Module.Root.Models.Page;
 
 namespace BetterCms.Module.Pages.Services
 {
-    internal class DefaultPageService : IPageAccessor, IPageService
+    public class DefaultPageService : IPageAccessor, IPageService
     {
         private readonly IRepository repository;
         private readonly IRedirectService redirectService;
