@@ -4,6 +4,8 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Command.Page.DeletePage;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
@@ -33,10 +35,6 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
                     session.Flush();
                     session.Clear();
                     
-                    var pageService = new Mock<IPageService>();
-                    pageService.Setup(f => f.ValidatePageUrl(It.IsAny<string>(), It.IsAny<Guid?>()));
-                    pageService.Setup(f => f.CreatePagePermalink(It.IsAny<string>(), It.IsAny<string>())).Returns(url);
-
                     var sitemapService = new Mock<ISitemapService>();
                     sitemapService
                         .Setup(service => service.GetNodesByPage(It.IsAny<PageProperties>()))
@@ -51,9 +49,22 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
                     var configurationService = new Mock<ICmsConfiguration>();
                     configurationService.Setup(f => f.Security).Returns(securityService.Object);
 
-                    var command = new DeletePageCommand(null, sitemapService.Object, urlService.Object, configurationService.Object);
+                    var redirectService = new Mock<IRedirectService>();
+
+                    var accessControlService = new Mock<IAccessControlService>();
+
+                    var pageService = new DefaultPageService(repository,
+                        redirectService.Object,
+                        urlService.Object,
+                        accessControlService.Object,
+                        configurationService.Object,
+                        sitemapService.Object,
+                        uow);
+
+                    var command = new DeletePageCommand(pageService);
                     command.Repository = repository;
                     command.UnitOfWork = uow;
+                    command.Context = new Mock<ICommandContext>().Object;
 
                     var result = command.Execute(new DeletePageViewModel
                                         {

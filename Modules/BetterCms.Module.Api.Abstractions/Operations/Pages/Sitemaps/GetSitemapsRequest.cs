@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
@@ -11,6 +12,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps
     /// </summary>
     [Route("/sitemaps", Verbs = "GET")]
     [DataContract]
+    [Serializable]
     public class GetSitemapsRequest : RequestBase<GetSitemapsModel>, IReturn<GetSitemapsResponse>
     {
     }

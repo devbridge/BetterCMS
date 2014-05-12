@@ -9,6 +9,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps
     /// Sitemap creation response.
     /// </summary>
     [DataContract]
+    [Serializable]
     public class PostSitemapResponse : ResponseBase<Guid?>
     {
     }

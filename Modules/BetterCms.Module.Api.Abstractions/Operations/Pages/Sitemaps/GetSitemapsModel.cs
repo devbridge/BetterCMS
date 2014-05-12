@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Infrastructure.Enums;
@@ -9,6 +10,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps
     /// Data model for getting sitemaps list.
     /// </summary>
     [DataContract]
+    [Serializable]
     public class GetSitemapsModel : DataOptions, IFilterByTags
     {
         /// <summary>

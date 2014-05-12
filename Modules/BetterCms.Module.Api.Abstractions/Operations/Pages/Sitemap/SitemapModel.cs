@@ -7,6 +7,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap
 {
     [Obsolete("Use everything from BetterCms.Module.Api.Operations.Pages.Sitemaps name space.")]
     [DataContract]
+    [Serializable]
     public class SitemapModel : ModelBase
     {
         /// <summary>
