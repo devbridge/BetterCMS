@@ -1,10 +1,12 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
 {
     /// <summary>
     /// Model for sitemap getting.
     /// </summary>
+    [Serializable]
     [DataContract]
     public class GetSitemapModel
     {

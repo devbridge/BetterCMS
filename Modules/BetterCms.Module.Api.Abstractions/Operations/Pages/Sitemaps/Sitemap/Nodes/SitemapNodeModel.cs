@@ -5,6 +5,10 @@ using BetterCms.Module.Api.Infrastructure;
 
 namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes
 {
+    /// <summary>
+    /// Sitemap node data model.
+    /// </summary>
+    [Serializable]
     [DataContract]
     public class SitemapNodeModel : ModelBase
     {
@@ -15,7 +19,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes
         /// The parent node id.
         /// </value>
         [DataMember]
-        public System.Guid? ParentId { get; set; }
+        public Guid? ParentId { get; set; }
 
         /// <summary>
         /// Gets or sets the node title.
@@ -30,7 +34,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes
         /// Gets or sets the node URL.
         /// </summary>
         /// <value>
-        /// The ndoe URL.
+        /// The node URL.
         /// </value>
         [DataMember]
         public string Url { get; set; }

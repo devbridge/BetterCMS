@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
@@ -9,6 +10,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
     /// <summary>
     /// Data model for sitemap save.
     /// </summary>
+    [Serializable]
+    [DataContract]
     public class SaveSitemapModel : SaveModelBase
     {
         /// <summary>

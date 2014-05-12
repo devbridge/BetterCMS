@@ -11,6 +11,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
     /// Sitemap delete request.
     /// </summary>
     [Route("/sitemaps/{SitemapId}", Verbs = "DELETE")]
+    [Serializable]
     [DataContract]
     public class DeleteSitemapRequest : RequestBase<RequestDeleteModel>, IReturn<DeleteSitemapResponse>
     {

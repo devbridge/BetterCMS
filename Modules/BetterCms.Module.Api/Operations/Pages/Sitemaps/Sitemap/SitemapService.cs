@@ -4,13 +4,14 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
-using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Security;
+using BetterCms.Core.Services;
 using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes;
 using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node;
 using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Tree;
 using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.Pages.Services;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
@@ -59,6 +60,21 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
         private readonly IAccessControlService accessControlService;
 
         /// <summary>
+        /// The security service.
+        /// </summary>
+        private readonly ISecurityService securityService;
+
+        /// <summary>
+        /// The sitemap service.
+        /// </summary>
+        private readonly Module.Pages.Services.ISitemapService sitemapService;
+
+        /// <summary>
+        /// The CMS configuration.
+        /// </summary>
+        private readonly ICmsConfiguration cmsConfiguration;
+
+        /// <summary>
         /// The node service.
         /// </summary>
         private readonly INodeService nodeService;
@@ -73,7 +89,20 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
         /// <param name="nodesService">The nodes service.</param>
         /// <param name="tagService">The tag service.</param>
         /// <param name="accessControlService">The access control service.</param>
-        public SitemapService(IRepository repository, IUnitOfWork unitOfWork, ISitemapTreeService treeService, INodeService nodeService, INodesService nodesService, ITagService tagService, IAccessControlService accessControlService)
+        /// <param name="securityService">The security service.</param>
+        /// <param name="sitemapService">The sitemap service.</param>
+        /// <param name="cmsConfiguration">The CMS configuration.</param>
+        public SitemapService(
+            IRepository repository,
+            IUnitOfWork unitOfWork,
+            ISitemapTreeService treeService,
+            INodeService nodeService,
+            INodesService nodesService,
+            ITagService tagService,
+            IAccessControlService accessControlService,
+            ISecurityService securityService,
+            Module.Pages.Services.ISitemapService sitemapService,
+            ICmsConfiguration cmsConfiguration)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
@@ -82,6 +111,9 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
             this.nodesService = nodesService;
             this.tagService = tagService;
             this.accessControlService = accessControlService;
+            this.securityService = securityService;
+            this.sitemapService = sitemapService;
+            this.cmsConfiguration = cmsConfiguration;
         }
 
         /// <summary>
@@ -137,6 +169,13 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
         {
             var tagsFuture = repository.AsQueryable<Module.Pages.Models.SitemapTag>().Where(e => e.Sitemap.Id == request.SitemapId).Select(e => e.Tag.Name).ToFuture();
 
+// TODO: implement.
+//            var nodesFuture = 
+//            if (request.Data.IncludeNodes)
+//            {
+//                
+//            }
+
             var response =
                 repository.AsQueryable<Module.Pages.Models.Sitemap>()
                     .Where(s => s.Id == request.SitemapId)
@@ -160,6 +199,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
                     .FirstOne();
 
             response.Data.Tags = tagsFuture.ToList();
+
+// TODO: implement.
+//            if (request.Data.IncludeNodesWithTranslations)
+//            {
+//                response.Nodes = LoadNodes(response.Data.Id);
+//            }
 
             if (request.Data.IncludeAccessRules)
             {
@@ -192,6 +237,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
             else if (request.Data.Version > 0)
             {
                 sitemap.Version = request.Data.Version;
+            }
+
+            if (cmsConfiguration.Security.AccessControlEnabled)
+            {
+                var roles = new[] { RootModuleConstants.UserRoles.EditContent };
+                accessControlService.DemandAccess(sitemap, securityService.GetCurrentPrincipal(), AccessLevel.ReadWrite, roles);
             }
 
             unitOfWork.BeginTransaction();
@@ -246,34 +297,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
                 return new DeleteSitemapResponse { Data = false };
             }
 
-            var sitemap = repository.First<Module.Pages.Models.Sitemap>(request.Data.Id);
-            if (request.Data.Version > 0 && sitemap.Version != request.Data.Version)
-            {
-                throw new ConcurrentDataException(sitemap);
-            }
-
-            unitOfWork.BeginTransaction();
-
-            // Delete child entities.            
-            if (sitemap.SitemapTags != null)
-            {
-                foreach (var pageTag in sitemap.SitemapTags)
-                {
-                    repository.Delete(pageTag);
-                }
-            }
-
-            if (sitemap.AccessRules != null)
-            {
-                var rules = sitemap.AccessRules.ToList();
-                rules.ForEach(sitemap.RemoveRule);
-            }
-
-            repository.Delete(sitemap);
-
-            unitOfWork.Commit();
-
-            Events.SitemapEvents.Instance.OnSitemapDeleted(sitemap);
+            sitemapService.DeleteSitemap(request.Data.Id, request.Data.Version, securityService.GetCurrentPrincipal());
 
             return new DeleteSitemapResponse { Data = true };
         }

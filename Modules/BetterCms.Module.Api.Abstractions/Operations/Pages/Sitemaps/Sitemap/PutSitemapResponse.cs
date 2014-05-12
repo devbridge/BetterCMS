@@ -8,6 +8,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
     /// <summary>
     /// Page save response.
     /// </summary>
+    [Serializable]
     [DataContract]
     public class PutSitemapResponse : ResponseBase<Guid>
     {

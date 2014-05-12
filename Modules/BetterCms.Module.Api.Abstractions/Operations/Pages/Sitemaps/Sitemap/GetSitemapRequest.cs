@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page;
@@ -11,6 +12,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
     /// Request to get sitemap data.
     /// </summary>
     [Route("/sitemaps/{SitemapId}", Verbs = "GET")]
+    [Serializable]
     [DataContract]
     public class GetSitemapRequest : RequestBase<GetSitemapModel>, IReturn<GetPageResponse>
     {
@@ -21,6 +23,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
         /// The sitemap identifier.
         /// </value>
         [DataMember]
-        public System.Guid SitemapId { get; set; }
+        public Guid SitemapId { get; set; }
     }
 }

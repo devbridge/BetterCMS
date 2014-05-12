@@ -7,6 +7,7 @@ using BetterCms.Module.Api.Infrastructure.Attributes;
 
 namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Tree
 {
+    [Serializable]
     [DataContract]
     public class SitemapTreeNodeModel : ModelBase
     {
