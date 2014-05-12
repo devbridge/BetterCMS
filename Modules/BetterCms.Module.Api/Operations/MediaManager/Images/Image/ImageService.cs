@@ -227,14 +227,14 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         /// </returns>
         public DeleteImageResponse Delete(DeleteImageRequest request)
         {
-            if (request.Data == null || request.Data.Id.HasDefaultValue())
+            if (request.Data == null || request.ImageId.HasDefaultValue())
             {
                 return new DeleteImageResponse { Data = false };
             }
 
             var itemToDelete = repository
                 .AsQueryable<MediaImage>()
-                .Where(p => p.Id == request.Data.Id)
+                .Where(p => p.Id == request.ImageId)
                 .FirstOne();
 
             if (request.Data.Version > 0 && itemToDelete.Version != request.Data.Version)

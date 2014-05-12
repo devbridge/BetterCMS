@@ -135,7 +135,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
         /// <returns><c>DeletePageContentResponse</c> with success status.</returns>
         public DeletePageContentResponse Delete(DeletePageContentRequest request)
         {
-            if (request.Data == null || request.Data.Id.HasDefaultValue())
+            if (request.Data == null || request.PageContentId.HasDefaultValue())
             {
                 return new DeletePageContentResponse { Data = false };
             }

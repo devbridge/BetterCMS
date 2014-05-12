@@ -13,7 +13,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         public DeleteImageRequestValidator()
         {
             this.RuleFor(request => request.Data).NotNull().WithMessage("Data object with filled Id and Version must be provided.");
-            this.RuleFor(request => request.Data.Id).NotEmpty().WithMessage("Id field must be not null.");
+            this.RuleFor(request => request.ImageId).NotEmpty().WithMessage("Id field must be not null.");
             this.RuleFor(request => request.Data.Version).GreaterThan(0).WithMessage("Version filed must be not null.");
         }
     }

@@ -5,14 +5,14 @@ using BetterCms.Module.Api.Infrastructure;
 
 using ServiceStack.ServiceHost;
 
-namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
+namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
 {
     /// <summary>
-    /// Request for image update or creation.
+    /// Blog post delete request for REST.
     /// </summary>
-    [Route("/images/{ImageId}", Verbs = "DELETE")]
+    [Route("/blog-post-properties/{BlogPostId}", Verbs = "DELETE")]
     [DataContract]
-    public class DeleteImageRequest : DeleteRequestBase, IReturn<DeleteImageResponse>
+    public class DeleteBlogPostPropertiesRequest : DeleteRequestBase, IReturn<DeleteBlogPostPropertiesResponse>
     {
         /// <summary>
         /// Gets or sets the identifier.
@@ -21,6 +21,6 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         /// The identifier.
         /// </value>
         [DataMember]
-        public Guid ImageId { get; set; }
+        public Guid BlogPostId { get; set; }
     }
 }

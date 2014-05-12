@@ -166,14 +166,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
         /// </returns>
         public DeleteHtmlContentResponse Delete(DeleteHtmlContentRequest request)
         {
-            if (request.Data == null || request.Data.Id.HasDefaultValue())
+            if (request.Data == null || request.ContentId.HasDefaultValue())
             {
                 return new DeleteHtmlContentResponse { Data = false };
             }
 
             var itemToDelete = repository
                 .AsQueryable<Module.Pages.Models.HtmlContent>()
-                .Where(p => p.Id == request.Data.Id)
+                .Where(p => p.Id == request.ContentId)
                 .FirstOne();
 
             if (request.Data.Version > 0 && itemToDelete.Version != request.Data.Version)

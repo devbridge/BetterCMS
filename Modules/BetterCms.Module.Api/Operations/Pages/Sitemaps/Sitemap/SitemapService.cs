@@ -292,12 +292,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
         /// </returns>
         public DeleteSitemapResponse Delete(DeleteSitemapRequest request)
         {
-            if (request.Data == null || request.Data.Id.HasDefaultValue())
+            if (request.Data == null || request.SitemapId.HasDefaultValue())
             {
                 return new DeleteSitemapResponse { Data = false };
             }
 
-            sitemapService.DeleteSitemap(request.Data.Id, request.Data.Version, securityService.GetCurrentPrincipal());
+            sitemapService.DeleteSitemap(request.SitemapId, request.Data.Version, securityService.GetCurrentPrincipal());
 
             return new DeleteSitemapResponse { Data = true };
         }

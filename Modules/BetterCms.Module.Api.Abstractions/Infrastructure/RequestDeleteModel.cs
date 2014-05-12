@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace BetterCms.Module.Api.Infrastructure
 {
@@ -9,15 +8,6 @@ namespace BetterCms.Module.Api.Infrastructure
     [DataContract]
     public class RequestDeleteModel
     {
-        /// <summary>
-        /// Gets or sets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        [DataMember]
-        public Guid Id { get; set; }
-
         /// <summary>
         /// Gets or sets the version.
         /// </summary>
