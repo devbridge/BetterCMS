@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project activeEnvironment="Default" name="BCMS API" resourceRoot="" soapui-version="4.6.3" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config">
+<con:soapui-project activeEnvironment="Default" name="BCMS API" resourceRoot="" soapui-version="4.6.4" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config">
   <con:settings/>
   <con:interface xsi:type="con:RestService" wadlVersion="http://wadl.dev.java.net/2009/02" name="http://localhost:55558" type="rest" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <con:settings/>
@@ -705,7 +705,65 @@
          "lastModifiedBy": "Better CMS",
          "version": 1
 }}
-</con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource></con:interface>
+</con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource><con:resource name="sitemaps" path="/bcms-api/sitemaps"><con:settings/><con:parameters><con:parameter><con:name>format</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:resource name="{ID}" path="17abfee95ae6470c92e1c2905036574b"><con:settings/><con:parameters><con:parameter><con:name>ID</con:name><con:value>ID</con:value><con:style>TEMPLATE</con:style><con:default>ID</con:default></con:parameter><con:parameter><con:name>data</con:name><con:value/><con:style>QUERY</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>Cookie</con:name><con:value>.ASPXAUTH=</con:value><con:style>HEADER</con:style><con:default>.ASPXAUTH=</con:default><con:description xsi:nil="true"/></con:parameter></con:parameters><con:method name="Get sitemap by ID" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:abf="http://localhost/bcms-api/sitemaps/17abfee95ae6470c92e1c2905036574b">abf:Response</con:element></con:representation><con:representation type="FAULT"><con:mediaType>text/html; charset=utf-8</con:mediaType><con:status>500</con:status><con:params/><con:element>html</con:element></con:representation><con:request name="Request 1" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:55558</con:endpoint><con:request/><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters>
+  <con:entry key="Cookie" value=".ASPXAUTH=EE626D014E193ED00DC476A2BC53B62163B8C141416AD1E67C97FB077E2BD8444F39E7D74EFB6967045258917648472B386FC16D57C9E8214984F4AB4351DB1E85B2786032B14AC97C5CEB58664304FD84FC658C69AD5D1BBA4C42F316265416E2E86D4AA02BEC3CA9C3FE7E8AF76B3A3500E6CC3CD86D0A1F2F3CFB33954071"/>
+  <con:entry key="data" value="{includeNodes:true}"/>
+  <con:entry key="format" value="json"/>
+</con:parameters><con:parameterOrder><con:entry>format</con:entry><con:entry>ID</con:entry><con:entry>data</con:entry><con:entry>Cookie</con:entry></con:parameterOrder></con:request></con:method><con:method name="Update sitemap" method="PUT"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:representation type="FAULT"><con:mediaType>text/html</con:mediaType><con:status>500</con:status><con:params/><con:element>html</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:request name="Request 1" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:55558</con:endpoint><con:request>{ "data":  {
+      "title": "Default Site Map",
+      "tags": ["test1", "3"],
+     "version": 1,
+"nodes":    [
+    {
+        "title": "_0000_Page_For_Tests",
+        "url": "/0000-page-for-tests/",
+        "displayOrder": 1,
+        "macro": null,
+        "pageId": null,
+        "pageIsPublished": false,
+        "pageLanguageId": null,
+        "translations": [],
+        "usePageTitleAsNodeTitle": false,
+        "nodes" : [
+            {
+             "title": "_0000_Page_For_Tests_3",
+             "url": "/0000-page-for-tests-3/",
+             "displayOrder": 4,
+             "macro": null,
+             "pageId": null,
+             "pageIsPublished": false,
+             "pageLanguageId": null,
+             "translations": [],
+             "usePageTitleAsNodeTitle": false,
+            }
+        ]
+    },
+    {
+        "title": "_0000_Page_For_Tests_1",
+        "url": "/0000-page-for-tests-1/",
+        "displayOrder": 2,
+        "macro": null,
+        "pageId": null,
+        "pageIsPublished": false,
+        "pageLanguageId": null,
+        "translations": [],
+        "usePageTitleAsNodeTitle": false,
+    },
+    {
+        "title": "_0000_Page_For_Tests_2",
+        "url": "/0000-page-for-tests-2/",
+        "displayOrder": 3,
+        "macro": null,
+        "pageId": null,
+        "pageIsPublished": false,
+        "pageLanguageId": null,
+        "translations": [],
+        "usePageTitleAsNodeTitle": false,
+        "version": 2
+    }
+   ],
+   }
+}</con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="Cookie" value=".ASPXAUTH=EE626D014E193ED00DC476A2BC53B62163B8C141416AD1E67C97FB077E2BD8444F39E7D74EFB6967045258917648472B386FC16D57C9E8214984F4AB4351DB1E85B2786032B14AC97C5CEB58664304FD84FC658C69AD5D1BBA4C42F316265416E2E86D4AA02BEC3CA9C3FE7E8AF76B3A3500E6CC3CD86D0A1F2F3CFB33954071" xmlns="http://eviware.com/soapui/config"/></con:parameters><con:parameterOrder><con:entry>format</con:entry><con:entry>ID</con:entry><con:entry>data</con:entry><con:entry>Cookie</con:entry></con:parameterOrder></con:request></con:method></con:resource><con:method name="Get Sitemaps" method="GET"><con:settings/><con:parameters/><con:representation type="FAULT"><con:mediaType>text/html; charset=utf-8</con:mediaType><con:status>404</con:status><con:params/><con:element>html</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:sit="http://localhost/bcms-api/sitemaps">sit:Response</con:element></con:representation><con:request name="Request 1" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:55558</con:endpoint><con:request/><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters><entry key="format" value="json" xmlns="http://eviware.com/soapui/config"/></con:parameters><con:parameterOrder><con:entry>format</con:entry></con:parameterOrder></con:request></con:method></con:resource></con:interface>
   <con:properties/>
   <con:wssContainer/>
 </con:soapui-project>

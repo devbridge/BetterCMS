@@ -173,11 +173,11 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
         {
             var tagsFuture = repository.AsQueryable<SitemapTag>().Where(e => e.Sitemap.Id == request.SitemapId).Select(e => e.Tag.Name).ToFuture();
 
-            IEnumerable<Module.Pages.Models.SitemapNode> nodesFuture = null;
+            IEnumerable<SitemapNode> nodesFuture = null;
             if (request.Data.IncludeNodes)
             {
                  nodesFuture =
-                    repository.AsQueryable<Module.Pages.Models.SitemapNode>()
+                    repository.AsQueryable<SitemapNode>()
                         .Where(node => node.Sitemap.Id == request.SitemapId && !node.IsDeleted)
                         .FetchMany(node => node.Translations)
                         .ToFuture();
@@ -274,11 +274,11 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
         /// </returns>
         public PutSitemapResponse Put(PutSitemapRequest request)
         {
-            IEnumerable<Module.Pages.Models.SitemapNode> nodesFuture = null;
+            IEnumerable<SitemapNode> nodesFuture = null;
             if (request.Data.Nodes != null)
             {
                 nodesFuture =
-                   repository.AsQueryable<Module.Pages.Models.SitemapNode>()
+                   repository.AsQueryable<SitemapNode>()
                        .Where(node => node.Sitemap.Id == request.SitemapId && !node.IsDeleted)
                        .FetchMany(node => node.Translations)
                        .ToFuture();
@@ -406,7 +406,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
 
             foreach (var existingNode in currentNodes)
             {
-                if (removeAll || updatedNodes.All(n => n.Id != existingNode.Id))
+                if (removeAll || !NodeExist(updatedNodes, existingNode.Id))
                 {
                     repository.Delete(existingNode);
                 }
@@ -417,21 +417,38 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
                 return;
             }
 
-            this.SaveChildNodes(sitemap, null, updatedNodes, updatedNodes, currentNodes);
+            this.SaveChildNodes(sitemap, null, updatedNodes, currentNodes);
+        }
+
+        private bool NodeExist(IList<SaveSitemapNodeModel> updatedNodes, Guid id)
+        {
+            if (updatedNodes == null || updatedNodes.IsEmpty())
+            {
+                return false;
+            }
+
+            foreach (var node in updatedNodes)
+            {
+                if (node.Id == id || NodeExist(node.Nodes, id))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
         /// Saves the child nodes.
         /// </summary>
         /// <param name="sitemap">The sitemap.</param>
+        /// <param name="parentNode">The parent node.</param>
         /// <param name="nodesToSave">The nodes to save.</param>
-        /// <param name="updatedNodes">The updated nodes.</param>
         /// <param name="currentNodes">The current nodes.</param>
         private void SaveChildNodes(
             Module.Pages.Models.Sitemap sitemap,
             SitemapNode parentNode, 
             IEnumerable<SaveSitemapNodeModel> nodesToSave,
-            IList<SaveSitemapNodeModel> updatedNodes,
             IList<SitemapNode> currentNodes)
         {
             foreach (var nodeModel in nodesToSave)
@@ -465,10 +482,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
 
                 this.SaveTranslations(nodeModel, nodeToSave);
 
-                this.SaveChildNodes(sitemap, nodeToSave, nodeModel.Nodes, updatedNodes, currentNodes);
+                this.SaveChildNodes(sitemap, nodeToSave, nodeModel.Nodes, currentNodes);
             }
         }
 
+        /// <summary>
+        /// Saves the translations.
+        /// </summary>
+        /// <param name="nodeModel">The node model.</param>
+        /// <param name="nodeToSave">The node to save.</param>
         private void SaveTranslations(SaveSitemapNodeModel nodeModel, SitemapNode nodeToSave)
         {
             foreach (var translationModel in nodeModel.Translations)

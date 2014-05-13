@@ -78,7 +78,5 @@ namespace BetterCms.Module.Api.Extensions
 
             return list;
         }
-
-
     }
 }
