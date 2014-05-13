@@ -4,6 +4,7 @@ using System.Linq;
 
 using BetterCms.Module.Api.Operations.Pages.Sitemaps;
 using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap;
+using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node;
 
 namespace BetterCms.Module.Api.Extensions
 {

@@ -2,6 +2,7 @@
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node;
 
 using ServiceStack.ServiceHost;
 

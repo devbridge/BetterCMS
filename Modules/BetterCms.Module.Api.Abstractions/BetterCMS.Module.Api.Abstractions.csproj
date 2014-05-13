@@ -133,8 +133,11 @@
     <Compile Include="Operations\Pages\Pages\Page\Properties\PostPagePropertiesRequest.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PostPagePropertiesResponse.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\GetSitemapModel.cs" />
-    <Compile Include="Operations\Pages\Sitemaps\Sitemap\SaveSitemapNodeTranslation.cs" />
-    <Compile Include="Operations\Pages\Sitemaps\Sitemap\SaveSitemapNodeModel.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Nodes\Node\SaveSitemapModel.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Nodes\Node\SaveSitemapNodeModel.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Nodes\Node\SaveSitemapNodeTranslation.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Nodes\PostSitemapNodeRequest.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Nodes\PostSitemapNodeResponse.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\SitemapNodeTranslation.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\SitemapNodeWithTranslationsModel.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\DeleteHtmlContentWidgetRequest.cs" />
@@ -167,7 +170,6 @@
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\Nodes\SitemapNodeModel.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\PutSitemapRequest.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\PutSitemapResponse.cs" />
-    <Compile Include="Operations\Pages\Sitemaps\Sitemap\SaveSitemapModel.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\SitemapModel.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\Tree\GetSitemapTreeModel.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\Tree\GetSitemapTreeRequest.cs" />

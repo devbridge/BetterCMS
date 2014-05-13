@@ -1,4 +1,7 @@
-﻿using BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent;
+﻿using System;
+
+using BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent;
+using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content;
 
 namespace BetterCms.Module.Api.Extensions
 {
@@ -10,6 +13,14 @@ namespace BetterCms.Module.Api.Extensions
 
             return new PutHtmlContentRequest { Data = model, ContentId = response.Data.Id };
         }
+
+        public static PutPageContentRequest ToPutRequest(this GetPageContentResponse response)
+        {
+            var model = MapPageContentWidgetModel(response);
+
+            return new PutPageContentRequest { Data = model, PageId = response.Data.PageId, PageContentId = response.Data.Id };
+        }
+
         private static SaveHtmlContentModel MapHtmlContentWidgetModel(GetHtmlContentResponse response)
         {
             var model = new SaveHtmlContentModel
@@ -27,6 +38,19 @@ namespace BetterCms.Module.Api.Extensions
                             CustomJavaScript = response.Data.CustomJavaScript,
                             UseCustomJavaScript = response.Data.UseCustomJavaScript,
                         };
+
+            return model;
+        }
+
+        private static SavePageContentModel MapPageContentWidgetModel(GetPageContentResponse response)
+        {
+            var model = new SavePageContentModel
+            {
+                Version = response.Data.Version,
+                ContentId = response.Data.ContentId,
+                RegionId = response.Data.RegionId,
+                Order = response.Data.Order
+            };
 
             return model;
         }
