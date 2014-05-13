@@ -218,6 +218,7 @@
     <Compile Include="Operations\Root\Layouts\Layout\LayoutService.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\Options\LayoutOptionsService.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\Regions\LayoutRegionsService.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\LayoutServiceHelper.cs" />
     <Compile Include="Operations\Root\Tags\TagsService.cs" />
     <Compile Include="Operations\Root\Version\VersionService.cs" />
     <Compile Include="ApiModuleDescriptor.cs" />

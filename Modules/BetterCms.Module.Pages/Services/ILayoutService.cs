@@ -42,11 +42,12 @@ namespace BetterCms.Module.Pages.Services
         /// Saves the layout.
         /// </summary>
         /// <param name="model">The model.</param>
+        /// <param name="treatNullsAsLists">if set to <c>true</c> treat null lists as empty lists.</param>
         /// <param name="createIfNotExists">if set to <c>true</c> create if not exists.</param>
         /// <returns>
         /// Saved layout entity
         /// </returns>
-        Layout SaveLayout(TemplateEditViewModel model, bool createIfNotExists = false);
+        Layout SaveLayout(TemplateEditViewModel model, bool treatNullsAsLists = true, bool createIfNotExists = false);
 
         /// <summary>
         /// Deletes the layout.

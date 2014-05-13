@@ -193,11 +193,12 @@ namespace BetterCms.Module.Pages.Services
         /// Saves the layout.
         /// </summary>
         /// <param name="model">The model.</param>
+        /// <param name="treatNullsAsLists">if set to <c>true</c> treat null lists as empty lists.</param>
         /// <param name="createIfNotExists">if set to <c>true</c> create if not exists.</param>
         /// <returns>
         /// Saved layout entity
         /// </returns>
-        public Layout SaveLayout(TemplateEditViewModel model, bool createIfNotExists = false)
+        public Layout SaveLayout(TemplateEditViewModel model, bool treatNullsAsLists = true, bool createIfNotExists = false)
         {
             if (model.Options != null)
             {
@@ -234,6 +235,13 @@ namespace BetterCms.Module.Pages.Services
             template.Name = model.Name;
             template.LayoutPath = model.Url;
             template.PreviewUrl = model.PreviewImageUrl;
+
+            // Set null list as empty
+            if (treatNullsAsLists)
+            {
+                model.Options = model.Options ?? new List<OptionViewModel>();
+                model.Regions = model.Regions ?? new List<TemplateRegionItemViewModel>();
+            }
 
             // Edits or removes regions.
             if (model.Regions != null)
