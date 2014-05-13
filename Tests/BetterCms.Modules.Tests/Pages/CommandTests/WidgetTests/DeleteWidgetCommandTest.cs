@@ -5,7 +5,12 @@ using System.Text;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.Services;
 using BetterCms.Module.Pages.Command.Widget.DeleteWidget;
+using BetterCms.Module.Pages.Services;
+using BetterCms.Module.Root.Services;
+
+using Moq;
 
 using NUnit.Framework;
 
@@ -25,9 +30,15 @@ namespace BetterCms.Test.Module.Pages.CommandTests.WidgetTests
                     session.Flush();
                     session.Clear();
 
-                    DeleteWidgetCommand command = new DeleteWidgetCommand();
-                    command.UnitOfWork = new DefaultUnitOfWork(session);
-                    command.Repository = new DefaultRepository(command.UnitOfWork);
+                    var uow = new DefaultUnitOfWork(session);
+                    var repository = new DefaultRepository(uow);
+                    var optionService = new Mock<IOptionService>().Object;
+                    var contentService = new Mock<IContentService>().Object;
+                    var securityService = new Mock<ISecurityService>().Object;
+
+                    var widgetService = new DefaultWidgetService(repository, uow, optionService, contentService, securityService);
+
+                    DeleteWidgetCommand command = new DeleteWidgetCommand(widgetService);
 
                     bool success = command.Execute(new DeleteWidgetRequest
                                                        {
@@ -48,10 +59,16 @@ namespace BetterCms.Test.Module.Pages.CommandTests.WidgetTests
                 session.SaveOrUpdate(htmlContentWidget);
                 session.Flush();
                 session.Clear();
-                
-                DeleteWidgetCommand command = new DeleteWidgetCommand();
-                command.UnitOfWork = new DefaultUnitOfWork(session);
-                command.Repository = new DefaultRepository(command.UnitOfWork);
+
+                var uow = new DefaultUnitOfWork(session);
+                var repository = new DefaultRepository(uow);
+                var optionService = new Mock<IOptionService>().Object;
+                var contentService = new Mock<IContentService>().Object;
+                var securityService = new Mock<ISecurityService>().Object;
+
+                var widgetService = new DefaultWidgetService(repository, uow, optionService, contentService, securityService);
+
+                DeleteWidgetCommand command = new DeleteWidgetCommand(widgetService);
 
                 bool success = command.Execute(new DeleteWidgetRequest
                                                     {
