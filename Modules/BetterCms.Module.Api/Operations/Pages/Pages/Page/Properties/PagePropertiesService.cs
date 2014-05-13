@@ -8,6 +8,7 @@ using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Exceptions.DataTier;
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 using BetterCms.Module.Api.Helpers;
@@ -64,7 +65,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// <summary>
         /// The tag service.
         /// </summary>
-        private readonly BetterCms.Module.Pages.Services.ITagService tagService;
+        private readonly Module.Pages.Services.ITagService tagService;
 
         /// <summary>
         /// The access control service.
@@ -432,17 +433,25 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// <returns><c>PutPageResponse</c> with created or updated item id.</returns>
         public PutPagePropertiesResponse Put(PutPagePropertiesRequest request)
         {
-            var pageProperties =
-                repository.AsQueryable<PageProperties>(e => e.Id == request.PageId.GetValueOrDefault())
-                    .FetchMany(p => p.Options)
-                    .Fetch(p => p.Layout)
-                    .ThenFetchMany(l => l.LayoutOptions)
-                    .FetchMany(p => p.MasterPages)
-                    .FetchMany(f => f.AccessRules)
-                    .ToList()
-                    .FirstOrDefault();
+            PageProperties pageProperties = null;
 
-            var isNew = pageProperties == null;
+            var isNew = !request.PageId.HasValue || request.PageId.Value.HasDefaultValue();
+
+            if (!isNew)
+            {
+                pageProperties =
+                    repository.AsQueryable<PageProperties>(e => e.Id == request.PageId.GetValueOrDefault())
+                        .FetchMany(p => p.Options)
+                        .Fetch(p => p.Layout)
+                        .ThenFetchMany(l => l.LayoutOptions)
+                        .FetchMany(p => p.MasterPages)
+                        .FetchMany(f => f.AccessRules)
+                        .ToList()
+                        .FirstOrDefault();
+                
+                isNew = pageProperties == null;
+            }
+
             if (isNew)
             {
                 pageProperties = new PageProperties { AccessRules = new List<AccessRule>(), Id = request.PageId.GetValueOrDefault() };
@@ -450,6 +459,13 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
             else if (request.Data.Version > 0)
             {
                 pageProperties.Version = request.Data.Version;
+            }
+
+            if (!isNew && pageProperties.IsMasterPage != request.Data.IsMasterPage)
+            {
+                const string message = "IsMasterPage cannot be changed for updating page. It can be modified only when creating a page.";
+                var logMessage = string.Format("{0} PageId: {1}", message, request.PageId);
+                throw new ValidationException(() => message, logMessage);
             }
 
             // Load master pages for updating page's master path and page's children master path
@@ -466,12 +482,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                 var pageUrl = request.Data.PageUrl;
                 if (string.IsNullOrEmpty(pageUrl) && !string.IsNullOrWhiteSpace(request.Data.Title))
                 {
-                    pageUrl = this.pageService.CreatePagePermalink(request.Data.Title, null);
+                    pageUrl = pageService.CreatePagePermalink(request.Data.Title, null);
                 }
                 else
                 {
-                    pageUrl = this.urlService.FixUrl(pageUrl);
-                    this.pageService.ValidatePageUrl(pageUrl, request.PageId);
+                    pageUrl = urlService.FixUrl(pageUrl);
+                    pageService.ValidatePageUrl(pageUrl, request.PageId);
                 }
 
                 pageProperties.PageUrl = pageUrl;

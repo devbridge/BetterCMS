@@ -20,6 +20,13 @@
         PutPagePropertiesResponse Put(PutPagePropertiesRequest request);
 
         /// <summary>
+        /// Posts the page specified in request.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns><c>PostPagePropertiesRequest</c> with updated page id.</returns>
+        PostPagePropertiesResponse Post(PostPagePropertiesRequest request);
+
+        /// <summary>
         /// Deletes the page specified in request.
         /// </summary>
         /// <param name="request">The request.</param>
