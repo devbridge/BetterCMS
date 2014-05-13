@@ -22,5 +22,12 @@
         ///   <c>PutHtmlContentResponse</c> with html content id.
         /// </returns>
         PutHtmlContentResponse Put(PutHtmlContentRequest request);
+
+        /// <summary>
+        /// Deletes the specified request.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns><c>DeleteHtmlContentResponse</c> with html content id.</returns>
+        DeleteHtmlContentResponse Delete(DeleteHtmlContentRequest request);
     }
 }

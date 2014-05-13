@@ -2,6 +2,8 @@
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+
+using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Root.Layouts.Layout.Options;
 using BetterCms.Module.Api.Operations.Root.Layouts.Layout.Regions;
 
@@ -17,11 +19,15 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
 
         private readonly IRepository repository;
 
-        public LayoutService(ILayoutRegionsService layoutRegionService, IRepository repository, ILayoutOptionsService layoutOptionsService)
+        private readonly Module.Pages.Services.ILayoutService layoutService;
+
+        public LayoutService(ILayoutRegionsService layoutRegionService, IRepository repository, ILayoutOptionsService layoutOptionsService,
+            Module.Pages.Services.ILayoutService layoutService)
         {
             this.layoutRegionService = layoutRegionService;
             this.layoutOptionsService = layoutOptionsService;
             this.repository = repository;
+            this.layoutService = layoutService;
         }
 
         public GetLayoutResponse Get(GetLayoutRequest request)
@@ -47,6 +53,26 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
                        {
                            Data = model
                        };
+        }
+
+        public PutLayoutResponse Put(PutLayoutRequest request)
+        {
+            var model = request.Data.ToServiceModel();
+            if (request.LayoutId.HasValue)
+            {
+                model.Id = request.LayoutId.Value;
+            }
+
+            var result = layoutService.SaveLayout(model, true);
+
+            return new PutLayoutResponse { Data = result.Id };
+        }
+
+        public DeleteLayoutResponse Delete(DeleteLayoutRequest request)
+        {
+            var result = layoutService.DeleteLayout(request.LayoutId, request.Data.Version);
+
+            return new DeleteLayoutResponse { Data = result };
         }
 
         ILayoutRegionsService ILayoutService.Regions

@@ -11,6 +11,6 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
     public class GetLayoutRequest : IReturn<GetLayoutResponse>
     {
         [DataMember]
-        public System.Guid LayoutId { get; set; }
+        public Guid LayoutId { get; set; }
     }
 }

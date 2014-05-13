@@ -386,9 +386,16 @@
     <Compile Include="Operations\Root\Languages\Language\GetLanguageRequestValidator.cs" />
     <Compile Include="Operations\Root\Languages\Language\GetLanguageResponse.cs" />
     <Compile Include="Operations\Root\Languages\Language\ILanguageService.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\DeleteLayoutRequest.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\DeleteLayoutResponse.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\LayoutSaveModel.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\Options\GetLayoutOptionsRequest.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\Options\GetLayoutOptionsResponse.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\Options\ILayoutOptionsService.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\PutLayoutRequest.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\PutLayoutResponse.cs" />
+    <Compile Include="Operations\Root\Layouts\PostLayoutRequest.cs" />
+    <Compile Include="Operations\Root\Layouts\PostLayoutResponse.cs" />
     <Compile Include="Operations\Root\OptionType.cs" />
     <Compile Include="Operations\Root\Tags\PostTagRequest.cs" />
     <Compile Include="Operations\Root\Tags\PostTagResponse.cs" />

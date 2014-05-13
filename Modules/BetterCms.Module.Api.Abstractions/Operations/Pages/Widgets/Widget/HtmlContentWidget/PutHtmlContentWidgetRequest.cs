@@ -22,6 +22,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
         /// The widget identifier.
         /// </value>
         [DataMember]
-        public System.Guid? WidgetId { get; set; }
+        public Guid? WidgetId { get; set; }
     }
 }
