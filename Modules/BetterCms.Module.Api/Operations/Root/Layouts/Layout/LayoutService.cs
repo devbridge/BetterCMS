@@ -49,10 +49,19 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
                     })
                 .FirstOne();
 
-            return new GetLayoutResponse
-                       {
-                           Data = model
-                       };
+            var response = new GetLayoutResponse { Data = model };
+
+            if (request.Data.IncludeOptions)
+            {
+                response.Options = LayoutServiceHelper.GetLayoutOptionsList(repository, request.LayoutId);
+            }
+
+            if (request.Data.IncludeRegions)
+            {
+                response.Regions = LayoutServiceHelper.GetLayoutRegionsList(repository, request.LayoutId);
+            }
+
+            return response;
         }
 
         public PutLayoutResponse Put(PutLayoutRequest request)
@@ -63,7 +72,7 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
                 model.Id = request.LayoutId.Value;
             }
 
-            var result = layoutService.SaveLayout(model, true);
+            var result = layoutService.SaveLayout(model, false, true);
 
             return new PutLayoutResponse { Data = result.Id };
         }
