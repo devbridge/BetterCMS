@@ -451,6 +451,11 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
             IEnumerable<SaveSitemapNodeModel> nodesToSave,
             IList<SitemapNode> currentNodes)
         {
+            if (nodesToSave == null)
+            {
+                return;
+            }
+
             foreach (var nodeModel in nodesToSave)
             {
                 var nodeToSave = currentNodes.FirstOrDefault(n => n.Id == nodeModel.Id);
