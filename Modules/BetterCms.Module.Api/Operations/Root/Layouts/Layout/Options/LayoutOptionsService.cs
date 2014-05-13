@@ -25,7 +25,8 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout.Options
                     {
                         Key = o.Key,
                         DefaultValue = o.DefaultValue,
-                        Type = (OptionType)(int)o.Type
+                        Type = (OptionType)(int)o.Type,
+                        CustomTypeIdentifier = o.CustomOption != null ? o.CustomOption.Identifier : null
                     })
                 .ToDataListResponse(request);
 

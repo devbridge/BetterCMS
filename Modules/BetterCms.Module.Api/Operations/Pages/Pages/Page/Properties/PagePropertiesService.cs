@@ -11,6 +11,7 @@ using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
+using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Operations.Root;
 
@@ -299,7 +300,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                             Value = o.OptionValue,
                             DefaultValue = o.OptionDefaultValue,
                             Type = (Root.OptionType)(int)o.Type,
-                            UseDefaultValue = o.UseDefaultValue
+                            UseDefaultValue = o.UseDefaultValue,
+                            CustomTypeIdentifier = o.CustomOption != null ? o.CustomOption.Identifier : null
                         })
                     .ToList();
             }
@@ -552,13 +554,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
 
             if (request.Data.PageOptions != null)
             {
-                var options = request.Data.PageOptions.Select(o => new OptionValueEditViewModel
-                {
-                    OptionValue = o.Value,
-                    OptionKey = o.Key,
-                    Type = (Core.DataContracts.Enums.OptionType)(short)o.Type,
-                    UseDefaultValue = o.UseDefaultValue
-                }).ToList();
+                var options = request.Data.PageOptions.ToServiceModel();
 
                 var pageOptions = pageProperties.Options != null ? pageProperties.Options.Distinct() : null;
                 pageProperties.Options = optionService.SaveOptionValues(options, pageOptions, () => new PageOption { Page = pageProperties });

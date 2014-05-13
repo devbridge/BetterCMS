@@ -30,7 +30,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget
                     {
                         Key = o.Key,
                         DefaultValue = o.DefaultValue,
-                        Type = (OptionType)(int)o.Type
+                        Type = (OptionType)(int)o.Type,
+                        CustomTypeIdentifier = o.CustomOption != null ? o.CustomOption.Identifier : null
                     });
         }
     }

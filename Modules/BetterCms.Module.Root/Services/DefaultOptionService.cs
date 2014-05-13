@@ -582,16 +582,25 @@ namespace BetterCms.Module.Root.Services
                 return new List<CustomOption>();
             }
 
-            var customOptions = repository
-                .AsQueryable<CustomOption>()
-                .Where(co => ids.Contains(co.Identifier))
-                .ToList();
-
-            // Validate if there are any missing custom options
-            var notExisting = ids.FirstOrDefault(i => customOptions.All(co => co.Identifier != i));
-            if (notExisting != null)
+            var hasExc = ids.Any(string.IsNullOrWhiteSpace);
+            string notExisting = string.Empty;
+            List<CustomOption> customOptions;
+            if (!hasExc)
             {
-                throw new InvalidOperationException(string.Format("Custom option provider not found for custom type {0}!", notExisting));
+                customOptions = repository.AsQueryable<CustomOption>().Where(co => ids.Contains(co.Identifier)).ToList();
+
+                // Validate if there are any missing custom options
+                notExisting = ids.FirstOrDefault(i => customOptions.All(co => co.Identifier != i));
+                hasExc = !customOptions.Any() || notExisting != null;
+            }
+            else
+            {
+                customOptions = null;
+            }
+
+            if (hasExc)
+            {
+                throw new InvalidOperationException(string.Format("Custom option provider not found for custom type \"{0}\"!", notExisting));
             }
 
             return customOptions;

@@ -35,5 +35,14 @@ namespace BetterCms.Module.Api.Operations
         /// </value>
         [DataMember]
         public OptionType Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets the custom type identifier.
+        /// </summary>
+        /// <value>
+        /// The custom type identifier.
+        /// </value>
+        [DataMember]
+        public string CustomTypeIdentifier { get; set; }
     }
 }

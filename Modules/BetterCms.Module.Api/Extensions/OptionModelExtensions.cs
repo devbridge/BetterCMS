@@ -16,7 +16,27 @@ namespace BetterCms.Module.Api.Extensions
                     {
                         OptionDefaultValue = o.DefaultValue,
                         OptionKey = o.Key,
-                        Type = (OptionType)(short)o.Type
+                        Type = (OptionType)(short)o.Type,
+                        CustomOption = o.Type == Operations.Root.OptionType.Custom 
+                            ? new CustomOptionViewModel {Identifier = o.CustomTypeIdentifier} 
+                            : null
+                    })
+                .ToList();
+        }
+        
+        public static IList<OptionValueEditViewModel> ToServiceModel(this IList<OptionValueModel> model)
+        {
+            return model
+                .Select(o => new OptionValueEditViewModel
+                    {
+                        OptionDefaultValue = o.DefaultValue,
+                        OptionKey = o.Key,
+                        Type = (OptionType)(short)o.Type,
+                        UseDefaultValue = o.UseDefaultValue,
+                        OptionValue = o.Value,
+                        CustomOption = o.Type == Operations.Root.OptionType.Custom 
+                            ? new CustomOptionViewModel {Identifier = o.CustomTypeIdentifier} 
+                            : null
                     })
                 .ToList();
         }
