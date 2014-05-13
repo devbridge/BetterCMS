@@ -73,6 +73,7 @@
     <Compile Include="Extensions\LayoutExtensions.cs" />
     <Compile Include="Extensions\SitemapExtensions.cs" />
     <Compile Include="Extensions\PageExtensions.cs" />
+    <Compile Include="Extensions\ContentExtensions.cs" />
     <Compile Include="Extensions\WidgetExtensions.cs" />
     <Compile Include="Extensions\BlogPostExtensions.cs" />
     <Compile Include="Infrastructure\ApiIdentity.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Operations\MediaManager\Images\PostImagesResponse.cs" />
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\DeleteHtmlContentRequest.cs" />
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\DeleteHtmlContentResponse.cs" />
+    <Compile Include="Operations\Pages\Contents\Content\HtmlContent\SaveHtmlContentModel.cs" />
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\PutHtmlContentRequest.cs" />
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\PutHtmlContentResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\DeletePageContentRequest.cs" />

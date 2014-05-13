@@ -13,7 +13,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
     [Route("/contents/html/{ContentId}", Verbs = "PUT")]
     [DataContract]
     [Serializable]
-    public class PutHtmlContentRequest : RequestBase<HtmlContentModel>, IReturn<PutHtmlContentResponse>
+    public class PutHtmlContentRequest : RequestBase<SaveHtmlContentModel>, IReturn<PutHtmlContentResponse>
     {
         /// <summary>
         /// Gets or sets the content identifier.
@@ -22,17 +22,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
         /// The content identifier.
         /// </value>
         [DataMember]
-        public Guid? ContentId
-        {
-            get
-            {
-                return this.Data.Id;
-            }
-
-            set
-            {
-                this.Data.Id = value.HasValue ? value.Value : Guid.Empty;
-            }
-        }
+        public Guid? ContentId { get; set; }
     }
 }
