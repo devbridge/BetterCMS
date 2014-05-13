@@ -17,7 +17,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
         /// The page content identifier.
         /// </value>
         [DataMember]
-        public Guid? PageContentId { get; set; }
+        public Guid PageContentId { get; set; }
 
         /// <summary>
         /// Gets or sets the page identifier.

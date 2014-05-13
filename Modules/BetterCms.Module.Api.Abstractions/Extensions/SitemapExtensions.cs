@@ -4,6 +4,7 @@ using System.Linq;
 
 using BetterCms.Module.Api.Operations.Pages.Sitemaps;
 using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap;
+using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes;
 using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node;
 
 namespace BetterCms.Module.Api.Extensions
@@ -22,6 +23,20 @@ namespace BetterCms.Module.Api.Extensions
             var model = MapPageModel(response, true);
 
             return new PostSitemapRequest { Data = model };
+        }
+
+        public static PutNodeRequest ToPutRequest(this GetSitemapNodeResponse response)
+        {
+            var model = MapSitemapNodeModel(response, false);
+
+            return new PutNodeRequest { Data = model, SitemapId = response.Data.SitemapId, NodeId = response.Data.Id };
+        }
+
+        public static PostSitemapNodeRequest ToPostRequest(this GetSitemapNodeResponse response)
+        {
+            var model = MapSitemapNodeModel(response, true);
+
+            return new PostSitemapNodeRequest { Data = model };
         }
 
         private static SaveSitemapModel MapPageModel(GetSitemapResponse response, bool resetIds)
@@ -78,6 +93,35 @@ namespace BetterCms.Module.Api.Extensions
             }
 
             return list;
+        }
+
+        private static SaveNodeModel MapSitemapNodeModel(GetSitemapNodeResponse response, bool resetIds)
+        {
+            return new SaveNodeModel
+            {
+                Id = resetIds ? default(Guid) : response.Data.Id,
+                Version = response.Data.Version,
+                ParentId = response.Data.ParentId,
+                PageId = response.Data.PageId,
+                UsePageTitleAsNodeTitle = response.Data.UsePageTitleAsNodeTitle,
+                Title = response.Data.NodeTitle,
+                Url = response.Data.NodeUrl,
+                DisplayOrder = response.Data.DisplayOrder,
+                Macro = response.Data.Macro,
+                Translations =
+                    response.Translations.Select(
+                        t =>
+                        new SaveNodeTranslation
+                        {
+                            Id = t.Id,
+                            Version = t.Version,
+                            Title = t.Title,
+                            UsePageTitleAsNodeTitle = t.UsePageTitleAsNodeTitle,
+                            Url = t.Url,
+                            Macro = t.Macro,
+                            LanguageId = t.LanguageId
+                        }).ToList()
+            };
         }
     }
 }

@@ -14,7 +14,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes
     [Route("/sitemaps/{SitemapId}/nodes/", Verbs = "POST")]
     [DataContract]
     [Serializable]
-    public class PostSitemapNodeRequest : RequestBase<SaveSitemapNodeModel>, IReturn<PostSitemapNodeResponse>
+    public class PostSitemapNodeRequest : RequestBase<SaveNodeModel>, IReturn<PostSitemapNodeResponse>
     {
+        /// <summary>
+        /// Gets or sets the sitemap identifier.
+        /// </summary>
+        /// <value>
+        /// The sitemap identifier.
+        /// </value>
+        [DataMember]
+        public Guid SitemapId { get; set; }
     }
 }

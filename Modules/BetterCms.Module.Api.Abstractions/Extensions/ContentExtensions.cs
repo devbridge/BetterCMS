@@ -1,6 +1,4 @@
-﻿using System;
-
-using BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent;
+﻿using BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content;
 
 namespace BetterCms.Module.Api.Extensions

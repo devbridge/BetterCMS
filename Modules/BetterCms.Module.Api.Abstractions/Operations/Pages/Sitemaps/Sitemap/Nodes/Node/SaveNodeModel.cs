@@ -1,25 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
-namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes
+namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node
 {
     /// <summary>
     /// Sitemap node data model.
     /// </summary>
     [Serializable]
     [DataContract]
-    public class SitemapNodeModel : ModelBase
+    public class SaveNodeModel : SaveModelBase
     {
         /// <summary>
-        /// Gets or sets the parent node id.
+        /// Gets or sets the identifier.
         /// </summary>
         /// <value>
-        /// The parent node id.
+        /// The identifier.
         /// </value>
         [DataMember]
-        public Guid? ParentId { get; set; }
+        public Guid? Id { get; set; }
 
         /// <summary>
         /// Gets or sets the node title.
@@ -67,57 +68,30 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes
         public Guid? PageId { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether page is published.
+        /// Gets or sets the translations.
         /// </summary>
         /// <value>
-        ///   <c>true</c> if page is published; otherwise, <c>false</c>.
+        /// The translations.
         /// </value>
         [DataMember]
-        public bool PageIsPublished { get; set; }
+        public IList<SaveNodeTranslation> Translations { get; set; }
 
         /// <summary>
-        /// Gets or sets the page language identifier.
+        /// Gets or sets a value indicating whether to use page title as node title.
         /// </summary>
         /// <value>
-        /// The page language identifier.
-        /// </value>
-        [DataMember]
-        public Guid? PageLanguageId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the sitemap identifier.
-        /// </summary>
-        /// <value>
-        /// The sitemap identifier.
-        /// </value>
-        [DataMember]
-        public Guid SitemapId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the node title.
-        /// </summary>
-        /// <value>
-        /// The node title.
-        /// </value>
-        [DataMember]
-        public string NodeTitle { get; set; }
-
-        /// <summary>
-        /// Gets or sets the node URL.
-        /// </summary>
-        /// <value>
-        /// The node URL.
-        /// </value>
-        [DataMember]
-        public string NodeUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [use page title as node title].
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if [use page title as node title]; otherwise, <c>false</c>.
+        /// <c>true</c> if to use page title as node title; otherwise, <c>false</c>.
         /// </value>
         [DataMember]
         public bool UsePageTitleAsNodeTitle { get; set; }
+
+        /// <summary>
+        /// Gets or sets the parent identifier.
+        /// </summary>
+        /// <value>
+        /// The parent identifier.
+        /// </value>
+        [DataMember]
+        public Guid? ParentId { get; set; }
     }
 }

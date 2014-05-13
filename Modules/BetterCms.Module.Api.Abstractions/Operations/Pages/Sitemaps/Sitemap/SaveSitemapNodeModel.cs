@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node;
 
-namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node
+namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
 {
     /// <summary>
     /// Sitemap node data model.

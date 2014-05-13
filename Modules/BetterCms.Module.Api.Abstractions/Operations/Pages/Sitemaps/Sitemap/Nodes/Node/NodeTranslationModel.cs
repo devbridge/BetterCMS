@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
-using BetterCms.Module.Api.Operations.Root;
 
 namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node
 {
-    /// <summary>
-    /// Data model for sitemap save.
-    /// </summary>
     [Serializable]
     [DataContract]
-    public class SaveSitemapModel : SaveModelBase
+    public class NodeTranslationModel : ModelBase
     {
         /// <summary>
         /// Gets or sets the title.
@@ -24,30 +19,39 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node
         public string Title { get; set; }
 
         /// <summary>
-        /// Gets or sets the tags.
+        /// Gets or sets a value indicating whether to use page title as node title.
         /// </summary>
         /// <value>
-        /// The tags.
+        /// <c>true</c> if to use page title as node title; otherwise, <c>false</c>.
         /// </value>
         [DataMember]
-        public IList<string> Tags { get; set; }
+        public bool UsePageTitleAsNodeTitle { get; set; }
 
         /// <summary>
-        /// Gets or sets the nodes.
+        /// Gets or sets the URL.
         /// </summary>
         /// <value>
-        /// The nodes.
+        /// The URL.
         /// </value>
         [DataMember]
-        public IList<SaveSitemapNodeModel> Nodes { get; set; }
+        public string Url { get; set; }
 
         /// <summary>
-        /// Gets or sets the access rules.
+        /// Gets or sets the macro.
         /// </summary>
         /// <value>
-        /// The access rules.
+        /// The macro.
         /// </value>
         [DataMember]
-        public IList<AccessRuleModel> AccessRules { get; set; }
+        public string Macro { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language identifier.
+        /// </summary>
+        /// <value>
+        /// The language identifier.
+        /// </value>
+        [DataMember]
+        public Guid LanguageId { get; set; }
     }
 }

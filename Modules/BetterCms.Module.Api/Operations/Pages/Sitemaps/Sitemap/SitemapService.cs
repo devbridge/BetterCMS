@@ -303,8 +303,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
 
             if (cmsConfiguration.Security.AccessControlEnabled)
             {
-                var roles = new[] { RootModuleConstants.UserRoles.EditContent };
-                accessControlService.DemandAccess(sitemap, securityService.GetCurrentPrincipal(), AccessLevel.ReadWrite, roles);
+                accessControlService.DemandAccess(sitemap, securityService.GetCurrentPrincipal(), AccessLevel.ReadWrite);
             }
 
             unitOfWork.BeginTransaction();
