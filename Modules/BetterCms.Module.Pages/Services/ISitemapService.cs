@@ -34,8 +34,8 @@ namespace BetterCms.Module.Pages.Services
         /// </summary>
         /// <param name="id">The id.</param>
         /// <param name="version">The version.</param>
-        /// <param name="deletedNodes">The deleted nodes.</param>
-        void DeleteNode(Guid id, int version, out IList<SitemapNode> deletedNodes);
+        /// <param name="sitemapId">The sitemap identifier.</param>
+        void DeleteNode(Guid id, int version, Guid? sitemapId = null);
 
         /// <summary>
         /// Deletes the node and child nodes.

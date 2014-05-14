@@ -8,7 +8,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node
     /// </summary>
     [Serializable]
     [DataContract]
-    public class GetSitemapNodeModel
+    public class GetNodeModel
     {
         /// <summary>
         /// Gets or sets a value indicating whether to include translations.

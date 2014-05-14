@@ -10,7 +10,7 @@
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>GetSitemapNodeResponse</c> with sitemap node data.</returns>
-        GetSitemapNodeResponse Get(GetSitemapNodeRequest request);
+        GetNodeResponse Get(GetNodeRequest request);
 
         /// <summary>
         /// Puts the specified request.

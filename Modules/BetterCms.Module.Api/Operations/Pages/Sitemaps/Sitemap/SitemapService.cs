@@ -13,7 +13,6 @@ using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Tree;
 using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
-using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
@@ -419,6 +418,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
             this.SaveChildNodes(sitemap, null, updatedNodes, currentNodes);
         }
 
+        /// <summary>
+        /// Nodes the exist.
+        /// </summary>
+        /// <param name="updatedNodes">The updated nodes.</param>
+        /// <param name="id">The identifier.</param>
+        /// <returns><c>true</c> if node exists; <c>false</c> otherwise.</returns>
         private bool NodeExist(IList<SaveSitemapNodeModel> updatedNodes, Guid id)
         {
             if (updatedNodes == null || updatedNodes.IsEmpty())
@@ -493,36 +498,47 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
         /// <summary>
         /// Saves the translations.
         /// </summary>
-        /// <param name="nodeModel">The node model.</param>
-        /// <param name="nodeToSave">The node to save.</param>
-        private void SaveTranslations(SaveSitemapNodeModel nodeModel, SitemapNode nodeToSave)
+        /// <param name="model">The node model.</param>
+        /// <param name="node">The node to save.</param>
+        private void SaveTranslations(SaveSitemapNodeModel model, SitemapNode node)
         {
-            foreach (var translationModel in nodeModel.Translations)
+            if (model.Translations != null)
             {
-                var translationToSave = nodeToSave.Translations.FirstOrDefault(t => t.Id == translationModel.Id);
-                var isNewTranslation = translationToSave == null;
-                if (isNewTranslation)
+                foreach (var nodeTranslation in node.Translations)
                 {
-                    translationToSave = new Module.Pages.Models.SitemapNodeTranslation { Id = translationModel.Id.GetValueOrDefault(), Node = nodeToSave };
-                }
-                else if (translationModel.Version > 0)
-                {
-                    translationToSave.Version = translationModel.Version;
+                    if (model.Translations.All(m => m.Id != nodeTranslation.Id))
+                    {
+                        repository.Delete(nodeTranslation);
+                    }
                 }
 
-                translationToSave.Language = this.repository.AsProxy<Language>(translationModel.LanguageId);
-                translationToSave.Macro = translationModel.Macro;
-                translationToSave.Title = translationModel.Title;
-                translationToSave.UsePageTitleAsNodeTitle = translationModel.UsePageTitleAsNodeTitle;
-                translationToSave.Url = translationModel.Url;
-                translationToSave.UrlHash = translationToSave.Url.UrlHash();
-
-                if (translationToSave.Node != nodeToSave)
+                foreach (var translationModel in model.Translations)
                 {
-                    translationToSave.Node = nodeToSave;
-                }
+                    var translationToSave = node.Translations.FirstOrDefault(t => t.Id == translationModel.Id);
+                    var isNewTranslation = translationToSave == null;
+                    if (isNewTranslation)
+                    {
+                        translationToSave = new Module.Pages.Models.SitemapNodeTranslation { Id = translationModel.Id.GetValueOrDefault(), Node = node };
+                    }
+                    else if (translationModel.Version > 0)
+                    {
+                        translationToSave.Version = translationModel.Version;
+                    }
 
-                this.repository.Save(translationToSave);
+                    translationToSave.Language = this.repository.AsProxy<Language>(translationModel.LanguageId);
+                    translationToSave.Macro = translationModel.Macro;
+                    translationToSave.Title = translationModel.Title;
+                    translationToSave.UsePageTitleAsNodeTitle = translationModel.UsePageTitleAsNodeTitle;
+                    translationToSave.Url = translationModel.Url;
+                    translationToSave.UrlHash = translationToSave.Url.UrlHash();
+
+                    if (translationToSave.Node != node)
+                    {
+                        translationToSave.Node = node;
+                    }
+
+                    repository.Save(translationToSave);
+                }
             }
         }
     }

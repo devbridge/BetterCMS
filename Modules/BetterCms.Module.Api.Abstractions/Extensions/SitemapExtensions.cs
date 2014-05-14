@@ -25,14 +25,14 @@ namespace BetterCms.Module.Api.Extensions
             return new PostSitemapRequest { Data = model };
         }
 
-        public static PutNodeRequest ToPutRequest(this GetSitemapNodeResponse response)
+        public static PutNodeRequest ToPutRequest(this GetNodeResponse response)
         {
             var model = MapSitemapNodeModel(response, false);
 
             return new PutNodeRequest { Data = model, SitemapId = response.Data.SitemapId, NodeId = response.Data.Id };
         }
 
-        public static PostSitemapNodeRequest ToPostRequest(this GetSitemapNodeResponse response)
+        public static PostSitemapNodeRequest ToPostRequest(this GetNodeResponse response)
         {
             var model = MapSitemapNodeModel(response, true);
 
@@ -95,7 +95,7 @@ namespace BetterCms.Module.Api.Extensions
             return list;
         }
 
-        private static SaveNodeModel MapSitemapNodeModel(GetSitemapNodeResponse response, bool resetIds)
+        private static SaveNodeModel MapSitemapNodeModel(GetNodeResponse response, bool resetIds)
         {
             return new SaveNodeModel
             {

@@ -31,6 +31,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node
         /// The node identifier.
         /// </value>
         [DataMember]
-        public Guid? NodeId { get; set; }
+        public Guid NodeId { get; set; }
     }
 }

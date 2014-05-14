@@ -122,21 +122,46 @@ namespace BetterCms.Module.Pages.Services
         /// </summary>
         /// <param name="id">The id.</param>
         /// <param name="version">The version.</param>
-        /// <param name="deletedNodes">The deleted nodes.</param>
-        public void DeleteNode(Guid id, int version, out IList<SitemapNode> deletedNodes)
+        /// <param name="sitemapId">The sitemap identifier.</param>
+        public void DeleteNode(Guid id, int version, Guid? sitemapId = null)
         {
-            deletedNodes = new List<SitemapNode>();
+            IList<SitemapNode> deletedNodes = new List<SitemapNode>();
 
             var node = repository.AsQueryable<SitemapNode>()
-                .Where(sitemapNode => sitemapNode.Id == id)
+                .Where(sitemapNode => sitemapNode.Id == id && (!sitemapId.HasValue || sitemapNode.Sitemap.Id == sitemapId.Value))
                 .Fetch(sitemapNode => sitemapNode.Sitemap)
                 .Distinct()
                 .First();
 
+            // Concurrency.
+            if (version > 0 && node.Version != version)
+            {
+                throw new ConcurrentDataException(node);
+            }
+
+            unitOfWork.BeginTransaction();
+            
             ArchiveSitemap(node.Sitemap.Id);
 
             node.Version = version;
             DeleteNode(node, ref deletedNodes);
+
+            unitOfWork.Commit();
+
+            var updatedSitemaps = new List<Sitemap>();
+            foreach (var deletedNode in deletedNodes)
+            {
+                Events.SitemapEvents.Instance.OnSitemapNodeDeleted(deletedNode);
+                if (!updatedSitemaps.Contains(deletedNode.Sitemap))
+                {
+                    updatedSitemaps.Add(deletedNode.Sitemap);
+                }
+            }
+
+            foreach (var sitemap in updatedSitemaps)
+            {
+                Events.SitemapEvents.Instance.OnSitemapUpdated(sitemap);
+            }
         }
 
         /// <summary>

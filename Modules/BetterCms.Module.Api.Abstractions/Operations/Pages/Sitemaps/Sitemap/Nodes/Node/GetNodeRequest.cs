@@ -10,7 +10,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node
     [Route("/sitemaps/{SitemapId}/nodes/{NodeId}", Verbs = "GET")]
     [Serializable]
     [DataContract]
-    public class GetSitemapNodeRequest : RequestBase<GetSitemapNodeModel>, IReturn<SitemapNodeModel>
+    public class GetNodeRequest : RequestBase<GetNodeModel>, IReturn<SitemapNodeModel>
     {
         [DataMember]
         public Guid SitemapId { get; set; }
