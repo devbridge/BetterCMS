@@ -82,6 +82,8 @@ namespace BetterCms.Module.Pages.Command.History.RestoreSitemapVersion
 
             UnitOfWork.Commit();
 
+            Events.SitemapEvents.Instance.OnSitemapRestored(restoredSitemap);
+
             return new SiteSettingSitemapViewModel
                 {
                     Id = restoredSitemap.Id,

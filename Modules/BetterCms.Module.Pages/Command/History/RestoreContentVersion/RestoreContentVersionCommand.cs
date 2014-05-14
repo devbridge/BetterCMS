@@ -79,9 +79,11 @@ namespace BetterCms.Module.Pages.Command.History.RestoreContentVersion
                 }
             }
 
-            contentService.RestoreContentFromArchive(content);
+            var restoredContent = contentService.RestoreContentFromArchive(content);
 
             UnitOfWork.Commit();
+
+            Events.RootEvents.Instance.OnContentRestored(restoredContent);
 
             return true;
         }

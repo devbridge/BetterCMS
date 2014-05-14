@@ -1,13 +1,7 @@
-﻿using System.Linq;
-
-using BetterCms.Core.Mvc.Commands;
-using BetterCms.Core.Security;
+﻿using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Sitemap;
-using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
-
-using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Command.Sitemap.DeleteSitemap
 {

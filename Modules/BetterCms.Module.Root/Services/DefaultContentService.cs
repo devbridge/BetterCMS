@@ -255,7 +255,7 @@ namespace BetterCms.Module.Root.Services
             }
         }
 
-        public void RestoreContentFromArchive(Models.Content restoreFrom)
+        public Models.Content RestoreContentFromArchive(Models.Content restoreFrom)
         {
             if (restoreFrom == null)
             {
@@ -275,7 +275,7 @@ namespace BetterCms.Module.Root.Services
             originalContent.Original = null;
 
             // Save entities
-            SaveContentWithStatusUpdate(originalContent, ContentStatus.Published);
+            return SaveContentWithStatusUpdate(originalContent, ContentStatus.Published);
         }
 
         public System.Tuple<PageContent, Models.Content> GetPageContentForEdit(Guid pageContentId)
