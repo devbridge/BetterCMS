@@ -7,9 +7,12 @@ using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
 using ServiceStack.ServiceInterface;
+
+using ITagService = BetterCms.Module.Pages.Services.ITagService;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
 {
@@ -34,16 +37,23 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         private readonly IMediaFileUrlResolver fileUrlResolver;
 
         /// <summary>
+        /// The tag service.
+        /// </summary>
+        private readonly ITagService tagService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ImageService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="unitOfWork">The unit of work.</param>
         /// <param name="fileUrlResolver">The file URL resolver.</param>
-        public ImageService(IRepository repository, IUnitOfWork unitOfWork, IMediaFileUrlResolver fileUrlResolver)
+        /// <param name="tagService">The tag service.</param>
+        public ImageService(IRepository repository, IUnitOfWork unitOfWork, IMediaFileUrlResolver fileUrlResolver, ITagService tagService)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
             this.fileUrlResolver = fileUrlResolver;
+            this.tagService = tagService;
         }
 
         /// <summary>
@@ -142,12 +152,12 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         /// </returns>
         public PutImageResponse Put(PutImageRequest request)
         {
-            var mediaImage = repository.AsQueryable<MediaImage>().FirstOrDefault(tag1 => tag1.Id == request.Data.Id);
+            var mediaImage = repository.AsQueryable<MediaImage>().FirstOrDefault(tag1 => tag1.Id == request.ImageId);
 
             var createImage = mediaImage == null;
             if (createImage)
             {
-                mediaImage = new MediaImage { Id = request.Data.Id, Type = MediaType.Image };
+                mediaImage = new MediaImage { Id = request.ImageId, Type = MediaType.Image };
             }
             else if (request.Data.Version > 0)
             {
@@ -196,13 +206,16 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
 
             repository.Save(mediaImage);
 
-// TODO: implement.
-//            IList<Module.Root.Models.Tag> newTags;
-//            tagService.SaveMediaTags(mediaImage, request.Tags, out newTags);
+            IList<Tag> newTags = null;
+            if (request.Data.Tags != null)
+            {
+                tagService.SaveMediaTags(mediaImage, request.Data.Tags, out newTags);
+            }
 
             unitOfWork.Commit();
 
             // Fire events.
+            Events.RootEvents.Instance.OnTagCreated(newTags);
             if (createImage)
             {
                 Events.MediaManagerEvents.Instance.OnMediaFileUploaded(mediaImage);

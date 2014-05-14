@@ -13,7 +13,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
     [Route("/images/{ImageId}", Verbs = "PUT")]
     [DataContract]
     [Serializable]
-    public class PutImageRequest : RequestBase<ImageModel>, IReturn<PutImageResponse>
+    public class PutImageRequest : RequestBase<SaveImageModel>, IReturn<PutImageResponse>
     {
         /// <summary>
         /// Gets or sets the image identifier.
@@ -22,19 +22,6 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         /// The image identifier.
         /// </value>
         [DataMember]
-        public Guid? ImageId
-        {
-            get
-            {
-                return this.Data.Id;
-            }
-
-            set
-            {
-                this.Data.Id = value.HasValue ? value.Value : Guid.Empty;
-            }
-        }
-
-        // TODO: add tags.
+        public Guid ImageId { get; set; }
     }
 }

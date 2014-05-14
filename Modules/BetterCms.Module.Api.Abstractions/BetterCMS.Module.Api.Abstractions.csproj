@@ -103,13 +103,11 @@
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\PostBlogPostPropertiesRequest.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\PostBlogPostPropertiesResponse.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\DeleteImageRequest.cs" />
-    <Compile Include="Operations\MediaManager\Images\Image\DeleteImageRequestValidator.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\DeleteImageResponse.cs" />
+    <Compile Include="Operations\MediaManager\Images\Image\SaveImageModel.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\PutImageRequest.cs" />
-    <Compile Include="Operations\MediaManager\Images\Image\PutImageRequestValidator.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\PutImageResponse.cs" />
     <Compile Include="Operations\MediaManager\Images\PostImagesRequest.cs" />
-    <Compile Include="Operations\MediaManager\Images\PostImagesRequestValidator.cs" />
     <Compile Include="Operations\MediaManager\Images\PostImagesResponse.cs" />
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\DeleteHtmlContentRequest.cs" />
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\DeleteHtmlContentResponse.cs" />
@@ -125,7 +123,6 @@
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\PutPageContentRequest.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\PutPageContentResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\DeletePagePropertiesRequest.cs" />
-    <Compile Include="Operations\Pages\Pages\Page\Properties\PutPagePropertiesRequestValidator.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\DeletePagePropertiesResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PutPagePropertiesResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PutPagePropertiesRequest.cs" />

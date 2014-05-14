@@ -13,7 +13,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
     [Route("/images", Verbs = "POST")]
     [DataContract]
     [Serializable]
-    public class PostImagesRequest : RequestBase<Image.ImageModel>, IReturn<PostImagesResponse>
+    public class PostImagesRequest : RequestBase<Image.SaveImageModel>, IReturn<PostImagesResponse>
     {
     }
 }
