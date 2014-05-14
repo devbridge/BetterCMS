@@ -332,15 +332,33 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
 
             repository.Save(sitemap);
 
+            var createdNodes = (IList<SitemapNode>)new List<SitemapNode>();
+            var updatedNodes = (IList<SitemapNode>)new List<SitemapNode>();
+            var deletedNodes = (IList<SitemapNode>)new List<SitemapNode>();
             if (request.Data.Nodes != null)
             {
-                SaveNodes(sitemap, request.Data.Nodes, nodesFuture != null ? nodesFuture.ToList() : new List<SitemapNode>());
+                SaveNodes(sitemap, request.Data.Nodes, nodesFuture != null ? nodesFuture.ToList() : new List<SitemapNode>(), ref createdNodes, ref updatedNodes, ref deletedNodes);
             }
 
             unitOfWork.Commit();
 
             // Fire events.
             Events.RootEvents.Instance.OnTagCreated(newTags);
+            foreach (var node in createdNodes)
+            {
+                Events.SitemapEvents.Instance.OnSitemapNodeCreated(node);
+            }
+
+            foreach (var node in updatedNodes)
+            {
+                Events.SitemapEvents.Instance.OnSitemapNodeUpdated(node);
+            }
+
+            foreach (var node in deletedNodes)
+            {
+                Events.SitemapEvents.Instance.OnSitemapNodeDeleted(node);
+            }
+
             if (isNew)
             {
                 Events.SitemapEvents.Instance.OnSitemapCreated(sitemap);
@@ -396,17 +414,21 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
         /// Saves the nodes.
         /// </summary>
         /// <param name="sitemap">The sitemap.</param>
-        /// <param name="updatedNodes">The nodes.</param>
+        /// <param name="nodeModels">The node models.</param>
         /// <param name="currentNodes">The existing nodes.</param>
-        private void SaveNodes(Module.Pages.Models.Sitemap sitemap, IList<SaveSitemapNodeModel> updatedNodes, IList<SitemapNode> currentNodes)
+        /// <param name="createdNodes">The created nodes.</param>
+        /// <param name="updatedNodes">The sitemap nodes.</param>
+        /// <param name="deletedNodes">The deleted nodes.</param>
+        private void SaveNodes(Module.Pages.Models.Sitemap sitemap, IList<SaveSitemapNodeModel> nodeModels, List<SitemapNode> currentNodes, ref IList<SitemapNode> createdNodes, ref IList<SitemapNode> updatedNodes, ref IList<SitemapNode> deletedNodes)
         {
-            var removeAll = updatedNodes.IsEmpty();
+            var removeAll = nodeModels.IsEmpty();
 
             foreach (var existingNode in currentNodes)
             {
-                if (removeAll || !NodeExist(updatedNodes, existingNode.Id))
+                if (removeAll || !NodeExist(nodeModels, existingNode.Id))
                 {
                     repository.Delete(existingNode);
+                    deletedNodes.Add(existingNode);
                 }
             }
 
@@ -415,7 +437,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
                 return;
             }
 
-            this.SaveChildNodes(sitemap, null, updatedNodes, currentNodes);
+            SaveChildNodes(sitemap, null, nodeModels, currentNodes, ref createdNodes, ref updatedNodes, ref deletedNodes);
         }
 
         /// <summary>
@@ -423,7 +445,9 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
         /// </summary>
         /// <param name="updatedNodes">The updated nodes.</param>
         /// <param name="id">The identifier.</param>
-        /// <returns><c>true</c> if node exists; <c>false</c> otherwise.</returns>
+        /// <returns>
+        ///   <c>true</c> if node exists; <c>false</c> otherwise.
+        /// </returns>
         private bool NodeExist(IList<SaveSitemapNodeModel> updatedNodes, Guid id)
         {
             if (updatedNodes == null || updatedNodes.IsEmpty())
@@ -449,11 +473,17 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
         /// <param name="parentNode">The parent node.</param>
         /// <param name="nodesToSave">The nodes to save.</param>
         /// <param name="currentNodes">The current nodes.</param>
+        /// <param name="createdNodes">The created nodes.</param>
+        /// <param name="updatedNodes">The sitemap nodes.</param>
+        /// <param name="deletedNodes">The deleted nodes.</param>
         private void SaveChildNodes(
             Module.Pages.Models.Sitemap sitemap,
-            SitemapNode parentNode, 
+            SitemapNode parentNode,
             IEnumerable<SaveSitemapNodeModel> nodesToSave,
-            IList<SitemapNode> currentNodes)
+            IList<SitemapNode> currentNodes,
+            ref IList<SitemapNode> createdNodes,
+            ref IList<SitemapNode> updatedNodes,
+            ref IList<SitemapNode> deletedNodes)
         {
             if (nodesToSave == null)
             {
@@ -462,7 +492,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
 
             foreach (var nodeModel in nodesToSave)
             {
-                var nodeToSave = currentNodes.FirstOrDefault(n => n.Id == nodeModel.Id);
+                var nodeToSave = currentNodes.FirstOrDefault(n => n.Id == nodeModel.Id && !n.IsDeleted);
                 var isNew = nodeToSave == null;
                 if (isNew)
                 {
@@ -489,9 +519,18 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
 
                 repository.Save(nodeToSave);
 
-                this.SaveTranslations(nodeModel, nodeToSave);
+                SaveTranslations(nodeModel, nodeToSave);
 
-                this.SaveChildNodes(sitemap, nodeToSave, nodeModel.Nodes, currentNodes);
+                if (isNew)
+                {
+                    createdNodes.Add(nodeToSave);
+                }
+                else
+                {
+                    updatedNodes.Add(nodeToSave);
+                }
+
+                SaveChildNodes(sitemap, nodeToSave, nodeModel.Nodes, currentNodes, ref createdNodes, ref updatedNodes, ref deletedNodes);
             }
         }
 
@@ -525,7 +564,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
                         translationToSave.Version = translationModel.Version;
                     }
 
-                    translationToSave.Language = this.repository.AsProxy<Language>(translationModel.LanguageId);
+                    translationToSave.Language = repository.AsProxy<Language>(translationModel.LanguageId);
                     translationToSave.Macro = translationModel.Macro;
                     translationToSave.Title = translationModel.Title;
                     translationToSave.UsePageTitleAsNodeTitle = translationModel.UsePageTitleAsNodeTitle;
