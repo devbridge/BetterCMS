@@ -143,7 +143,6 @@ namespace BetterCms.Module.Pages.Services
             
             ArchiveSitemap(node.Sitemap.Id);
 
-            node.Version = version;
             DeleteNode(node, ref deletedNodes);
 
             unitOfWork.Commit();
