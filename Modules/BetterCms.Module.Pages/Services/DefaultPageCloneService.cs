@@ -131,10 +131,13 @@ namespace BetterCms.Module.Pages.Services
             {
                 newPage.LanguageGroupIdentifier = null;
             }
+
             repository.Save(newPage);
 
             // Clone contents.
-            pageContents.ForEach(pageContent => ClonePageContent(pageContent, newPage));
+            var createdContents = new List<Root.Models.Content>();
+            var createdPageContents = new List<PageContent>();
+            pageContents.ForEach(pageContent => ClonePageContent(pageContent, newPage, ref createdContents, ref createdPageContents));
 
             // Clone tags.
             pageTags.ForEach(pageTag => ClonePageTags(pageTag, newPage));
@@ -154,7 +157,10 @@ namespace BetterCms.Module.Pages.Services
 
             unitOfWork.Commit();
 
+            // Fire events. (NOTE: do not change event order!!!)
             Events.PageEvents.Instance.OnPageCloned(newPage);
+            createdContents.Where(c => c is HtmlContent).ForEach(c => Events.PageEvents.Instance.OnHtmlContentCreated((HtmlContent)c));
+            createdPageContents.ForEach(Events.PageEvents.Instance.OnPageContentInserted);
 
             return newPage;
         }
@@ -218,13 +224,13 @@ namespace BetterCms.Module.Pages.Services
         /// </summary>
         /// <param name="pageContent">Content of the page.</param>
         /// <param name="newPage">The new page.</param>
-        private void ClonePageContent(PageContent pageContent, PageProperties newPage)
+        private void ClonePageContent(PageContent pageContent, PageProperties newPage, ref List<Root.Models.Content> createdContents, ref List<PageContent> createdPageContents)
         {
             var newPageContent = new PageContent();
             newPageContent.Page = newPage;
             newPageContent.Order = pageContent.Order;
             newPageContent.Region = pageContent.Region;
-
+            createdPageContents.Add(newPageContent);
             if (pageContent.Content is HtmlContentWidget || pageContent.Content is ServerControlWidget)
             {
                 // Do not need to clone widgets.
@@ -233,6 +239,7 @@ namespace BetterCms.Module.Pages.Services
             else
             {
                 newPageContent.Content = pageContent.Content.Clone();
+                createdContents.Add(newPageContent.Content);
 
                 var draft = pageContent.Content.History.FirstOrDefault(c => c.Status == ContentStatus.Draft && !c.IsDeleted);
                 if (pageContent.Content.Status == ContentStatus.Published && draft != null)
@@ -246,6 +253,7 @@ namespace BetterCms.Module.Pages.Services
                     draftClone.Original = newPageContent.Content;
                     newPageContent.Content.History.Add(draftClone);
                     repository.Save(draftClone);
+                    createdContents.Add(draftClone);
                 }
             }
 
