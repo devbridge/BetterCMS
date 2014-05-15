@@ -66,7 +66,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         public GetImageResponse Get(GetImageRequest request)
         {
             var model = repository
-                .AsQueryable<MediaImage>(media => media.Id == request.ImageId && media.Type == MediaType.Image)
+                .AsQueryable<MediaImage>(media => media.Id == request.ImageId && media.Type == Module.MediaManager.Models.MediaType.Image)
                 .Select(media => new ImageModel
                                      {
                                          Id = media.Id,
@@ -157,7 +157,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
             var createImage = mediaImage == null;
             if (createImage)
             {
-                mediaImage = new MediaImage { Id = request.ImageId, Type = MediaType.Image };
+                mediaImage = new MediaImage { Id = request.ImageId, Type = Module.MediaManager.Models.MediaType.Image };
             }
             else if (request.Data.Version > 0)
             {

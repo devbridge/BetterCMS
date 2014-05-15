@@ -37,7 +37,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
         /// <param name="repository">The repository.</param>
         /// <param name="fileUrlResolver">The file URL resolver.</param>
         /// <param name="imageService">The image service.</param>
-        public ImagesService(IRepository repository, IMediaFileUrlResolver fileUrlResolver, Image.IImageService imageService)
+        public ImagesService(IRepository repository, IMediaFileUrlResolver fileUrlResolver, IImageService imageService)
         {
             this.repository = repository;
             this.fileUrlResolver = fileUrlResolver;
@@ -57,7 +57,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
 
             var query = repository
                 .AsQueryable<Media>()
-                .Where(m => m.Original == null && m.Type == MediaType.Image)
+                .Where(m => m.Original == null && m.Type == Module.MediaManager.Models.MediaType.Image)
                 .Where(f => !(f is MediaImage) || (!((MediaImage)f).IsTemporary && ((MediaImage)f).IsUploaded == true));
 
             if (request.Data.FolderId == null)

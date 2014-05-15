@@ -172,6 +172,8 @@
     <Compile Include="Operations\MediaManager\DefaultMediaManagerApiOperations.cs" />
     <Compile Include="Operations\MediaManager\Files\FilesService.cs" />
     <Compile Include="Operations\MediaManager\Files\File\FileService.cs" />
+    <Compile Include="Operations\MediaManager\Folders\FoldersService.cs" />
+    <Compile Include="Operations\MediaManager\Folders\Folder\FolderService.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\ImageService.cs" />
     <Compile Include="Operations\MediaManager\Images\ImagesService.cs" />
     <Compile Include="Operations\MediaManager\MediaTree\MediaTreeService.cs" />

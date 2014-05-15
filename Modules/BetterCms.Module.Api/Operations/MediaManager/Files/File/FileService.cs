@@ -33,7 +33,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         {
             var model = repository
                 .AsQueryable<MediaFile>()
-                .Where(media => media.Id == request.FileId && media.Type == MediaType.File)
+                .Where(media => media.Id == request.FileId && media.Type == Module.MediaManager.Models.MediaType.File)
                 .Select(media => new FileModel
                     {
                         Id = media.Id,
@@ -60,7 +60,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
                     })
                 .FirstOne();
 
-            model.FileUrl = fileService.GetDownloadFileUrl(MediaType.File, model.Id, model.FileUrl);
+            model.FileUrl = fileService.GetDownloadFileUrl(Module.MediaManager.Models.MediaType.File, model.Id, model.FileUrl);
             model.ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(model.ThumbnailUrl);
 
             IEnumerable<TagModel> tagsFuture;

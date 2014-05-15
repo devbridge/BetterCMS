@@ -40,7 +40,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
             request.Data.SetDefaultOrder("Title");
 
             var query = repository.AsQueryable<Media>()
-                .Where(m => m.Original == null && m.Type == MediaType.File)
+                .Where(m => m.Original == null && m.Type == Module.MediaManager.Models.MediaType.File)
                 .Where(f => !(f is MediaFile) || (!((MediaFile)f).IsTemporary && ((MediaFile)f).IsUploaded == true));
 
             if (request.Data.FolderId == null)
@@ -109,7 +109,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
                 {
                     if (media.MediaContentType == MediaContentType.File)
                     {
-                        media.FileUrl = fileService.GetDownloadFileUrl(MediaType.File, media.Id, media.FileUrl);
+                        media.FileUrl = fileService.GetDownloadFileUrl(Module.MediaManager.Models.MediaType.File, media.Id, media.FileUrl);
                         ids.Add(media.Id);
                     }
                     media.FileUrl = fileUrlResolver.EnsureFullPathUrl(media.FileUrl);

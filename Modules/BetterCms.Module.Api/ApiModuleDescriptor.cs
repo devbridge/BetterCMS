@@ -12,6 +12,8 @@ using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
 using BetterCms.Module.Api.Operations.MediaManager;
 using BetterCms.Module.Api.Operations.MediaManager.Files;
 using BetterCms.Module.Api.Operations.MediaManager.Files.File;
+using BetterCms.Module.Api.Operations.MediaManager.Folders;
+using BetterCms.Module.Api.Operations.MediaManager.Folders.Folder;
 using BetterCms.Module.Api.Operations.MediaManager.Images;
 using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
 using BetterCms.Module.Api.Operations.MediaManager.MediaTree;
@@ -138,7 +140,9 @@ namespace BetterCms.Module.Api
             containerBuilder.RegisterType<BlogPostsService>().As<IBlogPostsService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<BlogPostService>().As<IBlogPostService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<BlogPostPropertiesService>().As<IBlogPostPropertiesService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
-            
+
+            containerBuilder.RegisterType<FoldersService>().As<IFoldersService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterType<FolderService>().As<IFolderService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<FilesService>().As<IFilesService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<FileService>().As<IFileService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<ImagesService>().As<IImagesService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);

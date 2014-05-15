@@ -64,6 +64,7 @@ namespace BetterCms.Test.Module.Api
 
                 Assert.IsNotNull(api.Media);
                 Assert.IsNotNull(api.Media.MediaTree);
+                Assert.IsNotNull(api.Media.Folders);
                 Assert.IsNotNull(api.Media.Image);
                 Assert.IsNotNull(api.Media.Images);
                 Assert.IsNotNull(api.Media.File);
