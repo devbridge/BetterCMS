@@ -154,6 +154,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\ApiCrudTrests.cs" />
     <Compile Include="Api\Pages\Sitemaps\SitemapsTests.cs" />
     <Compile Include="Blog\ServiceTests\BlogMLExportServiceTests.cs" />
     <Compile Include="Blog\ServiceTests\BlogMLServiceTests.cs" />
