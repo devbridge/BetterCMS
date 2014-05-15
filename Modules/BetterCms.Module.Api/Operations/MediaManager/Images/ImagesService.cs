@@ -128,7 +128,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
         /// <returns>
         ///   <c>PostImagesResponse</c> with a new image id.
         /// </returns>
-        public PostImagesResponse Post(PostImagesRequest request)
+        public PostImageResponse Post(PostImageRequest request)
         {
             var result =
                 imageService.Put(
@@ -138,7 +138,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
                         User = request.User
                     });
 
-            return new PostImagesResponse { Data = result.Data };
+            return new PostImageResponse { Data = result.Data };
         }
     }
 }

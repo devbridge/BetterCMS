@@ -5,7 +5,7 @@ using BetterCms.Module.Api.Infrastructure;
 
 using ServiceStack.ServiceHost;
 
-namespace BetterCms.Module.Api.Operations.MediaManager.Images
+namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
 {
     /// <summary>
     /// Request for image update or creation.
@@ -13,7 +13,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
     [Route("/images", Verbs = "POST")]
     [DataContract]
     [Serializable]
-    public class PostImagesRequest : RequestBase<Image.SaveImageModel>, IReturn<PostImagesResponse>
+    public class PostImageRequest : RequestBase<Image.SaveImageModel>, IReturn<PostImageResponse>
     {
     }
 }

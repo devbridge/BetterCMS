@@ -1,4 +1,6 @@
-﻿namespace BetterCms.Module.Api.Operations.MediaManager.Images
+﻿using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
+
+namespace BetterCms.Module.Api.Operations.MediaManager.Images
 {
     public interface IImagesService
     {
@@ -17,7 +19,7 @@
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>PostImagesResponse</c> with a new image id.</returns>
-        PostImagesResponse Post(PostImagesRequest request);
+        PostImageResponse Post(PostImageRequest request);
 
         // NOTE: do not implement: drops all the images.
         // DeleteImagesResponse Delete(DeleteImagesRequest request);

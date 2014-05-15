@@ -176,7 +176,6 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
             mediaImage.Title = request.Data.Title;
             mediaImage.Description = request.Data.Description;
             mediaImage.Caption = request.Data.Caption;
-            mediaImage.OriginalFileExtension = request.Data.OriginalFileExtension;
             mediaImage.Size = request.Data.FileSize;
             mediaImage.PublicUrl = request.Data.ImageUrl;
             mediaImage.Width = request.Data.Width;

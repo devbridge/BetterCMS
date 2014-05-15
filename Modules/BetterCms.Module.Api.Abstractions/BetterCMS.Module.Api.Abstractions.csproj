@@ -71,6 +71,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Extensions\LayoutExtensions.cs" />
+    <Compile Include="Extensions\MediaExtensions.cs" />
     <Compile Include="Extensions\SitemapExtensions.cs" />
     <Compile Include="Extensions\PageExtensions.cs" />
     <Compile Include="Extensions\ContentExtensions.cs" />
@@ -104,11 +105,11 @@
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\PostBlogPostPropertiesResponse.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\DeleteImageRequest.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\DeleteImageResponse.cs" />
+    <Compile Include="Operations\MediaManager\Images\Image\PostImageRequest.cs" />
+    <Compile Include="Operations\MediaManager\Images\Image\PostImageResponse.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\SaveImageModel.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\PutImageRequest.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\PutImageResponse.cs" />
-    <Compile Include="Operations\MediaManager\Images\PostImagesRequest.cs" />
-    <Compile Include="Operations\MediaManager\Images\PostImagesResponse.cs" />
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\DeleteHtmlContentRequest.cs" />
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\DeleteHtmlContentResponse.cs" />
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\SaveHtmlContentModel.cs" />
