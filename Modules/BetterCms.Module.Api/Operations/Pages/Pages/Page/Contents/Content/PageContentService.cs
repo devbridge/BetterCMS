@@ -4,8 +4,11 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.DataTier;
-using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
+
+using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content.Options;
+
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
 using ServiceStack.ServiceInterface;
@@ -33,16 +36,26 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
         private readonly IUnitOfWork unitOfWork;
 
         /// <summary>
+        /// The root option service
+        /// </summary>
+        private readonly Module.Root.Services.IOptionService rootOptionService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PageContentService" /> class.
         /// </summary>
         /// <param name="optionsService">The options service.</param>
         /// <param name="repository">The repository.</param>
         /// <param name="unitOfWork">The unit of work.</param>
-        public PageContentService(IPageContentOptionsService optionsService, IRepository repository, IUnitOfWork unitOfWork)
+        /// <param name="rootOptionService">The root option service.</param>
+        public PageContentService(IPageContentOptionsService optionsService, 
+            IRepository repository, 
+            IUnitOfWork unitOfWork,
+            Module.Root.Services.IOptionService rootOptionService)
         {
             this.optionsService = optionsService;
             this.repository = repository;
             this.unitOfWork = unitOfWork;
+            this.rootOptionService = rootOptionService;
         }
 
         /// <summary>
@@ -67,7 +80,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
         public GetPageContentResponse Get(GetPageContentRequest request)
         {
             var model =
-                repository.AsQueryable<Module.Root.Models.PageContent>(content => content.Id == request.PageContentId && content.Page.Id == request.PageId)
+                repository.AsQueryable<PageContent>(content => content.Id == request.PageContentId && content.Page.Id == request.PageId)
                     .Select(
                         pageContent =>
                         new PageContentModel
@@ -84,7 +97,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
                                 Order = pageContent.Order
                             })
                     .FirstOne();
-            return new GetPageContentResponse { Data = model };
+
+            var response = new GetPageContentResponse { Data = model };
+
+            if (request.Data.IncludeOptions)
+            {
+                response.Options = PageContentOptionsHelper.GetPageContentOptionsList(repository, request.PageContentId, rootOptionService);
+            }
+
+            return response;
         }
 
         /// <summary>
@@ -94,14 +115,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
         /// <returns><c>PutPageContentResponse</c> with saved page content id.</returns>
         public PutPageContentResponse Put(PutPageContentRequest request)
         {
-            var pageContent =
-                repository.AsQueryable<Module.Root.Models.PageContent>()
-                    .FirstOrDefault(content => content.Id == request.PageContentId && content.Page.Id == request.PageId);
+            var pageContent = repository
+                .AsQueryable<PageContent>()
+                .FirstOrDefault(content => content.Id == request.PageContentId && content.Page.Id == request.PageId);
 
             var isNew = pageContent == null;
             if (isNew)
             {
-                pageContent = new Module.Root.Models.PageContent
+                pageContent = new PageContent
                                   {
                                       Id = request.PageContentId.HasValue ? request.PageContentId.Value : Guid.Empty,
                                       Page = repository.AsProxy<Module.Root.Models.Page>(request.PageId)
@@ -113,8 +134,19 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
             }
 
             pageContent.Content = repository.AsProxy<Module.Root.Models.Content>(request.Data.ContentId);
-            pageContent.Region = repository.AsProxy<Module.Root.Models.Region>(request.Data.RegionId);
+            pageContent.Region = repository.AsProxy<Region>(request.Data.RegionId);
             pageContent.Order = request.Data.Order;
+
+            if (request.Data.Options != null)
+            {
+                var options = request.Data.Options.ToServiceModel();
+
+                var contentOptions = pageContent.Options != null ? pageContent.Options.Distinct() : null;
+                pageContent.Options = rootOptionService.SaveOptionValues(options, contentOptions, () => new PageContentOption
+                                                                                                        {
+                                                                                                            PageContent = pageContent
+                                                                                                        });
+            }
 
             unitOfWork.BeginTransaction();
             repository.Save(pageContent);
@@ -141,7 +173,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
             }
 
             var itemToDelete = repository
-                .AsQueryable<Module.Root.Models.PageContent>()
+                .AsQueryable<PageContent>()
                 .Where(p => p.Id == request.PageContentId && p.Page.Id == request.PageId)
                 .FirstOne();
 

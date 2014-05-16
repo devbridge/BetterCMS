@@ -43,12 +43,13 @@ namespace BetterCms.Module.Api.Extensions
         private static SavePageContentModel MapPageContentWidgetModel(GetPageContentResponse response)
         {
             var model = new SavePageContentModel
-            {
-                Version = response.Data.Version,
-                ContentId = response.Data.ContentId,
-                RegionId = response.Data.RegionId,
-                Order = response.Data.Order
-            };
+                {
+                    Version = response.Data.Version,
+                    ContentId = response.Data.ContentId,
+                    RegionId = response.Data.RegionId,
+                    Order = response.Data.Order,
+                    Options = response.Options
+                };
 
             return model;
         }
