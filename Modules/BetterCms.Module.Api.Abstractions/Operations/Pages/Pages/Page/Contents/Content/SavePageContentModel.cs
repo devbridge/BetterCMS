@@ -17,5 +17,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
 
         [DataMember]
         public int Order { get; set; }
+
+        [DataMember]
+        public System.Collections.Generic.IList<OptionValueModel> Options { get; set; }
     }
 }

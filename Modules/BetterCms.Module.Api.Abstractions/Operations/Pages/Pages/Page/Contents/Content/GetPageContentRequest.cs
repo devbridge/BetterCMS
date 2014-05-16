@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
+using BetterCms.Module.Api.Infrastructure;
+
 using ServiceStack.ServiceHost;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
@@ -8,7 +10,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
     [Route("/pages/{PageId}/contents/{PageContentId}", Verbs = "GET")]
     [DataContract]
     [Serializable]
-    public class GetPageContentRequest : IReturn<GetPageContentResponse>
+    public class GetPageContentRequest : RequestBase<GetPageContentModel>, IReturn<GetPageContentResponse>
     {
         /// <summary>
         /// Gets or sets the page content identifier.

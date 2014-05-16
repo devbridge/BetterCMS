@@ -181,6 +181,7 @@
     <Compile Include="Operations\Pages\Contents\Content\ContentService.cs" />
     <Compile Include="Operations\Pages\Contents\Content\History\ContentHistoryService.cs" />
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\HtmlContentService.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Contents\Content\PageContentOptionsHelper.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\Options\PageContentOptionsService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\PageContentService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Translations\PageTranslationsService.cs" />

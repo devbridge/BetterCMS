@@ -135,6 +135,7 @@
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\PutHtmlContentResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\DeletePageContentRequest.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\DeletePageContentResponse.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Contents\Content\GetPageContentModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\GetPageContentRequest.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\GetPageContentResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\SavePageContentModel.cs" />
