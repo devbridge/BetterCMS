@@ -276,5 +276,15 @@ namespace BetterCms.Module.Blog.Services
                 }
             }
         }
+
+        protected override IList<Tag> SaveTags(BlogPost blogPost, BlogPostViewModel request)
+        {
+            if (request.Tags != null)
+            {
+                return base.SaveTags(blogPost, request);
+            }
+
+            return null;
+        }
     }
 }
