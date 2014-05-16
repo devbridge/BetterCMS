@@ -1,14 +1,11 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.Api;
 using BetterCms.Module.Api.Extensions;
-using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Blog.BlogPosts;
-using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost;
 using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
 using BetterCms.Module.Api.Operations.MediaManager.Files.File;
 using BetterCms.Module.Api.Operations.MediaManager.Folders.Folder;
@@ -32,8 +29,6 @@ using BetterCms.Module.Api.Operations.Root.Tags;
 using BetterCms.Module.Api.Operations.Root.Tags.Tag;
 
 using NUnit.Framework;
-
-using ServiceStack.Common.Extensions;
 
 namespace BetterCms.Test.Module.Api
 {
@@ -280,6 +275,36 @@ namespace BetterCms.Test.Module.Api
                                                     });
                 api.Media.Images.Post(image.ToPostRequest());
                 api.Media.Image.Put(image.ToPutRequest());
+            }
+        }
+
+        [Ignore]
+        [Test]
+        public void Sitemap()
+        {
+            using (var api = ApiFactory.Create())
+            {
+                var sitemaps = api.Pages.Sitemaps.Get(new GetSitemapsRequest());
+
+                // Sitemap:
+                var sitemap = api.Pages.SitemapNew.Get(new GetSitemapRequest
+                {
+                    SitemapId = sitemaps.Data.Items.First().Id,
+                    Data = new GetSitemapModel
+                    {
+                        IncludeTags = true,
+                        IncludeNodes = true
+                    }
+                });
+                var saveSitmapRequest = sitemap.ToPutRequest();
+
+                // Sitemap nodes:
+                var node = api.Pages.SitemapNew.Node.Get(new GetNodeRequest
+                {
+                    SitemapId = sitemap.Data.Id,
+                    NodeId = sitemap.Nodes.First().Id
+                });
+                var saveNodeRequest = node.ToPutRequest();
             }
         }
     }

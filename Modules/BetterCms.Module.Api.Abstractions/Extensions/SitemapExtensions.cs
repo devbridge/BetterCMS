@@ -57,47 +57,51 @@ namespace BetterCms.Module.Api.Extensions
 
         private static SaveSitemapNodeModel ToModel(SitemapNodeWithTranslationsModel n, bool resetIds)
         {
-            return new SaveSitemapNodeModel
-                       {
-                           Id = resetIds ? default(Guid) : n.Id,
-                           Version = n.Version,
-                           PageId = n.PageId,
-                           UsePageTitleAsNodeTitle = n.UsePageTitleAsNodeTitle,
-                           Title = n.NodeTitle,
-                           Url = n.NodeUrl,
-                           DisplayOrder = n.DisplayOrder,
-                           Macro = n.Macro,
-                           Translations =
-                               n.Translations.Select(
-                                   t =>
-                                   new SaveSitemapNodeTranslation
-                                       {
-                                           Id = t.Id,
-                                           Version = t.Version,
-                                           Title = t.Title,
-                                           UsePageTitleAsNodeTitle = t.UsePageTitleAsNodeTitle,
-                                           Url = t.Url,
-                                           Macro = t.Macro,
-                                           LanguageId = t.LanguageId
-                                       }).ToList()
-                       };
+            var model = new SaveSitemapNodeModel
+                            {
+                                Id = resetIds ? default(Guid) : n.Id,
+                                Version = n.Version,
+                                PageId = n.PageId,
+                                UsePageTitleAsNodeTitle = n.UsePageTitleAsNodeTitle,
+                                Title = n.NodeTitle,
+                                Url = n.NodeUrl,
+                                DisplayOrder = n.DisplayOrder,
+                                Macro = n.Macro
+                            };
+
+            if (n.Translations != null)
+            {
+                model.Translations =
+                    n.Translations.Select(
+                        t =>
+                        new SaveSitemapNodeTranslation
+                            {
+                                Id = t.Id,
+                                Version = t.Version,
+                                Title = t.Title,
+                                UsePageTitleAsNodeTitle = t.UsePageTitleAsNodeTitle,
+                                Url = t.Url,
+                                Macro = t.Macro,
+                                LanguageId = t.LanguageId
+                            }).ToList();
+            }
+
+            return model;
         }
 
-        private static IList<SaveSitemapNodeModel> GetSubNodes(IEnumerable<SaveSitemapNodeModel> nodes, IList<SitemapNodeWithTranslationsModel> allNodes, bool resetIds)
+        private static IList<SaveSitemapNodeModel> GetSubNodes(IList<SaveSitemapNodeModel> nodes, IList<SitemapNodeWithTranslationsModel> allNodes, bool resetIds)
         {
-            var list = new List<SaveSitemapNodeModel>();
-
             foreach (var node in nodes)
             {
                 node.Nodes = GetSubNodes(allNodes.Where(n => n.ParentId == node.Id).Select(n => ToModel(n, resetIds)).ToList(), allNodes, resetIds);
             }
 
-            return list;
+            return nodes;
         }
 
         private static SaveNodeModel MapSitemapNodeModel(GetNodeResponse response, bool resetIds)
         {
-            return new SaveNodeModel
+            var model = new SaveNodeModel
             {
                 Id = resetIds ? default(Guid) : response.Data.Id,
                 Version = response.Data.Version,
@@ -108,20 +112,26 @@ namespace BetterCms.Module.Api.Extensions
                 Url = response.Data.NodeUrl,
                 DisplayOrder = response.Data.DisplayOrder,
                 Macro = response.Data.Macro,
-                Translations =
+            };
+
+            if (response.Translations != null)
+            {
+                model.Translations =
                     response.Translations.Select(
                         t =>
                         new SaveNodeTranslation
-                        {
-                            Id = t.Id,
-                            Version = t.Version,
-                            Title = t.Title,
-                            UsePageTitleAsNodeTitle = t.UsePageTitleAsNodeTitle,
-                            Url = t.Url,
-                            Macro = t.Macro,
-                            LanguageId = t.LanguageId
-                        }).ToList()
-            };
+                            {
+                                Id = t.Id,
+                                Version = t.Version,
+                                Title = t.Title,
+                                UsePageTitleAsNodeTitle = t.UsePageTitleAsNodeTitle,
+                                Url = t.Url,
+                                Macro = t.Macro,
+                                LanguageId = t.LanguageId
+                            }).ToList();
+            }
+
+            return model;
         }
     }
 }
