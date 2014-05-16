@@ -52,11 +52,13 @@ namespace BetterCms.Test.Module.Api
                 // TODO: implement.
 
                 // Layouts:
-                var layout = api.Root.Layout.Get(new GetLayoutRequest());
+                var getLayoutRequest = new GetLayoutRequest();
+                getLayoutRequest.Data.IncludeOptions = true;
+                getLayoutRequest.Data.IncludeRegions = true;
+                var layout = api.Root.Layout.Get(getLayoutRequest);
                 api.Root.Layouts.Post(layout.ToPostRequest());
                 api.Root.Layout.Put(layout.ToPutRequest());
                 api.Root.Layout.Delete(new DeleteLayoutRequest());
-                // TODO: implement options.
 
                 // Folders:
                 var folder = api.Media.Folder.Get(new GetFolderRequest());
@@ -83,18 +85,20 @@ namespace BetterCms.Test.Module.Api
                 // TODO: implement.
 
                 // Server Widget:
-                var serverWidget = api.Pages.Widget.ServerControl.Get(new GetServerControlWidgetRequest());
+                var getSWRequest = new GetServerControlWidgetRequest();
+                getSWRequest.Data.IncludeOptions = true;
+                var serverWidget = api.Pages.Widget.ServerControl.Get(getSWRequest);
                 api.Pages.Widget.ServerControl.Post(serverWidget.ToPostRequest());
                 api.Pages.Widget.ServerControl.Put(serverWidget.ToPutRequest());
                 api.Pages.Widget.ServerControl.Delete(new DeleteServerControlWidgetRequest());
-                // TODO: implement options.
 
                 // Html Widgets:
-                var htmlWidget = api.Pages.Widget.HtmlContent.Get(new GetHtmlContentWidgetRequest());
+                var getHWRequest = new GetHtmlContentWidgetRequest();
+                getHWRequest.Data.IncludeOptions = true;
+                var htmlWidget = api.Pages.Widget.HtmlContent.Get(getHWRequest);
                 api.Pages.Widget.HtmlContent.Post(htmlWidget.ToPostRequest());
                 api.Pages.Widget.HtmlContent.Put(htmlWidget.ToPutRequest());
                 api.Pages.Widget.HtmlContent.Delete(new DeleteHtmlContentWidgetRequest());
-                // TODO: implement options.
 
                 // Html Contents:
                 var html = api.Pages.Content.Html.Get(new GetHtmlContentRequest());
@@ -103,19 +107,30 @@ namespace BetterCms.Test.Module.Api
                 api.Pages.Content.Html.Delete(new DeleteHtmlContentRequest());
 
                 // Pages:
-                var page = api.Pages.Page.Properties.Get(new GetPagePropertiesRequest());
+                var getPageRequest = new GetPagePropertiesRequest();
+                getPageRequest.Data.IncludeAccessRules = true;
+                getPageRequest.Data.IncludePageOptions = true;
+                getPageRequest.Data.IncludeMetaData = true;
+                var page = api.Pages.Page.Properties.Get(getPageRequest);
                 api.Pages.Page.Properties.Post(page.ToPostRequest());
                 api.Pages.Page.Properties.Put(page.ToPutRequest());
                 api.Pages.Page.Properties.Delete(new DeletePagePropertiesRequest());
-                // TODO: implement options.
 
                 // Page Contents:
                 var pageContent = api.Pages.Page.Content.Get(new GetPageContentRequest());
                 api.Pages.Page.Content.Put(pageContent.ToPutRequest());
                 api.Pages.Page.Content.Delete(new DeletePageContentRequest());
 
+                // Page content options:
+                // TODO: implement
+
                 // Blog Post:
-                var blog = api.Blog.BlogPost.Properties.Get(new GetBlogPostPropertiesRequest());
+                var getBlogRequest = new GetBlogPostPropertiesRequest();
+                getBlogRequest.Data.IncludeHtmlContent = true;
+                getBlogRequest.Data.IncludeAccessRules = true;
+                getBlogRequest.Data.IncludeMetaData = true;
+                getBlogRequest.Data.IncludeTags = true;
+                var blog = api.Blog.BlogPost.Properties.Get(getBlogRequest);
                 api.Blog.BlogPost.Properties.Post(blog.ToPostRequest());
                 api.Blog.BlogPost.Properties.Put(blog.ToPutRequest());
                 api.Blog.BlogPost.Properties.Delete(new DeleteBlogPostPropertiesRequest());
