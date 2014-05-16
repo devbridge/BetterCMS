@@ -235,6 +235,17 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
             mediaImage.OriginalUri = new Uri(request.Data.OriginalUri);
             mediaImage.ThumbnailUri = new Uri(request.Data.ThumbnailUri);
 
+            var archivedMedias = new List<Media> { mediaImage };
+            var unarchivedMedias = new List<Media> { mediaImage };
+            if (request.Data.IsArchived)
+            {
+                mediaService.ArchiveSubMedias(mediaImage, archivedMedias);
+            }
+            else
+            {
+                mediaService.UnarchiveSubMedias(mediaImage, unarchivedMedias);
+            }
+
             repository.Save(mediaImage);
 
             IList<Tag> newTags = null;
@@ -254,6 +265,16 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
             else
             {
                 Events.MediaManagerEvents.Instance.OnMediaFileUpdated(mediaImage);
+            }
+
+            foreach (var archivedMedia in archivedMedias.Distinct())
+            {
+                Events.MediaManagerEvents.Instance.OnMediaArchived(archivedMedia);
+            }
+
+            foreach (var archivedMedia in unarchivedMedias.Distinct())
+            {
+                Events.MediaManagerEvents.Instance.OnMediaUnarchived(archivedMedia);
             }
 
             return new PutImageResponse

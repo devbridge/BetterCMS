@@ -139,11 +139,11 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders.Folder
             var unarchivedMedias = new List<Media> { mediaFolder };
             if (request.Data.IsArchived)
             {
-                ArchiveSubMedias(mediaFolder, archivedMedias);
+                mediaService.ArchiveSubMedias(mediaFolder, archivedMedias);
             }
             else
             {
-                UnarchiveSubMedias(mediaFolder, unarchivedMedias);
+                mediaService.UnarchiveSubMedias(mediaFolder, unarchivedMedias);
             }
 
             repository.Save(mediaFolder);
@@ -151,6 +151,15 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders.Folder
             unitOfWork.Commit();
 
             // Fire events.
+            if (createFolder)
+            {
+                Events.MediaManagerEvents.Instance.OnMediaFolderCreated(mediaFolder);
+            }
+            else
+            {
+                Events.MediaManagerEvents.Instance.OnMediaFolderUpdated(mediaFolder);
+            }
+
             foreach (var archivedMedia in archivedMedias.Distinct())
             {
                 Events.MediaManagerEvents.Instance.OnMediaArchived(archivedMedia);
@@ -159,15 +168,6 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders.Folder
             foreach (var archivedMedia in unarchivedMedias.Distinct())
             {
                 Events.MediaManagerEvents.Instance.OnMediaUnarchived(archivedMedia);
-            }
-
-            if (createFolder)
-            {
-                Events.MediaManagerEvents.Instance.OnMediaFolderCreated(mediaFolder);
-            }
-            else
-            {
-                Events.MediaManagerEvents.Instance.OnMediaFolderUpdated(mediaFolder);
             }
 
             return new PutFolderResponse { Data = mediaFolder.Id };
@@ -203,50 +203,6 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders.Folder
             Events.MediaManagerEvents.Instance.OnMediaFolderDeleted(itemToDelete);
 
             return new DeleteFolderResponse { Data = true };
-        }
-
-        /// <summary>
-        /// Archives the sub medias.
-        /// </summary>
-        /// <param name="media">The media.</param>
-        /// <param name="archivedMedias">The archived medias.</param>
-        private void ArchiveSubMedias(IEntity media, List<Media> archivedMedias)
-        {
-            var subItems = repository.AsQueryable<Media>().Where(m => m.Folder != null && m.Folder.Id == media.Id).ToList();
-            foreach (var subItem in subItems)
-            {
-                if (!subItem.IsArchived)
-                {
-                    subItem.IsArchived = true;
-                    archivedMedias.Add(subItem);
-
-                    repository.Save(subItem);
-                }
-
-                ArchiveSubMedias(subItem, archivedMedias);
-            }
-        }
-
-        /// <summary>
-        /// Unarchives the sub medias.
-        /// </summary>
-        /// <param name="media">The media.</param>
-        /// <param name="unarchivedMedias">The unarchived medias.</param>
-        private void UnarchiveSubMedias(IEntity media, List<Media> unarchivedMedias)
-        {
-            var subItems = repository.AsQueryable<Media>().Where(m => m.Folder != null && m.Folder.Id == media.Id).ToList();
-            foreach (var subItem in subItems)
-            {
-                if (subItem.IsArchived)
-                {
-                    subItem.IsArchived = false;
-                    unarchivedMedias.Add(subItem);
-
-                    repository.Save(subItem);
-                }
-
-                UnarchiveSubMedias(subItem, unarchivedMedias);
-            }
         }
     }
 }
