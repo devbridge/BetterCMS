@@ -22,6 +22,6 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         /// The image identifier.
         /// </value>
         [DataMember]
-        public Guid ImageId { get; set; }
+        public Guid? ImageId { get; set; }
     }
 }

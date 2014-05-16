@@ -13,7 +13,7 @@ namespace BetterCms.Module.Api.Operations.Root.Tags
     [Route("/tags", Verbs = "POST")]
     [DataContract]
     [Serializable]
-    public class PostTagRequest : RequestBase<TagModel>, IReturn<PostTagResponse>
+    public class PostTagRequest : RequestBase<SaveTagModel>, IReturn<PostTagResponse>
     {
     }
 }

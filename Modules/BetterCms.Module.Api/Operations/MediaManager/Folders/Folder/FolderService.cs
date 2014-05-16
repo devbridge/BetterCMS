@@ -84,7 +84,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders.Folder
             {
                 mediaFolder = new MediaFolder
                                   {
-                                      Id = request.FolderId,
+                                      Id = request.FolderId.GetValueOrDefault(),
                                       ContentType = Module.MediaManager.Models.MediaContentType.Folder,
                                       Type = (Module.MediaManager.Models.MediaType)(int)request.Data.Type
                                   };

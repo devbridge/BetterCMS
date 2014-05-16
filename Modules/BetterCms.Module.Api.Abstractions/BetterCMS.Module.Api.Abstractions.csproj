@@ -70,6 +70,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Extensions\TagExtensions.cs" />
     <Compile Include="Extensions\LayoutExtensions.cs" />
     <Compile Include="Extensions\MediaExtensions.cs" />
     <Compile Include="Extensions\SitemapExtensions.cs" />
@@ -429,9 +430,7 @@
     <Compile Include="Operations\Root\OptionType.cs" />
     <Compile Include="Operations\Root\Tags\PostTagRequest.cs" />
     <Compile Include="Operations\Root\Tags\PostTagResponse.cs" />
-    <Compile Include="Operations\Root\Tags\PostTagRequestValidator.cs" />
-    <Compile Include="Operations\Root\Tags\Tag\PutTagRequestValidator.cs" />
-    <Compile Include="Operations\Root\Tags\Tag\DeleteTagRequestValidator.cs" />
+    <Compile Include="Operations\Root\Tags\SaveTagModel.cs" />
     <Compile Include="Operations\Root\Tags\Tag\GetTagRequestValidator.cs" />
     <Compile Include="Operations\Root\Tags\Tag\DeleteTagRequest.cs" />
     <Compile Include="Operations\Root\Tags\Tag\DeleteTagResponse.cs" />

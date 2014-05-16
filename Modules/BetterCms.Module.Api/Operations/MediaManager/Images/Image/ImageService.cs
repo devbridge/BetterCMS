@@ -157,7 +157,11 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
             var createImage = mediaImage == null;
             if (createImage)
             {
-                mediaImage = new MediaImage { Id = request.ImageId, Type = Module.MediaManager.Models.MediaType.Image };
+                mediaImage = new MediaImage
+                                 {
+                                     Id = request.ImageId.GetValueOrDefault(),
+                                     Type = Module.MediaManager.Models.MediaType.Image
+                                 };
             }
             else if (request.Data.Version > 0)
             {

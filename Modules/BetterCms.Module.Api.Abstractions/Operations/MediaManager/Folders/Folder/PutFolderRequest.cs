@@ -22,6 +22,6 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders.Folder
         /// The folder identifier.
         /// </value>
         [DataMember]
-        public Guid FolderId { get; set; }
+        public Guid? FolderId { get; set; }
     }
 }

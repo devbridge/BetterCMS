@@ -25,7 +25,6 @@ using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidget;
 using BetterCms.Module.Api.Operations.Root.Categories.Category;
 using BetterCms.Module.Api.Operations.Root.Languages.Language;
 using BetterCms.Module.Api.Operations.Root.Layouts.Layout;
-using BetterCms.Module.Api.Operations.Root.Tags;
 using BetterCms.Module.Api.Operations.Root.Tags.Tag;
 
 using NUnit.Framework;
@@ -43,8 +42,8 @@ namespace BetterCms.Test.Module.Api
             {
                 // Tags:
                 var tag = api.Root.Tag.Get(new GetTagRequest());
-                api.Root.Tags.Post(new PostTagRequest()); // TODO: impelement extension.
-                api.Root.Tag.Put(new PutTagRequest()); // TODO: impelement extension.
+                api.Root.Tags.Post(tag.ToPostRequest());
+                api.Root.Tag.Put(tag.ToPutRequest());
                 api.Root.Tag.Delete(new DeleteTagRequest());
 
                 // Categories:
