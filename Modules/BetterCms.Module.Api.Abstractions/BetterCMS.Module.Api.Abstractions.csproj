@@ -104,6 +104,13 @@
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\PutBlogPostPropertiesResponse.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\PostBlogPostPropertiesRequest.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\PostBlogPostPropertiesResponse.cs" />
+    <Compile Include="Operations\MediaManager\Files\File\DeleteFileRequest.cs" />
+    <Compile Include="Operations\MediaManager\Files\File\DeleteFileResponse.cs" />
+    <Compile Include="Operations\MediaManager\Files\File\PostFileRequest.cs" />
+    <Compile Include="Operations\MediaManager\Files\File\PostFileResponse.cs" />
+    <Compile Include="Operations\MediaManager\Files\File\PutFileRequest.cs" />
+    <Compile Include="Operations\MediaManager\Files\File\PutFileResponse.cs" />
+    <Compile Include="Operations\MediaManager\Files\File\SaveFileModel.cs" />
     <Compile Include="Operations\MediaManager\Folders\Folder\DeleteFolderRequest.cs" />
     <Compile Include="Operations\MediaManager\Folders\Folder\DeleteFolderResponse.cs" />
     <Compile Include="Operations\MediaManager\Folders\Folder\FolderModel.cs" />

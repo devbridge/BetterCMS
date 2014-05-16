@@ -115,5 +115,15 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
                        AccessRules = accessRulesFuture != null ? accessRulesFuture.ToList() : null
                    };
         }
+
+        public PutFileResponse Put(PutFileRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DeleteFileResponse Delete(DeleteFileRequest request)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

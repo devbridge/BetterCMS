@@ -6,6 +6,7 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.Security;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.MediaManager.Files.File;
 using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
@@ -153,6 +154,11 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
                        {
                            Data = listResponse
                        };
+        }
+
+        public PostFileResponse Post(PostFileRequest request)
+        {
+            throw new NotImplementedException();
         }
 
         private class AccessRuleModelEx

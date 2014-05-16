@@ -74,6 +74,9 @@ namespace BetterCms.Test.Module.Api
 
                 // Files:
                 var file = api.Media.File.Get(new GetFileRequest());
+                api.Media.Files.Post(file.ToPostRequest());
+                api.Media.File.Put(file.ToPutRequest());
+                api.Media.File.Delete(new DeleteFileRequest());
                 // TODO: implement.
 
                 // Languages:
@@ -309,8 +312,9 @@ namespace BetterCms.Test.Module.Api
                     SitemapId = sitemaps.Data.Items.First().Id,
                     Data = new GetSitemapModel
                     {
-                        IncludeTags = true,
-                        IncludeNodes = true
+                        IncludeAccessRules = true,
+                        IncludeNodes = true,
+                        IncludeTags = true
                     }
                 });
                 var saveSitmapRequest = sitemap.ToPutRequest();

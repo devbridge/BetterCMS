@@ -44,6 +44,8 @@ namespace BetterCms.Module.Api.Extensions
             var model = new SaveSitemapModel
             {
                 Version = response.Data.Version,
+                Title = response.Data.Title,
+                Tags = response.Data.Tags,
                 AccessRules = response.AccessRules,
             };
 
