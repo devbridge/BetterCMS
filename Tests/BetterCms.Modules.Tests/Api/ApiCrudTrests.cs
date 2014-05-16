@@ -77,7 +77,6 @@ namespace BetterCms.Test.Module.Api
                 api.Media.Files.Post(file.ToPostRequest());
                 api.Media.File.Put(file.ToPutRequest());
                 api.Media.File.Delete(new DeleteFileRequest());
-                // TODO: implement.
 
                 // Languages:
                 var language = api.Root.Language.Get(new GetLanguageRequest());

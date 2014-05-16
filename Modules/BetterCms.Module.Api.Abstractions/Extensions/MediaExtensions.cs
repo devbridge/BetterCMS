@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 using BetterCms.Module.Api.Operations.MediaManager.Files.File;
 using BetterCms.Module.Api.Operations.MediaManager.Folders.Folder;
@@ -88,37 +89,24 @@ namespace BetterCms.Module.Api.Extensions
 
         private static SaveFileModel MapFileModel(GetFileResponse response)
         {
-            throw new NotImplementedException();
             var model = new SaveFileModel
                             {
-//                                Version = response.Data.Version,
-//                                Title = response.Data.Title,
-//                                Description = response.Data.Description,
-//                                Caption = response.Data.Caption,
-//                                FileSize = response.Data.FileSize,
-//                                ImageUrl = response.Data.ImageUrl,
-//                                Width = response.Data.Width,
-//                                Height = response.Data.Height,
-//                                ThumbnailUrl = response.Data.ThumbnailUrl,
-//                                ThumbnailWidth = response.Data.ThumbnailWidth,
-//                                ThumbnailHeight = response.Data.ThumbnailHeight,
-//                                ThumbnailSize = response.Data.ThumbnailSize,
-//                                IsArchived = response.Data.IsArchived,
-//                                FolderId = response.Data.FolderId,
-//                                PublishedOn = response.Data.PublishedOn,
-//                                OriginalFileName = response.Data.OriginalFileName,
-//                                OriginalFileExtension = response.Data.OriginalFileExtension,
-//                                OriginalWidth = response.Data.OriginalWidth,
-//                                OriginalHeight = response.Data.OriginalHeight,
-//                                OriginalSize = response.Data.OriginalSize,
-//                                OriginalUrl = response.Data.OriginalUrl,
-//                                FileUri = response.Data.FileUri,
-//                                IsUploaded = response.Data.IsUploaded,
-//                                IsTemporary = response.Data.IsTemporary,
-//                                IsCanceled = response.Data.IsCanceled,
-//                                OriginalUri = response.Data.OriginalUri,
-//                                ThumbnailUri = response.Data.ThumbnailUri,
-//                                AccessRules = response.AccessRules
+                                Version = response.Data.Version,
+                                FolderId = response.Data.FolderId,
+                                Title = response.Data.Title,
+                                IsArchived = response.Data.IsArchived,
+                                PublishedOn = response.Data.PublishedOn,
+                                Description = response.Data.Description,
+                                OriginalFileName = response.Data.OriginalFileName,
+                                OriginalFileExtension = response.Data.OriginalFileExtension,
+                                FileUri = response.Data.FileUri,
+                                PublicUrl = response.Data.PublicUrl,
+                                FileSize = response.Data.FileSize,
+                                IsTemporary = response.Data.IsTemporary,
+                                IsUploaded = response.Data.IsUploaded,
+                                IsCanceled = response.Data.IsCanceled,
+                                Tags = response.Tags.Select(t => t.Name).ToList(),
+                                AccessRules = response.AccessRules
                             };
 
             return model;
