@@ -105,6 +105,7 @@ namespace BetterCms.Sandbox.Mvc4
         private void AddBlogPostEvents()
         {
             BetterCms.Events.BlogEvents.Instance.BlogCreated += args => Log.Info("BlogCreated:" + args.Item.ToString());
+            BetterCms.Events.BlogEvents.Instance.BlogChanging += args => Log.Info("BlogChanging: BeforeUpdate: " + args.BeforeUpdate.ToString() + "; AfterUpdate: " + args.AfterUpdate.ToString());
             BetterCms.Events.BlogEvents.Instance.BlogUpdated += args => Log.Info("BlogUpdated:" + args.Item.ToString());
             BetterCms.Events.BlogEvents.Instance.BlogDeleted += args => Log.Info("BlogDeleted:" + args.Item.ToString());
         }

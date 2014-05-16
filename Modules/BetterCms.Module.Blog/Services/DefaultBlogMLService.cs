@@ -335,7 +335,20 @@ namespace BetterCms.Module.Blog.Services
                             blogPostModel.CategoryId = categories[blogML.Categories[0].Ref];
                         }
 
-                        var blogPost = blogService.SaveBlogPost(blogPostModel, principal);
+                        string[] error;
+                        var blogPost = blogService.SaveBlogPost(blogPostModel, principal, out error);
+                        if (blogPost == null)
+                        {
+                            blogPostResult = new BlogPostImportResult
+                            {
+                                Title = blogML.PostName ?? blogML.Title,
+                                Success = false,
+                                ErrorMessage = error.Length > 0 ? error[0] : string.Empty
+                            };
+                            createdBlogPosts.Add(blogPostResult);
+
+                            continue;
+                        }
                         
                         blogPostResult = new BlogPostImportResult
                                 {

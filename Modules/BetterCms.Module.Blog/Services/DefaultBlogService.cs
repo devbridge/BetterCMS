@@ -10,11 +10,13 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Exceptions.Service;
+using BetterCms.Core.Mvc;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Blog.Models.Events;
 using BetterCms.Module.Blog.ViewModels.Blog;
 
 using BetterCms.Module.MediaManager.Models;
@@ -115,8 +117,9 @@ namespace BetterCms.Module.Blog.Services
         /// <returns>
         /// Saved blog post entity
         /// </returns>
-        public BlogPost SaveBlogPost(BlogPostViewModel request, IPrincipal principal)
+        public BlogPost SaveBlogPost(BlogPostViewModel request, IPrincipal principal, out string[] errorMessages)
         {
+            errorMessages = new string[0];
             string[] roles;
             if (request.DesirableStatus == ContentStatus.Published)
             {
@@ -138,6 +141,7 @@ namespace BetterCms.Module.Blog.Services
             BlogPostContent content;
             PageContent pageContent;
             GetBlogPostAndContentEntities(request, principal, roles, ref isNew, out content, out pageContent, out blogPost);
+            var beforeChange = new UpdatingBlogModel(blogPost);
 
             // Master page / layout
             Layout layout;
@@ -273,6 +277,14 @@ namespace BetterCms.Module.Blog.Services
             blogPost.UseCanonicalUrl = request.UseCanonicalUrl;
 
             MapExtraProperties(isNew, blogPost, content, pageContent, request, principal);
+
+            // Notify about page properties changing.
+            var cancelEventArgs = Events.BlogEvents.Instance.OnBlogChanging(beforeChange, new UpdatingBlogModel(blogPost));
+            if (cancelEventArgs.Cancel)
+            {
+                errorMessages = cancelEventArgs.CancellationErrorMessages.ToArray();
+                return null;
+            }
 
             repository.Save(blogPost);
             repository.Save(content);

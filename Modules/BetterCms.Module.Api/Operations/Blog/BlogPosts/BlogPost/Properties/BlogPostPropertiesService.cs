@@ -283,7 +283,8 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
                 serviceModel.Id = request.BlogPostId.Value;
             }
 
-            var response = blogSaveService.SaveBlogPost(serviceModel, securityService.GetCurrentPrincipal());
+            string[] error;
+            var response = blogSaveService.SaveBlogPost(serviceModel, securityService.GetCurrentPrincipal(), out error);
 
             return new PutBlogPostPropertiesResponse { Data = response.Id };
         }

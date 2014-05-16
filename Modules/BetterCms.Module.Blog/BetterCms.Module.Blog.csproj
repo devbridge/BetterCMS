@@ -151,11 +151,13 @@
     <Compile Include="Controllers\AuthorController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\OptionController.cs" />
+    <Compile Include="Events\BlogChangingEventArgs.cs" />
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\BlogPost.cs" />
     <Compile Include="Models\BlogPostContent.cs" />
     <Compile Include="Models\BlogPostImportResult.cs" />
+    <Compile Include="Models\Events\UpdatingBlogModel.cs" />
     <Compile Include="Models\Maps\AuthorMap.cs" />
     <Compile Include="Models\Maps\BlogPostContentMap.cs" />
     <Compile Include="Models\Maps\BlogPostMap.cs" />
