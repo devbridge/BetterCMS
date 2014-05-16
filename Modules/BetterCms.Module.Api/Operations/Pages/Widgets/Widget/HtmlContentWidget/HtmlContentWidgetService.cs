@@ -84,13 +84,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
             HtmlContentWidgetEntity originalWidget;
 
             var model = request.Data.ToServiceModel();
-            model.CreateIfNotExists = true;
             if (request.WidgetId.HasValue)
             {
                 model.Id = request.WidgetId.Value;
             }
 
-            widgetService.SaveHtmlContentWidget(model, out widget, out originalWidget);
+            widgetService.SaveHtmlContentWidget(model, out widget, out originalWidget, false, true);
 
             return new PutHtmlContentWidgetResponse { Data = widget.Id };
         }

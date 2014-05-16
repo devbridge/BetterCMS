@@ -48,14 +48,6 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
         public string PublishedByUser { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to create content if not exists.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if to create content if not exists; otherwise, <c>false</c>.
-        /// </value>
-        public bool CreateIfNotExists { get; set; }
-
-        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

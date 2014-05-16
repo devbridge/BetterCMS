@@ -72,13 +72,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidg
         public PutServerControlWidgetResponse Put(PutServerControlWidgetRequest request)
         {
             var model = request.Data.ToServiceModel();
-            model.CreateIfNotExists = true;
             if (request.WidgetId.HasValue)
             {
                 model.Id = request.WidgetId.Value;
             }
 
-            var widget = widgetService.SaveServerControlWidget(model);
+            var widget = widgetService.SaveServerControlWidget(model, false, true);
 
             return new PutServerControlWidgetResponse { Data = widget.Id };
         }

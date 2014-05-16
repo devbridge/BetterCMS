@@ -4,6 +4,7 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
@@ -43,7 +44,8 @@ namespace BetterCms.Module.Pages.Services
             this.securityService = securityService;
         }
 
-        public void SaveHtmlContentWidget(EditHtmlContentWidgetViewModel model, out HtmlContentWidget widget, out HtmlContentWidget originalWidget)
+        public void SaveHtmlContentWidget(EditHtmlContentWidgetViewModel model, out HtmlContentWidget widget, out HtmlContentWidget originalWidget,
+            bool treatNullsAsLists = true, bool createIfNotExists = false)
         {
             if (model.Options != null)
             {
@@ -52,8 +54,8 @@ namespace BetterCms.Module.Pages.Services
 
             unitOfWork.BeginTransaction();
 
-            var widgetContent = GetHtmlContentWidgetFromRequest(model);
-            widget = GetWidgetForSave(widgetContent, model);
+            var widgetContent = GetHtmlContentWidgetFromRequest(model, treatNullsAsLists, !model.Id.HasDefaultValue());
+            widget = GetWidgetForSave(widgetContent, model, createIfNotExists);
 
             repository.Save(widget);
             unitOfWork.Commit();
@@ -82,7 +84,7 @@ namespace BetterCms.Module.Pages.Services
             }
         }
 
-        public ServerControlWidget SaveServerControlWidget(EditServerControlWidgetViewModel model)
+        public ServerControlWidget SaveServerControlWidget(EditServerControlWidgetViewModel model, bool treatNullsAsLists = true, bool createIfNotExists = false)
         {
             if (model.DesirableStatus == ContentStatus.Draft)
             {
@@ -96,8 +98,8 @@ namespace BetterCms.Module.Pages.Services
 
             unitOfWork.BeginTransaction();
 
-            var requestWidget = GetServerControlWidgetFromRequest(model);
-            var widget = GetWidgetForSave(requestWidget, model);
+            var requestWidget = GetServerControlWidgetFromRequest(model, treatNullsAsLists, !model.Id.HasDefaultValue());
+            var widget = GetWidgetForSave(requestWidget, model, createIfNotExists);
             
             repository.Save(widget);
             unitOfWork.Commit();
@@ -118,14 +120,14 @@ namespace BetterCms.Module.Pages.Services
             return widget;
         }
 
-        private TEntity GetWidgetForSave<TEntity>(TEntity widgetContent, EditWidgetViewModel model)
+        private TEntity GetWidgetForSave<TEntity>(TEntity widgetContent, EditWidgetViewModel model, bool createIfNotExists)
             where TEntity : Widget
         {
             TEntity widget;
             var createNewWithId = false;
 
             // Check if entity is created
-            if (model.CreateIfNotExists && !model.Id.HasDefaultValue())
+            if (createIfNotExists && !model.Id.HasDefaultValue())
             {
                 createNewWithId = !repository.AsQueryable<TEntity>().Any(w => w.Id == model.Id);
             }
@@ -150,7 +152,7 @@ namespace BetterCms.Module.Pages.Services
             return widget;
         }
 
-        private HtmlContentWidget GetHtmlContentWidgetFromRequest(EditHtmlContentWidgetViewModel request)
+        private HtmlContentWidget GetHtmlContentWidgetFromRequest(EditHtmlContentWidgetViewModel request, bool treatNullsAsLists, bool isNew)
         {
             HtmlContentWidget content = new HtmlContentWidget();
             content.Id = request.Id;
@@ -164,7 +166,7 @@ namespace BetterCms.Module.Pages.Services
                 content.Category = null;
             }
 
-            SetWidgetOptions(request, content);
+            SetWidgetOptions(request, content, treatNullsAsLists, isNew);
 
             content.Name = request.Name;
             content.Html = request.PageContent ?? string.Empty;
@@ -179,7 +181,7 @@ namespace BetterCms.Module.Pages.Services
             return content;
         }
 
-        private ServerControlWidget GetServerControlWidgetFromRequest(EditServerControlWidgetViewModel request)
+        private ServerControlWidget GetServerControlWidgetFromRequest(EditServerControlWidgetViewModel request, bool treatNullsAsLists, bool isNew)
         {
             ServerControlWidget widget = new ServerControlWidget();
             widget.Id = request.Id;
@@ -198,12 +200,12 @@ namespace BetterCms.Module.Pages.Services
             widget.Version = request.Version;
             widget.PreviewUrl = request.PreviewImageUrl;
 
-            SetWidgetOptions(request, widget);
+            SetWidgetOptions(request, widget, treatNullsAsLists, isNew);
 
             return widget;
         }
 
-        private void SetWidgetOptions(EditWidgetViewModel model, Widget content)
+        private void SetWidgetOptions(EditWidgetViewModel model, Widget content, bool treatNullsAsLists, bool isNew)
         {
             if (model.Options != null)
             {
@@ -211,30 +213,40 @@ namespace BetterCms.Module.Pages.Services
 
                 // NOTE: Loading custom options before saving.
                 // In other case, when loading custom options from option service, nHibernate updates version number (nHibernate bug)
-                var customOptionsIdentifiers = model.Options
-                    .Where(o => o.Type == OptionType.Custom)
-                    .Select(o => o.CustomOption.Identifier)
-                    .Distinct()
-                    .ToArray();
+                var customOptionsIdentifiers = model.Options.Where(o => o.Type == OptionType.Custom).Select(o => o.CustomOption.Identifier).Distinct().ToArray();
                 var customOptions = optionService.GetCustomOptionsById(customOptionsIdentifiers);
 
                 foreach (var requestContentOption in model.Options)
                 {
                     var contentOption = new ContentOption
-                    {
-                        Content = content,
-                        Key = requestContentOption.OptionKey,
-                        DefaultValue = optionService.ClearFixValueForSave(requestContentOption.OptionKey, requestContentOption.Type, requestContentOption.OptionDefaultValue),
-                        Type = requestContentOption.Type,
-                        CustomOption = requestContentOption.Type == OptionType.Custom
-                          ? customOptions.First(o => o.Identifier == requestContentOption.CustomOption.Identifier)
-                          : null
-                    };
+                                        {
+                                            Content = content,
+                                            Key = requestContentOption.OptionKey,
+                                            DefaultValue =
+                                                optionService.ClearFixValueForSave(
+                                                    requestContentOption.OptionKey,
+                                                    requestContentOption.Type,
+                                                    requestContentOption.OptionDefaultValue),
+                                            Type = requestContentOption.Type,
+                                            CustomOption =
+                                                requestContentOption.Type == OptionType.Custom
+                                                    ? customOptions.First(o => o.Identifier == requestContentOption.CustomOption.Identifier)
+                                                    : null
+                                        };
 
                     optionService.ValidateOptionValue(contentOption);
 
                     content.ContentOptions.Add(contentOption);
                 }
+            }
+            else if (!treatNullsAsLists)
+            {
+                // When calling from API with null list, options should be loaded before process
+                // Null from API means, that list should be kept unchanged
+                content.ContentOptions = repository
+                    .AsQueryable<ContentOption>(pco => pco.Content.Id == model.Id)
+                    .Fetch(pco => pco.CustomOption)
+                    .ToList();
             }
         }
 
