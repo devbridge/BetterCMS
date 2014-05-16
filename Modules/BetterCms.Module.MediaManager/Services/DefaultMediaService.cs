@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataContracts;
 using BetterCms.Module.MediaManager.Models;
 
 namespace BetterCms.Module.MediaManager.Services
@@ -54,6 +56,50 @@ namespace BetterCms.Module.MediaManager.Services
             foreach (var item in subItems)
             {
                 DeleteMedia(item);
+            }
+        }
+
+        /// <summary>
+        /// Archives the sub medias.
+        /// </summary>
+        /// <param name="media">The media.</param>
+        /// <param name="archivedMedias">The archived medias.</param>
+        public void ArchiveSubMedias(Media media, List<Media> archivedMedias)
+        {
+            var subItems = repository.AsQueryable<Media>().Where(m => m.Folder != null && m.Folder.Id == media.Id).ToList();
+            foreach (var subItem in subItems)
+            {
+                if (!subItem.IsArchived)
+                {
+                    subItem.IsArchived = true;
+                    archivedMedias.Add(subItem);
+
+                    repository.Save(subItem);
+                }
+
+                ArchiveSubMedias(subItem, archivedMedias);
+            }
+        }
+
+        /// <summary>
+        /// Unarchives the sub medias.
+        /// </summary>
+        /// <param name="media">The media.</param>
+        /// <param name="unarchivedMedias">The unarchived medias.</param>
+        public void UnarchiveSubMedias(Media media, List<Media> unarchivedMedias)
+        {
+            var subItems = repository.AsQueryable<Media>().Where(m => m.Folder != null && m.Folder.Id == media.Id).ToList();
+            foreach (var subItem in subItems)
+            {
+                if (subItem.IsArchived)
+                {
+                    subItem.IsArchived = false;
+                    unarchivedMedias.Add(subItem);
+
+                    repository.Save(subItem);
+                }
+
+                UnarchiveSubMedias(subItem, unarchivedMedias);
             }
         }
     }

@@ -239,6 +239,17 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
             mediaFile.IsTemporary = request.Data.IsTemporary;
             mediaFile.IsCanceled = request.Data.IsCanceled;
 
+            var archivedMedias = new List<Media> { mediaFile };
+            var unarchivedMedias = new List<Media> { mediaFile };
+            if (request.Data.IsArchived)
+            {
+                mediaService.ArchiveSubMedias(mediaFile, archivedMedias);
+            }
+            else
+            {
+                mediaService.UnarchiveSubMedias(mediaFile, unarchivedMedias);
+            }
+
             repository.Save(mediaFile);
 
             IList<Tag> newTags = null;
@@ -258,6 +269,16 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
             else
             {
                 Events.MediaManagerEvents.Instance.OnMediaFileUpdated(mediaFile);
+            }
+
+            foreach (var archivedMedia in archivedMedias.Distinct())
+            {
+                Events.MediaManagerEvents.Instance.OnMediaArchived(archivedMedia);
+            }
+
+            foreach (var archivedMedia in unarchivedMedias.Distinct())
+            {
+                Events.MediaManagerEvents.Instance.OnMediaUnarchived(archivedMedia);
             }
 
             return new PutFileResponse
