@@ -115,6 +115,7 @@ namespace BetterCms.Test.Module.Api
                 getPageRequest.Data.IncludeAccessRules = true;
                 getPageRequest.Data.IncludePageOptions = true;
                 getPageRequest.Data.IncludeMetaData = true;
+                getPageRequest.Data.IncludeTags = true;
                 var page = api.Pages.Page.Properties.Get(getPageRequest);
                 api.Pages.Page.Properties.Post(page.ToPostRequest());
                 api.Pages.Page.Properties.Put(page.ToPutRequest());
