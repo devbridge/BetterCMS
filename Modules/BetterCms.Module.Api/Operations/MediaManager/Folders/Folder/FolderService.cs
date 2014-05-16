@@ -5,9 +5,12 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
+using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Mvc;
+
+using NHibernate.Linq;
 
 using ServiceStack.ServiceInterface;
 
@@ -77,7 +80,29 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders.Folder
         /// </returns>
         public PutFolderResponse Put(PutFolderRequest request)
         {
-            var mediaFolder = repository.AsQueryable<MediaFolder>().FirstOrDefault(folder => folder.Id == request.FolderId);
+            IEnumerable<MediaFolder> parentFolderFuture = null;
+            if (request.Data.ParentFolderId.HasValue)
+            {
+                parentFolderFuture = repository.AsQueryable<MediaFolder>()
+                    .Where(c => c.Id == request.Data.ParentFolderId.Value && !c.IsDeleted)
+                    .ToFuture();
+            }
+
+            var mediaFolder = repository.AsQueryable<MediaFolder>()
+                .Fetch(media => media.Folder)
+                .Distinct()
+                .ToFuture()
+                .FirstOrDefault(folder => folder.Id == request.FolderId);
+
+            MediaFolder parentFolder = null;
+            if (parentFolderFuture != null)
+            {
+                parentFolder = parentFolderFuture.First();
+                if (parentFolder.Type != (Module.MediaManager.Models.MediaType)(int)request.Data.Type)
+                {
+                    throw new CmsApiValidationException("Parent folder type does not match to this folder type.");
+                }
+            }
 
             var createFolder = mediaFolder == null;
             if (createFolder)
@@ -97,9 +122,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders.Folder
             unitOfWork.BeginTransaction();
 
             mediaFolder.Title = request.Data.Title;
-            mediaFolder.Folder = request.Data.ParentFolderId.HasValue && !request.Data.ParentFolderId.Value.HasDefaultValue()
-                                     ? repository.AsProxy<MediaFolder>(request.Data.ParentFolderId.Value)
-                                     : null;
+            mediaFolder.Folder = parentFolder;
+
             mediaFolder.PublishedOn = DateTime.Now;
             mediaFolder.IsArchived = request.Data.IsArchived;
 
@@ -162,12 +186,46 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders.Folder
                 throw new ConcurrentDataException(itemToDelete);
             }
 
-            repository.Delete(itemToDelete);
+            DeleteMedias(itemToDelete);
+
             unitOfWork.Commit();
 
             Events.MediaManagerEvents.Instance.OnMediaFolderDeleted(itemToDelete);
 
             return new DeleteFolderResponse { Data = true };
+        }
+
+        /// <summary>
+        /// Deletes the medias.
+        /// </summary>
+        /// <param name="media">The media.</param>
+        private void DeleteMedias(Media media)
+        {
+            if (media.MediaTags != null)
+            {
+                foreach (var mediaTag in media.MediaTags)
+                {
+                    repository.Delete(mediaTag);
+                }
+            }
+
+            if (media is MediaFile)
+            {
+                MediaFile file = (MediaFile)media;
+                if (file.AccessRules != null)
+                {
+                    var rules = file.AccessRules.ToList();
+                    rules.ForEach(file.RemoveRule);
+                }
+            }
+
+            repository.Delete(media);
+
+            var subItems = repository.AsQueryable<Media>().Where(m => !m.IsDeleted && m.Folder != null && m.Folder.Id == media.Id).ToList();
+            foreach (var item in subItems)
+            {
+                DeleteMedias(item);
+            }
         }
 
         /// <summary>

@@ -8,6 +8,7 @@ using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Blog.BlogPosts;
 using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
 using BetterCms.Module.Api.Operations.MediaManager.Files.File;
+using BetterCms.Module.Api.Operations.MediaManager.Folders;
 using BetterCms.Module.Api.Operations.MediaManager.Folders.Folder;
 using BetterCms.Module.Api.Operations.MediaManager.Images;
 using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
@@ -59,7 +60,9 @@ namespace BetterCms.Test.Module.Api
 
                 // Folders:
                 var folder = api.Media.Folder.Get(new GetFolderRequest());
-                // TODO: implement - inprogress.
+                api.Media.Folders.Post(folder.ToPostRequest());
+                api.Media.Folder.Put(folder.ToPutRequest());
+                api.Media.Folder.Delete(new DeleteFolderRequest());
 
                 // Images:
                 var image = api.Media.Image.Get(new GetImageRequest());
@@ -279,7 +282,7 @@ namespace BetterCms.Test.Module.Api
 
         [Ignore]
         [Test]
-        public void Sitemap()
+        public void Sitemap_Crud()
         {
             using (var api = ApiFactory.Create())
             {
@@ -304,6 +307,18 @@ namespace BetterCms.Test.Module.Api
                     NodeId = sitemap.Nodes.First().Id
                 });
                 var saveNodeRequest = node.ToPutRequest();
+            }
+        }
+
+        [Ignore]
+        [Test]
+        public void Folder_Crud()
+        {
+            using (var api = ApiFactory.Create())
+            {
+                var folders =
+                    api.Media.Folders.Get(
+                        new GetFoldersRequest { Data = new BetterCms.Module.Api.Operations.MediaManager.Folders.GetFolderModel() { IncludeArchived = true } });
             }
         }
     }

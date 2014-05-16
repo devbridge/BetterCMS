@@ -1,4 +1,5 @@
-﻿using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
+﻿using BetterCms.Module.Api.Operations.MediaManager.Folders.Folder;
+using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
 
 namespace BetterCms.Module.Api.Extensions
 {
@@ -16,6 +17,20 @@ namespace BetterCms.Module.Api.Extensions
             var model = MapPageModel(response);
 
             return new PostImageRequest { Data = model };
+        }
+
+        public static PutFolderRequest ToPutRequest(this GetFolderResponse response)
+        {
+            var model = MapFolderModel(response);
+
+            return new PutFolderRequest { Data = model, FolderId = response.Data.Id };
+        }
+
+        public static PostFolderRequest ToPostRequest(this GetFolderResponse response)
+        {
+            var model = MapFolderModel(response);
+
+            return new PostFolderRequest { Data = model };
         }
 
         private static SaveImageModel MapPageModel(GetImageResponse request)
@@ -51,6 +66,19 @@ namespace BetterCms.Module.Api.Extensions
                                 ThumbnailUri = request.Data.ThumbnailUri
                             };
 
+            return model;
+        }
+
+        private static SaveFolderModel MapFolderModel(GetFolderResponse response)
+        {
+            var model = new SaveFolderModel
+                            {
+                                Version = response.Data.Version,
+                                Title = response.Data.Title,
+                                IsArchived = response.Data.IsArchived,
+                                ParentFolderId = response.Data.ParentFolderId,
+                                Type = response.Data.Type
+                            };
             return model;
         }
     }
