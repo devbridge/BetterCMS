@@ -8,6 +8,7 @@ using BetterCms.Core.DataContracts;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root.Mvc;
 
 using NHibernate.Linq;
@@ -32,14 +33,21 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders.Folder
         private readonly IUnitOfWork unitOfWork;
 
         /// <summary>
+        /// The media service.
+        /// </summary>
+        private readonly IMediaService mediaService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="FolderService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="unitOfWork">The unit of work.</param>
-        public FolderService(IRepository repository, IUnitOfWork unitOfWork)
+        /// <param name="mediaService">The media service.</param>
+        public FolderService(IRepository repository, IUnitOfWork unitOfWork, IMediaService mediaService)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
+            this.mediaService = mediaService;
         }
 
         /// <summary>
@@ -186,46 +194,15 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders.Folder
                 throw new ConcurrentDataException(itemToDelete);
             }
 
-            DeleteMedias(itemToDelete);
+            unitOfWork.BeginTransaction();
+
+            mediaService.DeleteMedia(itemToDelete);
 
             unitOfWork.Commit();
 
             Events.MediaManagerEvents.Instance.OnMediaFolderDeleted(itemToDelete);
 
             return new DeleteFolderResponse { Data = true };
-        }
-
-        /// <summary>
-        /// Deletes the medias.
-        /// </summary>
-        /// <param name="media">The media.</param>
-        private void DeleteMedias(Media media)
-        {
-            if (media.MediaTags != null)
-            {
-                foreach (var mediaTag in media.MediaTags)
-                {
-                    repository.Delete(mediaTag);
-                }
-            }
-
-            if (media is MediaFile)
-            {
-                MediaFile file = (MediaFile)media;
-                if (file.AccessRules != null)
-                {
-                    var rules = file.AccessRules.ToList();
-                    rules.ForEach(file.RemoveRule);
-                }
-            }
-
-            repository.Delete(media);
-
-            var subItems = repository.AsQueryable<Media>().Where(m => !m.IsDeleted && m.Folder != null && m.Folder.Id == media.Id).ToList();
-            foreach (var item in subItems)
-            {
-                DeleteMedias(item);
-            }
         }
 
         /// <summary>

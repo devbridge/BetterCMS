@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Root;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
 {
@@ -29,213 +30,6 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the file extension.
-        /// </summary>
-        /// <value>
-        /// The file extension.
-        /// </value>
-        [DataMember]
-        public string FileExtension { get; set; }
-
-        /// <summary>
-        /// Gets or sets the size of the file.
-        /// </summary>
-        /// <value>
-        /// The size of the file.
-        /// </value>
-        [DataMember]
-        public long FileSize { get; set; }
-
-        /// <summary>
-        /// Gets or sets the URL.
-        /// </summary>
-        /// <value>
-        /// The URL.
-        /// </value>
-        [DataMember]
-        public string FileUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets the thumbnail URL.
-        /// </summary>
-        /// <value>
-        /// The thumbnail URL.
-        /// </value>
-        [DataMember]
-        public string ThumbnailUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets the width of the thumbnail file.
-        /// </summary>
-        /// <value>
-        /// The width of the thumbnail file.
-        /// </value>
-        [DataMember]
-        public virtual int ThumbnailWidth { get; set; }
-
-        /// <summary>
-        /// Gets or sets the height of the thumbnail file.
-        /// </summary>
-        /// <value>
-        /// The height of the thumbnail file.
-        /// </value>
-        [DataMember]
-        public virtual int ThumbnailHeight { get; set; }
-
-        /// <summary>
-        /// Gets or sets the size of the thumbnail file.
-        /// </summary>
-        /// <value>
-        /// The size of the thumbnail file.
-        /// </value>
-        [DataMember]
-        public virtual long ThumbnailSize { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether media is archived.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if media is archived; otherwise, <c>false</c>.
-        /// </value>
-        [DataMember]
-        public bool IsArchived { get; set; }
-
-        /// <summary>
-        /// Gets or sets the folder id.
-        /// </summary>
-        /// <value>
-        /// The folder id.
-        /// </value>
-        [DataMember]
-        public System.Guid? FolderId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the folder.
-        /// </summary>
-        /// <value>
-        /// The name of the folder.
-        /// </value>
-        [DataMember]
-        public string FolderName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the date, when media was published on.
-        /// </summary>
-        /// <value>
-        /// The published on.
-        /// </value>
-        [DataMember]
-        public System.DateTime PublishedOn { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the original file.
-        /// </summary>
-        /// <value>
-        /// The name of the original file.
-        /// </value>
-        [DataMember]
-        public virtual string OriginalFileName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the original file file extension.
-        /// </summary>
-        /// <value>
-        /// The original file file extension.
-        /// </value>
-        [DataMember]
-        public virtual string OriginalFileExtension { get; set; }
-
-        /// <summary>
-        /// Gets or sets the width of the original file.
-        /// </summary>
-        /// <value>
-        /// The width of the original file.
-        /// </value>
-        [DataMember]
-        public virtual int OriginalWidth { get; set; }
-
-        /// <summary>
-        /// Gets or sets the height of the original file.
-        /// </summary>
-        /// <value>
-        /// The height of the original file.
-        /// </value>
-        [DataMember]
-        public virtual int OriginalHeight { get; set; }
-
-        /// <summary>
-        /// Gets or sets the size of the original file.
-        /// </summary>
-        /// <value>
-        /// The size of the original file.
-        /// </value>
-        [DataMember]
-        public virtual long OriginalSize { get; set; }
-
-        /// <summary>
-        /// Gets or sets the original file URL.
-        /// </summary>
-        /// <value>
-        /// The original file URL.
-        /// </value>
-        [DataMember]
-        public virtual string OriginalUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets the file URI.
-        /// </summary>
-        /// <value>
-        /// The file URI.
-        /// </value>
-        [DataMember]
-        public virtual string FileUri { get; set; }
-
-        /// <summary>
-        /// Gets or sets the is uploaded.
-        /// </summary>
-        /// <value>
-        /// The is uploaded.
-        /// </value>
-        [DataMember]
-        public virtual bool? IsUploaded { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether this instance is temporary.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if this instance is temporary; otherwise, <c>false</c>.
-        /// </value>
-        [DataMember]
-        public virtual bool IsTemporary { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether this instance is canceled.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if this instance is canceled; otherwise, <c>false</c>.
-        /// </value>
-        [DataMember]
-        public virtual bool IsCanceled { get; set; }
-
-        /// <summary>
-        /// Gets or sets the original URI.
-        /// </summary>
-        /// <value>
-        /// The original URI.
-        /// </value>
-        [DataMember]
-        public virtual string OriginalUri { get; set; }
-
-        /// <summary>
-        /// Gets or sets the thumbnail URI.
-        /// </summary>
-        /// <value>
-        /// The thumbnail URI.
-        /// </value>
-        [DataMember]
-        public virtual string ThumbnailUri { get; set; }
-
-        /// <summary>
         /// Gets or sets the tags.
         /// </summary>
         /// <value>
@@ -243,5 +37,103 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// </value>
         [DataMember]
         public IList<string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the public URL.
+        /// </summary>
+        /// <value>
+        /// The public URL.
+        /// </value>
+        [DataMember]
+        public string PublicUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the access rules.
+        /// </summary>
+        /// <value>
+        /// The access rules.
+        /// </value>
+        [DataMember]
+        public IList<AccessRuleModel> AccessRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets the folder identifier.
+        /// </summary>
+        /// <value>
+        /// The folder identifier.
+        /// </value>
+        public Guid? FolderId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is archived.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is archived; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsArchived { get; set; }
+
+        /// <summary>
+        /// Gets or sets the published on.
+        /// </summary>
+        /// <value>
+        /// The published on.
+        /// </value>
+        public DateTime PublishedOn { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the original file.
+        /// </summary>
+        /// <value>
+        /// The name of the original file.
+        /// </value>
+        public string OriginalFileName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the original file extension.
+        /// </summary>
+        /// <value>
+        /// The original file extension.
+        /// </value>
+        public string OriginalFileExtension { get; set; }
+
+        /// <summary>
+        /// Gets or sets the file URI.
+        /// </summary>
+        /// <value>
+        /// The file URI.
+        /// </value>
+        public string FileUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets the size of the file.
+        /// </summary>
+        /// <value>
+        /// The size of the file.
+        /// </value>
+        public long FileSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is temporary.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is temporary; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsTemporary { get; set; }
+
+        /// <summary>
+        /// Gets or sets the is uploaded.
+        /// </summary>
+        /// <value>
+        /// The is uploaded.
+        /// </value>
+        public bool? IsUploaded { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is canceled.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is canceled; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsCanceled { get; set; }
     }
 }

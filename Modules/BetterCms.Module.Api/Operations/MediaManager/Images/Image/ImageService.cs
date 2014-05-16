@@ -4,11 +4,15 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Module.MediaManager.Models;
+using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+
+using NHibernate.Linq;
 
 using ServiceStack.ServiceInterface;
 
@@ -42,18 +46,25 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         private readonly ITagService tagService;
 
         /// <summary>
+        /// The media service.
+        /// </summary>
+        private readonly IMediaService mediaService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ImageService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="unitOfWork">The unit of work.</param>
         /// <param name="fileUrlResolver">The file URL resolver.</param>
         /// <param name="tagService">The tag service.</param>
-        public ImageService(IRepository repository, IUnitOfWork unitOfWork, IMediaFileUrlResolver fileUrlResolver, ITagService tagService)
+        /// <param name="mediaService">The media service.</param>
+        public ImageService(IRepository repository, IUnitOfWork unitOfWork, IMediaFileUrlResolver fileUrlResolver, ITagService tagService, IMediaService mediaService)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
             this.fileUrlResolver = fileUrlResolver;
             this.tagService = tagService;
+            this.mediaService = mediaService;
         }
 
         /// <summary>
@@ -152,7 +163,28 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         /// </returns>
         public PutImageResponse Put(PutImageRequest request)
         {
-            var mediaImage = repository.AsQueryable<MediaImage>().FirstOrDefault(tag1 => tag1.Id == request.ImageId);
+            IEnumerable<MediaFolder> parentFolderFuture = null;
+            if (request.Data.FolderId.HasValue)
+            {
+                parentFolderFuture = repository.AsQueryable<MediaFolder>()
+                    .Where(c => c.Id == request.Data.FolderId.Value && !c.IsDeleted)
+                    .ToFuture();
+            }
+
+            var mediaImage = repository.AsQueryable<MediaImage>()
+                .Where(file => file.Id == request.ImageId)
+                .ToFuture()
+                .FirstOrDefault();
+
+            MediaFolder parentFolder = null;
+            if (parentFolderFuture != null)
+            {
+                parentFolder = parentFolderFuture.First();
+                if (parentFolder.Type != Module.MediaManager.Models.MediaType.Image)
+                {
+                    throw new CmsApiValidationException("Folder must be type of an image.");
+                }
+            }
 
             var createImage = mediaImage == null;
             if (createImage)
@@ -172,9 +204,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
 
             if (!createImage)
             {
-                var historyitem = mediaImage.Clone();
-                historyitem.Original = mediaImage;
-                repository.Save(historyitem);
+                repository.Save(mediaImage.CreateHistoryItem());
             }
 
             mediaImage.Title = request.Data.Title;
@@ -189,9 +219,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
             mediaImage.ThumbnailHeight = request.Data.ThumbnailHeight;
             mediaImage.ThumbnailSize = request.Data.ThumbnailSize;
             mediaImage.IsArchived = request.Data.IsArchived;
-            mediaImage.Folder = request.Data.FolderId.HasValue && !request.Data.FolderId.Value.HasDefaultValue()
-                                    ? repository.AsProxy<MediaFolder>(request.Data.FolderId.Value)
-                                    : null;
+            mediaImage.Folder = parentFolder;
             mediaImage.PublishedOn = request.Data.PublishedOn;
             mediaImage.OriginalFileName = request.Data.OriginalFileName;
             mediaImage.OriginalFileExtension = request.Data.OriginalFileExtension;
@@ -258,7 +286,10 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
                 throw new ConcurrentDataException(itemToDelete);
             }
 
-            repository.Delete(itemToDelete);
+            unitOfWork.BeginTransaction();
+
+            mediaService.DeleteMedia(itemToDelete);
+
             unitOfWork.Commit();
 
             Events.MediaManagerEvents.Instance.OnMediaFileDeleted(itemToDelete);
