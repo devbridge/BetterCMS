@@ -28,6 +28,8 @@ using BetterCms.Module.Api.Operations.Root.Languages.Language;
 using BetterCms.Module.Api.Operations.Root.Layouts.Layout;
 using BetterCms.Module.Api.Operations.Root.Tags.Tag;
 
+using FluentNHibernate.Utils;
+
 using NUnit.Framework;
 
 namespace BetterCms.Test.Module.Api
@@ -113,18 +115,18 @@ namespace BetterCms.Test.Module.Api
                 getPageRequest.Data.IncludeAccessRules = true;
                 getPageRequest.Data.IncludePageOptions = true;
                 getPageRequest.Data.IncludeMetaData = true;
+                getPageRequest.Data.IncludeTags = true;
                 var page = api.Pages.Page.Properties.Get(getPageRequest);
                 api.Pages.Page.Properties.Post(page.ToPostRequest());
                 api.Pages.Page.Properties.Put(page.ToPutRequest());
                 api.Pages.Page.Properties.Delete(new DeletePagePropertiesRequest());
 
                 // Page Contents:
-                var pageContent = api.Pages.Page.Content.Get(new GetPageContentRequest());
+                var getPCrequest = new GetPageContentRequest();
+                getPCrequest.Data.IncludeOptions = true; // Only when options should be retrieved and saved
+                var pageContent = api.Pages.Page.Content.Get(getPCrequest);
                 api.Pages.Page.Content.Put(pageContent.ToPutRequest());
                 api.Pages.Page.Content.Delete(new DeletePageContentRequest());
-
-                // Page content options:
-                // TODO: implement
 
                 // Blog Post:
                 var getBlogRequest = new GetBlogPostPropertiesRequest();

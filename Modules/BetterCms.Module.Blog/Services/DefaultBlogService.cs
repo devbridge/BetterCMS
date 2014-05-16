@@ -295,10 +295,12 @@ namespace BetterCms.Module.Blog.Services
             pageContent.Content = content;
             blogPost.PageContents = new [] {pageContent};
 
+            
+
             IList<Tag> newTags = null;
             if (userCanEdit)
             {
-                tagService.SavePageTags(blogPost, request.Tags, out newTags);
+                newTags = SaveTags(blogPost, request);
             }
 
             // Commit
@@ -324,6 +326,14 @@ namespace BetterCms.Module.Blog.Services
             }
 
             return blogPost;
+        }
+
+        protected virtual IList<Tag> SaveTags(BlogPost blogPost, BlogPostViewModel request)
+        {
+            IList<Tag> newTags;
+            tagService.SavePageTags(blogPost, request.Tags, out newTags);
+
+            return newTags;
         }
 
         protected virtual BlogPostContent SaveContentWithStatusUpdate(bool isNew, BlogPostContent newContent, BlogPostViewModel request, IPrincipal principal)
