@@ -266,7 +266,7 @@
           <con:params/>
           <con:element>html</con:element>
         </con:representation>
-        <con:request name="Update" mediaType="application/json" postQueryString="false">
+        <con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:request name="Update" mediaType="application/json" postQueryString="false">
           <con:settings>
             <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
           </con:settings>
@@ -284,7 +284,7 @@
 	"useHtml": "true",
 	"customJavaScript": "console.log('test');",
 	"useCustomJavaScript": "true",
-	"options": [
+	"__options": [
 		
 		{
 		      "key": "C1",
@@ -359,7 +359,7 @@
 	"publishedOn": "_____",
 	"publishedByUser": "_____",
 	"categoryId": "_____",
-	"options": [
+	"___options": [
 		{
 		      "key": "C1",
 		      "defaultValue": "dfc66392-e17e-4a79-91db-a30a01072077",
