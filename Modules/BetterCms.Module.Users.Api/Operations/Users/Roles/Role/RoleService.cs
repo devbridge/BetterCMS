@@ -49,6 +49,7 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Roles.Role
                         LastModifiedOn = role.ModifiedOn,
 
                         Name = role.Name,
+                        Description = role.Description,
                         IsSystematic = role.IsSystematic
                     })
                 .FirstOne();
@@ -58,13 +59,26 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Roles.Role
 
         public PutRoleResponse Put(PutRoleRequest request)
         {
-            var redirect = roleService.SaveRole(request.RoleId ?? Guid.Empty, request.Data.Version, request.Data.Name, request.Data.Description, true);
+            bool isNew;
+            unitOfWork.BeginTransaction();
+            var role = roleService.SaveRole(request.RoleId ?? Guid.Empty, request.Data.Version, request.Data.Name, request.Data.Description, out isNew, true);
+            unitOfWork.Commit();
 
-            return new PutRoleResponse { Data = redirect.Id };
+            if (isNew)
+            {
+                Events.UserEvents.Instance.OnRoleCreated(role);
+            }
+            else
+            {
+                Events.UserEvents.Instance.OnRoleUpdated(role);
+            }
+
+            return new PutRoleResponse { Data = role.Id };
         }
 
         public DeleteRoleResponse Delete(DeleteRoleRequest request)
         {
+            unitOfWork.BeginTransaction();
             var role = roleService.DeleteRole(request.RoleId, request.Data.Version, true);
             unitOfWork.Commit();
 

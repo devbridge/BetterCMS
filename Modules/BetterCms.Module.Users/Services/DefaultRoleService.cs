@@ -42,7 +42,8 @@ namespace BetterCms.Module.Users.Services
         /// </returns>
         public Role CreateRole(string name, string description = null)
         {
-            return SaveRole(Guid.Empty, 1, name, description);
+            bool newEntityCreated;
+            return SaveRole(Guid.Empty, 1, name, description, out newEntityCreated);
         }
 
         /// <summary>
@@ -57,7 +58,8 @@ namespace BetterCms.Module.Users.Services
         /// </returns>
         public Role UpdateRole(Guid id, int version, string name, string description = null)
         {
-            return SaveRole(id, version, name, description);
+            bool newEntityCreated;
+            return SaveRole(id, version, name, description, out newEntityCreated);
         }
 
         /// <summary>
@@ -111,29 +113,32 @@ namespace BetterCms.Module.Users.Services
         /// <param name="version">The version.</param>
         /// <param name="name">The name.</param>
         /// <param name="description">The description.</param>
-        /// <param name="createIfNotExists">if set to <c>true</c> [create if not exists].</param>
+        /// <param name="newEntityCreated">if set to <c>true</c> new entity was created.</param>
+        /// <param name="createIfNotExists">if set to <c>true</c> create entity if not exists.</param>
         /// <returns>
         /// Saved role entity
         /// </returns>
-        public Role SaveRole(Guid id, int version, string name, string description, bool createIfNotExists = false)
+        /// <exception cref="EntityNotFoundException"></exception>
+        /// <exception cref="System.ComponentModel.DataAnnotations.ValidationException"></exception>
+        public Role SaveRole(Guid id, int version, string name, string description, out bool newEntityCreated, bool createIfNotExists = false)
         {
             // Check if such role doesn't exist
             ValidateRoleName(id, name);
 
             Role role = null;
-            var isNew = !id.HasDefaultValue();
-            if (!isNew)
+            newEntityCreated = id.HasDefaultValue();
+            if (!newEntityCreated)
             {
                 role = repository.AsQueryable<Role>(f => f.Id == id).FirstOrDefault();
-                isNew = role == null;
+                newEntityCreated = role == null;
 
-                if (isNew && !createIfNotExists)
+                if (newEntityCreated && !createIfNotExists)
                 {
                     throw new EntityNotFoundException(typeof(Role), id);
                 }
             }
 
-            if (isNew)
+            if (newEntityCreated)
             {
                 role = new Role { Id = id };
             }

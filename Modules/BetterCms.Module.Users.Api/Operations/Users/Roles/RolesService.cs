@@ -9,8 +9,6 @@ using BetterCms.Module.Api.Operations.Users.Roles.Role;
 
 using ServiceStack.ServiceInterface;
 
-using RoleModel = BetterCms.Module.Api.Operations.Users.Roles.RoleModel;
-
 namespace BetterCms.Module.Users.Api.Operations.Users.Roles
 {
     public class RolesService : Service, IRolesService
@@ -41,6 +39,7 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Roles
                         LastModifiedOn = role.ModifiedOn,
 
                         Name = role.Name,
+                        Description = role.Description,
                         IsSystematic = role.IsSystematic
                     })
                 .ToDataListResponse(request);

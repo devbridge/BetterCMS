@@ -474,7 +474,6 @@
     <Compile Include="Operations\Users\Roles\IRolesService.cs" />
     <Compile Include="Operations\Users\Roles\PostRoleRequest.cs" />
     <Compile Include="Operations\Users\Roles\PostRoleResponse.cs" />
-    <Compile Include="Operations\Users\Roles\RoleModel.cs" />
     <Compile Include="Operations\Users\Roles\Role\DeleteRoleRequest.cs" />
     <Compile Include="Operations\Users\Roles\Role\DeleteRoleResponse.cs" />
     <Compile Include="Operations\Users\Roles\Role\GetRoleRequest.cs" />
