@@ -3,18 +3,31 @@
 using BetterCms.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Root.Languages.Language;
 
 using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Root.Languages
 {
+    /// <summary>
+    /// Language service for languages list handling.
+    /// </summary>
     public class LanguagesService : Service, ILanguagesService
     {
+        /// <summary>
+        /// The repository.
+        /// </summary>
         private readonly IRepository repository;
 
-        public LanguagesService(IRepository repository)
+        /// <summary>
+        /// The language service.
+        /// </summary>
+        private readonly ILanguageService languageService;
+
+        public LanguagesService(IRepository repository, ILanguageService languageService)
         {
             this.repository = repository;
+            this.languageService = languageService;
         }
 
         public GetLanguagesResponse Get(GetLanguagesRequest request)
@@ -41,6 +54,19 @@ namespace BetterCms.Module.Api.Operations.Root.Languages
                        {
                            Data = listResponse
                        };
+        }
+
+        public PostLanguageResponse Post(PostLanguageRequest request)
+        {
+            var result =
+                languageService.Put(
+                    new PutLanguageRequest
+                    {
+                        Data = request.Data,
+                        User = request.User
+                    });
+
+            return new PostLanguageResponse { Data = result.Data };
         }
     }
 }
