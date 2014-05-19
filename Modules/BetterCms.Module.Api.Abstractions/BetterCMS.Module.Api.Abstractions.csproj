@@ -419,10 +419,17 @@
     <Compile Include="Operations\Root\Languages\GetLanguagesResponse.cs" />
     <Compile Include="Operations\Root\Languages\ILanguagesService.cs" />
     <Compile Include="Operations\Root\Languages\LanguageModel.cs" />
+    <Compile Include="Operations\Root\Languages\Language\DeleteLanguageRequest.cs" />
+    <Compile Include="Operations\Root\Languages\Language\DeleteLanguageResponse.cs" />
     <Compile Include="Operations\Root\Languages\Language\GetLanguageRequest.cs" />
     <Compile Include="Operations\Root\Languages\Language\GetLanguageRequestValidator.cs" />
     <Compile Include="Operations\Root\Languages\Language\GetLanguageResponse.cs" />
     <Compile Include="Operations\Root\Languages\Language\ILanguageService.cs" />
+    <Compile Include="Operations\Root\Languages\Language\PostLanguageRequest.cs" />
+    <Compile Include="Operations\Root\Languages\Language\PostLanguageResponse.cs" />
+    <Compile Include="Operations\Root\Languages\Language\PutLanguageRequest.cs" />
+    <Compile Include="Operations\Root\Languages\Language\PutLanguageResponse.cs" />
+    <Compile Include="Operations\Root\Languages\Language\SaveLanguageModel.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\DeleteLayoutRequest.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\DeleteLayoutResponse.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\GetLayoutModel.cs" />
