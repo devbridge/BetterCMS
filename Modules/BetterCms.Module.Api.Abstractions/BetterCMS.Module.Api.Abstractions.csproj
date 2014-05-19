@@ -97,6 +97,13 @@
     <Compile Include="Infrastructure\RequestBase.cs" />
     <Compile Include="Infrastructure\ResponseBase.cs" />
     <Compile Include="Infrastructure\SaveModelBase.cs" />
+    <Compile Include="Operations\Blog\Authors\Author\DeleteAuthorRequest.cs" />
+    <Compile Include="Operations\Blog\Authors\Author\DeleteAuthorResponse.cs" />
+    <Compile Include="Operations\Blog\Authors\Author\PostAuthorRequest.cs" />
+    <Compile Include="Operations\Blog\Authors\Author\PostAuthorResponse.cs" />
+    <Compile Include="Operations\Blog\Authors\Author\PutAuthorRequest.cs" />
+    <Compile Include="Operations\Blog\Authors\Author\PutAuthorResponse.cs" />
+    <Compile Include="Operations\Blog\Authors\Author\SaveAuthorModel.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\DeleteBlogPostPropertiesRequest.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\DeleteBlogPostPropertiesResponse.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\TechnicalInfoModel.cs" />
