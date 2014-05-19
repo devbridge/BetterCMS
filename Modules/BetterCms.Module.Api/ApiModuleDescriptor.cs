@@ -20,6 +20,7 @@ using BetterCms.Module.Api.Operations.MediaManager.MediaTree;
 using BetterCms.Module.Api.Operations.Pages;
 using BetterCms.Module.Api.Operations.Pages.Contents.Content;
 using BetterCms.Module.Api.Operations.Pages.Contents.Content.BlogPostContent;
+using BetterCms.Module.Api.Operations.Pages.Contents.Content.Draft;
 using BetterCms.Module.Api.Operations.Pages.Contents.Content.History;
 using BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent;
 using BetterCms.Module.Api.Operations.Pages.Pages;
@@ -174,6 +175,7 @@ namespace BetterCms.Module.Api
             containerBuilder.RegisterType<RedirectsService>().As<IRedirectsService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<RedirectService>().As<IRedirectService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);            
             containerBuilder.RegisterType<ContentService>().As<IContentService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterType<ContentDraftService>().As<IContentDraftService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<BlogPostContentService>().As<IBlogPostContentService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<HtmlContentService>().As<IHtmlContentService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<ContentHistoryService>().As<IContentHistoryService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);

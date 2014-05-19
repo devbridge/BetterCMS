@@ -1,4 +1,5 @@
-﻿using BetterCms.Module.Api.Operations.Pages.Contents.Content.History;
+﻿using BetterCms.Module.Api.Operations.Pages.Contents.Content.Draft;
+using BetterCms.Module.Api.Operations.Pages.Contents.Content.History;
 using BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent;
 
 using ServiceStack.ServiceInterface;
@@ -10,11 +11,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content
         private readonly IHtmlContentService htmlService;
 
         private readonly IContentHistoryService historyService;
+        
+        private readonly IContentDraftService draftService;
 
-        public ContentService(IHtmlContentService htmlService, IContentHistoryService historyService)
+        public ContentService(IHtmlContentService htmlService, IContentHistoryService historyService, IContentDraftService draftService)
         {
             this.htmlService = htmlService;
             this.historyService = historyService;
+            this.draftService = draftService;
         }
 
         IHtmlContentService IContentService.Html
@@ -30,6 +34,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content
             get
             {
                 return historyService;
+            }
+        }
+        
+        IContentDraftService IContentService.Draft
+        {
+            get
+            {
+                return draftService;
             }
         }
     }

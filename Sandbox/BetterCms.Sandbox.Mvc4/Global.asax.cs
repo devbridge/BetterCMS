@@ -67,6 +67,7 @@ namespace BetterCms.Sandbox.Mvc4
             BetterCms.Events.PageEvents.Instance.HtmlContentCreated += args => Log.Info("HtmlContentCreated:" + args.Item.ToString());
             BetterCms.Events.PageEvents.Instance.HtmlContentUpdated += args => Log.Info("HtmlContentUpdated:" + args.Item.ToString());
             BetterCms.Events.PageEvents.Instance.HtmlContentDeleted += args => Log.Info("HtmlContentDeleted:" + args.Item.ToString());
+            BetterCms.Events.PageEvents.Instance.ContentDraftDestroyed += args => Log.Info("ContentDraftDestroyed:" + args.Item.ToString());
         }
 
         private void AddLayoutEvents()
