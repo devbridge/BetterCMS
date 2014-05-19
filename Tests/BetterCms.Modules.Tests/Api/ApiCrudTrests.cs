@@ -6,6 +6,7 @@ using BetterCms.Core.DataAccess.DataContext;
 
 using BetterCms.Module.Api;
 using BetterCms.Module.Api.Extensions;
+using BetterCms.Module.Api.Operations.Blog.Authors.Author;
 using BetterCms.Module.Api.Operations.Blog.BlogPosts;
 using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
 using BetterCms.Module.Api.Operations.MediaManager.Files.File;
@@ -140,6 +141,10 @@ namespace BetterCms.Test.Module.Api
                 api.Blog.BlogPost.Properties.Post(blog.ToPostRequest());
                 api.Blog.BlogPost.Properties.Put(blog.ToPutRequest());
                 api.Blog.BlogPost.Properties.Delete(new DeleteBlogPostPropertiesRequest());
+                var author = api.Blog.Author.Get(new GetAuthorRequest());
+                api.Blog.Authors.Post(author.ToPostRequest());
+                api.Blog.Author.Put(author.ToPutRequest());
+                api.Blog.Author.Delete(new DeleteAuthorRequest());
 
                 // Sitemap:
                 var sitemap = api.Pages.SitemapNew.Get(new GetSitemapRequest());

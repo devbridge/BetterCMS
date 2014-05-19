@@ -1,5 +1,8 @@
 ﻿namespace BetterCms.Module.Api.Operations.Root.Languages.Language
 {
+    /// <summary>
+    /// Contract for language service.
+    /// </summary>
     public interface ILanguageService
     {
         /// <summary>

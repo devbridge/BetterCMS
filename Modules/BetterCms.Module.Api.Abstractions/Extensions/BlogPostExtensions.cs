@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 
+using BetterCms.Module.Api.Operations.Blog.Authors.Author;
 using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
 
 namespace BetterCms.Module.Api.Extensions
@@ -18,6 +19,20 @@ namespace BetterCms.Module.Api.Extensions
             var model = MapBlogPostModel(response);
 
             return new PostBlogPostPropertiesRequest { Data = model };
+        }
+
+        public static PutAuthorRequest ToPutRequest(this GetAuthorResponse response)
+        {
+            var model = MapAuthorModel(response);
+
+            return new PutAuthorRequest { Data = model, AuthorId = response.Data.Id };
+        }
+
+        public static PostAuthorRequest ToPostRequest(this GetAuthorResponse response)
+        {
+            var model = MapAuthorModel(response);
+
+            return new PostAuthorRequest { Data = model };
         }
 
         private static SaveBlogPostPropertiesModel MapBlogPostModel(GetBlogPostPropertiesResponse response)
@@ -53,6 +68,16 @@ namespace BetterCms.Module.Api.Extensions
             {
                 model.Tags = response.Tags.Select(t => t.Name).ToList();
             }
+
+            return model;
+        }
+
+        private static SaveAuthorModel MapAuthorModel(GetAuthorResponse response)
+        {
+            var model = new SaveAuthorModel
+                        {
+                            Version = response.Data.Version,
+                        };
 
             return model;
         }
