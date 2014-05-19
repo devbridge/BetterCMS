@@ -172,7 +172,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                                   RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration))
                               : SecurityService.IsAuthorized(Context.Principal, RootModuleConstants.UserRoles.EditContent);
 
-            IList<Root.Models.Page> translations = null;
+            IList<PageProperties> translations = null;
             if (canEdit && isMultilanguageEnabled && !page.IsMasterPage)
             {
                 translations = LoadAndValidateTranslations(page, request);
@@ -216,6 +216,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                 page.PageUrl = request.PageUrl;
             }
 
+            List<PageProperties> updatePageTranslations = null;
             if (canEdit)
             {
                 page.PageUrlHash = page.PageUrl.UrlHash();
@@ -228,7 +229,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
 
                 if (isMultilanguageEnabled && !page.IsMasterPage)
                 {
-                    UpdatePageTranslations(page, translations, request);
+                    updatePageTranslations = UpdatePageTranslations(page, translations, request);
                 }
             }
 
@@ -311,6 +312,12 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             // Notify about page properties change.
             page.Options = pageOptions;
             Events.PageEvents.Instance.OnPagePropertiesChanged(page);
+
+            // Notify about translation properties changed
+            if (updatePageTranslations != null)
+            {
+                updatePageTranslations.ForEach(Events.PageEvents.Instance.OnPagePropertiesChanged);
+            }
 
             // Notify about redirect creation.
             if (redirectCreated != null)
@@ -417,10 +424,10 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         /// <param name="page">The page.</param>
         /// <param name="request">The request.</param>
         /// <returns>List of old and new page translations</returns>
-        private IList<Root.Models.Page> LoadAndValidateTranslations(PageProperties page, EditPagePropertiesViewModel request)
+        private IList<PageProperties> LoadAndValidateTranslations(PageProperties page, EditPagePropertiesViewModel request)
         {
             // Load translations
-            var predicateBuilder = PredicateBuilder.False<Root.Models.Page>();
+            var predicateBuilder = PredicateBuilder.False<PageProperties>();
             if (page.LanguageGroupIdentifier.HasValue)
             {
                 predicateBuilder = predicateBuilder.Or(p => p.LanguageGroupIdentifier == page.LanguageGroupIdentifier.Value);
@@ -431,7 +438,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                 request.Translations.Select(t => t.Id).ToList().ForEach(t => { predicateBuilder = predicateBuilder.Or(p => p.Id == t); });
             }
 
-            var translations = Repository.AsQueryable<Root.Models.Page>().Where(predicateBuilder).ToList();
+            var translations = Repository.AsQueryable<PageProperties>().Where(predicateBuilder).ToList();
 
             // Validate translations
             if (request.Translations != null)
@@ -475,8 +482,10 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         /// <param name="page">The page.</param>
         /// <param name="translations">The translations.</param>
         /// <param name="request">The request.</param>
-        private void UpdatePageTranslations(PageProperties page, IList<Root.Models.Page> translations, EditPagePropertiesViewModel request)
+        private List<PageProperties> UpdatePageTranslations(PageProperties page, IList<PageProperties> translations, EditPagePropertiesViewModel request)
         {
+            var updatedPages = new List<PageProperties>();
+
             // Update page language
             var oldLanguageId = page.Language != null ? page.Language.Id : (Guid?)null;
             var newLanguageId = request.LanguageId;
@@ -497,10 +506,12 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                         && requestTranslations.All(rt => rt.Id != t.Id)
                         && t.Id != page.Id)
                     .ToList()
-                    .ForEach(t =>
+                    .ForEach(translation =>
                             {
-                                t.LanguageGroupIdentifier = null;
-                                Repository.Save(t);
+                                translation.LanguageGroupIdentifier = null;
+
+                                updatedPages.Add(translation);
+                                Repository.Save(translation);
                             });
             }
 
@@ -517,14 +528,21 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             foreach (var translationViewModel in requestTranslations)
             {
                 var translation = translations.Where(t => t.Id == translationViewModel.Id).FirstOne();
-                translation.LanguageGroupIdentifier = page.LanguageGroupIdentifier;
-                if (translation.Language == null && translationViewModel.LanguageId.HasValue)
+                var changeLanguage = translation.Language == null && translationViewModel.LanguageId.HasValue;
+                if (translation.LanguageGroupIdentifier != page.LanguageGroupIdentifier || changeLanguage)
                 {
-                    translation.Language = Repository.AsProxy<Language>(translationViewModel.LanguageId.Value);
+                    translation.LanguageGroupIdentifier = page.LanguageGroupIdentifier;
+                    if (changeLanguage)
+                    {
+                        translation.Language = Repository.AsProxy<Language>(translationViewModel.LanguageId.Value);
+                    }
+
+                    updatedPages.Add(translation);
+                    Repository.Save(translation);
                 }
-            
-                Repository.Save(translation);
             }
+
+            return updatedPages;
         }
     }
 }

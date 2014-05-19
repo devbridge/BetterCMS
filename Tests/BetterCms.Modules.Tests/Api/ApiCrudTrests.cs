@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
+
 using BetterCms.Module.Api;
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Blog.BlogPosts;
@@ -27,8 +28,6 @@ using BetterCms.Module.Api.Operations.Root.Categories.Category;
 using BetterCms.Module.Api.Operations.Root.Languages.Language;
 using BetterCms.Module.Api.Operations.Root.Layouts.Layout;
 using BetterCms.Module.Api.Operations.Root.Tags.Tag;
-
-using FluentNHibernate.Utils;
 
 using NUnit.Framework;
 

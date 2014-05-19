@@ -149,9 +149,11 @@ namespace BetterCms.Module.Pages.Services
             masterPages.ForEach(masterPage => CloneMasterPages(masterPage, newPage));
 
             // Set language identifier for parent page, if it hasn't and child is cloned from the parent.
+            var parentChanged = false;
             if (languageGroupIdentifier.HasValue && !page.LanguageGroupIdentifier.HasValue)
             {
                 page.LanguageGroupIdentifier = languageGroupIdentifier.Value;
+                parentChanged = true;
                 repository.Save(page);
             }
 
@@ -161,6 +163,12 @@ namespace BetterCms.Module.Pages.Services
             Events.PageEvents.Instance.OnPageCloned(newPage);
             createdContents.Where(c => c is HtmlContent).ForEach(c => Events.PageEvents.Instance.OnHtmlContentCreated((HtmlContent)c));
             createdPageContents.ForEach(Events.PageEvents.Instance.OnPageContentInserted);
+
+            // Fire event about parent page changes
+            if (parentChanged)
+            {
+                Events.PageEvents.Instance.OnPagePropertiesChanged(page);
+            }
 
             return newPage;
         }
