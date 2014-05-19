@@ -77,6 +77,8 @@ namespace BetterCms.Module.Api.Extensions
             var model = new SaveAuthorModel
                         {
                             Version = response.Data.Version,
+                            Name = response.Data.Name,
+                            ImageId = response.Data.ImageId
                         };
 
             return model;
