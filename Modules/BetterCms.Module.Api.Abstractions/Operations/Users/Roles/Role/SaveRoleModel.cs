@@ -7,7 +7,7 @@ namespace BetterCms.Module.Api.Operations.Users.Roles.Role
 {
     [DataContract]
     [Serializable]
-    public class RoleModel : ModelBase
+    public class SaveRoleModel : SaveModelBase
     {
         /// <summary>
         /// Gets or sets the name of the role.
@@ -17,7 +17,7 @@ namespace BetterCms.Module.Api.Operations.Users.Roles.Role
         /// </value>
         [DataMember]
         public string Name { get; set; }
-
+        
         /// <summary>
         /// Gets or sets the description of the role.
         /// </summary>
@@ -26,14 +26,5 @@ namespace BetterCms.Module.Api.Operations.Users.Roles.Role
         /// </value>
         [DataMember]
         public string Description { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether role is systematic.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if role is systematic; otherwise, <c>false</c>.
-        /// </value>
-        [DataMember]
-        public bool IsSystematic { get; set; }
     }
 }

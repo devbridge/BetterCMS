@@ -4,6 +4,7 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
+using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Exceptions.Mvc;
 
 using BetterCms.Module.Root.Mvc;
@@ -110,34 +111,45 @@ namespace BetterCms.Module.Users.Services
         /// <param name="version">The version.</param>
         /// <param name="name">The name.</param>
         /// <param name="description">The description.</param>
+        /// <param name="createIfNotExists">if set to <c>true</c> [create if not exists].</param>
         /// <returns>
         /// Saved role entity
         /// </returns>
-        private Role SaveRole(Guid id, int version, string name, string description)
+        public Role SaveRole(Guid id, int version, string name, string description, bool createIfNotExists = false)
         {
             // Check if such role doesn't exist
             ValidateRoleName(id, name);
 
-            Role role;
-            if (!id.HasDefaultValue())
+            Role role = null;
+            var isNew = !id.HasDefaultValue();
+            if (!isNew)
             {
-                role = repository.AsQueryable<Role>(f => f.Id == id).FirstOne();
+                role = repository.AsQueryable<Role>(f => f.Id == id).FirstOrDefault();
+                isNew = role == null;
 
-                if (role.IsSystematic)
+                if (isNew && !createIfNotExists)
                 {
-                    var logMessage = string.Format("Cannot save systematic role: {0} {1}", role.Name, role.Description);
-                    var message = string.Format(UsersGlobalization.SaveRole_Cannot_Save_Systematic_Role, role.Description ?? role.Name);
-
-                    throw new ValidationException(() => message, logMessage);
+                    throw new EntityNotFoundException(typeof(Role), id);
                 }
+            }
 
+            if (isNew)
+            {
+                role = new Role { Id = id };
+            }
+
+            if (role.IsSystematic)
+            {
+                var logMessage = string.Format("Cannot save systematic role: {0} {1}", role.Name, role.Description);
+                var message = string.Format(UsersGlobalization.SaveRole_Cannot_Save_Systematic_Role, role.Description ?? role.Name);
+
+                throw new ValidationException(() => message, logMessage);
+            }
+
+            if (version > 0)
+            {
                 role.Version = version;
             }
-            else
-            {
-                role = new Role();
-            }
-
             role.Name = name;
             role.Description = description;
 

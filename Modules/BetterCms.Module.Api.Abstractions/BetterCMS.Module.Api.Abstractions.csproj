@@ -72,6 +72,7 @@
     </Compile>
     <Compile Include="Extensions\RedirectExtensions.cs" />
     <Compile Include="Extensions\LanguageExtensions.cs" />
+    <Compile Include="Extensions\RoleExtensions.cs" />
     <Compile Include="Extensions\TagExtensions.cs" />
     <Compile Include="Extensions\LayoutExtensions.cs" />
     <Compile Include="Extensions\MediaExtensions.cs" />
@@ -464,11 +465,18 @@
     <Compile Include="Operations\Users\Roles\GetRolesRequest.cs" />
     <Compile Include="Operations\Users\Roles\GetRolesResponse.cs" />
     <Compile Include="Operations\Users\Roles\IRolesService.cs" />
+    <Compile Include="Operations\Users\Roles\PostRoleRequest.cs" />
+    <Compile Include="Operations\Users\Roles\PostRoleResponse.cs" />
     <Compile Include="Operations\Users\Roles\RoleModel.cs" />
+    <Compile Include="Operations\Users\Roles\Role\DeleteRoleRequest.cs" />
+    <Compile Include="Operations\Users\Roles\Role\DeleteRoleResponse.cs" />
     <Compile Include="Operations\Users\Roles\Role\GetRoleRequest.cs" />
     <Compile Include="Operations\Users\Roles\Role\GetRoleRequestValidator.cs" />
     <Compile Include="Operations\Users\Roles\Role\GetRoleResponse.cs" />
     <Compile Include="Operations\Users\Roles\Role\IRoleService.cs" />
+    <Compile Include="Operations\Users\Roles\Role\PutRoleRequest.cs" />
+    <Compile Include="Operations\Users\Roles\Role\PutRoleResponse.cs" />
+    <Compile Include="Operations\Users\Roles\Role\SaveRoleModel.cs" />
     <Compile Include="Operations\Users\Roles\Role\RoleModel.cs" />
     <Compile Include="Operations\Users\IUsersApiOperations.cs" />
     <Compile Include="Operations\Users\Users\GetUsersModel.cs" />

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
@@ -11,10 +12,16 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Roles.Role
     public class RoleService : Service, IRoleService
     {
         private readonly IRepository repository;
+        
+        private readonly IUnitOfWork unitOfWork;
 
-        public RoleService(IRepository repository)
+        private readonly Services.IRoleService roleService;
+
+        public RoleService(IRepository repository, Services.IRoleService roleService, IUnitOfWork unitOfWork)
         {
             this.repository = repository;
+            this.unitOfWork = unitOfWork;
+            this.roleService = roleService;
         }
 
         public GetRoleResponse Get(GetRoleRequest request)
@@ -47,6 +54,24 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Roles.Role
                 .FirstOne();
 
             return new GetRoleResponse { Data = model };
+        }
+
+        public PutRoleResponse Put(PutRoleRequest request)
+        {
+            var redirect = roleService.SaveRole(request.RoleId ?? Guid.Empty, request.Data.Version, request.Data.Name, request.Data.Description, true);
+
+            return new PutRoleResponse { Data = redirect.Id };
+        }
+
+        public DeleteRoleResponse Delete(DeleteRoleRequest request)
+        {
+            var role = roleService.DeleteRole(request.RoleId, request.Data.Version, true);
+            unitOfWork.Commit();
+
+            // Notify.
+            Events.UserEvents.Instance.OnRoleDeleted(role);
+
+            return new DeleteRoleResponse { Data = true };
         }
     }
 }
