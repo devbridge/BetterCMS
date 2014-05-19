@@ -3,5 +3,7 @@
     public interface IRedirectsService
     {
         GetRedirectsResponse Get(GetRedirectsRequest request);
+        
+        PostRedirectResponse Post(PostRedirectRequest request);
     }
 }

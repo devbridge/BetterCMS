@@ -70,6 +70,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Extensions\RedirectExtensions.cs" />
     <Compile Include="Extensions\LanguageExtensions.cs" />
     <Compile Include="Extensions\TagExtensions.cs" />
     <Compile Include="Extensions\LayoutExtensions.cs" />
@@ -167,6 +168,13 @@
     <Compile Include="Operations\Pages\Pages\Page\SavePagePropertiesModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PostPagePropertiesRequest.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PostPagePropertiesResponse.cs" />
+    <Compile Include="Operations\Pages\Redirects\PostRedirectRequest.cs" />
+    <Compile Include="Operations\Pages\Redirects\PostRedirectResponse.cs" />
+    <Compile Include="Operations\Pages\Redirects\Redirect\DeleteRedirectRequest.cs" />
+    <Compile Include="Operations\Pages\Redirects\Redirect\DeleteRedirectResponse.cs" />
+    <Compile Include="Operations\Pages\Redirects\Redirect\PutRedirectRequest.cs" />
+    <Compile Include="Operations\Pages\Redirects\Redirect\PutRedirectResponse.cs" />
+    <Compile Include="Operations\Pages\Redirects\Redirect\SaveRedirectModel.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\GetSitemapModel.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\Nodes\Node\DeleteNodeRequest.cs" />
     <Compile Include="Operations\Pages\Sitemaps\Sitemap\Nodes\Node\DeleteNodeResponse.cs" />

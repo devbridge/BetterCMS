@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Content.Resources;
@@ -217,15 +218,16 @@ namespace BetterCms.Module.Pages.Services
                     .ToList()
                     .FirstOrDefault();
                 isNew = template == null;
+
+                if (isNew && !createIfNotExists)
+                {
+                    throw new EntityNotFoundException(typeof(Layout), model.Id);
+                }
             }
 
             if (template == null)
             {
-                template = new Layout();
-                if (createIfNotExists)
-                {
-                    template.Id = model.Id;
-                }
+                template = new Layout { Id = model.Id };
             }
             else if (model.Version > 0)
             {
