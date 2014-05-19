@@ -82,7 +82,9 @@ namespace BetterCms.Test.Module.Api
 
                 // Languages:
                 var language = api.Root.Language.Get(new GetLanguageRequest());
-                // TODO: implement.
+                api.Root.Languages.Post(language.ToPostRequest());
+                api.Root.Language.Put(language.ToPutRequest());
+                api.Root.Language.Delete(new DeleteLanguageRequest());
 
                 // Redirects:
                 var redirect = api.Pages.Redirect.Get(new GetRedirectRequest());

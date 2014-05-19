@@ -1,12 +1,12 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Exceptions.DataTier;
-using BetterCms.Core.Exceptions.Mvc;
-using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc;
 
 using NHibernate.Linq;
@@ -15,6 +15,9 @@ using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Root.Languages.Language
 {
+    /// <summary>
+    /// Language service for CRUD.
+    /// </summary>
     public class LanguageService : Service, ILanguageService
     {
         /// <summary>
@@ -84,15 +87,16 @@ namespace BetterCms.Module.Api.Operations.Root.Languages.Language
         /// <returns><c>PutLanguageResponse</c> with id of created/updated language.</returns>
         public PutLanguageResponse Put(PutLanguageRequest request)
         {
-            var language = repository.AsQueryable<Module.Root.Models.Language>()
-                .Where(file => file.Id == request.LanguageId)
-                .ToFuture()
-                .FirstOrDefault();
+            var languages = repository.AsQueryable<Module.Root.Models.Language>()
+                .Where(l => l.Id == request.LanguageId || l.Code == request.Data.Code || l.Name == request.Data.Name)
+                .ToList();
 
-            var createLanguage = language == null;
+            var languageToSave = languages.FirstOrDefault(l => l.Id == request.LanguageId);
+
+            var createLanguage = languageToSave == null;
             if (createLanguage)
             {
-                language = new Module.Root.Models.Language
+                languageToSave = new Module.Root.Models.Language
                 {
                     Id = request.LanguageId.GetValueOrDefault(),
                     Code = request.Data.Code
@@ -100,41 +104,32 @@ namespace BetterCms.Module.Api.Operations.Root.Languages.Language
             }
             else if (request.Data.Version > 0)
             {
-                language.Version = request.Data.Version;
+                languageToSave.Version = request.Data.Version;
             }
 
-            if (language.Code != request.Data.Code)
-            {
-                throw new CmsApiValidationException("Language code changing is not allowed.");
-            }
-
-            if (CultureInfo.GetCultures(CultureTypes.AllCultures).All(c => c.Name != request.Data.Code))
-            {
-                var message = string.Format("Language with code '{0}' doesn't exist.", request.Data.Code);
-                throw new CmsApiValidationException(message);
-            }
+            Validate(request, languageToSave, languages);
 
             unitOfWork.BeginTransaction();
 
-            language.Name = request.Data.Name;
+            languageToSave.Name = request.Data.Name;
 
-            repository.Save(language);
+            repository.Save(languageToSave);
 
             unitOfWork.Commit();
 
             // Fire events.
             if (createLanguage)
             {
-                Events.RootEvents.Instance.OnLanguageCreated(language);
+                Events.RootEvents.Instance.OnLanguageCreated(languageToSave);
             }
             else
             {
-                Events.RootEvents.Instance.OnLanguageUpdated(language);
+                Events.RootEvents.Instance.OnLanguageUpdated(languageToSave);
             }
 
             return new PutLanguageResponse
             {
-                Data = language.Id
+                Data = languageToSave.Id
             };
         }
 
@@ -181,6 +176,43 @@ namespace BetterCms.Module.Api.Operations.Root.Languages.Language
             Events.RootEvents.Instance.OnLanguageDeleted(itemToDelete);
 
             return new DeleteLanguageResponse { Data = true };
+        }
+
+        /// <summary>
+        /// Validates the specified request.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <param name="languageToSave">The language to save.</param>
+        /// <param name="languages">The languages.</param>
+        private static void Validate(PutLanguageRequest request, Module.Root.Models.Language languageToSave, List<Module.Root.Models.Language> languages)
+        {
+            if (languageToSave == null)
+            {
+                throw new ArgumentNullException("languageToSave");
+            }
+
+            if (languageToSave.Code != request.Data.Code)
+            {
+                throw new CmsApiValidationException("Language code changing is not allowed.");
+            }
+
+            if (CultureInfo.GetCultures(CultureTypes.AllCultures).All(c => c.Name != request.Data.Code))
+            {
+                var message = string.Format("Language with code '{0}' doesn't exist.", request.Data.Code);
+                throw new CmsApiValidationException(message);
+            }
+
+            if (languages.Any(l => l.Id != request.LanguageId && l.Code == request.Data.Code))
+            {
+                var message = string.Format("Language with code '{0}' already exists.", request.Data.Code);
+                throw new CmsApiValidationException(message);
+            }
+
+            if (languages.Any(l => l.Id != request.LanguageId && l.Name == request.Data.Name))
+            {
+                var message = string.Format("Language with name '{0}' already exists.", request.Data.Name);
+                throw new CmsApiValidationException(message);
+            }
         }
     }
 }
