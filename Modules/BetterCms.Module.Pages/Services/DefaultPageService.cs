@@ -373,7 +373,7 @@ namespace BetterCms.Module.Pages.Services
                 }
             }
 
-            Models.Redirect redirect;
+            Redirect redirect;
             if (!string.IsNullOrWhiteSpace(model.RedirectUrl))
             {
                 if (string.Equals(page.PageUrl, model.RedirectUrl, StringComparison.OrdinalIgnoreCase))
@@ -426,11 +426,13 @@ namespace BetterCms.Module.Pages.Services
                 }
             }
 
+            var deletedPageContents = new List<PageContent>();
             if (page.PageContents != null)
             {
                 foreach (var pageContent in page.PageContents)
                 {
                     repository.Delete(pageContent);
+                    deletedPageContents.Add(pageContent);
                 }
             }
 
@@ -490,6 +492,12 @@ namespace BetterCms.Module.Pages.Services
             if (redirect != null)
             {
                 Events.PageEvents.Instance.OnRedirectCreated(redirect);
+            }
+
+            // Notify about deleted page contents
+            foreach (var deletedPageContent in deletedPageContents)
+            {
+                Events.PageEvents.Instance.OnPageContentDeleted(deletedPageContent);
             }
 
             // Notifying, that page is deleted.
