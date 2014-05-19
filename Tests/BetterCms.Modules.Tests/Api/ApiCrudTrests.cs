@@ -52,7 +52,9 @@ namespace BetterCms.Test.Module.Api
 
                 // Categories:
                 var category = api.Root.Category.Get(new GetCategoryRequest());
-                // TODO: implement.
+                api.Root.Categories.Post(category.ToPostRequest());
+                api.Root.Category.Put(category.ToPutRequest());
+                api.Root.Category.Delete(new DeleteCategoryRequest());
 
                 // Layouts:
                 var getLayoutRequest = new GetLayoutRequest();

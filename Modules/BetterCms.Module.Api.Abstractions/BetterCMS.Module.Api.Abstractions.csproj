@@ -72,6 +72,7 @@
     </Compile>
     <Compile Include="Extensions\RedirectExtensions.cs" />
     <Compile Include="Extensions\LanguageExtensions.cs" />
+    <Compile Include="Extensions\CategoryExtensions.cs" />
     <Compile Include="Extensions\TagExtensions.cs" />
     <Compile Include="Extensions\LayoutExtensions.cs" />
     <Compile Include="Extensions\MediaExtensions.cs" />
@@ -433,7 +434,14 @@
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\Options\IServerControlWidgetOptionsService.cs" />
     <Compile Include="Operations\OptionModel.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\ServerControlWidgetModel.cs" />
+    <Compile Include="Operations\Root\Categories\Category\DeleteCategoryRequest.cs" />
+    <Compile Include="Operations\Root\Categories\Category\DeleteCategoryResponse.cs" />
     <Compile Include="Operations\Root\Categories\Category\GetCategoryRequestValidator.cs" />
+    <Compile Include="Operations\Root\Categories\Category\PostCategoryRequest.cs" />
+    <Compile Include="Operations\Root\Categories\Category\PostCategoryResponse.cs" />
+    <Compile Include="Operations\Root\Categories\Category\PutCategoryRequest.cs" />
+    <Compile Include="Operations\Root\Categories\Category\PutCategoryResponse.cs" />
+    <Compile Include="Operations\Root\Categories\Category\SaveCategoryModel.cs" />
     <Compile Include="Operations\Root\Languages\GetLanguagesRequest.cs" />
     <Compile Include="Operations\Root\Languages\GetLanguagesResponse.cs" />
     <Compile Include="Operations\Root\Languages\ILanguagesService.cs" />
