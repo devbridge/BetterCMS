@@ -9,7 +9,7 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Security;
-
+using BetterCms.Module.Pages.Exceptions;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root;
 
@@ -45,14 +45,14 @@ namespace BetterCms.Module.Pages.Services
                 contentQuery = contentQuery.FetchMany(f => f.PageContents).ThenFetch(f => f.Page).ThenFetchMany(f => f.AccessRules).AsQueryable();
             }
 
-            var content = contentQuery.ToList().FirstOrDefault();
+            var content = contentQuery.ToList().FirstOne();
 
             // Throw concurrent data exception (user needs to reload page):
             // - content may be null, if looking for already deleted draft
             // - content may be changed, if looking for 
-            if (content == null || (version > 0 && version != content.Version))
+            if (version > 0 && version != content.Version)
             {
-                throw new ConcurrentDataException(content ?? new Root.Models.Content());
+                throw new ConcurrentDataException(content);
             }
 
             var pageContents = content.PageContents;
@@ -70,7 +70,7 @@ namespace BetterCms.Module.Pages.Services
                 {
                     // Throw concurrent data exception (user needs to reload page):
                     // - content may be null, if looking for already deleted draft
-                    throw new ConcurrentDataException(new Root.Models.Content());
+                    throw new DraftNotFoundException(new Root.Models.Content());
                 }
             }
 
