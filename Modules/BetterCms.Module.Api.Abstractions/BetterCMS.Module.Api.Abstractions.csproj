@@ -135,6 +135,9 @@
     <Compile Include="Operations\MediaManager\Images\Image\PutImageRequest.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\PutImageResponse.cs" />
     <Compile Include="Operations\MediaManager\MediaType.cs" />
+    <Compile Include="Operations\Pages\Contents\Content\Draft\DestroyContentDraftRequest.cs" />
+    <Compile Include="Operations\Pages\Contents\Content\Draft\DestroyContentDraftResponse.cs" />
+    <Compile Include="Operations\Pages\Contents\Content\Draft\IContentDraftService.cs" />
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\DeleteHtmlContentRequest.cs" />
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\DeleteHtmlContentResponse.cs" />
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\SaveHtmlContentModel.cs" />

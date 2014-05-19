@@ -298,6 +298,7 @@
     <Compile Include="Registration\TemplatesJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\PagesContentJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\RedirectsJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Services\DefaultDraftService.cs" />
     <Compile Include="Services\DefaultHistoryService.cs" />
     <Compile Include="Services\DefaultLayoutService.cs" />
     <Compile Include="Services\DefaultMasterPageService.cs" />
@@ -307,6 +308,7 @@
     <Compile Include="Services\DefaultTagService.cs" />
     <Compile Include="Services\DefaultUrlService.cs" />
     <Compile Include="Services\DefaultWidgetService.cs" />
+    <Compile Include="Services\IDraftService.cs" />
     <Compile Include="Services\IHistoryService.cs" />
     <Compile Include="Services\ILayoutService.cs" />
     <Compile Include="Services\IMasterPageService.cs" />
