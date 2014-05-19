@@ -105,8 +105,19 @@ namespace BetterCms.Module.Root.Controllers
 
                         if (!HasCurrentPrincipalAccess(model.RenderPage))
                         {
+                            try
+                            {
+                                // Pre-renders the given request model.
+                                this.RenderPageToString(model.RenderPage);
+                            }
+                            catch (Exception ex)
+                            {
+                               log.FatalFormat("Failed to pre-render the request model {0}.", ex, model.RenderPage);
+                            }
+                            
                             Response.StatusCode = 403;
                             LogAccessForbidden(model.RenderPage);
+
                             return Content("403 Access Forbidden", "text/plain");
                         }
 
