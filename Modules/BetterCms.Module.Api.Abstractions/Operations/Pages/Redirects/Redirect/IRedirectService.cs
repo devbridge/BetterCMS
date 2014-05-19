@@ -3,5 +3,9 @@
     public interface IRedirectService
     {
         GetRedirectResponse Get(GetRedirectRequest request);
+        
+        PutRedirectResponse Put(PutRedirectRequest request);
+        
+        DeleteRedirectResponse Delete(DeleteRedirectRequest request);
     }
 }

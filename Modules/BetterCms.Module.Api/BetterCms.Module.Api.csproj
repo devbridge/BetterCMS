@@ -155,6 +155,7 @@
     <Compile Include="Extensions\BlogPostModelExtensions.cs" />
     <Compile Include="Extensions\OptionModelExtensions.cs" />
     <Compile Include="Extensions\LayoutModelExtensions.cs" />
+    <Compile Include="Extensions\RedirectModelExtensions.cs" />
     <Compile Include="Extensions\WidgetModelExtensions.cs" />
     <Compile Include="Filters\GetRequestProcessor.cs" />
     <Compile Include="Helpers\ContentTypeExtensions.cs" />

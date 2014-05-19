@@ -1,8 +1,10 @@
 ﻿using System.Linq;
 
 using BetterCms.Core.DataAccess;
+
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Pages.Redirects.Redirect;
 
 using ServiceStack.ServiceInterface;
 
@@ -11,10 +13,13 @@ namespace BetterCms.Module.Api.Operations.Pages.Redirects
     public class RedirectsService : Service, IRedirectsService
     {
         private readonly IRepository repository;
+        
+        private readonly IRedirectService redirectService;
 
-        public RedirectsService(IRepository repository)
+        public RedirectsService(IRepository repository, IRedirectService redirectService)
         {
             this.repository = repository;
+            this.redirectService = redirectService;
         }
 
         public GetRedirectsResponse Get(GetRedirectsRequest request)
@@ -41,6 +46,17 @@ namespace BetterCms.Module.Api.Operations.Pages.Redirects
                        {
                            Data = listResponse
                        };
+        }
+
+        public PostRedirectResponse Post(PostRedirectRequest request)
+        {
+            var result = redirectService.Put(new PutRedirectRequest
+                {
+                    Data = request.Data,
+                    User = request.User
+                });
+
+            return new PostRedirectResponse { Data = result.Data };
         }
     }
 }
