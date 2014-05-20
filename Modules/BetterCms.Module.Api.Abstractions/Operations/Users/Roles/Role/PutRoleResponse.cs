@@ -10,7 +10,7 @@ namespace BetterCms.Module.Api.Operations.Users.Roles.Role
     /// </summary>
     [DataContract]
     [Serializable]
-    public class PutRoleResponse : ResponseBase<Guid?>
+    public class PutRoleResponse : SaveResponseBase
     {
     }
 }

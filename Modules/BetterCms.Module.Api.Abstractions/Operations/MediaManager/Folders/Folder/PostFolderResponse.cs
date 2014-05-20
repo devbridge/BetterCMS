@@ -10,7 +10,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders.Folder
     /// </summary>
     [DataContract]
     [Serializable]
-    public class PostFolderResponse : ResponseBase<Guid?>
+    public class PostFolderResponse : SaveResponseBase
     {
     }
 }

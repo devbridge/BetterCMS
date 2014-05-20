@@ -10,7 +10,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidg
     /// </summary>
     [DataContract]
     [Serializable]
-    public class PostServerControlWidgetResponse : ResponseBase<Guid?>
+    public class PostServerControlWidgetResponse : SaveResponseBase
     {
     }
 }

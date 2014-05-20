@@ -10,7 +10,7 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors.Author
     /// </summary>
     [DataContract]
     [Serializable]
-    public class PostAuthorResponse : ResponseBase<Guid?>
+    public class PostAuthorResponse : SaveResponseBase
     {
     }
 }

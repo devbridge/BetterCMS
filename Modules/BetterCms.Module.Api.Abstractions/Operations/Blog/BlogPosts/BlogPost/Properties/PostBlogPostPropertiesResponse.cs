@@ -10,7 +10,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
     /// </summary>
     [DataContract]
     [Serializable]
-    public class PostBlogPostPropertiesResponse : ResponseBase<Guid?>
+    public class PostBlogPostPropertiesResponse : SaveResponseBase
     {
     }
 }
