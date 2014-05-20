@@ -61,7 +61,7 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Roles.Role
         {
             bool isNew;
             unitOfWork.BeginTransaction();
-            var role = roleService.SaveRole(request.RoleId ?? Guid.Empty, request.Data.Version, request.Data.Name, request.Data.Description, out isNew, true);
+            var role = roleService.SaveRole(request.Id ?? Guid.Empty, request.Data.Version, request.Data.Name, request.Data.Description, out isNew, true);
             unitOfWork.Commit();
 
             if (isNew)

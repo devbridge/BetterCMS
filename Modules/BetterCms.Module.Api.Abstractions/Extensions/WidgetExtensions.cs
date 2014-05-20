@@ -9,7 +9,7 @@ namespace BetterCms.Module.Api.Extensions
         {
             var model = MapHtmlContentWidgetModel(response);
 
-            return new PutHtmlContentWidgetRequest { Data = model, WidgetId = response.Data.Id };
+            return new PutHtmlContentWidgetRequest { Data = model, Id = response.Data.Id };
         }
 
         public static PostHtmlContentWidgetRequest ToPostRequest(this GetHtmlContentWidgetResponse response)
@@ -45,7 +45,7 @@ namespace BetterCms.Module.Api.Extensions
         {
             var model = MapServerControlWidgetModel(response);
 
-            return new PutServerControlWidgetRequest { Data = model, WidgetId = response.Data.Id };
+            return new PutServerControlWidgetRequest { Data = model, Id = response.Data.Id };
         }
 
         public static PostServerControlWidgetRequest ToPostRequest(this GetServerControlWidgetResponse response)

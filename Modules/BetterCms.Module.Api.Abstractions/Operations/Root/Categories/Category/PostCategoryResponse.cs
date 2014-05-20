@@ -10,7 +10,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
     /// </summary>
     [DataContract]
     [Serializable]
-    public class PostCategoryResponse : ResponseBase<Guid?>
+    public class PostCategoryResponse : SaveResponseBase
     {
     }
 }

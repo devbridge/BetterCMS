@@ -67,9 +67,9 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
         public PutLayoutResponse Put(PutLayoutRequest request)
         {
             var model = request.Data.ToServiceModel();
-            if (request.LayoutId.HasValue)
+            if (request.Id.HasValue)
             {
-                model.Id = request.LayoutId.Value;
+                model.Id = request.Id.Value;
             }
 
             var result = layoutService.SaveLayout(model, false, true);

@@ -10,20 +10,11 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
     /// <summary>
     /// Request for page content update or creation.
     /// </summary>
-    [Route("/pages/{PageId}/contents/{PageContentId}", Verbs = "PUT")]
+    [Route("/pages/{PageId}/contents/{Id}", Verbs = "PUT")]
     [DataContract]
     [Serializable]
-    public class PutPageContentRequest : RequestBase<SavePageContentModel>, IReturn<PutPageContentResponse>
+    public class PutPageContentRequest : PutRequestBase<SavePageContentModel>, IReturn<PutPageContentResponse>
     {
-        /// <summary>
-        /// Gets or sets the page content identifier.
-        /// </summary>
-        /// <value>
-        /// The page content identifier.
-        /// </value>
-        [DataMember]
-        public Guid? PageContentId { get; set; }
-
         /// <summary>
         /// Gets or sets the page identifier.
         /// </summary>

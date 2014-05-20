@@ -10,7 +10,7 @@ namespace BetterCms.Module.Api.Operations.Users.Users.User
     /// </summary>
     [DataContract]
     [Serializable]
-    public class PutUserResponse : ResponseBase<Guid?>
+    public class PutUserResponse : SaveResponseBase
     {
     }
 }

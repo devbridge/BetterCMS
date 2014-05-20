@@ -29,7 +29,7 @@ namespace BetterCms.Module.Api.Extensions
         {
             var model = MapSitemapNodeModel(response, false);
 
-            return new PutNodeRequest { Data = model, SitemapId = response.Data.SitemapId, NodeId = response.Data.Id };
+            return new PutNodeRequest { Data = model, SitemapId = response.Data.SitemapId, Id = response.Data.Id };
         }
 
         public static PostSitemapNodeRequest ToPostRequest(this GetNodeResponse response)

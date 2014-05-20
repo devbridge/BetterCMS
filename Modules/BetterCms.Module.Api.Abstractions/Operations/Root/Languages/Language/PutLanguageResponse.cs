@@ -10,7 +10,7 @@ namespace BetterCms.Module.Api.Operations.Root.Languages.Language
     /// </summary>
     [DataContract]
     [Serializable]
-    public class PutLanguageResponse : ResponseBase<Guid?>
+    public class PutLanguageResponse : SaveResponseBase
     {
     }
 }

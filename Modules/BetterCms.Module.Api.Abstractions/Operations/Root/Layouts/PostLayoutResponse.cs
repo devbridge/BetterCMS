@@ -10,7 +10,7 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts
     /// </summary>
     [DataContract]
     [Serializable]
-    public class PostLayoutResponse : ResponseBase<Guid?>
+    public class PostLayoutResponse : SaveResponseBase
     {
     }
 }

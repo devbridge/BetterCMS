@@ -15,7 +15,7 @@ namespace BetterCms.Module.Api.Extensions
         {
             var model = MapModel(response);
 
-            return new PutLanguageRequest { Data = model, LanguageId = response.Data.Id };
+            return new PutLanguageRequest { Data = model, Id = response.Data.Id };
         }
 
         private static SaveLanguageModel MapModel(GetLanguageResponse response)

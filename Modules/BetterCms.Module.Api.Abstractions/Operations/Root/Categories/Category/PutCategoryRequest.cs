@@ -10,18 +10,10 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
     /// <summary>
     /// Request for tag update or creation.
     /// </summary>
-    [Route("/categories/{CategoryId}", Verbs = "PUT")]
+    [Route("/categories/{Id}", Verbs = "PUT")]
     [DataContract]
     [Serializable]
-    public class PutCategoryRequest : RequestBase<SaveCategoryModel>, IReturn<PutCategoryResponse>
+    public class PutCategoryRequest : PutRequestBase<SaveCategoryModel>, IReturn<PutCategoryResponse>
     {
-        /// <summary>
-        /// Gets or sets the category identifier.
-        /// </summary>
-        /// <value>
-        /// The category identifier.
-        /// </value>
-        [DataMember]
-        public Guid? CategoryId { get; set; }
     }
 }

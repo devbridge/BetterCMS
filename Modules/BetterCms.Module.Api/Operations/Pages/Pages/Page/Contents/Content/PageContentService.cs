@@ -117,14 +117,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
         {
             var pageContent = repository
                 .AsQueryable<PageContent>()
-                .FirstOrDefault(content => content.Id == request.PageContentId && content.Page.Id == request.PageId);
+                .FirstOrDefault(content => content.Id == request.Id && content.Page.Id == request.PageId);
 
             var isNew = pageContent == null;
             if (isNew)
             {
                 pageContent = new PageContent
                                   {
-                                      Id = request.PageContentId.HasValue ? request.PageContentId.Value : Guid.Empty,
+                                      Id = request.Id.HasValue ? request.Id.Value : Guid.Empty,
                                       Page = repository.AsProxy<Module.Root.Models.Page>(request.PageId)
                                   };
             }

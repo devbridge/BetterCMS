@@ -10,7 +10,7 @@ namespace BetterCms.Module.Api.Operations.Root.Tags
     /// </summary>
     [DataContract]
     [Serializable]
-    public class PostTagResponse : ResponseBase<Guid?>
+    public class PostTagResponse : SaveResponseBase
     {
     }
 }

@@ -11,7 +11,7 @@ namespace BetterCms.Module.Api.Extensions
         {
             var model = MapPageModel(response);
 
-            return new PutPagePropertiesRequest { Data = model, PageId = response.Data.Id };
+            return new PutPagePropertiesRequest { Data = model, Id = response.Data.Id };
         }
 
         public static PostPagePropertiesRequest ToPostRequest(this GetPagePropertiesResponse response)

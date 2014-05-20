@@ -10,18 +10,10 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidg
     /// <summary>
     /// Request for server control widget update.
     /// </summary>
-    [Route("/widgets/server-control/{WidgetId}", Verbs = "PUT")]
+    [Route("/widgets/server-control/{Id}", Verbs = "PUT")]
     [DataContract]
     [Serializable]
-    public class PutServerControlWidgetRequest : RequestBase<SaveServerControlWidgetModel>, IReturn<PutServerControlWidgetResponse>
+    public class PutServerControlWidgetRequest : PutRequestBase<SaveServerControlWidgetModel>, IReturn<PutServerControlWidgetResponse>
     {
-        /// <summary>
-        /// Gets or sets the widget identifier.
-        /// </summary>
-        /// <value>
-        /// The widget identifier.
-        /// </value>
-        [DataMember]
-        public Guid? WidgetId { get; set; }
     }
 }

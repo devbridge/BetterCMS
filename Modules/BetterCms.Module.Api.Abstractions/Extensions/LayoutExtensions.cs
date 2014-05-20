@@ -12,7 +12,7 @@ namespace BetterCms.Module.Api.Extensions
         {
             var model = MapPageModel(response);
 
-            return new PutLayoutRequest { Data = model, LayoutId = response.Data.Id };
+            return new PutLayoutRequest { Data = model, Id = response.Data.Id };
         }
 
         public static PostLayoutRequest ToPostRequest(this GetLayoutResponse response)

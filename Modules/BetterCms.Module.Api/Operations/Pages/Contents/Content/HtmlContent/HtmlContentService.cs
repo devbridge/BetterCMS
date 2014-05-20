@@ -99,11 +99,11 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
         /// </returns>
         public PutHtmlContentResponse Put(PutHtmlContentRequest request)
         {
-            var isNew = !repository.AsQueryable<Module.Root.Models.Content>().Any(e => e.Id == request.ContentId);
+            var isNew = !repository.AsQueryable<Module.Root.Models.Content>().Any(e => e.Id == request.Id);
 
             var contentToSave = new Module.Pages.Models.HtmlContent
             {
-                Id = request.ContentId.GetValueOrDefault(),
+                Id = request.Id.GetValueOrDefault(),
                 ActivationDate = request.Data.ActivationDate,
                 ExpirationDate = TimeHelper.FormatEndDate(request.Data.ExpirationDate),
                 Name = request.Data.Name,

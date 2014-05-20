@@ -101,9 +101,9 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users.User
         public PutUserResponse Put(PutUserRequest request)
         {
             var model = request.Data.ToServiceModel();
-            if (request.UserId.HasValue)
+            if (request.Id.HasValue)
             {
-                model.Id = request.UserId.Value;
+                model.Id = request.Id.Value;
             }
             var user = userService.SaveUser(model, false, true);
 

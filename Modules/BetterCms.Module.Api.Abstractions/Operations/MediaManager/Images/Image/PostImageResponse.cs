@@ -10,7 +10,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
     /// </summary>
     [DataContract]
     [Serializable]
-    public class PostImageResponse : ResponseBase<Guid?>
+    public class PostImageResponse : SaveResponseBase
     {
     }
 }

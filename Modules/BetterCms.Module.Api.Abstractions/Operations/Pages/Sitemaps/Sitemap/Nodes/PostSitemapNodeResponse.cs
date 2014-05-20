@@ -10,7 +10,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes
     /// </summary>
     [DataContract]
     [Serializable]
-    public class PostSitemapNodeResponse : ResponseBase<Guid?>
+    public class PostSitemapNodeResponse : SaveResponseBase
     {
     }
 }

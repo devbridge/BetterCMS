@@ -437,12 +437,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         {
             PageProperties pageProperties = null;
 
-            var isNew = !request.PageId.HasValue || request.PageId.Value.HasDefaultValue();
+            var isNew = !request.Id.HasValue || request.Id.Value.HasDefaultValue();
 
             if (!isNew)
             {
                 pageProperties =
-                    repository.AsQueryable<PageProperties>(e => e.Id == request.PageId.GetValueOrDefault())
+                    repository.AsQueryable<PageProperties>(e => e.Id == request.Id.GetValueOrDefault())
                         .FetchMany(p => p.Options)
                         .Fetch(p => p.Layout)
                         .ThenFetchMany(l => l.LayoutOptions)
@@ -456,7 +456,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
 
             if (isNew)
             {
-                pageProperties = new PageProperties { AccessRules = new List<AccessRule>(), Id = request.PageId.GetValueOrDefault() };
+                pageProperties = new PageProperties { AccessRules = new List<AccessRule>(), Id = request.Id.GetValueOrDefault() };
             }
             else if (request.Data.Version > 0)
             {
@@ -466,7 +466,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
             if (!isNew && pageProperties.IsMasterPage != request.Data.IsMasterPage)
             {
                 const string message = "IsMasterPage cannot be changed for updating page. It can be modified only when creating a page.";
-                var logMessage = string.Format("{0} PageId: {1}", message, request.PageId);
+                var logMessage = string.Format("{0} PageId: {1}", message, request.Id);
                 throw new ValidationException(() => message, logMessage);
             }
 
@@ -489,7 +489,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                 else
                 {
                     pageUrl = urlService.FixUrl(pageUrl);
-                    pageService.ValidatePageUrl(pageUrl, request.PageId);
+                    pageService.ValidatePageUrl(pageUrl, request.Id);
                 }
 
                 pageProperties.PageUrl = pageUrl;

@@ -10,18 +10,10 @@ namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
     /// <summary>
     /// Request for tag update or creation.
     /// </summary>
-    [Route("/tags/{TagId}", Verbs = "PUT")]
+    [Route("/tags/{Id}", Verbs = "PUT")]
     [DataContract]
     [Serializable]
-    public class PutTagRequest : RequestBase<SaveTagModel>, IReturn<PutTagResponse>
+    public class PutTagRequest : PutRequestBase<SaveTagModel>, IReturn<PutTagResponse>
     {
-        /// <summary>
-        /// Gets or sets the tag identifier.
-        /// </summary>
-        /// <value>
-        /// The tag identifier.
-        /// </value>
-        [DataMember]
-        public Guid? TagId { get; set; }
     }
 }

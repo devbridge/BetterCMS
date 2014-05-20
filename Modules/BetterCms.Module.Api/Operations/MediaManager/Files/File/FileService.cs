@@ -189,7 +189,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
             }
 
             var mediaFile = repository.AsQueryable<MediaFile>()
-                .Where(file => file.Id == request.FileId)
+                .Where(file => file.Id == request.Id)
                 .ToFuture()
                 .FirstOrDefault();
 
@@ -208,7 +208,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
             {
                 mediaFile = new MediaFile
                 {
-                    Id = request.FileId.GetValueOrDefault(),
+                    Id = request.Id.GetValueOrDefault(),
                     Type = Module.MediaManager.Models.MediaType.File
                 };
             }
