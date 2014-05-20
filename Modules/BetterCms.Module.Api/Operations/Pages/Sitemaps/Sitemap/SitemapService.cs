@@ -380,12 +380,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
         /// </returns>
         public DeleteSitemapResponse Delete(DeleteSitemapRequest request)
         {
-            if (request.Data == null || request.SitemapId.HasDefaultValue())
+            if (request.Data == null || request.Id.HasDefaultValue())
             {
                 return new DeleteSitemapResponse { Data = false };
             }
 
-            sitemapService.DeleteSitemap(request.SitemapId, request.Data.Version, securityService.GetCurrentPrincipal());
+            sitemapService.DeleteSitemap(request.Id, request.Data.Version, securityService.GetCurrentPrincipal());
 
             return new DeleteSitemapResponse { Data = true };
         }

@@ -182,12 +182,12 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders.Folder
         /// </returns>
         public DeleteFolderResponse Delete(DeleteFolderRequest request)
         {
-            if (request.Data == null || request.FolderId.HasDefaultValue())
+            if (request.Data == null || request.Id.HasDefaultValue())
             {
                 return new DeleteFolderResponse { Data = false };
             }
 
-            var itemToDelete = repository.AsQueryable<MediaFolder>().Where(p => p.Id == request.FolderId).FirstOne();
+            var itemToDelete = repository.AsQueryable<MediaFolder>().Where(p => p.Id == request.Id).FirstOne();
 
             if (request.Data.Version > 0 && itemToDelete.Version != request.Data.Version)
             {

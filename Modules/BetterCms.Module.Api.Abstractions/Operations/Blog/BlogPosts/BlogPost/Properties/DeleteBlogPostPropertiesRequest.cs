@@ -10,18 +10,10 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
     /// <summary>
     /// Blog post delete request for REST.
     /// </summary>
-    [Route("/blog-post-properties/{BlogPostId}", Verbs = "DELETE")]
+    [Route("/blog-post-properties/{Id}", Verbs = "DELETE")]
     [DataContract]
     [Serializable]
     public class DeleteBlogPostPropertiesRequest : DeleteRequestBase, IReturn<DeleteBlogPostPropertiesResponse>
     {
-        /// <summary>
-        /// Gets or sets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        [DataMember]
-        public Guid BlogPostId { get; set; }
     }
 }

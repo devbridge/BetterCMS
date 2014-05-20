@@ -137,14 +137,14 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// <returns><c>DeleteCategoryResponse</c> with success status.</returns>
         public DeleteCategoryResponse Delete(DeleteCategoryRequest request)
         {
-            if (request.Data == null || request.CategoryId.HasDefaultValue())
+            if (request.Data == null || request.Id.HasDefaultValue())
             {
                 return new DeleteCategoryResponse { Data = false };
             }
 
             var itemToDelete = repository
                 .AsQueryable<Module.Root.Models.Category>()
-                .Where(p => p.Id == request.CategoryId)
+                .Where(p => p.Id == request.Id)
                 .FirstOne();
 
             if (request.Data.Version > 0 && itemToDelete.Version != request.Data.Version)

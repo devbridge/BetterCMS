@@ -598,7 +598,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         {
             var model = new DeletePageViewModel
                     {
-                        PageId = request.PageId,
+                        PageId = request.Id,
                         Version = request.Data.Version
                     };
             var result = pageService.DeletePage(model, securityService.GetCurrentPrincipal());

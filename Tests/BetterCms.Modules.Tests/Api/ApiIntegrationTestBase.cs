@@ -82,7 +82,7 @@ namespace BetterCms.Test.Module.Api
 
             Assert.IsNotNull(response);
             Assert.IsNotNull(response.Data);
-            Assert.AreEqual(response.Data, response.Data);
+            Assert.AreEqual(request.Id, response.Data.Value);
 
             return response;
         }

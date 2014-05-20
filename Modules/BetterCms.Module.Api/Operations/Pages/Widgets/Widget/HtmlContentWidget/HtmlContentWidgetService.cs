@@ -96,7 +96,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
 
         public DeleteHtmlContentWidgetResponse Delete(DeleteHtmlContentWidgetRequest request)
         {
-            var result = widgetService.DeleteWidget(request.WidgetId, request.Data.Version);
+            var result = widgetService.DeleteWidget(request.Id, request.Data.Version);
 
             return new DeleteHtmlContentWidgetResponse { Data = result };
         }

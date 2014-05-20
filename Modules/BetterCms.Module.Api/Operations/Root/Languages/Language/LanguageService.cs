@@ -140,19 +140,19 @@ namespace BetterCms.Module.Api.Operations.Root.Languages.Language
         /// <returns><c>DeleteLanguageResponse</c> with success status.</returns>
         public DeleteLanguageResponse Delete(DeleteLanguageRequest request)
         {
-            if (request.Data == null || request.LanguageId.HasDefaultValue())
+            if (request.Data == null || request.Id.HasDefaultValue())
             {
                 return new DeleteLanguageResponse { Data = false };
             }
 
             var futurePages = repository.AsQueryable<Module.Root.Models.Page>()
-                .Where(p => p.Language != null && p.Language.Id == request.LanguageId)
+                .Where(p => p.Language != null && p.Language.Id == request.Id)
                 .Select(p => p.Id)
                 .ToFuture();
 
             var itemToDelete = repository
                 .AsQueryable<Module.Root.Models.Language>()
-                .Where(p => p.Id == request.LanguageId)
+                .Where(p => p.Id == request.Id)
                 .ToFuture()
                 .FirstOne();
 

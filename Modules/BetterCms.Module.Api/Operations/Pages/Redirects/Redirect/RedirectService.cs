@@ -47,9 +47,9 @@ namespace BetterCms.Module.Api.Operations.Pages.Redirects.Redirect
         public PutRedirectResponse Put(PutRedirectRequest request)
         {
             var model = request.Data.ToServiceModel();
-            if (request.RedirectId.HasValue)
+            if (request.Id.HasValue)
             {
-                model.Id = request.RedirectId.Value;
+                model.Id = request.Id.Value;
             }
 
             var redirect = redirectService.SaveRedirect(model, true);

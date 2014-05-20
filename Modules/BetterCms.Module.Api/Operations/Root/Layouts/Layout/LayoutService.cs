@@ -79,7 +79,7 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
 
         public DeleteLayoutResponse Delete(DeleteLayoutRequest request)
         {
-            var result = layoutService.DeleteLayout(request.LayoutId, request.Data.Version);
+            var result = layoutService.DeleteLayout(request.Id, request.Data.Version);
 
             return new DeleteLayoutResponse { Data = result };
         }

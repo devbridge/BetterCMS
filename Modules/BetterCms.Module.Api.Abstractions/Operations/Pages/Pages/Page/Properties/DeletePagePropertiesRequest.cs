@@ -10,18 +10,10 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
     /// <summary>
     /// Page delete request for REST.
     /// </summary>
-    [Route("/page-properties/{PageId}", Verbs = "DELETE")]
+    [Route("/page-properties/{Id}", Verbs = "DELETE")]
     [DataContract]
     [Serializable]
     public class DeletePagePropertiesRequest : DeleteRequestBase, IReturn<DeletePagePropertiesResponse>
     {
-        /// <summary>
-        /// Gets or sets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        [DataMember]
-        public Guid PageId { get; set; }
     }
 }

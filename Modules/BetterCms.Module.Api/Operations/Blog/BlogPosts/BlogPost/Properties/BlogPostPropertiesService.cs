@@ -293,7 +293,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         {
             var model = new DeletePageViewModel
                     {
-                        PageId = request.BlogPostId,
+                        PageId = request.Id,
                         Version = request.Data.Version
                     };
             var result = pageService.DeletePage(model, securityService.GetCurrentPrincipal());

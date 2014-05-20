@@ -148,14 +148,14 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors.Author
         /// </returns>
         public DeleteAuthorResponse Delete(DeleteAuthorRequest request)
         {
-            if (request.Data == null || request.AuthorId.HasDefaultValue())
+            if (request.Data == null || request.Id.HasDefaultValue())
             {
                 return new DeleteAuthorResponse { Data = false };
             }
 
             var itemToDelete = repository
                 .AsQueryable<Module.Blog.Models.Author>()
-                .Where(p => p.Id == request.AuthorId)
+                .Where(p => p.Id == request.Id)
                 .FirstOne();
 
             if (request.Data.Version > 0 && itemToDelete.Version != request.Data.Version)
