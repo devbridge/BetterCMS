@@ -7,8 +7,6 @@ using BetterCms.Module.Api.Operations.Pages.Sitemaps;
 using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap;
 using BetterCms.Module.Api.Operations.Root;
 
-using MvcContrib;
-
 using NUnit.Framework;
 
 namespace BetterCms.Test.Module.Api.Pages.Sitemaps
