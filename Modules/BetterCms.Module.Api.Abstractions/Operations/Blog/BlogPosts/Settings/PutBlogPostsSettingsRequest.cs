@@ -10,7 +10,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.Settings
     /// <summary>
     /// Request for blogs settings update or creation.
     /// </summary>
-    [Route("/blog-posts/settings", Verbs = "POST")]
+    [Route("/blog-settings", Verbs = "Put")]
     [DataContract]
     [Serializable]
     public class PutBlogPostsSettingsRequest : RequestBase<SaveBlogPostsSettingsModel>, IReturn<PutBlogPostsSettingsResponse>

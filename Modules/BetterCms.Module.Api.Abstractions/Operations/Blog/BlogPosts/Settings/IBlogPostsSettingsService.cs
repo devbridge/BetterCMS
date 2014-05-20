@@ -2,8 +2,8 @@
 {
     public interface IBlogPostsSettingsService
     {
-        GetBlogPostsSettingsResponse GetSettings(GetBlogPostsSettingsRequest request);
+        GetBlogPostsSettingsResponse Get(GetBlogPostsSettingsRequest request);
 
-        PutBlogPostsSettingsResponse PutSettings(PutBlogPostsSettingsRequest request);
+        PutBlogPostsSettingsResponse Put(PutBlogPostsSettingsRequest request);
     }
 }

@@ -42,7 +42,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.Settings
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>GetBlogPostsSettingsResponse</c> with settings.</returns>
-        public GetBlogPostsSettingsResponse GetSettings(GetBlogPostsSettingsRequest request)
+        public GetBlogPostsSettingsResponse Get(GetBlogPostsSettingsRequest request)
         {
             return new GetBlogPostsSettingsResponse
                        {
@@ -72,7 +72,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.Settings
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>PutBlogPostsSettingsResponse</c> with success status.</returns>
-        public PutBlogPostsSettingsResponse PutSettings(PutBlogPostsSettingsRequest request)
+        public PutBlogPostsSettingsResponse Put(PutBlogPostsSettingsRequest request)
         {
             var option = repository.AsQueryable<Option>().OrderByDescending(o => o.CreatedOn).FirstOrDefault(o => !o.IsDeleted) ?? new Option();
 
@@ -94,6 +94,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.Settings
             else if (request.Data.DefaultLayoutId.GetValueOrDefault() != default(Guid))
             {
                 option.DefaultLayout = repository.AsProxy<Layout>(request.Data.DefaultLayoutId.GetValueOrDefault());
+                option.DefaultMasterPage = null;
             }
             else
             {

@@ -148,8 +148,8 @@ namespace BetterCms.Test.Module.Api
                 api.Blog.Authors.Post(author.ToPostRequest());
                 api.Blog.Author.Put(author.ToPutRequest());
                 api.Blog.Author.Delete(new DeleteAuthorRequest());
-                var settings = api.Blog.Settings.GetSettings(new GetBlogPostsSettingsRequest());
-                api.Blog.Settings.PutSettings(settings.ToPutRequest());
+                var settings = api.Blog.Settings.Get(new GetBlogPostsSettingsRequest());
+                api.Blog.Settings.Put(settings.ToPutRequest());
 
                 // Sitemap:
                 var sitemap = api.Pages.SitemapNew.Get(new GetSitemapRequest());
