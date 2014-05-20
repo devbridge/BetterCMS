@@ -43,7 +43,7 @@ namespace BetterCms.Module.Users.Services
         public Role CreateRole(string name, string description = null)
         {
             bool newEntityCreated;
-            return SaveRole(Guid.Empty, 1, name, description, out newEntityCreated);
+            return SaveRole(Guid.Empty, 0, name, description, out newEntityCreated);
         }
 
         /// <summary>

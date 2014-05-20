@@ -14,7 +14,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
     [Route("/sitemaps/{SitemapId}", Verbs = "PUT")]
     [Serializable]
     [DataContract]
-    public class PutSitemapRequest : RequestBase<SaveSitemapModel>, IReturn<PutSitemapResponse>
+    public class PutSitemapRequest : PutRequestBase<SaveSitemapModel>, IReturn<PutSitemapResponse>
     {
         /// <summary>
         /// Gets or sets the sitemap identifier.
