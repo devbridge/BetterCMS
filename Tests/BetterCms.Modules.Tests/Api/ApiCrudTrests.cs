@@ -276,7 +276,6 @@ namespace BetterCms.Test.Module.Api
                                                                           {
                                                                               IncludeAccessRules = true,
                                                                               IncludeNodes = true,
-                                                                              IncludeTags = true
                                                                           }
                                                            });
                 api.Pages.Sitemaps.Post(sitemap.ToPostRequest());
@@ -334,7 +333,6 @@ namespace BetterCms.Test.Module.Api
                     {
                         IncludeAccessRules = true,
                         IncludeNodes = true,
-                        IncludeTags = true
                     }
                 });
                 var saveSitmapRequest = sitemap.ToPutRequest();

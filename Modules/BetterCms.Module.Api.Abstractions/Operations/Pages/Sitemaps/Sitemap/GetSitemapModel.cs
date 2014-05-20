@@ -11,15 +11,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
     public class GetSitemapModel
     {
         /// <summary>
-        /// Gets or sets a value indicating whether to include tags.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if to include tags; otherwise, <c>false</c>.
-        /// </value>
-        [DataMember]
-        public bool IncludeTags { get; set; }
-
-        /// <summary>
         /// Gets or sets a value indicating whether to include access rules.
         /// </summary>
         /// <value>

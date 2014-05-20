@@ -15,7 +15,7 @@ namespace BetterCms.Module.Api.Extensions
         {
             var model = MapPageModel(response, false);
 
-            return new PutSitemapRequest { Data = model, SitemapId = response.Data.Id };
+            return new PutSitemapRequest { Data = model, Id = response.Data.Id };
         }
 
         public static PostSitemapRequest ToPostRequest(this GetSitemapResponse response)

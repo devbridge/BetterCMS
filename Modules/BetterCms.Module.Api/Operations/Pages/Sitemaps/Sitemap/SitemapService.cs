@@ -278,13 +278,13 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
             {
                 nodesFuture =
                    repository.AsQueryable<SitemapNode>()
-                       .Where(node => node.Sitemap.Id == request.SitemapId && !node.IsDeleted)
+                       .Where(node => node.Sitemap.Id == request.Id && !node.IsDeleted)
                        .FetchMany(node => node.Translations)
                        .ToFuture();
             }
 
             var sitemap =
-                repository.AsQueryable<Module.Pages.Models.Sitemap>(e => e.Id == request.SitemapId.GetValueOrDefault())
+                repository.AsQueryable<Module.Pages.Models.Sitemap>(e => e.Id == request.Id.GetValueOrDefault())
                     .FetchMany(f => f.AccessRules)
                     .ToFuture()
                     .ToList()
@@ -293,7 +293,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
             var isNew = sitemap == null;
             if (isNew)
             {
-                sitemap = new Module.Pages.Models.Sitemap { Id = request.SitemapId.GetValueOrDefault(), AccessRules = new List<AccessRule>() };
+                sitemap = new Module.Pages.Models.Sitemap { Id = request.Id.GetValueOrDefault(), AccessRules = new List<AccessRule>() };
             }
             else if (request.Data.Version > 0)
             {
@@ -505,7 +505,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
                 }
                 else if (nodeModel.Version > 0)
                 {
-                    sitemap.Version = nodeModel.Version;
+                    nodeToSave.Version = nodeModel.Version;
                 }
 
                 nodeToSave.Page = nodeModel.PageId.HasValue ? repository.AsProxy<PageProperties>(nodeModel.PageId.Value) : null;
