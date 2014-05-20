@@ -91,12 +91,15 @@
     <Compile Include="Infrastructure\DataOptions.cs" />
     <Compile Include="Infrastructure\DataOptionsExtensions.cs" />
     <Compile Include="Infrastructure\DataOrder.cs" />
+    <Compile Include="Infrastructure\DeleteResponseBase.cs" />
     <Compile Include="Infrastructure\FilterItem.cs" />
     <Compile Include="Infrastructure\IFilterByTags.cs" />
     <Compile Include="Infrastructure\ListResponseBase.cs" />
     <Compile Include="Infrastructure\ModelBase.cs" />
     <Compile Include="Infrastructure\OrderItem.cs" />
     <Compile Include="Infrastructure\DeleteRequestBase.cs" />
+    <Compile Include="Infrastructure\PutRequestBase.cs" />
+    <Compile Include="Infrastructure\SaveResponseBase.cs" />
     <Compile Include="Infrastructure\RequestDeleteModel.cs" />
     <Compile Include="Infrastructure\RequestBase.cs" />
     <Compile Include="Infrastructure\ResponseBase.cs" />

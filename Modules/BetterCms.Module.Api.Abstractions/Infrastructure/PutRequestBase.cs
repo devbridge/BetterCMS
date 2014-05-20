@@ -5,15 +5,16 @@ namespace BetterCms.Module.Api.Infrastructure
 {
     [DataContract]
     [Serializable]
-    public abstract class DeleteRequestBase : RequestBase<RequestDeleteModel>
+    public abstract class PutRequestBase<TData> : RequestBase<TData>
+         where TData : new()
     {
         /// <summary>
-        /// Gets or sets the deleting entity identifier.
+        /// Gets or sets the updating entity identifier.
         /// </summary>
         /// <value>
-        /// The deleting entity identifier.
+        /// The updating entity identifier.
         /// </value>
         [DataMember]
-        public Guid Id { get; set; }
+        public Guid? RedirectId { get; set; }
     }
 }

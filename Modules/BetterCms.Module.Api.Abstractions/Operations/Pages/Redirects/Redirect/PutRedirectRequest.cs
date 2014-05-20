@@ -10,18 +10,10 @@ namespace BetterCms.Module.Api.Operations.Pages.Redirects.Redirect
     /// <summary>
     /// Request for redirect update.
     /// </summary>
-    [Route("/redirects/{RedirectId}", Verbs = "PUT")]
+    [Route("/redirects/{Id}", Verbs = "PUT")]
     [DataContract]
     [Serializable]
-    public class PutRedirectRequest : RequestBase<SaveRedirectModel>, IReturn<PutRedirectResponse>
+    public class PutRedirectRequest : PutRequestBase<SaveRedirectModel>, IReturn<PutRedirectResponse>
     {
-        /// <summary>
-        /// Gets or sets the redirect identifier.
-        /// </summary>
-        /// <value>
-        /// The redirect identifier.
-        /// </value>
-        [DataMember]
-        public Guid? RedirectId { get; set; }
     }
 }

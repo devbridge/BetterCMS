@@ -7,7 +7,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Redirects.Redirect
 {
     [DataContract]
     [Serializable]
-    public class DeleteRedirectResponse : ResponseBase<bool>
+    public class DeleteRedirectResponse : DeleteResponseBase
     {
     }
 }

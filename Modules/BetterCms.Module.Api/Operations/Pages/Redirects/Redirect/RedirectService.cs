@@ -59,7 +59,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Redirects.Redirect
 
         public DeleteRedirectResponse Delete(DeleteRedirectRequest request)
         {
-            var result = redirectService.DeleteRedirect(request.RedirectId, request.Data.Version);
+            var result = redirectService.DeleteRedirect(request.Id, request.Data.Version);
 
             return new DeleteRedirectResponse { Data = result };
         }

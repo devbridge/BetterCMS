@@ -10,7 +10,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Redirects
     /// </summary>
     [DataContract]
     [Serializable]
-    public class PostRedirectResponse : ResponseBase<Guid?>
+    public class PostRedirectResponse : SaveResponseBase
     {
     }
 }
