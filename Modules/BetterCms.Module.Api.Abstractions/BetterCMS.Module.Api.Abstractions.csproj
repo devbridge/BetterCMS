@@ -116,6 +116,14 @@
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\PutBlogPostPropertiesResponse.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\PostBlogPostPropertiesRequest.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\PostBlogPostPropertiesResponse.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\Settings\BlogPostsSettingsModel.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\Settings\GetBlogPostsSettingsModel.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\Settings\GetBlogPostsSettingsRequest.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\Settings\GetBlogPostsSettingsResponse.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\Settings\IBlogPostsSettingsService.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\Settings\PutBlogPostsSettingsRequest.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\Settings\PutBlogPostsSettingsResponse.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\Settings\SaveBlogPostsSettingsModel.cs" />
     <Compile Include="Operations\MediaManager\Files\File\DeleteFileRequest.cs" />
     <Compile Include="Operations\MediaManager\Files\File\DeleteFileResponse.cs" />
     <Compile Include="Operations\MediaManager\Files\File\PostFileRequest.cs" />

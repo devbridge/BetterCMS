@@ -169,6 +169,7 @@
     <Compile Include="Operations\Blog\BlogPosts\BlogPostsService.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\BlogPostService.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\BlogPostPropertiesService.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\Settings\BlogPostsSettingsService.cs" />
     <Compile Include="Operations\Blog\DefaultBogApiOperations.cs" />
     <Compile Include="Operations\MediaManager\DefaultMediaManagerApiOperations.cs" />
     <Compile Include="Operations\MediaManager\Files\FilesService.cs" />
