@@ -7,7 +7,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidg
 {
     [DataContract]
     [Serializable]
-    public class DeleteServerControlWidgetResponse : ResponseBase<bool>
+    public class DeleteServerControlWidgetResponse : DeleteResponseBase
     {
     }
 }

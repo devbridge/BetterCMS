@@ -10,7 +10,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
     /// </summary>
     [Serializable]
     [DataContract]
-    public class DeleteSitemapResponse : ResponseBase<bool>
+    public class DeleteSitemapResponse : DeleteResponseBase
     {
     }
 }

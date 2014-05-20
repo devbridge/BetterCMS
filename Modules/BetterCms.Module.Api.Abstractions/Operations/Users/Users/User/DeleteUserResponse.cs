@@ -7,7 +7,7 @@ namespace BetterCms.Module.Api.Operations.Users.Users.User
 {
     [DataContract]
     [Serializable]
-    public class DeleteUserResponse : ResponseBase<bool>
+    public class DeleteUserResponse : DeleteResponseBase
     {
     }
 }

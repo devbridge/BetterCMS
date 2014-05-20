@@ -1,5 +1,4 @@
 ﻿using BetterCms.Core.Services;
-using BetterCms.Module.Api.Operations.Pages.Contents.Content.DestroyDraft;
 using BetterCms.Module.Pages.Services;
 
 using ServiceStack.ServiceInterface;

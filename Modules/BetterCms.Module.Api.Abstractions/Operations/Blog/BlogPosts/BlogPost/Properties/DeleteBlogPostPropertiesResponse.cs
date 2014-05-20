@@ -7,7 +7,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
 {
     [DataContract]
     [Serializable]
-    public class DeleteBlogPostPropertiesResponse : ResponseBase<bool>
+    public class DeleteBlogPostPropertiesResponse : DeleteResponseBase
     {
     }
 }

@@ -10,7 +10,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
     /// </summary>
     [DataContract]
     [Serializable]
-    public class DeleteCategoryResponse : ResponseBase<bool>
+    public class DeleteCategoryResponse : DeleteResponseBase
     {
     }
 }

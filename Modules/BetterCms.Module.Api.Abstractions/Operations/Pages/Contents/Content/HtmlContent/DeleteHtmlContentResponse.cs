@@ -10,7 +10,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
     /// </summary>
     [DataContract]
     [Serializable]
-    public class DeleteHtmlContentResponse : ResponseBase<bool>
+    public class DeleteHtmlContentResponse : DeleteResponseBase
     {
     }
 }
