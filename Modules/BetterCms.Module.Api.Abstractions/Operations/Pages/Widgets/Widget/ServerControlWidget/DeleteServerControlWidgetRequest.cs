@@ -10,18 +10,10 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidg
     /// <summary>
     /// Server control widget delete request for REST.
     /// </summary>
-    [Route("/widgets/server-control/{WidgetId}", Verbs = "DELETE")]
+    [Route("/widgets/server-control/{Id}", Verbs = "DELETE")]
     [DataContract]
     [Serializable]
     public class DeleteServerControlWidgetRequest : DeleteRequestBase, IReturn<DeleteServerControlWidgetResponse>
     {
-        /// <summary>
-        /// Gets or sets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        [DataMember]
-        public Guid WidgetId { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace BetterCms.Module.Api.Operations.Users.Roles.Role
 {
     [DataContract]
     [Serializable]
-    public class DeleteRoleResponse : ResponseBase<bool>
+    public class DeleteRoleResponse : DeleteResponseBase
     {
     }
 }

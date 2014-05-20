@@ -1,5 +1,4 @@
 ﻿using BetterCms.Core.Services;
-using BetterCms.Module.Api.Operations.Pages.Contents.Content.DestroyDraft;
 using BetterCms.Module.Pages.Services;
 
 using ServiceStack.ServiceInterface;
@@ -21,7 +20,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.Draft
         public DestroyContentDraftResponse Delete(DestroyContentDraftRequest request)
         {
             var version = request.Data != null ? request.Data.Version : 0;
-            draftService.DestroyDraftContent(request.ContentId, version, securityService.GetCurrentPrincipal());
+            draftService.DestroyDraftContent(request.Id, version, securityService.GetCurrentPrincipal());
 
             return new DestroyContentDraftResponse { Data = true };
         }

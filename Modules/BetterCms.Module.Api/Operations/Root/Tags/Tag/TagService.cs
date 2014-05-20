@@ -146,12 +146,12 @@ namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
         /// </returns>
         public DeleteTagResponse Delete(DeleteTagRequest request)
         {
-            if (request.Data == null || request.TagId.HasDefaultValue())
+            if (request.Data == null || request.Id.HasDefaultValue())
             {
                 return new DeleteTagResponse { Data = false };
             }
 
-            var tag = repository.Delete<Module.Root.Models.Tag>(request.TagId, request.Data.Version);
+            var tag = repository.Delete<Module.Root.Models.Tag>(request.Id, request.Data.Version);
             unitOfWork.Commit();
 
             Events.RootEvents.Instance.OnTagDeleted(tag);

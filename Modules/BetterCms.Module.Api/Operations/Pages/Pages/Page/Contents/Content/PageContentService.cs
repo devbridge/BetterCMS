@@ -167,14 +167,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
         /// <returns><c>DeletePageContentResponse</c> with success status.</returns>
         public DeletePageContentResponse Delete(DeletePageContentRequest request)
         {
-            if (request.Data == null || request.PageContentId.HasDefaultValue())
+            if (request.Data == null || request.Id.HasDefaultValue())
             {
                 return new DeletePageContentResponse { Data = false };
             }
 
             var itemToDelete = repository
                 .AsQueryable<PageContent>()
-                .Where(p => p.Id == request.PageContentId && p.Page.Id == request.PageId)
+                .Where(p => p.Id == request.Id && p.Page.Id == request.PageId)
                 .FirstOne();
 
             if (request.Data.Version > 0 && itemToDelete.Version != request.Data.Version)

@@ -93,7 +93,7 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users.User
 
         public DeleteUserResponse Delete(DeleteUserRequest request)
         {
-            userService.DeleteUser(request.UserId, request.Data.Version);
+            userService.DeleteUser(request.Id, request.Data.Version);
 
             return new DeleteUserResponse { Data = true };
         }

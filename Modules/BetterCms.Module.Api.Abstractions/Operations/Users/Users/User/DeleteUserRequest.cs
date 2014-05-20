@@ -10,18 +10,10 @@ namespace BetterCms.Module.Api.Operations.Users.Users.User
     /// <summary>
     /// User delete request for REST.
     /// </summary>
-    [Route("/users/{UserId}", Verbs = "DELETE")]
+    [Route("/users/{Id}", Verbs = "DELETE")]
     [DataContract]
     [Serializable]
     public class DeleteUserRequest : DeleteRequestBase, IReturn<DeleteUserResponse>
     {
-        /// <summary>
-        /// Gets or sets the user identifier.
-        /// </summary>
-        /// <value>
-        /// The user identifier.
-        /// </value>
-        [DataMember]
-        public Guid UserId { get; set; }
     }
 }

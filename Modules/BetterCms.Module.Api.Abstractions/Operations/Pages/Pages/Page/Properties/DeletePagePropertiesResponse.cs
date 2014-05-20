@@ -7,7 +7,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
 {
     [DataContract]
     [Serializable]
-    public class DeletePagePropertiesResponse : ResponseBase<bool>
+    public class DeletePagePropertiesResponse : DeleteResponseBase
     {
     }
 }

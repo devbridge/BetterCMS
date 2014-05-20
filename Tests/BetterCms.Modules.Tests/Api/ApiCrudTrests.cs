@@ -15,7 +15,7 @@ using BetterCms.Module.Api.Operations.MediaManager.Folders;
 using BetterCms.Module.Api.Operations.MediaManager.Folders.Folder;
 using BetterCms.Module.Api.Operations.MediaManager.Images;
 using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
-using BetterCms.Module.Api.Operations.Pages.Contents.Content.DestroyDraft;
+using BetterCms.Module.Api.Operations.Pages.Contents.Content.Draft;
 using BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent;
 using BetterCms.Module.Api.Operations.Pages.Pages;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content;

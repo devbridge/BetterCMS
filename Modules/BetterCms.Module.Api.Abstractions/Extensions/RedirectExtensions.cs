@@ -16,7 +16,7 @@ namespace BetterCms.Module.Api.Extensions
         {
             var model = MapModel(response);
 
-            return new PutRedirectRequest { Data = model, RedirectId = response.Data.Id };
+            return new PutRedirectRequest { Data = model, Id = response.Data.Id };
         }
 
         private static SaveRedirectModel MapModel(GetRedirectResponse response)

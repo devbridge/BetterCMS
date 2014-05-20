@@ -84,7 +84,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidg
 
         public DeleteServerControlWidgetResponse Delete(DeleteServerControlWidgetRequest request)
         {
-            var result = widgetService.DeleteWidget(request.WidgetId, request.Data.Version);
+            var result = widgetService.DeleteWidget(request.Id, request.Data.Version);
 
             return new DeleteServerControlWidgetResponse { Data = result };
         }

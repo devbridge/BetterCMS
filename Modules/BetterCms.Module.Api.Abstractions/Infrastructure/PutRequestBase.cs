@@ -15,6 +15,6 @@ namespace BetterCms.Module.Api.Infrastructure
         /// The updating entity identifier.
         /// </value>
         [DataMember]
-        public Guid? RedirectId { get; set; }
+        public Guid? Id { get; set; }
     }
 }

@@ -79,7 +79,7 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Roles.Role
         public DeleteRoleResponse Delete(DeleteRoleRequest request)
         {
             unitOfWork.BeginTransaction();
-            var role = roleService.DeleteRole(request.RoleId, request.Data.Version, true);
+            var role = roleService.DeleteRole(request.Id, request.Data.Version, true);
             unitOfWork.Commit();
 
             // Notify.

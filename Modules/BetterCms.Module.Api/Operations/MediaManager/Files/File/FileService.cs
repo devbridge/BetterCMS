@@ -296,14 +296,14 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// </returns>
         public DeleteFileResponse Delete(DeleteFileRequest request)
         {
-            if (request.Data == null || request.FileId.HasDefaultValue())
+            if (request.Data == null || request.Id.HasDefaultValue())
             {
                 return new DeleteFileResponse { Data = false };
             }
 
             var itemToDelete = repository
                 .AsQueryable<MediaImage>()
-                .Where(p => p.Id == request.FileId)
+                .Where(p => p.Id == request.Id)
                 .FirstOne();
 
             if (request.Data.Version > 0 && itemToDelete.Version != request.Data.Version)

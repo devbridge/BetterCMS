@@ -10,18 +10,10 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
     /// <summary>
     /// HTML content widget delete request for REST.
     /// </summary>
-    [Route("/widgets/html-content/{WidgetId}", Verbs = "DELETE")]
+    [Route("/widgets/html-content/{Id}", Verbs = "DELETE")]
     [DataContract]
     [Serializable]
     public class DeleteHtmlContentWidgetRequest : DeleteRequestBase, IReturn<DeleteHtmlContentWidgetResponse>
     {
-        /// <summary>
-        /// Gets or sets the identifier.
-        /// </summary>
-        /// <value>
-        /// The identifier.
-        /// </value>
-        [DataMember]
-        public Guid WidgetId { get; set; }
     }
 }

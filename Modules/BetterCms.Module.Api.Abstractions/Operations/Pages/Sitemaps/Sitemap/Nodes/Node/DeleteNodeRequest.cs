@@ -10,7 +10,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node
     /// <summary>
     /// Request to delete sitemap node.
     /// </summary>
-    [Route("/sitemaps/{SitemapId}/nodes/{NodeId}", Verbs = "DELETE")]
+    [Route("/sitemaps/{SitemapId}/nodes/{Id}", Verbs = "DELETE")]
     [Serializable]
     [DataContract]
     public class DeleteNodeRequest : DeleteRequestBase, IReturn<DeleteNodeResponse>
@@ -23,14 +23,5 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node
         /// </value>
         [DataMember]
         public Guid SitemapId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the node identifier.
-        /// </summary>
-        /// <value>
-        /// The node identifier.
-        /// </value>
-        [DataMember]
-        public Guid NodeId { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
 {
     [DataContract]
     [Serializable]
-    public class DeleteHtmlContentWidgetResponse : ResponseBase<bool>
+    public class DeleteHtmlContentWidgetResponse : DeleteResponseBase
     {
     }
 }

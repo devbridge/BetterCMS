@@ -248,12 +248,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node
         /// </returns>
         public DeleteNodeResponse Delete(DeleteNodeRequest request)
         {
-            if (request.Data == null || request.SitemapId.HasDefaultValue() || request.NodeId.HasDefaultValue())
+            if (request.Data == null || request.SitemapId.HasDefaultValue() || request.Id.HasDefaultValue())
             {
                 return new DeleteNodeResponse { Data = false };
             }
 
-            sitemapService.DeleteNode(request.NodeId, request.Data.Version, request.SitemapId);
+            sitemapService.DeleteNode(request.Id, request.Data.Version, request.SitemapId);
 
             return new DeleteNodeResponse { Data = true };
         }

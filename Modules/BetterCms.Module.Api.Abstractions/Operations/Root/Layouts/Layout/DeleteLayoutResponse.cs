@@ -10,7 +10,7 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
     /// </summary>
     [DataContract]
     [Serializable]
-    public class DeleteLayoutResponse : ResponseBase<bool>
+    public class DeleteLayoutResponse : DeleteResponseBase
     {
     }
 }
