@@ -2,6 +2,7 @@
 using BetterCms.Module.Api.Operations.Blog.Authors.Author;
 using BetterCms.Module.Api.Operations.Blog.BlogPosts;
 using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost;
+using BetterCms.Module.Api.Operations.Blog.BlogPosts.Settings;
 
 namespace BetterCms.Module.Api.Operations.Blog
 {
@@ -14,5 +15,7 @@ namespace BetterCms.Module.Api.Operations.Blog
         IAuthorsService Authors { get; }
         
         IAuthorService Author { get; }
+
+        IBlogPostsSettingsService Settings { get; }
     }
 }

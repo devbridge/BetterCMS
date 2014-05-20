@@ -8,9 +8,9 @@ using BetterCms.Core.Security;
 
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
-using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost;
+using BetterCms.Module.Api.Operations.Blog.BlogPosts.Settings;
 using BetterCms.Module.Api.Operations.Root;
-
+using BetterCms.Module.Blog.Models;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Pages.Models;
 
@@ -24,23 +24,42 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
 {
     public class BlogPostsService : Service, IBlogPostsService
     {
+        /// <summary>
+        /// The repository.
+        /// </summary>
         private readonly IRepository repository;
 
+        /// <summary>
+        /// The file URL resolver.
+        /// </summary>
         private readonly IMediaFileUrlResolver fileUrlResolver;
 
+        /// <summary>
+        /// The access control service.
+        /// </summary>
         private readonly IAccessControlService accessControlService;
-        
-        private readonly IBlogPostService blogPostService;
 
-        public BlogPostsService(IRepository repository, IBlogPostService blogPostService,
-            IMediaFileUrlResolver fileUrlResolver, IAccessControlService accessControlService)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlogPostsService"/> class.
+        /// </summary>
+        /// <param name="repository">The repository.</param>
+        /// <param name="fileUrlResolver">The file URL resolver.</param>
+        /// <param name="accessControlService">The access control service.</param>
+        public BlogPostsService(
+            IRepository repository,
+            IMediaFileUrlResolver fileUrlResolver,
+            IAccessControlService accessControlService)
         {
             this.repository = repository;
-            this.blogPostService = blogPostService;
             this.fileUrlResolver = fileUrlResolver;
             this.accessControlService = accessControlService;
         }
 
+        /// <summary>
+        /// Gets the specified request.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns><c>GetBlogPostsResponse</c> with a list of blog posts.</returns>
         public GetBlogPostsResponse Get(GetBlogPostsRequest request)
         {
             request.Data.SetDefaultOrder("Title");

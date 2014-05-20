@@ -2,6 +2,7 @@
 
 using BetterCms.Module.Api.Operations.Blog.Authors.Author;
 using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
+using BetterCms.Module.Api.Operations.Blog.BlogPosts.Settings;
 
 namespace BetterCms.Module.Api.Extensions
 {
@@ -33,6 +34,23 @@ namespace BetterCms.Module.Api.Extensions
             var model = MapAuthorModel(response);
 
             return new PostAuthorRequest { Data = model };
+        }
+
+        public static PutBlogPostsSettingsRequest ToPutRequest(this GetBlogPostsSettingsResponse response)
+        {
+            var model = MapSettingsModel(response);
+
+            return new PutBlogPostsSettingsRequest { Data = model };
+        }
+
+        private static SaveBlogPostsSettingsModel MapSettingsModel(GetBlogPostsSettingsResponse response)
+        {
+            return new SaveBlogPostsSettingsModel
+                       {
+                           Version = response.Data != null ? response.Data.Version : 0,
+                           DefaultMasterPageId = response.Data != null ? response.Data.DefaultMasterPageId : null,
+                           DefaultLayoutId = response.Data != null ? response.Data.DefaultLayoutId : null
+                       };
         }
 
         private static SaveBlogPostPropertiesModel MapBlogPostModel(GetBlogPostPropertiesResponse response)
