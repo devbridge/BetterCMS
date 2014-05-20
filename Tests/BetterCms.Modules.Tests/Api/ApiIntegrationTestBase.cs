@@ -55,13 +55,12 @@ namespace BetterCms.Test.Module.Api
         }
 
         protected virtual TResponse CreateResponse<TRequest, TResponse, TModel>(
-            TModel data,
+            TRequest request,
             Func<TRequest, TResponse> method)
             where TModel : SaveModelBase, new()
             where TRequest : RequestBase<TModel>, new()
             where TResponse : SaveResponseBase, new()
         {
-            var request = CreateRequest<TRequest, TModel>(data);
             var response = method.Invoke(request);
 
             Assert.IsNotNull(response);

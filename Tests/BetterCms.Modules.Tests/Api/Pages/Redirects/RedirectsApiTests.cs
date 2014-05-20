@@ -8,62 +8,49 @@ using NUnit.Framework;
 
 namespace BetterCms.Test.Module.Api.Pages.Redirects
 {
-    public class RedirectsApiTests : ApiIntegrationTestBase
+    public class RedirectsApiTests : ApiCrudIntegrationTestBase<
+        SaveRedirectModel, RedirectModel,
+        PostRedirectRequest, PostRedirectResponse,
+        GetRedirectRequest, GetRedirectResponse,
+        PutRedirectRequest, PutRedirectResponse,
+        DeleteRedirectRequest, DeleteRedirectResponse>
     {
         [Test]
         public void Should_CRUD_Redirect_Successfully()
         {
-            RunApiActionInTransaction((api, session) =>
-                {
-                    // Create
-                    var createModel = CreateInitialModel();
-                    var createResponse = CreateResponse<PostRedirectRequest, 
-                        PostRedirectResponse, 
-                        SaveRedirectModel>(createModel, api.Pages.Redirects.Post);
-
-                    // Get
-                    var getRequest = new GetRedirectRequest { RedirectId = createResponse.Data.Value };
-                    var getResponse = GetResponse<GetRedirectRequest, 
-                        GetRedirectResponse, 
-                        RedirectModel>(getRequest, api.Pages.Redirect.Get);
-
-                    CompareModels(getResponse.Data, createModel);
-
-                    // Update
-                    var updateRequest = getResponse.ToPutRequest();
-                    updateRequest.Data.PageUrl = string.Format("/{0}/", TestDataProvider.ProvideRandomString(MaxLength.Name));
-                    var updateResponse = UpdateResponse<PutRedirectRequest,
-                        PutRedirectResponse,
-                        SaveRedirectModel>(updateRequest, api.Pages.Redirect.Put);
-                    
-                    // Get
-                    getRequest = new GetRedirectRequest { RedirectId = updateResponse.Data.Value };
-                    getResponse = GetResponse<GetRedirectRequest,
-                        GetRedirectResponse,
-                        RedirectModel>(getRequest, api.Pages.Redirect.Get);
-
-                    CompareModels(getResponse.Data, updateRequest.Data);
-                    Assert.AreNotEqual(getResponse.Data.PageUrl, createModel.PageUrl);
-
-                    // Delete
-                    DeleteResponse<DeleteRedirectRequest, 
-                        DeleteRedirectResponse>(getResponse.Data, api.Pages.Redirect.Delete);
-                });
+            RunApiActionInTransaction((api, session) => 
+                Run(api.Pages.Redirects.Post, api.Pages.Redirect.Get, api.Pages.Redirect.Put, api.Pages.Redirect.Delete));
         }
 
-        private SaveRedirectModel CreateInitialModel()
+        protected override SaveRedirectModel GetCreateModel()
         {
             return new SaveRedirectModel
-            {
-                PageUrl = string.Format("/{0}/", TestDataProvider.ProvideRandomString(MaxLength.Name)),
-                RedirectUrl = string.Format("/{0}/", TestDataProvider.ProvideRandomString(MaxLength.Name))
-            };
+                {
+                    PageUrl = string.Format("/{0}/", TestDataProvider.ProvideRandomString(MaxLength.Name)),
+                    RedirectUrl = string.Format("/{0}/", TestDataProvider.ProvideRandomString(MaxLength.Name))
+                };
         }
 
-        private void CompareModels(RedirectModel getModel, SaveRedirectModel saveModel)
+        protected override GetRedirectRequest GetGetRequest(BetterCms.Module.Api.Infrastructure.SaveResponseBase saveResponseBase)
         {
-            Assert.AreEqual(getModel.RedirectUrl, saveModel.RedirectUrl);
-            Assert.AreEqual(getModel.PageUrl, saveModel.PageUrl);
+            return new GetRedirectRequest { RedirectId = saveResponseBase.Data.Value };
+        }
+
+        protected override PutRedirectRequest GetUpdateRequest(GetRedirectResponse getResponse)
+        {
+            var request = getResponse.ToPutRequest();
+            request.Data.PageUrl = string.Format("/{0}/", TestDataProvider.ProvideRandomString(MaxLength.Name));
+
+            return request;
+        }
+
+        protected override void OnAfterGet(GetRedirectResponse getResponse, SaveRedirectModel model)
+        {
+            Assert.IsNotNull(getResponse.Data.RedirectUrl);
+            Assert.IsNotNull(getResponse.Data.PageUrl);
+
+            Assert.AreEqual(getResponse.Data.RedirectUrl, model.RedirectUrl);
+            Assert.AreEqual(getResponse.Data.PageUrl, model.PageUrl);
         }
     }
 }
