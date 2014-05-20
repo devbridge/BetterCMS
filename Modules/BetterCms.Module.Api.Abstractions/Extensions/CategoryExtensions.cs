@@ -15,7 +15,7 @@ namespace BetterCms.Module.Api.Extensions
         {
             var model = MapModel(response);
 
-            return new PutCategoryRequest { Data = model, CategoryId = response.Data.Id };
+            return new PutCategoryRequest { Data = model, Id = response.Data.Id };
         }
 
         private static SaveCategoryModel MapModel(GetCategoryResponse response)

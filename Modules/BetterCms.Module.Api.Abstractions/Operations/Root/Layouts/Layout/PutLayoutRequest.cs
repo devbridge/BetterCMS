@@ -10,18 +10,10 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
     /// <summary>
     /// Request for layout update or creation.
     /// </summary>
-    [Route("/layouts/{LayoutId}", Verbs = "PUT")]
+    [Route("/layouts/{Id}", Verbs = "PUT")]
     [DataContract]
     [Serializable]
-    public class PutLayoutRequest : RequestBase<LayoutSaveModel>, IReturn<PutLayoutResponse>
+    public class PutLayoutRequest : PutRequestBase<LayoutSaveModel>, IReturn<PutLayoutResponse>
     {
-        /// <summary>
-        /// Gets or sets the layout identifier.
-        /// </summary>
-        /// <value>
-        /// The layout identifier.
-        /// </value>
-        [DataMember]
-        public Guid? LayoutId { get; set; }
     }
 }

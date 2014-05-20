@@ -82,17 +82,17 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         public PutCategoryResponse Put(PutCategoryRequest request)
         {
             var categories = repository.AsQueryable<Module.Root.Models.Category>()
-                .Where(l => l.Id == request.CategoryId || l.Name == request.Data.Name)
+                .Where(l => l.Id == request.Id || l.Name == request.Data.Name)
                 .ToList();
 
-            var categoryToSave = categories.FirstOrDefault(l => l.Id == request.CategoryId);
+            var categoryToSave = categories.FirstOrDefault(l => l.Id == request.Id);
 
             var createCategory = categoryToSave == null;
             if (createCategory)
             {
                 categoryToSave = new Module.Root.Models.Category
                 {
-                    Id = request.CategoryId.GetValueOrDefault()
+                    Id = request.Id.GetValueOrDefault()
                 };
             }
             else if (request.Data.Version > 0)
@@ -100,7 +100,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
                 categoryToSave.Version = request.Data.Version;
             }
 
-            if (categories.Any(l => l.Id != request.CategoryId && l.Name == request.Data.Name))
+            if (categories.Any(l => l.Id != request.Id && l.Name == request.Data.Name))
             {
                 var message = string.Format("Category with name '{0}' already exists.", request.Data.Name);
                 throw new CmsApiValidationException(message);

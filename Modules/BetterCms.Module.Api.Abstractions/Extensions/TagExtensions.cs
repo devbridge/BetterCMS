@@ -16,7 +16,7 @@ namespace BetterCms.Module.Api.Extensions
         {
             var model = MapModel(response);
 
-            return new PutTagRequest { Data = model, TagId = response.Data.Id };
+            return new PutTagRequest { Data = model, Id = response.Data.Id };
         }
 
         private static SaveTagModel MapModel(GetTagResponse response)

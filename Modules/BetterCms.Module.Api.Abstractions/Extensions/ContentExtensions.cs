@@ -9,14 +9,14 @@ namespace BetterCms.Module.Api.Extensions
         {
             var model = MapHtmlContentWidgetModel(response);
 
-            return new PutHtmlContentRequest { Data = model, ContentId = response.Data.Id };
+            return new PutHtmlContentRequest { Data = model, Id = response.Data.Id };
         }
 
         public static PutPageContentRequest ToPutRequest(this GetPageContentResponse response)
         {
             var model = MapPageContentWidgetModel(response);
 
-            return new PutPageContentRequest { Data = model, PageId = response.Data.PageId, PageContentId = response.Data.Id };
+            return new PutPageContentRequest { Data = model, PageId = response.Data.PageId, Id = response.Data.Id };
         }
 
         private static SaveHtmlContentModel MapHtmlContentWidgetModel(GetHtmlContentResponse response)

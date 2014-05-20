@@ -88,17 +88,17 @@ namespace BetterCms.Module.Api.Operations.Root.Languages.Language
         public PutLanguageResponse Put(PutLanguageRequest request)
         {
             var languages = repository.AsQueryable<Module.Root.Models.Language>()
-                .Where(l => l.Id == request.LanguageId || l.Code == request.Data.Code || l.Name == request.Data.Name)
+                .Where(l => l.Id == request.Id || l.Code == request.Data.Code || l.Name == request.Data.Name)
                 .ToList();
 
-            var languageToSave = languages.FirstOrDefault(l => l.Id == request.LanguageId);
+            var languageToSave = languages.FirstOrDefault(l => l.Id == request.Id);
 
             var createLanguage = languageToSave == null;
             if (createLanguage)
             {
                 languageToSave = new Module.Root.Models.Language
                 {
-                    Id = request.LanguageId.GetValueOrDefault(),
+                    Id = request.Id.GetValueOrDefault(),
                     Code = request.Data.Code
                 };
             }
@@ -202,13 +202,13 @@ namespace BetterCms.Module.Api.Operations.Root.Languages.Language
                 throw new CmsApiValidationException(message);
             }
 
-            if (languages.Any(l => l.Id != request.LanguageId && l.Code == request.Data.Code))
+            if (languages.Any(l => l.Id != request.Id && l.Code == request.Data.Code))
             {
                 var message = string.Format("Language with code '{0}' already exists.", request.Data.Code);
                 throw new CmsApiValidationException(message);
             }
 
-            if (languages.Any(l => l.Id != request.LanguageId && l.Name == request.Data.Name))
+            if (languages.Any(l => l.Id != request.Id && l.Name == request.Data.Name))
             {
                 var message = string.Format("Language with name '{0}' already exists.", request.Data.Name);
                 throw new CmsApiValidationException(message);

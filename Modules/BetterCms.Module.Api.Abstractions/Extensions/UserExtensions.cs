@@ -18,7 +18,7 @@ namespace BetterCms.Module.Api.Extensions
         {
             var model = MapModel(response);
 
-            return new PutUserRequest { Data = model, UserId = response.Data.Id };
+            return new PutUserRequest { Data = model, Id = response.Data.Id };
         }
 
         private static SaveUserModel MapModel(GetUserResponse response)

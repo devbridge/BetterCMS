@@ -16,7 +16,7 @@ namespace BetterCms.Module.Api.Extensions
         {
             var model = MapModel(response);
 
-            return new PutRoleRequest { Data = model, RoleId = response.Data.Id };
+            return new PutRoleRequest { Data = model, Id = response.Data.Id };
         }
 
         private static SaveRoleModel MapModel(GetRoleResponse response)

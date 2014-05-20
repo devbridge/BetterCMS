@@ -10,18 +10,10 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
     /// <summary>
     /// Request for tag update or creation.
     /// </summary>
-    [Route("/files/{FileId}", Verbs = "PUT")]
+    [Route("/files/{Id}", Verbs = "PUT")]
     [DataContract]
     [Serializable]
-    public class PutFileRequest : RequestBase<SaveFileModel>, IReturn<PutFileResponse>
+    public class PutFileRequest : PutRequestBase<SaveFileModel>, IReturn<PutFileResponse>
     {
-        /// <summary>
-        /// Gets or sets the file identifier.
-        /// </summary>
-        /// <value>
-        /// The file identifier.
-        /// </value>
-        [DataMember]
-        public Guid? FileId { get; set; }
     }
 }

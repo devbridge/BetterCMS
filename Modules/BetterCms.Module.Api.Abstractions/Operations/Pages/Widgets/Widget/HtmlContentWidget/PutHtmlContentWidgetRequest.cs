@@ -10,18 +10,10 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
     /// <summary>
     /// Request for HTML content widget update.
     /// </summary>
-    [Route("/widgets/html-content/{WidgetId}", Verbs = "PUT")]
+    [Route("/widgets/html-content/{Id}", Verbs = "PUT")]
     [DataContract]
     [Serializable]
-    public class PutHtmlContentWidgetRequest : RequestBase<SaveHtmlContentWidgetModel>, IReturn<PutHtmlContentWidgetResponse>
+    public class PutHtmlContentWidgetRequest : PutRequestBase<SaveHtmlContentWidgetModel>, IReturn<PutHtmlContentWidgetResponse>
     {
-        /// <summary>
-        /// Gets or sets the widget identifier.
-        /// </summary>
-        /// <value>
-        /// The widget identifier.
-        /// </value>
-        [DataMember]
-        public Guid? WidgetId { get; set; }
     }
 }

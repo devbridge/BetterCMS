@@ -87,7 +87,7 @@ namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
         public PutTagResponse Put(PutTagRequest request)
         {
             var tagName = request.Data.Name.Trim();
-            var tagsByIdFuture = repository.AsQueryable<Module.Root.Models.Tag>().Where(tag1 => tag1.Id == request.TagId).ToFuture();
+            var tagsByIdFuture = repository.AsQueryable<Module.Root.Models.Tag>().Where(tag1 => tag1.Id == request.Id).ToFuture();
             var tagsByIdNameFuture = repository.AsQueryable<Module.Root.Models.Tag>().Where(tag1 => tag1.Name == tagName).ToFuture();
             var tagById = tagsByIdFuture.FirstOrDefault();
             var tagByName = tagsByIdNameFuture.FirstOrDefault();
@@ -109,7 +109,7 @@ namespace BetterCms.Module.Api.Operations.Root.Tags.Tag
             var createTag = tagById == null;
             if (createTag)
             {
-                tagById = new Module.Root.Models.Tag { Id = request.TagId.GetValueOrDefault() };
+                tagById = new Module.Root.Models.Tag { Id = request.Id.GetValueOrDefault() };
             }
             else if (request.Data.Version > 0)
             {

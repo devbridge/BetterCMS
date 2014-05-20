@@ -13,7 +13,7 @@ namespace BetterCms.Module.Api.Extensions
         {
             var model = MapImageModel(response);
 
-            return new PutImageRequest { Data = model, ImageId = response.Data.Id };
+            return new PutImageRequest { Data = model, Id = response.Data.Id };
         }
 
         public static PostImageRequest ToPostRequest(this GetImageResponse response)
@@ -27,7 +27,7 @@ namespace BetterCms.Module.Api.Extensions
         {
             var model = MapFileModel(response);
 
-            return new PutFileRequest { Data = model, FileId = response.Data.Id };
+            return new PutFileRequest { Data = model, Id = response.Data.Id };
         }
 
         public static PostFileRequest ToPostRequest(this GetFileResponse response)
@@ -41,7 +41,7 @@ namespace BetterCms.Module.Api.Extensions
         {
             var model = MapFolderModel(response);
 
-            return new PutFolderRequest { Data = model, FolderId = response.Data.Id };
+            return new PutFolderRequest { Data = model, Id = response.Data.Id };
         }
 
         public static PostFolderRequest ToPostRequest(this GetFolderResponse response)

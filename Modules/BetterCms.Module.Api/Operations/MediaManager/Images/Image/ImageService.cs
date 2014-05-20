@@ -172,7 +172,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
             }
 
             var mediaImage = repository.AsQueryable<MediaImage>()
-                .Where(file => file.Id == request.ImageId)
+                .Where(file => file.Id == request.Id)
                 .ToFuture()
                 .FirstOrDefault();
 
@@ -191,7 +191,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
             {
                 mediaImage = new MediaImage
                                  {
-                                     Id = request.ImageId.GetValueOrDefault(),
+                                     Id = request.Id.GetValueOrDefault(),
                                      Type = Module.MediaManager.Models.MediaType.Image
                                  };
             }

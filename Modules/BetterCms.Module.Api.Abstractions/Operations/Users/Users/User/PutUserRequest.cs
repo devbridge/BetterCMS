@@ -10,18 +10,10 @@ namespace BetterCms.Module.Api.Operations.Users.Users.User
     /// <summary>
     /// Request for user update.
     /// </summary>
-    [Route("/users/{UserId}", Verbs = "PUT")]
+    [Route("/users/{Id}", Verbs = "PUT")]
     [DataContract]
     [Serializable]
-    public class PutUserRequest : RequestBase<SaveUserModel>, IReturn<PutUserResponse>
+    public class PutUserRequest : PutRequestBase<SaveUserModel>, IReturn<PutUserResponse>
     {
-        /// <summary>
-        /// Gets or sets the user identifier.
-        /// </summary>
-        /// <value>
-        /// The user identifier.
-        /// </value>
-        [DataMember]
-        public Guid? UserId { get; set; }
     }
 }

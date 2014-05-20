@@ -96,17 +96,17 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors.Author
         public PutAuthorResponse Put(PutAuthorRequest request)
         {
             var authors = repository.AsQueryable<Module.Blog.Models.Author>()
-                .Where(l => l.Id == request.AuthorId)
+                .Where(l => l.Id == request.Id)
                 .ToList();
 
-            var authorToSave = authors.FirstOrDefault(l => l.Id == request.AuthorId);
+            var authorToSave = authors.FirstOrDefault(l => l.Id == request.Id);
 
             var createAuthor = authorToSave == null;
             if (createAuthor)
             {
                 authorToSave = new Module.Blog.Models.Author
                 {
-                    Id = request.AuthorId.GetValueOrDefault()
+                    Id = request.Id.GetValueOrDefault()
                 };
             }
             else if (request.Data.Version > 0)

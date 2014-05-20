@@ -100,7 +100,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders.Folder
                 .Fetch(media => media.Folder)
                 .Distinct()
                 .ToFuture()
-                .FirstOrDefault(folder => folder.Id == request.FolderId);
+                .FirstOrDefault(folder => folder.Id == request.Id);
 
             MediaFolder parentFolder = null;
             if (parentFolderFuture != null)
@@ -117,7 +117,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders.Folder
             {
                 mediaFolder = new MediaFolder
                                   {
-                                      Id = request.FolderId.GetValueOrDefault(),
+                                      Id = request.Id.GetValueOrDefault(),
                                       ContentType = Module.MediaManager.Models.MediaContentType.Folder,
                                       Type = (Module.MediaManager.Models.MediaType)(int)request.Data.Type
                                   };

@@ -12,7 +12,7 @@ namespace BetterCms.Module.Api.Extensions
         {
             var model = MapBlogPostModel(response);
 
-            return new PutBlogPostPropertiesRequest { Data = model, BlogPostId = response.Data.Id };
+            return new PutBlogPostPropertiesRequest { Data = model, Id = response.Data.Id };
         }
         
         public static PostBlogPostPropertiesRequest ToPostRequest(this GetBlogPostPropertiesResponse response)
@@ -26,7 +26,7 @@ namespace BetterCms.Module.Api.Extensions
         {
             var model = MapAuthorModel(response);
 
-            return new PutAuthorRequest { Data = model, AuthorId = response.Data.Id };
+            return new PutAuthorRequest { Data = model, Id = response.Data.Id };
         }
 
         public static PostAuthorRequest ToPostRequest(this GetAuthorResponse response)

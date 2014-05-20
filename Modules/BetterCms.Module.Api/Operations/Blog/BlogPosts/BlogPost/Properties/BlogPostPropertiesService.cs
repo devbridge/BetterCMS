@@ -278,9 +278,9 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         public PutBlogPostPropertiesResponse Put(PutBlogPostPropertiesRequest request)
         {
             var serviceModel = request.Data.ToServiceModel();
-            if (request.BlogPostId.HasValue)
+            if (request.Id.HasValue)
             {
-                serviceModel.Id = request.BlogPostId.Value;
+                serviceModel.Id = request.Id.Value;
             }
 
             string[] error;

@@ -10,18 +10,10 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
     /// <summary>
     /// Request for html content update or creation.
     /// </summary>
-    [Route("/contents/html/{ContentId}", Verbs = "PUT")]
+    [Route("/contents/html/{Id}", Verbs = "PUT")]
     [DataContract]
     [Serializable]
-    public class PutHtmlContentRequest : RequestBase<SaveHtmlContentModel>, IReturn<PutHtmlContentResponse>
+    public class PutHtmlContentRequest : PutRequestBase<SaveHtmlContentModel>, IReturn<PutHtmlContentResponse>
     {
-        /// <summary>
-        /// Gets or sets the content identifier.
-        /// </summary>
-        /// <value>
-        /// The content identifier.
-        /// </value>
-        [DataMember]
-        public Guid? ContentId { get; set; }
     }
 }

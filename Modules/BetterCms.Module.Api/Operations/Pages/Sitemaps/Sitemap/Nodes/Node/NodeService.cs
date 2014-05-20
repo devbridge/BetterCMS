@@ -164,7 +164,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node
                 .ToFuture();
 
             var node =
-                repository.AsQueryable<SitemapNode>(e => e.Sitemap.Id == request.SitemapId && e.Id == request.NodeId)
+                repository.AsQueryable<SitemapNode>(e => e.Sitemap.Id == request.SitemapId && e.Id == request.Id)
                     .FetchMany(n => n.Translations)
                     .ToFuture()
                     .ToList()
@@ -182,7 +182,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node
             {
                 node = new SitemapNode
                               {
-                                  Id = request.NodeId.GetValueOrDefault(),
+                                  Id = request.Id.GetValueOrDefault(),
                                   Translations = new List<Module.Pages.Models.SitemapNodeTranslation>()
                               };
             }
