@@ -223,7 +223,7 @@
     <value>Name</value>
   </data>
   <data name="SiteSettings_BlogsMenuItem" xml:space="preserve">
-    <value>Blogs</value>
+    <value>Blog</value>
   </data>
   <data name="SiteSettings_Blogs_AddNew" xml:space="preserve">
     <value>Add New +</value>

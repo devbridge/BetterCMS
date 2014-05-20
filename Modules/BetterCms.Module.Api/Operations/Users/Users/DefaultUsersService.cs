@@ -8,5 +8,10 @@ namespace BetterCms.Module.Api.Operations.Users.Users
         {
             throw new CmsException(UsersApiConstants.UsersApiHasNoImplementationMessage);
         }
+
+        public PostUserResponse Post(PostUserRequest request)
+        {
+            throw new CmsException(UsersApiConstants.UsersApiHasNoImplementationMessage);
+        }
     }
 }

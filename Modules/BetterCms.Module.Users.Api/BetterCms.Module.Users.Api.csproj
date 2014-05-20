@@ -124,6 +124,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Extensions\UserModelExtensions.cs" />
     <Compile Include="Operations\Users\Roles\RolesService.cs" />
     <Compile Include="Operations\Users\Roles\Role\RoleService.cs" />
     <Compile Include="Operations\Users\Users\UsersService.cs" />
