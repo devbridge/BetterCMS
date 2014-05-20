@@ -155,6 +155,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\ApiCrudTrests.cs" />
+    <Compile Include="Api\ApiIntegrationTestBase.cs" />
+    <Compile Include="Api\Pages\Redirects\RedirectsApiTests.cs" />
     <Compile Include="Api\Pages\Sitemaps\SitemapsTests.cs" />
     <Compile Include="Blog\ServiceTests\BlogMLExportServiceTests.cs" />
     <Compile Include="Blog\ServiceTests\BlogMLServiceTests.cs" />
