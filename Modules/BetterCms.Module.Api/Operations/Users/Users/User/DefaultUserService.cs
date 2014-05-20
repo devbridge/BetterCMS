@@ -17,6 +17,16 @@ namespace BetterCms.Module.Api.Operations.Users.Users.User
             throw new CmsException(UsersApiConstants.UsersApiHasNoImplementationMessage);
         }
 
+        public DeleteUserResponse Delete(DeleteUserRequest request)
+        {
+            throw new CmsException(UsersApiConstants.UsersApiHasNoImplementationMessage);
+        }
+
+        public PutUserResponse Put(PutUserRequest request)
+        {
+            throw new CmsException(UsersApiConstants.UsersApiHasNoImplementationMessage);
+        }
+
         ValidateUserResponse IUserService.Validate(ValidateUserRequest request)
         {
             return validateUserService.Get(request);

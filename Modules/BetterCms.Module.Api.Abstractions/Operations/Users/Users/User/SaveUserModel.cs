@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
@@ -7,7 +8,7 @@ namespace BetterCms.Module.Api.Operations.Users.Users.User
 {
     [DataContract]
     [Serializable]
-    public class UserModel : ModelBase
+    public class SaveUserModel : SaveModelBase
     {
         /// <summary>
         /// Gets or sets the first name of user.
@@ -46,6 +47,15 @@ namespace BetterCms.Module.Api.Operations.Users.Users.User
         public string Email { get; set; }
 
         /// <summary>
+        /// Gets or sets the password.
+        /// </summary>
+        /// <value>
+        /// The password.
+        /// </value>
+        [DataMember]
+        public string Password { get; set; }
+
+        /// <summary>
         /// Gets or sets the user image id.
         /// </summary>
         /// <value>
@@ -55,30 +65,12 @@ namespace BetterCms.Module.Api.Operations.Users.Users.User
         public Guid? ImageId { get; set; }
 
         /// <summary>
-        /// Gets or sets the image URL.
+        /// Gets or sets the list of user roles.
         /// </summary>
         /// <value>
-        /// The image URL.
+        /// The list of user roles.
         /// </value>
         [DataMember]
-        public string ImageUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets the image thumbnail URL.
-        /// </summary>
-        /// <value>
-        /// The image thumbnail URL.
-        /// </value>
-        [DataMember]
-        public string ImageThumbnailUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets the image caption.
-        /// </summary>
-        /// <value>
-        /// The image caption.
-        /// </value>
-        [DataMember]
-        public string ImageCaption { get; set; }
+        public List<string> Roles { get; set; }
     }
 }

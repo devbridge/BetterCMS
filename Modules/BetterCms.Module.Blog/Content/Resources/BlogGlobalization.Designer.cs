@@ -1104,7 +1104,7 @@ namespace BetterCms.Module.Blog.Content.Resources
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Blogs.
+        ///   Looks up a localized string similar to Blog.
         /// </summary>
         public static string SiteSettings_BlogsMenuItem
         {

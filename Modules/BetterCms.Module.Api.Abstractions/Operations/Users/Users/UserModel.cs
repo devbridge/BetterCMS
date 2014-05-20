@@ -52,7 +52,7 @@ namespace BetterCms.Module.Api.Operations.Users.Users
         /// The user image id.
         /// </value>
         [DataMember]
-        public System.Guid? ImageId { get; set; }
+        public Guid? ImageId { get; set; }
 
         /// <summary>
         /// Gets or sets the image URL.
