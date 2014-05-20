@@ -92,7 +92,9 @@ namespace BetterCms.Test.Module.Api
 
                 // Redirects:
                 var redirect = api.Pages.Redirect.Get(new GetRedirectRequest());
-                // TODO: implement.
+                api.Pages.Redirects.Post(redirect.ToPostRequest());
+                api.Pages.Redirect.Put(redirect.ToPutRequest());
+                api.Pages.Redirect.Delete(new DeleteRedirectRequest());
 
                 // Server Widget:
                 var getSWRequest = new GetServerControlWidgetRequest();
