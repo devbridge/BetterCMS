@@ -10,7 +10,6 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Exceptions.Service;
-using BetterCms.Core.Mvc;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 
@@ -427,8 +426,11 @@ namespace BetterCms.Module.Blog.Services
             switch (desirableStatus)
             {
                 case ContentStatus.Published:
+                    if (blogPost.Status != PageStatus.Published)
+                    {
+                        blogPost.PublishedOn = DateTime.Now;
+                    }
                     blogPost.Status = PageStatus.Published;
-                    blogPost.PublishedOn = DateTime.Now;
                     break;
                 case ContentStatus.Draft:
                     blogPost.Status = PageStatus.Unpublished;
