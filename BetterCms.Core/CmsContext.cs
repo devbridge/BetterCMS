@@ -62,6 +62,10 @@ namespace BetterCms.Core
 
                 return config;
             }
+            set
+            {
+                config = value;
+            }
         }
         /// <summary>
         /// Constructs the host context.
