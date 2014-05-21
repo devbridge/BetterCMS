@@ -164,6 +164,8 @@
     <Compile Include="Api\ApiCrudIntegrationTestBase.cs" />
     <Compile Include="Api\Pages\Widgets\ServerControlWidgetsApiTests.cs" />
     <Compile Include="Api\Pages\Widgets\HtmlContentWidgetsApiTests.cs" />
+    <Compile Include="Api\Users\Roles\RolesApiTests.cs" />
+    <Compile Include="Api\Users\Users\UsersApiTests.cs" />
     <Compile Include="Blog\ServiceTests\BlogMLExportServiceTests.cs" />
     <Compile Include="Blog\ServiceTests\BlogMLServiceTests.cs" />
     <Compile Include="LuceneSearch\ServiceTests\IndexerServiceTests.cs" />
