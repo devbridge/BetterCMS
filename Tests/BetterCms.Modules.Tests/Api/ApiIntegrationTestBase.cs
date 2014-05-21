@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Transactions;
+
+using Autofac;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+
 using BetterCms.Module.Api;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Root.Mvc;
@@ -24,11 +28,11 @@ namespace BetterCms.Test.Module.Api
 
             using (var api = ApiFactory.Create())
             {
-                RunActionInTransaction(
-                    session =>
-                    {
-                        actionInTransaction(api, session);
-                    }, api.Scope);
+                using (new TransactionScope())
+                {
+                    var unitOfWork = api.Scope.Resolve<IUnitOfWork>();
+                    actionInTransaction(api, unitOfWork.Session);
+                }
             }
         }
 

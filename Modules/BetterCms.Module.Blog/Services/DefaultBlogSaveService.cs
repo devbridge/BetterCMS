@@ -263,7 +263,14 @@ namespace BetterCms.Module.Blog.Services
                 // Add access rules from the request
                 if (modelExt.AccessRules != null)
                 {
-                    entity.AccessRules.RemoveDuplicateEntities();
+                    if (entity.AccessRules == null)
+                    {
+                        entity.AccessRules = new List<AccessRule>();
+                    }
+                    else
+                    {
+                        entity.AccessRules.RemoveDuplicateEntities();
+                    }
                     var accessRules = modelExt.AccessRules
                         .Select(r => (IAccessRule)new AccessRule
                         {

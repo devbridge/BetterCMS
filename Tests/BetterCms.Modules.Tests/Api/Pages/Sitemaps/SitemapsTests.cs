@@ -7,6 +7,8 @@ using BetterCms.Module.Api.Operations.Pages.Sitemaps;
 using BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap;
 using BetterCms.Module.Api.Operations.Root;
 
+using NHibernate;
+
 using NUnit.Framework;
 
 namespace BetterCms.Test.Module.Api.Pages.Sitemaps
@@ -22,10 +24,10 @@ namespace BetterCms.Test.Module.Api.Pages.Sitemaps
         [Test]
         public void Should_CRUD_Sitemap_Successfully()
         {
-            RunApiActionInTransaction((api, session) => Run(api.Pages.Sitemaps.Post, api.Pages.SitemapNew.Get, api.Pages.SitemapNew.Put, api.Pages.SitemapNew.Delete));
+            RunApiActionInTransaction((api, session) => Run(session, api.Pages.Sitemaps.Post, api.Pages.SitemapNew.Get, api.Pages.SitemapNew.Put, api.Pages.SitemapNew.Delete));
         }
 
-        protected override SaveSitemapModel GetCreateModel()
+        protected override SaveSitemapModel GetCreateModel(ISession session)
         {
             return new SaveSitemapModel
                        {

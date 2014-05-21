@@ -107,6 +107,10 @@ namespace BetterCms.Module.Root.Services
             {
                 originalContent.History = originalContent.History.Distinct().ToList();
             }
+            else
+            {
+                originalContent.History = new List<Models.Content>();
+            }
 
             if (originalContent.ContentOptions != null)
             {

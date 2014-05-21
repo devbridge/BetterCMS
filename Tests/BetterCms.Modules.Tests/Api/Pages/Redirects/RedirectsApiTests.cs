@@ -4,6 +4,8 @@ using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Pages.Redirects;
 using BetterCms.Module.Api.Operations.Pages.Redirects.Redirect;
 
+using NHibernate;
+
 using NUnit.Framework;
 
 namespace BetterCms.Test.Module.Api.Pages.Redirects
@@ -19,10 +21,10 @@ namespace BetterCms.Test.Module.Api.Pages.Redirects
         public void Should_CRUD_Redirect_Successfully()
         {
             RunApiActionInTransaction((api, session) => 
-                Run(api.Pages.Redirects.Post, api.Pages.Redirect.Get, api.Pages.Redirect.Put, api.Pages.Redirect.Delete));
+                Run(session, api.Pages.Redirects.Post, api.Pages.Redirect.Get, api.Pages.Redirect.Put, api.Pages.Redirect.Delete));
         }
 
-        protected override SaveRedirectModel GetCreateModel()
+        protected override SaveRedirectModel GetCreateModel(ISession session)
         {
             return new SaveRedirectModel
                 {

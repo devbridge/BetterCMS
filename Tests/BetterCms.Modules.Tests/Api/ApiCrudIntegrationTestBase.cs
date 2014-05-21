@@ -2,6 +2,8 @@
 
 using BetterCms.Module.Api.Infrastructure;
 
+using NHibernate;
+
 using ServiceStack.ServiceHost;
 
 namespace BetterCms.Test.Module.Api
@@ -28,7 +30,7 @@ namespace BetterCms.Test.Module.Api
         where TDeleteRequest : DeleteRequestBase, new()
         where TDeleteResponse : DeleteResponseBase
     {
-        protected abstract TSaveModel GetCreateModel();
+        protected abstract TSaveModel GetCreateModel(ISession session);
 
         protected TCreateRequest GetCreateRequest(TSaveModel model)
         {
@@ -54,13 +56,14 @@ namespace BetterCms.Test.Module.Api
         }
 
         protected void Run(
+            ISession session,
             Func<TCreateRequest, TCreateResponse> createFunc,
             Func<TGetRequest, TGetResponse> getFunc,
             Func<TUpdateRequest, TUpdateResponse> updateFunc,
             Func<TDeleteRequest, TDeleteResponse> deleteFunc)
         {
             // Create
-            var createModel = GetCreateModel();
+            var createModel = GetCreateModel(session);
             var createRequest = GetCreateRequest(createModel);
             var createResponse = CreateResponse<TCreateRequest, TCreateResponse, TSaveModel>(createRequest, createFunc);
 
