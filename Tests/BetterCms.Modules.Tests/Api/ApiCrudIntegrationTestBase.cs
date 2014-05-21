@@ -4,6 +4,8 @@ using BetterCms.Module.Api.Infrastructure;
 
 using NHibernate;
 
+using NUnit.Framework;
+
 using ServiceStack.ServiceHost;
 
 namespace BetterCms.Test.Module.Api
@@ -30,6 +32,10 @@ namespace BetterCms.Test.Module.Api
         where TDeleteRequest : DeleteRequestBase, new()
         where TDeleteResponse : DeleteResponseBase
     {
+        protected int createdEventCount;
+        protected int updatedEventCount;
+        protected int deletedEventCount;
+
         protected abstract TSaveModel GetCreateModel(ISession session);
 
         protected virtual TCreateRequest GetCreateRequest(TSaveModel model)
@@ -64,6 +70,18 @@ namespace BetterCms.Test.Module.Api
         protected virtual void OnAfterGet(TGetResponse getResponse, TSaveModel saveModel)
         {
         }
+        
+        protected virtual void OnAfterCreate(TCreateRequest request, TCreateResponse response)
+        {
+        }
+        
+        protected virtual void OnAfterUpdate(TUpdateRequest request, TUpdateResponse response)
+        {
+        }
+        
+        protected virtual void OnAfterDelete(TDeleteRequest request, TDeleteResponse response)
+        {
+        }
 
         protected void Run(
             ISession session,
@@ -76,6 +94,7 @@ namespace BetterCms.Test.Module.Api
             var createModel = GetCreateModel(session);
             var createRequest = GetCreateRequest(createModel);
             var createResponse = CreateResponse<TCreateRequest, TCreateResponse, TSaveModel>(createRequest, createFunc);
+            OnAfterCreate(createRequest, createResponse);
 
             // Get
             var getRequest = GetGetRequest(createResponse);
@@ -85,6 +104,7 @@ namespace BetterCms.Test.Module.Api
             // Update
             var updateRequest = GetUpdateRequest(getResponse);
             var updateResponse = UpdateResponse<TUpdateRequest, TUpdateResponse, TSaveModel>(updateRequest, updateFunc);
+            OnAfterUpdate(updateRequest, updateResponse);
 
             // Get
             getRequest = GetGetRequest(updateResponse);
@@ -93,7 +113,15 @@ namespace BetterCms.Test.Module.Api
 
             // Delete
             var deleteRequest = GetDeleteRequest(getResponse);
-            DeleteResponse(deleteRequest, deleteFunc);
+            var deleteResponse =DeleteResponse(deleteRequest, deleteFunc);
+            OnAfterDelete(deleteRequest, deleteResponse);
+        }
+
+        protected void CheckEventsCount(int createdCount, int updatedCount, int deletedCount)
+        {
+            Assert.AreEqual(createdEventCount, createdCount, "Created events fired count");
+            Assert.AreEqual(updatedEventCount, updatedCount, "Updated events fired count");
+            Assert.AreEqual(deletedEventCount, deletedCount, "Deleted events fired count");
         }
     }
 }

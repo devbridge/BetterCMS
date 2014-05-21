@@ -1,6 +1,13 @@
-﻿using BetterCms.Core.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+using BetterCms.Core.Models;
 using BetterCms.Module.Api.Extensions;
+using BetterCms.Module.Api.Operations;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidget;
+using BetterCms.Module.Api.Operations.Root;
+using BetterCms.Module.MediaManager.Provider;
 
 using NHibernate;
 
@@ -18,8 +25,22 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
         [Test]
         public void Should_CRUD_ServerControlWidget_Successfully()
         {
+            // Attach to events
+            Events.PageEvents.Instance.WidgetCreated += Instance_WidgetCreated;
+            Events.PageEvents.Instance.WidgetUpdated += Instance_WidgetUpdated;
+            Events.PageEvents.Instance.WidgetDeleted += Instance_WidgetDeleted;
+
+            CheckEventsCount(0, 0, 0);
+
             RunApiActionInTransaction((api, session) =>
                 Run(session, api.Pages.Widget.ServerControl.Post, api.Pages.Widget.ServerControl.Get, api.Pages.Widget.ServerControl.Put, api.Pages.Widget.ServerControl.Delete));
+
+            CheckEventsCount(1, 1, 1);
+
+            // Detach from events
+            Events.PageEvents.Instance.WidgetCreated -= Instance_WidgetCreated;
+            Events.PageEvents.Instance.WidgetUpdated -= Instance_WidgetUpdated;
+            Events.PageEvents.Instance.WidgetDeleted -= Instance_WidgetDeleted;
         }
 
         protected override SaveServerControlWidgetModel GetCreateModel(ISession session)
@@ -36,10 +57,25 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
                     IsPublished = true,
                     PublishedOn = content.PublishedOn,
                     PublishedByUser = content.PublishedByUser,
-                    CategoryId = content.Category.Id
-                };
+                    CategoryId = content.Category.Id,
+                    Options = new List<OptionModel>
+                              {
+                                  new OptionModel
+                                  {
+                                      DefaultValue = "1",
+                                      Key = "K1",
+                                      Type = OptionType.Text
+                                  },
 
-            // TODO: options with custom options
+                                  new OptionModel
+                                  {
+                                      DefaultValue = Guid.NewGuid().ToString(),
+                                      Key = "K2",
+                                      Type = OptionType.Custom,
+                                      CustomTypeIdentifier = MediaManagerFolderOptionProvider.Identifier
+                                  }
+                              }
+                };
         }
 
         protected override GetServerControlWidgetRequest GetGetRequest(BetterCms.Module.Api.Infrastructure.SaveResponseBase saveResponseBase)
@@ -67,8 +103,8 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
             Assert.IsNotNull(getResponse.Data.CategoryId);
             Assert.IsNotNull(getResponse.Data.WidgetUrl);
             Assert.IsNotNull(getResponse.Data.PreviewUrl);
-            //Assert.IsNotNull(getResponse.Options);
-            //Assert.IsNotEmpty(getResponse.Options);
+            Assert.IsNotNull(getResponse.Options);
+            Assert.IsNotEmpty(getResponse.Options);
 
             // Compare saving entity with retrieved after save entity
             Assert.AreEqual(getResponse.Data.Name, model.Name);
@@ -79,7 +115,36 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
             Assert.AreEqual(getResponse.Data.PreviewUrl, model.PreviewUrl);
             Assert.AreEqual(getResponse.Data.WidgetUrl, model.WidgetUrl);
             
-            //Assert.AreEqual(getResponse.Options.Count, model.Options.Count);
+            Assert.AreEqual(getResponse.Options.Count, model.Options.Count);
+            Assert.IsTrue(getResponse.Options.All(a1 => model.Options.Any(a2 => a1.Key == a2.Key
+                   && a1.CustomTypeIdentifier == a2.CustomTypeIdentifier
+                   && a1.DefaultValue == a2.DefaultValue
+                   && a1.Type == a2.Type)));
+        }
+
+        private void Instance_WidgetDeleted(Events.SingleItemEventArgs<BetterCms.Module.Root.Models.Widget> args)
+        {
+            deletedEventCount++;
+        }
+
+        private void Instance_WidgetUpdated(Events.SingleItemEventArgs<BetterCms.Module.Root.Models.Widget> args)
+        {
+            updatedEventCount++;
+        }
+
+        private void Instance_WidgetCreated(Events.SingleItemEventArgs<BetterCms.Module.Root.Models.Widget> args)
+        {
+            createdEventCount++;
+        }
+
+        protected override void OnAfterCreate(PostServerControlWidgetRequest request, PostServerControlWidgetResponse response)
+        {
+            CheckEventsCount(1, 0, 0);
+        }
+
+        protected override void OnAfterUpdate(PutServerControlWidgetRequest request, PutServerControlWidgetResponse response)
+        {
+            CheckEventsCount(1, 1, 0);
         }
     }
 }
