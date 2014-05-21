@@ -19,8 +19,18 @@ namespace BetterCms.Test.Module.Api.Blog.Authors
         [Test]
         public void Should_CRUD_Author_Successfully()
         {
+            // Attach to events
+            Events.BlogEvents.Instance.AuthorCreated += Instance_EntityCreated;
+            Events.BlogEvents.Instance.AuthorUpdated += Instance_EntityUpdated;
+            Events.BlogEvents.Instance.AuthorDeleted += Instance_EntityDeleted;
+
             RunApiActionInTransaction((api, session) =>
                 Run(session, api.Blog.Authors.Post, api.Blog.Author.Get, api.Blog.Author.Put, api.Blog.Author.Delete));
+
+            // Detach from events
+            Events.BlogEvents.Instance.AuthorCreated -= Instance_EntityCreated;
+            Events.BlogEvents.Instance.AuthorUpdated -= Instance_EntityUpdated;
+            Events.BlogEvents.Instance.AuthorDeleted -= Instance_EntityDeleted;
         }
 
         protected override SaveAuthorModel GetCreateModel(ISession session)

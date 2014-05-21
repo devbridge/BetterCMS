@@ -47,6 +47,11 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
         [Test]
         public void Should_CRUD_BlogPost_WithLayout_Successfully()
         {
+            // Attach to events
+            Events.BlogEvents.Instance.BlogCreated += Instance_EntityCreated;
+            Events.BlogEvents.Instance.BlogUpdated += Instance_EntityUpdated;
+            Events.BlogEvents.Instance.BlogDeleted += Instance_EntityDeleted;
+
             RunApiActionInTransaction(
                 (api, session) =>
                 {
@@ -63,11 +68,21 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
 
                     Run(session, api.Blog.BlogPost.Properties.Post, api.Blog.BlogPost.Properties.Get, api.Blog.BlogPost.Properties.Put, api.Blog.BlogPost.Properties.Delete);
                 });
+
+            // Detach from events
+            Events.BlogEvents.Instance.BlogCreated -= Instance_EntityCreated;
+            Events.BlogEvents.Instance.BlogUpdated -= Instance_EntityUpdated;
+            Events.BlogEvents.Instance.BlogDeleted -= Instance_EntityDeleted;
         }
         
         [Test]
         public void Should_CRUD_BlogPost_WithMasterPage_Successfully()
         {
+            // Attach to events
+            Events.BlogEvents.Instance.BlogCreated += Instance_EntityCreated;
+            Events.BlogEvents.Instance.BlogUpdated += Instance_EntityUpdated;
+            Events.BlogEvents.Instance.BlogDeleted += Instance_EntityDeleted;
+
             RunApiActionInTransaction(
                 (api, session) =>
                 {
@@ -89,11 +104,21 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
 
                     Run(session, api.Blog.BlogPost.Properties.Post, api.Blog.BlogPost.Properties.Get, api.Blog.BlogPost.Properties.Put, api.Blog.BlogPost.Properties.Delete);
                 });
+
+            // Detach from events
+            Events.BlogEvents.Instance.BlogCreated -= Instance_EntityCreated;
+            Events.BlogEvents.Instance.BlogUpdated -= Instance_EntityUpdated;
+            Events.BlogEvents.Instance.BlogDeleted -= Instance_EntityDeleted;
         }
         
         [Test]
         public void Should_CRUD_BlogPost_WithNoLayoutSpecified_Successfully()
         {
+            // Attach to events
+            Events.BlogEvents.Instance.BlogCreated += Instance_EntityCreated;
+            Events.BlogEvents.Instance.BlogUpdated += Instance_EntityUpdated;
+            Events.BlogEvents.Instance.BlogDeleted += Instance_EntityDeleted;
+
             RunApiActionInTransaction(
                 (api, session) =>
                 {
@@ -124,6 +149,11 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
 
                     Run(session, api.Blog.BlogPost.Properties.Post, api.Blog.BlogPost.Properties.Get, api.Blog.BlogPost.Properties.Put, api.Blog.BlogPost.Properties.Delete);
                 });
+
+            // Detach from events
+            Events.BlogEvents.Instance.BlogCreated -= Instance_EntityCreated;
+            Events.BlogEvents.Instance.BlogUpdated -= Instance_EntityUpdated;
+            Events.BlogEvents.Instance.BlogDeleted -= Instance_EntityDeleted;
         }
 
         protected override SaveBlogPostPropertiesModel GetCreateModel(ISession session)
