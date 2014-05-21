@@ -169,6 +169,7 @@ namespace BetterCms.Tests.Helpers
             PopulateBaseFields(entity);
 
             entity.Status = ProvideRandomEnumValue<PageStatus>();
+            entity.PublishedOn = ProvideRandomDateTime();
             entity.PageUrl = ProvideRandomString(MaxLength.Url);
             entity.PageUrlHash = ProvideRandomString(MaxLength.Url).UrlHash();
             entity.Title = ProvideRandomString(MaxLength.Name);
