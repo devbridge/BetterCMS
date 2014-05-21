@@ -70,7 +70,7 @@ namespace BetterCms.Module.Pages.Services
             var urlHash = page.PageUrl.UrlHash();
             return repository
                 .AsQueryable<SitemapNode>()
-                .Where(n => (n.Page != null && n.Page.Id == page.Id) || (n.UrlHash == urlHash))
+                .Where(n => ((n.Page != null && n.Page.Id == page.Id) || (n.UrlHash == urlHash)) && !n.IsDeleted && !n.Sitemap.IsDeleted)
                 .Fetch(node => node.ChildNodes)
                 .Fetch(node => node.Sitemap)
                 .ThenFetch(sitemap => sitemap.AccessRules)
@@ -279,9 +279,12 @@ namespace BetterCms.Module.Pages.Services
         /// <param name="deletedNodes">The deleted nodes.</param>
         public void DeleteNode(SitemapNode node, ref IList<SitemapNode> deletedNodes)
         {
-            foreach (var childNode in node.ChildNodes)
+            if (node.ChildNodes != null)
             {
-                DeleteNode(childNode, ref deletedNodes);
+                foreach (var childNode in node.ChildNodes)
+                {
+                    DeleteNode(childNode, ref deletedNodes);
+                }
             }
 
             repository.Delete(node);
