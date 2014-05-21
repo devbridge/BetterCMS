@@ -161,6 +161,8 @@
     <Compile Include="Api\Pages\Redirects\RedirectsApiTests.cs" />
     <Compile Include="Api\Pages\Sitemaps\SitemapsTests.cs" />
     <Compile Include="Api\ApiCrudIntegrationTestBase.cs" />
+    <Compile Include="Api\Pages\Widgets\ServerControlWidgetsApiTests.cs" />
+    <Compile Include="Api\Pages\Widgets\HtmlContentWidgetsApiTests.cs" />
     <Compile Include="Blog\ServiceTests\BlogMLExportServiceTests.cs" />
     <Compile Include="Blog\ServiceTests\BlogMLServiceTests.cs" />
     <Compile Include="LuceneSearch\ServiceTests\IndexerServiceTests.cs" />

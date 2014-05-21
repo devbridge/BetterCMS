@@ -18,6 +18,8 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 
+using FluentNHibernate.Conventions.AcceptanceCriteria;
+
 using CategoryEntity = BetterCms.Module.Root.Models.Category;
 
 namespace BetterCms.Module.Pages.Services
@@ -54,8 +56,10 @@ namespace BetterCms.Module.Pages.Services
 
             unitOfWork.BeginTransaction();
 
+            bool isCreatingNew;
+
             var widgetContent = GetHtmlContentWidgetFromRequest(model, treatNullsAsLists, !model.Id.HasDefaultValue());
-            widget = GetWidgetForSave(widgetContent, model, createIfNotExists);
+            widget = GetWidgetForSave(widgetContent, model, createIfNotExists, out isCreatingNew);
 
             repository.Save(widget);
             unitOfWork.Commit();
@@ -63,7 +67,7 @@ namespace BetterCms.Module.Pages.Services
             // Notify.
             if (widget.Status != ContentStatus.Preview)
             {
-                if (model.Id == default(Guid))
+                if (isCreatingNew)
                 {
                     Events.PageEvents.Instance.OnWidgetCreated(widget);
                 }
@@ -98,8 +102,10 @@ namespace BetterCms.Module.Pages.Services
 
             unitOfWork.BeginTransaction();
 
+            bool isCreatingNew;
+
             var requestWidget = GetServerControlWidgetFromRequest(model, treatNullsAsLists, !model.Id.HasDefaultValue());
-            var widget = GetWidgetForSave(requestWidget, model, createIfNotExists);
+            var widget = GetWidgetForSave(requestWidget, model, createIfNotExists, out isCreatingNew);
             
             repository.Save(widget);
             unitOfWork.Commit();
@@ -107,7 +113,7 @@ namespace BetterCms.Module.Pages.Services
             // Notify.
             if (widget.Status != ContentStatus.Preview)
             {
-                if (model.Id == default(Guid))
+                if (isCreatingNew)
                 {
                     Events.PageEvents.Instance.OnWidgetCreated(widget);
                 }
@@ -120,26 +126,43 @@ namespace BetterCms.Module.Pages.Services
             return widget;
         }
 
-        private TEntity GetWidgetForSave<TEntity>(TEntity widgetContent, EditWidgetViewModel model, bool createIfNotExists)
+        private TEntity GetWidgetForSave<TEntity>(TEntity widgetContent, EditWidgetViewModel model, bool createIfNotExists, out bool isCreatingNew)
             where TEntity : Widget
         {
-            TEntity widget;
+            TEntity widget, originalWidget = null;
             var createNewWithId = false;
 
-            // Check if entity is created
-            if (createIfNotExists && !model.Id.HasDefaultValue())
+            isCreatingNew = model.Id.HasDefaultValue();
+            if (createIfNotExists || !isCreatingNew)
             {
-                createNewWithId = !repository.AsQueryable<TEntity>().Any(w => w.Id == model.Id);
+                originalWidget = repository.FirstOrDefault<TEntity>(model.Id);
+                isCreatingNew = originalWidget == null;
+                createNewWithId = isCreatingNew && !model.Id.HasDefaultValue();
+            }
+
+            if (model.DesirableStatus == ContentStatus.Published)
+            {
+                if (isCreatingNew)
+                {
+                    if (model.PublishedOn.HasValue)
+                    {
+                        widgetContent.PublishedOn = model.PublishedOn;
+                    }
+                    if (!string.IsNullOrEmpty(model.PublishedByUser))
+                    {
+                        widgetContent.PublishedByUser = model.PublishedByUser;
+                    }
+                }
+                else
+                {
+                    widgetContent.PublishedOn = originalWidget.PublishedOn;
+                    widgetContent.PublishedByUser = originalWidget.PublishedByUser;
+                }
             }
 
             if (createNewWithId)
             {
                 widget = widgetContent;
-                if (model.DesirableStatus == ContentStatus.Published)
-                {
-                    widget.PublishedOn = model.PublishedOn ?? DateTime.Now;
-                    widget.PublishedByUser = !string.IsNullOrEmpty(model.PublishedByUser) ? model.PublishedByUser : securityService.CurrentPrincipalName;
-                }
 
                 widget.Status = model.DesirableStatus;
                 widget.Id = model.Id;

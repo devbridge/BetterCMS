@@ -69,8 +69,14 @@ namespace BetterCms.Module.Root.Services
                 /* Just create a new content with requested status.*/
                 if (requestedStatus == ContentStatus.Published)
                 {
-                    updatedContent.PublishedOn = DateTime.Now;
-                    updatedContent.PublishedByUser = securityService.CurrentPrincipalName;
+                    if (!updatedContent.PublishedOn.HasValue)
+                    {
+                        updatedContent.PublishedOn = DateTime.Now;
+                    }
+                    if (string.IsNullOrWhiteSpace(updatedContent.PublishedByUser))
+                    {
+                        updatedContent.PublishedByUser = securityService.CurrentPrincipalName;
+                    }
                 }
 
                 updatedContent.Status = requestedStatus;
@@ -187,8 +193,14 @@ namespace BetterCms.Module.Root.Services
                 SetContentRegions(originalContent, updatedContent);
 
                 originalContent.Status = requestedStatus;
-                originalContent.PublishedOn = DateTime.Now;
-                originalContent.PublishedByUser = securityService.CurrentPrincipalName;
+                if (!originalContent.PublishedOn.HasValue)
+                {
+                    originalContent.PublishedOn = DateTime.Now;
+                }
+                if (string.IsNullOrWhiteSpace(originalContent.PublishedByUser))
+                {
+                    originalContent.PublishedByUser = securityService.CurrentPrincipalName;
+                }
                 repository.Save(originalContent);
 
                 IList<Models.Content> contentsToRemove = originalContent.History.Where(f => f.Status == ContentStatus.Preview || f.Status == ContentStatus.Draft).ToList();
@@ -252,8 +264,15 @@ namespace BetterCms.Module.Root.Services
                 SetContentOptions(originalContent, updatedContent);
                 SetContentRegions(originalContent, updatedContent);
                 originalContent.Status = requestedStatus;
-                originalContent.PublishedOn = DateTime.Now;
-                originalContent.PublishedByUser = securityService.CurrentPrincipalName;
+                if (!originalContent.PublishedOn.HasValue)
+                {
+                    originalContent.PublishedOn = DateTime.Now;
+                }
+                if (string.IsNullOrWhiteSpace(originalContent.PublishedByUser))
+                {
+                    originalContent.PublishedByUser = securityService.CurrentPrincipalName;
+                }
+
                 repository.Save(originalContent);
             }
         }

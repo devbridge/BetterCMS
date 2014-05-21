@@ -420,6 +420,7 @@ namespace BetterCms.Tests.Helpers
             entity.Category = CreateNewCategory();
             entity.Name = ProvideRandomString(MaxLength.Name);
             entity.Url = ProvideRandomString(MaxLength.Url);
+            entity.PreviewUrl = ProvideRandomString(MaxLength.Url);
             entity.Status = ContentStatus.Published;
             entity.Original = null;
             entity.PublishedByUser = ProvideRandomString(MaxLength.Name);

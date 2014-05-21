@@ -213,7 +213,7 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
 
         protected override void OnAfterGet(GetBlogPostPropertiesResponse getResponse, SaveBlogPostPropertiesModel model)
         {
-            // Check if entities is not null
+            // Check if properties are not null
             Assert.IsNotNull(getResponse.Data.BlogPostUrl);
             Assert.IsNotNull(getResponse.Data.Title);
             Assert.IsNotNull(getResponse.Data.IntroText);
