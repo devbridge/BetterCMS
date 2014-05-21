@@ -71,16 +71,19 @@ namespace BetterCms.Test.Module.Api
         {
         }
         
-        protected virtual void OnAfterCreate(TCreateRequest request, TCreateResponse response)
+        protected virtual void CheckCreateEvent()
         {
+            CheckEventsCount(1, 0, 0);
         }
-        
-        protected virtual void OnAfterUpdate(TUpdateRequest request, TUpdateResponse response)
+
+        protected virtual void CheckUpdateEvent()
         {
+            CheckEventsCount(1, 1, 0);
         }
-        
-        protected virtual void OnAfterDelete(TDeleteRequest request, TDeleteResponse response)
+
+        protected virtual void CheckDeleteEvent()
         {
+            CheckEventsCount(1, 1, 1);
         }
 
         protected void Run(
@@ -90,11 +93,15 @@ namespace BetterCms.Test.Module.Api
             Func<TUpdateRequest, TUpdateResponse> updateFunc,
             Func<TDeleteRequest, TDeleteResponse> deleteFunc)
         {
+            createdEventCount = 0;
+            deletedEventCount = 0;
+            updatedEventCount = 0;
+
             // Create
             var createModel = GetCreateModel(session);
             var createRequest = GetCreateRequest(createModel);
             var createResponse = CreateResponse<TCreateRequest, TCreateResponse, TSaveModel>(createRequest, createFunc);
-            OnAfterCreate(createRequest, createResponse);
+            CheckCreateEvent();
 
             // Get
             var getRequest = GetGetRequest(createResponse);
@@ -104,7 +111,7 @@ namespace BetterCms.Test.Module.Api
             // Update
             var updateRequest = GetUpdateRequest(getResponse);
             var updateResponse = UpdateResponse<TUpdateRequest, TUpdateResponse, TSaveModel>(updateRequest, updateFunc);
-            OnAfterUpdate(updateRequest, updateResponse);
+            CheckUpdateEvent();
 
             // Get
             getRequest = GetGetRequest(updateResponse);
@@ -113,8 +120,8 @@ namespace BetterCms.Test.Module.Api
 
             // Delete
             var deleteRequest = GetDeleteRequest(getResponse);
-            var deleteResponse =DeleteResponse(deleteRequest, deleteFunc);
-            OnAfterDelete(deleteRequest, deleteResponse);
+            DeleteResponse(deleteRequest, deleteFunc);
+            CheckDeleteEvent();
         }
 
         protected void CheckEventsCount(int createdCount, int updatedCount, int deletedCount)
@@ -122,6 +129,21 @@ namespace BetterCms.Test.Module.Api
             Assert.AreEqual(createdEventCount, createdCount, "Created events fired count");
             Assert.AreEqual(updatedEventCount, updatedCount, "Updated events fired count");
             Assert.AreEqual(deletedEventCount, deletedCount, "Deleted events fired count");
+        }
+
+        protected void Instance_EntityDeleted<TEntity>(Events.SingleItemEventArgs<TEntity> args)
+        {
+            deletedEventCount++;
+        }
+
+        protected void Instance_EntityUpdated<TEntity>(Events.SingleItemEventArgs<TEntity> args)
+        {
+            updatedEventCount++;
+        }
+
+        protected void Instance_EntityCreated<TEntity>(Events.SingleItemEventArgs<TEntity> args)
+        {
+            createdEventCount++;
         }
     }
 }

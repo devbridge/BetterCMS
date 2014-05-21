@@ -20,8 +20,18 @@ namespace BetterCms.Test.Module.Api.Pages.Redirects
         [Test]
         public void Should_CRUD_Redirect_Successfully()
         {
+            // Attach to events
+            Events.PageEvents.Instance.RedirectCreated += Instance_EntityCreated;
+            Events.PageEvents.Instance.RedirectUpdated += Instance_EntityUpdated;
+            Events.PageEvents.Instance.RedirectDeleted += Instance_EntityDeleted;
+
             RunApiActionInTransaction((api, session) => 
                 Run(session, api.Pages.Redirects.Post, api.Pages.Redirect.Get, api.Pages.Redirect.Put, api.Pages.Redirect.Delete));
+
+            // Detach
+            Events.PageEvents.Instance.RedirectCreated -= Instance_EntityCreated;
+            Events.PageEvents.Instance.RedirectUpdated -= Instance_EntityUpdated;
+            Events.PageEvents.Instance.RedirectDeleted -= Instance_EntityDeleted;
         }
 
         protected override SaveRedirectModel GetCreateModel(ISession session)

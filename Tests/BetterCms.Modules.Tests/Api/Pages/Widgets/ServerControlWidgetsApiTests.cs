@@ -26,21 +26,17 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
         public void Should_CRUD_ServerControlWidget_Successfully()
         {
             // Attach to events
-            Events.PageEvents.Instance.WidgetCreated += Instance_WidgetCreated;
-            Events.PageEvents.Instance.WidgetUpdated += Instance_WidgetUpdated;
-            Events.PageEvents.Instance.WidgetDeleted += Instance_WidgetDeleted;
-
-            CheckEventsCount(0, 0, 0);
+            Events.PageEvents.Instance.WidgetCreated += Instance_EntityCreated;
+            Events.PageEvents.Instance.WidgetUpdated += Instance_EntityUpdated;
+            Events.PageEvents.Instance.WidgetDeleted += Instance_EntityDeleted;
 
             RunApiActionInTransaction((api, session) =>
                 Run(session, api.Pages.Widget.ServerControl.Post, api.Pages.Widget.ServerControl.Get, api.Pages.Widget.ServerControl.Put, api.Pages.Widget.ServerControl.Delete));
 
-            CheckEventsCount(1, 1, 1);
-
             // Detach from events
-            Events.PageEvents.Instance.WidgetCreated -= Instance_WidgetCreated;
-            Events.PageEvents.Instance.WidgetUpdated -= Instance_WidgetUpdated;
-            Events.PageEvents.Instance.WidgetDeleted -= Instance_WidgetDeleted;
+            Events.PageEvents.Instance.WidgetCreated -= Instance_EntityCreated;
+            Events.PageEvents.Instance.WidgetUpdated -= Instance_EntityUpdated;
+            Events.PageEvents.Instance.WidgetDeleted -= Instance_EntityDeleted;
         }
 
         protected override SaveServerControlWidgetModel GetCreateModel(ISession session)
@@ -120,31 +116,6 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
                    && a1.CustomTypeIdentifier == a2.CustomTypeIdentifier
                    && a1.DefaultValue == a2.DefaultValue
                    && a1.Type == a2.Type)));
-        }
-
-        private void Instance_WidgetDeleted(Events.SingleItemEventArgs<BetterCms.Module.Root.Models.Widget> args)
-        {
-            deletedEventCount++;
-        }
-
-        private void Instance_WidgetUpdated(Events.SingleItemEventArgs<BetterCms.Module.Root.Models.Widget> args)
-        {
-            updatedEventCount++;
-        }
-
-        private void Instance_WidgetCreated(Events.SingleItemEventArgs<BetterCms.Module.Root.Models.Widget> args)
-        {
-            createdEventCount++;
-        }
-
-        protected override void OnAfterCreate(PostServerControlWidgetRequest request, PostServerControlWidgetResponse response)
-        {
-            CheckEventsCount(1, 0, 0);
-        }
-
-        protected override void OnAfterUpdate(PutServerControlWidgetRequest request, PutServerControlWidgetResponse response)
-        {
-            CheckEventsCount(1, 1, 0);
         }
     }
 }
