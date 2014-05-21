@@ -107,15 +107,11 @@ namespace BetterCms.Test.Module.Api
         }
 
         protected virtual TResponse DeleteResponse<TRequest, TResponse>(
-            ModelBase model,
+            TRequest request,
             Func<TRequest, TResponse> method)
             where TRequest : DeleteRequestBase, new()
             where TResponse : DeleteResponseBase
         {
-            var request = new TRequest();
-            request.Id = model.Id;
-            request.Data.Version = model.Version;
-
             var response = method.Invoke(request);
 
             Assert.IsNotNull(response);

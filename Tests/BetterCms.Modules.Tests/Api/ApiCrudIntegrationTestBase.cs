@@ -32,7 +32,7 @@ namespace BetterCms.Test.Module.Api
     {
         protected abstract TSaveModel GetCreateModel(ISession session);
 
-        protected TCreateRequest GetCreateRequest(TSaveModel model)
+        protected virtual TCreateRequest GetCreateRequest(TSaveModel model)
         {
             return new TCreateRequest { Data = model };
         }
@@ -40,6 +40,16 @@ namespace BetterCms.Test.Module.Api
         protected abstract TGetRequest GetGetRequest(SaveResponseBase saveResponseBase);
 
         protected abstract TUpdateRequest GetUpdateRequest(TGetResponse getResponse);
+
+        protected virtual TDeleteRequest GetDeleteRequest(TGetResponse getResponse)
+        {
+            var request = new TDeleteRequest
+                              {
+                                  Id = getResponse.Data.Id,
+                                  Data = { Version = getResponse.Data.Version }
+                              };
+            return request;
+        }
 
         protected virtual void OnAfterCreateGet(TGetResponse getResponse, TSaveModel saveModel)
         {
@@ -82,7 +92,8 @@ namespace BetterCms.Test.Module.Api
             OnAfterUpdateGet(getResponse, updateRequest.Data);
 
             // Delete
-            DeleteResponse(getResponse.Data, deleteFunc);
+            var deleteRequest = GetDeleteRequest(getResponse);
+            DeleteResponse(deleteRequest, deleteFunc);
         }
     }
 }
