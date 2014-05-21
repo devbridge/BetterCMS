@@ -5,10 +5,16 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 
+using Autofac;
+
 using BetterCms.Core;
+using BetterCms.Core.Dependencies;
 using BetterCms.Core.Environment.Host;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Core.Services.Storage;
 using BetterCms.Events;
+using BetterCms.Module.WindowsAzureStorage;
+using BetterCms.Sandbox.Mvc4.ConfigurationOverride;
 using BetterCms.Sandbox.Mvc4.Helpers;
 
 using Common.Logging;
@@ -29,7 +35,10 @@ namespace BetterCms.Sandbox.Mvc4
                                  name: "Default",
                                  url: "demo/{controller}/{action}/{id}",
                                  defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-                             ); 
+                             );
+
+
+            InsertProxyConfig();
 
             cmsHost = CmsContext.RegisterHost();
 
@@ -56,6 +65,19 @@ namespace BetterCms.Sandbox.Mvc4
             AddUsersEvents();
             AddNewsletterEvents();
         }
+
+
+        private static void InsertProxyConfig()
+        {
+            var originalConfig = CmsContext.Config;
+            var proxyConfig = new ProxyConfigurationForCms(originalConfig);
+
+            ContainerBuilder builder = new ContainerBuilder();
+            builder.RegisterType<WindowsAzureStorageService>().As<IStorageService>().SingleInstance();
+            builder.RegisterInstance(proxyConfig).As<ICmsConfiguration>().SingleInstance();
+            ContextScopeProvider.RegisterTypes(builder);
+        }
+
 
         private void AddContentEvents()
         {
