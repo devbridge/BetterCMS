@@ -15,19 +15,41 @@ namespace BetterCms.Test.Module.Api.Media.Images
         PutImageRequest, PutImageResponse,
         DeleteImageRequest, DeleteImageResponse>
     {
+        private int archivedMediaEventCount;
+
+        private int unarchivedMediaEventCount;
+
         [Test]
         public void Should_CRUD_Image_Successfully()
         {
             Events.MediaManagerEvents.Instance.MediaFileUploaded += Instance_EntityCreated;
             Events.MediaManagerEvents.Instance.MediaFileUpdated += Instance_EntityUpdated;
             Events.MediaManagerEvents.Instance.MediaFileDeleted += Instance_EntityDeleted;
+            Events.MediaManagerEvents.Instance.MediaArchived += Instance_MediaArchived;
+            Events.MediaManagerEvents.Instance.MediaUnarchived += Instance_MediaUnarchived;
+
 
             RunApiActionInTransaction((api, session) =>
                 Run(session, api.Media.Images.Post, api.Media.Image.Get, api.Media.Image.Put, api.Media.Image.Delete));
 
+            Assert.AreEqual(1, archivedMediaEventCount, "Archived media events fired count");
+            Assert.AreEqual(1, unarchivedMediaEventCount, "Unarchived media events fired count");
+
             Events.MediaManagerEvents.Instance.MediaFileUploaded -= Instance_EntityCreated;
             Events.MediaManagerEvents.Instance.MediaFileUpdated -= Instance_EntityUpdated;
             Events.MediaManagerEvents.Instance.MediaFileDeleted -= Instance_EntityDeleted;
+            Events.MediaManagerEvents.Instance.MediaArchived -= Instance_MediaArchived;
+            Events.MediaManagerEvents.Instance.MediaUnarchived -= Instance_MediaUnarchived;
+        }
+
+        void Instance_MediaUnarchived(Events.SingleItemEventArgs<BetterCms.Module.MediaManager.Models.Media> args)
+        {
+            archivedMediaEventCount++;
+        }
+
+        void Instance_MediaArchived(Events.SingleItemEventArgs<BetterCms.Module.MediaManager.Models.Media> args)
+        {
+            unarchivedMediaEventCount++;
         }
 
         protected override SaveImageModel GetCreateModel(ISession session)
