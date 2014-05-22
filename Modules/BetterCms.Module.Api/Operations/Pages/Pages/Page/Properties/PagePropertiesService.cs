@@ -18,8 +18,10 @@ using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Models.Events;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
@@ -435,6 +437,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// <returns><c>PutPageResponse</c> with created or updated item id.</returns>
         public PutPagePropertiesResponse Put(PutPagePropertiesRequest request)
         {
+            if (request.Data.IsMasterPage)
+            {
+                accessControlService.DemandAccess(securityService.GetCurrentPrincipal(), RootModuleConstants.UserRoles.Administration);
+            }
+            else
+            {
+                accessControlService.DemandAccess(securityService.GetCurrentPrincipal(), RootModuleConstants.UserRoles.EditContent);
+            }
+
             PageProperties pageProperties = null;
 
             var isNew = !request.Id.HasValue || request.Id.Value.HasDefaultValue();
@@ -453,13 +464,19 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                 
                 isNew = pageProperties == null;
             }
-
+            UpdatingPagePropertiesModel beforeChange = null;
             if (isNew)
             {
-                pageProperties = new PageProperties { AccessRules = new List<AccessRule>(), Id = request.Id.GetValueOrDefault() };
+                pageProperties = new PageProperties
+                                     {
+                                         Id = request.Id.GetValueOrDefault(),
+                                         Status = PageStatus.Unpublished,
+                                         AccessRules = new List<AccessRule>()
+                                     };
             }
             else if (request.Data.Version > 0)
             {
+                beforeChange = new UpdatingPagePropertiesModel(pageProperties);
                 pageProperties.Version = request.Data.Version;
             }
 
@@ -498,7 +515,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
 
             pageProperties.Title = request.Data.Title;
             pageProperties.Description = request.Data.Description;
-            pageProperties.Status = request.Data.IsMasterPage || request.Data.IsPublished ? PageStatus.Published : PageStatus.Unpublished;
+
+            var newStatus = request.Data.IsMasterPage || request.Data.IsPublished ? PageStatus.Published : PageStatus.Unpublished;
+            if (!request.Data.IsMasterPage && pageProperties.Status != newStatus)
+            {
+                accessControlService.DemandAccess(securityService.GetCurrentPrincipal(), RootModuleConstants.UserRoles.PublishContent);
+            }
+
+            pageProperties.Status = newStatus;
             pageProperties.PublishedOn = request.Data.IsPublished && !request.Data.PublishedOn.HasValue ? DateTime.Now : request.Data.PublishedOn;
 
             masterPageService.SetMasterOrLayout(pageProperties, request.Data.MasterPageId, request.Data.LayoutId);
@@ -560,6 +584,19 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                 pageProperties.Options = optionService.SaveOptionValues(options, pageOptions, () => new PageOption { Page = pageProperties });
             }
 
+            if (!isNew)
+            {
+                // Notify about page properties changing.
+                var cancelEventArgs = Events.PageEvents.Instance.OnPagePropertiesChanging(beforeChange, new UpdatingPagePropertiesModel(pageProperties));
+                if (cancelEventArgs.Cancel)
+                {
+                    throw new CmsApiValidationException(
+                        cancelEventArgs.CancellationErrorMessages != null && cancelEventArgs.CancellationErrorMessages.Count > 0
+                            ? string.Join(",", cancelEventArgs.CancellationErrorMessages)
+                            : "Page properties saving was canceled.");
+                }
+            }
+
             repository.Save(pageProperties);
 
             //
@@ -601,6 +638,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                         PageId = request.Id,
                         Version = request.Data.Version
                     };
+
             var result = pageService.DeletePage(model, securityService.GetCurrentPrincipal());
 
             return new DeletePagePropertiesResponse { Data = result };

@@ -70,7 +70,21 @@ namespace BetterCms.Test.Module.Api.Media.Files
                     PublishedOn = TestDataProvider.ProvideRandomDateTime(),
                     Tags = new[] { TestDataProvider.ProvideRandomString(MaxLength.Name), TestDataProvider.ProvideRandomString(MaxLength.Name) },
                     ThumbnailId = null,
-                    AccessRules = new[] { new AccessRuleModel { AccessLevel = AccessLevel.ReadWrite, Identity = "Admin", IsForRole = true } },
+                    AccessRules = new[]
+                                     {           
+                                          new AccessRuleModel
+                                                {
+                                                    AccessLevel = AccessLevel.ReadWrite, 
+                                                    Identity = TestDataProvider.ProvideRandomString(20),
+                                                    IsForRole = false
+                                                },
+                                          new AccessRuleModel
+                                                {
+                                                    AccessLevel = AccessLevel.Deny, 
+                                                    Identity = TestDataProvider.ProvideRandomString(20),
+                                                    IsForRole = true
+                                                }
+                                     },
                     PublicUrl = string.Format("{0}/{1}", TestDataProvider.ProvideRandomString(MaxLength.Name), TestDataProvider.ProvideRandomString(MaxLength.Name)),
                     Version = 0,
                 };

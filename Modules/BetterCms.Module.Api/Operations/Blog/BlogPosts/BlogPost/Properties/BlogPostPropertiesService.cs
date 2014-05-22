@@ -5,6 +5,7 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Services;
 
 using BetterCms.Module.Api.Extensions;
@@ -285,6 +286,10 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
 
             string[] error;
             var response = blogSaveService.SaveBlogPost(serviceModel, securityService.GetCurrentPrincipal(), out error);
+            if (response == null)
+            {
+                throw new CmsApiValidationException(error != null && error.Length > 0 ? string.Join(",", error) : "Page properties saving was canceled.");
+            }
 
             return new PutBlogPostPropertiesResponse { Data = response.Id };
         }
