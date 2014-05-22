@@ -218,7 +218,6 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
             mediaImage.ThumbnailWidth = request.Data.ThumbnailWidth;
             mediaImage.ThumbnailHeight = request.Data.ThumbnailHeight;
             mediaImage.ThumbnailSize = request.Data.ThumbnailSize;
-            mediaImage.IsArchived = request.Data.IsArchived;
             mediaImage.Folder = parentFolder;
             mediaImage.PublishedOn = request.Data.PublishedOn;
             mediaImage.OriginalFileName = request.Data.OriginalFileName;
@@ -235,16 +234,23 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
             mediaImage.OriginalUri = new Uri(request.Data.OriginalUri);
             mediaImage.ThumbnailUri = new Uri(request.Data.ThumbnailUri);
 
-            var archivedMedias = new List<Media> { mediaImage };
-            var unarchivedMedias = new List<Media> { mediaImage };
-            if (request.Data.IsArchived)
+            var archivedMedias = new List<Media>();
+            var unarchivedMedias = new List<Media>();
+            if (mediaImage.IsArchived != request.Data.IsArchived)
             {
-                mediaService.ArchiveSubMedias(mediaImage, archivedMedias);
+                if (request.Data.IsArchived)
+                {
+                    archivedMedias.Add(mediaImage);
+                    mediaService.ArchiveSubMedias(mediaImage, archivedMedias);
+                }
+                else
+                {
+                    unarchivedMedias.Add(mediaImage);
+                    mediaService.UnarchiveSubMedias(mediaImage, unarchivedMedias);
+                }
             }
-            else
-            {
-                mediaService.UnarchiveSubMedias(mediaImage, unarchivedMedias);
-            }
+
+            mediaImage.IsArchived = request.Data.IsArchived;
 
             repository.Save(mediaImage);
 

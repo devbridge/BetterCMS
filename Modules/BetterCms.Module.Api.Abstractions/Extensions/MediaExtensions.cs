@@ -82,6 +82,7 @@ namespace BetterCms.Module.Api.Extensions
                                 IsCanceled = response.Data.IsCanceled,
                                 OriginalUri = response.Data.OriginalUri,
                                 ThumbnailUri = response.Data.ThumbnailUri,
+                                Tags = response.Tags != null ? response.Tags.Select(t => t.Name).ToList() : null,
                             };
 
             return model;
@@ -100,13 +101,14 @@ namespace BetterCms.Module.Api.Extensions
                                 OriginalFileName = response.Data.OriginalFileName,
                                 OriginalFileExtension = response.Data.OriginalFileExtension,
                                 FileUri = response.Data.FileUri,
-                                PublicUrl = response.Data.PublicUrl,
+                                PublicUrl = response.Data.FileUrl,
                                 FileSize = response.Data.FileSize,
                                 IsTemporary = response.Data.IsTemporary,
                                 IsUploaded = response.Data.IsUploaded,
                                 IsCanceled = response.Data.IsCanceled,
-                                Tags = response.Tags.Select(t => t.Name).ToList(),
-                                AccessRules = response.AccessRules
+                                Tags = response.Tags != null ? response.Tags.Select(t => t.Name).ToList() : null,
+                                AccessRules = response.AccessRules,
+                                ThumbnailId = response.Data.ThumbnailId,
                             };
 
             return model;

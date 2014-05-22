@@ -135,5 +135,13 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// <c>true</c> if this instance is canceled; otherwise, <c>false</c>.
         /// </value>
         public bool IsCanceled { get; set; }
+
+        /// <summary>
+        /// Gets or sets the thumbnail identifier.
+        /// </summary>
+        /// <value>
+        /// The thumbnail identifier.
+        /// </value>
+        public Guid? ThumbnailId { get; set; }
     }
 }

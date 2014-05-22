@@ -73,8 +73,9 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders.Folder
                                 LastModifiedOn = media.ModifiedOn,
                                 Title = media.Title,
                                 IsArchived = media.IsArchived,
-                            })
-                    .FirstOne();
+                                Type = (MediaType)(int)media.Type,
+                                ParentFolderId = media.Folder != null ? (Guid?)media.Folder.Id : null
+                            }).FirstOne();
 
             return new GetFolderResponse { Data = model };
         }
@@ -133,18 +134,24 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders.Folder
             mediaFolder.Folder = parentFolder;
 
             mediaFolder.PublishedOn = DateTime.Now;
-            mediaFolder.IsArchived = request.Data.IsArchived;
 
-            var archivedMedias = new List<Media> { mediaFolder };
-            var unarchivedMedias = new List<Media> { mediaFolder };
-            if (request.Data.IsArchived)
+            var archivedMedias = new List<Media>();
+            var unarchivedMedias = new List<Media>();
+            if (mediaFolder.IsArchived != request.Data.IsArchived)
             {
-                mediaService.ArchiveSubMedias(mediaFolder, archivedMedias);
+                if (request.Data.IsArchived)
+                {
+                    archivedMedias.Add(mediaFolder);
+                    mediaService.ArchiveSubMedias(mediaFolder, archivedMedias);
+                }
+                else
+                {
+                    unarchivedMedias.Add(mediaFolder);
+                    mediaService.UnarchiveSubMedias(mediaFolder, unarchivedMedias);
+                }
             }
-            else
-            {
-                mediaService.UnarchiveSubMedias(mediaFolder, unarchivedMedias);
-            }
+
+            mediaFolder.IsArchived = request.Data.IsArchived;
 
             repository.Save(mediaFolder);
 

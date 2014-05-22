@@ -144,15 +144,6 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         public string FileUri { get; set; }
 
         /// <summary>
-        /// Gets or sets the public URL.
-        /// </summary>
-        /// <value>
-        /// The public URL.
-        /// </value>
-        [DataMember]
-        public string PublicUrl { get; set; }
-
-        /// <summary>
         /// Gets or sets a value indicating whether this instance is temporary.
         /// </summary>
         /// <value>

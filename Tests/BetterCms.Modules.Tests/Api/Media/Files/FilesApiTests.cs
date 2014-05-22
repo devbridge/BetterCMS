@@ -1,26 +1,27 @@
 ﻿using BetterCms.Core.Models;
 using BetterCms.Module.Api.Extensions;
-using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
+using BetterCms.Module.Api.Operations.MediaManager.Files.File;
+using BetterCms.Module.Api.Operations.Root;
 
 using NHibernate;
 
 using NUnit.Framework;
 
-namespace BetterCms.Test.Module.Api.Media.Images
+namespace BetterCms.Test.Module.Api.Media.Files
 {
-    public class ImagesApiTests : ApiCrudIntegrationTestBase<
-        SaveImageModel, ImageModel,
-        PostImageRequest, PostImageResponse,
-        GetImageRequest, GetImageResponse,
-        PutImageRequest, PutImageResponse,
-        DeleteImageRequest, DeleteImageResponse>
+    public class FilesApiTests : ApiCrudIntegrationTestBase<
+        SaveFileModel, FileModel,
+        PostFileRequest, PostFileResponse,
+        GetFileRequest, GetFileResponse,
+        PutFileRequest, PutFileResponse,
+        DeleteFileRequest, DeleteFileResponse>
     {
         private int archivedMediaEventCount;
 
         private int unarchivedMediaEventCount;
 
         [Test]
-        public void Should_CRUD_Image_Successfully()
+        public void Should_CRUD_File_Successfully()
         {
             Events.MediaManagerEvents.Instance.MediaFileUploaded += Instance_EntityCreated;
             Events.MediaManagerEvents.Instance.MediaFileUpdated += Instance_EntityUpdated;
@@ -28,9 +29,8 @@ namespace BetterCms.Test.Module.Api.Media.Images
             Events.MediaManagerEvents.Instance.MediaArchived += Instance_MediaArchived;
             Events.MediaManagerEvents.Instance.MediaUnarchived += Instance_MediaUnarchived;
 
-
             RunApiActionInTransaction((api, session) =>
-                Run(session, api.Media.Images.Post, api.Media.Image.Get, api.Media.Image.Put, api.Media.Image.Delete));
+                Run(session, api.Media.Files.Post, api.Media.File.Get, api.Media.File.Put, api.Media.File.Delete));
 
             Assert.AreEqual(1, archivedMediaEventCount, "Archived media events fired count");
             Assert.AreEqual(1, unarchivedMediaEventCount, "Unarchived media events fired count");
@@ -52,47 +52,36 @@ namespace BetterCms.Test.Module.Api.Media.Images
             unarchivedMediaEventCount++;
         }
 
-        protected override SaveImageModel GetCreateModel(ISession session)
+        protected override SaveFileModel GetCreateModel(ISession session)
         {
-            return new SaveImageModel
+            return new SaveFileModel
                 {
-                    Caption = TestDataProvider.ProvideRandomString(MaxLength.Name),
+                    Title = TestDataProvider.ProvideRandomString(MaxLength.Name),
                     Description = TestDataProvider.ProvideRandomString(MaxLength.Text),
                     FileSize = TestDataProvider.ProvideRandomNumber(0, 10000),
                     FileUri = "C:/tmp.jpg",
                     FolderId = null,
-                    Height = TestDataProvider.ProvideRandomNumber(1, 1000),
-                    ImageUrl = string.Format("{0}/{1}", TestDataProvider.ProvideRandomString(MaxLength.Name), TestDataProvider.ProvideRandomString(MaxLength.Name)),
                     IsArchived = true,
                     IsCanceled = TestDataProvider.ProvideRandomBooleanValue(),
                     IsTemporary = TestDataProvider.ProvideRandomBooleanValue(),
                     IsUploaded = TestDataProvider.ProvideRandomBooleanValue(),
                     OriginalFileExtension = TestDataProvider.ProvideRandomString(MaxLength.Name),
                     OriginalFileName = TestDataProvider.ProvideRandomString(MaxLength.Name),
-                    OriginalHeight = TestDataProvider.ProvideRandomNumber(1, 1000),
-                    OriginalSize = TestDataProvider.ProvideRandomNumber(0, 10000),
-                    OriginalUri = "C:/tmp_orig.jpg",
-                    OriginalUrl = TestDataProvider.ProvideRandomString(MaxLength.Url),
-                    OriginalWidth = TestDataProvider.ProvideRandomNumber(1, 1000),
                     PublishedOn = TestDataProvider.ProvideRandomDateTime(),
                     Tags = new[] { TestDataProvider.ProvideRandomString(MaxLength.Name), TestDataProvider.ProvideRandomString(MaxLength.Name) },
-                    ThumbnailHeight = TestDataProvider.ProvideRandomNumber(1, 100),
-                    ThumbnailSize = TestDataProvider.ProvideRandomNumber(1, 100),
-                    ThumbnailUri = "C:/tmp_thumbnail.jpg",
-                    ThumbnailUrl = TestDataProvider.ProvideRandomString(MaxLength.Url),
-                    ThumbnailWidth = TestDataProvider.ProvideRandomNumber(1, 100),
-                    Title = TestDataProvider.ProvideRandomString(MaxLength.Name),
+                    ThumbnailId = null,
+                    AccessRules = new[] { new AccessRuleModel { AccessLevel = AccessLevel.ReadWrite, Identity = "Admin", IsForRole = true } },
+                    PublicUrl = string.Format("{0}/{1}", TestDataProvider.ProvideRandomString(MaxLength.Name), TestDataProvider.ProvideRandomString(MaxLength.Name)),
                     Version = 0,
-                    Width = TestDataProvider.ProvideRandomNumber(1, 1000)
                 };
         }
 
-        protected override GetImageRequest GetGetRequest(BetterCms.Module.Api.Infrastructure.SaveResponseBase saveResponseBase)
+        protected override GetFileRequest GetGetRequest(BetterCms.Module.Api.Infrastructure.SaveResponseBase saveResponseBase)
         {
-            return new GetImageRequest { ImageId = saveResponseBase.Data.Value, Data = new GetImageModel() { IncludeTags = true } };
+            return new GetFileRequest { FileId = saveResponseBase.Data.Value, Data = new GetFileModel() { IncludeAccessRules = true, IncludeTags = true } };
         }
 
-        protected override PutImageRequest GetUpdateRequest(GetImageResponse getResponse)
+        protected override PutFileRequest GetUpdateRequest(GetFileResponse getResponse)
         {
             var request = getResponse.ToPutRequest();
             request.Data.Title = this.TestDataProvider.ProvideRandomString(MaxLength.Name);
@@ -100,36 +89,25 @@ namespace BetterCms.Test.Module.Api.Media.Images
             return request;
         }
 
-        protected override void OnAfterGet(GetImageResponse getResponse, SaveImageModel model)
+        protected override void OnAfterGet(GetFileResponse getResponse, SaveFileModel model)
         {
             Assert.IsNotNull(getResponse.Data.Id);
             Assert.AreEqual(getResponse.Data.Title, model.Title);
-            Assert.AreEqual(getResponse.Data.Caption, model.Caption);
             Assert.AreEqual(getResponse.Data.Description, model.Description);
             Assert.AreEqual(getResponse.Data.FileSize, model.FileSize);
             Assert.AreEqual(getResponse.Data.FileUri, model.FileUri);
             Assert.AreEqual(getResponse.Data.FolderId, model.FolderId);
-            Assert.AreEqual(getResponse.Data.Height, model.Height);
-            Assert.AreEqual(getResponse.Data.ImageUrl, model.ImageUrl);
             Assert.AreEqual(getResponse.Data.IsArchived, model.IsArchived);
             Assert.AreEqual(getResponse.Data.IsCanceled, model.IsCanceled);
             Assert.AreEqual(getResponse.Data.IsTemporary, model.IsTemporary);
             Assert.AreEqual(getResponse.Data.IsUploaded, model.IsUploaded);
             Assert.AreEqual(getResponse.Data.OriginalFileExtension, model.OriginalFileExtension);
             Assert.AreEqual(getResponse.Data.OriginalFileName, model.OriginalFileName);
-            Assert.AreEqual(getResponse.Data.OriginalHeight, model.OriginalHeight);
-            Assert.AreEqual(getResponse.Data.OriginalSize, model.OriginalSize);
-            Assert.AreEqual(getResponse.Data.OriginalUri, model.OriginalUri);
-            Assert.AreEqual(getResponse.Data.OriginalUrl, model.OriginalUrl);
-            Assert.AreEqual(getResponse.Data.OriginalWidth, model.OriginalWidth);
             Assert.AreEqual(getResponse.Data.PublishedOn, model.PublishedOn);
             Assert.AreEqual(getResponse.Tags.Count, model.Tags.Count);
-            Assert.AreEqual(getResponse.Data.ThumbnailHeight, model.ThumbnailHeight);
-            Assert.AreEqual(getResponse.Data.ThumbnailSize, model.ThumbnailSize);
-            Assert.AreEqual(getResponse.Data.ThumbnailUri, model.ThumbnailUri);
-            Assert.AreEqual(getResponse.Data.ThumbnailUrl, model.ThumbnailUrl);
-            Assert.AreEqual(getResponse.Data.ThumbnailWidth, model.ThumbnailWidth);
-            Assert.AreEqual(getResponse.Data.Width, model.Width);
+            Assert.AreEqual(getResponse.Data.ThumbnailId, model.ThumbnailId);
+            Assert.AreEqual(getResponse.AccessRules.Count, model.AccessRules.Count);
+            Assert.AreEqual(getResponse.Data.FileUrl, model.PublicUrl);
         }
     }
 }
