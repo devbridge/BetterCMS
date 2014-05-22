@@ -9,6 +9,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
         GetPageContentResponse Get(GetPageContentRequest request);
 
         PutPageContentResponse Put(PutPageContentRequest request);
+        
+        PostPageContentResponse Post(PostPageContentRequest request);
 
         DeletePageContentResponse Delete(DeletePageContentRequest request);
     }

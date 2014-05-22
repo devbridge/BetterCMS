@@ -108,6 +108,18 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
             return response;
         }
 
+        public PostPageContentResponse Post(PostPageContentRequest request)
+        {
+            var result = Put(new PutPageContentRequest
+                {
+                    Data = request.Data,
+                    User = request.User,
+                    PageId = request.PageId
+                });
+
+            return new PostPageContentResponse { Data = result.Data };
+        }
+
         /// <summary>
         /// Puts the specified request.
         /// </summary>
@@ -115,21 +127,29 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
         /// <returns><c>PutPageContentResponse</c> with saved page content id.</returns>
         public PutPageContentResponse Put(PutPageContentRequest request)
         {
-            var pageContent = repository
-                .AsQueryable<PageContent>()
-                .FirstOrDefault(content => content.Id == request.Id && content.Page.Id == request.PageId);
+            var isNew = !request.Id.HasValue || request.Id.Value.HasDefaultValue();
+            PageContent pageContent = null;
+            var isSorting = false;
 
-            var isNew = pageContent == null;
+            if (!isNew)
+            {
+                pageContent = repository
+                    .AsQueryable<PageContent>()
+                    .FirstOrDefault(content => content.Id == request.Id && content.Page.Id == request.PageId);
+                isNew = pageContent == null;
+            }
+
             if (isNew)
             {
                 pageContent = new PageContent
-                                  {
-                                      Id = request.Id.HasValue ? request.Id.Value : Guid.Empty,
-                                      Page = repository.AsProxy<Module.Root.Models.Page>(request.PageId)
-                                  };
+                              {
+                                  Id = request.Id.HasValue ? request.Id.Value : Guid.Empty,
+                                  Page = repository.AsProxy<Module.Root.Models.Page>(request.PageId)
+                              };
             }
             else if (request.Data.Version > 0)
             {
+                isSorting = request.Data.RegionId != pageContent.Region.Id || request.Data.Order != pageContent.Order;
                 pageContent.Version = request.Data.Version;
             }
 
@@ -155,6 +175,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
             if (isNew)
             {
                 Events.PageEvents.Instance.OnPageContentInserted(pageContent);
+            }
+            else if (isSorting)
+            {
+                Events.PageEvents.Instance.OnPageContentSorted(pageContent);
+            }
+
+            if (request.Data.Options != null)
+            {
+                Events.PageEvents.Instance.OnPageContentConfigured(pageContent);
             }
 
             return new PutPageContentResponse { Data = pageContent.Id };

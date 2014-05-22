@@ -101,6 +101,7 @@ namespace BetterCms.Test.Module.Api
             var createModel = GetCreateModel(session);
             var createRequest = GetCreateRequest(createModel);
             var createResponse = CreateResponse<TCreateRequest, TCreateResponse, TSaveModel>(createRequest, createFunc);
+            //session.Flush();
             session.Clear();
             CheckCreateEvent();
 
@@ -112,6 +113,7 @@ namespace BetterCms.Test.Module.Api
             // Update
             var updateRequest = GetUpdateRequest(getResponse);
             var updateResponse = UpdateResponse<TUpdateRequest, TUpdateResponse, TSaveModel>(updateRequest, updateFunc);
+            //session.Flush();
             session.Clear();
             CheckUpdateEvent();
 
