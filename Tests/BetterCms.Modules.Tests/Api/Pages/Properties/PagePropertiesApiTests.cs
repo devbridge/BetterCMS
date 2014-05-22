@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Principal;
 
 using BetterCms.Core.Models;
@@ -9,6 +10,7 @@ using BetterCms.Module.Api.Operations;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties;
 using BetterCms.Module.Api.Operations.Root;
+using BetterCms.Module.MediaManager.Provider;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 
@@ -157,7 +159,26 @@ namespace BetterCms.Test.Module.Api.Pages.PageProperties
                                           MetaDescription = TestDataProvider.ProvideRandomString(MaxLength.Text),
                                           MetaKeywords = TestDataProvider.ProvideRandomString(MaxLength.Text)
                                       },
-                       PageOptions = new OptionValueModel[0],
+                       PageOptions = new List<OptionValueModel>
+                                {
+                                    new OptionValueModel
+                                    {
+                                        DefaultValue = TestDataProvider.ProvideRandomString(100),
+                                        Value = TestDataProvider.ProvideRandomString(100),
+                                        Key = TestDataProvider.ProvideRandomString(100),
+                                        Type =  OptionType.Text,
+                                        UseDefaultValue = false
+                                    },
+                                    new OptionValueModel
+                                    {
+                                        DefaultValue = Guid.NewGuid().ToString(),
+                                        Value = Guid.NewGuid().ToString(),
+                                        Key = TestDataProvider.ProvideRandomString(100),
+                                        Type = OptionType.Custom,
+                                        CustomTypeIdentifier = MediaManagerFolderOptionProvider.Identifier,
+                                        UseDefaultValue = false
+                                    }
+                                },
                        PageUrl = string.Format("{0}/{1}", TestDataProvider.ProvideRandomString(MaxLength.Name), TestDataProvider.ProvideRandomString(MaxLength.Name)),
                        PublishedOn = TestDataProvider.ProvideRandomDateTime(),
                        UseCanonicalUrl = TestDataProvider.ProvideRandomBooleanValue(),
@@ -198,8 +219,22 @@ namespace BetterCms.Test.Module.Api.Pages.PageProperties
         protected override void OnAfterGet(GetPagePropertiesResponse getResponse, SavePagePropertiesModel model)
         {
             Assert.IsNotNull(getResponse.Data.Title);
-
             Assert.AreEqual(getResponse.Data.Title, model.Title);
+            Assert.AreEqual(getResponse.Tags.Count, model.Tags.Count);
+
+            Assert.IsNotNull(getResponse.PageOptions);
+            Assert.AreEqual(getResponse.PageOptions.Count, model.PageOptions.Count);
+            Assert.AreEqual(getResponse.PageOptions.Count, 2);
+
+            Assert.IsTrue(getResponse.PageOptions.Where(a1 => !a1.UseDefaultValue).All(a1 => model.PageOptions.Any(a2 => a1.Key == a2.Key
+               && a1.CustomTypeIdentifier == a2.CustomTypeIdentifier
+               && a1.Value == a2.Value
+               && a1.Type == a2.Type)));
+
+            Assert.IsTrue(getResponse.PageOptions.Where(a1 => a1.UseDefaultValue).All(a1 => model.PageOptions.Any(a2 => a1.Key == a2.Key
+               && a1.CustomTypeIdentifier == a2.CustomTypeIdentifier
+               && a1.Type == a2.Type
+               && a1.DefaultValue == a2.DefaultValue)));
         }
     }
 }
