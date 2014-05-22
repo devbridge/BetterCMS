@@ -171,6 +171,8 @@
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\GetPageContentModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\GetPageContentRequest.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\GetPageContentResponse.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Contents\Content\PostPageContentRequest.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Contents\Content\PostPageContentResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\SavePageContentModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\PageContentModel.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\PutPageContentRequest.cs" />
