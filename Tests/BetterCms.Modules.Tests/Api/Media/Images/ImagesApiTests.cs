@@ -40,8 +40,8 @@ namespace BetterCms.Test.Module.Api.Media.Images
                     FileUri = "C:/tmp.jpg",
                     FolderId = null,
                     Height = TestDataProvider.ProvideRandomNumber(1, 1000),
-                    ImageUrl = TestDataProvider.ProvideRandomString(MaxLength.Url),
-                    IsArchived = TestDataProvider.ProvideRandomBooleanValue(),
+                    ImageUrl = string.Format("{0}/{1}", TestDataProvider.ProvideRandomString(MaxLength.Name), TestDataProvider.ProvideRandomString(MaxLength.Name)),
+                    IsArchived = true,
                     IsCanceled = TestDataProvider.ProvideRandomBooleanValue(),
                     IsTemporary = TestDataProvider.ProvideRandomBooleanValue(),
                     IsUploaded = TestDataProvider.ProvideRandomBooleanValue(),
@@ -67,22 +67,47 @@ namespace BetterCms.Test.Module.Api.Media.Images
 
         protected override GetImageRequest GetGetRequest(BetterCms.Module.Api.Infrastructure.SaveResponseBase saveResponseBase)
         {
-            return new GetImageRequest { ImageId = saveResponseBase.Data.Value };
+            return new GetImageRequest { ImageId = saveResponseBase.Data.Value, Data = new GetImageModel() { IncludeTags = true } };
         }
 
         protected override PutImageRequest GetUpdateRequest(GetImageResponse getResponse)
         {
             var request = getResponse.ToPutRequest();
             request.Data.Title = this.TestDataProvider.ProvideRandomString(MaxLength.Name);
+            request.Data.IsArchived = false;
             return request;
         }
 
         protected override void OnAfterGet(GetImageResponse getResponse, SaveImageModel model)
         {
-            Assert.IsNotNull(getResponse.Data.Title);
             Assert.IsNotNull(getResponse.Data.Id);
-
             Assert.AreEqual(getResponse.Data.Title, model.Title);
+            Assert.AreEqual(getResponse.Data.Caption, model.Caption);
+            Assert.AreEqual(getResponse.Data.Description, model.Description);
+            Assert.AreEqual(getResponse.Data.FileSize, model.FileSize);
+            Assert.AreEqual(getResponse.Data.FileUri, model.FileUri);
+            Assert.AreEqual(getResponse.Data.FolderId, model.FolderId);
+            Assert.AreEqual(getResponse.Data.Height, model.Height);
+            Assert.AreEqual(getResponse.Data.ImageUrl, model.ImageUrl);
+            Assert.AreEqual(getResponse.Data.IsArchived, model.IsArchived);
+            Assert.AreEqual(getResponse.Data.IsCanceled, model.IsCanceled);
+            Assert.AreEqual(getResponse.Data.IsTemporary, model.IsTemporary);
+            Assert.AreEqual(getResponse.Data.IsUploaded, model.IsUploaded);
+            Assert.AreEqual(getResponse.Data.OriginalFileExtension, model.OriginalFileExtension);
+            Assert.AreEqual(getResponse.Data.OriginalFileName, model.OriginalFileName);
+            Assert.AreEqual(getResponse.Data.OriginalHeight, model.OriginalHeight);
+            Assert.AreEqual(getResponse.Data.OriginalSize, model.OriginalSize);
+            Assert.AreEqual(getResponse.Data.OriginalUri, model.OriginalUri);
+            Assert.AreEqual(getResponse.Data.OriginalUrl, model.OriginalUrl);
+            Assert.AreEqual(getResponse.Data.OriginalWidth, model.OriginalWidth);
+            Assert.AreEqual(getResponse.Data.PublishedOn, model.PublishedOn);
+            Assert.AreEqual(getResponse.Tags.Count, model.Tags.Count);
+            Assert.AreEqual(getResponse.Data.ThumbnailHeight, model.ThumbnailHeight);
+            Assert.AreEqual(getResponse.Data.ThumbnailSize, model.ThumbnailSize);
+            Assert.AreEqual(getResponse.Data.ThumbnailUri, model.ThumbnailUri);
+            Assert.AreEqual(getResponse.Data.ThumbnailUrl, model.ThumbnailUrl);
+            Assert.AreEqual(getResponse.Data.ThumbnailWidth, model.ThumbnailWidth);
+            Assert.AreEqual(getResponse.Data.Width, model.Width);
         }
     }
 }

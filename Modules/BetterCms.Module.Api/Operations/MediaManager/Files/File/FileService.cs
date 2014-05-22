@@ -6,17 +6,20 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Exceptions.DataTier;
+using BetterCms.Core.Security;
 using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
 
 using NHibernate.Linq;
 
 using ServiceStack.ServiceInterface;
 
+using AccessLevel = BetterCms.Module.Api.Operations.Root.AccessLevel;
 using ITagService = BetterCms.Module.Pages.Services.ITagService;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
@@ -54,6 +57,11 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         private readonly IMediaService mediaService;
 
         /// <summary>
+        /// The access control service.
+        /// </summary>
+        private readonly IAccessControlService accessControlService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="FileService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
@@ -62,7 +70,15 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// <param name="unitOfWork">The unit of work.</param>
         /// <param name="tagService">The tag service.</param>
         /// <param name="mediaService">The media service.</param>
-        public FileService(IRepository repository, IMediaFileService fileService, IMediaFileUrlResolver fileUrlResolver, IUnitOfWork unitOfWork, ITagService tagService, IMediaService mediaService)
+        /// <param name="accessControlService">The access control service.</param>
+        public FileService(
+            IRepository repository,
+            IMediaFileService fileService,
+            IMediaFileUrlResolver fileUrlResolver,
+            IUnitOfWork unitOfWork,
+            ITagService tagService,
+            IMediaService mediaService,
+            IAccessControlService accessControlService)
         {
             this.repository = repository;
             this.fileService = fileService;
@@ -70,6 +86,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
             this.unitOfWork = unitOfWork;
             this.tagService = tagService;
             this.mediaService = mediaService;
+            this.accessControlService = accessControlService;
         }
 
         /// <summary>
@@ -119,7 +136,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
             model.ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(model.ThumbnailUrl);
 
             IEnumerable<TagModel> tagsFuture;
-            if (request.Data.IncludeAccessRules)
+            if (request.Data.IncludeTags)
             {
                 tagsFuture =
                     repository.AsQueryable<MediaTag>(mediaTag => mediaTag.Media.Id == request.FileId && !mediaTag.Tag.IsDeleted)                               
@@ -143,7 +160,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
             }
             
             IEnumerable<AccessRuleModel> accessRulesFuture;
-            if (request.Data.IncludeTags)
+            if (request.Data.IncludeAccessRules)
             {
                 accessRulesFuture = (from file in repository.AsQueryable<MediaFile>()
                     from accessRule in file.AccessRules
@@ -190,6 +207,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
 
             var mediaFile = repository.AsQueryable<MediaFile>()
                 .Where(file => file.Id == request.Id)
+                .FetchMany(f => f.AccessRules)
                 .ToFuture()
                 .FirstOrDefault();
 
@@ -209,7 +227,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
                 mediaFile = new MediaFile
                 {
                     Id = request.Id.GetValueOrDefault(),
-                    Type = Module.MediaManager.Models.MediaType.File
+                    Type = Module.MediaManager.Models.MediaType.File,
+                    AccessRules = new List<AccessRule>()
                 };
             }
             else if (request.Data.Version > 0)
@@ -228,35 +247,55 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
             mediaFile.Description = request.Data.Description;
             mediaFile.Size = request.Data.FileSize;
             mediaFile.PublicUrl = request.Data.PublicUrl;
-            mediaFile.IsArchived = request.Data.IsArchived;
             mediaFile.Folder = parentFolder;
             mediaFile.PublishedOn = request.Data.PublishedOn;
             mediaFile.OriginalFileName = request.Data.OriginalFileName;
             mediaFile.OriginalFileExtension = request.Data.OriginalFileExtension;
+
+            mediaFile.Image = request.Data.ThumbnailId.GetValueOrDefault() != default(Guid)
+                ? repository.AsProxy<MediaImage>(request.Data.ThumbnailId.Value)
+                : null;
 
             mediaFile.FileUri = new Uri(request.Data.FileUri);
             mediaFile.IsUploaded = request.Data.IsUploaded;
             mediaFile.IsTemporary = request.Data.IsTemporary;
             mediaFile.IsCanceled = request.Data.IsCanceled;
 
-            var archivedMedias = new List<Media> { mediaFile };
-            var unarchivedMedias = new List<Media> { mediaFile };
-            if (request.Data.IsArchived)
+            var archivedMedias = new List<Media>();
+            var unarchivedMedias = new List<Media>();
+            if (mediaFile.IsArchived != request.Data.IsArchived)
             {
-                mediaService.ArchiveSubMedias(mediaFile, archivedMedias);
-            }
-            else
-            {
-                mediaService.UnarchiveSubMedias(mediaFile, unarchivedMedias);
+                if (request.Data.IsArchived)
+                {
+                    archivedMedias.Add(mediaFile);
+                    mediaService.ArchiveSubMedias(mediaFile, archivedMedias);
+                }
+                else
+                {
+                    unarchivedMedias.Add(mediaFile);
+                    mediaService.UnarchiveSubMedias(mediaFile, unarchivedMedias);
+                }
             }
 
-            repository.Save(mediaFile);
+            mediaFile.IsArchived = request.Data.IsArchived;
 
             IList<Tag> newTags = null;
             if (request.Data.Tags != null)
             {
                 tagService.SaveMediaTags(mediaFile, request.Data.Tags, out newTags);
             }
+
+            if (request.Data.AccessRules != null)
+            {
+                mediaFile.AccessRules.RemoveDuplicateEntities();
+                var accessRules =
+                    request.Data.AccessRules.Select(
+                        r => (IAccessRule)new AccessRule { AccessLevel = (Core.Security.AccessLevel)(int)r.AccessLevel, Identity = r.Identity, IsForRole = r.IsForRole })
+                        .ToList();
+                accessControlService.UpdateAccessControl(mediaFile, accessRules);
+            }
+
+            repository.Save(mediaFile);
 
             unitOfWork.Commit();
 
@@ -302,7 +341,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
             }
 
             var itemToDelete = repository
-                .AsQueryable<MediaImage>()
+                .AsQueryable<MediaFile>()
                 .Where(p => p.Id == request.Id)
                 .FirstOne();
 
