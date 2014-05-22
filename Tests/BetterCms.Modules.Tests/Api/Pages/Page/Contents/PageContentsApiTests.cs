@@ -24,7 +24,7 @@ namespace BetterCms.Test.Module.Api.Pages.Page.Contents
         PutPageContentRequest, PutPageContentResponse,
         DeletePageContentRequest, DeletePageContentResponse>
     {
-        private PageProperties page;
+        private BetterCms.Module.Pages.Models.PageProperties page;
 
         private bool updateOrder;
         

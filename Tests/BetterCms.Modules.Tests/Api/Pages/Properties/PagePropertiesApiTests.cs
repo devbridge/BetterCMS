@@ -29,7 +29,7 @@ namespace BetterCms.Test.Module.Api.Pages.PageProperties
     {
         private Layout layout;
         private Layout defaultLayout;
-        private Page masterPage;
+        private BetterCms.Module.Root.Models.Page masterPage;
         private Region region;
         private IPrincipal principal;
         private int changingPageProepertiesCount;
