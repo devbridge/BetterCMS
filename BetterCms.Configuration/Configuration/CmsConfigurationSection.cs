@@ -6,33 +6,33 @@ namespace BetterCms.Configuration
 {
     public class CmsConfigurationSection : ConfigurationSection, ICmsConfiguration
     {
-        private const string VersionAttribute = "version";
-        private const string UseMinifiedResourcesAttribute = "useMinifiedResources";
-        private const string ResourcesBasePathAttribute = "resourcesBasePath";
-        private const string LoginUrlAttribute = "loginUrl";
-        private const string WebSiteUrlAttribute = "webSiteUrl";
-        private const string PageNotFoundUrlAttribute = "pageNotFoundUrl";
-        private const string UrlModeAttribute = "urlMode";
-        private const string DatabaseNode = "database";
-        private const string StorageNode = "storage";
-        private const string SearchNode = "search";
-        private const string CacheNode = "cache";
-        private const string SecurityNode = "security";
-        private const string ModuleGalleryNode = "moduleGallery";
-        private const string WorkingDirectoryRootPathAttribute = "workingDirectoryRootPath";
-        private const string ArticleUrlPatternAttribute = "articleUrlPattern";
-        private const string UrlPatternsNode = "urlPatterns";
-        private const string InstallationNode = "installation";
-        private const string UsersNode = "users";
-        private const string RenderContentEndingDivAttribute = "renderContentEndingDiv";
-        private const string ContentEndingDivCssClassNameAttribute = "contentEndingDivCssClassName";
-        private const string EnableMultilanguageAttribute = "enableMultilanguage";
-        private const string EnableMacrosAttribute = "enableMacros";
+        protected const string VersionAttribute = "version";
+        protected const string UseMinifiedResourcesAttribute = "useMinifiedResources";
+        protected const string ResourcesBasePathAttribute = "resourcesBasePath";
+        protected const string LoginUrlAttribute = "loginUrl";
+        protected const string WebSiteUrlAttribute = "webSiteUrl";
+        protected const string PageNotFoundUrlAttribute = "pageNotFoundUrl";
+        protected const string UrlModeAttribute = "urlMode";
+        protected const string DatabaseNode = "database";
+        protected const string StorageNode = "storage";
+        protected const string SearchNode = "search";
+        protected const string CacheNode = "cache";
+        protected const string SecurityNode = "security";
+        protected const string ModuleGalleryNode = "moduleGallery";
+        protected const string WorkingDirectoryRootPathAttribute = "workingDirectoryRootPath";
+        protected const string ArticleUrlPatternAttribute = "articleUrlPattern";
+        protected const string UrlPatternsNode = "urlPatterns";
+        protected const string InstallationNode = "installation";
+        protected const string UsersNode = "users";
+        protected const string RenderContentEndingDivAttribute = "renderContentEndingDiv";
+        protected const string ContentEndingDivCssClassNameAttribute = "contentEndingDivCssClassName";
+        protected const string EnableMultilanguageAttribute = "enableMultilanguage";
+        protected const string EnableMacrosAttribute = "enableMacros";
 
         /// <summary>
         /// The version backing field.
         /// </summary>
-        private string version;
+        protected string version;
 
         #region Attributes
 

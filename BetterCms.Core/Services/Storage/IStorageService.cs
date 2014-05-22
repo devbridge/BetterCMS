@@ -4,6 +4,7 @@ namespace BetterCms.Core.Services.Storage
 {
     public interface IStorageService
     {        
+        // having yet another interface method just for tests? Really?
         bool ObjectExists(Uri uri);
 
         void UploadObject(UploadRequest request);
