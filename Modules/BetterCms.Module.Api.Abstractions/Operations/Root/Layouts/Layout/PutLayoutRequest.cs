@@ -13,7 +13,7 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
     [Route("/layouts/{Id}", Verbs = "PUT")]
     [DataContract]
     [Serializable]
-    public class PutLayoutRequest : PutRequestBase<LayoutSaveModel>, IReturn<PutLayoutResponse>
+    public class PutLayoutRequest : PutRequestBase<SaveLayoutModel>, IReturn<PutLayoutResponse>
     {
     }
 }

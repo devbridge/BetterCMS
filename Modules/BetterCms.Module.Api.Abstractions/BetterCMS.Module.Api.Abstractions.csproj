@@ -473,7 +473,7 @@
     <Compile Include="Operations\Root\Layouts\Layout\DeleteLayoutRequest.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\DeleteLayoutResponse.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\GetLayoutModel.cs" />
-    <Compile Include="Operations\Root\Layouts\Layout\LayoutSaveModel.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\SaveLayoutModel.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\Options\GetLayoutOptionsRequest.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\Options\GetLayoutOptionsResponse.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\Options\ILayoutOptionsService.cs" />

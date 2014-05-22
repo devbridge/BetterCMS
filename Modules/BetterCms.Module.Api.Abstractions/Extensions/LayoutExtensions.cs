@@ -22,9 +22,9 @@ namespace BetterCms.Module.Api.Extensions
             return new PostLayoutRequest { Data = model };
         }
 
-        private static LayoutSaveModel MapPageModel(GetLayoutResponse response)
+        private static SaveLayoutModel MapPageModel(GetLayoutResponse response)
         {
-            var model = new LayoutSaveModel
+            var model = new SaveLayoutModel
                 {
                     Version = response.Data.Version,
                     Name = response.Data.Name,

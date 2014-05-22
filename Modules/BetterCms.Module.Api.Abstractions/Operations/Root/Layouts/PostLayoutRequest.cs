@@ -14,7 +14,7 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts
     [Route("/layouts", Verbs = "POST")]
     [DataContract]
     [Serializable]
-    public class PostLayoutRequest : RequestBase<LayoutSaveModel>, IReturn<PostLayoutResponse>
+    public class PostLayoutRequest : RequestBase<SaveLayoutModel>, IReturn<PostLayoutResponse>
     {
     }
 }

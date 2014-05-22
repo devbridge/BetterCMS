@@ -8,7 +8,7 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
 {
     [DataContract]
     [Serializable]
-    public class LayoutSaveModel : SaveModelBase
+    public class SaveLayoutModel : SaveModelBase
     {
         /// <summary>
         /// Gets or sets the name.

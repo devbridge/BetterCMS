@@ -8,7 +8,7 @@ namespace BetterCms.Module.Api.Extensions
 {
     public static class LayoutModelExtensions
     {
-        public static TemplateEditViewModel ToServiceModel(this LayoutSaveModel model)
+        public static TemplateEditViewModel ToServiceModel(this SaveLayoutModel model)
         {
             var serviceModel = new TemplateEditViewModel();
 
