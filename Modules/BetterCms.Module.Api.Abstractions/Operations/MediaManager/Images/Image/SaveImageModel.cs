@@ -6,15 +6,18 @@ using BetterCms.Module.Api.Infrastructure;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
 {
+    /// <summary>
+    /// The save image model.
+    /// </summary>
     [DataContract]
     [Serializable]
     public class SaveImageModel : SaveModelBase
     {
         /// <summary>
-        /// Gets or sets the media title.
+        /// Gets or sets the title.
         /// </summary>
         /// <value>
-        /// The media title.
+        /// The title.
         /// </value>
         [DataMember]
         public string Title { get; set; }
@@ -29,22 +32,13 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the image caption.
+        /// Gets or sets the caption.
         /// </summary>
         /// <value>
-        /// The image caption.
+        /// The caption.
         /// </value>
         [DataMember]
         public string Caption { get; set; }
-
-        /// <summary>
-        /// Gets or sets the file extension.
-        /// </summary>
-        /// <value>
-        /// The file extension.
-        /// </value>
-        [DataMember]
-        public string FileExtension { get; set; }
 
         /// <summary>
         /// Gets or sets the size of the file.
@@ -56,31 +50,31 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         public long FileSize { get; set; }
 
         /// <summary>
-        /// Gets or sets the URL.
+        /// Gets or sets the image URL.
         /// </summary>
         /// <value>
-        /// The URL.
+        /// The image URL.
         /// </value>
         [DataMember]
         public string ImageUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the image width.
+        /// Gets or sets the width.
         /// </summary>
         /// <value>
-        /// The image width.
+        /// The width.
         /// </value>
         [DataMember]
-        public virtual int Width { get; set; }
+        public int Width { get; set; }
 
         /// <summary>
-        /// Gets or sets the image height.
+        /// Gets or sets the height.
         /// </summary>
         /// <value>
-        /// The image height.
+        /// The height.
         /// </value>
         [DataMember]
-        public virtual int Height { get; set; }
+        public int Height { get; set; }
 
         /// <summary>
         /// Gets or sets the thumbnail URL.
@@ -92,67 +86,58 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         public string ThumbnailUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the width of the thumbnail image.
+        /// Gets or sets the width of the thumbnail.
         /// </summary>
         /// <value>
-        /// The width of the thumbnail image.
+        /// The width of the thumbnail.
         /// </value>
         [DataMember]
-        public virtual int ThumbnailWidth { get; set; }
+        public int ThumbnailWidth { get; set; }
 
         /// <summary>
-        /// Gets or sets the height of the thumbnail image.
+        /// Gets or sets the height of the thumbnail.
         /// </summary>
         /// <value>
-        /// The height of the thumbnail image.
+        /// The height of the thumbnail.
         /// </value>
         [DataMember]
-        public virtual int ThumbnailHeight { get; set; }
+        public int ThumbnailHeight { get; set; }
 
         /// <summary>
-        /// Gets or sets the size of the thumbnail image.
+        /// Gets or sets the size of the thumbnail.
         /// </summary>
         /// <value>
-        /// The size of the thumbnail image.
+        /// The size of the thumbnail.
         /// </value>
         [DataMember]
-        public virtual long ThumbnailSize { get; set; }
+        public long ThumbnailSize { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether media is archived.
+        /// Gets or sets a value indicating whether this instance is archived.
         /// </summary>
         /// <value>
-        /// <c>true</c> if media is archived; otherwise, <c>false</c>.
+        /// <c>true</c> if this instance is archived; otherwise, <c>false</c>.
         /// </value>
         [DataMember]
         public bool IsArchived { get; set; }
 
         /// <summary>
-        /// Gets or sets the folder id.
+        /// Gets or sets the folder identifier.
         /// </summary>
         /// <value>
-        /// The folder id.
+        /// The folder identifier.
         /// </value>
         [DataMember]
-        public System.Guid? FolderId { get; set; }
+        public Guid? FolderId { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the folder.
-        /// </summary>
-        /// <value>
-        /// The name of the folder.
-        /// </value>
-        [DataMember]
-        public string FolderName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the date, when media was published on.
+        /// Gets or sets the published on.
         /// </summary>
         /// <value>
         /// The published on.
         /// </value>
         [DataMember]
-        public System.DateTime PublishedOn { get; set; }
+        public DateTime PublishedOn { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the original file.
@@ -161,52 +146,52 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         /// The name of the original file.
         /// </value>
         [DataMember]
-        public virtual string OriginalFileName { get; set; }
+        public string OriginalFileName { get; set; }
 
         /// <summary>
-        /// Gets or sets the original image file extension.
+        /// Gets or sets the original file extension.
         /// </summary>
         /// <value>
-        /// The original image file extension.
+        /// The original file extension.
         /// </value>
         [DataMember]
-        public virtual string OriginalFileExtension { get; set; }
+        public string OriginalFileExtension { get; set; }
 
         /// <summary>
-        /// Gets or sets the width of the original image.
+        /// Gets or sets the width of the original.
         /// </summary>
         /// <value>
-        /// The width of the original image.
+        /// The width of the original.
         /// </value>
         [DataMember]
-        public virtual int OriginalWidth { get; set; }
+        public int OriginalWidth { get; set; }
 
         /// <summary>
-        /// Gets or sets the height of the original image.
+        /// Gets or sets the height of the original.
         /// </summary>
         /// <value>
-        /// The height of the original image.
+        /// The height of the original.
         /// </value>
         [DataMember]
-        public virtual int OriginalHeight { get; set; }
+        public int OriginalHeight { get; set; }
 
         /// <summary>
-        /// Gets or sets the size of the original image.
+        /// Gets or sets the size of the original.
         /// </summary>
         /// <value>
-        /// The size of the original image.
+        /// The size of the original.
         /// </value>
         [DataMember]
-        public virtual long OriginalSize { get; set; }
+        public long OriginalSize { get; set; }
 
         /// <summary>
-        /// Gets or sets the original image URL.
+        /// Gets or sets the original URL.
         /// </summary>
         /// <value>
-        /// The original image URL.
+        /// The original URL.
         /// </value>
         [DataMember]
-        public virtual string OriginalUrl { get; set; }
+        public string OriginalUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the file URI.
@@ -215,7 +200,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         /// The file URI.
         /// </value>
         [DataMember]
-        public virtual string FileUri { get; set; }
+        public string FileUri { get; set; }
 
         /// <summary>
         /// Gets or sets the is uploaded.
@@ -224,7 +209,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         /// The is uploaded.
         /// </value>
         [DataMember]
-        public virtual bool? IsUploaded { get; set; }
+        public bool? IsUploaded { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is temporary.
@@ -233,7 +218,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         /// <c>true</c> if this instance is temporary; otherwise, <c>false</c>.
         /// </value>
         [DataMember]
-        public virtual bool IsTemporary { get; set; }
+        public bool IsTemporary { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is canceled.
@@ -242,7 +227,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         /// <c>true</c> if this instance is canceled; otherwise, <c>false</c>.
         /// </value>
         [DataMember]
-        public virtual bool IsCanceled { get; set; }
+        public bool IsCanceled { get; set; }
 
         /// <summary>
         /// Gets or sets the original URI.
@@ -251,7 +236,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         /// The original URI.
         /// </value>
         [DataMember]
-        public virtual string OriginalUri { get; set; }
+        public string OriginalUri { get; set; }
 
         /// <summary>
         /// Gets or sets the thumbnail URI.
@@ -260,7 +245,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         /// The thumbnail URI.
         /// </value>
         [DataMember]
-        public virtual string ThumbnailUri { get; set; }
+        public string ThumbnailUri { get; set; }
 
         /// <summary>
         /// Gets or sets the tags.
@@ -268,7 +253,6 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         /// <value>
         /// The tags.
         /// </value>
-        [DataMember]
         public IList<string> Tags { get; set; }
     }
 }

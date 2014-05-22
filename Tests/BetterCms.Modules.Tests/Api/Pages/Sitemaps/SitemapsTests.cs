@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Core.Models;
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Pages.Sitemaps;
@@ -21,28 +22,49 @@ namespace BetterCms.Test.Module.Api.Pages.Sitemaps
         PutSitemapRequest, PutSitemapResponse,
         DeleteSitemapRequest, DeleteSitemapResponse>
     {
+        private int createdNodeEventCount;
+
         [Test]
         public void Should_CRUD_Sitemap_Successfully()
         {
+            // Attach to events
+            Events.SitemapEvents.Instance.SitemapCreated += Instance_EntityCreated;
+            Events.SitemapEvents.Instance.SitemapUpdated += Instance_EntityUpdated;
+            Events.SitemapEvents.Instance.SitemapDeleted += Instance_EntityDeleted;
+            Events.SitemapEvents.Instance.SitemapNodeCreated += Instance_SitemapNodeCreated;
+
             RunApiActionInTransaction((api, session) => Run(session, api.Pages.Sitemaps.Post, api.Pages.SitemapNew.Get, api.Pages.SitemapNew.Put, api.Pages.SitemapNew.Delete));
+
+            Assert.AreEqual(2, createdNodeEventCount, "Created node events fired count");
+
+            // Detach from events
+            Events.SitemapEvents.Instance.SitemapCreated -= Instance_EntityCreated;
+            Events.SitemapEvents.Instance.SitemapUpdated -= Instance_EntityUpdated;
+            Events.SitemapEvents.Instance.SitemapDeleted -= Instance_EntityDeleted;
+            Events.SitemapEvents.Instance.SitemapNodeCreated -= Instance_SitemapNodeCreated;
+        }
+
+        void Instance_SitemapNodeCreated(Events.SingleItemEventArgs<BetterCms.Module.Pages.Models.SitemapNode> args)
+        {
+            createdNodeEventCount++;
         }
 
         protected override SaveSitemapModel GetCreateModel(ISession session)
         {
             return new SaveSitemapModel
                        {
-                           Title = "Test Sitemap 01",
-                           Tags = new[] { "Test Tag 01", "Test Tag 02" },
+                           Title = TestDataProvider.ProvideRandomString(MaxLength.Name),
+                           Tags = new[] { TestDataProvider.ProvideRandomString(MaxLength.Name), TestDataProvider.ProvideRandomString(MaxLength.Name) },
                            Nodes =
                                new[]
                                    {
                                        new SaveSitemapNodeModel
                                            {
-                                               Title = "Home",
+                                               Title = TestDataProvider.ProvideRandomString(MaxLength.Name),
                                                DisplayOrder = 0,
-                                               Url = "/",
+                                               Url = TestDataProvider.ProvideRandomString(MaxLength.Url),
                                                PageId = null,
-                                               Macro = "Some macro text.",
+                                               Macro = TestDataProvider.ProvideRandomString(MaxLength.Text),
                                                UsePageTitleAsNodeTitle = false,
                                                Translations = new List<SaveSitemapNodeTranslation>(),
                                                Nodes =
@@ -50,9 +72,13 @@ namespace BetterCms.Test.Module.Api.Pages.Sitemaps
                                                        {
                                                            new SaveSitemapNodeModel
                                                                {
-                                                                   Title = "BetterCMS.com",
+                                                                   Title = TestDataProvider.ProvideRandomString(MaxLength.Name),
                                                                    DisplayOrder = 0,
-                                                                   Url = "http://www.bettercms.com"
+                                                                   Url = TestDataProvider.ProvideRandomString(MaxLength.Url),
+                                                                   PageId = null,
+                                                                   Macro = TestDataProvider.ProvideRandomString(MaxLength.Text),
+                                                                   UsePageTitleAsNodeTitle = false,
+                                                                   Translations = null,
                                                                },
                                                        }
                                            },
@@ -68,7 +94,9 @@ namespace BetterCms.Test.Module.Api.Pages.Sitemaps
 
         protected override PutSitemapRequest GetUpdateRequest(GetSitemapResponse getResponse)
         {
-            return getResponse.ToPutRequest();
+            var request = getResponse.ToPutRequest();
+            request.Data.Title = this.TestDataProvider.ProvideRandomString(MaxLength.Name);
+            return request;
         }
 
         protected override void OnAfterGet(GetSitemapResponse getResponse, SaveSitemapModel saveModel)
