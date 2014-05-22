@@ -168,6 +168,7 @@
     <Compile Include="Api\Pages\Widgets\HtmlContentWidgetsApiTests.cs" />
     <Compile Include="Api\Root\Categories\CategoriesApiTests.cs" />
     <Compile Include="Api\Root\Languages\LanguagesApiTests.cs" />
+    <Compile Include="Api\Root\Layouts\LayoutsApiTests.cs" />
     <Compile Include="Api\Root\Tags\TagsApiTests.cs" />
     <Compile Include="Api\Users\Roles\RolesApiTests.cs" />
     <Compile Include="Api\Users\Users\UsersApiTests.cs" />
@@ -375,9 +376,7 @@
       <Name>BetterCms.Module.WindowsAzureStorage</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Api\Root\Layouts\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <PropertyGroup>
