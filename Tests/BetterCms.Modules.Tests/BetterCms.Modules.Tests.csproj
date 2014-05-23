@@ -161,6 +161,7 @@
     <Compile Include="Api\Media\Files\FilesApiTests.cs" />
     <Compile Include="Api\Media\Folders\FoldersApiTests.cs" />
     <Compile Include="Api\Media\Images\ImagesApiTests.cs" />
+    <Compile Include="Api\Pages\Contents\Draft\DestroyContentDraftTest.cs" />
     <Compile Include="Api\Pages\Contents\HtmlContent\HtmlContentApiTests.cs" />
     <Compile Include="Api\Pages\Properties\PagePropertiesApiTests.cs" />
     <Compile Include="Api\Pages\Page\Contents\PageContentsApiTests.cs" />

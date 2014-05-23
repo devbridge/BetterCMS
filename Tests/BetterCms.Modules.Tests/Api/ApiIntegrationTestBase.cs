@@ -9,7 +9,6 @@ using BetterCms.Core.DataAccess.DataContext;
 
 using BetterCms.Module.Api;
 using BetterCms.Module.Api.Infrastructure;
-using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 
 using NHibernate;
