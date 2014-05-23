@@ -120,6 +120,13 @@ namespace BetterCms.Test.Module.Api.Pages.PageProperties
 
         protected override SavePagePropertiesModel GetCreateModel(ISession session)
         {
+            var category = TestDataProvider.CreateNewCategory();
+            var image = TestDataProvider.CreateNewMediaImage();
+            session.SaveOrUpdate(category);
+            session.SaveOrUpdate(image);
+            session.Flush();
+            session.Clear();
+
             return new SavePagePropertiesModel
                    {
                        Title = TestDataProvider.ProvideRandomString(MaxLength.Name),
@@ -139,11 +146,11 @@ namespace BetterCms.Test.Module.Api.Pages.PageProperties
                                                     IsForRole = true
                                                 }
                                      },
-                       CategoryId = null,
                        CustomCss = TestDataProvider.ProvideRandomString(MaxLength.Text),
                        CustomJavaScript = TestDataProvider.ProvideRandomString(MaxLength.Text),
                        Description = TestDataProvider.ProvideRandomString(MaxLength.Text),
-                       FeaturedImageId = null,
+                       CategoryId = category.Id,
+                       FeaturedImageId = image.Id,
                        IsArchived = false,
                        IsMasterPage = false,
                        IsPublished = true,
@@ -151,8 +158,8 @@ namespace BetterCms.Test.Module.Api.Pages.PageProperties
                        LanguageId = null,
                        LayoutId = layout != null ? layout.Id : (Guid?)null,
                        MasterPageId = masterPage != null ? masterPage.Id : (Guid?)null,
-                       SecondaryImageId = null,
-                       MainImageId = null,
+                       SecondaryImageId = image.Id,
+                       MainImageId = image.Id,
                        MetaData = new MetadataModel
                                       {
                                           MetaTitle = TestDataProvider.ProvideRandomString(MaxLength.Name),
@@ -179,7 +186,7 @@ namespace BetterCms.Test.Module.Api.Pages.PageProperties
                                         UseDefaultValue = false
                                     }
                                 },
-                       PageUrl = string.Format("{0}/{1}", TestDataProvider.ProvideRandomString(MaxLength.Name), TestDataProvider.ProvideRandomString(MaxLength.Name)),
+                       PageUrl = string.Format("/{0}/", TestDataProvider.ProvideRandomString(200)),
                        PublishedOn = TestDataProvider.ProvideRandomDateTime(),
                        UseCanonicalUrl = TestDataProvider.ProvideRandomBooleanValue(),
                        UseNoFollow = TestDataProvider.ProvideRandomBooleanValue(),
@@ -222,6 +229,26 @@ namespace BetterCms.Test.Module.Api.Pages.PageProperties
             Assert.AreEqual(getResponse.Data.Title, model.Title);
             Assert.AreEqual(getResponse.Tags.Count, model.Tags.Count);
 
+            Assert.AreEqual(getResponse.Data.CustomCss, model.CustomCss);
+            Assert.AreEqual(getResponse.Data.CustomJavaScript, model.CustomJavaScript);
+            Assert.AreEqual(getResponse.Data.Description, model.Description);
+            Assert.AreEqual(getResponse.Data.CategoryId, model.CategoryId);
+            Assert.AreEqual(getResponse.Data.FeaturedImageId, model.FeaturedImageId);
+            Assert.AreEqual(getResponse.Data.IsArchived, model.IsArchived);
+            Assert.AreEqual(getResponse.Data.IsMasterPage, model.IsMasterPage);
+            Assert.AreEqual(getResponse.Data.IsPublished, model.IsPublished);
+            Assert.AreEqual(getResponse.Data.LanguageGroupIdentifier, model.LanguageGroupIdentifier);
+            Assert.AreEqual(getResponse.Data.LanguageId, model.LanguageId);
+            Assert.AreEqual(getResponse.Data.LayoutId, model.LayoutId);
+            Assert.AreEqual(getResponse.Data.MasterPageId, model.MasterPageId);
+            Assert.AreEqual(getResponse.Data.SecondaryImageId, model.SecondaryImageId);
+            Assert.AreEqual(getResponse.Data.MainImageId, model.MainImageId);
+
+            Assert.IsNotNull(getResponse.MetaData);
+            Assert.AreEqual(getResponse.MetaData.MetaTitle, model.MetaData.MetaTitle);
+            Assert.AreEqual(getResponse.MetaData.MetaDescription, model.MetaData.MetaDescription);
+            Assert.AreEqual(getResponse.MetaData.MetaKeywords, model.MetaData.MetaKeywords);
+
             Assert.IsNotNull(getResponse.PageOptions);
             Assert.AreEqual(getResponse.PageOptions.Count, model.PageOptions.Count);
             Assert.AreEqual(getResponse.PageOptions.Count, 2);
@@ -235,6 +262,12 @@ namespace BetterCms.Test.Module.Api.Pages.PageProperties
                && a1.CustomTypeIdentifier == a2.CustomTypeIdentifier
                && a1.Type == a2.Type
                && a1.DefaultValue == a2.DefaultValue)));
+
+            Assert.AreEqual(getResponse.Data.PageUrl, model.PageUrl);
+            Assert.AreEqual(getResponse.Data.PublishedOn, model.PublishedOn);
+            Assert.AreEqual(getResponse.Data.UseCanonicalUrl, model.UseCanonicalUrl);
+            Assert.AreEqual(getResponse.Data.UseNoFollow, model.UseNoFollow);
+            Assert.AreEqual(getResponse.Data.UseNoIndex, model.UseNoIndex);
         }
     }
 }
