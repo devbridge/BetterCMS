@@ -134,4 +134,13 @@ describe('root.categories.api.behavior', function () {
             api.expectValidationExceptionIsThrown(result, 'CategoryId');
         });
     });
+
+    it('00304: Should test CRUD for categories.', function () {
+        api.testCrud(runs, waitsFor, expect, "e87bfb18cdf74fd3a5dfa2040115ed1d", "/bcms-api/categories/", {
+            getPostData: function (json) {
+                json.data.name = api.createGuid();
+                return json.data;
+            }
+        });
+    });
 });
