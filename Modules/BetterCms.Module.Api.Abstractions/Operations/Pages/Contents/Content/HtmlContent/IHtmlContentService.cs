@@ -22,6 +22,15 @@
         ///   <c>PutHtmlContentResponse</c> with html content id.
         /// </returns>
         PutHtmlContentResponse Put(PutHtmlContentRequest request);
+        
+        /// <summary>
+        /// Posts the specified request.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        ///   <c>PostHtmlContentResponse</c> with html content id.
+        /// </returns>
+        PostHtmlContentResponse Post(PostHtmlContentRequest request);
 
         /// <summary>
         /// Deletes the specified request.

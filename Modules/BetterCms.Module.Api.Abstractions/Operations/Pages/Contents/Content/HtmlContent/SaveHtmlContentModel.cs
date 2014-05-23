@@ -25,7 +25,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
         /// The activation date.
         /// </value>
         [DataMember]
-        public System.DateTime ActivationDate { get; set; }
+        public DateTime ActivationDate { get; set; }
 
         /// <summary>
         /// Gets or sets the expiration date.
@@ -34,7 +34,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
         /// The expiration date.
         /// </value>
         [DataMember]
-        public System.DateTime? ExpirationDate { get; set; }
+        public DateTime? ExpirationDate { get; set; }
 
         /// <summary>
         /// Gets or sets the content HTML.
@@ -97,7 +97,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
         /// The date widget was published on.
         /// </value>
         [DataMember]
-        public System.DateTime? PublishedOn { get; set; }
+        public DateTime? PublishedOn { get; set; }
 
         /// <summary>
         /// Gets or sets the widget published user name.
