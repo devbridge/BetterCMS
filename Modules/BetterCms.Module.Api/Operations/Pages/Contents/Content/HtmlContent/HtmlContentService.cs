@@ -91,6 +91,24 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
         }
 
         /// <summary>
+        /// Posts the specified request.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        ///   <c>PostHtmlContentResponse</c> with html content id.
+        /// </returns>
+        public PostHtmlContentResponse Post(PostHtmlContentRequest request)
+        {
+            var result = Put(new PutHtmlContentRequest
+                {
+                    Data = request.Data,
+                    User = request.User
+                });
+
+            return new PostHtmlContentResponse { Data = result.Data };
+        }
+
+        /// <summary>
         /// Puts the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
@@ -99,7 +117,13 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
         /// </returns>
         public PutHtmlContentResponse Put(PutHtmlContentRequest request)
         {
-            var isNew = !repository.AsQueryable<Module.Root.Models.Content>().Any(e => e.Id == request.Id);
+            var isNew = !request.Id.HasValue || request.Id.Value.HasDefaultValue();
+            Module.Pages.Models.HtmlContent originalContent = null;
+            if (!isNew)
+            {
+                originalContent = repository.FirstOrDefault<Module.Pages.Models.HtmlContent>(request.Id.Value);
+                isNew = originalContent == null;
+            }
 
             var contentToSave = new Module.Pages.Models.HtmlContent
             {
@@ -114,20 +138,37 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
                 CustomJs = request.Data.CustomJavaScript
             };
 
+            if (request.Data.IsPublished)
+            {
+                if (isNew)
+                {
+                    if (request.Data.PublishedOn.HasValue)
+                    {
+                        contentToSave.PublishedOn = request.Data.PublishedOn;
+                    }
+                    if (!string.IsNullOrEmpty(request.Data.PublishedByUser))
+                    {
+                        contentToSave.PublishedByUser = request.Data.PublishedByUser;
+                    }
+                }
+                else
+                {
+                    contentToSave.PublishedOn = originalContent.PublishedOn;
+                    contentToSave.PublishedByUser = originalContent.PublishedByUser;
+                }
+            }
+
             unitOfWork.BeginTransaction();
 
             Module.Pages.Models.HtmlContent content;
             if (isNew && contentToSave.Id != default(Guid))
             {
-                if (request.Data.IsPublished)
-                {
-                    contentToSave.PublishedOn = request.Data.PublishedOn.HasValue ? request.Data.PublishedOn.Value : DateTime.Now;
-                    contentToSave.PublishedByUser = !string.IsNullOrEmpty(request.Data.PublishedByUser) ? request.Data.PublishedByUser : securityService.CurrentPrincipalName;
-                }
-
-                contentToSave.Status = request.Data.IsPublished ? ContentStatus.Published : ContentStatus.Draft;
-                repository.Save(contentToSave);
                 content = contentToSave;
+
+                content.Status = request.Data.IsPublished ? ContentStatus.Published : ContentStatus.Draft;
+                content.Id = contentToSave.Id;
+
+                repository.Save(content);
             }
             else
             {
@@ -136,7 +177,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
                     contentToSave.Version = request.Data.Version;
                 }
 
-                content = (Module.Pages.Models.HtmlContent)this.contentService
+                content = (Module.Pages.Models.HtmlContent)contentService
                     .SaveContentWithStatusUpdate(contentToSave, request.Data.IsPublished ? ContentStatus.Published : ContentStatus.Draft);
             }
 
