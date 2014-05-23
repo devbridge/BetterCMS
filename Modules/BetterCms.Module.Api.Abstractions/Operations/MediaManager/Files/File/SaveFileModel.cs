@@ -62,6 +62,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// <value>
         /// The folder identifier.
         /// </value>
+        [DataMember]
         public Guid? FolderId { get; set; }
 
         /// <summary>
@@ -70,6 +71,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// <value>
         /// <c>true</c> if this instance is archived; otherwise, <c>false</c>.
         /// </value>
+        [DataMember]
         public bool IsArchived { get; set; }
 
         /// <summary>
@@ -78,6 +80,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// <value>
         /// The published on.
         /// </value>
+        [DataMember]
         public DateTime PublishedOn { get; set; }
 
         /// <summary>
@@ -86,6 +89,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// <value>
         /// The name of the original file.
         /// </value>
+        [DataMember]
         public string OriginalFileName { get; set; }
 
         /// <summary>
@@ -94,6 +98,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// <value>
         /// The original file extension.
         /// </value>
+        [DataMember]
         public string OriginalFileExtension { get; set; }
 
         /// <summary>
@@ -102,6 +107,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// <value>
         /// The file URI.
         /// </value>
+        [DataMember]
         public string FileUri { get; set; }
 
         /// <summary>
@@ -110,6 +116,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// <value>
         /// The size of the file.
         /// </value>
+        [DataMember]
         public long FileSize { get; set; }
 
         /// <summary>
@@ -118,6 +125,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// <value>
         /// <c>true</c> if this instance is temporary; otherwise, <c>false</c>.
         /// </value>
+        [DataMember]
         public bool IsTemporary { get; set; }
 
         /// <summary>
@@ -126,6 +134,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// <value>
         /// The is uploaded.
         /// </value>
+        [DataMember]
         public bool? IsUploaded { get; set; }
 
         /// <summary>
@@ -134,6 +143,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// <value>
         /// <c>true</c> if this instance is canceled; otherwise, <c>false</c>.
         /// </value>
+        [DataMember]
         public bool IsCanceled { get; set; }
 
         /// <summary>
@@ -142,6 +152,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// <value>
         /// The thumbnail identifier.
         /// </value>
+        [DataMember]
         public Guid? ThumbnailId { get; set; }
     }
 }
