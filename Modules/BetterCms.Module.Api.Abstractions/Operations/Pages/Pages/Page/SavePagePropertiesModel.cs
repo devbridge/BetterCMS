@@ -205,7 +205,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
         /// The list of tags.
         /// </value>
         [DataMember]
-        public System.Collections.Generic.List<string> Tags { get; set; }
+        public System.Collections.Generic.IList<string> Tags { get; set; }
 
         /// <summary>
         /// Gets or sets the access rules.
