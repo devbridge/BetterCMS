@@ -59,6 +59,13 @@ namespace BetterCms.Test.Module.Api.Pages.Sitemaps.Nodes
 
         protected override SaveNodeModel GetCreateModel(ISession session)
         {
+            var languageA = TestDataProvider.CreateNewLanguage();
+            var languageB = TestDataProvider.CreateNewLanguage();
+            session.SaveOrUpdate(languageA);
+            session.SaveOrUpdate(languageB);
+            session.Flush();
+            session.Clear();
+
             return new SaveNodeModel
                        {
                            Title = TestDataProvider.ProvideRandomString(MaxLength.Name),
@@ -66,7 +73,25 @@ namespace BetterCms.Test.Module.Api.Pages.Sitemaps.Nodes
                            PageId = null,
                            DisplayOrder = 1,
                            Macro = TestDataProvider.ProvideRandomString(MaxLength.Text),
-                           Translations = new SaveNodeTranslation[0],
+                           Translations = new[]
+                                              {
+                                                  new SaveNodeTranslation
+                                                      {
+                                                          LanguageId = languageA.Id,
+                                                          Title = TestDataProvider.ProvideRandomString(MaxLength.Name),
+                                                          Macro = TestDataProvider.ProvideRandomString(MaxLength.Name),
+                                                          Url = TestDataProvider.ProvideRandomString(MaxLength.Url),
+                                                          UsePageTitleAsNodeTitle = TestDataProvider.ProvideRandomBooleanValue()
+                                                      },
+                                                  new SaveNodeTranslation
+                                                      {
+                                                          LanguageId = languageB.Id,
+                                                          Title = TestDataProvider.ProvideRandomString(MaxLength.Name),
+                                                          Macro = TestDataProvider.ProvideRandomString(MaxLength.Name),
+                                                          Url = TestDataProvider.ProvideRandomString(MaxLength.Url),
+                                                          UsePageTitleAsNodeTitle = TestDataProvider.ProvideRandomBooleanValue()
+                                                      },
+                                              },
                            UsePageTitleAsNodeTitle = false,
                            ParentId = null
                        };
@@ -77,7 +102,8 @@ namespace BetterCms.Test.Module.Api.Pages.Sitemaps.Nodes
             return new GetNodeRequest
                        {
                            SitemapId = this.SitemapId,
-                           NodeId = saveResponseBase.Data.Value
+                           NodeId = saveResponseBase.Data.Value,
+                           Data = new GetNodeModel() { IncludeTranslations = true }
                        };
         }
 
@@ -113,6 +139,9 @@ namespace BetterCms.Test.Module.Api.Pages.Sitemaps.Nodes
             Assert.AreEqual(getResponse.Data.UsePageTitleAsNodeTitle, saveModel.UsePageTitleAsNodeTitle);
             Assert.AreEqual(getResponse.Data.PageId, saveModel.PageId);
             Assert.AreEqual(getResponse.Data.ParentId, saveModel.ParentId);
+
+            Assert.IsNotNull(getResponse.Translations);
+            Assert.AreEqual(getResponse.Translations.Count, saveModel.Translations.Count);
         }
     }
 }
