@@ -118,4 +118,14 @@ describe('pages.redirects.api.behavior', function () {
             expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
         });
     });
+
+    it('01303: Should test CRUD for redirects.', function () {
+        api.testCrud(runs, waitsFor, expect, "72EC32B9-D5A4-4642-9D7A-A205009FE9B6", "/bcms-api/redirects/", {
+            getPostData: function (json) {
+                json.data.pageUrl = "/" + api.createGuid() + "/";
+                json.data.version = 0;
+                return json.data;
+            }
+        });
+    });
 });

@@ -59,7 +59,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes
                         LastModifiedBy = node.ModifiedByUser,
                         LastModifiedOn = node.ModifiedOn,
 
-                        SitemapId = node.Sitemap.Id,
                         ParentId = node.ParentNode != null && !node.ParentNode.IsDeleted ? node.ParentNode.Id : (System.Guid?)null,
                         PageId = node.Page != null && !node.Page.IsDeleted ? node.Page.Id : (System.Guid?)null,
                         PageIsPublished = node.Page != null && !node.Page.IsDeleted && node.Page.Status == PageStatus.Published,

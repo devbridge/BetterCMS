@@ -8,7 +8,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node
 {
     [Serializable]
     [DataContract]
-    public class GetNodeResponse : ResponseBase<SitemapNodeModel>
+    public class GetNodeResponse : ResponseBase<NodeModel>
     {
         /// <summary>
         /// Gets or sets the translations.

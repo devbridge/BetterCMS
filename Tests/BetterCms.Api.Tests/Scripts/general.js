@@ -179,6 +179,9 @@ var api = (function() {
             updateResultReady = false,
             deleteResultReady = false,
             options = $.extend({
+                getGetData: function() {
+                    return {};
+                },
                 getPostData: function(json) {
                     return json.data;
                 },
@@ -189,8 +192,9 @@ var api = (function() {
 
         // Get existing item.
         runs(function() {
-            var getUrl = url + itemId;
-            obj.get(getUrl, null, function (json) { getResult = json; getResultReady = true; });
+            var getUrl = url + itemId,
+                dataToGet = options.getGetData(getResult);
+            obj.get(getUrl, dataToGet, function (json) { getResult = json; getResultReady = true; });
         });
         waitsFor(function () { return getResultReady; }, 'GET existing item timeout.');
         runs(function () {

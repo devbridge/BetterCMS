@@ -14,7 +14,7 @@ namespace BetterCms.Test.Module.Api.Pages.Sitemaps.Nodes
 {
     [TestFixture]
     public class NodesTests : ApiCrudIntegrationTestBase<
-        SaveNodeModel, SitemapNodeModel,
+        SaveNodeModel, NodeModel,
         PostSitemapNodeRequest, PostSitemapNodeResponse,
         GetNodeRequest, GetNodeResponse,
         PutNodeRequest, PutNodeResponse,

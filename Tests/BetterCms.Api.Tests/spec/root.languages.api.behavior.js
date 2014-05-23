@@ -171,6 +171,7 @@ describe('root.languages.api.behavior', function () {
             getPostData: function (json) {
                 json.data.name = api.createGuid();
                 json.data.code = 'lt-LT';
+                json.data.version = 0;
                 return json.data;
             }
         });

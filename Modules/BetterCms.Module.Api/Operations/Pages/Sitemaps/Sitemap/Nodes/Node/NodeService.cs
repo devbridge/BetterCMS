@@ -115,7 +115,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node
             var model = repository
                 .AsQueryable<SitemapNode>()
                 .Where(node => node.Sitemap.Id == request.SitemapId && node.Id == request.NodeId && !node.IsDeleted)
-                .Select(node => new SitemapNodeModel
+                .Select(node => new NodeModel
                     {
                         Id = node.Id,
                         Version = node.Version,
