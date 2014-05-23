@@ -171,6 +171,82 @@ var api = (function() {
         return Object.keys(object).length;
     };
 
+    obj.testCrud = function (runs, waitsFor, expect, itemId, url, opts) {
+        var getResult, createResult, readResult, updateResult, deleteResult,
+            getResultReady = false,
+            createResultReady = false,
+            readResultReady = false,
+            updateResultReady = false,
+            deleteResultReady = false,
+            options = $.extend({
+                getPostData: function(json) {
+                    return json.data;
+                },
+                getPutData: function(json) {
+                    return json.data;
+                }
+            }, opts);
+
+        // Get existing item.
+        runs(function() {
+            var getUrl = url + itemId;
+            obj.get(getUrl, null, function (json) { getResult = json; getResultReady = true; });
+        });
+        waitsFor(function () { return getResultReady; }, 'GET existing item timeout.');
+        runs(function () {
+            expect(getResult).toBeDefinedAndNotNull('CRUD scenario: get result must be not null.');
+            expect(getResult.data).toBeDefinedAndNotNull('CRUD scenario: get result.data must be not null.');
+        });
+
+        // Create.
+        runs(function () {
+            var dataToPost = options.getPostData(getResult);
+            obj.post(url, dataToPost, function (json) { createResult = json; createResultReady = true; });
+        });
+        waitsFor(function () { return createResultReady; }, 'POST timeout.');
+        runs(function () {
+            expect(createResult).toBeDefinedAndNotNull('CRUD scenario: post result must be not null.');
+            expect(createResult.data).toBeDefinedAndNotNull('CRUD scenario: post result.data must be not null.');
+        });
+
+        // Read new item.
+        runs(function () {
+            var readUrl = url + createResult.data;
+            obj.get(readUrl, null, function (json) { readResult = json; readResultReady = true; });
+        });
+        waitsFor(function () { return readResultReady; }, 'GET timeout.');
+        runs(function () {
+            expect(readResult).toBeDefinedAndNotNull('CRUD scenario: get result must be not null.');
+            expect(readResult.data).toBeDefinedAndNotNull('CRUD scenario: get result.data must be not null.');
+            expect(readResult.data.id).toBe(createResult.data, 'CRUD scenario: ids must be the same.');
+        });
+
+        // Update.
+        runs(function () {
+            var updateUrl = url + readResult.data.id,
+                dataToPut = options.getPutData(readResult);
+            obj.put(updateUrl, dataToPut, function (json) { updateResult = json; updateResultReady = true; });
+        });
+        waitsFor(function () { return updateResultReady; }, 'PUT timeout.');
+        runs(function () {
+            expect(updateResult).toBeDefinedAndNotNull('CRUD scenario: post result must be not null.');
+            expect(updateResult.data).toBeDefinedAndNotNull('CRUD scenario: post result.data must be not null.');
+            expect(updateResult.data).toBe(readResult.data.id, 'CRUD scenario: ids must be the same.');
+        });
+
+        // Delete.
+        runs(function () {
+            var deleteUrl = url + readResult.data.id;
+            obj.delete(deleteUrl, null, function (json) { deleteResult = json; deleteResultReady = true; });
+        });
+        waitsFor(function () { return deleteResultReady; }, 'DELETE timeout.');
+        runs(function () {
+            expect(deleteResult).toBeDefinedAndNotNull('CRUD scenario: delete result must be not null.');
+            expect(deleteResult.data).toBeDefinedAndNotNull('CRUD scenario: delete result.data must be not null.');
+            expect(deleteResult.data).toBe(true, 'CRUD scenario: delete result.data must be true.');
+        });
+    }
+
     /**
     * Create custom matchers
     */
