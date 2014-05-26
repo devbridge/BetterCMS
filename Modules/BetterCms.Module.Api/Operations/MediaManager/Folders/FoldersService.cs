@@ -71,7 +71,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Folders
                             LastModifiedOn = media.ModifiedOn,
 
                             Title = media.Title,
-                            Type = (MediaType)((int)media.ContentType),
+                            Type = (MediaType)((int)media.Type),
                             IsArchived = media.IsArchived
                         })
                         .ToDataListResponse(request);
