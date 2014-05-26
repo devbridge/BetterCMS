@@ -3,14 +3,14 @@ using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
-namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes
+namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node
 {
     /// <summary>
     /// Sitemap node data model.
     /// </summary>
     [Serializable]
     [DataContract]
-    public class SitemapNodeModel : ModelBase
+    public class NodeModel : ModelBase
     {
         /// <summary>
         /// Gets or sets the parent node id.
@@ -83,5 +83,41 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes
         /// </value>
         [DataMember]
         public Guid? PageLanguageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sitemap identifier.
+        /// </summary>
+        /// <value>
+        /// The sitemap identifier.
+        /// </value>
+        [DataMember]
+        public Guid SitemapId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the node title.
+        /// </summary>
+        /// <value>
+        /// The node title.
+        /// </value>
+        [DataMember]
+        public string NodeTitle { get; set; }
+
+        /// <summary>
+        /// Gets or sets the node URL.
+        /// </summary>
+        /// <value>
+        /// The node URL.
+        /// </value>
+        [DataMember]
+        public string NodeUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [use page title as node title].
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if [use page title as node title]; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool UsePageTitleAsNodeTitle { get; set; }
     }
 }

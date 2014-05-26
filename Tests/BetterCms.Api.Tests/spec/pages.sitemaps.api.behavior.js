@@ -86,120 +86,12 @@ describe('pages.sitemaps.api.behavior', function () {
             expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
             expect(result.data.title).not.toBeNull('JSON data.title object should be retrieved.');
             expect(result.data.tags).not.toBeNull('JSON data.tags object should be retrieved.');
+            expect(result.data.nodes).not.toBeNull('JSON data.tags object should be retrieved.');
         });
     });
 
-    it('01402: Should create a sitemap via POST.', function () {
-        var url = '/bcms-api/sitemaps/',
-            data = {
-                title: "Sitemap for test 01402",
-                tags: ["_014xx_1", "_01402_2"],
-                accessRules: []
-            },
-            result,
-            ready = false;
-
-        runs(function () {
-            api.post(url, data, function (json) {
-                result = json;
-                ready = true;
-            });
-        });
-
-        waitsFor(function () {
-            return ready;
-        }, 'The ' + url + ' timeout.');
-
-        runs(function () {
-            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
-            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
-        });
-    });
-
-    it('01403: Should create a sitemap via PUT.', function () {
-        var url = '/bcms-api/sitemaps/' + '0b720c7faf614601867bb9e2878e2002',
-            data = {
-                title: "Sitemap for test 01403",
-                tags: ["_014xx_1", "_01403_2"],
-                accessRules: []
-            },
-            result,
-            ready = false;
-
-        runs(function () {
-            api.put(url, data, function (json) {
-                result = json;
-                ready = true;
-            });
-        });
-
-        waitsFor(function () {
-            return ready;
-        }, 'The ' + url + ' timeout.');
-
-        runs(function () {
-            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
-            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
-            expect(result.data).toEqual('0b720c7faf614601867bb9e2878e2002', 'Updated item id should be retrieved.');
-        });
-    });
-
-    it('01404: Should rename a sitemap via PUT.', function () {
-        var url = '/bcms-api/sitemaps/' + '0b720c7faf614601867bb9e2878e2002',
-            data = {
-                title: "Sitemap for test 01404",
-            },
-            result,
-            ready = false;
-
-        runs(function () {
-            api.put(url, data, function (json) {
-                result = json;
-                ready = true;
-            });
-        });
-
-        waitsFor(function () {
-            return ready;
-        }, 'The ' + url + ' timeout.');
-
-        runs(function () {
-            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
-            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
-            expect(result.data).toEqual('0b720c7faf614601867bb9e2878e2002', 'Updated item id should be retrieved.');
-        });
-    });
-
-    it('00209: Should delete a sitemap.', function () {
-        var url = '/bcms-api/sitemaps/' + '0b720c7faf614601867bb9e2878e2002',
-            data = {
-                version: 2
-            },
-            result,
-            ready = false;
-
-        runs(function () {
-            api.delete(url, data, function (json) {
-                result = json;
-                ready = true;
-            });
-        });
-
-        waitsFor(function () {
-            return ready;
-        }, 'The ' + url + ' timeout.');
-
-        runs(function () {
-            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
-            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
-            expect(result.data).toEqual(true, 'TRUE should be retrieved.');
-        });
-    });
-
-
-/*
     it('01401: Should get the full sitemap tree.', function () {
-        var url = '/bcms-api/sitemap-tree/' + constants.defaultSitemapId,
+        var url = '/bcms-api/sitemaps/' + constants.defaultSitemapId + '/tree',
             result,
             ready = false;
 
@@ -246,7 +138,7 @@ describe('pages.sitemaps.api.behavior', function () {
     });
     
     it('01402: Should get sitemap tree, filtered by node.', function () {
-        var url = '/bcms-api/sitemap-tree/' + constants.defaultSitemapId,
+        var url = '/bcms-api/sitemaps/' + constants.defaultSitemapId + '/tree',
             result,
             ready = false,
             data = {
@@ -281,7 +173,7 @@ describe('pages.sitemaps.api.behavior', function () {
     });
 
     it('01403: Should get sitemap tree, filtered by language.', function () {
-        var url = '/bcms-api/sitemap-tree/' + constants.sitemapId,
+        var url = '/bcms-api/sitemaps/' + constants.sitemapId + '/tree',
             result,
             ready = false,
             data = {
@@ -324,8 +216,24 @@ describe('pages.sitemaps.api.behavior', function () {
         });
     });
 
-    it('01404: Should get a list of sitemap nodes.', function () {
-        var url = '/bcms-api/sitemap-nodes/' + constants.defaultSitemapId,
+    it('01404: Should test CRUD for sitemaps.', function () {
+        api.testCrud(runs, waitsFor, expect, "17abfee95ae6470c92e1c2905036574b", "/bcms-api/sitemaps/", {
+            getGetData: function () {
+                return {
+                    IncludeNodes: true,
+                    includeAccessRules: true
+                }
+            },
+            getPostData: function (json) {
+                json.data.name = api.createGuid();
+                json.data.version = 0;
+                return json.data;
+            }
+        });
+    });
+
+    it('01405: Should get a list of sitemap nodes.', function () {
+        var url = '/bcms-api/sitemaps/' + constants.defaultSitemapId + '/nodes',
             result,
             ready = false,
             data = {
@@ -371,8 +279,8 @@ describe('pages.sitemaps.api.behavior', function () {
         });
     });
 
-    it('01405: Should get a list with one sitemap node, filtered by all available columns.', function () {
-        var url = '/bcms-api/sitemap-nodes/' + constants.defaultSitemapId,
+    it('01406: Should get a list with one sitemap node, filtered by all available columns.', function () {
+        var url = '/bcms-api/sitemaps/' + constants.defaultSitemapId + '/nodes',
             result,
             ready = false;
 
@@ -393,7 +301,7 @@ describe('pages.sitemaps.api.behavior', function () {
                     { field: 'PageId', value: null },
                     { field: 'PageIsPublished', value: false },
                     { field: 'PageLanguageId', value: null },
-                    { field: 'Macro', value: null }
+                    { field: 'Macro', value: null },
                 ]
             }
         };
@@ -422,8 +330,8 @@ describe('pages.sitemaps.api.behavior', function () {
         });
     });
 
-    it('01406: Should get a sitemap node by id.', function () {
-        var url = '/bcms-api/sitemap-node/' + constants.child11Id,
+    it('01407: Should get a sitemap node by id.', function () {
+        var url = '/bcms-api/sitemaps/' + constants.defaultSitemapId + '/nodes/' + constants.child11Id,
             result,
             ready = false;
 
@@ -450,7 +358,22 @@ describe('pages.sitemaps.api.behavior', function () {
             expect(node.displayOrder).toBeDefinedAndNotNull('displayOrder should be retrieved.');
         });
     });
-*/
+
+    it('01408: Should test CRUD for sitemap nodess.', function () {
+        api.testCrud(runs, waitsFor, expect, constants.child11Id, '/bcms-api/sitemaps/' + constants.defaultSitemapId + '/nodes/', {
+            getGetData: function () {
+                return {
+                    includeTranslations: true,
+                }
+            },
+            getPostData: function (json) {
+                json.data.name = api.createGuid();
+                json.data.version = 0;
+                return json.data;
+            }
+        });
+    });
+
     function findTreeChild(items, parentId, title, url, childrenCount) {
         var childFound = false,
             childNode = null;

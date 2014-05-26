@@ -504,6 +504,23 @@ describe('media.files.api.behavior', function () {
         });
     });
 
+    it('03113: Should test CRUD for files.', function () {
+        api.testCrud(runs, waitsFor, expect, "4ef65c378a9f4a2f90b5a20600816711", "/bcms-api/files/", {
+            getPostData: function (json) {
+                json.data.title = api.createGuid();
+                json.data.publicUrl = "/" + api.createGuid();
+                json.data.version = 0;
+                return json.data;
+            },
+            getPutData: function (json) {
+                json.data.title = api.createGuid();
+                json.data.publicUrl = "/" + api.createGuid();
+                json.data.version = 0;
+                return json.data;
+            }
+        });
+    });
+
     function runFilesListTests(data, expectingResults) {
         var url = '/bcms-api/files/',
             result,

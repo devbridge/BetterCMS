@@ -99,7 +99,11 @@ namespace BetterCms.Module.Users.Services
                 .FetchMany(r => r.UserRoles)
                 .ToList()
                 .FirstOne();
-            role.Version = version;
+
+            if (version > 0 && role.Version != version)
+            {
+                throw new ConcurrentDataException(role);
+            }
 
             DeleteRole(role, throwOnPopulatedRole);
 
