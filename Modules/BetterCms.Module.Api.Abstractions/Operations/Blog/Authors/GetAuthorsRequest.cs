@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
@@ -8,6 +9,7 @@ namespace BetterCms.Module.Api.Operations.Blog.Authors
 {
     [DataContract]
     [Route("/authors", Verbs = "GET")]
+    [Serializable]
     public class GetAuthorsRequest : RequestBase<DataOptions>, IReturn<GetAuthorsResponse>
     {
     }

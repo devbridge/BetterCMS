@@ -84,6 +84,12 @@ namespace BetterCms.Module.Pages.Models
         /// </value>
         public virtual IList<SitemapNode> ChildNodes { get; set; }
 
+        /// <summary>
+        /// Gets or sets the translations.
+        /// </summary>
+        /// <value>
+        /// The translations.
+        /// </value>
         public virtual IList<SitemapNodeTranslation> Translations { get; set; }
 
         /// <summary>

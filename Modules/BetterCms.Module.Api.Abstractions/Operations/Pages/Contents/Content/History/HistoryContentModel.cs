@@ -5,6 +5,7 @@ using BetterCms.Module.Api.Infrastructure;
 namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.History
 {
     [DataContract]
+    [System.Serializable]
     public class HistoryContentModel : ModelBase
     {
         /// <summary>

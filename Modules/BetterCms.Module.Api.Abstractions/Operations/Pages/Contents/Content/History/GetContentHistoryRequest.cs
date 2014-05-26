@@ -1,13 +1,12 @@
 ﻿using System.Runtime.Serialization;
 
-using BetterCms.Module.Api.Infrastructure;
-
 using ServiceStack.ServiceHost;
 
 namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.History
 {
     [Route("/contents/{ContentId}/history", Verbs = "GET")]
     [DataContract]
+    [System.Serializable]
     public class GetContentHistoryRequest : IReturn<GetContentHistoryResponse>
     {
         [DataMember]

@@ -27,7 +27,7 @@ describe('pages.sitemap.api.behavior', function () {
         pageIdWithLanguage: '9ea01e0b6a5d44d88478a2b600b65f34',
     };
 
-    it('01400: Should get a list of sitemaps.', function () {
+    it('01400: [Obsolete] Should get a list of sitemaps.', function () {
         var url = '/bcms-api/sitemap-trees/',
             result,
             ready = false,
@@ -62,7 +62,7 @@ describe('pages.sitemap.api.behavior', function () {
         });
     });
 
-    it('01401: Should get the full sitemap tree.', function () {
+    it('01401: [Obsolete] Should get the full sitemap tree.', function () {
         var url = '/bcms-api/sitemap-tree/' + constants.defaultSitemapId,
             result,
             ready = false;
@@ -109,7 +109,7 @@ describe('pages.sitemap.api.behavior', function () {
         });
     });
     
-    it('01402: Should get sitemap tree, filtered by node.', function () {
+    it('01402: [Obsolete] Should get sitemap tree, filtered by node.', function () {
         var url = '/bcms-api/sitemap-tree/' + constants.defaultSitemapId,
             result,
             ready = false,
@@ -144,7 +144,7 @@ describe('pages.sitemap.api.behavior', function () {
         });
     });
 
-    it('01403: Should get sitemap tree, filtered by language.', function () {
+    it('01403: [Obsolete] Should get sitemap tree, filtered by language.', function () {
         var url = '/bcms-api/sitemap-tree/' + constants.sitemapId,
             result,
             ready = false,
@@ -188,7 +188,7 @@ describe('pages.sitemap.api.behavior', function () {
         });
     });
 
-    it('01404: Should get a list of sitemap nodes.', function () {
+    it('01404: [Obsolete] Should get a list of sitemap nodes.', function () {
         var url = '/bcms-api/sitemap-nodes/' + constants.defaultSitemapId,
             result,
             ready = false,
@@ -235,7 +235,7 @@ describe('pages.sitemap.api.behavior', function () {
         });
     });
 
-    it('01405: Should get a list with one sitemap node, filtered by all available columns.', function () {
+    it('01405: [Obsolete] Should get a list with one sitemap node, filtered by all available columns.', function () {
         var url = '/bcms-api/sitemap-nodes/' + constants.defaultSitemapId,
             result,
             ready = false;
@@ -286,7 +286,7 @@ describe('pages.sitemap.api.behavior', function () {
         });
     });
 
-    it('01406: Should get a sitemap node by id.', function () {
+    it('01406: [Obsolete] Should get a sitemap node by id.', function () {
         var url = '/bcms-api/sitemap-node/' + constants.child11Id,
             result,
             ready = false;

@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
 using NHibernate.Linq;
@@ -20,12 +23,26 @@ namespace BetterCms.Module.Pages.Services
         private IUnitOfWork unitOfWork;
 
         /// <summary>
+        /// The URL service
+        /// </summary>
+        private IUrlService urlService;
+        
+        /// <summary>
+        /// The repository
+        /// </summary>
+        private IRepository repository;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DefaultRedirectService" /> class.
         /// </summary>
         /// <param name="unitOfWork">The unit of work.</param>
-        public DefaultRedirectService(IUnitOfWork unitOfWork)
+        /// <param name="urlService">The URL service.</param>
+        /// <param name="repository">The repository.</param>
+        public DefaultRedirectService(IUnitOfWork unitOfWork, IUrlService urlService, IRepository repository)
         {
             this.unitOfWork = unitOfWork;
+            this.urlService = urlService;
+            this.repository = repository;
         }
 
         /// <summary>
@@ -179,6 +196,111 @@ namespace BetterCms.Module.Pages.Services
                 .Select(r => r.RedirectUrl)
                 .SingleOrDefault();
             return redirect;
+        }
+
+        public Redirect SaveRedirect(ViewModels.SiteSettings.SiteSettingRedirectViewModel model, bool createIfNotExists = false)
+        {
+            var isRedirectInternal = urlService.ValidateInternalUrl(model.RedirectUrl);
+            if (!isRedirectInternal && urlService.ValidateInternalUrl(urlService.FixUrl(model.RedirectUrl)))
+            {
+                isRedirectInternal = true;
+            }
+
+            model.PageUrl = urlService.FixUrl(model.PageUrl);
+            if (isRedirectInternal)
+            {
+                model.RedirectUrl = urlService.FixUrl(model.RedirectUrl);
+            }
+
+            // Validate request
+            if (!urlService.ValidateInternalUrl(model.PageUrl))
+            {
+                var message = PagesGlobalization.SaveRedirect_InvalidPageUrl_Message;
+                var logMessage = string.Format("Invalid page url {0}.", model.PageUrl);
+                throw new ValidationException(() => message, logMessage);
+            }
+            if (!urlService.ValidateExternalUrl(model.RedirectUrl))
+            {
+                var message = PagesGlobalization.SaveRedirect_InvalidRedirectUrl_Message;
+                var logMessage = string.Format("Invalid redirect url {0}.", model.RedirectUrl);
+                throw new ValidationException(() => message, logMessage);
+            }
+
+            // Validate for url patterns
+            string patternsValidationMessage;
+            if (!urlService.ValidateUrlPatterns(model.PageUrl, out patternsValidationMessage))
+            {
+                var logMessage = string.Format("{0}. URL: {1}.", patternsValidationMessage, model.PageUrl);
+                throw new ValidationException(() => patternsValidationMessage, logMessage);
+            }
+            if (isRedirectInternal && !urlService.ValidateUrlPatterns(model.RedirectUrl, out patternsValidationMessage, PagesGlobalization.SaveRedirect_RedirectUrl_Name))
+            {
+                var logMessage = string.Format("{0}. URL: {1}.", patternsValidationMessage, model.PageUrl);
+                throw new ValidationException(() => patternsValidationMessage, logMessage);
+            }
+
+            ValidateRedirectExists(model.PageUrl, model.Id);
+            ValidateForCircularLoop(model.PageUrl, model.RedirectUrl, model.Id);
+
+            Redirect redirect = null;
+            var isNew = model.Id.HasDefaultValue();
+            
+            if (!isNew)
+            {
+                redirect = repository.FirstOrDefault<Redirect>(model.Id);
+                isNew = redirect == null;
+
+                if (isNew && !createIfNotExists)
+                {
+                    throw new EntityNotFoundException(typeof(Redirect), model.Id);
+                }
+            }
+
+            if (isNew)
+            {
+                redirect = new Redirect { Id = model.Id };
+            }
+
+            if (model.Version > 0)
+            {
+                redirect.Version = model.Version;
+            }
+            redirect.PageUrl = model.PageUrl;
+            redirect.RedirectUrl = model.RedirectUrl;
+
+            repository.Save(redirect);
+            unitOfWork.Commit();
+
+            // Notify.
+            if (isNew)
+            {
+                Events.PageEvents.Instance.OnRedirectCreated(redirect);
+            }
+            else
+            {
+                Events.PageEvents.Instance.OnRedirectUpdated(redirect);
+            }
+
+            return redirect;
+        }
+
+        public bool DeleteRedirect(Guid id, int version)
+        {
+            Redirect redirect;
+            if (version > 0)
+            {
+                redirect = repository.Delete<Redirect>(id, version);
+            }
+            else
+            {
+                redirect = repository.First<Redirect>(id);
+                repository.Delete(redirect);
+            }
+
+            unitOfWork.Commit();
+            Events.PageEvents.Instance.OnRedirectDeleted(redirect);
+
+            return true;
         }
     }
 }

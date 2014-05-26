@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace BetterCms.Module.Api.Infrastructure.Enums
 {
@@ -6,6 +7,7 @@ namespace BetterCms.Module.Api.Infrastructure.Enums
     /// Ordering directions enum
     /// </summary>
     [DataContract]
+    [Serializable]
     public enum OrderDirection
     {
         [EnumMember]

@@ -3,6 +3,7 @@
 using BetterCms.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 
@@ -10,25 +11,53 @@ using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.Images
 {
+    /// <summary>
+    /// Default images service contract implementation for REST.
+    /// </summary>
     public class ImagesService : Service, IImagesService
     {
+        /// <summary>
+        /// The repository.
+        /// </summary>
         private readonly IRepository repository;
 
+        /// <summary>
+        /// The file URL resolver.
+        /// </summary>
         private readonly IMediaFileUrlResolver fileUrlResolver;
 
-        public ImagesService(IRepository repository, IMediaFileUrlResolver fileUrlResolver)
+        /// <summary>
+        /// The image service.
+        /// </summary>
+        private readonly IImageService imageService;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImagesService" /> class.
+        /// </summary>
+        /// <param name="repository">The repository.</param>
+        /// <param name="fileUrlResolver">The file URL resolver.</param>
+        /// <param name="imageService">The image service.</param>
+        public ImagesService(IRepository repository, IMediaFileUrlResolver fileUrlResolver, IImageService imageService)
         {
             this.repository = repository;
             this.fileUrlResolver = fileUrlResolver;
+            this.imageService = imageService;
         }
 
+        /// <summary>
+        /// Gets images list.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        ///   <c>GetImagesResponse</c> with images list.
+        /// </returns>
         public GetImagesResponse Get(GetImagesRequest request)
         {
             request.Data.SetDefaultOrder("Title");
 
             var query = repository
                 .AsQueryable<Media>()
-                .Where(m => m.Original == null && m.Type == MediaType.Image)
+                .Where(m => m.Original == null && m.Type == Module.MediaManager.Models.MediaType.Image)
                 .Where(f => !(f is MediaImage) || (!((MediaImage)f).IsTemporary && ((MediaImage)f).IsUploaded == true));
 
             if (request.Data.FolderId == null)
@@ -90,6 +119,26 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
                        {
                            Data = listResponse
                        };
+        }
+
+        /// <summary>
+        /// Creates a new image.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        ///   <c>PostImagesResponse</c> with a new image id.
+        /// </returns>
+        public PostImageResponse Post(PostImageRequest request)
+        {
+            var result =
+                imageService.Put(
+                    new PutImageRequest
+                    {
+                        Data = request.Data,
+                        User = request.User
+                    });
+
+            return new PostImageResponse { Data = result.Data };
         }
     }
 }

@@ -42,7 +42,17 @@ describe('pages.contents.api.behavior', function () {
             expect(content.publishedByUser).toBe('Better CMS test user', 'Correctly filtered publishedByUser should be retrieved.');
         });
     });
-    
+
+    it('01101: Should test CRUD for html contents.', function () {
+        api.testCrud(runs, waitsFor, expect, "61263510-2810-4c6f-b7c5-a20400fe6877", "/bcms-api/contents/html/", {
+            getPostData: function (json) {
+                json.data.title = api.createGuid();
+                json.data.version = 0;
+                return json.data;
+            }
+        });
+    });
+
     it('01102: Should get content history by content id', function () {
         var url = '/bcms-api/contents/97A1C2CF-DC8A-4D3F-9DD1-A205008C3F36/history',
             result,

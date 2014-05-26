@@ -208,7 +208,7 @@
     <value>Edit article</value>
   </data>
   <data name="SaveBlogPost_LayoutNotFound_Message" xml:space="preserve">
-    <value>There are no compatible layouts for blogs.</value>
+    <value>There are no compatible layouts for blog post.</value>
   </data>
   <data name="SaveBlogPost_RegionNotFound_Message" xml:space="preserve">
     <value>Region {0} not found. It's the default region for blog post content.</value>
@@ -223,7 +223,7 @@
     <value>Name</value>
   </data>
   <data name="SiteSettings_BlogsMenuItem" xml:space="preserve">
-    <value>Blogs</value>
+    <value>Blog</value>
   </data>
   <data name="SiteSettings_Blogs_AddNew" xml:space="preserve">
     <value>Add New +</value>

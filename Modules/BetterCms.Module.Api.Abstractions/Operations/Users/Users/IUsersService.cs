@@ -3,5 +3,7 @@
     public interface IUsersService
     {
         GetUsersResponse Get(GetUsersRequest request);
+        
+        PostUserResponse Post(PostUserRequest request);
     }
 }

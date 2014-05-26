@@ -3,6 +3,7 @@
 using BetterCms.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Root.Layouts.Layout;
 
 using ServiceStack.ServiceInterface;
 
@@ -11,10 +12,13 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts
     public class LayoutsService : Service, ILayoutsService
     {
         private readonly IRepository repository;
+        
+        private readonly ILayoutService layoutService;
 
-        public LayoutsService(IRepository repository)
+        public LayoutsService(IRepository repository, ILayoutService layoutService)
         {
             this.repository = repository;
+            this.layoutService = layoutService;
         }
         
         public GetLayoutsResponse Get(GetLayoutsRequest request)
@@ -42,6 +46,17 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts
                        {
                            Data = listResponse
                        };
+        }
+
+        public PostLayoutResponse Post(PostLayoutRequest request)
+        {
+            var result = layoutService.Put(new PutLayoutRequest
+                {
+                    Data = request.Data,
+                    User = request.User
+                });
+
+            return new PostLayoutResponse { Data = result.Data };
         }
     }
 }

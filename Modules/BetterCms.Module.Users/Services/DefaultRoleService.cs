@@ -4,6 +4,7 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
+using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Exceptions.Mvc;
 
 using BetterCms.Module.Root.Mvc;
@@ -41,7 +42,8 @@ namespace BetterCms.Module.Users.Services
         /// </returns>
         public Role CreateRole(string name, string description = null)
         {
-            return SaveRole(Guid.Empty, 1, name, description);
+            bool newEntityCreated;
+            return SaveRole(Guid.Empty, 0, name, description, out newEntityCreated);
         }
 
         /// <summary>
@@ -56,7 +58,8 @@ namespace BetterCms.Module.Users.Services
         /// </returns>
         public Role UpdateRole(Guid id, int version, string name, string description = null)
         {
-            return SaveRole(id, version, name, description);
+            bool newEntityCreated;
+            return SaveRole(id, version, name, description, out newEntityCreated);
         }
 
         /// <summary>
@@ -96,7 +99,11 @@ namespace BetterCms.Module.Users.Services
                 .FetchMany(r => r.UserRoles)
                 .ToList()
                 .FirstOne();
-            role.Version = version;
+
+            if (version > 0 && role.Version != version)
+            {
+                throw new ConcurrentDataException(role);
+            }
 
             DeleteRole(role, throwOnPopulatedRole);
 
@@ -110,34 +117,48 @@ namespace BetterCms.Module.Users.Services
         /// <param name="version">The version.</param>
         /// <param name="name">The name.</param>
         /// <param name="description">The description.</param>
+        /// <param name="newEntityCreated">if set to <c>true</c> new entity was created.</param>
+        /// <param name="createIfNotExists">if set to <c>true</c> create entity if not exists.</param>
         /// <returns>
         /// Saved role entity
         /// </returns>
-        private Role SaveRole(Guid id, int version, string name, string description)
+        /// <exception cref="EntityNotFoundException"></exception>
+        /// <exception cref="System.ComponentModel.DataAnnotations.ValidationException"></exception>
+        public Role SaveRole(Guid id, int version, string name, string description, out bool newEntityCreated, bool createIfNotExists = false)
         {
             // Check if such role doesn't exist
             ValidateRoleName(id, name);
 
-            Role role;
-            if (!id.HasDefaultValue())
+            Role role = null;
+            newEntityCreated = id.HasDefaultValue();
+            if (!newEntityCreated)
             {
-                role = repository.AsQueryable<Role>(f => f.Id == id).FirstOne();
+                role = repository.AsQueryable<Role>(f => f.Id == id).FirstOrDefault();
+                newEntityCreated = role == null;
 
-                if (role.IsSystematic)
+                if (newEntityCreated && !createIfNotExists)
                 {
-                    var logMessage = string.Format("Cannot save systematic role: {0} {1}", role.Name, role.Description);
-                    var message = string.Format(UsersGlobalization.SaveRole_Cannot_Save_Systematic_Role, role.Description ?? role.Name);
-
-                    throw new ValidationException(() => message, logMessage);
+                    throw new EntityNotFoundException(typeof(Role), id);
                 }
+            }
 
+            if (newEntityCreated)
+            {
+                role = new Role { Id = id };
+            }
+
+            if (role.IsSystematic)
+            {
+                var logMessage = string.Format("Cannot save systematic role: {0} {1}", role.Name, role.Description);
+                var message = string.Format(UsersGlobalization.SaveRole_Cannot_Save_Systematic_Role, role.Description ?? role.Name);
+
+                throw new ValidationException(() => message, logMessage);
+            }
+
+            if (version > 0)
+            {
                 role.Version = version;
             }
-            else
-            {
-                role = new Role();
-            }
-
             role.Name = name;
             role.Description = description;
 

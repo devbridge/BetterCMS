@@ -1,4 +1,5 @@
 ﻿using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Blog.Models.Events;
 using BetterCms.Module.Pages.Models;
 
 // ReSharper disable CheckNamespace
@@ -14,6 +15,11 @@ namespace BetterCms.Events
         /// Occurs when blog post is created.
         /// </summary>
         public event DefaultEventHandler<SingleItemEventArgs<BlogPost>> BlogCreated;
+
+        /// <summary>
+        /// Occurs before blog post is updated.
+        /// </summary>
+        public event DefaultEventHandler<BlogChangingEventArgs> BlogChanging;
 
         /// <summary>
         /// Occurs when blog post is updated.
@@ -42,6 +48,18 @@ namespace BetterCms.Events
             {
                 BlogCreated(new SingleItemEventArgs<BlogPost>(blog));
             }
+        }
+
+        public BlogChangingEventArgs OnBlogChanging(UpdatingBlogModel beforeUpdate, UpdatingBlogModel afterUpdate)
+        {
+            var args = new BlogChangingEventArgs(beforeUpdate, afterUpdate);
+
+            if (BlogChanging != null)
+            {
+                BlogChanging(args);
+            }
+
+            return args;
         }
 
         /// <summary>

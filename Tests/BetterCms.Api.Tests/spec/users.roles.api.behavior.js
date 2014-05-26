@@ -93,7 +93,8 @@ describe('users.roles.api.behavior', function () {
                         { field: 'Version', value: '1' },
                         
                         { field: 'Name', value: '04102' },
-                        { field: 'IsSystematic', value: 'true' }
+                        { field: 'IsSystematic', value: 'true' },
+                        { field: 'Description', value: null }
                     ]
                 }
             };
@@ -167,6 +168,16 @@ describe('users.roles.api.behavior', function () {
             expect(result.data.id).toBe('5fb47003153f4e258b70a22201116a31', 'Correctly filtered id should be retrieved.');
             expect(result.data.name).toBe('04104', 'Correctly filtered name should be retrieved.');
             expect(result.data.isSystematic).toBe(true, 'Correctly filtered isSystematic should be retrieved.');
+        });
+    });
+
+    it('04105: Should test CRUD for roles.', function () {
+        api.testCrud(runs, waitsFor, expect, "5e82afa37695479397f3a222011157ba", "/bcms-api/roles/", {
+            getPostData: function (json) {
+                json.data.name = api.createGuid();
+                json.data.version = 0;
+                return json.data;
+            }
         });
     });
 });

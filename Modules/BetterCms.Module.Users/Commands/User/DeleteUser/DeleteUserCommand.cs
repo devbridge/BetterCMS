@@ -1,5 +1,6 @@
 ﻿using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Users.Services;
 
 namespace BetterCms.Module.Users.Commands.User.DeleteUser
 {
@@ -8,6 +9,13 @@ namespace BetterCms.Module.Users.Commands.User.DeleteUser
     /// </summary>
     public class DeleteUserCommand : CommandBase, ICommand<DeleteUserCommandRequest, bool>
     {
+        private readonly IUserService userService;
+
+        public DeleteUserCommand(IUserService userService)
+        {
+            this.userService = userService;
+        }
+
         /// <summary>
         /// Executes this command.
         /// </summary>
@@ -15,22 +23,7 @@ namespace BetterCms.Module.Users.Commands.User.DeleteUser
         /// <returns>Executed command result.</returns>
         public bool Execute(DeleteUserCommandRequest request)
         {
-            var user = Repository.First<Models.User>(request.UserId);
-            user.Version = request.Version;
-            Repository.Delete(user);
-
-            if (user.UserRoles != null)
-            {
-                foreach (var userRole in user.UserRoles)
-                {
-                    Repository.Delete(userRole);
-                }
-            }
-
-            UnitOfWork.Commit();
-
-            // Notify.
-            Events.UserEvents.Instance.OnUserDeleted(user);
+            userService.DeleteUser(request.UserId, request.Version);
 
             return true;
         }

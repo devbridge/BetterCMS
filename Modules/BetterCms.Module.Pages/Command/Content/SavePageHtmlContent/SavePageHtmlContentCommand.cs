@@ -160,8 +160,8 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
             {
                 if (isNew)
                 {
-                    Events.PageEvents.Instance.OnPageContentInserted(pageContent);
                     Events.PageEvents.Instance.OnHtmlContentCreated((HtmlContent)pageContent.Content);
+                    Events.PageEvents.Instance.OnPageContentInserted(pageContent);
                 }
                 else
                 {

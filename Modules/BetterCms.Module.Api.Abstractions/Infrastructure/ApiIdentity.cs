@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace BetterCms.Module.Api.Infrastructure
 {
     [DataContract]
+    [Serializable]
     public class ApiIdentity
     {
         public ApiIdentity()

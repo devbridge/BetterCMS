@@ -29,7 +29,13 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// <returns>Blog post view model</returns>
         public SaveBlogPostCommandResponse Execute(BlogPostViewModel request)
         {
-            var blogPost = blogService.SaveBlogPost(request, Context.Principal);
+            string[] error;
+            var blogPost = blogService.SaveBlogPost(request, Context.Principal, out error);
+            if (blogPost == null)
+            {
+                Context.Messages.AddError(error);
+                return null;
+            }
 
             return new SaveBlogPostCommandResponse
                        {

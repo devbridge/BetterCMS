@@ -354,4 +354,16 @@ describe('users.users.api.behavior', function () {
             expect(result.data.valid).toBeFalsy('JSON data should be boolean false.');
         });
     });
+
+    it('04009: Should test CRUD for users.', function () {
+        api.testCrud(runs, waitsFor, expect, "f7076866be7847269a5fa22201072aaf", "/bcms-api/users/", {
+            getPostData: function (json) {
+                json.data.userName = api.createGuid();
+                json.data.password = api.createGuid();
+                json.data.email = api.createGuid() + '@' + api.createGuid() + '.com';
+                json.data.version = 0;
+                return json.data;
+            }
+        });
+    });
 });

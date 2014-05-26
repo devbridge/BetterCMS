@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace BetterCms.Module.Api.Infrastructure
 {
@@ -6,6 +7,7 @@ namespace BetterCms.Module.Api.Infrastructure
     /// Represents container for data filter, order and paging information
     /// </summary>
     [DataContract]
+    [Serializable]
     public class DataOptions
     {
         /// <summary>

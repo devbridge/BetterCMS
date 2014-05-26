@@ -1,10 +1,12 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
 {
     [DataContract]
+    [Serializable]
     public class ImageModel : ModelBase
     {
         /// <summary>
@@ -204,5 +206,59 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         /// </value>
         [DataMember]
         public virtual string OriginalUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the file URI.
+        /// </summary>
+        /// <value>
+        /// The file URI.
+        /// </value>
+        [DataMember]
+        public virtual string FileUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets the is uploaded.
+        /// </summary>
+        /// <value>
+        /// The is uploaded.
+        /// </value>
+        [DataMember]
+        public virtual bool? IsUploaded { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is temporary.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is temporary; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public virtual bool IsTemporary { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is canceled.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is canceled; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public virtual bool IsCanceled { get; set; }
+
+        /// <summary>
+        /// Gets or sets the original URI.
+        /// </summary>
+        /// <value>
+        /// The original URI.
+        /// </value>
+        [DataMember]
+        public virtual string OriginalUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets the thumbnail URI.
+        /// </summary>
+        /// <value>
+        /// The thumbnail URI.
+        /// </value>
+        [DataMember]
+        public virtual string ThumbnailUri { get; set; }
     }
 }

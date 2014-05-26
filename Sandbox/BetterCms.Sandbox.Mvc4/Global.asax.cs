@@ -59,6 +59,7 @@ namespace BetterCms.Sandbox.Mvc4
 
         private void AddContentEvents()
         {
+            BetterCms.Events.RootEvents.Instance.ContentRestored += args => Log.Info("ContentRestored:" + args.Item.ToString());
             BetterCms.Events.PageEvents.Instance.PageContentInserted += args => Log.Info("PageContentInserted:" + args.Item.ToString());
             BetterCms.Events.PageEvents.Instance.PageContentDeleted += args => Log.Info("PageContentDeleted:" + args.Item.ToString());
             BetterCms.Events.PageEvents.Instance.PageContentSorted += args => Log.Info("PageContentSorted:" + args.Item.ToString());
@@ -66,6 +67,7 @@ namespace BetterCms.Sandbox.Mvc4
             BetterCms.Events.PageEvents.Instance.HtmlContentCreated += args => Log.Info("HtmlContentCreated:" + args.Item.ToString());
             BetterCms.Events.PageEvents.Instance.HtmlContentUpdated += args => Log.Info("HtmlContentUpdated:" + args.Item.ToString());
             BetterCms.Events.PageEvents.Instance.HtmlContentDeleted += args => Log.Info("HtmlContentDeleted:" + args.Item.ToString());
+            BetterCms.Events.PageEvents.Instance.ContentDraftDestroyed += args => Log.Info("ContentDraftDestroyed:" + args.Item.ToString());
         }
 
         private void AddLayoutEvents()
@@ -104,6 +106,7 @@ namespace BetterCms.Sandbox.Mvc4
         private void AddBlogPostEvents()
         {
             BetterCms.Events.BlogEvents.Instance.BlogCreated += args => Log.Info("BlogCreated:" + args.Item.ToString());
+            BetterCms.Events.BlogEvents.Instance.BlogChanging += args => Log.Info("BlogChanging: BeforeUpdate: " + args.BeforeUpdate.ToString() + "; AfterUpdate: " + args.AfterUpdate.ToString());
             BetterCms.Events.BlogEvents.Instance.BlogUpdated += args => Log.Info("BlogUpdated:" + args.Item.ToString());
             BetterCms.Events.BlogEvents.Instance.BlogDeleted += args => Log.Info("BlogDeleted:" + args.Item.ToString());
         }
@@ -207,6 +210,11 @@ namespace BetterCms.Sandbox.Mvc4
 
         protected void Application_EndRequest()
         {
+            // Redirect to login page example:
+            // if (Response.StatusCode == 403)
+            // {
+            //     Response.Redirect(string.Format(FormsAuthentication.LoginUrl+"?returnUrl={0}", (new UrlHelper(Request.RequestContext)).Encode(Request.RawUrl)));
+            // }
             cmsHost.OnEndRequest(this);
         }
 

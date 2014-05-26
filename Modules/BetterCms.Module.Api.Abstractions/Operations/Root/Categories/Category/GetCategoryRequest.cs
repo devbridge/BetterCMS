@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using ServiceStack.ServiceHost;
 
@@ -7,6 +8,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
     [Route("/categories/{CategoryId}", Verbs = "GET")]
     [Route("/categories/by-name/{CategoryName}", Verbs = "GET")]
     [DataContract]
+    [Serializable]
     public class GetCategoryRequest : IReturn<GetCategoryResponse>
     {
         [DataMember]

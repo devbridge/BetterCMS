@@ -19,35 +19,34 @@ using ServiceStack.WebHost.Endpoints;
 
 namespace BetterCms.Module.Api
 {
-	public class WebApiApplicationHost
-		: AppHostBase
-	{
+    public class WebApiApplicationHost : AppHostBase
+    {
         private readonly Func<ILifetimeScope> containerProvider;
 
         private static readonly ILog logger = LogManager.GetCurrentClassLogger();
 
         public WebApiApplicationHost(Func<ILifetimeScope> containerProvider)
             : base("Better CMS Web API Host", GetAssembliesWithServices())
-        {            
+        {
             this.containerProvider = containerProvider;
         }
 
-		public override void Configure(Funq.Container container)
-		{            
+        public override void Configure(Funq.Container container)
+        {
             RequestBinders.Clear();
-			
+
             JsConfig.EmitCamelCaseNames = true;
             JsConfig.IncludeNullValues = true;
-		    JsConfig.DateHandler = JsonDateHandler.ISO8601;
+            JsConfig.DateHandler = JsonDateHandler.ISO8601;
 
             Plugins.Add(new ValidationFeature());
-            
+
             // Add custom request filter
             RequestFilters.Add(GetRequestProcessor.DeserializeJsonFromGet);
 
             container.Adapter = new AutofacContainerAdapter(containerProvider);
             container.RegisterValidators(typeof(GetTagRequestValidator).Assembly);
-		}
+        }
 
         private static Assembly[] GetAssembliesWithServices()
         {
@@ -97,5 +96,5 @@ namespace BetterCms.Module.Api
 
             return assemblies.ToArray();
         }
-	}
+    }
 }

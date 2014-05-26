@@ -63,7 +63,7 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         public bool IsDeleted { get; set; }
 
         public int Version { get; set; }
-        
+
         public DateTime CreatedOn { get; set; }
         
         public DateTime ModifiedOn { get; set; }

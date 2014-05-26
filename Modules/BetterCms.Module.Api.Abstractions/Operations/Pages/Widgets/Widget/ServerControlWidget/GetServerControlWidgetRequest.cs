@@ -1,4 +1,7 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
+
+using BetterCms.Module.Api.Infrastructure;
 
 using ServiceStack.ServiceHost;
 
@@ -6,9 +9,10 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidg
 {
     [Route("/widgets/server-control/{WidgetId}", Verbs = "GET")]
     [DataContract]
-    public class GetServerControlWidgetRequest : IReturn<GetServerControlWidgetResponse>
+    [Serializable]
+    public class GetServerControlWidgetRequest : RequestBase<GetServerControlWidgetModel>, IReturn<GetServerControlWidgetResponse>
     {
         [DataMember]
-        public System.Guid WidgetId { get; set; }
+        public Guid WidgetId { get; set; }
     }
 }

@@ -40,6 +40,11 @@ namespace BetterCms.Events
         public event DefaultEventHandler<SingleItemEventArgs<MediaFolder>> MediaFolderDeleted;
         
         /// <summary>
+        /// Occurs when a media is restored from archive.
+        /// </summary>
+        public event DefaultEventHandler<SingleItemEventArgs<Media>> MediaRestored;
+        
+        /// <summary>
         /// Occurs when a media is archived.
         /// </summary>
         public event DefaultEventHandler<SingleItemEventArgs<Media>> MediaArchived;
@@ -97,6 +102,14 @@ namespace BetterCms.Events
             if (MediaFolderDeleted != null)
             {
                 MediaFolderDeleted(new SingleItemEventArgs<MediaFolder>(mediaFolder));
+            }
+        }
+        
+        public void OnMediaRestored(Media media)
+        {
+            if (MediaRestored != null)
+            {
+                MediaRestored(new SingleItemEventArgs<Media>(media));
             }
         }
         

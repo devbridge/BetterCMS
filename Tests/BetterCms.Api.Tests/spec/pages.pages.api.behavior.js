@@ -7,7 +7,8 @@ describe('pages.pages.api.behavior', function () {
     var constants = {
         testPageId: 'f0464c233b67406babe8a20400b4d8b8',
         testPageTitle: '_0000_Page_For_Tests',
-        testPageUrl: '/0000-page-for-tests/'
+        testPageUrl: '/0000-page-for-tests/',
+        testPage2Id: '0a9a85852e4944e4a5d98bcee6d88793'
     };
 
     it('01000: Should get list of pages', function() {
@@ -127,7 +128,7 @@ describe('pages.pages.api.behavior', function () {
         });
     });
 
-    it('01004: Should get page properties by id', function () {
+    it('01004.1: Should get page properties by id', function () {
         var url = '/bcms-api/page-properties/' + constants.testPageId,
              result,
              ready = false;
@@ -161,6 +162,17 @@ describe('pages.pages.api.behavior', function () {
             expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
 
             expectPagePropertiesPropertiesAreNotNull(result);
+        });
+    });
+
+    it('01004.2: Should test CRUD for pages.', function () {
+        api.testCrud(runs, waitsFor, expect, constants.testPageId, "/bcms-api/page-properties/", {
+            getPostData: function (json) {
+                json.data.title = api.createGuid();
+                json.data.pageUrl = null;
+                json.data.version = 0;
+                return json.data;
+            }
         });
     });
 
@@ -307,6 +319,44 @@ describe('pages.pages.api.behavior', function () {
 
             expect(contentsFound).toBe(4, 'Correct count of found contents should be retrieved.');
         });
+    });
+
+    it('01008.1: Should get page content by id', function() {
+        var url = '/bcms-api/pages/' + constants.testPageId + '/contents/' + 'd88b0aa8172149bb86c8a20400fe687e',
+              result,
+              ready = false;
+
+        runs(function () {
+            api.get(url, null, function (json) {
+                result = json;
+                ready = true;
+            });
+        });
+
+        waitsFor(function () {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
+            expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
+            expect(result.data.items).not.toBeNull('JSON data.items object should be retrieved.');
+        });
+    });
+
+    it('01008.2: Should test CRUD for page contents.', function () {
+        api.testCrud(runs, waitsFor, expect, "d88b0aa8172149bb86c8a20400fe687e", '/bcms-api/pages/' + constants.testPageId + '/contents/', {
+            getPostData: function (json) {
+                json.data.name = api.createGuid();
+                json.data.version = 0;
+                return json.data;
+            }
+        });
+    });
+
+    it('01008.3: Should destroy content draft.', function () {
+        // TODO: imepelement.
+        // DELETE: /bcms-api/contents/{Id}/draft
     });
 
     it('01009: Should get pages list, filtered by tags, using AND connector', function () {
@@ -1134,6 +1184,7 @@ describe('pages.pages.api.behavior', function () {
             expect(result.data.items[3].title).toBe('01027: only for role1', 'Correctly filtered data.items[3].title should be retrieved.');
         });
     });
+
 
     function expectPageListItemPropertiesAreNotNull(page) {
         api.expectBasePropertiesAreNotNull(page);

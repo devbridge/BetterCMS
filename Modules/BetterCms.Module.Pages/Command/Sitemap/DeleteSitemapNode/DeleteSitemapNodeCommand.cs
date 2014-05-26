@@ -29,28 +29,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.DeleteSitemapNode
         /// <returns>Execution result.</returns>
         public bool Execute(SitemapNodeViewModel request)
         {
-            UnitOfWork.BeginTransaction();
-
-            IList<SitemapNode> deletedNodes;
-            SitemapService.DeleteNode(request.Id, request.Version, out deletedNodes);
-
-            UnitOfWork.Commit();
-
-            var updatedSitemaps = new List<Models.Sitemap>();
-            foreach (var node in deletedNodes)
-            {
-                Events.SitemapEvents.Instance.OnSitemapNodeDeleted(node);
-                if (!updatedSitemaps.Contains(node.Sitemap))
-                {
-                    updatedSitemaps.Add(node.Sitemap);
-                }
-            }
-
-            foreach (var sitemap in updatedSitemaps)
-            {
-                Events.SitemapEvents.Instance.OnSitemapUpdated(sitemap);
-            }
-
+            SitemapService.DeleteNode(request.Id, request.Version);
             return true;
         }
     }

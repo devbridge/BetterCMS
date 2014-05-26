@@ -37,12 +37,17 @@ namespace BetterCms.Api.Tests.Common
             foreach (var type in types)
             {
                 var classAttributes = type.GetCustomAttributes(false);
-                if (!classAttributes.Any(attr => attr.GetType().Name == "DataContractAttribute"))
+                if (classAttributes.All(attr => attr.GetType().Name != "DataContractAttribute"))
                 {
                     Console.WriteLine("Classs {0} has no DataContractAttribute", type.Name);
                     anyErrors = true;
                 }
-
+                
+                if (classAttributes.All(attr => attr.GetType().Name != "SerializableAttribute"))
+                {
+                    Console.WriteLine("Classs {0} has no SerializableAttribute", type.Name);
+                    anyErrors = true;
+                }
 
                 var properties = type.GetProperties();
                 foreach (var property in properties)

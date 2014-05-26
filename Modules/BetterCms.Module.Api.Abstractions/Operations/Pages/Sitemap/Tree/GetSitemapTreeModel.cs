@@ -1,8 +1,11 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
 {
+    [Obsolete("Use everything from BetterCms.Module.Api.Operations.Pages.Sitemaps name space.")]
     [DataContract]
+    [Serializable]
     public class GetSitemapTreeModel
     {
         /// <summary>
@@ -12,7 +15,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
         /// The node id.
         /// </value>
         [DataMember]
-        public System.Guid? NodeId { get; set; }
+        public Guid? NodeId { get; set; }
 
         /// <summary>
         /// Gets or sets the language identifier.
@@ -21,6 +24,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemap.Tree
         /// The language identifier.
         /// </value>
         [DataMember]
-        public System.Guid? LanguageId { get; set; }
+        public Guid? LanguageId { get; set; }
     }
 }

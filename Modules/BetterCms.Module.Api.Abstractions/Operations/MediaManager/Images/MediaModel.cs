@@ -5,6 +5,7 @@ using BetterCms.Module.Api.Infrastructure;
 namespace BetterCms.Module.Api.Operations.MediaManager.Images
 {
     [DataContract]
+    [System.Serializable]
     public class MediaModel : ModelBase
     {
         /// <summary>

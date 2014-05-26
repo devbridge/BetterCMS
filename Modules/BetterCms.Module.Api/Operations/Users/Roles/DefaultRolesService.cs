@@ -8,5 +8,10 @@ namespace BetterCms.Module.Api.Operations.Users.Roles
         {
             throw new CmsException(UsersApiConstants.UsersApiHasNoImplementationMessage);
         }
+
+        public PostRoleResponse Post(PostRoleRequest request)
+        {
+            throw new CmsException(UsersApiConstants.UsersApiHasNoImplementationMessage);
+        }
     }
 }

@@ -2,6 +2,7 @@
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Module.Api.Extensions;
 
 using ServiceStack.ServiceInterface;
 
@@ -11,9 +12,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Redirects.Redirect
     {
         private readonly IRepository repository;
 
-        public RedirectService(IRepository repository)
+        private readonly Module.Pages.Services.IRedirectService redirectService;
+
+        public RedirectService(IRepository repository, Module.Pages.Services.IRedirectService redirectService)
         {
             this.repository = repository;
+            this.redirectService = redirectService;
         }
 
         public GetRedirectResponse Get(GetRedirectRequest request)
@@ -38,6 +42,26 @@ namespace BetterCms.Module.Api.Operations.Pages.Redirects.Redirect
                        {
                            Data = model
                        };
+        }
+
+        public PutRedirectResponse Put(PutRedirectRequest request)
+        {
+            var model = request.Data.ToServiceModel();
+            if (request.Id.HasValue)
+            {
+                model.Id = request.Id.Value;
+            }
+
+            var redirect = redirectService.SaveRedirect(model, true);
+
+            return new PutRedirectResponse { Data = redirect.Id };
+        }
+
+        public DeleteRedirectResponse Delete(DeleteRedirectRequest request)
+        {
+            var result = redirectService.DeleteRedirect(request.Id, request.Data.Version);
+
+            return new DeleteRedirectResponse { Data = result };
         }
     }
 }

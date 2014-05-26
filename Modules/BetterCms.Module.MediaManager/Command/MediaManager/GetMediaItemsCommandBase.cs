@@ -446,7 +446,7 @@ namespace BetterCms.Module.MediaManager.Command.MediaManager
         {
             FillMediaViewModel(model, media);
 
-            model.PublicUrl = FileService.GetDownloadFileUrl(MediaType.File, media.Id, FileUrlResolver.EnsureFullPathUrl(media.PublicUrl));
+            model.PublicUrl = FileService.GetDownloadFileUrl(MediaType, media.Id, FileUrlResolver.EnsureFullPathUrl(media.PublicUrl));
             model.FileExtension = media.OriginalFileExtension;
             model.Size = media.Size;
             model.SizeText = media.SizeAsText();

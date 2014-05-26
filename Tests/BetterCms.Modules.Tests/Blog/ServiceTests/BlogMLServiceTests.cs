@@ -47,9 +47,10 @@ namespace BetterCms.Test.Module.Blog.ServiceTests
             });
 
             var tested = false;
+            string[] errorMesages;
             var blogService = CreateBlogService();
             blogService
-                .Setup(x => x.SaveBlogPost(It.IsAny<BlogPostViewModel>(), It.IsAny<IPrincipal>()))
+                .Setup(x => x.SaveBlogPost(It.IsAny<BlogPostViewModel>(), It.IsAny<IPrincipal>(), out errorMesages))
                 .Returns((BlogPostViewModel x, IPrincipal principal) =>
                     {
                         AssertBlogPostUrl(x);
@@ -94,9 +95,10 @@ namespace BetterCms.Test.Module.Blog.ServiceTests
                 });
 
             var tested = false;
+            string[] errorMesages;
             var blogService = CreateBlogService();
             blogService
-                .Setup(x => x.SaveBlogPost(It.IsAny<BlogPostViewModel>(), It.IsAny<IPrincipal>()))
+                .Setup(x => x.SaveBlogPost(It.IsAny<BlogPostViewModel>(), It.IsAny<IPrincipal>(), out errorMesages))
                 .Returns((BlogPostViewModel x, IPrincipal principal) =>
                     {
                         AssertBlogPostUrl(x);

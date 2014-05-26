@@ -44,6 +44,11 @@ namespace BetterCms.Events
         /// Occurs when HTML content is deleted.
         /// </summary>        
         public event DefaultEventHandler<SingleItemEventArgs<HtmlContent>> HtmlContentDeleted;
+
+        /// <summary>
+        /// Occurs when content's draft version is destroyed.
+        /// </summary>        
+        public event DefaultEventHandler<SingleItemEventArgs<Content>> ContentDraftDestroyed;
         
         public void OnPageContentInserted(PageContent pageContent)
         {
@@ -98,6 +103,14 @@ namespace BetterCms.Events
             if (HtmlContentDeleted != null)
             {
                 HtmlContentDeleted(new SingleItemEventArgs<HtmlContent>(htmlContent));
+            }
+        }
+
+        public void OnContentDraftDestroyed(Content content)
+        {
+            if (ContentDraftDestroyed != null)
+            {
+                ContentDraftDestroyed(new SingleItemEventArgs<Content>(content));
             }
         }
     }

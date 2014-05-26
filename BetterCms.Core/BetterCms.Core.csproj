@@ -175,6 +175,7 @@
     <Compile Include="Exceptions\Api\CmsApiException.cs" />
     <Compile Include="Exceptions\Api\CmsApiValidationException.cs" />
     <Compile Include="Exceptions\Mvc\ConfirmationRequestException.cs" />
+    <Compile Include="Models\EntityIdGenerator.cs" />
     <Compile Include="Modules\CssIncludeDescriptor.cs" />
     <Compile Include="Modules\Projections\JavaScriptModuleLink.cs" />
     <Compile Include="Security\SuppressFormsAuthenticationRedirectModule.cs" />

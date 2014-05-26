@@ -1,9 +1,4 @@
-﻿using System.Linq;
-
-using BetterCms.Core.DataAccess;
-using BetterCms.Module.Api.Helpers;
-using BetterCms.Module.Api.Operations.Root;
-using BetterCms.Module.Root.Models;
+﻿using BetterCms.Core.DataAccess;
 
 using ServiceStack.ServiceInterface;
 
@@ -20,15 +15,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.ServerControlWidg
 
         public GetServerControlWidgetOptionsResponse Get(GetServerControlWidgetOptionsRequest request)
         {
-            var results = repository
-                .AsQueryable<ContentOption>(o => o.Content.Id == request.WidgetId)
-                .Select(o => new OptionModel
-                    {
-                        Key = o.Key,
-                        DefaultValue = o.DefaultValue,
-                        Type = (OptionType)(int)o.Type
-                    })
-                .ToDataListResponse(request);
+            var results = WidgetOptionsHelper.GetWidgetOptionsResponse(repository, request.WidgetId, request);
 
             return new GetServerControlWidgetOptionsResponse { Data = results };
         }

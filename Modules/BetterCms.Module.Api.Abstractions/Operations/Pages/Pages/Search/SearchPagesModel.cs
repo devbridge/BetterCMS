@@ -1,8 +1,10 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Search
 {
     [DataContract]
+    [Serializable]
     public class SearchPagesModel
     {
         /// <summary>
