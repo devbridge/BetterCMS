@@ -172,7 +172,7 @@ describe('blog.blogPosts.api.behavior', function () {
         });
     });
     
-    it('02105: Should get blog post properties by id.', function () {
+    it('02105.1: Should get blog post properties by id.', function () {
         var url = '/bcms-api/blog-post-properties/' + constants.testPageId,
              result,
              ready = false;
@@ -185,7 +185,8 @@ describe('blog.blogPosts.api.behavior', function () {
             includeImages: true,
             includeMetaData: true,
             includeHtmlContent: true,
-            includeAccessRules: true
+            includeAccessRules: true,
+            includeTechnicalInfo: true
         };
 
         runs(function () {
@@ -266,6 +267,13 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(metadata.metaKeywords).toBe('Test meta keywords', 'Correctly filtered metaKeywords should be retrieved.');
             expect(metadata.metaDescription).toBe('Test meta description', 'Correctly filtered metaDescription should be retrieved.');
 
+            // technical info
+            var techInfo = result.technicalInfo;
+            expect(techInfo).toBeDefinedAndNotNull('JSON techInfo object should be retrieved.');
+            expect(techInfo.blogPostContentId).toBe('335a518ba9e841eaab84a20500bbe74c', 'Correctly filtered techInfo.blogPostContentId should be retrieved.');
+            expect(techInfo.pageContentId).toBe('2815b2be74314dff96aaa20500bbe74e', 'Correctly filtered techInfo.pageContentId should be retrieved.');
+            expect(techInfo.regionId).toBe('e3e2e7fe62df4ba683216fdcc1691d8a', 'Correctly filtered techInfo.regionId should be retrieved.');
+
             // access rules
             var accessRules = result.accessRules;
             expect(accessRules).toBeDefinedAndNotNull('JSON accessRules object should be retrieved.');
@@ -300,7 +308,18 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(rule6.identity).toBe('role1', 'Correctly filtered accessRules[5].identity should be role1.');
         });
     });
-    
+
+    it('02105.2: Should test CRUD for blog post properties.', function () {
+        api.testCrud(runs, waitsFor, expect, constants.testPageId, "/bcms-api/blog-post-properties/", {
+            getPostData: function (json) {
+                json.data.title = "Test 02105.2: " + api.createGuid();
+                json.data.blogPostUrl = null;
+                json.data.version = 0;
+                return json.data;
+            }
+        });
+    });
+
     it('02106: Should get blog post list, filtered by tags, using AND connector', function () {
         filterByTags('and', 1, ['IFilterByTags Page 1']);
     });

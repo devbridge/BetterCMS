@@ -10,6 +10,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Translations
     [Route("/pages/{PageId}/translations")]
     [Route("/pages/translations/by-url/{PageUrl}")]
     [DataContract]
+    [Serializable]
     public class GetPageTranslationsRequest : RequestBase<DataOptions>, IReturn<GetPageTranslationsResponse>
     {
         [DataMember]

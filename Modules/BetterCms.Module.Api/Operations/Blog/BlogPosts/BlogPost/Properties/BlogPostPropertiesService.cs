@@ -5,9 +5,17 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Exceptions.Api;
+using BetterCms.Core.Services;
+
+using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Root;
+
 using BetterCms.Module.Blog.Models;
+using BetterCms.Module.Blog.Services;
 using BetterCms.Module.MediaManager.Services;
+using BetterCms.Module.Pages.Services;
+using BetterCms.Module.Pages.ViewModels.Page;
 
 using ServiceStack.ServiceInterface;
 
@@ -19,10 +27,20 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
 
         private readonly IMediaFileUrlResolver fileUrlResolver;
 
-        public BlogPostPropertiesService(IRepository repository, IMediaFileUrlResolver fileUrlResolver)
+        private readonly IBlogSaveService blogSaveService;
+
+        private readonly ISecurityService securityService;
+        
+        private readonly IPageService pageService;
+
+        public BlogPostPropertiesService(IRepository repository, IMediaFileUrlResolver fileUrlResolver,
+            IBlogSaveService blogSaveService, ISecurityService securityService, IPageService pageService)
         {
             this.repository = repository;
             this.fileUrlResolver = fileUrlResolver;
+            this.blogSaveService = blogSaveService;
+            this.securityService = securityService;
+            this.pageService = pageService;
         }
 
         public GetBlogPostPropertiesResponse Get(GetBlogPostPropertiesRequest request)
@@ -161,9 +179,9 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
                     })
                 .FirstOne();
 
-            if (request.Data.IncludeHtmlContent)
+            if (request.Data.IncludeHtmlContent || request.Data.IncludeTechnicalInfo)
             {
-                response.HtmlContent = LoadHtml(request.BlogPostId);
+                LoadContents(request.Data.IncludeHtmlContent, request.Data.IncludeTechnicalInfo, request.BlogPostId, response);
             }
 
             if (request.Data.IncludeTags)
@@ -180,12 +198,36 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
             return response;
         }
 
-        private string LoadHtml(Guid blogPostId)
+        private void LoadContents(bool includeHtml, bool includeTechnicalInfo, Guid blogPostId, GetBlogPostPropertiesResponse response)
         {
-            return repository
-                .AsQueryable<Module.Root.Models.PageContent>(pc => pc.Page.Id == blogPostId && !pc.Content.IsDeleted && pc.Content is BlogPostContent)
-                .Select(pc => ((BlogPostContent)pc.Content).Html)
-                .FirstOrDefault();
+            var content =
+                repository.AsQueryable<Module.Root.Models.PageContent>(pc => pc.Page.Id == blogPostId && !pc.Content.IsDeleted && pc.Content is BlogPostContent)
+                    .Select(pc => new
+                                  {
+                                      Html = ((BlogPostContent)pc.Content).Html, 
+                                      ContentId = pc.Content.Id, 
+                                      PageContentId = pc.Id, 
+                                      RegionId = pc.Region.Id
+                                  })
+                    .FirstOrDefault();
+
+            if (content != null)
+            {
+                if (includeHtml)
+                {
+                    response.HtmlContent = content.Html;
+                }
+
+                if (includeTechnicalInfo)
+                {
+                    response.TechnicalInfo = new TechnicalInfoModel
+                                             {
+                                                 BlogPostContentId = content.ContentId,
+                                                 PageContentId = content.PageContentId,
+                                                 RegionId = content.RegionId
+                                             };
+                }
+            }
         }
 
         private List<TagModel> LoadTags(Guid blogPostId)
@@ -220,6 +262,48 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
                         IsForRole = accessRule.IsForRole
                     })
                     .ToList();
+        }
+
+        public PostBlogPostPropertiesResponse Post(PostBlogPostPropertiesRequest request)
+        {
+            var result = Put(
+                    new PutBlogPostPropertiesRequest
+                    {
+                        Data = request.Data,
+                        User = request.User
+                    });
+
+            return new PostBlogPostPropertiesResponse { Data = result.Data };
+        }
+
+        public PutBlogPostPropertiesResponse Put(PutBlogPostPropertiesRequest request)
+        {
+            var serviceModel = request.Data.ToServiceModel();
+            if (request.Id.HasValue)
+            {
+                serviceModel.Id = request.Id.Value;
+            }
+
+            string[] error;
+            var response = blogSaveService.SaveBlogPost(serviceModel, securityService.GetCurrentPrincipal(), out error);
+            if (response == null)
+            {
+                throw new CmsApiValidationException(error != null && error.Length > 0 ? string.Join(",", error) : "Page properties saving was canceled.");
+            }
+
+            return new PutBlogPostPropertiesResponse { Data = response.Id };
+        }
+
+        public DeleteBlogPostPropertiesResponse Delete(DeleteBlogPostPropertiesRequest request)
+        {
+            var model = new DeletePageViewModel
+                    {
+                        PageId = request.Id,
+                        Version = request.Data.Version
+                    };
+            var result = pageService.DeletePage(model, securityService.GetCurrentPrincipal());
+
+            return new DeleteBlogPostPropertiesResponse { Data = result };
         }
     }
 }

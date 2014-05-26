@@ -510,7 +510,7 @@ namespace BetterCms.Module.Blog.Content.Resources
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Author with ID {0} wasn&apos;t found in the list of importing authors.
+        ///   Looks up a localized string similar to Author with ID &quot;{0}&quot; wasn&apos;t found in the list of importing authors.
         /// </summary>
         public static string ImportBlogPosts_AuthorByRefNotFound_Message
         {
@@ -521,7 +521,7 @@ namespace BetterCms.Module.Blog.Content.Resources
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Category with ID {0} wasn&apos;t found in the list of importing categories.
+        ///   Looks up a localized string similar to Category with ID &quot;{0}&quot; wasn&apos;t found in the list of importing categories.
         /// </summary>
         public static string ImportBlogPosts_CategoryByRefNotFound_Message
         {
@@ -796,7 +796,7 @@ namespace BetterCms.Module.Blog.Content.Resources
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to There are no compatible layouts for blogs..
+        ///   Looks up a localized string similar to There are no compatible layouts for blog post..
         /// </summary>
         public static string SaveBlogPost_LayoutNotFound_Message
         {
@@ -1104,7 +1104,7 @@ namespace BetterCms.Module.Blog.Content.Resources
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Blogs.
+        ///   Looks up a localized string similar to Blog.
         /// </summary>
         public static string SiteSettings_BlogsMenuItem
         {

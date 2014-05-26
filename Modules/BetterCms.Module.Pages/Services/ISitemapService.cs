@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Principal;
 
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
@@ -33,8 +34,8 @@ namespace BetterCms.Module.Pages.Services
         /// </summary>
         /// <param name="id">The id.</param>
         /// <param name="version">The version.</param>
-        /// <param name="deletedNodes">The deleted nodes.</param>
-        void DeleteNode(Guid id, int version, out IList<SitemapNode> deletedNodes);
+        /// <param name="sitemapId">The sitemap identifier.</param>
+        void DeleteNode(Guid id, int version, Guid? sitemapId = null);
 
         /// <summary>
         /// Deletes the node and child nodes.
@@ -99,5 +100,13 @@ namespace BetterCms.Module.Pages.Services
         /// <param name="archive">The archive.</param>
         /// <returns>Restored sitemap.</returns>
         Sitemap RestoreSitemapFromArchive(SitemapArchive archive);
+
+        /// <summary>
+        /// Deletes the sitemap.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="version">The version.</param>
+        /// <param name="currentUser">The current user.</param>
+        void DeleteSitemap(Guid id, int version, IPrincipal currentUser);
     }
 }

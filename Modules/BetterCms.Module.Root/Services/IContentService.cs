@@ -13,7 +13,7 @@ namespace BetterCms.Module.Root.Services
 
         Models.Content SaveContentWithStatusUpdate(Models.Content updatedContent, ContentStatus requestedStatus);
 
-        void RestoreContentFromArchive(Models.Content restoreFrom);
+        Models.Content RestoreContentFromArchive(Models.Content restoreFrom);
 
         int GetPageContentNextOrderNumber(Guid pageId);
 

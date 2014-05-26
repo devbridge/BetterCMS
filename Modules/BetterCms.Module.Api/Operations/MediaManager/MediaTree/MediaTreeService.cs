@@ -50,17 +50,17 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
                     deniedPages = accessControlService.GetPrincipalDeniedObjects<MediaFile>(principal, false);
                 }
 
-                response.Data.FilesTree = LoadMediaTree<MediaFile>(MediaType.File, deniedPages, request.Data.IncludeArchived, request.Data.IncludeFiles, request.Data.IncludeAccessRules);
+                response.Data.FilesTree = LoadMediaTree<MediaFile>(Module.MediaManager.Models.MediaType.File, deniedPages, request.Data.IncludeArchived, request.Data.IncludeFiles, request.Data.IncludeAccessRules);
             }
             if (request.Data.IncludeImagesTree)
             {
-                response.Data.ImagesTree = LoadMediaTree<MediaImage>(MediaType.Image, null, request.Data.IncludeArchived, request.Data.IncludeImages, false);
+                response.Data.ImagesTree = LoadMediaTree<MediaImage>(Module.MediaManager.Models.MediaType.Image, null, request.Data.IncludeArchived, request.Data.IncludeImages, false);
             }
 
             return response;
         }
 
-        private IList<MediaItemModel> LoadMediaTree<TEntity>(MediaType mediaType, IEnumerable<Guid> deniedPages,
+        private IList<MediaItemModel> LoadMediaTree<TEntity>(Module.MediaManager.Models.MediaType mediaType, IEnumerable<Guid> deniedPages,
             bool includeArchived, bool loadFiles, bool includeAccessRules)
             where TEntity: Media
         {
@@ -69,7 +69,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
                     .OrderBy(m => m.Title)
                     .Where(f => f.Type == mediaType && f.Original == null);
 
-            if (mediaType == MediaType.Image)
+            if (mediaType == Module.MediaManager.Models.MediaType.Image)
             {
                 query = query.Where(f => !(f is MediaImage) || (!((MediaImage)f).IsTemporary && ((MediaImage)f).IsUploaded == true));
             }

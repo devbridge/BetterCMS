@@ -1,4 +1,7 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
+
+using BetterCms.Module.Api.Infrastructure;
 
 using ServiceStack.ServiceHost;
 
@@ -6,9 +9,10 @@ namespace BetterCms.Module.Api.Operations.Root.Layouts.Layout
 {
     [Route("/layouts/{LayoutId}", Verbs = "GET")]
     [DataContract]
-    public class GetLayoutRequest : IReturn<GetLayoutResponse>
+    [Serializable]
+    public class GetLayoutRequest : RequestBase<GetLayoutModel>, IReturn<GetLayoutResponse>
     {
         [DataMember]
-        public System.Guid LayoutId { get; set; }
+        public Guid LayoutId { get; set; }
     }
 }

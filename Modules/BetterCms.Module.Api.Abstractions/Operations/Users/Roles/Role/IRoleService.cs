@@ -3,5 +3,9 @@
     public interface IRoleService
     {
         GetRoleResponse Get(GetRoleRequest request);
+
+        PutRoleResponse Put(PutRoleRequest request);
+
+        DeleteRoleResponse Delete(DeleteRoleRequest request);
     }
 }

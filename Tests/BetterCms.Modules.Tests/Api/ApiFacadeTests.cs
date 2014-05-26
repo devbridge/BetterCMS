@@ -34,6 +34,7 @@ namespace BetterCms.Test.Module.Api
                 Assert.IsNotNull(api.Pages.Content);
                 Assert.IsNotNull(api.Pages.Content.Html);
                 Assert.IsNotNull(api.Pages.Content.History);
+                Assert.IsNotNull(api.Pages.Content.Draft);
                 Assert.IsNotNull(api.Pages.Page.Contents);
                 Assert.IsNotNull(api.Pages.Page.Properties);
                 Assert.IsNotNull(api.Pages.Redirect);
@@ -48,6 +49,11 @@ namespace BetterCms.Test.Module.Api
                 Assert.IsNotNull(api.Pages.Sitemap.Node);
                 Assert.IsNotNull(api.Pages.Sitemap.Nodes);
                 Assert.IsNotNull(api.Pages.Sitemap.Tree);
+                Assert.IsNotNull(api.Pages.SitemapNew);
+                Assert.IsNotNull(api.Pages.SitemapNew.Node);
+                Assert.IsNotNull(api.Pages.SitemapNew.Nodes);
+                Assert.IsNotNull(api.Pages.SitemapNew.Tree);
+                Assert.IsNotNull(api.Pages.Sitemaps);
 
                 Assert.IsNotNull(api.Blog);
                 Assert.IsNotNull(api.Blog.BlogPost);
@@ -59,6 +65,7 @@ namespace BetterCms.Test.Module.Api
 
                 Assert.IsNotNull(api.Media);
                 Assert.IsNotNull(api.Media.MediaTree);
+                Assert.IsNotNull(api.Media.Folders);
                 Assert.IsNotNull(api.Media.Image);
                 Assert.IsNotNull(api.Media.Images);
                 Assert.IsNotNull(api.Media.File);

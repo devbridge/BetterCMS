@@ -3,6 +3,7 @@
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Translations
 {
     [DataContract]
+    [System.Serializable]
     public class PageTranslationModel
     {
         /// <summary>

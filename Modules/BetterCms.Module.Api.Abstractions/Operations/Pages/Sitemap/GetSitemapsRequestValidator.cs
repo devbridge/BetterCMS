@@ -1,9 +1,12 @@
-﻿using BetterCms.Module.Api.Infrastructure;
+﻿using System;
+
+using BetterCms.Module.Api.Infrastructure;
 
 using ServiceStack.FluentValidation;
 
 namespace BetterCms.Module.Api.Operations.Pages.Sitemap
 {
+    [Obsolete("Use everything from BetterCms.Module.Api.Operations.Pages.Sitemaps name space.")]
     public class GetSitemapsRequestValidator : AbstractValidator<GetSitemapsRequest>
     {
         public GetSitemapsRequestValidator()

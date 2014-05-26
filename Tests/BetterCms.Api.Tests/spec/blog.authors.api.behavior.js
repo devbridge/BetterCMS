@@ -132,4 +132,14 @@ describe('blog.authors.api.behavior', function () {
             expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
         });
     });
+
+    it('02003: Should test CRUD for authors.', function () {
+        api.testCrud(runs, waitsFor, expect, "b82a9428b40047c498a9a20500b7a276", "/bcms-api/authors/", {
+            getPostData: function (json) {
+                json.data.name = api.createGuid();
+                json.data.version = 0;
+                return json.data;
+            }
+        });
+    });
 });

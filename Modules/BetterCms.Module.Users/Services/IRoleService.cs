@@ -25,6 +25,20 @@
         Models.Role UpdateRole(System.Guid id, int version, string name, string description = null);
 
         /// <summary>
+        /// Saves the role.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="version">The version.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="description">The description.</param>
+        /// <param name="newEntityCreated">if set to <c>true</c> new entity was created.</param>
+        /// <param name="createIfNotExists">if set to <c>true</c> create if not exists.</param>
+        /// <returns>
+        /// Saved role entity
+        /// </returns>
+        Models.Role SaveRole(System.Guid id, int version, string name, string description, out bool newEntityCreated, bool createIfNotExists = false);
+
+        /// <summary>
         /// Deletes the role by specified role id and version.
         /// </summary>
         /// <param name="id">The id.</param>

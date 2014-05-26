@@ -5,6 +5,7 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Users.Roles;
+using BetterCms.Module.Api.Operations.Users.Roles.Role;
 
 using ServiceStack.ServiceInterface;
 
@@ -14,9 +15,12 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Roles
     {
         private readonly IRepository repository;
 
-        public RolesService(IRepository repository)
+        private readonly IRoleService roleService;
+
+        public RolesService(IRepository repository, IRoleService roleService)
         {
             this.repository = repository;
+            this.roleService = roleService;
         }
 
         public GetRolesResponse Get(GetRolesRequest request)
@@ -35,11 +39,23 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Roles
                         LastModifiedOn = role.ModifiedOn,
 
                         Name = role.Name,
+                        Description = role.Description,
                         IsSystematic = role.IsSystematic
                     })
                 .ToDataListResponse(request);
 
             return new GetRolesResponse { Data = listResponse };
+        }
+
+        public PostRoleResponse Post(PostRoleRequest request)
+        {
+            var result = roleService.Put(new PutRoleRequest
+                {
+                    Data = request.Data,
+                    User = request.User
+                });
+
+            return new PostRoleResponse { Data = result.Data };
         }
     }
 }

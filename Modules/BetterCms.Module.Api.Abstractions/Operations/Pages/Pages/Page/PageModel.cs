@@ -5,6 +5,7 @@ using BetterCms.Module.Api.Infrastructure;
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
 {
     [DataContract]
+    [System.Serializable]
     public class PageModel : ModelBase
     {
         /// <summary>

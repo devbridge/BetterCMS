@@ -1,10 +1,12 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
 namespace BetterCms.Module.Api.Operations.Users.Users
 {
     [DataContract]
+    [Serializable]
     public class UserModel : ModelBase
     {
         /// <summary>
@@ -50,7 +52,7 @@ namespace BetterCms.Module.Api.Operations.Users.Users
         /// The user image id.
         /// </value>
         [DataMember]
-        public System.Guid? ImageId { get; set; }
+        public Guid? ImageId { get; set; }
 
         /// <summary>
         /// Gets or sets the image URL.

@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
@@ -9,10 +10,11 @@ namespace BetterCms.Module.Api.Operations.Users.Users.User
     [Route("/users/{UserId}", Verbs = "GET")]
     [Route("/users/by-username/{UserName}", Verbs = "GET")]
     [DataContract]
+    [Serializable]
     public class GetUserRequest : RequestBase<GetUserModel>, IReturn<GetUserResponse>
     {
         [DataMember]
-        public System.Guid? UserId { get; set; }
+        public Guid? UserId { get; set; }
 
         [DataMember]
         public string UserName { get; set; }

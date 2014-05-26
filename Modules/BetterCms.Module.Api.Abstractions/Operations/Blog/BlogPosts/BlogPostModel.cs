@@ -6,6 +6,7 @@ using BetterCms.Module.Api.Operations.Root;
 namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
 {
     [DataContract]
+    [System.Serializable]
     public class BlogPostModel : ModelBase
     {
         /// <summary>
@@ -126,7 +127,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
         public string MainImageUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the main image thumbnauil URL.
+        /// Gets or sets the main image thumbnail URL.
         /// </summary>
         /// <value>
         /// The main image thumbnauil URL.

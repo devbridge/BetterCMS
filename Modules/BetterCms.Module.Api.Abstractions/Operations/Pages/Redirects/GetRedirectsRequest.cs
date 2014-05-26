@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
@@ -8,6 +9,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Redirects
 {
     [Route("/redirects", Verbs = "GET")]
     [DataContract]
+    [Serializable]
     public class GetRedirectsRequest : RequestBase<DataOptions>, IReturn<GetRedirectsResponse>
     {
     }

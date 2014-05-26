@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 
 using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
@@ -70,8 +69,14 @@ namespace BetterCms.Module.Root.Services
                 /* Just create a new content with requested status.*/
                 if (requestedStatus == ContentStatus.Published)
                 {
-                    updatedContent.PublishedOn = DateTime.Now;
-                    updatedContent.PublishedByUser = securityService.CurrentPrincipalName;
+                    if (!updatedContent.PublishedOn.HasValue)
+                    {
+                        updatedContent.PublishedOn = DateTime.Now;
+                    }
+                    if (string.IsNullOrWhiteSpace(updatedContent.PublishedByUser))
+                    {
+                        updatedContent.PublishedByUser = securityService.CurrentPrincipalName;
+                    }
                 }
 
                 updatedContent.Status = requestedStatus;
@@ -108,13 +113,17 @@ namespace BetterCms.Module.Root.Services
             {
                 originalContent.History = originalContent.History.Distinct().ToList();
             }
+            else
+            {
+                originalContent.History = new List<Models.Content>();
+            }
 
             if (originalContent.ContentOptions != null)
             {
                 originalContent.ContentOptions = originalContent.ContentOptions.Distinct().ToList();
             }
-            
-            if (originalContent.ContentOptions != null)
+
+            if (originalContent.ContentRegions != null)
             {
                 originalContent.ContentRegions = originalContent.ContentRegions.Distinct().ToList();
             }
@@ -184,8 +193,14 @@ namespace BetterCms.Module.Root.Services
                 SetContentRegions(originalContent, updatedContent);
 
                 originalContent.Status = requestedStatus;
-                originalContent.PublishedOn = DateTime.Now;
-                originalContent.PublishedByUser = securityService.CurrentPrincipalName;
+                if (!originalContent.PublishedOn.HasValue)
+                {
+                    originalContent.PublishedOn = DateTime.Now;
+                }
+                if (string.IsNullOrWhiteSpace(originalContent.PublishedByUser))
+                {
+                    originalContent.PublishedByUser = securityService.CurrentPrincipalName;
+                }
                 repository.Save(originalContent);
 
                 IList<Models.Content> contentsToRemove = originalContent.History.Where(f => f.Status == ContentStatus.Preview || f.Status == ContentStatus.Draft).ToList();
@@ -249,13 +264,20 @@ namespace BetterCms.Module.Root.Services
                 SetContentOptions(originalContent, updatedContent);
                 SetContentRegions(originalContent, updatedContent);
                 originalContent.Status = requestedStatus;
-                originalContent.PublishedOn = DateTime.Now;
-                originalContent.PublishedByUser = securityService.CurrentPrincipalName;
+                if (!originalContent.PublishedOn.HasValue)
+                {
+                    originalContent.PublishedOn = DateTime.Now;
+                }
+                if (string.IsNullOrWhiteSpace(originalContent.PublishedByUser))
+                {
+                    originalContent.PublishedByUser = securityService.CurrentPrincipalName;
+                }
+
                 repository.Save(originalContent);
             }
         }
 
-        public void RestoreContentFromArchive(Models.Content restoreFrom)
+        public Models.Content RestoreContentFromArchive(Models.Content restoreFrom)
         {
             if (restoreFrom == null)
             {
@@ -275,7 +297,7 @@ namespace BetterCms.Module.Root.Services
             originalContent.Original = null;
 
             // Save entities
-            SaveContentWithStatusUpdate(originalContent, ContentStatus.Published);
+            return SaveContentWithStatusUpdate(originalContent, ContentStatus.Published);
         }
 
         public System.Tuple<PageContent, Models.Content> GetPageContentForEdit(Guid pageContentId)

@@ -239,6 +239,7 @@ namespace BetterCms.Module.MediaManager.Services
                             updateMediaAfterUpload(media);
                             session.SaveOrUpdate(media);
                             session.Flush();
+                            Events.MediaManagerEvents.Instance.OnMediaFileUpdated(media);
                         });
                     }
                     else
@@ -249,6 +250,7 @@ namespace BetterCms.Module.MediaManager.Services
                             updateMediaAfterFail(media);
                             session.SaveOrUpdate(media);
                             session.Flush();
+                            Events.MediaManagerEvents.Instance.OnMediaFileUpdated(media);
                         });
 
                         // Log exception

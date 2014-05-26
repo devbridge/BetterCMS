@@ -4,9 +4,14 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
+
+using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget.Options;
 
 using ServiceStack.ServiceInterface;
+
+using ISaveWidgetService = BetterCms.Module.Pages.Services.IWidgetService;
+using HtmlContentWidgetEntity = BetterCms.Module.Pages.Models.HtmlContentWidget;
 
 namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
 {
@@ -16,10 +21,13 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
 
         private readonly IHtmlContentWidgetOptionsService optionsService;
 
-        public HtmlContentWidgetService(IRepository repository, IHtmlContentWidgetOptionsService optionsService)
+        private readonly ISaveWidgetService widgetService;
+
+        public HtmlContentWidgetService(IRepository repository, IHtmlContentWidgetOptionsService optionsService, ISaveWidgetService widgetService)
         {
             this.repository = repository;
             this.optionsService = optionsService;
+            this.widgetService = widgetService;
         }
 
         public GetHtmlContentWidgetResponse Get(GetHtmlContentWidgetRequest request)
@@ -50,7 +58,47 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
                     })
                 .FirstOne();
 
-            return new GetHtmlContentWidgetResponse { Data = model };
+            var response = new GetHtmlContentWidgetResponse { Data = model };
+            if (request.Data.IncludeOptions)
+            {
+                response.Options = WidgetOptionsHelper.GetWidgetOptionsList(repository, request.WidgetId);
+            }
+
+            return response;
+        }
+
+        public PostHtmlContentWidgetResponse Post(PostHtmlContentWidgetRequest request)
+        {
+            var result = Put(new PutHtmlContentWidgetRequest
+                             {
+                                 Data = request.Data, 
+                                 User = request.User
+                             });
+
+            return new PostHtmlContentWidgetResponse { Data = result.Data };
+        }
+
+        public PutHtmlContentWidgetResponse Put(PutHtmlContentWidgetRequest request)
+        {
+            HtmlContentWidgetEntity widget;
+            HtmlContentWidgetEntity originalWidget;
+
+            var model = request.Data.ToServiceModel();
+            if (request.Id.HasValue)
+            {
+                model.Id = request.Id.Value;
+            }
+
+            widgetService.SaveHtmlContentWidget(model, out widget, out originalWidget, false, true);
+
+            return new PutHtmlContentWidgetResponse { Data = widget.Id };
+        }
+
+        public DeleteHtmlContentWidgetResponse Delete(DeleteHtmlContentWidgetRequest request)
+        {
+            var result = widgetService.DeleteWidget(request.Id, request.Data.Version);
+
+            return new DeleteHtmlContentWidgetResponse { Data = result };
         }
 
         IHtmlContentWidgetOptionsService IHtmlContentWidgetService.Options

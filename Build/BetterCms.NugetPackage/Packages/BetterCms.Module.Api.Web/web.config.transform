@@ -3,6 +3,10 @@
     <httpHandlers>
       <add path="bcms-api*" type="ServiceStack.WebHost.Endpoints.ServiceStackHttpHandlerFactory, ServiceStack" verb="*" />
     </httpHandlers>
+    <authorization>
+      <allow verbs="GET" users="*"/>
+      <deny verbs="POST,PUT,DELETE" users="?"/>
+    </authorization>
   </system.web>
   <system.webServer>
     <handlers>

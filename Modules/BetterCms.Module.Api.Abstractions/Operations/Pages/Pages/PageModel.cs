@@ -6,6 +6,7 @@ using BetterCms.Module.Api.Operations.Root;
 namespace BetterCms.Module.Api.Operations.Pages.Pages
 {
     [DataContract]
+    [System.Serializable]
     public class PageModel : ModelBase
     {
         /// <summary>
@@ -141,7 +142,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
         /// The options.
         /// </value>
         [DataMember]
-        public System.Collections.Generic.List<OptionModel> Options  { get; set; }
+        public System.Collections.Generic.List<OptionValueModel> Options  { get; set; }
 
         /// <summary>
         /// Gets or sets the list of tag names.

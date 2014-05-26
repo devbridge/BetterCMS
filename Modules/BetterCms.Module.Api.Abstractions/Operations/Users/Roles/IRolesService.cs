@@ -3,5 +3,7 @@
     public interface IRolesService
     {
         GetRolesResponse Get(GetRolesRequest request);
+
+        PostRoleResponse Post(PostRoleRequest request);
     }
 }

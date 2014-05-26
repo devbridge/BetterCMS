@@ -1,6 +1,7 @@
 ﻿using System;
 
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.ViewModels.SiteSettings;
 
 namespace BetterCms.Module.Pages.Services
 {
@@ -50,5 +51,21 @@ namespace BetterCms.Module.Pages.Services
         /// Redirect entity or null, if such redirect doesn't already exists
         /// </returns>
         Redirect GetPageRedirect(string pageUrl, Guid? id = null);
+
+        /// <summary>
+        /// Saves the redirect.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <param name="createIfNotExists">if set to <c>true</c> creates entity if such not exists.</param>
+        /// <returns>Saved redirect entity</returns>
+        Redirect SaveRedirect(SiteSettingRedirectViewModel model, bool createIfNotExists = false);
+
+        /// <summary>
+        /// Deletes the redirect.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="version">The version.</param>
+        /// <returns>Deletion result</returns>
+        bool DeleteRedirect(Guid id, int version);
     }
 }

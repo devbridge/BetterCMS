@@ -256,7 +256,8 @@ describe('pages.widgets.api.behavior', function () {
                 where: [
                     { field: 'Key', value: 'Option 2' },
                     { field: 'DefaultValue', value: '18' },
-                    { field: 'Type', value: 'Integer' }
+                    { field: 'Type', value: 'Integer' },
+                    { field: 'CustomTypeIdentifier', value: null }
                 ]
             }
         };
@@ -339,7 +340,8 @@ describe('pages.widgets.api.behavior', function () {
                 where: [
                     { field: 'Key', value: 'Option 2' },
                     { field: 'DefaultValue', value: '1208' },
-                    { field: 'Type', value: 'Integer' }
+                    { field: 'Type', value: 'Integer' },
+                    { field: 'CustomTypeIdentifier', value: null }
                 ]
             }
         };
@@ -365,6 +367,26 @@ describe('pages.widgets.api.behavior', function () {
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
             expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
+        });
+    });
+
+    it('01209: Should test CRUD for html content widgets.', function () {
+        api.testCrud(runs, waitsFor, expect, "fa0cbcfb96454fcfa576a205009119c8", "/bcms-api/widgets/html-content/", {
+            getPostData: function (json) {
+                json.data.name = api.createGuid();
+                json.data.version = 0;
+                return json.data;
+            }
+        });
+    });
+
+    it('01210: Should test CRUD for server control widgets.', function () {
+        api.testCrud(runs, waitsFor, expect, "3ac115dfc5f34f148141a205009162cd", "/bcms-api/widgets/server-control/", {
+            getPostData: function (json) {
+                json.data.name = api.createGuid();
+                json.data.version = 0;
+                return json.data;
+            }
         });
     });
 });

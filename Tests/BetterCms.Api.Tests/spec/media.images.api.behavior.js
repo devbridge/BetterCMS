@@ -349,6 +349,16 @@ describe('media.images.api.behavior', function () {
         });
     });
 
+    it('03212: Should test CRUD for images.', function () {
+        api.testCrud(runs, waitsFor, expect, "5606d5be1b6347d88621a2050129ed3f", "/bcms-api/images/", {
+            getPostData: function (json) {
+                json.data.title = api.createGuid();
+                json.data.version = 0;
+                return json.data;
+            }
+        });
+    });
+
     function runImagesListTests(data, expectingResults) {
         var url = '/bcms-api/images/',
             result,

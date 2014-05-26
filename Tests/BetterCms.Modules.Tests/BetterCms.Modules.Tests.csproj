@@ -120,6 +120,18 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="ServiceStack.Common, Version=3.9.56.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\ServiceStack.Common.3.9.56\lib\net35\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces, Version=3.9.56.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\ServiceStack.Common.3.9.56\lib\net35\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text, Version=3.9.56.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\ServiceStack.Text.3.9.56\lib\net35\ServiceStack.Text.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -142,6 +154,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\ApiCrudTrests.cs" />
+    <Compile Include="Api\ApiIntegrationTestBase.cs" />
+    <Compile Include="Api\Blog\Authors\AuthorsApiTests.cs" />
+    <Compile Include="Api\Blog\BlogPosts\BlogPostsApiTests.cs" />
+    <Compile Include="Api\Media\Files\FilesApiTests.cs" />
+    <Compile Include="Api\Media\Folders\FoldersApiTests.cs" />
+    <Compile Include="Api\Media\Images\ImagesApiTests.cs" />
+    <Compile Include="Api\Pages\Contents\Draft\DestroyContentDraftTest.cs" />
+    <Compile Include="Api\Pages\Contents\HtmlContent\HtmlContentApiTests.cs" />
+    <Compile Include="Api\Pages\Properties\PagePropertiesApiTests.cs" />
+    <Compile Include="Api\Pages\Page\Contents\PageContentsApiTests.cs" />
+    <Compile Include="Api\Pages\Redirects\RedirectsApiTests.cs" />
+    <Compile Include="Api\Pages\Sitemaps\Nodes\NodesTests.cs" />
+    <Compile Include="Api\Pages\Sitemaps\SitemapsTests.cs" />
+    <Compile Include="Api\ApiCrudIntegrationTestBase.cs" />
+    <Compile Include="Api\Pages\Widgets\ServerControlWidgetsApiTests.cs" />
+    <Compile Include="Api\Pages\Widgets\HtmlContentWidgetsApiTests.cs" />
+    <Compile Include="Api\Root\Categories\CategoriesApiTests.cs" />
+    <Compile Include="Api\Root\Languages\LanguagesApiTests.cs" />
+    <Compile Include="Api\Root\Layouts\LayoutsApiTests.cs" />
+    <Compile Include="Api\Root\Tags\TagsApiTests.cs" />
+    <Compile Include="Api\Users\Roles\RolesApiTests.cs" />
+    <Compile Include="Api\Users\Users\UsersApiTests.cs" />
     <Compile Include="Blog\ServiceTests\BlogMLExportServiceTests.cs" />
     <Compile Include="Blog\ServiceTests\BlogMLServiceTests.cs" />
     <Compile Include="LuceneSearch\ServiceTests\IndexerServiceTests.cs" />

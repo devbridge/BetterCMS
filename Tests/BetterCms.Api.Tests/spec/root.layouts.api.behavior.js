@@ -274,7 +274,8 @@ describe('root.layouts.api.behavior', function () {
                 where: [
                     { field: 'Key', value: 'Option 3' },
                     { field: 'DefaultValue', value: '18' },
-                    { field: 'Type', value: 'Integer' }
+                    { field: 'Type', value: 'Integer' },
+                    { field: 'CustomTypeIdentifier', value: null }
                 ]
             }
         };
@@ -300,6 +301,16 @@ describe('root.layouts.api.behavior', function () {
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
             expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
+        });
+    });
+
+    it('00107: Should test CRUD for layouts.', function () {
+        api.testCrud(runs, waitsFor, expect, "d2f39fbd2c28401a8625a1fe0114e1eb", "/bcms-api/layouts/", {
+            getPostData: function (json) {
+                json.data.name = api.createGuid();
+                json.data.version = 0;
+                return json.data;
+            }
         });
     });
 });

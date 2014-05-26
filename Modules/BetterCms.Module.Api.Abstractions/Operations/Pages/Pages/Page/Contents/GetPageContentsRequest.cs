@@ -9,6 +9,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents
 {
     [Route("/pages/{PageId}/contents")]
     [DataContract]
+    [Serializable]
     public class GetPageContentsRequest : RequestBase<GetPageContentsModel>, IReturn<GetPageContentsResponse>
     {
         [DataMember]

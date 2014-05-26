@@ -134,4 +134,14 @@ describe('root.tags.api.behavior', function () {
             api.expectValidationExceptionIsThrown(result, 'TagId');
         });
     });
+
+    it('00204: Should test CRUD for tags.', function () {
+        api.testCrud(runs, waitsFor, expect, "b0dc1aa59fe54d4f9ad9a2060116b0f5", "/bcms-api/tags/", {
+            getPostData: function (json) {
+                json.data.name = api.createGuid();
+                json.data.version = 0;
+                return json.data;
+            }
+        });
+    });
 });

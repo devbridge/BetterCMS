@@ -5,6 +5,7 @@ using BetterCms.Module.Api.Infrastructure;
 namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
 {
     [DataContract]
+    [System.Serializable]
     public class FileModel : ModelBase
     {
         /// <summary>
@@ -132,5 +133,41 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// </value>
         [DataMember]
         public string ThumbnailCaption { get; set; }
+
+        /// <summary>
+        /// Gets or sets the file URI.
+        /// </summary>
+        /// <value>
+        /// The file URI.
+        /// </value>
+        [DataMember]
+        public string FileUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is temporary.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is temporary; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool IsTemporary { get; set; }
+
+        /// <summary>
+        /// Gets or sets the is uploaded.
+        /// </summary>
+        /// <value>
+        /// The is uploaded.
+        /// </value>
+        [DataMember]
+        public bool? IsUploaded { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is canceled.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is canceled; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool IsCanceled { get; set; }
     }
 }

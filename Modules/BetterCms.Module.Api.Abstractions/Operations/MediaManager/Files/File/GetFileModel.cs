@@ -3,6 +3,7 @@
 namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
 {
     [DataContract]
+    [System.Serializable]
     public class GetFileModel
     {
         /// <summary>

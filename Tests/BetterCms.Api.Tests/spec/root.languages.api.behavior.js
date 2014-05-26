@@ -165,4 +165,15 @@ describe('root.languages.api.behavior', function () {
             expect(result.data.code).toBe('ar-EG', 'Correctly filtered code should be retrieved.');
         });
     });
+
+    it('00405: Should test CRUD for languages.', function () {
+        api.testCrud(runs, waitsFor, expect, "03424e8f32cc4c89b1fba2a500ad595f", "/bcms-api/languages/", {
+            getPostData: function (json) {
+                json.data.name = api.createGuid();
+                json.data.code = 'lt-LT';
+                json.data.version = 0;
+                return json.data;
+            }
+        });
+    });
 });

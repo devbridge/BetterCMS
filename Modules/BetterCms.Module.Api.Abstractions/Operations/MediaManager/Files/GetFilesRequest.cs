@@ -8,6 +8,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
 {
     [Route("/files", Verbs = "GET")]
     [DataContract]
+    [System.Serializable]
     public class GetFilesRequest : RequestBase<GetFilesModel>, IReturn<GetFilesResponse>
     {
     }

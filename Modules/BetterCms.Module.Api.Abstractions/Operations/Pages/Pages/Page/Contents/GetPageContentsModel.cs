@@ -1,10 +1,12 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents
 {
     [DataContract]
+    [Serializable]
     public class GetPageContentsModel : DataOptions
     {
         /// <summary>
@@ -14,7 +16,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents
         /// The region id.
         /// </value>
         [DataMember]
-        public System.Guid? RegionId { get; set; }
+        public Guid? RegionId { get; set; }
 
         /// <summary>
         /// Gets or sets the region identifier.

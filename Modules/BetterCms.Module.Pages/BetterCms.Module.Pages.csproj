@@ -150,6 +150,7 @@
     <Compile Include="Events\SitemapEvents.cs" />
     <Compile Include="Events\LayoutEvents.cs" />
     <Compile Include="Events\TagEvents.cs" />
+    <Compile Include="Exceptions\DraftNotFoundException.cs" />
     <Compile Include="Helpers\SitemapHelper.cs" />
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
     <Compile Include="Models\Maps\SitemapNodeTranslationMap.cs" />
@@ -216,7 +217,9 @@
     <Compile Include="Command\Page\SavePagePublishStatus\SavePagePublishStatusCommand.cs" />
     <Compile Include="Command\Content\SavePageContentOptions\SavePageContentOptionsCommand.cs" />
     <Compile Include="Command\Redirect\SaveRedirect\SaveRedirectCommand.cs" />
-    <Compile Include="Command\Page\CreatePage\CreatePageCommand.cs" />
+    <Compile Include="Command\Page\CreatePage\CreatePageCommand.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Command\Widget\GetWidgetCategory\GetWidgetCategoryCommand.cs" />
     <Compile Include="Command\Widget\GetWidgetCategory\GetWidgetCategoryRequest.cs" />
     <Compile Include="Command\Page\GetPageProperties\GetPagePropertiesCommand.cs" />
@@ -296,6 +299,7 @@
     <Compile Include="Registration\TemplatesJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\PagesContentJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\RedirectsJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Services\DefaultDraftService.cs" />
     <Compile Include="Services\DefaultHistoryService.cs" />
     <Compile Include="Services\DefaultLayoutService.cs" />
     <Compile Include="Services\DefaultMasterPageService.cs" />
@@ -304,6 +308,8 @@
     <Compile Include="Services\DefaultSitemapService.cs" />
     <Compile Include="Services\DefaultTagService.cs" />
     <Compile Include="Services\DefaultUrlService.cs" />
+    <Compile Include="Services\DefaultWidgetService.cs" />
+    <Compile Include="Services\IDraftService.cs" />
     <Compile Include="Services\IHistoryService.cs" />
     <Compile Include="Services\ILayoutService.cs" />
     <Compile Include="Services\IMasterPageService.cs" />
@@ -317,6 +323,7 @@
     <Compile Include="Services\DefaultRedirectService.cs" />
     <Compile Include="Services\ICategoryService.cs" />
     <Compile Include="Services\IRedirectService.cs" />
+    <Compile Include="Services\IWidgetService.cs" />
     <Compile Include="ViewModels\Content\ContentViewModel.cs" />
     <Compile Include="ViewModels\Content\ContentSortViewModel.cs" />
     <Compile Include="ViewModels\Content\RestorePageContentViewModel.cs" />
@@ -354,6 +361,7 @@
     <Compile Include="ViewModels\Templates\TemplateRegionItemViewModel.cs" />
     <Compile Include="ViewModels\Widgets\EditHtmlContentWidgetViewModel.cs" />
     <Compile Include="ViewModels\Widgets\EditServerControlWidgetViewModel.cs" />
+    <Compile Include="ViewModels\Widgets\EditWidgetViewModel.cs" />
     <Compile Include="ViewModels\Widgets\HtmlContentWidgetViewModel.cs" />
     <Compile Include="ViewModels\Content\PageContentOptionsViewModel.cs" />
     <Compile Include="ViewModels\Page\AddNewPageViewModel.cs" />

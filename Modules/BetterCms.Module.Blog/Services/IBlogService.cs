@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Security.Principal;
 
+using BetterCms.Core.Mvc;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Blog.ViewModels.Filter;
@@ -25,11 +26,12 @@ namespace BetterCms.Module.Blog.Services
         /// Saves the blog post.
         /// </summary>
         /// <param name="model">The model.</param>
-        /// <param name="principal">The principal.</param>
+        /// <param name="principall">The principall.</param>
+        /// <param name="errorMessage">The error message.</param>
         /// <returns>
         /// Saved blog post entity
         /// </returns>
-        BlogPost SaveBlogPost(BlogPostViewModel model, IPrincipal principal);
+        BlogPost SaveBlogPost(BlogPostViewModel model, IPrincipal principall, out string[] errorMessages);
 
         /// <summary>
         /// Gets the filtered blog posts query.

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web.Helpers;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
@@ -315,58 +315,35 @@ namespace BetterCms.Module.MediaManager.Services
         /// <param name="size">The size.</param>
         private void CreatePngThumbnail(Stream sourceStream, Stream destinationStream, Size size)
         {
-            using (var tempStream = new MemoryStream())
+            using (var image = Image.FromStream(sourceStream))
             {
-                sourceStream.Seek(0, SeekOrigin.Begin);
-                sourceStream.CopyTo(tempStream);               
+                Image destination = image;
 
-                var image = new WebImage(tempStream);
-               
-                using (Image resizedBitmap = new Bitmap(size.Width, size.Height))
+                var diff = (destination.Width - destination.Height) / 2.0;
+                if (diff > 0)
                 {
-                    using (Bitmap source = new Bitmap(new MemoryStream(image.GetBytes())))
-                    {
-                        using (Graphics g = Graphics.FromImage(resizedBitmap))
-                        {
-                            var destination = source;
-
-                            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-                            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-
-                            var diff = (image.Width - image.Height) / 2.0;
-                            if (diff > 0)
-                            {
-                                var x1 = Convert.ToInt32(Math.Floor(diff));
-                                var y1 = 0;
-                                var x2 = image.Height;
-                                var y2 = image.Height;
-                                var rect = new Rectangle(x1, y1, x2, y2);
-                                destination = CropImage(destination, rect);
-                            }
-                            else if (diff < 0)
-                            {
-                                diff = Math.Abs(diff);
-
-                                var x1 = 0;
-                                var y1 = Convert.ToInt32(Math.Floor(diff));
-                                var x2 = image.Width;
-                                var y2 = image.Width;
-                                var rect = new Rectangle(x1, y1, x2, y2);
-                                destination = CropImage(destination, rect);
-                            }
-
-                            g.DrawImage(destination, 0, 0, size.Width, size.Height);
-                        }
-                    }
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        resizedBitmap.Save(ms, ImageFormat.Png);
-
-                        var resizedImage = new WebImage(ms);
-                        var bytes = resizedImage.GetBytes();
-                        destinationStream.Write(bytes, 0, bytes.Length);      
-                    }
+                    var x1 = Convert.ToInt32(Math.Floor(diff));
+                    var y1 = 0;
+                    var x2 = destination.Height;
+                    var y2 = destination.Height;
+                    var rect = new Rectangle(x1, y1, x2, y2);
+                    destination = ImageHelper.Crop(destination, rect);
                 }
+                else if (diff < 0)
+                {
+                    diff = Math.Abs(diff);
+
+                    var x1 = 0;
+                    var y1 = Convert.ToInt32(Math.Floor(diff));
+                    var x2 = destination.Width;
+                    var y2 = destination.Width;
+                    var rect = new Rectangle(x1, y1, x2, y2);
+                    destination = ImageHelper.Crop(destination, rect);
+                }
+
+                destination = ImageHelper.Resize(destination, size);
+
+                destination.Save(destinationStream, ImageFormat.Png);
             }
         }
 
@@ -412,18 +389,6 @@ namespace BetterCms.Module.MediaManager.Services
                     session.Close();
                 }
             }
-        }
-
-        /// <summary>
-        /// Crops the image.
-        /// </summary>
-        /// <param name="img">The img.</param>
-        /// <param name="cropArea">The crop area.</param>
-        /// <returns>Cropped image</returns>
-        private static Bitmap CropImage(Bitmap img, Rectangle cropArea)
-        {
-            Bitmap bmpCrop = img.Clone(cropArea, img.PixelFormat);
-            return bmpCrop;
         }
     }
 }
