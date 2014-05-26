@@ -55,8 +55,10 @@ namespace BetterCms.Module.Pages.Command.Content.SortPageContent
             {
                 var page = Repository
                     .AsQueryable<Root.Models.Page>()
+                    .Where(p => p.Id == request.PageId)
                     .FetchMany(p => p.AccessRules)
                     .ToFuture()
+                    .ToList()
                     .FirstOne();
 
                 AccessControlService.DemandAccess(page, Context.Principal, AccessLevel.ReadWrite, RootModuleConstants.UserRoles.EditContent);
