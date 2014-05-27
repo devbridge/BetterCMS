@@ -476,8 +476,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
             }
             else if (request.Data.Version > 0)
             {
-                beforeChange = new UpdatingPagePropertiesModel(pageProperties);
                 pageProperties.Version = request.Data.Version;
+            }
+
+            if (!isNew)
+            {
+                beforeChange = new UpdatingPagePropertiesModel(pageProperties);
             }
 
             if (!isNew && pageProperties.IsMasterPage != request.Data.IsMasterPage)
