@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using Autofac;
+
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
@@ -51,7 +53,8 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
                     rules.Add(rule2);
 
                     var pageCloningService = new DefaultPageCloneService(pageService.Object, urlService.Object, 
-                        new Mock<ISecurityService>().Object, new Mock<IAccessControlService>().Object, repository, uow);
+                        new Mock<ISecurityService>().Object, new Mock<IAccessControlService>().Object, repository, uow, 
+                        Container.Resolve<ICmsConfiguration>());
 
                     var command = new ClonePageCommand(pageCloningService);
                     command.Repository = repository;
