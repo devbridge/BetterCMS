@@ -9,6 +9,11 @@ namespace BetterCms.Module.Pages.ViewModels.Page
 {
     public class ClonePageWithLanguageViewModel : ClonePageViewModel
     {
+        public ClonePageWithLanguageViewModel()
+        {
+            Languages = new List<LookupKeyValue>();
+        }
+
         /// <summary>
         /// Gets or sets the language id.
         /// </summary>
