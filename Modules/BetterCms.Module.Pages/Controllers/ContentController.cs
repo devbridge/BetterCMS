@@ -112,10 +112,13 @@ namespace BetterCms.Module.Pages.Controllers
         {
             var model = GetCommand<GetInsertHtmlContentCommand>().ExecuteCommand(new InsertHtmlContentRequest() { PageId = pageId, RegionId = regionId });
 
-            var request = new GetWidgetCategoryRequest();
-            model.WidgetCategories = GetCommand<GetWidgetCategoryCommand>().ExecuteCommand(request).WidgetCategories;
+            if (model != null)
+            {
+                var request = new GetWidgetCategoryRequest();
+                model.WidgetCategories = GetCommand<GetWidgetCategoryCommand>().ExecuteCommand(request).WidgetCategories;
+            }
 
-            var view = RenderView("AddPageHtmlContent", model);
+            var view = RenderView("AddPageHtmlContent", model ?? new PageContentViewModel());
 
             return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
