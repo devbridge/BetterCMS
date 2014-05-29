@@ -65,7 +65,7 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
                         contentAvailable: function (dialogRef, content) {
                             initUploadFilesDialogEvents(dialog, options);
                             
-                            var context = $(selectors.userAccessControlContainer).get(0);
+                            var context = dialog.container.find(selectors.userAccessControlContainer).get(0);
                             if (context) {
                                 var viewModel = {
                                     accessControl: security.createUserAccessViewModel(content.Data.UserAccessList)
