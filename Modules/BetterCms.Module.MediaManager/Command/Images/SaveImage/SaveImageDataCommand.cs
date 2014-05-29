@@ -112,48 +112,14 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
             {
                 var downloadResponse = StorageService.DownloadObject(mediaImage.OriginalUri);
                 var dimensionsCalculator = new ImageDimensionsCalculator(newWidth, newHeight, mediaImage.OriginalWidth, mediaImage.OriginalHeight, x1, x2, y1, y2);
-                var image = Image.FromStream(downloadResponse.ResponseStream);
-                var codec = ImageHelper.GetImageCodec(image);
-
-                if (resized)
+                using (var image = Image.FromStream(downloadResponse.ResponseStream))
                 {
-                    image = ImageHelper.Resize(image, new Size { Width = newWidth, Height = newHeight });
-                }
+                    var destination = image;
+                    var codec = ImageHelper.GetImageCodec(destination);
 
-                if (cropped)
-                {
-                    var width = dimensionsCalculator.ResizedCroppedWidth;
-                    var heigth = dimensionsCalculator.ResizedCroppedHeight;
-                    var cropX12 = dimensionsCalculator.CropCoordX1.Value;
-                    var cropY12 = dimensionsCalculator.CropCoordY1.Value;
-
-                    Rectangle rec = new Rectangle(cropX12, cropY12, width, heigth);
-                    image = ImageHelper.Crop(image, rec);
-                }
-
-                /*var image = new WebImage(downloadResponse.ResponseStream);
-                ImageFormat format = null;
-                if (DefaultMediaImageService.transparencyFormats.TryGetValue(image.ImageFormat, out format))
-                {
-                    using (Image resizedBitmap = new Bitmap(newWidth, newHeight))
+                    if (resized)
                     {
-                        using (Bitmap source = new Bitmap(new MemoryStream(image.GetBytes())))
-                        {
-                            using (Graphics g = Graphics.FromImage(resizedBitmap))
-                            {
-                                if (resized)
-                                {
-                                    g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-                                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                                    g.DrawImage(source, 0, 0, newWidth, newHeight);
-                                    using (MemoryStream ms = new MemoryStream())
-                                    {
-                                        resizedBitmap.Save(ms, format);
-                                        image = new WebImage(ms.ToArray());
-                                    }
-                                }
-                            }
-                        }
+                        destination = ImageHelper.Resize(destination, new Size { Width = newWidth, Height = newHeight });
                     }
 
                     if (cropped)
@@ -164,56 +130,26 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
                         var cropY12 = dimensionsCalculator.CropCoordY1.Value;
 
                         Rectangle rec = new Rectangle(cropX12, cropY12, width, heigth);
-                        using (Bitmap source = new Bitmap(new MemoryStream(image.GetBytes())))
-                        {
-                            var resizedBitmap = source.Clone(rec, source.PixelFormat);
-                            using (MemoryStream ms = new MemoryStream())
-                            {
-                                resizedBitmap.Save(ms, format);
-                                image = new WebImage(ms.ToArray());
-                                resizedBitmap.Dispose();
-                            }
-                        }
+                        destination = ImageHelper.Crop(destination, rec);
                     }
+                    
+                    // Change image file names depending on file version
+                    var newVersion = mediaImage.Version + 1;
+                    mediaImage.FileUri = ApplyVersionToFileUri(mediaImage.FileUri, mediaImage.OriginalFileName, newVersion);
+                    mediaImage.PublicUrl = ApplyVersionToFileUrl(mediaImage.PublicUrl, mediaImage.OriginalFileName, newVersion);
+
+                    mediaImage.ThumbnailUri = ApplyVersionToFileUri(mediaImage.ThumbnailUri, mediaImage.OriginalFileName, newVersion);
+                    mediaImage.PublicThumbnailUrl = ApplyVersionToFileUrl(mediaImage.PublicThumbnailUrl, mediaImage.OriginalFileName, newVersion);
+
+                    // Upload image to storage
+                    var memoryStream = new MemoryStream();
+                    destination.Save(memoryStream, codec, null);
+                    mediaImage.Size = memoryStream.Length;
+                    StorageService.UploadObject(new UploadRequest { InputStream = memoryStream, Uri = mediaImage.FileUri, IgnoreAccessControl = true });
+
+                    // Update thumbnail
+                    MediaImageService.UpdateThumbnail(mediaImage, Size.Empty);
                 }
-                else
-                {
-                    if (resized)
-                    {
-                        image = image.Resize(newWidth, newHeight, false);
-                    }
-                    if (cropped)
-                    {
-                        var cropX1 = dimensionsCalculator.ResizedCropCoordX1.Value;
-                        var cropY1 = dimensionsCalculator.ResizedCropCoordY1.Value;
-                        var cropX2 = image.Width - dimensionsCalculator.ResizedCropCoordX2.Value;
-                        var cropY2 = image.Height - dimensionsCalculator.ResizedCropCoordY2.Value;
-
-                        // Fix for small resized images
-                        if (cropX2 - cropX1 < image.Width && cropY2 - cropY1 < image.Height)
-                        {
-                            image = image.Crop(cropY1, cropX1, cropY2, cropX2);
-                        }
-                    }                
-                }*/
-
-                // Change image file names depending on file version
-                var newVersion = mediaImage.Version + 1;
-                mediaImage.FileUri = ApplyVersionToFileUri(mediaImage.FileUri, mediaImage.OriginalFileName, newVersion);
-                mediaImage.PublicUrl = ApplyVersionToFileUrl(mediaImage.PublicUrl, mediaImage.OriginalFileName, newVersion);
-
-                mediaImage.ThumbnailUri = ApplyVersionToFileUri(mediaImage.ThumbnailUri, mediaImage.OriginalFileName, newVersion);
-                mediaImage.PublicThumbnailUrl = ApplyVersionToFileUrl(mediaImage.PublicThumbnailUrl, mediaImage.OriginalFileName, newVersion);
-
-                // Upload image to storage
-                var memoryStream = new MemoryStream();
-                image.Save(memoryStream, codec, null);
-                StorageService.UploadObject(new UploadRequest { InputStream = memoryStream, Uri = mediaImage.FileUri, IgnoreAccessControl = true });
-
-                mediaImage.Size = memoryStream.Length;
-
-                // Update thumbnail
-                MediaImageService.UpdateThumbnail(mediaImage, Size.Empty);
             }
 
             mediaImage.CropCoordX1 = x1;
