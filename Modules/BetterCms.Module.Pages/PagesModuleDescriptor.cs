@@ -23,6 +23,7 @@ using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Root.Services;
+using BetterCms.Module.Root.ViewModels.Cms;
 
 namespace BetterCms.Module.Pages
 {
@@ -447,8 +448,23 @@ namespace BetterCms.Module.Pages
         {
             if (args != null && args.RenderPageData != null)
             {
-                args.RenderPageData.ExtendWithPageData(args.PageData);
+                ExtendPageWithPageData(args.RenderPageData, args.PageData);
             }
+        }
+
+        /// <summary>
+        /// Extends the page and master page view models with data from provided page entity.
+        /// </summary>
+        /// <param name="renderPageViewModel">The render page view model.</param>
+        /// <param name="pageData">The page data.</param>
+        private void ExtendPageWithPageData(RenderPageViewModel renderPageViewModel, IPage pageData)
+        {
+            if (renderPageViewModel.MasterPage != null)
+            {
+                ExtendPageWithPageData(renderPageViewModel.MasterPage, renderPageViewModel.PageData);
+            }
+
+            renderPageViewModel.ExtendWithPageData(pageData);
         }
 
         private void RegisterRenderingPageProperties()

@@ -117,6 +117,8 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             newModel.PageUrl = pageModel.PageUrl;
             newModel.Title = pageModel.Title;
             newModel.MetaTitle = pageModel.MetaTitle;
+            newModel.MetaKeywords = pageModel.MetaKeywords;
+            newModel.MetaDescription = pageModel.MetaDescription;
             newModel.RenderingPage = pageModel;
             newModel.Metadata = pageModel.Metadata;
             newModel.IsReadOnly = pageModel.IsReadOnly;

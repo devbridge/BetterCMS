@@ -18,6 +18,11 @@ namespace BetterCms.Module.Pages.ViewModels.Content
     /// </summary>
     public class PageContentViewModel : IAccessSecuredViewModel, IDraftDestroy
     {
+        public PageContentViewModel()
+        {
+            WidgetCategories = new List<WidgetCategoryViewModel>();
+        }
+
         /// <summary>
         /// Gets or sets the page content id.
         /// </summary>
