@@ -33,9 +33,12 @@ namespace BetterCms.Module.Pages.Services
         private readonly IRepository repository;
         
         private readonly IUnitOfWork unitOfWork;
+        
+        private readonly ICmsConfiguration cmsConfiguration;
 
         public DefaultPageCloneService(IPageService pageService, IUrlService urlService, ISecurityService securityService, 
-            IAccessControlService accessControlService, IRepository repository, IUnitOfWork unitOfWork)
+            IAccessControlService accessControlService, IRepository repository, IUnitOfWork unitOfWork,
+            ICmsConfiguration cmsConfiguration)
         {
             this.pageService = pageService;
             this.urlService = urlService;
@@ -43,6 +46,7 @@ namespace BetterCms.Module.Pages.Services
             this.accessControlService = accessControlService;
             this.unitOfWork = unitOfWork;
             this.repository = repository;
+            this.cmsConfiguration = cmsConfiguration;
         }
 
         public PageProperties ClonePage(System.Guid pageId, string pageTitle, string pageUrl, IEnumerable<IAccessRule> userAccessList, bool cloneAsMasterPage)
@@ -290,20 +294,27 @@ namespace BetterCms.Module.Pages.Services
 
         private void AddAccessRules(PageProperties newPage, IEnumerable<IAccessRule> userAccess)
         {
-            if (userAccess == null)
+            if (cmsConfiguration.Security.AccessControlEnabled)
             {
-                return;
+                accessControlService.UpdateAccessControl(newPage, userAccess != null ? userAccess.ToList() : new List<IAccessRule>());
             }
-
-            newPage.AccessRules = new List<AccessRule>();
-            foreach (var rule in userAccess)
+            else
             {
-                newPage.AccessRules.Add(new AccessRule
+                if (userAccess == null)
                 {
-                    Identity = rule.Identity,
-                    AccessLevel = rule.AccessLevel,
-                    IsForRole = rule.IsForRole
-                });
+                    return;
+                }
+
+                newPage.AccessRules = new List<AccessRule>();
+                foreach (var rule in userAccess)
+                {
+                    newPage.AccessRules.Add(new AccessRule
+                    {
+                        Identity = rule.Identity,
+                        AccessLevel = rule.AccessLevel,
+                        IsForRole = rule.IsForRole
+                    });
+                }
             }
         }
 
