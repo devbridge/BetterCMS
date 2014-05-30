@@ -2,7 +2,6 @@
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Controllers;
-using BetterCms.Module.Root.Content.Resources;
 
 namespace BetterCms.Module.Pages.Registration
 {
@@ -27,7 +26,7 @@ namespace BetterCms.Module.Pages.Registration
                     new JavaScriptModuleLinkTo<PageController>(this, "changePublishStatusUrl", c => c.ChangePublishStatus(null)),
                     new JavaScriptModuleLinkTo<PageController>(this, "clonePageDialogUrl", c => c.ClonePage("{0}")),
                     new JavaScriptModuleLinkTo<PageController>(this, "clonePageWithLanguageDialogUrl", c => c.ClonePageWithLanguage("{0}")),
-                    new JavaScriptModuleLinkTo<PageController>(this, "convertStringToSlugUrl", c => c.ConvertStringToSlug("{0}", "{1}", "{2}", "{3}", "{4}", "{5}", "{6}"))
+                    new JavaScriptModuleLinkTo<PageController>(this, "convertStringToSlugUrl", c => c.ConvertStringToSlug("{0}", "{1}", "{2}", "{3}", "{4}", "{5}"))
                 };
 
             Globalization = new IActionProjection[]

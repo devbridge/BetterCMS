@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Web;
 using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts.Enums;
@@ -8,8 +7,6 @@ using BetterCms.Core.Security;
 
 using BetterCms.Module.Blog.Commands.GetBlogPost;
 using BetterCms.Module.Blog.Commands.GetBlogPostList;
-using BetterCms.Module.Blog.Commands.GetUrlSuggestion;
-using BetterCms.Module.Blog.Commands.ImportBlogPosts;
 using BetterCms.Module.Blog.Commands.SaveBlogPost;
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Services;
@@ -132,18 +129,10 @@ namespace BetterCms.Module.Blog.Controllers
         /// <param name="senderId">The sender id.</param>
         /// <returns>Json result.</returns>
         [BcmsAuthorize]
-        public ActionResult ConvertStringToSlug(string text, string senderId, string parentPageUrl, string titleChanged, string parentPageId, string languageId, string categoryId)
+        public ActionResult ConvertStringToSlug(string text, string senderId, string parentPageUrl, string parentPageId, string languageId, string categoryId)
         {
-            var slug = GetCommand<GetUrlSuggestionCommand>()
-                .ExecuteCommand(
-                    new GetUrlSuggestionCommandRequest
-                    {
-                        Title = text,
-                        TitleChanged = titleChanged.ToBoolOrDefault(),
-                        ParentPageId = parentPageId.ToGuidOrDefault(),
-                        LanguageId = languageId.ToGuidOrDefault(),
-                        CategoryId = categoryId.ToGuidOrDefault(),
-                    });
+            var slug = blogService.CreateBlogPermalink(text, null, categoryId.ToGuidOrNull());
+
             return Json(new { Text = text, Url = slug, SenderId = senderId }, JsonRequestBehavior.AllowGet);
         }
     }

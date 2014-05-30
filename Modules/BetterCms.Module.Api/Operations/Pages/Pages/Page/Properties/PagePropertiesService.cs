@@ -505,7 +505,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                 var pageUrl = request.Data.PageUrl;
                 if (string.IsNullOrEmpty(pageUrl) && !string.IsNullOrWhiteSpace(request.Data.Title))
                 {
-                    pageUrl = pageService.CreatePagePermalink(request.Data.Title, null);
+                    pageUrl = pageService.CreatePagePermalink(request.Data.Title, null, null, request.Data.LanguageId, request.Data.CategoryId);
                 }
                 else
                 {

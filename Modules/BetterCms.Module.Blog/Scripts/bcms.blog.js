@@ -37,7 +37,8 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             blogPostFormDatePickers: 'input.bcms-datepicker',
             importBlogPostsForm: '#bcms-import-blog-posts',
             fileUploadingTarget: '#bcms-import-form-target',
-            fileUploadingResult: '#jsonResult'
+            fileUploadingResult: '#jsonResult',
+            categorySelection: '#CategoryId',
         },
         links = {
             loadSiteSettingsBlogsUrl: null,
@@ -192,7 +193,11 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             newPost = false,
             canEdit = security.IsAuthorized(["BcmsEditContent"]),
             canPublish = security.IsAuthorized(["BcmsPublishContent"]),
-            form = dialog.container.find(selectors.firstForm);
+            form = dialog.container.find(selectors.firstForm),
+            categorySelector = form.find(selectors.categorySelection),
+            getCategoryId = function () {
+                return categorySelector != null ? categorySelector.val() : null;
+            };
         
         htmlEditor.initializeHtmlEditor(selectors.htmlEditor, {}, data.EditInSourceMode);
         if (data.EnableInsertDynamicRegion) {
@@ -203,7 +208,12 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             newPost = true;
         }
         
-        pages.initializePermalinkBox(dialog, false, links.convertStringToSlugUrl, selectors.blogTitle, newPost);
+        var generator = pages.initializePermalinkBox(dialog, false, links.convertStringToSlugUrl, selectors.blogTitle, newPost, null, null, getCategoryId);
+        if (newPost && categorySelector != null) {
+            categorySelector.on('change', function () {
+                generator.Regenerate();
+            });
+        }
         
         var tagsViewModel = new tags.TagsListViewModel(tagsList);
 

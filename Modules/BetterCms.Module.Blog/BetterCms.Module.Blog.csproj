@@ -125,8 +125,6 @@
     <Compile Include="Accessors\BlogPostContentAccessor.cs" />
     <Compile Include="Commands\DeleteBlogPostImportFile\DeleteBlogPostImportFileCommand.cs" />
     <Compile Include="Commands\ExportBlogPostsCommand\ExportBlogPostsCommand.cs" />
-    <Compile Include="Commands\GetUrlSuggestion\GetUrlSuggestionCommand.cs" />
-    <Compile Include="Commands\GetUrlSuggestion\GetUrlSuggestionCommandRequest.cs" />
     <Compile Include="Commands\UploadBlogsImportFile\UploadBlogsImportFileCommand.cs" />
     <Compile Include="Commands\UploadBlogsImportFile\UploadBlogsImportFileResponse.cs" />
     <Compile Include="Commands\ImportBlogPosts\ImportBlogPostsCommand.cs" />

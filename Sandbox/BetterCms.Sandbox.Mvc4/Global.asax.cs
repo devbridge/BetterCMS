@@ -10,7 +10,9 @@ using BetterCms.Core.Environment.Host;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Events;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page;
+using BetterCms.Module.Api.Operations.Root.Categories.Category;
 using BetterCms.Module.Api.Operations.Root.Languages.Language;
+using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Sandbox.Mvc4.Helpers;
 
@@ -47,25 +49,27 @@ namespace BetterCms.Sandbox.Mvc4
             cmsHost.OnApplicationStart(this);
 
 
-            Module.Pages.Helpers.UrlHelper.GeneratePageUrl = request =>
-                {
-                    if (request.LanguageId != default(Guid) || request.CategoryId != default(Guid))
-                    {
-                        using (var api = Module.Api.ApiFactory.Create())
-                        {
-                            // TODO: implement custom logic.
-                            return
-                                string.Format(
-                                    "/language-{0}/category-{1}/parent-{2}/{3}",
-                                    request.LanguageId,
-                                    request.CategoryId,
-                                    request.ParentPageId,
-                                    request.Title.Transliterate(true)).ToLowerInvariant();
-                        }
-                    }
-
-                    return null; // use default cms behavior.
-                };
+// NOTE:
+//            Module.Pages.Helpers.UrlHelper.GeneratePageUrl = request =>
+//                {
+//                    using (var api = Module.Api.ApiFactory.Create())
+//                    {
+//                        // TODO: implement custom logic.
+//                        return
+//                            string.Format(
+//                                "/language-{0}/category-{1}/parent-{2}/{3}",
+//                                request.LanguageId.HasValue && request.LanguageId != default(Guid)
+//                                    ? api.Root.Language.Get(new GetLanguageRequest { LanguageId = request.LanguageId }).Data.Code.Transliterate(true)
+//                                    : request.LanguageId.ToString(),
+//                                request.CategoryId.HasValue && request.CategoryId != default(Guid)
+//                                    ? api.Root.Category.Get(new GetCategoryRequest { CategoryId = request.CategoryId }).Data.Name.Transliterate(true)
+//                                    : request.CategoryId.ToString(),
+//                                request.ParentPageId,
+//                                request.Title.Transliterate(true)).ToLowerInvariant();
+//                    }
+//
+//                    return null; // use default cms behavior.
+//                };
 
 
             AddCategoryEvents();

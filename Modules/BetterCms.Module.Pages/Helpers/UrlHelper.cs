@@ -6,11 +6,11 @@ namespace BetterCms.Module.Pages.Helpers
     {
         public string Title { get; set; }
 
-        public Guid ParentPageId { get; set; }
+        public Guid? ParentPageId { get; set; }
 
-        public Guid LanguageId { get; set; }
+        public Guid? LanguageId { get; set; }
 
-        public Guid CategoryId { get; set; }
+        public Guid? CategoryId { get; set; }
     }
 
     public static class UrlHelper

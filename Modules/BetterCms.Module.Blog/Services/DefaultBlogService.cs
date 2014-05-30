@@ -32,6 +32,8 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
 
+using Common.Logging;
+
 using NHibernate.Criterion;
 using NHibernate.Linq;
 
@@ -43,6 +45,8 @@ namespace BetterCms.Module.Blog.Services
         /// The blog post region identifier.
         /// </summary>
         private const string RegionIdentifier = BlogModuleConstants.BlogPostMainContentRegionIdentifier;
+
+        private static readonly ILog Logger = LogManager.GetCurrentClassLogger();
 
         protected readonly ICmsConfiguration configuration;
         private readonly IUrlService urlService;
@@ -97,10 +101,52 @@ namespace BetterCms.Module.Blog.Services
         /// </summary>
         /// <param name="title">The title.</param>
         /// <param name="unsavedUrls">The unsaved urls.</param>
+        /// <param name="categoryId">The category identifier.</param>
         /// <returns>
         /// Created blog URL
         /// </returns>
-        public string CreateBlogPermalink(string title, List<string> unsavedUrls = null)
+        public string CreateBlogPermalink(string title, List<string> unsavedUrls = null, Guid? categoryId = null)
+        {
+            string newUrl = null;
+            if (UrlHelper.GeneratePageUrl != null)
+            {
+                try
+                {
+                    newUrl =
+                        UrlHelper.GeneratePageUrl(
+                            new PageUrlGenerationRequest
+                            {
+                                Title = title,
+                                CategoryId = categoryId
+                            });
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error("Custom blog post url generation failed.", ex);
+                }
+            }
+
+            if (string.IsNullOrWhiteSpace(newUrl))
+            {
+                newUrl = CreateBlogPermalinkDefault(title, unsavedUrls);
+            }
+            else
+            {
+                newUrl = urlService.AddPageUrlPostfix(newUrl, "{0}");
+            }
+
+            return newUrl;
+        }
+
+        /// <summary>
+        /// Creates the blog permalink default.
+        /// </summary>
+        /// <param name="title">The title.</param>
+        /// <param name="unsavedUrls">The unsaved urls.</param>
+        /// <returns>
+        /// Created blog URL
+        /// </returns>
+        private string CreateBlogPermalinkDefault(string title, List<string> unsavedUrls = null)
         {
             var url = title.Transliterate(true);
             url = urlService.AddPageUrlPostfix(url, configuration.ArticleUrlPattern, unsavedUrls);

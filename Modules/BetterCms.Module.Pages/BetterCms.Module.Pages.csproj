@@ -135,8 +135,6 @@
     <Compile Include="Command\Page\GetPageForCloningWithLanguage\GetPageForCloningWithLanguageCommandRequest.cs" />
     <Compile Include="Command\Page\GetPageForCloningWithLanguage\GetPageForCloningWithLanguageCommand.cs" />
     <Compile Include="Command\Page\GetUntranslatedPagesList\GetUntranslatedPagesListCommand.cs" />
-    <Compile Include="Command\Page\GetUrlSuggestion\GetUrlSuggestionCommand.cs" />
-    <Compile Include="Command\Page\GetUrlSuggestion\GetUrlSuggestionCommandRequest.cs" />
     <Compile Include="Command\Page\SuggestPages\SuggestPagesCommand.cs" />
     <Compile Include="Command\Sitemap\DeleteSitemap\DeleteSitemapCommand.cs" />
     <Compile Include="Command\Sitemap\GetPageTranslations\GetPageTranslationsCommand.cs" />
