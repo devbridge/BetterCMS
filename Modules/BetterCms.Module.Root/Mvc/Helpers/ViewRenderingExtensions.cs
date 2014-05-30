@@ -122,6 +122,10 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             newModel.RenderingPage = pageModel;
             newModel.Metadata = pageModel.Metadata;
             newModel.IsReadOnly = pageModel.IsReadOnly;
+            newModel.CreatedOn = pageModel.CreatedOn;
+            newModel.ModifiedOn = pageModel.ModifiedOn;
+            newModel.CreatedByUser = pageModel.CreatedByUser;
+            newModel.ModifiedByUser = pageModel.ModifiedByUser;
 
             PopulateCollections(newModel, pageModel);
 
