@@ -9,9 +9,16 @@ using BetterCms.Core;
 using BetterCms.Core.Environment.Host;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Events;
+using BetterCms.Module.Api.Operations.Pages.Pages.Page;
+using BetterCms.Module.Api.Operations.Root.Categories.Category;
+using BetterCms.Module.Api.Operations.Root.Languages.Language;
+using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Sandbox.Mvc4.Helpers;
 
 using Common.Logging;
+
+using Microsoft.SqlServer.Server;
 
 namespace BetterCms.Sandbox.Mvc4
 {
@@ -40,6 +47,30 @@ namespace BetterCms.Sandbox.Mvc4
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             cmsHost.OnApplicationStart(this);
+
+
+// NOTE:
+//            Module.Pages.Helpers.UrlHelper.GeneratePageUrl = request =>
+//                {
+//                    using (var api = Module.Api.ApiFactory.Create())
+//                    {
+//                        // TODO: implement custom logic.
+//                        return
+//                            string.Format(
+//                                "/language-{0}/category-{1}/parent-{2}/{3}",
+//                                request.LanguageId.HasValue && request.LanguageId != default(Guid)
+//                                    ? api.Root.Language.Get(new GetLanguageRequest { LanguageId = request.LanguageId }).Data.Code.Transliterate(true)
+//                                    : request.LanguageId.ToString(),
+//                                request.CategoryId.HasValue && request.CategoryId != default(Guid)
+//                                    ? api.Root.Category.Get(new GetCategoryRequest { CategoryId = request.CategoryId }).Data.Name.Transliterate(true)
+//                                    : request.CategoryId.ToString(),
+//                                request.ParentPageId,
+//                                request.Title.Transliterate(true)).ToLowerInvariant();
+//                    }
+//
+//                    return null; // use default cms behavior.
+//                };
+
 
             AddCategoryEvents();
             AddContentEvents();

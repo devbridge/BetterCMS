@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Security.Principal;
 
-using BetterCms.Core.Mvc;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Blog.ViewModels.Filter;
@@ -17,10 +17,11 @@ namespace BetterCms.Module.Blog.Services
         /// </summary>
         /// <param name="title">The title.</param>
         /// <param name="unsavedUrls">The list of not saved yet urls.</param>
+        /// <param name="categoryId">The category identifier.</param>
         /// <returns>
         /// Created blog URL
         /// </returns>
-        string CreateBlogPermalink(string title, List<string> unsavedUrls = null);
+        string CreateBlogPermalink(string title, List<string> unsavedUrls = null, Guid? categoryId = null);
 
         /// <summary>
         /// Saves the blog post.

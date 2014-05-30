@@ -361,12 +361,15 @@ namespace BetterCms.Module.Pages.Controllers
         /// <param name="text">The text.</param>
         /// <param name="senderId">The sender id.</param>
         /// <param name="parentPageUrl">The parent page URL.</param>
+        /// <param name="parentPageId">The parent page identifier.</param>
+        /// <param name="languageId">The language identifier.</param>
         /// <returns>
         /// URL, created from text.
         /// </returns>
-        public ActionResult ConvertStringToSlug(string text, string senderId, string parentPageUrl)
+        [BcmsAuthorize]
+        public ActionResult ConvertStringToSlug(string text, string senderId, string parentPageUrl, string parentPageId, string languageId, string categoryId)
         {
-            var slug = pageService.CreatePagePermalink(text, HttpUtility.UrlDecode(parentPageUrl));
+            var slug = pageService.CreatePagePermalink(text, HttpUtility.UrlDecode(parentPageUrl), parentPageId.ToGuidOrNull(), languageId.ToGuidOrNull(), categoryId.ToGuidOrNull());
 
             return Json(new { Text = text, Url = slug, SenderId = senderId }, JsonRequestBehavior.AllowGet);
         }

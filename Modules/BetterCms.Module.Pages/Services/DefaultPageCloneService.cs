@@ -76,7 +76,7 @@ namespace BetterCms.Module.Pages.Services
             // Create / fix page url
             if (pageUrl == null && !string.IsNullOrWhiteSpace(pageTitle))
             {
-                pageUrl = pageService.CreatePagePermalink(pageTitle, null);
+                pageUrl = pageService.CreatePagePermalink(pageTitle, null, pageId, languageId);
             }
             else
             {

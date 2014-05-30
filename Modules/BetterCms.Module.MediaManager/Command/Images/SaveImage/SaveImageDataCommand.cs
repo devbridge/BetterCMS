@@ -126,8 +126,8 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
                     {
                         var width = dimensionsCalculator.ResizedCroppedWidth;
                         var heigth = dimensionsCalculator.ResizedCroppedHeight;
-                        var cropX12 = dimensionsCalculator.CropCoordX1.Value;
-                        var cropY12 = dimensionsCalculator.CropCoordY1.Value;
+                        var cropX12 = dimensionsCalculator.ResizedCropCoordX1.Value;
+                        var cropY12 = dimensionsCalculator.ResizedCropCoordY1.Value;
 
                         Rectangle rec = new Rectangle(cropX12, cropY12, width, heigth);
                         destination = ImageHelper.Crop(destination, rec);

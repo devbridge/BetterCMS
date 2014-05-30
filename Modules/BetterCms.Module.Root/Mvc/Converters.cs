@@ -21,6 +21,16 @@ namespace BetterCms.Module.Root.Mvc
             }
             return Guid.Empty;
         }
+
+        public static Guid? ToGuidOrNull(this string source)
+        {
+            Guid result;
+            if (Guid.TryParse(source, out result))
+            {
+                return result;
+            }
+            return null;
+        }
         
         /// <summary>
         /// Converts string source to the value of Boolean type.

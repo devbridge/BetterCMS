@@ -16,12 +16,15 @@ using BetterCms.Core.Services;
 using BetterCms.Core.Web;
 
 using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Page;
 
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.Helpers;
+
+using Common.Logging;
 
 using NHibernate.Linq;
 
@@ -32,6 +35,8 @@ namespace BetterCms.Module.Pages.Services
 {
     public class DefaultPageService : IPageAccessor, IPageService
     {
+        private static readonly ILog Logger = LogManager.GetCurrentClassLogger(); 
+        
         private readonly IRepository repository;
         private readonly IRedirectService redirectService;
         private readonly IUrlService urlService;
@@ -172,7 +177,42 @@ namespace BetterCms.Module.Pages.Services
         /// <returns>
         /// Created permalink
         /// </returns>
-        public string CreatePagePermalink(string url, string parentPageUrl)
+        public string CreatePagePermalink(string url, string parentPageUrl, Guid? parentPageId = null, Guid? languageId = null, Guid? categoryId = null)
+        {
+            string newUrl = null;
+            if (UrlHelper.GeneratePageUrl != null)
+            {
+                try
+                {
+                    newUrl =
+                        UrlHelper.GeneratePageUrl(
+                            new PageUrlGenerationRequest
+                            {
+                                Title = url,
+                                ParentPageId = parentPageId,
+                                LanguageId = languageId,
+                                CategoryId = categoryId
+                            });
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error("Custom page url generation failed.", ex);
+                }
+            }
+
+            if (string.IsNullOrWhiteSpace(newUrl))
+            {
+                newUrl = CreatePagePermalinkDefault(url, parentPageUrl);
+            }
+            else
+            {
+                newUrl = urlService.AddPageUrlPostfix(newUrl, "{0}");
+            }
+
+            return newUrl;
+        }
+
+        private string CreatePagePermalinkDefault(string url, string parentPageUrl)
         {
             var prefixPattern = string.IsNullOrWhiteSpace(parentPageUrl)
                 ? "{0}"
