@@ -135,6 +135,8 @@
     <Compile Include="Command\Page\GetPageForCloningWithLanguage\GetPageForCloningWithLanguageCommandRequest.cs" />
     <Compile Include="Command\Page\GetPageForCloningWithLanguage\GetPageForCloningWithLanguageCommand.cs" />
     <Compile Include="Command\Page\GetUntranslatedPagesList\GetUntranslatedPagesListCommand.cs" />
+    <Compile Include="Command\Page\GetUrlSuggestion\GetUrlSuggestionCommand.cs" />
+    <Compile Include="Command\Page\GetUrlSuggestion\GetUrlSuggestionCommandRequest.cs" />
     <Compile Include="Command\Page\SuggestPages\SuggestPagesCommand.cs" />
     <Compile Include="Command\Sitemap\DeleteSitemap\DeleteSitemapCommand.cs" />
     <Compile Include="Command\Sitemap\GetPageTranslations\GetPageTranslationsCommand.cs" />
@@ -153,6 +155,7 @@
     <Compile Include="Exceptions\DraftNotFoundException.cs" />
     <Compile Include="Helpers\SitemapHelper.cs" />
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
+    <Compile Include="Helpers\UrlHelper.cs" />
     <Compile Include="Models\Maps\SitemapNodeTranslationMap.cs" />
     <Compile Include="Models\Migrations\Migration201401211353.cs" />
     <Compile Include="Models\Migrations\Migration201401091655.cs" />

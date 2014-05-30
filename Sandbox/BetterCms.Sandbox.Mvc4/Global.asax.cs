@@ -9,9 +9,14 @@ using BetterCms.Core;
 using BetterCms.Core.Environment.Host;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Events;
+using BetterCms.Module.Api.Operations.Pages.Pages.Page;
+using BetterCms.Module.Api.Operations.Root.Languages.Language;
+using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Sandbox.Mvc4.Helpers;
 
 using Common.Logging;
+
+using Microsoft.SqlServer.Server;
 
 namespace BetterCms.Sandbox.Mvc4
 {
@@ -40,6 +45,28 @@ namespace BetterCms.Sandbox.Mvc4
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             cmsHost.OnApplicationStart(this);
+
+
+            Module.Pages.Helpers.UrlHelper.GeneratePageUrl = request =>
+                {
+                    if (request.LanguageId != default(Guid) || request.CategoryId != default(Guid))
+                    {
+                        using (var api = Module.Api.ApiFactory.Create())
+                        {
+                            // TODO: implement custom logic.
+                            return
+                                string.Format(
+                                    "/language-{0}/category-{1}/parent-{2}/{3}",
+                                    request.LanguageId,
+                                    request.CategoryId,
+                                    request.ParentPageId,
+                                    request.Title.Transliterate(true)).ToLowerInvariant();
+                        }
+                    }
+
+                    return null; // use default cms behavior.
+                };
+
 
             AddCategoryEvents();
             AddContentEvents();

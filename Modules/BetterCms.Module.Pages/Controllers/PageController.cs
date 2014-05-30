@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 
@@ -19,10 +20,12 @@ using BetterCms.Module.Pages.Command.Page.GetPageForDelete;
 using BetterCms.Module.Pages.Command.Page.GetPageProperties;
 using BetterCms.Module.Pages.Command.Page.GetPagesList;
 using BetterCms.Module.Pages.Command.Page.GetUntranslatedPagesList;
+using BetterCms.Module.Pages.Command.Page.GetUrlSuggestion;
 using BetterCms.Module.Pages.Command.Page.SavePageProperties;
 using BetterCms.Module.Pages.Command.Page.SavePagePublishStatus;
 using BetterCms.Module.Pages.Command.Page.SuggestPages;
 using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.Page;
@@ -33,6 +36,8 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Security;
 
 using Microsoft.Web.Mvc;
+
+using UrlHelper = BetterCms.Module.Pages.Helpers.UrlHelper;
 
 namespace BetterCms.Module.Pages.Controllers
 {
@@ -361,13 +366,26 @@ namespace BetterCms.Module.Pages.Controllers
         /// <param name="text">The text.</param>
         /// <param name="senderId">The sender id.</param>
         /// <param name="parentPageUrl">The parent page URL.</param>
+        /// <param name="titleChanged">The title changed.</param>
+        /// <param name="parentPageId">The parent page identifier.</param>
+        /// <param name="languageId">The language identifier.</param>
         /// <returns>
         /// URL, created from text.
         /// </returns>
-        public ActionResult ConvertStringToSlug(string text, string senderId, string parentPageUrl)
+        [BcmsAuthorize]
+        public ActionResult ConvertStringToSlug(string text, string senderId, string parentPageUrl, string titleChanged, string parentPageId, string languageId, string categoryId)
         {
-            var slug = pageService.CreatePagePermalink(text, HttpUtility.UrlDecode(parentPageUrl));
-
+            var slug = GetCommand<GetUrlSuggestionCommand>()
+                .ExecuteCommand(
+                    new GetUrlSuggestionCommandRequest
+                    {
+                        Title = text,
+                        TitleChanged = titleChanged.ToBoolOrDefault(),
+                        ParentPageUrl = parentPageUrl,
+                        ParentPageId = parentPageId.ToGuidOrDefault(),
+                        LanguageId = languageId.ToGuidOrDefault(),
+                        CategoryId = categoryId.ToGuidOrDefault(),
+                    });
             return Json(new { Text = text, Url = slug, SenderId = senderId }, JsonRequestBehavior.AllowGet);
         }
 

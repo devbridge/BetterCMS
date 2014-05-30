@@ -106,7 +106,43 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         page.globalization = globalization;
         page.senderId = 0;
 
-        page.initializePermalinkBox = function (dialog, addPrefix, actionUrl, titleField, autoGenerate) {
+        function urlGenerator(dialog, addPrefix, actionUrl, titleField, autoGenerate, getParentPageId, getLanguageId, getCategoryId) {
+            var self = this;
+
+            self.dialog = dialog;
+            self.addPrefix = addPrefix;
+            self.actionUrl = actionUrl;
+            self.titleField = titleField;
+            self.autoGenerate = autoGenerate;
+
+            self.getParentPageId = getParentPageId;
+            self.getLanguageId = getLanguageId;
+            self.getCategoryId = getCategoryId;
+
+            self.Regenerate = function(titleChanged)
+            {
+                var parentPageId, languageId, categoryId;
+
+                if (self.getParentPageId != null && $.isFunction(self.getParentPageId)) {
+                    parentPageId = self.getParentPageId();
+                }
+
+                if (self.getLanguageId != null && $.isFunction(self.getLanguageId)) {
+                    languageId = self.getLanguageId();
+                }
+
+                if (self.getCategoryId != null && $.isFunction(self.getCategoryId)) {
+                    categoryId = self.getCategoryId();
+                }
+
+                page.changeUrlSlug(self.dialog, self.actionUrl, self.titleField, self.addPrefix, titleChanged, parentPageId, languageId, categoryId);
+            }
+
+            return self;
+        }
+
+        page.initializePermalinkBox = function (dialog, addPrefix, actionUrl, titleField, autoGenerate, getParentPageId, getLanguageId, getCategoryId) {
+            var generator = new urlGenerator(dialog, addPrefix, actionUrl, titleField, autoGenerate, getParentPageId, getLanguageId, getCategoryId);
             pageUrlManuallyEdited = false;
             oldTitleValue = '';
 
@@ -127,7 +163,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                     var newValue = $(this).val() || '';
                     if (newValue != oldTitleValue) {
                         oldTitleValue = newValue;
-                        page.changeUrlSlug(dialog, actionUrl, titleField, addPrefix);
+                        generator.Regenerate(true);
                     }
                 });
             }
@@ -152,6 +188,8 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                     page.closeAddNewPageEditPermalinkBox(dialog);
                 }
             });
+
+            return generator;
         };
 
         page.isEditedPageUrlManually = function () {
@@ -427,7 +465,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         /**
         * Changes page slug
         */
-        page.changeUrlSlug = function (dialog, actionUrl, titleInput, addPrefix) {
+        page.changeUrlSlug = function (dialog, actionUrl, titleInput, addPrefix, titleChanged, parentPageId, languageId, categoryId) {
             var oldText = $.trim(dialog.container.find(titleInput).val());
             setTimeout(function () {
                 var text = $.trim(dialog.container.find(titleInput).val()),
@@ -454,7 +492,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
                     $.ajax({
                         type: 'GET',
-                        url: $.format(actionUrl, encodeURIComponent(text), senderId, prefix),
+                        url: $.format(actionUrl, encodeURIComponent(text), senderId, prefix, titleChanged, parentPageId, languageId, categoryId),
                         dataType: 'json'
                     })
                         .done(function (result) {
