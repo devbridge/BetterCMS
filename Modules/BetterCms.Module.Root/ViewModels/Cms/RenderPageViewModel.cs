@@ -48,6 +48,8 @@ namespace BetterCms.Module.Root.ViewModels.Cms
             {
                 LanguageCode = rootPage.Language.Code;
             }
+
+            PageData = page;
         }
 
         /// <summary>
@@ -57,6 +59,8 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         {
             Bag = new DynamicDictionary();
         }
+
+        public IPage PageData { get; private set; }
 
         public Guid Id { get; set; }
 
