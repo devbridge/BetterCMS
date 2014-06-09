@@ -6,6 +6,7 @@ using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Seo;
 using BetterCms.Module.Root.Mvc;
@@ -40,7 +41,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageSeo
                 return new EditSeoViewModel();
             }
 
-            var inSitemapFuture = Repository.AsQueryable<SitemapNode>().Where(node => node.Page.Id == pageId && !node.IsDeleted && !node.Sitemap.IsDeleted).Select(node => node.Id).ToFuture();
+            var inSitemapFuture = Repository.AsQueryable<SitemapNode>().Where(node => node.Page.Id == pageId  && !node.IsDeleted && !node.Sitemap.IsDeleted).Select(node => node.Id).ToFuture();
             var page = Repository
                 .AsQueryable<PageProperties>()
                 .Where(f => f.Id == pageId)
@@ -50,11 +51,13 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageSeo
                             PageId = f.Id,
                             PageTitle = f.Title,
                             PageUrl = f.PageUrl,
+                            PageUrlHash = f.PageUrlHash,
                             MetaTitle = f.MetaTitle,
                             MetaKeywords = f.MetaKeywords,
                             MetaDescription = f.MetaDescription,
                             UseCanonicalUrl = f.UseCanonicalUrl,
-                            Version = f.Version
+                            Version = f.Version,
+                            LanguageGroupIdentifier = f.LanguageGroupIdentifier
                         })
                 .FirstOne();
 
@@ -71,8 +74,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageSeo
                 model.MetaKeywords = page.MetaKeywords;
                 model.MetaDescription = page.MetaDescription;
                 model.UseCanonicalUrl = page.UseCanonicalUrl;
-                var urlHash = page.PageUrl.UrlHash();
-                model.IsInSitemap = inSitemapFuture.Any() || Repository.AsQueryable<SitemapNode>().Any(node => node.UrlHash == urlHash && !node.IsDeleted && !node.Sitemap.IsDeleted);
+                model.IsInSitemap = inSitemapFuture.Any() || SitemapHelper.IsPageInSitemap(Repository, page.PageUrlHash, page.PageId, page.LanguageGroupIdentifier);
                 model.UpdateSitemap = true;
 
                 if (cmsConfiguration.Security.AccessControlEnabled)

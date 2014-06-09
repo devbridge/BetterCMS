@@ -6,6 +6,7 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Sitemap;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
 using NHibernate.Linq;
@@ -183,6 +184,50 @@ namespace BetterCms.Module.Pages.Helpers
             }
 
             return nodeList;
+        }
+
+        /// <summary>
+        /// Determines whether [is page in sitemap] [the specified repository].
+        /// </summary>
+        /// <param name="repository">The repository.</param>
+        /// <param name="pageUrlHash">The page URL hash.</param>
+        /// <param name="pageId">The page identifier.</param>
+        /// <param name="languageGroupIdentifier">The language group identifier.</param>
+        /// <returns><c>true</c> if page is on sitemap; otherwise <c>false</c></returns>
+        public static bool IsPageInSitemap(IRepository repository, string pageUrlHash,  Guid? pageId, Guid? languageGroupIdentifier)
+        {
+            if (languageGroupIdentifier.HasValue && languageGroupIdentifier.Value != default(Guid))
+            {
+                var pageIds =
+                    repository.AsQueryable<Page>()
+                        .Where(p => p.LanguageGroupIdentifier == languageGroupIdentifier && !p.IsDeleted)
+                        .Select(p => p.Id);
+
+                if (repository.AsQueryable<SitemapNode>().Any(n => !n.Sitemap.IsDeleted && !n.IsDeleted && n.Page != null && pageIds.Contains(n.Page.Id)))
+                {
+                    return true;
+                }
+            }
+
+            var futureNodeExists =
+                repository.AsQueryable<SitemapNode>()
+                    .Where(
+                        node =>
+                        (node.UrlHash == pageUrlHash || node.Page.Id == pageId)
+                        && !node.IsDeleted && !node.Sitemap.IsDeleted)
+                    .Select(n => n.Id)
+                    .ToFuture();
+
+            var futureTranslationExists =
+                repository.AsQueryable<SitemapNodeTranslation>()
+                    .Where(
+                        translation =>
+                        (translation.UrlHash == pageUrlHash)
+                        && !translation.IsDeleted && !translation.Node.IsDeleted && !translation.Node.Sitemap.IsDeleted)
+                    .Select(n => n.Id)
+                    .ToFuture();
+
+            return futureNodeExists.ToList().Any() || futureTranslationExists.ToList().Any();
         }
     }
 }
