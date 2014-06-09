@@ -264,7 +264,7 @@ namespace BetterCms.Module.Blog.Services
                 }
                 else
                 {
-                    blogPost.PageUrl = CreateBlogPermalink(request.Title);
+                    blogPost.PageUrl = CreateBlogPermalink(request.Title, null, blogPost.Category != null ? (Guid?)blogPost.Category.Id : null);
                 }
 
                 blogPost.MetaTitle = request.MetaTitle ?? request.Title;
