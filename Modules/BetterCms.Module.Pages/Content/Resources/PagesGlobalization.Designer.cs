@@ -3346,6 +3346,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Widget usages.
+        /// </summary>
+        public static string SiteSettings_Widgets_PagesUsingWidget_Title {
+            get {
+                return ResourceManager.GetString("SiteSettings_Widgets_PagesUsingWidget_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Register +.
         /// </summary>
         public static string SiteSettings_Widgets_RegisterNew {
@@ -3378,6 +3387,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string SiteSettings_Widgets_Title {
             get {
                 return ResourceManager.GetString("SiteSettings_Widgets_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find usages.
+        /// </summary>
+        public static string SiteSettings_Widgets_Usage {
+            get {
+                return ResourceManager.GetString("SiteSettings_Widgets_Usage", resourceCulture);
             }
         }
         

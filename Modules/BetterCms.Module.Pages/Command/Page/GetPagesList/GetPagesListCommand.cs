@@ -290,6 +290,20 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
                 }
             }
 
+            if (request.ContentId.HasValue)
+            {
+                Root.Models.Content contentAlias = null;
+                var subQuery = QueryOver.Of<PageContent>()
+                    .JoinAlias(p => p.Content, () => contentAlias)
+                    .Where(pageContent => pageContent.Page.Id == alias.Id
+                        && pageContent.Content.Id == request.ContentId.Value
+                        && !pageContent.IsDeleted)
+                    .And(() => !contentAlias.IsDeleted)
+                    .Select(pageContent => 1);
+
+                query = query.WithSubquery.WhereExists(subQuery);
+            }
+
             return query;
         }
     }

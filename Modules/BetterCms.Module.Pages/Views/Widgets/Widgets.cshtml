@@ -32,6 +32,12 @@
             .SortColumnName("Status")
             .Attributes(@class => "bcms-widget-status");
 
+        column.For(f => string.Format("<a class=\"bcms-template-usage\" data-id=\"{0}\" title=\"{1}\">&nbsp;</a>", f.Id, PagesGlobalization.SiteSettings_Widgets_Usage))
+            .Named("")
+            .HeaderAttributes(@style => "width: 15px;")
+            .Sortable(false)
+            .Encode(false);
+        
         column.HistoryButtonColumn(renderId: false);
         
         column.DeleteButtonColumn(renderId:false);

@@ -612,6 +612,7 @@ a.bcms-slider-next {
 }
     .bcms-template-usage:hover {
         color: #303030;
+        text-decoration: none;
     }
     .bcms-template-usage:after {
         width: 18px;
