@@ -69,24 +69,57 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
 
             PageProperties alias = null;
             SiteSettingPageViewModel modelAlias = null;
+            SitemapNode nodeAlias = null;
 
             var query = UnitOfWork.Session
                 .QueryOver(() => alias)
                 .Where(() => !alias.IsDeleted && alias.Status != PageStatus.Preview);
 
-            // NOTE: below does not work - need to find out how to rewrite it.
-            // var nodesSubQuery = QueryOver.Of<SitemapNode>()
-            //     .Where(x => x.Page.Id == alias.Id || x.UrlHash == alias.PageUrlHash)
-            //     .Select(s => 1)
-            //     .Take(1);
+            var subQuery1 = 
+                QueryOver.Of<SitemapNode>()
+                .Where(n => n.Page.Id == alias.Id || n.UrlHash == alias.PageUrlHash)
+                .And(n => !n.IsDeleted)
+                .JoinQueryOver(s => s.Sitemap)
+                .And(s => !s.IsDeleted)
+                .Select(s => 1);
+
+            var subQuery2 =
+                QueryOver.Of<SitemapNodeTranslation>()
+                .Where(t => t.UrlHash == alias.PageUrlHash)
+                .And(t => !t.IsDeleted)
+                .JoinQueryOver(n => n.Node)
+                .And(n => !n.IsDeleted)
+                .JoinQueryOver(s => s.Sitemap)
+                .And(s => !s.IsDeleted)
+                .Select(s => 1);
+
+            var subQueryOfPages = QueryOver.Of<Root.Models.Page>()
+                .Where(p => p.LanguageGroupIdentifier == alias.LanguageGroupIdentifier && p.Id == nodeAlias.Page.Id)
+                .And(p => !p.IsDeleted)
+                .Select(p => p.Id);
+
+            var subQuery3 =
+                QueryOver.Of(() => nodeAlias)
+                .WithSubquery.WhereExists(subQueryOfPages)
+                .And(n => !n.IsDeleted)
+                .JoinQueryOver(s => s.Sitemap)
+                .And(s => !s.IsDeleted)
+                .Select(s => 1);
+
             var hasSeoDisjunction =
                 Restrictions.Disjunction()
                     .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaTitle)))
                     .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaKeywords)))
-                    .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaDescription)));
+                    .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaDescription)))
+// NOTE: paging fails when subqueries are enabled.
+//                    .Add(Restrictions.Conjunction()
+//                        .Add(Subqueries.WhereNotExists(subQuery1))
+//                        .Add(Subqueries.WhereNotExists(subQuery2))
+//                        .Add(Subqueries.WhereNotExists(subQuery3)))
+                    ;
 
-            var hasSeoProjection = Projections.Conditional(hasSeoDisjunction,
-                //.Add(Restrictions.IsNull(Projections.SubQuery(nodesSubQuery))),
+            var hasSeoProjection = Projections.Conditional(
+                hasSeoDisjunction,
                 Projections.Constant(false, NHibernateUtil.Boolean),
                 Projections.Constant(true, NHibernateUtil.Boolean));
 
@@ -141,7 +174,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
                 model.Languages.Insert(0, languageService.GetInvariantLanguageModel());
             }
 
-            // NOTE: Query over with subquery in CASE statement and paging des not work.
+            // NOTE: Query over with subquery in CASE statement and paging does not work.
             if (sitemapNodesFuture != null)
             {
                 var nodes = sitemapNodesFuture.ToList();
