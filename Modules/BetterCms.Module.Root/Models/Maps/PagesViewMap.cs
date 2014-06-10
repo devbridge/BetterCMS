@@ -1,11 +1,11 @@
 using BetterCms.Core.Models;
 
-namespace BetterCms.Module.Pages.Models.Maps
+namespace BetterCms.Module.Root.Models.Maps
 {
     public class PagesViewMap : EntityMapBase<PagesView>
     {
         public PagesViewMap()
-            : base(PagesModuleDescriptor.ModuleName)
+            : base(RootModuleDescriptor.ModuleName)
         {
             Table("PagesView");
 

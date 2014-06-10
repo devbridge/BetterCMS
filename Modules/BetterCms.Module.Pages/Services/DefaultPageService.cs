@@ -128,11 +128,7 @@ namespace BetterCms.Module.Pages.Services
             var pageProperties = page as PageProperties;
             if (pageProperties != null)
             {
-                pageProperties.IsInSitemap = SitemapHelper.IsPageInSitemap(
-                    repository,
-                    pageProperties.PageUrlHash,
-                    pageProperties.Id,
-                    pageProperties.LanguageGroupIdentifier);
+                pageProperties.IsInSitemap = pageProperties.PagesView.IsInSitemap;
                 temporaryPageCache.Add(pageProperties.PageUrlHash, pageProperties);
             }
         }

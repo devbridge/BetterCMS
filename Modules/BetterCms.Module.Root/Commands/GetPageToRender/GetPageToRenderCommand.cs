@@ -296,6 +296,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             // Add fetched entities.
             query = query
                 .FetchMany(f => f.Options)
+                .Fetch(f => f.PagesView)
                 .Fetch(f => f.MasterPage)
                 .Fetch(f => f.Layout)
                 .ThenFetchMany(f => f.LayoutRegions)

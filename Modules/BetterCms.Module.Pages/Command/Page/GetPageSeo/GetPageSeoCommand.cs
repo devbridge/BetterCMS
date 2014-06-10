@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
-using BetterCms.Module.Pages.Content.Resources;
-using BetterCms.Module.Pages.Helpers;
+
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Seo;
+
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
-using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.ViewModels.Security;
 
 using NHibernate.Linq;
@@ -41,23 +40,24 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageSeo
                 return new EditSeoViewModel();
             }
 
-            var inSitemapFuture = Repository.AsQueryable<SitemapNode>().Where(node => node.Page.Id == pageId  && !node.IsDeleted && !node.Sitemap.IsDeleted).Select(node => node.Id).ToFuture();
             var page = Repository
-                .AsQueryable<PageProperties>()
+                .AsQueryable<PagesView>()
+                .Fetch(p => p.Page)
                 .Where(f => f.Id == pageId)
                 .Select(
                     f => new
                         {
-                            PageId = f.Id,
-                            PageTitle = f.Title,
-                            PageUrl = f.PageUrl,
-                            PageUrlHash = f.PageUrlHash,
-                            MetaTitle = f.MetaTitle,
-                            MetaKeywords = f.MetaKeywords,
-                            MetaDescription = f.MetaDescription,
-                            UseCanonicalUrl = f.UseCanonicalUrl,
-                            Version = f.Version,
-                            LanguageGroupIdentifier = f.LanguageGroupIdentifier
+                            PageId = f.Page.Id,
+                            PageTitle = f.Page.Title,
+                            PageUrl = f.Page.PageUrl,
+                            PageUrlHash = f.Page.PageUrlHash,
+                            MetaTitle = f.Page.MetaTitle,
+                            MetaKeywords = f.Page.MetaKeywords,
+                            MetaDescription = f.Page.MetaDescription,
+                            UseCanonicalUrl = ((PageProperties)f.Page).UseCanonicalUrl,
+                            Version = f.Page.Version,
+                            LanguageGroupIdentifier = f.Page.LanguageGroupIdentifier,
+                            IsInSitemap = f.IsInSitemap
                         })
                 .FirstOne();
 
@@ -74,8 +74,8 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageSeo
                 model.MetaKeywords = page.MetaKeywords;
                 model.MetaDescription = page.MetaDescription;
                 model.UseCanonicalUrl = page.UseCanonicalUrl;
-                model.IsInSitemap = inSitemapFuture.Any() || SitemapHelper.IsPageInSitemap(Repository, page.PageUrlHash, page.PageId, page.LanguageGroupIdentifier);
                 model.UpdateSitemap = true;
+                model.IsInSitemap = page.IsInSitemap;
 
                 if (cmsConfiguration.Security.AccessControlEnabled)
                 {

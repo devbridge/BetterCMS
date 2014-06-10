@@ -1,12 +1,14 @@
 ﻿using System.Linq;
 
 using BetterCms.Core.Security;
+
 using BetterCms.Module.Pages.Command.Page.GetPagesList;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.SiteSettings;
 
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
 
 using NHibernate.Criterion;

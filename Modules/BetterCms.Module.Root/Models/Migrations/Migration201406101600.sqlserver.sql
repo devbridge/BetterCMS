@@ -1,8 +1,8 @@
-﻿IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.VIEWS WHERE TABLE_SCHEMA = N'bcms_pages' AND TABLE_NAME = N'PagesView')
-	DROP VIEW [bcms_pages].[PagesView]
+﻿IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.VIEWS WHERE TABLE_SCHEMA = N'bcms_root' AND TABLE_NAME = N'PagesView')
+	DROP VIEW [bcms_root].[PagesView]
 GO
 
-CREATE VIEW [bcms_pages].[PagesView]
+CREATE VIEW [bcms_root].[PagesView]
 AS
       SELECT
 			p.[Id],
