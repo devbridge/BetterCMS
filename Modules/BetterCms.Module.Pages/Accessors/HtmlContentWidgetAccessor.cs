@@ -7,6 +7,7 @@ using BetterCms.Core.DataContracts;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 
 namespace BetterCms.Module.Pages.Accessors
@@ -65,11 +66,21 @@ namespace BetterCms.Module.Pages.Accessors
 
         public override string[] GetStylesResources(HtmlHelper html)
         {
+            if (Options != null)
+            {
+                return Options.ToStyleResources();
+            }
+
             return null;
         }
 
         public override string[] GetJavaScriptResources(HtmlHelper html)
         {
+            if (Options != null)
+            {
+                return Options.ToJavaScriptResources();
+            }
+
             return null;
         }
     }

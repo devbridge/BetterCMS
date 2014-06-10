@@ -17,6 +17,7 @@ using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Helpers.Extensions;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Mvc.PageHtmlRenderer;
+using BetterCms.Module.Pages.Mvc.Projections;
 using BetterCms.Module.Pages.Registration;
 using BetterCms.Module.Pages.Services;
 
@@ -282,14 +283,13 @@ namespace BetterCms.Module.Pages
                                 ShouldBeRendered = page => !page.IsMasterPage
                         }, 
                     
-                    new ButtonActionProjection(pagePropertiesJsModuleIncludeDescriptor, page => page.IsMasterPage ? "editMasterPageProperties" : "editPageProperties")
+                    new EditPagePropertiesButtonProjection(pagePropertiesJsModuleIncludeDescriptor, page => page.IsMasterPage ? "editMasterPageProperties" : "editPageProperties")
                             {
                                 Order = 20,
                                 Title = page => page.IsMasterPage 
                                     ? PagesGlobalization.Sidebar_EditMasterPagePropertiesButtonTitle
                                     : PagesGlobalization.Sidebar_EditPagePropertiesButtonTitle,
-                                CssClass = page => "bcms-sidemenu-btn",
-                                AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.Administration)
+                                CssClass = page => "bcms-sidemenu-btn"
                             },
 
                     new ButtonActionProjection(seoJsModuleIncludeDescriptor, page => "openEditSeoDialog")
