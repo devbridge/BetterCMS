@@ -12,6 +12,8 @@ namespace BetterCms
         string PublicSecuredContentUrlRoot { get; set; }
 
         string SecuredContentRoot { get; set; }
+        
+        int MaximumFileNameLength { get; set; }
 
         StorageServiceType ServiceType { get; set; }
 

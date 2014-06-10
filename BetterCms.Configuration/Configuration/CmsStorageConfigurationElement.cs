@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Globalization;
 
 namespace BetterCms.Configuration
 {
@@ -17,6 +18,8 @@ namespace BetterCms.Configuration
         private const string ServiceTypeAttribute = "serviceType";
 
         private const string ProcessTimeoutAttribute = "processTimeout";
+
+        private const string MaximumFileNameLengthAttribute = "maxFileNameLength";
 
         [ConfigurationProperty(ContentRootAttribute, IsRequired = true)]
         public string ContentRoot
@@ -94,6 +97,19 @@ namespace BetterCms.Configuration
         {
             get { return (TimeSpan)this[ProcessTimeoutAttribute]; }
             set { this[ProcessTimeoutAttribute] = value; }
+        }
+
+        [ConfigurationProperty(MaximumFileNameLengthAttribute, IsRequired = false, DefaultValue = 0)]
+        public int MaximumFileNameLength
+        {
+            get
+            {
+                int length;
+                Int32.TryParse(this[MaximumFileNameLengthAttribute].ToString(), out length);
+                
+                return length;
+            }
+            set { this[MaximumFileNameLengthAttribute] = value; }
         }
 
         public KeyValueElement this[int index]
