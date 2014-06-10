@@ -435,7 +435,7 @@
     <EmbeddedResource Include="Content\Styles\bcms.navigation.css" />
     <Content Include="BuildConfiguration.xml" />
     <EmbeddedResource Include="Models\Migrations\Migration201312121313.sqlserver.sql" />
-    <EmbeddedResource Include="Models\Migrations\Migration201406101545.sql" />
+    <EmbeddedResource Include="Models\Migrations\Migration201406101545.sqlserver.sql" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
