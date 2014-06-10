@@ -4,7 +4,7 @@ GO
 
 CREATE VIEW [bcms_pages].[PagesView]
 AS
-      SELECT TOP 50
+      SELECT
 			p.[Id],
 			p.[IsDeleted],
 			p.[Version],
