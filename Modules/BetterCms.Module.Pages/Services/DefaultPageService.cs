@@ -95,15 +95,15 @@ namespace BetterCms.Module.Pages.Services
             }
 
             // NOTE: if GetPageQuery() and CachePage() is used properly below code should not be executed.
-            var inSitemapFuture = repository.AsQueryable<SitemapNode>().Where(node => node.UrlHash == trimmed && !node.IsDeleted && !node.Sitemap.IsDeleted).Select(node => node.Id).ToFuture();
             var page = repository
                 .AsQueryable<PageProperties>(p => p.PageUrlHash == trimmed)
                 .Fetch(p => p.Layout)
+                .Fetch(p => p.PagesView)
                 .FirstOrDefault();
 
             if (page != null)
             {
-                page.IsInSitemap = inSitemapFuture.Any() || repository.AsQueryable<SitemapNode>().Any(node => node.Page.Id == page.Id && !node.IsDeleted && !node.Sitemap.IsDeleted);
+                page.IsInSitemap = page.PagesView.IsInSitemap;
                 temporaryPageCache.Add(trimmed, page);
             }
 
