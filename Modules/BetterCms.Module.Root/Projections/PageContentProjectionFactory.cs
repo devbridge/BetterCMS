@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using Autofac;
 using Autofac.Core;
@@ -8,7 +9,6 @@ using BetterCms.Core.DataContracts;
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.Content.Resources;
-using BetterCms.Module.Root.ViewModels.Option;
 
 using Common.Logging;
 
@@ -60,7 +60,22 @@ namespace BetterCms.Module.Root.Projections
                 contentAccessor = new EmptyContentAccessor(string.Format("<i style=\"color:red;\">{0}</i>", RootGlobalization.Message_FailedToRenderContent));
             }
 
-            PageContentProjection pageContentProjection = new PageContentProjection(pageContent, content, contentAccessor);
+            List<PageContentProjection> childProjections;
+            if (content.Children != null)
+            {
+                childProjections = new List<PageContentProjection>();
+                foreach (var child in content.Children.Distinct())
+                {
+                    var childProjection = Create(pageContent, child, null);
+                    childProjections.Add(childProjection);
+                }
+            }
+            else
+            {
+                childProjections = null;
+            }
+
+            PageContentProjection pageContentProjection = new PageContentProjection(pageContent, content, contentAccessor, childProjections);
 
             return pageContentProjection;
         }

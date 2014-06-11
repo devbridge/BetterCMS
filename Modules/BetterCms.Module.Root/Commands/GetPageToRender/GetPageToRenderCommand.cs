@@ -22,6 +22,8 @@ using BetterCms.Module.Root.Models.Extensions;
 
 using NHibernate.Linq;
 
+using Remotion.Linq.EagerFetching.Parsing;
+
 namespace BetterCms.Module.Root.Commands.GetPageToRender
 {
     public class GetPageToRenderCommand : CommandBase, ICommand<GetPageToRenderRequest, CmsRequestViewModel>
@@ -371,7 +373,11 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 .FetchMany(f => f.Options)
                 .Fetch(f => f.Content)
                 .ThenFetchMany(f => f.ContentRegions)
-                .ThenFetch(f => f.Region);
+                .ThenFetch(f => f.Region)
+                // Fetch child contents
+                .Fetch(f => f.Content)
+                .ThenFetchMany(f => f.ChildContents)
+                .ThenFetch(f => f.Child);
 
             if (request.CanManageContent || request.PreviewPageContentId != null)
             {

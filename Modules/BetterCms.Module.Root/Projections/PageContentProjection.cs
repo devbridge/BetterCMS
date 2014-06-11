@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Web.Mvc;
 
@@ -17,11 +18,14 @@ namespace BetterCms.Module.Root.Projections
 
         private readonly IContentAccessor contentAccessor;
 
-        public PageContentProjection(IPageContent pageContent, IContent content, IContentAccessor contentAccessor)
+        private readonly IList<PageContentProjection> childProjections;
+
+        public PageContentProjection(IPageContent pageContent, IContent content, IContentAccessor contentAccessor, IList<PageContentProjection> childProjections = null)
         {
             this.pageContent = pageContent;
             this.content = content;
             this.contentAccessor = contentAccessor;
+            this.childProjections = childProjections;
         }
 
         public PageContentProjection(SerializationInfo info, StreamingContext context)
@@ -136,6 +140,11 @@ namespace BetterCms.Module.Root.Projections
         public string[] GetJavaScriptResources(HtmlHelper html)
         {
             return contentAccessor.GetJavaScriptResources(html);
+        }
+
+        public IList<PageContentProjection> GetChildProjections()
+        {
+            return childProjections;
         }
     }
 }

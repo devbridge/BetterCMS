@@ -81,6 +81,11 @@
         public const string DynamicRegionRegexPattern = "{{DYNAMIC_REGION\\:([a-zA-Z0-9]{8}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{12})}}";
 
         /// <summary>
+        /// The regex pattern for to find all children widgets in the content
+        /// </summary>
+        public const string ChildrenWidgetRegexPattern = "{{WIDGET\\:([a-zA-Z0-9]{8}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{12})}}";
+
+        /// <summary>
         /// Module permissions.
         /// </summary>
         public static class UserRoles

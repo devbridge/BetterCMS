@@ -164,8 +164,10 @@
     <Compile Include="Models\Language.cs" />
     <Compile Include="Models\Extensions\CultureInfoExtensions.cs" />
     <Compile Include="Models\Maps\LanguageMap.cs" />
+    <Compile Include="Models\Maps\ContentContentMap.cs" />
     <Compile Include="Models\Maps\MasterPageMap.cs" />
     <Compile Include="Models\Maps\PagesViewMap.cs" />
+    <Compile Include="Models\ChildContent.cs" />
     <Compile Include="Models\MasterPage.cs" />
     <Compile Include="Models\Maps\ContentRegionMap.cs" />
     <Compile Include="Models\ContentRegion.cs" />
@@ -181,6 +183,7 @@
     <Compile Include="Models\Migrations\Migration201310180900.cs" />
     <Compile Include="Models\Migrations\Migration201406101600.cs" />
     <Compile Include="Models\PagesView.cs" />
+    <Compile Include="Mvc\PageHtmlRenderer\ContentHtmlRenderer.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\PageContentHtmlRenderer.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\RenderingContentOptionProperty.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\IRenderingOption.cs" />

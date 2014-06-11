@@ -25,6 +25,21 @@ namespace BetterCms.Module.Root.Models
 
         public virtual Content Original { get; set; }
 
+        public virtual IList<ChildContent> ChildContents { get; set; }
+
+        IList<IContent> IContent.Children
+        {
+            get
+            {
+                if (ChildContents != null)
+                {
+                    return ChildContents.Select(s => s.Child).Cast<IContent>().ToArray();
+                }
+
+                return null;
+            }
+        }
+
         public virtual IList<PageContent> PageContents { get; set; }
 
         public virtual IList<ContentOption> ContentOptions { get; set; }
