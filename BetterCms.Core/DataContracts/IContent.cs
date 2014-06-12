@@ -29,6 +29,6 @@ namespace BetterCms.Core.DataContracts
         /// <value>
         /// The child contents.
         /// </value>
-        IList<IContent> Children { get; }
+        IList<IChildContent> Children { get; }
     }
 }

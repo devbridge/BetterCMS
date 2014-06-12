@@ -161,11 +161,13 @@
     <Compile Include="Controllers\SidebarController.cs" />
     <Compile Include="Controllers\SiteSettingsController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
+    <Compile Include="Models\ChildContentOption.cs" />
     <Compile Include="Models\Language.cs" />
     <Compile Include="Models\Extensions\CultureInfoExtensions.cs" />
     <Compile Include="Models\Maps\LanguageMap.cs" />
-    <Compile Include="Models\Maps\ContentContentMap.cs" />
+    <Compile Include="Models\Maps\ChildContentMap.cs" />
     <Compile Include="Models\Maps\MasterPageMap.cs" />
+    <Compile Include="Models\Maps\ChildContentOptionMap.cs" />
     <Compile Include="Models\Maps\PagesViewMap.cs" />
     <Compile Include="Models\ChildContent.cs" />
     <Compile Include="Models\MasterPage.cs" />
@@ -206,6 +208,7 @@
     <Compile Include="Mvc\PageHtmlRenderer\RenderingPageProperties.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\RenderingPagePropertyBase.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\RenderingPageTitleProperty.cs" />
+    <Compile Include="Projections\ChildContentProjection.cs" />
     <Compile Include="Providers\CustomOptionsProvider.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Content.cs" />

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -18,23 +17,21 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
             this.htmlHelper = htmlHelper;
         }
 
-        public StringBuilder AppendHtml(StringBuilder stringBuilder, PageContentProjection projection,
-            IList<PageContentProjection> childrenContents = null)
+        public StringBuilder AppendHtml(StringBuilder stringBuilder, PageContentProjection projection)
         {
             var content = projection.GetHtml(htmlHelper);
 
-            if (childrenContents == null)
-            {
-                childrenContents = projection.GetChildProjections() ?? new List<PageContentProjection>();
-            }
-            if (childrenContents.Any())
+            var childrenContents = projection.GetChildProjections();
+            if (childrenContents != null && childrenContents.Any())
             {
                 var widgetIds = ParseWidgetsFromHtml(content);
                 var availableWidgets = childrenContents.Where(cc => widgetIds.Any(id => id == cc.ContentId));
                 foreach (var childProjection in availableWidgets)
                 {
-                    var replaceWhat = string.Format("{{{{WIDGET:{0}}}}}", childProjection.ContentId.ToString().ToUpperInvariant());
-                    var replaceWith = AppendHtml(new StringBuilder(), childProjection, childrenContents).ToString();
+                    var replaceWhat = string.Format(RootModuleConstants.ChildWidgetReplacePattern, 
+                        childProjection.ContentId.ToString().ToUpperInvariant(),
+                        childProjection.ChildContentId.ToString().ToUpperInvariant());
+                    var replaceWith = AppendHtml(new StringBuilder(), childProjection).ToString();
                     
                     content = content.Replace(replaceWhat, replaceWith);
                 }
@@ -54,7 +51,7 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
 
             var ids = new List<System.Guid>();
 
-            var matches = Regex.Matches(searchIn, RootModuleConstants.ChildrenWidgetRegexPattern, RegexOptions.IgnoreCase);
+            var matches = Regex.Matches(searchIn, RootModuleConstants.ChildWidgetRegexPattern, RegexOptions.IgnoreCase);
             foreach (Match match in matches)
             {
                 if (match.Groups.Count > 1)

@@ -20,6 +20,7 @@ using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Cms;
 using BetterCms.Module.Root.Models.Extensions;
 
+using NHibernate.Hql.Ast.ANTLR.Tree;
 using NHibernate.Linq;
 
 using Remotion.Linq.EagerFetching.Parsing;
@@ -265,8 +266,32 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             }
 
             var options = optionService.GetMergedOptionValues(contentToProject.ContentOptions, pageContent.Options);
-            
-            return pageContentProjectionFactory.Create(pageContent, contentToProject, options);
+            var childProjections = CreateListOfChildProjections(pageContent, contentToProject.ChildContents, options);
+
+            return pageContentProjectionFactory.Create(pageContent, contentToProject, options, childProjections);
+        }
+
+        private List<ChildContentProjection> CreateListOfChildProjections(PageContent pageContent, IList<ChildContent> children, List<IOptionValue> options)
+        {
+            List<ChildContentProjection> childProjections;
+            if (children != null && children.Any())
+            {
+                childProjections = new List<ChildContentProjection>();
+                foreach (var child in children.Distinct())
+                {
+                    var childChildProjections = CreateListOfChildProjections(pageContent, child.Child.ChildContents, options);
+                    var childProjection = pageContentProjectionFactory.Create(pageContent, child.Child, options, childChildProjections,
+                        (pc, c, a, ch) => new ChildContentProjection(pc, child, a, ch));
+                    
+                    childProjections.Add(childProjection);
+                }
+            }
+            else
+            {
+                childProjections = null;
+            }
+
+            return childProjections;
         }
 
         /// <summary>
@@ -384,7 +409,39 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 pageContentsQuery = pageContentsQuery.Fetch(f => f.Content).ThenFetchMany(f => f.History);
             }
 
-            return pageContentsQuery.ToList();
+            var contents = pageContentsQuery.ToList();
+
+            // TODO: use view instead of recursion???
+            RetrieveChildrenContents(contents.Select(pc => pc.Content).Distinct().ToList());
+
+            return contents;
+        }
+
+        private void RetrieveChildrenContents(List<Models.Content> contents)
+        {
+            var childContents = contents.Where(c => c.ChildContents != null).SelectMany(c => c.ChildContents).ToArray();
+            if (childContents.Any())
+            {
+                var childIds = childContents.Select(c => c.Child.Id).Distinct().ToArray();
+                var entities = Repository
+                    .AsQueryable<ChildContent>(c => childIds.Contains(c.Parent.Id))
+                    .Fetch(c => c.Child)
+                    .FetchMany(c => c.Options)
+                    .ToArray();
+
+                childContents.ForEach(c => {
+
+                    if (c.Child.ChildContents == null)
+                    {
+                        c.Child.ChildContents = new List<ChildContent>();
+                    }
+                    c.Child.ChildContents.Clear();
+
+                    entities.Where(e => e.Parent.Id == c.Child.Id).ForEach(c.Child.ChildContents.Add);
+                });
+
+                RetrieveChildrenContents(entities.Select(c => c.Child).Distinct().ToList());
+            }
         }
 
         /// <summary>

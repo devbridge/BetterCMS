@@ -2,15 +2,17 @@ using BetterCms.Core.Models;
 
 namespace BetterCms.Module.Root.Models.Maps
 {
-    public class ContentContentMap : EntityMapBase<ChildContent>
+    public class ChildContentMap : EntityMapBase<ChildContent>
     {
-        public ContentContentMap()
+        public ChildContentMap()
             : base(RootModuleDescriptor.ModuleName)
         {
             Table("ChildContents");
 
             References(f => f.Parent).Column("ParentContentId").Cascade.SaveUpdate().LazyLoad().Not.Nullable();
             References(f => f.Child).Column("ChildContentId").Cascade.SaveUpdate().LazyLoad().Not.Nullable();
+
+            HasMany(x => x.Options).KeyColumn("ChildContentId").Cascade.SaveUpdate().Inverse().LazyLoad().Where("IsDeleted = 0");
         }
     }
 }

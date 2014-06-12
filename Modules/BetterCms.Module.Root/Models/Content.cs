@@ -27,13 +27,13 @@ namespace BetterCms.Module.Root.Models
 
         public virtual IList<ChildContent> ChildContents { get; set; }
 
-        IList<IContent> IContent.Children
+        IList<IChildContent> IContent.Children
         {
             get
             {
                 if (ChildContents != null)
                 {
-                    return ChildContents.Select(s => s.Child).Cast<IContent>().ToArray();
+                    return ChildContents.Cast<IChildContent>().ToArray();
                 }
 
                 return null;
