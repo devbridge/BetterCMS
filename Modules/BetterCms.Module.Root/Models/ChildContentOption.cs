@@ -7,7 +7,7 @@ using BetterCms.Core.Models;
 namespace BetterCms.Module.Root.Models
 {
     [Serializable]
-    public class ChildContentOption : EquatableEntity<ChildContentOption>, IOptionValue
+    public class ChildContentOption : EquatableEntity<ChildContentOption>, IOption
     {
         public virtual ChildContent ChildContent { get; set; }
 
@@ -19,15 +19,7 @@ namespace BetterCms.Module.Root.Models
 
         public virtual CustomOption CustomOption { get; set; }
 
-        object IOptionValue.Value
-        {
-            get
-            {
-                return Value;
-            }
-        }
-
-        ICustomOption IOptionValue.CustomOption
+        ICustomOption IOption.CustomOption
         {
             get
             {

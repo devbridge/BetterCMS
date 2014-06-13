@@ -271,7 +271,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             return pageContentProjectionFactory.Create(pageContent, contentToProject, options, childProjections);
         }
 
-        private List<ChildContentProjection> CreateListOfChildProjections(PageContent pageContent, IList<ChildContent> children, List<IOptionValue> options)
+        private List<ChildContentProjection> CreateListOfChildProjections(PageContent pageContent, IList<ChildContent> children, List<IOptionValue> parentOptions)
         {
             List<ChildContentProjection> childProjections;
             if (children != null && children.Any())
@@ -279,6 +279,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 childProjections = new List<ChildContentProjection>();
                 foreach (var child in children.Distinct())
                 {
+                    var options = optionService.GetMergedOptionValues(parentOptions, child.Options);
                     var childChildProjections = CreateListOfChildProjections(pageContent, child.Child.ChildContents, options);
                     var childProjection = pageContentProjectionFactory.Create(pageContent, child.Child, options, childChildProjections,
                         (pc, c, a, ch) => new ChildContentProjection(pc, child, a, ch));

@@ -137,25 +137,13 @@ namespace BetterCms.Module.Root.Services
         /// </returns>
         public List<IOptionValue> GetMergedOptionValues(IEnumerable<IOption> options, IEnumerable<IOption> optionValues)
         {
-            var optionModels = new List<IOptionValue>();
+            var optionModels = new List<OptionValueViewModel>();
 
             if (optionValues != null)
             {
                 foreach (var optionValue in optionValues.Distinct())
                 {
-                    var value = GetValueSafe(optionValue);
-
-                    var optionViewModel = new OptionValueViewModel
-                                              {
-                                                  Type = optionValue.Type, 
-                                                  OptionKey = optionValue.Key.Trim(), 
-                                                  OptionValue = value,
-                                                  CustomOption = optionValue.CustomOption != null ? new CustomOptionViewModel
-                                                  {
-                                                      Identifier = optionValue.CustomOption.Identifier,
-                                                      Title = optionValue.CustomOption.Title
-                                                  } : null
-                                              };
+                    var optionViewModel = CreateOptionValueViewModel(optionValue);
                     optionModels.Add(optionViewModel);
                 }
             }
@@ -164,27 +152,99 @@ namespace BetterCms.Module.Root.Services
             {
                 foreach (var option in options.Distinct())
                 {
-                    if (!optionModels.Any(f => f.Key.Equals(option.Key.Trim(), StringComparison.OrdinalIgnoreCase)))
+                    var optionViewModel = optionModels.FirstOrDefault(f => f.OptionKey.Equals(option.Key.Trim(), StringComparison.OrdinalIgnoreCase));
+                    if (optionViewModel == null)
                     {
-                        var value = GetValueSafe(option);
-
-                        var optionViewModel = new OptionValueViewModel
-                                                  {
-                                                      Type = option.Type, 
-                                                      OptionKey = option.Key.Trim(),
-                                                      OptionValue = value,
-                                                      CustomOption = option.CustomOption != null ? new CustomOptionViewModel
-                                                      {
-                                                          Identifier = option.CustomOption.Identifier,
-                                                          Title = option.CustomOption.Title
-                                                      } : null,
-                                                  };
+                        optionViewModel = CreateOptionValueViewModel(option);
                         optionModels.Add(optionViewModel);
                     }
                 }
             }
 
-            return optionModels.OrderBy(o => o.Key).ToList();
+            return optionModels.OrderBy(o => o.OptionKey).Cast<IOptionValue>().ToList();
+        }
+
+        /// <summary>
+        /// Merges options and values and returns one list with option value view models for use (values are returned as objects).
+        /// </summary>
+        /// <param name="options">The options.</param>
+        /// <param name="optionValues">The option values.</param>
+        /// <returns>
+        /// List of option values view models, merged from options and option values
+        /// </returns>
+        public List<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionValue> options, IEnumerable<IOption> optionValues)
+        {
+            var optionModels = new List<OptionValueViewModel>();
+
+            if (optionValues != null)
+            {
+                foreach (var optionValue in optionValues.Distinct())
+                {
+                    var optionViewModel = CreateOptionValueViewModel(optionValue);
+                    optionModels.Add(optionViewModel);
+                }
+            }
+
+            if (options != null)
+            {
+                foreach (var option in options.Distinct())
+                {
+                    var optionViewModel = optionModels.FirstOrDefault(f => f.OptionKey.Equals(option.Key.Trim(), StringComparison.OrdinalIgnoreCase));
+                    if (optionViewModel == null)
+                    {
+                        optionViewModel = CreateOptionValueViewModel(option);
+                        optionModels.Add(optionViewModel);
+                    }
+                }
+            }
+
+            return optionModels.OrderBy(o => o.OptionKey).Cast<IOptionValue>().ToList();
+        }
+
+        /// <summary>
+        /// Creates the option value view model.
+        /// </summary>
+        /// <param name="option">The option.</param>
+        /// <returns>Created option value view model</returns>
+        private OptionValueViewModel CreateOptionValueViewModel(IOption option)
+        {
+            var value = GetValueSafe(option);
+
+            var optionViewModel = new OptionValueViewModel
+                {
+                    Type = option.Type,
+                    OptionKey = option.Key.Trim(),
+                    OptionValue = value,
+                    CustomOption = option.CustomOption != null ? new CustomOptionViewModel
+                    {
+                        Identifier = option.CustomOption.Identifier,
+                        Title = option.CustomOption.Title
+                    } : null,
+                };
+
+            return optionViewModel;
+        }
+        
+        /// <summary>
+        /// Creates the option value view model.
+        /// </summary>
+        /// <param name="option">The option.</param>
+        /// <returns>Created option value view model</returns>
+        private OptionValueViewModel CreateOptionValueViewModel(IOptionValue option)
+        {
+            var optionViewModel = new OptionValueViewModel
+                {
+                    Type = option.Type,
+                    OptionKey = option.Key.Trim(),
+                    OptionValue = option.Value,
+                    CustomOption = option.CustomOption != null ? new CustomOptionViewModel
+                    {
+                        Identifier = option.CustomOption.Identifier,
+                        Title = option.CustomOption.Title
+                    } : null,
+                };
+
+            return optionViewModel;
         }
 
         /// <summary>
