@@ -457,6 +457,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Widget not found by specified id..
+        /// </summary>
+        public static string ChildContent_WidgetNotFound_ById {
+            get {
+                return ResourceManager.GetString("ChildContent_WidgetNotFound_ById", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Attention!.
         /// </summary>
         public static string Confirm_DefaultTitle {

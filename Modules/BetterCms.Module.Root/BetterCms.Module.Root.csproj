@@ -785,6 +785,8 @@
     <EmbeddedResource Include="Scripts\ace\snippets\xquery.js" />
     <EmbeddedResource Include="Scripts\ace\snippets\yaml.js" />
     <EmbeddedResource Include="Scripts\bcms.codeEditor.js" />
+    <EmbeddedResource Include="Scripts\bcms.languages.js" />
+    <EmbeddedResource Include="Models\Migrations\Migration201406101600.sqlserver.sql" />
     <EmbeddedResource Include="Scripts\ckeditor\build-config.js" />
     <EmbeddedResource Include="Scripts\ckeditor\ckeditor.js" />
     <EmbeddedResource Include="Scripts\ckeditor\config.js" />
@@ -795,8 +797,8 @@
     <EmbeddedResource Include="Scripts\ckeditor\lang\bn.js" />
     <EmbeddedResource Include="Scripts\ckeditor\lang\bs.js" />
     <EmbeddedResource Include="Scripts\ckeditor\lang\ca.js" />
-    <EmbeddedResource Include="Scripts\ckeditor\lang\cs.js" />
     <EmbeddedResource Include="Scripts\ckeditor\lang\cy.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\cs.js" />
     <EmbeddedResource Include="Scripts\ckeditor\lang\da.js" />
     <EmbeddedResource Include="Scripts\ckeditor\lang\de.js" />
     <EmbeddedResource Include="Scripts\ckeditor\lang\el.js" />
@@ -855,11 +857,12 @@
     <EmbeddedResource Include="Scripts\ckeditor\lang\zh-cn.js" />
     <EmbeddedResource Include="Scripts\ckeditor\lang\zh.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\a11yhelp.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\_translationstatus.txt" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ar.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\bg.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ca.js" />
-    <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\cs.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\cy.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\cs.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\da.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\de.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\el.js" />
@@ -908,7 +911,6 @@
     <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\uk.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\vi.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\zh-cn.js" />
-    <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\_translationstatus.txt" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\about\dialogs\about.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\about\dialogs\hidpi\logo_ckeditor.png" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\about\dialogs\logo_ckeditor.png" />
@@ -918,6 +920,7 @@
     <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-filemanager\plugin.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-imagemanager\plugin.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-modelvalues\plugin.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-widget\plugin.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\colordialog\dialogs\colordialog.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\dialog\dialogDefinition.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\div\dialogs\div.js" />
@@ -1008,11 +1011,12 @@
     <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\images\whatchutalkingabout_smile.png" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\images\wink_smile.gif" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\images\wink_smile.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\_translationstatus.txt" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\ar.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\bg.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\ca.js" />
-    <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\cs.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\cy.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\cs.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\de.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\el.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\en.js" />
@@ -1051,10 +1055,9 @@
     <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\uk.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\vi.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\zh-cn.js" />
-    <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\_translationstatus.txt" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\specialchar.js" />
-    <EmbeddedResource Include="Scripts\ckeditor\plugins\tabletools\dialogs\tableCell.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\table\dialogs\table.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\tabletools\dialogs\tableCell.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\templates\dialogs\templates.css" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\templates\dialogs\templates.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\templates\templates\default.js" />
@@ -1080,8 +1083,6 @@
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\lock.png" />
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\refresh.png" />
     <EmbeddedResource Include="Scripts\ckeditor\styles.js" />
-    <EmbeddedResource Include="Scripts\bcms.languages.js" />
-    <EmbeddedResource Include="Models\Migrations\Migration201406101600.sqlserver.sql" />
     <Content Include="Views\Web.config" />
     <EmbeddedResource Include="Views\Sidebar\Container.cshtml" />
     <EmbeddedResource Include="Views\Rendering\RenderMainJsFile.cshtml" />
@@ -1204,16 +1205,22 @@
     <EmbeddedResource Include="Views\Shared\Partial\MasterPagesPath.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\ckeditor\plugins\scayt\LICENSE.md" />
-    <EmbeddedResource Include="Scripts\ckeditor\plugins\scayt\README.md" />
-    <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\LICENSE.md" />
-    <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\README.md" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\TopBlockAddItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Language\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\scayt\LICENSE.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\scayt\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\LICENSE.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\README.md" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -616,6 +616,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\Sitemap\Partial\SitemapTemplate.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Content\Partial\SelectWidget.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Widgets\SelectWidget.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

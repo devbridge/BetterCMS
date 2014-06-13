@@ -7,6 +7,7 @@ using BetterCms.Module.Pages.Command.Widget.DeleteWidget;
 using BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit;
 using BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit;
 using BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets;
+using BetterCms.Module.Pages.Command.Widget.GetWidgetCategory;
 using BetterCms.Module.Pages.Command.Widget.PreviewWidget;
 using BetterCms.Module.Pages.Command.Widget.SaveWidget;
 using BetterCms.Module.Pages.Content.Resources;
@@ -220,6 +221,22 @@ namespace BetterCms.Module.Pages.Controllers
             */
 
             return View(model);
+        }
+
+        /// <summary>
+        /// Creates select widget modal dialog for given page.
+        /// </summary>
+        /// <returns>
+        /// ViewResult to render select widget content modal dialog.
+        /// </returns>
+        [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        public ActionResult SelectWidget(GetWidgetCategoryRequest request)
+        {
+            var model = GetCommand<GetWidgetCategoryCommand>().ExecuteCommand(request);
+            var view = model != null ? RenderView("SelectWidget", model.WidgetCategories) : string.Empty;
+
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
     }
 }

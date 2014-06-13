@@ -24,12 +24,11 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
             var childrenContents = projection.GetChildProjections();
             if (childrenContents != null && childrenContents.Any())
             {
-                var widgetIds = ParseWidgetsFromHtml(content);
-                var availableWidgets = childrenContents.Where(cc => widgetIds.Any(id => id == cc.ContentId));
+                var widgetIds = ParseWidgetsFromHtml(content).Distinct();
+                var availableWidgets = childrenContents.Where(cc => widgetIds.Any(id => id == cc.ChildContentId));
                 foreach (var childProjection in availableWidgets)
                 {
                     var replaceWhat = string.Format(RootModuleConstants.ChildWidgetReplacePattern, 
-                        childProjection.ContentId.ToString().ToUpperInvariant(),
                         childProjection.ChildContentId.ToString().ToUpperInvariant());
                     var replaceWith = AppendHtml(new StringBuilder(), childProjection).ToString();
                     
@@ -42,7 +41,7 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
             return stringBuilder;
         }
 
-        public static System.Guid[] ParseWidgetsFromHtml(string searchIn)
+        public static System.Guid[] ParseWidgetsFromHtml(string searchIn, string pattern = RootModuleConstants.ChildWidgetRegexPattern)
         {
             if (string.IsNullOrWhiteSpace(searchIn))
             {
@@ -51,7 +50,7 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
 
             var ids = new List<System.Guid>();
 
-            var matches = Regex.Matches(searchIn, RootModuleConstants.ChildWidgetRegexPattern, RegexOptions.IgnoreCase);
+            var matches = Regex.Matches(searchIn, pattern, RegexOptions.IgnoreCase);
             foreach (Match match in matches)
             {
                 if (match.Groups.Count > 1)
@@ -64,7 +63,7 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
                 }
             }
 
-            return ids.Distinct().ToArray();
+            return ids.ToArray();
         }
     }
 }

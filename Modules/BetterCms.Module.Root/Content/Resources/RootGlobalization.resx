@@ -582,4 +582,7 @@
   <data name="DynamicContent_DialogUnauthorized_Message" xml:space="preserve">
     <value>Your session is expired. Please re-login to continue.</value>
   </data>
+  <data name="ChildContent_WidgetNotFound_ById" xml:space="preserve">
+    <value>Widget not found by specified id.</value>
+  </data>
 </root>

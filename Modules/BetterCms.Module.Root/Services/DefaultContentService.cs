@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 
 using BetterCms.Core.DataAccess;
@@ -8,10 +9,12 @@ using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.DataTier;
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Services;
-
+using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.Helpers;
+using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 
 using NHibernate.Linq;
 
@@ -61,7 +64,12 @@ namespace BetterCms.Module.Root.Services
                 {
                     updatedContent.ContentRegions = new List<ContentRegion>();
                 }
+                if (updatedContent.ChildContents == null)
+                {
+                    updatedContent.ChildContents = new List<ChildContent>();
+                }
                 CollectDynamicRegions(dynamicContainer.Html, updatedContent, updatedContent.ContentRegions);
+                dynamicContainer.Html = CollectCreatingWidgets(dynamicContainer.Html, updatedContent);
             }
 
             if (updatedContent.Id == default(Guid))
@@ -91,7 +99,8 @@ namespace BetterCms.Module.Root.Services
                           .Fetch(f => f.Original).ThenFetchMany(f => f.History)
                           .Fetch(f => f.Original).ThenFetchMany(f => f.ContentOptions)
                           .FetchMany(f => f.History)
-                          .FetchMany(f => f.ContentOptions)            
+                          .FetchMany(f => f.ContentOptions)
+                          .FetchMany(f => f.ChildContents)
                           .FetchMany(f => f.ContentRegions)            
                           .ThenFetch(f => f.Region)
                           .ToList()
@@ -126,6 +135,11 @@ namespace BetterCms.Module.Root.Services
             if (originalContent.ContentRegions != null)
             {
                 originalContent.ContentRegions = originalContent.ContentRegions.Distinct().ToList();
+            }
+            
+            if (originalContent.ChildContents != null)
+            {
+                originalContent.ChildContents = originalContent.ChildContents.Distinct().ToList();
             }
             
             /* Update existing content. */
@@ -173,7 +187,9 @@ namespace BetterCms.Module.Root.Services
                 contentVersionOfRequestedStatus.Original = originalContent;
                 contentVersionOfRequestedStatus.Status = requestedStatus;
                 originalContent.History.Add(contentVersionOfRequestedStatus);
-                repository.Save(contentVersionOfRequestedStatus);                
+                repository.Save(contentVersionOfRequestedStatus);
+
+                SetChildContents(contentVersionOfRequestedStatus, updatedContent);
             }
             
             if (requestedStatus == ContentStatus.Published)
@@ -202,6 +218,8 @@ namespace BetterCms.Module.Root.Services
                     originalContent.PublishedByUser = securityService.CurrentPrincipalName;
                 }
                 repository.Save(originalContent);
+
+                SetChildContents(originalContent, updatedContent);
 
                 IList<Models.Content> contentsToRemove = originalContent.History.Where(f => f.Status == ContentStatus.Preview || f.Status == ContentStatus.Draft).ToList();
                 foreach (var redundantContent in contentsToRemove)
@@ -246,7 +264,9 @@ namespace BetterCms.Module.Root.Services
                 SetContentOptions(previewOrDraftContentVersion, updatedContent);
                 SetContentRegions(previewOrDraftContentVersion, updatedContent);
                 previewOrDraftContentVersion.Status = requestedStatus;
-                repository.Save(previewOrDraftContentVersion); 
+                repository.Save(previewOrDraftContentVersion);
+
+                SetChildContents(previewOrDraftContentVersion, updatedContent);
             }            
             else if (requestedStatus == ContentStatus.Published)
             {
@@ -274,6 +294,8 @@ namespace BetterCms.Module.Root.Services
                 }
 
                 repository.Save(originalContent);
+
+                SetChildContents(originalContent, updatedContent);
             }
         }
 
@@ -392,7 +414,45 @@ namespace BetterCms.Module.Root.Services
             }
         }
 
-        public void CollectDynamicRegions(string html, Models.Content content, IList<ContentRegion> contentRegions)
+        private string CollectCreatingWidgets(string html, Models.Content content)
+        {
+            var widgetIds = ContentHtmlRenderer.ParseWidgetsFromHtml(html, RootModuleConstants.AddingChildWidgetRegexPattern);
+            if (widgetIds != null && widgetIds.Length > 0)
+            {
+                var widgets = repository.AsQueryable<Models.Content>(c => widgetIds.Contains(c.Id)).Select(c => c.Id).ToList();
+                widgetIds.Where(id => widgets.All(dbId => dbId != id)).ToList().ForEach(
+                    id =>
+                    {
+                        var message = RootGlobalization.ChildContent_WidgetNotFound_ById;
+                        var logMessage = string.Format("{0} Id: {1}", message, id);
+                        throw new ValidationException(() => message, logMessage);
+                    });
+
+                foreach (var id in widgetIds)
+                {
+                    var childContent = new ChildContent
+                                       {
+                                           Id = Guid.NewGuid(),
+                                           Child = repository.AsProxy<Models.Content>(id),
+                                           Parent = content
+                                       };
+                    content.ChildContents.Add(childContent);
+
+                    var replaceWhat = string.Format(RootModuleConstants.AddingChildWidgetReplacePattern, id.ToString().ToUpperInvariant());
+                    var replaceWith = string.Format(RootModuleConstants.ChildWidgetReplacePattern, childContent.Id.ToString().ToUpperInvariant());
+
+                    int pos = html.IndexOf(replaceWhat, StringComparison.InvariantCulture);
+                    if (pos >= 0)
+                    {
+                        html = string.Concat(html.Substring(0, pos), replaceWith, html.Substring(pos + replaceWhat.Length));
+                    }
+                }
+            }
+
+            return html;
+        }
+
+        private void CollectDynamicRegions(string html, Models.Content content, IList<ContentRegion> contentRegions)
         {
             var regionIdentifiers = GetRegionIds(html);
 
@@ -477,6 +537,18 @@ namespace BetterCms.Module.Root.Services
                 .Where(s => source.ContentRegions.All(d => s.Region.RegionIdentifier != d.Region.RegionIdentifier))
                 .Distinct().ToList()
                 .ForEach(d => repository.Delete(d));
+        }
+
+        private void SetChildContents(Models.Content destination, Models.Content source)
+        {
+            if (source.ChildContents != null)
+            {
+                foreach (var childContent in source.ChildContents)
+                {
+                    childContent.Parent = destination;
+                    repository.Save(childContent);
+                }
+            }
         }
 
         /// <summary>

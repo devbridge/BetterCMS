@@ -3713,5 +3713,14 @@ namespace BetterCms.Module.Pages.Content.Resources {
                 return ResourceManager.GetString("Widgets_CanNotDeleteWidgetIsInUse_Message", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Widget.
+        /// </summary>
+        public static string Widgets_SelectWidget_DialogTitle {
+            get {
+                return ResourceManager.GetString("Widgets_SelectWidget_DialogTitle", resourceCulture);
+            }
+        }
     }
 }

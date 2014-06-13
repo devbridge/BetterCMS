@@ -93,7 +93,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                 }
             }
 
-            // Deman access
+            // Demand access
             if (configuration.Security.AccessControlEnabled)
             {
                 AccessControlService.DemandAccess(pageContent.Page, Context.Principal, AccessLevel.ReadWrite);

@@ -1335,4 +1335,7 @@
   <data name="SiteSettings_Widgets_PagesUsingWidget_Title" xml:space="preserve">
     <value>Widget usages</value>
   </data>
+  <data name="Widgets_SelectWidget_DialogTitle" xml:space="preserve">
+    <value>Select Widget</value>
+  </data>
 </root>

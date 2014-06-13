@@ -81,14 +81,29 @@
         public const string DynamicRegionRegexPattern = "{{DYNAMIC_REGION\\:([a-zA-Z0-9]{8}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{12})}}";
 
         /// <summary>
+        /// The unique identifier regex pattern
+        /// </summary>
+        public const string GuidRegexPattern = "[a-zA-Z0-9]{8}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{12}";
+
+        /// <summary>
         /// The regex pattern for to find all child widgets in the content
         /// </summary>
-        public const string ChildWidgetRegexPattern = "{{WIDGET\\:([a-zA-Z0-9]{8}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{12})\\,([a-zA-Z0-9]{8}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{12})}}";
+        public const string ChildWidgetRegexPattern = "{{WIDGET\\:(" + GuidRegexPattern + ")}}";
 
         /// <summary>
         /// The child widget replacement pattern
         /// </summary>
-        public const string ChildWidgetReplacePattern = "{{{{WIDGET:{0},{1}}}}}";
+        public const string ChildWidgetReplacePattern = "{{{{WIDGET:{0}}}}}";
+
+        /// <summary>
+        /// The regex pattern for to find all adding new child widgets in the content
+        /// </summary>
+        public const string AddingChildWidgetRegexPattern = "{{ADDWIDGET\\:(" + GuidRegexPattern + ")}}";
+
+        /// <summary>
+        /// The adding child widget replace pattern
+        /// </summary>
+        public const string AddingChildWidgetReplacePattern = "{{{{ADDWIDGET:{0}}}}}";
 
         /// <summary>
         /// Module permissions.

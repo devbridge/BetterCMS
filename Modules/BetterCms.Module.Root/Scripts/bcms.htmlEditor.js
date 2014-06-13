@@ -16,6 +16,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
             insertImage: 'insertImage',
             insertFile: 'insertFile',
             insertDynamicRegion: 'insertDynamicRegion',
+            insertWidget: 'insertWidget',
         };
 
     // Assign objects to module
@@ -64,6 +65,10 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
 
         CKEDITOR.instances[id].InsertDynamicRegion = function (editor) {
             bcms.trigger(htmlEditor.events.insertDynamicRegion, editor);
+        };
+
+        CKEDITOR.instances[id].InsertWidget = function (editor) {
+            bcms.trigger(htmlEditor.events.insertWidget, editor);
         };
 
         CKEDITOR.instances[id].addHtml = function (html) {
