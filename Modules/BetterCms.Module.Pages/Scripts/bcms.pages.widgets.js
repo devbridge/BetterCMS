@@ -16,7 +16,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 loadCreateServerControlWidgetDialogUrl: null,
                 loadEditServerControlWidgetDialogUrl: null,                               
                 deleteWidgetUrl: null,
-                loadPageContentOptionsDialogUrl: null
+                loadPageContentOptionsDialogUrl: null,
+                loadChildContentOptionsDialogUrl: null
             },
             globalization = {
                 createHtmlContentWidgetDialogTitle: null,
@@ -30,7 +31,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 widgetStatusDraft: null,
                 widgetStatusPublishedWithDraft: null,
                 deletingMessage: null,
-                widgetUsageTitle: null
+                widgetUsageTitle: null,
+                editChildWidgetOptionsTitle: null
             },
             selectors = {                                
                 enableCustomCss: '#bcms-enable-custom-css',
@@ -407,12 +409,18 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Opens dialog for editing widget options 
         */
-        widgets.configureWidget = function (pageContentId, onSaveCallback) {
+        widgets.configureWidget = function (id, onSaveCallback, opts) {
             var optionListViewModel;
-            modal.open({
+
+            opts = $.extend({
                 title: globalization.editPageWidgetOptionsTitle,
+                url: $.format(links.loadPageContentOptionsDialogUrl, id)
+            }, opts);
+
+            modal.open({
+                title: opts.title,
                 onLoad: function (dialog) {
-                    var url = $.format(links.loadPageContentOptionsDialogUrl, pageContentId);
+                    var url = opts.url;
                     dynamicContent.bindDialog(dialog, url, {
                         contentAvailable: function (contentDialog, content) {
                             var optionsContainer = contentDialog.container.find(selectors.pageContentOptionsForm);
@@ -758,6 +766,24 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         }
 
         /**
+        * Called when editing child widget options (called from HTML editor)
+        */
+        function onEditChildWidgetOptions(data) {
+            var childContentId = data.childContentId;
+
+            if (!childContentId) {
+                bcms.logger.error("Cannot open child widget options modal window. widgetId cannot be null.");
+            }
+
+            widgets.configureWidget(childContentId, function () {
+                // Do nothing - just close modal and that's it
+            }, {
+                title: globalization.editChildWidgetOptionsTitle,
+                url: $.format(links.loadChildContentOptionsDialogUrl, childContentId)
+            });
+        }
+
+        /**
         * Initializes widgets module.
         */
         widgets.init = function () {
@@ -768,6 +794,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Subscribe to events
         */
         bcms.on(bcms.events.createContentOverlay, onCreateContentOverlay);
+        bcms.on(htmlEditor.events.editChildWidgetOptions, onEditChildWidgetOptions);
 
         /**
         * Register initialization

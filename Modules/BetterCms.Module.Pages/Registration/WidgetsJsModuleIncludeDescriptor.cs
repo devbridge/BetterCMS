@@ -28,7 +28,8 @@ namespace BetterCms.Module.Pages.Registration
                             new JavaScriptModuleLinkTo<WidgetsController>(this, "loadCreateServerControlWidgetDialogUrl", controller => controller.CreateServerControlWidget()),
                             new JavaScriptModuleLinkTo<WidgetsController>(this, "loadEditServerControlWidgetDialogUrl", controller => controller.EditServerControlWidget("{0}")),
                             new JavaScriptModuleLinkTo<WidgetsController>(this, "deleteWidgetUrl", controller => controller.DeleteWidget("{0}", "{1}")),
-                            new JavaScriptModuleLinkTo<ContentController>(this, "loadPageContentOptionsDialogUrl", controller => controller.PageContentOptions("{0}"))
+                            new JavaScriptModuleLinkTo<ContentController>(this, "loadPageContentOptionsDialogUrl", controller => controller.PageContentOptions("{0}")),
+                            new JavaScriptModuleLinkTo<ContentController>(this, "loadChildContentOptionsDialogUrl", controller => controller.ChildContentOptions("{0}"))
                         };
 
             Globalization = new IActionProjection[]
@@ -44,7 +45,8 @@ namespace BetterCms.Module.Pages.Registration
                                     new JavaScriptModuleGlobalization(this, "widgetStatusPublishedWithDraft", () => RootGlobalization.ContentStatus_PublishedWithDraft),
                                     new JavaScriptModuleGlobalization(this, "previewImageNotFoundMessage", () => PagesGlobalization.EditWidget_PreviewImageNotFound_Message),
                                     new JavaScriptModuleGlobalization(this, "deletingMessage", () => RootGlobalization.Message_Deleting),
-                                    new JavaScriptModuleGlobalization(this, "widgetUsageTitle", () => PagesGlobalization.SiteSettings_Widgets_PagesUsingWidget_Title)
+                                    new JavaScriptModuleGlobalization(this, "widgetUsageTitle", () => PagesGlobalization.SiteSettings_Widgets_PagesUsingWidget_Title),
+                                    new JavaScriptModuleGlobalization(this, "editChildWidgetOptionsTitle", () => PagesGlobalization.ChildWidgetOptions_Dialog_Title)
                                 };
         }
     }

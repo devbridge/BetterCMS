@@ -403,6 +403,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit child widget options.
+        /// </summary>
+        public static string ChildWidgetOptions_Dialog_Title {
+            get {
+                return ResourceManager.GetString("ChildWidgetOptions_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clone the current page as a master page.
         /// </summary>
         public static string ClonePage_Dialog_AsMasterPage {

@@ -8,9 +8,9 @@ using BetterCms.Module.Root.ViewModels.Security;
 namespace BetterCms.Module.Pages.ViewModels.Content
 {
     /// <summary>
-    /// Edit page content options view model.
+    /// Edit content option values view model.
     /// </summary>
-    public class PageContentOptionsViewModel : IAccessSecuredViewModel
+    public class ContentOptionValuesViewModel : IAccessSecuredViewModel
     {
         /// <summary>
         /// Gets or sets the list of page content options.
@@ -29,12 +29,12 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         public List<CustomOptionViewModel> CustomOptions { get; set; }
 
         /// <summary>
-        /// Gets or sets the page content id.
+        /// Gets or sets the option values container id.
         /// </summary>
         /// <value>
-        /// The page content id.
+        /// The option values container id.
         /// </value>
-        public Guid PageContentId { get; set; }
+        public Guid OptionValuesContainerId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether dialog should be opened in the read only mode.

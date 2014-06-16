@@ -5,10 +5,12 @@ using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Security;
 
 using BetterCms.Module.Pages.Command.Content.DeletePageContent;
+using BetterCms.Module.Pages.Command.Content.GetChildContentOptions;
 using BetterCms.Module.Pages.Command.Content.GetInsertHtmlContent;
 using BetterCms.Module.Pages.Command.Content.GetPageContentOptions;
 using BetterCms.Module.Pages.Command.Content.GetPageHtmlContent;
 using BetterCms.Module.Pages.Command.Content.InsertContent;
+using BetterCms.Module.Pages.Command.Content.SaveChildContentOptions;
 using BetterCms.Module.Pages.Command.Content.SavePageContentOptions;
 using BetterCms.Module.Pages.Command.Content.SavePageHtmlContent;
 using BetterCms.Module.Pages.Command.Content.SortPageContent;
@@ -199,6 +201,23 @@ namespace BetterCms.Module.Pages.Controllers
 
             return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
+        
+        /// <summary>
+        /// Creates modal dialog for editing a child content options.
+        /// </summary>
+        /// <param name="childContentId">The page content id.</param>
+        /// <returns>
+        /// ViewResult to render page content options modal dialog.
+        /// </returns>
+        [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        public ActionResult ChildContentOptions(string childContentId)
+        {
+            var model = GetCommand<GetChildContentOptionsCommand>().ExecuteCommand(childContentId.ToGuidOrDefault());
+            var view = RenderView("ChildContentOptions", model);
+
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
+        }
 
         /// <summary>
         /// Saves page content options.
@@ -209,9 +228,25 @@ namespace BetterCms.Module.Pages.Controllers
         /// </returns>
         [HttpPost]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
-        public ActionResult PageContentOptions(PageContentOptionsViewModel model)
+        public ActionResult PageContentOptions(ContentOptionValuesViewModel model)
         {
             bool success = GetCommand<SavePageContentOptionsCommand>().ExecuteCommand(model);
+
+            return Json(new WireJson { Success = success });
+        }
+
+        /// <summary>
+        /// Saves child content options.
+        /// </summary>
+        /// <param name="model">The view model.</param>
+        /// <returns>
+        /// Json with result status.
+        /// </returns>
+        [HttpPost]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        public ActionResult ChildContentOptions(ContentOptionValuesViewModel model)
+        {
+            bool success = GetCommand<SaveChildContentOptionsCommand>().ExecuteCommand(model);
 
             return Json(new WireJson { Success = success });
         }

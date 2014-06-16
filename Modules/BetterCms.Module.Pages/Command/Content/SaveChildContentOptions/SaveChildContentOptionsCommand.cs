@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
-
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -9,11 +8,9 @@ using BetterCms.Module.Root.Services;
 
 using NHibernate.Linq;
 
-using ContentEntity = BetterCms.Module.Root.Models.Content;
-
-namespace BetterCms.Module.Pages.Command.Content.SavePageContentOptions
+namespace BetterCms.Module.Pages.Command.Content.SaveChildContentOptions
 {
-    public class SavePageContentOptionsCommand : CommandBase, ICommand<ContentOptionValuesViewModel, bool>
+    public class SaveChildContentOptionsCommand : CommandBase, ICommand<ContentOptionValuesViewModel, bool>
     {
         /// <summary>
         /// Gets or sets the option service.
@@ -32,24 +29,25 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageContentOptions
         {
             if (model != null && !model.OptionValuesContainerId.HasDefaultValue())
             {
-                var pageContent = Repository.AsQueryable<PageContent>()
-                              .Where(f => f.Id == model.OptionValuesContainerId && !f.IsDeleted && !f.Content.IsDeleted)
+                var childContent = Repository.AsQueryable<ChildContent>()
+                              .Where(f => f.Id == model.OptionValuesContainerId && !f.IsDeleted && !f.Child.IsDeleted)
                               .FetchMany(f => f.Options)
-                              .Fetch(f => f.Content).ThenFetchMany(f => f.ContentOptions)
+                              .Fetch(f => f.Child).ThenFetchMany(f => f.ContentOptions)
                               .ToList()
                               .FirstOrDefault();
 
-                if (pageContent != null)
+                if (childContent != null)
                 {
                     UnitOfWork.BeginTransaction();
 
-                    var optionValues = pageContent.Options.Distinct();
+                    var optionValues = childContent.Options.Distinct();
 
-                    pageContent.Options = OptionService.SaveOptionValues(model.OptionValues, optionValues, () => new PageContentOption { PageContent = pageContent });
+                    childContent.Options = OptionService.SaveOptionValues(model.OptionValues, optionValues, () => new ChildContentOption { ChildContent = childContent });
 
                     UnitOfWork.Commit();
 
-                    Events.PageEvents.Instance.OnPageContentConfigured(pageContent);
+                    // TODO: implement child content event
+                    // Events.PageEvents.Instance.OnChildContentConfigured(childContent);
                 }                
             }
 

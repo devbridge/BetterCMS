@@ -1338,4 +1338,7 @@
   <data name="Widgets_SelectWidget_DialogTitle" xml:space="preserve">
     <value>Select Widget</value>
   </data>
+  <data name="ChildWidgetOptions_Dialog_Title" xml:space="preserve">
+    <value>Edit child widget options</value>
+  </data>
 </root>

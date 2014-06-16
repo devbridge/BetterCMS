@@ -11,7 +11,7 @@
     @Html.TabbedContentMessagesBox()
 
     <div class="bcms-input-list-holder">
-        @using (Html.BeginForm<ContentController>(c => c.PageContentOptions((ContentOptionValuesViewModel)null), FormMethod.Post, new
+        @using (Html.BeginForm<ContentController>(c => c.ChildContentOptions((ContentOptionValuesViewModel)null), FormMethod.Post, new
             {
                 @id = "bcms-options-form",
                 @class = "bcms-ajax-form",
