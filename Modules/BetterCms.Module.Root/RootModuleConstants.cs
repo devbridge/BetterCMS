@@ -88,22 +88,22 @@
         /// <summary>
         /// The regex pattern for to find all child widgets in the content
         /// </summary>
-        public const string ChildWidgetRegexPattern = "{{WIDGET\\:(" + GuidRegexPattern + ")}}";
+        public const string ChildWidgetRegexPattern = "<widget>{{WIDGET\\:(" + GuidRegexPattern + ")}}</widget>";
 
         /// <summary>
         /// The child widget replacement pattern
         /// </summary>
-        public const string ChildWidgetReplacePattern = "{{{{WIDGET:{0}}}}}";
+        public const string ChildWidgetReplacePattern = "<widget>{{{{WIDGET:{0}}}}}</widget>";
 
         /// <summary>
         /// The regex pattern for to find all adding new child widgets in the content
         /// </summary>
-        public const string AddingChildWidgetRegexPattern = "{{ADDWIDGET\\:(" + GuidRegexPattern + ")}}";
+        public const string AddingChildWidgetRegexPattern = "<widget>{{ADDWIDGET\\:(" + GuidRegexPattern + ")}}</widget>";
 
         /// <summary>
         /// The adding child widget replace pattern
         /// </summary>
-        public const string AddingChildWidgetReplacePattern = "{{{{ADDWIDGET:{0}}}}}";
+        public const string AddingChildWidgetReplacePattern = "<widget>{{{{ADDWIDGET:{0}}}}}</widget>";
 
         /// <summary>
         /// Module permissions.
