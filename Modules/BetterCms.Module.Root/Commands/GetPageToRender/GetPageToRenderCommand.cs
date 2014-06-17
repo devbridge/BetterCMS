@@ -266,12 +266,12 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             }
 
             var options = optionService.GetMergedOptionValues(contentToProject.ContentOptions, pageContent.Options);
-            var childProjections = CreateListOfChildProjections(pageContent, contentToProject.ChildContents, options);
+            var childProjections = CreateListOfChildProjections(pageContent, contentToProject.ChildContents);
 
             return pageContentProjectionFactory.Create(pageContent, contentToProject, options, childProjections);
         }
 
-        private List<ChildContentProjection> CreateListOfChildProjections(PageContent pageContent, IList<ChildContent> children, List<IOptionValue> parentOptions)
+        private List<ChildContentProjection> CreateListOfChildProjections(PageContent pageContent, IList<ChildContent> children)
         {
             List<ChildContentProjection> childProjections;
             if (children != null && children.Any())
@@ -279,8 +279,8 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 childProjections = new List<ChildContentProjection>();
                 foreach (var child in children.Distinct())
                 {
-                    var options = optionService.GetMergedOptionValues(parentOptions, child.Options);
-                    var childChildProjections = CreateListOfChildProjections(pageContent, child.Child.ChildContents, options);
+                    var childChildProjections = CreateListOfChildProjections(pageContent, child.Child.ChildContents);
+                    var options = optionService.GetMergedOptionValues(child.Child.ContentOptions, child.Options);
                     var childProjection = pageContentProjectionFactory.Create(pageContent, child.Child, options, childChildProjections,
                         (pc, c, a, ch) => new ChildContentProjection(pc, child, a, ch));
                     
@@ -373,8 +373,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         /// <returns>The list of page contents</returns>
         private IList<PageContent> GetPageContents(Guid[] pageIds, GetPageToRenderRequest request)
         {
-            IQueryable<PageContent> pageContentsQuery =
-                Repository.AsQueryable<PageContent>();
+            IQueryable<PageContent> pageContentsQuery = Repository.AsQueryable<PageContent>();
 
             pageContentsQuery = pageContentsQuery.Where(f => pageIds.Contains(f.Page.Id));
 
