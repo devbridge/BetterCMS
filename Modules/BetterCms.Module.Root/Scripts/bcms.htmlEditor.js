@@ -17,7 +17,8 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
             insertFile: 'insertFile',
             insertDynamicRegion: 'insertDynamicRegion',
             insertWidget: 'insertWidget',
-            editChildWidgetOptions: 'editChildWidgetOptions'
+            editChildWidgetOptions: 'editChildWidgetOptions',
+            editChildWidget: 'editChildWidget'
         };
 
     // Assign objects to module
@@ -79,6 +80,13 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
             });
         };
 
+        CKEDITOR.instances[id].EditChildWidget = function (editor, childContentId) {
+            bcms.trigger(htmlEditor.events.editChildWidget, {
+                editor: editor,
+                childContentId: childContentId
+            });
+        };
+
         CKEDITOR.instances[id].addHtml = function (html) {
             var editor = this;
 
@@ -125,8 +133,9 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
         }
     };
 
-    htmlEditor.destroyHtmlEditorInstance = function () {
-        var editor = CKEDITOR.instances[htmlEditor.id];
+    htmlEditor.destroyHtmlEditorInstance = function (textareaId) {
+        var id = textareaId || htmlEditor.id,
+            editor = CKEDITOR.instances[id];
         if (editor) {
             closeMaximizedMode(editor);
             editor.destroy();
@@ -137,7 +146,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
     };
 
     htmlEditor.setSourceMode = function (textareaId) {
-        var id = textareaId ? textareaId : htmlEditor.id;
+        var id = textareaId || htmlEditor.id;
 
         CKEDITOR.instances[id].on('instanceReady', function () {
             var instance = CKEDITOR.instances[id];
@@ -146,19 +155,19 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
     };
 
     htmlEditor.enableInsertDynamicRegion = function (textareaId) {
-        var id = textareaId ? textareaId : htmlEditor.id;
+        var id = textareaId || htmlEditor.id;
         CKEDITOR.instances[id].DynamicRegionsEnabled = true;
     };
 
     htmlEditor.isSourceMode = function (textareaId) {
-        var id = textareaId ? textareaId : htmlEditor.id;
+        var id = textareaId || htmlEditor.id;
 
         var instance = CKEDITOR.instances[id];
         return instance.mode === 'source';
     };
 
     htmlEditor.updateEditorContent = function (textareaId) {
-        var id = textareaId ? textareaId : htmlEditor.id;
+        var id = textareaId || htmlEditor.id;
 
         // Put content from HTML editor to textarea:
         var instance = CKEDITOR.instances[id],

@@ -6,6 +6,7 @@ using BetterCms.Core.Security;
 
 using BetterCms.Module.Pages.Command.Content.DeletePageContent;
 using BetterCms.Module.Pages.Command.Content.GetChildContentOptions;
+using BetterCms.Module.Pages.Command.Content.GetChildContentType;
 using BetterCms.Module.Pages.Command.Content.GetInsertHtmlContent;
 using BetterCms.Module.Pages.Command.Content.GetPageContentOptions;
 using BetterCms.Module.Pages.Command.Content.GetPageHtmlContent;
@@ -298,6 +299,20 @@ namespace BetterCms.Module.Pages.Controllers
         {
             var response = GetCommand<SortPageContentCommand>().ExecuteCommand(model);
             return Json(new WireJson { Success = response });
+        }
+
+        /// <summary>
+        /// Returns the type and id of the child content.
+        /// </summary>
+        /// <param name="childContentId">The child content identifier.</param>
+        /// <returns>JSON result with the type and id of the child content</returns>
+        [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        public JsonResult ChildContentType(string childContentId)
+        {
+            var response = GetCommand<GetChildContentTypeCommand>().ExecuteCommand(childContentId.ToGuidOrDefault());
+
+            return WireJson(response != null, response, JsonRequestBehavior.AllowGet);
         }
     }
 }

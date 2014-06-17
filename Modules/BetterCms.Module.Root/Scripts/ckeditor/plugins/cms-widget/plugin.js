@@ -42,6 +42,20 @@
                     }
                 }),
 
+                editWidgetCommand = new CKEDITOR.command(e, {
+                    exec: function(editor) {
+                        if (!a.currentElement) {
+                            return;
+                        }
+                        var id = CKEDITOR.plugins.cmswidget.getWidgetId(a.currentElement);
+                        if (!id) {
+                            return;
+                        }
+
+                        editor.EditChildWidget(editor, id);
+                    }
+                }),
+
                 removeWidgetCommand = new CKEDITOR.command(e, {
                     exec: function(editor) {
                         if (!a.currentElement) {
@@ -61,6 +75,7 @@
             });
 
             e.addCommand('cmsWidgetOptions', editWidgetOptionsCommand);
+            e.addCommand('cmsEditWidget', editWidgetCommand);
             e.addCommand('cmsRemoveWidget', removeWidgetCommand);
 
             e.on('doubleclick', function (evt) {
@@ -76,17 +91,24 @@
             if (e.addMenuItems) {
                 e.addMenuItems({
                     cmsWidgetOptions: {
-                        label: 'Edit widget Options',
+                        label: 'Edit widget options',
                         command: 'cmsWidgetOptions',
                         group: 'link',
                         order: 1
+                    },
+
+                    cmsEditWidget: {
+                        label: 'Edit widget',
+                        command: 'cmsEditWidget',
+                        group: 'link',
+                        order: 2
                     },
 
                     cmsRemoveWidget: {
                         label: 'Remove widget',
                         command: 'cmsRemoveWidget',
                         group: 'link',
-                        order: 1
+                        order: 3
                     }
                 });
             }
@@ -106,6 +128,7 @@
 
                     if (id) {
                         menu.cmsWidgetOptions = CKEDITOR.TRISTATE_OFF;
+                        menu.cmsEditWidget = CKEDITOR.TRISTATE_OFF;
                     }
 
                     return menu;

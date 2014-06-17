@@ -29,25 +29,26 @@ namespace BetterCms.Module.Pages.Registration
                             new JavaScriptModuleLinkTo<WidgetsController>(this, "loadEditServerControlWidgetDialogUrl", controller => controller.EditServerControlWidget("{0}")),
                             new JavaScriptModuleLinkTo<WidgetsController>(this, "deleteWidgetUrl", controller => controller.DeleteWidget("{0}", "{1}")),
                             new JavaScriptModuleLinkTo<ContentController>(this, "loadPageContentOptionsDialogUrl", controller => controller.PageContentOptions("{0}")),
-                            new JavaScriptModuleLinkTo<ContentController>(this, "loadChildContentOptionsDialogUrl", controller => controller.ChildContentOptions("{0}"))
+                            new JavaScriptModuleLinkTo<ContentController>(this, "loadChildContentOptionsDialogUrl", controller => controller.ChildContentOptions("{0}")),
+                            new JavaScriptModuleLinkTo<ContentController>(this, "getChildContentTypeUrl", controller => controller.ChildContentType("{0}"))
                         };
 
             Globalization = new IActionProjection[]
-                                {
-                                    new JavaScriptModuleGlobalization(this, "createHtmlContentWidgetDialogTitle", () => PagesGlobalization.CreateHtmlContentWidget_Dialog_Title),
-                                    new JavaScriptModuleGlobalization(this, "editAdvancedContentDialogTitle", () => PagesGlobalization.EditWidget_Dialog_Title),
-                                    new JavaScriptModuleGlobalization(this, "createWidgetDialogTitle", () => PagesGlobalization.CreateWidget_Dialog_Title),
-                                    new JavaScriptModuleGlobalization(this, "editWidgetDialogTitle", () => PagesGlobalization.EditWidget_Dialog_Title),
-                                    new JavaScriptModuleGlobalization(this, "editPageWidgetOptionsTitle", () => PagesGlobalization.PageWidgetOptions_Dialog_Title),
-                                    new JavaScriptModuleGlobalization(this, "deleteWidgetConfirmMessage", () => PagesGlobalization.DeleteWidget_Confirmation_Message),
-                                    new JavaScriptModuleGlobalization(this, "widgetStatusPublished", () => RootGlobalization.ContentStatus_Published),
-                                    new JavaScriptModuleGlobalization(this, "widgetStatusDraft", () => RootGlobalization.ContentStatus_Draft),
-                                    new JavaScriptModuleGlobalization(this, "widgetStatusPublishedWithDraft", () => RootGlobalization.ContentStatus_PublishedWithDraft),
-                                    new JavaScriptModuleGlobalization(this, "previewImageNotFoundMessage", () => PagesGlobalization.EditWidget_PreviewImageNotFound_Message),
-                                    new JavaScriptModuleGlobalization(this, "deletingMessage", () => RootGlobalization.Message_Deleting),
-                                    new JavaScriptModuleGlobalization(this, "widgetUsageTitle", () => PagesGlobalization.SiteSettings_Widgets_PagesUsingWidget_Title),
-                                    new JavaScriptModuleGlobalization(this, "editChildWidgetOptionsTitle", () => PagesGlobalization.ChildWidgetOptions_Dialog_Title)
-                                };
+                        {
+                            new JavaScriptModuleGlobalization(this, "createHtmlContentWidgetDialogTitle", () => PagesGlobalization.CreateHtmlContentWidget_Dialog_Title),
+                            new JavaScriptModuleGlobalization(this, "editAdvancedContentDialogTitle", () => PagesGlobalization.EditWidget_Dialog_Title),
+                            new JavaScriptModuleGlobalization(this, "createWidgetDialogTitle", () => PagesGlobalization.CreateWidget_Dialog_Title),
+                            new JavaScriptModuleGlobalization(this, "editWidgetDialogTitle", () => PagesGlobalization.EditWidget_Dialog_Title),
+                            new JavaScriptModuleGlobalization(this, "editPageWidgetOptionsTitle", () => PagesGlobalization.PageWidgetOptions_Dialog_Title),
+                            new JavaScriptModuleGlobalization(this, "deleteWidgetConfirmMessage", () => PagesGlobalization.DeleteWidget_Confirmation_Message),
+                            new JavaScriptModuleGlobalization(this, "widgetStatusPublished", () => RootGlobalization.ContentStatus_Published),
+                            new JavaScriptModuleGlobalization(this, "widgetStatusDraft", () => RootGlobalization.ContentStatus_Draft),
+                            new JavaScriptModuleGlobalization(this, "widgetStatusPublishedWithDraft", () => RootGlobalization.ContentStatus_PublishedWithDraft),
+                            new JavaScriptModuleGlobalization(this, "previewImageNotFoundMessage", () => PagesGlobalization.EditWidget_PreviewImageNotFound_Message),
+                            new JavaScriptModuleGlobalization(this, "deletingMessage", () => RootGlobalization.Message_Deleting),
+                            new JavaScriptModuleGlobalization(this, "widgetUsageTitle", () => PagesGlobalization.SiteSettings_Widgets_PagesUsingWidget_Title),
+                            new JavaScriptModuleGlobalization(this, "editChildWidgetOptionsTitle", () => PagesGlobalization.ChildWidgetOptions_Dialog_Title)
+                        };
         }
     }
 }
