@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 
 using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -46,8 +47,7 @@ namespace BetterCms.Module.Pages.Command.Content.SaveChildContentOptions
 
                     UnitOfWork.Commit();
 
-                    // TODO: implement child content event
-                    // Events.PageEvents.Instance.OnChildContentConfigured(childContent);
+                    Events.PageEvents.Instance.OnChildContentConfigured(childContent);
                 }                
             }
 
