@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -10,6 +11,8 @@ using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.ViewModels.Content;
 
 using HtmlAgilityPack;
+
+using NHibernate.Hql.Ast.ANTLR.Tree;
 
 namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
 {
@@ -30,6 +33,11 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
         /// </summary>
         public const string WidgetAssignmentIdAttributeName = "data-assign-id";
 
+        /// <summary>
+        /// The widget's attribute's which identifies creating attribute, name
+        /// </summary>
+        public const string WidgetIsNewAttributeName = "data-is-new";
+
         private readonly HtmlHelper htmlHelper;
 
         public ChildContentRenderHelper(HtmlHelper htmlHelper)
@@ -45,10 +53,11 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
             if (childrenContents != null && childrenContents.Any())
             {
                 var parsedWidgets = ParseWidgetsFromHtml(content).Distinct();
-                var availableWidgets = childrenContents.Where(cc => parsedWidgets.Any(id => id.ChildContentId == cc.ChildContentId));
+                var availableWidgets = childrenContents
+                    .Where(cc => parsedWidgets.Any(id => id.AssignmentIdentifier == cc.AssignmentIdentifier));
                 foreach (var childProjection in availableWidgets)
                 {
-                    var model = parsedWidgets.First(w => w.ChildContentId == childProjection.ChildContentId);
+                    var model = parsedWidgets.First(w => w.AssignmentIdentifier == childProjection.AssignmentIdentifier);
                     var replaceWhat = model.Match.Value;
                     var replaceWith = AppendHtml(new StringBuilder(), childProjection).ToString();
 
@@ -96,17 +105,52 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
                 model.WidgetHtmlNode = widgetNode;
                 model.Match = match;
 
-                var childContentIdAttribute = widgetNode.Attributes.FirstOrDefault(a => a.Name == WidgetAssignmentIdAttributeName);
-                System.Guid childContentId;
-                if (childContentIdAttribute != null && !string.IsNullOrWhiteSpace(childContentIdAttribute.Value) && System.Guid.TryParse(childContentIdAttribute.Value, out childContentId))
+                var assignmentIdAttribute = widgetNode.Attributes.FirstOrDefault(a => a.Name == WidgetAssignmentIdAttributeName);
+                System.Guid assignmentId;
+                if (assignmentIdAttribute == null || string.IsNullOrWhiteSpace(assignmentIdAttribute.Value) || !System.Guid.TryParse(assignmentIdAttribute.Value, out assignmentId))
                 {
-                    model.ChildContentId = childContentId;
+                    if (throwException)
+                    {
+                        // TODO: add to translations
+                        const string message = "Failed while parsing child widgets from content. Child widget tag should contain data-assign-id attribute with child widget assignment id.";
+                        throw new ValidationException(() => message, message);
+                    }
+
+                    continue;
+                }
+                model.AssignmentIdentifier = assignmentId;
+
+                var isNewAttribute = widgetNode.Attributes.FirstOrDefault(a => a.Name == WidgetIsNewAttributeName);
+                bool isNew;
+                if (isNewAttribute != null && !string.IsNullOrWhiteSpace(isNewAttribute.Value) && bool.TryParse(isNewAttribute.Value, out isNew))
+                {
+                    model.IsNew = isNew;
                 }
 
                 result.Add(model);
             }
 
             return result;
+        }
+
+        public static string RemoveIsNewAttribute(string html, ChildContentModel model)
+        {
+            var isNewAttribute = model.WidgetHtmlNode.Attributes.FirstOrDefault(a => a.Name == WidgetIsNewAttributeName);
+            if (isNewAttribute != null)
+            {
+                model.WidgetHtmlNode.Attributes.Remove(isNewAttribute);
+                
+                var replaceWhat = model.Match.Value;
+                var replaceWith = model.WidgetHtmlNode.OuterHtml;
+
+                int pos = html.IndexOf(replaceWhat, StringComparison.InvariantCulture);
+                if (pos >= 0)
+                {
+                    html = string.Concat(html.Substring(0, pos), replaceWith, html.Substring(pos + replaceWhat.Length));
+                }
+            }
+
+            return html;
         }
     }
 }

@@ -747,7 +747,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     var widgetContainer = $(this).parents(selectors.widgetContainerBlock),
                         contentId = widgetContainer.data('originalId').toUpperCase(),
                         title = widgetContainer.find(selectors.widgetName).text(),
-                        html = '<widget data-id="' + contentId + '">' + title + '</widget>';
+                        html = '<widget data-id="' + contentId + '" data-assign-id="' + bcms.createGuid() + '" data-is-new="true">' + title + '</widget>';
 
                     if (htmlContentEditor.mode == 'source') {
                         htmlContentEditor.addHtml(html);

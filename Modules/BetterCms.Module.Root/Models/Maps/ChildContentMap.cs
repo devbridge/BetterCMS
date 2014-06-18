@@ -9,6 +9,8 @@ namespace BetterCms.Module.Root.Models.Maps
         {
             Table("ChildContents");
 
+            Map(x => x.AssignmentIdentifier).Not.Nullable();
+
             References(f => f.Parent).Column("ParentContentId").Cascade.SaveUpdate().LazyLoad().Not.Nullable();
             References(f => f.Child).Column("ChildContentId").Cascade.SaveUpdate().LazyLoad().Not.Nullable();
 

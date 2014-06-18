@@ -12,6 +12,8 @@ namespace BetterCms.Module.Root.Models
         public virtual Content Parent { get; set; }
 
         public virtual Content Child { get; set; }
+        
+        public virtual Guid AssignmentIdentifier { get; set; }
 
         public virtual IList<ChildContentOption> Options { get; set; }
 

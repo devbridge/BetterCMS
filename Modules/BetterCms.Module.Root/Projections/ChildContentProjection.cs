@@ -10,10 +10,13 @@ namespace BetterCms.Module.Root.Projections
     {
         private readonly System.Guid childContentId;
 
+        private readonly System.Guid assignmentIdentifier;
+
         public ChildContentProjection(IPageContent pageContent, IChildContent content, IContentAccessor contentAccessor, IList<ChildContentProjection> childProjections = null)
             : base(pageContent, content.ChildContent, contentAccessor, childProjections)
         {
             childContentId = content.Id;
+            assignmentIdentifier = content.AssignmentIdentifier;
         }
 
         public ChildContentProjection(SerializationInfo info, StreamingContext context)
@@ -26,6 +29,14 @@ namespace BetterCms.Module.Root.Projections
             get
             {
                 return childContentId;
+            }
+        }
+        
+        public System.Guid AssignmentIdentifier
+        {
+            get
+            {
+                return assignmentIdentifier;
             }
         }
     }

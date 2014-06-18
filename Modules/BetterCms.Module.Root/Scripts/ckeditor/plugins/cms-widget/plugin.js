@@ -125,13 +125,14 @@
                             cmsRemoveWidget: CKEDITOR.TRISTATE_OFF
                         },
                         widgetId = CKEDITOR.plugins.cmswidget.getWidgetId(element),
-                        assignId = CKEDITOR.plugins.cmswidget.getAssignId(element);
+                        assignId = CKEDITOR.plugins.cmswidget.getAssignId(element),
+                        isNew = CKEDITOR.plugins.cmswidget.isNew(element);
 
                     if (widgetId) {
                         menu.cmsEditWidget = CKEDITOR.TRISTATE_OFF;
                     }
 
-                    if (assignId) {
+                    if (assignId && !isNew) {
                         menu.cmsWidgetOptions = CKEDITOR.TRISTATE_OFF;
                     }
 
@@ -173,6 +174,19 @@
             }
 
             return element.data('assign-id');
+        },
+        
+        isNew: function (element) {
+            if (!CKEDITOR.plugins.cmswidget.isWidget(element)) {
+                return false;
+            }
+
+            var innerHtml = element.$.innerHTML;
+            if (!innerHtml) {
+                return false;
+            }
+
+            return element.data('is-new') == "true";
         }
     };
 })();

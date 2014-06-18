@@ -31,6 +31,21 @@ namespace BetterCms.Module.Root.Models
             }
         }
 
+        public virtual ChildContentOption Clone()
+        {
+            return CopyDataTo(new ChildContentOption());
+        }
+
+        public virtual ChildContentOption CopyDataTo(ChildContentOption contentOption)
+        {
+            contentOption.Key = Key;
+            contentOption.Type = Type;
+            contentOption.Value = Value;
+            contentOption.CustomOption = CustomOption;
+
+            return contentOption;
+        }
+
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>

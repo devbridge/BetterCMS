@@ -7,9 +7,9 @@ namespace BetterCms.Module.Pages.Models
     [Serializable]
     public class ServerControlWidget : Widget, IServerControlWidget
     {
-        public override Root.Models.Content CopyDataTo(Root.Models.Content content, bool copyOptions = true, bool copyRegions = true)
+        public override Root.Models.Content CopyDataTo(Root.Models.Content content, bool copyCollections = true)
         {
-            var copy = (ServerControlWidget)base.CopyDataTo(content, copyOptions, copyRegions);
+            var copy = (ServerControlWidget)base.CopyDataTo(content, copyCollections);
             copy.Url = Url;
 
             return copy;

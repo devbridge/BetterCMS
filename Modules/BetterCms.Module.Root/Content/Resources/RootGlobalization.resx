@@ -585,4 +585,7 @@
   <data name="ChildContent_WidgetNotFound_ById" xml:space="preserve">
     <value>Widget not found by specified id.</value>
   </data>
+  <data name="ChildContent_AssignmentAlreadyAdded" xml:space="preserve">
+    <value>Assignment with id "{0}" added more than once as the child widget.</value>
+  </data>
 </root>

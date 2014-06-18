@@ -8,7 +8,6 @@ using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
-using BetterCms.Core.Services;
 
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
@@ -17,8 +16,6 @@ using BetterCms.Module.Pages.ViewModels.Widgets;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
-
-using FluentNHibernate.Conventions.AcceptanceCriteria;
 
 using CategoryEntity = BetterCms.Module.Root.Models.Category;
 
@@ -33,17 +30,13 @@ namespace BetterCms.Module.Pages.Services
         private readonly IOptionService optionService;
         
         private readonly IContentService contentService;
-        
-        private readonly ISecurityService securityService;
 
-        public DefaultWidgetService(IRepository repository, IUnitOfWork unitOfWork, IOptionService optionService, IContentService contentService,
-            ISecurityService securityService)
+        public DefaultWidgetService(IRepository repository, IUnitOfWork unitOfWork, IOptionService optionService, IContentService contentService)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
             this.optionService = optionService;
             this.contentService = contentService;
-            this.securityService = securityService;
         }
 
         public void SaveHtmlContentWidget(EditHtmlContentWidgetViewModel model, out HtmlContentWidget widget, out HtmlContentWidget originalWidget,

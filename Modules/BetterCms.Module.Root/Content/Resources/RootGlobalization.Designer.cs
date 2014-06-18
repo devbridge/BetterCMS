@@ -457,6 +457,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assignment with id &quot;{0}&quot; added more than once as the child widget..
+        /// </summary>
+        public static string ChildContent_AssignmentAlreadyAdded {
+            get {
+                return ResourceManager.GetString("ChildContent_AssignmentAlreadyAdded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Widget not found by specified id..
         /// </summary>
         public static string ChildContent_WidgetNotFound_ById {
