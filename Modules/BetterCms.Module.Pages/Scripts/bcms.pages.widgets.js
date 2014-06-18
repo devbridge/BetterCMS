@@ -18,7 +18,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 deleteWidgetUrl: null,
                 loadPageContentOptionsDialogUrl: null,
                 loadChildContentOptionsDialogUrl: null,
-                getChildContentTypeUrl: null
+                getContentTypeUrl: null
             },
             globalization = {
                 createHtmlContentWidgetDialogTitle: null,
@@ -791,11 +791,11 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         }
 
         /**
-        * Called when editing child widget options
+        * Called when editing widget options
         */
-        function onEditChildWidget(data) {
-            var childContentId = data.childContentId,
-                url = $.format(links.getChildContentTypeUrl, childContentId),
+        function onEditWidget(data) {
+            var contentId = data.contentId,
+                url = $.format(links.getContentTypeUrl, contentId),
                 onCompleted = function (json) {
                     if (json.Success && json.Data && json.Data.Id && json.Data.Type) {
                         widgets.editWidget(json.Data.Id, json.Data.Type);
@@ -829,7 +829,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         */
         bcms.on(bcms.events.createContentOverlay, onCreateContentOverlay);
         bcms.on(htmlEditor.events.editChildWidgetOptions, onEditChildWidgetOptions);
-        bcms.on(htmlEditor.events.editChildWidget, onEditChildWidget);
+        bcms.on(htmlEditor.events.editWidget, onEditWidget);
 
         /**
         * Register initialization

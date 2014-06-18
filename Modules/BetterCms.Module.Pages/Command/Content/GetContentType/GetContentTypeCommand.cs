@@ -3,25 +3,26 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Mvc;
 
-namespace BetterCms.Module.Pages.Command.Content.GetChildContentType
+namespace BetterCms.Module.Pages.Command.Content.GetContentType
 {
-    public class GetChildContentTypeCommand : CommandBase, ICommand<Guid, GetChildContentTypeCommandResponse>
+    public class GetContentTypeCommand : CommandBase, ICommand<Guid, GetContentTypeCommandResponse>
     {
-        public GetChildContentTypeCommandResponse Execute(Guid request)
+        public GetContentTypeCommandResponse Execute(Guid request)
         {
             var result =  Repository
-                .AsQueryable<Root.Models.ChildContent>(w => w.Id == request)
+                .AsQueryable<Root.Models.Content>(w => w.Id == request)
                 .Select(w => new
                              {
-                                 Id = w.Child.Id,
-                                 Type = w.Child.GetType()
+                                 Id = w.Id,
+                                 Type = w.GetType()
                              })
                  .FirstOne();
 
-            var response = new GetChildContentTypeCommandResponse { Id = result.Id };
+            var response = new GetContentTypeCommandResponse { Id = result.Id };
             if (typeof(ServerControlWidget).IsAssignableFrom(result.Type))
             {
                 response.Type = WidgetType.ServerControl.ToString();

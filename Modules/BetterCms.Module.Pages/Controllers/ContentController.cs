@@ -6,7 +6,7 @@ using BetterCms.Core.Security;
 
 using BetterCms.Module.Pages.Command.Content.DeletePageContent;
 using BetterCms.Module.Pages.Command.Content.GetChildContentOptions;
-using BetterCms.Module.Pages.Command.Content.GetChildContentType;
+using BetterCms.Module.Pages.Command.Content.GetContentType;
 using BetterCms.Module.Pages.Command.Content.GetInsertHtmlContent;
 using BetterCms.Module.Pages.Command.Content.GetPageContentOptions;
 using BetterCms.Module.Pages.Command.Content.GetPageHtmlContent;
@@ -302,15 +302,15 @@ namespace BetterCms.Module.Pages.Controllers
         }
 
         /// <summary>
-        /// Returns the type and id of the child content.
+        /// Returns the type of the content.
         /// </summary>
-        /// <param name="childContentId">The child content identifier.</param>
-        /// <returns>JSON result with the type and id of the child content</returns>
+        /// <param name="childContentId">The content identifier.</param>
+        /// <returns>JSON result with the type of the child content</returns>
         [HttpGet]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
-        public JsonResult ChildContentType(string childContentId)
+        public JsonResult GetContentType(string childContentId)
         {
-            var response = GetCommand<GetChildContentTypeCommand>().ExecuteCommand(childContentId.ToGuidOrDefault());
+            var response = GetCommand<GetContentTypeCommand>().ExecuteCommand(childContentId.ToGuidOrDefault());
 
             return WireJson(response != null, response, JsonRequestBehavior.AllowGet);
         }

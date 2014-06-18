@@ -33,7 +33,7 @@
                         if (!a.currentElement) {
                             return;
                         }
-                        var id = CKEDITOR.plugins.cmswidget.getWidgetId(a.currentElement);
+                        var id = CKEDITOR.plugins.cmswidget.getAssignId(a.currentElement);
                         if (!id) {
                             return;
                         }
@@ -52,7 +52,7 @@
                             return;
                         }
 
-                        editor.EditChildWidget(editor, id);
+                        editor.EditWidget(editor, id);
                     }
                 }),
 
@@ -124,11 +124,15 @@
                     var menu = {
                             cmsRemoveWidget: CKEDITOR.TRISTATE_OFF
                         },
-                        id = CKEDITOR.plugins.cmswidget.getWidgetId(element);
+                        widgetId = CKEDITOR.plugins.cmswidget.getWidgetId(element),
+                        assignId = CKEDITOR.plugins.cmswidget.getAssignId(element);
 
-                    if (id) {
-                        menu.cmsWidgetOptions = CKEDITOR.TRISTATE_OFF;
+                    if (widgetId) {
                         menu.cmsEditWidget = CKEDITOR.TRISTATE_OFF;
+                    }
+
+                    if (assignId) {
+                        menu.cmsWidgetOptions = CKEDITOR.TRISTATE_OFF;
                     }
 
                     return menu;
@@ -155,14 +159,20 @@
                 return null;
             }
 
-            var regex = new RegExp('{{WIDGET\\:([a-zA-Z0-9]{8}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{12})}}');
-            var result = regex.exec(innerHtml);
+            return element.data('id');
+        },
 
-            if (result && result.length > 1) {
-               return result[1];
+        getAssignId: function (element) {
+            if (!CKEDITOR.plugins.cmswidget.isWidget(element)) {
+                return null;
             }
 
-            return null;
+            var innerHtml = element.$.innerHTML;
+            if (!innerHtml) {
+                return null;
+            }
+
+            return element.data('assign-id');
         }
     };
 })();

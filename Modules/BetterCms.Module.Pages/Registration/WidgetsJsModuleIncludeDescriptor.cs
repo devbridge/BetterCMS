@@ -30,7 +30,7 @@ namespace BetterCms.Module.Pages.Registration
                             new JavaScriptModuleLinkTo<WidgetsController>(this, "deleteWidgetUrl", controller => controller.DeleteWidget("{0}", "{1}")),
                             new JavaScriptModuleLinkTo<ContentController>(this, "loadPageContentOptionsDialogUrl", controller => controller.PageContentOptions("{0}")),
                             new JavaScriptModuleLinkTo<ContentController>(this, "loadChildContentOptionsDialogUrl", controller => controller.ChildContentOptions("{0}")),
-                            new JavaScriptModuleLinkTo<ContentController>(this, "getChildContentTypeUrl", controller => controller.ChildContentType("{0}"))
+                            new JavaScriptModuleLinkTo<ContentController>(this, "getContentTypeUrl", controller => controller.GetContentType("{0}"))
                         };
 
             Globalization = new IActionProjection[]

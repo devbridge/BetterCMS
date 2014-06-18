@@ -18,7 +18,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
             insertDynamicRegion: 'insertDynamicRegion',
             insertWidget: 'insertWidget',
             editChildWidgetOptions: 'editChildWidgetOptions',
-            editChildWidget: 'editChildWidget'
+            editWidget: 'editWidget'
         };
 
     // Assign objects to module
@@ -80,10 +80,10 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
             });
         };
 
-        CKEDITOR.instances[id].EditChildWidget = function (editor, childContentId) {
-            bcms.trigger(htmlEditor.events.editChildWidget, {
+        CKEDITOR.instances[id].EditWidget = function (editor, contentId) {
+            bcms.trigger(htmlEditor.events.editWidget, {
                 editor: editor,
-                childContentId: childContentId
+                contentId: contentId
             });
         };
 

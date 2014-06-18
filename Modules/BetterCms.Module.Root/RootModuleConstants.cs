@@ -81,31 +81,6 @@
         public const string DynamicRegionRegexPattern = "{{DYNAMIC_REGION\\:([a-zA-Z0-9]{8}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{12})}}";
 
         /// <summary>
-        /// The unique identifier regex pattern
-        /// </summary>
-        public const string GuidRegexPattern = "[a-zA-Z0-9]{8}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{12}";
-
-        /// <summary>
-        /// The regex pattern for to find all child widgets in the content
-        /// </summary>
-        public const string ChildWidgetRegexPattern = "<widget>{{WIDGET\\:(" + GuidRegexPattern + ")}}</widget>";
-
-        /// <summary>
-        /// The child widget replacement pattern
-        /// </summary>
-        public const string ChildWidgetReplacePattern = "<widget>{{{{WIDGET:{0}}}}}</widget>";
-
-        /// <summary>
-        /// The regex pattern for to find all adding new child widgets in the content
-        /// </summary>
-        public const string AddingChildWidgetRegexPattern = "<widget>{{ADDWIDGET\\:(" + GuidRegexPattern + ")}}</widget>";
-
-        /// <summary>
-        /// The adding child widget replace pattern
-        /// </summary>
-        public const string AddingChildWidgetReplacePattern = "<widget>{{{{ADDWIDGET:{0}}}}}</widget>";
-
-        /// <summary>
         /// Module permissions.
         /// </summary>
         public static class UserRoles

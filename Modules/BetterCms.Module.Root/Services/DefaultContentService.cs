@@ -416,35 +416,43 @@ namespace BetterCms.Module.Root.Services
 
         private string CollectCreatingWidgets(string html, Models.Content content)
         {
-            var widgetIds = ContentHtmlRenderer.ParseWidgetsFromHtml(html, RootModuleConstants.AddingChildWidgetRegexPattern);
-            if (widgetIds != null && widgetIds.Length > 0)
+            var widgetModels = ChildContentRenderHelper.ParseWidgetsFromHtml(html, true);
+            if (widgetModels != null && widgetModels.Count > 0)
             {
-                var widgets = repository.AsQueryable<Models.Content>(c => widgetIds.Contains(c.Id)).Select(c => c.Id).ToList();
-                widgetIds.Where(id => widgets.All(dbId => dbId != id)).ToList().ForEach(
-                    id =>
-                    {
-                        var message = RootGlobalization.ChildContent_WidgetNotFound_ById;
-                        var logMessage = string.Format("{0} Id: {1}", message, id);
-                        throw new ValidationException(() => message, logMessage);
-                    });
-
-                foreach (var id in widgetIds)
+                var creatingWidgetIds = widgetModels.Where(w => w.ChildContentId == null).Select(w => w.WidgetId).ToArray();
+                if (creatingWidgetIds.Any())
                 {
-                    var childContent = new ChildContent
-                                       {
-                                           Id = Guid.NewGuid(),
-                                           Child = repository.AsProxy<Models.Content>(id),
-                                           Parent = content
-                                       };
-                    content.ChildContents.Add(childContent);
+                    var widgets = repository.AsQueryable<Models.Content>(c => creatingWidgetIds.Contains(c.Id)).Select(c => c.Id).ToList();
+                    creatingWidgetIds.Where(id => widgets.All(dbId => dbId != id)).ToList().ForEach(
+                        id =>
+                        {
+                            var message = RootGlobalization.ChildContent_WidgetNotFound_ById;
+                            var logMessage = string.Format("{0} Id: {1}", message, id);
+                            throw new ValidationException(() => message, logMessage);
+                        });
 
-                    var replaceWhat = string.Format(RootModuleConstants.AddingChildWidgetReplacePattern, id.ToString().ToUpperInvariant());
-                    var replaceWith = string.Format(RootModuleConstants.ChildWidgetReplacePattern, childContent.Id.ToString().ToUpperInvariant());
-
-                    int pos = html.IndexOf(replaceWhat, StringComparison.InvariantCulture);
-                    if (pos >= 0)
+                    foreach (var id in creatingWidgetIds)
                     {
-                        html = string.Concat(html.Substring(0, pos), replaceWith, html.Substring(pos + replaceWhat.Length));
+                        var childContent = new ChildContent
+                                           {
+                                               Id = Guid.NewGuid(), 
+                                               Child = repository.AsProxy<Models.Content>(id), 
+                                               Parent = content
+                                           };
+                        content.ChildContents.Add(childContent);
+
+                        var model = widgetModels.First(w => w.ChildContentId == null && w.WidgetId == id);
+                        model.ChildContentId = childContent.Id;
+                        model.WidgetHtmlNode.Attributes.Add(ChildContentRenderHelper.WidgetAssignmentIdAttributeName, model.ChildContentId.ToString());
+
+                        var replaceWhat = model.Match.Value;
+                        var replaceWith = model.WidgetHtmlNode.OuterHtml;
+
+                        int pos = html.IndexOf(replaceWhat, StringComparison.InvariantCulture);
+                        if (pos >= 0)
+                        {
+                            html = string.Concat(html.Substring(0, pos), replaceWith, html.Substring(pos + replaceWhat.Length));
+                        }
                     }
                 }
             }
