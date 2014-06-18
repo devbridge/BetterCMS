@@ -32,7 +32,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
     */
     htmlEditor.id = null;
 
-    htmlEditor.initializeHtmlEditor = function (id, options, startInSourceMode) {
+    htmlEditor.initializeHtmlEditor = function (id, editingContentId, options, startInSourceMode) {
         var editMode = startInSourceMode;
         if (!CKEDITOR) {
             alert('Failed to load HTML editor.');
@@ -56,6 +56,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
         }
 
         CKEDITOR.replace(id, options);
+        CKEDITOR.instances[id].contentId = editingContentId;
 
         CKEDITOR.instances[id].InsertImageClicked = function (editor) {
             bcms.trigger(htmlEditor.events.insertImage, editor);
@@ -73,10 +74,11 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
             bcms.trigger(htmlEditor.events.insertWidget, editor);
         };
 
-        CKEDITOR.instances[id].EditChildWidgetOptions = function (editor, childContentId) {
+        CKEDITOR.instances[id].EditChildWidgetOptions = function (editor, assignmentId, contentId) {
             bcms.trigger(htmlEditor.events.editChildWidgetOptions, {
                 editor: editor,
-                childContentId: childContentId
+                assignmentId: assignmentId,
+                contentId: contentId
             });
         };
 

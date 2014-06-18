@@ -246,7 +246,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             initializeWidgets(dialog.container, dialog, onInsert);
 
-            htmlEditor.initializeHtmlEditor(selectors.htmlEditor, {}, editInSourceMode);
+            htmlEditor.initializeHtmlEditor(selectors.htmlEditor, '', {}, editInSourceMode);
             if (enableInsertDynamicRegion) {
                 htmlEditor.enableInsertDynamicRegion(selectors.htmlEditor);
             }
@@ -259,12 +259,12 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Initializes content edit dialog form.
         */
-        pagesContent.initializeEditContentForm = function (dialog, editInSourceMode, enableInsertDynamicRegion) {
+        pagesContent.initializeEditContentForm = function (dialog, editInSourceMode, enableInsertDynamicRegion, data) {
             var canEdit = security.IsAuthorized(["BcmsEditContent"]),
                 canPublish = security.IsAuthorized(["BcmsPublishContent"]),
                 form = dialog.container.find(selectors.firstForm);
 
-            htmlEditor.initializeHtmlEditor(selectors.htmlEditor, {}, editInSourceMode);
+            htmlEditor.initializeHtmlEditor(selectors.htmlEditor, data.Id, {}, editInSourceMode);
             if (enableInsertDynamicRegion) {
                 htmlEditor.enableInsertDynamicRegion(selectors.htmlEditor);
             }
@@ -546,7 +546,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                     enableInsertDynamicRegion = true;
                                 }
                             }
-                            pagesContent.initializeEditContentForm(contentDialog, editInSourceMode, enableInsertDynamicRegion);
+                            pagesContent.initializeEditContentForm(contentDialog, editInSourceMode, enableInsertDynamicRegion, data.Data);
                         },
 
                         beforePost: function () {

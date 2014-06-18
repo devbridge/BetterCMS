@@ -120,6 +120,7 @@
     </Compile>
     <Compile Include="Accessors\PageStylesheetAccessor.cs" />
     <Compile Include="Accessors\PageJavaScriptAccessor.cs" />
+    <Compile Include="Command\Content\GetChildContentOptions\GetChildContentOptionsCommandRequest.cs" />
     <Compile Include="Command\Content\GetContentType\GetContentTypeCommand.cs" />
     <Compile Include="Command\Content\GetContentType\GetContentTypeCommandResponse.cs" />
     <Compile Include="Command\Content\GetInsertHtmlContent\GetInsertHtmlContentCommand.cs" />

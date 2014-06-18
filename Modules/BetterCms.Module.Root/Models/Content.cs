@@ -124,12 +124,13 @@ namespace BetterCms.Module.Root.Models
 
                     if (childContent.Options != null)
                     {
-                        foreach (var contentOption in childContent.Options)
+                        newChild.Options = new List<ChildContentOption>();
+                        foreach (var childContentOption in childContent.Options)
                         {
-                            var clonedOption = contentOption.Clone();
-                            clonedOption.ChildContent = childContent;
+                            var clonedOption = childContentOption.Clone();
+                            clonedOption.ChildContent = newChild;
 
-                            childContent.Options.Add(clonedOption);
+                            newChild.Options.Add(clonedOption);
                         }
                     }
                 }

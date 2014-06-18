@@ -254,9 +254,9 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         */
         function initializeEditHtmlContentWidgetForm(dialog, availablePreviewOnPageContentId, onSaveCallback, editInSourceMode, content, editorId) {
             var optionsContainer = dialog.container.find(selectors.optionsTab),
-                data = content.Data,
-                widgetOptions = data != null ? data.Options : null,
-                customOptions = data != null ? data.CustomOptions : null,
+                data = content.Data || {},
+                widgetOptions = data.Options,
+                customOptions = data.CustomOptions,
                 optionListViewModel = options.createOptionsViewModel(optionsContainer, widgetOptions, customOptions);
             ko.applyBindings(optionListViewModel, optionsContainer.get(0));
 
@@ -291,7 +291,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 });
             });
 
-            htmlEditor.initializeHtmlEditor(editorId, {}, editInSourceMode);
+            htmlEditor.initializeHtmlEditor(editorId, data.Id, {}, editInSourceMode);
 
             codeEditor.initialize(dialog.container);
 
@@ -776,17 +776,21 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Called when editing child widget options (called from HTML editor)
         */
         function onEditChildWidgetOptions(data) {
-            var childContentId = data.childContentId;
+            var assignmentId = data.assignmentId,
+                contentId = data.contentId;
 
-            if (!childContentId) {
-                bcms.logger.error("Cannot open child widget options modal window. widgetId cannot be null.");
+            if (!contentId) {
+                bcms.logger.error("Cannot open child widget options modal window. contentId cannot be null.");
+            }
+            if (!assignmentId) {
+                bcms.logger.error("Cannot open child widget options modal window. assignmentId cannot be null.");
             }
 
-            widgets.configureWidget(childContentId, function () {
+            widgets.configureWidget('', function () {
                 // Do nothing - just close modal and that's it
             }, {
                 title: globalization.editChildWidgetOptionsTitle,
-                url: $.format(links.loadChildContentOptionsDialogUrl, childContentId)
+                url: $.format(links.loadChildContentOptionsDialogUrl, contentId, assignmentId)
             });
         }
 

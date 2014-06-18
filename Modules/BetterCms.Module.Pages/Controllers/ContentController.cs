@@ -202,19 +202,25 @@ namespace BetterCms.Module.Pages.Controllers
 
             return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
-        
+
         /// <summary>
         /// Creates modal dialog for editing a child content options.
         /// </summary>
-        /// <param name="childContentId">The page content id.</param>
+        /// <param name="contentId">The content identifier.</param>
+        /// <param name="assignmentIdentifier">The assignment identifier.</param>
         /// <returns>
         /// ViewResult to render page content options modal dialog.
         /// </returns>
         [HttpGet]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
-        public ActionResult ChildContentOptions(string childContentId)
+        public ActionResult ChildContentOptions(string contentId, string assignmentIdentifier)
         {
-            var model = GetCommand<GetChildContentOptionsCommand>().ExecuteCommand(childContentId.ToGuidOrDefault());
+            var request = new GetChildContentOptionsCommandRequest
+                          {
+                              ContentId = contentId.ToGuidOrDefault(),
+                              AssignmentIdentifier = assignmentIdentifier.ToGuidOrDefault(),
+                          };
+            var model = GetCommand<GetChildContentOptionsCommand>().ExecuteCommand(request);
             var view = RenderView("ChildContentOptions", model);
 
             return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);

@@ -1,6 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Pages.ViewModels.Content;
@@ -12,7 +12,7 @@ using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
 {
-    public class GetChildContentOptionsCommand : CommandBase, ICommand<Guid, ContentOptionValuesViewModel>
+    public class GetChildContentOptionsCommand : CommandBase, ICommand<GetChildContentOptionsCommandRequest, ContentOptionValuesViewModel>
     {
         /// <summary>
         /// Gets or sets the option service.
@@ -25,30 +25,26 @@ namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
         /// <summary>
         /// Executes the specified request.
         /// </summary>
-        /// <param name="childContentId">The child content id.</param>
-        /// <returns></returns>        
-        public ContentOptionValuesViewModel Execute(Guid childContentId)
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        public ContentOptionValuesViewModel Execute(GetChildContentOptionsCommandRequest request)
         {
-            var model = new ContentOptionValuesViewModel
-            {
-                OptionValuesContainerId = childContentId
-            };
+            var model = new ContentOptionValuesViewModel();
 
-            if (!childContentId.HasDefaultValue())
-            {
-                var contentQuery = Repository.AsQueryable<ChildContent>()
-                    .Where(f => f.Id == childContentId && !f.IsDeleted && !f.Child.IsDeleted)
-                    .Fetch(f => f.Child).ThenFetchMany(f => f.ContentOptions).ThenFetch(f => f.CustomOption)
-                    .FetchMany(f => f.Options).ThenFetch(f => f.CustomOption)
-                    .AsQueryable();
-                
-                var childContent = contentQuery.ToList().FirstOrDefault();
+            var childContent = Repository.AsQueryable<ChildContent>()
+                .Where(f => f.Parent.Id == request.ContentId 
+                    && f.AssignmentIdentifier == request.AssignmentIdentifier 
+                    && !f.IsDeleted && !f.Child.IsDeleted)
+                .Fetch(f => f.Child).ThenFetchMany(f => f.ContentOptions).ThenFetch(f => f.CustomOption)
+                .FetchMany(f => f.Options).ThenFetch(f => f.CustomOption)
+                .ToList()
+                .FirstOne();
 
-                if (childContent != null)
-                {
-                    model.OptionValues = OptionService.GetMergedOptionValuesForEdit(childContent.Child.ContentOptions, childContent.Options);
-                    model.CustomOptions = OptionService.GetCustomOptions();
-                }
+            if (childContent != null)
+            {
+                model.OptionValuesContainerId = childContent.Id;
+                model.OptionValues = OptionService.GetMergedOptionValuesForEdit(childContent.Child.ContentOptions, childContent.Options);
+                model.CustomOptions = OptionService.GetCustomOptions();
             }
 
             return model;

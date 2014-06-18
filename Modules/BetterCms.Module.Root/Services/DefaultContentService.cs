@@ -562,7 +562,7 @@ namespace BetterCms.Module.Root.Services
             }
 
             // Add childs, which not exists in destination.
-            source.ChildContents.Where(
+            /*source.ChildContents.Where(
                 s => destination.ChildContents
                     .All(d => s.AssignmentIdentifier != d.AssignmentIdentifier))
                     .Distinct()
@@ -577,13 +577,56 @@ namespace BetterCms.Module.Root.Services
                                                               Child = s.Child
                                                           });
                             source.ChildContents.Remove(s);
-                        });
+                        });*/
+
+            // Update all child and their options
+            foreach (var sourceChildContent in source.ChildContents)
+            {
+                var destinationChildContent = destination.ChildContents.FirstOrDefault(d => sourceChildContent.AssignmentIdentifier == d.AssignmentIdentifier);
+                if (destinationChildContent == null)
+                {
+                    destinationChildContent = new ChildContent();
+                    destination.ChildContents.Add(destinationChildContent);
+                }
+
+                destinationChildContent.AssignmentIdentifier = sourceChildContent.AssignmentIdentifier;
+                destinationChildContent.Parent = destination;
+                destinationChildContent.Child = sourceChildContent.Child;
+
+                // Update all the options
+                if (sourceChildContent.Options == null)
+                {
+                    sourceChildContent.Options = new List<ChildContentOption>();
+                }
+                if (destinationChildContent.Options == null)
+                {
+                    destinationChildContent.Options = new List<ChildContentOption>();
+                }
+
+                // Add new options
+                foreach (var sourceChildOption in sourceChildContent.Options)
+                {
+                    var destinationChildOption = destinationChildContent.Options.FirstOrDefault(o => o.Key == sourceChildOption.Key);
+                    if (destinationChildOption == null)
+                    {
+                        destinationChildOption = new ChildContentOption();
+                        destinationChildContent.Options.Add(destinationChildOption);
+                    }
+
+                    sourceChildOption.CopyDataTo(destinationChildOption);
+                    destinationChildOption.ChildContent = destinationChildContent;
+                }
+
+                // Remove unneeded options
+                destinationChildContent.Options
+                    .Where(s => sourceChildContent.Options.All(d => s.Key != d.Key))
+                    .Distinct().ForEach(d => repository.Delete(d));
+            }
 
             // Remove childs, which not exists in source.
             destination.ChildContents
                 .Where(s => source.ChildContents.All(d => s.AssignmentIdentifier != d.AssignmentIdentifier))
-                .Distinct().ToList()
-                .ForEach(d => repository.Delete(d));
+                .Distinct().ForEach(d => repository.Delete(d));
         }
 
         /// <summary>
