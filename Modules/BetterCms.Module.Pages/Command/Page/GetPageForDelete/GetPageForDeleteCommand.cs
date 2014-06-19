@@ -35,13 +35,15 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageForDelete
             }
 
             var urlHash = page.PageUrl.UrlHash();
-            return new DeletePageViewModel
+            var model = new DeletePageViewModel
                 {
                     PageId = page.Id,
                     Version = page.Version,
                     IsInSitemap = inSitemapFuture.Any() || Repository.AsQueryable<SitemapNode>().Any(node => node.UrlHash == urlHash && !node.IsDeleted && !node.Sitemap.IsDeleted),
                     ValidationMessage = message
                 };
+            model.UpdateSitemap = model.IsInSitemap;
+            return model;
         }
     }
 }
