@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 
 using BetterCms.Core.DataAccess;
@@ -15,6 +16,8 @@ using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
+
+using FluentNHibernate.Conventions.AcceptanceCriteria;
 
 using NHibernate.Linq;
 
@@ -183,11 +186,11 @@ namespace BetterCms.Module.Root.Services
                 updatedContent.CopyDataTo(contentVersionOfRequestedStatus, false);
                 SetContentOptions(contentVersionOfRequestedStatus, updatedContent);
                 SetContentRegions(contentVersionOfRequestedStatus, updatedContent);
-                SetChildContents(contentVersionOfRequestedStatus, updatedContent);
 
                 contentVersionOfRequestedStatus.Original = originalContent;
                 contentVersionOfRequestedStatus.Status = requestedStatus;
                 originalContent.History.Add(contentVersionOfRequestedStatus);
+                SetChildContents(contentVersionOfRequestedStatus, updatedContent);
                 repository.Save(contentVersionOfRequestedStatus);
             }
             
@@ -206,7 +209,6 @@ namespace BetterCms.Module.Root.Services
                 updatedContent.CopyDataTo(originalContent, false);
                 SetContentOptions(originalContent, updatedContent);
                 SetContentRegions(originalContent, updatedContent);
-                SetChildContents(originalContent, updatedContent);
 
                 originalContent.Status = requestedStatus;
                 if (!originalContent.PublishedOn.HasValue)
@@ -217,6 +219,7 @@ namespace BetterCms.Module.Root.Services
                 {
                     originalContent.PublishedByUser = securityService.CurrentPrincipalName;
                 }
+                SetChildContents(originalContent, updatedContent);
                 repository.Save(originalContent);
 
                 IList<Models.Content> contentsToRemove = originalContent.History.Where(f => f.Status == ContentStatus.Preview || f.Status == ContentStatus.Draft).ToList();
@@ -261,9 +264,9 @@ namespace BetterCms.Module.Root.Services
                 updatedContent.CopyDataTo(previewOrDraftContentVersion, false);
                 SetContentOptions(previewOrDraftContentVersion, updatedContent);
                 SetContentRegions(previewOrDraftContentVersion, updatedContent);
-                SetChildContents(previewOrDraftContentVersion, updatedContent);
 
                 previewOrDraftContentVersion.Status = requestedStatus;
+                SetChildContents(previewOrDraftContentVersion, updatedContent);
                 repository.Save(previewOrDraftContentVersion);
             }            
             else if (requestedStatus == ContentStatus.Published)
@@ -281,7 +284,6 @@ namespace BetterCms.Module.Root.Services
                 updatedContent.CopyDataTo(originalContent, false);
                 SetContentOptions(originalContent, updatedContent);
                 SetContentRegions(originalContent, updatedContent);
-                SetChildContents(originalContent, updatedContent);
 
                 originalContent.Status = requestedStatus;
                 if (!originalContent.PublishedOn.HasValue)
@@ -293,6 +295,7 @@ namespace BetterCms.Module.Root.Services
                     originalContent.PublishedByUser = securityService.CurrentPrincipalName;
                 }
 
+                SetChildContents(originalContent, updatedContent);
                 repository.Save(originalContent);
             }
         }
@@ -561,24 +564,6 @@ namespace BetterCms.Module.Root.Services
                 source.ChildContents = new List<ChildContent>();
             }
 
-            // Add childs, which not exists in destination.
-            /*source.ChildContents.Where(
-                s => destination.ChildContents
-                    .All(d => s.AssignmentIdentifier != d.AssignmentIdentifier))
-                    .Distinct()
-                    .ToList()
-                    .ForEach(
-                        s =>
-                        {
-                            destination.ChildContents.Add(new ChildContent
-                                                          {
-                                                              AssignmentIdentifier = s.AssignmentIdentifier, 
-                                                              Parent = destination, 
-                                                              Child = s.Child
-                                                          });
-                            source.ChildContents.Remove(s);
-                        });*/
-
             // Update all child and their options
             foreach (var sourceChildContent in source.ChildContents)
             {
@@ -627,6 +612,76 @@ namespace BetterCms.Module.Root.Services
             destination.ChildContents
                 .Where(s => source.ChildContents.All(d => s.AssignmentIdentifier != d.AssignmentIdentifier))
                 .Distinct().ForEach(d => repository.Delete(d));
+
+            if (destination.ChildContents.Any())
+            {
+                var dictionary = new Dictionary<Guid, List<Guid>>();
+                var childrenIds = PopulateReferencesDictionary(
+                    dictionary,
+                    destination.ChildContents.Select(s => new System.Tuple<Guid, Guid, string>(destination.Id, s.Child.Id, s.Child.Name)));
+
+                ValidateChildContentsCircularReferences(childrenIds, dictionary);
+            }
+        }
+
+        /// <summary>
+        /// Populates the references dictionary.
+        /// </summary>
+        /// <param name="dictionary">The dictionary.</param>
+        /// <param name="children">The children: list of Tuple, where Item1: Parent, Item2: Childs.</param>
+        /// <returns></returns>
+        private List<Guid> PopulateReferencesDictionary(Dictionary<Guid, List<Guid>> dictionary, 
+            IEnumerable<System.Tuple<Guid, Guid, string>> children)
+        {
+            var childrenIds = new List<Guid>();
+
+            foreach (var childContent in children)
+            {
+                if (!dictionary.ContainsKey(childContent.Item1))
+                {
+                    dictionary[childContent.Item1] = new List<Guid>();
+                }
+                if (!dictionary[childContent.Item1].Contains(childContent.Item2))
+                {
+                    dictionary[childContent.Item1].Add(childContent.Item2);
+                }
+                if (!dictionary.ContainsKey(childContent.Item2) && !childrenIds.Contains(childContent.Item2))
+                {
+                    childrenIds.Add(childContent.Item2);
+                }
+            }
+
+            return childrenIds;
+        }
+
+        /// <summary>
+        /// Validates the list of child contents for circular references.
+        /// </summary>
+        /// <param name="childrenIds">The children ids.</param>
+        /// <param name="dictionary">The dictionary.</param>
+        private void ValidateChildContentsCircularReferences(List<Guid> childrenIds, Dictionary<Guid, List<Guid>> dictionary)
+        {
+            var children = repository
+                .AsQueryable<ChildContent>()
+                .Where(cc => childrenIds.Contains(cc.Parent.Id))
+                .Select(cc => new { ParentId = cc.Parent.Id, ChildId = cc.Child.Id, Name = cc.Child.Name })
+                .ToList()
+                .Distinct()
+                .Select(cc => new System.Tuple<Guid, Guid, string>(cc.ParentId, cc.ChildId, cc.Name));
+
+            var circularReference = children.FirstOrDefault(c => !dictionary.ContainsKey(c.Item1) && dictionary.ContainsKey(c.Item2));
+            if (circularReference != null)
+            {
+                // TODO: add to translations
+                var message = string.Format("Cannot add widget as child widget! One of child widgets references widget \"{0}\", which causes circular reference.", circularReference.Item3);
+                throw new ValidationException(() => message, message);
+            }
+
+            childrenIds = PopulateReferencesDictionary(dictionary, children);
+            if (childrenIds.Any())
+            {
+                ValidateChildContentsCircularReferences(childrenIds, dictionary);
+            }
         }
 
         /// <summary>
