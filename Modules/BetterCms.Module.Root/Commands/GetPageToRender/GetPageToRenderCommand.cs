@@ -411,7 +411,6 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             var contents = pageContentsQuery.ToList();
 
-            // TODO: use view instead of recursion???
             RetrieveChildrenContents(contents.Select(pc => pc.Content).Distinct().ToList());
 
             return contents;

@@ -588,4 +588,13 @@
   <data name="ChildContent_AssignmentAlreadyAdded" xml:space="preserve">
     <value>Assignment with id "{0}" added more than once as the child widget.</value>
   </data>
+  <data name="ChildContent_CirculatReferenceDetected" xml:space="preserve">
+    <value>Cannot add widget as child widget! One of child widgets references widget "{0}", which causes circular reference.</value>
+  </data>
+  <data name="ChildContent_FailedToParseAssignmentId_MEssage" xml:space="preserve">
+    <value>Failed while parsing child widgets from content. Child widget tag should contain data-assign-id attribute with child widget assignment id.</value>
+  </data>
+  <data name="ChildContent_FailedToParseWidgetId_Message" xml:space="preserve">
+    <value>Failed while parsing child widgets from content. Child widget tag should contain data-id attribute with child widget id.</value>
+  </data>
 </root>

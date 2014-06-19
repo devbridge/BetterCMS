@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 
 using BetterCms.Core.DataAccess;
@@ -16,8 +15,6 @@ using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
-
-using FluentNHibernate.Conventions.AcceptanceCriteria;
 
 using NHibernate.Linq;
 
@@ -615,37 +612,33 @@ namespace BetterCms.Module.Root.Services
 
             if (destination.ChildContents.Any())
             {
-                var dictionary = new Dictionary<Guid, List<Guid>>();
-                var childrenIds = PopulateReferencesDictionary(
-                    dictionary,
+                var references = new List<Guid>();
+                var childrenIds = PopulateReferencesList(
+                    references,
                     destination.ChildContents.Select(s => new System.Tuple<Guid, Guid, string>(destination.Id, s.Child.Id, s.Child.Name)));
 
-                ValidateChildContentsCircularReferences(childrenIds, dictionary);
+                ValidateChildContentsCircularReferences(childrenIds, references);
             }
         }
 
         /// <summary>
         /// Populates the references dictionary.
         /// </summary>
-        /// <param name="dictionary">The dictionary.</param>
+        /// <param name="references">The references.</param>
         /// <param name="children">The children: list of Tuple, where Item1: Parent, Item2: Childs.</param>
         /// <returns></returns>
-        private List<Guid> PopulateReferencesDictionary(Dictionary<Guid, List<Guid>> dictionary, 
+        private List<Guid> PopulateReferencesList(List<Guid> references, 
             IEnumerable<System.Tuple<Guid, Guid, string>> children)
         {
             var childrenIds = new List<Guid>();
 
             foreach (var childContent in children)
             {
-                if (!dictionary.ContainsKey(childContent.Item1))
+                if (!references.Contains(childContent.Item1))
                 {
-                    dictionary[childContent.Item1] = new List<Guid>();
+                    references.Add(childContent.Item1);
                 }
-                if (!dictionary[childContent.Item1].Contains(childContent.Item2))
-                {
-                    dictionary[childContent.Item1].Add(childContent.Item2);
-                }
-                if (!dictionary.ContainsKey(childContent.Item2) && !childrenIds.Contains(childContent.Item2))
+                if (!references.Contains(childContent.Item2) && !childrenIds.Contains(childContent.Item2))
                 {
                     childrenIds.Add(childContent.Item2);
                 }
@@ -658,8 +651,8 @@ namespace BetterCms.Module.Root.Services
         /// Validates the list of child contents for circular references.
         /// </summary>
         /// <param name="childrenIds">The children ids.</param>
-        /// <param name="dictionary">The dictionary.</param>
-        private void ValidateChildContentsCircularReferences(List<Guid> childrenIds, Dictionary<Guid, List<Guid>> dictionary)
+        /// <param name="references">The references list.</param>
+        private void ValidateChildContentsCircularReferences(List<Guid> childrenIds, List<Guid> references)
         {
             var children = repository
                 .AsQueryable<ChildContent>()
@@ -669,18 +662,17 @@ namespace BetterCms.Module.Root.Services
                 .Distinct()
                 .Select(cc => new System.Tuple<Guid, Guid, string>(cc.ParentId, cc.ChildId, cc.Name));
 
-            var circularReference = children.FirstOrDefault(c => !dictionary.ContainsKey(c.Item1) && dictionary.ContainsKey(c.Item2));
+            var circularReference = children.FirstOrDefault(c => !references.Contains(c.Item1) && references.Contains(c.Item2));
             if (circularReference != null)
             {
-                // TODO: add to translations
-                var message = string.Format("Cannot add widget as child widget! One of child widgets references widget \"{0}\", which causes circular reference.", circularReference.Item3);
+                var message = string.Format(RootGlobalization.ChildContent_CirculatReferenceDetected, circularReference.Item3);
                 throw new ValidationException(() => message, message);
             }
 
-            childrenIds = PopulateReferencesDictionary(dictionary, children);
+            childrenIds = PopulateReferencesList(references, children);
             if (childrenIds.Any())
             {
-                ValidateChildContentsCircularReferences(childrenIds, dictionary);
+                ValidateChildContentsCircularReferences(childrenIds, references);
             }
         }
 

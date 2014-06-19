@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Web.Mvc;
 
 using BetterCms.Core.Exceptions.Mvc;
-
+using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.ViewModels.Content;
 
@@ -88,13 +88,12 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
 
                 var widgetNode = htmlDocument.DocumentNode.Descendants("widget").First();
                 var widgetIdAttribute = widgetNode.Attributes.FirstOrDefault(a => a.Name == WidgetIdAttributeName);
-                System.Guid widgetId;
-                if (widgetIdAttribute == null || string.IsNullOrWhiteSpace(widgetIdAttribute.Value) || !System.Guid.TryParse(widgetIdAttribute.Value, out widgetId))
+                Guid widgetId;
+                if (widgetIdAttribute == null || string.IsNullOrWhiteSpace(widgetIdAttribute.Value) || !Guid.TryParse(widgetIdAttribute.Value, out widgetId))
                 {
                     if (throwException)
                     {
-                        // TODO: add to translations
-                        const string message = "Failed while parsing child widgets from content. Child widget tag should contain data-id attribute with child widget id.";
+                        var message = RootGlobalization.ChildContent_FailedToParseWidgetId_Message;
                         throw new ValidationException(() => message, message);
                     }
 
@@ -106,13 +105,12 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
                 model.Match = match;
 
                 var assignmentIdAttribute = widgetNode.Attributes.FirstOrDefault(a => a.Name == WidgetAssignmentIdAttributeName);
-                System.Guid assignmentId;
-                if (assignmentIdAttribute == null || string.IsNullOrWhiteSpace(assignmentIdAttribute.Value) || !System.Guid.TryParse(assignmentIdAttribute.Value, out assignmentId))
+                Guid assignmentId;
+                if (assignmentIdAttribute == null || string.IsNullOrWhiteSpace(assignmentIdAttribute.Value) || !Guid.TryParse(assignmentIdAttribute.Value, out assignmentId))
                 {
                     if (throwException)
                     {
-                        // TODO: add to translations
-                        const string message = "Failed while parsing child widgets from content. Child widget tag should contain data-assign-id attribute with child widget assignment id.";
+                        var message = RootGlobalization.ChildContent_FailedToParseAssignmentId_MEssage;
                         throw new ValidationException(() => message, message);
                     }
 

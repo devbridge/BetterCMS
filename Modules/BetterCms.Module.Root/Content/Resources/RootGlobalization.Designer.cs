@@ -466,6 +466,33 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot add widget as child widget! One of child widgets references widget &quot;{0}&quot;, which causes circular reference..
+        /// </summary>
+        public static string ChildContent_CirculatReferenceDetected {
+            get {
+                return ResourceManager.GetString("ChildContent_CirculatReferenceDetected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed while parsing child widgets from content. Child widget tag should contain data-assign-id attribute with child widget assignment id..
+        /// </summary>
+        public static string ChildContent_FailedToParseAssignmentId_MEssage {
+            get {
+                return ResourceManager.GetString("ChildContent_FailedToParseAssignmentId_MEssage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed while parsing child widgets from content. Child widget tag should contain data-id attribute with child widget id..
+        /// </summary>
+        public static string ChildContent_FailedToParseWidgetId_Message {
+            get {
+                return ResourceManager.GetString("ChildContent_FailedToParseWidgetId_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Widget not found by specified id..
         /// </summary>
         public static string ChildContent_WidgetNotFound_ById {
