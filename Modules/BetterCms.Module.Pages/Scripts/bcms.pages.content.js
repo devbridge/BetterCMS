@@ -264,7 +264,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 canPublish = security.IsAuthorized(["BcmsPublishContent"]),
                 form = dialog.container.find(selectors.firstForm);
 
-            htmlEditor.initializeHtmlEditor(selectors.htmlEditor, data.Id, {}, editInSourceMode);
+            htmlEditor.initializeHtmlEditor(selectors.htmlEditor, data.ContentId, {}, editInSourceMode);
             if (enableInsertDynamicRegion) {
                 htmlEditor.enableInsertDynamicRegion(selectors.htmlEditor);
             }

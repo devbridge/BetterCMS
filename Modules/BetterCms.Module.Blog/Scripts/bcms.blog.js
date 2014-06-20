@@ -199,7 +199,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 return categorySelector != null ? categorySelector.val() : null;
             };
         
-        htmlEditor.initializeHtmlEditor(selectors.htmlEditor, data.Id, {}, data.EditInSourceMode);
+        htmlEditor.initializeHtmlEditor(selectors.htmlEditor, data.ContentId, {}, data.EditInSourceMode);
         if (data.EnableInsertDynamicRegion) {
             htmlEditor.enableInsertDynamicRegion();
         }
