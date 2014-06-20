@@ -5,6 +5,7 @@ using System.Linq;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
+
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Filter;
@@ -13,14 +14,10 @@ using BetterCms.Module.Pages.ViewModels.SiteSettings;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
-using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
-
-using FluentNHibernate.Utils;
 
 using NHibernate;
 using NHibernate.Criterion;
-using NHibernate.Linq;
 using NHibernate.Transform;
 
 namespace BetterCms.Module.Pages.Command.Page.GetPagesList
@@ -68,33 +65,26 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
             request.SetDefaultSortingOptions("Title");
 
             PageProperties alias = null;
+            PagesView viewAlias = null;
             SiteSettingPageViewModel modelAlias = null;
 
             var query = UnitOfWork.Session
-                .QueryOver(() => alias)
+                .QueryOver(() => viewAlias)
+                .Inner.JoinAlias(() => viewAlias.Page, () => alias)
                 .Where(() => !alias.IsDeleted && alias.Status != PageStatus.Preview);
 
-            // NOTE: below does not work - need to find out how to rewrite it.
-            // var nodesSubQuery = QueryOver.Of<SitemapNode>()
-            //     .Where(x => x.Page.Id == alias.Id || x.UrlHash == alias.PageUrlHash)
-            //     .Select(s => 1)
-            //     .Take(1);
-            var hasSeoDisjunction =
+            var hasnotSeoDisjunction =
                 Restrictions.Disjunction()
+                    .Add(Restrictions.Eq(Projections.Property(() => viewAlias.IsInSitemap), false))
                     .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaTitle)))
                     .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaKeywords)))
                     .Add(RestrictionsExtensions.IsNullOrWhiteSpace(Projections.Property(() => alias.MetaDescription)));
 
-            var hasSeoProjection = Projections.Conditional(hasSeoDisjunction,
-                //.Add(Restrictions.IsNull(Projections.SubQuery(nodesSubQuery))),
+            var hasSeoProjection = Projections.Conditional(hasnotSeoDisjunction,
                 Projections.Constant(false, NHibernateUtil.Boolean),
                 Projections.Constant(true, NHibernateUtil.Boolean));
 
-            query = FilterQuery(query, request, hasSeoDisjunction);
-
-            var sitemapNodesFuture = Repository
-                .AsQueryable<SitemapNode>()
-                .Where(n => !n.IsDeleted && !n.Sitemap.IsDeleted).ToFuture();
+            query = FilterQuery(query, request, hasnotSeoDisjunction);
 
             query = query
                 .SelectList(select => select
@@ -141,17 +131,6 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
                 model.Languages.Insert(0, languageService.GetInvariantLanguageModel());
             }
 
-            // NOTE: Query over with subquery in CASE statement and paging des not work.
-            if (sitemapNodesFuture != null)
-            {
-                var nodes = sitemapNodesFuture.ToList();
-                foreach (var pageViewModel in model.Items)
-                {
-                    var hash = pageViewModel.Url.UrlHash();
-                    pageViewModel.HasSEO = pageViewModel.HasSEO && nodes.Any(n => n.UrlHash == hash || (n.Page != null && n.Page.Id == pageViewModel.Id));
-                }
-            }
-
             return model;
         }
 
@@ -168,8 +147,8 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
                    };
         }
 
-        protected virtual IQueryOver<PageProperties, PageProperties> FilterQuery(IQueryOver<PageProperties, PageProperties> query, 
-            PagesFilter request, Junction hasSeoDisjunction)
+        protected virtual IQueryOver<PagesView, PagesView> FilterQuery(IQueryOver<PagesView, PagesView> query,
+            PagesFilter request, Junction hasnotSeoDisjunction)
         {
             PageProperties alias = null;
 
@@ -251,27 +230,13 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
 
             if (request.SeoStatus.HasValue)
             {
-                var subQuery = QueryOver.Of<SitemapNode>()
-                    .Where(x => x.Page.Id == alias.Id || x.UrlHash == alias.PageUrlHash)
-                    .And(x => !x.IsDeleted)
-                    .JoinQueryOver(s => s.Sitemap)
-                    .And(x => !x.IsDeleted)
-                    .Select(s => 1);
-
-                if (request.SeoStatus.Value == SeoStatusFilterType.HasSeo)
+                if (request.SeoStatus.Value == SeoStatusFilterType.HasNotSeo)
                 {
-                    // NOT(seo disjunction) AND EXISTS(subquery)
-                    query = query
-                        .Where(Restrictions.Not(hasSeoDisjunction))
-                        .WithSubquery.WhereExists(subQuery);
+                    query = query.Where(hasnotSeoDisjunction);
                 }
                 else
                 {
-                    // seo disjunction OR NOT EXISTS(subquery)
-                    var disjunction = hasSeoDisjunction
-                        .DeepClone()
-                        .Add(Subqueries.WhereNotExists(subQuery));
-                    query = query.Where(disjunction);
+                    query = query.Where(Restrictions.Not(hasnotSeoDisjunction));
                 }
             }
 
@@ -288,6 +253,20 @@ namespace BetterCms.Module.Pages.Command.Page.GetPagesList
                 {
                     query = query.Where(() => alias.Layout.Id == id);
                 }
+            }
+
+            if (request.ContentId.HasValue)
+            {
+                Root.Models.Content contentAlias = null;
+                var subQuery = QueryOver.Of<PageContent>()
+                    .JoinAlias(p => p.Content, () => contentAlias)
+                    .Where(pageContent => pageContent.Page.Id == alias.Id
+                        && pageContent.Content.Id == request.ContentId.Value
+                        && !pageContent.IsDeleted)
+                    .And(() => !contentAlias.IsDeleted)
+                    .Select(pageContent => 1);
+
+                query = query.WithSubquery.WhereExists(subQuery);
             }
 
             return query;

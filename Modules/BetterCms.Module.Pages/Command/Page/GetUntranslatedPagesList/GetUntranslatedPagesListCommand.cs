@@ -1,12 +1,14 @@
 ﻿using System.Linq;
 
 using BetterCms.Core.Security;
+
 using BetterCms.Module.Pages.Command.Page.GetPagesList;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.SiteSettings;
 
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
 
 using NHibernate.Criterion;
@@ -87,14 +89,14 @@ namespace BetterCms.Module.Pages.Command.Page.GetUntranslatedPagesList
         /// </summary>
         /// <param name="query">The query.</param>
         /// <param name="request">The request.</param>
-        /// <param name="hasSeoDisjunction">The has seo disjunction.</param>
+        /// <param name="hasnotSeoDisjunction">The has seo disjunction.</param>
         /// <returns>
         /// Query, filtered with specified filter parameters
         /// </returns>
-        protected override NHibernate.IQueryOver<PageProperties, PageProperties> FilterQuery(NHibernate.IQueryOver<PageProperties, PageProperties> query,
-            PagesFilter request, Junction hasSeoDisjunction)
+        protected override NHibernate.IQueryOver<PagesView, PagesView> FilterQuery(NHibernate.IQueryOver<PagesView, PagesView> query,
+            PagesFilter request, Junction hasnotSeoDisjunction)
         {
-            query = base.FilterQuery(query, request, hasSeoDisjunction);
+            query = base.FilterQuery(query, request, hasnotSeoDisjunction);
 
             var filter = request as UntranslatedPagesFilter;
             if (filter != null)

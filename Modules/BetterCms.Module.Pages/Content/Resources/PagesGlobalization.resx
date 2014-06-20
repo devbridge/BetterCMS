@@ -1329,4 +1329,10 @@
   <data name="Pages_List_Title" xml:space="preserve">
     <value>Pages</value>
   </data>
+  <data name="SiteSettings_Widgets_Usage" xml:space="preserve">
+    <value>Find usages</value>
+  </data>
+  <data name="SiteSettings_Widgets_PagesUsingWidget_Title" xml:space="preserve">
+    <value>Widget usages</value>
+  </data>
 </root>

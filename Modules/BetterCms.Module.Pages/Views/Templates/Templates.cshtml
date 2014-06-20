@@ -1,7 +1,9 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Pages.ViewModels.SiteSettings
+@using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Grids.Extensions
 @using BetterCms.Module.Root.Mvc.Grids.TableRenderers
 @using BetterCms.Module.Root.Mvc.Helpers
@@ -12,6 +14,13 @@
 @model SiteSettingTemplateListViewModel
            
 @{
+    var controller = (CmsControllerBase)ViewContext.Controller;
+    var roles = string.Format("{0},{1},{2}",
+        RootModuleConstants.UserRoles.PublishContent,
+        RootModuleConstants.UserRoles.EditContent,
+        RootModuleConstants.UserRoles.DeleteContent);
+    var canViewPages = controller.SecurityService.IsAuthorized(roles);
+    
     Action<ColumnBuilder<SiteSettingTemplateItemViewModel>> columns = column =>
     {
         column.EditButtonColumn(renderId:false);
@@ -21,12 +30,15 @@
             .SortColumnName("TemplateName")
             .Encode(false);
 
-        column.For(f => string.Format("<a class=\"bcms-template-usage\" data-id=\"{0}\">{1}</a>", f.Id, PagesGlobalization.SiteSettings_Templates_Usage))
-            .HeaderAttributes(@style => "width: 100px;")
-            .Named("")
-            .Sortable(false)
-            .Encode(false);
-            
+        if (canViewPages)
+        {
+            column.For(f => string.Format("<a class=\"bcms-template-usage\" data-id=\"{0}\">{1}</a>", f.Id, PagesGlobalization.SiteSettings_Templates_Usage))
+                .HeaderAttributes(@style => "width: 100px;")
+                .Named("")
+                .Sortable(false)
+                .Encode(false);
+        }
+        
         column.DeleteButtonColumn(false);
     };
 }

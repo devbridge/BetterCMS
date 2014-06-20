@@ -12,6 +12,11 @@
 
 @model BetterCms.Module.Pages.ViewModels.Filter.PagesGridViewModel<SiteSettingPageViewModel>
 
+@if (Model == null)
+{
+    return;
+}
+
 @Html.HiddenGridOptions(Model.GridOptions)
 
 @{

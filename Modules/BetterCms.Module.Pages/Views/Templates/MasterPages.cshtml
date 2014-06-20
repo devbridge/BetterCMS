@@ -12,6 +12,13 @@
 
 @model BetterCms.Module.Pages.ViewModels.Filter.PagesGridViewModel<SiteSettingPageViewModel>
 @{
+    var controller = (CmsControllerBase)ViewContext.Controller;
+    var roles = string.Format("{0},{1},{2}",
+        RootModuleConstants.UserRoles.PublishContent,
+        RootModuleConstants.UserRoles.EditContent,
+        RootModuleConstants.UserRoles.DeleteContent);
+    var canViewPages = controller.SecurityService.IsAuthorized(roles);
+    
     Action<ColumnBuilder<SiteSettingPageViewModel>> columns = column =>
     {
         column.EditButtonColumn();
@@ -21,11 +28,13 @@
             .Attributes()
             .Encode(false);
 
-        column.For(f => string.Format("<a class=\"bcms-template-usage\" data-id=\"{0}\">{1}</a>", f.Id, PagesGlobalization.SiteSettings_MasterPages_Usage))
-           .Named("")
-           .HeaderAttributes(@style => "width: 100px;")
-           .Sortable(false)
-           .Encode(false);
+        if (canViewPages) {
+            column.For(f => string.Format("<a class=\"bcms-template-usage\" data-id=\"{0}\">{1}</a>", f.Id, PagesGlobalization.SiteSettings_MasterPages_Usage))
+               .Named("")
+               .HeaderAttributes(@style => "width: 100px;")
+               .Sortable(false)
+               .Encode(false);
+        }
         
         if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))
         {

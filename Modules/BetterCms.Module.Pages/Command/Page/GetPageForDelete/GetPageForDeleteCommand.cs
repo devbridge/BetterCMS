@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
@@ -25,8 +26,10 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageForDelete
         /// <returns>Delete confirmation view model.</returns>
         public DeletePageViewModel Execute(Guid request)
         {
-            var inSitemapFuture = Repository.AsQueryable<SitemapNode>().Where(node => node.Page.Id == request && !node.IsDeleted && !node.Sitemap.IsDeleted).Select(node => node.Id).ToFuture();
-            var page = Repository.First<PageProperties>(request);
+            var page = Repository
+                .AsQueryable<PageProperties>(p => p.Id == request)
+                .Fetch(p => p.PagesView)
+                .FirstOne();
             string message = null;
 
             if (page.IsMasterPage && Repository.AsQueryable<MasterPage>(mp => mp.Master == page).Any())
@@ -34,12 +37,11 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageForDelete
                 message = PagesGlobalization.DeletePageCommand_MasterPageHasChildren_Message;
             }
 
-            var urlHash = page.PageUrl.UrlHash();
             return new DeletePageViewModel
                 {
                     PageId = page.Id,
                     Version = page.Version,
-                    IsInSitemap = inSitemapFuture.Any() || Repository.AsQueryable<SitemapNode>().Any(node => node.UrlHash == urlHash && !node.IsDeleted && !node.Sitemap.IsDeleted),
+                    IsInSitemap = page.PagesView.IsInSitemap,
                     ValidationMessage = message
                 };
         }

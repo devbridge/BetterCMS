@@ -3,8 +3,9 @@
 
 bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.htmlEditor',
         'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid',
-        'bcms.slides.jquery', 'bcms.redirect', 'bcms.pages.history', 'bcms.security', 'bcms.options', 'bcms.ko.extenders', 'bcms.codeEditor'],
-    function ($, bcms, modal, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, slides, redirect, contentHistory, security, options, ko, codeEditor) {
+        'bcms.slides.jquery', 'bcms.redirect', 'bcms.pages.history', 'bcms.security', 'bcms.options', 'bcms.ko.extenders', 'bcms.codeEditor',
+        'bcms.pages'],
+    function ($, bcms, modal, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, slides, redirect, contentHistory, security, options, ko, codeEditor, pages) {
         'use strict';
 
         var widgets = {},
@@ -28,7 +29,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 widgetStatusPublished: null,
                 widgetStatusDraft: null,
                 widgetStatusPublishedWithDraft: null,
-                deletingMessage: null
+                deletingMessage: null,
+                widgetUsageTitle: null
             },
             selectors = {                                
                 enableCustomCss: '#bcms-enable-custom-css',
@@ -73,6 +75,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 widgetRowTemplateFirstRow: 'tr:first',
                 widgetsTableFirstRow: 'table.bcms-tables > tbody > tr:first',
                 widgetInsertButtons: '.bcms-widget-insert-button',
+                widgetRowUsageLinks: '.bcms-template-usage',
 
                 siteSettingsWidgetsListForm: '#bcms-widgets-form',
 
@@ -520,7 +523,29 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 bcms.stopEventPropagation(event);
                 deleteSiteSettingsWidget(container, $(this));
             });
+
+            container.find(selectors.widgetRowUsageLinks).on('click', function (event) {
+                bcms.stopEventPropagation(event);
+
+                filterPagesByWidget($(this));
+            });
         };
+
+        /*
+        * Opens pages list, filtered by template
+        */
+        function filterPagesByWidget(self) {
+            var id = self.data('id');
+
+            pages.openPageSelectDialog({
+                params: {
+                    ContentId: id
+                },
+                canBeSelected: false,
+                title: globalization.widgetUsageTitle,
+                disableAccept: true
+            });
+        }
 
         /**
         * Calls function, which opens dialog for a widget editing.

@@ -4,6 +4,7 @@
 @model BetterCms.Module.Pages.ViewModels.Filter.PagesGridViewModel<BetterCms.Module.Pages.ViewModels.SiteSettings.SiteSettingPageViewModel>
 
     <div id="bcms-filter-template">
+        @Html.HiddenFor(m => m.ContentId)
         <div class="bcms-grid-filtering" data-bind="css: { 'bcms-active-filter': isVisible() }">
             <div class="bcms-filterbox" data-bind="click: toggleFilter">
                 @PagesGlobalization.SiteSettings_Pages_Filter
