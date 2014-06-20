@@ -280,6 +280,13 @@ namespace BetterCms.Module.Pages.Services
                 .AsQueryable<PageContent>()
                 .Any(f => f.Content.Id == widgetId && !f.IsDeleted && !f.Page.IsDeleted);
 
+            if (!isWidgetInUse)
+            {
+                isWidgetInUse = repository
+                    .AsQueryable<ChildContent>()
+                    .Any(f => f.Child.Id == widgetId && !f.IsDeleted && !f.Parent.IsDeleted && f.Parent.Original == null);
+            }
+
             if (isWidgetInUse)
             {
                 var message = string.Format(PagesGlobalization.Widgets_CanNotDeleteWidgetIsInUse_Message, widget.Name);

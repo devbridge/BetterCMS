@@ -239,7 +239,11 @@ namespace BetterCms.Module.Root.Services
             var childContents = contents.Where(c => c.ChildContents != null).SelectMany(c => c.ChildContents).ToList();
             if (childContents.Any())
             {
-                var childIds = childContents.Select(c => c.Child.Id).Distinct().ToArray();
+                var childIds = childContents.Where(c => !c.Child.IsDeleted).Select(c => c.Child.Id).Distinct().ToArray();
+                if (!childIds.Any())
+                {
+                    return;
+                }
                 var entities = repository
                     .AsQueryable<ChildContent>(c => childIds.Contains(c.Parent.Id))
                     .Fetch(c => c.Child)
@@ -250,7 +254,6 @@ namespace BetterCms.Module.Root.Services
 
                 childContents.ForEach(c =>
                 {
-
                     if (c.Child.ChildContents == null)
                     {
                         c.Child.ChildContents = new List<ChildContent>();
@@ -267,10 +270,10 @@ namespace BetterCms.Module.Root.Services
         public IEnumerable<ChildContentProjection> CreateListOfChildProjectionsRecursively(PageContent pageContent, IEnumerable<ChildContent> children)
         {
             List<ChildContentProjection> childProjections;
-            if (children != null && children.Any())
+            if (children != null && children.Any(c => !c.Child.IsDeleted))
             {
                 childProjections = new List<ChildContentProjection>();
-                foreach (var child in children.Distinct())
+                foreach (var child in children.Where(c => !c.Child.IsDeleted).Distinct())
                 {
                     var childChildProjections = CreateListOfChildProjectionsRecursively(pageContent, child.Child.ChildContents);
                     var options = optionService.GetMergedOptionValues(child.Child.ContentOptions, child.Options);
