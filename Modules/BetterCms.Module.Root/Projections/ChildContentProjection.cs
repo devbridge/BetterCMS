@@ -12,7 +12,7 @@ namespace BetterCms.Module.Root.Projections
 
         private readonly System.Guid assignmentIdentifier;
 
-        public ChildContentProjection(IPageContent pageContent, IChildContent content, IContentAccessor contentAccessor, IList<ChildContentProjection> childProjections = null)
+        public ChildContentProjection(IPageContent pageContent, IChildContent content, IContentAccessor contentAccessor, IEnumerable<ChildContentProjection> childProjections = null)
             : base(pageContent, content.ChildContent, contentAccessor, childProjections)
         {
             childContentId = content.Id;

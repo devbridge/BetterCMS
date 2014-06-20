@@ -8,13 +8,10 @@ using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.DataTier;
-using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Services;
 
-using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.Helpers;
-using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 
 using NHibernate.Linq;
 
@@ -36,12 +33,18 @@ namespace BetterCms.Module.Root.Services
         /// The option service
         /// </summary>
         private readonly IOptionService optionService;
+        
+        /// <summary>
+        /// The child content service
+        /// </summary>
+        private readonly IChildContentService childContentService;
 
-        public DefaultContentService(ISecurityService securityService, IRepository repository, IOptionService optionService)
+        public DefaultContentService(ISecurityService securityService, IRepository repository, IOptionService optionService, IChildContentService childContentService)
         {
             this.securityService = securityService;
             this.repository = repository;
             this.optionService = optionService;
+            this.childContentService = childContentService;
         }
 
         public Models.Content SaveContentWithStatusUpdate(Models.Content updatedContent, ContentStatus requestedStatus)
@@ -69,7 +72,7 @@ namespace BetterCms.Module.Root.Services
                     updatedContent.ChildContents = new List<ChildContent>();
                 }
                 CollectDynamicRegions(dynamicContainer.Html, updatedContent, updatedContent.ContentRegions);
-                dynamicContainer.Html = CollectChildWidgets(dynamicContainer.Html, updatedContent);
+                dynamicContainer.Html = childContentService.CollectChildContents(dynamicContainer.Html, updatedContent);
             }
 
             if (updatedContent.Id == default(Guid))
@@ -141,7 +144,9 @@ namespace BetterCms.Module.Root.Services
             {
                 originalContent.ChildContents = originalContent.ChildContents.Distinct().ToList();
             }
-            
+
+            childContentService.ValidateChildContentsCircularReferences(originalContent, updatedContent);
+
             /* Update existing content. */
             switch (originalContent.Status)
             {
@@ -183,11 +188,12 @@ namespace BetterCms.Module.Root.Services
                 updatedContent.CopyDataTo(contentVersionOfRequestedStatus, false);
                 SetContentOptions(contentVersionOfRequestedStatus, updatedContent);
                 SetContentRegions(contentVersionOfRequestedStatus, updatedContent);
+                childContentService.CopyChildContents(contentVersionOfRequestedStatus, updatedContent);
 
                 contentVersionOfRequestedStatus.Original = originalContent;
                 contentVersionOfRequestedStatus.Status = requestedStatus;
                 originalContent.History.Add(contentVersionOfRequestedStatus);
-                SetChildContents(contentVersionOfRequestedStatus, updatedContent);
+
                 repository.Save(contentVersionOfRequestedStatus);
             }
             
@@ -206,6 +212,7 @@ namespace BetterCms.Module.Root.Services
                 updatedContent.CopyDataTo(originalContent, false);
                 SetContentOptions(originalContent, updatedContent);
                 SetContentRegions(originalContent, updatedContent);
+                childContentService.CopyChildContents(originalContent, updatedContent);
 
                 originalContent.Status = requestedStatus;
                 if (!originalContent.PublishedOn.HasValue)
@@ -216,7 +223,6 @@ namespace BetterCms.Module.Root.Services
                 {
                     originalContent.PublishedByUser = securityService.CurrentPrincipalName;
                 }
-                SetChildContents(originalContent, updatedContent);
                 repository.Save(originalContent);
 
                 IList<Models.Content> contentsToRemove = originalContent.History.Where(f => f.Status == ContentStatus.Preview || f.Status == ContentStatus.Draft).ToList();
@@ -261,9 +267,10 @@ namespace BetterCms.Module.Root.Services
                 updatedContent.CopyDataTo(previewOrDraftContentVersion, false);
                 SetContentOptions(previewOrDraftContentVersion, updatedContent);
                 SetContentRegions(previewOrDraftContentVersion, updatedContent);
+                childContentService.CopyChildContents(previewOrDraftContentVersion, updatedContent);
 
                 previewOrDraftContentVersion.Status = requestedStatus;
-                SetChildContents(previewOrDraftContentVersion, updatedContent);
+
                 repository.Save(previewOrDraftContentVersion);
             }            
             else if (requestedStatus == ContentStatus.Published)
@@ -281,6 +288,7 @@ namespace BetterCms.Module.Root.Services
                 updatedContent.CopyDataTo(originalContent, false);
                 SetContentOptions(originalContent, updatedContent);
                 SetContentRegions(originalContent, updatedContent);
+                childContentService.CopyChildContents(originalContent, updatedContent);
 
                 originalContent.Status = requestedStatus;
                 if (!originalContent.PublishedOn.HasValue)
@@ -292,7 +300,6 @@ namespace BetterCms.Module.Root.Services
                     originalContent.PublishedByUser = securityService.CurrentPrincipalName;
                 }
 
-                SetChildContents(originalContent, updatedContent);
                 repository.Save(originalContent);
             }
         }
@@ -413,57 +420,6 @@ namespace BetterCms.Module.Root.Services
             }
         }
 
-        private string CollectChildWidgets(string html, Models.Content content)
-        {
-            var widgetModels = ChildContentRenderHelper.ParseWidgetsFromHtml(html, true);
-            if (widgetModels != null && widgetModels.Count > 0)
-            {
-                // Validate widget ids
-                var widgetIds = widgetModels.Select(w => w.WidgetId).Distinct().ToArray();
-                var widgets = repository.AsQueryable<Models.Content>(c => widgetIds.Contains(c.Id)).Select(c => c.Id).ToList();
-                widgetIds.Where(id => widgets.All(dbId => dbId != id)).ToList().ForEach(
-                    id =>
-                    {
-                        var message = RootGlobalization.ChildContent_WidgetNotFound_ById;
-                        var logMessage = string.Format("{0} Id: {1}", message, id);
-                        throw new ValidationException(() => message, logMessage);
-                    });
-
-                // Validate child content
-                var group = widgetModels.GroupBy(w => w.AssignmentIdentifier).FirstOrDefault(g => g.Count() > 1);
-                if (group != null)
-                {
-                    var message = string.Format(RootGlobalization.ChildContent_AssignmentAlreadyAdded, group.First().AssignmentIdentifier);
-                    throw new ValidationException(() => message, message);
-                }
-
-                foreach (var model in widgetModels)
-                {
-                    // Remove data-is-new attribute
-                    if (model.IsNew)
-                    {
-                        html = ChildContentRenderHelper.RemoveIsNewAttribute(html, model);
-                    }
-
-                    // Add child content only if it's not added yet (for example, it may be added when restoring / cloning a content)
-                    if (content.ChildContents.All(cc => cc.AssignmentIdentifier != model.AssignmentIdentifier))
-                    {
-                        // Create child content
-                        var childContent = new ChildContent
-                        {
-                            Id = Guid.NewGuid(),
-                            Child = repository.AsProxy<Models.Content>(model.WidgetId),
-                            Parent = content,
-                            AssignmentIdentifier = model.AssignmentIdentifier
-                        };
-                        content.ChildContents.Add(childContent);
-                    }
-                }
-            }
-
-            return html;
-        }
-
         private void CollectDynamicRegions(string html, Models.Content content, IList<ContentRegion> contentRegions)
         {
             var regionIdentifiers = GetRegionIds(html);
@@ -551,135 +507,6 @@ namespace BetterCms.Module.Root.Services
                 .ForEach(d => repository.Delete(d));
         }
 
-        private void SetChildContents(Models.Content destination, Models.Content source)
-        {
-            if (destination.ChildContents == null)
-            {
-                destination.ChildContents = new List<ChildContent>();
-            }
-            if (source.ChildContents == null)
-            {
-                source.ChildContents = new List<ChildContent>();
-            }
-
-            // Update all child and their options
-            foreach (var sourceChildContent in source.ChildContents)
-            {
-                var destinationChildContent = destination.ChildContents.FirstOrDefault(d => sourceChildContent.AssignmentIdentifier == d.AssignmentIdentifier);
-                if (destinationChildContent == null)
-                {
-                    destinationChildContent = new ChildContent();
-                    destination.ChildContents.Add(destinationChildContent);
-                }
-
-                destinationChildContent.AssignmentIdentifier = sourceChildContent.AssignmentIdentifier;
-                destinationChildContent.Parent = destination;
-                destinationChildContent.Child = sourceChildContent.Child;
-
-                // Update all the options
-                if (sourceChildContent.Options == null)
-                {
-                    sourceChildContent.Options = new List<ChildContentOption>();
-                }
-                if (destinationChildContent.Options == null)
-                {
-                    destinationChildContent.Options = new List<ChildContentOption>();
-                }
-
-                // Add new options
-                foreach (var sourceChildOption in sourceChildContent.Options)
-                {
-                    var destinationChildOption = destinationChildContent.Options.FirstOrDefault(o => o.Key == sourceChildOption.Key);
-                    if (destinationChildOption == null)
-                    {
-                        destinationChildOption = new ChildContentOption();
-                        destinationChildContent.Options.Add(destinationChildOption);
-                    }
-
-                    sourceChildOption.CopyDataTo(destinationChildOption);
-                    destinationChildOption.ChildContent = destinationChildContent;
-                }
-
-                // Remove unneeded options
-                if (source.ChildContentsLoaded)
-                {
-                    destinationChildContent.Options
-                        .Where(s => sourceChildContent.Options.All(d => s.Key != d.Key))
-                        .Distinct().ForEach(d => repository.Delete(d));
-                }
-            }
-
-            // Remove childs, which not exists in source.
-            destination.ChildContents
-                .Where(s => source.ChildContents.All(d => s.AssignmentIdentifier != d.AssignmentIdentifier))
-                .Distinct().ForEach(d => repository.Delete(d));
-
-            if (destination.ChildContents.Any())
-            {
-                var references = new List<Guid>();
-                var childrenIds = PopulateReferencesList(
-                    references,
-                    destination.ChildContents.Select(s => new System.Tuple<Guid, Guid, string>(destination.Id, s.Child.Id, s.Child.Name)));
-
-                ValidateChildContentsCircularReferences(childrenIds, references);
-            }
-        }
-
-        /// <summary>
-        /// Populates the references dictionary.
-        /// </summary>
-        /// <param name="references">The references.</param>
-        /// <param name="children">The children: list of Tuple, where Item1: Parent, Item2: Childs.</param>
-        /// <returns></returns>
-        private List<Guid> PopulateReferencesList(List<Guid> references, 
-            IEnumerable<System.Tuple<Guid, Guid, string>> children)
-        {
-            var childrenIds = new List<Guid>();
-
-            foreach (var childContent in children)
-            {
-                if (!references.Contains(childContent.Item1))
-                {
-                    references.Add(childContent.Item1);
-                }
-                if (!references.Contains(childContent.Item2) && !childrenIds.Contains(childContent.Item2))
-                {
-                    childrenIds.Add(childContent.Item2);
-                }
-            }
-
-            return childrenIds;
-        }
-
-        /// <summary>
-        /// Validates the list of child contents for circular references.
-        /// </summary>
-        /// <param name="childrenIds">The children ids.</param>
-        /// <param name="references">The references list.</param>
-        private void ValidateChildContentsCircularReferences(List<Guid> childrenIds, List<Guid> references)
-        {
-            var children = repository
-                .AsQueryable<ChildContent>()
-                .Where(cc => childrenIds.Contains(cc.Parent.Id))
-                .Select(cc => new { ParentId = cc.Parent.Id, ChildId = cc.Child.Id, Name = cc.Child.Name })
-                .ToList()
-                .Distinct()
-                .Select(cc => new System.Tuple<Guid, Guid, string>(cc.ParentId, cc.ChildId, cc.Name));
-
-            var circularReference = children.FirstOrDefault(c => !references.Contains(c.Item1) && references.Contains(c.Item2));
-            if (circularReference != null)
-            {
-                var message = string.Format(RootGlobalization.ChildContent_CirculatReferenceDetected, circularReference.Item3);
-                throw new ValidationException(() => message, message);
-            }
-
-            childrenIds = PopulateReferencesList(references, children);
-            if (childrenIds.Any())
-            {
-                ValidateChildContentsCircularReferences(childrenIds, references);
-            }
-        }
-
         /// <summary>
         /// Validates if content has no children.
         /// </summary>
@@ -709,6 +536,36 @@ namespace BetterCms.Module.Root.Services
             }
 
             return hasAnyContents;
+        }
+
+        public void RetrieveChildrenContentsRecursively(IEnumerable<Models.Content> contents)
+        {
+            var childContents = contents.Where(c => c.ChildContents != null).SelectMany(c => c.ChildContents).ToArray();
+            if (childContents.Any())
+            {
+                var childIds = childContents.Select(c => c.Child.Id).Distinct().ToArray();
+                var entities = repository
+                    .AsQueryable<ChildContent>(c => childIds.Contains(c.Parent.Id))
+                    .Fetch(c => c.Child)
+                    .ThenFetchMany(c => c.ChildContents)
+                    .ThenFetch(cc => cc.Child)
+                    .FetchMany(c => c.Options)
+                    .ToArray();
+
+                childContents.ForEach(c =>
+                {
+
+                    if (c.Child.ChildContents == null)
+                    {
+                        c.Child.ChildContents = new List<ChildContent>();
+                    }
+                    c.Child.ChildContents.Clear();
+
+                    entities.Where(e => e.Parent.Id == c.Child.Id).ForEach(c.Child.ChildContents.Add);
+                });
+
+                RetrieveChildrenContentsRecursively(entities.Select(c => c.Child).Distinct().ToList());
+            }
         }
     }
 }

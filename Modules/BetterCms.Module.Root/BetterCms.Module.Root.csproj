@@ -331,7 +331,9 @@
     <Compile Include="Mvc\Helpers\MessagesHelper.cs" />
     <Compile Include="Registration\TabsJsModuleIncludeDescriptor.cs" />
     <Compile Include="RootModuleConstants.cs" />
+    <Compile Include="Services\DefaultChildContentService.cs" />
     <Compile Include="Services\DefaultLanguageService.cs" />
+    <Compile Include="Services\IChildContentService.cs" />
     <Compile Include="Services\ILanguageService.cs" />
     <Compile Include="Services\DefaultEntityTrackingCacheService.cs" />
     <Compile Include="Services\IEntityTrackingCacheService.cs" />

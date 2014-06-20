@@ -33,14 +33,14 @@ namespace BetterCms.Module.Root.Projections
         }
 
         public PageContentProjection Create(IPageContent pageContent, IContent content, IList<IOptionValue> options, 
-            IList<ChildContentProjection> childContentProjections)
+            IEnumerable<ChildContentProjection> childContentProjections)
         {
             return Create(pageContent, content, options, childContentProjections, (pc, c, a, ch) => new PageContentProjection(pc, c, a, ch));
         }
 
         public TProjection Create<TProjection>(IPageContent pageContent, IContent content, IList<IOptionValue> options,
-            IList<ChildContentProjection> childContentProjections,
-            Func<IPageContent, IContent, IContentAccessor, IList<ChildContentProjection>, TProjection> createProjectionDelegate)
+            IEnumerable<ChildContentProjection> childContentProjections,
+            Func<IPageContent, IContent, IContentAccessor, IEnumerable<ChildContentProjection>, TProjection> createProjectionDelegate)
             where TProjection : PageContentProjection
         {
             IContentAccessor contentAccessor = null;            
@@ -73,21 +73,6 @@ namespace BetterCms.Module.Root.Projections
 
                 contentAccessor = new EmptyContentAccessor(string.Format("<i style=\"color:red;\">{0}</i>", RootGlobalization.Message_FailedToRenderContent));
             }
-
-            /*List<ChildContentProjection> childProjections;
-            if (content.Children != null)
-            {
-                childProjections = new List<ChildContentProjection>();
-                foreach (var child in content.Children.Distinct())
-                {
-                    var childProjection = Create(pageContent, child.ChildContent, null, (pc, c, a, ch) => new ChildContentProjection(pc, child, a, ch));
-                    childProjections.Add(childProjection);
-                }
-            }
-            else
-            {
-                childProjections = null;
-            }*/
 
             TProjection pageContentProjection = createProjectionDelegate.Invoke(pageContent, content, contentAccessor, childContentProjections);
 

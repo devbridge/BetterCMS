@@ -18,9 +18,9 @@ namespace BetterCms.Module.Root.Projections
 
         private readonly IContentAccessor contentAccessor;
 
-        private readonly IList<ChildContentProjection> childProjections;
+        private readonly IEnumerable<ChildContentProjection> childProjections;
 
-        public PageContentProjection(IPageContent pageContent, IContent content, IContentAccessor contentAccessor, IList<ChildContentProjection> childProjections = null)
+        public PageContentProjection(IPageContent pageContent, IContent content, IContentAccessor contentAccessor, IEnumerable<ChildContentProjection> childProjections = null)
         {
             this.pageContent = pageContent;
             this.content = content;
@@ -142,7 +142,7 @@ namespace BetterCms.Module.Root.Projections
             return contentAccessor.GetJavaScriptResources(html);
         }
 
-        public IList<ChildContentProjection> GetChildProjections()
+        public IEnumerable<ChildContentProjection> GetChildProjections()
         {
             return childProjections;
         }
