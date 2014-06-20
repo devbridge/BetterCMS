@@ -38,7 +38,7 @@
                             return;
                         }
 
-                        editor.EditChildWidgetOptions(editor, id);
+                        editor.EditChildWidgetOptions(editor, id, editor.contentId);
                     }
                 }),
 

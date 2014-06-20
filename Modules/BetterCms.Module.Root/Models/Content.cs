@@ -58,6 +58,14 @@ namespace BetterCms.Module.Root.Models
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether child contents were loaded from the database, or were populated manually.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if child contents were loaded from the database; if child contents were populated manually, <c>false</c>.
+        /// </value>
+        public virtual bool ChildContentsLoaded { get; set; }
+
         public virtual Content Clone()
         {
             return CopyDataTo(new Content());

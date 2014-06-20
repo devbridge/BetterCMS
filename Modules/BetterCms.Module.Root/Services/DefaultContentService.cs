@@ -315,6 +315,7 @@ namespace BetterCms.Module.Root.Services
             originalContent.Version = restoreFrom.Original.Version;
             originalContent.Status = ContentStatus.Published;
             originalContent.Original = null;
+            originalContent.ChildContentsLoaded = true;
 
             // Save entities
             return SaveContentWithStatusUpdate(originalContent, ContentStatus.Published);
@@ -600,9 +601,12 @@ namespace BetterCms.Module.Root.Services
                 }
 
                 // Remove unneeded options
-                destinationChildContent.Options
-                    .Where(s => sourceChildContent.Options.All(d => s.Key != d.Key))
-                    .Distinct().ForEach(d => repository.Delete(d));
+                if (source.ChildContentsLoaded)
+                {
+                    destinationChildContent.Options
+                        .Where(s => sourceChildContent.Options.All(d => s.Key != d.Key))
+                        .Distinct().ForEach(d => repository.Delete(d));
+                }
             }
 
             // Remove childs, which not exists in source.
