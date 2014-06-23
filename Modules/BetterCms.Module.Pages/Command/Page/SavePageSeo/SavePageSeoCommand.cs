@@ -1,10 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 
+using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Models.Events;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Seo;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 
@@ -36,19 +41,30 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
         private readonly IUrlService urlService;
 
         /// <summary>
+        /// The CMS configuration.
+        /// </summary>
+        private readonly ICmsConfiguration cmsConfiguration;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SavePageSeoCommand" /> class.
         /// </summary>
         /// <param name="redirectService">The redirect service.</param>
         /// <param name="pageService">The page service.</param>
         /// <param name="sitemapService">The sitemap service.</param>
         /// <param name="urlService">The URL service.</param>
-        public SavePageSeoCommand(IRedirectService redirectService, IPageService pageService,
-            ISitemapService sitemapService, IUrlService urlService)
+        /// <param name="cmsConfiguration">The CMS configuration.</param>
+        public SavePageSeoCommand(
+            IRedirectService redirectService,
+            IPageService pageService,
+            ISitemapService sitemapService,
+            IUrlService urlService,
+            ICmsConfiguration cmsConfiguration)
         {
             this.pageService = pageService;
             this.sitemapService = sitemapService;
             this.redirectService = redirectService;
             this.urlService = urlService;
+            this.cmsConfiguration = cmsConfiguration;
         }
 
         /// <summary>
@@ -60,7 +76,31 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
         /// </returns>
         public virtual EditSeoViewModel Execute(EditSeoViewModel model)
         {
-            var page = Repository.First<PageProperties>(model.PageId);
+            var pageQuery =
+                Repository.AsQueryable<PageProperties>(p => p.Id == model.PageId)
+                          .FetchMany(p => p.Options)
+                          .Fetch(p => p.Layout)
+                          .ThenFetchMany(l => l.LayoutOptions)
+                          .FetchMany(p => p.MasterPages)
+                          .AsQueryable();
+
+            if (cmsConfiguration.Security.AccessControlEnabled)
+            {
+                pageQuery = pageQuery.FetchMany(f => f.AccessRules);
+            }
+
+            var page = pageQuery.ToList().FirstOne();
+            var beforeChange = new UpdatingPagePropertiesModel(page);
+
+            var roles = new[] { RootModuleConstants.UserRoles.EditContent };
+            if (cmsConfiguration.Security.AccessControlEnabled)
+            {
+                AccessControlService.DemandAccess(page, Context.Principal, AccessLevel.ReadWrite, roles);
+            }
+            else
+            {
+                AccessControlService.DemandAccess(Context.Principal, roles);
+            }
 
             bool initialHasSeo = page.HasSEO;
             Models.Redirect newRedirect = null;
@@ -99,8 +139,18 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageSeo
             page.MetaDescription = model.MetaDescription;
             page.UseCanonicalUrl = model.UseCanonicalUrl;
 
+            // Notify about page properties changing.
+            var cancelEventArgs = Events.PageEvents.Instance.OnPagePropertiesChanging(beforeChange, new UpdatingPagePropertiesModel(page));
+            if (cancelEventArgs.Cancel)
+            {
+                Context.Messages.AddError(cancelEventArgs.CancellationErrorMessages.ToArray());
+                return null;
+            }
+
             Repository.Save(page);
             UnitOfWork.Commit();
+
+            Events.PageEvents.Instance.OnPagePropertiesChanged(page);
 
             // Notify about SEO change.
             if (page.HasSEO != initialHasSeo)
