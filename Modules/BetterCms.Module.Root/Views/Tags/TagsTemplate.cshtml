@@ -1,5 +1,4 @@
-﻿@using BetterCms.Module.Pages.Content.Resources
-@using BetterCms.Module.Root
+﻿@using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
@@ -9,7 +8,7 @@
 <div class="bcms-input-list-holder">
     @Html.Tooltip(Model.TooltipDescription)
     <div class="bcms-content-titles">
-        @PagesGlobalization.TagsTemplate_AddTags_Title
+@* TODO:        @RootGlobalization.TagsTemplate_AddTags_Title*@
         <div class="bcms-btn-plus" data-bind="css: { 'bcms-btn-plus-expand': isExpanded() }@(canEdit ? ", click: expandCollapse" : string.Empty)">&nbsp;</div>
         <div class="bcms-tags-field-holder" data-bind="visible: isExpanded()">
             <input type="text" class="bcms-add-tags-field" style="width: 107px;" data-bind="

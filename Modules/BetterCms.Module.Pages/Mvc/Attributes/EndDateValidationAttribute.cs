@@ -12,7 +12,7 @@ namespace BetterCms.Module.Pages.Mvc.Attributes
     /// Date validation attribute.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
-    public sealed class EndDateValidationAttribute : ValidationAttribute, IClientValidatable
+    public sealed class EndDateValidationAttribute : ValidationAttribute//, IClientValidatable
     {
         /// <summary>
         /// The client validation rule.
@@ -61,16 +61,17 @@ namespace BetterCms.Module.Pages.Mvc.Attributes
         /// <returns>
         /// The client validation rules for this validator.
         /// </returns>
-        public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
-        {
-            var rule = new ModelClientValidationRule
-            {
-                ErrorMessage = ErrorMessageString,
-                ValidationType = clientValidationRule,
-            };
-            rule.ValidationParameters.Add("startdateproperty", StartDateProperty);
-
-            yield return rule;
-        }
+// TODO:
+//        public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
+//        {
+//            var rule = new ModelClientValidationRule
+//            {
+//                ErrorMessage = ErrorMessageString,
+//                ValidationType = clientValidationRule,
+//            };
+//            rule.ValidationParameters.Add("startdateproperty", StartDateProperty);
+//
+//            yield return rule;
+//        }
     }
 }

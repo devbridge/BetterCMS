@@ -87,7 +87,6 @@
     </Reference>
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -98,6 +97,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -176,6 +176,46 @@
     <Compile Include="ViewModels\User\EditUserViewModel.cs" />
     <Compile Include="ViewModels\Role\RoleViewModel.cs" />
     <Compile Include="ViewModels\User\UserItemViewModel.cs" />
+    <Compile Include="Views\Authentication\Login.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Login.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Registration\CreateFirstUser.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateFirstUser.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Role\Partial\ListTemplate.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ListTemplate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\PublicActionLayout.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PublicActionLayout.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserProfile\EditUserProfile.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditUserProfile.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\User\EditUser.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditUser.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\User\Index.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Index.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\User\Partial\EditUserRoles.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditUserRoles.cshtml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\Resources\UsersGlobalization.resx">
@@ -228,31 +268,55 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Role\Partial\ListTemplate.cshtml" />
+    <None Include="Views\Role\Partial\ListTemplate.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ListTemplate.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\User\EditUser.cshtml" />
+    <None Include="Views\User\EditUser.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EditUser.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\UserProfile\EditUserProfile.cshtml" />
+    <None Include="Views\UserProfile\EditUserProfile.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EditUserProfile.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\User\Index.cshtml" />
+    <None Include="Views\User\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\User\Partial\EditUserRoles.cshtml" />
+    <None Include="Views\User\Partial\EditUserRoles.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EditUserRoles.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Registration\CreateFirstUser.cshtml" />
+    <None Include="Views\Registration\CreateFirstUser.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>CreateFirstUser.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Authentication\Login.cshtml" />
+    <None Include="Views\Authentication\Login.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Login.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\PublicActionLayout.cshtml" />
+    <None Include="Views\Shared\PublicActionLayout.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>PublicActionLayout.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

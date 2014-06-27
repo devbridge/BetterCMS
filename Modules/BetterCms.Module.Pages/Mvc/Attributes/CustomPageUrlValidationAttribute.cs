@@ -8,7 +8,7 @@ using BetterCms.Module.Pages.Content.Resources;
 namespace BetterCms.Module.Pages.Mvc.Attributes
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
-    public class CustomPageUrlValidationAttribute : ValidationAttribute, IClientValidatable
+    public class CustomPageUrlValidationAttribute : ValidationAttribute//, IClientValidatable
     {
         private readonly string errorMessage = PagesGlobalization.PageProperties_PageUrl_InvalidMessage;
         private const string clientValidationRule = "pageurlvalidation";
@@ -27,17 +27,17 @@ namespace BetterCms.Module.Pages.Mvc.Attributes
 
             return ValidationResult.Success;
         }
-
-        public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
-        {
-            var rule = new ModelClientValidationRule
-            {
-                ErrorMessage = errorMessage,
-                ValidationType = clientValidationRule,
-            };
-            rule.ValidationParameters.Add("pattern", PagesConstants.InternalUrlRegularExpression);
-
-            yield return rule;
-        }
+// TODO:
+//        public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
+//        {
+//            var rule = new ModelClientValidationRule
+//            {
+//                ErrorMessage = errorMessage,
+//                ValidationType = clientValidationRule,
+//            };
+//            rule.ValidationParameters.Add("pattern", PagesConstants.InternalUrlRegularExpression);
+//
+//            yield return rule;
+//        }
     }
 }
