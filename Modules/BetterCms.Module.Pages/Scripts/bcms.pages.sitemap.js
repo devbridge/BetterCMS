@@ -658,6 +658,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                     node.title(dragObject.title());
                                     node.url(dragObject.url());
                                     node.pageId(dragObject.pageId());
+                                    node.pageTitle(dragObject.title());
                                     node.usePageTitleAsNodeTitle(dragObject.pageId() != null && dragObject.pageId() != defaultIdValue ? true : false);
                                     if (dropZoneType == DropZoneTypes.EmptyListZone || dropZoneType == DropZoneTypes.MiddleZone) {
                                         node.parentNode(dropZoneObject);
@@ -1072,6 +1073,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.macro = ko.observable();
             self.url = ko.observable();
             self.pageId = ko.observable(defaultIdValue);
+            self.pageTitle = ko.observable();
             self.usePageTitleAsNodeTitle = ko.observable(false);
             self.displayOrder = ko.observable(0);
             self.isDeleted = ko.observable(false);
@@ -1295,6 +1297,8 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         self.translations[languageId].macro(self.macro());
                         self.translations[languageId].version(self.version());
                         self.translations[languageId].isModified(true);
+                    } else {
+                        self.translations[languageId].title(self.pageId() != null ? self.pageTitle() : self.translations[languageId].title());
                     }
                 }
 
@@ -1375,6 +1379,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 self.macro(jsonNode.Macro);
                 self.url(jsonNode.Url);
                 self.pageId(jsonNode.PageId);
+                self.pageTitle(jsonNode.PageTitle);
                 self.usePageTitleAsNodeTitle(jsonNode.UsePageTitleAsNodeTitle);
                 self.displayOrder(jsonNode.DisplayOrder);
                 if (translationsEnabled) {
