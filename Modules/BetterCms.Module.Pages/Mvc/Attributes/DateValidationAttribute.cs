@@ -8,7 +8,7 @@ namespace BetterCms.Module.Pages.Mvc.Attributes
     /// <summary>
     /// Date validation attribute.
     /// </summary>
-    public class DateValidationAttribute : ValidationAttribute//, IClientValidatable
+    public class DateValidationAttribute : ValidationAttribute, IClientValidatable
     {
         /// <summary>
         /// The client validation rule.
@@ -44,11 +44,10 @@ namespace BetterCms.Module.Pages.Mvc.Attributes
         /// <returns>
         /// The client validation rules for this validator.
         /// </returns>
-// TODO:
-//        public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
-//        {
-//            var rule = new ModelClientValidationRule { ErrorMessage = ErrorMessageString, ValidationType = clientValidationRule, };
-//            yield return rule;
-//        }
+        public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
+        {
+            var rule = new ModelClientValidationRule { ErrorMessage = ErrorMessageString, ValidationType = clientValidationRule, };
+            yield return rule;
+        }
     }
 }
