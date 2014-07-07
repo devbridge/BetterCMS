@@ -138,6 +138,16 @@
     <Compile Include="ViewModels\SearchInputViewModel.cs" />
     <Compile Include="ViewModels\SearchRequestViewModel.cs" />
     <Compile Include="ViewModels\SearchResultsViewModel.cs" />
+    <Compile Include="Views\Search\SearchResultsWidget.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SearchResultsWidget.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Search\SearchResultsWidgetInvoker.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SearchResultsWidgetInvoker.cshtml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
@@ -177,10 +187,16 @@
     <EmbeddedResource Include="Views\Search\SearchInputWidget.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Search\SearchResultsWidget.cshtml" />
+    <None Include="Views\Search\SearchResultsWidget.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>SearchResultsWidget.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Search\SearchResultsWidgetInvoker.cshtml" />
+    <None Include="Views\Search\SearchResultsWidgetInvoker.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>SearchResultsWidgetInvoker.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />

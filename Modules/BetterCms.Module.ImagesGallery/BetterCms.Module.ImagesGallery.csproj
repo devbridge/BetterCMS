@@ -126,6 +126,36 @@
     </Compile>
     <Compile Include="ImagesGalleryModuleConstants.cs" />
     <Compile Include="ImagesGalleryModuleDescriptor.cs" />
+    <Compile Include="Views\GalleryWidget\Album.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Album.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GalleryWidget\List.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>List.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GalleryWidget\Partial\AlbumStyles.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlbumStyles.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GalleryWidget\Partial\ListStyles.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ListStyles.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Widgets\AlbumWidget.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlbumWidget.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Widgets\ImagesGalleryWidget.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ImagesGalleryWidget.cshtml</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Models\Migrations\Migration201310211700.sqlserver.sql" />
     <Compile Include="Models\Migrations\Migration201311190740.cs" />
     <Compile Include="Models\Migrations\Migration201310251623.cs" />
@@ -184,25 +214,43 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\GalleryWidget\Album.cshtml" />
+    <None Include="Views\GalleryWidget\Album.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Album.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\GalleryWidget\List.cshtml" />
+    <None Include="Views\GalleryWidget\List.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>List.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\GalleryWidget\Partial\AlbumStyles.cshtml" />
+    <None Include="Views\GalleryWidget\Partial\AlbumStyles.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>AlbumStyles.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\GalleryWidget\Partial\ListStyles.cshtml" />
+    <None Include="Views\GalleryWidget\Partial\ListStyles.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ListStyles.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Widgets\ImagesGalleryWidget.cshtml" />
+    <None Include="Views\Widgets\ImagesGalleryWidget.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ImagesGalleryWidget.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Widgets\AlbumWidget.cshtml" />
+    <None Include="Views\Widgets\AlbumWidget.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>AlbumWidget.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

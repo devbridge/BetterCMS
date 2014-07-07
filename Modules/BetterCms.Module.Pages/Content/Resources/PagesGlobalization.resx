@@ -369,9 +369,6 @@
   <data name="EditPageProperties_BasicPropertiesTab_AddCategories_Tooltip_Description" xml:space="preserve">
     <value>Add Categories</value>
   </data>
-  <data name="TagsTemplate_AddTags_Title" xml:space="preserve">
-    <value>Add Tags</value>
-  </data>
   <data name="EditPageProperties_BasicPropertiesTab_AddTags_Tooltip_Description" xml:space="preserve">
     <value>Add tags to this page to identify it with related pages.</value>
   </data>

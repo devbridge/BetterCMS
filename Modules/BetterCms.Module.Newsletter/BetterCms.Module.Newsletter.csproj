@@ -141,6 +141,11 @@
     <Compile Include="Services\DefaultSubscriberService.cs" />
     <Compile Include="Services\ISubscriberService.cs" />
     <Compile Include="ViewModels\SubscriberViewModel.cs" />
+    <Compile Include="Views\Subscriber\List.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>List.cshtml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\Resources\NewsletterGlobalization.resx">
@@ -190,7 +195,10 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Subscriber\List.cshtml" />
+    <None Include="Views\Subscriber\List.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>List.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Widgets\SubscribeToNewsletter.cshtml" />
