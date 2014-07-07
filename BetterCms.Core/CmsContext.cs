@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Compilation;
 using System.Web.Hosting;
@@ -31,6 +32,7 @@ using BetterCms.Core.Web.EmbeddedResources;
 using BetterCms.Core.Web.ViewEngines;
 
 using NHibernate.Linq;
+using NHibernate.Mapping;
 
 using RazorGenerator.Mvc;
 
@@ -267,13 +269,20 @@ namespace BetterCms.Core
                 var moduleRegistration = container.Resolve<IModulesRegistration>();
                 moduleRegistration.InitializeModules();
 
+                // Register precompiled views for all the assemblies
+                var precompiledAssemblies = new List<PrecompiledViewAssembly>();
                 moduleRegistration.GetModules().Select(m => m.ModuleDescriptor).Distinct().ForEach(
                     descriptor =>
                         {
-                            var engine = new PrecompiledMvcEngine(descriptor.GetType().Assembly, string.Format("~/Areas/{0}/", descriptor.AreaName)) { UsePhysicalViewsIfNewer = false };
-                            ViewEngines.Engines.Add(engine);
-                            VirtualPathFactoryManager.RegisterVirtualPathFactory(engine);
+                            var precompiledAssembly = new PrecompiledViewAssembly(descriptor.GetType().Assembly, string.Format("~/Areas/{0}/", descriptor.AreaName))
+                                                  {
+                                                      UsePhysicalViewsIfNewer = false
+                                                  };
+                            precompiledAssemblies.Add(precompiledAssembly);
                         });
+                var engine = new CompositePrecompiledMvcEngine(precompiledAssemblies.ToArray());
+                ViewEngines.Engines.Add(engine);
+                VirtualPathFactoryManager.RegisterVirtualPathFactory(engine);
             }
         }
     }

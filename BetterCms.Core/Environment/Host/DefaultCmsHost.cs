@@ -4,13 +4,17 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 using System.Web.Hosting;
+using System.Web.Mvc;
 using System.Web.Routing;
 
 using BetterCms.Core.DataAccess.DataContext.Migrations;
+using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Host;
 using BetterCms.Core.Modules.Registration;
 
 using Common.Logging;
+
+using RazorGenerator.Mvc;
 
 namespace BetterCms.Core.Environment.Host
 {
@@ -43,15 +47,22 @@ namespace BetterCms.Core.Environment.Host
         /// Called when the host application starts.
         /// </summary>
         /// <param name="application">The host application.</param>
-        public void OnApplicationStart(HttpApplication application)
+        /// <param name="validateViewEngines">if set to <c>true</c> valdiate view engines.</param>
+        /// <exception cref="CmsException">ViewEngines.Engines collection doesn't contain any precompiled MVC view engines. Each BetterCms module uses precompiled MVC engines for rendering views. Please check if Engines list is not cleared manualy in global.asax.cx</exception>
+        public void OnApplicationStart(HttpApplication application, bool validateViewEngines = true)
         {
             try
             {
                 Logger.Info("Better CMS host application starting...");
 
+                if (validateViewEngines && !ViewEngines.Engines.Any(engine => engine is CompositePrecompiledMvcEngine))
+                {
+                    throw new CmsException("ViewEngines.Engines collection doesn't contain precompiled composite MVC view engine. Each BetterCms module uses precompiled MVC views for rendering. Please check if Engines list is not cleared manualy in global.asax.cx");
+                }
+
                 modulesRegistration.RegisterKnownModuleRoutes(RouteTable.Routes);
                 MigrateDatabase();
-                
+
                 // Notify.                                
                 Events.CoreEvents.Instance.OnHostStart(application);
 
