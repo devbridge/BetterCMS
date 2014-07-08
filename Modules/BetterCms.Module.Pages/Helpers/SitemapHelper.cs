@@ -160,10 +160,18 @@ namespace BetterCms.Module.Pages.Helpers
                             }
                             else if (linkedPage.LanguageGroupIdentifier.HasValue)
                             {
+                                // Get page translation. If not exists, retrieve default language's translation
                                 var pageTranslation = pages.FirstOrDefault(p => p.LanguageGroupIdentifier.HasValue
                                                                                 && p.LanguageGroupIdentifier.Value == linkedPage.LanguageGroupIdentifier.Value
                                                                                 && p.LanguageId.HasValue
                                                                                 && p.LanguageId.Value == languageId);
+                                if (pageTranslation == null)
+                                {
+                                    pageTranslation = pages.FirstOrDefault(p => p.LanguageGroupIdentifier.HasValue
+                                                                                && p.LanguageGroupIdentifier.Value == linkedPage.LanguageGroupIdentifier.Value
+                                                                                && (!p.LanguageId.HasValue || p.LanguageId.Value.HasDefaultValue()));
+                                }
+
                                 if (pageTranslation != null)
                                 {
                                     title = pageTranslation.Title;
