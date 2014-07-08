@@ -95,7 +95,7 @@
     <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Transactions" />
-    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -105,6 +105,7 @@
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -387,6 +388,261 @@
     <Compile Include="ViewModels\SiteSettings\SiteSettingRedirectViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingWidgetListViewModel.cs" />
     <Compile Include="ViewModels\SiteSettings\SiteSettingWidgetItemViewModel.cs" />
+    <Compile Include="Views\Content\AddPageHtmlContent.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AddPageHtmlContent.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Content\EditPageHtmlContent.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditPageHtmlContent.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Content\PageContentOptions.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PageContentOptions.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Content\Partial\EditHtmlContent.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditHtmlContent.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Content\Partial\WidgetCategories.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WidgetCategories.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Content\Partial\WidgetCategory.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WidgetCategory.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Content\Widgets.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Widgets.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Filter\PagesFilterTemplate.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PagesFilterTemplate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\History\ContentHistory.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContentHistory.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\History\ContentVersion.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContentVersion.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Option\EditOptions.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditOptions.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Option\EditOptionValues.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditOptionValues.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Option\Partial\OptionCell.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OptionCell.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Option\Partial\UseDefaultValueCell.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UseDefaultValueCell.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Page\AddNewPage.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AddNewPage.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Page\ClonePage.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClonePage.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Page\ClonePageWithLanguage.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClonePageWithLanguage.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Page\DeletePageConfirmation.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DeletePageConfirmation.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Page\EditPageProperties.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditPageProperties.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Page\Pages.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Pages.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Page\Partial\AddNewPageEditPermalink.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AddNewPageEditPermalink.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Page\Partial\ClonePageEditUrl.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClonePageEditUrl.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Page\Partial\PagePropertiesEditPermalink.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PagePropertiesEditPermalink.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Page\Partial\SiteSettingsPagesList.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SiteSettingsPagesList.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Page\Partial\Template.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Template.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Page\Partial\TemplatesList.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TemplatesList.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Page\Partial\TranslationsGrid.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TranslationsGrid.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Page\SearchUntranslatedPages.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SearchUntranslatedPages.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Page\SelectPage.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SelectPage.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Redirect\Redirects.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Redirects.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Seo\EditSeo.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditSeo.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Seo\Partial\EditSeoEditUrlPath.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditSeoEditUrlPath.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Seo\Partial\WarnMessageAboutSitemap.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WarnMessageAboutSitemap.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\EditorTemplates\PageStatus.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PageStatus.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\EditorTemplates\SEOStatus.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SEOStatus.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\EditorTemplates\WidgetStatus.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WidgetStatus.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\Layouts\ContentVersionLayout.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContentVersionLayout.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\Partial\InfoMessageAboutMasterPage.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InfoMessageAboutMasterPage.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\Partial\WarnMessageAboutDraft.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WarnMessageAboutDraft.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sitemap\Edit.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Edit.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sitemap\History.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>History.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sitemap\NewPage.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NewPage.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sitemap\Partial\Sitemap.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Sitemap.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sitemap\Partial\SitemapTemplate.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SitemapTemplate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sitemap\Preview.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Preview.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sitemap\Sitemaps.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Sitemaps.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Templates\EditTemplate.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditTemplate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Templates\MasterPages.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MasterPages.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Templates\Templates.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Templates.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Widgets\EditHtmlContentWidget.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditHtmlContentWidget.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Widgets\EditServerControlWidget.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditServerControlWidget.cshtml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\Resources\NavigationGlobalization.resx">
@@ -455,166 +711,324 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Partial\WarnMessageAboutDraft.cshtml" />
+    <None Include="Views\Shared\Partial\WarnMessageAboutDraft.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>WarnMessageAboutDraft.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Content\AddPageHtmlContent.cshtml" />
+    <None Include="Views\Content\AddPageHtmlContent.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>AddPageHtmlContent.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Content\EditPageHtmlContent.cshtml" />
+    <None Include="Views\Content\EditPageHtmlContent.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EditPageHtmlContent.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Content\PageContentOptions.cshtml" />
+    <None Include="Views\Content\PageContentOptions.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>PageContentOptions.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Content\Partial\EditHtmlContent.cshtml" />
+    <None Include="Views\Content\Partial\EditHtmlContent.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EditHtmlContent.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Content\Partial\WidgetCategory.cshtml" />
+    <None Include="Views\Content\Partial\WidgetCategory.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>WidgetCategory.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Content\Partial\WidgetCategories.cshtml" />
+    <None Include="Views\Content\Partial\WidgetCategories.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>WidgetCategories.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Content\Widgets.cshtml" />
+    <None Include="Views\Content\Widgets.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Widgets.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\History\ContentHistory.cshtml" />
+    <None Include="Views\History\ContentHistory.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ContentHistory.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\History\ContentVersion.cshtml" />
+    <None Include="Views\History\ContentVersion.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ContentVersion.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Redirect\Redirects.cshtml" />
+    <None Include="Views\Redirect\Redirects.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Redirects.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Seo\EditSeo.cshtml" />
+    <None Include="Views\Seo\EditSeo.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EditSeo.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Seo\Partial\EditSeoEditUrlPath.cshtml" />
+    <None Include="Views\Seo\Partial\EditSeoEditUrlPath.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EditSeoEditUrlPath.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\EditorTemplates\SEOStatus.cshtml" />
+    <None Include="Views\Shared\EditorTemplates\SEOStatus.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>SEOStatus.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Layouts\ContentVersionLayout.cshtml" />
+    <None Include="Views\Shared\Layouts\ContentVersionLayout.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ContentVersionLayout.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Templates\EditTemplate.cshtml" />
+    <None Include="Views\Templates\EditTemplate.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EditTemplate.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Templates\Partial\EditTemplateRegions.cshtml" />
+    <None Include="Views\Templates\Partial\EditTemplateRegions.cshtml">
+      <CustomToolNamespace>RazorGenerator</CustomToolNamespace>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Templates\Templates.cshtml" />
+    <None Include="Views\Templates\Templates.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Templates.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Widgets\EditHtmlContentWidget.cshtml" />
+    <None Include="Views\Widgets\EditHtmlContentWidget.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EditHtmlContentWidget.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Widgets\EditServerControlWidget.cshtml" />
+    <None Include="Views\Widgets\EditServerControlWidget.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EditServerControlWidget.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Widgets\Widgets.cshtml" />
+    <None Include="Views\Widgets\Widgets.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Widgets.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\EditorTemplates\WidgetStatus.cshtml" />
+    <None Include="Views\Shared\EditorTemplates\WidgetStatus.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>WidgetStatus.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\EditorTemplates\PageStatus.cshtml" />
+    <None Include="Views\Shared\EditorTemplates\PageStatus.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>PageStatus.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Sitemap\Edit.cshtml" />
+    <None Include="Views\Sitemap\Edit.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Edit.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Sitemap\NewPage.cshtml" />
+    <None Include="Views\Sitemap\NewPage.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>NewPage.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Sitemap\Partial\Sitemap.cshtml" />
+    <None Include="Views\Sitemap\Partial\Sitemap.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Sitemap.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Seo\Partial\WarnMessageAboutSitemap.cshtml" />
+    <None Include="Views\Seo\Partial\WarnMessageAboutSitemap.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>WarnMessageAboutSitemap.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Filter\PagesFilterTemplate.cshtml" />
+    <None Include="Views\Filter\PagesFilterTemplate.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>PagesFilterTemplate.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Option\EditOptions.cshtml" />
+    <None Include="Views\Option\EditOptions.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EditOptions.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Option\EditOptionValues.cshtml" />
+    <None Include="Views\Option\EditOptionValues.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EditOptionValues.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Option\Partial\OptionCell.cshtml" />
+    <None Include="Views\Option\Partial\OptionCell.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>OptionCell.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Option\Partial\UseDefaultValueCell.cshtml" />
+    <None Include="Views\Option\Partial\UseDefaultValueCell.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>UseDefaultValueCell.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Templates\MasterPages.cshtml" />
+    <None Include="Views\Templates\MasterPages.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>MasterPages.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Partial\InfoMessageAboutMasterPage.cshtml" />
+    <None Include="Views\Shared\Partial\InfoMessageAboutMasterPage.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>InfoMessageAboutMasterPage.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\AddNewPage.cshtml" />
+    <None Include="Views\Page\AddNewPage.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>AddNewPage.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\ClonePage.cshtml" />
+    <None Include="Views\Page\ClonePage.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ClonePage.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\ClonePageWithLanguage.cshtml" />
+    <None Include="Views\Page\ClonePageWithLanguage.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ClonePageWithLanguage.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\DeletePageConfirmation.cshtml" />
+    <None Include="Views\Page\DeletePageConfirmation.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>DeletePageConfirmation.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\Pages.cshtml" />
+    <None Include="Views\Page\Pages.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Pages.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\Partial\AddNewPageEditPermalink.cshtml" />
+    <None Include="Views\Page\Partial\AddNewPageEditPermalink.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>AddNewPageEditPermalink.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\Partial\ClonePageEditUrl.cshtml" />
+    <None Include="Views\Page\Partial\ClonePageEditUrl.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ClonePageEditUrl.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\Partial\PagePropertiesEditPermalink.cshtml" />
+    <None Include="Views\Page\Partial\PagePropertiesEditPermalink.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>PagePropertiesEditPermalink.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\Partial\Template.cshtml" />
+    <None Include="Views\Page\Partial\Template.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Template.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\Partial\TemplatesList.cshtml" />
+    <None Include="Views\Page\Partial\TemplatesList.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>TemplatesList.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\SelectPage.cshtml" />
+    <None Include="Views\Page\SelectPage.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>SelectPage.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\Partial\SiteSettingsPagesList.cshtml" />
+    <None Include="Views\Page\Partial\SiteSettingsPagesList.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>SiteSettingsPagesList.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\SearchUntranslatedPages.cshtml" />
+    <None Include="Views\Page\SearchUntranslatedPages.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>SearchUntranslatedPages.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\Partial\TranslationsGrid.cshtml" />
+    <None Include="Views\Page\Partial\TranslationsGrid.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>TranslationsGrid.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Page\EditPageProperties.cshtml" />
+    <None Include="Views\Page\EditPageProperties.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EditPageProperties.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Sitemap\Sitemaps.cshtml" />
+    <None Include="Views\Sitemap\Sitemaps.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Sitemaps.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Sitemap\History.cshtml" />
+    <None Include="Views\Sitemap\History.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>History.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Sitemap\Preview.cshtml" />
+    <None Include="Views\Sitemap\Preview.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Preview.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Sitemap\Partial\SitemapTemplate.cshtml" />
+    <None Include="Views\Sitemap\Partial\SitemapTemplate.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>SitemapTemplate.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

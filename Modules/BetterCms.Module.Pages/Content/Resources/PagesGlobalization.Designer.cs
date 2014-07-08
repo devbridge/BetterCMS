@@ -3436,15 +3436,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Tags.
-        /// </summary>
-        public static string TagsTemplate_AddTags_Title {
-            get {
-                return ResourceManager.GetString("TagsTemplate_AddTags_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Title.
         /// </summary>
         public static string Template_Title_Title {
