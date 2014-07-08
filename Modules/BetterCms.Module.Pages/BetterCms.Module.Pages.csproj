@@ -643,6 +643,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EditServerControlWidget.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Widgets\Widgets.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Widgets.cshtml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\Resources\NavigationGlobalization.resx">
