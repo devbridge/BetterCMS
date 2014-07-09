@@ -81,6 +81,7 @@ namespace BetterCms.Module.Pages.Helpers
                     UsePageTitleAsNodeTitle = node.UsePageTitleAsNodeTitle,
                     Url = linkedPage != null ? linkedPage.Url : node.Url,
                     PageId = linkedPage != null ? linkedPage.Id : Guid.Empty,
+                    PageTitle = linkedPage != null ? linkedPage.Title : null,
                     DisplayOrder = node.DisplayOrder,
                     ChildNodes = GetSitemapNodesInHierarchy(enableMultilanguage, allNodes.Where(f => f.ParentNode == node).ToList(), allNodes, languageIds, pages),
                     Macro = node.Macro
@@ -140,7 +141,7 @@ namespace BetterCms.Module.Pages.Helpers
                                     {
                                         Id = Guid.Empty,
                                         LanguageId = languageId,
-                                        Title = nodeViewModel.Title,
+                                        Title = linkedPage.Title,
                                         Url = nodeViewModel.Url,
                                         UsePageTitleAsNodeTitle = true,
                                         Version = 0,
@@ -149,8 +150,8 @@ namespace BetterCms.Module.Pages.Helpers
                                 nodeViewModel.Translations.Add(translationViewModel);
                             }
 
-                            var title = nodeViewModel.Title;
-                            var url = nodeViewModel.Url;
+                            var title = translationViewModel.Title;
+                            var url = translationViewModel.Url ?? nodeViewModel.Url;
 
                             if (linkedPage.LanguageId != null && linkedPage.LanguageId == languageId)
                             {
@@ -159,10 +160,18 @@ namespace BetterCms.Module.Pages.Helpers
                             }
                             else if (linkedPage.LanguageGroupIdentifier.HasValue)
                             {
+                                // Get page translation. If not exists, retrieve default language's translation
                                 var pageTranslation = pages.FirstOrDefault(p => p.LanguageGroupIdentifier.HasValue
                                                                                 && p.LanguageGroupIdentifier.Value == linkedPage.LanguageGroupIdentifier.Value
                                                                                 && p.LanguageId.HasValue
                                                                                 && p.LanguageId.Value == languageId);
+                                if (pageTranslation == null)
+                                {
+                                    pageTranslation = pages.FirstOrDefault(p => p.LanguageGroupIdentifier.HasValue
+                                                                                && p.LanguageGroupIdentifier.Value == linkedPage.LanguageGroupIdentifier.Value
+                                                                                && (!p.LanguageId.HasValue || p.LanguageId.Value.HasDefaultValue()));
+                                }
+
                                 if (pageTranslation != null)
                                 {
                                     title = pageTranslation.Title;

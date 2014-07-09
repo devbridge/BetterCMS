@@ -293,7 +293,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap.Nodes.Node
                     translationToSave.Title = translationModel.Title;
                     translationToSave.UsePageTitleAsNodeTitle = translationModel.UsePageTitleAsNodeTitle;
                     translationToSave.Url = translationModel.Url;
-                    translationToSave.UrlHash = translationToSave.Url.UrlHash();
+                    translationToSave.UrlHash = !string.IsNullOrWhiteSpace(translationToSave.Url) ? translationToSave.Url.UrlHash() : null;
 
                     if (translationToSave.Node != node)
                     {
