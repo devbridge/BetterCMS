@@ -1,12 +1,11 @@
 ﻿using System.Linq;
 
 using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataContracts.Enums;
 
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Pages.Services;
-using BetterCms.Module.Root.Models;
 
 using ServiceStack.ServiceInterface;
 
@@ -48,6 +47,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Translations
                     PageUrl = p.PageUrl,
                     LanguageId = p.Language != null ? p.Language.Id : (System.Guid?)null,
                     LanguageCode = p.Language != null ? p.Language.Code : null,
+                    IsPublished = p.Status == PageStatus.Published,
+                    PublishedOn = p.PublishedOn
                 }).ToDataListResponse(request);
 
             return new GetPageTranslationsResponse { Data = dataListResult };
