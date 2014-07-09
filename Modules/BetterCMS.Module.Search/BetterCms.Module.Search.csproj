@@ -138,6 +138,11 @@
     <Compile Include="ViewModels\SearchInputViewModel.cs" />
     <Compile Include="ViewModels\SearchRequestViewModel.cs" />
     <Compile Include="ViewModels\SearchResultsViewModel.cs" />
+    <Compile Include="Views\Search\SearchInputWidget.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SearchInputWidget.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Search\SearchResultsWidget.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -184,7 +189,10 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Search\SearchInputWidget.cshtml" />
+    <None Include="Views\Search\SearchInputWidget.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>SearchInputWidget.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\Search\SearchResultsWidget.cshtml">

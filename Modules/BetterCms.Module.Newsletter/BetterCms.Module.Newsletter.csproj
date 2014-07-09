@@ -146,6 +146,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>List.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Widgets\SubscribeToNewsletter.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SubscribeToNewsletter.cshtml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\Resources\NewsletterGlobalization.resx">
@@ -201,7 +206,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Widgets\SubscribeToNewsletter.cshtml" />
+    <None Include="Views\Widgets\SubscribeToNewsletter.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>SubscribeToNewsletter.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
