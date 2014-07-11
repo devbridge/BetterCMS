@@ -872,8 +872,25 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         widgets.serializeFormWithChildWidgetOptions = function (form, editorSelector) {
             var serializedForm = forms.serializeToObject(form),
                 childOptions = getChildContentOptions(editorSelector),
-                i;
+                i, j, needFix;
             
+            // MVC's double checkbox fix - take only first item of an array
+            for (i in serializedForm) {
+                if ($.isArray(serializedForm[i]) && serializedForm[i].length == 2) {
+                    needFix = true;
+                    for (j = 0; j < 2; j ++) {
+                        if (serializedForm[i][j] !== "true" && serializedForm[i][j] !== "false") {
+                            needFix = false;
+                            continue;
+                        }
+                    }
+
+                    if (needFix) {
+                        serializedForm[i] = serializedForm[i][0];
+                    }
+                }
+            }
+
             if (childOptions) {
                 serializedForm.ChildContentOptionValues = [];
                 for (i in childOptions) {
@@ -884,7 +901,6 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 }
             }
 
-            console.log(serializedForm);
             return JSON.stringify(serializedForm);
         };
 

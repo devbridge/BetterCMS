@@ -37,6 +37,8 @@ using Common.Logging;
 using NHibernate.Criterion;
 using NHibernate.Linq;
 
+using RootOptionService = BetterCms.Module.Root.Services.IOptionService;
+
 namespace BetterCms.Module.Blog.Services
 {
     public class DefaultBlogService : IBlogService
@@ -51,7 +53,8 @@ namespace BetterCms.Module.Blog.Services
         protected readonly ICmsConfiguration configuration;
         private readonly IUrlService urlService;
         protected readonly IRepository repository;
-        private readonly IOptionService optionService;
+        private readonly IOptionService blogOptionService;
+        private readonly RootOptionService optionService;
         protected readonly IAccessControlService accessControlService;
         private readonly ISecurityService securityService;
         private readonly IContentService contentService;
@@ -67,7 +70,7 @@ namespace BetterCms.Module.Blog.Services
         /// <param name="configuration">The configuration.</param>
         /// <param name="urlService">The URL service.</param>
         /// <param name="repository">The repository.</param>
-        /// <param name="optionService">The option service.</param>
+        /// <param name="blogOptionService">The blog option service.</param>
         /// <param name="accessControlService">The access control service.</param>
         /// <param name="securityService">The security service.</param>
         /// <param name="contentService">The content service.</param>
@@ -76,15 +79,17 @@ namespace BetterCms.Module.Blog.Services
         /// <param name="redirectService">The redirect service.</param>
         /// <param name="masterPageService">The master page service.</param>
         /// <param name="unitOfWork">The unit of work.</param>
+        /// <param name="optionService">The option service.</param>
         public DefaultBlogService(ICmsConfiguration configuration, IUrlService urlService, IRepository repository,
-            IOptionService optionService, IAccessControlService accessControlService, ISecurityService securityService,
+            IOptionService blogOptionService, IAccessControlService accessControlService, ISecurityService securityService,
             IContentService contentService, ITagService tagService,
             IPageService pageService, IRedirectService redirectService, IMasterPageService masterPageService,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork, RootOptionService optionService)
         {
             this.configuration = configuration;
             this.urlService = urlService;
             this.repository = repository;
+            this.blogOptionService = blogOptionService;
             this.optionService = optionService;
             this.accessControlService = accessControlService;
             this.securityService = securityService;
@@ -317,6 +322,7 @@ namespace BetterCms.Module.Blog.Services
 
             content = SaveContentWithStatusUpdate(isNew, newContent, request, principal);
             pageContent.Content = content;
+            optionService.SaveChildContentOptions(content, request.ChildContentOptionValues);
 
             blogPost.PageUrlHash = blogPost.PageUrl.UrlHash();
             blogPost.UseCanonicalUrl = request.UseCanonicalUrl;
@@ -491,7 +497,7 @@ namespace BetterCms.Module.Blog.Services
 
         private void LoadDefaultLayoutAndRegion(out Layout layout, out Page masterPage, out Region region)
         {
-            var option = optionService.GetDefaultOption();
+            var option = blogOptionService.GetDefaultOption();
 
             layout = option != null ? option.DefaultLayout : null;
             masterPage = option != null ? option.DefaultMasterPage : null;

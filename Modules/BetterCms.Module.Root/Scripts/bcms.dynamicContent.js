@@ -20,7 +20,7 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             failedLoadDialogMessage: null,
             dialogLoadingCancelledMessage: null,
             forbiddenDialogMessage: null,
-            unauthorizedDialogMessage: null,
+            unauthorizedDialogMessage: null
         },
         lastDialogId = null;
 
@@ -155,12 +155,15 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
     */
     dynamicConent.bindDialogAjaxPost = function (dialog, options) {
 
-        var dialogForm = dialog.container.find(selectors.ajaxForm),
-            opts = $.extend({
-                contentType: 'application/x-www-form-urlencoded',
-                dataType: 'json',
-                serialize: function(form) {
-                    return form.serialize();
+        var dialogForm = dialog.container.find(selectors.ajaxForm);
+
+        dialogForm.each(function () {
+            var form = $(this);
+            forms.ajaxForm(form, {
+                contentType: options.contentType || 'application/x-www-form-urlencoded',
+                dataType: options.dataType || 'json',
+                serialize: options.serialize || function (formToSerialize) {
+                    return formToSerialize.serialize();
                 },
 
                 beforeSubmit: function () {
@@ -197,11 +200,7 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                         options.complete(json, dialog);
                     }
                 }
-            }, options);
-
-        dialogForm.each(function () {
-            var form = $(this);
-            forms.ajaxForm(form, opts);
+            });
         });
 
         dialog.submitForm = function() {
@@ -252,7 +251,7 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
 
                     dataType: options.formDataType,
                     contentType: options.formContentType,
-                    serialize: options.formSerialize,
+                    serialize: options.formSerialize
                 });
             }
         });

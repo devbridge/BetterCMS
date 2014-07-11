@@ -53,6 +53,7 @@ namespace BetterCms.Module.Pages.Services
 
             var widgetContent = GetHtmlContentWidgetFromRequest(model, treatNullsAsLists, !model.Id.HasDefaultValue());
             widget = GetWidgetForSave(widgetContent, model, createIfNotExists, out isCreatingNew);
+            optionService.SaveChildContentOptions(widget, model.ChildContentOptionValues);
 
             repository.Save(widget);
             unitOfWork.Commit();
