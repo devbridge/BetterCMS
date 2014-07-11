@@ -632,6 +632,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MasterPages.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Templates\Partial\EditTemplateRegions.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditTemplateRegions.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Templates\Templates.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -817,7 +822,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\Templates\Partial\EditTemplateRegions.cshtml">
-      <CustomToolNamespace>RazorGenerator</CustomToolNamespace>
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EditTemplateRegions.generated.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
