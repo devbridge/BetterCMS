@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using BetterCms.Module.Root.ViewModels.Option;
 using BetterCms.Module.Root.ViewModels.Security;
 
-namespace BetterCms.Module.Pages.ViewModels.Content
+namespace BetterCms.Module.Root.ViewModels.Option
 {
     /// <summary>
     /// Edit content option values view model.

@@ -74,11 +74,14 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
             bcms.trigger(htmlEditor.events.insertWidget, editor);
         };
 
-        CKEDITOR.instances[id].EditChildWidgetOptions = function (editor, assignmentId, contentId) {
+        CKEDITOR.instances[id].EditChildWidgetOptions = function (editor, widgetId, assignmentId, contentId, optionListViewModel, onCloseClick) {
             bcms.trigger(htmlEditor.events.editChildWidgetOptions, {
                 editor: editor,
+                widgetId: widgetId,
                 assignmentId: assignmentId,
-                contentId: contentId
+                contentId: contentId,
+                onCloseClick: onCloseClick,
+                optionListViewModel: optionListViewModel
             });
         };
 
@@ -136,8 +139,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
     };
 
     htmlEditor.destroyHtmlEditorInstance = function (textareaId) {
-        var id = textareaId || htmlEditor.id,
-            editor = CKEDITOR.instances[id];
+        var editor = htmlEditor.getInstance(textareaId);
         if (editor) {
             closeMaximizedMode(editor);
             editor.destroy();
@@ -148,33 +150,38 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
     };
 
     htmlEditor.setSourceMode = function (textareaId) {
-        var id = textareaId || htmlEditor.id;
+        var instance = htmlEditor.getInstance(textareaId);
 
-        CKEDITOR.instances[id].on('instanceReady', function () {
-            var instance = CKEDITOR.instances[id];
+        instance.on('instanceReady', function () {
             instance.setMode('source');
         });
     };
 
     htmlEditor.enableInsertDynamicRegion = function (textareaId) {
-        var id = textareaId || htmlEditor.id;
-        CKEDITOR.instances[id].DynamicRegionsEnabled = true;
+        var instance = htmlEditor.getInstance(textareaId);
+
+        instance.DynamicRegionsEnabled = true;
     };
 
     htmlEditor.isSourceMode = function (textareaId) {
-        var id = textareaId || htmlEditor.id;
+        var instance = htmlEditor.getInstance(textareaId);
 
-        var instance = CKEDITOR.instances[id];
         return instance.mode === 'source';
     };
 
     htmlEditor.updateEditorContent = function (textareaId) {
+        // Put content from HTML editor to textarea:
+        var instance = htmlEditor.getInstance(textareaId),
+            id = textareaId || htmlEditor.id,
+            html = instance.getData();
+
+        $('#' + id).val(html);
+    };
+
+    htmlEditor.getInstance = function(textareaId) {
         var id = textareaId || htmlEditor.id;
 
-        // Put content from HTML editor to textarea:
-        var instance = CKEDITOR.instances[id],
-        html = instance.getData();
-        $('#' + id).val(html);
+        return CKEDITOR.instances[id];
     };
 
     /**

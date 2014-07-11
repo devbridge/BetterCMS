@@ -9,6 +9,7 @@ using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Mvc.Attributes;
 using BetterCms.Module.Pages.ViewModels.Widgets;
+using BetterCms.Module.Root.ViewModels.Option;
 using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.Pages.ViewModels.Content
@@ -223,6 +224,14 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// <c>true</c> if user confirmed content saving when affecting children pages; otherwise, <c>false</c>.
         /// </value>
         public bool IsUserConfirmed { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of child content option values.
+        /// </summary>
+        /// <value>
+        /// The list of child content option values.
+        /// </value>
+        public IList<ContentOptionValuesViewModel> ChildContentOptionValues { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

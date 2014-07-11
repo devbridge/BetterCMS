@@ -121,6 +121,8 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
                             var editInSourceMode = htmlEditor.isSourceMode(selectors.htmlEditor);
                             dialog.container.find(selectors.editInSourceModeHiddenField).val(editInSourceMode);
+
+                            return true;
                         },
 
                         postSuccess: function (json) {                            
@@ -136,7 +138,12 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             } else {
                                 redirect.ReloadWithAlert();
                             }                            
-                        }
+                        },
+
+                        formSerialize: function(form) {
+                            return widgets.serializeFormWithChildWidgetOptions(form, selectors.htmlEditor);
+                        },
+                        formContentType: 'application/json; charset=utf-8'
                     });
                 },
                 onAccept: function () {
@@ -152,8 +159,6 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Save content order after sorting.
         */
         pagesContent.onSortPageContent = function (model) {
-            console.log(model);
-
             var info = modal.info({
                 content: globalization.sortingPageContentMessage,
                 disableCancel: true,
@@ -554,6 +559,8 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             
                             var editInSourceMode = htmlEditor.isSourceMode(selectors.htmlEditor);
                             dialog.container.find(selectors.editInSourceModeHiddenField).val(editInSourceMode);
+
+                            return true;
                         },
 
                         postError: function(json) {
@@ -579,7 +586,12 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             } else {
                                 redirect.ReloadWithAlert();
                             }
-                        }
+                        },
+
+                        formSerialize: function (form) {
+                            return widgets.serializeFormWithChildWidgetOptions(form, selectors.htmlEditor);
+                        },
+                        formContentType: 'application/json; charset=utf-8'
                     });
                 },
                 onAccept: function () {

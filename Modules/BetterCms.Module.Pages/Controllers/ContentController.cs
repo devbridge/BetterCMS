@@ -22,6 +22,7 @@ using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.ViewModels.Option;
 
 using Microsoft.Web.Mvc;
 
@@ -208,17 +209,19 @@ namespace BetterCms.Module.Pages.Controllers
         /// </summary>
         /// <param name="contentId">The content identifier.</param>
         /// <param name="assignmentIdentifier">The assignment identifier.</param>
+        /// <param name="widgetId">The widget identifier.</param>
         /// <returns>
         /// ViewResult to render page content options modal dialog.
         /// </returns>
         [HttpGet]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
-        public ActionResult ChildContentOptions(string contentId, string assignmentIdentifier)
+        public ActionResult ChildContentOptions(string contentId, string assignmentIdentifier, string widgetId)
         {
             var request = new GetChildContentOptionsCommandRequest
                           {
                               ContentId = contentId.ToGuidOrDefault(),
-                              AssignmentIdentifier = assignmentIdentifier.ToGuidOrDefault(),
+                              AssignmentIdentifier = (assignmentIdentifier ?? "").ToGuidOrDefault(),
+                              WidgetId = (widgetId ?? "").ToGuidOrDefault()
                           };
             var model = GetCommand<GetChildContentOptionsCommand>().ExecuteCommand(request);
             var view = RenderView("ChildContentOptions", model);

@@ -4,10 +4,10 @@ using System.Linq;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 
-using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
+using BetterCms.Module.Root.ViewModels.Option;
 
 using NHibernate.Linq;
 

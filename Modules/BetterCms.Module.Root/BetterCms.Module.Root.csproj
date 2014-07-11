@@ -360,6 +360,7 @@
     <Compile Include="ViewModels\Cms\RenderWidgetViewModel.cs" />
     <Compile Include="ViewModels\Content\ChildContentModel.cs" />
     <Compile Include="ViewModels\Language\LanguageViewModel.cs" />
+    <Compile Include="ViewModels\Option\ContentOptionValuesViewModel.cs" />
     <Compile Include="ViewModels\Option\CustomOptionViewModel.cs" />
     <Compile Include="ViewModels\Option\OptionValueEditViewModel.cs" />
     <Compile Include="ViewModels\Option\OptionValueViewModel.cs" />

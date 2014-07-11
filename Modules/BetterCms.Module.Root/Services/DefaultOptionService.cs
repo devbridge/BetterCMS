@@ -917,6 +917,41 @@ namespace BetterCms.Module.Root.Services
         }
 
         /// <summary>
+        /// Saves the child content options..
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <param name="viewModels">The list of view models with provided child content id and option values list.</param>
+        public void SaveChildContentOptions(Models.Content content, IList<ContentOptionValuesViewModel> viewModels)
+        {
+            if (viewModels == null)
+            {
+                viewModels = new ContentOptionValuesViewModel[0];
+            }
+
+            if (content != null && content.ChildContents != null)
+            {
+                foreach (var childContent in content.ChildContents)
+                {
+                    var viewModel = viewModels.FirstOrDefault(vm => vm.OptionValuesContainerId == childContent.AssignmentIdentifier);
+                    if (viewModel == null)
+                    {
+                        continue;
+                    }
+                    
+                    IList<OptionValueEditViewModel> optionValues = viewModel.OptionValues;
+                    IList<ChildContentOption> childContentOptions = null;
+
+                    if (childContent.Options != null)
+                    {
+                        childContentOptions = childContent.Options.Distinct().ToList();
+                    }
+
+                    SaveOptionValues(optionValues, childContentOptions, () => new ChildContentOption { ChildContent = childContent });
+                }
+            }
+        }
+
+        /// <summary>
         /// Helper class for storing page, master page and layout ids
         /// </summary>
         private class PageMasterPage

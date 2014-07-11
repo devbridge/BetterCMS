@@ -33,12 +33,22 @@
                         if (!a.currentElement) {
                             return;
                         }
-                        var id = CKEDITOR.plugins.cmswidget.getAssignId(a.currentElement);
-                        if (!id) {
-                            return;
+                        var widgetId = CKEDITOR.plugins.cmswidget.getWidgetId(a.currentElement),
+                            assignId = CKEDITOR.plugins.cmswidget.getAssignId(a.currentElement),
+                            optionListViewModel = null;
+
+                        if (editor.childWidgetOptions) {
+                            optionListViewModel = editor.childWidgetOptions[assignId];
                         }
 
-                        editor.EditChildWidgetOptions(editor, id, editor.contentId);
+                        editor.EditChildWidgetOptions(editor, widgetId, assignId, editor.contentId, optionListViewModel,
+                            function (viewModel) {
+                                if (!editor.childWidgetOptions) {
+                                    editor.childWidgetOptions = {};
+                                }
+
+                                editor.childWidgetOptions[assignId] = viewModel;
+                            });
                     }
                 }),
 
@@ -124,17 +134,13 @@
                     var menu = {
                             cmsRemoveWidget: CKEDITOR.TRISTATE_OFF
                         },
-                        widgetId = CKEDITOR.plugins.cmswidget.getWidgetId(element),
-                        assignId = CKEDITOR.plugins.cmswidget.getAssignId(element),
-                        isNew = CKEDITOR.plugins.cmswidget.isNew(element);
+                        widgetId = CKEDITOR.plugins.cmswidget.getWidgetId(element);
 
                     if (widgetId) {
                         menu.cmsEditWidget = CKEDITOR.TRISTATE_OFF;
                     }
 
-                    if (assignId && !isNew) {
-                        menu.cmsWidgetOptions = CKEDITOR.TRISTATE_OFF;
-                    }
+                    menu.cmsWidgetOptions = CKEDITOR.TRISTATE_OFF;
 
                     return menu;
                 });
@@ -174,19 +180,6 @@
             }
 
             return element.data('assign-id');
-        },
-        
-        isNew: function (element) {
-            if (!CKEDITOR.plugins.cmswidget.isWidget(element)) {
-                return false;
-            }
-
-            var innerHtml = element.$.innerHTML;
-            if (!innerHtml) {
-                return false;
-            }
-
-            return element.data('is-new') == "true";
         }
     };
 })();

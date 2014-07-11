@@ -1,11 +1,13 @@
 ﻿using System.Linq;
 
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
+using BetterCms.Module.Root.ViewModels.Option;
 
 using NHibernate.Linq;
 
@@ -28,27 +30,24 @@ namespace BetterCms.Module.Pages.Command.Content.SaveChildContentOptions
         /// <returns></returns>
         public bool Execute(ContentOptionValuesViewModel model)
         {
-            if (model != null && !model.OptionValuesContainerId.HasDefaultValue())
+            if (model != null)
             {
                 var childContent = Repository.AsQueryable<ChildContent>()
                               .Where(f => f.Id == model.OptionValuesContainerId && !f.IsDeleted && !f.Child.IsDeleted)
                               .FetchMany(f => f.Options)
                               .Fetch(f => f.Child).ThenFetchMany(f => f.ContentOptions)
                               .ToList()
-                              .FirstOrDefault();
+                              .FirstOne();
 
-                if (childContent != null)
-                {
-                    UnitOfWork.BeginTransaction();
+                UnitOfWork.BeginTransaction();
 
-                    var optionValues = childContent.Options.Distinct();
+                var optionValues = childContent.Options.Distinct();
 
-                    childContent.Options = OptionService.SaveOptionValues(model.OptionValues, optionValues, () => new ChildContentOption { ChildContent = childContent });
+                childContent.Options = OptionService.SaveOptionValues(model.OptionValues, optionValues, () => new ChildContentOption { ChildContent = childContent });
 
-                    UnitOfWork.Commit();
+                UnitOfWork.Commit();
 
-                    Events.PageEvents.Instance.OnChildContentConfigured(childContent);
-                }                
+                Events.PageEvents.Instance.OnChildContentConfigured(childContent);
             }
 
             return true;

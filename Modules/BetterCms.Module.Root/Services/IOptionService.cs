@@ -126,5 +126,12 @@ namespace BetterCms.Module.Root.Services
         /// <param name="value">The value.</param>
         /// <returns>Fixed option value</returns>
         string ClearFixValueForEdit(OptionType type, string value);
+
+        /// <summary>
+        /// Saves the child content options..
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <param name="viewModels">The list of view models with provided child content id and option values list.</param>
+        void SaveChildContentOptions(Models.Content content, IList<ContentOptionValuesViewModel> viewModels);
     }
 }

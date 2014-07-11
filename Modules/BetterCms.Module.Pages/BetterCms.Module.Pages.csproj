@@ -370,7 +370,6 @@
     <Compile Include="ViewModels\Widgets\EditServerControlWidgetViewModel.cs" />
     <Compile Include="ViewModels\Widgets\EditWidgetViewModel.cs" />
     <Compile Include="ViewModels\Widgets\HtmlContentWidgetViewModel.cs" />
-    <Compile Include="ViewModels\Content\ContentOptionValuesViewModel.cs" />
     <Compile Include="ViewModels\Page\AddNewPageViewModel.cs" />
     <Compile Include="ViewModels\Page\ClonePageViewModel.cs" />
     <Compile Include="ViewModels\Page\TemplateViewModel.cs" />

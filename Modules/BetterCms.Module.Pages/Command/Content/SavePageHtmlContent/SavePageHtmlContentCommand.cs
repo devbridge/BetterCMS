@@ -25,11 +25,14 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
         private readonly IContentService contentService;
         
         private readonly ICmsConfiguration configuration;
+        
+        private readonly IOptionService optionsService;
 
-        public SavePageHtmlContentCommand(IContentService contentService, ICmsConfiguration configuration)
+        public SavePageHtmlContentCommand(IContentService contentService, ICmsConfiguration configuration, IOptionService optionsService)
         {
             this.contentService = contentService;
             this.configuration = configuration;
+            this.optionsService = optionsService;
         }
 
         public SavePageHtmlContentResponse Execute(PageContentViewModel request)
@@ -141,6 +144,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
             pageContent.Content = contentService.SaveContentWithStatusUpdate(
                 contentToSave,
                 request.DesirableStatus);
+            optionsService.SaveChildContentOptions(pageContent.Content, request.ChildContentOptionValues);
 
             if (pageContent.Content.ContentRegions != null 
                 && pageContent.Content.ContentRegions.Count > 0)
