@@ -11,7 +11,6 @@ using BetterCms.Module.Pages.Command.Content.GetInsertHtmlContent;
 using BetterCms.Module.Pages.Command.Content.GetPageContentOptions;
 using BetterCms.Module.Pages.Command.Content.GetPageHtmlContent;
 using BetterCms.Module.Pages.Command.Content.InsertContent;
-using BetterCms.Module.Pages.Command.Content.SaveChildContentOptions;
 using BetterCms.Module.Pages.Command.Content.SavePageContentOptions;
 using BetterCms.Module.Pages.Command.Content.SavePageHtmlContent;
 using BetterCms.Module.Pages.Command.Content.SortPageContent;
@@ -241,22 +240,6 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult PageContentOptions(ContentOptionValuesViewModel model)
         {
             bool success = GetCommand<SavePageContentOptionsCommand>().ExecuteCommand(model);
-
-            return Json(new WireJson { Success = success });
-        }
-
-        /// <summary>
-        /// Saves child content options.
-        /// </summary>
-        /// <param name="model">The view model.</param>
-        /// <returns>
-        /// Json with result status.
-        /// </returns>
-        [HttpPost]
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
-        public ActionResult ChildContentOptions(ContentOptionValuesViewModel model)
-        {
-            bool success = GetCommand<SaveChildContentOptionsCommand>().ExecuteCommand(model);
 
             return Json(new WireJson { Success = success });
         }

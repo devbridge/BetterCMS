@@ -126,7 +126,6 @@
     <Compile Include="Command\Content\GetInsertHtmlContent\GetInsertHtmlContentCommand.cs" />
     <Compile Include="Command\Content\GetInsertHtmlContent\InsertHtmlContentRequest.cs" />
     <Compile Include="Command\Content\GetChildContentOptions\GetChildContentOptionsCommand.cs" />
-    <Compile Include="Command\Content\SaveChildContentOptions\SaveChildContentOptionsCommand.cs" />
     <Compile Include="Command\History\GetSitemapHistory\GetSitemapHistoryCommand.cs" />
     <Compile Include="Command\History\GetSitemapHistory\GetSitemapHistoryRequest.cs" />
     <Compile Include="Command\History\RestoreSitemapVersion\RestoreSitemapVersionCommand.cs" />

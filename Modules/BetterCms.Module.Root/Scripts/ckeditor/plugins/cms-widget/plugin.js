@@ -43,11 +43,17 @@
 
                         editor.EditChildWidgetOptions(editor, widgetId, assignId, editor.contentId, optionListViewModel,
                             function (viewModel) {
+                                if (!viewModel.isValid(true)) {
+                                    return false;
+                                }
+
                                 if (!editor.childWidgetOptions) {
                                     editor.childWidgetOptions = {};
                                 }
 
                                 editor.childWidgetOptions[assignId] = viewModel;
+
+                                return true;
                             });
                     }
                 }),
