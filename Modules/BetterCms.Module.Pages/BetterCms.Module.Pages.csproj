@@ -400,6 +400,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AddPageHtmlContent.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Content\ChildContentOptions.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ChildContentOptions.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Content\EditPageHtmlContent.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -414,6 +419,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EditHtmlContent.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Content\Partial\SelectWidget.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SelectWidget.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Content\Partial\WidgetCategories.generated.cs">
       <AutoGen>True</AutoGen>
@@ -649,6 +659,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EditServerControlWidget.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Widgets\SelectWidget.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SelectWidget.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Widgets\Widgets.generated.cs">
       <AutoGen>True</AutoGen>
@@ -1043,13 +1058,22 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Content\Partial\SelectWidget.cshtml" />
+    <None Include="Views\Content\Partial\SelectWidget.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>SelectWidget.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Widgets\SelectWidget.cshtml" />
+    <None Include="Views\Widgets\SelectWidget.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>SelectWidget.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Content\ChildContentOptions.cshtml" />
+    <None Include="Views\Content\ChildContentOptions.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ChildContentOptions.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

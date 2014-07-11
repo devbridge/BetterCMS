@@ -1548,17 +1548,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\LICENSE.md" />
-    <None Include="Views\Shared\EditableGrid\Partial\TopBlockAddItem.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>TopBlockAddItem.generated.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\README.md" />
-    <None Include="Views\Language\List.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>List.generated.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
