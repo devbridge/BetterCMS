@@ -11,7 +11,8 @@ namespace BetterCms.Core.Environment.Host
         /// Called when the host application starts.
         /// </summary>
         /// <param name="application">The host application.</param>
-        void OnApplicationStart(HttpApplication application);
+        /// <param name="validateViewEngines">if set to <c>true</c> valdiate view engines.</param>
+        void OnApplicationStart(HttpApplication application, bool validateViewEngines = true);
 
         /// <summary>
         /// Called when the host application stops.

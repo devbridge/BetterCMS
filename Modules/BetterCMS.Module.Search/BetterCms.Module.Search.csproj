@@ -90,7 +90,6 @@
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Transactions" />
-    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -100,6 +99,7 @@
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -138,6 +138,21 @@
     <Compile Include="ViewModels\SearchInputViewModel.cs" />
     <Compile Include="ViewModels\SearchRequestViewModel.cs" />
     <Compile Include="ViewModels\SearchResultsViewModel.cs" />
+    <Compile Include="Views\Search\SearchInputWidget.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SearchInputWidget.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Search\SearchResultsWidget.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SearchResultsWidget.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Search\SearchResultsWidgetInvoker.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SearchResultsWidgetInvoker.cshtml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
@@ -174,13 +189,22 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Search\SearchInputWidget.cshtml" />
+    <None Include="Views\Search\SearchInputWidget.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>SearchInputWidget.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Search\SearchResultsWidget.cshtml" />
+    <None Include="Views\Search\SearchResultsWidget.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>SearchResultsWidget.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Search\SearchResultsWidgetInvoker.cshtml" />
+    <None Include="Views\Search\SearchResultsWidgetInvoker.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>SearchResultsWidgetInvoker.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />

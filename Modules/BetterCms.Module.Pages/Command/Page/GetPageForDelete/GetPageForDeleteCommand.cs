@@ -37,13 +37,15 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageForDelete
                 message = PagesGlobalization.DeletePageCommand_MasterPageHasChildren_Message;
             }
 
-            return new DeletePageViewModel
+            var model = new DeletePageViewModel
                 {
                     PageId = page.Id,
                     Version = page.Version,
                     IsInSitemap = page.PagesView.IsInSitemap,
                     ValidationMessage = message
                 };
+            model.UpdateSitemap = model.IsInSitemap;
+            return model;
         }
     }
 }

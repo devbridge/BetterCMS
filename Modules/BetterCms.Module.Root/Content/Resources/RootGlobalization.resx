@@ -597,4 +597,7 @@
   <data name="ChildContent_FailedToParseWidgetId_Message" xml:space="preserve">
     <value>Failed while parsing child widgets from content. Child widget tag should contain data-id attribute with child widget id.</value>
   </data>
+  <data name="TagsTemplate_AddTags_Title" xml:space="preserve">
+    <value>Add Tags</value>
+  </data>
 </root>

@@ -91,7 +91,6 @@
     <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Transactions" />
-    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -101,6 +100,7 @@
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -247,6 +247,66 @@
     <Compile Include="ViewModels\MediaManager\MediaManagerViewModel.cs" />
     <Compile Include="ViewModels\MediaManager\UploadViewModel.cs" />
     <Compile Include="ViewModels\Upload\MultiFileUploadViewModel.cs" />
+    <Compile Include="Views\Files\FileEditor.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FileEditor.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Files\FileInsert.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FileInsert.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\History\MediaHistory.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MediaHistory.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\History\MediaVersion.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MediaVersion.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Images\ImageEditor.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ImageEditor.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Images\ImageEditorInsert.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ImageEditorInsert.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Images\ImageInsert.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ImageInsert.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MediaManager\Index.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Index.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MediaManager\Partial\MediaManagerTab.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MediaManagerTab.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MediaManager\Partial\MediaManagerTemplate.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MediaManagerTemplate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Upload\MultiFileUpload.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MultiFileUpload.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Upload\SingleFileUpload.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SingleFileUpload.cshtml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\Resources\MediaGlobalization.resx">
@@ -306,40 +366,76 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Files\FileInsert.cshtml" />
+    <None Include="Views\Files\FileInsert.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>FileInsert.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Upload\SingleFileUpload.cshtml" />
+    <None Include="Views\Upload\SingleFileUpload.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>SingleFileUpload.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\History\MediaHistory.cshtml" />
+    <None Include="Views\History\MediaHistory.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>MediaHistory.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\History\MediaVersion.cshtml" />
+    <None Include="Views\History\MediaVersion.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>MediaVersion.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Upload\MultiFileUpload.cshtml" />
+    <None Include="Views\Upload\MultiFileUpload.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>MultiFileUpload.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Images\ImageEditorInsert.cshtml" />
+    <None Include="Views\Images\ImageEditorInsert.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ImageEditorInsert.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Images\ImageInsert.cshtml" />
+    <None Include="Views\Images\ImageInsert.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ImageInsert.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\MediaManager\Index.cshtml" />
+    <None Include="Views\MediaManager\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\MediaManager\Partial\MediaManagerTab.cshtml" />
+    <None Include="Views\MediaManager\Partial\MediaManagerTab.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>MediaManagerTab.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\MediaManager\Partial\MediaManagerTemplate.cshtml" />
+    <None Include="Views\MediaManager\Partial\MediaManagerTemplate.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>MediaManagerTemplate.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Images\ImageEditor.cshtml" />
+    <None Include="Views\Images\ImageEditor.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ImageEditor.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Files\FileEditor.cshtml" />
+    <None Include="Views\Files\FileEditor.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>FileEditor.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

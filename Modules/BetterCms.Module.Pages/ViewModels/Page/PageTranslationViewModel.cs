@@ -27,6 +27,14 @@
         public virtual string PageUrl { get; set; }
 
         /// <summary>
+        /// Gets or sets the page URL hash.
+        /// </summary>
+        /// <value>
+        /// The page URL hash.
+        /// </value>
+        internal string PageUrlHash { get; set; }
+
+        /// <summary>
         /// Gets or sets the page language id.
         /// </summary>
         /// <value>

@@ -658,6 +658,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                     node.title(dragObject.title());
                                     node.url(dragObject.url());
                                     node.pageId(dragObject.pageId());
+                                    node.pageTitle(dragObject.title());
                                     node.usePageTitleAsNodeTitle(dragObject.pageId() != null && dragObject.pageId() != defaultIdValue ? true : false);
                                     if (dropZoneType == DropZoneTypes.EmptyListZone || dropZoneType == DropZoneTypes.MiddleZone) {
                                         node.parentNode(dropZoneObject);
@@ -1072,6 +1073,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             self.macro = ko.observable();
             self.url = ko.observable();
             self.pageId = ko.observable(defaultIdValue);
+            self.pageTitle = ko.observable();
             self.usePageTitleAsNodeTitle = ko.observable(false);
             self.displayOrder = ko.observable(0);
             self.isDeleted = ko.observable(false);
@@ -1295,6 +1297,10 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         self.translations[languageId].macro(self.macro());
                         self.translations[languageId].version(self.version());
                         self.translations[languageId].isModified(true);
+                    } else {
+                        self.translations[languageId].title(self.pageId() != null && !bcms.isEmptyGuid(self.pageId())
+                            ? self.translations[""].originalTitle() || self.translations[""].title()
+                            : self.translations[languageId].title());
                     }
                 }
 
@@ -1325,6 +1331,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                         languageId = translationJson.LanguageId == null ? "" : translationJson.LanguageId,
                                         translation = new TranslationViewModel(self, languageId);
                                     translation.title(translationJson.Title);
+                                    translation.originalTitle(translationJson.Title);
                                     translation.url(translationJson.PageUrl);
                                     translation.usePageTitleAsNodeTitle(self.usePageTitleAsNodeTitle());
                                     translation.isModified(true);
@@ -1375,6 +1382,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 self.macro(jsonNode.Macro);
                 self.url(jsonNode.Url);
                 self.pageId(jsonNode.PageId);
+                self.pageTitle(jsonNode.PageTitle);
                 self.usePageTitleAsNodeTitle(jsonNode.UsePageTitleAsNodeTitle);
                 self.displayOrder(jsonNode.DisplayOrder);
                 if (translationsEnabled) {
@@ -1494,9 +1502,11 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             if (defaultTranslation != null) {
                 self.title = ko.observable(defaultTranslation.title());
                 self.url = ko.observable(defaultTranslation.url());
+                self.originalTitle = ko.observable(defaultTranslation.title());
             } else {
                 self.title = ko.observable(node.title());
                 self.url = ko.observable(node.url());
+                self.originalTitle = ko.observable(node.title());
             }
             self.version = ko.observable(0);
             self.isModified = ko.observable(false);
