@@ -483,6 +483,7 @@
     <PostBuildEvent>"$(MSBuildBinPath)\msbuild.exe" /p:Configuration=$(ConfigurationName) /p:SolutionDir="$(SolutionDir)\" /p:ProjectDir="$(ProjectDir)\" "$(ProjectDir)BuildConfiguration.xml"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>powershell -File "$(ProjectDir)r.ps1" $(ProjectName) $(ProjectDir)</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
 </Project>
