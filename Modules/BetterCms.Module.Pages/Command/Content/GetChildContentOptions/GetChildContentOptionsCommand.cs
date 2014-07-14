@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
 
@@ -32,7 +33,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
         {
             if (request.WidgetId.HasDefaultValue() && request.AssignmentIdentifier.HasDefaultValue())
             {
-                var message = "WidgetId or AssignmentId should be set";
+                var message = "WidgetId and AssignmentId should be set";
                 throw new ValidationException(() => message, message);
             }
 
@@ -41,15 +42,28 @@ namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
 
             if (!request.AssignmentIdentifier.HasDefaultValue())
             {
-                var childContent = Repository.AsQueryable<ChildContent>()
-                        .Where(f => f.Parent.Id == request.ContentId && f.AssignmentIdentifier == request.AssignmentIdentifier && !f.IsDeleted && !f.Child.IsDeleted)
-                        .Fetch(f => f.Child)
-                        .ThenFetchMany(f => f.ContentOptions)
-                        .ThenFetch(f => f.CustomOption)
-                        .FetchMany(f => f.Options)
-                        .ThenFetch(f => f.CustomOption)
-                        .ToList()
-                        .FirstOrDefault();
+                // Try get draft
+                var draftQuery = Repository.AsQueryable<ChildContent>()
+                    .Where(f => f.Parent.Original.Id == request.ContentId 
+                        && !f.Parent.Original.IsDeleted
+                        && f.Parent.Original.Status == ContentStatus.Published
+                        && f.Parent.Status == ContentStatus.Draft
+                        && f.AssignmentIdentifier == request.AssignmentIdentifier
+                        && !f.IsDeleted
+                        && !f.Child.IsDeleted);
+                var childContent = AddFetches(draftQuery).ToList().FirstOrDefault();
+
+                // If draft not found, load content
+                if (childContent == null) {
+                    var query = Repository.AsQueryable<ChildContent>()
+                        .Where(f => f.Parent.Id == request.ContentId 
+                            && f.AssignmentIdentifier == request.AssignmentIdentifier 
+                            && !f.IsDeleted 
+                            && !f.Child.IsDeleted);
+
+                    childContent = AddFetches(query).ToList().FirstOrDefault();
+                }
+                        
 
                 if (childContent != null)
                 {
@@ -74,6 +88,15 @@ namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
             model.CustomOptions = OptionService.GetCustomOptions();
 
             return model;
-        }        
+        }
+
+        private IQueryable<ChildContent> AddFetches(IQueryable<ChildContent> query)
+        {
+            return query.Fetch(f => f.Child)
+                .ThenFetchMany(f => f.ContentOptions)
+                .ThenFetch(f => f.CustomOption)
+                .FetchMany(f => f.Options)
+                .ThenFetch(f => f.CustomOption);
+        }
     }
 }

@@ -921,16 +921,31 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <param name="content">The content.</param>
         /// <param name="viewModels">The list of view models with provided child content id and option values list.</param>
-        public void SaveChildContentOptions(Models.Content content, IList<ContentOptionValuesViewModel> viewModels)
+        /// <param name="requestedStatus">The requested status for saving content.</param>
+        public void SaveChildContentOptions(Models.Content content, IList<ContentOptionValuesViewModel> viewModels, 
+            ContentStatus requestedStatus)
         {
             if (viewModels == null)
             {
                 viewModels = new ContentOptionValuesViewModel[0];
             }
 
-            if (content != null && content.ChildContents != null)
+            Models.Content contentToUdpate = null;
+            if ((requestedStatus == ContentStatus.Draft || requestedStatus == ContentStatus.Preview) 
+                && content != null
+                && requestedStatus != content.Status
+                && content.History != null)
             {
-                foreach (var childContent in content.ChildContents)
+                contentToUdpate = content.History.FirstOrDefault(c => c.Status == requestedStatus);
+            }
+            if (contentToUdpate == null)
+            {
+                contentToUdpate = content;
+            }
+
+            if (contentToUdpate != null && contentToUdpate.ChildContents != null)
+            {
+                foreach (var childContent in contentToUdpate.ChildContents)
                 {
                     var viewModel = viewModels.FirstOrDefault(vm => vm.OptionValuesContainerId == childContent.AssignmentIdentifier);
                     if (viewModel == null)

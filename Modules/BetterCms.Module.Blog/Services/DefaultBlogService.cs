@@ -322,7 +322,7 @@ namespace BetterCms.Module.Blog.Services
 
             content = SaveContentWithStatusUpdate(isNew, newContent, request, principal);
             pageContent.Content = content;
-            optionService.SaveChildContentOptions(content, request.ChildContentOptionValues);
+            optionService.SaveChildContentOptions(content, request.ChildContentOptionValues, request.DesirableStatus);
 
             blogPost.PageUrlHash = blogPost.PageUrl.UrlHash();
             blogPost.UseCanonicalUrl = request.UseCanonicalUrl;

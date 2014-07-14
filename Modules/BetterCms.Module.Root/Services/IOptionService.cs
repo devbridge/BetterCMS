@@ -132,6 +132,7 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <param name="content">The content.</param>
         /// <param name="viewModels">The list of view models with provided child content id and option values list.</param>
-        void SaveChildContentOptions(Models.Content content, IList<ContentOptionValuesViewModel> viewModels);
+        /// <param name="requestedStatus">The requested status for saving content.</param>
+        void SaveChildContentOptions(Models.Content content, IList<ContentOptionValuesViewModel> viewModels, ContentStatus requestedStatus);
     }
 }

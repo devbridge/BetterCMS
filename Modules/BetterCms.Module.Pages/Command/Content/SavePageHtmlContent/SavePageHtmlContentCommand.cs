@@ -144,7 +144,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
             pageContent.Content = contentService.SaveContentWithStatusUpdate(
                 contentToSave,
                 request.DesirableStatus);
-            optionsService.SaveChildContentOptions(pageContent.Content, request.ChildContentOptionValues);
+            optionsService.SaveChildContentOptions(pageContent.Content, request.ChildContentOptionValues, request.DesirableStatus);
 
             if (pageContent.Content.ContentRegions != null 
                 && pageContent.Content.ContentRegions.Count > 0)
