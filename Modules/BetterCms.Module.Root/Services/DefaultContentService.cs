@@ -202,12 +202,24 @@ namespace BetterCms.Module.Root.Services
                 // Original is copied with options and saved.
                 // Removes options from original.
                 // Locks new stuff from view model.
-
                 var originalToArchive = originalContent.Clone();
                 originalToArchive.Status = ContentStatus.Archived;
                 originalToArchive.Original = originalContent;
                 originalContent.History.Add(originalToArchive);
                 repository.Save(originalToArchive);
+
+                // Load draft content's child contents options, if saving from draft to public
+                var draftVersion = originalContent.History.FirstOrDefault(f => f.Status == ContentStatus.Draft && !f.IsDeleted);
+                if (draftVersion != null)
+                {
+                    updatedContent
+                        .ChildContents
+                        .ForEach(cc => cc.Options = draftVersion
+                            .ChildContents
+                            .Where(cc1 => cc1.AssignmentIdentifier == cc.AssignmentIdentifier)
+                            .SelectMany(cc1 => cc1.Options)
+                            .ToList());
+                }
 
                 updatedContent.CopyDataTo(originalContent, false);
                 SetContentOptions(originalContent, updatedContent);
