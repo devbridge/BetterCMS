@@ -7,6 +7,7 @@ using BetterCms.Core.DataContracts.Enums;
 
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget.Options;
+using BetterCms.Module.Root.Services;
 
 using ServiceStack.ServiceInterface;
 
@@ -22,12 +23,16 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
         private readonly IHtmlContentWidgetOptionsService optionsService;
 
         private readonly ISaveWidgetService widgetService;
+        
+        private readonly IOptionService optionService;
 
-        public HtmlContentWidgetService(IRepository repository, IHtmlContentWidgetOptionsService optionsService, ISaveWidgetService widgetService)
+        public HtmlContentWidgetService(IRepository repository, IHtmlContentWidgetOptionsService optionsService,
+            ISaveWidgetService widgetService, IOptionService optionService)
         {
             this.repository = repository;
             this.optionsService = optionsService;
             this.widgetService = widgetService;
+            this.optionService = optionService;
         }
 
         public GetHtmlContentWidgetResponse Get(GetHtmlContentWidgetRequest request)
@@ -62,6 +67,13 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
             if (request.Data.IncludeOptions)
             {
                 response.Options = WidgetOptionsHelper.GetWidgetOptionsList(repository, request.WidgetId);
+            }
+
+            if (request.Data.IncludeChildContentsOptions)
+            {
+                response.ChildContentsOptionValues = optionService
+                    .GetChildContentsOptionValues(request.WidgetId)
+                    .ToServiceModel();
             }
 
             return response;

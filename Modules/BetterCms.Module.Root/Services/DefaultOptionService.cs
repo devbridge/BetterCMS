@@ -967,6 +967,35 @@ namespace BetterCms.Module.Root.Services
         }
 
         /// <summary>
+        /// Gets the child content options.
+        /// </summary>
+        /// <param name="contentId">The content identifier.</param>
+        /// <returns></returns>
+        public IList<ContentOptionValuesViewModel> GetChildContentsOptionValues(Guid contentId)
+        {
+            var models = new List<ContentOptionValuesViewModel>();
+            var allChildContents = repository.AsQueryable<ChildContent>()
+                .Where(f => f.Parent.Id == contentId && !f.IsDeleted && !f.Child.IsDeleted)
+                .OrderBy(f => f.AssignmentIdentifier)
+                .Fetch(f => f.Child)
+                .ThenFetchMany(f => f.ContentOptions)
+                .ThenFetch(f => f.CustomOption)
+                .FetchMany(f => f.Options)
+                .ThenFetch(f => f.CustomOption)
+                .ToList();
+
+            foreach (var childContent in allChildContents)
+            {
+                var model = new ContentOptionValuesViewModel { OptionValuesContainerId = childContent.AssignmentIdentifier };
+                model.OptionValues = GetMergedOptionValuesForEdit(childContent.Child.ContentOptions, childContent.Options);
+                
+                models.Add(model);
+            }
+
+            return models;
+        }
+
+        /// <summary>
         /// Helper class for storing page, master page and layout ids
         /// </summary>
         private class PageMasterPage

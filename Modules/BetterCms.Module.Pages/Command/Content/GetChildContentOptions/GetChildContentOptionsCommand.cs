@@ -63,7 +63,6 @@ namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
 
                     childContent = AddFetches(query).ToList().FirstOrDefault();
                 }
-                        
 
                 if (childContent != null)
                 {

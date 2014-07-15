@@ -40,5 +40,26 @@ namespace BetterCms.Module.Api.Extensions
                     })
                 .ToList();
         }
+
+        public static IList<ChildContentOptionValuesModel> ToServiceModel(this IList<ContentOptionValuesViewModel> model)
+        {
+            return model
+                .Select(o => new ChildContentOptionValuesModel
+                        {
+                            AssignmentIdentifier = o.OptionValuesContainerId,
+                            OptionValues = o.OptionValues != null ? o.OptionValues
+                                .Select(ov => new OptionValueModel
+                                        {
+                                            Key = ov.OptionKey,
+                                            Value = ov.OptionValue,
+                                            DefaultValue = ov.OptionDefaultValue,
+                                            Type = ((Operations.Root.OptionType)(int)ov.Type),
+                                            UseDefaultValue = ov.UseDefaultValue,
+                                            CustomTypeIdentifier = ov.CustomOption != null ? ov.CustomOption.Identifier : null
+                                        })
+                                .ToList() : null
+                        })
+                .ToList();
+        }
     }
 }
