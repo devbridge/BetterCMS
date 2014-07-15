@@ -708,5 +708,13 @@ namespace BetterCms.Tests.Helpers
 
             return file;
         }
+
+        public string CreateChildWidgetAssignment(Guid widgetId, Guid? assignmentId = null)
+        {
+            return string.Format("<widget data-id=\"{0}\" data-assign-id=\"{1}\">{2}</widget>",
+                widgetId,
+                assignmentId,
+                ProvideRandomString(20));
+        }
     }
 }

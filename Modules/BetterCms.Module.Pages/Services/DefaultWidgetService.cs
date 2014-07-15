@@ -249,7 +249,7 @@ namespace BetterCms.Module.Pages.Services
                                             Type = requestContentOption.Type,
                                             CustomOption =
                                                 requestContentOption.Type == OptionType.Custom
-                                                    ? customOptions.First(o => o.Identifier == requestContentOption.CustomOption.Identifier)
+                                                    ? repository.AsProxy<CustomOption>(customOptions.First(o => o.Identifier == requestContentOption.CustomOption.Identifier).Id)
                                                     : null
                                         };
 

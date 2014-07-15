@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
@@ -8,6 +9,7 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget.Options;
 using BetterCms.Module.Root.Services;
+using BetterCms.Module.Root.ViewModels.Option;
 
 using ServiceStack.ServiceInterface;
 
@@ -101,8 +103,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
                 model.Id = request.Id.Value;
             }
 
-            // TODO: need to pass child content option values
-            widgetService.SaveHtmlContentWidget(model, null, out widget, out originalWidget, false, true);
+            IList<ContentOptionValuesViewModel> childContents = null;
+            if (request.Data.ChildContentsOptionValues != null)
+            {
+                childContents = request.Data.ChildContentsOptionValues.ToViewModel();
+            }
+            widgetService.SaveHtmlContentWidget(model, childContents, out widget, out originalWidget, false, true);
 
             return new PutHtmlContentWidgetResponse { Data = widget.Id };
         }

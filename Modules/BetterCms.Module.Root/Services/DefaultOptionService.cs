@@ -81,7 +81,8 @@ namespace BetterCms.Module.Root.Services
                                                   CustomOption = optionValue.CustomOption != null ? new CustomOptionViewModel
                                                         {
                                                             Identifier = optionValue.CustomOption.Identifier,
-                                                            Title = optionValue.CustomOption.Title
+                                                            Title = optionValue.CustomOption.Title,
+                                                            Id = optionValue.CustomOption.Id
                                                         } : null,
                                                   OptionKey = optionValue.Key.Trim(),
                                                   OptionValue = ClearFixValueForEdit(optionValue.Type, optionValue.Value),
@@ -111,7 +112,8 @@ namespace BetterCms.Module.Root.Services
                                     CustomOption = option.CustomOption != null ? new CustomOptionViewModel
                                             {
                                                 Identifier = option.CustomOption.Identifier,
-                                                Title = option.CustomOption.Title
+                                                Title = option.CustomOption.Title,
+                                                Id = option.CustomOption.Id
                                             } : null,
                                     OptionKey = option.Key.Trim(),
                                     OptionValue = ClearFixValueForEdit(option.Type, option.Value),
@@ -218,7 +220,8 @@ namespace BetterCms.Module.Root.Services
                     CustomOption = option.CustomOption != null ? new CustomOptionViewModel
                     {
                         Identifier = option.CustomOption.Identifier,
-                        Title = option.CustomOption.Title
+                        Title = option.CustomOption.Title,
+                        Id = option.CustomOption.Id
                     } : null,
                 };
 
@@ -240,7 +243,8 @@ namespace BetterCms.Module.Root.Services
                     CustomOption = option.CustomOption != null ? new CustomOptionViewModel
                     {
                         Identifier = option.CustomOption.Identifier,
-                        Title = option.CustomOption.Title
+                        Title = option.CustomOption.Title,
+                        Id = option.CustomOption.Id
                     } : null,
                 };
 
@@ -297,7 +301,7 @@ namespace BetterCms.Module.Root.Services
 
                     if (optionViewModel.Type == OptionType.Custom)
                     {
-                        optionValue.CustomOption = customOptions.First(co => co.Identifier == optionViewModel.CustomOption.Identifier);
+                        optionValue.CustomOption = repository.AsProxy<CustomOption>(customOptions.First(co => co.Identifier == optionViewModel.CustomOption.Identifier).Id);
                     }
                     else
                     {
@@ -424,7 +428,7 @@ namespace BetterCms.Module.Root.Services
 
                     if (requestOption.Type == OptionType.Custom)
                     {
-                        option.CustomOption = customOptions.First(co => co.Identifier == requestOption.CustomOption.Identifier);
+                        option.CustomOption = repository.AsProxy<CustomOption>(customOptions.First(co => co.Identifier == requestOption.CustomOption.Identifier).Id);
                     }
                     else
                     {
@@ -595,7 +599,7 @@ namespace BetterCms.Module.Root.Services
         /// Loads and validate custom options.
         /// </summary>
         /// <returns>The list of custom option entities</returns>
-        private IList<CustomOption> LoadAndValidateCustomOptions(IEnumerable<IOption> options)
+        private IList<CustomOptionViewModel> LoadAndValidateCustomOptions(IEnumerable<IOption> options)
         {
             // Check if options are valid
             var invalidOption = options.FirstOrDefault(o => o.Type == OptionType.Custom && string.IsNullOrWhiteSpace(o.CustomOption.Identifier));
@@ -605,9 +609,14 @@ namespace BetterCms.Module.Root.Services
             }
 
             // Get already loaded custom options or option types
-            List<CustomOption> customOptions = options
+            List<CustomOptionViewModel> customOptions = options
                 .Where(o => o.Type == OptionType.Custom && o.CustomOption is CustomOption && !(o.CustomOption is IProxy))
-                .Select(o => (CustomOption)o.CustomOption)
+                .Select(o => new CustomOptionViewModel
+                             {
+                                 Identifier = o.CustomOption.Identifier, 
+                                 Title = o.CustomOption.Title,
+                                 Id = o.CustomOption.Id
+                             })
                 .ToList();
 
             // Load missing custom options
@@ -635,19 +644,20 @@ namespace BetterCms.Module.Root.Services
         /// <returns>
         /// List of custom option entities
         /// </returns>
-        public List<CustomOption> GetCustomOptionsById(string[] ids)
+        public List<CustomOptionViewModel> GetCustomOptionsById(string[] ids)
         {
             if (ids == null || ids.Length == 0)
             {
-                return new List<CustomOption>();
+                return new List<CustomOptionViewModel>();
             }
 
             var hasExc = ids.Any(string.IsNullOrWhiteSpace);
             string notExisting = string.Empty;
-            List<CustomOption> customOptions;
+            List<CustomOptionViewModel> customOptions;
             if (!hasExc)
             {
-                customOptions = repository.AsQueryable<CustomOption>().Where(co => ids.Contains(co.Identifier)).ToList();
+                var allCustomOptions = GetCustomOptions();
+                customOptions = allCustomOptions.Where(co => ids.Contains(co.Identifier)).ToList();
 
                 // Validate if there are any missing custom options
                 notExisting = ids.FirstOrDefault(i => customOptions.All(co => co.Identifier != i));
@@ -775,7 +785,7 @@ namespace BetterCms.Module.Root.Services
             return
                 repository.AsQueryable<CustomOption>()
                           .OrderBy(o => o.Title)
-                          .Select(o => new CustomOptionViewModel { Identifier = o.Identifier, Title = o.Title })
+                          .Select(o => new CustomOptionViewModel { Identifier = o.Identifier, Title = o.Title, Id = o.Id })
                           .ToFuture();
         }
 

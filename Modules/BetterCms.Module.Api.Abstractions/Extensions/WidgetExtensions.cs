@@ -35,7 +35,8 @@ namespace BetterCms.Module.Api.Extensions
                             UseHtml = response.Data.UseHtml,
                             CustomJavaScript = response.Data.CustomJavaScript,
                             UseCustomJavaScript = response.Data.UseCustomJavaScript,
-                            Options = response.Options
+                            Options = response.Options,
+                            ChildContentsOptionValues = response.ChildContentsOptionValues
                         };
 
             return model;

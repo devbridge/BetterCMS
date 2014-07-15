@@ -42,7 +42,18 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
 
         protected override SaveHtmlContentWidgetModel GetCreateModel(ISession session)
         {
+            var widget = TestDataProvider.CreateNewHtmlContentWidget();
+            session.SaveOrUpdate(widget);
+
             var content = TestDataProvider.CreateNewHtmlContentWidget();
+
+            var assignmentId1 = Guid.NewGuid();
+            var assignmentId2 = Guid.NewGuid();
+            content.Html = string.Format("{0}{1}{3}{2}",
+                TestDataProvider.ProvideRandomString(50),
+                TestDataProvider.CreateChildWidgetAssignment(widget.Id, assignmentId1),
+                TestDataProvider.ProvideRandomString(50),
+                TestDataProvider.CreateChildWidgetAssignment(widget.Id, assignmentId2));
 
             session.SaveOrUpdate(content.Category);
 
@@ -75,7 +86,46 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
                                       Type = OptionType.Custom,
                                       CustomTypeIdentifier = MediaManagerFolderOptionProvider.Identifier
                                   }
-                              }
+                              },
+                    ChildContentsOptionValues = new List<ChildContentOptionValuesModel>
+                                {
+                                    new ChildContentOptionValuesModel
+                                    {
+                                        AssignmentIdentifier = assignmentId1,
+                                        OptionValues = new List<OptionValueModel>
+                                        {
+                                            new OptionValueModel
+                                            {
+                                                Key = "O1",
+                                                Value = "V1",
+                                                UseDefaultValue = false,
+                                                Type = OptionType.Text
+                                            }
+                                        }
+                                    },
+                                    new ChildContentOptionValuesModel
+                                    {
+                                        AssignmentIdentifier = assignmentId2,
+                                        OptionValues = new List<OptionValueModel>
+                                        {
+                                            new OptionValueModel
+                                            {
+                                                Key = "O2",
+                                                Value = Guid.NewGuid().ToString(),
+                                                UseDefaultValue = false,
+                                                Type = OptionType.Custom,
+                                                CustomTypeIdentifier = "media-images-folder"
+                                            },
+                                            new OptionValueModel
+                                            {
+                                                Key = "O3",
+                                                Value = Guid.NewGuid().ToString(),
+                                                UseDefaultValue = true,
+                                                Type = OptionType.Text
+                                            }
+                                        }
+                                    }
+                                } 
                 };
         }
 
@@ -83,6 +133,7 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
         {
             var request = new GetHtmlContentWidgetRequest { WidgetId = saveResponseBase.Data.Value };
             request.Data.IncludeOptions = true;
+            request.Data.IncludeChildContentsOptions = true;
 
             return request;
         }
@@ -107,6 +158,8 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
             Assert.IsNotNull(getResponse.Data.CustomJavaScript);
             Assert.IsNotNull(getResponse.Options);
             Assert.IsNotEmpty(getResponse.Options);
+            Assert.IsNotNull(getResponse.ChildContentsOptionValues);
+            Assert.IsNotEmpty(getResponse.ChildContentsOptionValues);
 
             // Compare saving entity with retrieved after save entity
             Assert.AreEqual(getResponse.Data.Name, model.Name);
@@ -126,6 +179,22 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
                    && a1.CustomTypeIdentifier == a2.CustomTypeIdentifier
                    && a1.DefaultValue == a2.DefaultValue
                    && a1.Type == a2.Type)));
+
+            Assert.AreEqual(getResponse.ChildContentsOptionValues.Count, model.ChildContentsOptionValues.Count);
+            model.ChildContentsOptionValues.ToList().ForEach(
+                o =>
+                {
+                    var o1 = getResponse.ChildContentsOptionValues.FirstOrDefault(c => c.AssignmentIdentifier == o.AssignmentIdentifier);
+                    Assert.IsNotNull(o1);
+                    Assert.IsNotNull(o1.OptionValues);
+                    Assert.AreEqual(o1.OptionValues.Count(c => !c.UseDefaultValue), o.OptionValues.Count(c => !c.UseDefaultValue));
+                    Assert.IsTrue(o.OptionValues
+                        .Where(c => !c.UseDefaultValue)
+                        .All(c => o1.OptionValues.All(c1 => c1.Key == c.Key 
+                            && c.Value == c1.Value 
+                            && c.CustomTypeIdentifier == c1.CustomTypeIdentifier
+                            && c.Type == c1.Type)));
+                });
         }
     }
 }

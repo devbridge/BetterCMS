@@ -89,7 +89,7 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <param name="ids">The ids.</param>
         /// <returns>List of custom option entities</returns>
-        List<CustomOption> GetCustomOptionsById(string[] ids);
+        List<CustomOptionViewModel> GetCustomOptionsById(string[] ids);
 
         /// <summary>
         /// Sets the custom option value titles.
