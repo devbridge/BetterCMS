@@ -16,6 +16,7 @@ using BetterCms.Module.Pages.ViewModels.Widgets;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
+using BetterCms.Module.Root.ViewModels.Option;
 
 using CategoryEntity = BetterCms.Module.Root.Models.Category;
 
@@ -39,7 +40,8 @@ namespace BetterCms.Module.Pages.Services
             this.contentService = contentService;
         }
 
-        public void SaveHtmlContentWidget(EditHtmlContentWidgetViewModel model, out HtmlContentWidget widget, out HtmlContentWidget originalWidget,
+        public void SaveHtmlContentWidget(EditHtmlContentWidgetViewModel model, IList<ContentOptionValuesViewModel> childContentOptionValues,
+            out HtmlContentWidget widget, out HtmlContentWidget originalWidget,
             bool treatNullsAsLists = true, bool createIfNotExists = false)
         {
             if (model.Options != null)
@@ -53,7 +55,7 @@ namespace BetterCms.Module.Pages.Services
 
             var widgetContent = GetHtmlContentWidgetFromRequest(model, treatNullsAsLists, !model.Id.HasDefaultValue());
             widget = GetWidgetForSave(widgetContent, model, createIfNotExists, out isCreatingNew);
-            optionService.SaveChildContentOptions(widget, model.ChildContentOptionValues, model.DesirableStatus);
+            optionService.SaveChildContentOptions(widget, childContentOptionValues, model.DesirableStatus);
 
             repository.Save(widget);
             unitOfWork.Commit();

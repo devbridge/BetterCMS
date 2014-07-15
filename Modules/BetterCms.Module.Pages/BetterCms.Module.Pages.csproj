@@ -131,6 +131,7 @@
     <Compile Include="Command\Content\GetInsertHtmlContent\GetInsertHtmlContentCommand.cs" />
     <Compile Include="Command\Content\GetInsertHtmlContent\InsertHtmlContentRequest.cs" />
     <Compile Include="Command\Content\GetChildContentOptions\GetChildContentOptionsCommand.cs" />
+    <Compile Include="Command\Content\SavePageHtmlContent\SavePageHtmlContentCommandRequest.cs" />
     <Compile Include="Command\History\GetSitemapHistory\GetSitemapHistoryCommand.cs" />
     <Compile Include="Command\History\GetSitemapHistory\GetSitemapHistoryRequest.cs" />
     <Compile Include="Command\History\RestoreSitemapVersion\RestoreSitemapVersionCommand.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="Command\Sitemap\SaveMultipleSitemaps\SaveMultipleSitemapsCommand.cs" />
     <Compile Include="Command\Widget\PreviewWidget\PreviewWidgetCommand.cs" />
     <Compile Include="Command\Widget\PreviewWidget\PreviewWidgetCommandRequest.cs" />
+    <Compile Include="Command\Widget\SaveWidget\SaveWidgetCommandRequest.cs" />
     <Compile Include="Events\CategoryEvents.cs" />
     <Compile Include="Events\ContentEvents.cs" />
     <Compile Include="Events\PagePropertiesChangingEventArgs.cs" />

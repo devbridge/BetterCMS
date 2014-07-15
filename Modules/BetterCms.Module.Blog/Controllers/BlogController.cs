@@ -97,18 +97,20 @@ namespace BetterCms.Module.Blog.Controllers
         /// <summary>
         /// Saves the blog post.
         /// </summary>
-        /// <param name="model">The model.</param>
-        /// <returns>Json result.</returns>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        /// Json result.
+        /// </returns>
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)]
         [HttpPost]
-        public ActionResult SaveBlogPost(BlogPostViewModel model)
+        public ActionResult SaveBlogPost(SaveBlogPostCommandRequest request)
         {
             try
             {
-                var response = GetCommand<SaveBlogPostCommand>().ExecuteCommand(model);
+                var response = GetCommand<SaveBlogPostCommand>().ExecuteCommand(request);
                 if (response != null)
                 {
-                    if (model.DesirableStatus != ContentStatus.Preview && model.Id.HasDefaultValue())
+                    if (request.Content.DesirableStatus != ContentStatus.Preview && request.Content.Id.HasDefaultValue())
                     {
                         Messages.AddSuccess(BlogGlobalization.CreatePost_CreatedSuccessfully_Message);
                     }

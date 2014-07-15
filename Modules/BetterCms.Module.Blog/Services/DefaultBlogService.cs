@@ -31,6 +31,7 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
+using BetterCms.Module.Root.ViewModels.Option;
 
 using Common.Logging;
 
@@ -163,11 +164,15 @@ namespace BetterCms.Module.Blog.Services
         /// Saves the blog post.
         /// </summary>
         /// <param name="request">The request.</param>
+        /// <param name="childContentOptionValues">The child content option values.</param>
         /// <param name="principal">The principal.</param>
+        /// <param name="errorMessages">The error messages.</param>
         /// <returns>
         /// Saved blog post entity
         /// </returns>
-        public BlogPost SaveBlogPost(BlogPostViewModel request, IPrincipal principal, out string[] errorMessages)
+        /// <exception cref="System.ComponentModel.DataAnnotations.ValidationException"></exception>
+        /// <exception cref="SecurityException">Forbidden: Access is denied.</exception>
+        public BlogPost SaveBlogPost(BlogPostViewModel request, IList<ContentOptionValuesViewModel> childContentOptionValues, IPrincipal principal, out string[] errorMessages)
         {
             errorMessages = new string[0];
             string[] roles;
@@ -322,7 +327,7 @@ namespace BetterCms.Module.Blog.Services
 
             content = SaveContentWithStatusUpdate(isNew, newContent, request, principal);
             pageContent.Content = content;
-            optionService.SaveChildContentOptions(content, request.ChildContentOptionValues, request.DesirableStatus);
+            optionService.SaveChildContentOptions(content, childContentOptionValues, request.DesirableStatus);
 
             blogPost.PageUrlHash = blogPost.PageUrl.UrlHash();
             blogPost.UseCanonicalUrl = request.UseCanonicalUrl;

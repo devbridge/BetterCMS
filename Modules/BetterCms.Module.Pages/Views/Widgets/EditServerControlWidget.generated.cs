@@ -154,7 +154,7 @@ WriteLiteral("\r\n");
             #line hidden
             
             #line 20 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
-     using (Html.BeginForm<WidgetsController>(c => c.EditServerControlWidget((EditServerControlWidgetViewModel)null), FormMethod.Post, new { @id = "bcms-widget-form", @class = "bcms-ajax-form" }))
+     using (Html.BeginForm<WidgetsController>(c => c.EditServerControlWidget((string)null), FormMethod.Post, new { @id = "bcms-widget-form", @class = "bcms-ajax-form" }))
     {
 
             
@@ -417,14 +417,14 @@ WriteLiteral(">\r\n                            <img");
 
 WriteLiteral(" id=\"bcms-widget-preview-image\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 3631), Tuple.Create("\"", 3659)
+WriteAttribute("src", Tuple.Create(" src=\"", 3605), Tuple.Create("\"", 3633)
             
             #line 63 "..\..\Views\Widgets\EditServerControlWidget.cshtml"
-, Tuple.Create(Tuple.Create("", 3637), Tuple.Create<System.Object, System.Int32>(Model.PreviewImageUrl
+, Tuple.Create(Tuple.Create("", 3611), Tuple.Create<System.Object, System.Int32>(Model.PreviewImageUrl
             
             #line default
             #line hidden
-, 3637), false)
+, 3611), false)
 );
 
 WriteLiteral(" alt=\"\"");

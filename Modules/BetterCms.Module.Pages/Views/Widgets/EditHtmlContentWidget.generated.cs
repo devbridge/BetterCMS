@@ -154,7 +154,7 @@ WriteLiteral("\r\n");
             #line hidden
             
             #line 20 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
-     using (Html.BeginForm<WidgetsController>(c => c.EditHtmlContentWidget((EditHtmlContentWidgetViewModel)null), FormMethod.Post, new { @id = "bcms-advanced-content-form", @class = "bcms-ajax-form" }))
+     using (Html.BeginForm<WidgetsController>(c => c.EditHtmlContentWidget((string)null), FormMethod.Post, new { @id = "bcms-advanced-content-form", @class = "bcms-ajax-form" }))
     {
 
             

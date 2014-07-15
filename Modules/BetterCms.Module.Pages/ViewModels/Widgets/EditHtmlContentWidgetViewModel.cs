@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
-using BetterCms.Module.Root.ViewModels.Option;
 
 namespace BetterCms.Module.Pages.ViewModels.Widgets
 {
@@ -49,14 +48,6 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
                 return true;
             }
         }
-
-        /// <summary>
-        /// Gets or sets the list of child content option values.
-        /// </summary>
-        /// <value>
-        /// The list of child content option values.
-        /// </value>
-        public IList<ContentOptionValuesViewModel> ChildContentOptionValues { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

@@ -241,14 +241,6 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         public bool IsReadOnly { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of child content option values.
-        /// </summary>
-        /// <value>
-        /// The list of child content option values.
-        /// </value>
-        public IList<ContentOptionValuesViewModel> ChildContentOptionValues { get; set; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="BlogPostViewModel" /> class.
         /// </summary>
         public BlogPostViewModel()

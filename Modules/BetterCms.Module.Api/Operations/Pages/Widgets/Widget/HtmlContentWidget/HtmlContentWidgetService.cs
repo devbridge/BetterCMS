@@ -89,7 +89,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
                 model.Id = request.Id.Value;
             }
 
-            widgetService.SaveHtmlContentWidget(model, out widget, out originalWidget, false, true);
+            // TODO: need to pass child content option values
+            widgetService.SaveHtmlContentWidget(model, null, out widget, out originalWidget, false, true);
 
             return new PutHtmlContentWidgetResponse { Data = widget.Id };
         }

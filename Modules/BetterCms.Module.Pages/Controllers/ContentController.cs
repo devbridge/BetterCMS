@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 using BetterCms.Core.Exceptions.Mvc;
@@ -129,17 +130,17 @@ namespace BetterCms.Module.Pages.Controllers
         /// <summary>
         /// Validates and saves page content.
         /// </summary>
-        /// <param name="model">The model.</param>
+        /// <param name="request">The request.</param>
         /// <returns>
         /// JSON with result status and redirect URL.
         /// </returns>
         [HttpPost]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)]
-        public ActionResult SavePageHtmlContent(PageContentViewModel model)
+        public ActionResult SavePageHtmlContent(SavePageHtmlContentCommandRequest request)
         {
             try
             {
-                var result = GetCommand<SavePageHtmlContentCommand>().ExecuteCommand(model);
+                var result = GetCommand<SavePageHtmlContentCommand>().ExecuteCommand(request);
 
                 if (result != null)
                 {
@@ -155,7 +156,7 @@ namespace BetterCms.Module.Pages.Controllers
                                                 ContentId = result.ContentId,
                                                 RegionId = result.RegionId,
                                                 PageId = result.PageId,
-                                                DesirableStatus = model.DesirableStatus
+                                                DesirableStatus = request.Content.DesirableStatus
                                             }
                                 });
                 }

@@ -1,8 +1,7 @@
-﻿using System.Linq;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 using BetterCms.Core.Security;
-using BetterCms.Module.Pages.Command.History.GetContentVersion;
+
 using BetterCms.Module.Pages.Command.Widget.DeleteWidget;
 using BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit;
 using BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit;
@@ -12,6 +11,7 @@ using BetterCms.Module.Pages.Command.Widget.PreviewWidget;
 using BetterCms.Module.Pages.Command.Widget.SaveWidget;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.ViewModels.Widgets;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -97,20 +97,20 @@ namespace BetterCms.Module.Pages.Controllers
         /// <summary>
         /// Validates and saves html content widget.
         /// </summary>
-        /// <param name="model">The html content widget view model.</param>
+        /// <param name="request">The request.</param>
         /// <returns>
         /// Json with result status.
         /// </returns>
         [HttpPost]
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
-        public ActionResult EditHtmlContentWidget(EditHtmlContentWidgetViewModel model)
+        public ActionResult EditHtmlContentWidget(SaveWidgetCommandRequest<EditHtmlContentWidgetViewModel> request)
         {
             if (ModelState.IsValid)
             {
-                var response = GetCommand<SaveHtmlContentWidgetCommand>().ExecuteCommand(model);
+                var response = GetCommand<SaveHtmlContentWidgetCommand>().ExecuteCommand(request);
                 if (response != null)
                 {
-                    if (model.Id.HasDefaultValue())
+                    if (request.Content.Id.HasDefaultValue())
                     {
                         Messages.AddSuccess(PagesGlobalization.SaveWidget_CreatedSuccessfully_Message);
                     }
@@ -157,20 +157,20 @@ namespace BetterCms.Module.Pages.Controllers
         /// <summary>
         /// Validates and saves widget.
         /// </summary>
-        /// <param name="model">The widget view model.</param>
+        /// <param name="request">The request.</param>
         /// <returns>
         /// Json with result status.
         /// </returns>
         [HttpPost]
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
-        public ActionResult EditServerControlWidget(EditServerControlWidgetViewModel model)
+        public ActionResult EditServerControlWidget(SaveWidgetCommandRequest<EditServerControlWidgetViewModel> request)
         {
             if (ModelState.IsValid)
             {
-                var response = GetCommand<SaveServerControlWidgetCommand>().ExecuteCommand(model);
+                var response = GetCommand<SaveServerControlWidgetCommand>().ExecuteCommand(request);
                 if (response != null)
                 {
-                    if (model.Id.HasDefaultValue())
+                    if (request.Content.Id.HasDefaultValue())
                     {
                         Messages.AddSuccess(PagesGlobalization.SaveWidget_CreatedSuccessfully_Message);
                     }

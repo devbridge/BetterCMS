@@ -285,7 +285,8 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
             }
 
             string[] error;
-            var response = blogSaveService.SaveBlogPost(serviceModel, securityService.GetCurrentPrincipal(), out error);
+            // TODO: implement savnig of child content option values
+            var response = blogSaveService.SaveBlogPost(serviceModel, null, securityService.GetCurrentPrincipal(), out error);
             if (response == null)
             {
                 throw new CmsApiValidationException(error != null && error.Length > 0 ? string.Join(",", error) : "Page properties saving was canceled.");

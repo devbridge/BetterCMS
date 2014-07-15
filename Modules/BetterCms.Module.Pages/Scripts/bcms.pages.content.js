@@ -143,7 +143,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         formSerialize: function(form) {
                             return widgets.serializeFormWithChildWidgetOptions(form, selectors.htmlEditor);
                         },
-                        formContentType: 'application/json; charset=utf-8'
+                        formContentType: 'application/json; charset=UTF-8'
                     });
                 },
                 onAccept: function () {

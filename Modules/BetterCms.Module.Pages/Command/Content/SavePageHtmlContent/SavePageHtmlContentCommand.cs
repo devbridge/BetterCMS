@@ -20,7 +20,7 @@ using BetterCms.Module.Root.Services;
 
 namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
 {
-    public class SavePageHtmlContentCommand : CommandBase, ICommand<PageContentViewModel, SavePageHtmlContentResponse>
+    public class SavePageHtmlContentCommand : CommandBase, ICommand<SavePageHtmlContentCommandRequest, SavePageHtmlContentResponse>
     {
         private readonly IContentService contentService;
         
@@ -35,28 +35,29 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
             this.optionsService = optionsService;
         }
 
-        public SavePageHtmlContentResponse Execute(PageContentViewModel request)
+        public SavePageHtmlContentResponse Execute(SavePageHtmlContentCommandRequest request)
         {
-            if (request.DesirableStatus == ContentStatus.Published)
+            var model = request.Content;
+            if (model.DesirableStatus == ContentStatus.Published)
             {
                 AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.PublishContent);
             }
 
-            if (request.Id == default(Guid) || request.DesirableStatus != ContentStatus.Published)
+            if (model.Id == default(Guid) || model.DesirableStatus != ContentStatus.Published)
             {
                 AccessControlService.DemandAccess(Context.Principal, RootModuleConstants.UserRoles.EditContent);
             }
 
             PageContent pageContent;
-            var isNew = request.Id.HasDefaultValue();
+            var isNew = model.Id.HasDefaultValue();
             if (!isNew)
             {
                 var query = Repository
                     .AsQueryable<PageContent>()
-                    .Where(f => f.Id == request.Id && !f.IsDeleted)
+                    .Where(f => f.Id == model.Id && !f.IsDeleted)
                     .AsQueryable();
 
-                if (!request.IsUserConfirmed)
+                if (!model.IsUserConfirmed)
                 {
                     query = query.Fetch(f => f.Page);
                 }
@@ -69,14 +70,14 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                 pageContent = query.ToList().FirstOne();
 
                 // Check if user has confirmed the deletion of content
-                if (!request.IsUserConfirmed && pageContent.Page.IsMasterPage)
+                if (!model.IsUserConfirmed && pageContent.Page.IsMasterPage)
                 {
-                    var hasAnyChildren = contentService.CheckIfContentHasDeletingChildren(request.PageId, request.ContentId, request.PageContent);
+                    var hasAnyChildren = contentService.CheckIfContentHasDeletingChildren(model.PageId, model.ContentId, model.PageContent);
                     if (hasAnyChildren)
                     {
                         var message = PagesGlobalization.SaveContent_ContentHasChildrenContents_RegionDeleteConfirmationMessage;
                         var logMessage = string.Format("User is trying to delete content regions which has children contents. Confirmation is required. PageContentId: {0}, ContentId: {1}, PageId: {2}",
-                               request.Id, request.ContentId, request.PageId);
+                               model.Id, model.ContentId, model.PageId);
                         throw new ConfirmationRequestException(() => message, logMessage);
                     }
                 }
@@ -84,12 +85,12 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
             else
             {              
                 pageContent = new PageContent();
-                pageContent.Order = contentService.GetPageContentNextOrderNumber(request.PageId);
+                pageContent.Order = contentService.GetPageContentNextOrderNumber(model.PageId);
 
                 if (configuration.Security.AccessControlEnabled)
                 {
                     pageContent.Page = Repository
-                        .AsQueryable<Root.Models.Page>(p => p.Id == request.PageId)
+                        .AsQueryable<Root.Models.Page>(p => p.Id == model.PageId)
                         .FetchMany(p => p.AccessRules)
                         .ToList()
                         .FirstOne();
@@ -105,28 +106,28 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
             // Get page as proxy, if page is not retrieved yet
             if (!configuration.Security.AccessControlEnabled)
             {
-                pageContent.Page = Repository.AsProxy<Root.Models.Page>(request.PageId);
+                pageContent.Page = Repository.AsProxy<Root.Models.Page>(model.PageId);
             }
-            pageContent.Region = Repository.AsProxy<Region>(request.RegionId);
+            pageContent.Region = Repository.AsProxy<Region>(model.RegionId);
 
             var contentToSave = new HtmlContent
                 {
-                    Id = request.ContentId,
-                    ActivationDate = request.LiveFrom,
-                    ExpirationDate = TimeHelper.FormatEndDate(request.LiveTo),
-                    Name = request.ContentName,
-                    Html = request.PageContent ?? string.Empty,
-                    UseCustomCss = request.EnabledCustomCss,
-                    CustomCss = request.CustomCss,
-                    UseCustomJs = request.EanbledCustomJs,
-                    CustomJs = request.CustomJs,
-                    EditInSourceMode = request.EditInSourceMode
+                    Id = model.ContentId,
+                    ActivationDate = model.LiveFrom,
+                    ExpirationDate = TimeHelper.FormatEndDate(model.LiveTo),
+                    Name = model.ContentName,
+                    Html = model.PageContent ?? string.Empty,
+                    UseCustomCss = model.EnabledCustomCss,
+                    CustomCss = model.CustomCss,
+                    UseCustomJs = model.EanbledCustomJs,
+                    CustomJs = model.CustomJs,
+                    EditInSourceMode = model.EditInSourceMode
                 };
 
             // Preserve content if user is not authorized to change it.
-            if (!SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent) && request.Id != default(Guid))
+            if (!SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent) && model.Id != default(Guid))
             {
-                var originalContent = Repository.First<HtmlContent>(request.ContentId);
+                var originalContent = Repository.First<HtmlContent>(model.ContentId);
                 var contentToPublish = (HtmlContent)(originalContent.History != null
                     ? originalContent.History.FirstOrDefault(c => c.Status == ContentStatus.Draft) ?? originalContent
                     : originalContent);
@@ -143,8 +144,8 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
             UnitOfWork.BeginTransaction();
             pageContent.Content = contentService.SaveContentWithStatusUpdate(
                 contentToSave,
-                request.DesirableStatus);
-            optionsService.SaveChildContentOptions(pageContent.Content, request.ChildContentOptionValues, request.DesirableStatus);
+                model.DesirableStatus);
+            optionsService.SaveChildContentOptions(pageContent.Content, request.ChildContentOptionValues, model.DesirableStatus);
 
             if (pageContent.Content.ContentRegions != null 
                 && pageContent.Content.ContentRegions.Count > 0)
@@ -160,7 +161,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
             UnitOfWork.Commit();
 
             // Notify.
-            if (request.DesirableStatus != ContentStatus.Preview)
+            if (model.DesirableStatus != ContentStatus.Preview)
             {
                 if (isNew)
                 {

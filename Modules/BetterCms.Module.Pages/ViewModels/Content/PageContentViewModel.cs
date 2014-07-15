@@ -226,14 +226,6 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         public bool IsUserConfirmed { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of child content option values.
-        /// </summary>
-        /// <value>
-        /// The list of child content option values.
-        /// </value>
-        public IList<ContentOptionValuesViewModel> ChildContentOptionValues { get; set; }
-
-        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>
