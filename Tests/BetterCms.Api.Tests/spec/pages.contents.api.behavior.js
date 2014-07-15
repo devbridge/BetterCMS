@@ -46,7 +46,7 @@ describe('pages.contents.api.behavior', function () {
             expect(content.publishedByUser).toBe('admin', 'Correctly filtered publishedByUser should be retrieved.');
 
             expect(result.childContentsOptionValues).toBeDefinedAndNotNull('Correct childContentsOptionValues should be retrieved.');
-            expect(result.childContentsOptionValues.length).toBeDefinedAndNotNull(2, 'Correct childContentsOptionValues.length should be retrieved.');
+            expect(result.childContentsOptionValues.length).toBe(2, 'Correct childContentsOptionValues.length should be retrieved.');
 
             var child = result.childContentsOptionValues[0];
             expect(child.assignmentIdentifier).toBe('0051e4e6d740455a8753756e558f51bc', 'Correctly filtered childContentsOptionValues[0].assignmentIdentifier should be retrieved');
