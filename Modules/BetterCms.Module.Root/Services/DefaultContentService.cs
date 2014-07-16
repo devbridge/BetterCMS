@@ -537,36 +537,6 @@ namespace BetterCms.Module.Root.Services
             return hasAnyContents;
         }
 
-        public void RetrieveChildrenContentsRecursively(IEnumerable<Models.Content> contents)
-        {
-            var childContents = contents.Where(c => c.ChildContents != null).SelectMany(c => c.ChildContents).ToArray();
-            if (childContents.Any())
-            {
-                var childIds = childContents.Select(c => c.Child.Id).Distinct().ToArray();
-                var entities = repository
-                    .AsQueryable<ChildContent>(c => childIds.Contains(c.Parent.Id))
-                    .Fetch(c => c.Child)
-                    .ThenFetchMany(c => c.ChildContents)
-                    .ThenFetch(cc => cc.Child)
-                    .FetchMany(c => c.Options)
-                    .ToArray();
-
-                childContents.ForEach(c =>
-                {
-
-                    if (c.Child.ChildContents == null)
-                    {
-                        c.Child.ChildContents = new List<ChildContent>();
-                    }
-                    c.Child.ChildContents.Clear();
-
-                    entities.Where(e => e.Parent.Id == c.Child.Id).ForEach(c.Child.ChildContents.Add);
-                });
-
-                RetrieveChildrenContentsRecursively(entities.Select(c => c.Child).Distinct().ToList());
-            }
-        }
-
         public void UpdateDynamicContainer(Models.Content content)
         {
             var dynamicContainer = content as IDynamicContentContainer;

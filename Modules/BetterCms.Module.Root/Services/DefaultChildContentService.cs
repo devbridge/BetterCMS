@@ -193,9 +193,22 @@ namespace BetterCms.Module.Root.Services
                 sourceChildren.AddRange(source.ChildContents);
             }
             CopyChildContents(destinationChildren, sourceChildren);
+            
+            // Remove childs, which not exists in source.
+            destinationChildren
+                .Where(s => sourceChildren.All(d => s.AssignmentIdentifier != d.AssignmentIdentifier))
+                .ToList()
+                .ForEach(d => destinationChildren.Remove(d));
 
             if (destinationChildren.Any())
             {
+                // Cannot add itself as child
+                if (destinationChildren.Any(dc => dc.Child.Id == destination.Id))
+                {
+                    var message = string.Format(RootGlobalization.ChildContent_CirculatReferenceDetected, destination.Name);
+                    throw new ValidationException(() => message, message);
+                }
+
                 var references = new List<Guid>();
                 var childrenIds = PopulateReferencesList(
                     references,
