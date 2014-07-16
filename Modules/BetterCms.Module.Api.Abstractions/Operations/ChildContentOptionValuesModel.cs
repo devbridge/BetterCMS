@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace BetterCms.Module.Api.Operations
 {
+    [DataContract]
+    [Serializable]
     public class ChildContentOptionValuesModel
     {
         /// <summary>
@@ -11,6 +14,7 @@ namespace BetterCms.Module.Api.Operations
         /// <value>
         /// The asssignment identifier.
         /// </value>
+        [DataMember]
         public Guid AssignmentIdentifier { get; set; }
 
         /// <summary>
@@ -19,6 +23,7 @@ namespace BetterCms.Module.Api.Operations
         /// <value>
         /// The list of page content options.
         /// </value>
+        [DataMember]
         public IList<OptionValueModel> OptionValues { get; set; }
     }
 }

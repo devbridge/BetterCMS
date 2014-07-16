@@ -39,6 +39,24 @@ namespace BetterCms.Test.Module.Api.Pages.Widgets
             Events.PageEvents.Instance.WidgetUpdated -= Instance_EntityUpdated;
             Events.PageEvents.Instance.WidgetDeleted -= Instance_EntityDeleted;
         }
+        
+        [Test]
+        public void Should_CRUD_HtmlContentWidget_Successfully_WithIdSpecified()
+        {
+            // Attach to events
+            Events.PageEvents.Instance.WidgetCreated += Instance_EntityCreated;
+            Events.PageEvents.Instance.WidgetUpdated += Instance_EntityUpdated;
+            Events.PageEvents.Instance.WidgetDeleted += Instance_EntityDeleted;
+
+            // Run tests
+            RunApiActionInTransaction((api, session) =>
+                RunWithIdSpecified(session, api.Pages.Widget.HtmlContent.Get, api.Pages.Widget.HtmlContent.Put, api.Pages.Widget.HtmlContent.Delete));
+
+            // Detach from events
+            Events.PageEvents.Instance.WidgetCreated -= Instance_EntityCreated;
+            Events.PageEvents.Instance.WidgetUpdated -= Instance_EntityUpdated;
+            Events.PageEvents.Instance.WidgetDeleted -= Instance_EntityDeleted;
+        }
 
         protected override SaveHtmlContentWidgetModel GetCreateModel(ISession session)
         {

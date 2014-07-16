@@ -998,8 +998,11 @@ namespace BetterCms.Module.Root.Services
             {
                 var model = new ContentOptionValuesViewModel { OptionValuesContainerId = childContent.AssignmentIdentifier };
                 model.OptionValues = GetMergedOptionValuesForEdit(childContent.Child.ContentOptions, childContent.Options);
-                
-                models.Add(model);
+
+                if (model.OptionValues.Any())
+                {
+                    models.Add(model);
+                }
             }
 
             return models;

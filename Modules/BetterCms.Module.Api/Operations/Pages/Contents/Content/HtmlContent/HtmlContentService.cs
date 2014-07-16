@@ -173,11 +173,13 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
             unitOfWork.BeginTransaction();
 
             Module.Pages.Models.HtmlContent content;
+            var desirableStatus = request.Data.IsPublished ? ContentStatus.Published : ContentStatus.Draft;
             if (isNew && contentToSave.Id != default(Guid))
             {
                 content = contentToSave;
+                contentService.UpdateDynamicContainer(content);
 
-                content.Status = request.Data.IsPublished ? ContentStatus.Published : ContentStatus.Draft;
+                content.Status = desirableStatus;
                 content.Id = contentToSave.Id;
 
                 repository.Save(content);
@@ -190,8 +192,9 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
                 }
 
                 content = (Module.Pages.Models.HtmlContent)contentService
-                    .SaveContentWithStatusUpdate(contentToSave, request.Data.IsPublished ? ContentStatus.Published : ContentStatus.Draft);
+                    .SaveContentWithStatusUpdate(contentToSave, desirableStatus);
             }
+            optionService.SaveChildContentOptions(content, request.Data.ChildContentsOptionValues.ToViewModel(), desirableStatus);
 
             unitOfWork.Commit();
 

@@ -159,6 +159,7 @@ namespace BetterCms.Module.Pages.Services
             if (createNewWithId)
             {
                 widget = widgetContent;
+                contentService.UpdateDynamicContainer(widget);
 
                 widget.Status = model.DesirableStatus;
                 widget.Id = model.Id;

@@ -77,6 +77,37 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
         }
         
         [Test]
+        public void Should_CRUD_BlogPost_WithLayout_Successfully_WithIdSpecified()
+        {
+            // Attach to events
+            Events.BlogEvents.Instance.BlogCreated += Instance_EntityCreated;
+            Events.BlogEvents.Instance.BlogUpdated += Instance_EntityUpdated;
+            Events.BlogEvents.Instance.BlogDeleted += Instance_EntityDeleted;
+
+            RunApiActionInTransaction(
+                (api, session) =>
+                {
+                    masterPage = null;
+                    layout = TestDataProvider.CreateNewLayout();
+                    region = TestDataProvider.CreateNewRegion();
+                    
+                    var layoutRegion = new LayoutRegion { Layout = layout, Region = region };
+                    layout.LayoutRegions = new[] { layoutRegion };
+
+                    session.SaveOrUpdate(region);
+                    session.SaveOrUpdate(layout);
+                    session.SaveOrUpdate(layoutRegion);
+
+                    RunWithIdSpecified(session, api.Blog.BlogPost.Properties.Get, api.Blog.BlogPost.Properties.Put, api.Blog.BlogPost.Properties.Delete);
+                });
+
+            // Detach from events
+            Events.BlogEvents.Instance.BlogCreated -= Instance_EntityCreated;
+            Events.BlogEvents.Instance.BlogUpdated -= Instance_EntityUpdated;
+            Events.BlogEvents.Instance.BlogDeleted -= Instance_EntityDeleted;
+        }
+        
+        [Test]
         public void Should_CRUD_BlogPost_WithMasterPage_Successfully()
         {
             // Attach to events
