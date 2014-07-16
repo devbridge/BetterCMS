@@ -31,7 +31,7 @@
     </div>
 </div>
 <div class="bcms-text-editor-holder">
-    @Html.TextAreaFor(model => model.PageContent, new { @id = "bcms-contenthtml" })
+    @Html.TextAreaFor(model => model.PageContent, new { @class = "bcms-contenthtml", @id = Guid.NewGuid() })
 </div>
 
 <div class="bcms-edit-check-field">

@@ -771,7 +771,7 @@
   <ItemGroup>
     <None Include="Views\Content\Partial\EditHtmlContent.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>EditHtmlContent.generated.cs</LastGenOutput>
+      <LastGenOutput>EditHtmlContent1.generated.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

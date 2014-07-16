@@ -141,7 +141,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         postSuccess: postSuccess,
 
                         formSerialize: function (form) {
-                            return widgets.serializeFormWithChildWidgetOptions(form, selectors.htmlEditor);
+                            return widgets.serializeFormWithChildWidgetOptions(form, editorId);
                         },
                         formContentType: 'application/json; charset=utf-8'
                     });
@@ -189,7 +189,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         postSuccess: postSuccess,
 
                         formSerialize: function (form) {
-                            return widgets.serializeFormWithChildWidgetOptions(form, selectors.htmlEditor);
+                            return widgets.serializeFormWithChildWidgetOptions(form, editorId);
                         },
                         formContentType: 'application/json; charset=utf-8'
                     });
@@ -856,8 +856,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /*
          * Returns child content options view models
          */
-        function getChildContentOptions(editorSelector) {
-            var editorInstance = htmlEditor.getInstance(editorSelector);
+        function getChildContentOptions(htmlEditorId) {
+            var editorInstance = htmlEditor.getInstance(htmlEditorId);
 
             if (editorInstance) {
                 return editorInstance.childWidgetOptions;
@@ -869,9 +869,9 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
          * Serializes content edit form with child widget options
          */
-        widgets.serializeFormWithChildWidgetOptions = function (form, editorSelector) {
+        widgets.serializeFormWithChildWidgetOptions = function (form, htmlEditorId) {
             var serializedForm = forms.serializeToObject(form),
-                childOptions = getChildContentOptions(editorSelector),
+                childOptions = getChildContentOptions(htmlEditorId),
                 childContentOptionValues = [],
                 i, j, needFix, model;
             

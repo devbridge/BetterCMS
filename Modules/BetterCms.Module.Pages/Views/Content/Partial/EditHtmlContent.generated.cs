@@ -217,7 +217,7 @@ WriteLiteral("    ");
 
             
             #line 34 "..\..\Views\Content\Partial\EditHtmlContent.cshtml"
-Write(Html.TextAreaFor(model => model.PageContent, new { @id = "bcms-contenthtml" }));
+Write(Html.TextAreaFor(model => model.PageContent, new { @class = "bcms-contenthtml", @id = Guid.NewGuid() }));
 
             
             #line default
