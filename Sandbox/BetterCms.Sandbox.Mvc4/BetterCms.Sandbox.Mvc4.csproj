@@ -260,6 +260,7 @@
     <Folder Include="Areas\bcms-search\" />
     <Folder Include="file\bcms-blog\scripts\" />
     <Folder Include="file\bcms-media\scripts\" />
+    <Folder Include="file\bcms-pages\scripts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -93,7 +93,7 @@ WriteLiteral(">\r\n");
             #line 13 "..\..\Views\Content\ChildContentOptions.cshtml"
          if (Model != null)
         {
-            using (Html.BeginForm<ContentController>(c => c.ChildContentOptions(null, null, null), FormMethod.Post,
+            using (Html.BeginForm<ContentController>(c => c.ChildContentOptions(null, null, null, null), FormMethod.Post,
                 new
                 {
                     @id = "bcms-options-form",

@@ -12,7 +12,7 @@
     <div class="bcms-input-list-holder">
         @if (Model != null)
         {
-            using (Html.BeginForm<ContentController>(c => c.ChildContentOptions(null, null, null), FormMethod.Post,
+            using (Html.BeginForm<ContentController>(c => c.ChildContentOptions(null, null, null, null), FormMethod.Post,
                 new
                 {
                     @id = "bcms-options-form",

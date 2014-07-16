@@ -210,18 +210,20 @@ namespace BetterCms.Module.Pages.Controllers
         /// <param name="contentId">The content identifier.</param>
         /// <param name="assignmentIdentifier">The assignment identifier.</param>
         /// <param name="widgetId">The widget identifier.</param>
+        /// <param name="loadOptions">if set to <c>true</c> [load options].</param>
         /// <returns>
         /// ViewResult to render page content options modal dialog.
         /// </returns>
         [HttpGet]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
-        public ActionResult ChildContentOptions(string contentId, string assignmentIdentifier, string widgetId)
+        public ActionResult ChildContentOptions(string contentId, string assignmentIdentifier, string widgetId, string loadOptions)
         {
             var request = new GetChildContentOptionsCommandRequest
                           {
                               ContentId = contentId.ToGuidOrDefault(),
                               AssignmentIdentifier = (assignmentIdentifier ?? "").ToGuidOrDefault(),
-                              WidgetId = (widgetId ?? "").ToGuidOrDefault()
+                              WidgetId = (widgetId ?? "").ToGuidOrDefault(),
+                              LoadOptions = loadOptions.ToBoolOrDefault()
                           };
             var model = GetCommand<GetChildContentOptionsCommand>().ExecuteCommand(request);
             var view = RenderView("ChildContentOptions", model);

@@ -40,48 +40,50 @@ namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
             var model = new ContentOptionValuesViewModel();
             var optionsLoaded = false;
 
-            if (!request.AssignmentIdentifier.HasDefaultValue())
-            {
-                // Try get draft
-                var draftQuery = Repository.AsQueryable<ChildContent>()
-                    .Where(f => f.Parent.Original.Id == request.ContentId 
-                        && !f.Parent.Original.IsDeleted
-                        && f.Parent.Original.Status == ContentStatus.Published
-                        && f.Parent.Status == ContentStatus.Draft
-                        && f.AssignmentIdentifier == request.AssignmentIdentifier
-                        && !f.IsDeleted
-                        && !f.Child.IsDeleted);
-                var childContent = AddFetches(draftQuery).ToList().FirstOrDefault();
-
-                // If draft not found, load content
-                if (childContent == null) {
-                    var query = Repository.AsQueryable<ChildContent>()
-                        .Where(f => f.Parent.Id == request.ContentId 
-                            && f.AssignmentIdentifier == request.AssignmentIdentifier 
-                            && !f.IsDeleted 
-                            && !f.Child.IsDeleted);
-
-                    childContent = AddFetches(query).ToList().FirstOrDefault();
-                }
-
-                if (childContent != null)
+            if (request.LoadOptions) { 
+                if (!request.AssignmentIdentifier.HasDefaultValue())
                 {
-                    model.OptionValuesContainerId = childContent.Id;
-                    model.OptionValues = OptionService.GetMergedOptionValuesForEdit(childContent.Child.ContentOptions, childContent.Options);
-                    optionsLoaded = true;
-                }
-            }
-            
-            if (!optionsLoaded)
-            {
-                var content = Repository.AsQueryable<Root.Models.Content>()
-                        .Where(c => c.Id == request.WidgetId)
-                        .FetchMany(c => c.ContentOptions)
-                        .ThenFetch(c => c.CustomOption)
-                        .ToList()
-                        .FirstOne();
+                    // Try get draft
+                    var draftQuery = Repository.AsQueryable<ChildContent>()
+                        .Where(f => f.Parent.Original.Id == request.ContentId 
+                            && !f.Parent.Original.IsDeleted
+                            && f.Parent.Original.Status == ContentStatus.Published
+                            && f.Parent.Status == ContentStatus.Draft
+                            && f.AssignmentIdentifier == request.AssignmentIdentifier
+                            && !f.IsDeleted
+                            && !f.Child.IsDeleted);
+                    var childContent = AddFetches(draftQuery).ToList().FirstOrDefault();
 
-                model.OptionValues = OptionService.GetMergedOptionValuesForEdit(content.ContentOptions, null);
+                    // If draft not found, load content
+                    if (childContent == null) {
+                        var query = Repository.AsQueryable<ChildContent>()
+                            .Where(f => f.Parent.Id == request.ContentId 
+                                && f.AssignmentIdentifier == request.AssignmentIdentifier 
+                                && !f.IsDeleted 
+                                && !f.Child.IsDeleted);
+
+                        childContent = AddFetches(query).ToList().FirstOrDefault();
+                    }
+
+                    if (childContent != null)
+                    {
+                        model.OptionValuesContainerId = childContent.Id;
+                        model.OptionValues = OptionService.GetMergedOptionValuesForEdit(childContent.Child.ContentOptions, childContent.Options);
+                        optionsLoaded = true;
+                    }
+                }
+            
+                if (!optionsLoaded)
+                {
+                    var content = Repository.AsQueryable<Root.Models.Content>()
+                            .Where(c => c.Id == request.WidgetId)
+                            .FetchMany(c => c.ContentOptions)
+                            .ThenFetch(c => c.CustomOption)
+                            .ToList()
+                            .FirstOne();
+
+                    model.OptionValues = OptionService.GetMergedOptionValuesForEdit(content.ContentOptions, null);
+                }
             }
 
             model.CustomOptions = OptionService.GetCustomOptions();

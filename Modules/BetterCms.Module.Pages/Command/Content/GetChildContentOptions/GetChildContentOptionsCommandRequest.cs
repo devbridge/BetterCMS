@@ -9,5 +9,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
         public Guid AssignmentIdentifier { get; set; }
         
         public Guid WidgetId { get; set; }
+
+        public bool LoadOptions { get; set; }
     }
 }

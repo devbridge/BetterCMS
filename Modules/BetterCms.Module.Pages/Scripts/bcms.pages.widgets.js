@@ -818,7 +818,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 // Do nothing - just close modal and that's it
             }, {
                 title: globalization.editChildWidgetOptionsTitle,
-                url: $.format(links.loadChildContentOptionsDialogUrl, contentId, assignmentId, widgetId),
+                url: $.format(links.loadChildContentOptionsDialogUrl, contentId, assignmentId, widgetId, !optionListViewModel),
                 disableAccept: true,
                 cancelTitle: globalization.editChildWidgetOptionsCloseButtonTitle,
                 onCloseClick: onCloseClick,
