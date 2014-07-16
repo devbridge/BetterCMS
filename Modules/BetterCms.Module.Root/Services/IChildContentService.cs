@@ -7,7 +7,7 @@ namespace BetterCms.Module.Root.Services
 {
     public interface IChildContentService
     {
-        string CollectChildContents(string html, Models.Content content);
+        void CollectChildContents(string html, Models.Content content);
 
         void CopyChildContents(Models.Content destination, Models.Content source);
 

@@ -551,7 +551,7 @@ namespace BetterCms.Module.Root.Services
                     content.ChildContents = new List<ChildContent>();
                 }
                 CollectDynamicRegions(dynamicContainer.Html, content, content.ContentRegions);
-                dynamicContainer.Html = childContentService.CollectChildContents(dynamicContainer.Html, content);
+                childContentService.CollectChildContents(dynamicContainer.Html, content);
             }
         }
     }

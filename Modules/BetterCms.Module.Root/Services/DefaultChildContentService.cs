@@ -30,7 +30,7 @@ namespace BetterCms.Module.Root.Services
             this.pageContentProjectionFactory = pageContentProjectionFactory;
         }
 
-        public string CollectChildContents(string html, Models.Content content)
+        public void CollectChildContents(string html, Models.Content content)
         {
             var widgetModels = ChildContentRenderHelper.ParseWidgetsFromHtml(html, true);
             if (widgetModels != null && widgetModels.Count > 0)
@@ -56,12 +56,6 @@ namespace BetterCms.Module.Root.Services
 
                 foreach (var model in widgetModels)
                 {
-                    // Remove data-is-new attribute
-                    if (model.IsNew)
-                    {
-                        html = ChildContentRenderHelper.RemoveIsNewAttribute(html, model);
-                    }
-
                     // Add child content only if it's not added yet (for example, it may be added when restoring / cloning a content)
                     if (content.ChildContents.All(cc => cc.AssignmentIdentifier != model.AssignmentIdentifier))
                     {
@@ -77,8 +71,6 @@ namespace BetterCms.Module.Root.Services
                     }
                 }
             }
-
-            return html;
         }
 
         public void CopyChildContents(Models.Content destination, Models.Content source)

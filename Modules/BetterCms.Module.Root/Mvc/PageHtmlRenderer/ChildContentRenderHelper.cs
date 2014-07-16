@@ -118,13 +118,6 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
                 }
                 model.AssignmentIdentifier = assignmentId;
 
-                var isNewAttribute = widgetNode.Attributes.FirstOrDefault(a => a.Name == WidgetIsNewAttributeName);
-                bool isNew;
-                if (isNewAttribute != null && !string.IsNullOrWhiteSpace(isNewAttribute.Value) && bool.TryParse(isNewAttribute.Value, out isNew))
-                {
-                    model.IsNew = isNew;
-                }
-
                 result.Add(model);
             }
 
