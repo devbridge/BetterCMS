@@ -58,7 +58,7 @@ namespace BetterCms.Module.Blog.Services
         private readonly RootOptionService optionService;
         protected readonly IAccessControlService accessControlService;
         private readonly ISecurityService securityService;
-        private readonly IContentService contentService;
+        protected readonly IContentService contentService;
         private readonly IPageService pageService;
         private readonly IRedirectService redirectService;
         protected readonly IMasterPageService masterPageService;

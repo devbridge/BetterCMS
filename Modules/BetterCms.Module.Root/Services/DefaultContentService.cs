@@ -60,20 +60,7 @@ namespace BetterCms.Module.Root.Services
             }
 
             // Fill content with dynamic contents info
-            var dynamicContainer = updatedContent as IDynamicContentContainer;
-            if (dynamicContainer != null)
-            {
-                if (updatedContent.ContentRegions == null)
-                {
-                    updatedContent.ContentRegions = new List<ContentRegion>();
-                }
-                if (updatedContent.ChildContents == null)
-                {
-                    updatedContent.ChildContents = new List<ChildContent>();
-                }
-                CollectDynamicRegions(dynamicContainer.Html, updatedContent, updatedContent.ContentRegions);
-                dynamicContainer.Html = childContentService.CollectChildContents(dynamicContainer.Html, updatedContent);
-            }
+            UpdateDynamicContainer(updatedContent);
 
             if (updatedContent.Id == default(Guid))
             {
@@ -577,6 +564,24 @@ namespace BetterCms.Module.Root.Services
                 });
 
                 RetrieveChildrenContentsRecursively(entities.Select(c => c.Child).Distinct().ToList());
+            }
+        }
+
+        public void UpdateDynamicContainer(Models.Content content)
+        {
+            var dynamicContainer = content as IDynamicContentContainer;
+            if (dynamicContainer != null)
+            {
+                if (content.ContentRegions == null)
+                {
+                    content.ContentRegions = new List<ContentRegion>();
+                }
+                if (content.ChildContents == null)
+                {
+                    content.ChildContents = new List<ChildContent>();
+                }
+                CollectDynamicRegions(dynamicContainer.Html, content, content.ContentRegions);
+                dynamicContainer.Html = childContentService.CollectChildContents(dynamicContainer.Html, content);
             }
         }
     }

@@ -1,5 +1,4 @@
 ﻿using System;
-
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Root.Models;
 
@@ -20,5 +19,7 @@ namespace BetterCms.Module.Root.Services
         void PublishDraftContent(Guid pageId);
 
         bool CheckIfContentHasDeletingChildren(Guid pageId, Guid contentId, string html = null);
+
+        void UpdateDynamicContainer(Models.Content content);
     }
 }

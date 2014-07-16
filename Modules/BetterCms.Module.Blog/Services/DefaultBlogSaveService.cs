@@ -171,6 +171,7 @@ namespace BetterCms.Module.Blog.Services
             var modelExt = model as BlogPostViewModelExtender;
             if (isNew && modelExt != null && !modelExt.ContentId.HasDefaultValue())
             {
+                contentService.UpdateDynamicContainer(newContent);
                 if (model.DesirableStatus == ContentStatus.Published)
                 {
                     newContent.PublishedOn = modelExt.PublishedOn ?? DateTime.Now;

@@ -80,6 +80,7 @@ namespace BetterCms.Module.Api.Extensions
                             MetaData = response.MetaData,
                             TechnicalInfo = response.TechnicalInfo,
                             AccessRules = response.AccessRules,
+                            ChildContentsOptionValues = response.ChildContentsOptionValues
                         };
 
             if (response.Tags != null)
