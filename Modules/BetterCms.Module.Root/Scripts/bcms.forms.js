@@ -177,10 +177,13 @@ bettercms.define('bcms.forms', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.ta
         form.find('textarea:visible:not([data-bind])').attr('readonly', 'readonly').parent('div').css('z-index', 100);
     };
 
-    forms.serializeToObject = function (form) {
+    forms.serializeToObject = function (form, skipNulls) {
         var o = {};
         var a = form.serializeArray();
         $.each(a, function () {
+            if (skipNulls && (this.value === undefined || this.value === null || this.value === '')) {
+                return;
+            }
             if (o[this.name] !== undefined) {
                 if (!o[this.name].push) {
                     o[this.name] = [o[this.name]];

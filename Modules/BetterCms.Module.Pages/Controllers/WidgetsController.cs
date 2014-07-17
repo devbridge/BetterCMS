@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 
+using BetterCms.Core.Mvc.Binders;
 using BetterCms.Core.Security;
 
 using BetterCms.Module.Pages.Command.Widget.DeleteWidget;
@@ -103,7 +104,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// </returns>
         [HttpPost]
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
-        public ActionResult EditHtmlContentWidget(SaveWidgetCommandRequest<EditHtmlContentWidgetViewModel> request)
+        public ActionResult EditHtmlContentWidget([ModelBinder(typeof(JSONDataBinder))] SaveWidgetCommandRequest<EditHtmlContentWidgetViewModel> request)
         {
             if (ModelState.IsValid)
             {

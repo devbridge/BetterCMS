@@ -231,7 +231,7 @@ namespace BetterCms.Module.Blog.Services
             // UnitOfWork.BeginTransaction(); // NOTE: this causes concurrent data exception.
 
             Redirect redirectCreated = null;
-            if (!isNew && userCanEdit && !string.Equals(blogPost.PageUrl, request.BlogUrl) && request.BlogUrl != null)
+            if (!isNew && userCanEdit && !string.Equals(blogPost.PageUrl, request.BlogUrl) && !string.IsNullOrWhiteSpace(request.BlogUrl))
             {
                 request.BlogUrl = urlService.FixUrl(request.BlogUrl);
                 pageService.ValidatePageUrl(request.BlogUrl, request.Id);

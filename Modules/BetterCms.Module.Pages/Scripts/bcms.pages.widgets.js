@@ -870,7 +870,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
          * Serializes content edit form with child widget options
          */
         widgets.serializeFormWithChildWidgetOptions = function (form, htmlEditorId) {
-            var serializedForm = forms.serializeToObject(form),
+            var serializedForm = forms.serializeToObject(form, true),
                 childOptions = getChildContentOptions(htmlEditorId),
                 childContentOptionValues = [],
                 i, j, needFix, model;

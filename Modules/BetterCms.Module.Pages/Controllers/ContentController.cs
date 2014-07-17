@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 
 using BetterCms.Core.Exceptions.Mvc;
+using BetterCms.Core.Mvc.Binders;
 using BetterCms.Core.Security;
 
 using BetterCms.Module.Pages.Command.Content.DeletePageContent;
@@ -16,7 +17,6 @@ using BetterCms.Module.Pages.Command.Content.SavePageContentOptions;
 using BetterCms.Module.Pages.Command.Content.SavePageHtmlContent;
 using BetterCms.Module.Pages.Command.Content.SortPageContent;
 using BetterCms.Module.Pages.Command.Widget.GetWidgetCategory;
-
 using BetterCms.Module.Pages.ViewModels.Content;
 
 using BetterCms.Module.Root;
@@ -136,7 +136,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// </returns>
         [HttpPost]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)]
-        public ActionResult SavePageHtmlContent(SavePageHtmlContentCommandRequest request)
+        public ActionResult SavePageHtmlContent([ModelBinder(typeof(JSONDataBinder))] SavePageHtmlContentCommandRequest request)
         {
             try
             {

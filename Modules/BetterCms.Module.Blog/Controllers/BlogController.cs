@@ -3,6 +3,7 @@ using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
+using BetterCms.Core.Mvc.Binders;
 using BetterCms.Core.Security;
 
 using BetterCms.Module.Blog.Commands.GetBlogPost;
@@ -103,7 +104,7 @@ namespace BetterCms.Module.Blog.Controllers
         /// </returns>
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)]
         [HttpPost]
-        public ActionResult SaveBlogPost(SaveBlogPostCommandRequest request)
+        public ActionResult SaveBlogPost([ModelBinder(typeof(JSONDataBinder))] SaveBlogPostCommandRequest request)
         {
             try
             {
