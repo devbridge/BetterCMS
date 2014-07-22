@@ -152,6 +152,8 @@
     <Compile Include="Command\Sitemap\GetSitemapsList\GetSitemapsListCommand.cs" />
     <Compile Include="Command\Sitemap\GetSitemapVersion\GetSitemapVersionCommand.cs" />
     <Compile Include="Command\Sitemap\SaveMultipleSitemaps\SaveMultipleSitemapsCommand.cs" />
+    <Compile Include="Command\Widget\GetWidgetUsages\GetWidgetUsagesCommand.cs" />
+    <Compile Include="Command\Widget\GetWidgetUsages\GetWidgetUsagesCommandRequest.cs" />
     <Compile Include="Command\Widget\PreviewWidget\PreviewWidgetCommand.cs" />
     <Compile Include="Command\Widget\PreviewWidget\PreviewWidgetCommandRequest.cs" />
     <Compile Include="Command\Widget\SaveWidget\SaveWidgetCommandRequest.cs" />
@@ -165,6 +167,7 @@
     <Compile Include="Helpers\SitemapHelper.cs" />
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
     <Compile Include="Helpers\UrlHelper.cs" />
+    <Compile Include="Models\Enums\WidgetUsageType.cs" />
     <Compile Include="Models\Maps\SitemapNodeTranslationMap.cs" />
     <Compile Include="Models\Migrations\Migration201401211353.cs" />
     <Compile Include="Models\Migrations\Migration201401091655.cs" />
@@ -387,7 +390,13 @@
     <Compile Include="Registration\SeoJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\PagePropertiesJsModuleIncludeDescriptor.cs" />
     <Compile Include="Services\DefaultPageService.cs" />
+    <Compile Include="Views\Widgets\Partial\WidgetUsagesTemplate.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WidgetUsagesTemplate.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\Widgets\WidgetCategoryViewModel.cs" />
+    <Compile Include="ViewModels\Widgets\WidgetUsageViewModel.cs" />
     <Compile Include="ViewModels\Widgets\WidgetViewModel.cs" />
     <Compile Include="ViewModels\Content\PageContentViewModel.cs" />
     <Compile Include="ViewModels\Widgets\ServerControlWidgetViewModel.cs" />
@@ -749,6 +758,10 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Views\Widgets\Partial\WidgetUsagesTemplate.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>WidgetUsagesTemplate.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Views\Shared\Partial\WarnMessageAboutDraft.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>WarnMessageAboutDraft.generated.cs</LastGenOutput>

@@ -1338,4 +1338,19 @@
   <data name="ChildWidgetOptions_Dialog_Title" xml:space="preserve">
     <value>Edit child widget options</value>
   </data>
+  <data name="WidgetUsages_Dialog_Title" xml:space="preserve">
+    <value>Widget Usages</value>
+  </data>
+  <data name="WidgetUsages_Type_HtmlWidget" xml:space="preserve">
+    <value>HTML Widget</value>
+  </data>
+  <data name="WidgetUsages_Type_Page" xml:space="preserve">
+    <value>Page</value>
+  </data>
+  <data name="WidgetUsages_Title_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="WidgetUsages_Type_Title" xml:space="preserve">
+    <value>Type</value>
+  </data>
 </root>

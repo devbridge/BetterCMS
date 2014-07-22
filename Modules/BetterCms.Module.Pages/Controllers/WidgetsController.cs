@@ -8,6 +8,7 @@ using BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit;
 using BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit;
 using BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets;
 using BetterCms.Module.Pages.Command.Widget.GetWidgetCategory;
+using BetterCms.Module.Pages.Command.Widget.GetWidgetUsages;
 using BetterCms.Module.Pages.Command.Widget.PreviewWidget;
 using BetterCms.Module.Pages.Command.Widget.SaveWidget;
 using BetterCms.Module.Pages.Content.Resources;
@@ -236,6 +237,31 @@ namespace BetterCms.Module.Pages.Controllers
         {
             var model = GetCommand<GetWidgetCategoryCommand>().ExecuteCommand(request);
             var view = model != null ? RenderView("SelectWidget", model.WidgetCategories) : string.Empty;
+
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Returns the list of widget usages and template for rendering the results.
+        /// </summary>
+        /// <param name="widgetId">The widget identifier.</param>
+        /// <param name="options">The options.</param>
+        /// <returns>
+        /// JSON result with template and list of widget usages
+        /// </returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
+        public ActionResult WidgetUsages(string widgetId, SearchableGridOptions options)
+        {
+            options.SetDefaultPaging();
+
+            var request = new GetWidgetUsagesCommandRequest
+                          {
+                              Options = options,
+                              WidgetId = widgetId.ToGuidOrDefault()
+                          };
+
+            var model = GetCommand<GetWidgetUsagesCommand>().ExecuteCommand(request);
+            var view = RenderView("Partial/WidgetUsagesTemplate", null);
 
             return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }

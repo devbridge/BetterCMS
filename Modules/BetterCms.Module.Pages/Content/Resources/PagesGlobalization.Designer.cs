@@ -3722,5 +3722,50 @@ namespace BetterCms.Module.Pages.Content.Resources {
                 return ResourceManager.GetString("Widgets_SelectWidget_DialogTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Widget Usages.
+        /// </summary>
+        public static string WidgetUsages_Dialog_Title {
+            get {
+                return ResourceManager.GetString("WidgetUsages_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string WidgetUsages_Title_Title {
+            get {
+                return ResourceManager.GetString("WidgetUsages_Title_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HTML Widget.
+        /// </summary>
+        public static string WidgetUsages_Type_HtmlWidget {
+            get {
+                return ResourceManager.GetString("WidgetUsages_Type_HtmlWidget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page.
+        /// </summary>
+        public static string WidgetUsages_Type_Page {
+            get {
+                return ResourceManager.GetString("WidgetUsages_Type_Page", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string WidgetUsages_Type_Title {
+            get {
+                return ResourceManager.GetString("WidgetUsages_Type_Title", resourceCulture);
+            }
+        }
     }
 }

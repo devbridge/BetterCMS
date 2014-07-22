@@ -62,8 +62,12 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
     */
     grid.ListViewModel = (function() {
 
-        grid.ListViewModel = function (container, loadUrl, items, gridOptions, totalItemsCount) {
+        grid.ListViewModel = function (container, loadUrl, items, gridOptions, opts) {
             var self = this;
+
+            self.opts = $.extend({
+                createItem: null
+            }, opts);
 
             self.loadUrl = loadUrl;
             self.saveUrl = null;
@@ -232,7 +236,7 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             }
 
             // Set options
-            self.setOptions(gridOptions, totalItemsCount);
+            self.setOptions(gridOptions);
         };
 
         grid.ListViewModel.prototype.addNewItem = function () {
@@ -251,7 +255,11 @@ bettercms.define('bcms.ko.grid', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
             }
         };
 
-        grid.ListViewModel.prototype.createItem = function(item) {
+        grid.ListViewModel.prototype.createItem = function (item) {
+            if (this.opts && this.opts.createItem && $.isFunction(this.opts.createItem)) {
+                return this.opts.createItem(this, item);
+            }
+
             var newItem = new grid.ItemViewModel(this, item);
             return newItem;
         };

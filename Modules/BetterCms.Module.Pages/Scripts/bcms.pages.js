@@ -680,13 +680,20 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             container.html(html);
         };
 
+        /*
+         * Opens edit page form
+         */
+        page.openEditPageDialog = function (id, postSuccess, title, onLoad) {
+            pageProperties.openEditPageDialog(id, postSuccess, title, onLoad);
+        };
+
         /**
-        * Opens page edit form from site settings pages list
-        */
+            * Opens page edit form from site settings pages list
+            */
         page.editSiteSettingsPage = function (self, container, title) {
             var id = self.data('id');
 
-            pageProperties.openEditPageDialog(id, function (data) {
+            page.openEditPageDialog(id, function (data) {
                 if (data.Data != null) {
                     if (data.Data.IsArchived) {
                         var form = container.find(selectors.siteSettingsPagesListForm),

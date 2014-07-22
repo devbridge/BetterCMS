@@ -4,8 +4,8 @@
 bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.datepicker', 'bcms.htmlEditor',
         'bcms.dynamicContent', 'bcms.siteSettings', 'bcms.messages', 'bcms.preview', 'bcms.grid',
         'bcms.slides.jquery', 'bcms.redirect', 'bcms.pages.history', 'bcms.security', 'bcms.options', 'bcms.ko.extenders', 'bcms.codeEditor',
-        'bcms.pages', 'bcms.forms'],
-    function ($, bcms, modal, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, slides, redirect, contentHistory, security, options, ko, codeEditor, pages, forms) {
+        'bcms.pages', 'bcms.forms', 'bcms.ko.grid'],
+    function ($, bcms, modal, datepicker, htmlEditor, dynamicContent, siteSettings, messages, preview, grid, slides, redirect, contentHistory, security, options, ko, codeEditor, pages, forms, kogrid) {
         'use strict';
 
         var widgets = {},
@@ -18,7 +18,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 deleteWidgetUrl: null,
                 loadPageContentOptionsDialogUrl: null,
                 loadChildContentOptionsDialogUrl: null,
-                getContentTypeUrl: null
+                getContentTypeUrl: null,
+                getWidgetUsagesUrl: null
             },
             globalization = {
                 createHtmlContentWidgetDialogTitle: null,
@@ -34,8 +35,11 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 deletingMessage: null,
                 widgetUsageTitle: null,
                 editChildWidgetOptionsTitle: null,
-                editChildWidgetOptionsCloseButtonTitle: null
-            },
+                editChildWidgetOptionsCloseButtonTitle: null,
+                widgetUsagesDialogTitle: null,
+                widgetUsagesType_Page: null,
+                widgetUsagesType_HtmlWidget: null
+    },
             selectors = {
                 enableCustomCss: '#bcms-enable-custom-css',
                 customCssContainer: '#bcms-custom-css-container',
@@ -86,7 +90,9 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 optionsTab: '#bcms-tab-2',
                 pageContentOptionsForm: '#bcms-options-form',
 
-                editInSourceModeHiddenField: '#bcms-edit-in-source-mode'
+                editInSourceModeHiddenField: '#bcms-edit-in-source-mode',
+
+                widgetUsagesGrid: '#bcms-widget-usages-grid'
             },
             classes = {
                 regionAdvancedContent: 'bcms-content-advanced',
@@ -98,6 +104,10 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             contentTypes = {
                 htmlWidget: 'html-widget',
                 serverWidget: 'server-widget'
+            },
+            widgetUsageTypes = {
+                page: 1,
+                htmlWidget: 2
             };
 
         /**
@@ -569,23 +579,72 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             container.find(selectors.widgetRowUsageLinks).on('click', function (event) {
                 bcms.stopEventPropagation(event);
 
-                filterPagesByWidget($(this));
+                findWidgetUsages($(this));
             });
         };
 
         /*
-        * Opens pages list, filtered by template
+        * Opens pages and widgets list, filtered by using widget
         */
-        function filterPagesByWidget(self) {
-            var id = self.data('id');
+        function findWidgetUsages(self) {
+            var widgetId = self.data('id'),
+                url = $.format(links.getWidgetUsagesUrl, widgetId);
 
-            pages.openPageSelectDialog({
-                params: {
-                    ContentId: id
-                },
-                canBeSelected: false,
-                title: globalization.widgetUsageTitle,
-                disableAccept: true
+            modal.open({
+                title: globalization.widgetUsagesDialogTitle,
+                disableAccept: true,
+                onLoad: function(dialog) {
+                    dynamicContent.setContentFromUrl(dialog, url, {
+                        done: function (json) {
+
+                            var data = (json.Success == true) ? json.Data : null,
+                                opts = {
+                                    createItem: function(listModel, item) {
+                                        var newItem = new kogrid.ItemViewModel(listModel, item);
+
+                                        newItem.title = ko.observable(item.Title);
+                                        newItem.url = ko.observable(item.Url);
+                                        newItem.typeTitle = ko.observable();
+                                        newItem.type = ko.observable(item.Type);
+
+                                        if (item.Type == widgetUsageTypes.page) {
+                                            newItem.typeTitle(globalization.widgetUsagesType_Page);
+                                        } else if (item.Type == widgetUsageTypes.htmlWidget) {
+                                            newItem.typeTitle(globalization.widgetUsagesType_HtmlWidget);
+                                            newItem.deletingIsDisabled = true;
+                                        }
+
+                                        newItem.editItem = function () {
+                                            if (this.type() == widgetUsageTypes.page) {
+                                                pages.openEditPageDialog(this.id(), function (pageData) {
+                                                    newItem.url(pageData.Data.PageUrl);
+                                                    newItem.title(pageData.Data.Title);
+                                                });
+                                            } else if (item.Type == widgetUsageTypes.htmlWidget) {
+                                                widgets.openEditHtmlContentWidgetDialog(this.id(), function(widgetData) {
+                                                    newItem.title(widgetData.Data.WidgetName);
+                                                });
+                                            }
+                                        };
+
+                                        newItem.openItem = function () {
+                                            if (this.url()) {
+                                                window.open(this.url());
+                                            } else {
+                                                this.editItem();
+                                            }
+                                        };
+
+                                        return newItem;
+                                    }
+                                },
+                                container = dialog.container.find(selectors.widgetUsagesGrid),
+                                usagesViewModel = new kogrid.ListViewModel(container, url, data.Items, data.GridOptions, opts);
+
+                            ko.applyBindings(usagesViewModel, container.get(0));
+                        }
+                    });
+                }
             });
         }
 

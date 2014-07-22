@@ -30,7 +30,8 @@ namespace BetterCms.Module.Pages.Registration
                             new JavaScriptModuleLinkTo<WidgetsController>(this, "deleteWidgetUrl", controller => controller.DeleteWidget("{0}", "{1}")),
                             new JavaScriptModuleLinkTo<ContentController>(this, "loadPageContentOptionsDialogUrl", controller => controller.PageContentOptions("{0}")),
                             new JavaScriptModuleLinkTo<ContentController>(this, "loadChildContentOptionsDialogUrl", controller => controller.ChildContentOptions("{0}", "{1}", "{2}", "{3}")),
-                            new JavaScriptModuleLinkTo<ContentController>(this, "getContentTypeUrl", controller => controller.GetContentType("{0}"))
+                            new JavaScriptModuleLinkTo<ContentController>(this, "getContentTypeUrl", controller => controller.GetContentType("{0}")),
+                            new JavaScriptModuleLinkTo<WidgetsController>(this, "getWidgetUsagesUrl", controller => controller.WidgetUsages("{0}", null))
                         };
 
             Globalization = new IActionProjection[]
@@ -49,6 +50,10 @@ namespace BetterCms.Module.Pages.Registration
                             new JavaScriptModuleGlobalization(this, "widgetUsageTitle", () => PagesGlobalization.SiteSettings_Widgets_PagesUsingWidget_Title),
                             new JavaScriptModuleGlobalization(this, "editChildWidgetOptionsTitle", () => PagesGlobalization.ChildWidgetOptions_Dialog_Title),
                             new JavaScriptModuleGlobalization(this, "editChildWidgetOptionsCloseButtonTitle", () => RootGlobalization.Button_Close),
+                            
+                            new JavaScriptModuleGlobalization(this, "widgetUsagesDialogTitle", () => PagesGlobalization.WidgetUsages_Dialog_Title),
+                            new JavaScriptModuleGlobalization(this, "widgetUsagesType_Page", () => PagesGlobalization.WidgetUsages_Type_Page),
+                            new JavaScriptModuleGlobalization(this, "widgetUsagesType_HtmlWidget", () => PagesGlobalization.WidgetUsages_Type_HtmlWidget)
                         };
         }
     }
