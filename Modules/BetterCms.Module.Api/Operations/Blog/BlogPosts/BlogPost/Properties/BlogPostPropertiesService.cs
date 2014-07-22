@@ -301,7 +301,8 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
             }
 
             string[] error;
-            var response = blogSaveService.SaveBlogPost(serviceModel, request.Data.ChildContentsOptionValues.ToViewModel(), securityService.GetCurrentPrincipal(), out error);
+            var childContentOptionValues = request.Data.ChildContentsOptionValues != null ? request.Data.ChildContentsOptionValues.ToViewModel() : null;
+            var response = blogSaveService.SaveBlogPost(serviceModel, childContentOptionValues, securityService.GetCurrentPrincipal(), out error);
             if (response == null)
             {
                 throw new CmsApiValidationException(error != null && error.Length > 0 ? string.Join(",", error) : "Page properties saving was canceled.");

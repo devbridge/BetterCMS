@@ -194,7 +194,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
                 content = (Module.Pages.Models.HtmlContent)contentService
                     .SaveContentWithStatusUpdate(contentToSave, desirableStatus);
             }
-            optionService.SaveChildContentOptions(content, request.Data.ChildContentsOptionValues.ToViewModel(), desirableStatus);
+            var childContentOptionValues = request.Data.ChildContentsOptionValues != null ? request.Data.ChildContentsOptionValues.ToViewModel() : null;
+            optionService.SaveChildContentOptions(content, childContentOptionValues, desirableStatus);
 
             unitOfWork.Commit();
 
