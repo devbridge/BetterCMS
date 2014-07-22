@@ -1,10 +1,14 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 using BetterCms.Core.Exceptions.Mvc;
+using BetterCms.Core.Mvc.Binders;
 using BetterCms.Core.Security;
 
 using BetterCms.Module.Pages.Command.Content.DeletePageContent;
+using BetterCms.Module.Pages.Command.Content.GetChildContentOptions;
+using BetterCms.Module.Pages.Command.Content.GetContentType;
 using BetterCms.Module.Pages.Command.Content.GetInsertHtmlContent;
 using BetterCms.Module.Pages.Command.Content.GetPageContentOptions;
 using BetterCms.Module.Pages.Command.Content.GetPageHtmlContent;
@@ -13,12 +17,12 @@ using BetterCms.Module.Pages.Command.Content.SavePageContentOptions;
 using BetterCms.Module.Pages.Command.Content.SavePageHtmlContent;
 using BetterCms.Module.Pages.Command.Content.SortPageContent;
 using BetterCms.Module.Pages.Command.Widget.GetWidgetCategory;
-
 using BetterCms.Module.Pages.ViewModels.Content;
 
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.ViewModels.Option;
 
 using Microsoft.Web.Mvc;
 
@@ -126,17 +130,17 @@ namespace BetterCms.Module.Pages.Controllers
         /// <summary>
         /// Validates and saves page content.
         /// </summary>
-        /// <param name="model">The model.</param>
+        /// <param name="request">The request.</param>
         /// <returns>
         /// JSON with result status and redirect URL.
         /// </returns>
         [HttpPost]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)]
-        public ActionResult SavePageHtmlContent(PageContentViewModel model)
+        public ActionResult SavePageHtmlContent([ModelBinder(typeof(JSONDataBinder))] SavePageHtmlContentCommandRequest request)
         {
             try
             {
-                var result = GetCommand<SavePageHtmlContentCommand>().ExecuteCommand(model);
+                var result = GetCommand<SavePageHtmlContentCommand>().ExecuteCommand(request);
 
                 if (result != null)
                 {
@@ -152,7 +156,7 @@ namespace BetterCms.Module.Pages.Controllers
                                                 ContentId = result.ContentId,
                                                 RegionId = result.RegionId,
                                                 PageId = result.PageId,
-                                                DesirableStatus = model.DesirableStatus
+                                                DesirableStatus = request.Content.DesirableStatus
                                             }
                                 });
                 }
@@ -201,6 +205,33 @@ namespace BetterCms.Module.Pages.Controllers
         }
 
         /// <summary>
+        /// Creates modal dialog for editing a child content options.
+        /// </summary>
+        /// <param name="contentId">The content identifier.</param>
+        /// <param name="assignmentIdentifier">The assignment identifier.</param>
+        /// <param name="widgetId">The widget identifier.</param>
+        /// <param name="loadOptions">if set to <c>true</c> [load options].</param>
+        /// <returns>
+        /// ViewResult to render page content options modal dialog.
+        /// </returns>
+        [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        public ActionResult ChildContentOptions(string contentId, string assignmentIdentifier, string widgetId, string loadOptions)
+        {
+            var request = new GetChildContentOptionsCommandRequest
+                          {
+                              ContentId = contentId.ToGuidOrDefault(),
+                              AssignmentIdentifier = (assignmentIdentifier ?? "").ToGuidOrDefault(),
+                              WidgetId = (widgetId ?? "").ToGuidOrDefault(),
+                              LoadOptions = loadOptions.ToBoolOrDefault()
+                          };
+            var model = GetCommand<GetChildContentOptionsCommand>().ExecuteCommand(request);
+            var view = RenderView("ChildContentOptions", model);
+
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
         /// Saves page content options.
         /// </summary>
         /// <param name="model">The view model.</param>
@@ -209,7 +240,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// </returns>
         [HttpPost]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
-        public ActionResult PageContentOptions(PageContentOptionsViewModel model)
+        public ActionResult PageContentOptions(ContentOptionValuesViewModel model)
         {
             bool success = GetCommand<SavePageContentOptionsCommand>().ExecuteCommand(model);
 
@@ -263,6 +294,20 @@ namespace BetterCms.Module.Pages.Controllers
         {
             var response = GetCommand<SortPageContentCommand>().ExecuteCommand(model);
             return Json(new WireJson { Success = response });
+        }
+
+        /// <summary>
+        /// Returns the type of the content.
+        /// </summary>
+        /// <param name="childContentId">The content identifier.</param>
+        /// <returns>JSON result with the type of the child content</returns>
+        [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        public JsonResult GetContentType(string childContentId)
+        {
+            var response = GetCommand<GetContentTypeCommand>().ExecuteCommand(childContentId.ToGuidOrDefault());
+
+            return WireJson(response != null, response, JsonRequestBehavior.AllowGet);
         }
     }
 }

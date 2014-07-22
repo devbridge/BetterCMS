@@ -215,5 +215,14 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// </value>
         [DataMember]
         public System.Collections.Generic.IList<AccessRuleModel> AccessRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of child contents option values.
+        /// </summary>
+        /// <value>
+        /// The list of child contents option values.
+        /// </value>
+        [DataMember]
+        public System.Collections.Generic.IList<ChildContentOptionValuesModel> ChildContentsOptionValues { get; set; }
     }
 }

@@ -73,8 +73,7 @@
     </Reference>
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Transactions" />
-    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -85,6 +84,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -110,6 +110,31 @@
     <Compile Include="Models\Migrations\InstallationVersionTableMetaData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="InstallationModuleDescriptor.cs" />
+    <Compile Include="Views\Shared\BlankLayout.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BlankLayout.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DefaultLayout.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DefaultLayout.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\ThreeColumnsLayout.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ThreeColumnsLayout.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\TwoColumnsLayout.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TwoColumnsLayout.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\WideLayout.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WideLayout.cshtml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\Resources\UsersGlobalization.resx">
@@ -157,22 +182,37 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\ThreeColumnsLayout.cshtml" />
+    <None Include="Views\Shared\ThreeColumnsLayout.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ThreeColumnsLayout.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\TwoColumnsLayout.cshtml" />
+    <None Include="Views\Shared\TwoColumnsLayout.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>TwoColumnsLayout.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\WideLayout.cshtml" />
+    <None Include="Views\Shared\WideLayout.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>WideLayout.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\DefaultLayout.cshtml" />
+    <None Include="Views\Shared\DefaultLayout.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>DefaultLayout.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\BlankLayout.cshtml" />
+    <None Include="Views\Shared\BlankLayout.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>BlankLayout.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

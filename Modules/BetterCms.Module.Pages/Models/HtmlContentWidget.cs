@@ -22,9 +22,9 @@ namespace BetterCms.Module.Pages.Models
 
         public virtual bool EditInSourceMode { get; set; }
 
-        public override Root.Models.Content CopyDataTo(Root.Models.Content content, bool copyOptions = true, bool copyRegions = true)
+        public override Root.Models.Content CopyDataTo(Root.Models.Content content, bool copyCollections = true)
         {
-            var copy = (HtmlContentWidget)base.CopyDataTo(content, copyOptions, copyRegions);
+            var copy = (HtmlContentWidget)base.CopyDataTo(content, copyCollections);
             copy.CustomCss = CustomCss;
             copy.UseCustomCss = UseCustomCss;
             copy.Html = Html;

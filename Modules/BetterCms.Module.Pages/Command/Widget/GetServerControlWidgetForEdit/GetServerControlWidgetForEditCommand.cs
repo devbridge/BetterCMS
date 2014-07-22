@@ -87,7 +87,12 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
                                      OptionKey = f.Key,
                                      CanDeleteOption = f.IsDeletable,
                                      CustomOption = f.CustomOption != null
-                                        ? new CustomOptionViewModel { Identifier = f.CustomOption.Identifier, Title = f.CustomOption.Title }
+                                        ? new CustomOptionViewModel
+                                          {
+                                              Identifier = f.CustomOption.Identifier,
+                                              Title = f.CustomOption.Title,
+                                              Id = f.CustomOption.Id
+                                          }
                                         : null
                                  })
                         .OrderBy(o => o.OptionKey)

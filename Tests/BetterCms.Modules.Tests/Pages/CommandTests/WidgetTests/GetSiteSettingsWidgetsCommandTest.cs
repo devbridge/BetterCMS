@@ -5,6 +5,8 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Services;
+using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
 using NUnit.Framework;
@@ -30,10 +32,12 @@ namespace BetterCms.Test.Module.Pages.CommandTests.WidgetTests
                         session.SaveOrUpdate(control2);
                         session.Flush();
 
-                        var command = new GetSiteSettingsWidgetsCommand();
-                        command.Repository = new DefaultRepository(new DefaultUnitOfWork(session));
+                        var unitOfWork = new DefaultUnitOfWork(session);
+                        var repository = new DefaultRepository(unitOfWork);
+                        var widgetService = new DefaultWidgetService(repository, unitOfWork, null, null);
+                        var command = new GetSiteSettingsWidgetsCommand(widgetService);
 
-                        var response = command.Execute(new SearchableGridOptions { SearchQuery = control1.Name.Substring(1, control1.Name.Length - 1) });
+                        var response = command.Execute(new WidgetsFilter { SearchQuery = control1.Name.Substring(1, control1.Name.Length - 1) });
 
                         Assert.IsNotNull(response);
                         Assert.IsNotNull(response.Items);
@@ -51,13 +55,12 @@ namespace BetterCms.Test.Module.Pages.CommandTests.WidgetTests
             RunActionInTransaction(
                 session =>
                     {
-                        var command = new GetSiteSettingsWidgetsCommand();
-                        command.Repository = new DefaultRepository(new DefaultUnitOfWork(session));
+                        var unitOfWork = new DefaultUnitOfWork(session);
+                        var repository = new DefaultRepository(unitOfWork);
+                        var widgetService = new DefaultWidgetService(repository, unitOfWork, null, null);
+                        var command = new GetSiteSettingsWidgetsCommand(widgetService);
 
-                        var response = command.Execute(new SearchableGridOptions
-                                                           {
-                                                               SearchQuery = Guid.NewGuid().ToString()
-                                                           });
+                        var response = command.Execute(new WidgetsFilter { SearchQuery = Guid.NewGuid().ToString() });
 
                         Assert.IsNotNull(response);
                         Assert.IsNotNull(response.Items);

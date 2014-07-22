@@ -26,7 +26,8 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetPageTranslations
                                         Id = page.Id,
                                         LanguageId = page.Language != null ? page.Language.Id : (Guid?)null,
                                         Title = page.Title,
-                                        PageUrl = page.PageUrl
+                                        PageUrl = page.PageUrl,
+                                        PageUrlHash = page.PageUrlHash
                                     }
                             };
                     }
@@ -42,7 +43,8 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetPageTranslations
                                     Id = t.Id,
                                     LanguageId = t.Language != null ? t.Language.Id : (Guid?)null,
                                     Title = t.Title,
-                                    PageUrl = t.PageUrl
+                                    PageUrl = t.PageUrl,
+                                    PageUrlHash = t.PageUrlHash
                                 }).ToList();
                 }
             }

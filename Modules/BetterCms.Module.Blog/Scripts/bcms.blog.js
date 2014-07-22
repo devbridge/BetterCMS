@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'bcms.ko.extenders', 'bcms.media', 'bcms.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect', 'bcms.pages.history', 'bcms.preview', 'bcms.security', 'bcms.blog.filter', 'bcms.sidemenu', 'bcms.forms'],
-    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid, messages, redirect, history, preview, security, filter, sidemenu, forms) {
+bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'bcms.ko.extenders', 'bcms.media', 'bcms.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect', 'bcms.pages.history', 'bcms.preview', 'bcms.security', 'bcms.blog.filter', 'bcms.sidemenu', 'bcms.forms', 'bcms.pages.widgets'],
+    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid, messages, redirect, history, preview, security, filter, sidemenu, forms, widgets) {
     'use strict';
 
     var blog = { },
@@ -168,7 +168,12 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                             }
                         }
                         return true;
-                    }
+                    },
+
+                    formSerialize: function (form) {
+                        return widgets.serializeFormWithChildWidgetOptions(form, selectors.htmlEditor);
+                    },
+                    formContentType: 'application/json; charset=utf-8'
                 });
             },
             onAccept: function() {
@@ -199,7 +204,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 return categorySelector != null ? categorySelector.val() : null;
             };
         
-        htmlEditor.initializeHtmlEditor(selectors.htmlEditor, {}, data.EditInSourceMode);
+        htmlEditor.initializeHtmlEditor(selectors.htmlEditor, data.ContentId, {}, data.EditInSourceMode);
         if (data.EnableInsertDynamicRegion) {
             htmlEditor.enableInsertDynamicRegion();
         }

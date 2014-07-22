@@ -6,6 +6,7 @@ using System.Security.Principal;
 using BetterCms.Core.Models;
 
 using BetterCms.Module.Api.Extensions;
+using BetterCms.Module.Api.Operations;
 using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
 using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.Blog.Models;
@@ -67,6 +68,37 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
                     session.SaveOrUpdate(layoutRegion);
 
                     Run(session, api.Blog.BlogPost.Properties.Post, api.Blog.BlogPost.Properties.Get, api.Blog.BlogPost.Properties.Put, api.Blog.BlogPost.Properties.Delete);
+                });
+
+            // Detach from events
+            Events.BlogEvents.Instance.BlogCreated -= Instance_EntityCreated;
+            Events.BlogEvents.Instance.BlogUpdated -= Instance_EntityUpdated;
+            Events.BlogEvents.Instance.BlogDeleted -= Instance_EntityDeleted;
+        }
+        
+        [Test]
+        public void Should_CRUD_BlogPost_WithLayout_Successfully_WithIdSpecified()
+        {
+            // Attach to events
+            Events.BlogEvents.Instance.BlogCreated += Instance_EntityCreated;
+            Events.BlogEvents.Instance.BlogUpdated += Instance_EntityUpdated;
+            Events.BlogEvents.Instance.BlogDeleted += Instance_EntityDeleted;
+
+            RunApiActionInTransaction(
+                (api, session) =>
+                {
+                    masterPage = null;
+                    layout = TestDataProvider.CreateNewLayout();
+                    region = TestDataProvider.CreateNewRegion();
+                    
+                    var layoutRegion = new LayoutRegion { Layout = layout, Region = region };
+                    layout.LayoutRegions = new[] { layoutRegion };
+
+                    session.SaveOrUpdate(region);
+                    session.SaveOrUpdate(layout);
+                    session.SaveOrUpdate(layoutRegion);
+
+                    RunWithIdSpecified(session, api.Blog.BlogPost.Properties.Get, api.Blog.BlogPost.Properties.Put, api.Blog.BlogPost.Properties.Delete);
                 });
 
             // Detach from events
@@ -159,6 +191,17 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
         protected override SaveBlogPostPropertiesModel GetCreateModel(ISession session)
         {
             var blogPost = TestDataProvider.CreateNewBlogPost();
+
+            var widget = TestDataProvider.CreateNewHtmlContentWidget();
+            session.SaveOrUpdate(widget);
+
+            var assignmentId1 = Guid.NewGuid();
+            var assignmentId2 = Guid.NewGuid();
+            var html = string.Format("{0}{1}{3}{2}",
+                TestDataProvider.ProvideRandomString(50),
+                TestDataProvider.CreateChildWidgetAssignment(widget.Id, assignmentId1),
+                TestDataProvider.ProvideRandomString(50),
+                TestDataProvider.CreateChildWidgetAssignment(widget.Id, assignmentId2));
             
             session.SaveOrUpdate(blogPost.Category);
             session.SaveOrUpdate(blogPost.Author);
@@ -189,7 +232,7 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
                     UseCanonicalUrl = true,
                     UseNoFollow = true,
                     UseNoIndex = true,
-                    HtmlContent = TestDataProvider.ProvideRandomString(200),
+                    HtmlContent = html,
                     Tags = new List<string> { TestDataProvider.ProvideRandomString(20), TestDataProvider.ProvideRandomString(20) },
                     MetaData = new MetadataModel
                                {
@@ -215,7 +258,46 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
                                       BlogPostContentId = Guid.NewGuid(),
                                       PageContentId = Guid.NewGuid(),
                                       RegionId = region.Id
-                                }
+                                },
+                    ChildContentsOptionValues = new List<ChildContentOptionValuesModel>
+                                {
+                                    new ChildContentOptionValuesModel
+                                    {
+                                        AssignmentIdentifier = assignmentId1,
+                                        OptionValues = new List<OptionValueModel>
+                                        {
+                                            new OptionValueModel
+                                            {
+                                                Key = "O1",
+                                                Value = "V1",
+                                                UseDefaultValue = false,
+                                                Type = OptionType.Text
+                                            }
+                                        }
+                                    },
+                                    new ChildContentOptionValuesModel
+                                    {
+                                        AssignmentIdentifier = assignmentId2,
+                                        OptionValues = new List<OptionValueModel>
+                                        {
+                                            new OptionValueModel
+                                            {
+                                                Key = "O2",
+                                                Value = Guid.NewGuid().ToString(),
+                                                UseDefaultValue = false,
+                                                Type = OptionType.Custom,
+                                                CustomTypeIdentifier = "media-images-folder"
+                                            },
+                                            new OptionValueModel
+                                            {
+                                                Key = "O3",
+                                                Value = Guid.NewGuid().ToString(),
+                                                UseDefaultValue = true,
+                                                Type = OptionType.Text
+                                            }
+                                        }
+                                    }
+                                } 
                 };
 
             return model;
@@ -229,6 +311,7 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             request.Data.IncludeAccessRules = true;
             request.Data.IncludeMetaData = true;
             request.Data.IncludeTags = true;
+            request.Data.IncludeChildContentsOptions = true;
 
             return request;
         }
@@ -265,6 +348,8 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             Assert.IsNotNull(getResponse.TechnicalInfo.RegionId);
             Assert.IsNotNull(getResponse.TechnicalInfo.PageContentId);
             Assert.IsNotNull(getResponse.AccessRules);
+            Assert.IsNotNull(getResponse.ChildContentsOptionValues);
+            Assert.IsNotEmpty(getResponse.ChildContentsOptionValues);
             if (masterPage != null)
             {
                 Assert.IsNotNull(getResponse.Data.MasterPageId);
@@ -316,6 +401,22 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             Assert.AreEqual(getResponse.TechnicalInfo.BlogPostContentId, model.TechnicalInfo.BlogPostContentId);
             Assert.AreEqual(getResponse.TechnicalInfo.PageContentId, model.TechnicalInfo.PageContentId);
             Assert.AreEqual(getResponse.TechnicalInfo.RegionId, model.TechnicalInfo.RegionId);
+
+            Assert.AreEqual(getResponse.ChildContentsOptionValues.Count, model.ChildContentsOptionValues.Count);
+            model.ChildContentsOptionValues.ToList().ForEach(
+                o =>
+                {
+                    var o1 = getResponse.ChildContentsOptionValues.FirstOrDefault(c => c.AssignmentIdentifier == o.AssignmentIdentifier);
+                    Assert.IsNotNull(o1);
+                    Assert.IsNotNull(o1.OptionValues);
+                    Assert.AreEqual(o1.OptionValues.Count(c => !c.UseDefaultValue), o.OptionValues.Count(c => !c.UseDefaultValue));
+                    Assert.IsTrue(o.OptionValues
+                        .Where(c => !c.UseDefaultValue)
+                        .All(c => o1.OptionValues.All(c1 => c1.Key == c.Key
+                            && c.Value == c1.Value
+                            && c.CustomTypeIdentifier == c1.CustomTypeIdentifier
+                            && c.Type == c1.Type)));
+                });
         }
     }
 }

@@ -234,6 +234,7 @@
     <Compile Include="Helpers\AuthenticationHelper.cs" />
     <Compile Include="Helpers\OptionsHelper.cs" />
     <Compile Include="Models\MenuItemViewModel.cs" />
+    <Compile Include="Models\SitemapMenuViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
   </ItemGroup>
@@ -259,6 +260,8 @@
     <Folder Include="Areas\bcms-search\" />
     <Folder Include="file\bcms-blog\scripts\" />
     <Folder Include="file\bcms-media\scripts\" />
+    <Folder Include="file\bcms-pages\scripts\" />
+    <Folder Include="file\bcms-root\scripts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

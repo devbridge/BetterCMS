@@ -512,7 +512,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
                 nodeToSave.UsePageTitleAsNodeTitle = nodeModel.UsePageTitleAsNodeTitle;
                 nodeToSave.Title = nodeModel.Title;
                 nodeToSave.Url = nodeModel.Url;
-                nodeToSave.UrlHash = nodeModel.Url.UrlHash();
+                nodeToSave.UrlHash = !string.IsNullOrWhiteSpace(nodeModel.Url) ? nodeModel.Url.UrlHash() : null;
                 nodeToSave.DisplayOrder = nodeModel.DisplayOrder;
                 nodeToSave.Macro = nodeModel.Macro;
                 nodeToSave.ParentNode = parentNode;
@@ -569,7 +569,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Sitemaps.Sitemap
                     translationToSave.Title = translationModel.Title;
                     translationToSave.UsePageTitleAsNodeTitle = translationModel.UsePageTitleAsNodeTitle;
                     translationToSave.Url = translationModel.Url;
-                    translationToSave.UrlHash = translationToSave.Url.UrlHash();
+                    translationToSave.UrlHash = !string.IsNullOrWhiteSpace(translationToSave.Url) ? translationToSave.Url.UrlHash() : null;
 
                     if (translationToSave.Node != node)
                     {

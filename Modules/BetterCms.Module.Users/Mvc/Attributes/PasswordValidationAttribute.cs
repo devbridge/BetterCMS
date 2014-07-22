@@ -12,7 +12,7 @@ using BetterCms.Module.Users.ViewModels.User;
 namespace BetterCms.Module.Users.Mvc.Attributes
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
-    public class PasswordValidationAttribute : ValidationAttribute, IClientValidatable
+    public class PasswordValidationAttribute : ValidationAttribute//, IClientValidatable
     {
         private readonly string RequiredMessage = UsersGlobalization.CreateUser_Password_IsRequired;
         private readonly string RegexMessage = UsersGlobalization.User_Password_LengthMessage;
@@ -37,18 +37,18 @@ namespace BetterCms.Module.Users.Mvc.Attributes
 
             return ValidationResult.Success;
         }
-
-        public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
-        {
-            var rule = new ModelClientValidationRule
-            {
-                ErrorMessage = RequiredMessage,
-                ValidationType = ClientValidationRule,
-            };
-            rule.ValidationParameters.Add("pattern", RegExp);
-            rule.ValidationParameters.Add("patternmessage", RegexMessage);
-
-            yield return rule;
-        }
+// TODO:
+//        public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
+//        {
+//            var rule = new ModelClientValidationRule
+//            {
+//                ErrorMessage = RequiredMessage,
+//                ValidationType = ClientValidationRule,
+//            };
+//            rule.ValidationParameters.Add("pattern", RegExp);
+//            rule.ValidationParameters.Add("patternmessage", RegexMessage);
+//
+//            yield return rule;
+//        }
     }
 }

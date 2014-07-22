@@ -40,5 +40,47 @@ namespace BetterCms.Module.Api.Extensions
                     })
                 .ToList();
         }
+
+        public static IList<ChildContentOptionValuesModel> ToServiceModel(this IList<ContentOptionValuesViewModel> model)
+        {
+            return model
+                .Select(o => new ChildContentOptionValuesModel
+                        {
+                            AssignmentIdentifier = o.OptionValuesContainerId,
+                            OptionValues = o.OptionValues != null ? o.OptionValues
+                                .Select(ov => new OptionValueModel
+                                        {
+                                            Key = ov.OptionKey,
+                                            Value = ov.OptionValue,
+                                            DefaultValue = ov.OptionDefaultValue,
+                                            Type = ((Operations.Root.OptionType)(int)ov.Type),
+                                            UseDefaultValue = ov.UseDefaultValue,
+                                            CustomTypeIdentifier = ov.CustomOption != null ? ov.CustomOption.Identifier : null
+                                        })
+                                .ToList() : null
+                        })
+                .ToList();
+        }
+
+        public static IList<ContentOptionValuesViewModel> ToViewModel(this IList<ChildContentOptionValuesModel> model)
+        {
+            return model
+                .Select(o => new ContentOptionValuesViewModel
+                {
+                    OptionValuesContainerId = o.AssignmentIdentifier,
+                    OptionValues = o.OptionValues != null ? o.OptionValues
+                        .Select(ov => new OptionValueEditViewModel
+                        {
+                            OptionKey = ov.Key,
+                            OptionValue = ov.Value,
+                            OptionDefaultValue = ov.DefaultValue,
+                            Type = (OptionType)(int)ov.Type,
+                            UseDefaultValue = ov.UseDefaultValue,
+                            CustomOption = ov.CustomTypeIdentifier != null ? new CustomOptionViewModel { Identifier = ov.CustomTypeIdentifier } : null
+                        })
+                        .ToList() : null
+                })
+                .ToList();
+        }
     }
 }

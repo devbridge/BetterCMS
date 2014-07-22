@@ -30,7 +30,7 @@ namespace BetterCms.Core.Modules.Projections
     }
 
     public interface IContentAccessor : IHtmlAccessor, IStylesheetAccessor, IJavaScriptAccessor
-    {        
+    {
     }
 
     [Serializable]

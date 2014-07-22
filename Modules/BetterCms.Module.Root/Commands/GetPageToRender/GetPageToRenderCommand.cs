@@ -39,10 +39,13 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         private readonly RootModuleDescriptor rootModuleDescriptor;
         
         private readonly IOptionService optionService;
+        
+        private readonly IChildContentService childContentService;
 
         public GetPageToRenderCommand(IPageAccessor pageAccessor, PageContentProjectionFactory pageContentProjectionFactory,
             PageStylesheetProjectionFactory pageStylesheetProjectionFactory, PageJavaScriptProjectionFactory pageJavaScriptProjectionFactory,
-            ICmsConfiguration cmsConfiguration, RootModuleDescriptor rootModuleDescriptor, IOptionService optionService)
+            ICmsConfiguration cmsConfiguration, RootModuleDescriptor rootModuleDescriptor, IOptionService optionService,
+            IChildContentService childContentService)
         {
             this.rootModuleDescriptor = rootModuleDescriptor;
             this.pageContentProjectionFactory = pageContentProjectionFactory;
@@ -51,6 +54,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             this.pageAccessor = pageAccessor;
             this.cmsConfiguration = cmsConfiguration;
             this.optionService = optionService;
+            this.childContentService = childContentService;
         }
 
         /// <summary>
@@ -263,10 +267,11 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             }
 
             var options = optionService.GetMergedOptionValues(contentToProject.ContentOptions, pageContent.Options);
-            
-            return pageContentProjectionFactory.Create(pageContent, contentToProject, options);
-        }
+            var childProjections = childContentService.CreateListOfChildProjectionsRecursively(pageContent, contentToProject.ChildContents);
 
+            return pageContentProjectionFactory.Create(pageContent, contentToProject, options, childProjections);
+        }
+        
         /// <summary>
         /// Gets the page.
         /// </summary>
@@ -345,8 +350,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         /// <returns>The list of page contents</returns>
         private IList<PageContent> GetPageContents(Guid[] pageIds, GetPageToRenderRequest request)
         {
-            IQueryable<PageContent> pageContentsQuery =
-                Repository.AsQueryable<PageContent>();
+            IQueryable<PageContent> pageContentsQuery = Repository.AsQueryable<PageContent>();
 
             pageContentsQuery = pageContentsQuery.Where(f => pageIds.Contains(f.Page.Id));
 
@@ -371,14 +375,22 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 .FetchMany(f => f.Options)
                 .Fetch(f => f.Content)
                 .ThenFetchMany(f => f.ContentRegions)
-                .ThenFetch(f => f.Region);
+                .ThenFetch(f => f.Region)
+                // Fetch child contents
+                .Fetch(f => f.Content)
+                .ThenFetchMany(f => f.ChildContents)
+                .ThenFetch(f => f.Child);
 
             if (request.CanManageContent || request.PreviewPageContentId != null)
             {
                 pageContentsQuery = pageContentsQuery.Fetch(f => f.Content).ThenFetchMany(f => f.History);
             }
 
-            return pageContentsQuery.ToList();
+            var contents = pageContentsQuery.ToList();
+
+            childContentService.RetrieveChildrenContentsRecursively(contents.Select(pc => pc.Content).Distinct().ToList());
+
+            return contents;
         }
 
         /// <summary>

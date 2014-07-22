@@ -457,6 +457,51 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assignment with id &quot;{0}&quot; added more than once as the child widget..
+        /// </summary>
+        public static string ChildContent_AssignmentAlreadyAdded {
+            get {
+                return ResourceManager.GetString("ChildContent_AssignmentAlreadyAdded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot add widget as child widget! One of child widgets references widget &quot;{0}&quot;, which causes circular reference..
+        /// </summary>
+        public static string ChildContent_CirculatReferenceDetected {
+            get {
+                return ResourceManager.GetString("ChildContent_CirculatReferenceDetected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed while parsing child widgets from content. Child widget tag should contain data-assign-id attribute with child widget assignment id..
+        /// </summary>
+        public static string ChildContent_FailedToParseAssignmentId_MEssage {
+            get {
+                return ResourceManager.GetString("ChildContent_FailedToParseAssignmentId_MEssage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed while parsing child widgets from content. Child widget tag should contain data-id attribute with child widget id..
+        /// </summary>
+        public static string ChildContent_FailedToParseWidgetId_Message {
+            get {
+                return ResourceManager.GetString("ChildContent_FailedToParseWidgetId_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Widget not found by specified id..
+        /// </summary>
+        public static string ChildContent_WidgetNotFound_ById {
+            get {
+                return ResourceManager.GetString("ChildContent_WidgetNotFound_ById", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Attention!.
         /// </summary>
         public static string Confirm_DefaultTitle {
@@ -1290,6 +1335,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         public static string SiteSettings_Title {
             get {
                 return ResourceManager.GetString("SiteSettings_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Tags.
+        /// </summary>
+        public static string TagsTemplate_AddTags_Title {
+            get {
+                return ResourceManager.GetString("TagsTemplate_AddTags_Title", resourceCulture);
             }
         }
         

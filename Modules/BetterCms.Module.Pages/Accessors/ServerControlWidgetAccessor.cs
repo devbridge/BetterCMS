@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts;
+using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.ViewModels.Cms;
 
 using Common.Logging;
+
+using RazorGenerator.Mvc;
 
 namespace BetterCms.Module.Pages.Accessors
 {
@@ -147,10 +151,32 @@ namespace BetterCms.Module.Pages.Accessors
 
         private RenderWidgetViewModel CreateWidgetViewModel(IView view)
         {
+            Type compiledType = null;
+
             var razor = view as RazorView;
             if (razor != null)
             {
-                var compiledType = System.Web.Compilation.BuildManager.GetCompiledType(razor.ViewPath);
+                compiledType = System.Web.Compilation.BuildManager.GetCompiledType(razor.ViewPath);
+            }
+            else
+            {
+                var procompiledView = view as PrecompiledMvcView;
+                if (view is PrecompiledMvcView)
+                {
+                    var typeVariable = typeof(PrecompiledMvcView).GetField("_type", BindingFlags.NonPublic | BindingFlags.Instance);
+                    if (typeVariable != null)
+                    {
+                        compiledType = typeVariable.GetValue(procompiledView) as Type;
+                    }
+                    else
+                    {
+                        throw new CmsException("Failed to render server control widget. Failed to retrieve a Model type.");
+                    }
+                }
+            }
+
+            if (compiledType != null)
+            {
                 var baseType = compiledType.BaseType;
                 if (baseType != null && baseType.IsGenericType)
                 {

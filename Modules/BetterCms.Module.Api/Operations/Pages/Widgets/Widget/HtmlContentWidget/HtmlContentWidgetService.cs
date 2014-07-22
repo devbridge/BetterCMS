@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
@@ -7,6 +8,8 @@ using BetterCms.Core.DataContracts.Enums;
 
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget.Options;
+using BetterCms.Module.Root.Services;
+using BetterCms.Module.Root.ViewModels.Option;
 
 using ServiceStack.ServiceInterface;
 
@@ -22,12 +25,16 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
         private readonly IHtmlContentWidgetOptionsService optionsService;
 
         private readonly ISaveWidgetService widgetService;
+        
+        private readonly IOptionService optionService;
 
-        public HtmlContentWidgetService(IRepository repository, IHtmlContentWidgetOptionsService optionsService, ISaveWidgetService widgetService)
+        public HtmlContentWidgetService(IRepository repository, IHtmlContentWidgetOptionsService optionsService,
+            ISaveWidgetService widgetService, IOptionService optionService)
         {
             this.repository = repository;
             this.optionsService = optionsService;
             this.widgetService = widgetService;
+            this.optionService = optionService;
         }
 
         public GetHtmlContentWidgetResponse Get(GetHtmlContentWidgetRequest request)
@@ -64,6 +71,13 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
                 response.Options = WidgetOptionsHelper.GetWidgetOptionsList(repository, request.WidgetId);
             }
 
+            if (request.Data.IncludeChildContentsOptions)
+            {
+                response.ChildContentsOptionValues = optionService
+                    .GetChildContentsOptionValues(request.WidgetId)
+                    .ToServiceModel();
+            }
+
             return response;
         }
 
@@ -89,7 +103,12 @@ namespace BetterCms.Module.Api.Operations.Pages.Widgets.Widget.HtmlContentWidget
                 model.Id = request.Id.Value;
             }
 
-            widgetService.SaveHtmlContentWidget(model, out widget, out originalWidget, false, true);
+            IList<ContentOptionValuesViewModel> childContents = null;
+            if (request.Data.ChildContentsOptionValues != null)
+            {
+                childContents = request.Data.ChildContentsOptionValues.ToViewModel();
+            }
+            widgetService.SaveHtmlContentWidget(model, childContents, out widget, out originalWidget, false, true);
 
             return new PutHtmlContentWidgetResponse { Data = widget.Id };
         }

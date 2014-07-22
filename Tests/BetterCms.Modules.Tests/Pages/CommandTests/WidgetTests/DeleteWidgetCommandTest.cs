@@ -36,7 +36,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.WidgetTests
                     var contentService = new Mock<IContentService>().Object;
                     var securityService = new Mock<ISecurityService>().Object;
 
-                    var widgetService = new DefaultWidgetService(repository, uow, optionService, contentService, securityService);
+                    var widgetService = new DefaultWidgetService(repository, uow, optionService, contentService);
 
                     DeleteWidgetCommand command = new DeleteWidgetCommand(widgetService);
 
@@ -64,9 +64,8 @@ namespace BetterCms.Test.Module.Pages.CommandTests.WidgetTests
                 var repository = new DefaultRepository(uow);
                 var optionService = new Mock<IOptionService>().Object;
                 var contentService = new Mock<IContentService>().Object;
-                var securityService = new Mock<ISecurityService>().Object;
 
-                var widgetService = new DefaultWidgetService(repository, uow, optionService, contentService, securityService);
+                var widgetService = new DefaultWidgetService(repository, uow, optionService, contentService);
 
                 DeleteWidgetCommand command = new DeleteWidgetCommand(widgetService);
 

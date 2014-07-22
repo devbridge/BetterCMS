@@ -22,6 +22,7 @@ using BetterCms.Module.Pages.ViewModels.Page;
 
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 
 using Common.Logging;
@@ -305,6 +306,7 @@ namespace BetterCms.Module.Pages.Services
                     Id = p.Id,
                     Title = p.Title,
                     PageUrl = p.PageUrl,
+                    PageUrlHash = p.PageUrlHash,
                     LanguageId = p.Language.Id
                 })
                 .ToFuture();
@@ -324,7 +326,9 @@ namespace BetterCms.Module.Pages.Services
         /// </exception>
         public bool DeletePage(DeletePageViewModel model, IPrincipal principal, IMessagesIndicator messages = null)
         {
-            var page = repository.First<PageProperties>(model.PageId);
+            var languagesFuture = repository.AsQueryable<Language>().ToFuture();
+
+            var page = repository.AsQueryable<PageProperties>(p => p.Id == model.PageId).ToFuture().FirstOne();
             if (model.Version > 0 && page.Version != model.Version)
             {
                 throw new ConcurrentDataException(page);
@@ -381,37 +385,10 @@ namespace BetterCms.Module.Pages.Services
 
             unitOfWork.BeginTransaction();
 
+            // Update sitemap nodes
             IList<SitemapNode> updatedNodes = new List<SitemapNode>();
             IList<SitemapNode> deletedNodes = new List<SitemapNode>();
-            if (sitemapNodes != null)
-            {
-                // Archive sitemaps before update.
-                sitemaps.Select(pair => pair.Key).ToList().ForEach(sitemap => sitemapService.ArchiveSitemap(sitemap.Id));
-                foreach (var node in sitemapNodes)
-                {
-                    if (!node.IsDeleted)
-                    {
-                        if (model.UpdateSitemap && sitemaps[node.Sitemap])
-                        {
-                            // Delete sitemap node.
-                            sitemapService.DeleteNode(node, ref deletedNodes);
-                        }
-                        else
-                        {
-                            // Unlink sitemap node.
-                            if (node.Page != null && node.Page.Id == page.Id)
-                            {
-                                node.Page = null;
-                                node.Title = node.UsePageTitleAsNodeTitle ? page.Title : node.Title;
-                                node.Url = page.PageUrl;
-                                node.UrlHash = page.PageUrlHash;
-                                repository.Save(node);
-                                updatedNodes.Add(node);
-                            }
-                        }
-                    }
-                }
-            }
+            UpdateSitemapNodes(model, page, sitemapNodes, sitemaps, languagesFuture.ToList(), updatedNodes, deletedNodes);
 
             Redirect redirect;
             if (!string.IsNullOrWhiteSpace(model.RedirectUrl))
@@ -550,6 +527,134 @@ namespace BetterCms.Module.Pages.Services
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Updates page sitemap nodes.
+        /// </summary>
+        private void UpdateSitemapNodes(DeletePageViewModel model, PageProperties page, IList<SitemapNode> sitemapNodes, Dictionary<Sitemap, bool> sitemaps,
+            List<Language> languages, IList<SitemapNode> updatedNodes, IList<SitemapNode> deletedNodes)
+        {
+            if (sitemapNodes != null)
+            {
+                // Archive sitemaps before update.
+                sitemaps.Select(pair => pair.Key).ToList().ForEach(sitemap => sitemapService.ArchiveSitemap(sitemap.Id));
+                foreach (var node in sitemapNodes)
+                {
+                    if (!node.IsDeleted)
+                    {
+                        if (model.UpdateSitemap && sitemaps[node.Sitemap])
+                        {
+                            // Delete sitemap node.
+                            sitemapService.DeleteNode(node, ref deletedNodes);
+                        }
+                        else
+                        {
+                            // Unlink sitemap node.
+                            if (node.Page != null && node.Page.Id == page.Id)
+                            {
+                                node.Page = null;
+                                node.Title = node.UsePageTitleAsNodeTitle ? page.Title : node.Title;
+                                node.Url = page.PageUrl;
+                                node.UrlHash = page.PageUrlHash;
+                                repository.Save(node);
+                                updatedNodes.Add(node);
+
+                                IEnumerable<PageTranslationViewModel> pageTranslations;
+                                if (page.LanguageGroupIdentifier.HasValue && !page.LanguageGroupIdentifier.Value.HasDefaultValue())
+                                {
+                                    pageTranslations = GetPageTranslations(page.LanguageGroupIdentifier.Value);
+                                }
+                                else
+                                {
+                                    pageTranslations = new PageTranslationViewModel[0];
+                                }
+
+                                // Assigned node URL and title is taken from default language, if such exists
+                                var defaultPageTranslation = pageTranslations.FirstOrDefault(p => !p.LanguageId.HasValue);
+                                if (defaultPageTranslation != null)
+                                {
+                                    node.Url = defaultPageTranslation.PageUrl;
+                                    node.UrlHash = defaultPageTranslation.PageUrlHash;
+                                    if (node.UsePageTitleAsNodeTitle)
+                                    {
+                                        node.Title = defaultPageTranslation.Title;
+                                    }
+                                }
+
+                                // Update sitemap node translations
+                                if (node.Translations == null)
+                                {
+                                    node.Translations = new List<SitemapNodeTranslation>();
+                                }
+
+                                node.Translations.Where(t => t.UsePageTitleAsNodeTitle).ForEach(
+                                    t =>
+                                    {
+                                        var pageTranslation = GetPageTranslation(pageTranslations, t.Language.Id, node);
+                                        if (t.UsePageTitleAsNodeTitle)
+                                        {
+                                            t.Title = pageTranslation.Title;
+                                        }
+
+                                        t.UsePageTitleAsNodeTitle = false;
+                                        t.Url = pageTranslation.PageUrl;
+                                        t.UrlHash = pageTranslation.PageUrlHash;
+                                    });
+
+                                // Create non-existing node translations for each language
+                                languages.Where(language => node.Translations.All(nt => nt.Language.Id != language.Id))
+                                    .ForEach(language =>
+                                    {
+                                        var pageTranslation = GetPageTranslation(pageTranslations, language.Id, node);
+
+                                        var nodeTranslation = new SitemapNodeTranslation
+                                            {
+                                                Language = language,
+                                                Node = node,
+                                                UsePageTitleAsNodeTitle = false,
+                                                Title = pageTranslation.Title,
+                                                Url = pageTranslation.PageUrl,
+                                                UrlHash = pageTranslation.PageUrlHash
+                                            };
+
+                                        node.Translations.Add(nodeTranslation);
+                                    });
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the page translation from page translations list, which is most compatible with node translation:
+        /// if page translation exists, take page translations
+        /// if page translation does not exist, take default language translation
+        /// if default language translation does not exist, take node's data
+        /// </summary>
+        /// <param name="pageTranslations">The page translations.</param>
+        /// <param name="nodeLanguage">The node language.</param>
+        /// <param name="node">The node.</param>
+        /// <returns></returns>
+        private PageTranslationViewModel GetPageTranslation(IEnumerable<PageTranslationViewModel> pageTranslations, Guid nodeLanguage, SitemapNode node)
+        {
+            var pageTranslation = pageTranslations.FirstOrDefault(p => p.LanguageId == nodeLanguage);
+            if (pageTranslation == null)
+            {
+                pageTranslation = pageTranslations.FirstOrDefault(p => !p.LanguageId.HasValue);
+            }
+            if (pageTranslation == null)
+            {
+                pageTranslation = new PageTranslationViewModel
+                                  {
+                                      Title = node.Title, 
+                                      PageUrl = node.Url,
+                                      PageUrlHash = node.UrlHash
+                                  };
+            }
+
+            return pageTranslation;
         }
     }
 }

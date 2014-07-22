@@ -1,16 +1,20 @@
-﻿using System.Linq;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
+using BetterCms.Core.Mvc.Binders;
 using BetterCms.Core.Security;
-using BetterCms.Module.Pages.Command.History.GetContentVersion;
+
 using BetterCms.Module.Pages.Command.Widget.DeleteWidget;
 using BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit;
 using BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit;
 using BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets;
+using BetterCms.Module.Pages.Command.Widget.GetWidgetCategory;
+using BetterCms.Module.Pages.Command.Widget.GetWidgetUsages;
 using BetterCms.Module.Pages.Command.Widget.PreviewWidget;
 using BetterCms.Module.Pages.Command.Widget.SaveWidget;
 using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.Widgets;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
@@ -96,20 +100,20 @@ namespace BetterCms.Module.Pages.Controllers
         /// <summary>
         /// Validates and saves html content widget.
         /// </summary>
-        /// <param name="model">The html content widget view model.</param>
+        /// <param name="request">The request.</param>
         /// <returns>
         /// Json with result status.
         /// </returns>
         [HttpPost]
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
-        public ActionResult EditHtmlContentWidget(EditHtmlContentWidgetViewModel model)
+        public ActionResult EditHtmlContentWidget([ModelBinder(typeof(JSONDataBinder))] SaveWidgetCommandRequest<EditHtmlContentWidgetViewModel> request)
         {
             if (ModelState.IsValid)
             {
-                var response = GetCommand<SaveHtmlContentWidgetCommand>().ExecuteCommand(model);
+                var response = GetCommand<SaveHtmlContentWidgetCommand>().ExecuteCommand(request);
                 if (response != null)
                 {
-                    if (model.Id.HasDefaultValue())
+                    if (request.Content.Id.HasDefaultValue())
                     {
                         Messages.AddSuccess(PagesGlobalization.SaveWidget_CreatedSuccessfully_Message);
                     }
@@ -156,20 +160,20 @@ namespace BetterCms.Module.Pages.Controllers
         /// <summary>
         /// Validates and saves widget.
         /// </summary>
-        /// <param name="model">The widget view model.</param>
+        /// <param name="request">The request.</param>
         /// <returns>
         /// Json with result status.
         /// </returns>
         [HttpPost]
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
-        public ActionResult EditServerControlWidget(EditServerControlWidgetViewModel model)
+        public ActionResult EditServerControlWidget(SaveWidgetCommandRequest<EditServerControlWidgetViewModel> request)
         {
             if (ModelState.IsValid)
             {
-                var response = GetCommand<SaveServerControlWidgetCommand>().ExecuteCommand(model);
+                var response = GetCommand<SaveServerControlWidgetCommand>().ExecuteCommand(request);
                 if (response != null)
                 {
-                    if (model.Id.HasDefaultValue())
+                    if (request.Content.Id.HasDefaultValue())
                     {
                         Messages.AddSuccess(PagesGlobalization.SaveWidget_CreatedSuccessfully_Message);
                     }
@@ -207,7 +211,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// Rendered widgets list.
         /// </returns>
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
-        public ActionResult Widgets(SearchableGridOptions request)
+        public ActionResult Widgets(WidgetsFilter request)
         {
             request.SetDefaultPaging();
             var model = GetCommand<GetSiteSettingsWidgetsCommand>().ExecuteCommand(request);
@@ -220,6 +224,47 @@ namespace BetterCms.Module.Pages.Controllers
             */
 
             return View(model);
+        }
+
+        /// <summary>
+        /// Creates select widget modal dialog for given page.
+        /// </summary>
+        /// <returns>
+        /// ViewResult to render select widget content modal dialog.
+        /// </returns>
+        [HttpGet]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
+        public ActionResult SelectWidget(GetWidgetCategoryRequest request)
+        {
+            var model = GetCommand<GetWidgetCategoryCommand>().ExecuteCommand(request);
+            var view = model != null ? RenderView("SelectWidget", model.WidgetCategories) : string.Empty;
+
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Returns the list of widget usages and template for rendering the results.
+        /// </summary>
+        /// <param name="widgetId">The widget identifier.</param>
+        /// <param name="options">The options.</param>
+        /// <returns>
+        /// JSON result with template and list of widget usages
+        /// </returns>
+        [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
+        public ActionResult WidgetUsages(string widgetId, SearchableGridOptions options)
+        {
+            options.SetDefaultPaging();
+
+            var request = new GetWidgetUsagesCommandRequest
+                          {
+                              Options = options,
+                              WidgetId = widgetId.ToGuidOrDefault()
+                          };
+
+            var model = GetCommand<GetWidgetUsagesCommand>().ExecuteCommand(request);
+            var view = RenderView("Partial/WidgetUsagesTemplate", null);
+
+            return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }
     }
 }
