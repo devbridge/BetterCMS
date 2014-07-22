@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 
-using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.Grids;
 using BetterCms.Module.Root.ViewModels.SiteSettings;

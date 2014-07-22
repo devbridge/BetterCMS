@@ -197,6 +197,8 @@ namespace BetterCms.Module.Pages
             containerBuilder.RegisterType<DefaultPageCloneService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultWidgetService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultDraftService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultPageListService>().As<IPageListService>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultUntranslatedPageListService>().As<IUntranslatedPageListService>().InstancePerLifetimeScope();
 
             // Registering root module, because root module register the last one, and this one should be before users module
             containerBuilder.RegisterType<EmptyUserProfileUrlResolver>().As<IUserProfileUrlResolver>().InstancePerLifetimeScope();
