@@ -2,9 +2,11 @@
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+
 using BetterCms.Module.Pages.Command.Widget.GetSiteSettingsWidgets;
+using BetterCms.Module.Pages.Services;
+using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Root.Models;
-using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 
 using MvcContrib.Sorting;
 
@@ -22,9 +24,9 @@ namespace BetterCms.Test.Module.Pages.CommandTests.WidgetTests
                 {
                     var widgets = new Widget[]
                                       {
-                                         this.TestDataProvider.CreateNewServerControlWidget(),
-                                         this.TestDataProvider.CreateNewServerControlWidget(),
-                                         this.TestDataProvider.CreateNewHtmlContentWidget()
+                                         TestDataProvider.CreateNewServerControlWidget(),
+                                         TestDataProvider.CreateNewServerControlWidget(),
+                                         TestDataProvider.CreateNewHtmlContentWidget()
                                       };
                     int i = 0;
                     foreach (var widget in widgets)
@@ -35,13 +37,12 @@ namespace BetterCms.Test.Module.Pages.CommandTests.WidgetTests
                     session.Flush();
                     session.Clear();
 
-                    IUnitOfWork unitOfWork = new DefaultUnitOfWork(session);
+                    var unitOfWork = new DefaultUnitOfWork(session);
+                    var repository = new DefaultRepository(unitOfWork);
+                    var widgetService = new DefaultWidgetService(repository, unitOfWork, null, null);
+                    var command = new GetSiteSettingsWidgetsCommand(widgetService);
 
-                    GetSiteSettingsWidgetsCommand command = new GetSiteSettingsWidgetsCommand();                    
-                    command.UnitOfWork = unitOfWork;
-                    command.Repository = new DefaultRepository(unitOfWork);
-
-                    var result = command.Execute(new SearchableGridOptions
+                    var result = command.Execute(new WidgetsFilter
                                                      {
                                                          PageSize = 20,
                                                          Column = "CategoryName",
