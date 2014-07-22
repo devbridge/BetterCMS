@@ -14,5 +14,16 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
         public string Title { get; set; }
         
         public string Url { get; set; }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("{0}, Type:{1}, Id:{2}, Title: {3}, Url: {4}", base.ToString(), Type, Id, Title, Url);
+        }
     }
 }

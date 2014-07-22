@@ -12,6 +12,7 @@ using BetterCms.Module.Pages.Command.Widget.GetWidgetUsages;
 using BetterCms.Module.Pages.Command.Widget.PreviewWidget;
 using BetterCms.Module.Pages.Command.Widget.SaveWidget;
 using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.Widgets;
 
 using BetterCms.Module.Root;
@@ -210,7 +211,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// Rendered widgets list.
         /// </returns>
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
-        public ActionResult Widgets(SearchableGridOptions request)
+        public ActionResult Widgets(WidgetsFilter request)
         {
             request.SetDefaultPaging();
             var model = GetCommand<GetSiteSettingsWidgetsCommand>().ExecuteCommand(request);

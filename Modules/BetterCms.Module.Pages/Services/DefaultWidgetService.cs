@@ -11,10 +11,14 @@ using BetterCms.Core.Exceptions.Mvc;
 
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.ViewModels.Filter;
+using BetterCms.Module.Pages.ViewModels.SiteSettings;
 using BetterCms.Module.Pages.ViewModels.Widgets;
 
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Grids.Extensions;
+using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
 
@@ -314,6 +318,66 @@ namespace BetterCms.Module.Pages.Services
             Events.PageEvents.Instance.OnWidgetDeleted(widget);
 
             return true;
+        }
+
+        public SiteSettingWidgetListViewModel GetFilteredWidgetsList(WidgetsFilter filter)
+        {
+            filter = filter ?? new WidgetsFilter();
+            filter.SetDefaultSortingOptions("WidgetName");
+
+            var query = repository.AsQueryable<Widget>()
+                        .Where(f => !f.IsDeleted && (f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft));
+
+            if (filter.ChildContentId.HasValue && !filter.ChildContentId.Value.HasDefaultValue())
+            {
+                query = query.Where(f => f.ChildContents.Any(cc => cc.Child.Id == filter.ChildContentId.Value));
+            }
+
+            var modelQuery = query.Select(f => new SiteSettingWidgetItemViewModel
+                {
+                    Id = f.Id,
+                    OriginalId = f.Status == ContentStatus.Draft && f.Original != null && f.Original.Status == ContentStatus.Published ? f.Original.Id : f.Id,
+                    Version = f.Version,
+                    OriginalVersion = f.Status == ContentStatus.Draft && f.Original != null && f.Original.Status == ContentStatus.Published ? f.Original.Version : f.Version,
+                    WidgetName = f.Name,
+                    CategoryName = (!f.Category.IsDeleted) ? f.Category.Name : null,
+                    WidgetEntityType = f.GetType(),
+                    IsPublished = f.Status == ContentStatus.Published || (f.Original != null && f.Original.Status == ContentStatus.Published),
+                    HasDraft = f.Status == ContentStatus.Draft
+                });
+
+            if (!string.IsNullOrWhiteSpace(filter.SearchQuery))
+            {
+                var searchQuery = filter.SearchQuery.ToLowerInvariant();
+                modelQuery = modelQuery.Where(f => f.CategoryName.ToLower().Contains(searchQuery) || f.WidgetName.ToLower().Contains(searchQuery));
+            }
+
+            modelQuery = modelQuery.ToList()
+                .GroupBy(g => g.OriginalId)
+                .Select(grp => grp.OrderByDescending(p => p.HasDraft).First())
+                .AsQueryable();
+
+            var count = modelQuery.ToRowCountFutureValue();
+            var widgets = modelQuery.AddSortingAndPaging(filter).ToList();
+
+            widgets.ForEach(
+                item =>
+                {
+                    if (typeof(ServerControlWidget).IsAssignableFrom(item.WidgetEntityType))
+                    {
+                        item.WidgetType = WidgetType.ServerControl;
+                    }
+                    else if (typeof(HtmlContentWidget).IsAssignableFrom(item.WidgetEntityType))
+                    {
+                        item.WidgetType = WidgetType.HtmlContent;
+                    }
+                    else
+                    {
+                        item.WidgetType = null;
+                    }
+                });
+
+            return new SiteSettingWidgetListViewModel(widgets, filter, count.Value);
         }
     }
 }
