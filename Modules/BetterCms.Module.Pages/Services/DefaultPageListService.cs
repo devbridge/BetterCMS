@@ -242,15 +242,29 @@ namespace BetterCms.Module.Pages.Services
             if (request.ContentId.HasValue)
             {
                 Root.Models.Content contentAlias = null;
-                var subQuery = QueryOver.Of<PageContent>()
-                    .JoinAlias(p => p.Content, () => contentAlias)
-                    .Where(pageContent => pageContent.Page.Id == alias.Id
-                        && pageContent.Content.Id == request.ContentId.Value
-                        && !pageContent.IsDeleted)
+                ChildContent childContentAlias = null;
+                HtmlContent htmlContentAlias = null;
+                PageContent pageContentAlias = null;
+
+                var htmlChildContentSubQuery =
+                    QueryOver.Of(() => htmlContentAlias)
+                        .JoinAlias(h => h.ChildContents, () => childContentAlias)
+                        .Where(() => htmlContentAlias.Id == contentAlias.Id)
+                        .And(() => childContentAlias.Child.Id == request.ContentId.Value)
+                        .Select(pageContent => 1);
+
+                var pageContentSubQuery = QueryOver.Of(() => pageContentAlias)
+                    .JoinAlias(() => pageContentAlias.Content, () => contentAlias)
+                    .And(() => pageContentAlias.Page.Id == alias.Id)
                     .And(() => !contentAlias.IsDeleted)
+                    .And(() => !pageContentAlias.IsDeleted)
+                    .And(Restrictions.Or(
+                        Restrictions.Where(() => contentAlias.Id == request.ContentId.Value),
+                        Subqueries.WhereExists(htmlChildContentSubQuery)
+                    ))
                     .Select(pageContent => 1);
 
-                query = query.WithSubquery.WhereExists(subQuery);
+                query = query.WithSubquery.WhereExists(pageContentSubQuery);
             }
 
             return query;
