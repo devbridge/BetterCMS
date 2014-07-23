@@ -221,6 +221,7 @@ namespace BetterCms.Module.Pages.Services
 
             if (newPage.IsMasterPage)
             {
+                newPage.ForceAccessProtocol = ForceProtocolType.None;
                 newPage.Status = PageStatus.Published;
                 newPage.Language = null;
             }

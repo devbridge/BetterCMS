@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 
 using BetterCms.Module.MediaManager.ViewModels;
@@ -306,6 +307,22 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         ///   <c>true</c> if is master page; otherwise, <c>false</c>.
         /// </value>
         public bool IsMasterPage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page access protocol.
+        /// </summary>
+        /// <value>
+        /// The page access protocol.
+        /// </value>
+        public ForceProtocolType ForceAccessProtocol { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of page access protocols.
+        /// </summary>
+        /// <value>
+        /// The list of page access protocols.
+        /// </value>
+        public IEnumerable<LookupKeyValue> PageAccessProtocols { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EditPagePropertiesViewModel" /> class.

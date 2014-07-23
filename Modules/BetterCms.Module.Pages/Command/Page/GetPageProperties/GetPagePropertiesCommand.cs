@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
@@ -19,6 +21,8 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Security;
+
+using FluentNHibernate.Utils;
 
 using NHibernate.Linq;
 
@@ -115,6 +119,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                               Version = page.Version,
                               PageName = page.Title,
                               PageUrl = page.PageUrl,
+                              ForceAccessProtocol = page.ForceAccessProtocol,
                               PageCSS = page.CustomCss,
                               PageJavascript = page.CustomJS,
                               UseNoFollow = page.UseNoFollow,
@@ -199,6 +204,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 model.Model.Tags = tagsFuture.ToList();
                 model.Model.RedirectFromOldUrl = true;
                 model.Model.Categories = categories;
+                model.Model.PageAccessProtocols = this.GetProtocolForcingTypes();
                 model.Model.UpdateSitemap = true;
                 model.Model.CustomOptions = optionService.GetCustomOptions();
                 model.Model.ShowTranslationsTab = cmsConfiguration.EnableMultilanguage && !model.Model.IsMasterPage;
@@ -239,6 +245,17 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
             }
 
             return model != null ? model.Model : null;
+        }
+
+        private IEnumerable<LookupKeyValue> GetProtocolForcingTypes()
+        {
+            var list = new List<LookupKeyValue>
+                           {
+                               new LookupKeyValue(ForceProtocolType.None.ToString(), "None"),
+                               new LookupKeyValue(ForceProtocolType.ForceHttp.ToString(), "Force HTTP"),
+                               new LookupKeyValue(ForceProtocolType.ForceHttps.ToString(), "Force HTTPS (secure)"),
+                           };
+            return list;
         }
     }
 }
