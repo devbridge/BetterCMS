@@ -166,7 +166,7 @@ namespace BetterCms.Module.Pages.Controllers
         /// </returns>
         [HttpPost]
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
-        public ActionResult EditServerControlWidget(SaveWidgetCommandRequest<EditServerControlWidgetViewModel> request)
+        public ActionResult EditServerControlWidget([ModelBinder(typeof(JSONDataBinder))] SaveWidgetCommandRequest<EditServerControlWidgetViewModel> request)
         {
             if (ModelState.IsValid)
             {

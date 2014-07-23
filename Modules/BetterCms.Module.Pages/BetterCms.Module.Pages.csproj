@@ -391,6 +391,11 @@
     <Compile Include="Registration\SeoJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\PagePropertiesJsModuleIncludeDescriptor.cs" />
     <Compile Include="Services\DefaultPageService.cs" />
+    <Compile Include="Views\Option\EditOptions.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditOptions.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Widgets\Partial\WidgetUsagesTemplate.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -470,11 +475,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ContentVersion.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Option\EditOptions.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EditOptions.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Option\EditOptionValues.generated.cs">
       <AutoGen>True</AutoGen>

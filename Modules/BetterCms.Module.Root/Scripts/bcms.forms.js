@@ -177,11 +177,37 @@ bettercms.define('bcms.forms', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.ta
         form.find('textarea:visible:not([data-bind])').attr('readonly', 'readonly').parent('div').css('z-index', 100);
     };
 
-    forms.serializeToObject = function (form, skipNulls) {
+    forms.serializeToObject = function(form, skipNulls) {
         var o = {};
         var a = form.serializeArray();
-        $.each(a, function () {
-            if (skipNulls && (this.value === undefined || this.value === null || this.value === '')) {
+        $.each(a, function() {
+            var arrayStart = this.name.indexOf('[');
+            var arrayEnd = this.name.indexOf(']');
+            if (arrayStart > 0 && arrayEnd - arrayStart > 1) {
+                // If array
+                var arrayName = this.name.substr(0, arrayStart);
+                if (!o[arrayName]) {
+                    o[arrayName] = [];
+                }
+
+                var arrayIndex = parseInt(this.name.substr(arrayStart + 1, arrayEnd - arrayStart - 1));
+                var length = o[arrayName].length;
+
+                for (var i = length; i < arrayIndex + 1; i++) {
+                    o[arrayName].push({});
+                }
+
+                var propertyStart = this.name.indexOf('.');
+                if (propertyStart == arrayEnd + 1) {
+                    var propertyName = this.name.substr(propertyStart + 1, this.name.length - arrayEnd);
+                    o[arrayName][arrayIndex][propertyName] = this.value;
+                } else {
+                    o[arrayName][arrayIndex] = this.value;
+                }
+
+                return;
+            } else if (skipNulls && (this.value === undefined || this.value === null || this.value === '')) {
+                // If skipping null value
                 return;
             }
             if (o[this.name] !== undefined) {
