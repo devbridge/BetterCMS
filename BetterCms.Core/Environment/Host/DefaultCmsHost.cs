@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Security.Principal;
 using System.Threading;
 using System.Web;
 using System.Web.Hosting;
@@ -130,6 +131,12 @@ namespace BetterCms.Core.Environment.Host
         /// <exception cref="System.NotImplementedException"></exception>
         public void OnAuthenticateRequest(HttpApplication application)
         {
+            // Impersonates user as anonymous, if requested
+            if (application.Request["bcms-view-page-as-anonymous"] == "1")
+            {
+                application.Context.User = null;
+            }
+
             // Notify.
             Events.CoreEvents.Instance.OnHostAuthenticateRequest(application);
         }
