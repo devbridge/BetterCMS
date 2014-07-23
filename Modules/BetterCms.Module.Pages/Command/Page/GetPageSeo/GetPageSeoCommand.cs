@@ -49,7 +49,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageSeo
                             PageId = f.Page.Id,
                             PageTitle = f.Page.Title,
                             PageUrlPath = f.Page.PageUrl,
-                            ChangedUrlPath = f.Page.PageUrlHash,
+                            ChangedUrlPath = f.Page.PageUrl,
                             MetaTitle = f.Page.MetaTitle,
                             MetaKeywords = f.Page.MetaKeywords,
                             MetaDescription = f.Page.MetaDescription,
