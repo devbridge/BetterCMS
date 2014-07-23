@@ -1186,6 +1186,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to View page as anonymous.
+        /// </summary>
+        public static string Sidebar_ViewAsAnonymousButtonTitle {
+            get {
+                return ResourceManager.GetString("Sidebar_ViewAsAnonymousButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New +.
         /// </summary>
         public static string SiteSettings_Categories_AddNewCategory {
