@@ -43,6 +43,7 @@ namespace BetterCms.Module.Root.ViewModels.Cms
             ModifiedOn = page.ModifiedOn;
             ModifiedByUser = page.ModifiedByUser;
             IsMasterPage = page.IsMasterPage;
+            ForceAccessProtocol = page.ForceAccessProtocol;
 
             if (rootPage != null && rootPage.Language != null)
             {
@@ -83,6 +84,8 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         public string Title { get; set; }
         
         public bool IsMasterPage { get; set; }
+
+        public ForceProtocolType ForceAccessProtocol { get; set; }
 
         public string MetaTitle { get; set; }
 

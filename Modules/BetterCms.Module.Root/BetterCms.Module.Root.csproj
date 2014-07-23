@@ -186,6 +186,7 @@
     <Compile Include="Models\Migrations\Migration201310170919.cs" />
     <Compile Include="Models\Migrations\Migration201310160818.cs" />
     <Compile Include="Models\Migrations\Migration201310180900.cs" />
+    <Compile Include="Models\Migrations\Migration201407231054.cs" />
     <Compile Include="Models\Migrations\Migration201406191600.cs" />
     <Compile Include="Models\Migrations\Migration201406101600.cs" />
     <Compile Include="Models\PagesView.cs" />
@@ -1535,10 +1536,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\TopBlockAddItem.cshtml" />
+    <None Include="Views\Shared\EditableGrid\Partial\TopBlockAddItem.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>TopBlockAddItem.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Language\List.cshtml" />
+    <None Include="Views\Language\List.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>List.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\ckeditor\plugins\scayt\LICENSE.md" />

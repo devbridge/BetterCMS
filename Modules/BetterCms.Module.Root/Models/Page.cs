@@ -104,6 +104,14 @@ namespace BetterCms.Module.Root.Models
         public virtual bool IsMasterPage { get; set; }
 
         /// <summary>
+        /// Gets or sets the type of the access (http vs https).
+        /// </summary>
+        /// <value>
+        /// The type of the access (http vs https).
+        /// </value>
+        public virtual ForceProtocolType ForceAccessProtocol { get; set; }
+
+        /// <summary>
         /// Gets or sets the page layout.
         /// </summary>
         /// <value>

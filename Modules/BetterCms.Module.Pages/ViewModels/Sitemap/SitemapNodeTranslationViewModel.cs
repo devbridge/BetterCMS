@@ -19,6 +19,14 @@ namespace BetterCms.Module.Pages.ViewModels.Sitemap
         /// The id.
         /// </value>
         public Guid Id { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the page id.
+        /// </summary>
+        /// <value>
+        /// The page id.
+        /// </value>
+        public Guid PageId { get; set; }
 
         /// <summary>
         /// Gets or sets the language identifier.

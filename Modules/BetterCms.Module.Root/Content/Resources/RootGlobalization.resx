@@ -600,4 +600,7 @@
   <data name="TagsTemplate_AddTags_Title" xml:space="preserve">
     <value>Add Tags</value>
   </data>
+  <data name="Sidebar_ViewAsAnonymousButtonTitle" xml:space="preserve">
+    <value>View page as anonymous</value>
+  </data>
 </root>

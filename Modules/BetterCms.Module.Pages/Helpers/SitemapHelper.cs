@@ -7,6 +7,7 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Sitemap;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Grids.Extensions;
 
 using NHibernate.Linq;
 
@@ -81,6 +82,7 @@ namespace BetterCms.Module.Pages.Helpers
                     UsePageTitleAsNodeTitle = node.UsePageTitleAsNodeTitle,
                     Url = linkedPage != null ? linkedPage.Url : node.Url,
                     PageId = linkedPage != null ? linkedPage.Id : Guid.Empty,
+                    DefaultPageId = linkedPage != null ? linkedPage.Id : Guid.Empty,
                     PageTitle = linkedPage != null ? linkedPage.Title : null,
                     DisplayOrder = node.DisplayOrder,
                     ChildNodes = GetSitemapNodesInHierarchy(enableMultilanguage, allNodes.Where(f => f.ParentNode == node).ToList(), allNodes, languageIds, pages),
@@ -93,15 +95,15 @@ namespace BetterCms.Module.Pages.Helpers
 
                     node.Translations.Distinct()
                         .Select(t => new SitemapNodeTranslationViewModel
-                        {
-                            Id = t.Id,
-                            LanguageId = t.Language.Id,
-                            Title = t.Title,
-                            UsePageTitleAsNodeTitle = t.UsePageTitleAsNodeTitle,
-                            Url = t.Url,
-                            Version = t.Version,
-                            Macro = t.Macro
-                        })
+                            {
+                                Id = t.Id,
+                                LanguageId = t.Language.Id,
+                                Title = t.Title,
+                                UsePageTitleAsNodeTitle = t.UsePageTitleAsNodeTitle,
+                                Url = t.Url,
+                                Version = t.Version,
+                                Macro = t.Macro
+                            })
                         .ToList()
                         .ForEach(nodeViewModel.Translations.Add);
                     
@@ -118,15 +120,17 @@ namespace BetterCms.Module.Pages.Helpers
                         }
                         else if (linkedPage.LanguageGroupIdentifier.HasValue)
                         {
-                            var pageTranslation = pages.FirstOrDefault(p => p.LanguageGroupIdentifier.HasValue
+                            // If non-default translation is added to sitemap, retrieving default page from page translations list
+                            var defaultPageTranslation = pages.FirstOrDefault(p => p.LanguageGroupIdentifier.HasValue
                                                                             && p.LanguageGroupIdentifier.Value == linkedPage.LanguageGroupIdentifier.Value
                                                                             && (!p.LanguageId.HasValue || p.LanguageId.Value.HasDefaultValue()));
-                            if (pageTranslation != null)
+                            if (defaultPageTranslation != null)
                             {
-                                nodeViewModel.Url = pageTranslation.Url;
+                                nodeViewModel.Url = defaultPageTranslation.Url;
+                                nodeViewModel.DefaultPageId = defaultPageTranslation.Id;
                                 if (nodeViewModel.UsePageTitleAsNodeTitle)
                                 {
-                                    nodeViewModel.Title = pageTranslation.Title;
+                                    nodeViewModel.Title = defaultPageTranslation.Title;
                                 }
                             }
                         }
@@ -157,6 +161,7 @@ namespace BetterCms.Module.Pages.Helpers
                             {
                                 title = linkedPage.Title;
                                 url = linkedPage.Url;
+                                translationViewModel.PageId = linkedPage.Id;
                             }
                             else if (linkedPage.LanguageGroupIdentifier.HasValue)
                             {
@@ -165,6 +170,13 @@ namespace BetterCms.Module.Pages.Helpers
                                                                                 && p.LanguageGroupIdentifier.Value == linkedPage.LanguageGroupIdentifier.Value
                                                                                 && p.LanguageId.HasValue
                                                                                 && p.LanguageId.Value == languageId);
+                                // If page has translation, set it's id
+                                if (pageTranslation != null)
+                                {
+                                    translationViewModel.PageId = pageTranslation.Id;
+                                }
+                                
+                                // If page translation does not exist, retrieve default language's translation
                                 if (pageTranslation == null)
                                 {
                                     pageTranslation = pages.FirstOrDefault(p => p.LanguageGroupIdentifier.HasValue

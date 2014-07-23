@@ -302,13 +302,13 @@ namespace BetterCms.Module.Pages.Services
                 .AsQueryable<Root.Models.Page>()
                 .Where(p => p.LanguageGroupIdentifier == languageGroupIdentifier)
                 .Select(p => new PageTranslationViewModel
-                {
-                    Id = p.Id,
-                    Title = p.Title,
-                    PageUrl = p.PageUrl,
-                    PageUrlHash = p.PageUrlHash,
-                    LanguageId = p.Language.Id
-                })
+                    {
+                        Id = p.Id,
+                        Title = p.Title,
+                        PageUrl = p.PageUrl,
+                        PageUrlHash = p.PageUrlHash,
+                        LanguageId = p.Language.Id
+                    })
                 .ToFuture();
         }
 

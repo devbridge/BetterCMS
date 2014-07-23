@@ -19,6 +19,7 @@ namespace BetterCms.Module.Root.Models.Maps
             Map(x => x.MetaDescription).Length(MaxLength.Max);
             Map(x => x.IsMasterPage).Not.Nullable();
             Map(x => x.LanguageGroupIdentifier).Nullable();
+            Map(x => x.ForceAccessProtocol).Not.Nullable();
 
             References(x => x.Layout).Nullable().Cascade.SaveUpdate().LazyLoad();
             References(x => x.MasterPage).Nullable().Cascade.SaveUpdate().LazyLoad();
