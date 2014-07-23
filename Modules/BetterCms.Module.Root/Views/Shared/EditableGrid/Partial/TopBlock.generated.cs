@@ -96,45 +96,25 @@ WriteLiteral("</div>\r\n");
             #line hidden
 WriteLiteral("\r\n");
 
+WriteLiteral("    ");
+
             
             #line 11 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
+Write(Html.Partial(Model.TopBlockAddItemView, Model));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n\r\n");
+
+            
+            #line 13 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 11 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
-     if (Model.CanAddNewItems)
-    {
-        
-            
-            #line default
-            #line hidden
-            
             #line 13 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
-   Write(Html.Partial(Model.TopBlockAddItemView, Model));
-
-            
-            #line default
-            #line hidden
-            
-            #line 13 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
-                                                       
-    }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("    \r\n");
-
-            
-            #line 16 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
-    
-            
-            #line default
-            #line hidden
-            
-            #line 16 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
      if (Model.ShowSearch)
     {
 
@@ -154,14 +134,14 @@ WriteLiteral(" type=\"text\"");
 
 WriteLiteral(" class=\"bcms-editor-field-box\"");
 
-WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 670), Tuple.Create("\"", 719)
+WriteAttribute("placeholder", Tuple.Create(" placeholder=\"", 616), Tuple.Create("\"", 665)
             
-            #line 19 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
-                                                                                                                        , Tuple.Create(Tuple.Create("", 684), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
+            #line 16 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
+                                                                                                                        , Tuple.Create(Tuple.Create("", 630), Tuple.Create<System.Object, System.Int32>(RootGlobalization.WaterMark_Search
             
             #line default
             #line hidden
-, 684), false)
+, 630), false)
 );
 
 WriteLiteral(" />\r\n            <div");
@@ -173,7 +153,7 @@ WriteLiteral(" class=\"bcms-btn-search\"");
 WriteLiteral(">");
 
             
-            #line 20 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
+            #line 17 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
                                                                    Write(RootGlobalization.Button_Search);
 
             
@@ -182,22 +162,22 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n        </div>\r\n");
 
             
-            #line 22 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
+            #line 19 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
     }
 
             
             #line default
             #line hidden
-WriteLiteral("    \r\n");
+WriteLiteral("\r\n");
 
             
-            #line 24 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
+            #line 21 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 24 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
+            #line 21 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
      if (Model.AddPaging)
     {
 
@@ -215,7 +195,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 28 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
+            #line 25 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
        Write(Html.Partial(Model.PagingView, Model));
 
             
@@ -226,7 +206,7 @@ WriteLiteral("\r\n        </div>\r\n");
 WriteLiteral("        <!-- /ko -->\r\n");
 
             
-            #line 31 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
+            #line 28 "..\..\Views\Shared\EditableGrid\Partial\TopBlock.cshtml"
     }
 
             

@@ -1535,10 +1535,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\TopBlockAddItem.cshtml" />
+    <None Include="Views\Shared\EditableGrid\Partial\TopBlockAddItem.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>TopBlockAddItem.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Language\List.cshtml" />
+    <None Include="Views\Language\List.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>List.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\ckeditor\plugins\scayt\LICENSE.md" />

@@ -1,3 +1,10 @@
 ﻿@model BetterCms.Module.Root.ViewModels.Shared.EditableGridViewModel
 
-<div class="bcms-btn-links-main" data-bind="click: addNewItem">@Model.AddNewTitle</div>
+@if (Model.CanAddNewItems)
+{
+    <div class="bcms-btn-links-main" data-bind="click: addNewItem">@Model.AddNewTitle</div>
+}
+else
+{
+    <div class="bcms-btn-links-main">&nbsp;</div>
+}
