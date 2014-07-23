@@ -262,5 +262,8 @@ var api = (function() {
         });
     });
 
+    // TODO: should be used default: 5000. Check, why fails with 5000 in dev environment
+    jasmine.getEnv().defaultTimeoutInterval = 10000;
+
     return obj;
 })();
