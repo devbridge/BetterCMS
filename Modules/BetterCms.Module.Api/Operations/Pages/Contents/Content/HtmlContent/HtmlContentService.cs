@@ -5,9 +5,11 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.DataTier;
-using BetterCms.Core.Services;
+
+using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Services;
 
 using ServiceStack.ServiceInterface;
 
@@ -34,9 +36,9 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
         private readonly Module.Root.Services.IContentService contentService;
 
         /// <summary>
-        /// The security service.
+        /// The option service
         /// </summary>
-        private readonly ISecurityService securityService;
+        private readonly IOptionService optionService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HtmlContentService" /> class.
@@ -44,13 +46,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
         /// <param name="repository">The repository.</param>
         /// <param name="unitOfWork">The unit of work.</param>
         /// <param name="contentService">The content service.</param>
-        /// <param name="securityService">The security service.</param>
-        public HtmlContentService(IRepository repository, IUnitOfWork unitOfWork, Module.Root.Services.IContentService contentService, ISecurityService securityService)
+        /// <param name="optionService">The option service.</param>
+        public HtmlContentService(IRepository repository, IUnitOfWork unitOfWork,
+            Module.Root.Services.IContentService contentService, IOptionService optionService)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
             this.contentService = contentService;
-            this.securityService = securityService;
+            this.optionService = optionService;
         }
 
         /// <summary>
@@ -87,7 +90,16 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
                     })
                 .FirstOne();
 
-            return new GetHtmlContentResponse { Data = model };
+            var response = new GetHtmlContentResponse { Data = model };
+            
+            if (request.Data.IncludeChildContentsOptions)
+            {
+                response.ChildContentsOptionValues = optionService
+                    .GetChildContentsOptionValues(request.ContentId)
+                    .ToServiceModel();
+            }
+
+            return response;
         }
 
         /// <summary>
@@ -161,11 +173,13 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
             unitOfWork.BeginTransaction();
 
             Module.Pages.Models.HtmlContent content;
+            var desirableStatus = request.Data.IsPublished ? ContentStatus.Published : ContentStatus.Draft;
             if (isNew && contentToSave.Id != default(Guid))
             {
                 content = contentToSave;
+                contentService.UpdateDynamicContainer(content);
 
-                content.Status = request.Data.IsPublished ? ContentStatus.Published : ContentStatus.Draft;
+                content.Status = desirableStatus;
                 content.Id = contentToSave.Id;
 
                 repository.Save(content);
@@ -178,8 +192,10 @@ namespace BetterCms.Module.Api.Operations.Pages.Contents.Content.HtmlContent
                 }
 
                 content = (Module.Pages.Models.HtmlContent)contentService
-                    .SaveContentWithStatusUpdate(contentToSave, request.Data.IsPublished ? ContentStatus.Published : ContentStatus.Draft);
+                    .SaveContentWithStatusUpdate(contentToSave, desirableStatus);
             }
+            var childContentOptionValues = request.Data.ChildContentsOptionValues != null ? request.Data.ChildContentsOptionValues.ToViewModel() : null;
+            optionService.SaveChildContentOptions(content, childContentOptionValues, desirableStatus);
 
             unitOfWork.Commit();
 

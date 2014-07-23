@@ -43,6 +43,11 @@ namespace BetterCms.Test.Module.Api
             return new TCreateRequest { Data = model };
         }
 
+        protected virtual TUpdateRequest GetCreateRequestWithId(TSaveModel model)
+        {
+            return new TUpdateRequest { Data = model, Id = Guid.NewGuid() };
+        }
+
         protected abstract TGetRequest GetGetRequest(SaveResponseBase saveResponseBase);
 
         protected abstract TUpdateRequest GetUpdateRequest(TGetResponse getResponse);
@@ -84,6 +89,48 @@ namespace BetterCms.Test.Module.Api
         protected virtual void CheckDeleteEvent()
         {
             CheckEventsCount(1, 1, 1);
+        }
+
+        protected void RunWithIdSpecified(
+            ISession session,
+            Func<TGetRequest, TGetResponse> getFunc,
+            Func<TUpdateRequest, TUpdateResponse> updateFunc,
+            Func<TDeleteRequest, TDeleteResponse> deleteFunc)
+        {
+            createdEventCount = 0;
+            deletedEventCount = 0;
+            updatedEventCount = 0;
+
+            // Create
+            var createModel = GetCreateModel(session);
+            var createRequest = GetCreateRequestWithId(createModel);
+            var createResponse = UpdateResponse<TUpdateRequest, TUpdateResponse, TSaveModel>(createRequest, updateFunc);
+            //session.Flush();
+            session.Clear();
+            CheckCreateEvent();
+
+            // Get
+            var getRequest = GetGetRequest(createResponse);
+            var getResponse = GetResponse<TGetRequest, TGetResponse, TModel>(getRequest, getFunc);
+            Assert.AreEqual(createRequest.Id, getResponse.Data.Id);
+            OnAfterCreateGet(getResponse, createRequest.Data);
+
+            // Update
+            var updateRequest = GetUpdateRequest(getResponse);
+            var updateResponse = UpdateResponse<TUpdateRequest, TUpdateResponse, TSaveModel>(updateRequest, updateFunc);
+            //session.Flush();
+            session.Clear();
+            CheckUpdateEvent();
+
+            // Get
+            getRequest = GetGetRequest(updateResponse);
+            getResponse = GetResponse<TGetRequest, TGetResponse, TModel>(getRequest, getFunc);
+            OnAfterUpdateGet(getResponse, updateRequest.Data);
+
+            // Delete
+            var deleteRequest = GetDeleteRequest(getResponse);
+            DeleteResponse(deleteRequest, deleteFunc);
+            CheckDeleteEvent();
         }
 
         protected void Run(

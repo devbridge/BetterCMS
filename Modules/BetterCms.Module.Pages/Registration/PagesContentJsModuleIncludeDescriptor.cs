@@ -25,7 +25,8 @@ namespace BetterCms.Module.Pages.Registration
                     new JavaScriptModuleLinkTo<ContentController>(this, "insertContentToPageUrl", controller => controller.InsertContentToPage("{0}", "{1}", "{2}")),
                     new JavaScriptModuleLinkTo<ContentController>(this, "deletePageContentUrl", controller => controller.DeletePageContent("{0}", "{1}", "{2}", "{3}")),
                     new JavaScriptModuleLinkTo<ContentController>(this, "editPageContentUrl", controller => controller.EditPageHtmlContent("{0}")),
-                    new JavaScriptModuleLinkTo<ContentController>(this, "sortPageContentUrl", controller => controller.SortPageContent(null))
+                    new JavaScriptModuleLinkTo<ContentController>(this, "sortPageContentUrl", controller => controller.SortPageContent(null)),
+                    new JavaScriptModuleLinkTo<WidgetsController>(this, "selectWidgetUrl", controller => controller.SelectWidget(null))
                 };
 
             Globalization = new IActionProjection[]
@@ -49,7 +50,8 @@ namespace BetterCms.Module.Pages.Registration
                     new JavaScriptModuleGlobalization(this, "sortPageContentFailureMessageMessage", () => PagesGlobalization.SortPageContent_FailureMessage_Message),
                     new JavaScriptModuleGlobalization(this, "datePickerTooltipTitle", () => RootGlobalization.Date_Picker_Tooltip_Title),
                                         
-                    new JavaScriptModuleGlobalization(this, "errorTitle", () => RootGlobalization.Alert_ErrorTitle)                                       
+                    new JavaScriptModuleGlobalization(this, "errorTitle", () => RootGlobalization.Alert_ErrorTitle),
+                    new JavaScriptModuleGlobalization(this, "selectWidgetDialogTitle", () => PagesGlobalization.Widgets_SelectWidget_DialogTitle)
                 };
         }
     }

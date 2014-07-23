@@ -17,9 +17,9 @@ namespace BetterCms.Module.Root.Models
             }
         }
 
-        public override Content CopyDataTo(Content content, bool copyOptions = true, bool copyRegions = true)
+        public override Content CopyDataTo(Content content, bool copyCollections = true)
         {
-            var copy = (Widget)base.CopyDataTo(content, copyOptions, copyRegions);
+            var copy = (Widget)base.CopyDataTo(content, copyCollections);
             copy.Category = Category;
 
             return copy;

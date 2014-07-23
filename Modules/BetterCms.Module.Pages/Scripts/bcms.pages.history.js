@@ -71,9 +71,9 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
     function restoreVersion(container, id) {
         var submitRestoreIt = function (isConfirmed) {
             var url = $.format(links.restoreContentVersionUrl, id, isConfirmed),
-                onComplete = function(json) {
+                onComplete = function (json) {
+                    messages.refreshBox(container, json);
                     if (json.Success) {
-                        messages.refreshBox(container, json);
                         redirect.ReloadWithAlert();
                     } else {
                         if (json.Data && json.Data.ConfirmationMessage) {

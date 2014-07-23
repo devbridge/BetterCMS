@@ -2,10 +2,10 @@
 
 using BetterCms.Core.Mvc.Commands;
 
-using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
+using BetterCms.Module.Root.ViewModels.Option;
 
 using NHibernate.Linq;
 
@@ -13,7 +13,7 @@ using ContentEntity = BetterCms.Module.Root.Models.Content;
 
 namespace BetterCms.Module.Pages.Command.Content.SavePageContentOptions
 {
-    public class SavePageContentOptionsCommand : CommandBase, ICommand<PageContentOptionsViewModel, bool>
+    public class SavePageContentOptionsCommand : CommandBase, ICommand<ContentOptionValuesViewModel, bool>
     {
         /// <summary>
         /// Gets or sets the option service.
@@ -28,12 +28,12 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageContentOptions
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns></returns>
-        public bool Execute(PageContentOptionsViewModel model)
+        public bool Execute(ContentOptionValuesViewModel model)
         {
-            if (model != null && !model.PageContentId.HasDefaultValue())
+            if (model != null && !model.OptionValuesContainerId.HasDefaultValue())
             {
                 var pageContent = Repository.AsQueryable<PageContent>()
-                              .Where(f => f.Id == model.PageContentId && !f.IsDeleted && !f.Content.IsDeleted)
+                              .Where(f => f.Id == model.OptionValuesContainerId && !f.IsDeleted && !f.Content.IsDeleted)
                               .FetchMany(f => f.Options)
                               .Fetch(f => f.Content).ThenFetchMany(f => f.ContentOptions)
                               .ToList()

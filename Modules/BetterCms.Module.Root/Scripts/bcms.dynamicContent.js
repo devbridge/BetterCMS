@@ -20,7 +20,7 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             failedLoadDialogMessage: null,
             dialogLoadingCancelledMessage: null,
             forbiddenDialogMessage: null,
-            unauthorizedDialogMessage: null,
+            unauthorizedDialogMessage: null
         },
         lastDialogId = null;
 
@@ -160,6 +160,12 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
         dialogForm.each(function () {
             var form = $(this);
             forms.ajaxForm(form, {
+                contentType: options.contentType || 'application/x-www-form-urlencoded',
+                dataType: options.dataType || 'json',
+                serialize: options.serialize || function (formToSerialize) {
+                    return formToSerialize.serialize();
+                },
+
                 beforeSubmit: function () {
                     if ($.isFunction(options.beforeSubmit)) {
                         var result = options.beforeSubmit(form);
@@ -171,7 +177,7 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                     dynamicConent.showLoading(dialog);
                     return true;
                 },
-                
+
                 success: function (json) {
                     if ($.isFunction(options.success)) {
                         if (options.success(json, dialog) !== false) {
@@ -221,7 +227,13 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
             beforePost: null,
             postSuccess: null,
             postError: null,
-            postComplete: null
+            postComplete: null,
+
+            formContentType: 'application/x-www-form-urlencoded',
+            formDataType: 'json',
+            formSerialize: function (form) {
+                return form.serialize();
+            }
         }, options);
 
         dynamicConent.setContentFromUrl(dialog, url, {
@@ -235,7 +247,11 @@ bettercms.define('bcms.dynamicContent', ['bcms.jquery', 'bcms', 'bcms.modal', 'b
                     beforeSubmit: options.beforePost,
                     success: options.postSuccess,
                     error: options.postError,
-                    complete: options.postComplete
+                    complete: options.postComplete,
+
+                    dataType: options.formDataType,
+                    contentType: options.formContentType,
+                    serialize: options.formSerialize
                 });
             }
         });

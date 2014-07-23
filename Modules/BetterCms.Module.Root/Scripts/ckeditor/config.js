@@ -4,7 +4,7 @@
  */
 
 CKEDITOR.editorConfig = function (config) {
-    config.extraPlugins = 'cms-imagemanager,cms-filemanager,cms-dynamicregion,cms-modelvalues,aceeditor';
+    config.extraPlugins = 'cms-imagemanager,cms-filemanager,cms-dynamicregion,cms-modelvalues,aceeditor,cms-widget';
 
     config.toolbar = [
 		['Undo', 'Redo'],
@@ -15,7 +15,7 @@ CKEDITOR.editorConfig = function (config) {
         ['TextColor', 'BGColor'],
 		['NumberedList', 'BulletedList', 'Outdent', 'Indent'],
 		['Styles', 'Format', 'Font', 'FontSize'],
-        ['CmsDynamicRegion', 'CmsModelValues'],
+        ['CmsDynamicRegion', 'CmsModelValues', 'CmsWidget'],
 		['Source', 'Maximize', 'ShowBlocks']
     ];
 

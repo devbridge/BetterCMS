@@ -11,6 +11,7 @@ using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Mvc.Attributes;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.ViewModels.Option;
 using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.Blog.ViewModels.Blog

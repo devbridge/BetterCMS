@@ -166,7 +166,6 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
 
             var tagsFuture = tagService.GetPageTagNames(id);
             var categories = categoryService.GetCategories();
-            var customOptionsFuture = optionService.GetCustomOptionsFuture();
             var languagesFuture = (cmsConfiguration.EnableMultilanguage) ? languageService.GetLanguages() : null;
 
             IEnumerable<AccessRule> userAccessFuture;
@@ -201,7 +200,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 model.Model.RedirectFromOldUrl = true;
                 model.Model.Categories = categories;
                 model.Model.UpdateSitemap = true;
-                model.Model.CustomOptions = customOptionsFuture.ToList();
+                model.Model.CustomOptions = optionService.GetCustomOptions();
                 model.Model.ShowTranslationsTab = cmsConfiguration.EnableMultilanguage && !model.Model.IsMasterPage;
                 if (model.Model.ShowTranslationsTab)
                 {

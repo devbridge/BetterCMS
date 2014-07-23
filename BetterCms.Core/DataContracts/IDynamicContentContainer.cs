@@ -2,6 +2,6 @@
 {
     public interface IDynamicContentContainer : IContent
     {
-        string Html { get; }
+        string Html { get; set; }
     }
 }

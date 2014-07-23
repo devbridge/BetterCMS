@@ -127,6 +127,7 @@
     <Compile Include="Operations\Blog\BlogPosts\Settings\PutBlogPostsSettingsRequest.cs" />
     <Compile Include="Operations\Blog\BlogPosts\Settings\PutBlogPostsSettingsResponse.cs" />
     <Compile Include="Operations\Blog\BlogPosts\Settings\SaveBlogPostsSettingsModel.cs" />
+    <Compile Include="Operations\ChildContentOptionValuesModel.cs" />
     <Compile Include="Operations\MediaManager\Files\File\DeleteFileRequest.cs" />
     <Compile Include="Operations\MediaManager\Files\File\DeleteFileResponse.cs" />
     <Compile Include="Operations\MediaManager\Files\File\PostFileRequest.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="Operations\Pages\Contents\Content\Draft\IContentDraftService.cs" />
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\DeleteHtmlContentRequest.cs" />
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\DeleteHtmlContentResponse.cs" />
+    <Compile Include="Operations\Pages\Contents\Content\HtmlContent\GetHtmlContentModel.cs" />
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\PostHtmlContentRequest.cs" />
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\PostHtmlContentResponse.cs" />
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\SaveHtmlContentModel.cs" />

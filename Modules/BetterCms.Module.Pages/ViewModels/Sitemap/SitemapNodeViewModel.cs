@@ -124,6 +124,14 @@ namespace BetterCms.Module.Pages.ViewModels.Sitemap
         public string Macro { get; set; }
 
         /// <summary>
+        /// Gets or sets the page title.
+        /// </summary>
+        /// <value>
+        /// The page title.
+        /// </value>
+        public string PageTitle { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

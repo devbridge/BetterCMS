@@ -336,7 +336,7 @@ namespace BetterCms.Module.Blog.Services
                         }
 
                         string[] error;
-                        var blogPost = blogService.SaveBlogPost(blogPostModel, principal, out error);
+                        var blogPost = blogService.SaveBlogPost(blogPostModel, null, principal, out error);
                         if (blogPost == null)
                         {
                             blogPostResult = new BlogPostImportResult

@@ -51,12 +51,19 @@ namespace BetterCms.Module.Pages.Services
         /// </summary>
         private readonly ISecurityService securityService;
 
-        public DefaultPreviewService(PageContentProjectionFactory pageContentProjectionFactory, IOptionService optionService, IRepository repository, ISecurityService securityService)
+        /// <summary>
+        /// The child content service
+        /// </summary>
+        private readonly IChildContentService childContentService;
+
+        public DefaultPreviewService(PageContentProjectionFactory pageContentProjectionFactory, IOptionService optionService,
+            IRepository repository, ISecurityService securityService, IChildContentService childContentService)
         {
             this.pageContentProjectionFactory = pageContentProjectionFactory;
             this.repository = repository;
             this.optionService = optionService;
             this.securityService = securityService;
+            this.childContentService = childContentService;
         }
 
         /// <summary>
@@ -84,6 +91,10 @@ namespace BetterCms.Module.Pages.Services
             pageContent.Content = repository
                 .AsQueryable<ContentEntity>(c => c.Id == contentId)
                 .FetchMany(f => f.ContentOptions)
+                .FetchMany(f => f.ChildContents)
+                .ThenFetch(f => f.Child)
+                .FetchMany(f => f.ChildContents)
+                .ThenFetchMany(f => f.Options)
                 .ToList()
                 .FirstOrDefault();
 
@@ -92,9 +103,12 @@ namespace BetterCms.Module.Pages.Services
                 DemandAccess(user, RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent);
             }
 
+            childContentService.RetrieveChildrenContentsRecursively(new[] { pageContent.Content });
+
             var options = optionService.GetMergedOptionValues(pageContent.Content.ContentOptions, pageContent.Options);
 
-            var contentProjection = pageContentProjectionFactory.Create(pageContent, pageContent.Content, options);
+            var childProjections = childContentService.CreateListOfChildProjectionsRecursively(pageContent, pageContent.Content.ChildContents);
+            var contentProjection = pageContentProjectionFactory.Create(pageContent, pageContent.Content, options, childProjections);
 
             var pageViewModel = new RenderPageViewModel
                                     {

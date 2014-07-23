@@ -31,11 +31,14 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
+using BetterCms.Module.Root.ViewModels.Option;
 
 using Common.Logging;
 
 using NHibernate.Criterion;
 using NHibernate.Linq;
+
+using RootOptionService = BetterCms.Module.Root.Services.IOptionService;
 
 namespace BetterCms.Module.Blog.Services
 {
@@ -51,10 +54,11 @@ namespace BetterCms.Module.Blog.Services
         protected readonly ICmsConfiguration configuration;
         private readonly IUrlService urlService;
         protected readonly IRepository repository;
-        private readonly IOptionService optionService;
+        private readonly IOptionService blogOptionService;
+        private readonly RootOptionService optionService;
         protected readonly IAccessControlService accessControlService;
         private readonly ISecurityService securityService;
-        private readonly IContentService contentService;
+        protected readonly IContentService contentService;
         private readonly IPageService pageService;
         private readonly IRedirectService redirectService;
         protected readonly IMasterPageService masterPageService;
@@ -67,7 +71,7 @@ namespace BetterCms.Module.Blog.Services
         /// <param name="configuration">The configuration.</param>
         /// <param name="urlService">The URL service.</param>
         /// <param name="repository">The repository.</param>
-        /// <param name="optionService">The option service.</param>
+        /// <param name="blogOptionService">The blog option service.</param>
         /// <param name="accessControlService">The access control service.</param>
         /// <param name="securityService">The security service.</param>
         /// <param name="contentService">The content service.</param>
@@ -76,15 +80,17 @@ namespace BetterCms.Module.Blog.Services
         /// <param name="redirectService">The redirect service.</param>
         /// <param name="masterPageService">The master page service.</param>
         /// <param name="unitOfWork">The unit of work.</param>
+        /// <param name="optionService">The option service.</param>
         public DefaultBlogService(ICmsConfiguration configuration, IUrlService urlService, IRepository repository,
-            IOptionService optionService, IAccessControlService accessControlService, ISecurityService securityService,
+            IOptionService blogOptionService, IAccessControlService accessControlService, ISecurityService securityService,
             IContentService contentService, ITagService tagService,
             IPageService pageService, IRedirectService redirectService, IMasterPageService masterPageService,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork, RootOptionService optionService)
         {
             this.configuration = configuration;
             this.urlService = urlService;
             this.repository = repository;
+            this.blogOptionService = blogOptionService;
             this.optionService = optionService;
             this.accessControlService = accessControlService;
             this.securityService = securityService;
@@ -158,11 +164,15 @@ namespace BetterCms.Module.Blog.Services
         /// Saves the blog post.
         /// </summary>
         /// <param name="request">The request.</param>
+        /// <param name="childContentOptionValues">The child content option values.</param>
         /// <param name="principal">The principal.</param>
+        /// <param name="errorMessages">The error messages.</param>
         /// <returns>
         /// Saved blog post entity
         /// </returns>
-        public BlogPost SaveBlogPost(BlogPostViewModel request, IPrincipal principal, out string[] errorMessages)
+        /// <exception cref="System.ComponentModel.DataAnnotations.ValidationException"></exception>
+        /// <exception cref="SecurityException">Forbidden: Access is denied.</exception>
+        public BlogPost SaveBlogPost(BlogPostViewModel request, IList<ContentOptionValuesViewModel> childContentOptionValues, IPrincipal principal, out string[] errorMessages)
         {
             errorMessages = new string[0];
             string[] roles;
@@ -221,7 +231,7 @@ namespace BetterCms.Module.Blog.Services
             // UnitOfWork.BeginTransaction(); // NOTE: this causes concurrent data exception.
 
             Redirect redirectCreated = null;
-            if (!isNew && userCanEdit && !string.Equals(blogPost.PageUrl, request.BlogUrl) && request.BlogUrl != null)
+            if (!isNew && userCanEdit && !string.Equals(blogPost.PageUrl, request.BlogUrl) && !string.IsNullOrWhiteSpace(request.BlogUrl))
             {
                 request.BlogUrl = urlService.FixUrl(request.BlogUrl);
                 pageService.ValidatePageUrl(request.BlogUrl, request.Id);
@@ -317,6 +327,7 @@ namespace BetterCms.Module.Blog.Services
 
             content = SaveContentWithStatusUpdate(isNew, newContent, request, principal);
             pageContent.Content = content;
+            optionService.SaveChildContentOptions(content, childContentOptionValues, request.DesirableStatus);
 
             blogPost.PageUrlHash = blogPost.PageUrl.UrlHash();
             blogPost.UseCanonicalUrl = request.UseCanonicalUrl;
@@ -491,7 +502,7 @@ namespace BetterCms.Module.Blog.Services
 
         private void LoadDefaultLayoutAndRegion(out Layout layout, out Page masterPage, out Region region)
         {
-            var option = optionService.GetDefaultOption();
+            var option = blogOptionService.GetDefaultOption();
 
             layout = option != null ? option.DefaultLayout : null;
             masterPage = option != null ? option.DefaultMasterPage : null;

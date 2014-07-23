@@ -1,7 +1,6 @@
 ﻿using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Blog.Services;
-using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.Blog.Commands.SaveBlogPost
@@ -9,7 +8,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
     /// <summary>
     /// Command saves existing or creates new blog post
     /// </summary>
-    public class SaveBlogPostCommand : CommandBase, ICommand<BlogPostViewModel, SaveBlogPostCommandResponse>
+    public class SaveBlogPostCommand : CommandBase, ICommand<SaveBlogPostCommandRequest, SaveBlogPostCommandResponse>
     {
         private readonly IBlogService blogService;
 
@@ -27,10 +26,10 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>Blog post view model</returns>
-        public SaveBlogPostCommandResponse Execute(BlogPostViewModel request)
+        public SaveBlogPostCommandResponse Execute(SaveBlogPostCommandRequest request)
         {
             string[] error;
-            var blogPost = blogService.SaveBlogPost(request, Context.Principal, out error);
+            var blogPost = blogService.SaveBlogPost(request.Content, request.ChildContentOptionValues, Context.Principal, out error);
             if (blogPost == null)
             {
                 Context.Messages.AddError(error);
@@ -47,7 +46,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                            ModifiedOn = blogPost.ModifiedOn.ToFormattedDateString(),
                            CreatedOn = blogPost.CreatedOn.ToFormattedDateString(),
                            PageStatus = blogPost.Status,
-                           DesirableStatus = request.DesirableStatus,
+                           DesirableStatus = request.Content.DesirableStatus,
                            PageContentId = blogPost.PageContents[0].Id
                        };
         }

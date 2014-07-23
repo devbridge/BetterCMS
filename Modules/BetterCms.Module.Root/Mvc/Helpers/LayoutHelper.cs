@@ -11,6 +11,7 @@ using System.Web.WebPages;
 
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Root.ViewModels.Cms;
 
 namespace BetterCms.Module.Root.Mvc.Helpers
@@ -32,16 +33,16 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             {
                 var contentsBuilder = new StringBuilder();
                 var projections = model.Contents.Where(c => c.RegionId == region.RegionId).OrderBy(c => c.Order).ToList();
+                var contentHtmlHelper = new ChildContentRenderHelper(htmlHelper);
 
                 using (new LayoutRegionWrapper(contentsBuilder, region, model.AreRegionsEditable))
                 {
                     foreach (var projection in projections)
                     {
-                        // Add Html
+                        // Add content Html
                         using (new RegionContentWrapper(contentsBuilder, projection, model.CanManageContent && model.AreRegionsEditable))
                         {
-                            var content = projection.GetHtml(htmlHelper);
-                            contentsBuilder.Append(content);
+                            contentsBuilder = contentHtmlHelper.AppendHtml(contentsBuilder, projection);
                         }
                     }
                 }

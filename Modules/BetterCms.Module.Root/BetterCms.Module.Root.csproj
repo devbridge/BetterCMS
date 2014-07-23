@@ -70,6 +70,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\FluentNHibernate.1.3.0.733\lib\FluentNHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\..\packages\HtmlAgilityPack.1.4.6\lib\Net40\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Iesi.Collections.3.3.1.4000\lib\Net35\Iesi.Collections.dll</HintPath>
@@ -89,7 +92,6 @@
     </Reference>
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Transactions" />
-    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -100,6 +102,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
@@ -161,11 +164,15 @@
     <Compile Include="Controllers\SidebarController.cs" />
     <Compile Include="Controllers\SiteSettingsController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
+    <Compile Include="Models\ChildContentOption.cs" />
     <Compile Include="Models\Language.cs" />
     <Compile Include="Models\Extensions\CultureInfoExtensions.cs" />
     <Compile Include="Models\Maps\LanguageMap.cs" />
+    <Compile Include="Models\Maps\ChildContentMap.cs" />
     <Compile Include="Models\Maps\MasterPageMap.cs" />
+    <Compile Include="Models\Maps\ChildContentOptionMap.cs" />
     <Compile Include="Models\Maps\PagesViewMap.cs" />
+    <Compile Include="Models\ChildContent.cs" />
     <Compile Include="Models\MasterPage.cs" />
     <Compile Include="Models\Maps\ContentRegionMap.cs" />
     <Compile Include="Models\ContentRegion.cs" />
@@ -179,8 +186,10 @@
     <Compile Include="Models\Migrations\Migration201310170919.cs" />
     <Compile Include="Models\Migrations\Migration201310160818.cs" />
     <Compile Include="Models\Migrations\Migration201310180900.cs" />
+    <Compile Include="Models\Migrations\Migration201406191600.cs" />
     <Compile Include="Models\Migrations\Migration201406101600.cs" />
     <Compile Include="Models\PagesView.cs" />
+    <Compile Include="Mvc\PageHtmlRenderer\ChildContentRenderHelper.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\PageContentHtmlRenderer.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\RenderingContentOptionProperty.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\IRenderingOption.cs" />
@@ -203,6 +212,7 @@
     <Compile Include="Mvc\PageHtmlRenderer\RenderingPageProperties.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\RenderingPagePropertyBase.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\RenderingPageTitleProperty.cs" />
+    <Compile Include="Projections\ChildContentProjection.cs" />
     <Compile Include="Providers\CustomOptionsProvider.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Content.cs" />
@@ -321,7 +331,9 @@
     <Compile Include="Mvc\Helpers\MessagesHelper.cs" />
     <Compile Include="Registration\TabsJsModuleIncludeDescriptor.cs" />
     <Compile Include="RootModuleConstants.cs" />
+    <Compile Include="Services\DefaultChildContentService.cs" />
     <Compile Include="Services\DefaultLanguageService.cs" />
+    <Compile Include="Services\IChildContentService.cs" />
     <Compile Include="Services\ILanguageService.cs" />
     <Compile Include="Services\DefaultEntityTrackingCacheService.cs" />
     <Compile Include="Services\IEntityTrackingCacheService.cs" />
@@ -346,7 +358,9 @@
     <Compile Include="ViewModels\Cms\RedirectViewModel.cs" />
     <Compile Include="ViewModels\Cms\RenderPageViewModel.cs" />
     <Compile Include="ViewModels\Cms\RenderWidgetViewModel.cs" />
+    <Compile Include="ViewModels\Content\ChildContentModel.cs" />
     <Compile Include="ViewModels\Language\LanguageViewModel.cs" />
+    <Compile Include="ViewModels\Option\ContentOptionValuesViewModel.cs" />
     <Compile Include="ViewModels\Option\CustomOptionViewModel.cs" />
     <Compile Include="ViewModels\Option\OptionValueEditViewModel.cs" />
     <Compile Include="ViewModels\Option\OptionValueViewModel.cs" />
@@ -379,6 +393,211 @@
     <Compile Include="RootModuleRegistration.cs" />
     <Compile Include="ViewModels\Tags\TagItemViewModel.cs" />
     <Compile Include="ViewModels\Tags\TagsTemplateViewModel.cs" />
+    <Compile Include="Views\Authentication\Info.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Info.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Category\Categories.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Categories.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Cms\Index.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Index.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Language\List.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>List.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Rendering\RenderMainJsFile.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RenderMainJsFile.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Rendering\RenderProcessorJsFile.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RenderProcessorJsFile.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Rendering\RenderStyleSheetIncludes.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RenderStyleSheetIncludes.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Security\AccessControlTemplate.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AccessControlTemplate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\BaseLayout.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BaseLayout.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\EditableGrid\Grid.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Grid.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\EditableGrid\Partial\BooleanCell.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BooleanCell.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\EditableGrid\Partial\Cell.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cell.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\EditableGrid\Partial\DropDownCell.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DropDownCell.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\EditableGrid\Partial\Header.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Header.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\EditableGrid\Partial\TopBlock.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TopBlock.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\EditableGrid\Partial\TopBlockAddItem.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TopBlockAddItem.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\Layouts\OneColumnLayout.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OneColumnLayout.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\Layouts\Preview.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Preview.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\Partial\Alert.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Alert.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\Partial\Confirm.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Confirm.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\Partial\ContentOverlay.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContentOverlay.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\Partial\ImagePreview.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ImagePreview.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\Partial\Info.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Info.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\Partial\MasterPagesPath.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MasterPagesPath.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\Partial\Modal.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Modal.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\Partial\Paging.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Paging.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\Partial\Region.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Region.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\Partial\SiteSettingTab.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SiteSettingTab.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\Partial\SupportBrowser.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SupportBrowser.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\Partial\SupportCookie.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SupportCookie.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\Partial\SupportJavaScript.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SupportJavaScript.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\Partial\Tooltip.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Tooltip.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\RootLayout.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RootLayout.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sidebar\Body.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Body.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sidebar\Container.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Container.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sidebar\Footer.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Footer.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sidebar\Header.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Header.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sidebar\Side.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Side.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SiteSettings\Container.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Container.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tags\ListTags.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ListTags.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tags\TagsTemplate.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TagsTemplate.cshtml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\Resources\RootGlobalization.resx">
@@ -779,6 +998,8 @@
     <EmbeddedResource Include="Scripts\ace\snippets\xquery.js" />
     <EmbeddedResource Include="Scripts\ace\snippets\yaml.js" />
     <EmbeddedResource Include="Scripts\bcms.codeEditor.js" />
+    <EmbeddedResource Include="Scripts\bcms.languages.js" />
+    <EmbeddedResource Include="Models\Migrations\Migration201406101600.sqlserver.sql" />
     <EmbeddedResource Include="Scripts\ckeditor\build-config.js" />
     <EmbeddedResource Include="Scripts\ckeditor\ckeditor.js" />
     <EmbeddedResource Include="Scripts\ckeditor\config.js" />
@@ -789,8 +1010,8 @@
     <EmbeddedResource Include="Scripts\ckeditor\lang\bn.js" />
     <EmbeddedResource Include="Scripts\ckeditor\lang\bs.js" />
     <EmbeddedResource Include="Scripts\ckeditor\lang\ca.js" />
-    <EmbeddedResource Include="Scripts\ckeditor\lang\cs.js" />
     <EmbeddedResource Include="Scripts\ckeditor\lang\cy.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\lang\cs.js" />
     <EmbeddedResource Include="Scripts\ckeditor\lang\da.js" />
     <EmbeddedResource Include="Scripts\ckeditor\lang\de.js" />
     <EmbeddedResource Include="Scripts\ckeditor\lang\el.js" />
@@ -849,11 +1070,12 @@
     <EmbeddedResource Include="Scripts\ckeditor\lang\zh-cn.js" />
     <EmbeddedResource Include="Scripts\ckeditor\lang\zh.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\a11yhelp.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\_translationstatus.txt" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ar.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\bg.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\ca.js" />
-    <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\cs.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\cy.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\cs.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\da.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\de.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\el.js" />
@@ -902,7 +1124,6 @@
     <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\uk.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\vi.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\zh-cn.js" />
-    <EmbeddedResource Include="Scripts\ckeditor\plugins\a11yhelp\dialogs\lang\_translationstatus.txt" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\about\dialogs\about.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\about\dialogs\hidpi\logo_ckeditor.png" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\about\dialogs\logo_ckeditor.png" />
@@ -912,6 +1133,7 @@
     <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-filemanager\plugin.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-imagemanager\plugin.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-modelvalues\plugin.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\cms-widget\plugin.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\colordialog\dialogs\colordialog.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\dialog\dialogDefinition.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\div\dialogs\div.js" />
@@ -1002,11 +1224,12 @@
     <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\images\whatchutalkingabout_smile.png" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\images\wink_smile.gif" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\smiley\images\wink_smile.png" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\_translationstatus.txt" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\ar.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\bg.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\ca.js" />
-    <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\cs.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\cy.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\cs.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\de.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\el.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\en.js" />
@@ -1045,10 +1268,9 @@
     <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\uk.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\vi.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\zh-cn.js" />
-    <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\_translationstatus.txt" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\specialchar\dialogs\specialchar.js" />
-    <EmbeddedResource Include="Scripts\ckeditor\plugins\tabletools\dialogs\tableCell.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\table\dialogs\table.js" />
+    <EmbeddedResource Include="Scripts\ckeditor\plugins\tabletools\dialogs\tableCell.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\templates\dialogs\templates.css" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\templates\dialogs\templates.js" />
     <EmbeddedResource Include="Scripts\ckeditor\plugins\templates\templates\default.js" />
@@ -1074,23 +1296,54 @@
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\lock.png" />
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\refresh.png" />
     <EmbeddedResource Include="Scripts\ckeditor\styles.js" />
-    <EmbeddedResource Include="Scripts\bcms.languages.js" />
-    <EmbeddedResource Include="Models\Migrations\Migration201406101600.sqlserver.sql" />
     <Content Include="Views\Web.config" />
-    <EmbeddedResource Include="Views\Sidebar\Container.cshtml" />
-    <EmbeddedResource Include="Views\Rendering\RenderMainJsFile.cshtml" />
-    <EmbeddedResource Include="Views\SiteSettings\Container.cshtml" />
-    <EmbeddedResource Include="Views\Sidebar\Header.cshtml" />
-    <EmbeddedResource Include="Views\Sidebar\Side.cshtml" />
-    <EmbeddedResource Include="Views\Rendering\RenderStyleSheetIncludes.cshtml" />
-    <EmbeddedResource Include="Views\Rendering\RenderProcessorJsFile.cshtml" />
-    <EmbeddedResource Include="Views\Sidebar\Footer.cshtml" />
-    <EmbeddedResource Include="Views\Sidebar\Body.cshtml" />
-    <EmbeddedResource Include="Views\Authentication\Info.cshtml" />
+    <None Include="Views\Sidebar\Container.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Container.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Rendering\RenderMainJsFile.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>RenderMainJsFile.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\SiteSettings\Container.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Container.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Sidebar\Header.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Header.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Sidebar\Side.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Side.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Rendering\RenderStyleSheetIncludes.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>RenderStyleSheetIncludes.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Rendering\RenderProcessorJsFile.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>RenderProcessorJsFile.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Sidebar\Footer.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Footer.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Sidebar\Body.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Body.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Authentication\Info.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Info.generated.cs</LastGenOutput>
+    </None>
     <Content Include="web.config">
       <SubType>Designer</SubType>
     </Content>
-    <EmbeddedResource Include="Views\Cms\Index.cshtml" />
+    <None Include="Views\Cms\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BetterCMS.Configuration\BetterCms.Configuration.csproj">
@@ -1111,103 +1364,199 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Layouts\OneColumnLayout.cshtml" />
+    <None Include="Views\Shared\Layouts\OneColumnLayout.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>OneColumnLayout.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Layouts\Preview.cshtml" />
+    <None Include="Views\Shared\Layouts\Preview.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Preview.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Partial\Alert.cshtml" />
+    <None Include="Views\Shared\Partial\Alert.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Alert.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Partial\Confirm.cshtml" />
+    <None Include="Views\Shared\Partial\Confirm.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Confirm.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Partial\ContentOverlay.cshtml" />
+    <None Include="Views\Shared\Partial\ContentOverlay.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ContentOverlay.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Partial\ImagePreview.cshtml" />
+    <None Include="Views\Shared\Partial\ImagePreview.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ImagePreview.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Partial\Info.cshtml" />
+    <None Include="Views\Shared\Partial\Info.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Info.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Partial\Modal.cshtml" />
+    <None Include="Views\Shared\Partial\Modal.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Modal.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Partial\Region.cshtml" />
+    <None Include="Views\Shared\Partial\Region.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Region.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Partial\SiteSettingTab.cshtml" />
+    <None Include="Views\Shared\Partial\SiteSettingTab.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>SiteSettingTab.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Partial\Tooltip.cshtml" />
+    <None Include="Views\Shared\Partial\Tooltip.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Tooltip.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\RootLayout.cshtml" />
+    <None Include="Views\Shared\RootLayout.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>RootLayout.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Partial\SupportBrowser.cshtml" />
+    <None Include="Views\Shared\Partial\SupportBrowser.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>SupportBrowser.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Partial\SupportCookie.cshtml" />
+    <None Include="Views\Shared\Partial\SupportCookie.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>SupportCookie.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Partial\SupportJavaScript.cshtml" />
+    <None Include="Views\Shared\Partial\SupportJavaScript.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>SupportJavaScript.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Partial\Paging.cshtml" />
+    <None Include="Views\Shared\Partial\Paging.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Paging.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Tags\ListTags.cshtml" />
+    <None Include="Views\Tags\ListTags.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ListTags.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Tags\TagsTemplate.cshtml" />
+    <None Include="Views\Tags\TagsTemplate.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>TagsTemplate.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Category\Categories.cshtml" />
+    <None Include="Views\Category\Categories.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Categories.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Security\AccessControlTemplate.cshtml" />
+    <None Include="Views\Security\AccessControlTemplate.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>AccessControlTemplate.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\EditableGrid\Grid.cshtml" />
+    <None Include="Views\Shared\EditableGrid\Grid.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Grid.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\BooleanCell.cshtml" />
+    <None Include="Views\Shared\EditableGrid\Partial\BooleanCell.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>BooleanCell.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\Cell.cshtml" />
+    <None Include="Views\Shared\EditableGrid\Partial\Cell.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Cell.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\DropDownCell.cshtml" />
+    <None Include="Views\Shared\EditableGrid\Partial\DropDownCell.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>DropDownCell.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\Header.cshtml" />
+    <None Include="Views\Shared\EditableGrid\Partial\Header.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Header.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\TopBlock.cshtml" />
+    <None Include="Views\Shared\EditableGrid\Partial\TopBlock.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>TopBlock.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\ace\LICENSE" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\BaseLayout.cshtml" />
+    <None Include="Views\Shared\BaseLayout.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>BaseLayout.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\Partial\MasterPagesPath.cshtml" />
+    <None Include="Views\Shared\Partial\MasterPagesPath.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>MasterPagesPath.generated.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Views\Shared\EditableGrid\Partial\TopBlockAddItem.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>TopBlockAddItem.generated.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Views\Language\List.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>List.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scripts\ckeditor\plugins\scayt\LICENSE.md" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Scripts\ckeditor\plugins\scayt\README.md" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\LICENSE.md" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\README.md" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\EditableGrid\Partial\TopBlockAddItem.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Language\List.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

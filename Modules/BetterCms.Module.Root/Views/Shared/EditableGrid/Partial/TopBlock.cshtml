@@ -8,11 +8,8 @@
         <div class="bcms-large-titles">@Model.TopBlockTitle</div>
     }
 
-    @if (Model.CanAddNewItems)
-    {
-        @Html.Partial(Model.TopBlockAddItemView, Model)
-    }
-    
+    @Html.Partial(Model.TopBlockAddItemView, Model)
+
     @if (Model.ShowSearch)
     {
         <div class="bcms-search-block">
@@ -20,7 +17,7 @@
             <div data-bind="click: searchItems" class="bcms-btn-search">@RootGlobalization.Button_Search</div>
         </div>
     }
-    
+
     @if (Model.AddPaging)
     {
         <!-- ko with: options().paging -->

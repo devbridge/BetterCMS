@@ -8,17 +8,18 @@ using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
-using BetterCms.Core.Services;
 
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.ViewModels.Filter;
+using BetterCms.Module.Pages.ViewModels.SiteSettings;
 using BetterCms.Module.Pages.ViewModels.Widgets;
 
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Mvc.Grids.Extensions;
 using BetterCms.Module.Root.Services;
-
-using FluentNHibernate.Conventions.AcceptanceCriteria;
+using BetterCms.Module.Root.ViewModels.Option;
 
 using CategoryEntity = BetterCms.Module.Root.Models.Category;
 
@@ -33,20 +34,17 @@ namespace BetterCms.Module.Pages.Services
         private readonly IOptionService optionService;
         
         private readonly IContentService contentService;
-        
-        private readonly ISecurityService securityService;
 
-        public DefaultWidgetService(IRepository repository, IUnitOfWork unitOfWork, IOptionService optionService, IContentService contentService,
-            ISecurityService securityService)
+        public DefaultWidgetService(IRepository repository, IUnitOfWork unitOfWork, IOptionService optionService, IContentService contentService)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
             this.optionService = optionService;
             this.contentService = contentService;
-            this.securityService = securityService;
         }
 
-        public void SaveHtmlContentWidget(EditHtmlContentWidgetViewModel model, out HtmlContentWidget widget, out HtmlContentWidget originalWidget,
+        public void SaveHtmlContentWidget(EditHtmlContentWidgetViewModel model, IList<ContentOptionValuesViewModel> childContentOptionValues,
+            out HtmlContentWidget widget, out HtmlContentWidget originalWidget,
             bool treatNullsAsLists = true, bool createIfNotExists = false)
         {
             if (model.Options != null)
@@ -60,6 +58,7 @@ namespace BetterCms.Module.Pages.Services
 
             var widgetContent = GetHtmlContentWidgetFromRequest(model, treatNullsAsLists, !model.Id.HasDefaultValue());
             widget = GetWidgetForSave(widgetContent, model, createIfNotExists, out isCreatingNew);
+            optionService.SaveChildContentOptions(widget, childContentOptionValues, model.DesirableStatus);
 
             repository.Save(widget);
             unitOfWork.Commit();
@@ -163,6 +162,7 @@ namespace BetterCms.Module.Pages.Services
             if (createNewWithId)
             {
                 widget = widgetContent;
+                contentService.UpdateDynamicContainer(widget);
 
                 widget.Status = model.DesirableStatus;
                 widget.Id = model.Id;
@@ -253,7 +253,7 @@ namespace BetterCms.Module.Pages.Services
                                             Type = requestContentOption.Type,
                                             CustomOption =
                                                 requestContentOption.Type == OptionType.Custom
-                                                    ? customOptions.First(o => o.Identifier == requestContentOption.CustomOption.Identifier)
+                                                    ? repository.AsProxy<CustomOption>(customOptions.First(o => o.Identifier == requestContentOption.CustomOption.Identifier).Id)
                                                     : null
                                         };
 
@@ -287,6 +287,13 @@ namespace BetterCms.Module.Pages.Services
                 .AsQueryable<PageContent>()
                 .Any(f => f.Content.Id == widgetId && !f.IsDeleted && !f.Page.IsDeleted);
 
+            if (!isWidgetInUse)
+            {
+                isWidgetInUse = repository
+                    .AsQueryable<ChildContent>()
+                    .Any(f => f.Child.Id == widgetId && !f.IsDeleted && !f.Parent.IsDeleted && f.Parent.Original == null);
+            }
+
             if (isWidgetInUse)
             {
                 var message = string.Format(PagesGlobalization.Widgets_CanNotDeleteWidgetIsInUse_Message, widget.Name);
@@ -310,6 +317,66 @@ namespace BetterCms.Module.Pages.Services
             Events.PageEvents.Instance.OnWidgetDeleted(widget);
 
             return true;
+        }
+
+        public SiteSettingWidgetListViewModel GetFilteredWidgetsList(WidgetsFilter filter)
+        {
+            filter = filter ?? new WidgetsFilter();
+            filter.SetDefaultSortingOptions("WidgetName");
+
+            var query = repository.AsQueryable<Widget>()
+                        .Where(f => !f.IsDeleted && (f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft));
+
+            if (filter.ChildContentId.HasValue && !filter.ChildContentId.Value.HasDefaultValue())
+            {
+                query = query.Where(f => f.ChildContents.Any(cc => cc.Child.Id == filter.ChildContentId.Value));
+            }
+
+            var modelQuery = query.Select(f => new SiteSettingWidgetItemViewModel
+                {
+                    Id = f.Id,
+                    OriginalId = f.Status == ContentStatus.Draft && f.Original != null && f.Original.Status == ContentStatus.Published ? f.Original.Id : f.Id,
+                    Version = f.Version,
+                    OriginalVersion = f.Status == ContentStatus.Draft && f.Original != null && f.Original.Status == ContentStatus.Published ? f.Original.Version : f.Version,
+                    WidgetName = f.Name,
+                    CategoryName = (!f.Category.IsDeleted) ? f.Category.Name : null,
+                    WidgetEntityType = f.GetType(),
+                    IsPublished = f.Status == ContentStatus.Published || (f.Original != null && f.Original.Status == ContentStatus.Published),
+                    HasDraft = f.Status == ContentStatus.Draft
+                });
+
+            if (!string.IsNullOrWhiteSpace(filter.SearchQuery))
+            {
+                var searchQuery = filter.SearchQuery.ToLowerInvariant();
+                modelQuery = modelQuery.Where(f => f.CategoryName.ToLower().Contains(searchQuery) || f.WidgetName.ToLower().Contains(searchQuery));
+            }
+
+            modelQuery = modelQuery.ToList()
+                .GroupBy(g => g.OriginalId)
+                .Select(grp => grp.OrderByDescending(p => p.HasDraft).First())
+                .AsQueryable();
+
+            var count = modelQuery.ToRowCountFutureValue();
+            var widgets = modelQuery.AddSortingAndPaging(filter).ToList();
+
+            widgets.ForEach(
+                item =>
+                {
+                    if (typeof(ServerControlWidget).IsAssignableFrom(item.WidgetEntityType))
+                    {
+                        item.WidgetType = WidgetType.ServerControl;
+                    }
+                    else if (typeof(HtmlContentWidget).IsAssignableFrom(item.WidgetEntityType))
+                    {
+                        item.WidgetType = WidgetType.HtmlContent;
+                    }
+                    else
+                    {
+                        item.WidgetType = null;
+                    }
+                });
+
+            return new SiteSettingWidgetListViewModel(widgets, filter, count.Value);
         }
     }
 }

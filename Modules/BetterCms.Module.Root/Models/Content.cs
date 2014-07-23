@@ -25,6 +25,21 @@ namespace BetterCms.Module.Root.Models
 
         public virtual Content Original { get; set; }
 
+        public virtual IList<ChildContent> ChildContents { get; set; }
+
+        IList<IChildContent> IContent.Children
+        {
+            get
+            {
+                if (ChildContents != null)
+                {
+                    return ChildContents.Cast<IChildContent>().ToArray();
+                }
+
+                return null;
+            }
+        }
+
         public virtual IList<PageContent> PageContents { get; set; }
 
         public virtual IList<ContentOption> ContentOptions { get; set; }
@@ -43,12 +58,20 @@ namespace BetterCms.Module.Root.Models
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether child contents were loaded from the database, or were populated manually.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if child contents were loaded from the database; if child contents were populated manually, <c>false</c>.
+        /// </value>
+        public virtual bool ChildContentsLoaded { get; set; }
+
         public virtual Content Clone()
         {
             return CopyDataTo(new Content());
         }
 
-        public virtual Content CopyDataTo(Content content, bool copyOptions = true, bool copyRegions = true)
+        public virtual Content CopyDataTo(Content content, bool copyCollections = true)
         {
             content.Name = Name;
             content.PreviewUrl = PreviewUrl;
@@ -57,7 +80,7 @@ namespace BetterCms.Module.Root.Models
             content.Status = Status;
             content.Original = Original;
 
-            if (copyOptions && ContentOptions != null)
+            if (copyCollections && ContentOptions != null)
             {
                 if (content.ContentOptions == null)
                 {
@@ -73,7 +96,7 @@ namespace BetterCms.Module.Root.Models
                 }
             }
 
-            if (copyRegions && ContentRegions != null)
+            if (copyCollections && ContentRegions != null)
             {
                 if (content.ContentRegions == null)
                 {
@@ -87,6 +110,37 @@ namespace BetterCms.Module.Root.Models
                             Content = content,
                             Region = contentRegion.Region
                         });
+                }
+            }
+
+            if (copyCollections && ChildContents != null)
+            {
+                if (content.ChildContents == null)
+                {
+                    content.ChildContents = new List<ChildContent>();
+                }
+
+                foreach (var childContent in ChildContents)
+                {
+                    var newChild = new ChildContent
+                        {
+                            Parent = content,
+                            Child = childContent.Child,
+                            AssignmentIdentifier = childContent.AssignmentIdentifier
+                        };
+                    content.ChildContents.Add(newChild);
+
+                    if (childContent.Options != null)
+                    {
+                        newChild.Options = new List<ChildContentOption>();
+                        foreach (var childContentOption in childContent.Options)
+                        {
+                            var clonedOption = childContentOption.Clone();
+                            clonedOption.ChildContent = newChild;
+
+                            newChild.Options.Add(clonedOption);
+                        }
+                    }
                 }
             }
 

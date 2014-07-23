@@ -17,11 +17,11 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        public override SaveWidgetResponse Execute(EditHtmlContentWidgetViewModel request)
+        public override SaveWidgetResponse Execute(SaveWidgetCommandRequest<EditHtmlContentWidgetViewModel> request)
         {
             HtmlContentWidget widget;
             HtmlContentWidget originalWiget;
-            WidgetService.SaveHtmlContentWidget(request, out widget, out originalWiget);
+            WidgetService.SaveHtmlContentWidget(request.Content, request.ChildContentOptionValues, out widget, out originalWiget);
 
             return new SaveWidgetResponse
                     {
@@ -34,8 +34,8 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
                         WidgetType = WidgetType.HtmlContent.ToString(),
                         IsPublished = originalWiget.Status == ContentStatus.Published,
                         HasDraft = originalWiget.Status == ContentStatus.Draft || originalWiget.History != null && originalWiget.History.Any(f => f.Status == ContentStatus.Draft),
-                        DesirableStatus = request.DesirableStatus,
-                        PreviewOnPageContentId = request.PreviewOnPageContentId
+                        DesirableStatus = request.Content.DesirableStatus,
+                        PreviewOnPageContentId = request.Content.PreviewOnPageContentId
                     };
         }
     }

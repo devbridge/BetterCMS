@@ -4,16 +4,16 @@ using System.Linq;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 
-using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
+using BetterCms.Module.Root.ViewModels.Option;
 
 using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Command.Content.GetPageContentOptions
 {
-    public class GetPageContentOptionsCommand : CommandBase, ICommand<Guid, PageContentOptionsViewModel>
+    public class GetPageContentOptionsCommand : CommandBase, ICommand<Guid, ContentOptionValuesViewModel>
     {
         /// <summary>
         /// Gets or sets the option service.
@@ -36,11 +36,11 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageContentOptions
         /// </summary>
         /// <param name="pageContentId">The page content id.</param>
         /// <returns></returns>        
-        public PageContentOptionsViewModel Execute(Guid pageContentId)
+        public ContentOptionValuesViewModel Execute(Guid pageContentId)
         {
-            var model = new PageContentOptionsViewModel
+            var model = new ContentOptionValuesViewModel
             {
-                PageContentId = pageContentId
+                OptionValuesContainerId = pageContentId
             };
 
             if (!pageContentId.HasDefaultValue())

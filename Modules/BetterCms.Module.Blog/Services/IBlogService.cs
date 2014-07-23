@@ -5,6 +5,7 @@ using System.Security.Principal;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Blog.ViewModels.Filter;
+using BetterCms.Module.Root.ViewModels.Option;
 
 using NHibernate;
 
@@ -27,12 +28,13 @@ namespace BetterCms.Module.Blog.Services
         /// Saves the blog post.
         /// </summary>
         /// <param name="model">The model.</param>
+        /// <param name="childContentOptionValues">The child content option values.</param>
         /// <param name="principall">The principall.</param>
-        /// <param name="errorMessage">The error message.</param>
+        /// <param name="errorMessages">The error messages.</param>
         /// <returns>
         /// Saved blog post entity
         /// </returns>
-        BlogPost SaveBlogPost(BlogPostViewModel model, IPrincipal principall, out string[] errorMessages);
+        BlogPost SaveBlogPost(BlogPostViewModel model, IList<ContentOptionValuesViewModel> childContentOptionValues, IPrincipal principall, out string[] errorMessages);
 
         /// <summary>
         /// Gets the filtered blog posts query.

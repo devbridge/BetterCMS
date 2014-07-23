@@ -38,7 +38,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                 var randomOptionValue = TestDataProvider.CreateNewPageContentOption();
 
                 // Create request
-                var request = new PageContentOptionsViewModel
+                var request = new ContentOptionValuesViewModel
                     {
                         OptionValues = new List<OptionValueEditViewModel>
                             {
@@ -72,7 +72,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                                       }
 
                             },
-                        PageContentId = pageContent.Id
+                        OptionValuesContainerId = pageContent.Id
                     };
 
                 // Create command

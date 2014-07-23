@@ -117,6 +117,18 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                 self.attachDatePickers = function () {
                     attachDatePickers(self);
                 };
+
+                self.toJson = function() {
+                    var allItems = self.items(),
+                        result = [],
+                        i;
+
+                    for (i = 0; i < allItems.length; i ++) {
+                        result.push(allItems[i].toJson());
+                    }
+
+                    return result;
+                };
             };
 
             OptionValuesListViewModel.prototype.createItem = function (item) {
@@ -444,6 +456,21 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
                     }
 
                     return true;
+                };
+
+                self.toJson = function () {
+                    var result = {
+                        OptionValue: self.value(),
+                        UseDefaultValue: self.useDefaultValue(),
+                        OptionDefaultValue: self.defaultValue(),
+                        OptionKey: self.key(),
+                        Type: self.type()
+                    };
+                    if (result.Type == optionTypes.customType) {
+                        result.CustomOption = { Identifier: self.customType() };
+                    }
+
+                    return result;
                 };
             }
 
