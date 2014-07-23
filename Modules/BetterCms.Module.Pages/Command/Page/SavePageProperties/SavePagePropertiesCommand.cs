@@ -220,6 +220,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             if (canEdit)
             {
                 page.PageUrlHash = page.PageUrl.UrlHash();
+                page.ForceAccessProtocol = request.ForceAccessProtocol;
                 page.Category = request.CategoryId.HasValue ? Repository.AsProxy<CategoryEntity>(request.CategoryId.Value) : null;
                 page.Title = request.PageName;
                 page.CustomCss = request.PageCSS;

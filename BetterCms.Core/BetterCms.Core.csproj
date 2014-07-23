@@ -127,6 +127,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="DataAccess\PredicateBuilder.cs" />
+    <Compile Include="DataContracts\Enums\ForceProtocolType.cs" />
     <Compile Include="DataContracts\IChildContent.cs" />
     <Compile Include="DataContracts\IContentRegion.cs" />
     <Compile Include="DataContracts\ICustomOption.cs" />

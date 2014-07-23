@@ -146,6 +146,11 @@
                             <div class="bcms-edit-label">@PagesGlobalization.EditPageProperties_AdvancedPropertiesTab_IsArchived</div>
                         </div>
                     </div>
+                    <div class="bcms-input-list-holder">
+                        @Html.Tooltip(PagesGlobalization.EditPageProperties_ForceProtocol_Tooltip_Description)
+                        <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_ForceProtocol_Title</div>
+                        @Html.DropDownListFor(model => model.ForceAccessProtocol, Model.PageAccessProtocols.ToSelectList(Model.CategoryId), null, new { @class = "bcms-global-select" })
+                    </div>
                 }
                 @Html.HiddenFor(model => model.CanPublishPage)
                 @Html.HiddenFor(model => model.TemplateId, new { @id = "TemplateId" })

@@ -66,6 +66,7 @@ namespace BetterCms.Module.Pages.Models
             duplicate.Category = Category;
             duplicate.IsArchived = IsArchived;
             duplicate.IsMasterPage = IsMasterPage;
+            duplicate.ForceAccessProtocol = ForceAccessProtocol;
 
             return duplicate;
         }
