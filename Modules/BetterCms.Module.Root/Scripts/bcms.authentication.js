@@ -15,6 +15,9 @@ bettercms.define('bcms.authentication', ['bcms.jquery', 'bcms', 'bcms.modal'],
         },
         globalization = {
             confirmLogoutMessage: null
+        },
+        getParams = {
+            viewAsAnonymous: 'bcms-view-page-as-anonymous'
         };
 
     // Assign objects to module.
@@ -30,7 +33,14 @@ bettercms.define('bcms.authentication', ['bcms.jquery', 'bcms', 'bcms.modal'],
             }
         });
     };
-    
+
+    authentication.viewPageAsAnonymous = function () {
+        var url = window.location.href;
+        url = url + (url.indexOf("?") > 0 ? "&" : "?") + getParams.viewAsAnonymous + "=1";
+
+        window.open(url);
+    };
+
     authentication.init = function () {
         $(selectors.sideManuHeader).find(selectors.logoutButton).on("click", function (event) {
             event.stopPropagation();

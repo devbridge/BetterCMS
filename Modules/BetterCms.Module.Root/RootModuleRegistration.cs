@@ -275,6 +275,15 @@ namespace BetterCms.Module.Root
                             Title = page => RootGlobalization.Sidebar_SiteSettingsButtonTitle,
                             CssClass = page => "bcms-sidemenu-btn bcms-btn-settings",
                             Order = 500,
+                        },
+
+                    new SeparatorProjection(5000) { CssClass = page => "bcms-sidebar-separator" },
+
+                    new ButtonActionProjection(authenticationJsModuleIncludeDescriptor, page => "viewPageAsAnonymous")
+                        {
+                            Title = page => RootGlobalization.Sidebar_ViewAsAnonymousButtonTitle,
+                            CssClass = page => "bcms-sidemenu-btn",
+                            Order = 5001,
                         }
                 };
         }
