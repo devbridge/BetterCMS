@@ -34,9 +34,19 @@ bettercms.define('bcms.authentication', ['bcms.jquery', 'bcms', 'bcms.modal'],
         });
     };
 
-    authentication.viewPageAsAnonymous = function () {
-        var url = window.location.href;
+    authentication.viewPageAsAnonymous = function() {
+        var url = window.location.href,
+            hash = window.location.hash;
+
+        if (hash) {
+            url = url.substring(0, url.lastIndexOf(hash));
+        }
+
         url = url + (url.indexOf("?") > 0 ? "&" : "?") + getParams.viewAsAnonymous + "=1";
+
+        if (hash) {
+            url = url + hash;
+        }
 
         window.open(url);
     };
