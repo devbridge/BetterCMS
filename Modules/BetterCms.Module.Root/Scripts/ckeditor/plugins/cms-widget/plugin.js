@@ -86,7 +86,7 @@
             e.ui.addButton('CmsWidget', {
                 title: 'Insert Widget',
                 label: 'Widget',
-                icon: 'cmsdynamicregion',
+                icon: 'cmswidget',
                 command: b
             });
 
