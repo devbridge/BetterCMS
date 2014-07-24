@@ -160,6 +160,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Public.
+        /// </summary>
+        public static string Authentication_ViewAsPublic_Public {
+            get {
+                return ResourceManager.GetString("Authentication_ViewAsPublic_Public", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
         public static string Boolean_No {
@@ -1141,7 +1150,7 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Logged in as:.
+        ///   Looks up a localized string similar to View page as:.
         /// </summary>
         public static string Sidebar_LoggedInAsTitle {
             get {

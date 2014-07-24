@@ -430,7 +430,7 @@
     <value>Hide</value>
   </data>
   <data name="Sidebar_LoggedInAsTitle" xml:space="preserve">
-    <value>Logged in as:</value>
+    <value>View page as:</value>
   </data>
   <data name="Sidebar_LogoutButton" xml:space="preserve">
     <value>Log Out</value>
@@ -602,5 +602,8 @@
   </data>
   <data name="Sidebar_ViewAsAnonymousButtonTitle" xml:space="preserve">
     <value>View page as anonymous</value>
+  </data>
+  <data name="Authentication_ViewAsPublic_Public" xml:space="preserve">
+    <value>Public</value>
   </data>
 </root>
