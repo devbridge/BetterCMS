@@ -166,15 +166,14 @@ describe('pages.pages.api.behavior', function () {
     });
 
     it('01004.2: Should test CRUD for pages.', function () {
-        // TODO: need to authenticate for success
-//        api.testCrud(runs, waitsFor, expect, constants.testPageId, "/bcms-api/page-properties/", {
-//            getPostData: function (json) {
-//                json.data.title = api.createGuid();
-//                json.data.pageUrl = null;
-//                json.data.version = 0;
-//                return json.data;
-//            }
-//        });
+        api.testCrud(runs, waitsFor, expect, constants.testPageId, "/bcms-api/page-properties/", {
+            getPostData: function (json) {
+                json.data.title = api.createGuid();
+                json.data.pageUrl = null;
+                json.data.version = 0;
+                return json.data;
+            }
+        });
     });
 
     it('01005: Should get page properties by url', function () {
@@ -346,14 +345,13 @@ describe('pages.pages.api.behavior', function () {
     });
 
     it('01008.2: Should test CRUD for page contents.', function () {
-        // TODO: need to authenticate for success
-//        api.testCrud(runs, waitsFor, expect, "d88b0aa8172149bb86c8a20400fe687e", '/bcms-api/pages/' + constants.testPageId + '/contents/', {
-//            getPostData: function (json) {
-//                json.data.name = api.createGuid();
-//                json.data.version = 0;
-//                return json.data;
-//            }
-//        });
+        api.testCrud(runs, waitsFor, expect, "d88b0aa8172149bb86c8a20400fe687e", '/bcms-api/pages/' + constants.testPageId + '/contents/', {
+            getPostData: function (json) {
+                json.data.name = api.createGuid();
+                json.data.version = 0;
+                return json.data;
+            }
+        });
     });
 
     it('01008.3: Should destroy content draft.', function () {
