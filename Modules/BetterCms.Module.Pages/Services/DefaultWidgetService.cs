@@ -7,6 +7,7 @@ using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
+using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Exceptions.Mvc;
 
 using BetterCms.Module.Pages.Content.Resources;
@@ -277,8 +278,24 @@ namespace BetterCms.Module.Pages.Services
         {
             unitOfWork.BeginTransaction();
 
-            var widget = repository.First<Widget>(widgetId);
-            if (widgetVersion > 0)
+            var widget = repository
+                .AsQueryable<Widget>(w => w.Id == widgetId)
+                .FetchMany(w => w.ContentOptions)
+                .Fetch(w => w.Original)
+                .ThenFetchMany(ow => ow.ContentOptions)
+                .ToList()
+                .FirstOne();
+
+            if (widget.Original != null)
+            {
+                if (widget.Version != widgetVersion)
+                {
+                    throw new ConcurrentDataException(widget);
+                }
+                repository.Delete<Widget>(widget.Id, widget.Version);
+                widget = (Widget)widget.Original;
+            }
+            else if (widgetVersion > 0)
             {
                 widget.Version = widgetVersion;
             }
@@ -325,7 +342,9 @@ namespace BetterCms.Module.Pages.Services
             filter.SetDefaultSortingOptions("WidgetName");
 
             var query = repository.AsQueryable<Widget>()
-                        .Where(f => !f.IsDeleted && (f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft));
+                        .Where(f => !f.IsDeleted 
+                                && (f.Status == ContentStatus.Published || f.Status == ContentStatus.Draft)
+                                && (f.Original == null || !f.Original.IsDeleted));
 
             if (filter.ChildContentId.HasValue && !filter.ChildContentId.Value.HasDefaultValue())
             {
