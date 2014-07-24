@@ -593,21 +593,40 @@ a.bcms-remove-image {
     left: 100px;
     color: #A6A6A6;
     width: 135px;
-    height: 35px;
+    /*height: 35px;*/
     line-height: 18px;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 .bcms-sidemenu-username {
     color: #0F76BE;
-    overflow: hidden;
+    /*overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis;
+    text-overflow: ellipsis;*/
+    position: relative;
+    z-index: 5000;
+    background-color: #242424;
+    padding: 0 10px 5px;
+    margin-left: -10px;
 }
 
-    .bcms-sidemenu-username a {
-        color: #2eadd5;
+    .bcms-sidemenu-username:hover .bcms-view-page-as-public {
+        display: block;
     }
+
+    .bcms-sidemenu-username a {
+        color: #2EADD5;
+        margin-bottom: 5px;
+        display: block;
+        /*test below*/
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+        .bcms-sidemenu-username a.bcms-view-page-as-public {
+            display: none;
+        }
 
 .bcms-sidemenu-openclosearrow {
     height: 20px;
