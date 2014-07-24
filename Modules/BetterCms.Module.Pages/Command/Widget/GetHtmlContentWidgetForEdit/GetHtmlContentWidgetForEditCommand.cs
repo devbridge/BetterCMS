@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Mvc.Commands;
 
@@ -114,6 +115,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
 
             model.Categories = categories.ToList();
             model.CustomOptions = optionService.GetCustomOptions();
+            model.CanDestroyDraft = model.CurrentStatus == ContentStatus.Draft && model.HasPublishedContent;
 
             return model;
         }

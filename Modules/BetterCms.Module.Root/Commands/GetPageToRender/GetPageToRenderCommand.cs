@@ -383,7 +383,11 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             if (request.CanManageContent || request.PreviewPageContentId != null)
             {
-                pageContentsQuery = pageContentsQuery.Fetch(f => f.Content).ThenFetchMany(f => f.History);
+                pageContentsQuery = pageContentsQuery
+                    .Fetch(f => f.Content)
+                    .ThenFetchMany(f => f.History)
+                    .ThenFetchMany(f => f.ChildContents)
+                    .ThenFetch(f => f.Child);
             }
 
             var contents = pageContentsQuery.ToList();

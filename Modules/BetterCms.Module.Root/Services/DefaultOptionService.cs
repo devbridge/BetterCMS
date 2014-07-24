@@ -622,7 +622,7 @@ namespace BetterCms.Module.Root.Services
             // Load missing custom options
             var customOptionsIdentifiers = options
                 .Where(o => o.Type == OptionType.Custom 
-                    && !(o.CustomOption is CustomOption) 
+                    && (!(o.CustomOption is CustomOption) || o.CustomOption is IProxy)
                     && customOptions.All(co => co.Identifier != o.CustomOption.Identifier))
                 .Select(o => o.CustomOption.Identifier)
                 .Distinct().ToArray();

@@ -41,13 +41,7 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
         /// <value>
         ///   <c>true</c> if user can destroy draft; otherwise, <c>false</c>.
         /// </value>
-        public bool CanDestroyDraft
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public bool CanDestroyDraft { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
