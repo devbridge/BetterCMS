@@ -195,7 +195,7 @@ STYLE MODIFIED BY DEVBRIDGE http://www.devbridge.com
         padding: 3px 4px;
         display: block;
         border: 1px solid #fff;
-        color: inherit!important;
+        color: inherit !important;
         text-decoration: none;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -820,361 +820,369 @@ textarea#bcms-contenthtml {
 
 /*toolbar icons*/
 .cke_button__about_icon {
-    background: url(icons.png) no-repeat 0 -0px!important;
+    background: url(icons.png) no-repeat 0 -0px !important;
 }
 
 .cke_button__bold_icon {
-    background: url(icons.png) no-repeat 0 -32px!important;
+    background: url(icons.png) no-repeat 0 -32px !important;
 }
 
 .cke_button__italic_icon {
-    background: url(icons.png) no-repeat 0 -64px!important;
+    background: url(icons.png) no-repeat 0 -64px !important;
 }
 
 .cke_button__strike_icon {
-    background: url(icons.png) no-repeat 0 -96px!important;
+    background: url(icons.png) no-repeat 0 -96px !important;
 }
 
 .cke_button__subscript_icon {
-    background: url(icons.png) no-repeat 0 -128px!important;
+    background: url(icons.png) no-repeat 0 -128px !important;
 }
 
 .cke_button__superscript_icon {
-    background: url(icons.png) no-repeat 0 -160px!important;
+    background: url(icons.png) no-repeat 0 -160px !important;
 }
 
 .cke_button__underline_icon {
-    background: url(icons.png) no-repeat 0 -192px!important;
+    background: url(icons.png) no-repeat 0 -192px !important;
 }
 
 .cke_button__bidiltr_icon {
-    background: url(icons.png) no-repeat 0 -224px!important;
+    background: url(icons.png) no-repeat 0 -224px !important;
 }
 
 .cke_button__bidirtl_icon {
-    background: url(icons.png) no-repeat 0 -256px!important;
+    background: url(icons.png) no-repeat 0 -256px !important;
 }
 
 .cke_button__blockquote_icon {
-    background: url(icons.png) no-repeat 0 -288px!important;
+    background: url(icons.png) no-repeat 0 -288px !important;
 }
 
 .cke_rtl .cke_button__copy_icon, .cke_mixed_dir_content .cke_rtl .cke_button__copy_icon {
-    background: url(icons.png) no-repeat 0 -320px!important;
+    background: url(icons.png) no-repeat 0 -320px !important;
 }
 
 .cke_ltr .cke_button__copy_icon {
-    background: url(icons.png) no-repeat 0 -352px!important;
+    background: url(icons.png) no-repeat 0 -352px !important;
 }
 
 .cke_rtl .cke_button__cut_icon, .cke_mixed_dir_content .cke_rtl .cke_button__cut_icon {
-    background: url(icons.png) no-repeat 0 -384px!important;
+    background: url(icons.png) no-repeat 0 -384px !important;
 }
 
 .cke_ltr .cke_button__cut_icon {
-    background: url(icons.png) no-repeat 0 -416px!important;
+    background: url(icons.png) no-repeat 0 -416px !important;
 }
 
 .cke_rtl .cke_button__paste_icon, .cke_mixed_dir_content .cke_rtl .cke_button__paste_icon {
-    background: url(icons.png) no-repeat 0 -448px!important;
+    background: url(icons.png) no-repeat 0 -448px !important;
 }
 
 .cke_ltr .cke_button__paste_icon {
-    background: url(icons.png) no-repeat 0 -480px!important;
+    background: url(icons.png) no-repeat 0 -480px !important;
 }
 
 .cke_button__bgcolor_icon {
-    background: url(icons.png) no-repeat 0 -512px!important;
+    background: url(icons.png) no-repeat 0 -512px !important;
 }
 
 .cke_button__textcolor_icon {
-    background: url(icons.png) no-repeat 0 -544px!important;
+    background: url(icons.png) no-repeat 0 -544px !important;
 }
 
 .cke_button__creatediv_icon {
-    background: url(icons.png) no-repeat 0 -576px!important;
+    background: url(icons.png) no-repeat 0 -576px !important;
 }
 
 .cke_rtl .cke_button__docprops_icon, .cke_mixed_dir_content .cke_rtl .cke_button__docprops_icon {
-    background: url(icons.png) no-repeat 0 -608px!important;
+    background: url(icons.png) no-repeat 0 -608px !important;
 }
 
 .cke_ltr .cke_button__docprops_icon {
-    background: url(icons.png) no-repeat 0 -640px!important;
+    background: url(icons.png) no-repeat 0 -640px !important;
 }
 
 .cke_rtl .cke_button__find_icon, .cke_mixed_dir_content .cke_rtl .cke_button__find_icon {
-    background: url(icons.png) no-repeat 0 -672px!important;
+    background: url(icons.png) no-repeat 0 -672px !important;
 }
 
 .cke_ltr .cke_button__find_icon {
-    background: url(icons.png) no-repeat 0 -704px!important;
+    background: url(icons.png) no-repeat 0 -704px !important;
 }
 
 .cke_button__replace_icon {
-    background: url(icons.png) no-repeat 0 -736px!important;
+    background: url(icons.png) no-repeat 0 -736px !important;
 }
 
 .cke_button__flash_icon {
-    background: url(icons.png) no-repeat 0 -768px!important;
+    background: url(icons.png) no-repeat 0 -768px !important;
 }
 
 .cke_button__button_icon {
-    background: url(icons.png) no-repeat 0 -800px!important;
+    background: url(icons.png) no-repeat 0 -800px !important;
 }
 
 .cke_button__checkbox_icon {
-    background: url(icons.png) no-repeat 0 -832px!important;
+    background: url(icons.png) no-repeat 0 -832px !important;
 }
 
 .cke_button__form_icon {
-    background: url(icons.png) no-repeat 0 -864px!important;
+    background: url(icons.png) no-repeat 0 -864px !important;
 }
 
 .cke_button__hiddenfield_icon {
-    background: url(icons.png) no-repeat 0 -896px!important;
+    background: url(icons.png) no-repeat 0 -896px !important;
 }
 
 .cke_button__imagebutton_icon {
-    background: url(icons.png) no-repeat 0 -928px!important;
+    background: url(icons.png) no-repeat 0 -928px !important;
 }
 
 .cke_button__radio_icon {
-    background: url(icons.png) no-repeat 0 -960px!important;
+    background: url(icons.png) no-repeat 0 -960px !important;
 }
 
 .cke_rtl .cke_button__select_icon, .cke_mixed_dir_content .cke_rtl .cke_button__select_icon {
-    background: url(icons.png) no-repeat 0 -992px!important;
+    background: url(icons.png) no-repeat 0 -992px !important;
 }
 
 .cke_ltr .cke_button__select_icon {
-    background: url(icons.png) no-repeat 0 -1024px!important;
+    background: url(icons.png) no-repeat 0 -1024px !important;
 }
 
 .cke_rtl .cke_button__textarea_icon, .cke_mixed_dir_content .cke_rtl .cke_button__textarea_icon {
-    background: url(icons.png) no-repeat 0 -1056px!important;
+    background: url(icons.png) no-repeat 0 -1056px !important;
 }
 
 .cke_ltr .cke_button__textarea_icon {
-    background: url(icons.png) no-repeat 0 -1088px!important;
+    background: url(icons.png) no-repeat 0 -1088px !important;
 }
 
 .cke_rtl .cke_button__textfield_icon, .cke_mixed_dir_content .cke_rtl .cke_button__textfield_icon {
-    background: url(icons.png) no-repeat 0 -1120px!important;
+    background: url(icons.png) no-repeat 0 -1120px !important;
 }
 
 .cke_ltr .cke_button__textfield_icon {
-    background: url(icons.png) no-repeat 0 -1152px!important;
+    background: url(icons.png) no-repeat 0 -1152px !important;
 }
 
 .cke_button__horizontalrule_icon {
-    background: url(icons.png) no-repeat 0 -1184px!important;
+    background: url(icons.png) no-repeat 0 -1184px !important;
 }
 
 .cke_button__iframe_icon {
-    background: url(icons.png) no-repeat 0 -1216px!important;
+    background: url(icons.png) no-repeat 0 -1216px !important;
 }
 
 .cke_button__image_icon {
-    background: url(icons.png) no-repeat 0 -1248px!important;
+    background: url(icons.png) no-repeat 0 -1248px !important;
 }
 
 .cke_button__cmsimage_icon {
-    background: url(icons.png) no-repeat 0 -1248px!important;
+    background: url(icons.png) no-repeat 0 -1248px !important;
 }
 
 .cke_button__cmsdynamicregion_icon {
-    background: url(icons.png) no-repeat 0 -2800px!important;
+    background: url(icons.png) no-repeat 0 -2800px !important;
+}
+
+/*.cke_button__cmswidget_icon {
+    background: url(icons.png) no-repeat 0 -2830px !important;
+}*/
+
+.cke_ltr .cke_button__cmswidget_icon {
+    background: url(icons.png) no-repeat 0 -2830px !important;
 }
 
 .cke_rtl .cke_button__indent_icon, .cke_mixed_dir_content .cke_rtl .cke_button__indent_icon {
-    background: url(icons.png) no-repeat 0 -1280px!important;
+    background: url(icons.png) no-repeat 0 -1280px !important;
 }
 
 .cke_ltr .cke_button__indent_icon {
-    background: url(icons.png) no-repeat 0 -1312px!important;
+    background: url(icons.png) no-repeat 0 -1312px !important;
 }
 
 .cke_rtl .cke_button__outdent_icon, .cke_mixed_dir_content .cke_rtl .cke_button__outdent_icon {
-    background: url(icons.png) no-repeat 0 -1344px!important;
+    background: url(icons.png) no-repeat 0 -1344px !important;
 }
 
 .cke_ltr .cke_button__outdent_icon {
-    background: url(icons.png) no-repeat 0 -1376px!important;
+    background: url(icons.png) no-repeat 0 -1376px !important;
 }
 
 .cke_button__justifyblock_icon {
-    background: url(icons.png) no-repeat 0 -1408px!important;
+    background: url(icons.png) no-repeat 0 -1408px !important;
 }
 
 .cke_button__justifycenter_icon {
-    background: url(icons.png) no-repeat 0 -1440px!important;
+    background: url(icons.png) no-repeat 0 -1440px !important;
 }
 
 .cke_button__justifyleft_icon {
-    background: url(icons.png) no-repeat 0 -1472px!important;
+    background: url(icons.png) no-repeat 0 -1472px !important;
 }
 
 .cke_button__justifyright_icon {
-    background: url(icons.png) no-repeat 0 -1504px!important;
+    background: url(icons.png) no-repeat 0 -1504px !important;
 }
 
 .cke_rtl .cke_button__anchor_icon, .cke_mixed_dir_content .cke_rtl .cke_button__anchor_icon {
-    background: url(icons.png) no-repeat 0 -1536px!important;
+    background: url(icons.png) no-repeat 0 -1536px !important;
 }
 
 .cke_ltr .cke_button__anchor_icon {
-    background: url(icons.png) no-repeat 0 -1568px!important;
+    background: url(icons.png) no-repeat 0 -1568px !important;
 }
 
 .cke_button__link_icon {
-    background: url(icons.png) no-repeat 0 -1600px!important;
+    background: url(icons.png) no-repeat 0 -1600px !important;
 }
 
 .cke_button__unlink_icon {
-    background: url(icons.png) no-repeat 0 -1632px!important;
+    background: url(icons.png) no-repeat 0 -1632px !important;
 }
 
 .cke_rtl .cke_button__bulletedlist_icon, .cke_mixed_dir_content .cke_rtl .cke_button__bulletedlist_icon {
-    background: url(icons.png) no-repeat 0 -1664px!important;
+    background: url(icons.png) no-repeat 0 -1664px !important;
 }
 
 .cke_ltr .cke_button__bulletedlist_icon {
-    background: url(icons.png) no-repeat 0 -1696px!important;
+    background: url(icons.png) no-repeat 0 -1696px !important;
 }
 
 .cke_rtl .cke_button__numberedlist_icon, .cke_mixed_dir_content .cke_rtl .cke_button__numberedlist_icon {
-    background: url(icons.png) no-repeat 0 -1728px!important;
+    background: url(icons.png) no-repeat 0 -1728px !important;
 }
 
 .cke_ltr .cke_button__numberedlist_icon {
-    background: url(icons.png) no-repeat 0 -1760px!important;
+    background: url(icons.png) no-repeat 0 -1760px !important;
 }
 
 .cke_button__maximize_icon {
-    background: url(icons.png) no-repeat 0 -1792px!important;
+    background: url(icons.png) no-repeat 0 -1792px !important;
 }
 
 .cke_rtl .cke_button__newpage_icon, .cke_mixed_dir_content .cke_rtl .cke_button__newpage_icon {
-    background: url(icons.png) no-repeat 0 -1824px!important;
+    background: url(icons.png) no-repeat 0 -1824px !important;
 }
 
 .cke_ltr .cke_button__newpage_icon {
-    background: url(icons.png) no-repeat 0 -1856px!important;
+    background: url(icons.png) no-repeat 0 -1856px !important;
 }
 
 .cke_rtl .cke_button__pagebreak_icon, .cke_mixed_dir_content .cke_rtl .cke_button__pagebreak_icon {
-    background: url(icons.png) no-repeat 0 -1888px!important;
+    background: url(icons.png) no-repeat 0 -1888px !important;
 }
 
 .cke_ltr .cke_button__pagebreak_icon {
-    background: url(icons.png) no-repeat 0 -1920px!important;
+    background: url(icons.png) no-repeat 0 -1920px !important;
 }
 
 .cke_rtl .cke_button__pastefromword_icon, .cke_mixed_dir_content .cke_rtl .cke_button__pastefromword_icon {
-    background: url(icons.png) no-repeat 0 -1952px!important;
+    background: url(icons.png) no-repeat 0 -1952px !important;
 }
 
 .cke_ltr .cke_button__pastefromword_icon {
-    background: url(icons.png) no-repeat 0 -1984px!important;
+    background: url(icons.png) no-repeat 0 -1984px !important;
 }
 
 .cke_rtl .cke_button__pastetext_icon, .cke_mixed_dir_content .cke_rtl .cke_button__pastetext_icon {
-    background: url(icons.png) no-repeat 0 -2016px!important;
+    background: url(icons.png) no-repeat 0 -2016px !important;
 }
 
 .cke_ltr .cke_button__pastetext_icon {
-    background: url(icons.png) no-repeat 0 -2048px!important;
+    background: url(icons.png) no-repeat 0 -2048px !important;
 }
 
 .cke_button__placeholder_icon {
-    background: url(icons.png) no-repeat 0 -2080px!important;
+    background: url(icons.png) no-repeat 0 -2080px !important;
 }
 
 .cke_rtl .cke_button__preview_icon, .cke_mixed_dir_content .cke_rtl .cke_button__preview_icon {
-    background: url(icons.png) no-repeat 0 -2112px!important;
+    background: url(icons.png) no-repeat 0 -2112px !important;
 }
 
 .cke_ltr .cke_button__preview_icon {
-    background: url(icons.png) no-repeat 0 -2144px!important;
+    background: url(icons.png) no-repeat 0 -2144px !important;
 }
 
 .cke_button__print_icon {
-    background: url(icons.png) no-repeat 0 -2176px!important;
+    background: url(icons.png) no-repeat 0 -2176px !important;
 }
 
 .cke_button__removeformat_icon {
-    background: url(icons.png) no-repeat 0 -2208px!important;
+    background: url(icons.png) no-repeat 0 -2208px !important;
 }
 
 .cke_button__save_icon {
-    background: url(icons.png) no-repeat 0 -2240px!important;
+    background: url(icons.png) no-repeat 0 -2240px !important;
 }
 
 .cke_button__scayt_icon {
-    background: url(icons.png) no-repeat 0 -2272px!important;
+    background: url(icons.png) no-repeat 0 -2272px !important;
 }
 
 .cke_button__selectall_icon {
-    background: url(icons.png) no-repeat 0 -2304px!important;
+    background: url(icons.png) no-repeat 0 -2304px !important;
 }
 
 .cke_rtl .cke_button__showblocks_icon, .cke_mixed_dir_content .cke_rtl .cke_button__showblocks_icon {
-    background: url(icons.png) no-repeat 0 -2336px!important;
+    background: url(icons.png) no-repeat 0 -2336px !important;
 }
 
 .cke_ltr .cke_button__showblocks_icon {
-    background: url(icons.png) no-repeat 0 -2368px!important;
+    background: url(icons.png) no-repeat 0 -2368px !important;
 }
 
 .cke_button__smiley_icon {
-    background: url(icons.png) no-repeat 0 -2400px!important;
+    background: url(icons.png) no-repeat 0 -2400px !important;
 }
 
 .cke_rtl .cke_button__source_icon, .cke_mixed_dir_content .cke_rtl .cke_button__source_icon {
-    background: url(icons.png) no-repeat 0 -2432px!important;
+    background: url(icons.png) no-repeat 0 -2432px !important;
 }
 
 .cke_ltr .cke_button__source_icon {
-    background: url(icons.png) no-repeat 0 -2464px!important;
+    background: url(icons.png) no-repeat 0 -2464px !important;
 }
 
 .cke_button__specialchar_icon {
-    background: url(icons.png) no-repeat 0 -2496px!important;
+    background: url(icons.png) no-repeat 0 -2496px !important;
 }
 
 .cke_button__table_icon {
-    background: url(icons.png) no-repeat 0 -2528px!important;
+    background: url(icons.png) no-repeat 0 -2528px !important;
 }
 
 .cke_rtl .cke_button__templates_icon, .cke_mixed_dir_content .cke_rtl .cke_button__templates_icon {
-    background: url(icons.png) no-repeat 0 -2560px!important;
+    background: url(icons.png) no-repeat 0 -2560px !important;
 }
 
 .cke_ltr .cke_button__templates_icon {
-    background: url(icons.png) no-repeat 0 -2592px!important;
+    background: url(icons.png) no-repeat 0 -2592px !important;
 }
 
 .cke_button__uicolor_icon {
-    background: url(icons.png) no-repeat 0 -2624px!important;
+    background: url(icons.png) no-repeat 0 -2624px !important;
 }
 
 .cke_rtl .cke_button__redo_icon, .cke_mixed_dir_content .cke_rtl .cke_button__redo_icon {
-    background: url(icons.png) no-repeat 0 -2656px!important;
+    background: url(icons.png) no-repeat 0 -2656px !important;
 }
 
 .cke_ltr .cke_button__redo_icon {
-    background: url(icons.png) no-repeat 0 -2688px!important;
+    background: url(icons.png) no-repeat 0 -2688px !important;
 }
 
 .cke_rtl .cke_button__undo_icon, .cke_mixed_dir_content .cke_rtl .cke_button__undo_icon {
-    background: url(icons.png) no-repeat 0 -2720px!important;
+    background: url(icons.png) no-repeat 0 -2720px !important;
 }
 
 .cke_ltr .cke_button__undo_icon {
-    background: url(icons.png) no-repeat 0 -2752px!important;
+    background: url(icons.png) no-repeat 0 -2752px !important;
 }
 
 .cke_button__spellchecker_icon {
-    background: url(icons.png) no-repeat 0 -2784px!important;
+    background: url(icons.png) no-repeat 0 -2784px !important;
 }
