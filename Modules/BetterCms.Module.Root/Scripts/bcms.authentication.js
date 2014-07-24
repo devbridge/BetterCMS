@@ -8,7 +8,8 @@ bettercms.define('bcms.authentication', ['bcms.jquery', 'bcms', 'bcms.modal'],
     var authentication = {},
         selectors = {
             sideManuHeader: ".bcms-sidemenu-header",
-            logoutButton: ".bcms-logout-btn"
+            logoutButton: ".bcms-logout-btn",
+            viewAsPublicLink: ".bcms-view-page-as-public"
         },
         links = {
             logoutUrl: null
@@ -34,9 +35,13 @@ bettercms.define('bcms.authentication', ['bcms.jquery', 'bcms', 'bcms.modal'],
         });
     };
 
-    authentication.viewPageAsAnonymous = function() {
+    function viewPageAsAnonymous() {
         var url = window.location.href,
             hash = window.location.hash;
+
+        if (!hash && url.lastIndexOf('#') == url.length - 1) {
+            hash = '#';
+        }
 
         if (hash) {
             url = url.substring(0, url.lastIndexOf(hash));
@@ -49,12 +54,17 @@ bettercms.define('bcms.authentication', ['bcms.jquery', 'bcms', 'bcms.modal'],
         }
 
         window.open(url);
-    };
+    }
 
     authentication.init = function () {
         $(selectors.sideManuHeader).find(selectors.logoutButton).on("click", function (event) {
             event.stopPropagation();
             authentication.logout();
+        });
+
+        $(selectors.viewAsPublicLink).on('click', function (event) {
+            bcms.stopEventPropagation(event);
+            viewPageAsAnonymous();
         });
     };
 
