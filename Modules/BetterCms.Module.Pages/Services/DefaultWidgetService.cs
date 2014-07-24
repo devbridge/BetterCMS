@@ -83,7 +83,7 @@ namespace BetterCms.Module.Pages.Services
                 var draft = widget.History.FirstOrDefault(h => h is HtmlContentWidget && !h.IsDeleted && h.Status == ContentStatus.Draft) as HtmlContentWidget;
                 if (draft != null)
                 {
-                    originalWidget = draft;
+                    widget = draft;
                 }
             }
         }
