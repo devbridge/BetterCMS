@@ -53,6 +53,7 @@ namespace BetterCms.Module.Pages.Registration
                             
                             new JavaScriptModuleGlobalization(this, "widgetUsagesDialogTitle", () => PagesGlobalization.WidgetUsages_Dialog_Title),
                             new JavaScriptModuleGlobalization(this, "widgetUsagesType_Page", () => PagesGlobalization.WidgetUsages_Type_Page),
+                            new JavaScriptModuleGlobalization(this, "widgetUsagesType_MasterPage", () => PagesGlobalization.WidgetUsages_Type_MasterPage),
                             new JavaScriptModuleGlobalization(this, "widgetUsagesType_HtmlWidget", () => PagesGlobalization.WidgetUsages_Type_HtmlWidget)
                         };
         }

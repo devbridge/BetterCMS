@@ -83,7 +83,8 @@ namespace BetterCms.Module.Pages.Services
                     .Select(() => alias.CreatedOn).WithAlias(() => modelAlias.CreatedOn)
                     .Select(() => alias.ModifiedOn).WithAlias(() => modelAlias.ModifiedOn)
                     .Select(() => alias.PageUrl).WithAlias(() => modelAlias.Url)
-                    .Select(() => alias.Language.Id).WithAlias(() => modelAlias.LanguageId))
+                    .Select(() => alias.Language.Id).WithAlias(() => modelAlias.LanguageId)
+                    .Select(() => alias.IsMasterPage).WithAlias(() => modelAlias.IsMasterPage))
                 .TransformUsing(Transformers.AliasToBean<SiteSettingPageViewModel>());
 
             if (configuration.Security.AccessControlEnabled)

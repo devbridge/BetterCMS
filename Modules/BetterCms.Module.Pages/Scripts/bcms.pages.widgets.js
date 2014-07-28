@@ -38,8 +38,9 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 editChildWidgetOptionsCloseButtonTitle: null,
                 widgetUsagesDialogTitle: null,
                 widgetUsagesType_Page: null,
-                widgetUsagesType_HtmlWidget: null
-    },
+                widgetUsagesType_HtmlWidget: null,
+                widgetUsagesType_MasterPage: null
+            },
             selectors = {
                 enableCustomCss: '#bcms-enable-custom-css',
                 customCssContainer: '#bcms-custom-css-container',
@@ -107,7 +108,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             },
             widgetUsageTypes = {
                 page: 1,
-                htmlWidget: 2
+                masterPage: 2,
+                htmlWidget: 3
             };
 
         /**
@@ -619,13 +621,15 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
                                         if (item.Type == widgetUsageTypes.page) {
                                             newItem.typeTitle(globalization.widgetUsagesType_Page);
+                                        } else if (item.Type == widgetUsageTypes.masterPage) {
+                                            newItem.typeTitle(globalization.widgetUsagesType_MasterPage);
                                         } else if (item.Type == widgetUsageTypes.htmlWidget) {
                                             newItem.typeTitle(globalization.widgetUsagesType_HtmlWidget);
                                             newItem.deletingIsDisabled = true;
                                         }
 
                                         newItem.editItem = function () {
-                                            if (this.type() == widgetUsageTypes.page) {
+                                            if (this.type() == widgetUsageTypes.page || this.type() == widgetUsageTypes.masterPage) {
                                                 pages.openEditPageDialog(this.id(), function (pageData) {
                                                     newItem.url(pageData.Data.PageUrl);
                                                     newItem.title(pageData.Data.Title);
