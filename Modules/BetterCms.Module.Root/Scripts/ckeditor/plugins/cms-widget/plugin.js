@@ -12,7 +12,6 @@
             if (CKEDITOR.addCss) {
                 CKEDITOR.addCss(
                     'widget {' +
-                    '  position: relative;' +
                     '  height: 35px;' +
                     '  line-height: 35px;' +
                     '  padding: 10px;' +
