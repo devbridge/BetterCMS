@@ -599,7 +599,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Opens pages and widgets list, filtered by using widget
         */
         function findWidgetUsages(self) {
-            var widgetId = self.data('id'),
+            var widgetId = self.parents(selectors.widgetParentRow).data('originalId'),
                 url = $.format(links.getWidgetUsagesUrl, widgetId);
 
             modal.open({
