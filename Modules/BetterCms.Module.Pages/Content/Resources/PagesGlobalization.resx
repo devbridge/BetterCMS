@@ -1359,4 +1359,7 @@
   <data name="EditPageProperties_ForceProtocol_Tooltip_Description" xml:space="preserve">
     <value>Select protocol forcing if it is required that page must be server only via one protocol.&lt;br/&gt;&lt;strong&gt;Warning:&lt;/strong&gt; selected forced protocol must be properly configured in website hosting environment.</value>
   </data>
+  <data name="WidgetUsages_Type_MasterPage" xml:space="preserve">
+    <value>Master page</value>
+  </data>
 </root>
