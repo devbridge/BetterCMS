@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Root.ViewModels.Cms;
 
 namespace BetterCms.Module.Root.Mvc.Helpers
@@ -76,6 +77,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                 var renderedMaster = RenderRecursively(controller, currentModel.MasterPage, pageModel, htmlHelper);
 
                 var pageHtmlHelper = new PageHtmlRenderer.PageHtmlRenderer(renderedMaster, pageModel);
+                var contentHtmlHelper = new ChildContentRenderHelper(htmlHelper);
 
                 foreach (var region in currentModel.Regions)
                 {
@@ -92,8 +94,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                                 // Pass current model as view data model
                                 htmlHelper.ViewData.Model = pageModel;
 
-                                var content = projection.GetHtml(htmlHelper);
-                                contentsBuilder.Append(content);
+                                contentsBuilder = contentHtmlHelper.AppendHtml(contentsBuilder, projection);
                             }
                         }
                     }
