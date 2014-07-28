@@ -570,7 +570,7 @@ namespace BetterCms.Module.Pages.Services
                                     pageTranslations = new PageTranslationViewModel[0];
                                 }
 
-                                // Assigned node URL and title is taken from default language, if such exists
+                                // Assigned node URL and title is taken from default language, if such exists.
                                 var defaultPageTranslation = pageTranslations.FirstOrDefault(p => !p.LanguageId.HasValue);
                                 if (defaultPageTranslation != null)
                                 {
@@ -582,7 +582,7 @@ namespace BetterCms.Module.Pages.Services
                                     }
                                 }
 
-                                // Update sitemap node translations
+                                // Update sitemap node translations.
                                 if (node.Translations == null)
                                 {
                                     node.Translations = new List<SitemapNodeTranslation>();
@@ -591,7 +591,7 @@ namespace BetterCms.Module.Pages.Services
                                 node.Translations.Where(t => t.UsePageTitleAsNodeTitle).ForEach(
                                     t =>
                                     {
-                                        var pageTranslation = GetPageTranslation(pageTranslations, t.Language.Id, node);
+                                        var pageTranslation = GetPageTranslation(pageTranslations, t.Language.Id, node, page);
                                         if (t.UsePageTitleAsNodeTitle)
                                         {
                                             t.Title = pageTranslation.Title;
@@ -602,11 +602,11 @@ namespace BetterCms.Module.Pages.Services
                                         t.UrlHash = pageTranslation.PageUrlHash;
                                     });
 
-                                // Create non-existing node translations for each language
+                                // Create non-existing node translations for each language.
                                 languages.Where(language => node.Translations.All(nt => nt.Language.Id != language.Id))
                                     .ForEach(language =>
                                     {
-                                        var pageTranslation = GetPageTranslation(pageTranslations, language.Id, node);
+                                        var pageTranslation = GetPageTranslation(pageTranslations, language.Id, node, page);
 
                                         var nodeTranslation = new SitemapNodeTranslation
                                             {
@@ -637,18 +637,30 @@ namespace BetterCms.Module.Pages.Services
         /// <param name="nodeLanguage">The node language.</param>
         /// <param name="node">The node.</param>
         /// <returns></returns>
-        private PageTranslationViewModel GetPageTranslation(IEnumerable<PageTranslationViewModel> pageTranslations, Guid nodeLanguage, SitemapNode node)
+        private PageTranslationViewModel GetPageTranslation(IEnumerable<PageTranslationViewModel> pageTranslations, Guid nodeLanguage, SitemapNode node, Page page)
         {
             var pageTranslation = pageTranslations.FirstOrDefault(p => p.LanguageId == nodeLanguage);
+
             if (pageTranslation == null)
             {
                 pageTranslation = pageTranslations.FirstOrDefault(p => !p.LanguageId.HasValue);
             }
+
+            if (pageTranslation == null && page != null)
+            {
+                pageTranslation = new PageTranslationViewModel
+                                  {
+                                      Title = page.Title,
+                                      PageUrl = page.PageUrl,
+                                      PageUrlHash = page.PageUrlHash
+                                  };
+            }
+
             if (pageTranslation == null)
             {
                 pageTranslation = new PageTranslationViewModel
                                   {
-                                      Title = node.Title, 
+                                      Title = node.Title,
                                       PageUrl = node.Url,
                                       PageUrlHash = node.UrlHash
                                   };
