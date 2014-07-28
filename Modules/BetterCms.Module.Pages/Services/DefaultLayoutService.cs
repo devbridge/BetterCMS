@@ -153,12 +153,12 @@ namespace BetterCms.Module.Pages.Services
                         Type = o.Type,
                         OptionDefaultValue = optionService.ClearFixValueForEdit(o.Type, o.DefaultValue),
                         CanDeleteOption = o.IsDeletable,
-                        CustomOption = new CustomOptionViewModel
+                        CustomOption = o.CustomOption != null ? new CustomOptionViewModel
                                        {
                                            Identifier = o.CustomOption.Identifier,
                                            Title = o.CustomOption.Title,
                                            Id = o.CustomOption.Id
-                                       }
+                                       } : null
                     })
                 .OrderBy(o => o.OptionKey)
                 .ToList();
