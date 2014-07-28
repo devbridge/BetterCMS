@@ -42,7 +42,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetWidgetUsages
                     Url = p.Url,
                     Id = p.Id,
                     Version = p.Version,
-                    Type = WidgetUsageType.Page
+                    Type = p.IsMasterPage ? WidgetUsageType.MasterPage : WidgetUsageType.Page
                 });
 
             int widgetsTotalCount;

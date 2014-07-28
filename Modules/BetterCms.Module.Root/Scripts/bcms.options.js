@@ -297,8 +297,14 @@ bettercms.define('bcms.options', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'b
 
                         // Entering boolean mode
                         if (newType == optionTypes.boolType) {
-                            if (self.editableValue() !== 'true' && self.editableValue() !== true) {
+                            var value = self.editableValue();
+                            if (value && typeof value === "string") {
+                                value = value.toLowerCase();
+                            }
+                            if (value !== 'true' && value !== true) {
                                 self.editableValue(false);
+                            } else {
+                                self.editableValue(true);
                             }
                         }
                     }

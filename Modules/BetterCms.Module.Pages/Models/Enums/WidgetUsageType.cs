@@ -4,6 +4,8 @@
     {
         Page = 1,
 
-        HtmlWidget = 2
+        MasterPage = 2,
+
+        HtmlWidget = 3
     }
 }

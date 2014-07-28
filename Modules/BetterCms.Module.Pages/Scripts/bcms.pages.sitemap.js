@@ -1581,21 +1581,40 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             self.updateStatusOfLinks = function () {
                 var pagesInSitemap = [],
+                    pagesInSitemapSoftLink =[],
                     getAllPages = function (nodes) {
-                        var i, k, translation, translationId;
+                        var i, k, j, translation, translationId, translationUrl;
 
                         for (i = 0; i < nodes.length; i++) {
-                            var pageId = nodes[i].defaultPageId() || nodes[i].pageId();
-                            if (pageId != null && pageId != defaultIdValue && !nodes[i].isDeleted()) {
-                                pagesInSitemap[pageId] = true;
-                                if (nodes[i].translations != null) {
-                                    for (k in nodes[i].translations) {
-                                        translation = nodes[i].translations[k];
+                            if (!nodes[i].isDeleted()) {
+                                var pageId = nodes[i].defaultPageId() || nodes[i].pageId();
+                                if (pageId != null && pageId != defaultIdValue) {
+                                    pagesInSitemap[pageId] = true;
+                                    if (nodes[i].translations != null) {
+                                        for (k in nodes[i].translations) {
+                                            translation = nodes[i].translations[k];
 
-                                        if (translation && translation.pageId && $.isFunction(translation.pageId)) {
-                                            translationId = translation.pageId();
-                                            if (translationId) {
-                                                pagesInSitemap[translationId] = true;
+                                            if (translation && translation.pageId && $.isFunction(translation.pageId)) {
+                                                translationId = translation.pageId();
+                                                if (translationId) {
+                                                    pagesInSitemap[translationId] = true;
+                                                }
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    var url = nodes[i].url();
+                                    if (url) {
+                                        pagesInSitemapSoftLink[url] = true;
+                                        if (nodes[i].translations != null) {
+                                            for (j in nodes[i].translations) {
+                                                translation = nodes[i].translations[j];
+                                                if (translation && translation.url && $.isFunction(translation.url)) {
+                                                    translationUrl = translation.url();
+                                                    if (translationUrl) {
+                                                        pagesInSitemapSoftLink[translationUrl] = true;
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -1608,7 +1627,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 var pageLinks = self.pageLinks();
                 for (var j = 0; j < pageLinks.length; j++) {
                     var link = pageLinks[j],
-                        onSitemap = pagesInSitemap[link.pageId()] === true;
+                        onSitemap = pagesInSitemap[link.pageId()] === true || pagesInSitemapSoftLink[link.url()] === true;
                     if (link.isOnSitemap() != onSitemap) {
                         link.isOnSitemap(onSitemap);
                     }

@@ -12,7 +12,6 @@
             if (CKEDITOR.addCss) {
                 CKEDITOR.addCss(
                     'widget {' +
-                    '  position: relative;' +
                     '  height: 35px;' +
                     '  line-height: 35px;' +
                     '  padding: 10px;' +
@@ -86,7 +85,7 @@
             e.ui.addButton('CmsWidget', {
                 title: 'Insert Widget',
                 label: 'Widget',
-                icon: 'cmsdynamicregion',
+                icon: 'cmswidget',
                 command: b
             });
 
