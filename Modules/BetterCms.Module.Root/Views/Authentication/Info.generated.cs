@@ -46,25 +46,16 @@ WriteLiteral("<div");
 
 WriteLiteral(" class=\"bcms-sidemenu-credentials\"");
 
-WriteLiteral(">\r\n    <div>");
+WriteLiteral(">\r\n");
 
             
             #line 4 "..\..\Views\Authentication\Info.cshtml"
-    Write(RootGlobalization.Sidebar_LoggedInAsTitle);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n");
-
-            
-            #line 5 "..\..\Views\Authentication\Info.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 5 "..\..\Views\Authentication\Info.cshtml"
+            #line 4 "..\..\Views\Authentication\Info.cshtml"
      if (!string.IsNullOrEmpty(Model.EditUserProfileUrl))
     {
 
@@ -77,13 +68,43 @@ WriteLiteral(" class=\"bcms-sidemenu-username\"");
 
 WriteLiteral(">\r\n            <a");
 
-WriteLiteral(" class=\"bcms-pointer\"");
+WriteLiteral(" class=\"bcms-pointer bcms-as-current\"");
+
+WriteLiteral(">");
+
+            
+            #line 7 "..\..\Views\Authentication\Info.cshtml"
+                                               Write(Html.Encode(Model.UserName));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</a>\r\n            <a");
+
+WriteLiteral(" class=\"bcms-pointer bcms-view-page-as-public bcms-as-public\"");
+
+WriteLiteral(" target=\"_blank\"");
+
+WriteLiteral(" href=\"/\"");
+
+WriteLiteral(">");
+
+            
+            #line 8 "..\..\Views\Authentication\Info.cshtml"
+                                                                                                Write(RootGlobalization.Authentication_ViewAsPublic_Public);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</a>\r\n            <a");
+
+WriteLiteral(" class=\"bcms-pointer bcms-view-page-as-public bcms-as-user\"");
 
 WriteLiteral(" data-url=\"");
 
             
-            #line 8 "..\..\Views\Authentication\Info.cshtml"
-                                         Write(Model.EditUserProfileUrl);
+            #line 9 "..\..\Views\Authentication\Info.cshtml"
+                                                                               Write(Model.EditUserProfileUrl);
 
             
             #line default
@@ -93,25 +114,8 @@ WriteLiteral("\"");
 WriteLiteral(">");
 
             
-            #line 8 "..\..\Views\Authentication\Info.cshtml"
-                                                                    Write(Html.Encode(Model.UserName));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</a>\r\n            <a");
-
-WriteLiteral(" class=\"bcms-pointer bcms-view-page-as-public\"");
-
-WriteLiteral(" target=\"_blank\"");
-
-WriteLiteral(" href=\"/\"");
-
-WriteLiteral(">");
-
-            
             #line 9 "..\..\Views\Authentication\Info.cshtml"
-                                                                                 Write(RootGlobalization.Authentication_ViewAsPublic_Public);
+                                                                                                          Write(Html.Encode(Model.UserName));
 
             
             #line default
@@ -131,18 +135,20 @@ WriteLiteral("        <div");
 
 WriteLiteral(" class=\"bcms-sidemenu-username\"");
 
-WriteLiteral(">\r\n");
+WriteLiteral(">\r\n            <a");
 
-WriteLiteral("            ");
+WriteLiteral(" class=\"bcms-pointer bcms-as-current\"");
+
+WriteLiteral(">");
 
             
             #line 15 "..\..\Views\Authentication\Info.cshtml"
-       Write(Html.Encode(Model.UserName));
+                                               Write(Html.Encode(Model.UserName));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n            <a");
+WriteLiteral("</a>\r\n            <a");
 
 WriteLiteral(" class=\"bcms-pointer bcms-view-page-as-public\"");
 
