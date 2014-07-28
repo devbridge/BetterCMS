@@ -189,7 +189,9 @@
                     }
                     @if (canEdit)
                     {
+                        <!-- ko if: !$root.isGrid() -->
                         <a class="bcms-media-content-link" data-bind="click: renameMedia.bind($data, $root), clickBubble: false, visible: !isReadOnly()">@RootGlobalization.Button_Rename</a>
+                        <!-- /ko -->
                     }
                     <!-- ko if: !isFailed() && canBeDownloaded() -->
                     <a class="bcms-media-content-link" data-bind="click: downloadMedia, clickBubble: false">@MediaGlobalization.MediaManager_ButtonDownload</a>

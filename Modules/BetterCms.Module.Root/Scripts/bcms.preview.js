@@ -57,7 +57,7 @@ bettercms.define('bcms.preview', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.dyn
 
     preview.previewPageContent = function (pageId, pageContentId) {
         var link = $.format(links.previewPageUrl, pageId, pageContentId);
-        window.open(link, bcms.previewWindow, 'toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,copyhistory=yes,resizable=yes');
+        window.open(link, bcms.previewWindow);
     };
     
     return preview;
