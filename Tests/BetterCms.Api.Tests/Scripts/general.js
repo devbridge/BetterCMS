@@ -22,7 +22,6 @@ var api = (function() {
             beforeSend: function (request) {
                 // Hack for phantomjs runner (it ignores a regularly provided contentType).
                 request.setRequestHeader("X-Content-Type", "application/json");
-                request.setRequestHeader("Cookie", ".ASPXROLES=VD8LuMapNbQYRBQnT7P9cbhAVy1eAba4kllOnWXAOkoIXMoz25MQl_7UaBrocqvL2c-9mNmIb8GTLzCD8n1IbQQbXjPE8V7nIN8uWAqYhyI0NDDUs5LPWma1_GdI7dVYT4_-IaaeD4xeBKvNV8cuKAWA1NRbM3fSseYFuSdVWbWdaS6wuY_vAMXpKHKRGxBlNDUZ1m8FLzplxl0YAhBaUa76o5jXDa2TQTuygnTjjowlo0ZhIcuhqi0MyTKn5tJzRWOINhGCcjwjTdHLyASIcQMjtGoEaqM8Xu43hsA-JzlPw94gOtdjG0uXDEBWdnYhy8QjVe5Q8V4D2EIZdL5CRmonvt3y86EZj8OyRj_V2y-4WXVVcz9FeUPHcKyInG3oL25KEj7RzufRxbXtxjvcamfQc3OOaCa-ZHdY471UlXnZtU4i_hmx1Ys2xMkGVtsYvD-CVGZkHe4MjlvPNKYgzxywmnAap-k5ByTGysHsPWcRJrmR-T_yvL2o5neFBoxKnAKkn0jjKlyHayJK6VL7A_JTvPz-eDG5-9a_ANn5WUpgDF1H6wf-RlNQA3behhbHthKYD4Zs7IB6x_uESLmK_1lzJjXk9lcH2XBACxCL_KKUuf9AIe1Xo4hBftqf65a54xbsng2; .ASPXAUTH=8E9A0B93CF0DEC9A6E6318536D551DE9F36009FC52CD37574994216001FBE4FF115818F2932E5A0184DC34086699AC89C355A0DCEA41E5E1DEB4CFE6F4398BBB5C00655722E22A1D3D8D9F61044E9D45A9EEB85B4C1CBAD98D38EDE2B9585D04BD959416634285682A0AD5D00EDC76905A33B90D");
             },
         };
 
@@ -73,7 +72,6 @@ var api = (function() {
             beforeSend: function (request) {
                 // Hack for phantomjs runner (it ignores a regularly provided contentType).
                 request.setRequestHeader("X-Content-Type", "application/json");
-                request.setRequestHeader("Cookie", ".ASPXROLES=VD8LuMapNbQYRBQnT7P9cbhAVy1eAba4kllOnWXAOkoIXMoz25MQl_7UaBrocqvL2c-9mNmIb8GTLzCD8n1IbQQbXjPE8V7nIN8uWAqYhyI0NDDUs5LPWma1_GdI7dVYT4_-IaaeD4xeBKvNV8cuKAWA1NRbM3fSseYFuSdVWbWdaS6wuY_vAMXpKHKRGxBlNDUZ1m8FLzplxl0YAhBaUa76o5jXDa2TQTuygnTjjowlo0ZhIcuhqi0MyTKn5tJzRWOINhGCcjwjTdHLyASIcQMjtGoEaqM8Xu43hsA-JzlPw94gOtdjG0uXDEBWdnYhy8QjVe5Q8V4D2EIZdL5CRmonvt3y86EZj8OyRj_V2y-4WXVVcz9FeUPHcKyInG3oL25KEj7RzufRxbXtxjvcamfQc3OOaCa-ZHdY471UlXnZtU4i_hmx1Ys2xMkGVtsYvD-CVGZkHe4MjlvPNKYgzxywmnAap-k5ByTGysHsPWcRJrmR-T_yvL2o5neFBoxKnAKkn0jjKlyHayJK6VL7A_JTvPz-eDG5-9a_ANn5WUpgDF1H6wf-RlNQA3behhbHthKYD4Zs7IB6x_uESLmK_1lzJjXk9lcH2XBACxCL_KKUuf9AIe1Xo4hBftqf65a54xbsng2; .ASPXAUTH=8E9A0B93CF0DEC9A6E6318536D551DE9F36009FC52CD37574994216001FBE4FF115818F2932E5A0184DC34086699AC89C355A0DCEA41E5E1DEB4CFE6F4398BBB5C00655722E22A1D3D8D9F61044E9D45A9EEB85B4C1CBAD98D38EDE2B9585D04BD959416634285682A0AD5D00EDC76905A33B90D");
             },
         };
 
@@ -97,7 +95,6 @@ var api = (function() {
             beforeSend: function (request) {
                 // Hack for phantomjs runner (it ignores a regularly provided contentType).
                 request.setRequestHeader("X-Content-Type", "application/json");
-                request.setRequestHeader("Cookie", ".ASPXROLES=VD8LuMapNbQYRBQnT7P9cbhAVy1eAba4kllOnWXAOkoIXMoz25MQl_7UaBrocqvL2c-9mNmIb8GTLzCD8n1IbQQbXjPE8V7nIN8uWAqYhyI0NDDUs5LPWma1_GdI7dVYT4_-IaaeD4xeBKvNV8cuKAWA1NRbM3fSseYFuSdVWbWdaS6wuY_vAMXpKHKRGxBlNDUZ1m8FLzplxl0YAhBaUa76o5jXDa2TQTuygnTjjowlo0ZhIcuhqi0MyTKn5tJzRWOINhGCcjwjTdHLyASIcQMjtGoEaqM8Xu43hsA-JzlPw94gOtdjG0uXDEBWdnYhy8QjVe5Q8V4D2EIZdL5CRmonvt3y86EZj8OyRj_V2y-4WXVVcz9FeUPHcKyInG3oL25KEj7RzufRxbXtxjvcamfQc3OOaCa-ZHdY471UlXnZtU4i_hmx1Ys2xMkGVtsYvD-CVGZkHe4MjlvPNKYgzxywmnAap-k5ByTGysHsPWcRJrmR-T_yvL2o5neFBoxKnAKkn0jjKlyHayJK6VL7A_JTvPz-eDG5-9a_ANn5WUpgDF1H6wf-RlNQA3behhbHthKYD4Zs7IB6x_uESLmK_1lzJjXk9lcH2XBACxCL_KKUuf9AIe1Xo4hBftqf65a54xbsng2; .ASPXAUTH=8E9A0B93CF0DEC9A6E6318536D551DE9F36009FC52CD37574994216001FBE4FF115818F2932E5A0184DC34086699AC89C355A0DCEA41E5E1DEB4CFE6F4398BBB5C00655722E22A1D3D8D9F61044E9D45A9EEB85B4C1CBAD98D38EDE2B9585D04BD959416634285682A0AD5D00EDC76905A33B90D");
             },
         };
 
@@ -119,10 +116,8 @@ var api = (function() {
             success: onSuccess,
             error: onError,
             beforeSend: function (request) {
-                request.setDisableHeaderCheck(true);
                 // Hack for phantomjs runner (it ignores a regularly provided contentType).
                 request.setRequestHeader("X-Content-Type", "application/json");
-                request.setRequestHeader("Cookie", ".ASPXROLES=VD8LuMapNbQYRBQnT7P9cbhAVy1eAba4kllOnWXAOkoIXMoz25MQl_7UaBrocqvL2c-9mNmIb8GTLzCD8n1IbQQbXjPE8V7nIN8uWAqYhyI0NDDUs5LPWma1_GdI7dVYT4_-IaaeD4xeBKvNV8cuKAWA1NRbM3fSseYFuSdVWbWdaS6wuY_vAMXpKHKRGxBlNDUZ1m8FLzplxl0YAhBaUa76o5jXDa2TQTuygnTjjowlo0ZhIcuhqi0MyTKn5tJzRWOINhGCcjwjTdHLyASIcQMjtGoEaqM8Xu43hsA-JzlPw94gOtdjG0uXDEBWdnYhy8QjVe5Q8V4D2EIZdL5CRmonvt3y86EZj8OyRj_V2y-4WXVVcz9FeUPHcKyInG3oL25KEj7RzufRxbXtxjvcamfQc3OOaCa-ZHdY471UlXnZtU4i_hmx1Ys2xMkGVtsYvD-CVGZkHe4MjlvPNKYgzxywmnAap-k5ByTGysHsPWcRJrmR-T_yvL2o5neFBoxKnAKkn0jjKlyHayJK6VL7A_JTvPz-eDG5-9a_ANn5WUpgDF1H6wf-RlNQA3behhbHthKYD4Zs7IB6x_uESLmK_1lzJjXk9lcH2XBACxCL_KKUuf9AIe1Xo4hBftqf65a54xbsng2; .ASPXAUTH=8E9A0B93CF0DEC9A6E6318536D551DE9F36009FC52CD37574994216001FBE4FF115818F2932E5A0184DC34086699AC89C355A0DCEA41E5E1DEB4CFE6F4398BBB5C00655722E22A1D3D8D9F61044E9D45A9EEB85B4C1CBAD98D38EDE2B9585D04BD959416634285682A0AD5D00EDC76905A33B90D");
             },
         };
 
