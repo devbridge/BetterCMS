@@ -11,7 +11,6 @@ using BetterCms.Core.Dependencies;
 using BetterCms.Core.Environment.Assemblies;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Mvc.Extensions;
-using BetterCms.Core.Mvc.Routes;
 
 using Common.Logging;
 
@@ -31,11 +30,6 @@ namespace BetterCms.Core.Modules.Registration
         /// Assembly loader instance.
         /// </summary>
         private readonly IAssemblyLoader assemblyLoader;
-
-        /// <summary>
-        /// CMS configuration instance.
-        /// </summary>
-        private readonly ICmsConfiguration cmsConfiguration;
 
         /// <summary>
         /// Controller extensions.
@@ -80,19 +74,16 @@ namespace BetterCms.Core.Modules.Registration
         /// <summary>
         /// Thread safe style sheet files collection.
         /// </summary>
-        private readonly List<CssIncludeDescriptor> knownStyleSheetIncludes;        
+        private readonly List<CssIncludeDescriptor> knownStyleSheetIncludes;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultModulesRegistration" /> class.
         /// </summary>
         /// <param name="assemblyLoader">The assembly loader.</param>
-        /// <param name="cmsConfiguration">The CMS configuration.</param>
         /// <param name="controllerExtensions">The controller extensions.</param>
-        /// <param name="routeTable">The route table.</param>
-        public DefaultModulesRegistration(IAssemblyLoader assemblyLoader,  ICmsConfiguration cmsConfiguration, IControllerExtensions controllerExtensions, IRouteTable routeTable)
+        public DefaultModulesRegistration(IAssemblyLoader assemblyLoader,  IControllerExtensions controllerExtensions)
         {
             this.assemblyLoader = assemblyLoader;
-            this.cmsConfiguration = cmsConfiguration;
             this.controllerExtensions = controllerExtensions;
 
             knownModuleDescriptorTypes = new Dictionary<string, Type>();
@@ -102,7 +93,7 @@ namespace BetterCms.Core.Modules.Registration
             knownSidebarContentItems = new List<IPageActionProjection>();
             knownSidebarBodyContentItems = new List<IPageActionProjection>();
             knownSiteSettingsItems = new List<IPageActionProjection>();
-            knownStyleSheetIncludes = new List<CssIncludeDescriptor>();            
+            knownStyleSheetIncludes = new List<CssIncludeDescriptor>();
         }
 
         /// <summary>

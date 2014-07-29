@@ -3,5 +3,7 @@
     public interface IVersionChecker
     {
         bool VersionExists(string moduleName, long version);
+
+        void AddVersion(string moduleName, long version, bool writeToFile);
     }
 }

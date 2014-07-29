@@ -61,6 +61,7 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
         /// </summary>
         /// <param name="assemblyLoader">The assembly loader.</param>
         /// <param name="configuration">The configuration.</param>
+        /// <param name="versionChecker">The version checker.</param>
         public DefaultMigrationRunner(IAssemblyLoader assemblyLoader, ICmsConfiguration configuration, IVersionChecker versionChecker)
         {
             this.assemblyLoader = assemblyLoader;
@@ -113,6 +114,8 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
                     {
                         var migrationTypes = moduleWithMigrations[moduleDescriptor];
                         Migrate(moduleDescriptor, migrationTypes, versionNumber);
+
+                        versionChecker.AddVersion(moduleDescriptor.Name, versionNumber, true);
                     }
                 }
             }
