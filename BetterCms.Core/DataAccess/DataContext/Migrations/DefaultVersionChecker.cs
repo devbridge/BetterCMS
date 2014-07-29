@@ -183,7 +183,12 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
             return false;
         }
 
-        public void AddVersion(string moduleName, long version, bool writeToFile)
+        public void AddVersion(string moduleName, long version)
+        {
+            AddVersion(moduleName, version, true);
+        }
+
+        private void AddVersion(string moduleName, long version, bool writeToFile)
         {
             try
             {

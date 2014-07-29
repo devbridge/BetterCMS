@@ -115,7 +115,7 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
                         var migrationTypes = moduleWithMigrations[moduleDescriptor];
                         Migrate(moduleDescriptor, migrationTypes, versionNumber);
 
-                        versionChecker.AddVersion(moduleDescriptor.Name, versionNumber, true);
+                        versionChecker.AddVersion(moduleDescriptor.Name, versionNumber);
                     }
                 }
             }
