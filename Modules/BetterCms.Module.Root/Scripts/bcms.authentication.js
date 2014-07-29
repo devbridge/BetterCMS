@@ -9,7 +9,7 @@ bettercms.define('bcms.authentication', ['bcms.jquery', 'bcms', 'bcms.modal'],
         selectors = {
             sideManuHeader: ".bcms-sidemenu-header",
             logoutButton: ".bcms-logout-btn",
-            viewAsPublicLink: ".bcms-view-page-as-public"
+            viewAsPublicLink: ".bcms-as-public"
         },
         links = {
             logoutUrl: null
