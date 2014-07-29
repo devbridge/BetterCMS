@@ -16,11 +16,18 @@ using BetterCms.Module.Users.Services;
 
 namespace BetterCms.Module.Users
 {
+    using Common.Logging;
+
     /// <summary>
     /// Pages module descriptor.
     /// </summary>
     public class UsersModuleDescriptor : ModuleDescriptor
     {
+        /// <summary>
+        /// Current class logger.
+        /// </summary>
+        private static readonly ILog Logger = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// The module name.
         /// </summary>
@@ -245,10 +252,14 @@ namespace BetterCms.Module.Users
 
         private void OnHostStart(SingleItemEventArgs<HttpApplication> args)
         {
+            Logger.Info("OnHostStart: check if is first user registered...");
+
             if (Configuration.Users != null && Configuration.Users.CreateDefaultUserOnStart)
             {
                 CheckIfIsFirstUserRegistered();
             }
+
+            Logger.Info("OnHostStart: checking if is first user registered completed.");
         }
 
         private void HostAuthenticateRequest(SingleItemEventArgs<HttpApplication> args)
