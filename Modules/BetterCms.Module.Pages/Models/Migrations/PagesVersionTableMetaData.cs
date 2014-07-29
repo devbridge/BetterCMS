@@ -9,7 +9,7 @@ namespace BetterCms.Module.Pages.Models.Migrations
         {
             get
             {
-                return "bcms_" + PagesModuleDescriptor.ModuleName;
+                return PagesModuleDescriptor.PagesSchemaName;
             }
         }
 

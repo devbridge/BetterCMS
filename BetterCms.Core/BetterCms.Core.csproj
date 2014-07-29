@@ -126,6 +126,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="DataAccess\DataContext\Migrations\VersionInfo.cs" />
     <Compile Include="DataAccess\PredicateBuilder.cs" />
     <Compile Include="DataContracts\Enums\ForceProtocolType.cs" />
     <Compile Include="DataContracts\IChildContent.cs" />

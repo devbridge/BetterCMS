@@ -10,6 +10,8 @@ namespace BetterCms.Module.Installation
     public class InstallationModuleDescriptor : ModuleDescriptor
     {
         internal const string ModuleName = "installation";
+        
+        internal const string ModuleSchemaName = "bcms_installation";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InstallationModuleDescriptor" /> class.
@@ -30,6 +32,20 @@ namespace BetterCms.Module.Installation
             get
             {
                 return ModuleName;
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the module database schema name.
+        /// </summary>
+        /// <value>
+        /// The name of the module database schema.
+        /// </value>
+        public override string SchemaName
+        {
+            get
+            {
+                return ModuleSchemaName;
             }
         }
 

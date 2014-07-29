@@ -9,7 +9,7 @@ namespace BetterCms.Module.LuceneSearch.Models.Migrations
         {
             get
             {
-                return "bcms_" + LuceneSearchModuleDescriptor.ModuleName;
+                return LuceneSearchModuleDescriptor.LuceneSchemaName;
             }
         }
 

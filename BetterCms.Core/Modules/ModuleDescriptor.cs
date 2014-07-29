@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
+
 using Autofac;
+
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Mvc.Extensions;
-using BetterCms.Core.Security;
 
 namespace BetterCms.Core.Modules
 {
@@ -92,6 +93,20 @@ namespace BetterCms.Core.Modules
                 }
 
                 return areaName;
+            }
+        }
+        
+        /// <summary>
+        /// Gets the name of the module database schema name.
+        /// </summary>
+        /// <value>
+        /// The name of the module database schema.
+        /// </value>
+        public virtual string SchemaName
+        {
+            get
+            {
+                return null;
             }
         }
 

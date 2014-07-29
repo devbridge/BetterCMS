@@ -9,7 +9,7 @@ namespace BetterCms.Module.ImagesGallery.Models.Migrations
         {
             get
             {
-                return "bcms_" + ImagesGalleryModuleDescriptor.ModuleName;
+                return ImagesGalleryModuleDescriptor.ImagesGallerySchemaName;
             }
         }
 

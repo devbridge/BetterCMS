@@ -51,6 +51,9 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
         /// </summary>
         private readonly ICmsConfiguration configuration;
 
+        /// <summary>
+        /// The version checker
+        /// </summary>
         private readonly IVersionChecker versionChecker;
 
         /// <summary>
@@ -70,8 +73,8 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
         /// </summary>
         public void MigrateStructure(IList<ModuleDescriptor> moduleDescriptors)
         {
-            IList<long> versions = new List<long>();
-            IDictionary<ModuleDescriptor, IList<Type>> moduleWithMigrations = new Dictionary<ModuleDescriptor, IList<Type>>();
+            var versions = new Dictionary<long, IList<ModuleDescriptor>>();
+            var moduleWithMigrations = new Dictionary<ModuleDescriptor, IList<Type>>();
 
             foreach (var moduleDescriptor in moduleDescriptors)
             {
@@ -89,25 +92,29 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
                             var attribute = migrationAttributes[0] as MigrationAttribute;
                             if (attribute != null)
                             {
-                                versions.Add(attribute.Version);
+                                if (!versions.ContainsKey(attribute.Version))
+                                {
+                                    versions[attribute.Version] = new List<ModuleDescriptor>();
+                                }
+                                versions[attribute.Version].Add(moduleDescriptor);
                             }
                         }
                     }
                 }
             }
 
-            versions = versions.OrderBy(f => f).ToList();
-
-            foreach (var version in versions)
+            foreach (var version in versions.OrderBy(f => f.Key))
             {
-                foreach (var moduleWithMigration in moduleWithMigrations)
+                var versionNumber = version.Key;
+
+                foreach (var moduleDescriptor in version.Value)
                 {
-                    if (!versionChecker.VersionExists(moduleWithMigration.Key.Name, version))
+                    if (!versionChecker.VersionExists(moduleDescriptor.Name, versionNumber))
                     {
-                        Migrate(moduleWithMigration.Key, moduleWithMigration.Value, version);
-                        versionChecker.AddVersion(moduleWithMigration.Key.Name, version);
+                        var migrationTypes = moduleWithMigrations[moduleDescriptor];
+                        Migrate(moduleDescriptor, migrationTypes, versionNumber);
                     }
-                }                    
+                }
             }
         }
 

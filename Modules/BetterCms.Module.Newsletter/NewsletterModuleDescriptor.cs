@@ -28,6 +28,11 @@ namespace BetterCms.Module.Newsletter
         internal const string NewsletterAreaName = "bcms-newsletter";
 
         /// <summary>
+        /// The newsletter module databse schema name
+        /// </summary>
+        internal const string NewsletterSchemaName = "bcms_newsletter";
+
+        /// <summary>
         /// The newsletter java script module descriptor.
         /// </summary>
         private readonly NewsletterJsModuleIncludeDescriptor newsletterJsModuleIncludeDescriptor;
@@ -80,6 +85,20 @@ namespace BetterCms.Module.Newsletter
             get
             {
                 return NewsletterAreaName;
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the module database schema name.
+        /// </summary>
+        /// <value>
+        /// The name of the module database schema.
+        /// </value>
+        public override string SchemaName
+        {
+            get
+            {
+                return NewsletterSchemaName;
             }
         }
 

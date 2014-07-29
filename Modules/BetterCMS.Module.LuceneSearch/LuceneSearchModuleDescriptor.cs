@@ -22,6 +22,8 @@ namespace BetterCms.Module.LuceneSearch
     public class LuceneSearchModuleDescriptor : ModuleDescriptor
     {
         internal const string ModuleName = "lucene";        
+        
+        internal const string LuceneSchemaName = "bcms_lucene";        
 
         private static List<IWorker> workers = new List<IWorker>();
 
@@ -41,6 +43,26 @@ namespace BetterCms.Module.LuceneSearch
             }
         }
 
+        /// <summary>
+        /// Gets the name of the module database schema name.
+        /// </summary>
+        /// <value>
+        /// The name of the module database schema.
+        /// </value>
+        public override string SchemaName
+        {
+            get
+            {
+                return LuceneSchemaName;
+            }
+        }
+
+        /// <summary>
+        /// Gets the description.
+        /// </summary>
+        /// <value>
+        /// The description.
+        /// </value>
         public override string Description
         {
             get

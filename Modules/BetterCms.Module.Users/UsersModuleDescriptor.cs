@@ -27,9 +27,14 @@ namespace BetterCms.Module.Users
         internal const string ModuleName = "users";
 
         /// <summary>
-        /// The users area name.
+        /// The users module area name.
         /// </summary>
         internal const string UsersAreaName = "bcms-users";
+
+        /// <summary>
+        /// The users module database schema name
+        /// </summary>
+        internal const string UsersSchemaName = "bcms_users";
 
         /// <summary>
         /// The user java script module descriptor
@@ -121,7 +126,21 @@ namespace BetterCms.Module.Users
             {
                 return UsersAreaName;
             }
-        }        
+        }
+
+        /// <summary>
+        /// Gets the name of the module database schema name.
+        /// </summary>
+        /// <value>
+        /// The name of the module database schema.
+        /// </value>
+        public override string SchemaName
+        {
+            get
+            {
+                return UsersSchemaName;
+            }
+        }
 
         /// <summary>
         /// Registers the style sheet files.

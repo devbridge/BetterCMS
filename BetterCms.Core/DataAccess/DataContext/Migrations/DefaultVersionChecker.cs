@@ -1,68 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Web.Hosting;
+using System.Text;
+
+using BetterCms.Core.Modules.Registration;
 
 using Common.Logging;
+
+using NHibernate.Transform;
 
 namespace BetterCms.Core.DataAccess.DataContext.Migrations
 {
     public class DefaultVersionChecker : IVersionChecker
     {
-        private readonly string FolderPath = HostingEnvironment.MapPath(@"~/App_Data/BetterCMS/");
-
-        private const string Filename = @"versions.info.cache";
-
-        private string FilePath
-        {
-            get
-            {
-                return string.Concat(FolderPath, Filename);
-            }
-        }
+        private readonly IUnitOfWork unitOfWork;
+        
+        private readonly IModulesRegistration modulesRegistration;
 
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
-        private Dictionary<long, HashSet<string>> versionHolder = null;
+        private Dictionary<string, IList<long>> versionHolder = new Dictionary<string, IList<long>>();
 
-        private Dictionary<long, HashSet<string>> versions
+        public DefaultVersionChecker(IUnitOfWork unitOfWork, IModulesRegistration modulesRegistration)
         {
-            get
-            {
-                return versionHolder ?? (versionHolder = new Dictionary<long, HashSet<string>>());
-            }
-        }
+            this.unitOfWork = unitOfWork;
+            this.modulesRegistration = modulesRegistration;
 
-        public bool VersionExists(string moduleName, long version)
-        {
             try
             {
-                return versions.ContainsKey(version) && versions[version].Contains(moduleName);
-            }
-            catch (Exception ex)
-            {
-                Log.Error("DefaultVersionChecker version check failed.", ex);
-                return false;
-            }
-        }
-
-        public void AddVersion(string moduleName, long version)
-        {
-            try
-            {
-                AddVersion(moduleName, version, true);
-            }
-            catch (Exception ex)
-            {
-                Log.Error("DefaultVersionChecker version adding failed.", ex);
-            }
-        }
-
-        public DefaultVersionChecker()
-        {
-            try
-            {
-                LoadFromFile();
+                LoadFromDatabase();
             }
             catch (Exception ex)
             {
@@ -70,90 +35,65 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
             }
         }
 
-        private void AddVersion(string moduleName, long version, bool writeTofile)
+        public bool VersionExists(string moduleName, long version)
         {
-            if (VersionExists(moduleName, version))
-            {
-                return;
-            }
-
-            if (!string.IsNullOrEmpty(moduleName) && !string.IsNullOrWhiteSpace(moduleName))
-            {
-                if (writeTofile && !SaveToFile(moduleName, version))
-                {
-                    return;
-                }
-
-                if (!versions.ContainsKey(version))
-                {
-                    versions.Add(version, new HashSet<string>());
-                }
-
-                versions[version].Add(moduleName);
-
-            }
-        }
-
-        private void LoadFromFile()
-        {
-            versionHolder = null;
-
-            if (File.Exists(FilePath))
-            {
-                StreamReader file = null;
-                try
-                {
-                    file = new StreamReader(FilePath);
-                    string line;
-                    while ((line = file.ReadLine()) != null)
-                    {
-                        if (!string.IsNullOrEmpty(line) && !string.IsNullOrWhiteSpace(line))
-                        {
-                            var segments = line.Trim().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                            if (segments.Length == 2)
-                            {
-                                long version;
-                                if (long.TryParse(segments[0], out version))
-                                {
-                                    AddVersion(segments[1], version, false);
-                                }
-                            }
-                        }
-                    }
-                }
-                finally
-                {
-                    if (file != null)
-                    {
-                        file.Close();
-                    }
-                }
-            }
-        }
-
-        private bool SaveToFile(string moduleName, long version)
-        {
-            StreamWriter file = null;
             try
             {
-                if (!Directory.Exists(FolderPath))
-                {
-                    Directory.CreateDirectory(FolderPath);
-                }
-
-                file = new StreamWriter(FilePath, true);
-                file.WriteLine("{0} {1}", version, moduleName);
-                file.Flush();
+                return versionHolder.ContainsKey(moduleName) && versionHolder[moduleName].Contains(version);
             }
-            finally
+            catch (Exception ex)
             {
-                if (file != null)
+                Log.Error("DefaultVersionChecker version check failed.", ex);
+                return false;
+            }
+        }
+        
+        private void LoadFromDatabase()
+        {
+            var sqlQueryBuilder = new StringBuilder();
+            var first = true;
+
+            foreach (var module in modulesRegistration.GetModules())
+            {
+                var schemaName = module.ModuleDescriptor.SchemaName;
+                if (!string.IsNullOrWhiteSpace(schemaName))
                 {
-                    file.Close();
+                    if (!first)
+                    {
+                        sqlQueryBuilder.AppendLine("UNION ALL");
+                    }
+
+                    sqlQueryBuilder
+                        .AppendFormat("SELECT {0}, '{1}' AS {2} FROM {3}.VersionInfo", 
+                            VersionInfo.VersionFieldName, 
+                            module.ModuleDescriptor.Name, 
+                            VersionInfo.ModuleFieldName,
+                            module.ModuleDescriptor.SchemaName)
+                        .AppendLine();
+
+                    first = false;
                 }
             }
 
-            return true;
+            var sqlQuery = sqlQueryBuilder.ToString();
+            if (!string.IsNullOrWhiteSpace(sqlQuery))
+            {
+                var versions = unitOfWork
+                        .Session
+                        .CreateSQLQuery(sqlQuery)
+                        .SetResultTransformer(Transformers.AliasToBean<VersionInfo>())
+                        .List<VersionInfo>();
+                
+                foreach (var version in versions)
+                {
+                    if (!versionHolder.ContainsKey(version.ModuleName))
+                    {
+                        versionHolder.Add(version.ModuleName, new List<long>());
+                    }
+
+                    versionHolder[version.ModuleName].Add(version.Version);
+                }
+            }
         }
     }
 }

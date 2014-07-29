@@ -15,9 +15,14 @@ namespace BetterCms.Module.Search
         internal const string ModuleName = "search";
 
         /// <summary>
-        /// The newsletter area name.
+        /// The search module area name.
         /// </summary>
         internal const string SearchAreaName = "bcms-search";
+        
+        /// <summary>
+        /// The search module database schema name.
+        /// </summary>
+        internal const string SearchSchemaName = "bcms_search";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchModuleDescriptor" /> class.
@@ -66,6 +71,20 @@ namespace BetterCms.Module.Search
             get
             {
                 return SearchAreaName;
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the module database schema name.
+        /// </summary>
+        /// <value>
+        /// The name of the module database schema.
+        /// </value>
+        public override string SchemaName
+        {
+            get
+            {
+                return SearchSchemaName;
             }
         }
 
