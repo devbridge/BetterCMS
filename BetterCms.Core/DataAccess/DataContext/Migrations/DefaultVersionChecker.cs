@@ -65,7 +65,6 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
 
                 if (!exists && !isLoadedFromDatabase)
                 {
-                    isLoadedFromDatabase = true;
                     LoadFromDatabase();
 
                     return VersionExists(moduleName, version);
@@ -82,6 +81,7 @@ namespace BetterCms.Core.DataAccess.DataContext.Migrations
         
         private void LoadFromDatabase()
         {
+            isLoadedFromDatabase = true;
             Log.Trace("Loading migration files list from database");
 
             // Select which tables are available

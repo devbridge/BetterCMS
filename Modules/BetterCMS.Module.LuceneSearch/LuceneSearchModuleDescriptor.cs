@@ -21,6 +21,11 @@ namespace BetterCms.Module.LuceneSearch
 {
     public class LuceneSearchModuleDescriptor : ModuleDescriptor
     {
+        /// <summary>
+        /// Current class logger.
+        /// </summary>
+        private static readonly ILog Logger = LogManager.GetCurrentClassLogger();
+
         internal const string ModuleName = "lucene";        
         
         internal const string LuceneSchemaName = "bcms_lucene";        
@@ -80,6 +85,8 @@ namespace BetterCms.Module.LuceneSearch
         {
             Events.CoreEvents.Instance.HostStart += x =>
                 {
+                    Logger.Info("OnHostStart: preparing Lucene Search index workers...");
+
                     // Content indexer
                     TimeSpan indexerFrequency;
                     if (TimeSpan.TryParse(configuration.Search.GetValue(LuceneSearchConstants.ConfigurationKeys.LuceneIndexerFrequency), out indexerFrequency))
@@ -101,6 +108,8 @@ namespace BetterCms.Module.LuceneSearch
                     }
 
                     workers.ForEach(f => f.Start());
+
+                    Logger.Info("OnHostStart: preparing Lucene Search index workers completed.");
                 };
         }
         
