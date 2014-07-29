@@ -226,6 +226,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\SandboxController.cs" />
     <Compile Include="Custom\CustomCacheTest.cs" />
     <Compile Include="Global.asax.cs">
@@ -233,6 +234,7 @@
     </Compile>
     <Compile Include="Helpers\AuthenticationHelper.cs" />
     <Compile Include="Helpers\OptionsHelper.cs" />
+    <Compile Include="Models\BlogTestViewModel.cs" />
     <Compile Include="Models\MenuItemViewModel.cs" />
     <Compile Include="Models\SitemapMenuViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -394,6 +396,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\SitemapMenu\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Blog\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

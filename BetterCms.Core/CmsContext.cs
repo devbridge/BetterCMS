@@ -256,7 +256,6 @@ namespace BetterCms.Core
                 }
 
                 ControllerBuilder.Current.SetControllerFactory(container.Resolve<DefaultCmsControllerFactory>());
-//                ViewEngines.Engines.Insert(0, new EmbeddedResourcesViewEngine());
 
                 IAssemblyManager assemblyManager = container.Resolve<IAssemblyManager>();
                                 
@@ -280,8 +279,9 @@ namespace BetterCms.Core
                                                   };
                             precompiledAssemblies.Add(precompiledAssembly);
                         });
+                
                 var engine = new CompositePrecompiledMvcEngine(precompiledAssemblies.ToArray());
-                ViewEngines.Engines.Add(engine);
+                ViewEngines.Engines.Insert(0, engine);
                 VirtualPathFactoryManager.RegisterVirtualPathFactory(engine);
             }
         }
