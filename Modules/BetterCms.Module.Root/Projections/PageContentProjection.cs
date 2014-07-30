@@ -20,12 +20,16 @@ namespace BetterCms.Module.Root.Projections
 
         private readonly IEnumerable<ChildContentProjection> childProjections;
 
-        public PageContentProjection(IPageContent pageContent, IContent content, IContentAccessor contentAccessor, IEnumerable<ChildContentProjection> childProjections = null)
+        private readonly IEnumerable<PageContentProjection> childRegionContentProjections;
+
+        public PageContentProjection(IPageContent pageContent, IContent content, IContentAccessor contentAccessor,
+            IEnumerable<ChildContentProjection> childProjections = null, IEnumerable<PageContentProjection> childRegionContentProjections = null)
         {
             this.pageContent = pageContent;
             this.content = content;
             this.contentAccessor = contentAccessor;
             this.childProjections = childProjections;
+            this.childRegionContentProjections = childRegionContentProjections;
         }
 
         public PageContentProjection(SerializationInfo info, StreamingContext context)
@@ -145,6 +149,11 @@ namespace BetterCms.Module.Root.Projections
         public IEnumerable<ChildContentProjection> GetChildProjections()
         {
             return childProjections;
+        }
+        
+        public IEnumerable<PageContentProjection> GetChildRegionContentProjections()
+        {
+            return childRegionContentProjections;
         }
     }
 }

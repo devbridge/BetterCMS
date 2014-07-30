@@ -325,6 +325,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             });
 
             htmlEditor.initializeHtmlEditor(editorId, data.Id, {}, editInSourceMode);
+            htmlEditor.enableInsertDynamicRegion(editorId);
 
             codeEditor.initialize(dialog.container);
 

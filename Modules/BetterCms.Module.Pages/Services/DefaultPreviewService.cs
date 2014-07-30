@@ -108,7 +108,7 @@ namespace BetterCms.Module.Pages.Services
             var options = optionService.GetMergedOptionValues(pageContent.Content.ContentOptions, pageContent.Options);
 
             var childProjections = childContentService.CreateListOfChildProjectionsRecursively(pageContent, pageContent.Content.ChildContents);
-            var contentProjection = pageContentProjectionFactory.Create(pageContent, pageContent.Content, options, childProjections);
+            var contentProjection = pageContentProjectionFactory.Create(pageContent, pageContent.Content, options, childProjections, null);
 
             var pageViewModel = new RenderPageViewModel
                                     {

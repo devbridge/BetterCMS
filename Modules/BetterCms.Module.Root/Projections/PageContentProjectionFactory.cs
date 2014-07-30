@@ -27,20 +27,15 @@ namespace BetterCms.Module.Root.Projections
             this.containerProvider = containerProvider;
         }
 
-        public PageContentProjection Create(IPageContent pageContent, IContent content, IList<IOptionValue> options)
+        public PageContentProjection Create(IPageContent pageContent, IContent content, IList<IOptionValue> options,
+            IEnumerable<ChildContentProjection> childContentProjections, IEnumerable<PageContentProjection> childRegionContentProjections)
         {
-            return Create(pageContent, content, options, null, (pc, c, a, ch) => new PageContentProjection(pc, c, a, ch));
-        }
-
-        public PageContentProjection Create(IPageContent pageContent, IContent content, IList<IOptionValue> options, 
-            IEnumerable<ChildContentProjection> childContentProjections)
-        {
-            return Create(pageContent, content, options, childContentProjections, (pc, c, a, ch) => new PageContentProjection(pc, c, a, ch));
+            return Create(pageContent, content, options, childContentProjections, childRegionContentProjections, (pc, c, cc, crc, ch) => new PageContentProjection(pc, c, cc, crc, ch));
         }
 
         public TProjection Create<TProjection>(IPageContent pageContent, IContent content, IList<IOptionValue> options,
-            IEnumerable<ChildContentProjection> childContentProjections,
-            Func<IPageContent, IContent, IContentAccessor, IEnumerable<ChildContentProjection>, TProjection> createProjectionDelegate)
+            IEnumerable<ChildContentProjection> childContentProjections, IEnumerable<PageContentProjection> childRegionContentProjections,
+            Func<IPageContent, IContent, IContentAccessor, IEnumerable<ChildContentProjection>, IEnumerable<PageContentProjection>, TProjection> createProjectionDelegate)
             where TProjection : PageContentProjection
         {
             IContentAccessor contentAccessor = null;            
@@ -74,7 +69,7 @@ namespace BetterCms.Module.Root.Projections
                 contentAccessor = new EmptyContentAccessor(string.Format("<i style=\"color:red;\">{0}</i>", RootGlobalization.Message_FailedToRenderContent));
             }
 
-            TProjection pageContentProjection = createProjectionDelegate.Invoke(pageContent, content, contentAccessor, childContentProjections);
+            TProjection pageContentProjection = createProjectionDelegate.Invoke(pageContent, content, contentAccessor, childContentProjections, childRegionContentProjections);
 
             return pageContentProjection;
         }

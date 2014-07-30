@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Module.Root.Content.Resources;
+using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.ViewModels.Content;
 
@@ -40,15 +41,20 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
 
         private readonly HtmlHelper htmlHelper;
 
-        public ChildContentRenderHelper(HtmlHelper htmlHelper)
+        private readonly bool allowContentManagement;
+
+        public ChildContentRenderHelper(HtmlHelper htmlHelper, bool allowContentManagement = false)
         {
             this.htmlHelper = htmlHelper;
+            this.allowContentManagement = allowContentManagement;
         }
 
         public StringBuilder AppendHtml(StringBuilder stringBuilder, PageContentProjection projection)
         {
+            // Get HTML from projection
             var content = projection.GetHtml(htmlHelper);
 
+            // Render children contents
             var childrenContents = projection.GetChildProjections();
             if (childrenContents != null && childrenContents.Any())
             {
@@ -63,6 +69,23 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
 
                     content = content.Replace(replaceWhat, replaceWith);
                 }
+            }
+
+            // Render contents from children regions
+            var childRegionContents = projection.GetChildRegionContentProjections();
+            if (childRegionContents != null)
+            {
+                var childRegionsContentBuilder = new StringBuilder();
+                foreach (var childRegionContentProjection in childRegionContents)
+                {
+                    using (new RegionContentWrapper(childRegionsContentBuilder, childRegionContentProjection, allowContentManagement))
+                    {
+                        childRegionsContentBuilder = AppendHtml(childRegionsContentBuilder, childRegionContentProjection);
+                    }
+                }
+
+                var childRegionsContents = childRegionsContentBuilder.ToString();
+                stringBuilder.AppendLine(childRegionsContents);
             }
 
             stringBuilder.Append(content);

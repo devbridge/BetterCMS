@@ -29,11 +29,13 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// <param name="model">The model.</param>
         public static void RenderSectionContents(this HtmlHelper htmlHelper, WebPageBase webPage, RenderPageViewModel model)
         {
+            var allowContentManagement = model.CanManageContent && model.AreRegionsEditable;
+            var contentHtmlHelper = new ChildContentRenderHelper(htmlHelper, allowContentManagement);
+
             foreach (var region in model.Regions)
             {
                 var contentsBuilder = new StringBuilder();
                 var projections = model.Contents.Where(c => c.RegionId == region.RegionId).OrderBy(c => c.Order).ToList();
-                var contentHtmlHelper = new ChildContentRenderHelper(htmlHelper);
 
                 using (new LayoutRegionWrapper(contentsBuilder, region, model.AreRegionsEditable))
                 {

@@ -79,8 +79,8 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             }
             var pageContents = GetPageContents(ids.ToArray(), request);
 
-            var childrenList = new List<Page>();
-            var renderPageViewModel = CreatePageViewModel(page, pageContents, page, request, childrenList);
+            var childPagesList = new List<Page>();
+            var renderPageViewModel = CreatePageViewModel(page, pageContents, page, request, childPagesList);
 
             // Notify about retrieved page.
             var result = Events.RootEvents.Instance.OnPageRetrieved(renderPageViewModel, page);
@@ -95,8 +95,8 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             }
         }
 
-        private RenderPageViewModel CreatePageViewModel(Page renderingPage, IList<PageContent> allPageContents, Page page, 
-            GetPageToRenderRequest request, List<Page> childrenList)
+        private RenderPageViewModel CreatePageViewModel(Page renderingPage, List<PageContent> allPageContents, Page page, 
+            GetPageToRenderRequest request, List<Page> childPagesList)
         {
             if (request.PreviewPageContentId == null && !request.IsAuthenticated && page.Status != PageStatus.Published)
             {
@@ -115,12 +115,12 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             RenderPageViewModel renderPageViewModel = new RenderPageViewModel(page);
             renderPageViewModel.CanManageContent = request.CanManageContent;
-            renderPageViewModel.AreRegionsEditable = request.CanManageContent && !childrenList.Any();
+            renderPageViewModel.AreRegionsEditable = request.CanManageContent && !childPagesList.Any();
 
             if (page.Layout != null)
             {
                 renderPageViewModel.LayoutPath = page.Layout.LayoutPath;
-                renderPageViewModel.Options = GetMergedOptionValues(page.Layout.LayoutOptions, page.Options, childrenList);
+                renderPageViewModel.Options = GetMergedOptionValues(page.Layout.LayoutOptions, page.Options, childPagesList);
                 renderPageViewModel.Regions = page.Layout.LayoutRegions
                     .Distinct()
                     .Select(f => new PageRegionViewModel
@@ -138,11 +138,11 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                      throw new InvalidOperationException(string.Format("Cannot find a master page in master pages path collection for page {0}.", request.PageUrl));
                 }
 
-                childrenList.Insert(0, page);
-                renderPageViewModel.MasterPage = CreatePageViewModel(renderingPage, allPageContents, masterPage.Master, request, childrenList);
-                childrenList.Remove(page);
+                childPagesList.Insert(0, page);
+                renderPageViewModel.MasterPage = CreatePageViewModel(renderingPage, allPageContents, masterPage.Master, request, childPagesList);
+                childPagesList.Remove(page);
 
-                renderPageViewModel.Options = GetMergedOptionValues(new List<IOption>(), page.Options, childrenList);
+                renderPageViewModel.Options = GetMergedOptionValues(new List<IOption>(), page.Options, childPagesList);
                 renderPageViewModel.Regions = allPageContents
                     .Where(pc => pc.Page == page.MasterPage)
                     .SelectMany(pc => pc.Content.ContentRegions.Distinct())
@@ -158,8 +158,8 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 throw new InvalidOperationException(string.Format("Failed to load layout or master page for page {0}.", request.PageUrl));
             }
 
-            var pageContents = allPageContents.Where(pc => pc.Page.Id == page.Id);
-            var contentProjections = pageContents.Distinct().Select(f => CreatePageContentProjection(request, f)).Where(c => c != null).ToList();
+            var pageContents = allPageContents.Where(pc => pc.Page.Id == page.Id).Where(pc => pc.Parent == null || allPageContents.All(apc => apc.Id != pc.Parent.Id));
+            var contentProjections = pageContents.Distinct().Select(f => CreatePageContentProjection(request, f, allPageContents)).Where(c => c != null).ToList();
 
             renderPageViewModel.Contents = contentProjections;
             renderPageViewModel.Metadata = pageAccessor.GetPageMetaData(page).ToList();
@@ -217,8 +217,12 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="pageContent">Content of the page.</param>
-        /// <returns>Page content projection</returns>
-        private PageContentProjection CreatePageContentProjection(GetPageToRenderRequest request, PageContent pageContent)
+        /// <param name="allPageContents">All page contents.</param>
+        /// <returns>
+        /// Page content projection
+        /// </returns>
+        /// <exception cref="CmsException"></exception>
+        private PageContentProjection CreatePageContentProjection(GetPageToRenderRequest request, PageContent pageContent, List<PageContent> allPageContents)
         {
             Models.Content contentToProject = null;
             
@@ -267,9 +271,17 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             }
 
             var options = optionService.GetMergedOptionValues(contentToProject.ContentOptions, pageContent.Options);
-            var childProjections = childContentService.CreateListOfChildProjectionsRecursively(pageContent, contentToProject.ChildContents);
+            var childContentsProjections = childContentService.CreateListOfChildProjectionsRecursively(pageContent, contentToProject.ChildContents).ToList();
 
-            return pageContentProjectionFactory.Create(pageContent, contentToProject, options, childProjections);
+            var childRegionContentProjections = new List<PageContentProjection>();
+            foreach (var childPageContent in allPageContents.Where(apc => apc.Parent != null && apc.Parent.Id == pageContent.Id))
+            {
+                var childPageContentOptions = optionService.GetMergedOptionValues(childPageContent.Options, childPageContent.Content.ContentOptions);
+                var childPageContentProjection = pageContentProjectionFactory.Create(childPageContent, childPageContent.Content, childPageContentOptions, null, null);
+                childRegionContentProjections.Add(childPageContentProjection);
+            }
+
+            return pageContentProjectionFactory.Create(pageContent, contentToProject, options, childContentsProjections, childRegionContentProjections);
         }
         
         /// <summary>
@@ -348,7 +360,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         /// <param name="pageIds">The page ids.</param>
         /// <param name="request">The request.</param>
         /// <returns>The list of page contents</returns>
-        private IList<PageContent> GetPageContents(Guid[] pageIds, GetPageToRenderRequest request)
+        private List<PageContent> GetPageContents(Guid[] pageIds, GetPageToRenderRequest request)
         {
             IQueryable<PageContent> pageContentsQuery = Repository.AsQueryable<PageContent>();
 
@@ -390,11 +402,11 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                     .ThenFetch(f => f.Child);
             }
 
-            var contents = pageContentsQuery.ToList();
+            var pageContents = pageContentsQuery.ToList();
 
-            childContentService.RetrieveChildrenContentsRecursively(contents.Select(pc => pc.Content).Distinct().ToList());
+            childContentService.RetrieveChildrenContentsRecursively(pageContents.Select(pc => pc.Content).Distinct().ToList());
 
-            return contents;
+            return pageContents;
         }
 
         /// <summary>
