@@ -1,18 +1,18 @@
 ﻿@using BetterCms.Module.Root.Content.Resources
 @model BetterCms.Module.Root.Models.Authentication.InfoViewModel
 <div class="bcms-sidemenu-credentials">
-    <div>@RootGlobalization.Sidebar_LoggedInAsTitle</div>
     @if (!string.IsNullOrEmpty(Model.EditUserProfileUrl))
     {
         <div class="bcms-sidemenu-username">
-            <a class="bcms-pointer" data-url="@Model.EditUserProfileUrl">@Html.Encode(Model.UserName)</a>
-            <a class="bcms-pointer bcms-view-page-as-public" target="_blank" href="/">@RootGlobalization.Authentication_ViewAsPublic_Public</a>
+            <a class="bcms-pointer bcms-as-current">@Html.Encode(Model.UserName)</a>
+            <a class="bcms-pointer bcms-view-page-as-public bcms-as-public" target="_blank" href="/">@RootGlobalization.Authentication_ViewAsPublic_Public</a>
+            <a class="bcms-pointer bcms-view-page-as-public bcms-as-user" data-url="@Model.EditUserProfileUrl">@Html.Encode(Model.UserName)</a>
         </div>
     }
     else
     {
         <div class="bcms-sidemenu-username">
-            @Html.Encode(Model.UserName)
+            <a class="bcms-pointer bcms-as-current">@Html.Encode(Model.UserName)</a>
             <a class="bcms-pointer bcms-view-page-as-public" target="_blank" href="/">@RootGlobalization.Authentication_ViewAsPublic_Public</a>
         </div>
     }

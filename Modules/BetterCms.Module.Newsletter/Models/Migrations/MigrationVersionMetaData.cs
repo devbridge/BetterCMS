@@ -9,7 +9,7 @@ namespace BetterCms.Module.Newsletter.Models.Migrations
         {
             get
             {
-                return "bcms_" + NewsletterModuleDescriptor.ModuleName;
+                return NewsletterModuleDescriptor.NewsletterSchemaName;
             }
         }
 

@@ -1,8 +1,6 @@
-﻿using BetterCms.Module.Users;
+﻿using FluentMigrator.VersionTableInfo;
 
-using FluentMigrator.VersionTableInfo;
-
-namespace BetterCms.Module.MediaManager.Models.Migrations
+namespace BetterCms.Module.Users.Models.Migrations
 {
     [VersionTableMetaData]
     public class UsersVersionTableMetaData : IVersionTableMetaData
@@ -11,7 +9,7 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
         {
             get
             {
-                return "bcms_" + UsersModuleDescriptor.ModuleName;
+                return UsersModuleDescriptor.UsersSchemaName;
             }
         }
 

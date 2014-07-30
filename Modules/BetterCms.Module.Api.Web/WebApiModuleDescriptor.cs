@@ -8,11 +8,18 @@ using BetterCms.Events;
 
 namespace BetterCms.Module.Api
 {
+    using Common.Logging;
+
     /// <summary>
     /// API module descriptor.
     /// </summary>
     public class WebApiModuleDescriptor : ModuleDescriptor
     {
+        /// <summary>
+        /// Current class logger.
+        /// </summary>
+        private static readonly ILog Logger = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// The module name.
         /// </summary>
@@ -68,11 +75,15 @@ namespace BetterCms.Module.Api
 
         private void ApplicationStart(SingleItemEventArgs<HttpApplication> args)
         {
+            Logger.Info("OnHostStart: preparing web api...");
+
             using (var container = ContextScopeProvider.CreateChildContainer())
             {
                 var containerProvider = container.Resolve<PerWebRequestContainerProvider>();
                 new WebApiApplicationHost(() => containerProvider.CurrentScope).Init();
             }
+
+            Logger.Info("OnHostStart: preparing web api completed.");
         }
     }
 }

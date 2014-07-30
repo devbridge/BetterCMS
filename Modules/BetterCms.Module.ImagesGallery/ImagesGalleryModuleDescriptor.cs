@@ -18,6 +18,11 @@ namespace BetterCms.Module.ImagesGallery
         internal const string ImagesGalleryAreaName = "bcms-images-gallery";
 
         /// <summary>
+        /// The images gallery schema name
+        /// </summary>
+        internal const string ImagesGallerySchemaName = "bcms_images_gallery";
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ImagesGalleryModuleDescriptor" /> class.
         /// </summary>
         public ImagesGalleryModuleDescriptor(ICmsConfiguration cmsConfiguration)
@@ -64,6 +69,20 @@ namespace BetterCms.Module.ImagesGallery
             get
             {
                 return ImagesGalleryAreaName;
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the module database schema name.
+        /// </summary>
+        /// <value>
+        /// The name of the module database schema.
+        /// </value>
+        public override string SchemaName
+        {
+            get
+            {
+                return ImagesGallerySchemaName;
             }
         }
     }

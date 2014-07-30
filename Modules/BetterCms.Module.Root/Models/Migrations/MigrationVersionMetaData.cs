@@ -9,7 +9,7 @@ namespace BetterCms.Module.Root.Models.Migrations
         {
             get
             {
-                return "bcms_" + RootModuleDescriptor.ModuleName;
+                return RootModuleDescriptor.RootSchemaName;
             }
         }
 

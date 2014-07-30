@@ -36,6 +36,11 @@ namespace BetterCms.Module.Root
         internal const string RootAreaName = "bcms-root";
 
         /// <summary>
+        /// The root module database schema name
+        /// </summary>
+        internal const string RootSchemaName = "bcms_root";
+
+        /// <summary>
         /// The bcms.authentication.js include descriptor
         /// </summary>
         private readonly AuthenticationJsModuleIncludeDescriptor authenticationJsModuleIncludeDescriptor;
@@ -107,6 +112,20 @@ namespace BetterCms.Module.Root
             get
             {
                 return RootAreaName;
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the module database schema name.
+        /// </summary>
+        /// <value>
+        /// The name of the module database schema.
+        /// </value>
+        public override string SchemaName
+        {
+            get
+            {
+                return RootSchemaName;
             }
         }
 

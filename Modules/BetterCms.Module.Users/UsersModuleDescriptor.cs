@@ -16,20 +16,32 @@ using BetterCms.Module.Users.Services;
 
 namespace BetterCms.Module.Users
 {
+    using Common.Logging;
+
     /// <summary>
     /// Pages module descriptor.
     /// </summary>
     public class UsersModuleDescriptor : ModuleDescriptor
     {
         /// <summary>
+        /// Current class logger.
+        /// </summary>
+        private static readonly ILog Logger = LogManager.GetCurrentClassLogger();
+
+        /// <summary>
         /// The module name.
         /// </summary>
         internal const string ModuleName = "users";
 
         /// <summary>
-        /// The users area name.
+        /// The users module area name.
         /// </summary>
         internal const string UsersAreaName = "bcms-users";
+
+        /// <summary>
+        /// The users module database schema name
+        /// </summary>
+        internal const string UsersSchemaName = "bcms_users";
 
         /// <summary>
         /// The user java script module descriptor
@@ -121,7 +133,21 @@ namespace BetterCms.Module.Users
             {
                 return UsersAreaName;
             }
-        }        
+        }
+
+        /// <summary>
+        /// Gets the name of the module database schema name.
+        /// </summary>
+        /// <value>
+        /// The name of the module database schema.
+        /// </value>
+        public override string SchemaName
+        {
+            get
+            {
+                return UsersSchemaName;
+            }
+        }
 
         /// <summary>
         /// Registers the style sheet files.
@@ -226,10 +252,14 @@ namespace BetterCms.Module.Users
 
         private void OnHostStart(SingleItemEventArgs<HttpApplication> args)
         {
+            Logger.Info("OnHostStart: check if is first user registered...");
+
             if (Configuration.Users != null && Configuration.Users.CreateDefaultUserOnStart)
             {
                 CheckIfIsFirstUserRegistered();
             }
+
+            Logger.Info("OnHostStart: checking if is first user registered completed.");
         }
 
         private void HostAuthenticateRequest(SingleItemEventArgs<HttpApplication> args)

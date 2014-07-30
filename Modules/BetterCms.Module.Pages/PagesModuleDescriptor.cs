@@ -38,7 +38,15 @@ namespace BetterCms.Module.Pages
         /// </summary>
         internal const string ModuleName = "pages";
 
+        /// <summary>
+        /// The pages module area name
+        /// </summary>
         internal const string PagesAreaName = "bcms-pages";
+
+        /// <summary>
+        /// The pages module database schema name
+        /// </summary>
+        internal const string PagesSchemaName = "bcms_pages";
 
         /// <summary>
         /// bcms.pages.js java script module descriptor.
@@ -164,6 +172,20 @@ namespace BetterCms.Module.Pages
             get
             {
                 return PagesAreaName;
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the module database schema name.
+        /// </summary>
+        /// <value>
+        /// The name of the module database schema.
+        /// </value>
+        public override string SchemaName
+        {
+            get
+            {
+                return PagesSchemaName;
             }
         }
 

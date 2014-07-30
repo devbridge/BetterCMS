@@ -11,8 +11,8 @@ using BetterCms.Module.Blog.Commands.GetBlogPostList;
 using BetterCms.Module.Blog.Commands.SaveBlogPost;
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.Blog.Services;
-using BetterCms.Module.Blog.ViewModels.Blog;
 using BetterCms.Module.Blog.ViewModels.Filter;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 

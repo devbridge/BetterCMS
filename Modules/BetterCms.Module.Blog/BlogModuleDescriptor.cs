@@ -36,7 +36,15 @@ namespace BetterCms.Module.Blog
         /// </summary>
         internal const string ModuleName = "blog";
 
+        /// <summary>
+        /// The blog area name
+        /// </summary>
         internal const string BlogAreaName = "bcms-blog";
+        
+        /// <summary>
+        /// The blog schema name
+        /// </summary>
+        internal const string BlogSchemaName = "bcms_blog";
 
         /// <summary>
         /// The blog java script module descriptor
@@ -94,6 +102,20 @@ namespace BetterCms.Module.Blog
             get
             {
                 return BlogAreaName;
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the module database schema name.
+        /// </summary>
+        /// <value>
+        /// The name of the module database schema.
+        /// </value>
+        public override string SchemaName
+        {
+            get
+            {
+                return BlogSchemaName;
             }
         }
 
