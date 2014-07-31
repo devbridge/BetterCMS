@@ -147,10 +147,10 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                     .Where(pc => pc.Page == page.MasterPage)
                     .SelectMany(pc => pc.Content.ContentRegions.Distinct())
                     .Select(cr => new PageRegionViewModel
-                    {
-                        RegionId = cr.Region.Id,
-                        RegionIdentifier = cr.Region.RegionIdentifier
-                    })
+                        {
+                            RegionId = cr.Region.Id,
+                            RegionIdentifier = cr.Region.RegionIdentifier
+                        })
                     .ToList();
             }
             else

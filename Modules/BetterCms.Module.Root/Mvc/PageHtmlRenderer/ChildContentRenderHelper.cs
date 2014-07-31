@@ -6,14 +6,14 @@ using System.Text.RegularExpressions;
 using System.Web.Mvc;
 
 using BetterCms.Core.Exceptions.Mvc;
+
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Projections;
+using BetterCms.Module.Root.ViewModels.Cms;
 using BetterCms.Module.Root.ViewModels.Content;
 
 using HtmlAgilityPack;
-
-using NHibernate.Hql.Ast.ANTLR.Tree;
 
 namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
 {
@@ -34,11 +34,6 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
         /// </summary>
         public const string WidgetAssignmentIdAttributeName = "data-assign-id";
 
-        /// <summary>
-        /// The widget's attribute's which identifies creating attribute, name
-        /// </summary>
-        public const string WidgetIsNewAttributeName = "data-is-new";
-
         private readonly HtmlHelper htmlHelper;
 
         private readonly bool allowContentManagement;
@@ -49,7 +44,7 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
             this.allowContentManagement = allowContentManagement;
         }
 
-        public StringBuilder AppendHtml(StringBuilder stringBuilder, PageContentProjection projection)
+        public StringBuilder AppendHtml(StringBuilder stringBuilder, PageContentProjection projection, RenderPageViewModel pageModel)
         {
             // Get HTML from projection
             var content = projection.GetHtml(htmlHelper);
@@ -65,28 +60,13 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
                 {
                     var model = parsedWidgets.First(w => w.AssignmentIdentifier == childProjection.AssignmentIdentifier);
                     var replaceWhat = model.Match.Value;
-                    var replaceWith = AppendHtml(new StringBuilder(), childProjection).ToString();
+                    var replaceWith = AppendHtml(new StringBuilder(), childProjection, pageModel).ToString();
 
                     content = content.Replace(replaceWhat, replaceWith);
                 }
             }
 
-            // Render contents from children regions
-            var childRegionContents = projection.GetChildRegionContentProjections();
-            if (childRegionContents != null)
-            {
-                var childRegionsContentBuilder = new StringBuilder();
-                foreach (var childRegionContentProjection in childRegionContents)
-                {
-                    using (new RegionContentWrapper(childRegionsContentBuilder, childRegionContentProjection, allowContentManagement))
-                    {
-                        childRegionsContentBuilder = AppendHtml(childRegionsContentBuilder, childRegionContentProjection);
-                    }
-                }
-
-                var childRegionsContents = childRegionsContentBuilder.ToString();
-                stringBuilder.AppendLine(childRegionsContents);
-            }
+            content = AppendHtmlWithChildRegionContens(content, projection, pageModel);
 
             stringBuilder.Append(content);
 
@@ -147,21 +127,50 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
             return result;
         }
 
-        public static string RemoveIsNewAttribute(string html, ChildContentModel model)
+        private string AppendHtmlWithChildRegionContens(string html, PageContentProjection projection, RenderPageViewModel pageModel)
         {
-            var isNewAttribute = model.WidgetHtmlNode.Attributes.FirstOrDefault(a => a.Name == WidgetIsNewAttributeName);
-            if (isNewAttribute != null)
+            // Render contents from children regions
+            var childRegionContents = projection.GetChildRegionContentProjections();
+            if (childRegionContents != null && projection.Content.ContentRegions != null)
             {
-                model.WidgetHtmlNode.Attributes.Remove(isNewAttribute);
-                
-                var replaceWhat = model.Match.Value;
-                var replaceWith = model.WidgetHtmlNode.OuterHtml;
+                var stringBuilder = new StringBuilder(html);
+                var pageHtmlHelper = new PageHtmlRenderer(stringBuilder, pageModel);
 
-                int pos = html.IndexOf(replaceWhat, StringComparison.InvariantCulture);
-                if (pos >= 0)
+                foreach (var region in projection.Content.ContentRegions)
                 {
-                    html = string.Concat(html.Substring(0, pos), replaceWith, html.Substring(pos + replaceWhat.Length));
+                    var contentsBuilder = new StringBuilder();
+                    var regionModel = new PageRegionViewModel
+                        {
+                            RegionId = region.Region.Id,
+                            RegionIdentifier = region.Region.RegionIdentifier
+                        };
+                    var childRegionContentProjections = childRegionContents.Where(c => c.RegionId == regionModel.RegionId).OrderBy(c => c.Order).ToList();
+
+                    using (new LayoutRegionWrapper(contentsBuilder, regionModel, allowContentManagement))
+                    {
+                        foreach (var childRegionContentProjection in childRegionContentProjections)
+                        {
+                            // Add Html
+                            using (new RegionContentWrapper(contentsBuilder, childRegionContentProjection,allowContentManagement))
+                            {
+                                // Pass current model as view data model
+                                htmlHelper.ViewData.Model = pageModel;
+
+                                contentsBuilder = AppendHtml(contentsBuilder, childRegionContentProjection, pageModel);
+                            }
+                        }
+                    }
+
+                    // Insert region to master page
+                    var regionHtml = contentsBuilder.ToString();
+                    pageHtmlHelper.ReplaceRegionHtml(regionModel.RegionIdentifier, regionHtml);
                 }
+
+                if (pageModel.AreRegionsEditable)
+                {
+                    pageHtmlHelper.ReplaceRegionRepresentationHtml();
+                }
+                return pageHtmlHelper.GetReplacedHtml().ToString();
             }
 
             return html;

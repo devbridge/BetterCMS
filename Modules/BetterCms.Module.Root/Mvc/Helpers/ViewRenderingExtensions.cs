@@ -94,7 +94,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                                 // Pass current model as view data model
                                 htmlHelper.ViewData.Model = pageModel;
 
-                                contentsBuilder = contentHtmlHelper.AppendHtml(contentsBuilder, projection);
+                                contentsBuilder = contentHtmlHelper.AppendHtml(contentsBuilder, projection, currentModel);
                             }
                         }
                     }
