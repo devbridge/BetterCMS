@@ -52,17 +52,24 @@ namespace BetterCms.Module.Pages.Services
         private readonly ISecurityService securityService;
 
         /// <summary>
+        /// The content projections service
+        /// </summary>
+        private readonly IContentProjectionService contentProjectionService;
+
+        /// <summary>
         /// The child content service
         /// </summary>
         private readonly IChildContentService childContentService;
 
         public DefaultPreviewService(PageContentProjectionFactory pageContentProjectionFactory, IOptionService optionService,
-            IRepository repository, ISecurityService securityService, IChildContentService childContentService)
+            IRepository repository, ISecurityService securityService, IContentProjectionService contentProjectionService,
+            IChildContentService childContentService)
         {
             this.pageContentProjectionFactory = pageContentProjectionFactory;
             this.repository = repository;
             this.optionService = optionService;
             this.securityService = securityService;
+            this.contentProjectionService = contentProjectionService;
             this.childContentService = childContentService;
         }
 
@@ -107,7 +114,7 @@ namespace BetterCms.Module.Pages.Services
 
             var options = optionService.GetMergedOptionValues(pageContent.Content.ContentOptions, pageContent.Options);
 
-            var childProjections = childContentService.CreateListOfChildProjectionsRecursively(pageContent, pageContent.Content.ChildContents);
+            IList<ChildContentProjection> childProjections = null;// TODO: contentProjectionService.CreateListOfChildProjectionsRecursively(pageContent, pageContent.Content.ChildContents);
             var contentProjection = pageContentProjectionFactory.Create(pageContent, pageContent.Content, options, childProjections, null);
 
             var pageViewModel = new RenderPageViewModel

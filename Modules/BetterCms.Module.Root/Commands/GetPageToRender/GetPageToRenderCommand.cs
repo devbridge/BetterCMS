@@ -5,7 +5,6 @@ using System.Web;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Mvc.Extensions;
@@ -28,8 +27,6 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
     {
         private readonly IPageAccessor pageAccessor;
 
-        private readonly PageContentProjectionFactory pageContentProjectionFactory;
-
         private readonly PageJavaScriptProjectionFactory pageJavaScriptProjectionFactory;
 
         private readonly PageStylesheetProjectionFactory pageStylesheetProjectionFactory;
@@ -40,20 +37,22 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         
         private readonly IOptionService optionService;
         
+        private readonly IContentProjectionService contentProjectionService;
+        
         private readonly IChildContentService childContentService;
 
-        public GetPageToRenderCommand(IPageAccessor pageAccessor, PageContentProjectionFactory pageContentProjectionFactory,
-            PageStylesheetProjectionFactory pageStylesheetProjectionFactory, PageJavaScriptProjectionFactory pageJavaScriptProjectionFactory,
+        public GetPageToRenderCommand(IPageAccessor pageAccessor, PageStylesheetProjectionFactory pageStylesheetProjectionFactory, 
+            PageJavaScriptProjectionFactory pageJavaScriptProjectionFactory,
             ICmsConfiguration cmsConfiguration, RootModuleDescriptor rootModuleDescriptor, IOptionService optionService,
-            IChildContentService childContentService)
+            IContentProjectionService contentProjectionService, IChildContentService childContentService)
         {
             this.rootModuleDescriptor = rootModuleDescriptor;
-            this.pageContentProjectionFactory = pageContentProjectionFactory;
             this.pageStylesheetProjectionFactory = pageStylesheetProjectionFactory;
             this.pageJavaScriptProjectionFactory = pageJavaScriptProjectionFactory;
             this.pageAccessor = pageAccessor;
             this.cmsConfiguration = cmsConfiguration;
             this.optionService = optionService;
+            this.contentProjectionService = contentProjectionService;
             this.childContentService = childContentService;
         }
 
@@ -159,7 +158,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             }
 
             var pageContents = allPageContents.Where(pc => pc.Page.Id == page.Id).Where(pc => pc.Parent == null || allPageContents.All(apc => apc.Id != pc.Parent.Id));
-            var contentProjections = pageContents.Distinct().Select(f => CreatePageContentProjection(request, f, allPageContents)).Where(c => c != null).ToList();
+            var contentProjections = pageContents.Distinct().Select(f => contentProjectionService.CreatePageContentProjection(request, f, allPageContents)).Where(c => c != null).ToList();
 
             renderPageViewModel.Contents = contentProjections;
             renderPageViewModel.Metadata = pageAccessor.GetPageMetaData(page).ToList();
@@ -212,6 +211,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             return renderPageViewModel;
         }
 
+        /*
         /// <summary>
         /// Creates the page content projection.
         /// </summary>
@@ -270,19 +270,22 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 throw new CmsException(string.Format("A content version was not found to project on the page. PageContent={0}; Request={1};", pageContent, request));
             }
 
-            var options = optionService.GetMergedOptionValues(contentToProject.ContentOptions, pageContent.Options);
-            var childContentsProjections = childContentService.CreateListOfChildProjectionsRecursively(pageContent, contentToProject.ChildContents).ToList();
-
+            // Create a collection of child regions (dynamic regions) contents projections
             var childRegionContentProjections = new List<PageContentProjection>();
-            foreach (var childPageContent in allPageContents.Where(apc => apc.Parent != null && apc.Parent.Id == pageContent.Id))
+            var childRegionPageContents = allPageContents.Where(apc => apc.Parent != null && apc.Parent.Id == pageContent.Id);
+            foreach (var childPageContent in childRegionPageContents)
             {
-                var childPageContentOptions = optionService.GetMergedOptionValues(childPageContent.Options, childPageContent.Content.ContentOptions);
-                var childPageContentProjection = pageContentProjectionFactory.Create(childPageContent, childPageContent.Content, childPageContentOptions, null, null);
-                childRegionContentProjections.Add(childPageContentProjection);
+                var childRegionContentProjection = CreatePageContentProjection(request, childPageContent, allPageContents);
+                childRegionContentProjections.Add(childRegionContentProjection);
             }
+
+            // Create a collection of child contents (child widgets) projections
+            var options = optionService.GetMergedOptionValues(contentToProject.ContentOptions, pageContent.Options);
+            var childContentsProjections = childContentService.CreateListOfChildProjectionsRecursively(pageContent, contentToProject.ChildContents);
 
             return pageContentProjectionFactory.Create(pageContent, contentToProject, options, childContentsProjections, childRegionContentProjections);
         }
+        */
         
         /// <summary>
         /// Gets the page.

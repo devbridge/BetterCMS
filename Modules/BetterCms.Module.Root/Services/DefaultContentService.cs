@@ -33,13 +33,14 @@ namespace BetterCms.Module.Root.Services
         /// The option service
         /// </summary>
         private readonly IOptionService optionService;
-        
+
         /// <summary>
         /// The child content service
         /// </summary>
         private readonly IChildContentService childContentService;
 
-        public DefaultContentService(ISecurityService securityService, IRepository repository, IOptionService optionService, IChildContentService childContentService)
+        public DefaultContentService(ISecurityService securityService, IRepository repository, IOptionService optionService,
+            IChildContentService childContentService)
         {
             this.securityService = securityService;
             this.repository = repository;
