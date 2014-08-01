@@ -454,14 +454,19 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
         self.regions = [];
         self.contents = [];
-        self.currentParentRegion = null;
+        self.currentParentContent = null;
 
-        self.isRegionVisible = function(regionViewModel) {
-            return regionViewModel.getParentRegion() == self.currentParentRegion;
+        self.isRegionVisible = function (regionViewModel) {
+            var parentRegion = null;
+            if (self.currentParentContent != null) {
+                parentRegion = self.currentParentContent.region;
+            }
+
+            return regionViewModel.getParentRegion() == parentRegion;
         };
 
         self.isContentVisible = function (contentViewModel) {
-            return contentViewModel.region.getParentRegion() == self.currentParentRegion;
+            return contentViewModel.getParentContent() == self.currentParentContent;
         };
     }
 
@@ -532,7 +537,58 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             return self.parentContent;
         };
     }
-    
+
+    function getParentContentOverlay(id) {
+        var overlay = $('#' + id);
+
+        if (overlay.length == 0) {
+            overlay = $('<div style="position: fixed; background-color: black; opacity: 0.4;"></div>');
+            overlay.attr('id', id);
+            $('body').append(overlay);
+        }
+
+        return overlay;
+    }
+
+    function recalculateParentContentOverlays() {
+
+        if (pageViewModel.currentParentContent == null) {
+            return;
+        }
+
+        var parentContent = pageViewModel.currentParentContent,
+            maxWidth = 10000,
+            maxHeight = 10000,
+            leftOverlay = getParentContentOverlay('bcms-parent-content-left-overlay'),
+            rightOverlay = getParentContentOverlay('bcms-parent-content-right-overlay'),
+            topOverlay = getParentContentOverlay('bcms-parent-content-top-overlay'),
+            bottomOverlay = getParentContentOverlay('bcms-parent-content-bottom-overlay');
+
+        // Left
+        leftOverlay.css('top', 0);
+        leftOverlay.css('left', 0);
+        leftOverlay.css('height', maxHeight);
+        leftOverlay.css('width', parentContent.left);
+
+        // Right
+        rightOverlay.css('top', 0);
+        rightOverlay.css('left', parentContent.left + parentContent.width);
+        rightOverlay.css('height', maxHeight);
+        rightOverlay.css('width', maxWidth - parentContent.left - parentContent.width);
+
+        // Top
+        topOverlay.css('top', 0);
+        topOverlay.css('left', parentContent.left);
+        topOverlay.css('height', parentContent.top);
+        topOverlay.css('width', parentContent.width);
+
+        // Bottom
+        bottomOverlay.css('top', parentContent.top + parentContent.height);
+        bottomOverlay.css('left', parentContent.left);
+        bottomOverlay.css('height', maxHeight - parentContent.top + parentContent.height);
+        bottomOverlay.css('width', parentContent.width);
+    }
+
     /**
     * Page content view model
     */
@@ -567,7 +623,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             self.left = positions.left + 1;
             self.top = positions.top + 1;
             self.width = positions.width ;
-            self.height = positions.height ;
+            self.height = positions.height;
         };
 
         self.onEditContent = function() {};
@@ -576,13 +632,15 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         self.onContentHistory = function() {};
 
         self.onEnterChildContent = function () {
-            pageViewModel.currentParentRegion = self.region;
+            pageViewModel.currentParentContent = self;
 
             content.refreshRegionsPosition();
             content.refreshContentsPosition();
             if (masterPagesModel != null) {
                 masterPagesModel.calculatePathPositions();
             }
+
+            recalculateParentContentOverlays();
         };
 
         self.removeHistoryButton = function () {
@@ -744,6 +802,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 if (masterPagesModel != null) {
                     masterPagesModel.calculatePathPositions();
                 }
+                recalculateParentContentOverlays();
             }, 100);
         });
     };
