@@ -1,4 +1,7 @@
-﻿/*jslint unparam: true, white: true, browser: true, devel: true */
+﻿// TODO: remove after tests
+window.cms = {};
+
+/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
 bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
@@ -14,6 +17,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             contentEditInnerDiv: '.bcms-content-edit .bcms-content-icon',
             contentHistory: '.bcms-content-history',
             contentConfigure: '.bcms-content-configure',
+            enterChildContent: '.bcms-enter-child-content',
 
             regionsAndContents: '.bcms-region-start, .bcms-region-end, .bcms-content-start, .bcms-content-end',
             regionOverlay: '#bcms-region-overlay-template',
@@ -68,7 +72,6 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
     * Shows overlay over content region:
     */
     content.showOverlay = function (contentViewModel) {
-
         var overlay = contentViewModel.overlay;
         
         overlay.animate({ 'opacity': 1 }, opacityAnimationSpeed);
@@ -105,13 +108,17 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         rectangle.data('target', contentViewModel);
         rectangle.insertBefore(container);
         contentRectangles = contentRectangles.add(rectangle);
-        
+
         if (bcms.editModeIsOn()) {
             rectangle.show();
         }
         
         contentViewModel.overlay = rectangle;
         
+        if (contentViewModel.getChildRegions().length == 0) {
+            contentViewModel.removeEnterChildContentButton();
+        }
+
         bcms.trigger(bcms.events.createContentOverlay, contentViewModel);
     };
 
@@ -125,6 +132,14 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         }
 
         $.each(pageViewModel.contents, function () {
+            if (!pageViewModel.isContentVisible(this)) {
+                this.overlay.hide();
+
+                return;
+            } else {
+                this.overlay.show();
+            }
+
             this.recalculatePositions();
         });
 
@@ -163,10 +178,21 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         regionViewModels = regionViewModels || pageViewModel.regions;
 
         $.each(regionViewModels, function () {
+            if (!pageViewModel.isRegionVisible(this)) {
+                this.overlay.hide();
+
+                return;
+            } else {
+                this.overlay.show();
+            }
+
             this.recalculatePositions();
         });
 
         $.each(regionViewModels, function () {
+            if (!pageViewModel.isRegionVisible(this)) {
+                return;
+            }
 
             var regionViewModel = this,
                 overlay = regionViewModel.overlay,
@@ -203,6 +229,10 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
         $(selectors.contentConfigure, overlay).on('click', function () {
             contentViewModel.onConfigureContent();
+        });
+
+        $(selectors.enterChildContent, overlay).on('click', function () {
+            contentViewModel.onEnterChildContent();
         });
 
         overlay.on('mouseleave', function () {
@@ -302,6 +332,10 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         var changedRegions = [];
 
         $.each(pageViewModel.regions, function () {
+            if (!pageViewModel.isRegionVisible(this)) {
+                return;
+            }
+
             var regionContents = [],
                 regionViewModel = this;
 
@@ -348,7 +382,11 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
     content.turnSortModeOn = function (currentRegionViewModel) {
         isSortMode = true;
         
-        $.each(pageViewModel.regions, function() {
+        $.each(pageViewModel.regions, function () {
+            if (!pageViewModel.isRegionVisible(this)) {
+                return;
+            }
+
             var regionViewModel = this;
             
             if (regionViewModel != currentRegionViewModel) {
@@ -416,12 +454,21 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
         self.regions = [];
         self.contents = [];
+        self.currentParentRegion = null;
+
+        self.isRegionVisible = function(regionViewModel) {
+            return regionViewModel.getParentRegion() == self.currentParentRegion;
+        };
+
+        self.isContentVisible = function (contentViewModel) {
+            return contentViewModel.region.getParentRegion() == self.currentParentRegion;
+        };
     }
 
     /**
     * Page region view model
     */
-    function RegionViewModel(regionStart, regionEnd, regionContents) {
+    function RegionViewModel(regionStart, regionEnd, regionContents, parentRegionId, parentContentId) {
         var self = this;
 
         self.id = regionStart.data('id');
@@ -430,6 +477,10 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         self.contents = regionContents;
         self.overlay = null;
         self.sortBlock = null;
+        self.parentRegionId = parentRegionId;
+        self.parentRegion = null;
+        self.parentContentId = parentContentId;
+        self.parentContent = null;
         
         self.left = 0;
         self.top = 0;
@@ -453,17 +504,48 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 }
             }
         };
+
+        self.getParentRegion = function () {
+            if (self.parentRegionId && !self.parentRegion) {
+                for (var i = 0; i < pageViewModel.regions.length; i ++) {
+                    if (pageViewModel.regions[i].id == self.parentRegionId) {
+                        self.parentRegion = pageViewModel.regions[i];
+
+                        break;
+                    }
+                }
+            }
+
+            return self.parentRegion;
+        };
+
+        self.getParentContent = function () {
+            if (self.parentContentId && !self.parentContent) {
+                for (var i = 0; i < pageViewModel.contents.length; i++) {
+                    if (pageViewModel.contents[i].contentId == self.parentContentId) {
+                        self.parentContent = pageViewModel.contents[i];
+                        break;
+                    }
+                }
+            }
+
+            return self.parentContent;
+        };
     }
     
     /**
     * Page content view model
     */
-    function ContentViewModel(contentStart, contentEnd) {
+    function ContentViewModel(contentStart, contentEnd, parentContentId) {
         var self = this;
 
         self.contentStart = contentStart;
         self.contentEnd = contentEnd;
         self.overlay = null;
+        self.region = null;
+        self.parentContentId = parentContentId;
+        self.parentContent = null;
+        self.childRegions = null;
         self.hideEndingDiv = contentEnd.data('hide') === true;
 
         self.contentId = contentStart.data('contentId');
@@ -493,6 +575,16 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         self.onConfigureContent = function() {};
         self.onContentHistory = function() {};
 
+        self.onEnterChildContent = function () {
+            pageViewModel.currentParentRegion = self.region;
+
+            content.refreshRegionsPosition();
+            content.refreshContentsPosition();
+            if (masterPagesModel != null) {
+                masterPagesModel.calculatePathPositions();
+            }
+        };
+
         self.removeHistoryButton = function () {
             self.overlay.find(selectors.contentHistory).remove();
         };
@@ -505,6 +597,10 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             self.overlay.find(selectors.contentConfigure).remove();
         };
 
+        self.removeEnterChildContentButton = function () {
+            self.overlay.find(selectors.enterChildContent).remove();
+        };
+
         self.removeDeleteButton = function () {
             self.overlay.find(selectors.contentDelete).remove();
         };
@@ -513,7 +609,101 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             self.overlay.find(selectors.contentEditInnerDiv).html('<div>*</div>');
         };
 
+        self.getParentContent = function () {
+            if (self.parentContentId && !self.parentContent) {
+                for (var i = 0; i < pageViewModel.contents.length; i++) {
+                    if (pageViewModel.contents[i].contentId == self.parentContentId) {
+                        self.parentContent = pageViewModel.contents[i];
+                        break;
+                    }
+                }
+            }
+
+            return self.parentContent;
+        };
+
+        self.getChildRegions = function () {
+            if (self.childRegions == null) {
+                self.childRegions = [];
+
+                for (var i = 0; i < pageViewModel.regions.length; i++) {
+                    if (pageViewModel.regions[i].getParentContent() == self) {
+                        self.childRegions.push(pageViewModel.regions[i]);
+                    }
+                }
+            }
+
+            return self.childRegions;
+        };
+
         return self;
+    }
+
+    function collectRegionsAndContents(tags) {
+        var tagsCount = tags.length,
+            currentTag,
+            i,
+            allContents = [],
+            allRegions = [],
+            regionId,
+            contentId,
+            currentContent,
+            currentRegion,
+            parentRegionId,
+            parentContentId;
+
+        for (i = 0; i < tagsCount; i++) {
+            currentTag = $(tags[i]);
+
+            if (currentTag.hasClass(classes.regionStart)) {
+                // Region start
+                regionId = currentTag.data('id');
+                currentRegion = {
+                    regionId: regionId,
+                    contents: [],
+                    startTag: currentTag
+                };
+                allRegions.push(currentRegion);
+            } else if (currentTag.hasClass(classes.regionEnd)) {
+                // Region end
+                currentRegion = allRegions.pop();
+                parentRegionId = null;
+                parentContentId = null;
+                if (allRegions.length > 0) {
+                    parentRegionId = allRegions[allRegions.length - 1].regionId;
+                    parentContentId = allContents[allContents.length - 1].contentId;
+                }
+
+                var regionViewModel = new RegionViewModel(currentRegion.startTag, currentTag, currentRegion.contents, parentRegionId, parentContentId);
+                pageViewModel.regions.push(regionViewModel);
+                
+                $.each(currentRegion.contents, function () {
+                    pageViewModel.contents.push(this);
+                    this.region = regionViewModel;
+                });
+            } else if (currentTag.hasClass(classes.contentStart)) {
+                // Content start
+                contentId = currentTag.data('contentId');
+                currentContent = {
+                    contentId: contentId,
+                    startTag: currentTag
+                };
+                allContents.push(currentContent);
+            } else if (currentTag.hasClass(classes.contentEnd)) {
+                // Content end
+                currentContent = allContents.pop();
+                currentRegion = allRegions[allRegions.length - 1];
+                parentContentId = null;
+                if (allContents.length > 0) {
+                    parentContentId = allContents[allContents.length - 1].contentId;
+                }
+
+                var contentViewModel = new ContentViewModel(currentContent.startTag, currentTag, parentContentId);
+                currentRegion.contents.push(contentViewModel);
+            }
+        }
+
+        console.log('Regions found: ' + pageViewModel.regions.length);
     }
 
     /**
@@ -524,45 +714,11 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
         pageViewModel = new PageViewModel();
 
-        var tags = $(selectors.regionsAndContents).toArray(),
-            tagsCount = tags.length,
-            regionStart,
-            i;
-        
-        for (i = 0; i < tagsCount; i++) {
-            regionStart = $(tags[i]);
-            if (regionStart.hasClass(classes.regionStart)) {
-                var regionContentViewModels = [],
-                    currentTag,
-                    j,
-                    contentStartFound = false,
-                    contentStart = null;
+        // TODO: remove after tests
+        window.cms.page = pageViewModel;
 
-                for (j = i; j < tagsCount; j++) {
-                    currentTag = $(tags[j]);
-
-                    if (currentTag.hasClass(classes.contentStart)) {
-                        contentStart = currentTag;
-                        contentStartFound = true;
-                    } else if (currentTag.hasClass(classes.contentEnd) && contentStartFound) {
-                        contentStartFound = false;
-                        
-                        var contentViewModel = new ContentViewModel(contentStart, currentTag);
-                        regionContentViewModels.push(contentViewModel);
-                    } else if (currentTag.hasClass(classes.regionEnd)) {
-                        var regionViewModel = new RegionViewModel(regionStart, currentTag, regionContentViewModels);
-
-                        pageViewModel.regions.push(regionViewModel);
-                        $.each(regionContentViewModels, function() {
-                            pageViewModel.contents.push(this);
-                        });
-
-                        i = j;
-                        break;
-                    }
-                }
-            }
-        }
+        var tags = $(selectors.regionsAndContents).toArray();
+        collectRegionsAndContents(tags, 0);
         
         $.each(pageViewModel.regions, function () {
             content.highlightRegion(this);
@@ -624,6 +780,10 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
     function onEditModeOn() {
         if (pageViewModel != null) {
             $.each(pageViewModel.contents, function () {
+                if (!pageViewModel.isContentVisible(this)) {
+                    return;
+                }
+
                 this.overlay.show();
                 
                 if (this.hideEndingDiv) {

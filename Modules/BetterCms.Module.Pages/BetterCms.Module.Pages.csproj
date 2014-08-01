@@ -753,9 +753,9 @@
     <EmbeddedResource Include="Scripts\bcms.pages.template.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.properties.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.masterpage.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.languages.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

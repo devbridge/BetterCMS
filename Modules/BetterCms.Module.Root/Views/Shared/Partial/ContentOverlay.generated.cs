@@ -45,6 +45,9 @@ WriteLiteral(" id=\"bcms-content-overlay\"");
 WriteLiteral(@">
     <div class=""bcms-content-overlay bcms-layer"">
         <div class=""bcms-content-actions"">
+            <div class=""bcms-content-button bcms-enter-child-content"" style=""background: url('http://i.imgur.com/6dL5cLQ.png') repeat scroll 4px 5px transparent"">
+                <div class=""bcms-content-icon""></div>
+            </div>
             <div class=""bcms-content-button bcms-content-history"">
                 <div class=""bcms-content-icon""></div>
             </div>
@@ -57,13 +60,13 @@ WriteLiteral(@">
 ");
 
             
-            #line 14 "..\..\Views\Shared\Partial\ContentOverlay.cshtml"
+            #line 17 "..\..\Views\Shared\Partial\ContentOverlay.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 14 "..\..\Views\Shared\Partial\ContentOverlay.cshtml"
+            #line 17 "..\..\Views\Shared\Partial\ContentOverlay.cshtml"
              if (!Model.IsReadOnly && Model.HasEditRole)
             {
 
@@ -81,7 +84,7 @@ WriteLiteral(" class=\"bcms-content-icon\"");
 WriteLiteral("></div>\r\n                </div>\r\n");
 
             
-            #line 19 "..\..\Views\Shared\Partial\ContentOverlay.cshtml"
+            #line 22 "..\..\Views\Shared\Partial\ContentOverlay.cshtml"
             }
 
             
