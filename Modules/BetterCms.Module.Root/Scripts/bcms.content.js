@@ -457,12 +457,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         self.currentParentContent = null;
 
         self.isRegionVisible = function (regionViewModel) {
-            var parentRegion = null;
-            if (self.currentParentContent != null) {
-                parentRegion = self.currentParentContent.region;
-            }
-
-            return regionViewModel.getParentRegion() == parentRegion;
+            return regionViewModel.getParentContent() == self.currentParentContent;
         };
 
         self.isContentVisible = function (contentViewModel) {
@@ -473,7 +468,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
     /**
     * Page region view model
     */
-    function RegionViewModel(regionStart, regionEnd, regionContents, parentRegionId, parentContentId) {
+    function RegionViewModel(regionStart, regionEnd, regionContents, parentRegionId, parentPageContentId) {
         var self = this;
 
         self.id = regionStart.data('id');
@@ -484,7 +479,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         self.sortBlock = null;
         self.parentRegionId = parentRegionId;
         self.parentRegion = null;
-        self.parentContentId = parentContentId;
+        self.parentPageContentId = parentPageContentId;
         self.parentContent = null;
         
         self.left = 0;
@@ -525,9 +520,9 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         };
 
         self.getParentContent = function () {
-            if (self.parentContentId && !self.parentContent) {
+            if (self.parentPageContentId && !self.parentContent) {
                 for (var i = 0; i < pageViewModel.contents.length; i++) {
-                    if (pageViewModel.contents[i].contentId == self.parentContentId) {
+                    if (pageViewModel.contents[i].pageContentId == self.parentPageContentId) {
                         self.parentContent = pageViewModel.contents[i];
                         break;
                     }
@@ -592,14 +587,14 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
     /**
     * Page content view model
     */
-    function ContentViewModel(contentStart, contentEnd, parentContentId) {
+    function ContentViewModel(contentStart, contentEnd, parentPageContentId) {
         var self = this;
 
         self.contentStart = contentStart;
         self.contentEnd = contentEnd;
         self.overlay = null;
         self.region = null;
-        self.parentContentId = parentContentId;
+        self.parentPageContentId = parentPageContentId;
         self.parentContent = null;
         self.childRegions = null;
         self.hideEndingDiv = contentEnd.data('hide') === true;
@@ -668,9 +663,9 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         };
 
         self.getParentContent = function () {
-            if (self.parentContentId && !self.parentContent) {
+            if (self.parentPageContentId && !self.parentContent) {
                 for (var i = 0; i < pageViewModel.contents.length; i++) {
-                    if (pageViewModel.contents[i].contentId == self.parentContentId) {
+                    if (pageViewModel.contents[i].pageContentId == self.parentPageContentId) {
                         self.parentContent = pageViewModel.contents[i];
                         break;
                     }
@@ -705,10 +700,11 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             allRegions = [],
             regionId,
             contentId,
+            pageContentId,
             currentContent,
             currentRegion,
             parentRegionId,
-            parentContentId;
+            parentPageContentId;
 
         for (i = 0; i < tagsCount; i++) {
             currentTag = $(tags[i]);
@@ -726,13 +722,13 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 // Region end
                 currentRegion = allRegions.pop();
                 parentRegionId = null;
-                parentContentId = null;
+                parentPageContentId = null;
                 if (allRegions.length > 0) {
                     parentRegionId = allRegions[allRegions.length - 1].regionId;
-                    parentContentId = allContents[allContents.length - 1].contentId;
+                    parentPageContentId = allContents[allContents.length - 1].pageContentId;
                 }
 
-                var regionViewModel = new RegionViewModel(currentRegion.startTag, currentTag, currentRegion.contents, parentRegionId, parentContentId);
+                var regionViewModel = new RegionViewModel(currentRegion.startTag, currentTag, currentRegion.contents, parentRegionId, parentPageContentId);
                 pageViewModel.regions.push(regionViewModel);
                 
                 $.each(currentRegion.contents, function () {
@@ -741,9 +737,9 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 });
             } else if (currentTag.hasClass(classes.contentStart)) {
                 // Content start
-                contentId = currentTag.data('contentId');
+                pageContentId = currentTag.data('pageContentId');
                 currentContent = {
-                    contentId: contentId,
+                    pageContentId: pageContentId,
                     startTag: currentTag
                 };
                 allContents.push(currentContent);
@@ -751,12 +747,12 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 // Content end
                 currentContent = allContents.pop();
                 currentRegion = allRegions[allRegions.length - 1];
-                parentContentId = null;
+                parentPageContentId = null;
                 if (allContents.length > 0) {
-                    parentContentId = allContents[allContents.length - 1].contentId;
+                    parentPageContentId = allContents[allContents.length - 1].pageContentId;
                 }
 
-                var contentViewModel = new ContentViewModel(currentContent.startTag, currentTag, parentContentId);
+                var contentViewModel = new ContentViewModel(currentContent.startTag, currentTag, parentPageContentId);
                 currentRegion.contents.push(contentViewModel);
             }
         }
