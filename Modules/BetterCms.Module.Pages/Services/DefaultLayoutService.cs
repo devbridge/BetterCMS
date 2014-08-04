@@ -181,18 +181,18 @@ namespace BetterCms.Module.Pages.Services
                 .AsQueryable<LayoutOption>(lo => lo.Layout.Id == id)
                 .OrderBy(o => o.Key)
                 .Select(o => new OptionValueEditViewModel
-                {
-                    OptionKey = o.Key,
-                    Type = o.Type,
-                    OptionDefaultValue = optionService.ClearFixValueForEdit(o.Type, o.DefaultValue),
-                    UseDefaultValue = true,
-                    CustomOption = new CustomOptionViewModel
-                                   {
-                                       Identifier = o.CustomOption.Identifier,
-                                       Title = o.CustomOption.Title,
-                                       Id = o.CustomOption.Id
-                                   }
-                })
+                    {
+                        OptionKey = o.Key,
+                        Type = o.Type,
+                        OptionDefaultValue = optionService.ClearFixValueForEdit(o.Type, o.DefaultValue),
+                        UseDefaultValue = true,
+                        CustomOption = o.CustomOption != null ? new CustomOptionViewModel
+                                       {
+                                           Identifier = o.CustomOption.Identifier,
+                                           Title = o.CustomOption.Title,
+                                           Id = o.CustomOption.Id
+                                       } : null
+                    })
                 .ToList();
 
             optionService.SetCustomOptionValueTitles(options, options);
