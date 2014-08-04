@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BetterCms.Core.DataContracts
 {
@@ -9,5 +10,7 @@ namespace BetterCms.Core.DataContracts
         IContent ChildContent { get; }
 
         Guid AssignmentIdentifier { get; }
+
+        IEnumerable<IOption> Options { get; }
     }
 }

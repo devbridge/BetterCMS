@@ -67,8 +67,10 @@ namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
 
                     if (childContent != null)
                     {
+                        var content = GetDraftIfExists(childContent.Child);
+
                         model.OptionValuesContainerId = childContent.Id;
-                        model.OptionValues = OptionService.GetMergedOptionValuesForEdit(childContent.Child.ContentOptions, childContent.Options);
+                        model.OptionValues = OptionService.GetMergedOptionValuesForEdit(content.ContentOptions, childContent.Options);
                         optionsLoaded = true;
                     }
                 }
@@ -79,8 +81,11 @@ namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
                             .Where(c => c.Id == request.WidgetId)
                             .FetchMany(c => c.ContentOptions)
                             .ThenFetch(c => c.CustomOption)
+                            .FetchMany(f => f.History).ThenFetchMany(f => f.ContentOptions).ThenFetch(f => f.CustomOption)
                             .ToList()
                             .FirstOne();
+
+                    content = GetDraftIfExists(content);
 
                     model.OptionValues = OptionService.GetMergedOptionValuesForEdit(content.ContentOptions, null);
                 }
@@ -91,13 +96,26 @@ namespace BetterCms.Module.Pages.Command.Content.GetChildContentOptions
             return model;
         }
 
+        private Root.Models.Content GetDraftIfExists(Root.Models.Content content)
+        {
+            if (content.Status != ContentStatus.Draft)
+            {
+                var draftContent = content.History.FirstOrDefault(c => c.Status == ContentStatus.Draft);
+                if (draftContent != null)
+                {
+                    content = draftContent;
+                }
+            }
+
+            return content;
+        }
+
         private IQueryable<ChildContent> AddFetches(IQueryable<ChildContent> query)
         {
-            return query.Fetch(f => f.Child)
-                .ThenFetchMany(f => f.ContentOptions)
-                .ThenFetch(f => f.CustomOption)
-                .FetchMany(f => f.Options)
-                .ThenFetch(f => f.CustomOption);
+            return query
+                .Fetch(f => f.Child).ThenFetchMany(f => f.ContentOptions).ThenFetch(f => f.CustomOption)
+                .FetchMany(f => f.Options).ThenFetch(f => f.CustomOption)
+                .Fetch(f => f.Child).ThenFetchMany(f => f.History).ThenFetchMany(f => f.ContentOptions).ThenFetch(f => f.CustomOption);
         }
     }
 }
