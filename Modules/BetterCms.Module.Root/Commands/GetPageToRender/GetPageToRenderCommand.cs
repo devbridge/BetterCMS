@@ -34,9 +34,11 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         private readonly ICmsConfiguration cmsConfiguration;
 
         private readonly RootModuleDescriptor rootModuleDescriptor;
-        
+
         private readonly IOptionService optionService;
-        
+
+        private readonly IContentProjectionService contentProjectionService;
+
         private readonly IContentProjectionService contentProjectionService;
         
         private readonly IChildContentService childContentService;

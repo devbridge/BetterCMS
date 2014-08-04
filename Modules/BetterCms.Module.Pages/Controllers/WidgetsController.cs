@@ -84,15 +84,15 @@ namespace BetterCms.Module.Pages.Controllers
         /// <summary>
         /// Creates modal dialog for editing an html content widget.
         /// </summary>
-        /// <param name="id">The id.</param>
+        /// <param name="widgetId">The id.</param>
         /// <returns>
         /// ViewResult to render a dialog for the html content widget editing.
         /// </returns>
         [HttpGet]
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
-        public ActionResult EditHtmlContentWidget(string id)
+        public ActionResult EditHtmlContentWidget(string widgetId)
         {
-            var model = GetCommand<GetHtmlContentWidgetForEditCommand>().ExecuteCommand(id.ToGuidOrDefault());
+            var model = GetCommand<GetHtmlContentWidgetForEditCommand>().ExecuteCommand(widgetId.ToGuidOrDefault());
             var view = RenderView("EditHtmlContentWidget", model);
             return ComboWireJson(model != null, view, model, JsonRequestBehavior.AllowGet);
         }

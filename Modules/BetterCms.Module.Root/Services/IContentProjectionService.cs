@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Module.Root.Commands.GetPageToRender;

@@ -24,5 +24,13 @@ namespace BetterCms.Module.Root.Models
                 return Child;
             }
         }
+
+        IEnumerable<IOption> IChildContent.Options
+        {
+            get
+            {
+                return Options;
+            }
+        }
     }
 }
