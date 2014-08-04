@@ -97,7 +97,8 @@ namespace BetterCms.Module.Root.Services
                 createProjectionDelegate = (pc, c, a, ccpl, pcpl) => new PageContentProjection(pc, c, a, ccpl, pcpl);
             }
 
-            var options = optionService.GetMergedOptionValues(contentToProject.ContentOptions, pageContent.Options);
+            var optionValues = childContent != null ? childContent.Options : pageContent.Options;
+            var options = optionService.GetMergedOptionValues(contentToProject.ContentOptions, optionValues);
             return pageContentProjectionFactory.Create(pageContent, contentToProject, options, childContentsProjections, childRegionContentProjections, createProjectionDelegate);
         }
 

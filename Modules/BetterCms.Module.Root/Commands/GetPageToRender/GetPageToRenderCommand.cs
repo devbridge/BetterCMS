@@ -38,8 +38,6 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         private readonly IOptionService optionService;
 
         private readonly IContentProjectionService contentProjectionService;
-
-        private readonly IContentProjectionService contentProjectionService;
         
         private readonly IChildContentService childContentService;
 
@@ -212,82 +210,6 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             return renderPageViewModel;
         }
-
-        /*
-        /// <summary>
-        /// Creates the page content projection.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <param name="pageContent">Content of the page.</param>
-        /// <param name="allPageContents">All page contents.</param>
-        /// <returns>
-        /// Page content projection
-        /// </returns>
-        /// <exception cref="CmsException"></exception>
-        private PageContentProjection CreatePageContentProjection(GetPageToRenderRequest request, PageContent pageContent, List<PageContent> allPageContents)
-        {
-            Models.Content contentToProject = null;
-            
-            if (request.PreviewPageContentId != null && request.PreviewPageContentId.Value == pageContent.Id)
-            {
-                // Looks for the preview content version first.
-                if (pageContent.Content.Status == ContentStatus.Preview)
-                {
-                    contentToProject = pageContent.Content;
-                }
-                else
-                {
-                    contentToProject = pageContent.Content.History.FirstOrDefault(f => f.Status == ContentStatus.Preview);
-                }
-            }
-
-            if (contentToProject == null && (request.CanManageContent || request.PreviewPageContentId != null))
-            {
-                // Look for the draft content version if we are in the edit or preview mode.
-                if (pageContent.Content.Status == ContentStatus.Draft)
-                {
-                    contentToProject = pageContent.Content;
-                }
-                else
-                {
-                    contentToProject = pageContent.Content.History.FirstOrDefault(f => f.Status == ContentStatus.Draft);
-                }
-            }
-            
-            if (contentToProject == null && pageContent.Content.Status == ContentStatus.Published)
-            {
-                IHtmlContent htmlContent = pageContent.Content as IHtmlContent;
-                if (!request.CanManageContent && htmlContent != null && (DateTime.Now < htmlContent.ActivationDate || (htmlContent.ExpirationDate.HasValue && htmlContent.ExpirationDate.Value < DateTime.Now)))
-                {
-                    // Invisible for user because of activation dates.
-                    return null;
-                }
-
-                // Otherwise take published version.
-                contentToProject = pageContent.Content;
-            }
-
-            if (contentToProject == null)
-            {
-                throw new CmsException(string.Format("A content version was not found to project on the page. PageContent={0}; Request={1};", pageContent, request));
-            }
-
-            // Create a collection of child regions (dynamic regions) contents projections
-            var childRegionContentProjections = new List<PageContentProjection>();
-            var childRegionPageContents = allPageContents.Where(apc => apc.Parent != null && apc.Parent.Id == pageContent.Id);
-            foreach (var childPageContent in childRegionPageContents)
-            {
-                var childRegionContentProjection = CreatePageContentProjection(request, childPageContent, allPageContents);
-                childRegionContentProjections.Add(childRegionContentProjection);
-            }
-
-            // Create a collection of child contents (child widgets) projections
-            var options = optionService.GetMergedOptionValues(contentToProject.ContentOptions, pageContent.Options);
-            var childContentsProjections = childContentService.CreateListOfChildProjectionsRecursively(pageContent, contentToProject.ChildContents);
-
-            return pageContentProjectionFactory.Create(pageContent, contentToProject, options, childContentsProjections, childRegionContentProjections);
-        }
-        */
         
         /// <summary>
         /// Gets the page.
