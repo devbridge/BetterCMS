@@ -10,24 +10,16 @@ using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
-using BetterCms.Module.Root.Projections;
 
 namespace BetterCms.Module.Root.Services
 {
     public class DefaultChildContentService : IChildContentService
     {
         private readonly IRepository repository;
-        
-        private readonly IOptionService optionService;
 
-        private readonly PageContentProjectionFactory pageContentProjectionFactory;
-
-        public DefaultChildContentService(IRepository repository, PageContentProjectionFactory pageContentProjectionFactory,
-            IOptionService optionService)
+        public DefaultChildContentService(IRepository repository)
         {
             this.repository = repository;
-            this.optionService = optionService;
-            this.pageContentProjectionFactory = pageContentProjectionFactory;
         }
 
         public void CollectChildContents(string html, Models.Content content)
@@ -270,30 +262,6 @@ namespace BetterCms.Module.Root.Services
 
                 RetrieveChildrenContentsRecursively(entities.Select(c => c.Child).Distinct().ToList());
             }
-        }
-
-        public IEnumerable<ChildContentProjection> CreateListOfChildProjectionsRecursively(PageContent pageContent, IEnumerable<ChildContent> children)
-        {
-            List<ChildContentProjection> childProjections;
-            if (children != null && children.Any(c => !c.Child.IsDeleted))
-            {
-                childProjections = new List<ChildContentProjection>();
-                foreach (var child in children.Where(c => !c.Child.IsDeleted).Distinct())
-                {
-                    var childChildProjections = CreateListOfChildProjectionsRecursively(pageContent, child.Child.ChildContents);
-                    var options = optionService.GetMergedOptionValues(child.Child.ContentOptions, child.Options);
-                    var childProjection = pageContentProjectionFactory.Create(pageContent, child.Child, options, childChildProjections,
-                        (pc, c, a, ch) => new ChildContentProjection(pc, child, a, ch));
-
-                    childProjections.Add(childProjection);
-                }
-            }
-            else
-            {
-                childProjections = null;
-            }
-
-            return childProjections;
         }
     }
 }

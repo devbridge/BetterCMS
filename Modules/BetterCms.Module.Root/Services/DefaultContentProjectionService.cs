@@ -7,7 +7,6 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Projections;
 
-using BetterCms.Module.Root.Commands.GetPageToRender;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Projections;
 
@@ -27,16 +26,17 @@ namespace BetterCms.Module.Root.Services
         }
 
         public PageContentProjection CreatePageContentProjection(
-            GetPageToRenderRequest renderPageRequest,
+            bool canManageContent,
             PageContent pageContent,
-            IChildContent childContent = null)
+            IChildContent childContent = null,
+            Guid? previewPageContentId = null)
         {
             Models.Content contentToProject = null;
             var content = childContent == null ? pageContent.Content : (Models.Content)childContent.ChildContent;
 
             if (childContent == null
-                && renderPageRequest.PreviewPageContentId != null
-                && renderPageRequest.PreviewPageContentId.Value == pageContent.Id)
+                && previewPageContentId != null
+                && previewPageContentId.Value == pageContent.Id)
             {
                 // Looks for the preview content version first.
                 if (pageContent.Content.Status == ContentStatus.Preview)
@@ -49,7 +49,7 @@ namespace BetterCms.Module.Root.Services
                 }
             }
 
-            if (contentToProject == null && (renderPageRequest.CanManageContent || renderPageRequest.PreviewPageContentId != null))
+            if (contentToProject == null && (canManageContent || previewPageContentId != null))
             {
                 // Look for the draft content version if we are in the edit or preview mode.
                 if (content.Status == ContentStatus.Draft)
@@ -65,7 +65,7 @@ namespace BetterCms.Module.Root.Services
             if (contentToProject == null && content.Status == ContentStatus.Published)
             {
                 IHtmlContent htmlContent = content as IHtmlContent;
-                if (!renderPageRequest.CanManageContent && htmlContent != null && (DateTime.Now < htmlContent.ActivationDate || (htmlContent.ExpirationDate.HasValue && htmlContent.ExpirationDate.Value < DateTime.Now)))
+                if (!canManageContent && htmlContent != null && (DateTime.Now < htmlContent.ActivationDate || (htmlContent.ExpirationDate.HasValue && htmlContent.ExpirationDate.Value < DateTime.Now)))
                 {
                     // Invisible for user because of activation dates.
                     return null;
@@ -77,11 +77,11 @@ namespace BetterCms.Module.Root.Services
 
             if (contentToProject == null)
             {
-                throw new CmsException(string.Format("A content version was not found to project on the page. PageContent={0}; Request={1};", pageContent, renderPageRequest));
+                throw new CmsException(string.Format("A content version was not found to project on the page. PageContent={0}; CanManageContent={1}, PreviewPageContentId={2};", pageContent, canManageContent, previewPageContentId));
             }
 
             // Create a collection of child contents (child widgets) projections
-            var childContentsProjections = CreateListOfChildProjectionsRecursively(renderPageRequest, pageContent, contentToProject.ChildContents);
+            var childContentsProjections = CreateListOfChildProjectionsRecursively(canManageContent, previewPageContentId, pageContent, contentToProject.ChildContents);
 
             Func<IPageContent, IContent, IContentAccessor, IEnumerable<ChildContentProjection>, PageContentProjection> createProjectionDelegate;
             if (childContent != null)
@@ -99,7 +99,8 @@ namespace BetterCms.Module.Root.Services
         }
 
         private IEnumerable<ChildContentProjection> CreateListOfChildProjectionsRecursively(
-            GetPageToRenderRequest renderPageRequest,
+            bool canManageContent, 
+            Guid? previewPageContentId, 
             PageContent pageContent,
             IEnumerable<ChildContent> children)
         {
@@ -109,7 +110,7 @@ namespace BetterCms.Module.Root.Services
                 childProjections = new List<ChildContentProjection>();
                 foreach (var child in children.Where(c => !c.Child.IsDeleted).Distinct())
                 {
-                    var childProjection = (ChildContentProjection)CreatePageContentProjection(renderPageRequest, pageContent, child);
+                    var childProjection = (ChildContentProjection)CreatePageContentProjection(canManageContent, pageContent, child, previewPageContentId);
 
                     childProjections.Add(childProjection);
                 }
