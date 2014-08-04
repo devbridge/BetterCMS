@@ -158,7 +158,9 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             }
 
             var pageContents = allPageContents.Where(pc => pc.Page.Id == page.Id).Where(pc => pc.Parent == null || allPageContents.All(apc => apc.Id != pc.Parent.Id));
-            var contentProjections = pageContents.Distinct().Select(f => contentProjectionService.CreatePageContentProjection(request, f, allPageContents)).Where(c => c != null).ToList();
+            var contentProjections = pageContents.Distinct()
+                    .Select(f => contentProjectionService.CreatePageContentProjection(request.CanManageContent, f, allPageContents, null, request.PreviewPageContentId))
+                    .Where(c => c != null).ToList();
 
             renderPageViewModel.Contents = contentProjections;
             renderPageViewModel.Metadata = pageAccessor.GetPageMetaData(page).ToList();
