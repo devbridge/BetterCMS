@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 
@@ -48,6 +49,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageContentOptions
                 var contentQuery = Repository.AsQueryable<PageContent>()
                     .Where(f => f.Id == pageContentId && !f.IsDeleted && !f.Content.IsDeleted)
                     .Fetch(f => f.Content).ThenFetchMany(f => f.ContentOptions).ThenFetch(f => f.CustomOption)
+                    .Fetch(f => f.Content).ThenFetchMany(f => f.History).ThenFetchMany(f => f.ContentOptions).ThenFetch(f => f.CustomOption)
                     .FetchMany(f => f.Options).ThenFetch(f => f.CustomOption)
                     .AsQueryable();
 
@@ -60,7 +62,17 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageContentOptions
 
                 if (pageContent != null)
                 {
-                    model.OptionValues = OptionService.GetMergedOptionValuesForEdit(pageContent.Content.ContentOptions, pageContent.Options);
+                    var contentToProject = pageContent.Content;
+                    if (contentToProject.Status != ContentStatus.Draft)
+                    {
+                        var draftContent = contentToProject.History.FirstOrDefault(c => c.Status == ContentStatus.Draft);
+                        if (draftContent != null)
+                        {
+                            contentToProject = draftContent;
+                        }
+                    }
+
+                    model.OptionValues = OptionService.GetMergedOptionValuesForEdit(contentToProject.ContentOptions, pageContent.Options);
                     model.CustomOptions = OptionService.GetCustomOptions();
 
                     if (CmsConfiguration.Security.AccessControlEnabled)
