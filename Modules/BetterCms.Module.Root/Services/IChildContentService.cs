@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
 
-using BetterCms.Module.Root.Models;
-using BetterCms.Module.Root.Projections;
-
 namespace BetterCms.Module.Root.Services
 {
     public interface IChildContentService
@@ -14,7 +11,5 @@ namespace BetterCms.Module.Root.Services
         void ValidateChildContentsCircularReferences(Models.Content destination, Models.Content source);
 
         void RetrieveChildrenContentsRecursively(IEnumerable<Models.Content> contents);
-
-        IEnumerable<ChildContentProjection> CreateListOfChildProjectionsRecursively(PageContent pageContent, IEnumerable<ChildContent> children);
     }
 }
