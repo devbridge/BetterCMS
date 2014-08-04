@@ -588,7 +588,7 @@ namespace BetterCms.Module.Pages.Services
                                     node.Translations = new List<SitemapNodeTranslation>();
                                 }
 
-                                node.Translations.Where(t => t.UsePageTitleAsNodeTitle).ForEach(
+                                node.Translations.ForEach(
                                     t =>
                                     {
                                         var pageTranslation = GetPageTranslation(pageTranslations, t.Language.Id, node, page);
