@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using BetterCms.Core.Exceptions.Mvc;
 
 using BetterCms.Module.Root.Content.Resources;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.ViewModels.Cms;
@@ -66,7 +67,14 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
                 }
             }
 
-            content = AppendHtmlWithChildRegionContens(content, projection, pageModel);
+            // Add child contents in the master page to child region is possible only if content is widget.
+            // If content is regulat HTML content, it works as master page contents, and contens may be added only in the child page
+            if ((pageModel.RenderingPage == null && !pageModel.IsMasterPage)
+                || (pageModel.RenderingPage != null && !pageModel.RenderingPage.IsMasterPage) 
+                || projection.Content is Widget)
+            {
+                content = AppendHtmlWithChildRegionContens(content, projection, pageModel);
+            }
 
             stringBuilder.Append(content);
 

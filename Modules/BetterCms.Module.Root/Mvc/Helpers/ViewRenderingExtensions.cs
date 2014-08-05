@@ -77,7 +77,8 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                 var renderedMaster = RenderRecursively(controller, currentModel.MasterPage, pageModel, htmlHelper);
 
                 var pageHtmlHelper = new PageHtmlRenderer.PageHtmlRenderer(renderedMaster, pageModel);
-                var contentHtmlHelper = new ChildContentRenderHelper(htmlHelper);
+                var allowContentManagement = pageModel.CanManageContent && pageModel.AreRegionsEditable;
+                var contentHtmlHelper = new ChildContentRenderHelper(htmlHelper, allowContentManagement);
 
                 foreach (var region in currentModel.Regions)
                 {
@@ -127,6 +128,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             newModel.ModifiedOn = pageModel.ModifiedOn;
             newModel.CreatedByUser = pageModel.CreatedByUser;
             newModel.ModifiedByUser = pageModel.ModifiedByUser;
+            newModel.IsMasterPage = pageModel.IsMasterPage;
 
             PopulateCollections(newModel, pageModel);
 
