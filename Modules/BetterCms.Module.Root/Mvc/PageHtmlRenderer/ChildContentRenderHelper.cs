@@ -160,12 +160,12 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
                         };
                     var childRegionContentProjections = childRegionContents.Where(c => c.RegionId == regionModel.RegionId).OrderBy(c => c.Order).ToList();
 
-                    using (new LayoutRegionWrapper(contentsBuilder, regionModel, allowContentManagement))
+                    using (new LayoutRegionWrapper(contentsBuilder, regionModel, pageModel.AreRegionsEditable))
                     {
                         foreach (var childRegionContentProjection in childRegionContentProjections)
                         {
                             // Add Html
-                            using (new RegionContentWrapper(contentsBuilder, childRegionContentProjection,allowContentManagement))
+                            using (new RegionContentWrapper(contentsBuilder, childRegionContentProjection, pageModel.CanManageContent && pageModel.AreRegionsEditable))
                             {
                                 // Pass current model as view data model
                                 htmlHelper.ViewData.Model = pageModel;
