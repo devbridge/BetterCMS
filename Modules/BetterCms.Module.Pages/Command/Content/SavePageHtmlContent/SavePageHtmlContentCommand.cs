@@ -85,7 +85,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
             else
             {              
                 pageContent = new PageContent();
-                pageContent.Order = contentService.GetPageContentNextOrderNumber(model.PageId);
+                pageContent.Order = contentService.GetPageContentNextOrderNumber(model.PageId, model.ParentPageContentId);
 
                 if (configuration.Security.AccessControlEnabled)
                 {

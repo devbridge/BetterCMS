@@ -109,21 +109,21 @@ namespace BetterCms.Module.Pages.Controllers
         /// <summary>
         /// Creates add page content modal dialog for given page.
         /// </summary>
-        /// <param name="pageId">The page id.</param>
-        /// <param name="regionId">The region id.</param>
-        /// <param name="parentPageContentId">The parent page content identifier.</param>
+        /// <param name="pageIdentifier">The page identifier.</param>
+        /// <param name="regionIdentifier">The region identifier.</param>
+        /// <param name="parentPageContentIdentifier">The parent page content identifier.</param>
         /// <returns>
         /// ViewResult to render add page content modal dialog.
         /// </returns>
         [HttpGet]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
-        public ActionResult AddPageHtmlContent(string pageId, string regionId, string parentPageContentId)
+        public ActionResult AddPageHtmlContent(string pageIdentifier, string regionIdentifier, string parentPageContentIdentifier)
         {
             var addRequest = new InsertHtmlContentRequest
                     {
-                        PageId = pageId, 
-                        RegionId = regionId, 
-                        ParentPageContentId = parentPageContentId
+                        PageId = pageIdentifier,
+                        RegionId = regionIdentifier,
+                        ParentPageContentId = parentPageContentIdentifier
                     };
             var model = GetCommand<GetInsertHtmlContentCommand>().ExecuteCommand(addRequest);
 

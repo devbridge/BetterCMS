@@ -1,13 +1,20 @@
-﻿using System.Linq;
+﻿using BetterCms.Core.Mvc.Commands;
 
-using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Services;
 
 namespace BetterCms.Module.Pages.Command.Content.InsertContent
 {
     public class InsertContentToPageCommand : CommandBase, ICommand<InsertContentToPageRequest, bool>
     {
+        private readonly IContentService contentService;
+
+        public InsertContentToPageCommand(IContentService contentService)
+        {
+            this.contentService = contentService;
+        }
+
         /// <summary>
         /// Executes the specified request.
         /// </summary>
@@ -34,20 +41,8 @@ namespace BetterCms.Module.Pages.Command.Content.InsertContent
                                     Region = region,
                                     Parent = parentPageContent
                                 };
+            pageContent.Order = contentService.GetPageContentNextOrderNumber(request.PageId, request.ParentPageContentId);
 
-            // Retrieve maximum order number
-            var max = Repository
-                .AsQueryable<PageContent>()
-                .Where(f => f.Page.Id == request.PageId && !f.IsDeleted && f.Parent == parentPageContent)
-                .Select(f => (int?)f.Order).Max();
-            if (max == null)
-            {
-                pageContent.Order = 0;
-            }
-            else
-            {
-                pageContent.Order = max.Value + 1;
-            }
 
             Repository.Save(pageContent);
             UnitOfWork.Commit();

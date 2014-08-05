@@ -11,6 +11,7 @@ using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Services;
 
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 
 using NHibernate.Linq;
@@ -369,26 +370,24 @@ namespace BetterCms.Module.Root.Services
             return null;
         }
 
-        public int GetPageContentNextOrderNumber(Guid pageId)
+        public int GetPageContentNextOrderNumber(Guid pageId, Guid? parentPageContentId)
         {
             var page = repository.AsProxy<Page>(pageId);
+            PageContent parent = parentPageContentId.HasValue && !parentPageContentId.Value.HasDefaultValue() 
+                ? repository.AsProxy<PageContent>(parentPageContentId.Value) : null;
+
             var max = repository
                 .AsQueryable<PageContent>()
-                .Where(f => f.Page == page && !f.IsDeleted)
+                .Where(f => f.Page == page && !f.IsDeleted && f.Parent == parent)
                 .Select(f => (int?)f.Order)
                 .Max();
-            int order;
 
             if (max == null)
             {
-                order = 0;
+                return 0;
             }
-            else
-            {
-                order = max.Value + 1;
-            }
-
-            return order;
+           
+            return max.Value + 1;
         }
 
         public void PublishDraftContent(Guid pageId)

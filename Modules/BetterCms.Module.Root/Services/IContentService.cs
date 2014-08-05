@@ -14,7 +14,7 @@ namespace BetterCms.Module.Root.Services
 
         Models.Content RestoreContentFromArchive(Models.Content restoreFrom);
 
-        int GetPageContentNextOrderNumber(Guid pageId);
+        int GetPageContentNextOrderNumber(Guid pageId, Guid? parentPageContentId);
 
         void PublishDraftContent(Guid pageId);
 

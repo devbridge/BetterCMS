@@ -8,6 +8,7 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Command.Content.InsertContent;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Services;
 
 using Moq;
 
@@ -49,7 +50,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                               });
 
             // Create command
-            var command = new InsertContentToPageCommand();
+            var command = new InsertContentToPageCommand(new Mock<IContentService>().Object);
             command.UnitOfWork = new Mock<IUnitOfWork>().Object;
             command.Repository = repository.Object;
 
