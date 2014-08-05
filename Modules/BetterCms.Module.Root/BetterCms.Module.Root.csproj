@@ -165,6 +165,7 @@
     <Compile Include="Controllers\SiteSettingsController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
     <Compile Include="Models\ChildContentOption.cs" />
+    <Compile Include="Models\IChildRegionContainer.cs" />
     <Compile Include="Models\Language.cs" />
     <Compile Include="Models\Extensions\CultureInfoExtensions.cs" />
     <Compile Include="Models\Maps\LanguageMap.cs" />

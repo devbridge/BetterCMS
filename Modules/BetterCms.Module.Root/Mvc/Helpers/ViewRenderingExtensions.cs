@@ -77,8 +77,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                 var renderedMaster = RenderRecursively(controller, currentModel.MasterPage, pageModel, htmlHelper);
 
                 var pageHtmlHelper = new PageHtmlRenderer.PageHtmlRenderer(renderedMaster, pageModel);
-                var allowContentManagement = pageModel.CanManageContent && pageModel.AreRegionsEditable;
-                var contentHtmlHelper = new ChildContentRenderHelper(htmlHelper, allowContentManagement);
+                var contentHtmlHelper = new ChildContentRenderHelper(htmlHelper);
 
                 foreach (var region in currentModel.Regions)
                 {

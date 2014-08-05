@@ -29,8 +29,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// <param name="model">The model.</param>
         public static void RenderSectionContents(this HtmlHelper htmlHelper, WebPageBase webPage, RenderPageViewModel model)
         {
-            var allowContentManagement = model.CanManageContent && model.AreRegionsEditable;
-            var contentHtmlHelper = new ChildContentRenderHelper(htmlHelper, allowContentManagement);
+            var contentHtmlHelper = new ChildContentRenderHelper(htmlHelper);
 
             foreach (var region in model.Regions)
             {

@@ -13,6 +13,7 @@ using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.ViewModels.Cms;
 using BetterCms.Module.Root.ViewModels.Content;
+using BetterCms.Module.Root.Views.Language;
 
 using HtmlAgilityPack;
 
@@ -35,18 +36,23 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
         /// </summary>
         public const string WidgetAssignmentIdAttributeName = "data-assign-id";
 
+        /// <summary>
+        /// The HTML helper
+        /// </summary>
         private readonly HtmlHelper htmlHelper;
 
-        private readonly bool allowContentManagement;
-
-        public ChildContentRenderHelper(HtmlHelper htmlHelper, bool allowContentManagement = false)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ChildContentRenderHelper"/> class.
+        /// </summary>
+        /// <param name="htmlHelper">The HTML helper.</param>
+        public ChildContentRenderHelper(HtmlHelper htmlHelper)
         {
             this.htmlHelper = htmlHelper;
-            this.allowContentManagement = allowContentManagement;
         }
 
         public StringBuilder AppendHtml(StringBuilder stringBuilder, PageContentProjection projection, RenderPageViewModel pageModel)
         {
+            var renderingPageModel = pageModel.RenderingPage ?? pageModel;
             var content = projection.GetHtml(htmlHelper);
 
             var childrenContents = projection.GetChildProjections() ?? new List<ChildContentProjection>();
@@ -57,7 +63,7 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
             {
                 var model = parsedWidgets.First(w => w.AssignmentIdentifier == childProjection.AssignmentIdentifier);
                 var replaceWhat = model.Match.Value;
-                var replaceWith = AppendHtml(new StringBuilder(), childProjection, pageModel).ToString();
+                var replaceWith = AppendHtml(new StringBuilder(), childProjection, renderingPageModel).ToString();
 
                 content = content.Replace(replaceWhat, replaceWith);
             }
@@ -75,11 +81,9 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
 
             // Add child contents in the master page to child region is possible only if content is widget.
             // If content is regulat HTML content, it works as master page contents, and contens may be added only in the child page
-            if ((pageModel.RenderingPage == null && !pageModel.IsMasterPage)
-                || (pageModel.RenderingPage != null && !pageModel.RenderingPage.IsMasterPage) 
-                || projection.Content is Widget)
+            if (!renderingPageModel.IsMasterPage || projection.Content is IChildRegionContainer)
             {
-                content = AppendHtmlWithChildRegionContens(content, projection, pageModel);
+                content = AppendHtmlWithChildRegionContens(content, projection, renderingPageModel);
             }
 
             stringBuilder.Append(content);
@@ -144,8 +148,10 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
         private string AppendHtmlWithChildRegionContens(string html, PageContentProjection projection, RenderPageViewModel pageModel)
         {
             // Render contents from children regions
-            var childRegionContents = projection.GetChildRegionContentProjections();
-            if (childRegionContents != null && projection.Content.ContentRegions != null)
+            var childRegionContents = projection.GetChildRegionContentProjections() ?? new List<PageContentProjection>();
+            if (projection.Content is IChildRegionContainer
+                && projection.Content.ContentRegions != null
+                && projection.Content.ContentRegions.Any())
             {
                 var stringBuilder = new StringBuilder(html);
                 var pageHtmlHelper = new PageHtmlRenderer(stringBuilder, pageModel);
