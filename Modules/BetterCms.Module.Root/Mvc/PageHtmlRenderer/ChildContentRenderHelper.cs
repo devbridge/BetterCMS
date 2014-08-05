@@ -9,6 +9,7 @@ using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.ViewModels.Content;
+using BetterCms.Module.Root.Views.Language;
 
 using HtmlAgilityPack;
 
@@ -44,20 +45,28 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
         {
             var content = projection.GetHtml(htmlHelper);
 
-            var childrenContents = projection.GetChildProjections();
-            if (childrenContents != null && childrenContents.Any())
+            var childrenContents = projection.GetChildProjections() ?? new List<ChildContentProjection>();
+            var parsedWidgets = ParseWidgetsFromHtml(content).Distinct();
+            
+            var availableWidgets = childrenContents.Where(cc => parsedWidgets.Any(id => id.AssignmentIdentifier == cc.AssignmentIdentifier));
+            foreach (var childProjection in availableWidgets)
             {
-                var parsedWidgets = ParseWidgetsFromHtml(content).Distinct();
-                var availableWidgets = childrenContents
-                    .Where(cc => parsedWidgets.Any(id => id.AssignmentIdentifier == cc.AssignmentIdentifier));
-                foreach (var childProjection in availableWidgets)
-                {
-                    var model = parsedWidgets.First(w => w.AssignmentIdentifier == childProjection.AssignmentIdentifier);
-                    var replaceWhat = model.Match.Value;
-                    var replaceWith = AppendHtml(new StringBuilder(), childProjection).ToString();
+                var model = parsedWidgets.First(w => w.AssignmentIdentifier == childProjection.AssignmentIdentifier);
+                var replaceWhat = model.Match.Value;
+                var replaceWith = AppendHtml(new StringBuilder(), childProjection).ToString();
 
-                    content = content.Replace(replaceWhat, replaceWith);
-                }
+                content = content.Replace(replaceWhat, replaceWith);
+            }
+            
+            // Widgets, which has no access (e.g. widgets with draft status for public users)
+            var invisibleWidgets = parsedWidgets.Where(id => childrenContents.All(cc => cc.AssignmentIdentifier != id.AssignmentIdentifier));
+            foreach (var model in invisibleWidgets)
+            {
+                var replaceWhat = model.Match.Value;
+                var replaceWith = string.Empty;
+
+                content = content.Replace(replaceWhat, replaceWith);
+
             }
 
             stringBuilder.Append(content);

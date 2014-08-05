@@ -10,6 +10,6 @@ namespace BetterCms.Module.Root.Services
 
         void ValidateChildContentsCircularReferences(Models.Content destination, Models.Content source);
 
-        void RetrieveChildrenContentsRecursively(IEnumerable<Models.Content> contents);
+        void RetrieveChildrenContentsRecursively(bool canManageContent, IEnumerable<Models.Content> contents);
     }
 }
