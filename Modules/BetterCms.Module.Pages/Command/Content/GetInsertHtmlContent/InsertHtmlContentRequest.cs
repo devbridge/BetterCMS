@@ -17,5 +17,13 @@
         /// The region identifier.
         /// </value>
         public string RegionId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the parent page content identifier.
+        /// </summary>
+        /// <value>
+        /// The parent page content identifier.
+        /// </value>
+        public string ParentPageContentId { get; set; }
     }
 }

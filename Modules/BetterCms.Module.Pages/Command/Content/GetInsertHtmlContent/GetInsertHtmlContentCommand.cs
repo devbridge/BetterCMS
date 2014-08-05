@@ -14,15 +14,18 @@ namespace BetterCms.Module.Pages.Command.Content.GetInsertHtmlContent
         public PageContentViewModel Execute(InsertHtmlContentRequest request)
         {
             var isMasterPage = Repository.First<Root.Models.Page>(request.PageId.ToGuidOrDefault()).IsMasterPage;
+            var parentPageContentId = request.ParentPageContentId != null ? request.ParentPageContentId.ToGuidOrDefault() : Guid.Empty;
+
             return new PageContentViewModel
-            {
-                PageId = Guid.Parse(request.PageId),
-                RegionId = Guid.Parse(request.RegionId),
-                LiveFrom = DateTime.Today,
-                EnableInsertDynamicRegion = isMasterPage,
-                EditInSourceMode = isMasterPage,
-                CanEditContent = true
-            };
+                {
+                    PageId = Guid.Parse(request.PageId),
+                    RegionId = Guid.Parse(request.RegionId),
+                    ParentPageContentId = parentPageContentId,
+                    LiveFrom = DateTime.Today,
+                    EnableInsertDynamicRegion = isMasterPage,
+                    EditInSourceMode = isMasterPage,
+                    CanEditContent = true
+                };
         }
     }
 }

@@ -13,6 +13,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 contentId: '#bcmsContentId',
                 contentVersion: '#bcmsPageContentVersion',
                 pageContentId: '#bcmsPageContentId',
+                parentPageContentId: '#bcmsParentPageContentId',
                 contentFormRegionId: '#bcmsContentToRegionId',
                 desirableStatus: '#bcmsContentDesirableStatus',
                 dataPickers: '.bcms-datepicker',
@@ -94,14 +95,14 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Open dialog with add new content form
         */
-        pagesContent.onAddNewContent = function(regionId) {
+        pagesContent.onAddNewContent = function(regionViewModel) {
             var editorId;
 
             modal.edit({
                 title: globalization.addNewContentDialogTitle,
                 disableSaveAndPublish: !security.IsAuthorized(["BcmsPublishContent"]),
                 onLoad: function (dialog) {
-                    var url = $.format(links.loadAddNewHtmlContentDialogUrl, bcms.pageId, regionId);
+                    var url = $.format(links.loadAddNewHtmlContentDialogUrl, bcms.pageId, regionViewModel.id, regionViewModel.parentPageContentId);
                     dynamicContent.bindDialog(dialog, url, {
                         contentAvailable: function (contentDialog, data) {
                             var editInSourceMode = false,
@@ -403,9 +404,10 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         */
         pagesContent.insertWidget = function (self, dialog) {
             var regionId = dialog.container.find(selectors.contentFormRegionId).val(),
+                parentPageContentId = dialog.container.find(selectors.parentPageContentId).val(),
                 widgetContainer = $(self).parents(selectors.widgetContainerBlock),
                 contentId = widgetContainer.data('originalId'),
-                url = $.format(links.insertContentToPageUrl, bcms.pageId, contentId, regionId);
+                url = $.format(links.insertContentToPageUrl, bcms.pageId, contentId, regionId, parentPageContentId);
 
             $.ajax({
                 type: 'POST',

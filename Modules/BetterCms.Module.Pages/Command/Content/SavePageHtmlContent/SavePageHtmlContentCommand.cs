@@ -109,6 +109,14 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                 pageContent.Page = Repository.AsProxy<Root.Models.Page>(model.PageId);
             }
             pageContent.Region = Repository.AsProxy<Region>(model.RegionId);
+            if (!model.ParentPageContentId.HasDefaultValue())
+            {
+                pageContent.Parent = Repository.AsProxy<PageContent>(model.ParentPageContentId);
+            }
+            else
+            {
+                pageContent.Parent = null;
+            }
 
             var contentToSave = new HtmlContent
                 {

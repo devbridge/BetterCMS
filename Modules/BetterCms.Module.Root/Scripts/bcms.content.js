@@ -288,10 +288,8 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
     */
     content.initRegionEvents = function (regionViewModel) {
 
-        var regionId = regionViewModel.id;
-
         $(selectors.regionAddContentButtons, regionViewModel.overlay).on('click', function () {
-            bcms.trigger(bcms.events.addPageContent, regionId);
+            bcms.trigger(bcms.events.addPageContent, regionViewModel);
         });
 
         $(selectors.regionSortButtons, regionViewModel.overlay).on('click', function () {

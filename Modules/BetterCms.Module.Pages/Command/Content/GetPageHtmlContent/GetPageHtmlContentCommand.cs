@@ -45,6 +45,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageHtmlContent
                                                 Id = pageContent.Id,
                                                 PageId = pageContent.Page.Id,
                                                 RegionId = pageContent.Region.Id,
+                                                ParentPageContentId = pageContent.Parent != null ? pageContent.Parent.Id : Guid.Empty,
                                                 ContentId = pageContent.Content.Id,
                                                 ContentName = content.Name,
                                                 LiveFrom = content.ActivationDate,

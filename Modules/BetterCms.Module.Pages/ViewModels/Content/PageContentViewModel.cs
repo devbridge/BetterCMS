@@ -9,7 +9,7 @@ using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Mvc.Attributes;
 using BetterCms.Module.Pages.ViewModels.Widgets;
-using BetterCms.Module.Root.ViewModels.Option;
+
 using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.Pages.ViewModels.Content
@@ -95,6 +95,14 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// The region id.
         /// </value>
         public Guid RegionId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the parent page content identifier.
+        /// </summary>
+        /// <value>
+        /// The parent page content identifier.
+        /// </value>
+        public Guid ParentPageContentId { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the page content.

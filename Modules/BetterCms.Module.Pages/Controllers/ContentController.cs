@@ -41,19 +41,23 @@ namespace BetterCms.Module.Pages.Controllers
         /// <param name="pageId">The page id.</param>
         /// <param name="contentId">The widget id.</param>
         /// <param name="regionId">The region id.</param>
+        /// <param name="parentPageContentId">The parent page content identifier.</param>
         /// <returns>
         /// Json with result status.
         /// </returns>
         [HttpPost]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
-        public ActionResult InsertContentToPage(string pageId, string contentId, string regionId)
+        public ActionResult InsertContentToPage(string pageId, string contentId, string regionId, string parentPageContentId)
         {
             var request = new InsertContentToPageRequest
-            {
-                ContentId = contentId.ToGuidOrDefault(),
-                PageId = pageId.ToGuidOrDefault(),
-                RegionId = regionId.ToGuidOrDefault()
-            };
+                {
+                    ContentId = contentId.ToGuidOrDefault(),
+                    PageId = pageId.ToGuidOrDefault(),
+                    RegionId = regionId.ToGuidOrDefault(),
+                    ParentPageContentId = (!string.IsNullOrWhiteSpace(parentPageContentId)) 
+                        ? parentPageContentId.ToGuidOrDefault() 
+                        : (System.Guid?) null
+                };
 
             if (GetCommand<InsertContentToPageCommand>().ExecuteCommand(request))
             {
@@ -107,14 +111,21 @@ namespace BetterCms.Module.Pages.Controllers
         /// </summary>
         /// <param name="pageId">The page id.</param>
         /// <param name="regionId">The region id.</param>
+        /// <param name="parentPageContentId">The parent page content identifier.</param>
         /// <returns>
         /// ViewResult to render add page content modal dialog.
         /// </returns>
         [HttpGet]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
-        public ActionResult AddPageHtmlContent(string pageId, string regionId)
+        public ActionResult AddPageHtmlContent(string pageId, string regionId, string parentPageContentId)
         {
-            var model = GetCommand<GetInsertHtmlContentCommand>().ExecuteCommand(new InsertHtmlContentRequest() { PageId = pageId, RegionId = regionId });
+            var addRequest = new InsertHtmlContentRequest
+                    {
+                        PageId = pageId, 
+                        RegionId = regionId, 
+                        ParentPageContentId = parentPageContentId
+                    };
+            var model = GetCommand<GetInsertHtmlContentCommand>().ExecuteCommand(addRequest);
 
             if (model != null)
             {

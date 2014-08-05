@@ -22,6 +22,7 @@
                 @Html.Partial("Partial/EditHtmlContent", Model)                  
                 @Html.HiddenFor(model => model.Id, new { @id = "bcmsPageContentId"})
                 @Html.HiddenFor(model => model.ContentId, new { @id = "bcmsContentId"})
+                @Html.HiddenFor(model => model.ParentPageContentId, new { @id = "bcmsParentPageContentId" })
                 @Html.HiddenFor(model => model.PageId)
                 @Html.HiddenFor(model => model.RegionId, new { @id = "bcmsContentToRegionId" })
                 @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status"})
