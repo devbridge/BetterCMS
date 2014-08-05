@@ -33,11 +33,6 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
         /// </summary>
         public const string WidgetAssignmentIdAttributeName = "data-assign-id";
 
-        /// <summary>
-        /// The widget's attribute's which identifies creating attribute, name
-        /// </summary>
-        public const string WidgetIsNewAttributeName = "data-is-new";
-
         private readonly HtmlHelper htmlHelper;
 
         public ChildContentRenderHelper(HtmlHelper htmlHelper)
@@ -122,26 +117,6 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
             }
 
             return result;
-        }
-
-        public static string RemoveIsNewAttribute(string html, ChildContentModel model)
-        {
-            var isNewAttribute = model.WidgetHtmlNode.Attributes.FirstOrDefault(a => a.Name == WidgetIsNewAttributeName);
-            if (isNewAttribute != null)
-            {
-                model.WidgetHtmlNode.Attributes.Remove(isNewAttribute);
-                
-                var replaceWhat = model.Match.Value;
-                var replaceWith = model.WidgetHtmlNode.OuterHtml;
-
-                int pos = html.IndexOf(replaceWhat, StringComparison.InvariantCulture);
-                if (pos >= 0)
-                {
-                    html = string.Concat(html.Substring(0, pos), replaceWith, html.Substring(pos + replaceWhat.Length));
-                }
-            }
-
-            return html;
         }
     }
 }
