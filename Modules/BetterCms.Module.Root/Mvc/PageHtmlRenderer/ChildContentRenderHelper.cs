@@ -47,24 +47,30 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
 
         public StringBuilder AppendHtml(StringBuilder stringBuilder, PageContentProjection projection, RenderPageViewModel pageModel)
         {
-            // Get HTML from projection
             var content = projection.GetHtml(htmlHelper);
 
-            // Render children contents
-            var childrenContents = projection.GetChildProjections();
-            if (childrenContents != null && childrenContents.Any())
-            {
-                var parsedWidgets = ParseWidgetsFromHtml(content).Distinct();
-                var availableWidgets = childrenContents
-                    .Where(cc => parsedWidgets.Any(id => id.AssignmentIdentifier == cc.AssignmentIdentifier));
-                foreach (var childProjection in availableWidgets)
-                {
-                    var model = parsedWidgets.First(w => w.AssignmentIdentifier == childProjection.AssignmentIdentifier);
-                    var replaceWhat = model.Match.Value;
-                    var replaceWith = AppendHtml(new StringBuilder(), childProjection, pageModel).ToString();
+            var childrenContents = projection.GetChildProjections() ?? new List<ChildContentProjection>();
+            var parsedWidgets = ParseWidgetsFromHtml(content).Distinct();
 
-                    content = content.Replace(replaceWhat, replaceWith);
-                }
+            var availableWidgets = childrenContents.Where(cc => parsedWidgets.Any(id => id.AssignmentIdentifier == cc.AssignmentIdentifier));
+            foreach (var childProjection in availableWidgets)
+            {
+                var model = parsedWidgets.First(w => w.AssignmentIdentifier == childProjection.AssignmentIdentifier);
+                var replaceWhat = model.Match.Value;
+                var replaceWith = AppendHtml(new StringBuilder(), childProjection, pageModel).ToString();
+
+                content = content.Replace(replaceWhat, replaceWith);
+            }
+
+            // Widgets, which has no access (e.g. widgets with draft status for public users)
+            var invisibleWidgets = parsedWidgets.Where(id => childrenContents.All(cc => cc.AssignmentIdentifier != id.AssignmentIdentifier));
+            foreach (var model in invisibleWidgets)
+            {
+                var replaceWhat = model.Match.Value;
+                var replaceWith = string.Empty;
+
+                content = content.Replace(replaceWhat, replaceWith);
+
             }
 
             // Add child contents in the master page to child region is possible only if content is widget.

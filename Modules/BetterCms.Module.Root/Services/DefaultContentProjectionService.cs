@@ -116,8 +116,10 @@ namespace BetterCms.Module.Root.Services
                 foreach (var child in children.Where(c => !c.Child.IsDeleted).Distinct())
                 {
                     var childProjection = (ChildContentProjection)CreatePageContentProjection(canManageContent, pageContent, allPageContents, child, previewPageContentId);
-
-                    childProjections.Add(childProjection);
+                    if (childProjection != null)
+                    {
+                        childProjections.Add(childProjection);
+                    }
                 }
             }
             else
