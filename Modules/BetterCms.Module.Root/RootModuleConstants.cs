@@ -78,7 +78,7 @@
         /// <summary>
         /// The regex pattern for to find all dynamic regions in the content
         /// </summary>
-        public const string DynamicRegionRegexPattern = "{{DYNAMIC_REGION\\:([a-zA-Z0-9]{8}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{4}\\-[a-zA-Z0-9]{12})}}";
+        public const string DynamicRegionRegexPattern = "{{DYNAMIC_REGION\\:([a-zA-Z0-9\\-_]{1,200})}}";
 
         /// <summary>
         /// Module permissions.
