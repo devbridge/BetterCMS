@@ -44,7 +44,9 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             contentEnd: 'bcms-content-end',
             regionSortOverlay: 'bcms-show-overlay',
             masterPagesPathToggler: 'bcms-path-toggler',
-            masterPagesPathInactiveArrow: 'bcms-path-arrow-inactive'
+            masterPagesPathInactiveArrow: 'bcms-path-arrow-inactive',
+            masterPagesPathItem: 'bcms-layout-path-item',
+            masterPagesPathChildContentItem: 'bcms-layout-path-child-content'
         },
         keys = {
             showMasterPagesPath: 'bcms.showMasterPagesPath',
@@ -56,7 +58,8 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         links = {},
         globalization = {
             showMasterPagesPath: null,
-            hideMasterPagesPath: null
+            hideMasterPagesPath: null,
+            currentPage: null
         },
         pageViewModel,
         opacityAnimationSpeed = 50,
@@ -545,10 +548,6 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
     function recalculateParentContentOverlays() {
 
-        if (pageViewModel.currentParentContent == null) {
-            return;
-        }
-
         var parentContent = pageViewModel.currentParentContent,
             maxWidth = 10000,
             maxHeight = 10000,
@@ -556,6 +555,20 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             rightOverlay = getParentContentOverlay('bcms-parent-content-right-overlay'),
             topOverlay = getParentContentOverlay('bcms-parent-content-top-overlay'),
             bottomOverlay = getParentContentOverlay('bcms-parent-content-bottom-overlay');
+
+        if (parentContent == null) {
+            leftOverlay.hide();
+            rightOverlay.hide();
+            topOverlay.hide();
+            bottomOverlay.hide();
+
+            return;
+        } else {
+            leftOverlay.show();
+            rightOverlay.show();
+            topOverlay.show();
+            bottomOverlay.show();
+        }
 
         // Left
         leftOverlay.css('top', 0);
@@ -629,8 +642,16 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
             content.refreshRegionsPosition();
             content.refreshContentsPosition();
+
             if (masterPagesModel != null) {
                 masterPagesModel.calculatePathPositions();
+                masterPagesModel.addParentContent(self.title, function() {
+                    pageViewModel.currentParentContent = self;
+
+                    content.refreshRegionsPosition();
+                    content.refreshContentsPosition();
+                    recalculateParentContentOverlays();
+                });
             }
 
             recalculateParentContentOverlays();
@@ -697,7 +718,6 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             allContents = [],
             allRegions = [],
             regionId,
-            contentId,
             pageContentId,
             currentContent,
             currentRegion,
@@ -768,6 +788,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
         // TODO: remove after tests
         window.cms.page = pageViewModel;
+        window.cms.path = masterPagesModel;
 
         var tags = $(selectors.regionsAndContents).toArray();
         collectRegionsAndContents(tags, 0);
@@ -869,14 +890,19 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
     function MasterPagesPathModel() {
         var self = this,
             pathContainer = $(selectors.masterPagesPathContainer),
-            hasPath = pathContainer.length > 0,
+            innerContainer = pathContainer.find(selectors.masterPagesPathInnerContainer),
             handle = pathContainer.find(selectors.masterPagesPathHandler),
             leftSlider = pathContainer.find(selectors.masterPagesPathSliderLeft),
             rightSlider = pathContainer.find(selectors.masterPagesPathSliderRight),
             items = [],
             currentItem = 0,
-            maxItem = 0;
+            maxItem = 0,
+            currentPage = null;
        
+        function hasPath() {
+            return items.length > 0;
+        }
+
         function getPathVisibility() {
             var showPage = localStorage.getItem(keys.showMasterPagesPath);
             
@@ -886,7 +912,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             }
             
             return showPage;
-        };
+        }
 
         function setPathVisibility(isVisible) {
             localStorage.setItem(keys.showMasterPagesPath, isVisible);
@@ -898,7 +924,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 pathContainer.addClass(classes.masterPagesPathToggler);
                 handle.html(globalization.showMasterPagesPath);
             }
-        };
+        }
 
         function onHandleClick() {
             if (pathContainer.hasClass(classes.masterPagesPathToggler)) {
@@ -906,7 +932,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             } else {
                 setPathVisibility(0);
             }
-        };
+        }
 
         function slide(step) {
             var itemNr = currentItem + step,
@@ -953,11 +979,16 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         }
         
         function slideToTheFirstParent() {
-            var width = pathContainer.find(selectors.masterPagesPathInnerContainer).width(),
+            if (!hasPath()) {
+                return;
+            }
+
+            var width = innerContainer.width(),
                 length = items.length,
                 sum = items[length - 1].element.outerWidth(),
                 i,
-                slidesToLeave = 0;
+                slidesToLeave = 0,
+                step;
 
             for (i = length - 2; i >= 0; i--) {
                 sum += items[i].element.outerWidth();
@@ -969,11 +1000,26 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
             maxItem = length - 1 - slidesToLeave;
             bcms.logger.trace('Slide to: ' + maxItem);
-            slide(maxItem);
+            step = maxItem - currentItem;
+            if (step > 0) {
+                slide(step);
+            }
+        }
+
+        function redraw() {
+            if (!hasPath()) {
+                pathContainer.hide();
+
+                return;
+            } else {
+                pathContainer.show();
+            }
+
+            self.calculatePathPositions();
         }
 
         self.calculatePathPositions = function () {
-            if (!hasPath) {
+            if (!hasPath()) {
                 return;
             }
 
@@ -992,14 +1038,6 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         };
 
         self.initialize = function () {
-            if (!hasPath) {
-                return;
-            }
-            
-            setPathVisibility(getPathVisibility());
-            handle.on('click', onHandleClick);
-            pathContainer.show();
-            
             pathContainer.find(selectors.masterPagesPathItem).each(function (index) {
                 var item = $(this),
                     html = item.html();
@@ -1018,15 +1056,72 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 });
             });
 
+            setPathVisibility(getPathVisibility());
+            handle.on('click', onHandleClick);
+
             leftSlider.on('click', function () {
                 slide(-1);
             });
             rightSlider.on('click', function () {
                 slide(1);
             });
-            
-            self.calculatePathPositions();
+
+            redraw();
             slideToTheFirstParent();
+        };
+
+        self.addParentContent = function (title, onClick) {
+
+            if (currentPage == null) {
+                currentPage = true;
+
+                currentPage = self.addParentContent(globalization.currentPage, function() {
+                    items.pop();
+                    currentPage.remove();
+                    currentPage = null;
+
+                    pageViewModel.currentParentContent = null;
+
+                    content.refreshRegionsPosition();
+                    content.refreshContentsPosition();
+                    recalculateParentContentOverlays();
+                });
+            }
+
+            var div = $('<div></div>'),
+                index = items.length,
+                model = new PathViewModel(div, index);
+
+            div.addClass(classes.masterPagesPathItem);
+            div.addClass(classes.masterPagesPathChildContentItem);
+            div.html(title);
+            div.data('index', index);
+
+            div.on('click', function() {
+                var currentItemIndex = $(this).data('index'),
+                    total = items.length,
+                    i,
+                    item;
+
+                for (i = currentItemIndex + 1; i < total; i++) {
+                    item = items.pop();
+                    item.element.remove();
+
+                    if ($.isFunction(onClick)) {
+                        onClick();
+                    }
+
+                    redraw();
+                }
+            });
+
+            innerContainer.append(div);
+            items.push(model);
+
+            redraw();
+            slideToTheFirstParent();
+
+            return div;
         };
 
         return self;

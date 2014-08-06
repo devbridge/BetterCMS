@@ -763,6 +763,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current page.
+        /// </summary>
+        public static string MasterPagesPath_CurrentPage_Title {
+            get {
+                return ResourceManager.GetString("MasterPagesPath_CurrentPage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hide Path.
         /// </summary>
         public static string MasterPagesPath_HidePath_Button {

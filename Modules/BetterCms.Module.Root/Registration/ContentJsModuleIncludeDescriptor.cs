@@ -24,7 +24,8 @@ namespace BetterCms.Module.Root.Registration
             Globalization = new IActionProjection[]
                 {              
                     new JavaScriptModuleGlobalization(this, "showMasterPagesPath", () => RootGlobalization.MasterPagesPath_ShowPath_Button),        
-                    new JavaScriptModuleGlobalization(this, "hideMasterPagesPath", () => RootGlobalization.MasterPagesPath_HidePath_Button)        
+                    new JavaScriptModuleGlobalization(this, "hideMasterPagesPath", () => RootGlobalization.MasterPagesPath_HidePath_Button),
+                    new JavaScriptModuleGlobalization(this, "currentPage", () => RootGlobalization.MasterPagesPath_CurrentPage_Title)
                 };
         }
     }

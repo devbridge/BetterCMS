@@ -603,4 +603,7 @@
   <data name="Authentication_ViewAsPublic_Public" xml:space="preserve">
     <value>Anonymous</value>
   </data>
+  <data name="MasterPagesPath_CurrentPage_Title" xml:space="preserve">
+    <value>Current page</value>
+  </data>
 </root>
