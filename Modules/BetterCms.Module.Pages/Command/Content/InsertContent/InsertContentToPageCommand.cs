@@ -29,7 +29,7 @@ namespace BetterCms.Module.Pages.Command.Content.InsertContent
             var content = Repository.AsProxy<Root.Models.Content>(request.ContentId);
             
             PageContent parentPageContent = null;
-            if (request.ParentPageContentId.HasValue)
+            if (request.ParentPageContentId.HasValue && !request.ParentPageContentId.Value.HasDefaultValue())
             {
                 parentPageContent = Repository.AsProxy<PageContent>(request.ParentPageContentId.Value);
             }
