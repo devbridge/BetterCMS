@@ -331,7 +331,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             var pageContents = pageContentsQuery.ToList();
 
-            childContentService.RetrieveChildrenContentsRecursively(pageContents.Select(pc => pc.Content).Distinct().ToList());
+            childContentService.RetrieveChildrenContentsRecursively(request.CanManageContent, pageContents.Select(pc => pc.Content).Distinct().ToList());
 
             return pageContents;
         }

@@ -4,12 +4,15 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
 
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
+
+using FluentNHibernate.Utils;
 
 namespace BetterCms.Module.Root.Services
 {
@@ -231,9 +234,17 @@ namespace BetterCms.Module.Root.Services
             }
         }
 
-        public void RetrieveChildrenContentsRecursively(IEnumerable<Models.Content> contents)
+        public void RetrieveChildrenContentsRecursively(bool canManageContent, IEnumerable<Models.Content> contents)
         {
-            var childContents = contents.Where(c => c.ChildContents != null).SelectMany(c => c.ChildContents).ToList();
+            // Check if all child contents are OK
+            var allContentsWithChildren = contents.Where(c => c.ChildContents != null).ToList();
+            allContentsWithChildren.ForEach(
+                    content =>
+                    {
+                        content.ChildContents = RetrieveCorrectVersionsOfChildContents(content.ChildContents, canManageContent);
+                    });
+
+            var childContents = allContentsWithChildren.SelectMany(c => c.ChildContents).Distinct().ToList();
             if (childContents.Any())
             {
                 var childIds = childContents.Where(c => !c.Child.IsDeleted).Select(c => c.Child.Id).Distinct().ToArray();
@@ -241,6 +252,7 @@ namespace BetterCms.Module.Root.Services
                 {
                     return;
                 }
+                
                 var entities = repository
                     .AsQueryable<ChildContent>(c => childIds.Contains(c.Parent.Id))
                     .Fetch(c => c.Child)
@@ -248,20 +260,61 @@ namespace BetterCms.Module.Root.Services
                     .ThenFetch(cc => cc.Child)
                     .FetchMany(c => c.Options)
                     .ToList();
-
-                childContents.ForEach(c =>
-                {
-                    if (c.Child.ChildContents == null)
+                
+                entities = RetrieveCorrectVersionsOfChildContents(entities, canManageContent);
+                childContents.ForEach(
+                    c =>
                     {
-                        c.Child.ChildContents = new List<ChildContent>();
-                    }
-                    c.Child.ChildContents.Clear();
+                        if (c.Child.ChildContents == null)
+                        {
+                            c.Child.ChildContents = new List<ChildContent>();
+                        }
+                        c.Child.ChildContents.Clear();
 
-                    entities.Where(e => e.Parent.Id == c.Child.Id).ToList().ForEach(c.Child.ChildContents.Add);
-                });
+                        if (entities.Any())
+                        {
+                            entities.Where(e => e.Parent.Id == c.Child.Id).ToList().ForEach(c.Child.ChildContents.Add);
+                        }
+                    });
 
-                RetrieveChildrenContentsRecursively(entities.Select(c => c.Child).Distinct().ToList());
+                if (entities.Any())
+                {
+                    RetrieveChildrenContentsRecursively(canManageContent, entities.Select(c => c.Child).Distinct().ToList());
+                }
             }
+        }
+
+        private List<ChildContent> RetrieveCorrectVersionsOfChildContents(IList<ChildContent> childContents, bool canManageContent)
+        {
+            if (childContents == null)
+            {
+                return new List<ChildContent>();
+            }
+
+            if (canManageContent)
+            {
+                return childContents.ToList();
+            }
+
+            var visibleChildContents = new List<ChildContent>(childContents.Count);
+            foreach (var childContent in childContents)
+            {
+                if (childContent.Child.Status == ContentStatus.Draft)
+                {
+                    if (childContent.Child.Original != null && childContent.Child.Original.Status == ContentStatus.Published)
+                    {
+                        childContent.Child = childContent.Child.Original;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+
+                visibleChildContents.Add(childContent);
+            }
+
+            return visibleChildContents;
         }
     }
 }

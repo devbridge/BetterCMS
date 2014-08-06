@@ -104,7 +104,7 @@ namespace BetterCms.Module.Pages.Services
                 DemandAccess(user, RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent);
             }
 
-            childContentService.RetrieveChildrenContentsRecursively(new[] { pageContent.Content });
+            childContentService.RetrieveChildrenContentsRecursively(true, new[] { pageContent.Content });
 
             var contentProjection = contentProjectionService.CreatePageContentProjection(true, pageContent);
 

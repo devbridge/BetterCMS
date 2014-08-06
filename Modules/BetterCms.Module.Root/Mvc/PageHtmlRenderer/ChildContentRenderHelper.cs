@@ -9,6 +9,7 @@ using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.ViewModels.Content;
+using BetterCms.Module.Root.Views.Language;
 
 using HtmlAgilityPack;
 
@@ -33,11 +34,6 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
         /// </summary>
         public const string WidgetAssignmentIdAttributeName = "data-assign-id";
 
-        /// <summary>
-        /// The widget's attribute's which identifies creating attribute, name
-        /// </summary>
-        public const string WidgetIsNewAttributeName = "data-is-new";
-
         private readonly HtmlHelper htmlHelper;
 
         public ChildContentRenderHelper(HtmlHelper htmlHelper)
@@ -49,20 +45,28 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
         {
             var content = projection.GetHtml(htmlHelper);
 
-            var childrenContents = projection.GetChildProjections();
-            if (childrenContents != null && childrenContents.Any())
+            var childrenContents = projection.GetChildProjections() ?? new List<ChildContentProjection>();
+            var parsedWidgets = ParseWidgetsFromHtml(content).Distinct();
+            
+            var availableWidgets = childrenContents.Where(cc => parsedWidgets.Any(id => id.AssignmentIdentifier == cc.AssignmentIdentifier));
+            foreach (var childProjection in availableWidgets)
             {
-                var parsedWidgets = ParseWidgetsFromHtml(content).Distinct();
-                var availableWidgets = childrenContents
-                    .Where(cc => parsedWidgets.Any(id => id.AssignmentIdentifier == cc.AssignmentIdentifier));
-                foreach (var childProjection in availableWidgets)
-                {
-                    var model = parsedWidgets.First(w => w.AssignmentIdentifier == childProjection.AssignmentIdentifier);
-                    var replaceWhat = model.Match.Value;
-                    var replaceWith = AppendHtml(new StringBuilder(), childProjection).ToString();
+                var model = parsedWidgets.First(w => w.AssignmentIdentifier == childProjection.AssignmentIdentifier);
+                var replaceWhat = model.Match.Value;
+                var replaceWith = AppendHtml(new StringBuilder(), childProjection).ToString();
 
-                    content = content.Replace(replaceWhat, replaceWith);
-                }
+                content = content.Replace(replaceWhat, replaceWith);
+            }
+            
+            // Widgets, which has no access (e.g. widgets with draft status for public users)
+            var invisibleWidgets = parsedWidgets.Where(id => childrenContents.All(cc => cc.AssignmentIdentifier != id.AssignmentIdentifier));
+            foreach (var model in invisibleWidgets)
+            {
+                var replaceWhat = model.Match.Value;
+                var replaceWith = string.Empty;
+
+                content = content.Replace(replaceWhat, replaceWith);
+
             }
 
             stringBuilder.Append(content);
@@ -122,26 +126,6 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
             }
 
             return result;
-        }
-
-        public static string RemoveIsNewAttribute(string html, ChildContentModel model)
-        {
-            var isNewAttribute = model.WidgetHtmlNode.Attributes.FirstOrDefault(a => a.Name == WidgetIsNewAttributeName);
-            if (isNewAttribute != null)
-            {
-                model.WidgetHtmlNode.Attributes.Remove(isNewAttribute);
-                
-                var replaceWhat = model.Match.Value;
-                var replaceWith = model.WidgetHtmlNode.OuterHtml;
-
-                int pos = html.IndexOf(replaceWhat, StringComparison.InvariantCulture);
-                if (pos >= 0)
-                {
-                    html = string.Concat(html.Substring(0, pos), replaceWith, html.Substring(pos + replaceWhat.Length));
-                }
-            }
-
-            return html;
         }
     }
 }

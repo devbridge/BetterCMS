@@ -64,11 +64,12 @@ namespace BetterCms.Module.Blog.Commands.GetTemplatesList
                 .TransformUsing(Transformers.AliasToBean<BlogTemplateViewModel>())
                 .List<BlogTemplateViewModel>();
 
+            var mainContentIdentifier = BlogModuleConstants.BlogPostMainContentRegionIdentifier.ToLowerInvariant();
             var compatibleLayouts = Repository.AsQueryable<Layout>()
                       .Where(
                           layout =>
                           layout.LayoutRegions.Count(region => !region.IsDeleted && !region.Region.IsDeleted).Equals(1)
-                          || layout.LayoutRegions.Any(region => !region.IsDeleted && !region.Region.IsDeleted && region.Region.RegionIdentifier == BlogModuleConstants.BlogPostMainContentRegionIdentifier))
+                          || layout.LayoutRegions.Any(region => !region.IsDeleted && !region.Region.IsDeleted && region.Region.RegionIdentifier.ToLowerInvariant() == mainContentIdentifier))
                       .Select(layout => layout.Id)
                       .ToList();
 
@@ -101,7 +102,7 @@ namespace BetterCms.Module.Blog.Commands.GetTemplatesList
             masterPagesQuery
                 .Select(
                     page =>
-                    new BlogTemplateViewModel()
+                    new BlogTemplateViewModel
                         {
                             TemplateId = page.Id,
                             Title = page.Title,
@@ -111,15 +112,16 @@ namespace BetterCms.Module.Blog.Commands.GetTemplatesList
                                     : page.FeaturedImage != null ? page.FeaturedImage.PublicUrl : page.SecondaryImage != null ? page.SecondaryImage.PublicUrl : null,
                             IsMasterPage = true,
                             IsCompatible =
-                                page.PageContents.Count(
-                                    pageContnet =>
-                                    !pageContnet.IsDeleted && !pageContnet.Content.IsDeleted
-                                    && pageContnet.Content.ContentRegions.Any(contentRegion => !contentRegion.IsDeleted && !contentRegion.Region.IsDeleted)).Equals(1)
-                                && page.PageContents.Count(
-                                    pageContnet =>
-                                    !pageContnet.IsDeleted && !pageContnet.Content.IsDeleted
-                                    && pageContnet.Content.ContentRegions.Count(contentRegion => !contentRegion.IsDeleted && !contentRegion.Region.IsDeleted).Equals(1))
-                                        .Equals(1)
+                                page.PageContents.Count(pageContent =>
+                                    !pageContent.IsDeleted && !pageContent.Content.IsDeleted
+                                        && pageContent.Content.ContentRegions.Count(contentRegion => !contentRegion.IsDeleted && !contentRegion.Region.IsDeleted
+                                            && contentRegion.Region.RegionIdentifier.ToLowerInvariant() == mainContentIdentifier).Equals(1)
+                                ).Equals(1)
+
+                                || page.PageContents.Count(pageContent => 
+                                    !pageContent.IsDeleted && !pageContent.Content.IsDeleted 
+                                        && pageContent.Content.ContentRegions.Count(contentRegion => !contentRegion.IsDeleted && !contentRegion.Region.IsDeleted).Equals(1)
+                                ).Equals(1)
                         })
                 .ToList()
                 .ForEach(templates.Add);

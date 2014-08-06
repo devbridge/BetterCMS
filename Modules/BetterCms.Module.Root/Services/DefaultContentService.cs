@@ -425,19 +425,20 @@ namespace BetterCms.Module.Root.Services
 
             if (regionIdentifiers.Length > 0)
             {
+                var regionIdentifiersLower = regionIdentifiers.Select(s => s.ToLowerInvariant()).ToArray();
                 var existingRegions = repository
                     .AsQueryable<Region>()
-                    .Where(r => regionIdentifiers.Contains(r.RegionIdentifier))
+                    .Where(r => regionIdentifiersLower.Contains(r.RegionIdentifier.ToLowerInvariant()))
                     .ToArray();
 
                 foreach (var regionId in regionIdentifiers.Where(s => contentRegions.All(region => region.Region.RegionIdentifier != s)))
                 {
-                    var region = existingRegions.FirstOrDefault(r => r.RegionIdentifier == regionId);
+                    var region = existingRegions.FirstOrDefault(r => r.RegionIdentifier.ToLowerInvariant() == regionId.ToLowerInvariant());
 
                     if (region == null)
                     {
                         region = contentRegions
-                            .Where(cr => cr.Region.RegionIdentifier == regionId)
+                            .Where(cr => cr.Region.RegionIdentifier.ToLowerInvariant() == regionId.ToLowerInvariant())
                             .Select(cr => cr.Region).FirstOrDefault();
 
                         if (region == null)
@@ -491,7 +492,7 @@ namespace BetterCms.Module.Root.Services
 
             // Add regions, which not exists in destination.
             source.ContentRegions
-                .Where(s => destination.ContentRegions.All(d => s.Region.RegionIdentifier != d.Region.RegionIdentifier))
+                .Where(s => destination.ContentRegions.All(d => s.Region.RegionIdentifier.ToLowerInvariant() != d.Region.RegionIdentifier.ToLowerInvariant()))
                 .Distinct().ToList()
                 .ForEach(s =>
                              {
@@ -501,7 +502,7 @@ namespace BetterCms.Module.Root.Services
 
             // Remove regions, which not exists in source.
             destination.ContentRegions
-                .Where(s => source.ContentRegions.All(d => s.Region.RegionIdentifier != d.Region.RegionIdentifier))
+                .Where(s => source.ContentRegions.All(d => s.Region.RegionIdentifier.ToLowerInvariant() != d.Region.RegionIdentifier.ToLowerInvariant()))
                 .Distinct().ToList()
                 .ForEach(d => repository.Delete(d));
         }
@@ -518,12 +519,12 @@ namespace BetterCms.Module.Root.Services
         public bool CheckIfContentHasDeletingChildren(Guid pageId, Guid contentId, string html = null)
         {
             bool hasAnyContents = false;
-            var regionIdentifiers = GetRegionIds(html);
+            var regionIdentifiers = GetRegionIds(html).Select(s => s.ToLowerInvariant()).ToArray();
 
             // Get regions going to be deleted
             var regionIds = repository.AsQueryable<ContentRegion>()
                 .Where(cr => cr.Content.Id == contentId
-                    && !regionIdentifiers.Contains(cr.Region.RegionIdentifier))
+                    && !regionIdentifiers.Contains(cr.Region.RegionIdentifier.ToLowerInvariant()))
                 .Select(cr => cr.Region.Id)
                 .ToArray();
 

@@ -58,7 +58,7 @@
         df.addRules({
             elements: {
               div: function(el) {
-                var regexp = /^{{DYNAMIC_REGION\:([a-zA-Z0-9]{8}\-[a-zA-Z0-9]{4}\-[a-zA-Z0-9]{4}\-[a-zA-Z0-9]{4}\-[a-zA-Z0-9]{12})}}$/i;
+                var regexp = /^{{DYNAMIC_REGION\:([a-zA-Z0-9\-_]{1,200})}}$/i;
                 if (el.children.length == 1 && CKEDITOR.htmlParser.text.prototype.isPrototypeOf(el.children[0]) && regexp.test(el.children[0].value)) {
                   var f = e.createFakeParserElement(el, 'bcms-draggable-region', 'cmsdynamicregion', false);
                   f.attributes.title = 'Dynamic Region';
