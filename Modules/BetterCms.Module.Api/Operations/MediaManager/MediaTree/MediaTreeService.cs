@@ -113,6 +113,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
 
                                      ParentFolderId = media.Folder != null && !media.Folder.IsDeleted ? media.Folder.Id : (Guid?)null,
                                      Title = media.Title,
+                                     Description = media.Description,
                                      MediaContentType = media is MediaFolder 
                                                             ? (MediaContentType)((int)MediaContentType.Folder) 
                                                             : (MediaContentType)((int)MediaContentType.File),

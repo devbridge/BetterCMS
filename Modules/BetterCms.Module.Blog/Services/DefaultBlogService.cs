@@ -521,22 +521,37 @@ namespace BetterCms.Module.Blog.Services
             Guid regionId;
             if (layout != null)
             {
+                var regionIdentifier = RegionIdentifier.ToLowerInvariant();
                 regionId = layout.LayoutRegions.Count(layoutRegion => !layoutRegion.IsDeleted && !layoutRegion.Region.IsDeleted) == 1
                                    ? layout.LayoutRegions.First(layoutRegion => !layoutRegion.IsDeleted).Region.Id
                                    : layout.LayoutRegions.Where(
                                        layoutRegion =>
-                                       !layoutRegion.IsDeleted && !layoutRegion.Region.IsDeleted && layoutRegion.Region.RegionIdentifier == RegionIdentifier)
+                                       !layoutRegion.IsDeleted && !layoutRegion.Region.IsDeleted && layoutRegion.Region.RegionIdentifier.ToLowerInvariant() == regionIdentifier)
                                            .Select(layoutRegion => layoutRegion.Region.Id)
                                            .FirstOrDefault();
             }
             else
             {
                 var masterPageRef = masterPage;
-                regionId = repository.AsQueryable<PageContent>()
+                var results = repository.AsQueryable<PageContent>()
                           .Where(pageContent => pageContent.Page == masterPageRef)
                           .SelectMany(pageContent => pageContent.Content.ContentRegions)
-                          .Select(contentRegion => contentRegion.Region.Id)
-                          .FirstOrDefault();
+                          .Select(contentRegion => new { contentRegion.Region.Id, contentRegion.Region.RegionIdentifier })
+                          .ToList();
+                var mainContent = results.FirstOrDefault(r => r.RegionIdentifier.ToLowerInvariant() == RegionIdentifier.ToLowerInvariant());
+                if (mainContent == null)
+                {
+                    mainContent = results.FirstOrDefault();
+                }
+
+                if (mainContent != null)
+                {
+                    regionId = mainContent.Id;
+                }
+                else
+                {
+                    regionId = Guid.Empty;
+                }
             }
 
             if (regionId.HasDefaultValue())
@@ -555,11 +570,13 @@ namespace BetterCms.Module.Blog.Services
         /// <returns>Layout for blog post.</returns>
         private Layout GetFirstCompatibleLayout()
         {
+            var regionIdentifier = RegionIdentifier.ToLowerInvariant();
+
             return
                 repository.AsQueryable<Layout>()
                           .Where(layout =>
                               layout.LayoutRegions.Count(region => !region.IsDeleted && !region.Region.IsDeleted).Equals(1)
-                                || layout.LayoutRegions.Any(region => !region.IsDeleted && !region.Region.IsDeleted && region.Region.RegionIdentifier == RegionIdentifier))
+                                || layout.LayoutRegions.Any(region => !region.IsDeleted && !region.Region.IsDeleted && region.Region.RegionIdentifier.ToLowerInvariant() == regionIdentifier))
                           .FetchMany(layout => layout.LayoutRegions)
                           .ThenFetch(l => l.Region)
                           .ToList()

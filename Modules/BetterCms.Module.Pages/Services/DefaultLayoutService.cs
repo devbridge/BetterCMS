@@ -263,10 +263,10 @@ namespace BetterCms.Module.Pages.Services
                     foreach (var region in template.LayoutRegions)
                     {
                         var requestRegion = model.Regions != null
-                            ? model.Regions.FirstOrDefault(f => f.Identifier == region.Region.RegionIdentifier)
+                            ? model.Regions.FirstOrDefault(f => f.Identifier.ToLowerInvariant() == region.Region.RegionIdentifier.ToLowerInvariant())
                             : null;
 
-                        if (requestRegion != null && region.Region.RegionIdentifier == requestRegion.Identifier)
+                        if (requestRegion != null && region.Region.RegionIdentifier.ToLowerInvariant() == requestRegion.Identifier.ToLowerInvariant())
                         {
                             region.Description = requestRegion.Description;
                             repository.Save(region);

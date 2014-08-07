@@ -97,6 +97,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
                             LastModifiedOn = media.ModifiedOn,
 
                             Title = media.Title,
+                            Description = media.Description,
                             Caption = media is MediaImage ? ((MediaImage)media).Caption : null,
                             MediaContentType = media is MediaFolder 
                                                     ? (MediaContentType)((int)MediaContentType.Folder)

@@ -107,14 +107,11 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
         /// <summary>
         /// Replaces the given HTML within master page with region identifier.
         /// </summary>
-        /// <param name="regionId">The region id.</param>
+        /// <param name="regionIdentifier">The region id.</param>
         /// <param name="replaceWith">The replace with.</param>
-        /// <returns>
-        /// Replaced HTML
-        /// </returns>
-        public void ReplaceRegionHtml(string regionId, string replaceWith)
+        public void ReplaceRegionHtml(string regionIdentifier, string replaceWith)
         {
-            var replacement = string.Format(RootModuleConstants.DynamicRegionReplacePattern, regionId);
+            var replacement = string.Format(RootModuleConstants.DynamicRegionReplacePattern, regionIdentifier);
 
             stringBuilder = new StringBuilder(Regex.Replace(stringBuilder.ToString(), replacement, EscapeReplacement(replaceWith), RegexOptions.IgnoreCase));
         }

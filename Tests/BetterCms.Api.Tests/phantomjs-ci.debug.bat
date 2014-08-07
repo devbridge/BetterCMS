@@ -1,0 +1,1 @@
+phantomjs-ci.bat "http://localhost:55558/runner.html" logs
