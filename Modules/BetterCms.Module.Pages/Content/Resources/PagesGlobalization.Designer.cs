@@ -2590,15 +2590,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You are trying to delete dynamic regions. There are some children pages, which have contents created within these regions. If you delete this region, children page contens will be deleted also. Anyway, you can restore them by restoring archived version of current content. &lt;br /&gt;&lt;br /&gt;Are you sure you want to continue?.
-        /// </summary>
-        public static string SaveContent_ContentHasChildrenContents_RegionDeleteConfirmationMessage {
-            get {
-                return ResourceManager.GetString("SaveContent_ContentHasChildrenContents_RegionDeleteConfirmationMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Page is not a master, so dynamic regions are not allowed..
         /// </summary>
         public static string SaveContent_DynamicRegionsAreNotAllowed_Message {

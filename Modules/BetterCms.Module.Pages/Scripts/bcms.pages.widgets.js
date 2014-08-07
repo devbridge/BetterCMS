@@ -93,7 +93,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
                 editInSourceModeHiddenField: '#bcms-edit-in-source-mode',
 
-                widgetUsagesGrid: '#bcms-widget-usages-grid'
+                widgetUsagesGrid: '#bcms-widget-usages-grid',
+                userConfirmationHiddenField: '#bcms-user-confirmed-region-deletion'
             },
             classes = {
                 regionAdvancedContent: 'bcms-content-advanced',
@@ -199,6 +200,20 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         },
 
                         postSuccess: postSuccess,
+                    
+                        postError: function (json) {
+                            if (json.Data && json.Data.ConfirmationMessage) {
+                                modal.confirm({
+                                    content: json.Data.ConfirmationMessage,
+                                    onAccept: function () {
+                                        childDialog.container.find(selectors.userConfirmationHiddenField).val(true);
+                                        childDialog.submitForm();
+
+                                        return true;
+                                    }
+                                });
+                            }
+                        },
 
                         formSerialize: function (form) {
                             return widgets.serializeFormWithChildWidgetOptions(form, editorId);

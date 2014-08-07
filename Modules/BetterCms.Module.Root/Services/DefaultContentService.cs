@@ -8,8 +8,9 @@ using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.DataTier;
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Services;
-
+using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
@@ -516,7 +517,7 @@ namespace BetterCms.Module.Root.Services
         /// <returns>
         /// Boolean value, indicating, if content has any children contents, which are based on deleting regions
         /// </returns>
-        public bool CheckIfContentHasDeletingChildren(Guid pageId, Guid contentId, string html = null)
+        public bool CheckIfContentHasDeletingChildren(Guid? pageId, Guid contentId, string html = null)
         {
             bool hasAnyContents = false;
             var regionIdentifiers = GetRegionIds(html).Select(s => s.ToLowerInvariant()).ToArray();
@@ -530,12 +531,29 @@ namespace BetterCms.Module.Root.Services
 
             if (regionIds.Length > 0)
             {
-                hasAnyContents = repository
+                var validationQuery = repository
                     .AsQueryable<PageContent>()
-                    .Any(pc => pc.Page.MasterPage.Id == pageId && regionIds.Contains(pc.Region.Id));
+                    .Where(pc => regionIds.Contains(pc.Region.Id));
+                if (pageId.HasValue)
+                {
+                    validationQuery = validationQuery.Where(pc => pc.Page.MasterPage.Id == pageId);
+                }
+                
+                hasAnyContents = validationQuery.Any();
             }
 
             return hasAnyContents;
+        }
+
+        public void CheckIfContentHasDeletingChildrenWithException(Guid? pageId, Guid contentId, string html = null)
+        {
+            var hasAnyChildren = CheckIfContentHasDeletingChildren(pageId, contentId, html);
+            if (hasAnyChildren)
+            {
+                var message = RootGlobalization.SaveContent_ContentHasChildrenContents_RegionDeleteConfirmationMessage;
+                var logMessage = string.Format("User is trying to delete content regions which has children contents. Confirmation is required. ContentId: {0}, PageId: {1}", contentId, pageId);
+                throw new ConfirmationRequestException(() => message, logMessage);
+            }
         }
 
         public void UpdateDynamicContainer(Models.Content content)

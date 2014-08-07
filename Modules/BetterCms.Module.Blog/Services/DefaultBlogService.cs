@@ -436,14 +436,7 @@ namespace BetterCms.Module.Blog.Services
                     // Check if user has confirmed the deletion of content
                     if (!request.IsUserConfirmed && blogPost.IsMasterPage)
                     {
-                        var hasAnyChildren = contentService.CheckIfContentHasDeletingChildren(blogPost.Id, content.Id, request.Content);
-                        if (hasAnyChildren)
-                        {
-                            var message = PagesGlobalization.SaveContent_ContentHasChildrenContents_RegionDeleteConfirmationMessage;
-                            var logMessage = string.Format("User is trying to delete content regions which has children contents. Confirmation is required. ContentId: {0}, PageId: {1}",
-                                    content.Id, blogPost.Id);
-                            throw new ConfirmationRequestException(() => message, logMessage);
-                        }
+                        contentService.CheckIfContentHasDeletingChildrenWithException(blogPost.Id, content.Id, request.Content);
                     }
 
                     var bpRef = blogPost;

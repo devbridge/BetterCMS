@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
@@ -49,12 +50,14 @@ namespace BetterCms.Module.Pages.Command.Content.DeletePageContent
                                     .Fetch(f => f.Page)
                                     .FirstOne();
 
+            var htmlContainer = pageContent.Content as IDynamicContentContainer;
             var htmlContent = pageContent.Content as HtmlContent;
-            if (htmlContent != null)
+            if (htmlContainer != null)
             {
                 // Check if user has confirmed the deletion of content
-                if (!request.IsUserConfirmed && pageContent.Page.IsMasterPage)
+                if (!request.IsUserConfirmed)
                 {
+                    // TODO: need to validate !!!
                     var hasAnyChildren = contentService.CheckIfContentHasDeletingChildren(pageContent.Page.Id, pageContent.Content.Id);
                     if (hasAnyChildren)
                     {
@@ -65,15 +68,19 @@ namespace BetterCms.Module.Pages.Command.Content.DeletePageContent
                     }
                 }
 
-                var draft = pageContent.Content.History != null ? pageContent.Content.History.FirstOrDefault(c => c.Status == ContentStatus.Draft) : null;
-                if (draft != null)
+                // If content is HTML content, delete HTML content
+                if (htmlContent != null)
                 {
-                    Repository.Delete<HtmlContent>(draft.Id, request.ContentVersion);
-                    Repository.Delete<HtmlContent>(pageContent.Content.Id, pageContent.Content.Version);
-                }
-                else
-                {
-                    Repository.Delete<HtmlContent>(pageContent.Content.Id, request.ContentVersion);
+                    var draft = pageContent.Content.History != null ? pageContent.Content.History.FirstOrDefault(c => c.Status == ContentStatus.Draft) : null;
+                    if (draft != null)
+                    {
+                        Repository.Delete<HtmlContent>(draft.Id, request.ContentVersion);
+                        Repository.Delete<HtmlContent>(pageContent.Content.Id, pageContent.Content.Version);
+                    }
+                    else
+                    {
+                        Repository.Delete<HtmlContent>(pageContent.Content.Id, request.ContentVersion);
+                    }
                 }
             }
 

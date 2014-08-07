@@ -5,6 +5,7 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
+using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.DataTier;
@@ -138,6 +139,12 @@ namespace BetterCms.Module.Pages.Services
                 originalWidget = repository.FirstOrDefault<TEntity>(model.Id);
                 isCreatingNew = originalWidget == null;
                 createNewWithId = isCreatingNew && !model.Id.HasDefaultValue();
+            }
+
+            var dynamicContentContainer = widgetContent as IDynamicContentContainer;
+            if (dynamicContentContainer != null && !isCreatingNew && !model.IsUserConfirmed)
+            {
+                contentService.CheckIfContentHasDeletingChildrenWithException(null, widgetContent.Id, dynamicContentContainer.Html);
             }
 
             if (model.DesirableStatus == ContentStatus.Published)

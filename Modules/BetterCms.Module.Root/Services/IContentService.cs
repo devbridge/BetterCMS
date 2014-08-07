@@ -18,7 +18,9 @@ namespace BetterCms.Module.Root.Services
 
         void PublishDraftContent(Guid pageId);
 
-        bool CheckIfContentHasDeletingChildren(Guid pageId, Guid contentId, string html = null);
+        bool CheckIfContentHasDeletingChildren(Guid? pageId, Guid contentId, string html = null);
+
+        void CheckIfContentHasDeletingChildrenWithException(Guid? pageId, Guid contentId, string html = null);
 
         void UpdateDynamicContainer(Models.Content content);
     }
