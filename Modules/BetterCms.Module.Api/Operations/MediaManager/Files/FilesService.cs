@@ -131,6 +131,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
                             LastModifiedBy = media.ModifiedByUser,
                             LastModifiedOn = media.ModifiedOn,
                             Title = media.Title,
+                            Description = media.Description,
                             MediaContentType =
                                 media is MediaFolder ? (MediaContentType)((int)MediaContentType.Folder) : (MediaContentType)((int)MediaContentType.File),
                             FileExtension = media is MediaFile ? ((MediaFile)media).OriginalFileExtension : null,

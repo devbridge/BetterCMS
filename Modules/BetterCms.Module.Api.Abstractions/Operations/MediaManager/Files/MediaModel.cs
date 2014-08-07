@@ -20,6 +20,15 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
         public string Title { get; set; }
 
         /// <summary>
+        /// Gets or sets the description.
+        /// </summary>
+        /// <value>
+        /// The description.
+        /// </value>
+        [DataMember]
+        public string Description { get; set; }
+
+        /// <summary>
         /// Gets or sets the type of the media content.
         /// </summary>
         /// <value>
