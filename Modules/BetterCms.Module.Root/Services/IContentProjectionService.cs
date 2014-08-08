@@ -11,6 +11,7 @@ namespace BetterCms.Module.Root.Services
             bool canManageContent,
             PageContent pageContent,
             IChildContent childContent = null,
-            System.Guid? previewPageContentId = null);
+            System.Guid? previewPageContentId = null,
+            bool retrieveCorrectVersion = true);
     }
 }

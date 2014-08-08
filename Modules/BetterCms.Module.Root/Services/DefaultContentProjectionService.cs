@@ -29,50 +29,57 @@ namespace BetterCms.Module.Root.Services
             bool canManageContent,
             PageContent pageContent,
             IChildContent childContent = null,
-            Guid? previewPageContentId = null)
+            Guid? previewPageContentId = null, 
+            bool retrieveCorrectVersion = true)
         {
             Models.Content contentToProject = null;
             var content = childContent == null ? pageContent.Content : (Models.Content)childContent.ChildContent;
 
-            if (childContent == null
-                && previewPageContentId != null
-                && previewPageContentId.Value == pageContent.Id)
+            if (!retrieveCorrectVersion)
             {
-                // Looks for the preview content version first.
-                if (pageContent.Content.Status == ContentStatus.Preview)
-                {
-                    contentToProject = pageContent.Content;
-                }
-                else
-                {
-                    contentToProject = pageContent.Content.History.FirstOrDefault(f => f.Status == ContentStatus.Preview);
-                }
+                contentToProject = content;
             }
-
-            if (contentToProject == null && (canManageContent || previewPageContentId != null))
+            else
             {
-                // Look for the draft content version if we are in the edit or preview mode.
-                if (content.Status == ContentStatus.Draft)
+                if (childContent == null && previewPageContentId != null && previewPageContentId.Value == pageContent.Id)
                 {
+                    // Looks for the preview content version first.
+                    if (content.Status == ContentStatus.Preview)
+                    {
+                        contentToProject = content;
+                    }
+                    else
+                    {
+                        contentToProject = content.History.FirstOrDefault(f => f.Status == ContentStatus.Preview);
+                    }
+                }
+
+                if (contentToProject == null && (canManageContent || previewPageContentId != null))
+                {
+                    // Look for the draft content version if we are in the edit or preview mode.
+                    if (content.Status == ContentStatus.Draft)
+                    {
+                        contentToProject = content;
+                    }
+                    else
+                    {
+                        contentToProject = content.History.FirstOrDefault(f => f.Status == ContentStatus.Draft);
+                    }
+                }
+
+                if (contentToProject == null && content.Status == ContentStatus.Published)
+                {
+                    IHtmlContent htmlContent = content as IHtmlContent;
+                    if (!canManageContent && htmlContent != null
+                        && (DateTime.Now < htmlContent.ActivationDate || (htmlContent.ExpirationDate.HasValue && htmlContent.ExpirationDate.Value < DateTime.Now)))
+                    {
+                        // Invisible for user because of activation dates.
+                        return null;
+                    }
+
+                    // Otherwise take published version.
                     contentToProject = content;
                 }
-                else
-                {
-                    contentToProject = content.History.FirstOrDefault(f => f.Status == ContentStatus.Draft);
-                }
-            }
-
-            if (contentToProject == null && content.Status == ContentStatus.Published)
-            {
-                IHtmlContent htmlContent = content as IHtmlContent;
-                if (!canManageContent && htmlContent != null && (DateTime.Now < htmlContent.ActivationDate || (htmlContent.ExpirationDate.HasValue && htmlContent.ExpirationDate.Value < DateTime.Now)))
-                {
-                    // Invisible for user because of activation dates.
-                    return null;
-                }
-
-                // Otherwise take published version.
-                contentToProject = content;
             }
 
             if (contentToProject == null)
