@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 
 using BetterCms.Core.DataContracts;
@@ -141,6 +140,11 @@ namespace BetterCms.Module.Root.Models
             }
 
             return content;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0}, Name: {1}", base.ToString(), Name);
         }
     }
 }

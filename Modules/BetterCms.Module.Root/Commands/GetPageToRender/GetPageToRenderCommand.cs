@@ -313,14 +313,18 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             pageContentsQuery = pageContentsQuery
                 .Fetch(f => f.Content)
                 .ThenFetchMany(f => f.ContentOptions)
+
                 .FetchMany(f => f.Options)
+
                 .Fetch(f => f.Content)
                 .ThenFetchMany(f => f.ContentRegions)
                 .ThenFetch(f => f.Region)
+
                 // Fetch child contents
                 .Fetch(f => f.Content)
                 .ThenFetchMany(f => f.ChildContents)
-                .ThenFetch(f => f.Child);
+                .ThenFetch(f => f.Child)
+                .ThenFetch(f => f.Original);
 
             if (request.CanManageContent || request.PreviewPageContentId != null)
             {

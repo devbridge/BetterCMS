@@ -57,7 +57,6 @@ namespace BetterCms.Module.Pages.Command.Content.DeletePageContent
                 // Check if user has confirmed the deletion of content
                 if (!request.IsUserConfirmed)
                 {
-                    // TODO: need to validate !!!
                     var hasAnyChildren = contentService.CheckIfContentHasDeletingChildren(pageContent.Page.Id, pageContent.Content.Id);
                     if (hasAnyChildren)
                     {

@@ -2,9 +2,11 @@
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
-
+using BetterCms.Core.Services;
 using BetterCms.Module.Pages.Command.Content.DeletePageContent;
 using BetterCms.Module.Root.Services;
+
+using Moq;
 
 using NUnit.Framework;
 
@@ -35,7 +37,11 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                                   };
                 var unitOfWork = new DefaultUnitOfWork(session);
                 var repository = new DefaultRepository(unitOfWork);
-                var contentService = Container.Resolve<IContentService>();
+                var securityService = new Mock<ISecurityService>().Object;
+                var optionService = new Mock<IOptionService>().Object;
+                var childContentService = new Mock<IChildContentService>().Object;
+
+                var contentService = new DefaultContentService(securityService, repository, optionService, childContentService);
                 var command = new DeletePageContentCommand(contentService);
                 command.UnitOfWork = unitOfWork;
                 command.Repository = repository;

@@ -11,7 +11,6 @@ using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
-using BetterCms.Module.Pages.ViewModels.Content;
 
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;

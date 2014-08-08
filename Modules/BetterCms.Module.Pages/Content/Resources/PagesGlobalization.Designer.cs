@@ -2779,6 +2779,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You are trying to remove child widget which has children with dynamic regions. There are some children pages, which have contents created within these regions. If you delete this region, children page contents will be deleted also. &lt;br /&gt;&lt;br /&gt;Are you sure you want to continue?.
+        /// </summary>
+        public static string SaveWidget_ContentHasChildrenWidgetWithDynamicContents_ConfirmationMessage {
+            get {
+                return ResourceManager.GetString("SaveWidget_ContentHasChildrenWidgetWithDynamicContents_ConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Widget created succesfully..
         /// </summary>
         public static string SaveWidget_CreatedSuccessfully_Message {

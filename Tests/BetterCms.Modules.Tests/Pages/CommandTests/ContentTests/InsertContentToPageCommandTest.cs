@@ -31,6 +31,12 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
             var pageContent = TestDataProvider.CreateNewPageContent(widget, page, region);
             pageContent.Order = TestDataProvider.ProvideRandomNumber(1, 99999);
 
+            // Mock content Service
+            var contentService = new Mock<IContentService>();
+            contentService
+                .Setup(r => r.GetPageContentNextOrderNumber(It.IsAny<Guid>(), It.IsAny<Guid?>()))
+                .Returns(pageContent.Order + 1);
+
             // Mock
             var repository = new Mock<IRepository>();
             repository
@@ -50,7 +56,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                               });
 
             // Create command
-            var command = new InsertContentToPageCommand(new Mock<IContentService>().Object);
+            var command = new InsertContentToPageCommand(contentService.Object);
             command.UnitOfWork = new Mock<IUnitOfWork>().Object;
             command.Repository = repository.Object;
 

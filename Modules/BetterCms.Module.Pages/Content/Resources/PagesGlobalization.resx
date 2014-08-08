@@ -1359,4 +1359,7 @@
   <data name="WidgetUsages_Type_MasterPage" xml:space="preserve">
     <value>Master page</value>
   </data>
+  <data name="SaveWidget_ContentHasChildrenWidgetWithDynamicContents_ConfirmationMessage" xml:space="preserve">
+    <value>You are trying to remove child widget which has children with dynamic regions. There are some children pages, which have contents created within these regions. If you delete this region, children page contents will be deleted also. &lt;br /&gt;&lt;br /&gt;Are you sure you want to continue?</value>
+  </data>
 </root>

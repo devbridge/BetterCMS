@@ -12,8 +12,6 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 
-using FluentNHibernate.Utils;
-
 namespace BetterCms.Module.Root.Services
 {
     public class DefaultChildContentService : IChildContentService
@@ -234,87 +232,134 @@ namespace BetterCms.Module.Root.Services
             }
         }
 
-        public void RetrieveChildrenContentsRecursively(bool canManageContent, IEnumerable<Models.Content> contents)
+        public IList<ChildContent> RetrieveChildrenContentsRecursively(bool canManageContent, IEnumerable<Guid> contentIds)
         {
-            // Check if all child contents are OK
-            var allContentsWithChildren = contents.Where(c => c.ChildContents != null).ToList();
-            allContentsWithChildren.ForEach(
-                    content =>
-                    {
-                        content.ChildContents = RetrieveCorrectVersionsOfChildContents(content.ChildContents, canManageContent);
-                    });
+            var dictionary = new Dictionary<Guid, IList<ChildContent>>();
+            dictionary = RetrieveChildrenContentsRecursively(canManageContent, contentIds, dictionary);
 
-            var childContents = allContentsWithChildren.SelectMany(c => c.ChildContents).Distinct().ToList();
-            if (childContents.Any())
-            {
-                var childIds = childContents.Where(c => !c.Child.IsDeleted).Select(c => c.Child.Id).Distinct().ToArray();
-                if (!childIds.Any())
-                {
-                    return;
-                }
-                
-                var entities = repository
-                    .AsQueryable<ChildContent>(c => childIds.Contains(c.Parent.Id))
-                    .Fetch(c => c.Child)
-                    .ThenFetchMany(c => c.ChildContents)
-                    .ThenFetch(cc => cc.Child)
-                    .FetchMany(c => c.Options)
-                    .ToList();
-                
-                entities = RetrieveCorrectVersionsOfChildContents(entities, canManageContent);
-                childContents.ForEach(
-                    c =>
-                    {
-                        if (c.Child.ChildContents == null)
-                        {
-                            c.Child.ChildContents = new List<ChildContent>();
-                        }
-                        c.Child.ChildContents.Clear();
-
-                        if (entities.Any())
-                        {
-                            entities.Where(e => e.Parent.Id == c.Child.Id).ToList().ForEach(c.Child.ChildContents.Add);
-                        }
-                    });
-
-                if (entities.Any())
-                {
-                    RetrieveChildrenContentsRecursively(canManageContent, entities.Select(c => c.Child).Distinct().ToList());
-                }
-            }
+            return dictionary.Where(d => d.Value != null).SelectMany(d => d.Value).Distinct().ToList();
         }
 
-        private List<ChildContent> RetrieveCorrectVersionsOfChildContents(IList<ChildContent> childContents, bool canManageContent)
+        private Dictionary<Guid, IList<ChildContent>> RetrieveChildrenContentsRecursively(bool canManageContent, IEnumerable<Guid> contentIds, Dictionary<Guid, IList<ChildContent>> dictionary)
         {
-            if (childContents == null)
+            var contentIdsToRetrieve = contentIds.Where(contentId => !dictionary.ContainsKey(contentId)).Distinct().ToArray();
+            if (contentIdsToRetrieve.Any())
             {
-                return new List<ChildContent>();
+                var childContents = GetChildContentsQuery(c => contentIdsToRetrieve.Contains(c.Parent.Id)).ToList();
+                contentIdsToRetrieve
+                    .Where(parentId => childContents.All(cc => cc.Parent.Id != parentId))
+                    .ToList()
+                    .ForEach(parentId =>
+                        {
+                            dictionary[parentId] = null;
+                        });
+
+                if (childContents.Any())
+                {
+                    // Collect children
+                    childContents.Select(cc => cc.Parent.Id)
+                        .Distinct()
+                        .ToList()
+                        .ForEach(parentId =>
+                            {
+                                dictionary[parentId] = childContents
+                                    .Where(cc => cc.Parent.Id == parentId)
+                                    .Select(cc => RetrieveCorrectVersionOfChildContents(cc, canManageContent)).ToList();
+                            });
+
+                    // Collect children of children
+                    childContents
+                        .ToList()
+                        .ForEach(cc =>
+                            {
+                                if (!dictionary.ContainsKey(cc.Child.Id))
+                                {
+                                    dictionary[cc.Child.Id] = cc.Child.ChildContents;
+                                }
+                            });
+
+                    var childContentIds = childContents
+                        .Where(cc => cc.Child.ChildContents != null)
+                        .SelectMany(cc => cc.Child.ChildContents)
+                        .Select(cc => cc.Child.Id)
+                        .Distinct();
+                    dictionary = RetrieveChildrenContentsRecursively(canManageContent, childContentIds, dictionary);
+                }
             }
 
+            return dictionary;
+        }
+
+        private IQueryable<ChildContent> GetChildContentsQuery(System.Linq.Expressions.Expression<Func<ChildContent, bool>> filter)
+        {
+            return repository
+                .AsQueryable(filter)
+                .Fetch(c => c.Child)
+                .ThenFetchMany(c => c.ChildContents)
+                .ThenFetch(cc => cc.Child)
+                .FetchMany(c => c.Options);
+        }
+
+        public void RetrieveChildrenContentsRecursively(bool canManageContent, IEnumerable<Models.Content> contents)
+        {
+            var dictionary = new Dictionary<Guid, IList<ChildContent>>();
+            var idsToRetrieve = new List<Guid>();
+            var contentsList = contents.ToList();
+            contentsList.ForEach(
+                c =>
+                {
+                    dictionary[c.Id] = c.ChildContents;
+                    if (c.ChildContents != null)
+                    {
+                        c.ChildContents.ToList().ForEach(
+                            cc =>
+                            {
+                                if (!idsToRetrieve.Contains(cc.Child.Id))
+                                {
+                                    idsToRetrieve.Add(cc.Child.Id);
+                                }
+                            });
+                    }
+                });
+
+            dictionary = RetrieveChildrenContentsRecursively(canManageContent, idsToRetrieve, dictionary);
+
+            contentsList.ForEach(content => SetChildContentsRecursively(content, dictionary));
+        }
+
+        private ChildContent RetrieveCorrectVersionOfChildContents(ChildContent childContent, bool canManageContent)
+        {
             if (canManageContent)
             {
-                return childContents.ToList();
+                return childContent;
             }
 
-            var visibleChildContents = new List<ChildContent>(childContents.Count);
-            foreach (var childContent in childContents)
+            if (childContent.Child.Status == ContentStatus.Draft)
             {
-                if (childContent.Child.Status == ContentStatus.Draft)
+                if (childContent.Child.Original != null && childContent.Child.Original.Status == ContentStatus.Published)
                 {
-                    if (childContent.Child.Original != null && childContent.Child.Original.Status == ContentStatus.Published)
-                    {
-                        childContent.Child = childContent.Child.Original;
-                    }
-                    else
-                    {
-                        continue;
-                    }
+                    var childContentWithOriginalContent = childContent.Clone();
+                    childContentWithOriginalContent.Child = childContent.Child.Original;
+
+                    return childContentWithOriginalContent;
                 }
 
-                visibleChildContents.Add(childContent);
+                return null;
             }
 
-            return visibleChildContents;
+            return childContent;
+        }
+
+        private void SetChildContentsRecursively(Models.Content content, Dictionary<Guid, IList<ChildContent>> dictionary)
+        {
+            content.ChildContents = dictionary[content.Id];
+            if (content.ChildContents != null)
+            {
+                foreach (var childContent in content.ChildContents)
+                {
+                    SetChildContentsRecursively(childContent.Child, dictionary);
+                }
+            }
         }
     }
 }
