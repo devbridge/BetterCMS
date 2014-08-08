@@ -332,7 +332,8 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         */
         pagesContent.updateWidgetCategoryList = function (dialog, onInsert) {
             $.ajax({
-                url: $.format(links.loadWidgetsUrl, dialog.container.find(selectors.widgetsSearchInput).val())
+                url: $.format(links.loadWidgetsUrl, dialog.container.find(selectors.widgetsSearchInput).val()),
+                cache: false,
             }).done(function (data) {            
                 dialog.container.find(selectors.widgetsContainer).html(data);
 
