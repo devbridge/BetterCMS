@@ -65,6 +65,13 @@ WriteLiteral(" class=\"bcms-region-actions\"");
 
 WriteLiteral(">\r\n                    <div");
 
+WriteLiteral(" class=\"bcms-region-button bcms-leave-child-content\"");
+
+WriteLiteral(" style=\"display: none; background: url(\'http://i.imgur.com/10tFODt.png\') no-repea" +
+"t scroll 4px 4px rgba(0, 0, 0, 0); margin-left: 4px;\"");
+
+WriteLiteral("></div>\r\n                    <div");
+
 WriteLiteral(" class=\"bcms-region-button bcms-region-sortdone\"");
 
 WriteLiteral(" style=\"display: none;\"");
@@ -86,7 +93,7 @@ WriteLiteral(" class=\"bcms-sorting-block\"");
 WriteLiteral("></div>\r\n");
 
             
-            #line 15 "..\..\Views\Shared\Partial\Region.cshtml"
+            #line 16 "..\..\Views\Shared\Partial\Region.cshtml"
             }
 
             
