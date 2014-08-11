@@ -106,7 +106,7 @@ namespace BetterCms.Module.Pages.Services
 
             childContentService.RetrieveChildrenContentsRecursively(true, new[] { pageContent.Content });
 
-            var contentProjection = contentProjectionService.CreatePageContentProjection(true, pageContent, new List<PageContent> { pageContent });
+            var contentProjection = contentProjectionService.CreatePageContentProjection(true, pageContent, new List<PageContent> { pageContent }, retrieveCorrectVersion: false);
 
             var pageViewModel = new RenderPageViewModel
                                     {
