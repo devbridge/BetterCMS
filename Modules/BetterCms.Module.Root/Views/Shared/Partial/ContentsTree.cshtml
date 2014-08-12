@@ -1,0 +1,51 @@
+﻿@using BetterCms.Module.Root.Content.Resources
+
+<script type="text/html" id="bcms-contents-tree-template">
+    <div class="bcms-padded-content">
+        <div data-bind='template: { name: "bcms-contents-tree-list-template" }'></div>
+    </div>
+</script>
+
+<style type="text/css">
+    .bcms-contents-tree-region {
+        background-color: #dcf5ff;
+    }
+</style>
+
+<script type="text/html" id="bcms-contents-tree-list-template">
+    <!-- ko if: items().length > 0 -->
+    <div class="bcms-tree-holder">
+
+
+        <div class="bcms-nodes-dropzone ui-droppable">
+            <div class="bcms-node-infotext">Place your page link here.</div>
+        </div>
+
+        <!-- ko foreach: items() -->
+        <div>
+            <div class="bcms-placement-node" data-bind="css: {'bcms-contents-tree-region': type == types.region}">
+                <a class="bcms-expand-collapse-node">&nbsp;</a>
+
+                <div class="bcms-node-info">
+                    <div class="bcms-placement-title" data-bind="text: model.title"></div>
+                </div>
+
+                <div class="bcms-node-controls">
+                    <!-- ko if: type == types.content -->
+                    <a class="bcms-pointer" data-bind="click: configure">TODO: Configure</a>
+                    <a class="bcms-icn-history" data-bind="click: history"></a>
+                    <a class="bcms-icn-edit" data-bind="click: editItem">@RootGlobalization.Button_Edit</a>
+                    <a class="bcms-icn-delete" data-bind="click: deleteItem">@RootGlobalization.Button_Delete</a>
+                    <!-- /ko -->
+                    <!-- ko if: type == types.region -->
+                    <div class="bcms-region-button bcms-region-addcontent" data-bind="click: addContent"></div>
+                    <!-- /ko -->
+                </div>
+            </div>
+        </div>
+
+        <div class="bcms-zone-holder" data-bind="template: { name: 'bcms-contents-tree-list-template' }"></div>
+        <!-- /ko -->
+    </div>
+    <!-- /ko -->
+</script>

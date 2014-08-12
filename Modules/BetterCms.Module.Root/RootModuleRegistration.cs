@@ -269,7 +269,8 @@ namespace BetterCms.Module.Root
                     new JsIncludeDescriptor(this, "ckeditor", "ckeditor/ckeditor.js", "ckeditor/ckeditor.js"),
                     tagsJsModuleIncludeDescriptor,
                     languagesJsModuleIncludeDescriptor,
-                    new OptionsJsModuleIncludeDescriptor(this)
+                    new OptionsJsModuleIncludeDescriptor(this),
+                    new JsIncludeDescriptor(this, "bcms.content.tree")
                 };
         }
 

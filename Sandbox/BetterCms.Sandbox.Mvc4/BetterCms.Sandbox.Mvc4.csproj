@@ -258,7 +258,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\bcms-images-gallery\" />
-    <Folder Include="Areas\bcms-media\Views\" />
+    <Folder Include="Areas\bcms-root\Views\Shared\Partial\" />
     <Folder Include="Areas\bcms-search\" />
     <Folder Include="file\bcms-blog\scripts\" />
     <Folder Include="file\bcms-media\scripts\" />

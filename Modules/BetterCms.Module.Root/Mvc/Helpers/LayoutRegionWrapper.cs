@@ -51,7 +51,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// </summary>
         private void RenderOpeningTags()
         {
-            sb.AppendFormat(@"<div class=""{0}"" data-id=""{1}""></div>", RegionStartClassName, region.RegionId);
+            sb.AppendFormat(@"<div class=""{0}"" data-id=""{1}"" data-identifier=""{2}""></div>", RegionStartClassName, region.RegionId, region.RegionIdentifier);
             sb.AppendLine();
         }
 

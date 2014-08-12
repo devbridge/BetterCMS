@@ -20,7 +20,8 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
             addPageContent: 'addPageContent',
             sortPageContent: 'sortPageContent',
             createContentOverlay: 'createContentOverlay',
-            pageCreated: 'pageCreated'
+            pageCreated: 'pageCreated',
+            editContentsTree: 'editContentsTree'
         },
         eventListeners = {},
         contentStatus = {

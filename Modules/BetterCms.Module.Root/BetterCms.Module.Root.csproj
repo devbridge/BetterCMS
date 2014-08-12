@@ -502,6 +502,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContentOverlay.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Shared\Partial\ContentsTree.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContentsTree.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Shared\Partial\ImagePreview.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1300,7 +1305,12 @@
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\lock.png" />
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\refresh.png" />
     <EmbeddedResource Include="Scripts\ckeditor\styles.js" />
+    <EmbeddedResource Include="Scripts\bcms.content.tree.js" />
     <Content Include="Views\Web.config" />
+    <None Include="Views\Shared\Partial\ContentsTree.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ContentsTree.generated.cs</LastGenOutput>
+    </None>
     <None Include="Views\Sidebar\Container.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Container.generated.cs</LastGenOutput>

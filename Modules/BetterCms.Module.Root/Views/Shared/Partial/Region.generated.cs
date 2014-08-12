@@ -75,6 +75,10 @@ WriteLiteral(" class=\"bcms-region-button bcms-region-addcontent\"");
 
 WriteLiteral("></div>\r\n                    <div");
 
+WriteLiteral(" class=\"bcms-region-button bcms-region-contentstree\"");
+
+WriteLiteral("></div>\r\n                    <div");
+
 WriteLiteral(" class=\"bcms-region-button bcms-region-sortcontent\"");
 
 WriteLiteral("></div>\r\n                </div>\r\n");
@@ -86,7 +90,7 @@ WriteLiteral(" class=\"bcms-sorting-block\"");
 WriteLiteral("></div>\r\n");
 
             
-            #line 15 "..\..\Views\Shared\Partial\Region.cshtml"
+            #line 16 "..\..\Views\Shared\Partial\Region.cshtml"
             }
 
             

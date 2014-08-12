@@ -892,7 +892,7 @@ a.bcms-remove-image {
     position: absolute;
     top: 0;
     right: 0;
-    width: 66px;
+    width: 101px;
     height: 26px;
     z-index: 1010;
     border-style: none none dashed dashed;
@@ -916,6 +916,11 @@ a.bcms-remove-image {
 
 .bcms-region-addcontent {
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAWdEVYdENyZWF0aW9uIFRpbWUAMDcvMjYvMTJzxIU/AAAAMklEQVQokWP8//8/AxaALsiIroAJmy5iwBDSyMKAGRDYAIaaIeZHjMhlGE0ADAwMDAwAXswHHBrCtxsAAAAASUVORK5CYII=);
+}
+
+.bcms-region-contentstree {
+    margin-left: 4px;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAadEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjEwMPRyoQAAAKZJREFUOE+l0zsKAjEUheHpxFpRhOlt7EUt7G1kVuEqbHUb9i7KJVjbGP8jXIswyQEn8DX3cSDMpEkphStecEczmv3uxXKLNzrsDc1oVju/gCV05ohaiWZ0tNMbsMEKExwz6tmAOy7Y4ZlRzwZErcQG3HDGGo/MFDbggC0WOGXGGBSgng2oXUE9GxC1EhtQ+4wz2IDajzSCDYhaSW/A4Mckfzzn1HwAtb9YRHbtKWsAAAAASUVORK5CYII=);
 }
 
 .bcms-region-sortcontent {
