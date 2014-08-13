@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Autofac;
 using Autofac.Core;
 
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules.Projections;
@@ -20,16 +21,12 @@ namespace BetterCms.Module.Root.Projections
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
         private readonly PerWebRequestContainerProvider containerProvider;
+        private readonly IUnitOfWork unitOfWork;
 
-        public PageContentProjectionFactory(PerWebRequestContainerProvider containerProvider)
+        public PageContentProjectionFactory(PerWebRequestContainerProvider containerProvider, IUnitOfWork unitOfWork)
         {
             this.containerProvider = containerProvider;
-        }
-
-        public PageContentProjection Create(IPageContent pageContent, IContent content, IList<IOptionValue> options,
-            IEnumerable<ChildContentProjection> childContentProjections, IEnumerable<PageContentProjection> childRegionContentProjections)
-        {
-            return Create(pageContent, content, options, childContentProjections, childRegionContentProjections, (pc, c, cc, crc, ch) => new PageContentProjection(pc, c, cc, crc, ch));
+            this.unitOfWork = unitOfWork;
         }
 
         public TProjection Create<TProjection>(IPageContent pageContent, IContent content, IList<IOptionValue> options,
@@ -42,7 +39,8 @@ namespace BetterCms.Module.Root.Projections
 
             if (content is IProxy)
             {
-                contentType = content.GetType().BaseType;
+                content = (IContent)unitOfWork.Session.GetSessionImplementation().PersistenceContext.Unproxy(content);
+                contentType = content.GetType();
             }
             else
             {

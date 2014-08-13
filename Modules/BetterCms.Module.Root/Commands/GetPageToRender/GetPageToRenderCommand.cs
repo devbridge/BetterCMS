@@ -19,6 +19,7 @@ using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Cms;
 using BetterCms.Module.Root.Models.Extensions;
 
+using NHibernate.Criterion;
 using NHibernate.Linq;
 
 namespace BetterCms.Module.Root.Commands.GetPageToRender
@@ -322,17 +323,14 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
                 // Fetch child contents
                 .Fetch(f => f.Content)
-                .ThenFetchMany(f => f.ChildContents)
-                .ThenFetch(f => f.Child)
-                .ThenFetch(f => f.Original);
+                .ThenFetchMany(f => f.ChildContents);
 
             if (request.CanManageContent || request.PreviewPageContentId != null)
             {
                 pageContentsQuery = pageContentsQuery
                     .Fetch(f => f.Content)
                     .ThenFetchMany(f => f.History)
-                    .ThenFetchMany(f => f.ChildContents)
-                    .ThenFetch(f => f.Child);
+                    .ThenFetchMany(f => f.ChildContents);
             }
 
             var pageContents = pageContentsQuery.ToList();

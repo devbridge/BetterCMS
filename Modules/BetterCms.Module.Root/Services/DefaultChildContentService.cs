@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Mvc;
 
@@ -11,6 +10,8 @@ using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
+
+using NHibernate.Criterion;
 
 namespace BetterCms.Module.Root.Services
 {
@@ -245,7 +246,10 @@ namespace BetterCms.Module.Root.Services
             var contentIdsToRetrieve = contentIds.Where(contentId => !dictionary.ContainsKey(contentId)).Distinct().ToArray();
             if (contentIdsToRetrieve.Any())
             {
-                var childContents = GetChildContentsQuery(c => contentIdsToRetrieve.Contains(c.Parent.Id)).ToList();
+                // Load child contents
+                var childContents = GetChildContents(contentIdsToRetrieve, canManageContent);
+
+                // Add parents without children to the dictionary
                 contentIdsToRetrieve
                     .Where(parentId => childContents.All(cc => cc.Parent.Id != parentId))
                     .ToList()
@@ -267,20 +271,7 @@ namespace BetterCms.Module.Root.Services
                                     .Select(cc => RetrieveCorrectVersionOfChildContents(cc, canManageContent)).ToList();
                             });
 
-                    // Collect children of children
-                    childContents
-                        .ToList()
-                        .ForEach(cc =>
-                            {
-                                if (!dictionary.ContainsKey(cc.Child.Id))
-                                {
-                                    dictionary[cc.Child.Id] = cc.Child.ChildContents;
-                                }
-                            });
-
                     var childContentIds = childContents
-                        .Where(cc => cc.Child.ChildContents != null)
-                        .SelectMany(cc => cc.Child.ChildContents)
                         .Select(cc => cc.Child.Id)
                         .Distinct();
                     dictionary = RetrieveChildrenContentsRecursively(canManageContent, childContentIds, dictionary);
@@ -290,14 +281,43 @@ namespace BetterCms.Module.Root.Services
             return dictionary;
         }
 
-        private IQueryable<ChildContent> GetChildContentsQuery(System.Linq.Expressions.Expression<Func<ChildContent, bool>> filter)
+        private IList<ChildContent> GetChildContents(Guid[] ids, bool canManageContent)
         {
-            return repository
-                .AsQueryable(filter)
-                .Fetch(c => c.Child)
-                .ThenFetchMany(c => c.ChildContents)
-                .ThenFetch(cc => cc.Child)
-                .FetchMany(c => c.Options);
+            ChildContent ccAlias = null;
+            ChildContentOption ccOptionAlias = null;
+            Models.Content childAlias = null;
+            ContentOption cOptionAlias = null;
+            ContentRegion cRegionAlias = null;
+            Region regionAlias = null;
+
+            ChildContent ccAlias1 = null;
+            Models.Content ccChildAlias = null;
+            Models.Content historyAlias = null;
+            ChildContent historyCcAlias = null;
+            Models.Content historyChildAlias = null;
+
+            var query = repository
+                .AsQueryOver(() => ccAlias)
+                .Where(Restrictions.In(NHibernate.Criterion.Projections.Property(() => ccAlias.Parent.Id), ids))
+                .Inner.JoinAlias(() => ccAlias.Child, () => childAlias)
+                .Left.JoinAlias(() => childAlias.ContentOptions, () => cOptionAlias)
+                .Left.JoinAlias(() => ccAlias.Options, () => ccOptionAlias)
+
+                .Left.JoinAlias(() => childAlias.ContentRegions, () => cRegionAlias)
+                .Left.JoinAlias(() => cRegionAlias.Region, () => regionAlias)
+
+                .Left.JoinAlias(() => childAlias.ChildContents, () => ccAlias1)
+                .Left.JoinAlias(() => ccAlias1.Child, () => ccChildAlias);
+
+            if (canManageContent)
+            {
+                query = query
+                    .Left.JoinAlias(() => childAlias.History, () => historyAlias)
+                    .Left.JoinAlias(() => historyAlias.ChildContents, () => historyCcAlias)
+                    .Left.JoinAlias(() => historyCcAlias.Child, () => historyChildAlias);
+            }
+
+            return query.List<ChildContent>();
         }
 
         public void RetrieveChildrenContentsRecursively(bool canManageContent, IEnumerable<Models.Content> contents)
@@ -308,7 +328,10 @@ namespace BetterCms.Module.Root.Services
             contentsList.ForEach(
                 c =>
                 {
-                    dictionary[c.Id] = c.ChildContents;
+                    if (!idsToRetrieve.Contains(c.Id))
+                    {
+                        idsToRetrieve.Add(c.Id);
+                    }
                     if (c.ChildContents != null)
                     {
                         c.ChildContents.ToList().ForEach(
@@ -357,6 +380,7 @@ namespace BetterCms.Module.Root.Services
             {
                 foreach (var childContent in content.ChildContents)
                 {
+                    // Retrieve child contents
                     SetChildContentsRecursively(childContent.Child, dictionary);
                 }
             }
