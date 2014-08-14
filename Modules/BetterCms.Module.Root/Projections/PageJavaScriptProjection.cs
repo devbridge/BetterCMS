@@ -36,7 +36,7 @@ namespace BetterCms.Module.Root.Projections
         /// </summary>
         /// <param name="html">The HTML.</param>
         /// <returns>Custom JavaScript</returns>
-        public string GetCustomJavaScript(System.Web.Mvc.HtmlHelper html)
+        public string[] GetCustomJavaScript(System.Web.Mvc.HtmlHelper html)
         {
             return jsAccessor.GetCustomJavaScript(html);
         }

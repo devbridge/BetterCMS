@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Metadata.Edm;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Web.Mvc;
 
@@ -126,24 +128,27 @@ namespace BetterCms.Module.Root.Projections
             return contentAccessor.GetHtml(html);
         }
 
-        public string GetCustomStyles(HtmlHelper html)
+        public string[] GetCustomStyles(HtmlHelper html)
         {
-            return contentAccessor.GetCustomStyles(html);
+            return null;
+            return GetStylesAndScripts(accessor => accessor.GetCustomStyles(html));
         }
 
-        public string GetCustomJavaScript(HtmlHelper html)
+        public string[] GetCustomJavaScript(HtmlHelper html)
         {
-            return contentAccessor.GetCustomJavaScript(html);
+            return GetStylesAndScripts(accessor => accessor.GetCustomJavaScript(html));
         }
 
         public string[] GetStylesResources(HtmlHelper html)
         {
-            return contentAccessor.GetStylesResources(html);
+            return null;
+            return GetStylesAndScripts(accessor => accessor.GetStylesResources(html));
         }
 
         public string[] GetJavaScriptResources(HtmlHelper html)
         {
-            return contentAccessor.GetJavaScriptResources(html);
+            return null;
+            return GetStylesAndScripts(accessor => accessor.GetJavaScriptResources(html));
         }
 
         public IEnumerable<ChildContentProjection> GetChildProjections()
@@ -154,6 +159,48 @@ namespace BetterCms.Module.Root.Projections
         public IEnumerable<PageContentProjection> GetChildRegionContentProjections()
         {
             return childRegionContentProjections;
+        }
+
+        private string[] GetStylesAndScripts(Func<IContentAccessor, string[]> func, List<string> renderedContents = null)
+        {
+            if (renderedContents == null)
+            {
+                renderedContents = new List<string>();
+            }
+
+            var contentArray = func.Invoke(contentAccessor);
+            if (childProjections != null || childRegionContentProjections != null)
+            {
+                var contentList = contentArray != null ? contentArray.ToList() : new List<string>();
+                var allChildProjections = new List<PageContentProjection>();
+                if (childProjections != null)
+                {
+                    allChildProjections.AddRange(childProjections);
+                }
+                if (childRegionContentProjections != null)
+                {
+                    allChildProjections.AddRange(childRegionContentProjections);
+                }
+
+                foreach (var childProjection in allChildProjections)
+                {
+                    var key = string.Format("{0}-{1}", childProjection.PageContentId, childProjection.ContentId);
+                    if (!renderedContents.Contains(key))
+                    {
+                        renderedContents.Add(key);
+
+                        var childContentArray = childProjection.GetStylesAndScripts(func, renderedContents);
+                        if (childContentArray != null)
+                        {
+                            contentList.AddRange(childContentArray);
+                        }
+                    }
+                }
+
+                contentArray = contentList.ToArray();
+            }
+
+            return contentArray;
         }
     }
 }
