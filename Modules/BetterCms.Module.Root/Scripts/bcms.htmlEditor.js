@@ -189,6 +189,8 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
     */
     htmlEditor.init = function () {
         bcms.logger.debug('Initializing bcms.htmlEditor module.');
+
+        CKEDITOR.disableAutoInline = true;
     };
 
     /**
