@@ -25,6 +25,10 @@ namespace BetterCms.Module.Root.Models
             {
                 return Child;
             }
+            set
+            {
+                Child = (Content)value;
+            }
         }
 
         IEnumerable<IOption> IChildContent.Options

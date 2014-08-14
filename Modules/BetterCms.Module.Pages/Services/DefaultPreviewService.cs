@@ -113,7 +113,8 @@ namespace BetterCms.Module.Pages.Services
                                         Contents = new List<PageContentProjection> { contentProjection },
                                         Stylesheets = new List<IStylesheetAccessor> { contentProjection },
                                         Regions = new List<PageRegionViewModel> { regionViewModel },
-                                        AreRegionsEditable = true
+                                        AreRegionsEditable = true,
+                                        IsPreviewing = true
                                     };
             if (allowJavaScript)
             {

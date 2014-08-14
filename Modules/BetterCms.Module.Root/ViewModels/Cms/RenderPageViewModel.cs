@@ -85,6 +85,8 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         
         public bool IsMasterPage { get; set; }
 
+        public bool IsPreviewing { get; set; }
+
         public ForceProtocolType ForceAccessProtocol { get; set; }
 
         public string MetaTitle { get; set; }

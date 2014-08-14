@@ -19,7 +19,6 @@ using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Cms;
 using BetterCms.Module.Root.Models.Extensions;
 
-using NHibernate.Criterion;
 using NHibernate.Linq;
 
 namespace BetterCms.Module.Root.Commands.GetPageToRender

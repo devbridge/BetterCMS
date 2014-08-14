@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
@@ -9,6 +11,8 @@ using BetterCms.Core.Modules.Projections;
 
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Projections;
+
+using NHibernate.Proxy.DynamicProxy;
 
 namespace BetterCms.Module.Root.Services
 {
@@ -18,11 +22,14 @@ namespace BetterCms.Module.Root.Services
 
         private readonly PageContentProjectionFactory pageContentProjectionFactory;
 
+        private readonly IUnitOfWork unitOfWork;
+
         public DefaultContentProjectionService(PageContentProjectionFactory pageContentProjectionFactory,
-            IOptionService optionService)
+            IOptionService optionService, IUnitOfWork unitOfWork)
         {
             this.optionService = optionService;
             this.pageContentProjectionFactory = pageContentProjectionFactory;
+            this.unitOfWork = unitOfWork;
         }
 
         public PageContentProjection CreatePageContentProjection(
@@ -97,7 +104,14 @@ namespace BetterCms.Module.Root.Services
             Func<IPageContent, IContent, IContentAccessor, IEnumerable<ChildContentProjection>, IEnumerable<PageContentProjection>, PageContentProjection> createProjectionDelegate;
             if (childContent != null)
             {
-                createProjectionDelegate = (pc, c, a, ccpl, pcpl) => new ChildContentProjection(pc, childContent, a, ccpl, pcpl);
+                createProjectionDelegate = (pc, c, a, ccpl, pcpl) =>
+                {
+                    if (childContent.ChildContent is IProxy)
+                    {
+                        childContent.ChildContent = (IContent)unitOfWork.Session.GetSessionImplementation().PersistenceContext.Unproxy(childContent.ChildContent);
+                    }
+                    return new ChildContentProjection(pc, childContent, a, ccpl, pcpl);
+                };
             }
             else
             {

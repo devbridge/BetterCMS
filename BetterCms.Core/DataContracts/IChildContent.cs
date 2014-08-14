@@ -7,7 +7,7 @@ namespace BetterCms.Core.DataContracts
     {
         Guid Id { get; }
         
-        IContent ChildContent { get; }
+        IContent ChildContent { get; set; }
 
         Guid AssignmentIdentifier { get; }
 
