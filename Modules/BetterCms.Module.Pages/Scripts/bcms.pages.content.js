@@ -215,7 +215,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             dialog.container.find(selectors.widgetCreateButton).on('click', function () {
                 widgets.openCreateHtmlContentWidgetDialog(function (json) {
-                    htmlEditor.updateEditorContent();
+                    htmlEditor.updateEditorContent(editorId);
                     // Reload search results after category was created.
                     pagesContent.updateWidgetCategoryList(dialog, onInsert);
                     messages.refreshBox(dialog.container, json);
@@ -761,7 +761,10 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Inserts child widget to the content
         */
-        function onWidgetInsert(htmlContentEditor) {
+        function onWidgetInsert(opts) {
+            var htmlContentEditor = opts.editor,
+                editorId = opts.editorId;
+
             if (!htmlContentEditor) {
                 return;
             }
@@ -790,7 +793,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     var url = links.selectWidgetUrl;
                     dynamicContent.bindDialog(dialog, url, {
                         contentAvailable: function (contentDialog) {
-                            initializeWidgetsTab(contentDialog, onInsert);
+                            initializeWidgetsTab(contentDialog, onInsert, editorId);
                             initializeWidgets(contentDialog.container, contentDialog, onInsert);
                         },
                     });
