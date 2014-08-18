@@ -6,6 +6,7 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
@@ -196,6 +197,59 @@ namespace BetterCms.Module.Pages.Services
             }
 
             return query.Where(mp => updatingIds.Contains(mp.Master.Id)).ToList();
+        }
+
+        public int GetLastDynamicRegionNumber(Guid pageId)
+        {
+            ContentRegion crAlias = null;
+            Region regionAlias = null;
+            Root.Models.Content contentAlias = null;
+            PageContent pcAlias = null;
+            Page pageAlias = null;
+
+            var regionIdentifiers = repository
+                .AsQueryOver(() => crAlias)
+                .Inner.JoinAlias(() => crAlias.Region, () => regionAlias)
+                .Inner.JoinAlias(() => crAlias.Content, () => contentAlias)
+                .Inner.JoinAlias(() => contentAlias.PageContents, () => pcAlias)
+                .Inner.JoinAlias(() => pcAlias.Page, () => pageAlias)
+                .Where(() => pcAlias.Page.Id == pageId)
+                .And(() => contentAlias.GetType() == typeof(HtmlContent))
+                .And(() => !crAlias.IsDeleted
+                    && !contentAlias.IsDeleted
+                    && !pcAlias.IsDeleted)
+                .SelectList(list => list.SelectGroup(() => regionAlias.RegionIdentifier))
+                .List<string>();
+
+            var maxNr = 0;
+            var length = RootModuleConstants.DynamicRegionIdentifierPrefix.Length;
+            foreach (var identifier in regionIdentifiers.Distinct())
+            {
+                int nr = 0;
+                if (String.Equals(identifier, RootModuleConstants.MainContentRegionIdentifier, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    nr = 1;
+                }
+                else
+                {
+                    try
+                    {
+                        var nrStr = identifier.Substring(length);
+                        Int32.TryParse(nrStr, out nr);
+                    }
+                    catch
+                    {
+                        // Nothing to do: just catch the exception
+                    }
+                }
+
+                if (nr > maxNr)
+                {
+                    maxNr = nr;
+                }
+            }
+
+            return maxNr;
         }
     }
 }

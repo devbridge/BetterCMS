@@ -160,10 +160,12 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
         });
     };
 
-    htmlEditor.enableInsertDynamicRegion = function (textareaId) {
+    htmlEditor.enableInsertDynamicRegion = function (textareaId, isMasterPage, lastDynamicRegionNumber) {
         var instance = htmlEditor.getInstance(textareaId);
 
         instance.DynamicRegionsEnabled = true;
+        instance.LastDynamicRegionNumber = lastDynamicRegionNumber;
+        instance.IsMasterPage = isMasterPage;
     };
 
     htmlEditor.isSourceMode = function (textareaId) {

@@ -205,10 +205,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             };
         
         htmlEditor.initializeHtmlEditor(selectors.htmlEditor, data.ContentId, {}, data.EditInSourceMode);
-        if (data.EnableInsertDynamicRegion) {
-            htmlEditor.enableInsertDynamicRegion();
-        }
-        
+       
         if (data.Version == 0) {
             newPost = true;
         }

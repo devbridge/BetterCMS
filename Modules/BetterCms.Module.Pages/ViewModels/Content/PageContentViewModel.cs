@@ -176,6 +176,14 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         public bool EnableInsertDynamicRegion { get; set; }
 
         /// <summary>
+        /// Gets or sets the last dynamic region number.
+        /// </summary>
+        /// <value>
+        /// The last dynamic region number.
+        /// </value>
+        public int LastDynamicRegionNumber { get; set; }
+
+        /// <summary>
         /// Gets or sets the custom JavaSctript.
         /// </summary>
         /// <value>
