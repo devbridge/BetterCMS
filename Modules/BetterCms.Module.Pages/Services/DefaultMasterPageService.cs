@@ -4,7 +4,7 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
-
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
@@ -204,22 +204,46 @@ namespace BetterCms.Module.Pages.Services
             ContentRegion crAlias = null;
             Region regionAlias = null;
             Root.Models.Content contentAlias = null;
+            Root.Models.Content hAlias = null;
             PageContent pcAlias = null;
-            Page pageAlias = null;
 
-            var regionIdentifiers = repository
+            // Load all original contents
+            var originalFuture = repository
                 .AsQueryOver(() => crAlias)
                 .Inner.JoinAlias(() => crAlias.Region, () => regionAlias)
                 .Inner.JoinAlias(() => crAlias.Content, () => contentAlias)
                 .Inner.JoinAlias(() => contentAlias.PageContents, () => pcAlias)
-                .Inner.JoinAlias(() => pcAlias.Page, () => pageAlias)
+
                 .Where(() => pcAlias.Page.Id == pageId)
                 .And(() => contentAlias.GetType() == typeof(HtmlContent))
+                .And(() => contentAlias.Status == ContentStatus.Draft
+                    || contentAlias.Status == ContentStatus.Published)
                 .And(() => !crAlias.IsDeleted
                     && !contentAlias.IsDeleted
                     && !pcAlias.IsDeleted)
                 .SelectList(list => list.SelectGroup(() => regionAlias.RegionIdentifier))
-                .List<string>();
+                .Future<string>();
+
+            // Load all draft contents
+            var draftFuture = repository
+                .AsQueryOver(() => crAlias)
+                .Inner.JoinAlias(() => crAlias.Region, () => regionAlias)
+                .Inner.JoinAlias(() => crAlias.Content, () => hAlias)
+                .Inner.JoinAlias(() => hAlias.Original, () => contentAlias)
+                .Inner.JoinAlias(() => contentAlias.PageContents, () => pcAlias)
+
+                .Where(() => pcAlias.Page.Id == pageId)
+                .And(() => contentAlias.GetType() == typeof(HtmlContent))
+                .And(() => hAlias.Status == ContentStatus.Draft
+                    && contentAlias.Status == ContentStatus.Published)
+                .And(() => !crAlias.IsDeleted
+                    && !contentAlias.IsDeleted
+                    && !pcAlias.IsDeleted
+                    && !hAlias.IsDeleted)
+                .SelectList(list => list.SelectGroup(() => regionAlias.RegionIdentifier))
+                .Future<string>();
+
+            var regionIdentifiers = draftFuture.ToList().Concat(originalFuture.ToList()).Distinct();
 
             var maxNr = 0;
             var length = RootModuleConstants.DynamicRegionIdentifierPrefix.Length;
