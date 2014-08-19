@@ -747,7 +747,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
                 last ++;
                 if (last == 1 && isMasterPage) {
-                    regionIdentifier = 'CMSMainRegion';
+                    regionIdentifier = 'CMSMainContent';
                 } else {
                     regionIdentifier = 'ContentRegion' + last;
                 }
