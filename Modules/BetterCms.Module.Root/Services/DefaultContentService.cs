@@ -360,6 +360,8 @@ namespace BetterCms.Module.Root.Services
             Models.Content content = repository.AsQueryable<Models.Content>()
                                   .Where(p => p.Id == contentId && !p.IsDeleted)
                                   .FetchMany(p => p.History)
+                                  .FetchMany(p => p.ContentRegions)
+                                  .ThenFetch(cr => cr.Region)
                                   .ToList()
                                   .FirstOrDefault();
 

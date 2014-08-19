@@ -81,11 +81,6 @@
         public const string DynamicRegionRegexPattern = "{{DYNAMIC_REGION\\:([a-zA-Z0-9\\-_]{1,200})}}";
 
         /// <summary>
-        /// The dynamic region identifier prefix
-        /// </summary>
-        public const string DynamicRegionIdentifierPrefix = "ContentRegion";
-
-        /// <summary>
         /// The main content region identifier
         /// </summary>
         public const string MainContentRegionIdentifier = "CMSMainContent";

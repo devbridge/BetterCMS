@@ -5,6 +5,7 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
@@ -245,35 +246,7 @@ namespace BetterCms.Module.Pages.Services
 
             var regionIdentifiers = draftFuture.ToList().Concat(originalFuture.ToList()).Distinct();
 
-            var maxNr = 0;
-            var length = RootModuleConstants.DynamicRegionIdentifierPrefix.Length;
-            foreach (var identifier in regionIdentifiers.Distinct())
-            {
-                int nr = 0;
-                if (String.Equals(identifier, RootModuleConstants.MainContentRegionIdentifier, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    nr = 1;
-                }
-                else
-                {
-                    try
-                    {
-                        var nrStr = identifier.Substring(length);
-                        Int32.TryParse(nrStr, out nr);
-                    }
-                    catch
-                    {
-                        // Nothing to do: just catch the exception
-                    }
-                }
-
-                if (nr > maxNr)
-                {
-                    maxNr = nr;
-                }
-            }
-
-            return maxNr;
+            return RegionHelper.GetLastDynamicRegionNumber(regionIdentifiers);
         }
     }
 }
