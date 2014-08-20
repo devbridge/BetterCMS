@@ -513,7 +513,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 }
 
                 if (!security.IsAuthorized(["BcmsEditContent"])) {
-                    contentViewModel.visibleButtons.delete = false;
+                    contentViewModel.visibleButtons["delete"] = false;
                 }
             }
 

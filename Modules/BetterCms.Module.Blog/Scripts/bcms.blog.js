@@ -761,7 +761,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             };
 
             contentViewModel.visibleButtons.configure = false;
-            contentViewModel.visibleButtons.delete = false;
+            contentViewModel.visibleButtons["delete"] = false;
         }
     }
 

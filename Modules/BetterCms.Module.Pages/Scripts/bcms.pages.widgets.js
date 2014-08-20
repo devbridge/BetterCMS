@@ -851,7 +851,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 }
                 if (!security.IsAuthorized(["BcmsEditContent"])) {
                     contentViewModel.visibleButtons.configure = false;
-                    contentViewModel.visibleButtons.delete = false;
+                    contentViewModel.visibleButtons["delete"] = false;
                 }
             } else if (contentViewModel.contentType == contentTypes.htmlWidget) {
                 // Edit
@@ -872,7 +872,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 }
                 if (!security.IsAuthorized(["BcmsEditContent"])) {
                     contentViewModel.visibleButtons.configure = false;
-                    contentViewModel.visibleButtons.delete = false;
+                    contentViewModel.visibleButtons["delete"] = false;
                 }
             }
         }

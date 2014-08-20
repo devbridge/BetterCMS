@@ -670,7 +670,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             if (!self.visibleButtons.history) {
                 self.overlay.find(selectors.contentHistory).remove();
             }
-            if (!self.visibleButtons.delete) {
+            if (!self.visibleButtons["delete"]) {
                 self.overlay.find(selectors.contentDelete).remove();
             }
             if (!self.visibleButtons.enterChildContent) {
