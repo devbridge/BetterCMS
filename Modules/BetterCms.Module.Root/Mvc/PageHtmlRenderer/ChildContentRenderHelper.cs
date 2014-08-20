@@ -13,7 +13,6 @@ using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.ViewModels.Cms;
 using BetterCms.Module.Root.ViewModels.Content;
-using BetterCms.Module.Root.Views.Language;
 
 using HtmlAgilityPack;
 
@@ -50,6 +49,13 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
             this.htmlHelper = htmlHelper;
         }
 
+        /// <summary>
+        /// Appends the HTML with HTML, rendered by content projection.
+        /// </summary>
+        /// <param name="stringBuilder">The string builder.</param>
+        /// <param name="projection">The projection.</param>
+        /// <param name="pageModel">The page model.</param>
+        /// <returns></returns>
         public StringBuilder AppendHtml(StringBuilder stringBuilder, PageContentProjection projection, RenderPageViewModel pageModel)
         {
             var renderingPageModel = pageModel.RenderingPage ?? pageModel;

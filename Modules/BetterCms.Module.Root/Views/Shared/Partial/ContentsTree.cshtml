@@ -1,8 +1,17 @@
 ﻿@using BetterCms.Module.Root.Content.Resources
 
 <script type="text/html" id="bcms-contents-tree-template">
-    <div class="bcms-padded-content">
-        <div data-bind='template: { name: "bcms-contents-tree-list-template" }'></div>
+    <div class="bcms-scroll-window">
+        <div class="bcms-padded-content">
+            <div data-bind="visible: visibleItems().length > 0, with: visibleItems()">
+                <h2 data-bind="visible: $parent.invisibleItems().length > 0">TODO: Visible regions</h2>
+                <div data-bind='template: { name: "bcms-contents-tree-list-template" }'></div>
+            </div>
+            <div data-bind="visible: invisibleItems().length > 0, with: invisibleItems()">
+                <h2>TODO: Invisible regions</h2>
+                <div data-bind='template: { name: "bcms-contents-tree-list-template" }'></div>
+            </div>
+        </div>
     </div>
 </script>
 
@@ -13,15 +22,14 @@
 </style>
 
 <script type="text/html" id="bcms-contents-tree-list-template">
-    <!-- ko if: items().length > 0 -->
+    <!-- ko if: $data.length > 0 -->
     <div class="bcms-tree-holder">
-
 
         <div class="bcms-nodes-dropzone ui-droppable">
             <div class="bcms-node-infotext">Place your page link here.</div>
         </div>
 
-        <!-- ko foreach: items() -->
+        <!-- ko foreach: $data -->
         <div>
             <div class="bcms-placement-node" data-bind="css: {'bcms-contents-tree-region': type == types.region}">
                 <a class="bcms-expand-collapse-node">&nbsp;</a>
@@ -32,10 +40,18 @@
 
                 <div class="bcms-node-controls">
                     <!-- ko if: type == types.content -->
-                    <a class="bcms-pointer" data-bind="click: configure">TODO: Configure</a>
-                    <a class="bcms-icn-history" data-bind="click: history"></a>
-                    <a class="bcms-icn-edit" data-bind="click: editItem">@RootGlobalization.Button_Edit</a>
-                    <a class="bcms-icn-delete" data-bind="click: deleteItem">@RootGlobalization.Button_Delete</a>
+                        <!-- ko if: model.visibleButtons.configure -->
+                        <a class="bcms-pointer" data-bind="click: configure">TODO: Configure</a>
+                        <!-- /ko -->
+                        <!-- ko if: model.visibleButtons.history -->
+                        <a class="bcms-icn-history" data-bind="click: history"></a>
+                        <!-- /ko -->
+                        <!-- ko if: model.visibleButtons.edit -->
+                        <a class="bcms-icn-edit" data-bind="click: editItem">@RootGlobalization.Button_Edit</a>
+                        <!-- /ko -->
+                        <!-- ko if: model.visibleButtons.delete -->
+                        <a class="bcms-icn-delete" data-bind="click: deleteItem">@RootGlobalization.Button_Delete</a>
+                        <!-- /ko -->
                     <!-- /ko -->
                     <!-- ko if: type == types.region -->
                     <div class="bcms-region-button bcms-region-addcontent" data-bind="click: addContent"></div>
@@ -43,8 +59,10 @@
                 </div>
             </div>
         </div>
-
-        <div class="bcms-zone-holder" data-bind="template: { name: 'bcms-contents-tree-list-template' }"></div>
+        
+        <div data-bind="with: items()">
+            <div class="bcms-zone-holder" data-bind="template: { name: 'bcms-contents-tree-list-template' }"></div>
+        </div>
         <!-- /ko -->
     </div>
     <!-- /ko -->

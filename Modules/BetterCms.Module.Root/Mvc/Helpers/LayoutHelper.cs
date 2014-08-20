@@ -11,8 +11,11 @@ using System.Web.WebPages;
 
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Root.ViewModels.Cms;
+
+using NHibernate.Linq;
 
 namespace BetterCms.Module.Root.Mvc.Helpers
 {
@@ -228,6 +231,49 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             }
 
             return new MvcHtmlString(attributes);
+        }
+
+        public static MvcHtmlString RenderInvisibleRegions(this HtmlHelper htmlHelper, RenderPageViewModel childModel)
+        {
+            if (!childModel.CanManageContent)
+            {
+                return null;
+            }
+
+            var model = childModel.RenderingPage;
+            if (model == null)
+            {
+                return null;
+            }
+
+            var contentsBuilder = new StringBuilder();
+
+            model.Contents
+                .Where(c => model.Regions.All(r => r.RegionId != c.RegionId))
+                .GroupBy(c => c.RegionId)
+                .ForEach(
+                    group =>
+                    {
+                        var region = group.First();
+                        var regionModel = new PageRegionViewModel { RegionId = region.RegionId, RegionIdentifier = region.RegionIdentifier };
+                        using (new LayoutRegionWrapper(contentsBuilder, regionModel, true, true))
+                        {
+                            foreach (var projection in group)
+                            {
+                                using (new RegionContentWrapper(contentsBuilder, projection, true, true))
+                                {
+                                }
+                            }
+                        }
+                    });
+
+            var html = contentsBuilder.ToString();
+            if (!string.IsNullOrWhiteSpace(html))
+            {
+                return new MvcHtmlString(html);
+            }
+
+            return null;
         }
     }
 }

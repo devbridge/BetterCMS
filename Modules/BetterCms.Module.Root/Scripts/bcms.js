@@ -19,7 +19,7 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
             editModeOn: 'editModeOn',
             addPageContent: 'addPageContent',
             sortPageContent: 'sortPageContent',
-            createContentOverlay: 'createContentOverlay',
+            contentModelCreated: 'contentModelCreated',
             pageCreated: 'pageCreated',
             editContentsTree: 'editContentsTree'
         },

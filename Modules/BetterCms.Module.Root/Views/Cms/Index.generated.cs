@@ -68,6 +68,20 @@ WriteLiteral("\r\n\r\n");
   
     // Render regions and contents.
     Html.RenderSectionContents(this, Model);
+    
+            
+            #line default
+            #line hidden
+            
+            #line 21 "..\..\Views\Cms\Index.cshtml"
+Write(Html.RenderInvisibleRegions(Model));
+
+            
+            #line default
+            #line hidden
+            
+            #line 21 "..\..\Views\Cms\Index.cshtml"
+                                       ;
 
             
             #line default

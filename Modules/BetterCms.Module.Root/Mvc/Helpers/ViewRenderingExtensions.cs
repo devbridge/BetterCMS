@@ -10,6 +10,8 @@ using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Root.ViewModels.Cms;
 
+using NHibernate.Linq;
+
 namespace BetterCms.Module.Root.Mvc.Helpers
 {
     public static class ViewRenderingExtensions

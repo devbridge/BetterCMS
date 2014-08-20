@@ -29,6 +29,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         model.title = regionModel.title;
         model.model = regionModel;
         model.type = treeItemTypes.region;
+        model.isInvisible = regionModel.isInvisible;
 
         // Collect child contents
         childContents = regionModel.getChildContents();
@@ -54,6 +55,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         model.title = contentModel.title;
         model.model = contentModel;
         model.type = treeItemTypes.content;
+        model.isInvisible = contentModel.isInvisible;
 
         childRegions = contentModel.getChildRegions();
         for (i = 0; i < childRegions.length; i++) {
@@ -91,6 +93,8 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
 
         self.pageModel = pageModel;
         self.items = ko.observableArray();
+        self.visibleItems = ko.observableArray();
+        self.invisibleItems = ko.observableArray();
 
         // Collect child regions
         for (i = 0; i < pageModel.regions.length; i++) {
@@ -98,6 +102,11 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                 continue;
             }
             itemModel = createRegionViewModel(pageModel.regions[i]);
+            if (itemModel.isInvisible) {
+                self.invisibleItems.push(itemModel);
+            } else {
+                self.visibleItems.push(itemModel);
+            }
             self.items.push(itemModel);
         }
 
@@ -114,6 +123,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         self.model = null;
         self.title = null;
         self.type = null;
+        self.isInvisible = false;
         self.types = treeItemTypes;
 
         self.editItem = function () { };

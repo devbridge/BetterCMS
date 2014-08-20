@@ -88,6 +88,14 @@ namespace BetterCms.Module.Root.Projections
                 return pageContent.Region.Id;
             }
         }
+        
+        public virtual string RegionIdentifier
+        {
+            get
+            {
+                return pageContent.Region.RegionIdentifier;
+            }
+        }
 
         public virtual Guid ContentId
         {

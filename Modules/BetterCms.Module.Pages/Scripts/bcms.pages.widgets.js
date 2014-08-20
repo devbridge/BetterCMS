@@ -813,9 +813,9 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         };
 
         /**
-        * Called when creating page content overlay
+        * Called when content view model is created
         */
-        function onCreateContentOverlay(contentViewModel) {
+        function onContentModelCreated(contentViewModel) {
             var contentId = contentViewModel.contentId,
                 pageContentId = contentViewModel.pageContentId,
                 onSave = function (json) {
@@ -846,15 +846,13 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 };
 
                 if (!security.IsAuthorized(["BcmsAdministration"])) {
-                    contentViewModel.removeHistoryButton();
-                    contentViewModel.removeEditButton();
+                    contentViewModel.visibleButtons.history = false;
+                    contentViewModel.visibleButtons.edit = false;
                 }
-
                 if (!security.IsAuthorized(["BcmsEditContent"])) {
-                    contentViewModel.removeConfigureButton();
-                    contentViewModel.removeDeleteButton();
+                    contentViewModel.visibleButtons.configure = false;
+                    contentViewModel.visibleButtons.delete = false;
                 }
-
             } else if (contentViewModel.contentType == contentTypes.htmlWidget) {
                 // Edit
                 contentViewModel.onEditContent = function () {
@@ -869,12 +867,12 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 };
 
                 if (!security.IsAuthorized(["BcmsAdministration"])) {
-                    contentViewModel.removeHistoryButton();
-                    contentViewModel.removeEditButton();
+                    contentViewModel.visibleButtons.history = false;
+                    contentViewModel.visibleButtons.edit = false;
                 }
-
                 if (!security.IsAuthorized(["BcmsEditContent"])) {
-                    contentViewModel.removeDeleteButton();
+                    contentViewModel.visibleButtons.configure = false;
+                    contentViewModel.visibleButtons.delete = false;
                 }
             }
         }
@@ -1008,7 +1006,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Subscribe to events
         */
-        bcms.on(bcms.events.createContentOverlay, onCreateContentOverlay);
+        bcms.on(bcms.events.contentModelCreated, onContentModelCreated);
         bcms.on(htmlEditor.events.editChildWidgetOptions, onEditChildWidgetOptions);
         bcms.on(htmlEditor.events.editWidget, onEditWidget);
 

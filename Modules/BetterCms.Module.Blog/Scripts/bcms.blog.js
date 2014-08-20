@@ -747,21 +747,21 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
     }
 
     /**
-    * Called when content overlay is created
+    * Called when content view model is created
     */
-    function onCreateContentOverlay(contentViewModel) {
+    function onContentModelCreated(contentViewModel) {
         var onSave = function () {
                 redirect.ReloadWithAlert();
             };
         
         if (contentViewModel.contentType == contentTypes.blogContent) {
-            contentViewModel.removeConfigureButton();
-            contentViewModel.removeDeleteButton();
-
             // Edit
             contentViewModel.onEditContent = function() {
                 editBlogPost(bcms.pageId, onSave, true);
             };
+
+            contentViewModel.visibleButtons.configure = false;
+            contentViewModel.visibleButtons.delete = false;
         }
     }
 
@@ -990,7 +990,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
     /**
     * Subscribe to events
     */
-    bcms.on(bcms.events.createContentOverlay, onCreateContentOverlay);
+    bcms.on(bcms.events.contentModelCreated, onContentModelCreated);
     
 
     /**

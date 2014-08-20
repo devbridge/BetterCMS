@@ -48,9 +48,22 @@ WriteLiteral(" type=\"text/html\"");
 
 WriteLiteral(" id=\"bcms-contents-tree-template\"");
 
-WriteLiteral(">\r\n    <div class=\"bcms-padded-content\">\r\n        <div data-bind=\'template: { nam" +
-"e: \"bcms-contents-tree-list-template\" }\'></div>\r\n    </div>\r\n</script>\r\n\r\n<style" +
-"");
+WriteLiteral(@">
+    <div class=""bcms-scroll-window"">
+        <div class=""bcms-padded-content"">
+            <div data-bind=""visible: visibleItems().length > 0, with: visibleItems()"">
+                <h2 data-bind=""visible: $parent.invisibleItems().length > 0"">TODO: Visible regions</h2>
+                <div data-bind='template: { name: ""bcms-contents-tree-list-template"" }'></div>
+            </div>
+            <div data-bind=""visible: invisibleItems().length > 0, with: invisibleItems()"">
+                <h2>TODO: Invisible regions</h2>
+                <div data-bind='template: { name: ""bcms-contents-tree-list-template"" }'></div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<style");
 
 WriteLiteral(" type=\"text/css\"");
 
@@ -62,15 +75,14 @@ WriteLiteral(" type=\"text/html\"");
 WriteLiteral(" id=\"bcms-contents-tree-list-template\"");
 
 WriteLiteral(@">
-    <!-- ko if: items().length > 0 -->
+    <!-- ko if: $data.length > 0 -->
     <div class=""bcms-tree-holder"">
-
 
         <div class=""bcms-nodes-dropzone ui-droppable"">
             <div class=""bcms-node-infotext"">Place your page link here.</div>
         </div>
 
-        <!-- ko foreach: items() -->
+        <!-- ko foreach: $data -->
         <div>
             <div class=""bcms-placement-node"" data-bind=""css: {'bcms-contents-tree-region': type == types.region}"">
                 <a class=""bcms-expand-collapse-node"">&nbsp;</a>
@@ -81,28 +93,35 @@ WriteLiteral(@">
 
                 <div class=""bcms-node-controls"">
                     <!-- ko if: type == types.content -->
-                    <a class=""bcms-pointer"" data-bind=""click: configure"">TODO: Configure</a>
-                    <a class=""bcms-icn-history"" data-bind=""click: history""></a>
-                    <a class=""bcms-icn-edit"" data-bind=""click: editItem"">");
+                        <!-- ko if: model.visibleButtons.configure -->
+                        <a class=""bcms-pointer"" data-bind=""click: configure"">TODO: Configure</a>
+                        <!-- /ko -->
+                        <!-- ko if: model.visibleButtons.history -->
+                        <a class=""bcms-icn-history"" data-bind=""click: history""></a>
+                        <!-- /ko -->
+                        <!-- ko if: model.visibleButtons.edit -->
+                        <a class=""bcms-icn-edit"" data-bind=""click: editItem"">");
 
             
-            #line 37 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
-                                                                    Write(RootGlobalization.Button_Edit);
+            #line 50 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
+                                                                        Write(RootGlobalization.Button_Edit);
 
             
             #line default
             #line hidden
-WriteLiteral("</a>\r\n                    <a class=\"bcms-icn-delete\" data-bind=\"click: deleteItem" +
-"\">");
+WriteLiteral("</a>\r\n                        <!-- /ko -->\r\n                        <!-- ko if: m" +
+"odel.visibleButtons.delete -->\r\n                        <a class=\"bcms-icn-delet" +
+"e\" data-bind=\"click: deleteItem\">");
 
             
-            #line 38 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
-                                                                        Write(RootGlobalization.Button_Delete);
+            #line 53 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
+                                                                            Write(RootGlobalization.Button_Delete);
 
             
             #line default
             #line hidden
 WriteLiteral(@"</a>
+                        <!-- /ko -->
                     <!-- /ko -->
                     <!-- ko if: type == types.region -->
                     <div class=""bcms-region-button bcms-region-addcontent"" data-bind=""click: addContent""></div>
@@ -110,8 +129,10 @@ WriteLiteral(@"</a>
                 </div>
             </div>
         </div>
-
-        <div class=""bcms-zone-holder"" data-bind=""template: { name: 'bcms-contents-tree-list-template' }""></div>
+        
+        <div data-bind=""with: items()"">
+            <div class=""bcms-zone-holder"" data-bind=""template: { name: 'bcms-contents-tree-list-template' }""></div>
+        </div>
         <!-- /ko -->
     </div>
     <!-- /ko -->

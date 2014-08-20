@@ -489,49 +489,49 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 });
             });
         };
-
+        
         /**
-        * Called when content overlay is created
+        * Called when content view model is created
         */
-        function onCreateContentOverlay(contentViewModel) {
+        function onContentModelCreated(contentViewModel) {
             var contentId = contentViewModel.contentId,
                 pageContentId = contentViewModel.pageContentId,
                 contentVersion = contentViewModel.contentVersion,
                 pageContentVersion = contentViewModel.pageContentVersion;
 
             if (contentViewModel.contentType == contentTypes.htmlContent) {
-                contentViewModel.removeConfigureButton();
-
                 // Edit content
-                contentViewModel.onEditContent = function() {
+                contentViewModel.onEditContent = function () {
                     pagesContent.editPageContent(pageContentId);
                 };
-                
+
+                contentViewModel.visibleButtons.configure = false;
+
                 if (!security.IsAuthorized(["BcmsEditContent", "BcmsPublishContent"])) {
-                    contentViewModel.removeHistoryButton();
-                    contentViewModel.removeEditButton();
+                    contentViewModel.visibleButtons.history = false;
+                    contentViewModel.visibleButtons.edit = false;
                 }
-                
+
                 if (!security.IsAuthorized(["BcmsEditContent"])) {
-                    contentViewModel.removeDeleteButton();
+                    contentViewModel.visibleButtons.delete = false;
                 }
             }
-            
+
             // Delete content
             contentViewModel.onDeleteContent = function () {
                 pagesContent.removeContentFromPage(pageContentId, pageContentVersion, contentVersion);
             };
-            
+
             // Content history
-            contentViewModel.onContentHistory = function() {
+            contentViewModel.onContentHistory = function () {
                 history.openPageContentHistoryDialog(contentId, pageContentId);
             };
 
             // Change draft icon
             if (contentViewModel.draft) {
-                contentViewModel.addDraftIcon();
+                contentViewModel.visibleButtons.draft = true;
             }
-        };
+        }
 
         /**
         * Opens dialog for editing page regular content  
@@ -823,7 +823,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         */
         bcms.on(bcms.events.addPageContent, pagesContent.onAddNewContent);
         bcms.on(bcms.events.sortPageContent, pagesContent.onSortPageContent);
-        bcms.on(bcms.events.createContentOverlay, onCreateContentOverlay);
+        bcms.on(bcms.events.contentModelCreated, onContentModelCreated);
         bcms.on(htmlEditor.events.insertDynamicRegion, onDynamicRegionInsert);
         bcms.on(htmlEditor.events.insertWidget, onWidgetInsert);
 
