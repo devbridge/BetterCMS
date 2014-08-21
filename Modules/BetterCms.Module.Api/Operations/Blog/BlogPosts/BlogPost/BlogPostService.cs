@@ -65,6 +65,9 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
                         ExpirationDate = blogPost.ExpirationDate,
                         IsArchived = blogPost.IsArchived,
                         UseCanonicalUrl = blogPost.UseCanonicalUrl,
+                        LanguageId = blogPost.Language != null ? blogPost.Language.Id : (Guid?)null,
+                        LanguageCode = blogPost.Language != null ? blogPost.Language.Code : null,
+                        LanguageGroupIdentifier = blogPost.LanguageGroupIdentifier
                     })
                 .FirstOne();
 

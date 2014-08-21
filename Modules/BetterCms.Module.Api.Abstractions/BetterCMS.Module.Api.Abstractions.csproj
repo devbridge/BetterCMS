@@ -113,6 +113,7 @@
     <Compile Include="Operations\Blog\Authors\Author\SaveAuthorModel.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\DeleteBlogPostPropertiesRequest.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\DeleteBlogPostPropertiesResponse.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\LanguageModel.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\TechnicalInfoModel.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\SaveBlogPostPropertiesModel.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\PutBlogPostPropertiesRequest.cs" />

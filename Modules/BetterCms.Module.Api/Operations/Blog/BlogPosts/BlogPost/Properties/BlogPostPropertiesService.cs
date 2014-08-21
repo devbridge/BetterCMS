@@ -117,6 +117,21 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
                                     Name = blogPost.Category.Name    
                                 } 
                                 : null,
+                        Language = blogPost.Language != null && !blogPost.Language.IsDeleted && request.Data.IncludeLanguage 
+                                ? new LanguageModel
+                                {
+                                    Id = blogPost.Language.Id,
+                                    Version = blogPost.Language.Version,
+                                    CreatedBy = blogPost.Language.CreatedByUser,
+                                    CreatedOn = blogPost.Language.CreatedOn,
+                                    LastModifiedBy = blogPost.Language.ModifiedByUser,
+                                    LastModifiedOn = blogPost.Language.ModifiedOn,
+
+                                    Name = blogPost.Language.Name,
+                                    Code = blogPost.Language.Code,
+                                    LanguageGroupIdentifier = blogPost.LanguageGroupIdentifier
+                                } 
+                                : null,
                         Layout = request.Data.IncludeLayout && !blogPost.Layout.IsDeleted
                                 ? new LayoutModel
                                 {

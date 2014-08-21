@@ -185,6 +185,7 @@ namespace BetterCms.Tests.Helpers
             entity.Image = CreateNewMediaImage();
             entity.FeaturedImage = CreateNewMediaImage();
             entity.SecondaryImage = CreateNewMediaImage();
+            entity.Language = CreateNewLanguage();
         }
 
         public Content CreateNewContent()

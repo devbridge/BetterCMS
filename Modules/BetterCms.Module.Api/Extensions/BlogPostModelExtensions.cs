@@ -47,6 +47,13 @@ namespace BetterCms.Module.Api.Extensions
             serviceModel.MetaDescription = model.MetaData != null ? model.MetaData.MetaDescription : null;
             serviceModel.MetaTitle = model.MetaData != null ? model.MetaData.MetaTitle : null;
 
+            if (model.Language != null)
+            {
+                serviceModel.UpdateLanguage = true;
+                serviceModel.LanguageGroupIdentifier = model.Language.LanguageGroupIdentifier;
+                serviceModel.LanguageId = model.Language.Id;
+            }
+
             if (model.AccessRules != null)
             {
                 serviceModel.AccessRules = model.AccessRules
