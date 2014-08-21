@@ -13,6 +13,7 @@ using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
+using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.ViewModels.Cms;
 
 using NHibernate.Linq;
@@ -247,25 +248,8 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             }
 
             var contentsBuilder = new StringBuilder();
-
-            model.Contents
-                .Where(c => model.Regions.All(r => r.RegionId != c.RegionId))
-                .GroupBy(c => c.RegionId)
-                .ForEach(
-                    group =>
-                    {
-                        var region = group.First();
-                        var regionModel = new PageRegionViewModel { RegionId = region.RegionId, RegionIdentifier = region.RegionIdentifier };
-                        using (new LayoutRegionWrapper(contentsBuilder, regionModel, true, true))
-                        {
-                            foreach (var projection in group)
-                            {
-                                using (new RegionContentWrapper(contentsBuilder, projection, true, true))
-                                {
-                                }
-                            }
-                        }
-                    });
+            var contents = model.Contents.Where(c => model.Regions.All(r => r.RegionId != c.RegionId));
+            contentsBuilder = RenderInvisibleRegionsRecursively(contentsBuilder, contents);
 
             var html = contentsBuilder.ToString();
             if (!string.IsNullOrWhiteSpace(html))
@@ -274,6 +258,31 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             }
 
             return null;
+        }
+
+        private static StringBuilder RenderInvisibleRegionsRecursively(StringBuilder contentsBuilder, IEnumerable<PageContentProjection> contents)
+        {
+            foreach (var group in contents.GroupBy(c => c.RegionId))
+            {
+                var region = group.First();
+                var regionModel = new PageRegionViewModel { RegionId = region.RegionId, RegionIdentifier = region.RegionIdentifier };
+                using (new LayoutRegionWrapper(contentsBuilder, regionModel, true, true))
+                {
+                    foreach (var projection in group)
+                    {
+                        using (new RegionContentWrapper(contentsBuilder, projection, true, true))
+                        {
+                            var childRegionContentProjections = projection.GetChildRegionContentProjections();
+                            if (childRegionContentProjections != null)
+                            {
+                                contentsBuilder = RenderInvisibleRegionsRecursively(contentsBuilder, childRegionContentProjections);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return contentsBuilder;
         }
     }
 }
