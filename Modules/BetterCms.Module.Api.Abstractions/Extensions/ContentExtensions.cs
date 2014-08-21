@@ -47,6 +47,7 @@ namespace BetterCms.Module.Api.Extensions
                 {
                     Version = response.Data.Version,
                     ContentId = response.Data.ContentId,
+                    ParentPageContentId = response.Data.ParentPageContentId,
                     RegionId = response.Data.RegionId,
                     Order = response.Data.Order,
                     Options = response.Options

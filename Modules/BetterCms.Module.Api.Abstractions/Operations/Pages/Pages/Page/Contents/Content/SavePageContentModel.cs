@@ -16,6 +16,9 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
         public Guid ContentId { get; set; }
 
         [DataMember]
+        public Guid? ParentPageContentId { get; set; }
+
+        [DataMember]
         public int Order { get; set; }
 
         [DataMember]

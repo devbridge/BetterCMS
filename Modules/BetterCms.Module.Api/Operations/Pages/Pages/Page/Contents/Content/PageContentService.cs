@@ -94,7 +94,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
                                 ContentId = pageContent.Content.Id,
                                 PageId = pageContent.Page.Id,
                                 RegionId = pageContent.Region.Id,
-                                Order = pageContent.Order
+                                Order = pageContent.Order,
+                                ParentPageContentId = pageContent.Parent != null ? pageContent.Parent.Id : (Guid?) null
                             })
                     .FirstOne();
 
@@ -156,6 +157,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content
             pageContent.Content = repository.AsProxy<Module.Root.Models.Content>(request.Data.ContentId);
             pageContent.Region = repository.AsProxy<Region>(request.Data.RegionId);
             pageContent.Order = request.Data.Order;
+
+            if (request.Data.ParentPageContentId.HasValue && !request.Data.ParentPageContentId.Value.HasDefaultValue())
+            {
+                pageContent.Parent = repository.AsProxy<PageContent>(request.Data.ParentPageContentId.Value);
+            }
+            else
+            {
+                pageContent.Parent = null;
+            }
 
             if (request.Data.Options != null)
             {
