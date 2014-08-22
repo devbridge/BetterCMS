@@ -36,6 +36,15 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// </value>
         [DataMember]
         public CategoryModel Category { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the language.
+        /// </summary>
+        /// <value>
+        /// The language.
+        /// </value>
+        [DataMember]
+        public LanguageModel Language { get; set; }
 
         /// <summary>
         /// Gets or sets the author.

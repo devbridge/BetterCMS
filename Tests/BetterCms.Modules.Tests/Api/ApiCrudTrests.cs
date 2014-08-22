@@ -187,6 +187,7 @@ namespace BetterCms.Test.Module.Api
                                                                                {
                                                                                    IncludeAccessRules = true,
                                                                                    IncludeAuthor = true,
+                                                                                   IncludeLanguage = true,
                                                                                    IncludeCategory = true,
                                                                                    IncludeHtmlContent = true,
                                                                                    IncludeImages = true,

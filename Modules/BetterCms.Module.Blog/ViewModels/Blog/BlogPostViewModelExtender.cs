@@ -1,4 +1,6 @@
-﻿using BetterCms.Core.Security;
+﻿using System;
+
+using BetterCms.Core.Security;
 
 namespace BetterCms.Module.Blog.ViewModels.Blog
 {
@@ -107,5 +109,29 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// The access rules.
         /// </value>
         public System.Collections.Generic.IList<IAccessRule> AccessRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to update language.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to update language; otherwise, <c>false</c>.
+        /// </value>
+        public bool UpdateLanguage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language group identifier.
+        /// </summary>
+        /// <value>
+        /// The language group identifier.
+        /// </value>
+        public Guid? LanguageGroupIdentifier { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language identifier.
+        /// </summary>
+        /// <value>
+        /// The language identifier.
+        /// </value>
+        public Guid? LanguageId { get; set; }
     }
 }

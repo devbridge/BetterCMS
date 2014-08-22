@@ -188,5 +188,32 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
         /// </value>
         [DataMember]
         public System.Collections.Generic.List<AccessRuleModel> AccessRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language id.
+        /// </summary>
+        /// <value>
+        /// The language id.
+        /// </value>
+        [DataMember]
+        public System.Guid? LanguageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language code.
+        /// </summary>
+        /// <value>
+        /// The language code.
+        /// </value>
+        [DataMember]
+        public string LanguageCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language group identifier.
+        /// </summary>
+        /// <value>
+        /// The language group identifier.
+        /// </value>
+        [DataMember]
+        public System.Guid? LanguageGroupIdentifier { get; set; }
     }
 }

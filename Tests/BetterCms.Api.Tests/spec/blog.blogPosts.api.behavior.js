@@ -124,6 +124,9 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(blogPost.mainImageUrl).toBeDefinedAndNotNull('mainImageUrl should be retrieved.');
             expect(blogPost.mainImageThumbnauilUrl).toBeDefinedAndNotNull('mainImageThumbnailUrl should be retrieved.');
             expect(blogPost.mainImageCaption).toBe('Image caption for _0003_Blog_For_Tests_', 'Correctly filtered mainImageCaption should be retrieved.');
+            expect(blogPost.languageCode).toBe('ar-MA', 'Correctly filtered languageCode should be retrieved.');
+            expect(blogPost.languageId).toBe('a3f605164ab549a7afb1a38e00f7ec89', 'Correctly filtered languageId should be retrieved.');
+            expect(blogPost.languageGroupIdentifier).toBe('15830a7f9c1044138bc1fb6cab6199a3', 'Correctly filtered languageGroupIdentifier should be retrieved.');
             expect(new Date(blogPost.activationDate).getTime()).toBe(new Date('2013-07-24T00:00:00').getTime(), 'Correctly filtered activationDate should be retrieved.');
             expect(new Date(blogPost.expirationDate).getTime()).toBe(new Date('2032-07-24T23:59:59').getTime(), 'Correctly filtered expirationDate should be retrieved.');
             expect(blogPost.isArchived).toBe(false);
@@ -166,6 +169,9 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(blogPost.mainImageUrl).toBeDefinedAndNotNull('mainImageUrl should be retrieved.');
             expect(blogPost.mainImageThumbnauilUrl).toBeDefinedAndNotNull('mainImageThumbnailUrl should be retrieved.');
             expect(blogPost.mainImageCaption).toBe('Image caption for _0003_Blog_For_Tests_', 'Correctly filtered mainImageCaption should be retrieved.');
+            expect(blogPost.languageId).toBe('a3f605164ab549a7afb1a38e00f7ec89', 'Correctly filtered languageId should be retrieved.');
+            expect(blogPost.languageCode).toBe('ar-MA', 'Correctly filtered languageCode should be retrieved.');
+            expect(blogPost.languageGroupIdentifier).toBe('15830a7f9c1044138bc1fb6cab6199a3', 'Correctly filtered languageGroupIdentifier should be retrieved.');
             expect(new Date(blogPost.activationDate).getTime()).toBe(new Date('2013-07-24T00:00:00').getTime(), 'Correctly filtered activationDate should be retrieved.');
             expect(new Date(blogPost.expirationDate).getTime()).toBe(new Date('2032-07-24T23:59:59').getTime(), 'Correctly filtered expirationDate should be retrieved.');            
             expect(blogPost.isArchived).toBe(false, 'Correctly filtered isArchived should be retrieved.');
@@ -187,7 +193,8 @@ describe('blog.blogPosts.api.behavior', function () {
             includeHtmlContent: true,
             includeAccessRules: true,
             includeTechnicalInfo: true,
-            includeChildContentsOptions: true
+            includeChildContentsOptions: true,
+            includeLanguage: true
         };
 
         runs(function () {
@@ -241,6 +248,14 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(category).toBeDefinedAndNotNull('JSON category object should be retrieved.');
             api.expectBasePropertiesAreNotNull(category);
             expect(category.name).toBe('Category for _0003_Blog_For_Tests_', 'Correctly filtered category.name should be retrieved.');
+
+            // language
+            var language = result.language;
+            expect(language).toBeDefinedAndNotNull('JSON language object should be retrieved.');
+            api.expectBasePropertiesAreNotNull(language);
+            expect(language.name).toBe('Language for _0003_Blog_For_Tests_', 'Correctly filtered language.name should be retrieved.');
+            expect(language.code).toBe('ar-MA', 'Correctly filtered language.code should be retrieved.');
+            expect(language.languageGroupIdentifier).toBe('15830a7f9c1044138bc1fb6cab6199a3', 'Correctly filtered language.languageGroupIdentifier should be retrieved.');
             
             // author
             var author = result.author;
@@ -367,9 +382,9 @@ describe('blog.blogPosts.api.behavior', function () {
                     { field: 'Id', value: 'c1efcb1107ed4901abb3a206012b0b87' },
                     { field: 'CreatedOn', value: '2013-07-25 18:08:47.000' },
                     { field: 'CreatedBy', value: 'Better CMS test user' },
-                    { field: 'LastModifiedOn', value: '2013-07-25 18:13:56.000' },
-                    { field: 'LastModifiedBy', value: 'Better CMS test user' },
-                    { field: 'Version', value: '2' },
+                    { field: 'LastModifiedOn', value: '2014-08-21 15:36:51.000' },
+                    { field: 'LastModifiedBy', value: 'admin' },
+                    { field: 'Version', value: '4' },
 
                     { field: 'Title', value: '02108' },
                     { field: 'BlogPostUrl', value: '/articles/02108/' },
@@ -388,7 +403,10 @@ describe('blog.blogPosts.api.behavior', function () {
                     { field: 'MainImageCaption', value: '02108 caption' },
                     { field: 'ActivationDate', value: '2013-07-25 00:00:00.000' },
                     { field: 'ExpirationDate', value: '2032-07-25 23:59:59.000' },
-                    { field: 'IsArchived', value: false }
+                    { field: 'IsArchived', value: false },
+                    { field: 'LanguageId', value: '2000fc5567104616a34fa38e0100f060' },
+                    { field: 'LanguageGroupIdentifier', value: '2fc90bc7af3341eb84cec8d29baaf6a4' },
+                    { field: 'LanguageCode', value: 'arn' }
                 ]
             }
         };
@@ -410,7 +428,7 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
             expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
-            expect(result.data.items[0].id).toBe('c1efcb1107ed4901abb3a206012b0b87', 'Correctly filtered ____ should be retrieved.');
+            expect(result.data.items[0].id).toBe('c1efcb1107ed4901abb3a206012b0b87', 'Correctly filtered items[0].id should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
             // data.filter.where.length + 2 <-- Because fields [Tags, AccessRules] cannnot be filtered by
@@ -536,9 +554,9 @@ describe('blog.blogPosts.api.behavior', function () {
                     { field: 'Id', value: '98a7ba1fbadd419db331a2f100b48f93' },
                     { field: 'CreatedOn', value: '2014-03-17 10:57:24.000' },
                     { field: 'CreatedBy', value: 'admin' },
-                    { field: 'LastModifiedOn', value: '2014-03-17 10:58:29.000' },
+                    { field: 'LastModifiedOn', value: '2014-08-21 15:36:51' },
                     { field: 'LastModifiedBy', value: 'admin' },
-                    { field: 'Version', value: '2' },
+                    { field: 'Version', value: '4' },
 
                     { field: 'Title', value: '02112' },
                     { field: 'BlogPostUrl', value: '/articles/02112/' },
@@ -557,7 +575,10 @@ describe('blog.blogPosts.api.behavior', function () {
                     { field: 'MainImageCaption', value: '02112 caption' },
                     { field: 'ActivationDate', value: '2014-03-17 00:00:00.000' },
                     { field: 'ExpirationDate', value: '2014-03-19 23:59:59.000' },
-                    { field: 'IsArchived', value: false }
+                    { field: 'IsArchived', value: false },
+                    { field: 'LanguageId', value: 'c0c6e81497e94ced8b8da38e01010139' },
+                    { field: 'LanguageCode', value: 'arn-CL' },
+                    { field: 'LanguageGroupIdentifier', value: '2fc90bc7af3341eb84cec8d29baaf6a4' }
                 ]
             }
         };

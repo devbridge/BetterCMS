@@ -1,6 +1,7 @@
 ﻿using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties;
 using BetterCms.Module.Api.Operations.Root;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
@@ -188,6 +189,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
         /// </value>
         [DataMember]
         public System.Guid? LanguageGroupIdentifier { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of the access (http vs https).
+        /// </summary>
+        /// <value>
+        /// The type of the access (http vs https).
+        /// </value>
+        [DataMember]
+        public virtual ForceProtocolType ForceAccessProtocol { get; set; }
 
         /// <summary>
         /// Gets or sets the meta data.

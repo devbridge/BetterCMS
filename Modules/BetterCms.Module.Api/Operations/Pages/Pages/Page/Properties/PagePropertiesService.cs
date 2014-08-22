@@ -171,6 +171,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                                 IsArchived = page.IsArchived,
                                 IsMasterPage = page.IsMasterPage,
                                 LanguageGroupIdentifier = page.LanguageGroupIdentifier,
+                                ForceAccessProtocol = (ForceProtocolType)(int)page.ForceAccessProtocol,
                                 LanguageId = page.Language != null ? page.Language.Id : (Guid?)null,
                                 MainImageId = page.Image != null && !page.Image.IsDeleted ? page.Image.Id : (Guid?)null,
                                 FeaturedImageId = page.FeaturedImage != null && !page.FeaturedImage.IsDeleted ? page.FeaturedImage.Id : (Guid?)null,
@@ -537,6 +538,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
             pageProperties.IsArchived = request.Data.IsArchived;
             pageProperties.IsMasterPage = request.Data.IsMasterPage;
             pageProperties.LanguageGroupIdentifier = request.Data.LanguageGroupIdentifier;
+            pageProperties.ForceAccessProtocol = (Core.DataContracts.Enums.ForceProtocolType)(int)request.Data.ForceAccessProtocol;
             pageProperties.Language = request.Data.LanguageId.HasValue && !request.Data.LanguageId.Value.HasDefaultValue()
                                     ? repository.AsProxy<Language>(request.Data.LanguageId.Value)
                                     : null;

@@ -78,6 +78,7 @@ namespace BetterCms.Module.Api.Extensions
                             UseNoIndex = response.Data.UseNoIndex,
                             HtmlContent = response.HtmlContent,
                             MetaData = response.MetaData,
+                            Language = response.Language,
                             TechnicalInfo = response.TechnicalInfo,
                             AccessRules = response.AccessRules,
                             ChildContentsOptionValues = response.ChildContentsOptionValues

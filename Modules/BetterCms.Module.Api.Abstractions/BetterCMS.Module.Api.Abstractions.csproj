@@ -113,6 +113,7 @@
     <Compile Include="Operations\Blog\Authors\Author\SaveAuthorModel.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\DeleteBlogPostPropertiesRequest.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\DeleteBlogPostPropertiesResponse.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\LanguageModel.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\TechnicalInfoModel.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\SaveBlogPostPropertiesModel.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\PutBlogPostPropertiesRequest.cs" />
@@ -183,6 +184,7 @@
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\PutPageContentResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\DeletePagePropertiesRequest.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\DeletePagePropertiesResponse.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Properties\ForceProtocolType.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PutPagePropertiesResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PutPagePropertiesRequest.cs" />
     <Compile Include="Operations\Pages\Pages\Page\SavePagePropertiesModel.cs" />

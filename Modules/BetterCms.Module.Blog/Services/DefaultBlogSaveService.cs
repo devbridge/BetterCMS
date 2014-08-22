@@ -211,6 +211,12 @@ namespace BetterCms.Module.Blog.Services
                 entity.MetaKeywords = modelExt.MetaKeywords;
                 entity.MetaDescription = modelExt.MetaDescription;
 
+                if (modelExt.UpdateLanguage)
+                {
+                    entity.Language = modelExt.LanguageId.HasValue ? repository.AsProxy<Language>(modelExt.LanguageId.Value) : null;
+                    entity.LanguageGroupIdentifier = modelExt.LanguageGroupIdentifier;
+                }
+
                 // If creating new and content / page content / region ids are set, enforce them to be set explicitly
                 if (isNew && !model.ContentId.HasDefaultValue() && modelExt.PageContentId.HasValue && modelExt.RegionId.HasValue)
                 {

@@ -208,6 +208,7 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             session.SaveOrUpdate(blogPost.Image);
             session.SaveOrUpdate(blogPost.FeaturedImage);
             session.SaveOrUpdate(blogPost.SecondaryImage);
+            session.SaveOrUpdate(blogPost.Language);
 
             session.Flush();
             session.Clear();
@@ -234,6 +235,13 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
                     UseNoIndex = true,
                     HtmlContent = html,
                     Tags = new List<string> { TestDataProvider.ProvideRandomString(20), TestDataProvider.ProvideRandomString(20) },
+                    Language = new LanguageModel
+                                {
+                                    LanguageGroupIdentifier = Guid.NewGuid(),
+                                    Id = blogPost.Language.Id,
+                                    Code = blogPost.Language.Code,
+                                    Name = blogPost.Language.Name
+                                },
                     MetaData = new MetadataModel
                                {
                                    MetaDescription = blogPost.MetaDescription,
@@ -312,6 +320,8 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             request.Data.IncludeMetaData = true;
             request.Data.IncludeTags = true;
             request.Data.IncludeChildContentsOptions = true;
+            request.Data.IncludeLayout = true;
+            request.Data.IncludeLanguage = true;
 
             return request;
         }
@@ -340,6 +350,8 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             Assert.IsNotNull(getResponse.HtmlContent);
             Assert.IsNotNull(getResponse.Tags);
             Assert.IsNotNull(getResponse.MetaData);
+            Assert.IsNotNull(getResponse.Language);
+            Assert.IsNotNull(getResponse.Language.LanguageGroupIdentifier);
             Assert.IsNotNull(getResponse.MetaData.MetaDescription);
             Assert.IsNotNull(getResponse.MetaData.MetaKeywords);
             Assert.IsNotNull(getResponse.MetaData.MetaTitle);
@@ -401,6 +413,11 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             Assert.AreEqual(getResponse.TechnicalInfo.BlogPostContentId, model.TechnicalInfo.BlogPostContentId);
             Assert.AreEqual(getResponse.TechnicalInfo.PageContentId, model.TechnicalInfo.PageContentId);
             Assert.AreEqual(getResponse.TechnicalInfo.RegionId, model.TechnicalInfo.RegionId);
+            
+            Assert.AreEqual(getResponse.Language.Id, model.Language.Id);
+            Assert.AreEqual(getResponse.Language.LanguageGroupIdentifier, model.Language.LanguageGroupIdentifier);
+            Assert.AreEqual(getResponse.Language.Name, model.Language.Name);
+            Assert.AreEqual(getResponse.Language.Code, model.Language.Code);
 
             Assert.AreEqual(getResponse.ChildContentsOptionValues.Count, model.ChildContentsOptionValues.Count);
             model.ChildContentsOptionValues.ToList().ForEach(

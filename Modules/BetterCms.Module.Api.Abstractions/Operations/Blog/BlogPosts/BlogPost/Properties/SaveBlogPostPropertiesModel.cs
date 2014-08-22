@@ -197,6 +197,15 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// </value>
         [DataMember]
         public MetadataModel MetaData { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the language data.
+        /// </summary>
+        /// <value>
+        /// The language data.
+        /// </value>
+        [DataMember]
+        public LanguageModel Language { get; set; }
 
         /// <summary>
         /// Gets or sets the technical information (content, page content, region ids).
