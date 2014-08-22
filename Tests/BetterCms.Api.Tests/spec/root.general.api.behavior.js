@@ -23,7 +23,44 @@ describe('root.general.api.behavior', function () {
         runs(function () {
             expect(result).toBeDefinedAndNotNull('JSON object should be retrieved.');
             expect(result.data).toBeDefinedAndNotNull('JSON data object should be retrieved.');
-            expect(result.data.version).toBe("1.6.0-dev", 'Correctly filtered version should be retrieved.');
-        });               
+            expect(result.data.version).toBe("1.8.0-dev", 'Correctly filtered version should be retrieved.');
+        });
+    });
+
+    it('00001: Should login', function () {
+        var url = '/login/',
+            result,
+            ready = false,
+            onResults = function (json) {
+                result = json;
+                ready = true;
+            };
+
+        runs(function () {
+            var options = {
+                type: 'POST',
+                data: JSON.stringify({ UserName: "admin", Password: "admin" }),
+                cache: false,
+                async: false,
+                contentType: 'application/json',
+                dataType: 'json',
+                success: onResults,
+                error: onResults,
+                beforeSend: function (request) {
+                    // Hack for phantomjs runner (it ignores a regularly provided contentType).
+                    request.setRequestHeader("X-Content-Type", "application/json");
+                },
+            };
+
+            $.ajax(url, options);
+        });
+        
+        waitsFor(function() {
+            return ready;
+        }, 'The ' + url + ' timeout.');
+
+        runs(function () {
+            // Do nothing.
+        });
     });
 });

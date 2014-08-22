@@ -9,7 +9,7 @@ namespace BetterCms.Module.Installation.Models.Migrations
         {
             get
             {
-                return "bcms_" + InstallationModuleDescriptor.ModuleName;
+                return InstallationModuleDescriptor.ModuleSchemaName;
             }
         }
 

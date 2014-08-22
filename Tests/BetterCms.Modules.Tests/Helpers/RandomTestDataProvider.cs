@@ -169,6 +169,7 @@ namespace BetterCms.Tests.Helpers
             PopulateBaseFields(entity);
 
             entity.Status = ProvideRandomEnumValue<PageStatus>();
+            entity.PublishedOn = ProvideRandomDateTime();
             entity.PageUrl = ProvideRandomString(MaxLength.Url);
             entity.PageUrlHash = ProvideRandomString(MaxLength.Url).UrlHash();
             entity.Title = ProvideRandomString(MaxLength.Name);
@@ -184,6 +185,7 @@ namespace BetterCms.Tests.Helpers
             entity.Image = CreateNewMediaImage();
             entity.FeaturedImage = CreateNewMediaImage();
             entity.SecondaryImage = CreateNewMediaImage();
+            entity.Language = CreateNewLanguage();
         }
 
         public Content CreateNewContent()
@@ -419,6 +421,7 @@ namespace BetterCms.Tests.Helpers
             entity.Category = CreateNewCategory();
             entity.Name = ProvideRandomString(MaxLength.Name);
             entity.Url = ProvideRandomString(MaxLength.Url);
+            entity.PreviewUrl = ProvideRandomString(MaxLength.Url);
             entity.Status = ContentStatus.Published;
             entity.Original = null;
             entity.PublishedByUser = ProvideRandomString(MaxLength.Name);
@@ -705,6 +708,14 @@ namespace BetterCms.Tests.Helpers
             }
 
             return file;
+        }
+
+        public string CreateChildWidgetAssignment(Guid widgetId, Guid? assignmentId = null)
+        {
+            return string.Format("<widget data-id=\"{0}\" data-assign-id=\"{1}\">{2}</widget>",
+                widgetId,
+                assignmentId,
+                ProvideRandomString(20));
         }
     }
 }

@@ -311,6 +311,7 @@ describe('media.tree.api.behavior', function () {
         testFileBase(image);
         
         expect(image.title).toBe('_0000_Image_1', 'Correctly filtered title should be retrieved.');
+        expect(image.description).toBe('_0000_Image_1 description', 'Correctly filtered description should be retrieved.');
         expect(image.isArchived).toBe(false, 'Correctly filtered isArchived should be retrieved.');
     }
 
@@ -325,6 +326,7 @@ describe('media.tree.api.behavior', function () {
         testFileBase(file);
         
         expect(file.title).toBe('_0000_File_1', 'Correctly filtered title should be retrieved.');
+        expect(file.description).toBe('_0000_File_1 description', 'Correctly filtered description should be retrieved.');
         expect(file.isArchived).toBe(false, 'Correctly filtered isArchived should be retrieved.');
 
         if (includeAccessRules) {

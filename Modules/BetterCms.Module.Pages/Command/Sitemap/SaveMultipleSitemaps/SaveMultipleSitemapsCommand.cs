@@ -80,14 +80,17 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveMultipleSitemaps
 
                 if (!createNew)
                 {
-                    var sitemapQuery = Repository.AsQueryable<Models.Sitemap>().Where(s => s.Id == request.Id);
+                    var sitemapQuery = Repository.AsQueryable<Models.Sitemap>()
+                        .Where(s => s.Id == request.Id);
 
                     if (CmsConfiguration.Security.AccessControlEnabled)
                     {
                         sitemapQuery = sitemapQuery.FetchMany(f => f.AccessRules);
                     }
 
-                    sitemap = sitemapQuery.ToList().First();
+                    sitemapQuery = sitemapQuery.FetchMany(s => s.Nodes);
+
+                    sitemap = sitemapQuery.ToList().First(); // NOTE: bottleneck. TODO: remake with ToFuture to get all the sitemaps at once.
 
                     if (CmsConfiguration.Security.AccessControlEnabled)
                     {
@@ -96,7 +99,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveMultipleSitemaps
                 }
                 else
                 {
-                    sitemap = new Models.Sitemap() { AccessRules = new List<AccessRule>() };
+                    sitemap = new Models.Sitemap() { AccessRules = new List<AccessRule>(), Nodes = new List<SitemapNode>() };
                 }
 
                 sitemapsToSave.Add(new SaveModel() { Model = request, Entity = sitemap, IsNew = createNew });
@@ -109,7 +112,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveMultipleSitemaps
             foreach (var item in sitemapsToSave)
             {
                 // Save/update only sitemap nodes.
-                SaveNodeList(item.Entity, item.Model.RootNodes, null);
+                SaveNodeList(item.Entity, item.Model.RootNodes, null, item.Entity.Nodes.ToList());
             }
 
             UnitOfWork.Commit();
@@ -147,9 +150,11 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveMultipleSitemaps
         /// <summary>
         /// Saves the node list.
         /// </summary>
+        /// <param name="sitemap"></param>
         /// <param name="nodes">The nodes.</param>
         /// <param name="parentNode">The parent node.</param>
-        private void SaveNodeList(Models.Sitemap sitemap, IEnumerable<SitemapNodeViewModel> nodes, SitemapNode parentNode)
+        /// <param name="toList"></param>
+        private void SaveNodeList(Models.Sitemap sitemap, IEnumerable<SitemapNodeViewModel> nodes, SitemapNode parentNode, List<SitemapNode> nodesToSearchIn)
         {
             if (nodes == null)
             {
@@ -164,7 +169,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveMultipleSitemaps
                 var delete = !node.Id.HasDefaultValue() && isDeleted;
 
                 bool updatedInDB;
-                var sitemapNode = SaveNodeIfUpdated(out updatedInDB, sitemap, node.Id, node.Version, node.Url, node.Title, node.PageId, node.UsePageTitleAsNodeTitle, node.DisplayOrder, node.ParentId, isDeleted, parentNode);
+                var sitemapNode = SaveNodeIfUpdated(out updatedInDB, sitemap, node.Id, node.Version, node.Url, node.Title, node.PageId, node.UsePageTitleAsNodeTitle, node.DisplayOrder, node.ParentId, isDeleted, parentNode, nodesToSearchIn);
 
                 if (create && updatedInDB)
                 {
@@ -179,16 +184,16 @@ namespace BetterCms.Module.Pages.Command.Sitemap.SaveMultipleSitemaps
                     deletedNodes.Add(sitemapNode);
                 }
 
-                SaveNodeList(sitemap, node.ChildNodes, sitemapNode);
+                SaveNodeList(sitemap, node.ChildNodes, sitemapNode, nodesToSearchIn);
             }
         }
 
-        private SitemapNode SaveNodeIfUpdated(out bool nodeUpdated, Models.Sitemap sitemap, Guid nodeId, int version, string url, string title, Guid pageId, bool usePageTitleAsNodeTitle, int displayOrder, Guid parentId, bool isDeleted = false, SitemapNode parentNode = null)
+        private SitemapNode SaveNodeIfUpdated(out bool nodeUpdated, Models.Sitemap sitemap, Guid nodeId, int version, string url, string title, Guid pageId, bool usePageTitleAsNodeTitle, int displayOrder, Guid parentId, bool isDeleted = false, SitemapNode parentNode = null, List<SitemapNode> nodesToSearchIn = null)
         {
             nodeUpdated = false;
             var node = nodeId.HasDefaultValue()
                 ? new SitemapNode()
-                : Repository.First<SitemapNode>(nodeId);
+                : nodesToSearchIn != null ? nodesToSearchIn.First(n => n.Id == nodeId) : Repository.First<SitemapNode>(nodeId);
 
             if (isDeleted)
             {

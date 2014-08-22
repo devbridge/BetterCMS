@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Root;
@@ -6,6 +7,7 @@ using BetterCms.Module.Api.Operations.Root;
 namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
 {
     [DataContract]
+    [Serializable]
     public class GetBlogPostPropertiesResponse : ResponseBase<BlogPostPropertiesModel>
     {
         /// <summary>
@@ -34,6 +36,15 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// </value>
         [DataMember]
         public CategoryModel Category { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the language.
+        /// </summary>
+        /// <value>
+        /// The language.
+        /// </value>
+        [DataMember]
+        public LanguageModel Language { get; set; }
 
         /// <summary>
         /// Gets or sets the author.
@@ -90,6 +101,15 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         public MetadataModel MetaData { get; set; }
 
         /// <summary>
+        /// Gets or sets the technical information (content, page content, region ids).
+        /// </summary>
+        /// <value>
+        /// The technical information (content, page content, region ids).
+        /// </value>
+        [DataMember]
+        public TechnicalInfoModel TechnicalInfo { get; set; }
+
+        /// <summary>
         /// Gets or sets the access rules.
         /// </summary>
         /// <value>
@@ -97,5 +117,14 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// </value>
         [DataMember]
         public System.Collections.Generic.IList<AccessRuleModel> AccessRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of child contents option values.
+        /// </summary>
+        /// <value>
+        /// The list of child contents option values.
+        /// </value>
+        [DataMember]
+        public System.Collections.Generic.IList<ChildContentOptionValuesModel> ChildContentsOptionValues { get; set; }
     }
 }

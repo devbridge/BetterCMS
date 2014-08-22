@@ -6,6 +6,7 @@ using BetterCms.Module.Api.Operations.Root;
 namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
 {
     [DataContract]
+    [System.Serializable]
     public class GetFileResponse : ResponseBase<FileModel>
     {
         /// <summary>

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using Autofac;
+
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
@@ -39,7 +41,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
                     
                     var pageService = new Mock<IPageService>();
                     pageService.Setup(f => f.ValidatePageUrl(It.IsAny<string>(), It.IsAny<Guid?>()));
-                    pageService.Setup(f => f.CreatePagePermalink(It.IsAny<string>(), It.IsAny<string>())).Returns(url);
+                    pageService.Setup(f => f.CreatePagePermalink(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<Guid>())).Returns(url);
 
                     var urlService = new Mock<IUrlService>();
                     urlService.Setup(f => f.FixUrl(It.IsAny<string>())).Returns(url);
@@ -51,7 +53,8 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
                     rules.Add(rule2);
 
                     var pageCloningService = new DefaultPageCloneService(pageService.Object, urlService.Object, 
-                        new Mock<ISecurityService>().Object, new Mock<IAccessControlService>().Object, repository, uow);
+                        new Mock<ISecurityService>().Object, new Mock<IAccessControlService>().Object, repository, uow, 
+                        Container.Resolve<ICmsConfiguration>());
 
                     var command = new ClonePageCommand(pageCloningService);
                     command.Repository = repository;

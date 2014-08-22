@@ -9,7 +9,7 @@ namespace BetterCms.Module.MediaManager.Models.Migrations
         {
             get
             {
-                return "bcms_" + MediaManagerModuleDescriptor.ModuleName;
+                return MediaManagerModuleDescriptor.MediaManagerSchemaName;
             }
         }
 

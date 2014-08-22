@@ -164,6 +164,7 @@ describe('media.files.api.behavior', function () {
             var file = result.data.items[0];
             api.expectBasePropertiesAreNotNull(file);
             expect(file.title).toBe('_0001_File_For_Tests', 'Correctly filtered title should be retrieved.');
+            expect(file.description).toBe('File Description', 'Correctly filtered description should be retrieved.');
             expect(file.mediaContentType).toBe('File', 'Correctly filtered mediaContentType should be retrieved.');
             expect(file.fileExtension).toBe('.png', 'Correctly filtered fileExtension should be retrieved.');
             expect(file.fileSize).toBe(92217, 'Correctly filtered fileSize should be retrieved.');
@@ -327,6 +328,7 @@ describe('media.files.api.behavior', function () {
                     { field: 'Version', value: '6' },
                     
                     { field: 'Title', value: '03110' },
+                    { field: 'Description', value: 'description' },
                     { field: 'MediaContentType', value: 'File' },
                     { field: 'FileExtension', value: '.jpg' },
                     { field: 'FileSize', value: 9901 },
@@ -501,6 +503,23 @@ describe('media.files.api.behavior', function () {
             expect(result.data.items[1].title).toBe('03112: for all', 'Correctly filtered data.items[1].title should be retrieved.');
             expect(result.data.items[2].title).toBe('03112: only for admin 2', 'Correctly filtered data.items[2].title should be retrieved.');
             expect(result.data.items[3].title).toBe('03112: only for role role1', 'Correctly filtered data.items[3].title should be retrieved.');
+        });
+    });
+
+    it('03113: Should test CRUD for files.', function () {
+        api.testCrud(runs, waitsFor, expect, "4ef65c378a9f4a2f90b5a20600816711", "/bcms-api/files/", {
+            getPostData: function (json) {
+                json.data.title = api.createGuid();
+                json.data.publicUrl = "/" + api.createGuid();
+                json.data.version = 0;
+                return json.data;
+            },
+            getPutData: function (json) {
+                json.data.title = api.createGuid();
+                json.data.publicUrl = "/" + api.createGuid();
+                json.data.version = 0;
+                return json.data;
+            }
         });
     });
 

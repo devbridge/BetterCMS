@@ -13,9 +13,13 @@
 
 @model BetterCms.Module.Blog.ViewModels.Filter.BlogsGridViewModel<SiteSettingBlogPostViewModel>
 @{
+    var controller = (CmsControllerBase)ViewContext.Controller;
+    var canEdit = controller.SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent);
+    var canPublish = controller.SecurityService.IsAuthorized(RootModuleConstants.UserRoles.PublishContent);
+    
     Action<ColumnBuilder<SiteSettingBlogPostViewModel>> columns = column =>
     {
-        if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent)))
+        if (canEdit || canPublish)
         {
             column.EditButtonColumn();
         }
@@ -45,13 +49,13 @@
            .SortColumnName("ModifiedByUser")
            .Attributes(@class => "bcms-blog-ModifiedByUser");
 
-        column.For(m => Html.EditorFor(e => m.PageStatus, "PageStatus"))
+        column.For(m => Html.EditorFor(e => m.Status, "PageStatus"))
            .Named(BlogGlobalization.SiteSettings_Blogs_PageStatusColumn)
-           .SortColumnName("PageStatus")
+           .SortColumnName("Status")
            .HeaderAttributes(@style => "width: 65px; text-align: center")
            .Attributes(@class => "bcms-blog-IsPublished");
 
-        if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))
+        if (controller.SecurityService.IsAuthorized(RootModuleConstants.UserRoles.DeleteContent))
         {
             column.DeleteButtonColumn();
         }
@@ -67,13 +71,21 @@
     @Html.HiddenGridOptions(Model.GridOptions)
 
     <div class="bcms-top-block-holder">
-        @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.EditContent))
-        {
-            <div class="bcms-btn-links-main" id="bcms-create-blog-button">@BlogGlobalization.SiteSettings_Blogs_AddNew</div>
-        }
-        else
-        {
-            <div class="bcms-btn-links-main">&nbsp;</div>
+        @{
+            if (canEdit)
+            {
+                <div class="bcms-btn-links-main" id="bcms-create-blog-button">@BlogGlobalization.SiteSettings_Blogs_AddNew</div>
+            }
+            else
+            {
+                <div class="bcms-btn-links-main">&nbsp;</div>
+            }
+
+            if (canPublish && canEdit)
+            {
+                <div class="bcms-btn-links-main" id="bcms-import-blogs">@BlogGlobalization.SiteSettings_Blogs_Import</div>
+                <div class="bcms-btn-links-main" id="bcms-export-blogs">@BlogGlobalization.SiteSettings_Blogs_Export</div>
+            }
         }
 
         <div class="bcms-search-block">

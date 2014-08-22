@@ -59,10 +59,13 @@ describe('pages.widgets.api.behavior', function () {
     it('01201: Should get an html content widget by id', function () {
         var url = '/bcms-api/widgets/html-content/fa0cbcfb96454fcfa576a205009119c8',
             result,
-            ready = false;
+            ready = false,
+            data = {
+                includeChildContentsOptions: true
+            };
 
         runs(function () {
-            api.get(url, null, function (json) {
+            api.get(url, data, function (json) {
                 result = json;
                 ready = true;
             });
@@ -78,6 +81,8 @@ describe('pages.widgets.api.behavior', function () {
             var widget = result.data;
             expect(widget).toBeDefinedAndNotNull('JSON data object should be retrieved.');
             api.expectBasePropertiesAreNotNull(widget);
+
+            var substring = '_0004_Html_Widget_2 HTML';
             expect(widget.name).toBe('_0004_Html_Widget_2', 'Correctly filtered name should be retrieved.');
             expect(widget.isPublished).toBe(true, 'Correctly filtered isPublished should be retrieved.');
             expect(widget.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
@@ -86,10 +91,35 @@ describe('pages.widgets.api.behavior', function () {
             expect(widget.categoryName).toBe('Category for _0004_Html_Widget_2', 'Correctly filtered categoryName should be retrieved.');
             expect(widget.customCss).toBe('custom css', 'Correctly filtered customCss should be retrieved.');
             expect(widget.useCustomCss).toBe(true, 'Correctly filtered useCustomCss should be retrieved.');
-            expect(widget.html).toBe('_0004_Html_Widget_2 HTML', 'Correctly filtered html should be retrieved.');
+            expect(widget.html.substring(0, substring.length)).toBe(substring, 'Correctly filtered html should be retrieved.');
             expect(widget.useHtml).toBe(true, 'Correctly filtered useHtml should be retrieved.');
             expect(widget.customJavaScript).toBe("console.log('test')", 'Correctly filtered customJavaScript should be retrieved.');
             expect(widget.useCustomJavaScript).toBe(true, 'Correctly filtered useCustomJavaScript should be retrieved.');
+
+            expect(result.childContentsOptionValues).toBeDefinedAndNotNull('Correct childContentsOptionValues should be retrieved.');
+            expect(result.childContentsOptionValues.length).toBe(2, 'Correct childContentsOptionValues.length should be retrieved.');
+
+            var child = result.childContentsOptionValues[1];
+            expect(child.assignmentIdentifier).toBe('fde11eb4f67741e089ff37de5ad73fab', 'Correctly filtered childContentsOptionValues[1].assignmentIdentifier should be retrieved');
+            expect(child.optionValues).toBeDefinedAndNotNull('Correctly filtered childContentsOptionValues[1].optionValues should be retrieved');
+            expect(child.optionValues.length).toBe(2, 'The length of childContentsOptionValues[1].optionValues array should be 2');
+            expect(child.optionValues[1].key).toBe('O3', 'Correctly filtered childContentsOptionValues[1].optionValues[1].key should be retrieved');
+            expect(child.optionValues[1].value).toBe('902c287b-9eef-4de1-8975-a20601052b9a', 'Correctly filtered childContentsOptionValues[1].optionValues[1].value should be retrieved');
+            expect(child.optionValues[1].defaultValue).toBe('0dbf035e-a1b8-4fe1-ba61-a20500fb8491', 'Correctly filtered childContentsOptionValues[1].optionValues[1].defaultValue should be retrieved');
+            expect(child.optionValues[1].type).toBe('Custom', 'Correctly filtered childContentsOptionValues[1].optionValues[1].type should be retrieved');
+            expect(child.optionValues[1].useDefaultValue).toBe(false, 'Correctly filtered childContentsOptionValues[1].optionValues[1].useDefaultValue should be retrieved');
+            expect(child.optionValues[1].customTypeIdentifier).toBe('media-images-folder', 'Correctly filtered childContentsOptionValues[1].optionValues[1].customTypeIdentifier should be retrieved');
+
+            child = result.childContentsOptionValues[0];
+            expect(child.assignmentIdentifier).toBe('f156028886d645d18ba92bb6dea3a96f', 'Correctly filtered childContentsOptionValues[0].assignmentIdentifier should be retrieved');
+            expect(child.optionValues).toBeDefinedAndNotNull('Correctly filtered childContentsOptionValues[0].optionValues should be retrieved');
+            expect(child.optionValues.length).toBe(1, 'The length of childContentsOptionValues[0].optionValues array should be 1');
+            expect(child.optionValues[0].key).toBe('O1', 'Correctly filtered childContentsOptionValues[0].optionValues[0].key should be retrieved');
+            expect(child.optionValues[0].value).toBe('V1', 'Correctly filtered childContentsOptionValues[0].optionValues[0].value should be retrieved');
+            expect(child.optionValues[0].defaultValue).toBeNull('Correctly filtered childContentsOptionValues[0].optionValues[0].defaultValue should be retrieved');
+            expect(child.optionValues[0].type).toBe('Text', 'Correctly filtered childContentsOptionValues[0].optionValues[0].type should be retrieved');
+            expect(child.optionValues[0].useDefaultValue).toBe(false, 'Correctly filtered childContentsOptionValues[0].optionValues[0].useDefaultValue should be retrieved');
+            expect(child.optionValues[0].customTypeIdentifier).toBeNull('Correctly filtered childContentsOptionValues[0].optionValues[0].customTypeIdentifier should be retrieved');
         });
     });
     
@@ -256,7 +286,8 @@ describe('pages.widgets.api.behavior', function () {
                 where: [
                     { field: 'Key', value: 'Option 2' },
                     { field: 'DefaultValue', value: '18' },
-                    { field: 'Type', value: 'Integer' }
+                    { field: 'Type', value: 'Integer' },
+                    { field: 'CustomTypeIdentifier', value: null }
                 ]
             }
         };
@@ -339,7 +370,8 @@ describe('pages.widgets.api.behavior', function () {
                 where: [
                     { field: 'Key', value: 'Option 2' },
                     { field: 'DefaultValue', value: '1208' },
-                    { field: 'Type', value: 'Integer' }
+                    { field: 'Type', value: 'Integer' },
+                    { field: 'CustomTypeIdentifier', value: null }
                 ]
             }
         };
@@ -365,6 +397,26 @@ describe('pages.widgets.api.behavior', function () {
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
             expect(data.filter.where.length).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
+        });
+    });
+
+    it('01209: Should test CRUD for html content widgets.', function () {
+        api.testCrud(runs, waitsFor, expect, "fa0cbcfb96454fcfa576a205009119c8", "/bcms-api/widgets/html-content/", {
+            getPostData: function (json) {
+                json.data.name = api.createGuid();
+                json.data.version = 0;
+                return json.data;
+            }
+        });
+    });
+
+    it('01210: Should test CRUD for server control widgets.', function () {
+        api.testCrud(runs, waitsFor, expect, "3ac115dfc5f34f148141a205009162cd", "/bcms-api/widgets/server-control/", {
+            getPostData: function (json) {
+                json.data.name = api.createGuid();
+                json.data.version = 0;
+                return json.data;
+            }
         });
     });
 });

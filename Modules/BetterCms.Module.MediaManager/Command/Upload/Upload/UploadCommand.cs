@@ -1,5 +1,8 @@
-﻿using BetterCms.Core.Exceptions;
+﻿using System.IO;
+
+using BetterCms.Core.Exceptions;
 using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root.Mvc;
@@ -15,12 +18,22 @@ namespace BetterCms.Module.MediaManager.Command.Upload.Upload
         public IMediaVideoService MediaVideoService { get; set; }
 
         public IMediaAudioService MediaAudioService { get; set; }
+        
+        public ICmsConfiguration CmsConfiguration { get; set; }
 
         public MediaFile Execute(UploadFileRequest request)
-        {            
+        {
+            var maxLength = CmsConfiguration.Storage.MaximumFileNameLength > 0 ? CmsConfiguration.Storage.MaximumFileNameLength : 100;
+
+            var fileName = request.FileName;
+            if (fileName.Length > maxLength)
+            {
+                fileName = string.Concat(Path.GetFileNameWithoutExtension(fileName.Substring(0, maxLength)), Path.GetExtension(fileName));
+            }
+
             if (request.Type == MediaType.File || request.Type == MediaType.Audio || request.Type == MediaType.Video)
             {
-                var media = MediaFileService.UploadFile(request.Type, request.RootFolderId, request.FileName, request.FileLength, request.FileStream);
+                var media = MediaFileService.UploadFile(request.Type, request.RootFolderId, fileName, request.FileLength, request.FileStream);
 
                 Events.MediaManagerEvents.Instance.OnMediaFileUploaded(media);
 
@@ -29,7 +42,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.Upload
 
             if (request.Type == MediaType.Image)
             {
-                var media = MediaImageService.UploadImage(request.RootFolderId, request.FileName, request.FileLength, request.FileStream, request.ReuploadMediaId);
+                var media = MediaImageService.UploadImage(request.RootFolderId, fileName, request.FileLength, request.FileStream, request.ReuploadMediaId);
                 
                 Events.MediaManagerEvents.Instance.OnMediaFileUploaded(media);
 

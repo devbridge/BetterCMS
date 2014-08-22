@@ -369,9 +369,6 @@
   <data name="EditPageProperties_BasicPropertiesTab_AddCategories_Tooltip_Description" xml:space="preserve">
     <value>Add Categories</value>
   </data>
-  <data name="TagsTemplate_AddTags_Title" xml:space="preserve">
-    <value>Add Tags</value>
-  </data>
   <data name="EditPageProperties_BasicPropertiesTab_AddTags_Tooltip_Description" xml:space="preserve">
     <value>Add tags to this page to identify it with related pages.</value>
   </data>
@@ -1328,5 +1325,41 @@
   </data>
   <data name="Pages_List_Title" xml:space="preserve">
     <value>Pages</value>
+  </data>
+  <data name="SiteSettings_Widgets_Usage" xml:space="preserve">
+    <value>Find usages</value>
+  </data>
+  <data name="SiteSettings_Widgets_PagesUsingWidget_Title" xml:space="preserve">
+    <value>Widget usages</value>
+  </data>
+  <data name="Widgets_SelectWidget_DialogTitle" xml:space="preserve">
+    <value>Select Widget</value>
+  </data>
+  <data name="ChildWidgetOptions_Dialog_Title" xml:space="preserve">
+    <value>Edit child widget options</value>
+  </data>
+  <data name="WidgetUsages_Dialog_Title" xml:space="preserve">
+    <value>Widget Usages</value>
+  </data>
+  <data name="WidgetUsages_Type_HtmlWidget" xml:space="preserve">
+    <value>HTML Widget</value>
+  </data>
+  <data name="WidgetUsages_Type_Page" xml:space="preserve">
+    <value>Page</value>
+  </data>
+  <data name="WidgetUsages_Title_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="WidgetUsages_Type_Title" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="EditPageProperties_ForceProtocol_Title" xml:space="preserve">
+    <value>Force Page Access Protocol</value>
+  </data>
+  <data name="EditPageProperties_ForceProtocol_Tooltip_Description" xml:space="preserve">
+    <value>Select protocol forcing if it is required that page must be server only via one protocol.&lt;br/&gt;&lt;strong&gt;Warning:&lt;/strong&gt; selected forced protocol must be properly configured in website hosting environment.</value>
+  </data>
+  <data name="WidgetUsages_Type_MasterPage" xml:space="preserve">
+    <value>Master page</value>
   </data>
 </root>

@@ -33,9 +33,12 @@ namespace BetterCms.Module.Pages.Services
         private readonly IRepository repository;
         
         private readonly IUnitOfWork unitOfWork;
+        
+        private readonly ICmsConfiguration cmsConfiguration;
 
         public DefaultPageCloneService(IPageService pageService, IUrlService urlService, ISecurityService securityService, 
-            IAccessControlService accessControlService, IRepository repository, IUnitOfWork unitOfWork)
+            IAccessControlService accessControlService, IRepository repository, IUnitOfWork unitOfWork,
+            ICmsConfiguration cmsConfiguration)
         {
             this.pageService = pageService;
             this.urlService = urlService;
@@ -43,6 +46,7 @@ namespace BetterCms.Module.Pages.Services
             this.accessControlService = accessControlService;
             this.unitOfWork = unitOfWork;
             this.repository = repository;
+            this.cmsConfiguration = cmsConfiguration;
         }
 
         public PageProperties ClonePage(System.Guid pageId, string pageTitle, string pageUrl, IEnumerable<IAccessRule> userAccessList, bool cloneAsMasterPage)
@@ -72,7 +76,7 @@ namespace BetterCms.Module.Pages.Services
             // Create / fix page url
             if (pageUrl == null && !string.IsNullOrWhiteSpace(pageTitle))
             {
-                pageUrl = pageService.CreatePagePermalink(pageTitle, null);
+                pageUrl = pageService.CreatePagePermalink(pageTitle, null, pageId, languageId);
             }
             else
             {
@@ -97,6 +101,8 @@ namespace BetterCms.Module.Pages.Services
 
             // Detach page to avoid duplicate saving.            
             repository.Detach(page);
+            repository.Detach(page.MasterPage);
+            page.MasterPages.ForEach(mp => repository.Detach(mp.Master));
             page.PageContents.ForEach(repository.Detach);
             page.PageTags.ForEach(repository.Detach);
             page.Options.ForEach(repository.Detach);
@@ -129,10 +135,13 @@ namespace BetterCms.Module.Pages.Services
             {
                 newPage.LanguageGroupIdentifier = null;
             }
+
             repository.Save(newPage);
 
             // Clone contents.
-            pageContents.ForEach(pageContent => ClonePageContent(pageContent, newPage));
+            var createdContents = new List<Root.Models.Content>();
+            var createdPageContents = new List<PageContent>();
+            pageContents.ForEach(pageContent => ClonePageContent(pageContent, newPage, ref createdContents, ref createdPageContents));
 
             // Clone tags.
             pageTags.ForEach(pageTag => ClonePageTags(pageTag, newPage));
@@ -144,15 +153,26 @@ namespace BetterCms.Module.Pages.Services
             masterPages.ForEach(masterPage => CloneMasterPages(masterPage, newPage));
 
             // Set language identifier for parent page, if it hasn't and child is cloned from the parent.
+            var parentChanged = false;
             if (languageGroupIdentifier.HasValue && !page.LanguageGroupIdentifier.HasValue)
             {
                 page.LanguageGroupIdentifier = languageGroupIdentifier.Value;
+                parentChanged = true;
                 repository.Save(page);
             }
 
             unitOfWork.Commit();
 
+            // Fire events. (NOTE: do not change event order!!!)
             Events.PageEvents.Instance.OnPageCloned(newPage);
+            createdContents.Where(c => c is HtmlContent).ForEach(c => Events.PageEvents.Instance.OnHtmlContentCreated((HtmlContent)c));
+            createdPageContents.ForEach(Events.PageEvents.Instance.OnPageContentInserted);
+
+            // Fire event about parent page changes
+            if (parentChanged)
+            {
+                Events.PageEvents.Instance.OnPagePropertiesChanged(page);
+            }
 
             return newPage;
         }
@@ -201,6 +221,7 @@ namespace BetterCms.Module.Pages.Services
 
             if (newPage.IsMasterPage)
             {
+                newPage.ForceAccessProtocol = ForceProtocolType.None;
                 newPage.Status = PageStatus.Published;
                 newPage.Language = null;
             }
@@ -216,13 +237,13 @@ namespace BetterCms.Module.Pages.Services
         /// </summary>
         /// <param name="pageContent">Content of the page.</param>
         /// <param name="newPage">The new page.</param>
-        private void ClonePageContent(PageContent pageContent, PageProperties newPage)
+        private void ClonePageContent(PageContent pageContent, PageProperties newPage, ref List<Root.Models.Content> createdContents, ref List<PageContent> createdPageContents)
         {
             var newPageContent = new PageContent();
             newPageContent.Page = newPage;
             newPageContent.Order = pageContent.Order;
             newPageContent.Region = pageContent.Region;
-
+            createdPageContents.Add(newPageContent);
             if (pageContent.Content is HtmlContentWidget || pageContent.Content is ServerControlWidget)
             {
                 // Do not need to clone widgets.
@@ -231,6 +252,7 @@ namespace BetterCms.Module.Pages.Services
             else
             {
                 newPageContent.Content = pageContent.Content.Clone();
+                createdContents.Add(newPageContent.Content);
 
                 var draft = pageContent.Content.History.FirstOrDefault(c => c.Status == ContentStatus.Draft && !c.IsDeleted);
                 if (pageContent.Content.Status == ContentStatus.Published && draft != null)
@@ -244,6 +266,7 @@ namespace BetterCms.Module.Pages.Services
                     draftClone.Original = newPageContent.Content;
                     newPageContent.Content.History.Add(draftClone);
                     repository.Save(draftClone);
+                    createdContents.Add(draftClone);
                 }
             }
 
@@ -272,20 +295,27 @@ namespace BetterCms.Module.Pages.Services
 
         private void AddAccessRules(PageProperties newPage, IEnumerable<IAccessRule> userAccess)
         {
-            if (userAccess == null)
+            if (cmsConfiguration.Security.AccessControlEnabled)
             {
-                return;
+                accessControlService.UpdateAccessControl(newPage, userAccess != null ? userAccess.ToList() : new List<IAccessRule>());
             }
-
-            newPage.AccessRules = new List<AccessRule>();
-            foreach (var rule in userAccess)
+            else
             {
-                newPage.AccessRules.Add(new AccessRule
+                if (userAccess == null)
                 {
-                    Identity = rule.Identity,
-                    AccessLevel = rule.AccessLevel,
-                    IsForRole = rule.IsForRole
-                });
+                    return;
+                }
+
+                newPage.AccessRules = new List<AccessRule>();
+                foreach (var rule in userAccess)
+                {
+                    newPage.AccessRules.Add(new AccessRule
+                    {
+                        Identity = rule.Identity,
+                        AccessLevel = rule.AccessLevel,
+                        IsForRole = rule.IsForRole
+                    });
+                }
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
@@ -6,6 +7,7 @@ using BetterCms.Module.Api.Infrastructure;
 namespace BetterCms.Module.Api.Operations.Users.Users.User
 {
     [DataContract]
+    [Serializable]
     public class GetUserResponse : ResponseBase<UserModel>
     {
         /// <summary>

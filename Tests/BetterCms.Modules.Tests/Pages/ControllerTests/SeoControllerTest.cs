@@ -73,7 +73,8 @@ namespace BetterCms.Test.Module.Pages.ControllerTests
             Mock<ISitemapService> sitemapService = new Mock<ISitemapService>();
             Mock<ISecurityService> securityService = new Mock<ISecurityService>();
             Mock<IUrlService> urlService = new Mock<IUrlService>();
-            Mock<SavePageSeoCommand> savePageSeoCommandMock = new Mock<SavePageSeoCommand>(redirectService.Object, pageService.Object, sitemapService.Object, urlService.Object);
+            Mock<ICmsConfiguration> cmsConfiguration = new Mock<ICmsConfiguration>();
+            Mock<SavePageSeoCommand> savePageSeoCommandMock = new Mock<SavePageSeoCommand>(redirectService.Object, pageService.Object, sitemapService.Object, urlService.Object, cmsConfiguration.Object);
 
             savePageSeoCommandMock.SetupGet(x => x.SecurityService).Returns(securityService.Object);
             savePageSeoCommandMock.Setup(f => f.Execute(It.IsAny<EditSeoViewModel>())).Returns(new EditSeoViewModel()).Verifiable();

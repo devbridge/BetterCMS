@@ -9,7 +9,7 @@ namespace BetterCms.Module.Search.Models.Migrations
         {
             get
             {
-                return "bcms_" + SearchModuleDescriptor.ModuleName;
+                return SearchModuleDescriptor.SearchSchemaName;
             }
         }
 

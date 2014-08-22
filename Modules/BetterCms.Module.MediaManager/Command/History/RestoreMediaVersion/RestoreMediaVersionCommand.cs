@@ -30,6 +30,9 @@ namespace BetterCms.Module.MediaManager.Command.History.RestoreMediaVersion
                 original.PublishedOn = DateTime.Now;
                 Repository.Save(original);
                 UnitOfWork.Commit();
+
+                Events.MediaManagerEvents.Instance.OnMediaRestored(original);
+
                 return true;
             }
 

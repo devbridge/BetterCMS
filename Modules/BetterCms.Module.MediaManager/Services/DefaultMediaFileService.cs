@@ -93,18 +93,6 @@ namespace BetterCms.Module.MediaManager.Services
             {
                 if (file.IsUploaded.HasValue && file.IsUploaded.Value)
                 {
-                    /*Task removeFile = 
-                            new Task(() =>
-                            {
-                                storageService.RemoveObject(file.FileUri);
-                            })
-                            .ContinueWith(task =>
-                            {
-                                storageService.RemoveFolder(file.FileUri);
-                            });
-
-                    removeFile.Start();*/
-
                     Task.Factory
                         .StartNew(() => {})
                         .ContinueWith(task =>
@@ -251,6 +239,7 @@ namespace BetterCms.Module.MediaManager.Services
                             updateMediaAfterUpload(media);
                             session.SaveOrUpdate(media);
                             session.Flush();
+                            Events.MediaManagerEvents.Instance.OnMediaFileUpdated(media);
                         });
                     }
                     else
@@ -261,6 +250,7 @@ namespace BetterCms.Module.MediaManager.Services
                             updateMediaAfterFail(media);
                             session.SaveOrUpdate(media);
                             session.Flush();
+                            Events.MediaManagerEvents.Instance.OnMediaFileUpdated(media);
                         });
 
                         // Log exception

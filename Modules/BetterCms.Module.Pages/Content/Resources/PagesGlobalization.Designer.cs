@@ -403,6 +403,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit child widget options.
+        /// </summary>
+        public static string ChildWidgetOptions_Dialog_Title {
+            get {
+                return ResourceManager.GetString("ChildWidgetOptions_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clone the current page as a master page.
         /// </summary>
         public static string ClonePage_Dialog_AsMasterPage {
@@ -1560,6 +1569,24 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string EditPageProperties_EditMasterPage_Title {
             get {
                 return ResourceManager.GetString("EditPageProperties_EditMasterPage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Force Page Access Protocol.
+        /// </summary>
+        public static string EditPageProperties_ForceProtocol_Title {
+            get {
+                return ResourceManager.GetString("EditPageProperties_ForceProtocol_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select protocol forcing if it is required that page must be server only via one protocol.&lt;br/&gt;&lt;strong&gt;Warning:&lt;/strong&gt; selected forced protocol must be properly configured in website hosting environment..
+        /// </summary>
+        public static string EditPageProperties_ForceProtocol_Tooltip_Description {
+            get {
+                return ResourceManager.GetString("EditPageProperties_ForceProtocol_Tooltip_Description", resourceCulture);
             }
         }
         
@@ -3346,6 +3373,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Widget usages.
+        /// </summary>
+        public static string SiteSettings_Widgets_PagesUsingWidget_Title {
+            get {
+                return ResourceManager.GetString("SiteSettings_Widgets_PagesUsingWidget_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Register +.
         /// </summary>
         public static string SiteSettings_Widgets_RegisterNew {
@@ -3382,6 +3418,15 @@ namespace BetterCms.Module.Pages.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Find usages.
+        /// </summary>
+        public static string SiteSettings_Widgets_Usage {
+            get {
+                return ResourceManager.GetString("SiteSettings_Widgets_Usage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Widgets.
         /// </summary>
         public static string SiteSettings_WidgetsMenuItem {
@@ -3414,15 +3459,6 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string SortPageContent_Info_Message {
             get {
                 return ResourceManager.GetString("SortPageContent_Info_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add Tags.
-        /// </summary>
-        public static string TagsTemplate_AddTags_Title {
-            get {
-                return ResourceManager.GetString("TagsTemplate_AddTags_Title", resourceCulture);
             }
         }
         
@@ -3693,6 +3729,69 @@ namespace BetterCms.Module.Pages.Content.Resources {
         public static string Widgets_CanNotDeleteWidgetIsInUse_Message {
             get {
                 return ResourceManager.GetString("Widgets_CanNotDeleteWidgetIsInUse_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Widget.
+        /// </summary>
+        public static string Widgets_SelectWidget_DialogTitle {
+            get {
+                return ResourceManager.GetString("Widgets_SelectWidget_DialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Widget Usages.
+        /// </summary>
+        public static string WidgetUsages_Dialog_Title {
+            get {
+                return ResourceManager.GetString("WidgetUsages_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string WidgetUsages_Title_Title {
+            get {
+                return ResourceManager.GetString("WidgetUsages_Title_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HTML Widget.
+        /// </summary>
+        public static string WidgetUsages_Type_HtmlWidget {
+            get {
+                return ResourceManager.GetString("WidgetUsages_Type_HtmlWidget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Master page.
+        /// </summary>
+        public static string WidgetUsages_Type_MasterPage {
+            get {
+                return ResourceManager.GetString("WidgetUsages_Type_MasterPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page.
+        /// </summary>
+        public static string WidgetUsages_Type_Page {
+            get {
+                return ResourceManager.GetString("WidgetUsages_Type_Page", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string WidgetUsages_Type_Title {
+            get {
+                return ResourceManager.GetString("WidgetUsages_Type_Title", resourceCulture);
             }
         }
     }

@@ -1,8 +1,10 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Exists
 {
     [DataContract]
+    [Serializable]
     public class PageModel
     {
         /// <summary>
@@ -21,6 +23,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Exists
         /// The existing page id.
         /// </value>
         [DataMember]
-        public System.Guid? PageId { get; set; }
+        public Guid? PageId { get; set; }
     }
 }

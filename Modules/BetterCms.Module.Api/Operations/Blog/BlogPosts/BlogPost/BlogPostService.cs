@@ -4,8 +4,10 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
+
 using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
 using BetterCms.Module.Api.Operations.Pages.Contents.Content.BlogPostContent;
+
 using BetterCms.Module.MediaManager.Services;
 
 using ServiceStack.ServiceInterface;
@@ -22,7 +24,8 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
         
         private readonly IBlogPostContentService contentService;
 
-        public BlogPostService(IBlogPostPropertiesService propertiesService, IBlogPostContentService contentService, IRepository repository, IMediaFileUrlResolver fileUrlResolver)
+        public BlogPostService(IBlogPostPropertiesService propertiesService, IBlogPostContentService contentService,
+            IRepository repository, IMediaFileUrlResolver fileUrlResolver)
         {
             this.propertiesService = propertiesService;
             this.contentService = contentService;
@@ -60,7 +63,11 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
                         MainImageCaption = blogPost.Image != null && !blogPost.Image.IsDeleted ? blogPost.Image.Caption : null,
                         ActivationDate = blogPost.ActivationDate,
                         ExpirationDate = blogPost.ExpirationDate,
-                        IsArchived = blogPost.IsArchived
+                        IsArchived = blogPost.IsArchived,
+                        UseCanonicalUrl = blogPost.UseCanonicalUrl,
+                        LanguageId = blogPost.Language != null ? blogPost.Language.Id : (Guid?)null,
+                        LanguageCode = blogPost.Language != null ? blogPost.Language.Code : null,
+                        LanguageGroupIdentifier = blogPost.LanguageGroupIdentifier
                     })
                 .FirstOne();
 

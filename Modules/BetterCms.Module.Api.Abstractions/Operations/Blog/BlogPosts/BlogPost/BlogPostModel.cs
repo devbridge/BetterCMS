@@ -5,6 +5,7 @@ using BetterCms.Module.Api.Infrastructure;
 namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
 {
     [DataContract]
+    [System.Serializable]
     public class BlogPostModel : ModelBase
     {
         /// <summary>
@@ -125,7 +126,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
         public string MainImageUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the main image thumbnauil URL.
+        /// Gets or sets the main image thumbnail URL.
         /// </summary>
         /// <value>
         /// The main image thumbnauil URL.
@@ -168,5 +169,41 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
         /// </value>
         [DataMember]
         public bool IsArchived { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to use canonical URL.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to use canonical URL; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool UseCanonicalUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language id.
+        /// </summary>
+        /// <value>
+        /// The language id.
+        /// </value>
+        [DataMember]
+        public System.Guid? LanguageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language code.
+        /// </summary>
+        /// <value>
+        /// The language code.
+        /// </value>
+        [DataMember]
+        public string LanguageCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language group identifier.
+        /// </summary>
+        /// <value>
+        /// The language group identifier.
+        /// </value>
+        [DataMember]
+        public System.Guid? LanguageGroupIdentifier { get; set; }
     }
 }

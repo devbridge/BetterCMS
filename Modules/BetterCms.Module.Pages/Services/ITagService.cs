@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using BetterCms.Core.DataContracts;
+using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 
@@ -38,5 +39,13 @@ namespace BetterCms.Module.Pages.Services
         /// <param name="tags">The tags.</param>
         /// <param name="newTags">The new tags.</param>
         void SaveTags(Sitemap sitemap, IList<string> tags, out IList<Tag> newTags);
+
+        /// <summary>
+        /// Saves the media tags.
+        /// </summary>
+        /// <param name="media">The media.</param>
+        /// <param name="tags">The tags.</param>
+        /// <param name="newTags">The new tags.</param>
+        void SaveMediaTags(Media media, IList<string> tags, out IList<Tag> newTags);
     }
 }

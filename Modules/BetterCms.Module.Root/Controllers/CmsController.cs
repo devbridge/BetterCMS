@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 
 using BetterCms.Configuration;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Attributes;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services.Caching;
@@ -103,10 +104,40 @@ namespace BetterCms.Module.Root.Controllers
 
                         ViewBag.pageId = model.RenderPage.Id;
 
+                        // Force protocol.
+                        switch (model.RenderPage.ForceAccessProtocol)
+                        {
+                            case ForceProtocolType.ForceHttp:
+                                if (Request.Url.Scheme.Equals("https"))
+                                {
+                                    Response.Redirect(Request.Url.AbsoluteUri.Replace("https://", "http://"));
+                                    return null;
+                                }
+                                break;
+                            case ForceProtocolType.ForceHttps:
+                                if (!Request.Url.Scheme.Contains("https"))
+                                {
+                                    Response.Redirect(Request.Url.AbsoluteUri.Replace("http://", "https://"));
+                                    return null;
+                                }
+                                break;
+                        }
+
                         if (!HasCurrentPrincipalAccess(model.RenderPage))
                         {
+                            try
+                            {
+                                // Pre-renders the given request model.
+                                this.RenderPageToString(model.RenderPage);
+                            }
+                            catch (Exception ex)
+                            {
+                               log.FatalFormat("Failed to pre-render the request model {0}.", ex, model.RenderPage);
+                            }
+                            
                             Response.StatusCode = 403;
                             LogAccessForbidden(model.RenderPage);
+
                             return Content("403 Access Forbidden", "text/plain");
                         }
 

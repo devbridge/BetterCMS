@@ -8,5 +8,15 @@ namespace BetterCms.Module.Api.Operations.Users.Roles.Role
         {
             throw new CmsException(UsersApiConstants.UsersApiHasNoImplementationMessage);
         }
+
+        public PutRoleResponse Put(PutRoleRequest request)
+        {
+            throw new CmsException(UsersApiConstants.UsersApiHasNoImplementationMessage);
+        }
+
+        public DeleteRoleResponse Delete(DeleteRoleRequest request)
+        {
+            throw new CmsException(UsersApiConstants.UsersApiHasNoImplementationMessage);
+        }
     }
 }

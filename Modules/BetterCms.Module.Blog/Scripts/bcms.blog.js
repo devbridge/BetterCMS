@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'bcms.ko.extenders', 'bcms.media', 'bcms.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect', 'bcms.pages.history', 'bcms.preview', 'bcms.security', 'bcms.blog.filter', 'bcms.sidemenu', 'bcms.forms'],
-    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid, messages, redirect, history, preview, security, filter, sidemenu, forms) {
+bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.dynamicContent', 'bcms.datepicker', 'bcms.htmlEditor', 'bcms.grid', 'bcms.pages', 'bcms.ko.extenders', 'bcms.media', 'bcms.tags', 'bcms.ko.grid', 'bcms.messages', 'bcms.redirect', 'bcms.pages.history', 'bcms.preview', 'bcms.security', 'bcms.blog.filter', 'bcms.sidemenu', 'bcms.forms', 'bcms.pages.widgets'],
+    function ($, bcms, modal, siteSettings, dynamicContent, datepicker, htmlEditor, grid, pages, ko, media, tags, kogrid, messages, redirect, history, preview, security, filter, sidemenu, forms, widgets) {
     'use strict';
 
     var blog = { },
@@ -14,6 +14,8 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             siteSettingsBlogsSearchButton: '#bcms-blogs-search-btn',
             siteSettingsBlogsSearchInput: '.bcms-search-query',
             siteSettingsBlogCreateButton: '#bcms-create-blog-button',
+            siteSettingsBlogExportButton: '#bcms-export-blogs',
+            siteSettingsBlogImportButton: '#bcms-import-blogs',
             siteSettingsBlogDeleteButton: '.bcms-grid-item-delete-button',
             siteSettingsBlogParentRow: 'tr:first',
             siteSettingsBlogEditButton: '.bcms-grid-item-edit-button',
@@ -32,7 +34,11 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             blogTitle: "#bcms-editor-blog-title",
             editPermalinkEditField: '#bcms-page-permalink-edit',
             contentUserConfirmationHiddenField: '#bcms-user-confirmed-region-deletion',
-            blogPostFormDatePickers: 'input.bcms-datepicker'
+            blogPostFormDatePickers: 'input.bcms-datepicker',
+            importBlogPostsForm: '#bcms-import-blog-posts',
+            fileUploadingTarget: '#bcms-import-form-target',
+            fileUploadingResult: '#jsonResult',
+            categorySelection: '#CategoryId',
         },
         links = {
             loadSiteSettingsBlogsUrl: null,
@@ -45,7 +51,11 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             saveAuthorsUrl: null,
             loadTemplatesUrl: null,
             saveDefaultTemplateUrl: null,
-            convertStringToSlugUrl: null
+            convertStringToSlugUrl: null,
+            uploadBlogPostsImportFileUrl: null,
+            startImportUrl: null,
+            deleteUploadedFileUrl: null,
+            exportBlogPostsUrl: null
         },
         globalization = {
             createNewPostDialogTitle: null,
@@ -55,7 +65,14 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             blogPostsTabTitle: null,
             authorsTabTitle: null,
             templatesTabTitle: null,
-            datePickerTooltipTitle: null
+            datePickerTooltipTitle: null,
+            importBlogPostsTitle: null,
+            closeButtonTitle: null,
+            importButtonTitle: null,
+            uploadButtonTitle: null,
+            multipleFilesWarningMessage: null,
+            pleaseSelectAFile: null,
+            noBlogPostsSelectedToImport: null
         },
         classes = {
             inactive: 'bcms-inactive'
@@ -151,7 +168,12 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                             }
                         }
                         return true;
-                    }
+                    },
+
+                    formSerialize: function (form) {
+                        return widgets.serializeFormWithChildWidgetOptions(form, selectors.htmlEditor);
+                    },
+                    formContentType: 'application/json; charset=utf-8'
                 });
             },
             onAccept: function() {
@@ -176,9 +198,13 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             newPost = false,
             canEdit = security.IsAuthorized(["BcmsEditContent"]),
             canPublish = security.IsAuthorized(["BcmsPublishContent"]),
-            form = dialog.container.find(selectors.firstForm);
+            form = dialog.container.find(selectors.firstForm),
+            categorySelector = form.find(selectors.categorySelection),
+            getCategoryId = function () {
+                return categorySelector != null ? categorySelector.val() : null;
+            };
         
-        htmlEditor.initializeHtmlEditor(selectors.htmlEditor, {}, data.EditInSourceMode);
+        htmlEditor.initializeHtmlEditor(selectors.htmlEditor, data.ContentId, {}, data.EditInSourceMode);
         if (data.EnableInsertDynamicRegion) {
             htmlEditor.enableInsertDynamicRegion();
         }
@@ -187,7 +213,12 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             newPost = true;
         }
         
-        pages.initializePermalinkBox(dialog, false, links.convertStringToSlugUrl, selectors.blogTitle, newPost);
+        var generator = pages.initializePermalinkBox(dialog, false, links.convertStringToSlugUrl, selectors.blogTitle, newPost, null, null, getCategoryId);
+        if (newPost && categorySelector != null) {
+            categorySelector.on('change', function () {
+                generator.Regenerate();
+            });
+        }
         
         var tagsViewModel = new tags.TagsListViewModel(tagsList);
 
@@ -342,6 +373,16 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             });
         });
 
+        container.find(selectors.siteSettingsBlogExportButton).on('click', function () {
+            var url = $.format("{0}?{1}", links.exportBlogPostsUrl, form.serialize());
+
+            window.location.href = url;
+        });
+
+        container.find(selectors.siteSettingsBlogImportButton).on('click', function () {
+            openImportBlogPostsForm(container, form);
+        });
+
         initializeSiteSettingsBlogsListItems(container);
 
         filter.bind(container, ((content.Data) ? content.Data : jsonData), function () {
@@ -351,7 +392,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         // Select search (timeout is required to work on IE11)
         grid.focusSearchInput(container.find(selectors.siteSettingsBlogsSearchInput), true);
     }
-     
+
     /**
     * Initializes site settings blogs list items for current container
     */
@@ -725,6 +766,221 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                 editBlogPost(bcms.pageId, onSave, true);
             };
         }
+    }
+
+    /*
+    * Import results view model 
+    */
+    function ImportResultViewModel(item) {
+        var self = this;
+
+        self.success = item.Success === true;
+        self.checked = ko.observable(item.Success === true);
+        self.id = item.Id;
+        self.title = item.Title || '&nbsp;';
+        self.url = item.PageUrl;
+        self.errorMessage = item.ErrorMessage;
+        self.warnMessage = item.WarnMessage;
+        self.skipped = false;
+
+
+        self.checked.subscribe(function(checked) {
+            self.skipped = !checked;
+        });
+        self.toJson = function() {
+            return {
+                Id: self.id,
+                Title: self.title,
+                PageUrl: self.url
+            };
+        };
+    }
+
+    /**
+    * Updates import results
+    */
+    function updateImportResults(importModel, results) {
+        var i, item;
+
+        for (i = 0; i < results.length; i++) {
+            item = results[i];
+            importModel.results.push(new ImportResultViewModel(item));
+        }
+    }
+
+    /*
+    * Opens form for importing blog posts XML
+    */
+    function openImportBlogPostsForm(parentContainer, parentForm) {
+        var importModel, i, item, form;
+
+        modal.open({
+            title: globalization.importBlogPostsTitle,
+            acceptTitle: globalization.uploadButtonTitle,
+            cancelTitle: globalization.closeButtonTitle,
+            onLoad: function (dialog) {
+                dynamicContent.bindDialog(dialog, links.uploadBlogPostsImportFileUrl, {
+                    contentAvailable: function (dialog, json) {
+                        var iframe = dialog.container.find($(selectors.fileUploadingTarget)),
+                            onLoadCallback = function () {
+                                importModel.started = false;
+                                form.hideLoading();
+                                var result = iframe.contents().find(selectors.fileUploadingResult).get(0);
+                                if (!result) {
+                                    return true;
+                                }
+
+                                try {
+                                    json = $.parseJSON(result.innerHTML);
+                                    messages.refreshBox(form, json);
+
+                                    if (json.Success) {
+                                        importModel.uploaded(true);
+                                        importModel.dialog.model.buttons()[0].title(globalization.importButtonTitle);
+
+                                        if (json.Data && $.isArray(json.Data.Results)) {
+                                            updateImportResults(importModel, json.Data.Results);
+                                            importModel.fileId = json.Data.FileId;
+                                        }
+                                    }
+                                } catch (exc) {
+                                    bcms.logger.error(exc);
+                                }
+                            };
+
+                        form = dialog.container.find(selectors.importBlogPostsForm);
+
+                        importModel = {
+                            createRedirects: ko.observable(true),
+                            fileName: ko.observable(''),
+                            fixedFileName: ko.observable(''),
+                            messageBox: messages.box({ container: form }),
+                            form: form,
+                            results: ko.observableArray(),
+                            uploaded: ko.observable(false),
+                            finished: ko.observable(false),
+                            dialog: dialog,
+                            fileId: '',
+                            checkedAll: ko.observable(true)
+                        };
+                        importModel.fileName.subscribe(function (fileName) {
+                            if (fileName) {
+                                fileName = fileName.toUpperCase().replace('C:\\FAKEPATH\\', '');
+                            }
+                            importModel.fixedFileName(fileName);
+                        });
+                        importModel.checkedAll.subscribe(function(checked) {
+                            for (i = 0; i < importModel.results().length; i ++) {
+                                item = importModel.results()[i];
+
+                                item.checked(checked);
+                            }
+                        });
+
+                        iframe.on('load', onLoadCallback);
+
+                        ko.applyBindings(importModel, form.get(0));
+                    },
+                });
+            },
+            onAcceptClick: function () {
+                var params,
+                    onImportComplete = function (json) {
+                        var items = [],
+                            j;
+
+                        form.hideLoading();
+                        messages.refreshBox(form, json);
+
+                        if (json.Success == true) {
+                            importModel.finished(true);
+                            importModel.dialog.model.buttons()[0].disabled(true);
+
+                            for (i = 0; i < importModel.results().length; i ++) {
+                                item = importModel.results()[i];
+
+                                if (item.success && !item.skipped) {
+                                    for (j = 0; j < json.Data.Results.length; j++) {
+                                        if (json.Data.Results[j].PageUrl == item.url
+                                            // When exception occurs before calculating URL
+                                            || (item.id && (item.id == json.Data.Results[j].Id))) {
+                                            item = new ImportResultViewModel(json.Data.Results[j]);
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                items.push(item);
+                            }
+
+                            importModel.results.removeAll();
+                            for (i = 0; i < items.length; i++) {
+                                importModel.results.push(items[i]);
+                            }
+                        }
+                    };
+
+                if (!importModel.uploaded()) {
+                    // Upload file
+                    if (!importModel.fileName()) {
+                        importModel.messageBox.clearMessages();
+                        importModel.messageBox.addErrorMessage(globalization.pleaseSelectAFile);
+                    } else {
+                        if (!importModel.started) {
+                            form.showLoading();
+                            importModel.started = true;
+                            importModel.form.submit();
+                        }
+                    }
+                } else {
+                    params = {
+                        BlogPosts: [],
+                        CreateRedirects: importModel.createRedirects(),
+                        FileId: importModel.fileId
+                    };
+
+                    // Start import
+                    for (i = 0; i < importModel.results().length; i ++) {
+                        item = importModel.results()[i];
+                        if (item.success && item.id && item.checked()) {
+                            params.BlogPosts.push(item.toJson());
+                        }
+                    }
+
+                    if (params.BlogPosts.length > 0) {
+                        form.showLoading();
+                        $.ajax({
+                                type: 'POST',
+                                contentType: 'application/json; charset=utf-8',
+                                cache: false,
+                                url: links.startImportUrl,
+                                data: JSON.stringify(params)
+                            })
+                            .done(function(result) {
+                                onImportComplete(result);
+                            })
+                            .fail(function(response) {
+                                onImportComplete(bcms.parseFailedResponse(response));
+                            });
+                    } else {
+                        importModel.messageBox.clearMessages();
+                        importModel.messageBox.addWarningMessage(globalization.noBlogPostsSelectedToImport);
+                    }
+                }
+            },
+            onCloseClick: function () {
+                if (importModel.finished()) {
+                    searchSiteSettingsBlogs(parentContainer, parentForm);
+                } else if (importModel.uploaded() && importModel.fileId) {
+                    // Call method for deleting uploaded file
+                    $.ajax({
+                        type: 'POST',
+                        cache: false,
+                        url: $.format(links.deleteUploadedFileUrl, importModel.fileId)
+                    });
+                }
+            }
+        });
     }
 
     /**

@@ -58,6 +58,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Autofac.3.1.5\lib\net40\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="BlogML">
+      <HintPath>..\..\packages\blogml.2.2.0\lib\BlogML.dll</HintPath>
+    </Reference>
     <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
@@ -91,7 +94,6 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -102,6 +104,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v2.0\Assemblies\System.Web.WebPages.dll</HintPath>
@@ -120,6 +123,14 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Accessors\BlogPostContentAccessor.cs" />
+    <Compile Include="Commands\DeleteBlogPostImportFile\DeleteBlogPostImportFileCommand.cs" />
+    <Compile Include="Commands\ExportBlogPostsCommand\ExportBlogPostsCommand.cs" />
+    <Compile Include="Commands\SaveBlogPost\SaveBlogPostCommandRequest.cs" />
+    <Compile Include="Commands\UploadBlogsImportFile\UploadBlogsImportFileCommand.cs" />
+    <Compile Include="Commands\UploadBlogsImportFile\UploadBlogsImportFileResponse.cs" />
+    <Compile Include="Commands\ImportBlogPosts\ImportBlogPostsCommand.cs" />
+    <Compile Include="Commands\ImportBlogPosts\ImportBlogPostsResponse.cs" />
+    <Compile Include="Controllers\BlogMLController.cs" />
     <Compile Include="Events\BlogEvents.cs" />
     <Compile Include="Events\AuthorEvents.cs" />
     <Compile Include="BlogModuleConstants.cs" />
@@ -141,10 +152,13 @@
     <Compile Include="Controllers\AuthorController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\OptionController.cs" />
+    <Compile Include="Events\BlogChangingEventArgs.cs" />
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\BlogPost.cs" />
     <Compile Include="Models\BlogPostContent.cs" />
+    <Compile Include="Models\BlogPostImportResult.cs" />
+    <Compile Include="Models\Events\UpdatingBlogModel.cs" />
     <Compile Include="Models\Maps\AuthorMap.cs" />
     <Compile Include="Models\Maps\BlogPostContentMap.cs" />
     <Compile Include="Models\Maps\BlogPostMap.cs" />
@@ -162,26 +176,80 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registration\BlogJsModuleIncludeDescriptor.cs" />
     <Compile Include="Services\DefaultAuthorService.cs" />
+    <Compile Include="Services\DefaultBlogMLExportService.cs" />
+    <Compile Include="Services\DefaultBlogMLService.cs" />
+    <Compile Include="Services\DefaultBlogSaveService.cs" />
     <Compile Include="Services\DefaultBlogService.cs" />
     <Compile Include="Services\DefaultOptionService.cs" />
     <Compile Include="Services\IAuthorService.cs" />
+    <Compile Include="Services\IBlogMLExportService.cs" />
+    <Compile Include="Services\IBlogMLService.cs" />
+    <Compile Include="Services\IBlogSaveService.cs" />
     <Compile Include="Services\IBlogService.cs" />
     <Compile Include="Services\IOptionService.cs" />
     <Compile Include="ViewModels\Author\AuthorViewModel.cs" />
     <Compile Include="ViewModels\Author\RenderBlogPostAuthorViewModel.cs" />
     <Compile Include="ViewModels\Blog\BlogPostViewModel.cs" />
+    <Compile Include="ViewModels\Blog\BlogPostViewModelExtender.cs" />
     <Compile Include="ViewModels\Blog\BlogTemplateViewModel.cs" />
     <Compile Include="ViewModels\Blog\DefaultTemplateViewModel.cs" />
+    <Compile Include="ViewModels\Blog\UploadImportFileViewModel.cs" />
+    <Compile Include="ViewModels\Blog\ImportBlogPostsViewModel.cs" />
     <Compile Include="ViewModels\Blog\RenderBlogPostViewModel.cs" />
     <Compile Include="ViewModels\Blog\SiteSettingBlogPostViewModel.cs" />
     <Compile Include="ViewModels\Filter\BlogsFilter.cs" />
     <Compile Include="ViewModels\Filter\BlogsGridViewModel.cs" />
+    <Compile Include="Views\Author\Partial\ImageCell.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ImageCell.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Author\Partial\ListTemplate.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ListTemplate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BlogML\UploadImportFile.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UploadImportFile.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Blog\EditBlogPost.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditBlogPost.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Blog\Index.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Index.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Blog\Partial\AddNewBlogEditPermalink.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AddNewBlogEditPermalink.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Blog\Partial\BlogsFilterTemplate.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BlogsFilterTemplate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Option\Templates.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Templates.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\EditorTemplates\PageStatus.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PageStatus.cshtml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Content\Resources\BlogGlobalization.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>BlogGlobalization.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>BlogGlobalization1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Content\Styles\bcms.blog.css" />
     <EmbeddedResource Include="Content\Styles\Images\sprite-blog.png" />
@@ -195,6 +263,7 @@
     <Content Include="BuildConfiguration.xml" />
     <EmbeddedResource Include="Scripts\bcms.blog.filter.js" />
     <EmbeddedResource Include="Models\Migrations\Migration201305271258.sqlserver.sql" />
+    <EmbeddedResource Include="Content\example.blog.post.import.xml" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -228,34 +297,61 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Author\Partial\ImageCell.cshtml" />
+    <None Include="Views\Author\Partial\ImageCell.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ImageCell.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Option\Templates.cshtml" />
+    <None Include="Views\Option\Templates.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Templates.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Shared\EditorTemplates\PageStatus.cshtml" />
+    <None Include="Views\Shared\EditorTemplates\PageStatus.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>PageStatus.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Author\Partial\ListTemplate.cshtml" />
+    <None Include="Views\Author\Partial\ListTemplate.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ListTemplate.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Blog\Partial\AddNewBlogEditPermalink.cshtml" />
+    <None Include="Views\Blog\Partial\AddNewBlogEditPermalink.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>AddNewBlogEditPermalink.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Blog\EditBlogPost.cshtml" />
+    <None Include="Views\Blog\EditBlogPost.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EditBlogPost.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Blog\Index.cshtml" />
+    <None Include="Views\Blog\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Blog\Partial\BlogsFilterTemplate.cshtml" />
+    <None Include="Views\Blog\Partial\BlogsFilterTemplate.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>BlogsFilterTemplate.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\MigrationsContent\" />
+    <None Include="Views\BlogML\UploadImportFile.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>UploadImportFile.generated.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

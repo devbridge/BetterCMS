@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Services;
@@ -24,7 +25,11 @@ namespace BetterCms.Test.Module.Pages.ServiceTests
                 .Setup(f => f.AsQueryable<BetterCms.Module.Root.Models.Layout>())
                 .Returns(new[] { layout1, layout2 }.AsQueryable());
 
-            var service = new DefaultLayoutService(repositoryMock.Object, new Mock<IOptionService>().Object, new Mock<ICmsConfiguration>().Object, new Mock<IAccessControlService>().Object);
+            var service = new DefaultLayoutService(repositoryMock.Object, 
+                new Mock<IOptionService>().Object, 
+                new Mock<ICmsConfiguration>().Object, 
+                new Mock<IAccessControlService>().Object,
+                new Mock<IUnitOfWork>().Object);
             var response = service.GetAvailableLayouts().ToList();
 
             Assert.IsNotNull(response);
@@ -46,7 +51,11 @@ namespace BetterCms.Test.Module.Pages.ServiceTests
                 .Setup(f => f.AsQueryable<BetterCms.Module.Root.Models.Layout>())
                 .Returns(new BetterCms.Module.Root.Models.Layout[] { }.AsQueryable());
 
-            var service = new DefaultLayoutService(repositoryMock.Object, new Mock<IOptionService>().Object, new Mock<ICmsConfiguration>().Object, new Mock<IAccessControlService>().Object);
+            var service = new DefaultLayoutService(repositoryMock.Object, 
+                new Mock<IOptionService>().Object, 
+                new Mock<ICmsConfiguration>().Object, 
+                new Mock<IAccessControlService>().Object,
+                new Mock<IUnitOfWork>().Object);
             var response = service.GetAvailableLayouts().ToList();
 
             Assert.IsNotNull(response);

@@ -3,6 +3,7 @@
 namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
 {
     [DataContract]
+    [System.Serializable]
     public class GetBlogPostPropertiesModel
     {
         /// <summary>
@@ -31,6 +32,15 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// </value>
         [DataMember]
         public bool IncludeCategory { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to include language.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to include language; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool IncludeLanguage { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to include layout.
@@ -76,5 +86,23 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
         /// </value>
         [DataMember]
         public bool IncludeAccessRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to include technical information (content, page content, region ids).
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if include technical information (content, page content, region ids); otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool IncludeTechnicalInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to include child contents options.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if to include child contents options; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool IncludeChildContentsOptions { get; set; }
     }
 }

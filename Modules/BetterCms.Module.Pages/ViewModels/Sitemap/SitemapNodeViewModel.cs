@@ -36,6 +36,14 @@ namespace BetterCms.Module.Pages.ViewModels.Sitemap
         /// The page identifier.
         /// </value>
         public Guid PageId { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the default page translation id.
+        /// </summary>
+        /// <value>
+        /// The default page translation identifier.
+        /// </value>
+        public Guid DefaultPageId { get; set; }
 
         /// <summary>
         /// Gets or sets the version.
@@ -122,6 +130,14 @@ namespace BetterCms.Module.Pages.ViewModels.Sitemap
         /// </value>
         [StringLength(MaxLength.Text, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
         public string Macro { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page title.
+        /// </summary>
+        /// <value>
+        /// The page title.
+        /// </value>
+        public string PageTitle { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

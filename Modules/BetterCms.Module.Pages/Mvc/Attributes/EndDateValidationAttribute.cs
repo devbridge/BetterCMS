@@ -4,8 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Web;
 using System.Web.Mvc;
 
-using BetterCms.Module.Pages.Content.Resources;
-
 namespace BetterCms.Module.Pages.Mvc.Attributes
 {
     /// <summary>

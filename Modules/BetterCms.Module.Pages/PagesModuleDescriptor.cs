@@ -17,12 +17,14 @@ using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Helpers.Extensions;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Mvc.PageHtmlRenderer;
+using BetterCms.Module.Pages.Mvc.Projections;
 using BetterCms.Module.Pages.Registration;
 using BetterCms.Module.Pages.Services;
 
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Root.Services;
+using BetterCms.Module.Root.ViewModels.Cms;
 
 namespace BetterCms.Module.Pages
 {
@@ -36,7 +38,15 @@ namespace BetterCms.Module.Pages
         /// </summary>
         internal const string ModuleName = "pages";
 
+        /// <summary>
+        /// The pages module area name
+        /// </summary>
         internal const string PagesAreaName = "bcms-pages";
+
+        /// <summary>
+        /// The pages module database schema name
+        /// </summary>
+        internal const string PagesSchemaName = "bcms_pages";
 
         /// <summary>
         /// bcms.pages.js java script module descriptor.
@@ -166,6 +176,20 @@ namespace BetterCms.Module.Pages
         }
 
         /// <summary>
+        /// Gets the name of the module database schema name.
+        /// </summary>
+        /// <value>
+        /// The name of the module database schema.
+        /// </value>
+        public override string SchemaName
+        {
+            get
+            {
+                return PagesSchemaName;
+            }
+        }
+
+        /// <summary>
         /// Registers module types.
         /// </summary>
         /// <param name="context">The area registration context.</param>
@@ -193,6 +217,10 @@ namespace BetterCms.Module.Pages
             containerBuilder.RegisterType<DefaultPreviewService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultMasterPageService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultPageCloneService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultWidgetService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultDraftService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultPageListService>().As<IPageListService>().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultUntranslatedPageListService>().As<IUntranslatedPageListService>().InstancePerLifetimeScope();
 
             // Registering root module, because root module register the last one, and this one should be before users module
             containerBuilder.RegisterType<EmptyUserProfileUrlResolver>().As<IUserProfileUrlResolver>().InstancePerLifetimeScope();
@@ -279,14 +307,13 @@ namespace BetterCms.Module.Pages
                                 ShouldBeRendered = page => !page.IsMasterPage
                         }, 
                     
-                    new ButtonActionProjection(pagePropertiesJsModuleIncludeDescriptor, page => page.IsMasterPage ? "editMasterPageProperties" : "editPageProperties")
+                    new EditPagePropertiesButtonProjection(pagePropertiesJsModuleIncludeDescriptor, page => page.IsMasterPage ? "editMasterPageProperties" : "editPageProperties")
                             {
                                 Order = 20,
                                 Title = page => page.IsMasterPage 
                                     ? PagesGlobalization.Sidebar_EditMasterPagePropertiesButtonTitle
                                     : PagesGlobalization.Sidebar_EditPagePropertiesButtonTitle,
-                                CssClass = page => "bcms-sidemenu-btn",
-                                AccessRole = RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.Administration)
+                                CssClass = page => "bcms-sidemenu-btn"
                             },
 
                     new ButtonActionProjection(seoJsModuleIncludeDescriptor, page => "openEditSeoDialog")
@@ -445,8 +472,23 @@ namespace BetterCms.Module.Pages
         {
             if (args != null && args.RenderPageData != null)
             {
-                args.RenderPageData.ExtendWithPageData(args.PageData);
+                ExtendPageWithPageData(args.RenderPageData, args.PageData);
             }
+        }
+
+        /// <summary>
+        /// Extends the page and master page view models with data from provided page entity.
+        /// </summary>
+        /// <param name="renderPageViewModel">The render page view model.</param>
+        /// <param name="pageData">The page data.</param>
+        private void ExtendPageWithPageData(RenderPageViewModel renderPageViewModel, IPage pageData)
+        {
+            if (renderPageViewModel.MasterPage != null)
+            {
+                ExtendPageWithPageData(renderPageViewModel.MasterPage, renderPageViewModel.PageData);
+            }
+
+            renderPageViewModel.ExtendWithPageData(pageData);
         }
 
         private void RegisterRenderingPageProperties()

@@ -30,6 +30,16 @@ namespace BetterCms.Module.Root.Services
         /// List of option values view models, merged from options and option values
         /// </returns>
         List<IOptionValue> GetMergedOptionValues(IEnumerable<IOption> options, IEnumerable<IOption> optionValues);
+        
+        /// <summary>
+        /// Merges options and values and returns one list with option value view models for use (values are returned as objects).
+        /// </summary>
+        /// <param name="options">The options.</param>
+        /// <param name="optionValues">The option values.</param>
+        /// <returns>
+        /// List of option values view models, merged from options and option values
+        /// </returns>
+        List<IOptionValue> GetMergedOptionValues(IEnumerable<IOptionValue> options, IEnumerable<IOption> optionValues);
 
         /// <summary>
         /// Gets the merged master pages option values.
@@ -79,7 +89,7 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <param name="ids">The ids.</param>
         /// <returns>List of custom option entities</returns>
-        List<CustomOption> GetCustomOptionsById(string[] ids);
+        List<CustomOptionViewModel> GetCustomOptionsById(string[] ids);
 
         /// <summary>
         /// Sets the custom option value titles.
@@ -116,5 +126,20 @@ namespace BetterCms.Module.Root.Services
         /// <param name="value">The value.</param>
         /// <returns>Fixed option value</returns>
         string ClearFixValueForEdit(OptionType type, string value);
+
+        /// <summary>
+        /// Gets the child content options.
+        /// </summary>
+        /// <param name="contentId">The content identifier.</param>
+        /// <returns></returns>
+        IList<ContentOptionValuesViewModel> GetChildContentsOptionValues(Guid contentId);
+
+        /// <summary>
+        /// Saves the child content options..
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <param name="viewModels">The list of view models with provided child content id and option values list.</param>
+        /// <param name="requestedStatus">The requested status for saving content.</param>
+        void SaveChildContentOptions(Models.Content content, IList<ContentOptionValuesViewModel> viewModels, ContentStatus requestedStatus);
     }
 }

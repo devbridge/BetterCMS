@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
@@ -19,6 +21,8 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Security;
+
+using FluentNHibernate.Utils;
 
 using NHibernate.Linq;
 
@@ -115,6 +119,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                               Version = page.Version,
                               PageName = page.Title,
                               PageUrl = page.PageUrl,
+                              ForceAccessProtocol = page.ForceAccessProtocol,
                               PageCSS = page.CustomCss,
                               PageJavascript = page.CustomJS,
                               UseNoFollow = page.UseNoFollow,
@@ -128,6 +133,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                               CategoryId = page.Category.Id,
                               LanguageId = page.Language.Id,
                               AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled,
+                              IsInSitemap = page.PagesView.IsInSitemap,
                               Image = page.Image == null || page.Image.IsDeleted ? null :
                                   new ImageSelectorViewModel
                                           {
@@ -163,10 +169,8 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                     })
                 .ToFuture();
 
-            var inSitemapFuture = Repository.AsQueryable<SitemapNode>().Where(node => node.Page.Id == id && !node.IsDeleted && !node.Sitemap.IsDeleted).Select(node => node.Id).ToFuture();
             var tagsFuture = tagService.GetPageTagNames(id);
             var categories = categoryService.GetCategories();
-            var customOptionsFuture = optionService.GetCustomOptionsFuture();
             var languagesFuture = (cmsConfiguration.EnableMultilanguage) ? languageService.GetLanguages() : null;
 
             IEnumerable<AccessRule> userAccessFuture;
@@ -200,10 +204,9 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 model.Model.Tags = tagsFuture.ToList();
                 model.Model.RedirectFromOldUrl = true;
                 model.Model.Categories = categories;
-                var urlHash = model.Model.PageUrl.UrlHash();
-                model.Model.IsInSitemap = inSitemapFuture.Any() || Repository.AsQueryable<SitemapNode>().Any(node => node.UrlHash == urlHash && !node.IsDeleted && !node.Sitemap.IsDeleted);
+                model.Model.PageAccessProtocols = this.GetProtocolForcingTypes();
                 model.Model.UpdateSitemap = true;
-                model.Model.CustomOptions = customOptionsFuture.ToList();
+                model.Model.CustomOptions = optionService.GetCustomOptions();
                 model.Model.ShowTranslationsTab = cmsConfiguration.EnableMultilanguage && !model.Model.IsMasterPage;
                 if (model.Model.ShowTranslationsTab)
                 {
@@ -234,7 +237,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 model.Model.CanPublishPage = SecurityService.IsAuthorized(Context.Principal, RootModuleConstants.UserRoles.PublishContent);
 
                 // Get templates
-                model.Model.Templates = layoutService.GetAvailableLayouts(id).ToList();
+                model.Model.Templates = layoutService.GetAvailableLayouts(id, model.Model.MasterPageId).ToList();
                 model.Model.Templates
                     .Where(x => x.TemplateId == model.Model.TemplateId || x.TemplateId == model.Model.MasterPageId)
                     .Take(1).ToList()
@@ -242,6 +245,17 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
             }
 
             return model != null ? model.Model : null;
+        }
+
+        private IEnumerable<LookupKeyValue> GetProtocolForcingTypes()
+        {
+            var list = new List<LookupKeyValue>
+                           {
+                               new LookupKeyValue(ForceProtocolType.None.ToString(), "None"),
+                               new LookupKeyValue(ForceProtocolType.ForceHttp.ToString(), "Force HTTP"),
+                               new LookupKeyValue(ForceProtocolType.ForceHttps.ToString(), "Force HTTPS (secure)"),
+                           };
+            return list;
         }
     }
 }

@@ -6,6 +6,7 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.Security;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.MediaManager.Files.File;
 using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
@@ -18,30 +19,68 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
 {
     public class FilesService : Service, IFilesService
     {
+        /// <summary>
+        /// The repository.
+        /// </summary>
         private readonly IRepository repository;
 
-        private readonly IMediaFileService fileService;
+        /// <summary>
+        /// The media file service.
+        /// </summary>
+        private readonly IMediaFileService mediaFileService;
 
+        /// <summary>
+        /// The file URL resolver.
+        /// </summary>
         private readonly IMediaFileUrlResolver fileUrlResolver;
-        
+
+        /// <summary>
+        /// The access control service.
+        /// </summary>
         private readonly IAccessControlService accessControlService;
 
-        public FilesService(IRepository repository, IMediaFileService fileService,
-            IMediaFileUrlResolver fileUrlResolver, IAccessControlService accessControlService)
+        /// <summary>
+        /// The file service.
+        /// </summary>
+        private readonly IFileService fileService;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FilesService"/> class.
+        /// </summary>
+        /// <param name="repository">The repository.</param>
+        /// <param name="mediaFileService">The media file service.</param>
+        /// <param name="fileUrlResolver">The file URL resolver.</param>
+        /// <param name="accessControlService">The access control service.</param>
+        /// <param name="fileService">The file service.</param>
+        public FilesService(
+            IRepository repository,
+            IMediaFileService mediaFileService,
+            IMediaFileUrlResolver fileUrlResolver,
+            IAccessControlService accessControlService,
+            IFileService fileService)
         {
             this.repository = repository;
-            this.fileService = fileService;
+            this.mediaFileService = mediaFileService;
             this.fileUrlResolver = fileUrlResolver;
             this.accessControlService = accessControlService;
+            this.fileService = fileService;
         }
 
+        /// <summary>
+        /// Gets files list.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        ///   <c>GetFilesResponse</c> with files list.
+        /// </returns>
         public GetFilesResponse Get(GetFilesRequest request)
         {
             request.Data.SetDefaultOrder("Title");
 
-            var query = repository.AsQueryable<Media>()
-                .Where(m => m.Original == null && m.Type == MediaType.File)
-                .Where(f => !(f is MediaFile) || (!((MediaFile)f).IsTemporary && ((MediaFile)f).IsUploaded == true));
+            var query =
+                repository.AsQueryable<Media>()
+                    .Where(m => m.Original == null && m.Type == Module.MediaManager.Models.MediaType.File)
+                    .Where(f => !(f is MediaFile) || (!((MediaFile)f).IsTemporary && ((MediaFile)f).IsUploaded == true));
 
             if (request.Data.FolderId == null)
             {
@@ -80,7 +119,10 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
                 }
             }
 
-            var listResponse = query.Select(media => new MediaModel
+            var listResponse =
+                query.Select(
+                    media =>
+                    new MediaModel
                         {
                             Id = media.Id,
                             Version = media.Version,
@@ -88,11 +130,10 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
                             CreatedOn = media.CreatedOn,
                             LastModifiedBy = media.ModifiedByUser,
                             LastModifiedOn = media.ModifiedOn,
-
                             Title = media.Title,
-                            MediaContentType = media is MediaFolder 
-                                                    ? (MediaContentType)((int)MediaContentType.Folder) 
-                                                    : (MediaContentType)((int)MediaContentType.File),
+                            Description = media.Description,
+                            MediaContentType =
+                                media is MediaFolder ? (MediaContentType)((int)MediaContentType.Folder) : (MediaContentType)((int)MediaContentType.File),
                             FileExtension = media is MediaFile ? ((MediaFile)media).OriginalFileExtension : null,
                             FileSize = media is MediaFile ? ((MediaFile)media).Size : (long?)null,
                             FileUrl = media is MediaFile ? ((MediaFile)media).PublicUrl : null,
@@ -100,59 +141,73 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
                             ThumbnailId = media.Image != null && !media.Image.IsDeleted ? media.Image.Id : (Guid?)null,
                             ThumbnailCaption = media.Image != null && !media.Image.IsDeleted ? media.Image.Caption : null,
                             ThumbnailUrl = media.Image != null && !media.Image.IsDeleted ? media.Image.PublicThumbnailUrl : null
-                        })
-                        .ToDataListResponse(request);
+                        }).ToDataListResponse(request);
 
             var ids = new List<Guid>();
 
-            listResponse.Items.ToList().ForEach(media =>
-                {
-                    if (media.MediaContentType == MediaContentType.File)
+            listResponse.Items.ToList().ForEach(
+                media =>
                     {
-                        media.FileUrl = fileService.GetDownloadFileUrl(MediaType.File, media.Id, media.FileUrl);
-                        ids.Add(media.Id);
-                    }
-                    media.FileUrl = fileUrlResolver.EnsureFullPathUrl(media.FileUrl);
-                    media.ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(media.ThumbnailUrl);
-                });
+                        if (media.MediaContentType == MediaContentType.File)
+                        {
+                            media.FileUrl = this.mediaFileService.GetDownloadFileUrl(Module.MediaManager.Models.MediaType.File, media.Id, media.FileUrl);
+                            ids.Add(media.Id);
+                        }
+                        media.FileUrl = fileUrlResolver.EnsureFullPathUrl(media.FileUrl);
+                        media.ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(media.ThumbnailUrl);
+                    });
 
             if (request.Data.IncludeAccessRules)
             {
                 (from file in repository.AsQueryable<MediaFile>()
-                from accessRule in file.AccessRules
-                where ids.Contains(file.Id)
-                orderby accessRule.IsForRole, accessRule.Identity
-                select new AccessRuleModelEx
-                {
-                    AccessRule = new AccessRuleModel
-                    {
-                        AccessLevel = (AccessLevel)(int)accessRule.AccessLevel,
-                        Identity = accessRule.Identity,
-                        IsForRole = accessRule.IsForRole
-                    },
-                    FileId = file.Id
-                }).ToList()
-                .ForEach(
-                    rule => listResponse
-                            .Items
-                            .Where(file => file.Id == rule.FileId)
-                            .ToList()
-                            .ForEach(
-                                file =>
+                 from accessRule in file.AccessRules
+                 where ids.Contains(file.Id)
+                 orderby accessRule.IsForRole, accessRule.Identity
+                 select
+                     new AccessRuleModelEx
+                         {
+                             AccessRule =
+                                 new AccessRuleModel
+                                     {
+                                         AccessLevel = (AccessLevel)(int)accessRule.AccessLevel,
+                                         Identity = accessRule.Identity,
+                                         IsForRole = accessRule.IsForRole
+                                     },
+                             FileId = file.Id
+                         }).ToList()
+                    .ForEach(
+                        rule => listResponse.Items.Where(file => file.Id == rule.FileId).ToList().ForEach(
+                            file =>
                                 {
                                     if (file.AccessRules == null)
                                     {
                                         file.AccessRules = new List<AccessRuleModel>();
                                     }
                                     file.AccessRules.Add(rule.AccessRule);
-                                })
-                    );
+                                }));
             }
 
-            return new GetFilesResponse
-                       {
-                           Data = listResponse
-                       };
+            return new GetFilesResponse { Data = listResponse };
+        }
+
+        /// <summary>
+        /// Creates a new file.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        ///   <c>PostFilesResponse</c> with a new file id.
+        /// </returns>
+        public PostFileResponse Post(PostFileRequest request)
+        {
+            var result =
+                fileService.Put(
+                    new PutFileRequest
+                    {
+                        Data = request.Data,
+                        User = request.User
+                    });
+
+            return new PostFileResponse { Data = result.Data };
         }
 
         private class AccessRuleModelEx

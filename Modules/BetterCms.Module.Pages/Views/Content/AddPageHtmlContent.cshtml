@@ -1,7 +1,6 @@
 ﻿@using BetterCms.Module.Pages.Content.Resources
 @using BetterCms.Module.Pages.Controllers
 @using BetterCms.Module.Root
-@using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
 @using Microsoft.Web.Mvc
@@ -30,21 +29,7 @@
         </div>
 
         <div id="bcms-tab-2" class="bcms-tab-single">
-            <div class="bcms-top-block-holder">
-            @if ((ViewContext.Controller as CmsControllerBase).SecurityService.IsAuthorized(RootModuleConstants.UserRoles.Administration))
-            {
-                <div class="bcms-btn-links-main" id="bcms-create-advanced-content-button">@PagesGlobalization.AddPageContent_WidgetTab_AddNewButton</div>
-                <div class="bcms-btn-links-main" id="bcms-registeradvanced-content-button">@PagesGlobalization.AddPageContent_WidgetTab_RegisterButton</div>
-            }
-                <div class="bcms-search-block">
-                    <input type="text" id="bcms-advanced-content-search" class="bcms-editor-field-box" placeholder="@RootGlobalization.WaterMark_Search" />
-                    <div class="bcms-btn-search" id="bcms-advanced-content-search-btn">@PagesGlobalization.AddPageContent_WidgetTab_SearchButton</div>
-                </div>
-            </div>
-            <div class="bcms-content-sliders" id="bcms-advanced-contents-container">
-                @Html.Partial("Partial/WidgetCategories", Model.WidgetCategories)
-            </div>
+            @Html.Partial("Partial/SelectWidget", Model.WidgetCategories)
         </div>
-                
     </div>
 </div>

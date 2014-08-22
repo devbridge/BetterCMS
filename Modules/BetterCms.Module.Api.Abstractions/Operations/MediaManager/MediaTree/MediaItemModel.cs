@@ -7,6 +7,7 @@ using BetterCms.Module.Api.Operations.Root;
 namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
 {
     [DataContract]
+    [System.Serializable]
     public class MediaItemModel : ModelBase
     {
         /// <summary>
@@ -26,6 +27,15 @@ namespace BetterCms.Module.Api.Operations.MediaManager.MediaTree
         /// </value>
         [DataMember]
         public string Title { get; set; }
+
+        /// <summary>
+        /// Gets or sets the description.
+        /// </summary>
+        /// <value>
+        /// The description.
+        /// </value>
+        [DataMember]
+        public string Description { get; set; }
 
         /// <summary>
         /// Gets or sets the type of the media content.

@@ -172,7 +172,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                                   RootModuleConstants.UserRoles.MultipleRoles(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration))
                               : SecurityService.IsAuthorized(Context.Principal, RootModuleConstants.UserRoles.EditContent);
 
-            IList<Root.Models.Page> translations = null;
+            IList<PageProperties> translations = null;
             if (canEdit && isMultilanguageEnabled && !page.IsMasterPage)
             {
                 translations = LoadAndValidateTranslations(page, request);
@@ -183,29 +183,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             IList<Guid> oldMasterIds;
             IList<Guid> childrenPageIds;
             IList<MasterPage> existingChildrenMasterPages;
-            if ((page.MasterPage != null && page.MasterPage.Id != request.MasterPageId) || (page.MasterPage == null && request.MasterPageId.HasValue))
-            {
-                newMasterIds = request.MasterPageId.HasValue ? masterPageService.GetPageMasterPageIds(request.MasterPageId.Value) : new List<Guid>(0);
-
-                oldMasterIds = page.MasterPage != null && page.MasterPages != null ? page.MasterPages.Select(mp => mp.Master.Id).Distinct().ToList() : new List<Guid>(0);
-
-                var intersectingIds = newMasterIds.Intersect(oldMasterIds).ToArray();
-                foreach (var id in intersectingIds)
-                {
-                    oldMasterIds.Remove(id);
-                    newMasterIds.Remove(id);
-                }
-
-                var updatingIds = newMasterIds.Union(oldMasterIds).Distinct().ToList();
-                existingChildrenMasterPages = GetChildrenMasterPagesToUpdate(page, updatingIds, out childrenPageIds);
-            }
-            else
-            {
-                newMasterIds = null;
-                oldMasterIds = null;
-                childrenPageIds = null;
-                existingChildrenMasterPages = null;
-            }
+            masterPageService.PrepareForUpdateChildrenMasterPages(page, request.MasterPageId, out newMasterIds, out oldMasterIds, out childrenPageIds, out existingChildrenMasterPages);
 
             IList<SitemapNode> updatedNodes = null;
 
@@ -238,34 +216,21 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                 page.PageUrl = request.PageUrl;
             }
 
+            List<PageProperties> updatePageTranslations = null;
             if (canEdit)
             {
                 page.PageUrlHash = page.PageUrl.UrlHash();
+                page.ForceAccessProtocol = request.ForceAccessProtocol;
                 page.Category = request.CategoryId.HasValue ? Repository.AsProxy<CategoryEntity>(request.CategoryId.Value) : null;
                 page.Title = request.PageName;
                 page.CustomCss = request.PageCSS;
                 page.CustomJS = request.PageJavascript;
 
-                if (request.MasterPageId.HasValue)
-                {
-                    if (page.MasterPage == null || page.MasterPage.Id != request.MasterPageId.Value)
-                    {
-                        page.MasterPage = Repository.AsProxy<Root.Models.Page>(request.MasterPageId.Value);
-                    }
-                    page.Layout = null;
-                }
-                else
-                {
-                    if (page.Layout == null || page.Layout.Id != request.TemplateId.Value)
-                    {
-                        page.Layout = Repository.First<Root.Models.Layout>(request.TemplateId.Value);
-                    }
-                    page.MasterPage = null;
-                }
+                masterPageService.SetMasterOrLayout(page, request.MasterPageId, request.TemplateId);
 
                 if (isMultilanguageEnabled && !page.IsMasterPage)
                 {
-                    UpdatePageTranslations(page, translations, request);
+                    updatePageTranslations = UpdatePageTranslations(page, translations, request);
                 }
             }
 
@@ -334,7 +299,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             IList<Tag> newTags = null;
             if (canEdit)
             {
-                UpdateChildrenMasterPages(existingChildrenMasterPages, oldMasterIds, newMasterIds, childrenPageIds);
+                masterPageService.UpdateChildrenMasterPages(existingChildrenMasterPages, oldMasterIds, newMasterIds, childrenPageIds);
                 tagService.SavePageTags(page, request.Tags, out newTags);
             }
 
@@ -348,6 +313,12 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             // Notify about page properties change.
             page.Options = pageOptions;
             Events.PageEvents.Instance.OnPagePropertiesChanged(page);
+
+            // Notify about translation properties changed
+            if (updatePageTranslations != null)
+            {
+                updatePageTranslations.ForEach(Events.PageEvents.Instance.OnPagePropertiesChanged);
+            }
 
             // Notify about redirect creation.
             if (redirectCreated != null)
@@ -384,66 +355,6 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             }
 
             return new SavePageResponse(page);
-        }
-
-        /// <summary>
-        /// Retrieves all the master page children, when master page is changed.
-        /// </summary>
-        /// <param name="page">The page.</param>
-        /// <param name="updatingIds">The updating ids.</param>
-        /// <param name="childrenPageIds">The children page ids.</param>
-        /// <returns>
-        /// List of all the childer master pages, which must be changed
-        /// </returns>
-        private List<MasterPage> GetChildrenMasterPagesToUpdate(PageProperties page, IList<Guid> updatingIds, out IList<Guid> childrenPageIds)
-        {
-            // Retrieve all master pages, refering old master and master, which include updating page also as master page
-            var query = Repository.AsQueryable<MasterPage>().Where(mp => mp.Page.MasterPages.Any(mp1 => mp1.Master == page) || mp.Page == page);
-
-            childrenPageIds = query.Select(mp => mp.Page.Id).Distinct().ToList();
-            if (!childrenPageIds.Contains(page.Id))
-            {
-                childrenPageIds.Add(page.Id);
-            }
-
-            return query.Where(mp => updatingIds.Contains(mp.Master.Id)).ToList();
-        }
-
-        /// <summary>
-        /// Updates the master page children: instead of old master page inserts the new one.
-        /// </summary>
-        /// <param name="existingChildrenMasterPages">Already saved children master page assignments.</param>
-        /// <param name="oldMasterIds">The old master ids.</param>
-        /// <param name="newMasterIds">The new master ids.</param>
-        /// <param name="childrenPageIds">The children page ids.</param>
-        private void UpdateChildrenMasterPages(
-            IList<MasterPage> existingChildrenMasterPages, IList<Guid> oldMasterIds, IList<Guid> newMasterIds, IEnumerable<Guid> childrenPageIds)
-        {
-            if (childrenPageIds == null)
-            {
-                return;
-            }
-
-            // Loop in all the distinct master pages
-            foreach (var pageId in childrenPageIds)
-            {
-                // Delete master pages from path
-                existingChildrenMasterPages.Where(mp => mp.Page.Id == pageId && oldMasterIds.Contains(mp.Master.Id)).ToList().ForEach(mp => Repository.Delete(mp));
-
-                // Add new ones
-                newMasterIds.Where(masterPageId => !existingChildrenMasterPages.Any(mp => mp.Page.Id == pageId && mp.Master.Id == masterPageId))
-                            .ToList()
-                            .ForEach(
-                                masterPageId =>
-                                    {
-                                        var mp = new MasterPage
-                                                     {
-                                                         Master = Repository.AsProxy<Root.Models.Page>(masterPageId),
-                                                         Page = Repository.AsProxy<Root.Models.Page>(pageId)
-                                                     };
-                                        Repository.Save(mp);
-                                    });
-            }
         }
 
         /// <summary>
@@ -514,10 +425,10 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         /// <param name="page">The page.</param>
         /// <param name="request">The request.</param>
         /// <returns>List of old and new page translations</returns>
-        private IList<Root.Models.Page> LoadAndValidateTranslations(PageProperties page, EditPagePropertiesViewModel request)
+        private IList<PageProperties> LoadAndValidateTranslations(PageProperties page, EditPagePropertiesViewModel request)
         {
             // Load translations
-            var predicateBuilder = PredicateBuilder.False<Root.Models.Page>();
+            var predicateBuilder = PredicateBuilder.False<PageProperties>();
             if (page.LanguageGroupIdentifier.HasValue)
             {
                 predicateBuilder = predicateBuilder.Or(p => p.LanguageGroupIdentifier == page.LanguageGroupIdentifier.Value);
@@ -528,7 +439,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                 request.Translations.Select(t => t.Id).ToList().ForEach(t => { predicateBuilder = predicateBuilder.Or(p => p.Id == t); });
             }
 
-            var translations = Repository.AsQueryable<Root.Models.Page>().Where(predicateBuilder).ToList();
+            var translations = Repository.AsQueryable<PageProperties>().Where(predicateBuilder).ToList();
 
             // Validate translations
             if (request.Translations != null)
@@ -572,8 +483,10 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         /// <param name="page">The page.</param>
         /// <param name="translations">The translations.</param>
         /// <param name="request">The request.</param>
-        private void UpdatePageTranslations(PageProperties page, IList<Root.Models.Page> translations, EditPagePropertiesViewModel request)
+        private List<PageProperties> UpdatePageTranslations(PageProperties page, IList<PageProperties> translations, EditPagePropertiesViewModel request)
         {
+            var updatedPages = new List<PageProperties>();
+
             // Update page language
             var oldLanguageId = page.Language != null ? page.Language.Id : (Guid?)null;
             var newLanguageId = request.LanguageId;
@@ -594,10 +507,12 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                         && requestTranslations.All(rt => rt.Id != t.Id)
                         && t.Id != page.Id)
                     .ToList()
-                    .ForEach(t =>
+                    .ForEach(translation =>
                             {
-                                t.LanguageGroupIdentifier = null;
-                                Repository.Save(t);
+                                translation.LanguageGroupIdentifier = null;
+
+                                updatedPages.Add(translation);
+                                Repository.Save(translation);
                             });
             }
 
@@ -614,14 +529,21 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
             foreach (var translationViewModel in requestTranslations)
             {
                 var translation = translations.Where(t => t.Id == translationViewModel.Id).FirstOne();
-                translation.LanguageGroupIdentifier = page.LanguageGroupIdentifier;
-                if (translation.Language == null && translationViewModel.LanguageId.HasValue)
+                var changeLanguage = translation.Language == null && translationViewModel.LanguageId.HasValue;
+                if (translation.LanguageGroupIdentifier != page.LanguageGroupIdentifier || changeLanguage)
                 {
-                    translation.Language = Repository.AsProxy<Language>(translationViewModel.LanguageId.Value);
+                    translation.LanguageGroupIdentifier = page.LanguageGroupIdentifier;
+                    if (changeLanguage)
+                    {
+                        translation.Language = Repository.AsProxy<Language>(translationViewModel.LanguageId.Value);
+                    }
+
+                    updatedPages.Add(translation);
+                    Repository.Save(translation);
                 }
-            
-                Repository.Save(translation);
             }
+
+            return updatedPages;
         }
     }
 }

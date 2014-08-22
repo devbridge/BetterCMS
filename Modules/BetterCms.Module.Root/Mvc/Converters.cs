@@ -21,6 +21,16 @@ namespace BetterCms.Module.Root.Mvc
             }
             return Guid.Empty;
         }
+
+        public static Guid? ToGuidOrNull(this string source)
+        {
+            Guid result;
+            if (Guid.TryParse(source, out result))
+            {
+                return result;
+            }
+            return null;
+        }
         
         /// <summary>
         /// Converts string source to the value of Boolean type.
@@ -93,6 +103,10 @@ namespace BetterCms.Module.Root.Mvc
         /// </returns>
         public static string ToFormattedDateString(this DateTime dateTime)
         {
+            if (dateTime == DateTime.MinValue || dateTime == DateTime.MaxValue)
+            {
+                return string.Empty;
+            }
             return dateTime.ToString("MMM dd, yyyy");            
         }
 

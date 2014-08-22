@@ -1,0 +1,29 @@
+﻿@using BetterCms.Module.Pages
+@using BetterCms.Module.Pages.Controllers
+@using BetterCms.Module.Root.Mvc.Helpers
+@using Microsoft.Web.Mvc
+
+@model BetterCms.Module.Root.ViewModels.Option.ContentOptionValuesViewModel
+
+<div class="bcms-scroll-window">
+
+    @Html.TabbedContentMessagesBox()
+
+    <div class="bcms-input-list-holder">
+        @if (Model != null)
+        {
+            using (Html.BeginForm<ContentController>(c => c.ChildContentOptions(null, null, null, null), FormMethod.Post,
+                new
+                {
+                    @id = "bcms-options-form",
+                    @class = "bcms-ajax-form",
+                    data_readonly = Model.IsReadOnly.ToString().ToLower()
+                }))
+            {
+                @Html.Partial(PagesConstants.OptionValuesGridTemplate)
+
+                @Html.HiddenFor(model => model.OptionValuesContainerId)
+            }
+        }
+    </div>
+</div>

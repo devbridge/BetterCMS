@@ -78,5 +78,18 @@ namespace BetterCms.Module.Root.Mvc.Grids.GridOptions
         {
             return string.Format("PageSize: {0}, PageNumber: {1}, TotalCount: {2}", PageSize, PageNumber, TotalCount);
         }
+
+        /// <summary>
+        /// Populates the specified options.
+        /// </summary>
+        /// <param name="options">The options.</param>
+        public virtual void CopyFrom(GridOptions options)
+        {
+            PageNumber = options.PageNumber;
+            PageSize = options.PageSize;
+            TotalCount = options.TotalCount;
+            Column = options.Column;
+            Direction = options.Direction;
+        }
     }
 }

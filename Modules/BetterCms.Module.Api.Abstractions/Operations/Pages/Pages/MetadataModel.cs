@@ -3,6 +3,7 @@
 namespace BetterCms.Module.Api.Operations.Pages.Pages
 {
     [DataContract]
+    [System.Serializable]
     public class MetadataModel
     {
         /// <summary>

@@ -126,7 +126,6 @@
     <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.4.0.30506.0\lib\net40\System.Web.Http.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -135,6 +134,7 @@
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -152,6 +152,11 @@
     </Compile>
     <Compile Include="ApiFactory.cs" />
     <Compile Include="DefaultApiFacade.cs" />
+    <Compile Include="Extensions\BlogPostModelExtensions.cs" />
+    <Compile Include="Extensions\OptionModelExtensions.cs" />
+    <Compile Include="Extensions\LayoutModelExtensions.cs" />
+    <Compile Include="Extensions\RedirectModelExtensions.cs" />
+    <Compile Include="Extensions\WidgetModelExtensions.cs" />
     <Compile Include="Filters\GetRequestProcessor.cs" />
     <Compile Include="Helpers\ContentTypeExtensions.cs" />
     <Compile Include="Helpers\FilterByTagExtensions.cs" />
@@ -164,38 +169,51 @@
     <Compile Include="Operations\Blog\BlogPosts\BlogPostsService.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\BlogPostService.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Properties\BlogPostPropertiesService.cs" />
+    <Compile Include="Operations\Blog\BlogPosts\Settings\BlogPostsSettingsService.cs" />
     <Compile Include="Operations\Blog\DefaultBogApiOperations.cs" />
     <Compile Include="Operations\MediaManager\DefaultMediaManagerApiOperations.cs" />
     <Compile Include="Operations\MediaManager\Files\FilesService.cs" />
     <Compile Include="Operations\MediaManager\Files\File\FileService.cs" />
+    <Compile Include="Operations\MediaManager\Folders\FoldersService.cs" />
+    <Compile Include="Operations\MediaManager\Folders\Folder\FolderService.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\ImageService.cs" />
     <Compile Include="Operations\MediaManager\Images\ImagesService.cs" />
     <Compile Include="Operations\MediaManager\MediaTree\MediaTreeService.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Content\BlogPostContentService.cs" />
     <Compile Include="Operations\Pages\Contents\Content\ContentService.cs" />
+    <Compile Include="Operations\Pages\Contents\Content\Draft\ContentDraftService.cs" />
     <Compile Include="Operations\Pages\Contents\Content\History\ContentHistoryService.cs" />
     <Compile Include="Operations\Pages\Contents\Content\HtmlContent\HtmlContentService.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Contents\Content\PageContentOptionsHelper.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\Options\PageContentOptionsService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\PageContentService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Translations\PageTranslationsService.cs" />
     <Compile Include="Operations\Pages\Pages\Search\DefaultSearchPagesService.cs" />
     <Compile Include="Operations\Pages\Redirects\RedirectsService.cs" />
     <Compile Include="Operations\Pages\Redirects\Redirect\RedirectService.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Nodes\NodesService.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Nodes\Node\NodeService.cs" />
-    <Compile Include="Operations\Pages\Sitemap\SitemapService.cs" />
-    <Compile Include="Operations\Pages\Sitemap\Tree\SitemapTreeService.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\SitemapsService.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Nodes\NodesService.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Nodes\Node\NodeService.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\SitemapService.cs" />
+    <Compile Include="Operations\Pages\Sitemaps\Sitemap\Tree\SitemapTreeService.cs" />
     <Compile Include="Operations\Pages\DefaultPagesApiOperations.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Contents\PageContentsService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Exists\PageExistsService.cs" />
     <Compile Include="Operations\Pages\Pages\PagesService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\PageService.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PagePropertiesService.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Nodes\NodesService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Operations\Pages\Sitemap\Nodes\Node\NodeService.cs" />
+    <Compile Include="Operations\Pages\Sitemap\SitemapService.cs" />
+    <Compile Include="Operations\Pages\Sitemap\Tree\SitemapTreeService.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\HtmlContentWidgetService.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\HtmlContentWidget\Options\HtmlContentWidgetOptionsService.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\Options\ServerControlWidgetOptionsService.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\ServerControlWidget\ServerControlWidgetService.cs" />
     <Compile Include="Operations\Pages\Widgets\WidgetsService.cs" />
+    <Compile Include="Operations\Pages\Widgets\Widget\WidgetOptionsHelper.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\WidgetService.cs" />
     <Compile Include="Operations\Root\Categories\CategoriesService.cs" />
     <Compile Include="Operations\Root\Categories\Category\CategoryService.cs" />
@@ -206,6 +224,7 @@
     <Compile Include="Operations\Root\Layouts\Layout\LayoutService.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\Options\LayoutOptionsService.cs" />
     <Compile Include="Operations\Root\Layouts\Layout\Regions\LayoutRegionsService.cs" />
+    <Compile Include="Operations\Root\Layouts\Layout\LayoutServiceHelper.cs" />
     <Compile Include="Operations\Root\Tags\TagsService.cs" />
     <Compile Include="Operations\Root\Version\VersionService.cs" />
     <Compile Include="ApiModuleDescriptor.cs" />

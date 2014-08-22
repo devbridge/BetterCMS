@@ -6,6 +6,7 @@ using BetterCms.Module.Api.Operations.Root;
 namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
 {
     [DataContract]
+    [System.Serializable]
     public class BlogPostModel : ModelBase
     {
         /// <summary>
@@ -126,7 +127,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
         public string MainImageUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the main image thumbnauil URL.
+        /// Gets or sets the main image thumbnail URL.
         /// </summary>
         /// <value>
         /// The main image thumbnauil URL.
@@ -187,5 +188,32 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
         /// </value>
         [DataMember]
         public System.Collections.Generic.List<AccessRuleModel> AccessRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language id.
+        /// </summary>
+        /// <value>
+        /// The language id.
+        /// </value>
+        [DataMember]
+        public System.Guid? LanguageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language code.
+        /// </summary>
+        /// <value>
+        /// The language code.
+        /// </value>
+        [DataMember]
+        public string LanguageCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language group identifier.
+        /// </summary>
+        /// <value>
+        /// The language group identifier.
+        /// </value>
+        [DataMember]
+        public System.Guid? LanguageGroupIdentifier { get; set; }
     }
 }

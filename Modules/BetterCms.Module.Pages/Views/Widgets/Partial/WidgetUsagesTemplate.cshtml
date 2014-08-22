@@ -1,0 +1,25 @@
+﻿@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Root;
+@using BetterCms.Module.Root.Mvc.Grids;
+@using BetterCms.Module.Root.ViewModels.Shared;
+
+@{
+    var gridViewModel = new EditableGridViewModel
+    {
+        CanAddNewItems = false,
+        CanDeleteItems = false,
+        Columns = new List<EditableGridColumn>
+            {
+                new EditableGridColumn(PagesGlobalization.WidgetUsages_Title_Title, "Title", "title"),
+                    
+                new EditableGridColumn(PagesGlobalization.WidgetUsages_Type_Title, "", "typeTitle")
+                    {
+                        HeaderAttributes = "style=\"width: 105px;\""
+                    }
+            }
+    };
+}
+
+<div class="bcms-scroll-window" id="bcms-widget-usages-grid">
+    @Html.Partial(RootModuleConstants.EditableGridTemplate, gridViewModel)
+</div>

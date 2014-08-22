@@ -3,6 +3,7 @@ using System.Linq;
 
 using Autofac;
 
+using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
@@ -35,7 +36,15 @@ namespace BetterCms.Module.Blog
         /// </summary>
         internal const string ModuleName = "blog";
 
+        /// <summary>
+        /// The blog area name
+        /// </summary>
         internal const string BlogAreaName = "bcms-blog";
+        
+        /// <summary>
+        /// The blog schema name
+        /// </summary>
+        internal const string BlogSchemaName = "bcms_blog";
 
         /// <summary>
         /// The blog java script module descriptor
@@ -93,6 +102,20 @@ namespace BetterCms.Module.Blog
             get
             {
                 return BlogAreaName;
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the module database schema name.
+        /// </summary>
+        /// <value>
+        /// The name of the module database schema.
+        /// </value>
+        public override string SchemaName
+        {
+            get
+            {
+                return BlogSchemaName;
             }
         }
 
@@ -174,7 +197,10 @@ namespace BetterCms.Module.Blog
 
             containerBuilder.RegisterType<DefaultOptionService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultAuthorService>().AsImplementedInterfaces().InstancePerLifetimeScope(); 
-            containerBuilder.RegisterType<DefaultBlogService>().AsImplementedInterfaces().InstancePerLifetimeScope();          
+            containerBuilder.RegisterType<DefaultBlogService>().As<IBlogService>().InstancePerLifetimeScope();          
+            containerBuilder.RegisterType<DefaultBlogSaveService>().As<IBlogSaveService>().InstancePerLifetimeScope();          
+            containerBuilder.RegisterType<DefaultBlogMLService>().AsImplementedInterfaces().InstancePerLifetimeScope();          
+            containerBuilder.RegisterType<DefaultBlogMLExportService>().AsImplementedInterfaces().InstancePerLifetimeScope();          
         }
 
         /// <summary>
@@ -188,7 +214,7 @@ namespace BetterCms.Module.Blog
                 return;
             }
 
-            args.RenderPageData.ExtendWithBlogData(args.PageData);
+            ExtendPageWithPageData(args.RenderPageData, args.PageData);
 
             if (!args.RenderPageData.IsBlogPost())
             {
@@ -214,6 +240,21 @@ namespace BetterCms.Module.Blog
             {
                 args.EventResult = PageRetrievedEventResult.ForcePageNotFound;
             }
+        }
+
+        /// <summary>
+        /// Extends the page and master page view models with data from provided page entity.
+        /// </summary>
+        /// <param name="renderPageViewModel">The render page view model.</param>
+        /// <param name="pageData">The page data.</param>
+        private void ExtendPageWithPageData(RenderPageViewModel renderPageViewModel, IPage pageData)
+        {
+            if (renderPageViewModel.MasterPage != null)
+            {
+                ExtendPageWithPageData(renderPageViewModel.MasterPage, renderPageViewModel.PageData);
+            }
+
+            renderPageViewModel.ExtendWithBlogData(pageData);
         }
 
         private void RegisterRenderingPageProperties()

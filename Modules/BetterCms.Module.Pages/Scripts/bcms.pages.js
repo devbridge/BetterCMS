@@ -58,7 +58,8 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
                 clonePageForm: 'form:first',
                 cloneWithLanguageGoToPagePropertiesLink: '#bcms-open-page-translations',
-                pagePropertiesTranslationsTab: '.bcms-tab-header .bcms-tab[data-name="#bcms-tab-5"]'
+                pagePropertiesTranslationsTab: '.bcms-tab-header .bcms-tab[data-name="#bcms-tab-5"]',
+                languageSelection: '#LanguageId'
             },
             links = {
                 loadEditPropertiesUrl: null,
@@ -96,7 +97,8 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 addNewPageActiveTemplateBox: 'bcms-inner-grid-box-active',
                 gridActiveRow: 'bcms-table-row-active'
             },
-            pageUrlManuallyEdited = false;
+            pageUrlManuallyEdited = false,
+            oldTitleValue = '';
 
         /**
         * Assign objects to module.
@@ -105,8 +107,45 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         page.globalization = globalization;
         page.senderId = 0;
 
-        page.initializePermalinkBox = function (dialog, addPrefix, actionUrl, titleField, autoGenerate) {
+        function urlGenerator(dialog, addPrefix, actionUrl, titleField, autoGenerate, getParentPageId, getLanguageId, getCategoryId) {
+            var self = this;
+
+            self.dialog = dialog;
+            self.addPrefix = addPrefix;
+            self.actionUrl = actionUrl;
+            self.titleField = titleField;
+            self.autoGenerate = autoGenerate;
+
+            self.getParentPageId = getParentPageId;
+            self.getLanguageId = getLanguageId;
+            self.getCategoryId = getCategoryId;
+
+            self.Regenerate = function()
+            {
+                var parentPageId, languageId, categoryId;
+
+                if (self.getParentPageId != null && $.isFunction(self.getParentPageId)) {
+                    parentPageId = self.getParentPageId();
+                }
+
+                if (self.getLanguageId != null && $.isFunction(self.getLanguageId)) {
+                    languageId = self.getLanguageId();
+                }
+
+                if (self.getCategoryId != null && $.isFunction(self.getCategoryId)) {
+                    categoryId = self.getCategoryId();
+                }
+
+                page.changeUrlSlug(self.dialog, self.actionUrl, self.titleField, self.addPrefix, parentPageId, languageId, categoryId);
+            }
+
+            return self;
+        }
+
+        page.initializePermalinkBox = function (dialog, addPrefix, actionUrl, titleField, autoGenerate, getParentPageId, getLanguageId, getCategoryId) {
+            var generator = new urlGenerator(dialog, addPrefix, actionUrl, titleField, autoGenerate, getParentPageId, getLanguageId, getCategoryId);
             pageUrlManuallyEdited = false;
+            oldTitleValue = '';
 
             dialog.container.find(selectors.editPermalink).on('click', function () {
                 page.showAddNewPageEditPermalinkBox(dialog);
@@ -122,7 +161,11 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
             if (autoGenerate) {
                 dialog.container.find(titleField).on('keyup', function () {
-                    page.changeUrlSlug(dialog, actionUrl, titleField, addPrefix);
+                    var newValue = $(this).val() || '';
+                    if (newValue != oldTitleValue) {
+                        oldTitleValue = newValue;
+                        generator.Regenerate();
+                    }
                 });
             }
 
@@ -146,6 +189,8 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                     page.closeAddNewPageEditPermalinkBox(dialog);
                 }
             });
+
+            return generator;
         };
 
         page.isEditedPageUrlManually = function () {
@@ -163,9 +208,20 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                     accessControl: security.createUserAccessViewModel(content.Data.UserAccessList),
                     language: languageViewModel,
                     options: options.createOptionValuesViewModel(optionsContainer, content.Data.OptionValues, content.Data.CustomOptions)
+                },
+                getLanguageId = function () {
+                    if (languageViewModel != null) {
+                        return languageViewModel.languageId();
+                    }
+                    return null;
                 };
 
-            page.initializePermalinkBox(dialog, true, links.convertStringToSlugUrl, selectors.addNewPageTitleInput, true);
+            var generator = page.initializePermalinkBox(dialog, true, links.convertStringToSlugUrl, selectors.addNewPageTitleInput, true, null, getLanguageId, null);
+            if (languageViewModel != null) {
+                languageViewModel.languageId.subscribe(function() {
+                    generator.Regenerate();
+                });
+            }
 
             if (infoMessageClosed && infoMessageClosed === '1') {
                 page.hideAddNewPageInfoMessage(dialog);
@@ -421,7 +477,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         /**
         * Changes page slug
         */
-        page.changeUrlSlug = function (dialog, actionUrl, titleInput, addPrefix) {
+        page.changeUrlSlug = function (dialog, actionUrl, titleInput, addPrefix, parentPageId, languageId, categoryId) {
             var oldText = $.trim(dialog.container.find(titleInput).val());
             setTimeout(function () {
                 var text = $.trim(dialog.container.find(titleInput).val()),
@@ -448,7 +504,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
                     $.ajax({
                         type: 'GET',
-                        url: $.format(actionUrl, encodeURIComponent(text), senderId, prefix),
+                        url: $.format(actionUrl, encodeURIComponent(text), senderId, prefix, parentPageId, languageId, categoryId),
                         dataType: 'json'
                     })
                         .done(function (result) {
@@ -624,13 +680,20 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
             container.html(html);
         };
 
+        /*
+         * Opens edit page form
+         */
+        page.openEditPageDialog = function (id, postSuccess, title, onLoad) {
+            pageProperties.openEditPageDialog(id, postSuccess, title, onLoad);
+        };
+
         /**
-        * Opens page edit form from site settings pages list
-        */
+            * Opens page edit form from site settings pages list
+            */
         page.editSiteSettingsPage = function (self, container, title) {
             var id = self.data('id');
 
-            pageProperties.openEditPageDialog(id, function (data) {
+            page.openEditPageDialog(id, function (data) {
                 if (data.Data != null) {
                     if (data.Data.IsArchived) {
                         var form = container.find(selectors.siteSettingsPagesListForm),
@@ -677,12 +740,23 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 onLoad: function (dialog) {
                     dynamicContent.bindDialog(dialog, url, {
                         contentAvailable: function (childDialog, content) {
-                            page.initializePermalinkBox(dialog, false, links.convertStringToSlugUrl, selectors.addNewPageTitleInput, true);
-
                             var viewModel = {
-                                accessControl: security.createUserAccessViewModel(content.Data.UserAccessList)
-                            },
-                                form = dialog.container.find(selectors.clonePageForm);
+                                    accessControl: security.createUserAccessViewModel(content.Data.UserAccessList)
+                                },
+                                form = dialog.container.find(selectors.clonePageForm),
+                                languageSelector = form.find(selectors.languageSelection),
+                                getParentPageId = function () {
+                                    return bcms.pageId;
+                                },
+                                getLanguageId = function () {
+                                    return languageSelector != null ? languageSelector.val() : null;
+                                },
+                                generator = page.initializePermalinkBox(dialog, false, links.convertStringToSlugUrl, selectors.addNewPageTitleInput, true, getParentPageId, getLanguageId);
+                            if (languageSelector != null) {
+                                languageSelector.on('change', function() {
+                                    generator.Regenerate();
+                                });
+                            }
 
                             if (form.length > 0) {
                                 ko.applyBindings(viewModel, form.get(0));

@@ -65,7 +65,7 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
                         contentAvailable: function (dialogRef, content) {
                             initUploadFilesDialogEvents(dialog, options);
                             
-                            var context = $(selectors.userAccessControlContainer).get(0);
+                            var context = dialog.container.find(selectors.userAccessControlContainer).get(0);
                             if (context) {
                                 var viewModel = {
                                     accessControl: security.createUserAccessViewModel(content.Data.UserAccessList)
@@ -347,8 +347,8 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
         };
         
         // When one of file status is "Processing", checking file status repeatedly
-        self.timeout = 10000;
-        self.firstTimeout = 500;
+        self.timeout = 5000;
+        self.firstTimeout = 1000;
         self.timer = null;
 
         self.startStatusChecking = function (timeout) {

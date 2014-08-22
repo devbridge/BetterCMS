@@ -1,0 +1,17 @@
+﻿using BetterCms.Core.DataContracts;
+
+using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Projections;
+
+namespace BetterCms.Module.Root.Services
+{
+    public interface IContentProjectionService
+    {
+        PageContentProjection CreatePageContentProjection(
+            bool canManageContent,
+            PageContent pageContent,
+            IChildContent childContent = null,
+            System.Guid? previewPageContentId = null,
+            bool retrieveCorrectVersion = true);
+    }
+}

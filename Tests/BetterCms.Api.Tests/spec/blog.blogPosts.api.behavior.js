@@ -124,6 +124,9 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(blogPost.mainImageUrl).toBeDefinedAndNotNull('mainImageUrl should be retrieved.');
             expect(blogPost.mainImageThumbnauilUrl).toBeDefinedAndNotNull('mainImageThumbnailUrl should be retrieved.');
             expect(blogPost.mainImageCaption).toBe('Image caption for _0003_Blog_For_Tests_', 'Correctly filtered mainImageCaption should be retrieved.');
+            expect(blogPost.languageCode).toBe('ar-MA', 'Correctly filtered languageCode should be retrieved.');
+            expect(blogPost.languageId).toBe('a3f605164ab549a7afb1a38e00f7ec89', 'Correctly filtered languageId should be retrieved.');
+            expect(blogPost.languageGroupIdentifier).toBe('15830a7f9c1044138bc1fb6cab6199a3', 'Correctly filtered languageGroupIdentifier should be retrieved.');
             expect(new Date(blogPost.activationDate).getTime()).toBe(new Date('2013-07-24T00:00:00').getTime(), 'Correctly filtered activationDate should be retrieved.');
             expect(new Date(blogPost.expirationDate).getTime()).toBe(new Date('2032-07-24T23:59:59').getTime(), 'Correctly filtered expirationDate should be retrieved.');
             expect(blogPost.isArchived).toBe(false);
@@ -166,13 +169,16 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(blogPost.mainImageUrl).toBeDefinedAndNotNull('mainImageUrl should be retrieved.');
             expect(blogPost.mainImageThumbnauilUrl).toBeDefinedAndNotNull('mainImageThumbnailUrl should be retrieved.');
             expect(blogPost.mainImageCaption).toBe('Image caption for _0003_Blog_For_Tests_', 'Correctly filtered mainImageCaption should be retrieved.');
+            expect(blogPost.languageId).toBe('a3f605164ab549a7afb1a38e00f7ec89', 'Correctly filtered languageId should be retrieved.');
+            expect(blogPost.languageCode).toBe('ar-MA', 'Correctly filtered languageCode should be retrieved.');
+            expect(blogPost.languageGroupIdentifier).toBe('15830a7f9c1044138bc1fb6cab6199a3', 'Correctly filtered languageGroupIdentifier should be retrieved.');
             expect(new Date(blogPost.activationDate).getTime()).toBe(new Date('2013-07-24T00:00:00').getTime(), 'Correctly filtered activationDate should be retrieved.');
             expect(new Date(blogPost.expirationDate).getTime()).toBe(new Date('2032-07-24T23:59:59').getTime(), 'Correctly filtered expirationDate should be retrieved.');            
             expect(blogPost.isArchived).toBe(false, 'Correctly filtered isArchived should be retrieved.');
         });
     });
     
-    it('02105: Should get blog post properties by id.', function () {
+    it('02105.1: Should get blog post properties by id.', function () {
         var url = '/bcms-api/blog-post-properties/' + constants.testPageId,
              result,
              ready = false;
@@ -185,7 +191,10 @@ describe('blog.blogPosts.api.behavior', function () {
             includeImages: true,
             includeMetaData: true,
             includeHtmlContent: true,
-            includeAccessRules: true
+            includeAccessRules: true,
+            includeTechnicalInfo: true,
+            includeChildContentsOptions: true,
+            includeLanguage: true
         };
 
         runs(function () {
@@ -223,7 +232,8 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(blogPost.isArchived).toBe(false, 'Correctly filtered isArchived should be retrieved.');
 
             // html
-            expect(result.htmlContent).toBe('<p>_0003_Blog_For_Tests_ HTML</p>', 'Correctly filtered htmlContent should be retrieved.');
+            var substring = '<p>_0003_Blog_For_Tests_ HTML</p>';
+            expect(result.htmlContent.substr(0, substring.length)).toBe(substring, 'Correctly filtered htmlContent should be retrieved.');
 
             // layout
             var layout = result.layout;
@@ -238,6 +248,14 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(category).toBeDefinedAndNotNull('JSON category object should be retrieved.');
             api.expectBasePropertiesAreNotNull(category);
             expect(category.name).toBe('Category for _0003_Blog_For_Tests_', 'Correctly filtered category.name should be retrieved.');
+
+            // language
+            var language = result.language;
+            expect(language).toBeDefinedAndNotNull('JSON language object should be retrieved.');
+            api.expectBasePropertiesAreNotNull(language);
+            expect(language.name).toBe('Language for _0003_Blog_For_Tests_', 'Correctly filtered language.name should be retrieved.');
+            expect(language.code).toBe('ar-MA', 'Correctly filtered language.code should be retrieved.');
+            expect(language.languageGroupIdentifier).toBe('15830a7f9c1044138bc1fb6cab6199a3', 'Correctly filtered language.languageGroupIdentifier should be retrieved.');
             
             // author
             var author = result.author;
@@ -265,6 +283,13 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(metadata.metaTitle).toBe('Test meta title', 'Correctly filtered metaTitle should be retrieved.');
             expect(metadata.metaKeywords).toBe('Test meta keywords', 'Correctly filtered metaKeywords should be retrieved.');
             expect(metadata.metaDescription).toBe('Test meta description', 'Correctly filtered metaDescription should be retrieved.');
+
+            // technical info
+            var techInfo = result.technicalInfo;
+            expect(techInfo).toBeDefinedAndNotNull('JSON techInfo object should be retrieved.');
+            expect(techInfo.blogPostContentId).toBe('335a518ba9e841eaab84a20500bbe74c', 'Correctly filtered techInfo.blogPostContentId should be retrieved.');
+            expect(techInfo.pageContentId).toBe('2815b2be74314dff96aaa20500bbe74e', 'Correctly filtered techInfo.pageContentId should be retrieved.');
+            expect(techInfo.regionId).toBe('e3e2e7fe62df4ba683216fdcc1691d8a', 'Correctly filtered techInfo.regionId should be retrieved.');
 
             // access rules
             var accessRules = result.accessRules;
@@ -298,9 +323,46 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(rule4.identity).toBe('Authenticated Users', 'Correctly filtered accessRules[3].identity should be Authenticated Users.');
             expect(rule5.identity).toBe('Everyone', 'Correctly filtered accessRules[4].identity should be Everyone.');
             expect(rule6.identity).toBe('role1', 'Correctly filtered accessRules[5].identity should be role1.');
+
+            // Child content options
+            expect(result.childContentsOptionValues).toBeDefinedAndNotNull('Correct childContentsOptionValues should be retrieved.');
+            expect(result.childContentsOptionValues.length).toBe(2, 'Correct childContentsOptionValues.length should be retrieved.');
+
+            var child = result.childContentsOptionValues[1];
+            expect(child.assignmentIdentifier).toBe('94837f8d922d4ef2859cd99a1c66dbea', 'Correctly filtered childContentsOptionValues[1].assignmentIdentifier should be retrieved');
+            expect(child.optionValues).toBeDefinedAndNotNull('Correctly filtered childContentsOptionValues[1].optionValues should be retrieved');
+            expect(child.optionValues.length).toBe(2, 'The length of childContentsOptionValues[1].optionValues array should be 2');
+            expect(child.optionValues[1].key).toBe('O3', 'Correctly filtered childContentsOptionValues[1].optionValues[1].key should be retrieved');
+            expect(child.optionValues[1].value).toBe('902c287b-9eef-4de1-8975-a20601052b9a', 'Correctly filtered childContentsOptionValues[1].optionValues[1].value should be retrieved');
+            expect(child.optionValues[1].defaultValue).toBe('0dbf035e-a1b8-4fe1-ba61-a20500fb8491', 'Correctly filtered childContentsOptionValues[1].optionValues[1].defaultValue should be retrieved');
+            expect(child.optionValues[1].type).toBe('Custom', 'Correctly filtered childContentsOptionValues[1].optionValues[1].type should be retrieved');
+            expect(child.optionValues[1].useDefaultValue).toBe(false, 'Correctly filtered childContentsOptionValues[1].optionValues[1].useDefaultValue should be retrieved');
+            expect(child.optionValues[1].customTypeIdentifier).toBe('media-images-folder', 'Correctly filtered childContentsOptionValues[1].optionValues[1].customTypeIdentifier should be retrieved');
+
+            child = result.childContentsOptionValues[0];
+            expect(child.assignmentIdentifier).toBe('ae2efe36ec0c48dab9900babddd46e9f', 'Correctly filtered childContentsOptionValues[0].assignmentIdentifier should be retrieved');
+            expect(child.optionValues).toBeDefinedAndNotNull('Correctly filtered childContentsOptionValues[0].optionValues should be retrieved');
+            expect(child.optionValues.length).toBe(1, 'The length of childContentsOptionValues[0].optionValues array should be 1');
+            expect(child.optionValues[0].key).toBe('O1', 'Correctly filtered childContentsOptionValues[0].optionValues[0].key should be retrieved');
+            expect(child.optionValues[0].value).toBe('V1', 'Correctly filtered childContentsOptionValues[0].optionValues[0].value should be retrieved');
+            expect(child.optionValues[0].defaultValue).toBeNull('Correctly filtered childContentsOptionValues[0].optionValues[0].defaultValue should be retrieved');
+            expect(child.optionValues[0].type).toBe('Text', 'Correctly filtered childContentsOptionValues[0].optionValues[0].type should be retrieved');
+            expect(child.optionValues[0].useDefaultValue).toBe(false, 'Correctly filtered childContentsOptionValues[0].optionValues[0].useDefaultValue should be retrieved');
+            expect(child.optionValues[0].customTypeIdentifier).toBeNull('Correctly filtered childContentsOptionValues[0].optionValues[0].customTypeIdentifier should be retrieved');
         });
     });
-    
+
+    it('02105.2: Should test CRUD for blog post properties.', function () {
+        api.testCrud(runs, waitsFor, expect, constants.testPageId, "/bcms-api/blog-post-properties/", {
+            getPostData: function (json) {
+                json.data.title = "Test 02105.2: " + api.createGuid();
+                json.data.blogPostUrl = null;
+                json.data.version = 0;
+                return json.data;
+            }
+        });
+    });
+
     it('02106: Should get blog post list, filtered by tags, using AND connector', function () {
         filterByTags('and', 1, ['IFilterByTags Page 1']);
     });
@@ -320,9 +382,9 @@ describe('blog.blogPosts.api.behavior', function () {
                     { field: 'Id', value: 'c1efcb1107ed4901abb3a206012b0b87' },
                     { field: 'CreatedOn', value: '2013-07-25 18:08:47.000' },
                     { field: 'CreatedBy', value: 'Better CMS test user' },
-                    { field: 'LastModifiedOn', value: '2013-07-25 18:13:56.000' },
-                    { field: 'LastModifiedBy', value: 'Better CMS test user' },
-                    { field: 'Version', value: '2' },
+                    { field: 'LastModifiedOn', value: '2014-08-21 15:36:51.000' },
+                    { field: 'LastModifiedBy', value: 'admin' },
+                    { field: 'Version', value: '4' },
 
                     { field: 'Title', value: '02108' },
                     { field: 'BlogPostUrl', value: '/articles/02108/' },
@@ -341,7 +403,10 @@ describe('blog.blogPosts.api.behavior', function () {
                     { field: 'MainImageCaption', value: '02108 caption' },
                     { field: 'ActivationDate', value: '2013-07-25 00:00:00.000' },
                     { field: 'ExpirationDate', value: '2032-07-25 23:59:59.000' },
-                    { field: 'IsArchived', value: false }
+                    { field: 'IsArchived', value: false },
+                    { field: 'LanguageId', value: '2000fc5567104616a34fa38e0100f060' },
+                    { field: 'LanguageGroupIdentifier', value: '2fc90bc7af3341eb84cec8d29baaf6a4' },
+                    { field: 'LanguageCode', value: 'arn' }
                 ]
             }
         };
@@ -363,7 +428,7 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(result.data.totalCount).toBe(1, 'Total count should be 1.');
             expect(result.data.items.length).toBe(1, 'Returned array length should be 1.');
 
-            expect(result.data.items[0].id).toBe('c1efcb1107ed4901abb3a206012b0b87', 'Correctly filtered ____ should be retrieved.');
+            expect(result.data.items[0].id).toBe('c1efcb1107ed4901abb3a206012b0b87', 'Correctly filtered items[0].id should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
             // data.filter.where.length + 2 <-- Because fields [Tags, AccessRules] cannnot be filtered by
@@ -489,9 +554,9 @@ describe('blog.blogPosts.api.behavior', function () {
                     { field: 'Id', value: '98a7ba1fbadd419db331a2f100b48f93' },
                     { field: 'CreatedOn', value: '2014-03-17 10:57:24.000' },
                     { field: 'CreatedBy', value: 'admin' },
-                    { field: 'LastModifiedOn', value: '2014-03-17 10:58:29.000' },
+                    { field: 'LastModifiedOn', value: '2014-08-21 15:36:51' },
                     { field: 'LastModifiedBy', value: 'admin' },
-                    { field: 'Version', value: '2' },
+                    { field: 'Version', value: '4' },
 
                     { field: 'Title', value: '02112' },
                     { field: 'BlogPostUrl', value: '/articles/02112/' },
@@ -510,7 +575,10 @@ describe('blog.blogPosts.api.behavior', function () {
                     { field: 'MainImageCaption', value: '02112 caption' },
                     { field: 'ActivationDate', value: '2014-03-17 00:00:00.000' },
                     { field: 'ExpirationDate', value: '2014-03-19 23:59:59.000' },
-                    { field: 'IsArchived', value: false }
+                    { field: 'IsArchived', value: false },
+                    { field: 'LanguageId', value: 'c0c6e81497e94ced8b8da38e01010139' },
+                    { field: 'LanguageCode', value: 'arn-CL' },
+                    { field: 'LanguageGroupIdentifier', value: '2fc90bc7af3341eb84cec8d29baaf6a4' }
                 ]
             }
         };

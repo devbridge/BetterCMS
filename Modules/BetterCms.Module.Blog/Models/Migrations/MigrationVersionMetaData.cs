@@ -9,7 +9,7 @@ namespace BetterCms.Module.Blog.Models.Migrations
         {
             get
             {
-                return "bcms_" + BlogModuleDescriptor.ModuleName;
+                return BlogModuleDescriptor.BlogSchemaName;
             }
         }
 

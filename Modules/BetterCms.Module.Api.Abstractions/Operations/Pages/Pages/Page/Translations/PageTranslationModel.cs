@@ -3,6 +3,7 @@
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Translations
 {
     [DataContract]
+    [System.Serializable]
     public class PageTranslationModel
     {
         /// <summary>
@@ -49,5 +50,23 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Translations
         /// </value>
         [DataMember]
         public string LanguageCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page status.
+        /// </summary>
+        /// <value>
+        /// The page status.
+        /// </value>
+        [DataMember]
+        public bool IsPublished { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page published date.
+        /// </summary>
+        /// <value>
+        /// The page published date.
+        /// </value>
+        [DataMember]
+        public System.DateTime? PublishedOn { get; set; }
     }
 }

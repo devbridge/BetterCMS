@@ -1,4 +1,8 @@
-﻿namespace BetterCms.Module.Users.Services
+﻿using System;
+
+using BetterCms.Module.Users.ViewModels.User;
+
+namespace BetterCms.Module.Users.Services
 {
     public interface IUserService
     {
@@ -52,5 +56,23 @@
         /// <param name="username">The username.</param>
         /// <returns>User by username.</returns>
         Models.User GetUser(string username);
+
+        /// <summary>
+        /// Saves the user.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <param name="treatNullsAsLists">if set to <c>true</c> treat null lists as empty lists.</param>
+        /// <param name="createIfNotExists">if set to <c>true</c> create if not exists.</param>
+        /// <returns>
+        /// Saved user entity
+        /// </returns>
+        Models.User SaveUser(EditUserViewModel model, bool treatNullsAsLists = true, bool createIfNotExists = false);
+
+        /// <summary>
+        /// Deletes the user.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="version">The version.</param>
+        void DeleteUser(Guid id, int version);
     }
 }

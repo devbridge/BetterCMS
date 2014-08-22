@@ -1,22 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Web;
 
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
+using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Modules.Projections;
+using BetterCms.Core.Mvc;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
-using BetterCms.Core.Services.Caching;
 using BetterCms.Core.Web;
 
 using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Page;
 
+using BetterCms.Module.Root;
+using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
+
+using Common.Logging;
 
 using NHibernate.Linq;
 
@@ -25,26 +34,36 @@ using RootPage = BetterCms.Module.Root.Models.Page;
 
 namespace BetterCms.Module.Pages.Services
 {
-    internal class DefaultPageService : IPageAccessor, IPageService
+    public class DefaultPageService : IPageAccessor, IPageService
     {
+        private static readonly ILog Logger = LogManager.GetCurrentClassLogger(); 
+        
         private readonly IRepository repository;
         private readonly IRedirectService redirectService;
         private readonly IUrlService urlService;
-        private readonly ISecurityService securityService;
         private readonly IAccessControlService accessControlService;
-        private readonly ICacheService cacheService;
+        private readonly ICmsConfiguration cmsConfiguration;
+        private readonly ISitemapService sitemapService;
+        private readonly IUnitOfWork unitOfWork;
 
         private IDictionary<string, IPage> temporaryPageCache;
 
-        public DefaultPageService(IRepository repository, IRedirectService redirectService, IUrlService urlService,
-            ISecurityService securityService, IAccessControlService accessControlService, ICacheService cacheService)
+        public DefaultPageService(
+            IRepository repository, 
+            IRedirectService redirectService, 
+            IUrlService urlService,
+            IAccessControlService accessControlService, 
+            ICmsConfiguration cmsConfiguration, 
+            ISitemapService sitemapService, 
+            IUnitOfWork unitOfWork)
         {
             this.repository = repository;
             this.redirectService = redirectService;
             this.urlService = urlService;
-            this.securityService = securityService;
             this.accessControlService = accessControlService;
-            this.cacheService = cacheService;
+            this.cmsConfiguration = cmsConfiguration;
+            this.unitOfWork = unitOfWork;
+            this.sitemapService = sitemapService;
 
             temporaryPageCache = new Dictionary<string, IPage>();
         }
@@ -77,15 +96,15 @@ namespace BetterCms.Module.Pages.Services
             }
 
             // NOTE: if GetPageQuery() and CachePage() is used properly below code should not be executed.
-            var inSitemapFuture = repository.AsQueryable<SitemapNode>().Where(node => node.UrlHash == trimmed && !node.IsDeleted && !node.Sitemap.IsDeleted).Select(node => node.Id).ToFuture();
             var page = repository
                 .AsQueryable<PageProperties>(p => p.PageUrlHash == trimmed)
                 .Fetch(p => p.Layout)
+                .Fetch(p => p.PagesView)
                 .FirstOrDefault();
 
             if (page != null)
             {
-                page.IsInSitemap = inSitemapFuture.Any() || repository.AsQueryable<SitemapNode>().Any(node => node.Page.Id == page.Id && !node.IsDeleted && !node.Sitemap.IsDeleted);
+                page.IsInSitemap = page.PagesView.IsInSitemap;
                 temporaryPageCache.Add(trimmed, page);
             }
 
@@ -110,7 +129,7 @@ namespace BetterCms.Module.Pages.Services
             var pageProperties = page as PageProperties;
             if (pageProperties != null)
             {
-                pageProperties.IsInSitemap = repository.AsQueryable<SitemapNode>().Any(node => (node.Page.Id == pageProperties.Id || node.UrlHash == pageProperties.PageUrlHash) && !node.IsDeleted && !node.Sitemap.IsDeleted);
+                pageProperties.IsInSitemap = pageProperties.PagesView.IsInSitemap;
                 temporaryPageCache.Add(pageProperties.PageUrlHash, pageProperties);
             }
         }
@@ -159,7 +178,42 @@ namespace BetterCms.Module.Pages.Services
         /// <returns>
         /// Created permalink
         /// </returns>
-        public string CreatePagePermalink(string url, string parentPageUrl)
+        public string CreatePagePermalink(string url, string parentPageUrl, Guid? parentPageId = null, Guid? languageId = null, Guid? categoryId = null)
+        {
+            string newUrl = null;
+            if (UrlHelper.GeneratePageUrl != null)
+            {
+                try
+                {
+                    newUrl =
+                        UrlHelper.GeneratePageUrl(
+                            new PageUrlGenerationRequest
+                            {
+                                Title = url,
+                                ParentPageId = parentPageId,
+                                LanguageId = languageId,
+                                CategoryId = categoryId
+                            });
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error("Custom page url generation failed.", ex);
+                }
+            }
+
+            if (string.IsNullOrWhiteSpace(newUrl))
+            {
+                newUrl = CreatePagePermalinkDefault(url, parentPageUrl);
+            }
+            else
+            {
+                newUrl = urlService.AddPageUrlPostfix(newUrl, "{0}");
+            }
+
+            return newUrl;
+        }
+
+        private string CreatePagePermalinkDefault(string url, string parentPageUrl)
         {
             var prefixPattern = string.IsNullOrWhiteSpace(parentPageUrl)
                 ? "{0}"
@@ -248,13 +302,371 @@ namespace BetterCms.Module.Pages.Services
                 .AsQueryable<Root.Models.Page>()
                 .Where(p => p.LanguageGroupIdentifier == languageGroupIdentifier)
                 .Select(p => new PageTranslationViewModel
-                {
-                    Id = p.Id,
-                    Title = p.Title,
-                    PageUrl = p.PageUrl,
-                    LanguageId = p.Language.Id
-                })
+                    {
+                        Id = p.Id,
+                        Title = p.Title,
+                        PageUrl = p.PageUrl,
+                        PageUrlHash = p.PageUrlHash,
+                        LanguageId = p.Language.Id
+                    })
                 .ToFuture();
+        }
+
+        /// <summary>
+        /// Deletes the page.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <param name="principal">The principal.</param>
+        /// <param name="messages">The messages.</param>
+        /// <returns>
+        /// Delete result
+        /// </returns>
+        /// <exception cref="ConcurrentDataException"></exception>
+        /// <exception cref="System.ComponentModel.DataAnnotations.ValidationException">
+        /// </exception>
+        public bool DeletePage(DeletePageViewModel model, IPrincipal principal, IMessagesIndicator messages = null)
+        {
+            var languagesFuture = repository.AsQueryable<Language>().ToFuture();
+
+            var page = repository.AsQueryable<PageProperties>(p => p.Id == model.PageId).ToFuture().FirstOne();
+            if (model.Version > 0 && page.Version != model.Version)
+            {
+                throw new ConcurrentDataException(page);
+            }
+
+            if (page.IsMasterPage && repository.AsQueryable<MasterPage>(mp => mp.Master == page).Any())
+            {
+                var message = PagesGlobalization.DeletePageCommand_MasterPageHasChildren_Message;
+                var logMessage = string.Format("Failed to delete page. Page is selected as master page. Id: {0} Url: {1}", page.Id, page.PageUrl);
+                throw new ValidationException(() => message, logMessage);
+            }
+
+            var isRedirectInternal = false;
+            if (!string.IsNullOrWhiteSpace(model.RedirectUrl))
+            {
+                isRedirectInternal = urlService.ValidateInternalUrl(model.RedirectUrl);
+                if (!isRedirectInternal && urlService.ValidateInternalUrl(urlService.FixUrl(model.RedirectUrl)))
+                {
+                    isRedirectInternal = true;
+                }
+                if (isRedirectInternal)
+                {
+                    model.RedirectUrl = urlService.FixUrl(model.RedirectUrl);
+                }
+            }
+
+            if (model.UpdateSitemap)
+            {
+                accessControlService.DemandAccess(principal, RootModuleConstants.UserRoles.EditContent);
+            }
+
+            var sitemaps = new Dictionary<Sitemap, bool>();
+            var sitemapNodes = sitemapService.GetNodesByPage(page);
+            if (model.UpdateSitemap)
+            {
+                sitemapNodes.Select(node => node.Sitemap)
+                            .Distinct()
+                            .ToList()
+                            .ForEach(
+                                sitemap =>
+                                sitemaps.Add(
+                                    sitemap,
+                                    !cmsConfiguration.Security.AccessControlEnabled || accessControlService.GetAccessLevel(sitemap, principal) == AccessLevel.ReadWrite));
+
+                foreach (var node in sitemapNodes)
+                {
+                    if (sitemaps[node.Sitemap] && node.ChildNodes.Count > 0)
+                    {
+                        var logMessage = string.Format("In {0} sitemap node {1} has {2} child nodes.", node.Sitemap.Id, node.Id, node.ChildNodes.Count);
+                        throw new ValidationException(() => PagesGlobalization.DeletePageCommand_SitemapNodeHasChildNodes_Message, logMessage);
+                    }
+                }
+            }
+
+            unitOfWork.BeginTransaction();
+
+            // Update sitemap nodes
+            IList<SitemapNode> updatedNodes = new List<SitemapNode>();
+            IList<SitemapNode> deletedNodes = new List<SitemapNode>();
+            UpdateSitemapNodes(model, page, sitemapNodes, sitemaps, languagesFuture.ToList(), updatedNodes, deletedNodes);
+
+            Redirect redirect;
+            if (!string.IsNullOrWhiteSpace(model.RedirectUrl))
+            {
+                if (string.Equals(page.PageUrl, model.RedirectUrl, StringComparison.OrdinalIgnoreCase))
+                {
+                    var logMessage = string.Format("Circular redirect loop from url {0} to url {0}.", model.RedirectUrl);
+                    throw new ValidationException(() => PagesGlobalization.ValidatePageUrlCommand_SameUrlPath_Message, logMessage);
+                }
+
+                // Validate url
+                if (!urlService.ValidateExternalUrl(model.RedirectUrl))
+                {
+                    var logMessage = string.Format("Invalid redirect url {0}.", model.RedirectUrl);
+                    throw new ValidationException(() => PagesGlobalization.ValidatePageUrlCommand_InvalidUrlPath_Message, logMessage);
+                }
+
+                string patternsValidationMessage;
+                if (isRedirectInternal
+                    && !urlService.ValidateUrlPatterns(model.RedirectUrl, out patternsValidationMessage, PagesGlobalization.DeletePage_RedirectUrl_Name))
+                {
+                    var logMessage = string.Format("{0}. URL: {1}.", patternsValidationMessage, model.RedirectUrl);
+                    throw new ValidationException(() => patternsValidationMessage, logMessage);
+                }
+
+                redirect = redirectService.GetPageRedirect(page.PageUrl);
+                if (redirect != null)
+                {
+                    redirect.RedirectUrl = model.RedirectUrl;
+                }
+                else
+                {
+                    redirect = redirectService.CreateRedirectEntity(page.PageUrl, model.RedirectUrl);
+                }
+
+                if (redirect != null)
+                {
+                    repository.Save(redirect);
+                }
+            }
+            else
+            {
+                redirect = null;
+            }
+
+            // Delete child entities.            
+            if (page.PageTags != null)
+            {
+                foreach (var pageTag in page.PageTags)
+                {
+                    repository.Delete(pageTag);
+                }
+            }
+
+            var deletedPageContents = new List<PageContent>();
+            if (page.PageContents != null)
+            {
+                foreach (var pageContent in page.PageContents)
+                {
+                    repository.Delete(pageContent);
+                    deletedPageContents.Add(pageContent);
+                }
+            }
+
+            if (page.Options != null)
+            {
+                foreach (var option in page.Options)
+                {
+                    repository.Delete(option);
+                }
+            }
+
+            if (page.AccessRules != null)
+            {
+                var rules = page.AccessRules.ToList();
+                rules.ForEach(page.RemoveRule);
+            }
+
+            if (page.MasterPages != null)
+            {
+                foreach (var master in page.MasterPages)
+                {
+                    repository.Delete(master);
+                }
+            }
+
+            // Delete page
+            repository.Delete<Root.Models.Page>(page);
+
+            // Commit
+            unitOfWork.Commit();
+
+            var updatedSitemaps = new List<Sitemap>();
+            foreach (var node in updatedNodes)
+            {
+                Events.SitemapEvents.Instance.OnSitemapNodeUpdated(node);
+                if (!updatedSitemaps.Contains(node.Sitemap))
+                {
+                    updatedSitemaps.Add(node.Sitemap);
+                }
+            }
+
+            foreach (var node in deletedNodes)
+            {
+                Events.SitemapEvents.Instance.OnSitemapNodeDeleted(node);
+                if (!updatedSitemaps.Contains(node.Sitemap))
+                {
+                    updatedSitemaps.Add(node.Sitemap);
+                }
+            }
+
+            foreach (var updatedSitemap in updatedSitemaps)
+            {
+                Events.SitemapEvents.Instance.OnSitemapUpdated(updatedSitemap);
+            }
+
+            // Notifying about redirect created
+            if (redirect != null)
+            {
+                Events.PageEvents.Instance.OnRedirectCreated(redirect);
+            }
+
+            // Notify about deleted page contents
+            foreach (var deletedPageContent in deletedPageContents)
+            {
+                Events.PageEvents.Instance.OnPageContentDeleted(deletedPageContent);
+            }
+
+            // Notifying, that page is deleted.
+            Events.PageEvents.Instance.OnPageDeleted(page);
+
+            if (sitemaps.Any(tuple => !tuple.Value) && messages != null)
+            {
+                // Some sitemaps where skipped, because user has no permission to edit.
+                messages.AddSuccess(PagesGlobalization.DeletePage_SitemapSkipped_Message);
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Updates page sitemap nodes.
+        /// </summary>
+        private void UpdateSitemapNodes(DeletePageViewModel model, PageProperties page, IList<SitemapNode> sitemapNodes, Dictionary<Sitemap, bool> sitemaps,
+            List<Language> languages, IList<SitemapNode> updatedNodes, IList<SitemapNode> deletedNodes)
+        {
+            if (sitemapNodes != null)
+            {
+                // Archive sitemaps before update.
+                sitemaps.Select(pair => pair.Key).ToList().ForEach(sitemap => sitemapService.ArchiveSitemap(sitemap.Id));
+                foreach (var node in sitemapNodes)
+                {
+                    if (!node.IsDeleted)
+                    {
+                        if (model.UpdateSitemap && sitemaps[node.Sitemap])
+                        {
+                            // Delete sitemap node.
+                            sitemapService.DeleteNode(node, ref deletedNodes);
+                        }
+                        else
+                        {
+                            // Unlink sitemap node.
+                            if (node.Page != null && node.Page.Id == page.Id)
+                            {
+                                node.Page = null;
+                                node.Title = node.UsePageTitleAsNodeTitle ? page.Title : node.Title;
+                                node.Url = page.PageUrl;
+                                node.UrlHash = page.PageUrlHash;
+                                repository.Save(node);
+                                updatedNodes.Add(node);
+
+                                IEnumerable<PageTranslationViewModel> pageTranslations;
+                                if (page.LanguageGroupIdentifier.HasValue && !page.LanguageGroupIdentifier.Value.HasDefaultValue())
+                                {
+                                    pageTranslations = GetPageTranslations(page.LanguageGroupIdentifier.Value);
+                                }
+                                else
+                                {
+                                    pageTranslations = new PageTranslationViewModel[0];
+                                }
+
+                                // Assigned node URL and title is taken from default language, if such exists.
+                                var defaultPageTranslation = pageTranslations.FirstOrDefault(p => !p.LanguageId.HasValue);
+                                if (defaultPageTranslation != null)
+                                {
+                                    node.Url = defaultPageTranslation.PageUrl;
+                                    node.UrlHash = defaultPageTranslation.PageUrlHash;
+                                    if (node.UsePageTitleAsNodeTitle)
+                                    {
+                                        node.Title = defaultPageTranslation.Title;
+                                    }
+                                }
+
+                                // Update sitemap node translations.
+                                if (node.Translations == null)
+                                {
+                                    node.Translations = new List<SitemapNodeTranslation>();
+                                }
+
+                                node.Translations.ForEach(
+                                    t =>
+                                    {
+                                        var pageTranslation = GetPageTranslation(pageTranslations, t.Language.Id, node, page);
+                                        if (t.UsePageTitleAsNodeTitle)
+                                        {
+                                            t.Title = pageTranslation.Title;
+                                        }
+
+                                        t.UsePageTitleAsNodeTitle = false;
+                                        t.Url = pageTranslation.PageUrl;
+                                        t.UrlHash = pageTranslation.PageUrlHash;
+                                    });
+
+                                // Create non-existing node translations for each language.
+                                languages.Where(language => node.Translations.All(nt => nt.Language.Id != language.Id))
+                                    .ForEach(language =>
+                                    {
+                                        var pageTranslation = GetPageTranslation(pageTranslations, language.Id, node, page);
+
+                                        var nodeTranslation = new SitemapNodeTranslation
+                                            {
+                                                Language = language,
+                                                Node = node,
+                                                UsePageTitleAsNodeTitle = false,
+                                                Title = pageTranslation.Title,
+                                                Url = pageTranslation.PageUrl,
+                                                UrlHash = pageTranslation.PageUrlHash
+                                            };
+
+                                        node.Translations.Add(nodeTranslation);
+                                    });
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the page translation from page translations list, which is most compatible with node translation:
+        /// if page translation exists, take page translations
+        /// if page translation does not exist, take default language translation
+        /// if default language translation does not exist, take node's data
+        /// </summary>
+        /// <param name="pageTranslations">The page translations.</param>
+        /// <param name="nodeLanguage">The node language.</param>
+        /// <param name="node">The node.</param>
+        /// <returns></returns>
+        private PageTranslationViewModel GetPageTranslation(IEnumerable<PageTranslationViewModel> pageTranslations, Guid nodeLanguage, SitemapNode node, Page page)
+        {
+            var pageTranslation = pageTranslations.FirstOrDefault(p => p.LanguageId == nodeLanguage);
+
+            if (pageTranslation == null)
+            {
+                pageTranslation = pageTranslations.FirstOrDefault(p => !p.LanguageId.HasValue);
+            }
+
+            if (pageTranslation == null && page != null)
+            {
+                pageTranslation = new PageTranslationViewModel
+                                  {
+                                      Title = page.Title,
+                                      PageUrl = page.PageUrl,
+                                      PageUrlHash = page.PageUrlHash
+                                  };
+            }
+
+            if (pageTranslation == null)
+            {
+                pageTranslation = new PageTranslationViewModel
+                                  {
+                                      Title = node.Title,
+                                      PageUrl = node.Url,
+                                      PageUrlHash = node.UrlHash
+                                  };
+            }
+
+            return pageTranslation;
         }
     }
 }

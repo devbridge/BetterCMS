@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Web;
-using System.Web.Security;
 
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Environment.ApplicationStart;
@@ -44,7 +43,7 @@ namespace BetterCms.Core.Environment.ApplicationStart
             }
             catch (Exception ex)
             {
-                    throw new CmsException("Logging is not working. A reason may be that Common.Logging section is not configured in web.config.", ex);
+                throw new CmsException("Logging is not working. A reason may be that Common.Logging section is not configured in web.config.", ex);
             }            
 
             if (!IsFullTrust)
@@ -107,17 +106,7 @@ namespace BetterCms.Core.Environment.ApplicationStart
                 throw new CmsException(message, ex);
             }
 
-            try
-            {
-                // TODO: implement
-            }
-            catch (Exception ex)
-            {
-                string message = "Failed to initialize role provider.";
-                logger.Fatal(message, ex);
 
-                throw new CmsException(message, ex);
-            }
         }
     }
 }

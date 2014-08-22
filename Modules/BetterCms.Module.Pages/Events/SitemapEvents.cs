@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-using BetterCms.Module.Pages.Models;
+﻿using BetterCms.Module.Pages.Models;
 
 // ReSharper disable CheckNamespace
 namespace BetterCms.Events
@@ -21,6 +18,11 @@ namespace BetterCms.Events
         /// Occurs when a sitemap is updated.
         /// </summary>
         public event DefaultEventHandler<SingleItemEventArgs<Sitemap>> SitemapUpdated;
+
+        /// <summary>
+        /// Occurs when a sitemap is restored.
+        /// </summary>
+        public event DefaultEventHandler<SingleItemEventArgs<Sitemap>> SitemapRestored;
 
         /// <summary>
         /// Occurs when a sitemap is updated.
@@ -61,6 +63,17 @@ namespace BetterCms.Events
             if (SitemapUpdated != null)
             {
                 SitemapUpdated(new SingleItemEventArgs<Sitemap>(sitemap));
+            }
+        }
+
+        /// <summary>
+        /// Called when the sitemap is restored.
+        /// </summary>
+        public void OnSitemapRestored(Sitemap sitemap)
+        {
+            if (SitemapRestored != null)
+            {
+                SitemapRestored(new SingleItemEventArgs<Sitemap>(sitemap));
             }
         }
 

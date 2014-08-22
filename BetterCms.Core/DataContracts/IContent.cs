@@ -1,4 +1,6 @@
-﻿namespace BetterCms.Core.DataContracts
+﻿using System.Collections.Generic;
+
+namespace BetterCms.Core.DataContracts
 {
     /// <summary>
     /// Defines interface to access basic content properties.
@@ -20,5 +22,13 @@
         /// The preview URL.
         /// </value>
         string PreviewUrl { get; }
+
+        /// <summary>
+        /// Gets the list of child content.
+        /// </summary>
+        /// <value>
+        /// The child contents.
+        /// </value>
+        IList<IChildContent> Children { get; }
     }
 }

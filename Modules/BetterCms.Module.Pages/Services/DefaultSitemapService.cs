@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Web.Script.Serialization;
 
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.Exceptions.DataTier;
+using BetterCms.Core.Security;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
@@ -24,18 +29,33 @@ namespace BetterCms.Module.Pages.Services
         private readonly IRepository repository;
 
         /// <summary>
+        /// The unit of work.
+        /// </summary>
+        private readonly IUnitOfWork unitOfWork;
+
+        /// <summary>
         /// The CMS configuration.
         /// </summary>
         private readonly ICmsConfiguration cmsConfiguration;
 
         /// <summary>
+        /// The access control service.
+        /// </summary>
+        private readonly IAccessControlService accessControlService;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DefaultSitemapService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
-        public DefaultSitemapService(IRepository repository, ICmsConfiguration cmsConfiguration)
+        /// <param name="unitOfWork">The unit of work.</param>
+        /// <param name="cmsConfiguration">The CMS configuration.</param>
+        /// <param name="accessControlService">The access control service.</param>
+        public DefaultSitemapService(IRepository repository, IUnitOfWork unitOfWork, ICmsConfiguration cmsConfiguration, IAccessControlService accessControlService)
         {
             this.repository = repository;
+            this.unitOfWork = unitOfWork;
             this.cmsConfiguration = cmsConfiguration;
+            this.accessControlService = accessControlService;
         }
 
         /// <summary>
@@ -50,7 +70,7 @@ namespace BetterCms.Module.Pages.Services
             var urlHash = page.PageUrl.UrlHash();
             return repository
                 .AsQueryable<SitemapNode>()
-                .Where(n => (n.Page != null && n.Page.Id == page.Id) || (n.UrlHash == urlHash))
+                .Where(n => ((n.Page != null && n.Page.Id == page.Id) || (n.UrlHash == urlHash)) && !n.IsDeleted && !n.Sitemap.IsDeleted)
                 .Fetch(node => node.ChildNodes)
                 .Fetch(node => node.Sitemap)
                 .ThenFetch(sitemap => sitemap.AccessRules)
@@ -102,21 +122,45 @@ namespace BetterCms.Module.Pages.Services
         /// </summary>
         /// <param name="id">The id.</param>
         /// <param name="version">The version.</param>
-        /// <param name="deletedNodes">The deleted nodes.</param>
-        public void DeleteNode(Guid id, int version, out IList<SitemapNode> deletedNodes)
+        /// <param name="sitemapId">The sitemap identifier.</param>
+        public void DeleteNode(Guid id, int version, Guid? sitemapId = null)
         {
-            deletedNodes = new List<SitemapNode>();
+            IList<SitemapNode> deletedNodes = new List<SitemapNode>();
 
             var node = repository.AsQueryable<SitemapNode>()
-                .Where(sitemapNode => sitemapNode.Id == id)
+                .Where(sitemapNode => sitemapNode.Id == id && (!sitemapId.HasValue || sitemapNode.Sitemap.Id == sitemapId.Value))
                 .Fetch(sitemapNode => sitemapNode.Sitemap)
                 .Distinct()
                 .First();
 
+            // Concurrency.
+            if (version > 0 && node.Version != version)
+            {
+                throw new ConcurrentDataException(node);
+            }
+
+            unitOfWork.BeginTransaction();
+            
             ArchiveSitemap(node.Sitemap.Id);
 
-            node.Version = version;
             DeleteNode(node, ref deletedNodes);
+
+            unitOfWork.Commit();
+
+            var updatedSitemaps = new List<Sitemap>();
+            foreach (var deletedNode in deletedNodes)
+            {
+                Events.SitemapEvents.Instance.OnSitemapNodeDeleted(deletedNode);
+                if (!updatedSitemaps.Contains(deletedNode.Sitemap))
+                {
+                    updatedSitemaps.Add(deletedNode.Sitemap);
+                }
+            }
+
+            foreach (var sitemap in updatedSitemaps)
+            {
+                Events.SitemapEvents.Instance.OnSitemapUpdated(sitemap);
+            }
         }
 
         /// <summary>
@@ -235,9 +279,12 @@ namespace BetterCms.Module.Pages.Services
         /// <param name="deletedNodes">The deleted nodes.</param>
         public void DeleteNode(SitemapNode node, ref IList<SitemapNode> deletedNodes)
         {
-            foreach (var childNode in node.ChildNodes)
+            if (node.ChildNodes != null)
             {
-                DeleteNode(childNode, ref deletedNodes);
+                foreach (var childNode in node.ChildNodes)
+                {
+                    DeleteNode(childNode, ref deletedNodes);
+                }
             }
 
             repository.Delete(node);
@@ -336,6 +383,51 @@ namespace BetterCms.Module.Pages.Services
             RestoreTheNodes(sitemap, null, archivedSitemap.Nodes.Where(node => node.ParentNode == null).OrderBy(node => node.DisplayOrder).ToList());
 
             return sitemap;
+        }
+
+        /// <summary>
+        /// Deletes the sitemap.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="version">The version.</param>
+        /// <param name="currentUser">The current user.</param>
+        public void DeleteSitemap(Guid id, int version, IPrincipal currentUser)
+        {
+            var sitemap = repository
+                .AsQueryable<Sitemap>()
+                .Where(map => map.Id == id)
+                .FetchMany(map => map.AccessRules)
+                .Distinct()
+                .ToList()
+                .First();
+
+            // Security.
+            if (cmsConfiguration.Security.AccessControlEnabled)
+            {
+                var roles = new[] { RootModuleConstants.UserRoles.EditContent };
+                accessControlService.DemandAccess(sitemap, currentUser, AccessLevel.ReadWrite, roles);
+            }
+
+            // Concurrency.
+            if (version > 0 && sitemap.Version != version)
+            {
+                throw new ConcurrentDataException(sitemap);
+            }
+
+            unitOfWork.BeginTransaction();
+
+            if (sitemap.AccessRules != null)
+            {
+                var rules = sitemap.AccessRules.ToList();
+                rules.ForEach(sitemap.RemoveRule);
+            }
+
+            repository.Delete(sitemap);
+
+            unitOfWork.Commit();
+
+            // Events.
+            Events.SitemapEvents.Instance.OnSitemapDeleted(sitemap);
         }
 
         /// <summary>

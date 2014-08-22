@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure.Enums;
@@ -9,6 +10,7 @@ namespace BetterCms.Module.Api.Infrastructure
     /// Represents container for filtering items list
     /// </summary>
     [DataContract]
+    [Serializable]
     public class DataFilter
     {
         /// <summary>

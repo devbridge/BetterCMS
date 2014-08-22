@@ -31,6 +31,11 @@ namespace BetterCms.Events
         public event DefaultEventHandler<SingleItemEventArgs<PageContent>> PageContentConfigured;
         
         /// <summary>
+        /// Occurs when child content is configured.
+        /// </summary>        
+        public event DefaultEventHandler<SingleItemEventArgs<ChildContent>> ChildContentConfigured;
+        
+        /// <summary>
         /// Occurs when HTML content is created.
         /// </summary>        
         public event DefaultEventHandler<SingleItemEventArgs<HtmlContent>> HtmlContentCreated;
@@ -44,6 +49,11 @@ namespace BetterCms.Events
         /// Occurs when HTML content is deleted.
         /// </summary>        
         public event DefaultEventHandler<SingleItemEventArgs<HtmlContent>> HtmlContentDeleted;
+
+        /// <summary>
+        /// Occurs when content's draft version is destroyed.
+        /// </summary>        
+        public event DefaultEventHandler<SingleItemEventArgs<Content>> ContentDraftDestroyed;
         
         public void OnPageContentInserted(PageContent pageContent)
         {
@@ -77,6 +87,14 @@ namespace BetterCms.Events
             }
         }
 
+        public void OnChildContentConfigured(ChildContent childContent)
+        {
+            if (ChildContentConfigured != null)
+            {
+                ChildContentConfigured(new SingleItemEventArgs<ChildContent>(childContent));
+            }
+        }
+
         public void OnHtmlContentCreated(HtmlContent htmlContent)
         {
             if (HtmlContentCreated != null)
@@ -98,6 +116,14 @@ namespace BetterCms.Events
             if (HtmlContentDeleted != null)
             {
                 HtmlContentDeleted(new SingleItemEventArgs<HtmlContent>(htmlContent));
+            }
+        }
+
+        public void OnContentDraftDestroyed(Content content)
+        {
+            if (ContentDraftDestroyed != null)
+            {
+                ContentDraftDestroyed(new SingleItemEventArgs<Content>(content));
             }
         }
     }

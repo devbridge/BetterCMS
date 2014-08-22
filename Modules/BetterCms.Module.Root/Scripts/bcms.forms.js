@@ -73,7 +73,13 @@ bettercms.define('bcms.forms', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.ta
             beforeSubmit: null,
             success: null,
             error: null,
-            complete: null
+            complete: null,
+
+            contentType: 'application/x-www-form-urlencoded',
+            dataType: 'json',
+            serialize: function(form) {
+                return form.serialize();
+            }
         }, options);
 
         $(formElement).on('submit', function () {
@@ -131,11 +137,11 @@ bettercms.define('bcms.forms', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.ta
 
             $.ajax({
                 type: 'POST',
-                contentType: 'application/x-www-form-urlencoded',
-                dataType: 'json',
+                contentType: options.contentType,
+                dataType: options.dataType,
                 cache: false,
                 url: form.attr('action'),
-                data: form.serialize()
+                data: options.serialize(form)
             })
                 .done(function (response) {
                     onComplete(response);
@@ -169,6 +175,51 @@ bettercms.define('bcms.forms', ['bcms.jquery', 'bcms', 'bcms.messages', 'bcms.ta
         form.find('textarea:visible').attr('readonly', 'readonly');
         form.find('input[type=text]:visible:not([data-bind])').parent('div').css('z-index', 100);
         form.find('textarea:visible:not([data-bind])').attr('readonly', 'readonly').parent('div').css('z-index', 100);
+    };
+
+    forms.serializeToObject = function(form, skipNulls) {
+        var o = {};
+        var a = form.serializeArray();
+        $.each(a, function() {
+            var arrayStart = this.name.indexOf('[');
+            var arrayEnd = this.name.indexOf(']');
+            if (arrayStart > 0 && arrayEnd - arrayStart > 1) {
+                // If array
+                var arrayName = this.name.substr(0, arrayStart);
+                if (!o[arrayName]) {
+                    o[arrayName] = [];
+                }
+
+                var arrayIndex = parseInt(this.name.substr(arrayStart + 1, arrayEnd - arrayStart - 1));
+                var length = o[arrayName].length;
+
+                for (var i = length; i < arrayIndex + 1; i++) {
+                    o[arrayName].push({});
+                }
+
+                var propertyStart = this.name.indexOf('.');
+                if (propertyStart == arrayEnd + 1) {
+                    var propertyName = this.name.substr(propertyStart + 1, this.name.length - arrayEnd);
+                    o[arrayName][arrayIndex][propertyName] = this.value;
+                } else {
+                    o[arrayName][arrayIndex] = this.value;
+                }
+
+                return;
+            } else if (skipNulls && (this.value === undefined || this.value === null || this.value === '')) {
+                // If skipping null value
+                return;
+            }
+            if (o[this.name] !== undefined) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
     };
 
     return forms;

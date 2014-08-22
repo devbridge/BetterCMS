@@ -6,6 +6,7 @@ using BetterCms.Module.Api.Infrastructure.Enums;
 namespace BetterCms.Module.Api.Operations.Pages.Pages
 {
     [DataContract]
+    [System.Serializable]
     public class GetPagesModel : DataOptions, IFilterByTags
     {
         /// <summary>

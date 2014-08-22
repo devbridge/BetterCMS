@@ -46,5 +46,13 @@ namespace BetterCms.Core.DataContracts
         /// <c>true</c> if page is master page; otherwise, <c>false</c>.
         /// </value>
         bool IsMasterPage { get; }
+
+        /// <summary>
+        /// Gets the type of the access (http vs https).
+        /// </summary>
+        /// <value>
+        /// The type of the access (http vs https).
+        /// </value>
+        ForceProtocolType ForceAccessProtocol { get; }
     }
 }

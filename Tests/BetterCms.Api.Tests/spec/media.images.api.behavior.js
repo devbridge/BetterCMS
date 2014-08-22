@@ -154,6 +154,7 @@ describe('media.images.api.behavior', function () {
             var image = result.data.items[0];
             api.expectBasePropertiesAreNotNull(image);
             expect(image.title).toBe('_0001_Image_For_Tests', 'Correctly filtered title should be retrieved.');
+            expect(image.description).toBe('Image Description', 'Correctly filtered description should be retrieved.');
             expect(image.caption).toBe('Image Caption', 'Correctly filtered caption should be retrieved.');
             expect(image.mediaContentType).toBe('File', 'Correctly filtered mediaContentType should be retrieved.');
             expect(image.fileExtension).toBe('.png', 'Correctly filtered fileExtension should be retrieved.');
@@ -289,6 +290,7 @@ describe('media.images.api.behavior', function () {
                     { field: 'Version', value: '6' },
 
                     { field: 'Title', value: '03210' },
+                    { field: 'Description', value: 'description' },
                     { field: 'Caption', value: '03210 caption' },
                     { field: 'MediaContentType', value: 'File' },
                     { field: 'FileExtension', value: '.jpg' },
@@ -346,6 +348,16 @@ describe('media.images.api.behavior', function () {
 
         runs(function () {
             api.expectValidationExceptionIsThrown(result, 'Data.IncludeFolders');
+        });
+    });
+
+    it('03212: Should test CRUD for images.', function () {
+        api.testCrud(runs, waitsFor, expect, "5606d5be1b6347d88621a2050129ed3f", "/bcms-api/images/", {
+            getPostData: function (json) {
+                json.data.title = api.createGuid();
+                json.data.version = 0;
+                return json.data;
+            }
         });
     });
 

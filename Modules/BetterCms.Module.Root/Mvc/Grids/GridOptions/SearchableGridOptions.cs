@@ -23,5 +23,20 @@ namespace BetterCms.Module.Root.Mvc.Grids.GridOptions
         {
             return string.Format("{0}, SearchQuery: {1}", base.ToString(), SearchQuery);
         }
+
+        /// <summary>
+        /// Populates the specified options.
+        /// </summary>
+        /// <param name="options">The options.</param>
+        public override void CopyFrom(GridOptions options)
+        {
+            var searchableGridOptions = options as SearchableGridOptions;
+            if (searchableGridOptions != null)
+            {
+                SearchQuery = searchableGridOptions.SearchQuery;
+            }
+
+            base.CopyFrom(options);
+        }
     }
 }

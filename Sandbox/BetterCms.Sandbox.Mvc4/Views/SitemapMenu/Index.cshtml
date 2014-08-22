@@ -1,6 +1,28 @@
-﻿@model IList<BetterCms.Sandbox.Mvc4.Models.MenuItemViewModel>
+﻿@model BetterCms.Sandbox.Mvc4.Models.SitemapMenuViewModel
 
-@foreach (var item in Model)
+<h2>Obsolete <i>@(Model.LanguageCode ?? "default Language")</i> items:</h2>
+@if (Model != null && Model.ObsoleteMenuItems != null)
 {
-     @item.Caption <a href="@item.Url"><span>@item.Url</span></a> @(item.IsPublished ? "(Live)" : "")<br/>
+    foreach (var item in Model.ObsoleteMenuItems)
+    {
+         @item.Caption <a href="@item.Url"><span>@item.Url</span></a> @(item.IsPublished ? "(Live)" : "")<br/>
+    }
+}
+
+<h2>New <i>@(Model.LanguageCode ?? "default Language")</i> items:</h2>
+@if (Model != null && Model.MenuItems != null)
+{
+    foreach (var item in Model.MenuItems)
+    {
+        @item.Caption <a href="@item.Url"><span>@item.Url</span></a> @(item.IsPublished ? "(Live)" : "")<br />
+    }
+}
+
+@if (Model != null && Model.RenderIFrame && Model.LanguageCodes != null)
+{
+    foreach (var lang in Model.LanguageCodes)
+    {
+        <hr />
+        <iframe style="padding: 0; overflow: auto; border: 0; width: 1000px; height: 200px;" src="http://bettercms.sandbox.mvc4.local/sandbox/SitemapMenu?languageCode=@(lang)"></iframe>
+    }
 }

@@ -5,6 +5,7 @@ using BetterCms.Module.Api.Infrastructure;
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
 {
     [DataContract]
+    [System.Serializable]
     public class PagePropertiesModel : ModelBase
     {
         /// <summary>
@@ -186,5 +187,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         /// </value>
         [DataMember]
         public System.Guid? LanguageGroupIdentifier { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of the access (http vs https).
+        /// </summary>
+        /// <value>
+        /// The type of the access (http vs https).
+        /// </value>
+        [DataMember]
+        public virtual ForceProtocolType ForceAccessProtocol { get; set; }
     }
 }

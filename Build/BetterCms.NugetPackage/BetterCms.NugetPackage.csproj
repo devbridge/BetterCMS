@@ -222,6 +222,7 @@ mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Core\lib"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Core\lib\net40"
 xcopy "$(ProjectDir)$(OutDir)BetterCms.Core.dll" "$(ProjectDir)$(OutDir)packages\BetterCms.Core\lib\net40\" /Y /Q
 xcopy "$(ProjectDir)$(OutDir)BetterCms.Configuration.dll" "$(ProjectDir)$(OutDir)packages\BetterCms.Core\lib\net40\" /Y /Q
+xcopy "$(ProjectDir)$(OutDir)RazorGenerator.Mvc.dll" "$(ProjectDir)$(OutDir)packages\BetterCms.Core\lib\net40\" /Y /Q
 
 "$(ProjectDir)$(OutDir)BetterCms.NugetPackage.exe" "$(ProjectDir)Packages\BetterCms.Core\BetterCms.Core.nuspec.template" "$(ProjectDir)$(OutDir)packages\BetterCms.Core\BetterCms.Core.nuspec"
 "$(SolutionDir).nuget\nuget.exe" pack "$(ProjectDir)$(OutDir)packages\BetterCms.Core\BetterCms.Core.nuspec" -OutputDirectory "$(ProjectDir)$(OutDir)\" -NoPackageAnalysis

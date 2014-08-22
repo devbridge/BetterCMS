@@ -1,12 +1,13 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
+
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.ViewModels.Content;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
@@ -79,9 +80,11 @@ namespace BetterCms.Module.Pages.Command.History.RestoreContentVersion
                 }
             }
 
-            contentService.RestoreContentFromArchive(content);
+            var restoredContent = contentService.RestoreContentFromArchive(content);
 
             UnitOfWork.Commit();
+
+            Events.RootEvents.Instance.OnContentRestored(restoredContent);
 
             return true;
         }

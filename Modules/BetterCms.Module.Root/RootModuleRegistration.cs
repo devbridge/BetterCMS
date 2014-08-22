@@ -3,6 +3,7 @@
 using Autofac;
 
 using BetterCms.Core;
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules;
@@ -33,6 +34,11 @@ namespace BetterCms.Module.Root
         /// The root area name.
         /// </summary>
         internal const string RootAreaName = "bcms-root";
+
+        /// <summary>
+        /// The root module database schema name
+        /// </summary>
+        internal const string RootSchemaName = "bcms_root";
 
         /// <summary>
         /// The bcms.authentication.js include descriptor
@@ -110,6 +116,20 @@ namespace BetterCms.Module.Root
         }
 
         /// <summary>
+        /// Gets the name of the module database schema name.
+        /// </summary>
+        /// <value>
+        /// The name of the module database schema.
+        /// </value>
+        public override string SchemaName
+        {
+            get
+            {
+                return RootSchemaName;
+            }
+        }
+
+        /// <summary>
         /// Gets the order.
         /// </summary>
         /// <value>
@@ -141,6 +161,8 @@ namespace BetterCms.Module.Root
             containerBuilder.RegisterType<DefaultEntityTrackingService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultEntityTrackingCacheService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultLanguageService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultContentProjectionService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultChildContentService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 
         /// <summary>
@@ -356,12 +378,15 @@ namespace BetterCms.Module.Root
             }
         }
 
-        private void OnEntitySave(SingleItemEventArgs<IEntity> args)
+        private void OnEntitySave(EntitySavingEventArgs args)
         {
             using (var container = ContextScopeProvider.CreateChildContainer())
             {
-                var tracker = container.Resolve<IEntityTrackingService>();
-                tracker.OnEntityUpdate(args.Item);
+                if (args.Session == null || args.Session.IsDirtyEntity(args.Entity))
+                {
+                    var tracker = container.Resolve<IEntityTrackingService>();
+                    tracker.OnEntityUpdate(args.Entity);
+                }
             }
         }
 

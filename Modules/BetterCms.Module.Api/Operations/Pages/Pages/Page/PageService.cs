@@ -4,6 +4,7 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Security;
 
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content;
@@ -12,34 +13,93 @@ using BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page.Translations;
 
 using BetterCms.Module.MediaManager.Services;
+using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Mvc.Helpers;
 
 using ServiceStack.ServiceInterface;
 
+using ITagService = BetterCms.Module.Pages.Services.ITagService;
+
 namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
 {
+    /// <summary>
+    /// Default page service for pages API.
+    /// </summary>
     public class PageService : Service, IPageService
     {
+        /// <summary>
+        /// The page properties service.
+        /// </summary>
         private readonly IPagePropertiesService pagePropertiesService;
 
+        /// <summary>
+        /// The page exists service.
+        /// </summary>
         private readonly IPageExistsService pageExistsService;
 
+        /// <summary>
+        /// The page contents service.
+        /// </summary>
         private readonly IPageContentsService pageContentsService;
 
+        /// <summary>
+        /// The page content service.
+        /// </summary>
         private readonly IPageContentService pageContentService;
-        
+
+        /// <summary>
+        /// The page translations service.
+        /// </summary>
         private readonly IPageTranslationsService pageTranslationsService;
 
+        /// <summary>
+        /// The repository.
+        /// </summary>
         private readonly IRepository repository;
 
+        /// <summary>
+        /// The URL service.
+        /// </summary>
         private readonly IUrlService urlService;
 
+        /// <summary>
+        /// The file URL resolver.
+        /// </summary>
         private readonly IMediaFileUrlResolver fileUrlResolver;
 
-        public PageService(IRepository repository, IPagePropertiesService pagePropertiesService, IPageExistsService pageExistsService, 
-            IPageContentsService pageContentsService, IPageContentService pageContentService, IUrlService urlService, IMediaFileUrlResolver fileUrlResolver,
-            IPageTranslationsService pageTranslationsService)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PageService" /> class.
+        /// </summary>
+        /// <param name="repository">The repository.</param>
+        /// <param name="unitOfWork">The unit of work.</param>
+        /// <param name="pagePropertiesService">The page properties service.</param>
+        /// <param name="pageExistsService">The page exists service.</param>
+        /// <param name="pageContentsService">The page contents service.</param>
+        /// <param name="pageContentService">The page content service.</param>
+        /// <param name="urlService">The URL service.</param>
+        /// <param name="fileUrlResolver">The file URL resolver.</param>
+        /// <param name="pageTranslationsService">The page translations service.</param>
+        /// <param name="masterPageService">The master page service.</param>
+        /// <param name="pageService">The page service.</param>
+        /// <param name="sitemapService">The sitemap service.</param>
+        /// <param name="tagService">The tag service.</param>
+        /// <param name="accessControlService">The access control service.</param>
+        public PageService(
+            IRepository repository,
+            IUnitOfWork unitOfWork,
+            IPagePropertiesService pagePropertiesService,
+            IPageExistsService pageExistsService,
+            IPageContentsService pageContentsService,
+            IPageContentService pageContentService,
+            IUrlService urlService,
+            IMediaFileUrlResolver fileUrlResolver,
+            IPageTranslationsService pageTranslationsService,
+            IMasterPageService masterPageService,
+            Module.Pages.Services.IPageService pageService,
+            ISitemapService sitemapService,
+            ITagService tagService,
+            IAccessControlService accessControlService)
         {
             this.pageContentsService = pageContentsService;
             this.pageContentService = pageContentService;
@@ -51,9 +111,70 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
             this.pageTranslationsService = pageTranslationsService;
         }
 
+        /// <summary>
+        /// Gets the properties.
+        /// </summary>
+        /// <value>
+        /// The properties.
+        /// </value>
+        IPagePropertiesService IPageService.Properties
+        {
+            get
+            {
+                return pagePropertiesService;
+            }
+        }
+
+        /// <summary>
+        /// Gets the contents.
+        /// </summary>
+        /// <value>
+        /// The contents.
+        /// </value>
+        IPageContentsService IPageService.Contents
+        {
+            get
+            {
+                return pageContentsService;
+            }
+        }
+
+        /// <summary>
+        /// Gets the content.
+        /// </summary>
+        /// <value>
+        /// The content.
+        /// </value>
+        IPageContentService IPageService.Content
+        {
+            get
+            {
+                return pageContentService;
+            }
+        }
+
+        /// <summary>
+        /// Gets the translations.
+        /// </summary>
+        /// <value>
+        /// The translations.
+        /// </value>
+        IPageTranslationsService IPageService.Translations
+        {
+            get
+            {
+                return pageTranslationsService;
+            }
+        }
+
+        /// <summary>
+        /// Gets the specified request.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns><c>GetPageResponse</c> with page properties.</returns>
         public GetPageResponse Get(GetPageRequest request)
         {
-            var query = repository.AsQueryable<Module.Pages.Models.PageProperties>();
+            var query = repository.AsQueryable<PageProperties>();
             
             if (request.PageId.HasValue)
             {
@@ -102,41 +223,14 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
             return new GetPageResponse { Data = model };
         }
 
-        IPagePropertiesService IPageService.Properties
-        {
-            get
-            {
-                return pagePropertiesService;
-            }
-        }
-
+        /// <summary>
+        /// Exists the specified request.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns><c>PageExistsResponse</c> with page data.</returns>
         PageExistsResponse IPageService.Exists(PageExistsRequest request)
         {
             return pageExistsService.Get(request);
-        }
-
-        IPageContentsService IPageService.Contents
-        {
-            get
-            {
-                return pageContentsService;
-            }
-        }
-
-        IPageContentService IPageService.Content
-        {
-            get
-            {
-                return pageContentService;
-            }
-        }
-
-        IPageTranslationsService IPageService.Translations
-        {
-            get
-            {
-                return pageTranslationsService;
-            }
         }
     }
 }

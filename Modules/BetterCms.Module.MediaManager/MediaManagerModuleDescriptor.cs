@@ -5,6 +5,7 @@ using Autofac;
 
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
+
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Provider;
 using BetterCms.Module.MediaManager.Registration;
@@ -24,7 +25,15 @@ namespace BetterCms.Module.MediaManager
         /// </summary>
         internal const string ModuleName = "media";
 
+        /// <summary>
+        /// The media manager area name
+        /// </summary>
         internal const string MediaManagerAreaName = "bcms-media";
+        
+        /// <summary>
+        /// The media manager schema name
+        /// </summary>
+        internal const string MediaManagerSchemaName = "bcms_media";
 
         /// <summary>
         /// The media java script module descriptor.
@@ -109,6 +118,20 @@ namespace BetterCms.Module.MediaManager
         }
 
         /// <summary>
+        /// Gets the name of the module database schema name.
+        /// </summary>
+        /// <value>
+        /// The name of the module database schema.
+        /// </value>
+        public override string SchemaName
+        {
+            get
+            {
+                return MediaManagerSchemaName;
+            }
+        }
+
+        /// <summary>
         /// Gets the order.
         /// </summary>
         /// <value>
@@ -133,6 +156,7 @@ namespace BetterCms.Module.MediaManager
             containerBuilder.RegisterType<DefaultMediaFileUrlResolver>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultMediaFileService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultMediaImageService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
+            containerBuilder.RegisterType<DefaultMediaService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
             containerBuilder.RegisterType<DefaultMediaHistoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
             containerBuilder.RegisterType<DefaultTagService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
         }

@@ -8,7 +8,6 @@ using BetterCms.Core.DataContracts;
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.Content.Resources;
-using BetterCms.Module.Root.ViewModels.Option;
 
 using Common.Logging;
 
@@ -28,6 +27,20 @@ namespace BetterCms.Module.Root.Projections
         }
 
         public PageContentProjection Create(IPageContent pageContent, IContent content, IList<IOptionValue> options)
+        {
+            return Create(pageContent, content, options, null, (pc, c, a, ch) => new PageContentProjection(pc, c, a, ch));
+        }
+
+        public PageContentProjection Create(IPageContent pageContent, IContent content, IList<IOptionValue> options, 
+            IEnumerable<ChildContentProjection> childContentProjections)
+        {
+            return Create(pageContent, content, options, childContentProjections, (pc, c, a, ch) => new PageContentProjection(pc, c, a, ch));
+        }
+
+        public TProjection Create<TProjection>(IPageContent pageContent, IContent content, IList<IOptionValue> options,
+            IEnumerable<ChildContentProjection> childContentProjections,
+            Func<IPageContent, IContent, IContentAccessor, IEnumerable<ChildContentProjection>, TProjection> createProjectionDelegate)
+            where TProjection : PageContentProjection
         {
             IContentAccessor contentAccessor = null;            
             Type contentType;
@@ -60,7 +73,7 @@ namespace BetterCms.Module.Root.Projections
                 contentAccessor = new EmptyContentAccessor(string.Format("<i style=\"color:red;\">{0}</i>", RootGlobalization.Message_FailedToRenderContent));
             }
 
-            PageContentProjection pageContentProjection = new PageContentProjection(pageContent, content, contentAccessor);
+            TProjection pageContentProjection = createProjectionDelegate.Invoke(pageContent, content, contentAccessor, childContentProjections);
 
             return pageContentProjection;
         }

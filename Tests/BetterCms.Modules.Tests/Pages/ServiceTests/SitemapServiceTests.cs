@@ -47,7 +47,7 @@ namespace BetterCms.Test.Module.Pages.ServiceTests
             Mock<ICmsConfiguration> cmsConfigurationMock = new Mock<ICmsConfiguration>();
             cmsConfigurationMock.Setup(f => f.EnableMacros).Returns(false);
 
-            var service = new DefaultSitemapService(repositoryMock.Object, cmsConfigurationMock.Object);
+            var service = new DefaultSitemapService(repositoryMock.Object, null, cmsConfigurationMock.Object, null);
             service.ArchiveSitemap(sitemap.Id);
 
             Assert.AreEqual(savedMaps.Count, 1);

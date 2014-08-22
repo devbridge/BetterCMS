@@ -2,9 +2,11 @@
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+
 using BetterCms.Module.Api.Operations.Users.Users.User;
 using BetterCms.Module.Api.Operations.Users.Users.User.ValidateUser;
 using BetterCms.Module.MediaManager.Services;
+using BetterCms.Module.Users.Api.Extensions;
 
 using ServiceStack.ServiceInterface;
 
@@ -18,11 +20,15 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users.User
 
         private readonly IMediaFileUrlResolver fileUrlResolver;
 
-        public UserService(IRepository repository, IValidateUserService validateUserService, IMediaFileUrlResolver fileUrlResolver)
+        private readonly Services.IUserService userService;
+
+        public UserService(IRepository repository, IValidateUserService validateUserService,
+            IMediaFileUrlResolver fileUrlResolver, Services.IUserService userService)
         {
             this.repository = repository;
             this.validateUserService = validateUserService;
             this.fileUrlResolver = fileUrlResolver;
+            this.userService = userService;
         }
 
         public GetUserResponse Get(GetUserRequest request)
@@ -83,6 +89,25 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users.User
             }
 
             return response;
+        }
+
+        public DeleteUserResponse Delete(DeleteUserRequest request)
+        {
+            userService.DeleteUser(request.Id, request.Data.Version);
+
+            return new DeleteUserResponse { Data = true };
+        }
+
+        public PutUserResponse Put(PutUserRequest request)
+        {
+            var model = request.Data.ToServiceModel();
+            if (request.Id.HasValue)
+            {
+                model.Id = request.Id.Value;
+            }
+            var user = userService.SaveUser(model, false, true);
+
+            return new PutUserResponse { Data = user.Id };
         }
 
         ValidateUserResponse IUserService.Validate(ValidateUserRequest request)

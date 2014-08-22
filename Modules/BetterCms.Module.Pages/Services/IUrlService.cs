@@ -1,4 +1,6 @@
-﻿namespace BetterCms.Module.Pages.Services
+﻿using System.Collections.Generic;
+
+namespace BetterCms.Module.Pages.Services
 {
     public interface IUrlService
     {
@@ -7,8 +9,9 @@
         /// </summary>
         /// <param name="url">The page URL.</param>
         /// <param name="prefixPattern">The prefix pattern.</param>
+        /// <param name="unsavedUrls">The list of not saved yet urls.</param>
         /// <returns></returns>
-        string AddPageUrlPostfix(string url, string prefixPattern);
+        string AddPageUrlPostfix(string url, string prefixPattern, List<string> unsavedUrls = null);
 
         /// <summary>
         /// Validates the internal URL.

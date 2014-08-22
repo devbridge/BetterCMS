@@ -1,5 +1,4 @@
 ﻿using System;
-
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Root.Models;
 
@@ -13,12 +12,14 @@ namespace BetterCms.Module.Root.Services
 
         Models.Content SaveContentWithStatusUpdate(Models.Content updatedContent, ContentStatus requestedStatus);
 
-        void RestoreContentFromArchive(Models.Content restoreFrom);
+        Models.Content RestoreContentFromArchive(Models.Content restoreFrom);
 
         int GetPageContentNextOrderNumber(Guid pageId);
 
         void PublishDraftContent(Guid pageId);
 
         bool CheckIfContentHasDeletingChildren(Guid pageId, Guid contentId, string html = null);
+
+        void UpdateDynamicContainer(Models.Content content);
     }
 }

@@ -7,10 +7,13 @@ describe('pages.contents.api.behavior', function () {
     it('01100: Should get html content by content id', function () {
         var url = '/bcms-api/contents/html/61263510-2810-4c6f-b7c5-a20400fe6877',
             result,
-            ready = false;
+            ready = false,
+            data = {
+                includeChildContentsOptions: true
+            };
 
         runs(function () {
-            api.get(url, null, function (json) {
+            api.get(url, data, function (json) {
                 result = json;
                 ready = true;
             });
@@ -31,18 +34,54 @@ describe('pages.contents.api.behavior', function () {
             expect(new Date(content.activationDate).getTime()).toBe(new Date('2013-07-23T00:00:00.0000000').getTime(), 'Correctly filtered activationDate should be retrieved.');
             
             expect(new Date(content.expirationDate).getTime()).toBe(new Date('2032-07-23T23:59:59.0000000').getTime(), 'Correctly filtered expirationDate should be retrieved.');
-            
-            expect(content.html).toBe('<p>MainContent1 - HTML</p>', 'Correctly filtered html should be retrieved.');
+
+            var substring = '<p>MainContent1 - HTML</p>';
+            expect(content.html.substr(0, substring.length)).toBe(substring, 'Correctly filtered html should be retrieved.');
             expect(content.customCss).toBe('custom css', 'Correctly filtered customCss should be retrieved.');
             expect(content.useCustomCss).toBe(true, 'Correctly filtered useCustomCss should be retrieved.');
             expect(content.customJavaScript).toBe("console.log('test')", 'Correctly filtered customJavaScript should be retrieved.');
             expect(content.useCustomJavaScript).toBe(true, 'Correctly filtered useCustomJavaScipt should be retrieved.');
             expect(content.isPublished).toBe(true, 'Correctly filtered isPublished should be retrieved.');
-            expect(new Date(content.publishedOn).getTime()).toBe(new Date('2013-07-24T08:06:45.0000000').getTime(), 'Correctly filtered publishedOn should be retrieved.');
-            expect(content.publishedByUser).toBe('Better CMS test user', 'Correctly filtered publishedByUser should be retrieved.');
+            expect(new Date(content.publishedOn).getTime()).toBe(new Date('2014-07-15T13:32:46.0000000').getTime(), 'Correctly filtered publishedOn should be retrieved.');
+            expect(content.publishedByUser).toBe('admin', 'Correctly filtered publishedByUser should be retrieved.');
+
+            expect(result.childContentsOptionValues).toBeDefinedAndNotNull('Correct childContentsOptionValues should be retrieved.');
+            expect(result.childContentsOptionValues.length).toBe(2, 'Correct childContentsOptionValues.length should be retrieved.');
+
+            var child = result.childContentsOptionValues[0];
+            expect(child.assignmentIdentifier).toBe('0051e4e6d740455a8753756e558f51bc', 'Correctly filtered childContentsOptionValues[0].assignmentIdentifier should be retrieved');
+            expect(child.optionValues).toBeDefinedAndNotNull('Correctly filtered childContentsOptionValues[0].optionValues should be retrieved');
+            expect(child.optionValues.length).toBe(2, 'The length of childContentsOptionValues[0].optionValues array should be 2');
+            expect(child.optionValues[1].key).toBe('O3', 'Correctly filtered childContentsOptionValues[0].optionValues[1].key should be retrieved');
+            expect(child.optionValues[1].value).toBe('902c287b-9eef-4de1-8975-a20601052b9a', 'Correctly filtered childContentsOptionValues[0].optionValues[1].value should be retrieved');
+            expect(child.optionValues[1].defaultValue).toBe('0dbf035e-a1b8-4fe1-ba61-a20500fb8491', 'Correctly filtered childContentsOptionValues[0].optionValues[1].defaultValue should be retrieved');
+            expect(child.optionValues[1].type).toBe('Custom', 'Correctly filtered childContentsOptionValues[0].optionValues[1].type should be retrieved');
+            expect(child.optionValues[1].useDefaultValue).toBe(false, 'Correctly filtered childContentsOptionValues[0].optionValues[1].useDefaultValue should be retrieved');
+            expect(child.optionValues[1].customTypeIdentifier).toBe('media-images-folder', 'Correctly filtered childContentsOptionValues[0].optionValues[1].customTypeIdentifier should be retrieved');
+
+            child = result.childContentsOptionValues[1];
+            expect(child.assignmentIdentifier).toBe('f611b554a8cc413a89a48f9432e28a73', 'Correctly filtered childContentsOptionValues[1].assignmentIdentifier should be retrieved');
+            expect(child.optionValues).toBeDefinedAndNotNull('Correctly filtered childContentsOptionValues[1].optionValues should be retrieved');
+            expect(child.optionValues.length).toBe(1, 'The length of childContentsOptionValues[1].optionValues array should be 1');
+            expect(child.optionValues[0].key).toBe('O1', 'Correctly filtered childContentsOptionValues[1].optionValues[0].key should be retrieved');
+            expect(child.optionValues[0].value).toBe('V1', 'Correctly filtered childContentsOptionValues[1].optionValues[0].value should be retrieved');
+            expect(child.optionValues[0].defaultValue).toBeNull('Correctly filtered childContentsOptionValues[1].optionValues[0].defaultValue should be retrieved');
+            expect(child.optionValues[0].type).toBe('Text', 'Correctly filtered childContentsOptionValues[1].optionValues[0].type should be retrieved');
+            expect(child.optionValues[0].useDefaultValue).toBe(false, 'Correctly filtered childContentsOptionValues[1].optionValues[0].useDefaultValue should be retrieved');
+            expect(child.optionValues[0].customTypeIdentifier).toBeNull('Correctly filtered childContentsOptionValues[1].optionValues[0].customTypeIdentifier should be retrieved');
         });
     });
-    
+
+    it('01101: Should test CRUD for html contents.', function () {
+        api.testCrud(runs, waitsFor, expect, "61263510-2810-4c6f-b7c5-a20400fe6877", "/bcms-api/contents/html/", {
+            getPostData: function (json) {
+                json.data.title = api.createGuid();
+                json.data.version = 0;
+                return json.data;
+            }
+        });
+    });
+
     it('01102: Should get content history by content id', function () {
         var url = '/bcms-api/contents/97A1C2CF-DC8A-4D3F-9DD1-A205008C3F36/history',
             result,

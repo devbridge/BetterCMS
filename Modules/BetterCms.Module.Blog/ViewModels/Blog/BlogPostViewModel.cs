@@ -11,6 +11,7 @@ using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Mvc.Attributes;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.ViewModels.Option;
 using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.Blog.ViewModels.Blog
@@ -57,9 +58,18 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// <value>
         /// The blog title.
         /// </value>
-        [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
-        [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
+        [Required(ErrorMessageResourceType = typeof(BlogGlobalization), ErrorMessageResourceName = "BlogPost_Title_RequiredMessage")]
+        [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(BlogGlobalization), ErrorMessageResourceName = "BlogPost_Title_MaxLengthMessage")]
         public virtual string Title { get; set; }
+
+        /// <summary>
+        /// Gets or sets the meta title.
+        /// </summary>
+        /// <value>
+        /// The meta title.
+        /// </value>
+        [StringLength(MaxLength.Name, ErrorMessageResourceType = typeof(BlogGlobalization), ErrorMessageResourceName = "BlogPost_MetaTitle_MaxLengthMessage")]
+        public virtual string MetaTitle { get; set; }
 
         /// <summary>
         /// Gets or sets the blog intro text.
@@ -68,7 +78,7 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// The blog intro text.
         /// </value>
         [AllowHtml]
-        [StringLength(MaxLength.Text, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
+        [StringLength(MaxLength.Text, ErrorMessageResourceType = typeof(BlogGlobalization), ErrorMessageResourceName = "BlogPost_IntroText_MaxLengthMessage")]
         public virtual string IntroText { get; set; }
 
         /// <summary>

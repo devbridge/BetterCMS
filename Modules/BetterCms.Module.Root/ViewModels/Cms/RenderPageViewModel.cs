@@ -43,11 +43,14 @@ namespace BetterCms.Module.Root.ViewModels.Cms
             ModifiedOn = page.ModifiedOn;
             ModifiedByUser = page.ModifiedByUser;
             IsMasterPage = page.IsMasterPage;
+            ForceAccessProtocol = page.ForceAccessProtocol;
 
             if (rootPage != null && rootPage.Language != null)
             {
                 LanguageCode = rootPage.Language.Code;
             }
+
+            PageData = page;
         }
 
         /// <summary>
@@ -58,12 +61,14 @@ namespace BetterCms.Module.Root.ViewModels.Cms
             Bag = new DynamicDictionary();
         }
 
+        public IPage PageData { get; private set; }
+
         public Guid Id { get; set; }
 
         public bool IsDeleted { get; set; }
 
         public int Version { get; set; }
-        
+
         public DateTime CreatedOn { get; set; }
         
         public DateTime ModifiedOn { get; set; }
@@ -79,6 +84,8 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         public string Title { get; set; }
         
         public bool IsMasterPage { get; set; }
+
+        public ForceProtocolType ForceAccessProtocol { get; set; }
 
         public string MetaTitle { get; set; }
 

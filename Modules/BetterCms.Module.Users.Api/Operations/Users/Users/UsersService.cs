@@ -8,11 +8,13 @@ using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Infrastructure.Enums;
 using BetterCms.Module.Api.Operations.Users.Users;
+using BetterCms.Module.Api.Operations.Users.Users.User;
 using BetterCms.Module.MediaManager.Services;
 
 using ServiceStack.ServiceInterface;
 
 using PredicateBuilder = ServiceStack.OrmLite.PredicateBuilder;
+using UserModel = BetterCms.Module.Api.Operations.Users.Users.UserModel;
 
 namespace BetterCms.Module.Users.Api.Operations.Users.Users
 {
@@ -22,10 +24,13 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users
 
         private readonly IMediaFileUrlResolver fileUrlResolver;
 
-        public UsersService(IRepository repository, IMediaFileUrlResolver fileUrlResolver)
+        private readonly IUserService userService;
+
+        public UsersService(IRepository repository, IMediaFileUrlResolver fileUrlResolver, IUserService userService)
         {
             this.repository = repository;
             this.fileUrlResolver = fileUrlResolver;
+            this.userService = userService;
         }
 
         public GetUsersResponse Get(GetUsersRequest request)
@@ -102,6 +107,17 @@ namespace BetterCms.Module.Users.Api.Operations.Users.Users
             }
 
             return query;
+        }
+
+        public PostUserResponse Post(PostUserRequest request)
+        {
+            var result = userService.Put(new PutUserRequest
+                {
+                    Data = request.Data,
+                    User = request.User
+                });
+
+            return new PostUserResponse { Data = result.Data };
         }
     }
 }

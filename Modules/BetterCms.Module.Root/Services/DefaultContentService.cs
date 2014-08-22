@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 
 using BetterCms.Core.DataAccess;
-using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
@@ -34,12 +33,18 @@ namespace BetterCms.Module.Root.Services
         /// The option service
         /// </summary>
         private readonly IOptionService optionService;
+        
+        /// <summary>
+        /// The child content service
+        /// </summary>
+        private readonly IChildContentService childContentService;
 
-        public DefaultContentService(ISecurityService securityService, IRepository repository, IOptionService optionService)
+        public DefaultContentService(ISecurityService securityService, IRepository repository, IOptionService optionService, IChildContentService childContentService)
         {
             this.securityService = securityService;
             this.repository = repository;
             this.optionService = optionService;
+            this.childContentService = childContentService;
         }
 
         public Models.Content SaveContentWithStatusUpdate(Models.Content updatedContent, ContentStatus requestedStatus)
@@ -55,23 +60,21 @@ namespace BetterCms.Module.Root.Services
             }
 
             // Fill content with dynamic contents info
-            var dynamicContainer = updatedContent as IDynamicContentContainer;
-            if (dynamicContainer != null)
-            {
-                if (updatedContent.ContentRegions == null)
-                {
-                    updatedContent.ContentRegions = new List<ContentRegion>();
-                }
-                CollectDynamicRegions(dynamicContainer.Html, updatedContent, updatedContent.ContentRegions);
-            }
+            UpdateDynamicContainer(updatedContent);
 
             if (updatedContent.Id == default(Guid))
             {
                 /* Just create a new content with requested status.*/
                 if (requestedStatus == ContentStatus.Published)
                 {
-                    updatedContent.PublishedOn = DateTime.Now;
-                    updatedContent.PublishedByUser = securityService.CurrentPrincipalName;
+                    if (!updatedContent.PublishedOn.HasValue)
+                    {
+                        updatedContent.PublishedOn = DateTime.Now;
+                    }
+                    if (string.IsNullOrWhiteSpace(updatedContent.PublishedByUser))
+                    {
+                        updatedContent.PublishedByUser = securityService.CurrentPrincipalName;
+                    }
                 }
 
                 updatedContent.Status = requestedStatus;
@@ -86,7 +89,8 @@ namespace BetterCms.Module.Root.Services
                           .Fetch(f => f.Original).ThenFetchMany(f => f.History)
                           .Fetch(f => f.Original).ThenFetchMany(f => f.ContentOptions)
                           .FetchMany(f => f.History)
-                          .FetchMany(f => f.ContentOptions)            
+                          .FetchMany(f => f.ContentOptions)
+                          .FetchMany(f => f.ChildContents)
                           .FetchMany(f => f.ContentRegions)            
                           .ThenFetch(f => f.Region)
                           .ToList()
@@ -108,17 +112,28 @@ namespace BetterCms.Module.Root.Services
             {
                 originalContent.History = originalContent.History.Distinct().ToList();
             }
+            else
+            {
+                originalContent.History = new List<Models.Content>();
+            }
 
             if (originalContent.ContentOptions != null)
             {
                 originalContent.ContentOptions = originalContent.ContentOptions.Distinct().ToList();
             }
-            
-            if (originalContent.ContentOptions != null)
+
+            if (originalContent.ContentRegions != null)
             {
                 originalContent.ContentRegions = originalContent.ContentRegions.Distinct().ToList();
             }
             
+            if (originalContent.ChildContents != null)
+            {
+                originalContent.ChildContents = originalContent.ChildContents.Distinct().ToList();
+            }
+
+            childContentService.ValidateChildContentsCircularReferences(originalContent, updatedContent);
+
             /* Update existing content. */
             switch (originalContent.Status)
             {
@@ -157,14 +172,16 @@ namespace BetterCms.Module.Root.Services
                     contentVersionOfRequestedStatus = originalContent.Clone();
                 }
 
-                updatedContent.CopyDataTo(contentVersionOfRequestedStatus, false, false);
+                updatedContent.CopyDataTo(contentVersionOfRequestedStatus, false);
                 SetContentOptions(contentVersionOfRequestedStatus, updatedContent);
                 SetContentRegions(contentVersionOfRequestedStatus, updatedContent);
+                childContentService.CopyChildContents(contentVersionOfRequestedStatus, updatedContent);
 
                 contentVersionOfRequestedStatus.Original = originalContent;
                 contentVersionOfRequestedStatus.Status = requestedStatus;
                 originalContent.History.Add(contentVersionOfRequestedStatus);
-                repository.Save(contentVersionOfRequestedStatus);                
+
+                repository.Save(contentVersionOfRequestedStatus);
             }
             
             if (requestedStatus == ContentStatus.Published)
@@ -172,20 +189,39 @@ namespace BetterCms.Module.Root.Services
                 // Original is copied with options and saved.
                 // Removes options from original.
                 // Locks new stuff from view model.
-
                 var originalToArchive = originalContent.Clone();
                 originalToArchive.Status = ContentStatus.Archived;
                 originalToArchive.Original = originalContent;
                 originalContent.History.Add(originalToArchive);
                 repository.Save(originalToArchive);
 
-                updatedContent.CopyDataTo(originalContent, false, false);
+                // Load draft content's child contents options, if saving from draft to public
+                var draftVersion = originalContent.History.FirstOrDefault(f => f.Status == ContentStatus.Draft && !f.IsDeleted);
+                if (draftVersion != null)
+                {
+                    updatedContent
+                        .ChildContents
+                        .ForEach(cc => cc.Options = draftVersion
+                            .ChildContents
+                            .Where(cc1 => cc1.AssignmentIdentifier == cc.AssignmentIdentifier)
+                            .SelectMany(cc1 => cc1.Options)
+                            .ToList());
+                }
+
+                updatedContent.CopyDataTo(originalContent, false);
                 SetContentOptions(originalContent, updatedContent);
                 SetContentRegions(originalContent, updatedContent);
+                childContentService.CopyChildContents(originalContent, updatedContent);
 
                 originalContent.Status = requestedStatus;
-                originalContent.PublishedOn = DateTime.Now;
-                originalContent.PublishedByUser = securityService.CurrentPrincipalName;
+                if (!originalContent.PublishedOn.HasValue)
+                {
+                    originalContent.PublishedOn = DateTime.Now;
+                }
+                if (string.IsNullOrWhiteSpace(originalContent.PublishedByUser))
+                {
+                    originalContent.PublishedByUser = securityService.CurrentPrincipalName;
+                }
                 repository.Save(originalContent);
 
                 IList<Models.Content> contentsToRemove = originalContent.History.Where(f => f.Status == ContentStatus.Preview || f.Status == ContentStatus.Draft).ToList();
@@ -227,11 +263,14 @@ namespace BetterCms.Module.Root.Services
                     }
                 }
 
-                updatedContent.CopyDataTo(previewOrDraftContentVersion, false, false);
+                updatedContent.CopyDataTo(previewOrDraftContentVersion, false);
                 SetContentOptions(previewOrDraftContentVersion, updatedContent);
                 SetContentRegions(previewOrDraftContentVersion, updatedContent);
+                childContentService.CopyChildContents(previewOrDraftContentVersion, updatedContent);
+
                 previewOrDraftContentVersion.Status = requestedStatus;
-                repository.Save(previewOrDraftContentVersion); 
+
+                repository.Save(previewOrDraftContentVersion);
             }            
             else if (requestedStatus == ContentStatus.Published)
             {
@@ -245,17 +284,26 @@ namespace BetterCms.Module.Root.Services
                     repository.Save(originalToArchive);
                 }
 
-                updatedContent.CopyDataTo(originalContent, false, false);
+                updatedContent.CopyDataTo(originalContent, false);
                 SetContentOptions(originalContent, updatedContent);
                 SetContentRegions(originalContent, updatedContent);
+                childContentService.CopyChildContents(originalContent, updatedContent);
+
                 originalContent.Status = requestedStatus;
-                originalContent.PublishedOn = DateTime.Now;
-                originalContent.PublishedByUser = securityService.CurrentPrincipalName;
+                if (!originalContent.PublishedOn.HasValue)
+                {
+                    originalContent.PublishedOn = DateTime.Now;
+                }
+                if (string.IsNullOrWhiteSpace(originalContent.PublishedByUser))
+                {
+                    originalContent.PublishedByUser = securityService.CurrentPrincipalName;
+                }
+
                 repository.Save(originalContent);
             }
         }
 
-        public void RestoreContentFromArchive(Models.Content restoreFrom)
+        public Models.Content RestoreContentFromArchive(Models.Content restoreFrom)
         {
             if (restoreFrom == null)
             {
@@ -273,9 +321,10 @@ namespace BetterCms.Module.Root.Services
             originalContent.Version = restoreFrom.Original.Version;
             originalContent.Status = ContentStatus.Published;
             originalContent.Original = null;
+            originalContent.ChildContentsLoaded = true;
 
             // Save entities
-            SaveContentWithStatusUpdate(originalContent, ContentStatus.Published);
+            return SaveContentWithStatusUpdate(originalContent, ContentStatus.Published);
         }
 
         public System.Tuple<PageContent, Models.Content> GetPageContentForEdit(Guid pageContentId)
@@ -370,25 +419,26 @@ namespace BetterCms.Module.Root.Services
             }
         }
 
-        public void CollectDynamicRegions(string html, Models.Content content, IList<ContentRegion> contentRegions)
+        private void CollectDynamicRegions(string html, Models.Content content, IList<ContentRegion> contentRegions)
         {
             var regionIdentifiers = GetRegionIds(html);
 
             if (regionIdentifiers.Length > 0)
             {
+                var regionIdentifiersLower = regionIdentifiers.Select(s => s.ToLowerInvariant()).ToArray();
                 var existingRegions = repository
                     .AsQueryable<Region>()
-                    .Where(r => regionIdentifiers.Contains(r.RegionIdentifier))
+                    .Where(r => regionIdentifiersLower.Contains(r.RegionIdentifier.ToLowerInvariant()))
                     .ToArray();
 
                 foreach (var regionId in regionIdentifiers.Where(s => contentRegions.All(region => region.Region.RegionIdentifier != s)))
                 {
-                    var region = existingRegions.FirstOrDefault(r => r.RegionIdentifier == regionId);
+                    var region = existingRegions.FirstOrDefault(r => r.RegionIdentifier.ToLowerInvariant() == regionId.ToLowerInvariant());
 
                     if (region == null)
                     {
                         region = contentRegions
-                            .Where(cr => cr.Region.RegionIdentifier == regionId)
+                            .Where(cr => cr.Region.RegionIdentifier.ToLowerInvariant() == regionId.ToLowerInvariant())
                             .Select(cr => cr.Region).FirstOrDefault();
 
                         if (region == null)
@@ -442,7 +492,7 @@ namespace BetterCms.Module.Root.Services
 
             // Add regions, which not exists in destination.
             source.ContentRegions
-                .Where(s => destination.ContentRegions.All(d => s.Region.RegionIdentifier != d.Region.RegionIdentifier))
+                .Where(s => destination.ContentRegions.All(d => s.Region.RegionIdentifier.ToLowerInvariant() != d.Region.RegionIdentifier.ToLowerInvariant()))
                 .Distinct().ToList()
                 .ForEach(s =>
                              {
@@ -452,7 +502,7 @@ namespace BetterCms.Module.Root.Services
 
             // Remove regions, which not exists in source.
             destination.ContentRegions
-                .Where(s => source.ContentRegions.All(d => s.Region.RegionIdentifier != d.Region.RegionIdentifier))
+                .Where(s => source.ContentRegions.All(d => s.Region.RegionIdentifier.ToLowerInvariant() != d.Region.RegionIdentifier.ToLowerInvariant()))
                 .Distinct().ToList()
                 .ForEach(d => repository.Delete(d));
         }
@@ -469,12 +519,12 @@ namespace BetterCms.Module.Root.Services
         public bool CheckIfContentHasDeletingChildren(Guid pageId, Guid contentId, string html = null)
         {
             bool hasAnyContents = false;
-            var regionIdentifiers = GetRegionIds(html);
+            var regionIdentifiers = GetRegionIds(html).Select(s => s.ToLowerInvariant()).ToArray();
 
             // Get regions going to be deleted
             var regionIds = repository.AsQueryable<ContentRegion>()
                 .Where(cr => cr.Content.Id == contentId
-                    && !regionIdentifiers.Contains(cr.Region.RegionIdentifier))
+                    && !regionIdentifiers.Contains(cr.Region.RegionIdentifier.ToLowerInvariant()))
                 .Select(cr => cr.Region.Id)
                 .ToArray();
 
@@ -486,6 +536,24 @@ namespace BetterCms.Module.Root.Services
             }
 
             return hasAnyContents;
+        }
+
+        public void UpdateDynamicContainer(Models.Content content)
+        {
+            var dynamicContainer = content as IDynamicContentContainer;
+            if (dynamicContainer != null)
+            {
+                if (content.ContentRegions == null)
+                {
+                    content.ContentRegions = new List<ContentRegion>();
+                }
+                if (content.ChildContents == null)
+                {
+                    content.ChildContents = new List<ChildContent>();
+                }
+                CollectDynamicRegions(dynamicContainer.Html, content, content.ContentRegions);
+                childContentService.CollectChildContents(dynamicContainer.Html, content);
+            }
         }
     }
 }

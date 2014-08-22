@@ -5,6 +5,7 @@ using BetterCms.Module.Api.Infrastructure;
 namespace BetterCms.Module.Api.Operations.MediaManager.Images
 {
     [DataContract]
+    [System.Serializable]
     public class MediaModel : ModelBase
     {
         /// <summary>
@@ -15,6 +16,15 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
         /// </value>
         [DataMember]
         public string Title { get; set; }
+
+        /// <summary>
+        /// Gets or sets the description.
+        /// </summary>
+        /// <value>
+        /// The description.
+        /// </value>
+        [DataMember]
+        public string Description { get; set; }
 
         /// <summary>
         /// Gets or sets the image caption.

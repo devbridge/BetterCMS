@@ -34,7 +34,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// <returns>
         /// List of images
         /// </returns>
-        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.DeleteContent, RootModuleConstants.UserRoles.Administration)]
+        [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.DeleteContent, RootModuleConstants.UserRoles.Administration, RootModuleConstants.UserRoles.ManageUsers)]
         public ActionResult GetImagesList(MediaManagerViewModel options)
         {
             var success = true;

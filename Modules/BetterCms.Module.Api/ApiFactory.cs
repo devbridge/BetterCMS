@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Autofac.Core;
 
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Exceptions.Api;
