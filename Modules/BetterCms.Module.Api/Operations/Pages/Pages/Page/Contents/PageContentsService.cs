@@ -49,6 +49,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents
                          LastModifiedOn = pageContent.ModifiedOn,
 
                          ContentId = pageContent.Content.Id,
+                         ParentPageContentId = pageContent.Parent != null ? pageContent.Parent.Id : (System.Guid?)null,
                          OriginalContentType = pageContent.Content.GetType(),
                          Name = pageContent.Content.Name,
                          RegionId = pageContent.Region.Id,
