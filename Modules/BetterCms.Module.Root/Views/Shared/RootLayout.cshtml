@@ -1,0 +1,36 @@
+﻿@if (IsSectionDefined("DoctypeTag"))
+{
+    @RenderSection("DoctypeTag", false)
+}
+else {
+    @:<!DOCTYPE html>
+}
+
+@if (IsSectionDefined("HtmlTag")) {
+    @RenderSection("HtmlTag", false)
+}
+else {
+    @:<html>
+}
+    <head>
+        @RenderSection("CmsMetaTitle", false)
+        @RenderSection("CmsMeta", false)
+        @RenderSection("CmsHeadStyles", false)
+        @RenderSection("CmsHeadScripts", false)
+        
+        @RenderSection("Styles", false)
+        @RenderSection("HeadScripts", false)
+    </head>
+    @if (IsSectionDefined("BodyTag"))
+    {
+        @RenderSection("BodyTag", false)
+    }
+    else
+    {
+        @:<body @RenderSection("CmsBodyAttributes", false)@RenderSection("BodyAttributes", false)>
+    }
+        @RenderBody()
+        @RenderSection("Scripts", false)
+        @RenderSection("CmsScripts", false)
+    </body>
+</html>

@@ -566,7 +566,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RootLayout.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Sidebar\Body.generated.cs">
+   <Compile Include="Views\Sidebar\Body.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Body.cshtml</DependentUpon>
@@ -1553,6 +1553,7 @@
   <ItemGroup>
     <None Include="Views\Shared\BaseLayout.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>BaseLayout.generated.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1564,11 +1565,13 @@
   <ItemGroup>
     <None Include="Views\Shared\RootLayout.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>RootLayout.generated.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\Cms\Index.cshtml">
       <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <PropertyGroup>
