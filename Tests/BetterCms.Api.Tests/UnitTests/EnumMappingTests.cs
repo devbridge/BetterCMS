@@ -12,6 +12,9 @@ using ApiOptionType = BetterCms.Module.Api.Operations.Root.OptionType;
 using CoreAccessLevel = BetterCms.Core.Security.AccessLevel;
 using ApiAccessLevel = BetterCms.Module.Api.Operations.Root.AccessLevel;
 
+using CoreForceProtocolType = BetterCms.Core.DataContracts.Enums.ForceProtocolType;
+using ApiForceProtocolType = BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties.ForceProtocolType;
+
 using NUnit.Framework;
 
 namespace BetterCms.Api.Tests.UnitTests
@@ -67,6 +70,17 @@ namespace BetterCms.Api.Tests.UnitTests
 
             Assert.AreEqual(Enum.GetValues(typeof(CoreAccessLevel)).Length, 3, "Not all CoreAccessLevel values are mapped.");
             Assert.AreEqual(Enum.GetValues(typeof(ApiAccessLevel)).Length, 3, "Not all ApiAccessLevel are mapped.");
+        }
+        
+        [Test]
+        public void ShouldMapForceProtocolType()
+        {
+            Assert.AreEqual((int)CoreForceProtocolType.None, (int)ApiForceProtocolType.None);
+            Assert.AreEqual((int)CoreForceProtocolType.ForceHttp, (int)ApiForceProtocolType.ForceHttp);
+            Assert.AreEqual((int)CoreForceProtocolType.ForceHttps, (int)ApiForceProtocolType.ForceHttps);
+
+            Assert.AreEqual(Enum.GetValues(typeof(CoreForceProtocolType)).Length, 3, "Not all CoreForceProtocolType values are mapped.");
+            Assert.AreEqual(Enum.GetValues(typeof(ApiForceProtocolType)).Length, 3, "Not all ApiForceProtocolType are mapped.");
         }
     }
 }

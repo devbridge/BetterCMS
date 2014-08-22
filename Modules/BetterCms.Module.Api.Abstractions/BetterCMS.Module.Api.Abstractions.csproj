@@ -184,6 +184,7 @@
     <Compile Include="Operations\Pages\Pages\Page\Contents\Content\PutPageContentResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\DeletePagePropertiesRequest.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\DeletePagePropertiesResponse.cs" />
+    <Compile Include="Operations\Pages\Pages\Page\Properties\ForceProtocolType.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PutPagePropertiesResponse.cs" />
     <Compile Include="Operations\Pages\Pages\Page\Properties\PutPagePropertiesRequest.cs" />
     <Compile Include="Operations\Pages\Pages\Page\SavePagePropertiesModel.cs" />

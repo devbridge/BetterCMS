@@ -1253,6 +1253,7 @@ describe('pages.pages.api.behavior', function () {
         expect(page.isMasterPage).toBe(false, 'Correctly filtered isMasterPage should be retrieved.');
         expect(page.languageId).toBe('5fea841ef108430da6eca2a7009366ec', 'Correctly filtered languageId should be retrieved.');
         expect(page.languageGroupIdentifier).toBe('10e54c92e03643f2b5df656825726ad6', 'Correctly filtered languageGroupIdentifier should be retrieved.');
+        expect(page.forceAccessProtocol).toBe('None', 'Correctly filtered forceAccessProtocol should be retrieved.');
 
         // layout
         var layout = response.layout;

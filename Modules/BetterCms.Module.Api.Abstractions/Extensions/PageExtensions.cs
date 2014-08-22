@@ -46,6 +46,7 @@ namespace BetterCms.Module.Api.Extensions
                 IsMasterPage = response.Data.IsMasterPage,
                 LanguageId = response.Data.LanguageId,
                 LanguageGroupIdentifier = response.Data.LanguageGroupIdentifier,
+                ForceAccessProtocol = response.Data.ForceAccessProtocol,
                 MetaData = response.MetaData,
                 AccessRules = response.AccessRules,
                 PageOptions = response.PageOptions,

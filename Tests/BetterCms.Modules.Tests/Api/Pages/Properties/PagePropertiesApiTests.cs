@@ -4,7 +4,6 @@ using System.Linq;
 using System.Security.Principal;
 
 using BetterCms.Core.Models;
-
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Operations;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page;
@@ -18,9 +17,7 @@ using NHibernate;
 
 using NUnit.Framework;
 
-using PagePropertiesModel = BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties.PagePropertiesModel;
-
-namespace BetterCms.Test.Module.Api.Pages.PageProperties
+namespace BetterCms.Test.Module.Api.Pages.Properties
 {
     public class PagePropertiesApiTests : ApiCrudIntegrationTestBase<
         SavePagePropertiesModel, PagePropertiesModel,
@@ -33,13 +30,11 @@ namespace BetterCms.Test.Module.Api.Pages.PageProperties
         private Layout defaultLayout;
         private BetterCms.Module.Root.Models.Page masterPage;
         private Region region;
-        private IPrincipal principal;
         private int changingPageProepertiesCount;
 
         [SetUp]
         public void SetUp()
         {
-            principal = System.Threading.Thread.CurrentPrincipal;
             SetCurrentPrincipal(RootModuleConstants.UserRoles.AllRoles);
         }
 
@@ -155,6 +150,7 @@ namespace BetterCms.Test.Module.Api.Pages.PageProperties
                        IsMasterPage = false,
                        IsPublished = true,
                        LanguageGroupIdentifier = null,
+                       ForceAccessProtocol = ForceProtocolType.ForceHttps,
                        LanguageId = null,
                        LayoutId = layout != null ? layout.Id : (Guid?)null,
                        MasterPageId = masterPage != null ? masterPage.Id : (Guid?)null,
@@ -243,6 +239,7 @@ namespace BetterCms.Test.Module.Api.Pages.PageProperties
             Assert.AreEqual(getResponse.Data.MasterPageId, model.MasterPageId);
             Assert.AreEqual(getResponse.Data.SecondaryImageId, model.SecondaryImageId);
             Assert.AreEqual(getResponse.Data.MainImageId, model.MainImageId);
+            Assert.AreEqual(getResponse.Data.ForceAccessProtocol, ForceProtocolType.ForceHttps);
 
             Assert.IsNotNull(getResponse.MetaData);
             Assert.AreEqual(getResponse.MetaData.MetaTitle, model.MetaData.MetaTitle);
