@@ -8,6 +8,9 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
         // Selectors used in the module to locate DOM elements:
         selectors = {
+            iframe: '#bcms-content-frame',
+            iframeHtml: '#bcms-content-html',
+
             contentOverlay: '#bcms-content-overlay',
             contentDelete: '.bcms-content-delete',
             contentEdit: '.bcms-content-edit',
@@ -45,10 +48,11 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         keys = {
             showMasterPagesPath: 'bcms.showMasterPagesPath',
         },
+        iframe,
         resizeTimer,
         currentContentDom,
-        regionRectangles = $(),
-        contentRectangles = $(),
+        regionRectangles,
+        contentRectangles,
         links = {},
         globalization = {
             showMasterPagesPath: null,
@@ -524,11 +528,14 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
         pageViewModel = new PageViewModel();
 
-        var tags = $(selectors.regionsAndContents).toArray(),
+        regionRectangles = $();
+        contentRectangles = $();
+
+        var tags = iframe.contents().find(selectors.regionsAndContents).toArray(),
             tagsCount = tags.length,
             regionStart,
             i;
-        
+
         for (i = 0; i < tagsCount; i++) {
             regionStart = $(tags[i]);
             if (regionStart.hasClass(classes.regionStart)) {
@@ -828,6 +835,66 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         }
     };
 
+    /*
+    * Sets iframe source
+    */
+    function setIframeContents(source) {
+        var dom = iframe.get(0);
+        dom.contentWindow.contents = source;
+        dom.src = 'javascript:window["contents"]';
+    }
+    
+    function fixUrl(loc) {
+        var hash = loc.hash,
+            index;
+
+        if (hash) {
+            index = loc.href.lastIndexOf(hash);
+            if (index > 0) {
+                return loc.href.substr(0, index);
+            }
+        }
+
+        return loc.href;
+    }
+
+    function compareUrls() {
+        var parentUrl = fixUrl(window.top.location),
+            iframeUrl = fixUrl(iframe.get(0).contentWindow.location);
+
+        if (iframeUrl.indexOf('javascript:') === 0 || parentUrl === iframeUrl) {
+            return true;
+        }
+
+        window.location.href = iframeUrl;
+        return false;
+    }
+
+    /*
+    * Initializes iFrame with content, passed from server side
+    */
+    function initIframe() {
+        var source = $('<textarea />').html($(selectors.iframeHtml).html()).text();
+
+        iframe = $(selectors.iframe);
+        iframe.on('load', function () {
+            if (compareUrls()) {
+                content.initRegions();
+
+                var innerIframe = iframe.contents().find(selectors.iframeHtml);
+                if (innerIframe.length > 0) {
+                    source = $('<textarea />').html(innerIframe.html()).text();
+                    setIframeContents(source);
+                }
+            }
+        });
+        iframe.on('error', function () {
+            console.log('Error');
+        });
+
+        setIframeContents(source);
+    }
+
     /**
     * Initializes sidebar module.
     */
@@ -837,7 +904,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         masterPagesModel = new MasterPagesPathModel();
         masterPagesModel.initialize();
 
-        content.initRegions();
+        initIframe();
     };
 
     /**
