@@ -65,7 +65,13 @@ WriteLiteral("\r\n\r\n");
  if (Model.RenderAdminMode)
 {
     Layout = "~/Areas/bcms-Root/Views/Shared/CmsLayout.cshtml";
-    
+
+    var privateModel = Model.Clone();
+    privateModel.RenderAdminMode = false;
+
+    var pageSource = ViewRenderingExtensions.RenderPageToString(ViewContext.Controller as CmsControllerBase, privateModel);
+    // var pageSource = "<h1>Hello World!</h1>";
+
 
             
             #line default
@@ -74,20 +80,22 @@ WriteLiteral("    <iframe");
 
 WriteLiteral(" id=\"bcms-content-frame\"");
 
-WriteLiteral(" style=\"border: 1px solid black; position: absolute; width: 90%; height: 90%; pad" +
-"ding: 0; margin: 0;\"");
-
-WriteLiteral(" src=\"http://bettercms.sandbox.mvc4.local/\"");
+WriteLiteral(" style=\"position: absolute; width: 100%; height: 100%; padding: 0; margin: 0; bor" +
+"der: 0; top: 0; left: 0; right: 0;\"");
 
 WriteLiteral("></iframe>\r\n");
 
             
-            #line 15 "..\..\Views\Cms\Index.cshtml"
+            #line 21 "..\..\Views\Cms\Index.cshtml"
+    
+    
+            
+            #line default
+            #line hidden
+            
+            #line 22 "..\..\Views\Cms\Index.cshtml"
+                                                                                                                                                                                        
 
-    var privateModel = Model.Clone();
-    privateModel.RenderAdminMode = false;
-
-    var pageSource = ViewRenderingExtensions.RenderPageToString(this.ViewContext.Controller as CmsControllerBase, privateModel);
 
             
             #line default
@@ -101,7 +109,7 @@ WriteLiteral(" id=\"bcms-content-html\"");
 WriteLiteral(">");
 
             
-            #line 20 "..\..\Views\Cms\Index.cshtml"
+            #line 24 "..\..\Views\Cms\Index.cshtml"
                                                Write(pageSource);
 
             
@@ -109,8 +117,43 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</script>\r\n");
 
+WriteLiteral("    <script");
+
+WriteLiteral(" type=\"text/javascript\"");
+
+WriteLiteral(" language=\"javascript\"");
+
+WriteLiteral(">\r\n        function decodeHtml(html) {\r\n            var txt = document.createElem" +
+"ent(\"textarea\");\r\n            txt.innerHTML = html;\r\n            return txt.valu" +
+"e;\r\n        }\r\n\r\n        var html = document.getElementById(\'bcms-content-html\')" +
+".text,\r\n            text = decodeHtml(html),\r\n            iframe = document.getE" +
+"lementById(\'bcms-content-frame\'),\r\n            host = location.protocol + \'//\' +" +
+" location.host,\r\n            links,\r\n            tryCount = 0,\r\n            maxT" +
+"ryCount = 5,\r\n            tryTimeout = 100,\r\n            onTimeout = function() " +
+"{\r\n                if (tryCount < maxTryCount) {\r\n                    setTimeout" +
+"(function () {\r\n                        var i, url, update;\r\n                   " +
+"     console.log(\"Timeout %s of %s. Length of document: \", tryCount, maxTryCount" +
+");\r\n                        links = iframe.contentWindow.document.getElementsByT" +
+"agName(\'a\');\r\n\r\n                        if (links.length > 0) {\r\n               " +
+"             for (i = 0; i < links.length ; i++) {\r\n                            " +
+"    url = links[i].href;\r\n                                update = true;\r\n\r\n    " +
+"                            console.log(url);\r\n                                i" +
+"f (url && (url.startsWith(host) || (url.startsWith(\'/\') && !url.startsWith(\'//\')" +
+"))) {\r\n                                    update = false;\r\n                    " +
+"            }\r\n\r\n                                if (update) {\r\n                " +
+"                    links[i].target = \'_parent\';\r\n                              " +
+"  }\r\n                            }\r\n                        } else {\r\n          " +
+"                  onTimeout();\r\n                        }\r\n                    }" +
+", tryTimeout);\r\n\r\n                    tryCount ++;\r\n                }\r\n         " +
+"   };\r\n\r\n        iframe.contentWindow.contents = text;\r\n        iframe.src = \'ja" +
+"vascript:window[\"contents\"]\';\r\n\r\n        onTimeout();\r\n\r\n        /*setTimeout(fu" +
+"nction () {\r\n            var i, url, update;\r\n            links = iframe.content" +
+"Window.document.getElementsByTagName(\'a\');\r\n            console.log(links);\r\n   " +
+"         console.log(links.length);\r\n\r\n            \r\n        }, 500);*/\r\n\r\n    <" +
+"/script>\r\n");
+
             
-            #line 21 "..\..\Views\Cms\Index.cshtml"
+            #line 85 "..\..\Views\Cms\Index.cshtml"
 }
 else
 {

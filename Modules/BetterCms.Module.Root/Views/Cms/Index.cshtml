@@ -10,14 +10,78 @@
 @if (Model.RenderAdminMode)
 {
     Layout = "~/Areas/bcms-Root/Views/Shared/CmsLayout.cshtml";
-    
-    <iframe id="bcms-content-frame" style="border: 1px solid black; position: absolute; width: 90%; height: 90%; padding: 0; margin: 0;" src="http://bettercms.sandbox.mvc4.local/"></iframe>
 
     var privateModel = Model.Clone();
     privateModel.RenderAdminMode = false;
 
-    var pageSource = ViewRenderingExtensions.RenderPageToString(this.ViewContext.Controller as CmsControllerBase, privateModel);
+    var pageSource = ViewRenderingExtensions.RenderPageToString(ViewContext.Controller as CmsControllerBase, privateModel);
+    // var pageSource = "<h1>Hello World!</h1>";
+
+    <iframe id="bcms-content-frame" style="position: absolute; width: 100%; height: 100%; padding: 0; margin: 0; border: 0; top: 0; left: 0; right: 0;"></iframe>
+    
+    @*<iframe style="position: absolute; width: 100%; height: 100%; padding: 0; margin: 0; border: 0; top: 0; left: 0; right: 0; z-index: 80000;" src="http://www.google.lt"></iframe>*@
+
     <script type="text/html" id="bcms-content-html">@pageSource</script>
+    <script type="text/javascript" language="javascript">
+        function decodeHtml(html) {
+            var txt = document.createElement("textarea");
+            txt.innerHTML = html;
+            return txt.value;
+        }
+
+        var html = document.getElementById('bcms-content-html').text,
+            text = decodeHtml(html),
+            iframe = document.getElementById('bcms-content-frame'),
+            host = location.protocol + '//' + location.host,
+            links,
+            tryCount = 0,
+            maxTryCount = 5,
+            tryTimeout = 100,
+            onTimeout = function() {
+                if (tryCount < maxTryCount) {
+                    setTimeout(function () {
+                        var i, url, update;
+                        console.log("Timeout %s of %s. Length of document: ", tryCount, maxTryCount);
+                        links = iframe.contentWindow.document.getElementsByTagName('a');
+
+                        if (links.length > 0) {
+                            for (i = 0; i < links.length ; i++) {
+                                url = links[i].href;
+                                update = true;
+
+                                console.log(url);
+                                if (url && (url.startsWith(host) || (url.startsWith('/') && !url.startsWith('//')))) {
+                                    update = false;
+                                }
+
+                                if (update) {
+                                    links[i].target = '_parent';
+                                }
+                            }
+                        } else {
+                            onTimeout();
+                        }
+                    }, tryTimeout);
+
+                    tryCount ++;
+                }
+            };
+
+        iframe.contentWindow.contents = text;
+        iframe.src = 'javascript:window["contents"]';
+
+        onTimeout();
+
+        /*setTimeout(function () {
+            var i, url, update;
+            links = iframe.contentWindow.document.getElementsByTagName('a');
+            console.log(links);
+            console.log(links.length);
+
+            
+        }, 500);*/
+
+    </script>
 }
 else
 {

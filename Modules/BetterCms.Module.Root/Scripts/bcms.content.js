@@ -835,32 +835,34 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         }
     };
 
-    /*
-    * Sets iframe source
-    */
-    function setIframeContents(source) {
-        var dom = iframe.get(0);
-        dom.contentWindow.contents = source;
-        dom.src = 'javascript:window["contents"]';
-    }
-    
     function fixUrl(loc) {
-        var hash = loc.hash,
-            index;
+        try {
+            var hash = loc.hash,
+                index;
 
-        if (hash) {
-            index = loc.href.lastIndexOf(hash);
-            if (index > 0) {
-                return loc.href.substr(0, index);
+            if (hash) {
+                index = loc.href.lastIndexOf(hash);
+                if (index > 0) {
+                    return loc.href.substr(0, index);
+                }
             }
-        }
 
-        return loc.href;
+            return loc.href;
+        } catch (exc)  {
+            return null;
+        }
     }
 
     function compareUrls() {
         var parentUrl = fixUrl(window.top.location),
             iframeUrl = fixUrl(iframe.get(0).contentWindow.location);
+
+        console.log('Comparing: %s vs %s', parentUrl, iframeUrl);
+
+        if (iframeUrl == null) {
+            bcms.logger.error('Failed to link to external domain from within iFrame.');
+            return false;
+        }
 
         if (iframeUrl.indexOf('javascript:') === 0 || parentUrl === iframeUrl) {
             return true;
@@ -874,25 +876,28 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
     * Initializes iFrame with content, passed from server side
     */
     function initIframe() {
-        var source = $('<textarea />').html($(selectors.iframeHtml).html()).text();
-
-        iframe = $(selectors.iframe);
-        iframe.on('load', function () {
+        var onLoad = function() {
             if (compareUrls()) {
                 content.initRegions();
 
                 var innerIframe = iframe.contents().find(selectors.iframeHtml);
                 if (innerIframe.length > 0) {
-                    source = $('<textarea />').html(innerIframe.html()).text();
-                    setIframeContents(source);
+                    var source = $('<textarea />').html(innerIframe.html()).text();
+
+                    var dom = iframe.get(0);
+                    dom.contentWindow.contents = source;
+                    dom.src = 'javascript:window["contents"]';
                 }
             }
-        });
+        };
+
+        iframe = $(selectors.iframe);
+        iframe.on('load', onLoad);
         iframe.on('error', function () {
             console.log('Error');
         });
 
-        setIframeContents(source);
+        onLoad();
     }
 
     /**
@@ -901,10 +906,10 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
     content.init = function () {
         bcms.logger.debug('Initializing content module');
         
+        initIframe();
+
         masterPagesModel = new MasterPagesPathModel();
         masterPagesModel.initialize();
-
-        initIframe();
     };
 
     /**
