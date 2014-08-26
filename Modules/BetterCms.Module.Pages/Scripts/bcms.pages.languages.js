@@ -1,12 +1,12 @@
 ﻿bettercms.define('bcms.pages.languages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.ko.extenders', 'bcms.autocomplete'],
-    function($, bcms, modal, ko, autocomplete) {
+    function ($, bcms, modal, ko, autocomplete) {
         'use strict';
 
         var pageLanguages = {
-                openPageSelectDialog: null
-            },
+            openPageSelectDialog: null
+        },
             selectors = {
-                
+
             },
             links = {
                 suggestUntranslatedPagesUrl: null,
@@ -19,7 +19,7 @@
                 replaceItemWithLanguageConfirmation: null,
                 assigningPageHasSameCultureAsCurrentPageMessage: null
             };
-        
+
         /**
         * Assign objects to module.
         */
@@ -65,6 +65,7 @@
                 i, l;
 
             self.languageId = ko.observable(languageId);
+            self.suspendLanguageCheck = false;
 
             self.languages = [];
             self.languages.push({ key: '', value: globalization.invariantLanguage });
@@ -99,7 +100,7 @@
             self.originalItems = [];
 
             function onSelectPage(pageId, pageLanguageId, pageTitle, pageUrl) {
-                
+
                 if (pageLanguageId == self.language.languageId()) {
                     modal.info({
                         content: $.format(globalization.assigningPageHasSameCultureAsCurrentPageMessage, pageTitle)
@@ -185,24 +186,28 @@
 
             function onLanguageChange(newValue) {
                 var il = self.items().length,
-                    i, item;
+                    i, item,
+                    hasError = false;
 
                 closeAddMode();
 
                 for (i = 0; i < il; i++) {
                     item = self.items()[i];
 
-                    if (item.languageId() == newValue) {
+                    if (!self.language.suspendLanguageCheck && item.languageId() == newValue) {
+                        hasError = true;
                         modal.confirm({
                             content: $.format(globalization.replaceItemWithCurrentLanguageConfirmation, item.languageName()),
-                            onAccept: function () {
+                            onAccept: function() {
                                 self.items.remove(item);
                                 self.oldCurrentPageLanguageId = newValue;
 
                                 return true;
                             },
-                            onClose: function () {
+                            onClose: function() {
+                                self.language.suspendLanguageCheck = true;
                                 self.language.languageId(self.oldCurrentPageLanguageId);
+                                self.language.suspendLanguageCheck = false;
 
                                 return true;
                             }
@@ -210,6 +215,10 @@
 
                         break;
                     }
+                }
+
+                if (!hasError) {
+                    self.oldCurrentPageLanguageId = newValue;
                 }
             }
 
@@ -230,7 +239,7 @@
                 closeAddMode();
             };
 
-            self.selectPage = function() {
+            self.selectPage = function () {
                 pageLanguages.openPageSelectDialog({
                     onAccept: function (selectedPage) {
                         return onSelectPage(selectedPage.Id, selectedPage.LanguageId, selectedPage.Title, selectedPage.PageUrl);
@@ -395,7 +404,7 @@
         /**
         * Initializes page languages module.
         */
-        pageLanguages.init = function() {
+        pageLanguages.init = function () {
             bcms.logger.debug('Initializing bcms.pages.languages module.');
         };
 
