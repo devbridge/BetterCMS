@@ -57,6 +57,12 @@
     <None Include="Packages\BetterCms.Module.Api\BetterCms.Module.Api.nuspec.template">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Packages\BetterCms.Module.GoogleAnalytics\BetterCms.Module.GoogleAnalytics.nuspec.template">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Packages\BetterCms.Module.GoogleAnalytics\cms.config.transform">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Packages\BetterCms.Module.ImagesGallery\BetterCms.Module.ImagesGallery.nuspec.template">
       <SubType>Designer</SubType>
     </None>
@@ -154,6 +160,10 @@
     <ProjectReference Include="..\..\Modules\BetterCMS.Module.Blog\BetterCms.Module.Blog.csproj">
       <Project>{a66a3046-ef60-4c51-ada7-eb055763419b}</Project>
       <Name>BetterCms.Module.Blog</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.GoogleAnalytics\BetterCms.Module.GoogleAnalytics.csproj">
+      <Project>{8af079ab-c376-41ea-bd26-2034a29b46e9}</Project>
+      <Name>BetterCms.Module.GoogleAnalytics</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCMS.Module.GoogleSiteSearch\BetterCms.Module.GoogleSiteSearch.csproj">
       <Project>{ec53ac56-c1a7-4752-8152-b4559827dd91}</Project>
@@ -458,6 +468,26 @@ xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.GoogleSiteSearch.dll" "$(ProjectDi
 
 "$(ProjectDir)$(OutDir)BetterCms.NugetPackage.exe" "$(ProjectDir)Packages\BetterCms.Module.GoogleSiteSearch\BetterCms.Module.GoogleSiteSearch.nuspec.template" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleSiteSearch\BetterCms.Module.GoogleSiteSearch.nuspec"
 "$(SolutionDir).nuget\nuget.exe" pack "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleSiteSearch\BetterCms.Module.GoogleSiteSearch.nuspec" -OutputDirectory "$(ProjectDir)$(OutDir)\" -NoPackageAnalysis
+
+
+
+rem --- Creating BetterCms.Module.GoogleAnalytics package ------------------------------------------------------------------
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleAnalytics"
+
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleAnalytics\content"
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleAnalytics\content\net40"
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleAnalytics\content\net40\Config"
+copy "$(ProjectDir)Packages\BetterCms.Module.GoogleAnalytics\cms.config.transform" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleAnalytics\content\net40\Config\cms.config.transform" /Y
+
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleAnalytics\lib"
+mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleAnalytics\lib\net40"
+xcopy "$(ProjectDir)$(OutDir)BetterCms.Module.GoogleAnalytics.dll" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleAnalytics\lib\net40\" /Y /Q
+
+"$(ProjectDir)$(OutDir)BetterCms.NugetPackage.exe" "$(ProjectDir)Packages\BetterCms.Module.GoogleAnalytics\BetterCms.Module.GoogleAnalytics.nuspec.template" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleAnalytics\BetterCms.Module.GoogleAnalytics.nuspec"
+"$(SolutionDir).nuget\nuget.exe" pack "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleAnalytics\BetterCms.Module.GoogleAnalytics.nuspec" -OutputDirectory "$(ProjectDir)$(OutDir)\" -NoPackageAnalysis
+
+
+
 
 rem --- Creating BetterCms.Module.Search.Api package ------------------------------------------------------------------
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search.Api"
