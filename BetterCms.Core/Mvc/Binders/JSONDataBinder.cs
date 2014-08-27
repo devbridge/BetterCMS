@@ -1,7 +1,9 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Web.Mvc;
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace BetterCms.Core.Mvc.Binders
 {
@@ -18,12 +20,15 @@ namespace BetterCms.Core.Mvc.Binders
                 var json = new StreamReader(controllerContext.HttpContext.Request.InputStream).ReadToEnd();
                 var type = bindingContext.ModelType;
 
-                var model = JsonConvert.DeserializeObject(json, type);
+                var model = JsonConvert.DeserializeObject(json, type, 
+                    new JsonSerializerSettings {
+                        // Addidn ISO date time converter, because dates are sent as strings, not as integers
+                        Converters = new List<JsonConverter> { new IsoDateTimeConverter() }
+                    });
                 return model;
             }
 
             return null;
         }
-
     } 
 }
