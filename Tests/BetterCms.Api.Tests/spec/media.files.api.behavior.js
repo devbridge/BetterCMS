@@ -168,8 +168,8 @@ describe('media.files.api.behavior', function () {
             expect(file.mediaContentType).toBe('File', 'Correctly filtered mediaContentType should be retrieved.');
             expect(file.fileExtension).toBe('.png', 'Correctly filtered fileExtension should be retrieved.');
             expect(file.fileSize).toBe(92217, 'Correctly filtered fileSize should be retrieved.');
-            expect(file.fileUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/file/8f46bc6b4fd74c10aba01bf1f7269b92/__Tapir.png', 'Correctly filtered fileUrl should be retrieved.');
-            expect(file.thumbnailUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/image/88247a8341184fc2be8c1761c7b86c02/t_1_1.png', 'Correctly filtered thumbnailUrl should be retrieved.');
+            expect(file.fileUrl).toBe('http://bettercms.sandbox.mvc4.local.net/uploads/file/8f46bc6b4fd74c10aba01bf1f7269b92/__Tapir.png', 'Correctly filtered fileUrl should be retrieved.');
+            expect(file.thumbnailUrl).toBe('http://bettercms.sandbox.mvc4.local.net/uploads/image/88247a8341184fc2be8c1761c7b86c02/t_1_1.png', 'Correctly filtered thumbnailUrl should be retrieved.');
             expect(file.thumbnailId).toBeDefinedAndNotNull('thumbnailId should be retrieved.');
             expect(file.thumbnailCaption).toBe('Image caption for _0001_File_For_Tests', 'Correctly filtered thumbnailCaption should be retrieved.');
             expect(file.isArchived).toBe(false, 'Correctly filtered isArchived should be retrieved.');
@@ -249,14 +249,14 @@ describe('media.files.api.behavior', function () {
             expect(file.description).toBe('File Description', 'Correctly filtered description should be retrieved.');
             expect(file.fileExtension).toBe('.png', 'Correctly filtered fileExtension should be retrieved.');
             expect(file.fileSize).toBe(92217, 'Correctly filtered fileSize should be retrieved.');
-            expect(file.fileUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/file/8f46bc6b4fd74c10aba01bf1f7269b92/__Tapir.png', 'Correctly filtered fileUrl should be retrieved.');
+            expect(file.fileUrl).toBe('http://bettercms.sandbox.mvc4.local.net/uploads/file/8f46bc6b4fd74c10aba01bf1f7269b92/__Tapir.png', 'Correctly filtered fileUrl should be retrieved.');
             expect(file.isArchived).toBe(false, 'Correctly filtered isArchived should be retrieved.');
             expect(file.folderId).toBeDefinedAndNotNull('folderId should be retrieved.', 'Correctly filtered folderId should be retrieved.');
             expect(file.folderName).toBe('_0001_Files_Folder_For_Tests', 'Correctly filtered folderName should be retrieved.');
             expect(file.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.', 'Correctly filtered publishedOn should be retrieved.');
             expect(file.originalFileName).toBe('__Tapir.png', 'Correctly filtered originalFileName should be retrieved.');
             expect(file.originalFileExtension).toBe('.png', 'Correctly filtered fileExtension should be retrieved.');
-            expect(file.thumbnailUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/image/88247a8341184fc2be8c1761c7b86c02/t_1_1.png', 'Correctly filtered thumbnailUrl should be retrieved.');
+            expect(file.thumbnailUrl).toBe('http://bettercms.sandbox.mvc4.local.net/uploads/image/88247a8341184fc2be8c1761c7b86c02/t_1_1.png', 'Correctly filtered thumbnailUrl should be retrieved.');
             expect(file.thumbnailId).toBeDefinedAndNotNull('thumbnailId should be retrieved.');
             expect(file.thumbnailCaption).toBe('Image caption for _0001_File_For_Tests', 'Correctly filtered thumbnailCaption should be retrieved.');
             
@@ -332,8 +332,8 @@ describe('media.files.api.behavior', function () {
                     { field: 'MediaContentType', value: 'File' },
                     { field: 'FileExtension', value: '.jpg' },
                     { field: 'FileSize', value: 9901 },
-                    { field: 'FileUrl', value: 'http://bettercms.sandbox.mvc4.local/uploads/file/737256d2822d4c16b246d59fbfaa7f9b/1.jpg' },
-                    { field: 'ThumbnailUrl', value: 'http://bettercms.sandbox.mvc4.local/uploads/image/ea8be69ccb97474eae513454f5dec93e/t_1_1.png' },
+                    { field: 'FileUrl', value: 'http://bettercms.sandbox.mvc4.local.net/uploads/file/737256d2822d4c16b246d59fbfaa7f9b/1.jpg' },
+                    { field: 'ThumbnailUrl', value: 'http://bettercms.sandbox.mvc4.local.net/uploads/image/ea8be69ccb97474eae513454f5dec93e/t_1_1.png' },
                     { field: 'ThumbnailCaption', value: '03110 caption' },
                     { field: 'IsArchived', value: false },
                     { field: 'ThumbnailId', value: '8a653450def8433c8298a20700786dad' }

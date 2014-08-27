@@ -455,7 +455,7 @@
           <IISUrl>http://localhost:8004/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>True</UseCustomServer>
-          <CustomServerUrl>http://bettercms.sandbox.mvc4.local</CustomServerUrl>
+          <CustomServerUrl>http://bettercms.sandbox.mvc4.local.net</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

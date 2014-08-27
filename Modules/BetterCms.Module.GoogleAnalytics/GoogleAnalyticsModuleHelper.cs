@@ -26,16 +26,22 @@
             return !string.IsNullOrEmpty(value) ? value : GoogleAnalyticsModuleConstants.DefaultSitemapUrl;
         }
 
-        public static string GetDefaultSitemapTitle(ICmsConfiguration cmsConfiguration)
+        public static string GetSitemapTitle(ICmsConfiguration cmsConfiguration)
         {
-            var value = GetConfigurationValue(cmsConfiguration, GoogleAnalyticsModuleConstants.DefaultSitemapTitleKey);
+            var value = GetConfigurationValue(cmsConfiguration, GoogleAnalyticsModuleConstants.SitemapTitleKey);
             return !string.IsNullOrEmpty(value) ? value : GoogleAnalyticsModuleConstants.DefaultSitemapTitle;
         }
 
-        public static string GetDefaultDateTimeFormat(ICmsConfiguration cmsConfiguration)
+        public static string GetDateTimeFormat(ICmsConfiguration cmsConfiguration)
         {
-            var value = GetConfigurationValue(cmsConfiguration, GoogleAnalyticsModuleConstants.GoogleSitemapDateFormatKey);
-            return !string.IsNullOrEmpty(value) ? value : GoogleAnalyticsModuleConstants.GoogleSitemapDateFormat;
+            var value = GetConfigurationValue(cmsConfiguration, GoogleAnalyticsModuleConstants.SitemapDateFormatKey);
+            return !string.IsNullOrEmpty(value) ? value : GoogleAnalyticsModuleConstants.DefaultSitemapDateFormat;
+        }
+
+        public static string GetAnalyticsKey(ICmsConfiguration cmsConfiguration)
+        {
+            var value = GetConfigurationValue(cmsConfiguration, GoogleAnalyticsModuleConstants.KeyForAnalyticsKey);
+            return !string.IsNullOrEmpty(value) ? value : GoogleAnalyticsModuleConstants.DeveloperAnalyticsKey;
         }
 
         private static string GetConfigurationValue(ICmsConfiguration cmsConfiguration, string key)

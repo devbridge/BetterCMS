@@ -40,7 +40,7 @@ namespace BetterCms.Module.GoogleAnalytics.Command.Sitemap
 
             if (sitemapModel.SitemapId.HasDefaultValue())
             {
-                sitemap = _sitemapService.GetByTitle(GoogleAnalyticsModuleHelper.GetDefaultSitemapTitle(_cmsConfiguration)) ?? _sitemapService.GetFirst();
+                sitemap = _sitemapService.GetByTitle(GoogleAnalyticsModuleHelper.GetSitemapTitle(_cmsConfiguration)) ?? _sitemapService.GetFirst();
                 if (sitemap == null)
                     throw new CmsException("There aren't any sitemaps created.");
             }
@@ -58,7 +58,7 @@ namespace BetterCms.Module.GoogleAnalytics.Command.Sitemap
             {
                 if (node.Page != null)
                 {
-                    var url = new GoogleSitemapUrl(GoogleAnalyticsModuleHelper.GetDefaultDateTimeFormat(_cmsConfiguration))
+                    var url = new GoogleSitemapUrl(GoogleAnalyticsModuleHelper.GetDateTimeFormat(_cmsConfiguration))
                     {
                         Location = node.Page.PageUrl,
                         LastModifiedDateTime = node.ModifiedOn,

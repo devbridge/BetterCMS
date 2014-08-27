@@ -57,8 +57,8 @@ describe('users.users.api.behavior', function () {
             expect(result.data.items[1].lastName).toBe('04000_3 Last Name', 'Correctly filtered items[1].lastName should be retrieved.');
             expect(result.data.items[1].email).toBe('04000_3@email.com', 'Correctly filtered items[1].email should be retrieved.');
             expect(result.data.items[1].imageId).toBe('650ad17e5aaa4809a9d2a2220103d3c7', 'Correctly filtered items[1].imageId should be retrieved.');
-            expect(result.data.items[1].imageUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/image/c5fab583d8f94773ae86aba0ee81d6ac/1_1.jpg', 'Correctly filtered items[1].imageUrl should be retrieved.');
-            expect(result.data.items[1].imageThumbnailUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/image/c5fab583d8f94773ae86aba0ee81d6ac/t_1_1.png', 'Correctly filtered items[1].imageThumbnailUrl should be retrieved.');
+            expect(result.data.items[1].imageUrl).toBe('http://bettercms.sandbox.mvc4.local.net/uploads/image/c5fab583d8f94773ae86aba0ee81d6ac/1_1.jpg', 'Correctly filtered items[1].imageUrl should be retrieved.');
+            expect(result.data.items[1].imageThumbnailUrl).toBe('http://bettercms.sandbox.mvc4.local.net/uploads/image/c5fab583d8f94773ae86aba0ee81d6ac/t_1_1.png', 'Correctly filtered items[1].imageThumbnailUrl should be retrieved.');
             expect(result.data.items[1].imageCaption).toBe('04000_3 Caption', 'Correctly filtered items[1].imageCaption should be retrieved.');
         });
     });
@@ -93,8 +93,8 @@ describe('users.users.api.behavior', function () {
             expect(result.data.lastName).toBe('04001 Last Name', 'Correctly filtered lastName should be retrieved.');
             expect(result.data.email).toBe('04001@email.com', 'Correctly filtered email should be retrieved.');
             expect(result.data.imageId).toBe('c71f7d4ea17044f085d5a22201071ac7', 'Correctly filtered imageId should be retrieved.');
-            expect(result.data.imageUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/image/a98cc774306c42e5b8550dc77491ec26/1_1.jpg', 'Correctly filtered imageUrl should be retrieved.');
-            expect(result.data.imageThumbnailUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/image/a98cc774306c42e5b8550dc77491ec26/t_1_1.png', 'Correctly filtered imageThumbnailUrl should be retrieved.');
+            expect(result.data.imageUrl).toBe('http://bettercms.sandbox.mvc4.local.net/uploads/image/a98cc774306c42e5b8550dc77491ec26/1_1.jpg', 'Correctly filtered imageUrl should be retrieved.');
+            expect(result.data.imageThumbnailUrl).toBe('http://bettercms.sandbox.mvc4.local.net/uploads/image/a98cc774306c42e5b8550dc77491ec26/t_1_1.png', 'Correctly filtered imageThumbnailUrl should be retrieved.');
             expect(result.data.imageCaption).toBe('04001 Caption', 'Correctly filtered imageCaption should be retrieved.');
 
             expect(result.roles).toBeDefinedAndNotNull('Correctly filtered roles should be retrieved.');
@@ -127,8 +127,8 @@ describe('users.users.api.behavior', function () {
                         { field: 'LastName', value: '04002 Last Name' },
                         { field: 'Email', value: '04002@email.com' },
                         { field: 'ImageId', value: 'f93ba968a3d842838ea9a222010584a8' },
-                        { field: 'ImageUrl', value: 'http://bettercms.sandbox.mvc4.local/uploads/image/cb06965eda0b4ad2ba0f7b22000b0b80/1_1.jpg' },
-                        { field: 'ImageThumbnailUrl', value: 'http://bettercms.sandbox.mvc4.local/uploads/image/cb06965eda0b4ad2ba0f7b22000b0b80/t_1_1.png' },
+                        { field: 'ImageUrl', value: 'http://bettercms.sandbox.mvc4.local.net/uploads/image/cb06965eda0b4ad2ba0f7b22000b0b80/1_1.jpg' },
+                        { field: 'ImageThumbnailUrl', value: 'http://bettercms.sandbox.mvc4.local.net/uploads/image/cb06965eda0b4ad2ba0f7b22000b0b80/t_1_1.png' },
                         { field: 'ImageCaption', value: '04002 Caption' }
                     ]
                 }
@@ -209,8 +209,8 @@ describe('users.users.api.behavior', function () {
             expect(result.data.lastName).toBe('04004 Last Name', 'Correctly filtered lastName should be retrieved.');
             expect(result.data.email).toBe('04004@email.com', 'Correctly filtered email should be retrieved.');
             expect(result.data.imageId).toBe('cd40891f9db7456798eca222010eed10', 'Correctly filtered imageId should be retrieved.');
-            expect(result.data.imageUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/image/aecea7d38583450eb8bca3f15b2abf6e/1_1.jpg', 'Correctly filtered imageUrl should be retrieved.');
-            expect(result.data.imageThumbnailUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/image/aecea7d38583450eb8bca3f15b2abf6e/t_1_1.png', 'Correctly filtered imageThumbnailUrl should be retrieved.');
+            expect(result.data.imageUrl).toBe('http://bettercms.sandbox.mvc4.local.net/uploads/image/aecea7d38583450eb8bca3f15b2abf6e/1_1.jpg', 'Correctly filtered imageUrl should be retrieved.');
+            expect(result.data.imageThumbnailUrl).toBe('http://bettercms.sandbox.mvc4.local.net/uploads/image/aecea7d38583450eb8bca3f15b2abf6e/t_1_1.png', 'Correctly filtered imageThumbnailUrl should be retrieved.');
             expect(result.data.imageCaption).toBe('04004 Caption', 'Correctly filtered imageCaption should be retrieved.');
 
             expect(result.roles).toBeDefinedAndNotNull('Correctly filtered roles should be retrieved.');
