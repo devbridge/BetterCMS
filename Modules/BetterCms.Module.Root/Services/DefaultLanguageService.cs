@@ -32,7 +32,7 @@ namespace BetterCms.Module.Root.Services
         /// <returns>
         /// List of language lookup values.
         /// </returns>
-        public IEnumerable<LookupKeyValue> GetLanguages()
+        public IEnumerable<LookupKeyValue> GetLanguagesLookupValues()
         {
             return repository
                 .AsQueryable<Language>()
@@ -42,6 +42,20 @@ namespace BetterCms.Module.Root.Services
                                      Key = c.Id.ToString().ToLowerInvariant(),
                                      Value = c.Name
                                  })
+                .ToFuture();
+        }
+
+        /// <summary>
+        /// Gets the list of languages.
+        /// </summary>
+        /// <returns>
+        /// List of languages.
+        /// </returns>
+        public IEnumerable<Language> GetLanguages()
+        {
+            return repository
+                .AsQueryable<Language>()
+                .OrderBy(c => c.Code)
                 .ToFuture();
         }
 

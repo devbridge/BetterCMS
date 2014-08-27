@@ -289,6 +289,10 @@
       <Project>{a66a3046-ef60-4c51-ada7-eb055763419b}</Project>
       <Name>BetterCms.Module.Blog</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.GoogleAnalytics\BetterCms.Module.GoogleAnalytics.csproj">
+      <Project>{8af079ab-c376-41ea-bd26-2034a29b46e9}</Project>
+      <Name>BetterCms.Module.GoogleAnalytics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.ImagesGallery\BetterCms.Module.ImagesGallery.csproj">
       <Project>{0bb64452-9b66-403e-94c6-e66c6071d12b}</Project>
       <Name>BetterCms.Module.ImagesGallery</Name>

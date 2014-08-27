@@ -100,7 +100,7 @@ namespace BetterCms.Module.Pages.Services
             var count = query.ToRowCountFutureValue();
 
             var categoriesFuture = categoryService.GetCategories();
-            IEnumerable<LookupKeyValue> languagesFuture = configuration.EnableMultilanguage ? languageService.GetLanguages() : null;
+            IEnumerable<LookupKeyValue> languagesFuture = configuration.EnableMultilanguage ? languageService.GetLanguagesLookupValues() : null;
 
             var pages = query.AddSortingAndPaging(request).Future<SiteSettingPageViewModel>();
 

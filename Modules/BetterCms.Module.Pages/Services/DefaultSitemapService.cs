@@ -59,6 +59,64 @@ namespace BetterCms.Module.Pages.Services
         }
 
         /// <summary>
+        /// Gets specific sitemap for specific language.
+        /// </summary>
+        /// <param name="sitemapId">The sitemap identifier.</param>
+        /// <returns>The sitemap.</returns>
+        public Sitemap Get(Guid sitemapId)
+        {
+            var sitemap = repository.AsQueryable<Sitemap>()
+                .Where(map => map.Id == sitemapId)
+                .FetchMany(map => map.Nodes)
+                .ThenFetch(node => node.Page)
+                .FetchMany(map => map.Nodes)
+                .ThenFetch(mapNode => mapNode.Translations)
+                .Distinct()
+                .ToList()
+                .First();
+
+            return sitemap;
+        }
+
+        /// <summary>
+        /// Gets specific sitemap.
+        /// </summary>
+        /// <param name="sitemapTitle">The sitemap title.</param>
+        /// <returns>The sitemap.</returns>
+        public Sitemap GetByTitle(string sitemapTitle)
+        {
+            var sitemap = repository.AsQueryable<Sitemap>()
+                .Where(map => map.Title == sitemapTitle)
+                .FetchMany(map => map.Nodes)
+                .ThenFetch(node => node.Page)
+                .FetchMany(map => map.Nodes)
+                .ThenFetch(mapNode => mapNode.Translations)
+                .Distinct()
+                .ToList()
+                .First();
+
+            return sitemap;
+        }
+
+        /// <summary>
+        /// Gets first sitemap.
+        /// </summary>
+        /// <returns>The sitemap.</returns>
+        public Sitemap GetFirst()
+        {
+            var sitemap = repository.AsQueryable<Sitemap>()
+                .FetchMany(map => map.Nodes)
+                .ThenFetch(node => node.Page)
+                .FetchMany(map => map.Nodes)
+                .ThenFetch(mapNode => mapNode.Translations)
+                .Distinct()
+                .ToList()
+                .First();
+
+            return sitemap;
+        }
+
+        /// <summary>
         /// Gets the nodes by URL.
         /// </summary>
         /// <param name="page">The page.</param>
@@ -290,7 +348,7 @@ namespace BetterCms.Module.Pages.Services
             repository.Delete(node);
             deletedNodes.Add(node);
         }
-
+        
         #region History
 
         /// <summary>
@@ -315,17 +373,7 @@ namespace BetterCms.Module.Pages.Services
         /// <param name="sitemapId">The sitemap identifier.</param>
         public void ArchiveSitemap(Guid sitemapId)
         {
-            var sitemap = repository.AsQueryable<Sitemap>()
-                .Where(map => map.Id == sitemapId)
-                .FetchMany(map => map.Nodes)
-                .ThenFetch(node => node.Page)
-                .FetchMany(map => map.Nodes)
-                .ThenFetch(mapNode => mapNode.Translations)
-                .Distinct()
-                .ToList()
-                .First();
-
-            ArchiveSitemap(sitemap);
+            ArchiveSitemap(Get(sitemapId));
         }
 
         /// <summary>
@@ -388,14 +436,14 @@ namespace BetterCms.Module.Pages.Services
         /// <summary>
         /// Deletes the sitemap.
         /// </summary>
-        /// <param name="id">The identifier.</param>
+        /// <param name="sitemapId">The identifier.</param>
         /// <param name="version">The version.</param>
         /// <param name="currentUser">The current user.</param>
-        public void DeleteSitemap(Guid id, int version, IPrincipal currentUser)
+        public void DeleteSitemap(Guid sitemapId, int version, IPrincipal currentUser)
         {
             var sitemap = repository
                 .AsQueryable<Sitemap>()
-                .Where(map => map.Id == id)
+                .Where(map => map.Id == sitemapId)
                 .FetchMany(map => map.AccessRules)
                 .Distinct()
                 .ToList()
@@ -467,8 +515,7 @@ namespace BetterCms.Module.Pages.Services
 
             if (deserialized != null)
             {
-                var sitemap = new Sitemap()
-                {
+                var sitemap = new Sitemap {
                     Title = deserialized.Title,
                     Nodes = new List<SitemapNode>()
                 };
@@ -534,7 +581,7 @@ namespace BetterCms.Module.Pages.Services
                     translations.Add(new SitemapNodeTranslation
                     {
                         Node = node,
-                        Language = new Language() { Id = translation.LanguageId },
+                        Language = new Language { Id = translation.LanguageId },
                         Title = translation.Title,
                         Url = translation.Url,
                         UsePageTitleAsNodeTitle = translation.UsePageTitleAsNodeTitle,

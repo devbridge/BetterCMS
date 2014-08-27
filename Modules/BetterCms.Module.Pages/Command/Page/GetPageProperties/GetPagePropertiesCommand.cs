@@ -171,7 +171,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
 
             var tagsFuture = tagService.GetPageTagNames(id);
             var categories = categoryService.GetCategories();
-            var languagesFuture = (cmsConfiguration.EnableMultilanguage) ? languageService.GetLanguages() : null;
+            var languagesFuture = (cmsConfiguration.EnableMultilanguage) ? languageService.GetLanguagesLookupValues() : null;
 
             IEnumerable<AccessRule> userAccessFuture;
             if (cmsConfiguration.Security.AccessControlEnabled)
