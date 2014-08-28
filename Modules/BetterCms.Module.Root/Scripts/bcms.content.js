@@ -449,8 +449,17 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 }
             }
 
-            self.onAddContent = function () {
-                bcms.trigger(bcms.events.addPageContent, self);
+            self.onAddContent = function (onSuccess) {
+                if (!onSuccess) {
+                    onSuccess = function() {
+                        redirect.ReloadWithAlert();
+                    };
+                }
+
+                bcms.trigger(bcms.events.addPageContent, {
+                    regionViewModel: self,
+                    onSuccess: onSuccess
+                });
             };
 
             if (self.isInvisible) {
@@ -514,7 +523,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
     /**
     * Page content view model
     */
-    function ContentViewModel(contentStart, contentEnd, parentPageContentId) {
+    content.ContentViewModel = function(contentStart, contentEnd, parentPageContentId) {
         var self = this;
 
         self.contentStart = contentStart;
@@ -524,16 +533,31 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         self.parentPageContentId = parentPageContentId;
         self.parentContent = null;
         self.childRegions = null;
-        self.hideEndingDiv = contentEnd.data('hide') === true;
+        self.hideEndingDiv = false;
+        self.isInvisible = false;
+        self.draft = false;
 
-        self.contentId = contentStart.data('contentId');
-        self.pageContentId = contentStart.data('pageContentId');
-        self.contentVersion = contentStart.data('contentVersion');
-        self.pageContentVersion = contentStart.data('pageContentVersion');
-        self.contentType = contentStart.data('contentType');
-        self.draft = contentStart.data('draft');
-        self.title = contentStart.data('contentTitle');
-        self.isInvisible = contentStart.data("invisible") === true;
+        self.title = null;
+        self.contentId = null;
+        self.pageContentId = null;
+        self.contentVersion = null;
+        self.pageContentVersion = null;
+        self.contentType = null;
+
+        if (contentEnd) {
+            self.hideEndingDiv = contentEnd.data('hide') === true;
+        }
+
+        if (contentStart) {
+            self.contentId = contentStart.data('contentId');
+            self.pageContentId = contentStart.data('pageContentId');
+            self.contentVersion = contentStart.data('contentVersion');
+            self.pageContentVersion = contentStart.data('pageContentVersion');
+            self.contentType = contentStart.data('contentType');
+            self.draft = contentStart.data('draft');
+            self.title = contentStart.data('contentTitle');
+            self.isInvisible = contentStart.data("invisible") === true;
+        }
 
         self.left = 0;
         self.top = 0;
@@ -549,7 +573,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             'draft': false
         };
 
-        self.initializeContent = function () {
+        self.initializeContent = function() {
 
             // Setup parent content
             if (self.parentPageContentId && !self.parentContent) {
@@ -587,32 +611,32 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
             showHideButtons();
 
-            $(selectors.contentDelete, rectangle).on('click', function () {
+            $(selectors.contentDelete, rectangle).on('click', function() {
                 self.onDeleteContent();
             });
 
-            $(selectors.contentEdit, rectangle).on('click', function () {
+            $(selectors.contentEdit, rectangle).on('click', function() {
                 self.onEditContent();
             });
 
-            $(selectors.contentHistory, rectangle).on('click', function () {
+            $(selectors.contentHistory, rectangle).on('click', function() {
                 self.onContentHistory();
             });
 
-            $(selectors.contentConfigure, rectangle).on('click', function () {
+            $(selectors.contentConfigure, rectangle).on('click', function() {
                 self.onConfigureContent();
             });
 
-            $(selectors.enterChildContent, rectangle).on('click', function () {
+            $(selectors.enterChildContent, rectangle).on('click', function() {
                 self.onEnterChildContent();
             });
 
-            rectangle.on('mouseleave', function () {
+            rectangle.on('mouseleave', function() {
                 bcms.logger.trace('Content mouse leave');
                 content.hideOverlay(self);
             });
 
-            rectangle.on('mouseover', function () {
+            rectangle.on('mouseover', function() {
                 if (!bcms.editModeIsOn() || currentContentDom === rectangle) {
                     bcms.logger.trace('Exit content mouse over');
                     return;
@@ -628,7 +652,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             }
         };
 
-        self.recalculatePositions = function () {
+        self.recalculatePositions = function() {
             var positions = calculatePositions(self.contentStart, self.contentEnd);
 
             self.left = positions.left + 1;
@@ -637,19 +661,19 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             self.height = positions.height;
         };
 
-        self.onEditContent = function () { };
-        self.onDeleteContent = function () { };
-        self.onConfigureContent = function () { };
-        self.onContentHistory = function () { };
+        self.onEditContent = function() {};
+        self.onDeleteContent = function() {};
+        self.onConfigureContent = function() {};
+        self.onContentHistory = function() {};
 
-        self.onEnterChildContent = function () {
+        self.onEnterChildContent = function() {
             pageViewModel.currentParentContent = self;
 
             content.refreshOverlays();
 
             if (masterPagesModel != null) {
                 masterPagesModel.calculatePathPositions();
-                masterPagesModel.addParentContent(self.title, function () {
+                masterPagesModel.addParentContent(self.title, function() {
                     pageViewModel.currentParentContent = self;
 
                     content.refreshOverlays();
@@ -660,7 +684,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             recalculateParentContentOverlays();
         };
 
-        self.getChildRegions = function () {
+        self.getChildRegions = function() {
             if (self.childRegions == null) {
                 self.childRegions = [];
 
@@ -696,7 +720,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         }
 
         return self;
-    }
+    };
 
     function getParentContentOverlay(id) {
         var overlay = $('#' + id);
@@ -818,7 +842,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                     parentPageContentId = allContents[allContents.length - 1].pageContentId;
                 }
 
-                var contentViewModel = new ContentViewModel(currentContent.startTag, currentTag, parentPageContentId);
+                var contentViewModel = new content.ContentViewModel(currentContent.startTag, currentTag, parentPageContentId);
                 currentRegion.contents.push(contentViewModel);
             }
         }

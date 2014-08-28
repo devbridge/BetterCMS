@@ -556,6 +556,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Page structure.
+        /// </summary>
+        public static string ContentsTree_Dialog_Title {
+            get {
+                return ResourceManager.GetString("ContentsTree_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sorry, looks like &lt;b&gt;cookies are disabled&lt;/b&gt; in your browser. For full web experience.
         /// </summary>
         public static string CookieSupport_MustBeEnabled_Message_FirstLine {

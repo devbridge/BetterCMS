@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
-bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.modal'],
-    function ($, bcms, ko, modal) {
+bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.modal', 'bcms.content'],
+    function ($, bcms, ko, modal, contentModule) {
     'use strict';
 
     var tree = {},
@@ -9,10 +9,16 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             treeTemplate: '#bcms-contents-tree-template'
         },
         links = {},
-        globalization = {},
+        globalization = {
+            contentsTreeTitle: null,
+            closeTreeButtonTitle: null
+        },
         treeItemTypes = {
             content: 1,
             region: 2
+        },
+        contentStatuses = {
+            draft: 2
         };
 
     // Assign objects to module
@@ -39,8 +45,24 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             model.items.push(itemModel);
         }
 
-        model.addContent = function() {
-            regionModel.onAddContent();
+        model.addContent = function () {
+            var self = this;
+
+            regionModel.onAddContent(function (json) {
+                var contentViewModel = new contentModule.ContentViewModel(null, null, regionModel.parentPageContentId);
+
+                contentViewModel.isInvisible = true;
+                contentViewModel.contentId = json.Data.ContentId;
+                contentViewModel.pageContentId = json.Data.PageContentId;
+                contentViewModel.draft = json.Data.DesirableStatus == contentStatuses.draft;
+                contentViewModel.title = json.Data.Title;
+                contentViewModel.contentVersion = json.Data.ContentVersion;
+                contentViewModel.pageContentVersion = json.Data.PageContentVersion;
+                contentViewModel.contentType = json.Data.ContentType;
+
+                contentViewModel.initializeContent();
+                self.items.push(createContentViewModel(contentViewModel));
+            });
         };
 
         return model;
@@ -140,7 +162,8 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
     */
     function onEditContentsTree(pageModel) {
         modal.open({
-            title: "TODO: TITLE",
+            title: globalization.contentsTreeTitle,
+            cancelTitle: globalization.closeTreeButtonTitle,
             disableAccept: true,
             onLoad: function(dialog) {
                 var container = $($(selectors.treeTemplate).html());

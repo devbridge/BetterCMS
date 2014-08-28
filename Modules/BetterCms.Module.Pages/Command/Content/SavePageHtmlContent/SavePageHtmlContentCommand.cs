@@ -8,9 +8,11 @@ using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 
+using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.ViewModels.Content;
 
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
@@ -19,7 +21,7 @@ using BetterCms.Module.Root.Services;
 
 namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
 {
-    public class SavePageHtmlContentCommand : CommandBase, ICommand<SavePageHtmlContentCommandRequest, SavePageHtmlContentResponse>
+    public class SavePageHtmlContentCommand : CommandBase, ICommand<SavePageHtmlContentCommandRequest, InsertContentToPageResultViewModel>
     {
         private readonly IContentService contentService;
         
@@ -34,7 +36,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
             this.optionsService = optionsService;
         }
 
-        public SavePageHtmlContentResponse Execute(SavePageHtmlContentCommandRequest request)
+        public InsertContentToPageResultViewModel Execute(SavePageHtmlContentCommandRequest request)
         {
             var model = request.Content;
             if (model.DesirableStatus == ContentStatus.Published)
@@ -174,12 +176,18 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                 }
             }
 
-            return new SavePageHtmlContentResponse {
-                                                       PageContentId = pageContent.Id,
-                                                       ContentId = pageContent.Content.Id,
-                                                       RegionId = pageContent.Region.Id,
-                                                       PageId = pageContent.Page.Id
-                                                   };
+            return new InsertContentToPageResultViewModel
+                {
+                    PageContentId = pageContent.Id,
+                    ContentId = pageContent.Content.Id,
+                    RegionId = pageContent.Region.Id,
+                    PageId = pageContent.Page.Id,
+                    DesirableStatus = request.Content.DesirableStatus,
+                    Title = pageContent.Content.Name,
+                    ContentVersion = pageContent.Content.Version,
+                    PageContentVersion = pageContent.Version,
+                    ContentType = HtmlContentAccessor.ContentWrapperType
+                };
         }
     }
 }

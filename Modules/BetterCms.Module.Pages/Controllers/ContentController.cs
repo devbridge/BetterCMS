@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 
 using BetterCms.Core.Exceptions.Mvc;
@@ -153,26 +152,7 @@ namespace BetterCms.Module.Pages.Controllers
             {
                 var result = GetCommand<SavePageHtmlContentCommand>().ExecuteCommand(request);
 
-                if (result != null)
-                {
-                    return
-                        Json(
-                            new WireJson
-                                {
-                                    Success = true,
-                                    Data =
-                                        new
-                                            {
-                                                PageContentId = result.PageContentId,
-                                                ContentId = result.ContentId,
-                                                RegionId = result.RegionId,
-                                                PageId = result.PageId,
-                                                DesirableStatus = request.Content.DesirableStatus
-                                            }
-                                });
-                }
-
-                return Json(new WireJson { Success = false });
+                return WireJson(result != null, result);
             }
             catch (ConfirmationRequestException exc)
             {

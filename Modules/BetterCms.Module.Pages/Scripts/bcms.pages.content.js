@@ -95,8 +95,10 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Open dialog with add new content form
         */
-        pagesContent.onAddNewContent = function(regionViewModel) {
-            var editorId;
+        pagesContent.onAddNewContent = function(data) {
+            var editorId,
+                regionViewModel = data.regionViewModel,
+                onSuccess = data.onSuccess;
 
             modal.edit({
                 title: globalization.addNewContentDialogTitle,
@@ -141,8 +143,12 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                     return false;
                                 }                                 
                             } else {
-                                redirect.ReloadWithAlert();
-                            }                            
+                                if ($.isFunction(onSuccess)) {
+                                    onSuccess(json);
+                                }
+                            }
+
+                            return true;
                         },
 
                         formSerialize: function(form) {
@@ -598,6 +604,8 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             } else {
                                 redirect.ReloadWithAlert();
                             }
+
+                            return true;
                         },
 
                         formSerialize: function (form) {

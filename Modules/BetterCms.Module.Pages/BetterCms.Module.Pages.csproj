@@ -195,7 +195,6 @@
     <Compile Include="Command\Content\DeletePageContent\DeletePageContentCommand.cs" />
     <Compile Include="Command\Content\DeletePageContent\DeletePageContentCommandRequest.cs" />
     <Compile Include="Command\Content\GetPageHtmlContent\GetPageHtmlContentCommand.cs" />
-    <Compile Include="Command\Content\SavePageHtmlContent\SavePageHtmlContentResponse.cs" />
     <Compile Include="Command\Content\SortPageContent\SortPageContentCommand.cs" />
     <Compile Include="Command\History\DestroyContentDraft\DestroyContentDraftCommand.cs" />
     <Compile Include="Command\History\DestroyContentDraft\DestroyContentDraftCommandResponse.cs" />
@@ -347,6 +346,7 @@
     <Compile Include="Services\IWidgetService.cs" />
     <Compile Include="ViewModels\Content\ContentViewModel.cs" />
     <Compile Include="ViewModels\Content\ContentSortViewModel.cs" />
+    <Compile Include="ViewModels\Content\InsertContentToPageResultViewModel.cs" />
     <Compile Include="ViewModels\Content\RestorePageContentViewModel.cs" />
     <Compile Include="ViewModels\Content\IDraftDestroy.cs" />
     <Compile Include="ViewModels\Content\PageContentSortViewModel.cs" />

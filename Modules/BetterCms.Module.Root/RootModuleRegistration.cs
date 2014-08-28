@@ -235,6 +235,7 @@ namespace BetterCms.Module.Root
                 {
                     authenticationJsModuleIncludeDescriptor,                    
                     new ContentJsModuleIncludeDescriptor(this),       
+                    new ContentTreeJsModuleIncludeDescriptor(this),
                     new DatePickerJsModuleIncludeDescriptor(this), 
                     new DynamicContentJsModuleIncludeDescriptor(this), 
                     new FormsJsModuleIncludeDescriptor(this),
@@ -269,8 +270,7 @@ namespace BetterCms.Module.Root
                     new JsIncludeDescriptor(this, "ckeditor", "ckeditor/ckeditor.js", "ckeditor/ckeditor.js"),
                     tagsJsModuleIncludeDescriptor,
                     languagesJsModuleIncludeDescriptor,
-                    new OptionsJsModuleIncludeDescriptor(this),
-                    new JsIncludeDescriptor(this, "bcms.content.tree")
+                    new OptionsJsModuleIncludeDescriptor(this)
                 };
         }
 

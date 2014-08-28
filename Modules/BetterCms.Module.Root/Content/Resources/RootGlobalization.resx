@@ -609,4 +609,7 @@
   <data name="SaveContent_ContentHasChildrenContents_RegionDeleteConfirmationMessage" xml:space="preserve">
     <value>You are trying to delete dynamic regions. There are some children pages, which have contents created within these regions. If you delete this region, children page contens will be deleted also. Anyway, you can restore them by restoring archived version of current content. &lt;br /&gt;&lt;br /&gt;Are you sure you want to continue?</value>
   </data>
+  <data name="ContentsTree_Dialog_Title" xml:space="preserve">
+    <value>Page structure</value>
+  </data>
 </root>
