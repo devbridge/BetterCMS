@@ -22,7 +22,7 @@ namespace BetterCms.Core.Mvc.Binders
 
                 var model = JsonConvert.DeserializeObject(json, type, 
                     new JsonSerializerSettings {
-                        // Addidn ISO date time converter, because dates are sent as strings, not as integers
+                        // Adding ISO date time converter, because dates are sent as strings, not as integers
                         Converters = new List<JsonConverter> { new IsoDateTimeConverter() }
                     });
                 return model;
