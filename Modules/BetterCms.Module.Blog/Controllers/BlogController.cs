@@ -127,10 +127,17 @@ namespace BetterCms.Module.Blog.Controllers
 
         /// <summary>
         /// Converts the string to slug.
+        /// NOTE: do not remove parentPageUrl, parentPageId, languageId, they are required for correct URL generation
         /// </summary>
         /// <param name="text">The text.</param>
         /// <param name="senderId">The sender id.</param>
-        /// <returns>Json result.</returns>
+        /// <param name="parentPageUrl">The parent page URL.</param>
+        /// <param name="parentPageId">The parent page identifier.</param>
+        /// <param name="languageId">The language identifier.</param>
+        /// <param name="categoryId">The category identifier.</param>
+        /// <returns>
+        /// Json result.
+        /// </returns>
         [BcmsAuthorize]
         public ActionResult ConvertStringToSlug(string text, string senderId, string parentPageUrl, string parentPageId, string languageId, string categoryId)
         {
