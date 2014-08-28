@@ -64,7 +64,10 @@ namespace BetterCms.Module.GoogleAnalytics
                 new { area = AreaName, controller = "GoogleSitemap", action = "Index" });
         }
 
-
+        /// <summary>
+        /// Add google analytics script accessor to Page.
+        /// </summary>
+        /// <param name="args">The args.</param>
         private void Events_PageRendering(PageRenderingEventArgs args)
         {
             args.RenderPageData.JavaScripts.Add(new GoogleAnalyticsScriptAccessor(_cmsConfiguration));
