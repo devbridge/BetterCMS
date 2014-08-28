@@ -25,6 +25,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             regionAddContentButtons: '.bcms-region-addcontent',
             regionSortButtons: '.bcms-region-sortcontent',
             regionSortDoneButtons: '.bcms-region-sortdone',
+            regionSortCancelButtons: '.bcms-region-sortcancel',
             regionButtons: '.bcms-region-button',
             regionActions: '.bcms-region-actions',
             regionSortWrappers: '.bcms-sort-wrapper',
@@ -246,9 +247,13 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             var regionContents = [],
                 regionViewModel = this;
 
+            $(selectors.regionActions, regionViewModel.overlay).css('width', this.regionActionsWidth);
+
             $(selectors.regionActions, regionViewModel.overlay).show();
             $(selectors.regionButtons, regionViewModel.overlay).show();
             $(selectors.regionSortDoneButtons, regionViewModel.overlay).hide();
+            $(selectors.regionSortCancelButtons, regionViewModel.overlay).hide();
+            $(selectors.regionTreeButtons, regionViewModel.overlay).hide();
 
             if (isSortMode) {
                 regionViewModel.sortBlock.sortable('destroy');
@@ -302,8 +307,13 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             if (regionViewModel != currentRegionViewModel) {
                 $(selectors.regionActions, regionViewModel.overlay).hide();
             } else {
+                this.regionActionsWidth = $(selectors.regionActions, regionViewModel.overlay).css('width');
+                $(selectors.regionActions, regionViewModel.overlay).css('width', '171px');
+
                 $(selectors.regionButtons, regionViewModel.overlay).hide();
                 $(selectors.regionSortDoneButtons, regionViewModel.overlay).show();
+                $(selectors.regionSortCancelButtons, regionViewModel.overlay).show();
+                $(selectors.regionTreeButtons, regionViewModel.overlay).show();
             }
 
             $(regionViewModel.contents).each(function () {
@@ -479,6 +489,10 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 if (changedRegions.length > 0) {
                     saveContentChanges(changedRegions);
                 }
+            });
+
+            $(selectors.regionSortCancelButtons, self.overlay).on('click', function () {
+                content.cancelSortMode();
             });
         };
 

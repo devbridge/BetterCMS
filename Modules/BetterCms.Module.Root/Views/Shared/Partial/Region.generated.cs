@@ -71,11 +71,19 @@ WriteLiteral(" style=\"display: none;\"");
 
 WriteLiteral("></div>\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-region-button bcms-region-addcontent\"");
+WriteLiteral(" class=\"bcms-region-button bcms-region-contentstree\"");
+
+WriteLiteral(" style=\"display: none;\"");
 
 WriteLiteral("></div>\r\n                    <div");
 
-WriteLiteral(" class=\"bcms-region-button bcms-region-contentstree\"");
+WriteLiteral(" class=\"bcms-region-button bcms-region-sortcancel\"");
+
+WriteLiteral(" style=\"display: none;\"");
+
+WriteLiteral("></div>\r\n                    <div");
+
+WriteLiteral(" class=\"bcms-region-button bcms-region-addcontent\"");
 
 WriteLiteral("></div>\r\n                    <div");
 
@@ -90,7 +98,7 @@ WriteLiteral(" class=\"bcms-sorting-block\"");
 WriteLiteral("></div>\r\n");
 
             
-            #line 16 "..\..\Views\Shared\Partial\Region.cshtml"
+            #line 17 "..\..\Views\Shared\Partial\Region.cshtml"
             }
 
             
