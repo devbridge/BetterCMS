@@ -34,7 +34,23 @@ namespace BetterCms.Module.Root.Projections
             Func<IPageContent, IContent, IContentAccessor, IEnumerable<ChildContentProjection>, IEnumerable<PageContentProjection>, TProjection> createProjectionDelegate)
             where TProjection : PageContentProjection
         {
-            IContentAccessor contentAccessor = null;            
+            IContentAccessor contentAccessor = GetAccessorForType(content, options);
+
+            if (contentAccessor == null)
+            {
+                Log.Error(string.Format("A content accessor was not found for the content type {0} with id={1}.", content.GetType().FullName, content.Id));
+
+                contentAccessor = new EmptyContentAccessor(string.Format("<i style=\"color:red;\">{0}</i>", RootGlobalization.Message_FailedToRenderContent));
+            }
+
+            TProjection pageContentProjection = createProjectionDelegate.Invoke(pageContent, content, contentAccessor, childContentProjections, childRegionContentProjections);
+
+            return pageContentProjection;
+        }
+
+        public IContentAccessor GetAccessorForType(IContent content, IList<IOptionValue> options = null)
+        {
+            IContentAccessor contentAccessor = null;
             Type contentType;
 
             if (content is IProxy)
@@ -59,16 +75,7 @@ namespace BetterCms.Module.Root.Projections
                                                              });
             }
 
-            if (contentAccessor == null)
-            {
-                Log.Error(string.Format("A content accessor was not found for the content type {0} with id={1}.", content.GetType().FullName, content.Id));
-
-                contentAccessor = new EmptyContentAccessor(string.Format("<i style=\"color:red;\">{0}</i>", RootGlobalization.Message_FailedToRenderContent));
-            }
-
-            TProjection pageContentProjection = createProjectionDelegate.Invoke(pageContent, content, contentAccessor, childContentProjections, childRegionContentProjections);
-
-            return pageContentProjection;
+            return contentAccessor;
         }
     }
 }

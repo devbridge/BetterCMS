@@ -16,6 +16,7 @@ using BetterCms.Module.Pages.Command.Content.SavePageContentOptions;
 using BetterCms.Module.Pages.Command.Content.SavePageHtmlContent;
 using BetterCms.Module.Pages.Command.Content.SortPageContent;
 using BetterCms.Module.Pages.Command.Widget.GetWidgetCategory;
+
 using BetterCms.Module.Pages.ViewModels.Content;
 
 using BetterCms.Module.Root;
@@ -58,12 +59,9 @@ namespace BetterCms.Module.Pages.Controllers
                         : (System.Guid?) null
                 };
 
-            if (GetCommand<InsertContentToPageCommand>().ExecuteCommand(request))
-            {
-                return Json(new WireJson { Success = true });
-            }
+            var result = GetCommand<InsertContentToPageCommand>().ExecuteCommand(request);
 
-            return Json(new WireJson { Success = false });
+            return WireJson(result != null, result);
         }
 
         /// <summary>

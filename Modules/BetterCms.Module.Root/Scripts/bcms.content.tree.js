@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
-bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.modal', 'bcms.content'],
-    function ($, bcms, ko, modal, contentModule) {
+bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.modal', 'bcms.content', 'bcms.redirect'],
+    function ($, bcms, ko, modal, contentModule, redirect) {
     'use strict';
 
     var tree = {},
@@ -19,12 +19,23 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         },
         contentStatuses = {
             draft: 2
-        };
+        },
+        treeViewModel = null;
 
     // Assign objects to module
     tree.selectors = selectors;
     tree.links = links;
     tree.globalization = globalization;
+
+    function setContentModelValues(contentViewModel, json) {
+        contentViewModel.contentId = json.Data.ContentId;
+        contentViewModel.pageContentId = json.Data.PageContentId;
+        contentViewModel.draft = json.Data.DesirableStatus == contentStatuses.draft;
+        contentViewModel.title = json.Data.Title;
+        contentViewModel.contentVersion = json.Data.ContentVersion;
+        contentViewModel.pageContentVersion = json.Data.PageContentVersion;
+        contentViewModel.contentType = json.Data.ContentType;
+    }
 
     function createRegionViewModel(regionModel) {
         var model = new TreeItemViewModel(),
@@ -32,7 +43,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             itemModel,
             i;
 
-        model.title = regionModel.title;
+        model.title(regionModel.title);
         model.model = regionModel;
         model.type = treeItemTypes.region;
         model.isInvisible = regionModel.isInvisible;
@@ -40,44 +51,43 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         // Collect child contents
         childContents = regionModel.getChildContents();
         for (i = 0; i < childContents.length; i++) {
-            itemModel = createContentViewModel(childContents[i]);
+            itemModel = createContentViewModel(childContents[i], model);
 
             model.items.push(itemModel);
         }
 
         model.addContent = function () {
-            var self = this;
-
             regionModel.onAddContent(function (json) {
+                treeViewModel.reloadPage = true;
+
                 var contentViewModel = new contentModule.ContentViewModel(null, null, regionModel.parentPageContentId);
 
                 contentViewModel.isInvisible = true;
-                contentViewModel.contentId = json.Data.ContentId;
-                contentViewModel.pageContentId = json.Data.PageContentId;
-                contentViewModel.draft = json.Data.DesirableStatus == contentStatuses.draft;
-                contentViewModel.title = json.Data.Title;
-                contentViewModel.contentVersion = json.Data.ContentVersion;
-                contentViewModel.pageContentVersion = json.Data.PageContentVersion;
-                contentViewModel.contentType = json.Data.ContentType;
+                setContentModelValues(contentViewModel, json);
 
                 contentViewModel.initializeContent();
-                self.items.push(createContentViewModel(contentViewModel));
+                model.items.push(createContentViewModel(contentViewModel, model));
             });
+        };
+
+        model.removeContent = function (contentViewModel) {
+            model.items.remove(contentViewModel);
         };
 
         return model;
     }
 
-    function createContentViewModel(contentModel) {
+    function createContentViewModel(contentModel, parentRegion) {
         var model = new TreeItemViewModel(),
             childRegions,
             itemModel,
             i;
 
-        model.title = contentModel.title;
+        model.title(contentModel.title);
         model.model = contentModel;
         model.type = treeItemTypes.content;
         model.isInvisible = contentModel.isInvisible;
+        model.parentRegion = parentRegion;
 
         childRegions = contentModel.getChildRegions();
         for (i = 0; i < childRegions.length; i++) {
@@ -87,11 +97,20 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         }
 
         model.editItem = function () {
-            contentModel.onEditContent();
+            contentModel.onEditContent(function(json) {
+                treeViewModel.reloadPage = true;
+
+                setContentModelValues(model.model, json);
+                model.title(json.Data.Title);
+            });
         };
 
         model.deleteItem = function () {
-            contentModel.onDeleteContent();
+            contentModel.onDeleteContent(function () {
+                treeViewModel.reloadPage = true;
+
+                model.parentRegion.removeContent(model);
+            });
         };
 
         model.history = function() {
@@ -117,6 +136,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         self.items = ko.observableArray();
         self.visibleItems = ko.observableArray();
         self.invisibleItems = ko.observableArray();
+        self.reloadPage = false;
 
         // Collect child regions
         for (i = 0; i < pageModel.regions.length; i++) {
@@ -143,7 +163,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
 
         self.items = ko.observableArray();
         self.model = null;
-        self.title = null;
+        self.title = ko.observable();
         self.type = null;
         self.isInvisible = false;
         self.types = treeItemTypes;
@@ -169,9 +189,15 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                 var container = $($(selectors.treeTemplate).html());
                 dialog.setContent(container);
 
-                var treeViewModel = new TreeViewModel(pageModel);
+                treeViewModel = new TreeViewModel(pageModel);
 
                 ko.applyBindings(treeViewModel, container.get(0));
+            },
+
+            onClose: function() {
+                if (treeViewModel.reloadPage) {
+                    redirect.ReloadWithAlert();
+                }
             }
         });
     }

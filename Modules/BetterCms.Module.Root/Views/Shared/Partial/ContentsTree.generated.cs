@@ -123,7 +123,7 @@ WriteLiteral(@">
     <div data-bind=""css: {'bcms-contents-tree-region': type == types.region, 'bcms-contents-tree-content': type == types.content}"">
 
         <div data-bind=""css: {'bcms-contents-tree-region-header': type == types.region}"">
-            <span data-bind=""text: model.title""></span>
+            <span data-bind=""text: title()""></span>
             <div data-bind=""css: {'bcms-contents-tree-region-icons': type==types.region, 'bcms-contents-tree-content-icons': type==types.content}"">
                 <!-- ko if: type == types.content -->
                 <!-- ko if: model.visibleButtons.configure -->

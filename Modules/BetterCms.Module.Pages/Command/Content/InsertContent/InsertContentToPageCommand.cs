@@ -1,18 +1,22 @@
-﻿using BetterCms.Core.Mvc.Commands;
-
+﻿using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.Services;
 
 namespace BetterCms.Module.Pages.Command.Content.InsertContent
 {
-    public class InsertContentToPageCommand : CommandBase, ICommand<InsertContentToPageRequest, bool>
+    public class InsertContentToPageCommand : CommandBase, ICommand<InsertContentToPageRequest, InsertContentToPageResultViewModel>
     {
         private readonly IContentService contentService;
+        private readonly PageContentProjectionFactory projectionFactory;
 
-        public InsertContentToPageCommand(IContentService contentService)
+        public InsertContentToPageCommand(IContentService contentService, PageContentProjectionFactory projectionFactory)
         {
             this.contentService = contentService;
+            this.projectionFactory = projectionFactory;
         }
 
         /// <summary>
@@ -20,13 +24,13 @@ namespace BetterCms.Module.Pages.Command.Content.InsertContent
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        public bool Execute(InsertContentToPageRequest request)
+        public InsertContentToPageResultViewModel Execute(InsertContentToPageRequest request)
         {
             UnitOfWork.BeginTransaction();
             
             var page = Repository.AsProxy<Root.Models.Page>(request.PageId);
             var region = Repository.AsProxy<Region>(request.RegionId);
-            var content = Repository.AsProxy<Root.Models.Content>(request.ContentId);
+            var content = Repository.AsQueryable<Root.Models.Content>(c => c.Id == request.ContentId).FirstOne();
             
             PageContent parentPageContent = null;
             if (request.ParentPageContentId.HasValue && !request.ParentPageContentId.Value.HasDefaultValue())
@@ -50,7 +54,20 @@ namespace BetterCms.Module.Pages.Command.Content.InsertContent
             // Notify.
             Events.PageEvents.Instance.OnPageContentInserted(pageContent);
 
-            return true;
+            var accessor = projectionFactory.GetAccessorForType(content);
+
+            return new InsertContentToPageResultViewModel
+                {
+                    PageContentId = pageContent.Id,
+                    ContentId = content.Id,
+                    RegionId = request.RegionId,
+                    PageId = request.PageId,
+                    DesirableStatus = content.Status,
+                    Title = content.Name,
+                    ContentVersion = content.Version,
+                    PageContentVersion = pageContent.Version,
+                    ContentType = accessor != null ? accessor.GetContentWrapperType() : null
+                };
         }
     }
 }
