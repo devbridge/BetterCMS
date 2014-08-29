@@ -65,25 +65,25 @@ namespace BetterCms.Module.OpenGraphIntegration
                 httpContextAccessor = container.Resolve<IHttpContextAccessor>();
             }
             args.RenderPageData.Metadata.Add(new OpenGraphMetaDataProjection("title", args.RenderPageData.PageData.Title));
-            args.RenderPageData.Metadata.Add(new OpenGraphMetaDataProjection("url", args.RenderPageData.PageData.PageUrl));
+            args.RenderPageData.Metadata.Add(new OpenGraphMetaDataProjection("url", httpContextAccessor.MapPublicPath(args.RenderPageData.PageData.PageUrl)));
             if (args.RenderPageData.GetPageModel().MainImage != null)
             {
                 args.RenderPageData.Metadata.Add(
-                    new OpenGraphMetaDataProjection("image", httpContextAccessor.MapPublicPath(args.RenderPageData.GetPageModel().MainImage.PublicUrl)));
+                    new OpenGraphMetaDataProjection("image", args.RenderPageData.GetPageModel().MainImage.PublicUrl));
             }
             else
             {
                 if (args.RenderPageData.GetPageModel().FeaturedImage != null)
                 {
                     args.RenderPageData.Metadata.Add(
-                        new OpenGraphMetaDataProjection("image", httpContextAccessor.MapPublicPath(args.RenderPageData.GetPageModel().FeaturedImage.PublicUrl)));
+                        new OpenGraphMetaDataProjection("image", args.RenderPageData.GetPageModel().FeaturedImage.PublicUrl));
                 }
                 else
                 {
                     if (args.RenderPageData.GetPageModel().SecondaryImage != null)
                     {
                         args.RenderPageData.Metadata.Add(
-                            new OpenGraphMetaDataProjection("image", httpContextAccessor.MapPublicPath(args.RenderPageData.GetPageModel().SecondaryImage.PublicUrl)));
+                            new OpenGraphMetaDataProjection("image", args.RenderPageData.GetPageModel().SecondaryImage.PublicUrl));
                     }
 
                 }
