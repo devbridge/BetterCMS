@@ -28,13 +28,25 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
     tree.globalization = globalization;
 
     function setContentModelValues(contentViewModel, json) {
-        contentViewModel.contentId = json.Data.ContentId;
-        contentViewModel.pageContentId = json.Data.PageContentId;
-        contentViewModel.draft = json.Data.DesirableStatus == contentStatuses.draft;
-        contentViewModel.title = json.Data.Title;
-        contentViewModel.contentVersion = json.Data.ContentVersion;
-        contentViewModel.pageContentVersion = json.Data.PageContentVersion;
+        if (json.Data.ContentId || json.Data.Id) {
+            contentViewModel.contentId = json.Data.ContentId || json.Data.Id;
+        }
+        if (json.Data.DesirableStatus || json.Data.HasDraft) {
+            contentViewModel.draft = json.Data.DesirableStatus == contentStatuses.draft || json.Data.HasDraft;
+        }
+        if (json.Data.Title || json.Data.WidgetName) {
+            contentViewModel.title = json.Data.Title || json.Data.WidgetName;
+        }
+        if (json.Data.ContentVersion || json.Data.Version) {
+            contentViewModel.contentVersion = json.Data.ContentVersion || json.Data.Version;
+        }
         contentViewModel.contentType = json.Data.ContentType;
+        if (json.Data.PageContentId) {
+            contentViewModel.pageContentId = json.Data.PageContentId;
+        }
+        if (json.Data.PageContentVersion) {
+            contentViewModel.pageContentVersion = json.Data.PageContentVersion;
+        }
     }
 
     function createRegionViewModel(regionModel) {
@@ -101,7 +113,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                 treeViewModel.reloadPage = true;
 
                 setContentModelValues(model.model, json);
-                model.title(json.Data.Title);
+                model.title(model.model.title);
             });
         };
 

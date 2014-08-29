@@ -107,11 +107,19 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 htmlWidget: 'html-widget',
                 serverWidget: 'server-widget'
             },
+            widgetTypes = {
+                htmlWidget: 'HtmlContent',
+                serverWidget: 'ServerControl'
+            },
             widgetUsageTypes = {
                 page: 1,
                 masterPage: 2,
                 htmlWidget: 3
-            };
+            },
+            widgetTypeMappings = {};
+
+        widgetTypeMappings[widgetTypes.htmlWidget] = contentTypes.htmlWidget;
+        widgetTypeMappings[widgetTypes.serverWidget] = contentTypes.serverWidget;
 
         /**
         * Assign objects to module.
@@ -415,10 +423,10 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         * Open a widget edit dialog by the specified widget type.
         */
         widgets.editWidget = function (widgetId, widgetType, onSaveCallback, previewAvailableOnPageContentId) {
-            if (widgetType === 'ServerControl') {
+            if (widgetType === widgetTypes.serverWidget) {
                 widgets.openEditServerControlWidgetDialog(widgetId, onSaveCallback, previewAvailableOnPageContentId);
             }
-            else if (widgetType === 'HtmlContent') {
+            else if (widgetType === widgetTypes.htmlWidget) {
                 widgets.openEditHtmlContentWidgetDialog(widgetId, onSaveCallback, previewAvailableOnPageContentId);
             } else {
                 throw new Error($.format('A widget type "{0}" is unknown and edit action is imposible.', widgetType));
@@ -818,6 +826,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         function onContentModelCreated(contentViewModel) {
             var contentId = contentViewModel.contentId,
                 pageContentId = contentViewModel.pageContentId,
+                onAfterSuccessCallback,
                 onSave = function (json) {
                     var result = json != null ? json.Data : null;
                     if (result && result.DesirableStatus === bcms.contentStatus.preview) {
@@ -827,14 +836,22 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             return false;
                         }
                     } else {
-                        redirect.ReloadWithAlert();
+                        if ($.isFunction(onAfterSuccessCallback)) {
+                            if (json) {
+                                json.Data.ContentType = widgetTypeMappings[json.Data.WidgetType];
+                            }
+                            onAfterSuccessCallback(json);
+                        } else {
+                            redirect.ReloadWithAlert();
+                        }
                     }
                     return true;
                 };
 
             if (contentViewModel.contentType == contentTypes.serverWidget) {
                 // Edit
-                contentViewModel.onEditContent = function () {
+                contentViewModel.onEditContent = function (onSuccess) {
+                    onAfterSuccessCallback = onSuccess;
                     widgets.openEditServerControlWidgetDialog(contentId, onSave, pageContentId);
                 };
 
@@ -855,7 +872,8 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 }
             } else if (contentViewModel.contentType == contentTypes.htmlWidget) {
                 // Edit
-                contentViewModel.onEditContent = function () {
+                contentViewModel.onEditContent = function (onSuccess) {
+                    onAfterSuccessCallback = onSuccess;
                     widgets.openEditHtmlContentWidgetDialog(contentId, onSave, pageContentId);
                 };
 
