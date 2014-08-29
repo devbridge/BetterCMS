@@ -1,4 +1,6 @@
-﻿using Autofac;
+﻿using System;
+
+using Autofac;
 
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules;
@@ -13,6 +15,22 @@ namespace BetterCms.Module.OpenGraphIntegration
     public class OpenGraphIntegrationModuleDescriptor : ModuleDescriptor
     {
         internal const string ModuleName = "opengraph_integration";
+
+        internal const string ModuleId = "0528b726-7fe9-489c-84c3-6af89479a5ad";
+
+        /// <summary>
+        /// Gets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public override Guid Id
+        {
+            get
+            {
+                return new Guid(ModuleId);
+            }
+        }
 
         /// <summary>
         /// Gets the name.

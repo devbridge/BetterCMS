@@ -1,4 +1,6 @@
-﻿using BetterCms.Core.Modules;
+﻿using System;
+
+using BetterCms.Core.Modules;
 
 namespace BetterCms.Module.ImagesGallery
 {
@@ -28,6 +30,22 @@ namespace BetterCms.Module.ImagesGallery
         public ImagesGalleryModuleDescriptor(ICmsConfiguration cmsConfiguration)
             : base(cmsConfiguration)
         {
+        }
+
+        internal const string ModuleId = "abbdb3e7-818c-457c-a787-98822ffafc61";
+
+        /// <summary>
+        /// Gets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public override Guid Id
+        {
+            get
+            {
+                return new Guid(ModuleId);
+            }
         }
 
         /// <summary>

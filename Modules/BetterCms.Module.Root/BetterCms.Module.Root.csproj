@@ -393,7 +393,7 @@
     </Compile>
     <Compile Include="Mvc\Helpers\TooltipHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RootModuleRegistration.cs" />
+    <Compile Include="RootModuleDescriptor.cs" />
     <Compile Include="ViewModels\Tags\TagItemViewModel.cs" />
     <Compile Include="ViewModels\Tags\TagsTemplateViewModel.cs" />
     <Compile Include="Views\Authentication\Info.generated.cs">

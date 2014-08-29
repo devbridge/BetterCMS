@@ -1,4 +1,6 @@
-﻿using Autofac;
+﻿using System;
+
+using Autofac;
 
 using BetterCms.Configuration;
 using BetterCms.Core.Modules;
@@ -11,6 +13,22 @@ namespace BetterCms.Module.WindowsAzureStorage
     /// </summary>
     public class WindowsAzureStorageModuleDescriptor : ModuleDescriptor
     {
+        internal const string ModuleId = "92296b77-4102-4a85-92d9-35d8be2044a2";
+
+        /// <summary>
+        /// Gets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public override Guid Id
+        {
+            get
+            {
+                return new Guid(ModuleId);
+            }
+        }
+
         /// <summary>
         /// Gets the name.
         /// </summary>

@@ -34,6 +34,22 @@ namespace BetterCms.Module.LuceneSearch
 
         private static readonly ILog Log = LogManager.GetLogger(LuceneSearchConstants.LuceneSearchModuleLoggerNamespace);
 
+        internal const string ModuleId = "4382d4f2-b5a3-4c1f-bcdb-823289ccf82f";
+
+        /// <summary>
+        /// Gets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public override Guid Id
+        {
+            get
+            {
+                return new Guid(ModuleId);
+            }
+        }
+
         /// <summary>
         /// Gets the name.
         /// </summary>

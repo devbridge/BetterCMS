@@ -86,3 +86,5 @@ logs
 /Tests/BetterCms.Api.Tests/App_Data/Temp/*.ldf
 /Tests/BetterCms.Api.Tests/Lucene.BetterCms.Api.Tests/
 
+/Modules/BetterCms.Module.OpenGraphIntegration/Web.Debug.config
+/Modules/BetterCms.Module.OpenGraphIntegration/Web.Release.config

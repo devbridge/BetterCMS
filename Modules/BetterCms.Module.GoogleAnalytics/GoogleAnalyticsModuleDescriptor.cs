@@ -1,4 +1,6 @@
-﻿using Autofac;
+﻿using System;
+
+using Autofac;
 
 using BetterCms.Core.Modules;
 using BetterCms.Events;
@@ -11,6 +13,22 @@ namespace BetterCms.Module.GoogleAnalytics
         internal const string ModuleName = "google_analytics";
 
         private readonly ICmsConfiguration _cmsConfiguration;
+
+        internal const string ModuleId = "de5280e4-99e6-4c95-ac06-1c31312b82ec";
+
+        /// <summary>
+        /// Gets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public override Guid Id
+        {
+            get
+            {
+                return new Guid(ModuleId);
+            }
+        }
 
         /// <summary>
         /// Gets the name.
@@ -47,6 +65,8 @@ namespace BetterCms.Module.GoogleAnalytics
         public GoogleAnalyticsModuleDescriptor(ICmsConfiguration configuration)
             : base(configuration)
         {
+
+
             _cmsConfiguration = configuration;
             RootEvents.Instance.PageRendering += Events_PageRendering;
         }
