@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Linq;
 
+using Autofac;
+
+using BetterCms.Core.Dependencies;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Web;
 using BetterCms.Module.GoogleAnalytics.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Mvc;
@@ -54,13 +58,19 @@ namespace BetterCms.Module.GoogleAnalytics.Command.Sitemap
             var urlset = new GoogleSitemapUrlSet();
             var languages = languageService.GetLanguages().ToList();
 
+            IHttpContextAccessor httpContextAccessor;
+            using (var container = ContextScopeProvider.CreateChildContainer())
+            {
+                httpContextAccessor = container.Resolve<IHttpContextAccessor>();
+            }
+
             foreach (var node in sitemap.Nodes.Distinct())
             {
                 if (node.Page != null)
                 {
                     var url = new GoogleSitemapUrl(GoogleAnalyticsModuleHelper.GetDateTimeFormat(cmsConfiguration))
                     {
-                        Location = node.Page.PageUrl,
+                        Location = httpContextAccessor.MapPublicPath(node.Page.PageUrl),
                         LastModifiedDateTime = node.ModifiedOn,
                         ChangeFrequency = GoogleAnalyticsModuleHelper.GetChangeFrequency(cmsConfiguration),
                         Priority = GoogleAnalyticsModuleHelper.GetPriority(cmsConfiguration)
@@ -77,7 +87,7 @@ namespace BetterCms.Module.GoogleAnalytics.Command.Sitemap
                                 {
                                     LinkType = GoogleAnalyticsModuleHelper.GetLinkType(cmsConfiguration),
                                     LanguageCode = languages.First(l => l.Id == pageTranslation.LanguageId).Code,
-                                    Url = pageTranslation.PageUrl
+                                    Url = httpContextAccessor.MapPublicPath(pageTranslation.PageUrl)
                                 });
                             }
                         }
