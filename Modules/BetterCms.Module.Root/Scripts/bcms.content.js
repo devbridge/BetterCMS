@@ -450,12 +450,6 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             }
 
             self.onAddContent = function (onSuccess) {
-                if (!onSuccess) {
-                    onSuccess = function() {
-                        redirect.ReloadWithAlert();
-                    };
-                }
-
                 bcms.trigger(bcms.events.addPageContent, {
                     regionViewModel: self,
                     onSuccess: onSuccess
@@ -482,7 +476,9 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             self.overlay = rectangle;
             self.sortBlock = this.overlay.find(selectors.regionSortBlock);
 
-            $(selectors.regionAddContentButtons, self.overlay).on('click', self.onAddContent);
+            $(selectors.regionAddContentButtons, self.overlay).on('click', function() {
+                self.onAddContent();
+            });
 
             $(selectors.regionSortButtons, self.overlay).on('click', function () {
                 content.turnSortModeOn(self);

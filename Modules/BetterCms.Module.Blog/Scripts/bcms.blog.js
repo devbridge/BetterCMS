@@ -750,14 +750,16 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
     * Called when content view model is created
     */
     function onContentModelCreated(contentViewModel) {
-        var onSave = function () {
-                redirect.ReloadWithAlert();
-            };
-        
         if (contentViewModel.contentType == contentTypes.blogContent) {
             // Edit
-            contentViewModel.onEditContent = function() {
-                editBlogPost(bcms.pageId, onSave, true);
+            contentViewModel.onEditContent = function(onSuccess) {
+                editBlogPost(bcms.pageId, function (json) {
+                    if ($.isFunction(onSuccess)) {
+                        onSuccess(json);
+                    } else {
+                        redirect.ReloadWithAlert();
+                    }
+                }, true);
             };
 
             contentViewModel.visibleButtons.configure = false;

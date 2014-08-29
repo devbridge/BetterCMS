@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using Autofac;
+
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Command.Content.InsertContent;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.Services;
 
 using Moq;
@@ -56,7 +59,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                               });
 
             // Create command
-            var command = new InsertContentToPageCommand(contentService.Object);
+            var command = new InsertContentToPageCommand(contentService.Object, Container.Resolve<PageContentProjectionFactory>());
             command.UnitOfWork = new Mock<IUnitOfWork>().Object;
             command.Repository = repository.Object;
 
@@ -65,7 +68,6 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
             var result = command.Execute(request);
 
             Assert.IsNotNull(result);
-            Assert.IsTrue(result);
         }
     }
 }
