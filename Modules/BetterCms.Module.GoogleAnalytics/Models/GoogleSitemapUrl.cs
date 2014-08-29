@@ -6,7 +6,7 @@ namespace BetterCms.Module.GoogleAnalytics.Models
 {
     public class GoogleSitemapUrl
     {
-        private readonly string _dateTimeFormat;
+        private readonly string dateTimeFormat;
 
         public GoogleSitemapUrl()
         {
@@ -16,7 +16,7 @@ namespace BetterCms.Module.GoogleAnalytics.Models
         public GoogleSitemapUrl(string dateTimeformat)
         {
             Links = new List<GoogleSitemapLink>();
-            _dateTimeFormat = dateTimeformat;
+            dateTimeFormat = dateTimeformat;
         }
 
         [XmlElement(ElementName = "loc")]
@@ -31,7 +31,7 @@ namespace BetterCms.Module.GoogleAnalytics.Models
         [XmlElement(ElementName = "lastmod")]
         public string LastModifiedString
         {
-            get { return LastModifiedDateTime.ToString(_dateTimeFormat); }
+            get { return LastModifiedDateTime.ToString(dateTimeFormat); }
             set { LastModifiedDateTime = DateTime.Parse(value); }
         }
 

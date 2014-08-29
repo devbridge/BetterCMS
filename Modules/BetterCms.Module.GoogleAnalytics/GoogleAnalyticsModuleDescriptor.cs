@@ -12,9 +12,9 @@ namespace BetterCms.Module.GoogleAnalytics
     {
         internal const string ModuleName = "google_analytics";
 
-        private readonly ICmsConfiguration _cmsConfiguration;
-
         internal const string ModuleId = "de5280e4-99e6-4c95-ac06-1c31312b82ec";
+
+        private readonly ICmsConfiguration cmsConfiguration;
 
         /// <summary>
         /// Gets the identifier.
@@ -65,9 +65,7 @@ namespace BetterCms.Module.GoogleAnalytics
         public GoogleAnalyticsModuleDescriptor(ICmsConfiguration configuration)
             : base(configuration)
         {
-
-
-            _cmsConfiguration = configuration;
+            cmsConfiguration = configuration;
             RootEvents.Instance.PageRendering += Events_PageRendering;
         }
 
@@ -80,7 +78,7 @@ namespace BetterCms.Module.GoogleAnalytics
         {
             context.MapRoute(
                 "bcms-google-sitemap",
-                GoogleAnalyticsModuleHelper.GetSitemapUrl(_cmsConfiguration),
+                GoogleAnalyticsModuleHelper.GetSitemapUrl(cmsConfiguration),
                 new { area = AreaName, controller = "GoogleSitemap", action = "Index" });
         }
 
@@ -90,7 +88,7 @@ namespace BetterCms.Module.GoogleAnalytics
         /// <param name="args">The args.</param>
         private void Events_PageRendering(PageRenderingEventArgs args)
         {
-            args.RenderPageData.JavaScripts.Add(new GoogleAnalyticsScriptAccessor(_cmsConfiguration));
+            args.RenderPageData.JavaScripts.Add(new GoogleAnalyticsScriptAccessor(cmsConfiguration));
         }
 
     }

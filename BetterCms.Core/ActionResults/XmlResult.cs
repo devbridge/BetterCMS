@@ -5,7 +5,7 @@ namespace BetterCms.Core.ActionResults
 {
     public class XmlResult : ActionResult
     {
-        private readonly object _objectToSerialize;
+        private readonly object objectToSerialize;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="XmlResult"/> class.
@@ -13,7 +13,7 @@ namespace BetterCms.Core.ActionResults
         /// <param name="objectToSerialize">The object to serialize to XML.</param>
         public XmlResult(object objectToSerialize)
         {
-            _objectToSerialize = objectToSerialize;
+            this.objectToSerialize = objectToSerialize;
         }
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace BetterCms.Core.ActionResults
         /// </summary>
         public object ObjectToSerialize
         {
-            get { return _objectToSerialize; }
+            get { return objectToSerialize; }
         }
 
         /// <summary>
@@ -30,19 +30,19 @@ namespace BetterCms.Core.ActionResults
         /// <param name="context">The controller context for the current request.</param>
         public override void ExecuteResult(ControllerContext context)
         {
-            if (_objectToSerialize != null)
+            if (objectToSerialize != null)
             {
                 context.HttpContext.Response.Clear();
-                var xs = new XmlSerializer(_objectToSerialize.GetType());
+                var xs = new XmlSerializer(objectToSerialize.GetType());
                 context.HttpContext.Response.ContentType = "text/xml";
                 
-                if (_objectToSerialize is IHaveCustomXmlSettings)
+                if (objectToSerialize is IHaveCustomXmlSettings)
                 {
-                    xs.Serialize(context.HttpContext.Response.Output, _objectToSerialize, ((IHaveCustomXmlSettings)_objectToSerialize).Namespaces);
+                    xs.Serialize(context.HttpContext.Response.Output, objectToSerialize, ((IHaveCustomXmlSettings)objectToSerialize).Namespaces);
                 }
                 else
                 {
-                    xs.Serialize(context.HttpContext.Response.Output, _objectToSerialize);
+                    xs.Serialize(context.HttpContext.Response.Output, objectToSerialize);
                 }
             }
         }

@@ -13,20 +13,20 @@ namespace BetterCms.Module.GoogleAnalytics.Command.Sitemap
 {
     public class GetSitemapCommand : CommandBase, ICommand<GetSitemapModel, GoogleSitemapUrlSet>
     {
-        private readonly ICmsConfiguration _cmsConfiguration;
+        private readonly ICmsConfiguration cmsConfiguration;
 
-        private readonly ISitemapService _sitemapService;
+        private readonly ISitemapService sitemapService;
 
-        private readonly ILanguageService _languageService;
+        private readonly ILanguageService languageService;
 
-        private readonly IPageService _pageService;
+        private readonly IPageService pageService;
         
         public GetSitemapCommand(ICmsConfiguration cmsConfiguration, ISitemapService sitemapService, ILanguageService languageService, IPageService pageService)
         {
-            _cmsConfiguration = cmsConfiguration;
-            _sitemapService = sitemapService;
-            _languageService = languageService;
-            _pageService = pageService;
+            this.cmsConfiguration = cmsConfiguration;
+            this.sitemapService = sitemapService;
+            this.languageService = languageService;
+            this.pageService = pageService;
         }
 
         /// <summary>
@@ -40,42 +40,42 @@ namespace BetterCms.Module.GoogleAnalytics.Command.Sitemap
 
             if (sitemapModel.SitemapId.HasDefaultValue())
             {
-                sitemap = _sitemapService.GetByTitle(GoogleAnalyticsModuleHelper.GetSitemapTitle(_cmsConfiguration)) ?? _sitemapService.GetFirst();
+                sitemap = sitemapService.GetByTitle(GoogleAnalyticsModuleHelper.GetSitemapTitle(cmsConfiguration)) ?? sitemapService.GetFirst();
                 if (sitemap == null)
                     throw new CmsException("There aren't any sitemaps created.");
             }
             else
             {
-                sitemap = _sitemapService.Get(sitemapModel.SitemapId);
+                sitemap = sitemapService.Get(sitemapModel.SitemapId);
                 if (sitemap == null)
                     throw new EntityNotFoundException(typeof(Pages.Models.Sitemap), sitemapModel.SitemapId);
             }
 
             var urlset = new GoogleSitemapUrlSet();
-            var languages = _languageService.GetLanguages().ToList();
+            var languages = languageService.GetLanguages().ToList();
 
             foreach (var node in sitemap.Nodes.Distinct())
             {
                 if (node.Page != null)
                 {
-                    var url = new GoogleSitemapUrl(GoogleAnalyticsModuleHelper.GetDateTimeFormat(_cmsConfiguration))
+                    var url = new GoogleSitemapUrl(GoogleAnalyticsModuleHelper.GetDateTimeFormat(cmsConfiguration))
                     {
                         Location = node.Page.PageUrl,
                         LastModifiedDateTime = node.ModifiedOn,
-                        ChangeFrequency = GoogleAnalyticsModuleHelper.GetChangeFrequency(_cmsConfiguration),
-                        Priority = GoogleAnalyticsModuleHelper.GetPriority(_cmsConfiguration)
+                        ChangeFrequency = GoogleAnalyticsModuleHelper.GetChangeFrequency(cmsConfiguration),
+                        Priority = GoogleAnalyticsModuleHelper.GetPriority(cmsConfiguration)
                     };
 
                     if (node.Page.LanguageGroupIdentifier != null)
                     {
-                        var pageTranslations = _pageService.GetPageTranslations((Guid)node.Page.LanguageGroupIdentifier);
+                        var pageTranslations = pageService.GetPageTranslations((Guid)node.Page.LanguageGroupIdentifier);
                         foreach (var pageTranslation in pageTranslations)
                         {
                             if (pageTranslation.LanguageId != null && pageTranslation.PageUrl != node.Page.PageUrl)
                             {
                                 url.Links.Add(new GoogleSitemapLink
                                 {
-                                    LinkType = GoogleAnalyticsModuleHelper.GetLinkType(_cmsConfiguration),
+                                    LinkType = GoogleAnalyticsModuleHelper.GetLinkType(cmsConfiguration),
                                     LanguageCode = languages.First(l => l.Id == pageTranslation.LanguageId).Code,
                                     Url = pageTranslation.PageUrl
                                 });

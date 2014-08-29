@@ -6,16 +6,16 @@ namespace BetterCms.Module.GoogleAnalytics.Accessors
 {
     public class GoogleAnalyticsScriptAccessor : IJavaScriptAccessor
     {
-        private ICmsConfiguration _cmsConfiguration;
+        private ICmsConfiguration cmsConfiguration;
 
         public GoogleAnalyticsScriptAccessor(ICmsConfiguration cmsConfiguration)
         {
-            _cmsConfiguration = cmsConfiguration;
+            this.cmsConfiguration = cmsConfiguration;
         }
 
         public string GetCustomJavaScript(HtmlHelper html)
         {
-            return string.Format(GoogleAnalyticsModuleConstants.GoogleAnalyticsScript, GoogleAnalyticsModuleHelper.GetAnalyticsKey(_cmsConfiguration));
+            return string.Format(GoogleAnalyticsModuleConstants.GoogleAnalyticsScript, GoogleAnalyticsModuleHelper.GetAnalyticsKey(cmsConfiguration));
         }
 
         public string[] GetJavaScriptResources(HtmlHelper html)

@@ -10,7 +10,5 @@ namespace BetterCms.Module.Users
         public const int UserNameMaxLength = MaxLength.Name + MaxLength.Name + 1;        
 
         public const string PasswordRegularExpression = @"^\S.{2,255}\S$";
-
-        //public static Guid ModuleId = new Guid("");
     }
 }

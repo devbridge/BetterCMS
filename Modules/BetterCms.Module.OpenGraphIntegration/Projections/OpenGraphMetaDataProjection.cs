@@ -7,8 +7,8 @@ namespace BetterCms.Module.OpenGraphIntegration.Projections
 {
     public class OpenGraphMetaDataProjection : HtmlElementProjection
     {
-        private readonly string _property;
-        private readonly string _content;
+        private readonly string property;
+        private readonly string content;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenGraphMetaDataProjection" /> class.
@@ -18,8 +18,8 @@ namespace BetterCms.Module.OpenGraphIntegration.Projections
         public OpenGraphMetaDataProjection(string property, string content)
             : base("meta", true)
         {
-            _property = string.Format("{0}{1}", OpenGrachIntegrationModuleConstants.OpenGraphPropertyPrefix, property);
-            _content = content;
+            this.property = string.Format("{0}{1}", OpenGrachIntegrationModuleConstants.OpenGraphPropertyPrefix, property);
+            this.content = content;
         }
 
         /// <summary>
@@ -30,8 +30,8 @@ namespace BetterCms.Module.OpenGraphIntegration.Projections
         /// <param name="html">The html helper.</param>
         protected override void OnPreRender(HtmlControlRenderer controlRenderer, IPage page, HtmlHelper html)
         {
-            controlRenderer.Attributes["property"] = _property;
-            controlRenderer.Attributes["content"] = _content;
+            controlRenderer.Attributes["property"] = property;
+            controlRenderer.Attributes["content"] = content;
         }
     }
 }
