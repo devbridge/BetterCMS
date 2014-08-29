@@ -1,4 +1,6 @@
-﻿using Autofac;
+﻿using System;
+
+using Autofac;
 
 using BetterCMS.Module.GoogleSiteSearch.Services.Search;
 
@@ -10,7 +12,23 @@ namespace BetterCMS.Module.GoogleSiteSearch
 {
     public class GoogleSiteSearchModuleDescriptor : ModuleDescriptor
     {
-        internal const string ModuleName = "googlesitesearch";        
+        internal const string ModuleName = "googlesitesearch";
+
+        internal const string ModuleId = "a15f4a2a-6adf-447e-984c-c782212f3f2e";
+
+        /// <summary>
+        /// Gets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public override Guid Id
+        {
+            get
+            {
+                return new Guid(ModuleId);
+            }
+        }
 
         /// <summary>
         /// Gets the name.

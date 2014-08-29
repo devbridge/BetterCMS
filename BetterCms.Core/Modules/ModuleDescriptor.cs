@@ -62,6 +62,25 @@ namespace BetterCms.Core.Modules
         public abstract string Name { get; }
 
         /// <summary>
+        /// Gets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public abstract Guid Id { get; }
+
+        /// <summary>
+        /// Flag describe is module root or additional
+        /// </summary>
+        public virtual bool IsRootModule
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Gets the CMS configuration.
         /// </summary>
         /// <value>

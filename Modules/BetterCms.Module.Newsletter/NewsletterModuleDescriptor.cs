@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 using Autofac;
@@ -44,6 +45,22 @@ namespace BetterCms.Module.Newsletter
             : base(cmsConfiguration)
         {
             newsletterJsModuleIncludeDescriptor = new NewsletterJsModuleIncludeDescriptor(this);
+        }
+
+        internal const string ModuleId = "c99ff575-daa8-4b6c-8b02-a8a4aac31bad";
+
+        /// <summary>
+        /// Gets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public override Guid Id
+        {
+            get
+            {
+                return new Guid(ModuleId);
+            }
         }
 
         /// <summary>

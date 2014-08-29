@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Web;
 
@@ -77,7 +78,23 @@ namespace BetterCms.Module.Users
 
             CoreEvents.Instance.HostStart += OnHostStart;
             CoreEvents.Instance.HostAuthenticateRequest += HostAuthenticateRequest;            
-        }            
+        }
+
+        internal const string ModuleId = "6c5ca410-e8c4-483f-a9ec-354051e1cb38";
+
+        /// <summary>
+        /// Gets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public override Guid Id
+        {
+            get
+            {
+                return new Guid(ModuleId);
+            }
+        }
 
         /// <summary>
         /// Gets the name of module.

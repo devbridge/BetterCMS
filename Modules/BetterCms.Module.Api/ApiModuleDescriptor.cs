@@ -1,4 +1,6 @@
-﻿using Autofac;
+﻿using System;
+
+using Autofac;
 
 using BetterCms.Core.Modules;
 
@@ -86,6 +88,22 @@ namespace BetterCms.Module.Api
         public ApiModuleDescriptor(ICmsConfiguration cmsConfiguration)
             : base(cmsConfiguration)
         {
+        }
+
+        internal const string ModuleId = "4abf7d03-bd9d-43db-9c2e-a964342c0af1";
+
+        /// <summary>
+        /// Gets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public override Guid Id
+        {
+            get
+            {
+                return new Guid(ModuleId);
+            }
         }
 
         /// <summary>

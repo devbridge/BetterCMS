@@ -1,4 +1,6 @@
-﻿using Autofac;
+﻿using System;
+
+using Autofac;
 
 using BetterCms.Configuration;
 using BetterCms.Core.Modules;
@@ -11,6 +13,22 @@ namespace BetterCms.Module.AppFabricCache
     /// </summary>
     public class AppFabricCacheModuleDescriptor : ModuleDescriptor
     {
+        internal const string ModuleId = "c7980cec-fd62-4e1a-84a4-1ecfe99283e0";
+
+        /// <summary>
+        /// Gets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public override Guid Id
+        {
+            get
+            {
+                return new Guid(ModuleId);
+            }
+        }
+
         /// <summary>
         /// Gets the name.
         /// </summary>
