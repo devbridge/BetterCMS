@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2725CEED-4CBD-4924-BD36-38E93209562B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{F01C795A-76DA-4AE3-8CFC-C2450D2AC921}"
@@ -66,6 +68,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.NugetPackage", "Build\BetterCms.NugetPackage\BetterCms.NugetPackage.csproj", "{A5D7CC00-D8A7-4177-8432-86B10EEABAE8}"
 	ProjectSection(ProjectDependencies) = postProject
 		{5235602A-EE7C-45A3-8B41-0C8770303650} = {5235602A-EE7C-45A3-8B41-0C8770303650}
+		{EEA18F38-F27D-4E23-BE8F-9458C9248340} = {EEA18F38-F27D-4E23-BE8F-9458C9248340}
 		{A66A3046-EF60-4C51-ADA7-EB055763419B} = {A66A3046-EF60-4C51-ADA7-EB055763419B}
 		{EC53AC56-C1A7-4752-8152-B4559827DD91} = {EC53AC56-C1A7-4752-8152-B4559827DD91}
 		{B935DD58-18EC-4340-B236-F1DAE4509CC8} = {B935DD58-18EC-4340-B236-F1DAE4509CC8}
@@ -74,6 +77,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.NugetPackage", "B
 		{42698E7B-A9B1-4C23-8BB0-FC363A3F8B94} = {42698E7B-A9B1-4C23-8BB0-FC363A3F8B94}
 		{F3E41793-E8ED-4BA8-A1AB-CBA1E47B0786} = {F3E41793-E8ED-4BA8-A1AB-CBA1E47B0786}
 		{17BF5CA2-23B6-4796-8EF1-CDDF6D41A4F7} = {17BF5CA2-23B6-4796-8EF1-CDDF6D41A4F7}
+		{8AF079AB-C376-41EA-BD26-2034A29B46E9} = {8AF079AB-C376-41EA-BD26-2034A29B46E9}
 		{FC04D4C2-8688-498F-B546-292C7E3688A9} = {FC04D4C2-8688-498F-B546-292C7E3688A9}
 		{694CA5CA-A0E2-4578-A249-648498B058D7} = {694CA5CA-A0E2-4578-A249-648498B058D7}
 		{66E7E4DF-EEEA-4B1E-8663-A1B430EB7375} = {66E7E4DF-EEEA-4B1E-8663-A1B430EB7375}
@@ -101,7 +105,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Module.ImagesGall
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Sandbox.Mvc4", "Sandbox\BetterCms.Sandbox.Mvc4\BetterCms.Sandbox.Mvc4.csproj", "{5ABF44DC-EE5E-4EDE-B1FF-E5FE65BA7CC1}"
 	ProjectSection(ProjectDependencies) = postProject
+		{EEA18F38-F27D-4E23-BE8F-9458C9248340} = {EEA18F38-F27D-4E23-BE8F-9458C9248340}
 		{B935DD58-18EC-4340-B236-F1DAE4509CC8} = {B935DD58-18EC-4340-B236-F1DAE4509CC8}
+		{8AF079AB-C376-41EA-BD26-2034A29B46E9} = {8AF079AB-C376-41EA-BD26-2034A29B46E9}
 		{5255ABED-2111-497F-A94C-6AA89862D814} = {5255ABED-2111-497F-A94C-6AA89862D814}
 	EndProjectSection
 EndProject
@@ -123,9 +129,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterCms.Module.OpenGraphIntegration", "Modules\BetterCms.Module.OpenGraphIntegration\BetterCms.Module.OpenGraphIntegration.csproj", "{EEA18F38-F27D-4E23-BE8F-9458C9248340}"
 EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = DevBridge.Cms31.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Dev|Any CPU = Dev|Any CPU
@@ -405,5 +408,8 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = DevBridge.Cms31.vsmdi
 	EndGlobalSection
 EndGlobal
