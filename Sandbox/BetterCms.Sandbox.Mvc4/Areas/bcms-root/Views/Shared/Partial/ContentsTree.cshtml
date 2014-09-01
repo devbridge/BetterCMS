@@ -1,0 +1,132 @@
+﻿@using BetterCms.Module.Root.Content.Resources
+
+<script type="text/html" id="bcms-contents-tree-template">
+    <div class="bcms-scroll-window" id="bcms-contents-tree">
+        <div class="bcms-padded-content">
+            <div data-bind="visible: visibleItems().length > 0, with: visibleItems()">
+                <h2 data-bind="visible: $parent.invisibleItems().length > 0">TODO: Visible regions</h2>
+                <div data-bind='template: { name: "bcms-contents-tree-list-template" }'></div>
+            </div>
+            <div data-bind="visible: invisibleItems().length > 0, with: invisibleItems()">
+                <h2>TODO: Invisible regions</h2>
+                <div data-bind='template: { name: "bcms-contents-tree-list-template" }'></div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<style type="text/css">
+    .bcms-contents-tree-region {
+        border: 1px dashed blue;
+        margin: 20px;
+        padding: 10px;
+    }
+        .bcms-contents-tree-region:hover {
+            background-color: #EFEFEF;
+        }
+
+        .bcms-contents-tree-region .bcms-contents-tree-region-icons {
+            display: none;
+            float: right;
+        }
+
+        .bcms-contents-tree-region:hover .bcms-contents-tree-region-icons {
+            display: block;
+        }
+
+    .bcms-contents-tree-content {
+        border: 1px solid black;
+        margin: 5px;
+        padding: 5px;
+    }
+
+        .bcms-contents-tree-content:hover {
+            background-color: #EFEFEF;
+        }
+
+        .bcms-contents-tree-content .bcms-contents-tree-content-icons {
+            display: none;
+            float: right;
+        }
+
+        .bcms-contents-tree-content:hover .bcms-contents-tree-content-icons {
+            display: block;
+        }
+
+    .bcms-contents-tree-region-header {
+        color: blue;
+    }
+
+    .bcms-contents-tree-droppable {
+        height: 10px;
+    }
+
+    .bcms-contents-tree-droppable-active {
+        color: black;
+        height: 30px;
+        border: 2px dashed black;
+    }
+</style>
+
+<script type="text/html" id="bcms-contents-tree-list-template">
+    <!-- ko if: $data.length > 0 -->
+    <!-- ko foreach: $data -->
+
+
+    <!-- ko if: type == types.content && $index() == 0 -->
+    <div class="bcms-contents-tree-droppable" data-bind="droppableContent: {type: 'top', region: parentRegion}, css: {'bcms-contents-tree-droppable-active': activeZone() == 'top'}">
+        &nbsp;
+    </div>
+    <!-- /ko -->
+
+    <div data-bind="
+        css: {
+            'bcms-contents-tree-region': type == types.region, 
+            'bcms-contents-tree-content': type == types.content
+        },
+        draggableContent: type == types.content,
+        style: { zIndex: !isBeingDragged() ? '0' : '9999' }">
+
+        <div data-bind="css: {'bcms-contents-tree-region-header': type == types.region}">
+            <span data-bind="text: title()"></span>
+            <div data-bind="css: {'bcms-contents-tree-region-icons': type==types.region, 'bcms-contents-tree-content-icons': type==types.content}, visible: !isBeingDragged()">
+                <!-- ko if: type == types.content -->
+                <!-- ko if: model.visibleButtons.configure -->
+                <a class="bcms-pointer" data-bind="click: configure">TODO: Configure</a>
+                <!-- /ko -->
+                <!-- ko if: model.visibleButtons.history -->
+                <a class="bcms-icn-history" data-bind="click: history"></a>
+                <!-- /ko -->
+                <!-- ko if: model.visibleButtons.edit -->
+                <a class="bcms-icn-edit" data-bind="click: editItem">@RootGlobalization.Button_Edit</a>
+                <!-- /ko -->
+                <!-- ko if: model.visibleButtons.delete -->
+                <a class="bcms-icn-delete" data-bind="click: deleteItem">@RootGlobalization.Button_Delete</a>
+                <!-- /ko -->
+                <!-- /ko -->
+                <!-- ko if: type == types.region -->
+                <div class="bcms-region-button bcms-region-addcontent" data-bind="click: addContent"></div>
+                <!-- /ko -->
+            </div>
+        </div>
+
+        <div data-bind="with: items()">
+            <div data-bind="template: { name: 'bcms-contents-tree-list-template' }"></div>
+        </div>
+        
+        <!-- ko if: type == types.region && items().length === 0 -->
+        <div class="bcms-contents-tree-droppable" data-bind="droppableContent: {type: 'emptyListZone', region: $data}, css: {'bcms-contents-tree-droppable-active': activeZone() == 'emptyListZone'}">
+            &nbsp;
+        </div>
+        <!-- /ko -->
+    </div>
+    
+    <!-- ko if: type == types.content -->
+    <div class="bcms-contents-tree-droppable" data-bind="droppableContent: {type: 'middle', region: parentRegion}, css: {'bcms-contents-tree-droppable-active': activeZone() == 'middle'}">
+        &nbsp;
+    </div>
+    <!-- /ko -->
+
+    <!-- /ko -->
+    <!-- /ko -->
+</script>

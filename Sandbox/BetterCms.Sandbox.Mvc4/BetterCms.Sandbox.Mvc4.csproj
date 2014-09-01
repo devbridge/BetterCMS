@@ -246,6 +246,8 @@
     <Content Include="404.aspx" />
     <Content Include="500.aspx" />
     <Content Include="favicon.ico" />
+    <EmbeddedResource Include="file\bcms-root\scripts\bcms.content.tree.js" />
+    <EmbeddedResource Include="file\bcms-root\scripts\bcms.content.js" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\knockout-2.2.1.debug.js" />
     <Content Include="Scripts\knockout-2.2.1.js" />
@@ -258,12 +260,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\bcms-images-gallery\" />
-    <Folder Include="Areas\bcms-root\Views\Shared\Partial\" />
     <Folder Include="Areas\bcms-search\" />
     <Folder Include="file\bcms-blog\scripts\" />
     <Folder Include="file\bcms-media\scripts\" />
     <Folder Include="file\bcms-pages\scripts\" />
-    <Folder Include="file\bcms-root\scripts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -399,6 +399,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Blog\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\bcms-root\Views\Shared\Partial\ContentsTree.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
