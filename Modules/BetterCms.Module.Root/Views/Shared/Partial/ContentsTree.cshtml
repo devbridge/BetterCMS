@@ -1,7 +1,7 @@
 ﻿@using BetterCms.Module.Root.Content.Resources
 
 <script type="text/html" id="bcms-contents-tree-template">
-    <div class="bcms-scroll-window">
+    <div class="bcms-scroll-window" id="bcms-contents-tree">
         <div class="bcms-padded-content">
             <div data-bind="visible: visibleItems().length > 0, with: visibleItems()">
                 <h2 data-bind="visible: $parent.invisibleItems().length > 0">TODO: Visible regions</h2>
@@ -56,17 +56,40 @@
     .bcms-contents-tree-region-header {
         color: blue;
     }
+
+    .bcms-contents-tree-droppable {
+        height: 10px;
+    }
+
+    .bcms-contents-tree-droppable-active {
+        color: black;
+        height: 30px;
+        border: 2px dashed black;
+    }
 </style>
 
 <script type="text/html" id="bcms-contents-tree-list-template">
     <!-- ko if: $data.length > 0 -->
     <!-- ko foreach: $data -->
 
-    <div data-bind="css: {'bcms-contents-tree-region': type == types.region, 'bcms-contents-tree-content': type == types.content}">
+
+    <!-- ko if: type == types.content && $index() == 0 -->
+    <div class="bcms-contents-tree-droppable" data-bind="droppableContent: {type: 'top', region: parentRegion}, css: {'bcms-contents-tree-droppable-active': activeZone() == 'top'}">
+        &nbsp;
+    </div>
+    <!-- /ko -->
+
+    <div data-bind="
+        css: {
+            'bcms-contents-tree-region': type == types.region, 
+            'bcms-contents-tree-content': type == types.content
+        },
+        draggableContent: type == types.content,
+        style: { zIndex: !isBeingDragged() ? '0' : '9999' }">
 
         <div data-bind="css: {'bcms-contents-tree-region-header': type == types.region}">
             <span data-bind="text: title()"></span>
-            <div data-bind="css: {'bcms-contents-tree-region-icons': type==types.region, 'bcms-contents-tree-content-icons': type==types.content}">
+            <div data-bind="css: {'bcms-contents-tree-region-icons': type==types.region, 'bcms-contents-tree-content-icons': type==types.content}, visible: !isBeingDragged()">
                 <!-- ko if: type == types.content -->
                 <!-- ko if: model.visibleButtons.configure -->
                 <a class="bcms-pointer" data-bind="click: configure">TODO: Configure</a>
@@ -86,11 +109,23 @@
                 <!-- /ko -->
             </div>
         </div>
-        
+
         <div data-bind="with: items()">
             <div data-bind="template: { name: 'bcms-contents-tree-list-template' }"></div>
         </div>
+        
+        <!-- ko if: type == types.region && items().length === 0 -->
+        <div class="bcms-contents-tree-droppable" data-bind="droppableContent: {type: 'emptyListZone', region: $data}, css: {'bcms-contents-tree-droppable-active': activeZone() == 'emptyListZone'}">
+            &nbsp;
+        </div>
+        <!-- /ko -->
     </div>
+    
+    <!-- ko if: type == types.content -->
+    <div class="bcms-contents-tree-droppable" data-bind="droppableContent: {type: 'middle', region: parentRegion}, css: {'bcms-contents-tree-droppable-active': activeZone() == 'middle'}">
+        &nbsp;
+    </div>
+    <!-- /ko -->
 
     <!-- /ko -->
     <!-- /ko -->

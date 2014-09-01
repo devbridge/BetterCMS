@@ -49,7 +49,7 @@ WriteLiteral(" type=\"text/html\"");
 WriteLiteral(" id=\"bcms-contents-tree-template\"");
 
 WriteLiteral(@">
-    <div class=""bcms-scroll-window"">
+    <div class=""bcms-scroll-window"" id=""bcms-contents-tree"">
         <div class=""bcms-padded-content"">
             <div data-bind=""visible: visibleItems().length > 0, with: visibleItems()"">
                 <h2 data-bind=""visible: $parent.invisibleItems().length > 0"">TODO: Visible regions</h2>
@@ -108,6 +108,16 @@ WriteLiteral(@">
     .bcms-contents-tree-region-header {
         color: blue;
     }
+
+    .bcms-contents-tree-droppable {
+        height: 10px;
+    }
+
+    .bcms-contents-tree-droppable-active {
+        color: black;
+        height: 30px;
+        border: 2px dashed black;
+    }
 </style>
 
 <script");
@@ -116,27 +126,28 @@ WriteLiteral(" type=\"text/html\"");
 
 WriteLiteral(" id=\"bcms-contents-tree-list-template\"");
 
-WriteLiteral(@">
-    <!-- ko if: $data.length > 0 -->
-    <!-- ko foreach: $data -->
-
-    <div data-bind=""css: {'bcms-contents-tree-region': type == types.region, 'bcms-contents-tree-content': type == types.content}"">
-
-        <div data-bind=""css: {'bcms-contents-tree-region-header': type == types.region}"">
-            <span data-bind=""text: title()""></span>
-            <div data-bind=""css: {'bcms-contents-tree-region-icons': type==types.region, 'bcms-contents-tree-content-icons': type==types.content}"">
-                <!-- ko if: type == types.content -->
-                <!-- ko if: model.visibleButtons.configure -->
-                <a class=""bcms-pointer"" data-bind=""click: configure"">TODO: Configure</a>
-                <!-- /ko -->
-                <!-- ko if: model.visibleButtons.history -->
-                <a class=""bcms-icn-history"" data-bind=""click: history""></a>
-                <!-- /ko -->
-                <!-- ko if: model.visibleButtons.edit -->
-                <a class=""bcms-icn-edit"" data-bind=""click: editItem"">");
+WriteLiteral(">\r\n    <!-- ko if: $data.length > 0 -->\r\n    <!-- ko foreach: $data -->\r\n\r\n\r\n    " +
+"<!-- ko if: type == types.content && $index() == 0 -->\r\n    <div class=\"bcms-con" +
+"tents-tree-droppable\" data-bind=\"droppableContent: {type: \'top\', region: parentR" +
+"egion}, css: {\'bcms-contents-tree-droppable-active\': activeZone() == \'top\'}\">\r\n " +
+"       &nbsp;\r\n    </div>\r\n    <!-- /ko -->\r\n\r\n    <div data-bind=\"\r\n        css" +
+": {\r\n            \'bcms-contents-tree-region\': type == types.region, \r\n          " +
+"  \'bcms-contents-tree-content\': type == types.content\r\n        },\r\n        dragg" +
+"ableContent: type == types.content,\r\n        style: { zIndex: !isBeingDragged() " +
+"? \'0\' : \'9999\' }\">\r\n\r\n        <div data-bind=\"css: {\'bcms-contents-tree-region-h" +
+"eader\': type == types.region}\">\r\n            <span data-bind=\"text: title()\"></s" +
+"pan>\r\n            <div data-bind=\"css: {\'bcms-contents-tree-region-icons\': type=" +
+"=types.region, \'bcms-contents-tree-content-icons\': type==types.content}, visible" +
+": !isBeingDragged()\">\r\n                <!-- ko if: type == types.content -->\r\n  " +
+"              <!-- ko if: model.visibleButtons.configure -->\r\n                <a" +
+" class=\"bcms-pointer\" data-bind=\"click: configure\">TODO: Configure</a>\r\n        " +
+"        <!-- /ko -->\r\n                <!-- ko if: model.visibleButtons.history -" +
+"->\r\n                <a class=\"bcms-icn-history\" data-bind=\"click: history\"></a>\r" +
+"\n                <!-- /ko -->\r\n                <!-- ko if: model.visibleButtons." +
+"edit -->\r\n                <a class=\"bcms-icn-edit\" data-bind=\"click: editItem\">");
 
             
-            #line 78 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
+            #line 101 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
                                                                 Write(RootGlobalization.Button_Edit);
 
             
@@ -147,7 +158,7 @@ WriteLiteral("</a>\r\n                <!-- /ko -->\r\n                <!-- ko if
 "eteItem\">");
 
             
-            #line 81 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
+            #line 104 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
                                                                     Write(RootGlobalization.Button_Delete);
 
             
@@ -161,11 +172,23 @@ WriteLiteral(@"</a>
                 <!-- /ko -->
             </div>
         </div>
-        
+
         <div data-bind=""with: items()"">
             <div data-bind=""template: { name: 'bcms-contents-tree-list-template' }""></div>
         </div>
+        
+        <!-- ko if: type == types.region && items().length === 0 -->
+        <div class=""bcms-contents-tree-droppable"" data-bind=""droppableContent: {type: 'emptyListZone', region: $data}, css: {'bcms-contents-tree-droppable-active': activeZone() == 'emptyListZone'}"">
+            &nbsp;
+        </div>
+        <!-- /ko -->
     </div>
+    
+    <!-- ko if: type == types.content -->
+    <div class=""bcms-contents-tree-droppable"" data-bind=""droppableContent: {type: 'middle', region: parentRegion}, css: {'bcms-contents-tree-droppable-active': activeZone() == 'middle'}"">
+        &nbsp;
+    </div>
+    <!-- /ko -->
 
     <!-- /ko -->
     <!-- /ko -->

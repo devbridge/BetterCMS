@@ -6,7 +6,8 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
 
     var tree = {},
         selectors = {
-            treeTemplate: '#bcms-contents-tree-template'
+            treeTemplate: '#bcms-contents-tree-template',
+            contentTreeContainer: '#bcms-contents-tree'
         },
         links = {},
         globalization = {
@@ -19,6 +20,12 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         },
         contentStatuses = {
             draft: 2
+        },
+        dropZoneTypes = {
+            none: 'none',
+            emptyListZone: 'emptyListZone',
+            topZone: 'top',
+            middle: 'middle'
         },
         treeViewModel = null;
 
@@ -130,7 +137,9 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         };
 
         model.configure = function() {
-            contentModel.onConfigureContent();
+            contentModel.onConfigureContent(function() {
+                treeViewModel.reloadPage = true;
+            });
         };
 
         return model;
@@ -186,6 +195,9 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         self.history = function () { };
         self.configure = function () { };
 
+        self.isBeingDragged = ko.observable(false);
+        self.activeZone = ko.observable(dropZoneTypes.none);
+
         return self;
     }
 
@@ -215,10 +227,136 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
     }
 
     /**
+    * Helper function to add knockout binding 'draggable'.
+    */
+    function addDraggableBinding() {
+        ko.bindingHandlers.draggableContent = {
+            init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+                if (!valueAccessor()) {
+                    return;
+                }
+
+                var dragObject = viewModel,
+                    setup = {
+                        revert: true,
+                        revertDuration: 0,
+                        refreshPositions: true,
+                        scroll: true,
+//                        TODO
+//                        containment: $(selectors.contentTreeContainer).get(0),
+//                        appendTo: $(selectors.contentTreeContainer).get(0),
+                        helper: function () {
+                            if (dragObject.isBeingDragged) {
+                                dragObject.isBeingDragged(true);
+                            }
+                            return $(this).clone().width($(this).width()).css({ zIndex: 9999 });
+                        },
+                        start: function () {
+                            $(this).hide();
+                        },
+                        stop: function (event, ui) {
+                            ui.helper.remove();
+                            $(this).show();
+                            if (dragObject.isBeingDragged) {
+                                dragObject.isBeingDragged(false);
+                            }
+                        }
+                    };
+
+                $(element).draggable(setup).data("dragObject", dragObject);
+            }
+        };
+    }
+
+    /**
+    * Helper function to add knockout binding 'droppable'.
+    */
+    function addDroppableBinding() {
+        ko.bindingHandlers.droppableContent = {
+            init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+                var accessor = valueAccessor();
+                if (!accessor || !accessor.region || !accessor.type) {
+                    return;
+                }
+
+                var dropRegionModel = accessor.region,
+                    dropZoneObject = viewModel,
+                    dropZoneType = accessor.type,
+                    setup = {
+                        tolerance: "pointer",
+                        over: function () {
+                            if (dropZoneObject.activeZone) {
+                                dropZoneObject.activeZone(dropZoneType);
+                            }
+                        },
+                        out: function () {
+                            if (dropZoneObject.activeZone) {
+                                dropZoneObject.activeZone(dropZoneTypes.none);
+                            }
+                        },
+                        drop: function (event, ui) {
+
+                            var dragObject = $(ui.draggable).data("dragObject");
+//                                forFix = $(ui.draggable).data('draggable'),
+//                                originalDragObject = dragObject;
+                            ui.helper.remove();
+
+                            dragObject.parentRegion.removeContent(dragObject);
+                            dragObject.parentRegion = dropRegionModel;
+                            dropRegionModel.items.push(dragObject);
+
+                            dragObject.isBeingDragged(false);
+//                            dragObject.displayOrder(0);
+//
+//                            // Add node to tree.
+//                            var index;
+//                            if (dropZoneType == DropZoneTypes.EmptyListZone) {
+//                                dropZoneObject.childNodes.splice(0, 0, dragObject);
+//                            }
+//                            else if (dropZoneType == DropZoneTypes.TopZone) {
+//                                index = $.inArray(dropZoneObject, dropZoneObject.parentNode().childNodes());
+//                                dropZoneObject.parentNode().childNodes.splice(index, 0, dragObject);
+//                            }
+//                            else if (dropZoneType == DropZoneTypes.MiddleZone) {
+//                                dropZoneObject.childNodes.splice(0, 0, dragObject);
+//                                dropZoneObject.isExpanded(true);
+//                            }
+//                            else if (dropZoneType == DropZoneTypes.BottomZone) {
+//                                index = $.inArray(dropZoneObject, dropZoneObject.parentNode().childNodes());
+//                                dropZoneObject.parentNode().childNodes.splice(index + 1, 0, dragObject);
+//                            }
+                            dropZoneObject.activeZone(dropZoneTypes.none);
+//
+//                            sitemap.activeMapModel.updateNodesOrderAndParent();
+//
+                            // Fix for jQuery drag object.
+//                            $(ui.draggable).data('draggable', forFix);
+//
+//                            if (originalDragObject.dropped && $.isFunction(originalDragObject.dropped)) {
+//                                originalDragObject.dropped(dragObject);
+//                            }
+//
+//                            updateValidation();
+//                            bcms.trigger(events.sitemapNodeAdded, dragObject);
+                        }
+                    };
+//                if (dropZoneObject.getSitemap && !dropZoneObject.getSitemap().settings.canDropNode) {
+//                    return;
+//                }
+                $(element).droppable(setup);
+            }
+        };
+    }
+
+    /**
     * Initializes contents tree module.
     */
     tree.init = function () {
         bcms.logger.debug('Initializing contents tree module');
+
+        // Bindings for sitemap nodes Drag'n'Drop.
+        addDraggableBinding();
+        addDroppableBinding();
     };
 
     /**

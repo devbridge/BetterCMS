@@ -856,9 +856,13 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 };
 
                 // Configure
-                contentViewModel.onConfigureContent = function () {
+                contentViewModel.onConfigureContent = function (onSuccess) {
                     widgets.configureWidget(pageContentId, function () {
-                        redirect.ReloadWithAlert();
+                        if ($.isFunction(onSuccess)) {
+                            onSuccess();
+                        } else {
+                            redirect.ReloadWithAlert();
+                        }
                     });
                 };
 
@@ -878,9 +882,13 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 };
 
                 // Configure
-                contentViewModel.onConfigureContent = function () {
+                contentViewModel.onConfigureContent = function (onSuccess) {
                     widgets.configureWidget(pageContentId, function () {
-                        redirect.ReloadWithAlert();
+                        if ($.isFunction(onSuccess)) {
+                            onSuccess();
+                        } else {
+                            redirect.ReloadWithAlert();
+                        }
                     });
                 };
 
