@@ -631,6 +631,14 @@ a.bcms-remove-image {
             display: none;
         }
 
+.bcms-as-user:visited {
+    color: #28add5;
+}
+
+.bcms-as-public:visited {
+    color: white;
+}
+
 .bcms-as-user:after, .bcms-as-public:after, .bcms-as-current:after, .bcms-as-current:before {
     content: "";
     position: absolute;
