@@ -504,11 +504,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContentOverlay.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Shared\Partial\ContentsTree.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ContentsTree.cshtml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Shared\Partial\ImagePreview.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
