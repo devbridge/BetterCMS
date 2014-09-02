@@ -24,7 +24,10 @@ namespace BetterCms.Module.Root.Registration
             Globalization = new IActionProjection[]
                 {              
                     new JavaScriptModuleGlobalization(this, "contentsTreeTitle", () => RootGlobalization.ContentsTree_Dialog_Title),
-                    new JavaScriptModuleGlobalization(this, "closeTreeButtonTitle", () => RootGlobalization.Button_Close)
+                    new JavaScriptModuleGlobalization(this, "closeTreeButtonTitle", () => RootGlobalization.Button_Close),
+                    new JavaScriptModuleGlobalization(this, "saveSortChanges", () => RootGlobalization.ContentsTree_Dialog_SaveSortChanges_Button),
+                    new JavaScriptModuleGlobalization(this, "resetSortChanges", () => RootGlobalization.ContentsTree_Dialog_ResetSortChanges_Button),
+                    new JavaScriptModuleGlobalization(this, "saveSortChangesConfirmation", () => RootGlobalization.ContentsTree_Dialog_SaveSortChanges_ConfirmationMessage),
                 };
         }
     }

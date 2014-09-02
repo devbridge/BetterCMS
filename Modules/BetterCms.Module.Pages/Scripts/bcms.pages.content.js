@@ -171,8 +171,10 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Save content order after sorting.
         */
-        pagesContent.onSortPageContent = function (model) {
-            var info = modal.info({
+        pagesContent.onSortPageContent = function (data) {
+            var models = data.models,
+                onSuccess = data.onSuccess,
+                info = modal.info({
                 content: globalization.sortingPageContentMessage,
                 disableCancel: true,
                 disableAccept: true
@@ -187,7 +189,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                },
                dataToSend = JSON.stringify({
                    PageId: bcms.pageId,
-                   PageContents: model
+                   PageContents: models
                });
 
             $.ajax({
@@ -200,7 +202,11 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 success: function (json) {
                     info.close();
                     if (json.Success) {
-                        redirect.ReloadWithAlert();
+                        if ($.isFunction(onSuccess)) {
+                            onSuccess();
+                        } else {
+                            redirect.ReloadWithAlert();
+                        }
                     } else {
                         if (json.Messages && json.Messages.length > 0) {
                             modal.showMessages(json);

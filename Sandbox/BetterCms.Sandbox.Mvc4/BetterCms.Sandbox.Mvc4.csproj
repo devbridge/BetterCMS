@@ -258,6 +258,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\bcms-images-gallery\" />
+    <Folder Include="Areas\bcms-root\Views\Shared\Partial\" />
     <Folder Include="Areas\bcms-search\" />
     <Folder Include="file\bcms-blog\scripts\" />
     <Folder Include="file\bcms-media\scripts\" />
@@ -398,9 +399,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Blog\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\bcms-root\Views\Shared\Partial\ContentsTree.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

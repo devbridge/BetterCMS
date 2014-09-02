@@ -12,7 +12,10 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         links = {},
         globalization = {
             contentsTreeTitle: null,
-            closeTreeButtonTitle: null
+            closeTreeButtonTitle: null,
+            saveSortChanges: null,
+            resetSortChanges: null,
+            saveSortChangesConfirmation: null
         },
         treeItemTypes = {
             content: 1,
@@ -205,7 +208,49 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
     /*
     * Opens modal window with all regions / contents listed
     */
-    function onEditContentsTree(pageModel) {
+    function onEditContentsTree(data) {
+
+        var pageModel = data.pageViewModel,
+            regionModel = data.regionViewModel,
+            changedRegions = contentModule.turnSortModeOff(false, true),
+            doNotsaveButton,
+            dialog,
+            i;
+
+        if (changedRegions.length > 0) {
+
+            doNotsaveButton = new modal.button(globalization.resetSortChanges, null, 5, function () {
+                contentModule.turnSortModeOff(true);
+                contentModule.turnSortModeOn(regionModel);
+                dialog.close();
+
+                // Open pages structure modal after user resets changes
+                openContentsTree(pageModel);
+            });
+
+            dialog = modal.confirm({
+                content: globalization.saveSortChangesConfirmation,
+                acceptTitle: globalization.saveSortChanges,
+                buttons: [doNotsaveButton],
+                onAccept: function () {
+                    for (i = 0; i < changedRegions.length; i++) {
+                        changedRegions[i].contents = changedRegions[i].changedContents;
+                    }
+                    contentModule.saveContentChanges(changedRegions, function () {
+                        // Open pages structure modal after user accepts changes
+                        openContentsTree(pageModel, function() {
+                            treeViewModel.reloadPage = true;
+                        });
+                    });
+                }
+            });
+        } else {
+            // Open pages structure modal, when there are no changes
+            openContentsTree(pageModel);
+        }
+    }
+
+    function openContentsTree(pageModel, onModelCreated) {
         modal.open({
             title: globalization.contentsTreeTitle,
             cancelTitle: globalization.closeTreeButtonTitle,
@@ -215,6 +260,9 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                 dialog.setContent(container);
 
                 treeViewModel = new TreeViewModel(pageModel);
+                if ($.isFunction(onModelCreated)) {
+                    onModelCreated();
+                }
 
                 ko.applyBindings(treeViewModel, container.get(0));
             },
@@ -272,11 +320,11 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                 if (hasContentsChanged) {
                     treeItem.model.contents = contentsAfterReorder;
 
-                    for (j = 0; j < contentsAfterReorder.length; j++) {
-                        contentsAfterReorder[j].region = treeItem.model;
-                        contentsAfterReorder[j].parentContent = treeItem.model.parentContent;
-                        contentsAfterReorder[j].parentPageContentId = treeItem.model.parentPageContentId;
-                    }
+//                    for (j = 0; j < contentsAfterReorder.length; j++) {
+//                        contentsAfterReorder[j].region = treeItem.model;
+//                        contentsAfterReorder[j].parentContent = treeItem.model.parentContent;
+//                        contentsAfterReorder[j].parentPageContentId = treeItem.model.parentPageContentId;
+//                    }
 
                     changedRegions.push(treeItem.model);
                 }

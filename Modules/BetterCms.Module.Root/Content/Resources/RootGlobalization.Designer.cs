@@ -556,6 +556,33 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Discard changes.
+        /// </summary>
+        public static string ContentsTree_Dialog_ResetSortChanges_Button {
+            get {
+                return ResourceManager.GetString("ContentsTree_Dialog_ResetSortChanges_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save changes.
+        /// </summary>
+        public static string ContentsTree_Dialog_SaveSortChanges_Button {
+            get {
+                return ResourceManager.GetString("ContentsTree_Dialog_SaveSortChanges_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Some contents were sorted / moved to another regions. Do you want to save these changes before continue?.
+        /// </summary>
+        public static string ContentsTree_Dialog_SaveSortChanges_ConfirmationMessage {
+            get {
+                return ResourceManager.GetString("ContentsTree_Dialog_SaveSortChanges_ConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Page structure.
         /// </summary>
         public static string ContentsTree_Dialog_Title {

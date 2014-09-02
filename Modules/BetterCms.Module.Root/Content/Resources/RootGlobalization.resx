@@ -612,4 +612,13 @@
   <data name="ContentsTree_Dialog_Title" xml:space="preserve">
     <value>Page structure</value>
   </data>
+  <data name="ContentsTree_Dialog_ResetSortChanges_Button" xml:space="preserve">
+    <value>Discard changes</value>
+  </data>
+  <data name="ContentsTree_Dialog_SaveSortChanges_Button" xml:space="preserve">
+    <value>Save changes</value>
+  </data>
+  <data name="ContentsTree_Dialog_SaveSortChanges_ConfirmationMessage" xml:space="preserve">
+    <value>Some contents were sorted / moved to another regions. Do you want to save these changes before continue?</value>
+  </data>
 </root>
