@@ -6,6 +6,7 @@
                 <h2 data-bind="visible: $parent.invisibleItems().length > 0">TODO: Visible regions</h2>
                 <div data-bind='template: { name: "bcms-contents-tree-list-template" }'></div>
             </div>
+
             <div data-bind="visible: invisibleItems().length > 0, with: invisibleItems()">
                 <h2>TODO: Invisible regions</h2>
                 <div data-bind='template: { name: "bcms-contents-tree-list-template" }'></div>
@@ -83,6 +84,21 @@
         float: right;
     }
 
+    .bcms-dragging {
+        background-color: #f5f5f5;
+        opacity: 0.8;
+    }
+
+        .bcms-dragging:after {
+            content: "";
+            position: absolute;
+            top: 14px;
+            right: 20px;
+            width: 18px;
+            height: 18px;
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAwElEQVQ4y82UMQoCMRBFAxbay9qId8ghbdQbWKynUEFFEcTCbezWRm+y6v8yA0GygYyNxWuG7IP8+RvnvXcJRuABbmCQOpuS9EAFXsIBdCyiRSBRZhbREjwDSQP2FpGiImfNyCRiiGNwyhCtQClL+Yj6YJP4oG2u+V1YEw6uke3kcndStl9FNUVDcDZcrZE5K1HosAvmYJshYtOn2vb/7VGM49cvQtYW0SSyndIiYoi7QFJpiy0ZFewICyePXOvZNzOcGkIop91gAAAAAElFTkSuQmCC') no-repeat center center;
+        }
+
     .bcms-contents-tree-droppable {
         height: 20px;
     }
@@ -105,6 +121,59 @@
         .bcms-contents-hover .bcms-contents-tree-region-icons {
             display: block;
         }
+
+    .bcms-tree-controls a {
+        position: relative;
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        margin-left: 15px;
+        background-position: center;
+        cursor: pointer;
+        vertical-align: middle;
+        text-indent: -9999px;
+    }
+
+    .bcms-tree-controls-pointer {
+        background-image: url('');
+    }
+
+        .bcms-tree-controls-pointer:hover {
+            background-image: url('');
+        }
+
+    .bcms-tree-controls-history {
+        background-image: url('');
+    }
+     
+        .bcms-tree-controls-history:hover {
+            background-image: url('');
+        }
+
+    .bcms-tree-controls-edit {
+        background-image: url('');
+    }
+
+        .bcms-tree-controls-edit:hover {
+            background-image: url('');
+        }
+
+    .bcms-tree-controls-delete {
+        background-image: url('');
+    }
+
+        .bcms-tree-controls-delete:hover {
+            background-image: url('');
+        }
+
+    .bcms-tree-controls-add {
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAPklEQVQ4y2NgmPGOAQc+DMT/ofgwTnV4DPiPhkcNwGPAYSyKicWHGSjQDMHUMIASLxwZTQc0NuAwSmjjUAcAbxLzwsvYFoMAAAAASUVORK5CYII=');
+    }
+
+        .bcms-tree-controls-add:hover {
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAPklEQVQ4y2NgaHzEgAMfBuL/UHwYpzo8BvxHw6MG4DHgMBbFxOLDDBRohmBqGECJF46MpgMaG3AYJbRxqAMATWnQwmj3tBgAAAAASUVORK5CYII=');
+        }
+
     /*TEST ONLY*/
     .bcms-contents-tree-content:hover .bcms-contents-tree-content-icons {
         display: block;
@@ -125,29 +194,30 @@
     <div data-bind="
         css: {
             'bcms-contents-tree-region': type == types.region,
-            'bcms-contents-tree-content': type == types.content
+            'bcms-contents-tree-content': type == types.content,
+            'bcms-dragging': isBeingDragged()
         },
         draggableContent: type == types.content,
-        style: { zIndex: !isBeingDragged() ? '0' : '9999' }">
+        style: { zIndex: !isBeingDragged() ? '0' : '9999'}">
         <div data-bind="css: {'bcms-contents-tree-region-header': type == types.region}">
             <span data-bind="text: title()"></span>
-            <div data-bind="css: {'bcms-contents-tree-region-icons': type==types.region, 'bcms-contents-tree-content-icons': type==types.content}, visible: !isBeingDragged()">
+            <div class="bcms-tree-controls" data-bind="css: {'bcms-contents-tree-region-icons': type==types.region, 'bcms-contents-tree-content-icons': type==types.content}, visible: !isBeingDragged()">
                 <!-- ko if: type == types.content -->
                 <!-- ko if: model.visibleButtons.configure -->
-                <a class="bcms-pointer" data-bind="click: configure">TODO: Configure</a>
+                <a class="bcms-tree-controls-pointer" data-bind="click: configure">TODO: Configure</a>
                 <!-- /ko -->
                 <!-- ko if: model.visibleButtons.history -->
-                <a class="bcms-icn-history" data-bind="click: history"></a>
+                <a class="bcms-tree-controls-history" data-bind="click: history"></a>
                 <!-- /ko -->
                 <!-- ko if: model.visibleButtons.edit -->
-                <a class="bcms-icn-edit" data-bind="click: editItem">@RootGlobalization.Button_Edit</a>
+                <a class="bcms-tree-controls-edit" data-bind="click: editItem">@RootGlobalization.Button_Edit</a>
                 <!-- /ko -->
                 <!-- ko if: model.visibleButtons.delete -->
-                <a class="bcms-icn-delete" data-bind="click: deleteItem">@RootGlobalization.Button_Delete</a>
+                <a class="bcms-tree-controls-delete" data-bind="click: deleteItem">@RootGlobalization.Button_Delete</a>
                 <!-- /ko -->
                 <!-- /ko -->
                 <!-- ko if: type == types.region -->
-                <div class="bcms-region-button bcms-region-addcontent" data-bind="click: addContent"></div>
+                <a class="bcms-tree-controls-add" data-bind="click: addContent"></a>
                 <!-- /ko -->
             </div>
         </div>

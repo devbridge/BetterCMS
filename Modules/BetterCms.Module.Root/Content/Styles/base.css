@@ -1046,6 +1046,10 @@ a.bcms-remove-image {
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAARCAYAAAAG/yacAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAWdEVYdENyZWF0aW9uIFRpbWUAMDcvMjYvMTJzxIU/AAAA6ElEQVQokX2Sy3nDMAyDfyjpUtnGHsuHdJo6C2SL9NC7k6AHixaVFw/+JJoAQYhiupDj+/BlAKfcOC/KNftHwDAv9RZ1jvwGFNOFY2Unl2tt53ZEguFnkY7nvw7wLgIYnYwE/oTNkHUmYYfEG7DrJ0pyWeUVIM+0y+R5Hrs1K0EiwVid08oIGAPj6doJLCGhZpSk6O6qyVaeuMThlQ1FwdLsCCO6yOvwaGonL0feF7t1UvpXWqG3rzrkM1tpiZZ9JanHp90TcHM1gGdzBAxzfdxxXpDgXgEdq5qGYXvH6Zfk2bZGb/ZRAP/Yj2asR6Yj1wAAAABJRU5ErkJggg==);
 }
 
+.bcms-enter-child-content .bcms-content-icon {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAA30lEQVQ4y93SQQsBQRgG4BFHyWlL0f4P5aAkd8lf2fIrJBfak5sTB1eUmxydKLlLkS3ZMN7RTH1NOzXj6PBc5vvet512WLi9joBDl3POXDEE37Lg/GsBly5/XIBZGTpQcC7AeQ4iuXME31QQGQqyopzsHaBEC25k6BtK6nAne3soqoIZGcyT7ilLGvAguzvwxKBKHpMQwxqmMNas4EV2J6o9IIcuYvqJNVjC06HglHTXPFSgCS2iDQutILB6bVhMQaiF++LctqCnhQci/P2NFmFPC4cqbFuQgY0MDyFN5x9h9nIvFVe4HwAAAABJRU5ErkJggg==');
+}
+
 /* Modal Dialog */
 .bcms-scroll-window {
     position: relative;
