@@ -114,7 +114,7 @@
             <div data-bind="template: { name: 'bcms-contents-tree-list-template' }"></div>
         </div>
         
-        <!-- ko if: type == types.region && items().length === 0 -->
+        <!-- ko if: type == types.region && items().length === 0 && !isBeingDragged() -->
         <div class="bcms-contents-tree-droppable" data-bind="droppableContent: {type: 'emptyListZone', region: $data}, css: {'bcms-contents-tree-droppable-active': activeZone() == 'emptyListZone'}">
             &nbsp;
         </div>

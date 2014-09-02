@@ -158,6 +158,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         self.visibleItems = ko.observableArray();
         self.invisibleItems = ko.observableArray();
         self.reloadPage = false;
+        self.contentsSorted = false;
 
         // Collect child regions
         for (i = 0; i < pageModel.regions.length; i++) {
@@ -218,12 +219,72 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                 ko.applyBindings(treeViewModel, container.get(0));
             },
 
-            onClose: function() {
+            onClose: function () {
+                if (treeViewModel.contentsSorted) {
+                    var changedRegions = checkIfRegionContentsChanged([], treeViewModel.items());
+                    if (changedRegions.length > 0) {
+                        contentModule.saveContentChanges(changedRegions);
+
+                        return;
+                    }
+                }
+
                 if (treeViewModel.reloadPage) {
                     redirect.ReloadWithAlert();
                 }
             }
         });
+    }
+
+    /*
+    * Checks if order of contents has changed and if there are changes, saves the changes. 
+    */
+    function checkIfRegionContentsChanged(changedRegions, treeItems) {
+        var l = treeItems.length,
+            i,
+            j,
+            treeItem,
+            subTreeItem,
+            contentsBeforeReorder,
+            contentsAfterReorder,
+            hasContentsChanged;
+
+        for (i = 0; i < l; i++) {
+            treeItem = treeItems[i];
+
+            //console.log("Level 1: Tree item: %s, type: %s", treeItem.type, treeItem.title());
+            if (treeItem.type == treeItemTypes.region) {
+                contentsBeforeReorder = treeItem.model.contents;
+                contentsAfterReorder = [];
+
+                for (j = 0; j < treeItem.items().length; j++) {
+                    subTreeItem = treeItem.items()[j];
+
+                    //console.log("Level 2: Subtree item: %s, type: %s", subTreeItem.type, subTreeItem.title());
+                    if (subTreeItem.type == treeItemTypes.content) {
+                        contentsAfterReorder.push(subTreeItem.model);
+                    }
+
+                    changedRegions = checkIfRegionContentsChanged(changedRegions, subTreeItem.items());
+                }
+
+                hasContentsChanged = contentModule.hasContentsOrderChanged(contentsBeforeReorder, contentsAfterReorder);
+                if (hasContentsChanged) {
+                    treeItem.model.contents = contentsAfterReorder;
+
+                    for (j = 0; j < contentsAfterReorder.length; j++) {
+                        contentsAfterReorder[j].region = treeItem.model;
+                        contentsAfterReorder[j].parentContent = treeItem.model.parentContent;
+                        contentsAfterReorder[j].parentPageContentId = treeItem.model.parentPageContentId;
+                    }
+
+                    changedRegions.push(treeItem.model);
+                }
+                // console.log("Region: %s, Before: %s, After: %s, Changed: %s", treeItem.title(), contentsBeforeReorder.length, contentsAfterReorder.length, hasContentsChanged);
+            }
+        }
+
+        return changedRegions;
     }
 
     /**
@@ -242,9 +303,8 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                         revertDuration: 0,
                         refreshPositions: true,
                         scroll: true,
-//                        TODO
-//                        containment: $(selectors.contentTreeContainer).get(0),
-//                        appendTo: $(selectors.contentTreeContainer).get(0),
+                        containment: $(selectors.contentTreeContainer).get(0),
+                        appendTo: $(selectors.contentTreeContainer).get(0),
                         helper: function () {
                             if (dragObject.isBeingDragged) {
                                 dragObject.isBeingDragged(true);
@@ -295,6 +355,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                             }
                         },
                         drop: function (event, ui) {
+                            treeViewModel.contentsSorted = true;
 
                             var dragObject = $(ui.draggable).data("dragObject");
 //                                forFix = $(ui.draggable).data('draggable'),
@@ -303,28 +364,28 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
 
                             dragObject.parentRegion.removeContent(dragObject);
                             dragObject.parentRegion = dropRegionModel;
-                            dropRegionModel.items.push(dragObject);
 
                             dragObject.isBeingDragged(false);
 //                            dragObject.displayOrder(0);
 //
-//                            // Add node to tree.
-//                            var index;
-//                            if (dropZoneType == DropZoneTypes.EmptyListZone) {
-//                                dropZoneObject.childNodes.splice(0, 0, dragObject);
-//                            }
-//                            else if (dropZoneType == DropZoneTypes.TopZone) {
-//                                index = $.inArray(dropZoneObject, dropZoneObject.parentNode().childNodes());
-//                                dropZoneObject.parentNode().childNodes.splice(index, 0, dragObject);
-//                            }
-//                            else if (dropZoneType == DropZoneTypes.MiddleZone) {
-//                                dropZoneObject.childNodes.splice(0, 0, dragObject);
-//                                dropZoneObject.isExpanded(true);
-//                            }
-//                            else if (dropZoneType == DropZoneTypes.BottomZone) {
-//                                index = $.inArray(dropZoneObject, dropZoneObject.parentNode().childNodes());
-//                                dropZoneObject.parentNode().childNodes.splice(index + 1, 0, dragObject);
-//                            }
+                            // Add content to region where it should be.
+                            var index;
+                            if (dropZoneType == dropZoneTypes.topZone) {
+                                index = $.inArray(dropZoneObject, dropRegionModel.items());
+                                
+                                console.log("Top zone: %s", index);
+                                dropRegionModel.items.splice(index, 0, dragObject);
+                            }
+                            else if (dropZoneType == dropZoneTypes.middle) {
+                                index = $.inArray(dropZoneObject, dropRegionModel.items());
+                                if (index + 1 <= dropZoneObject, dropRegionModel.items().length) {
+                                    index++;
+                                }
+                                console.log("Middle zone: %s", index);
+                                dropRegionModel.items.splice(index, 0, dragObject);
+                            } else {
+                                dropRegionModel.items.push(dragObject);
+                            }
                             dropZoneObject.activeZone(dropZoneTypes.none);
 //
 //                            sitemap.activeMapModel.updateNodesOrderAndParent();

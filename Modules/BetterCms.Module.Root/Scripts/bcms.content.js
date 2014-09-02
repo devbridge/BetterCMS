@@ -196,7 +196,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
     /**
     * Saves content sorting and other changes
     */
-    function saveContentChanges(regionViewModels) {
+    content.saveContentChanges = function(regionViewModels) {
         var models = [],
             i, l, regionViewModel;
 
@@ -207,18 +207,19 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 models.push({
                     'RegionId': regionViewModel.id,
                     'PageContentId': this.pageContentId,
+                    'ParentPageContentId': this.parentPageContentId,
                     'Version': this.pageContentVersion
                 });
             });
         }
 
         bcms.trigger(bcms.events.sortPageContent, models);
-    }
+    };
 
     /**
     * Checks if contents order has changed
     */
-    function hasContentsOrderChanged(before, after) {
+    content.hasContentsOrderChanged = function(before, after) {
         if (before.length != after.length) {
             return true;
         }
@@ -269,7 +270,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             });
 
             if (!cancel) {
-                if (hasContentsOrderChanged(regionViewModel.contents, regionContents)) {
+                if (content.hasContentsOrderChanged(regionViewModel.contents, regionContents)) {
                     changedRegions.push(regionViewModel);
                 }
                 regionViewModel.contents = regionContents;
@@ -492,7 +493,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 var changedRegions = content.turnSortModeOff();
 
                 if (changedRegions.length > 0) {
-                    saveContentChanges(changedRegions);
+                    content.saveContentChanges(changedRegions);
                 }
             });
 
