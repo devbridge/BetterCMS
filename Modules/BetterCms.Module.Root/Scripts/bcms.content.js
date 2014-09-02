@@ -231,7 +231,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         }
 
         return false;
-    }
+    };
 
     /**
     * Turns region content sorting mode OFF:
@@ -732,7 +732,6 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
     }
 
     function recalculateParentContentOverlays() {
-
         var parentContent = pageViewModel.currentParentContent,
             maxWidth = 10000,
             maxHeight = 10000,
@@ -964,6 +963,9 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             maxItem = 0,
             currentPage = null;
 
+        // TODO: remove after tests
+        self.items = items;
+
         function hasPath() {
             return items.length > 0;
         }
@@ -1068,10 +1070,12 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             step = maxItem - currentItem;
             if (step > 0) {
                 slide(step);
+            } else {
+                updateSliders();
             }
         }
 
-        function redraw() {
+        function redraw(onAfterCalculate) {
             if (!hasPath()) {
                 pathContainer.hide();
 
@@ -1080,26 +1084,32 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 pathContainer.show();
             }
 
-            self.calculatePathPositions();
+            self.calculatePathPositions(onAfterCalculate);
         }
 
-        self.calculatePathPositions = function () {
+        self.calculatePathPositions = function (onAfterCalculate) {
             if (!hasPath()) {
                 return;
             }
 
-            var ww = $(window).width(),
+            setTimeout(function() {
+                var ww = $(window).width(),
                 cw = ww * 0.8,
                 totalItemsWidth = leftSlider.outerWidth() + leftSlider.outerWidth() + 30;
 
-            $.each(items, function (index) {
-                totalItemsWidth += items[index].element.outerWidth();
-                bcms.logger.trace('Item: ' + items[index].element.outerWidth() + '; total: ' + totalItemsWidth + '; cw: ' + cw);
-            });
+                $.each(items, function (index) {
+                    totalItemsWidth += items[index].element.outerWidth();
+                    console.log('Item: ' + items[index].element.outerWidth() + '; total: ' + totalItemsWidth + '; cw: ' + cw);
+                });
 
-            pathContainer.css('width', cw > totalItemsWidth ? totalItemsWidth : cw);
-            pathContainer.css('left', ww / 2);
-            pathContainer.css('margin-left', cw > totalItemsWidth ? totalItemsWidth / -2 : cw / -2);
+                pathContainer.css('width', cw > totalItemsWidth ? totalItemsWidth : cw);
+                pathContainer.css('left', ww / 2);
+                pathContainer.css('margin-left', cw > totalItemsWidth ? totalItemsWidth / -2 : cw / -2);
+
+                if ($.isFunction(onAfterCalculate)) {
+                    onAfterCalculate();
+                }
+            }, 100);
         };
 
         self.initialize = function () {
@@ -1131,8 +1141,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 slide(1);
             });
 
-            redraw();
-            slideToTheFirstParent();
+            redraw(slideToTheFirstParent);
         };
 
         self.addParentContent = function (title, onClick) {
@@ -1140,7 +1149,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             if (currentPage == null) {
                 currentPage = true;
 
-                currentPage = self.addParentContent(globalization.currentPage, function () {
+                currentPage = self.addParentContent(globalization.currentPage, function() {
                     items.pop();
                     currentPage.remove();
                     currentPage = null;
@@ -1170,20 +1179,19 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 for (i = currentItemIndex + 1; i < total; i++) {
                     item = items.pop();
                     item.element.remove();
-
-                    if ($.isFunction(onClick)) {
-                        onClick();
-                    }
-
-                    redraw();
                 }
+
+                if ($.isFunction(onClick)) {
+                    onClick();
+                }
+
+                redraw();
             });
 
             innerContainer.append(div);
             items.push(model);
 
-            redraw();
-            slideToTheFirstParent();
+            redraw(slideToTheFirstParent);
 
             return div;
         };
