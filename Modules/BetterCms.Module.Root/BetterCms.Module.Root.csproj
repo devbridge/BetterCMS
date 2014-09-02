@@ -1309,10 +1309,7 @@
     <EmbeddedResource Include="Scripts\ckeditor\styles.js" />
     <EmbeddedResource Include="Scripts\bcms.content.tree.js" />
     <Content Include="Views\Web.config" />
-    <None Include="Views\Shared\Partial\ContentsTree.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>ContentsTree.generated.cs</LastGenOutput>
-    </None>
+    <Content Include="Views\Shared\Partial\ContentsTree.cshtml" />
     <None Include="Views\Sidebar\Container.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Container.generated.cs</LastGenOutput>
