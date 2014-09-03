@@ -103,255 +103,243 @@ WriteLiteral(">\r\n    body {\r\n        -webkit-font-smoothing: antialiased;\r\
 "nUEFFEcTCbezWRm+y6v8yA0GygYyNxWuG7IP8+RvnvXcJRuABbmCQOpuS9EAFXsIBdCyiRSBRZhbREjw" +
 "DSQP2FpGiImfNyCRiiGNwyhCtQClL+Yj6YJP4oG2u+V1YEw6uke3kcndStl9FNUVDcDZcrZE5K1HosAv" +
 "mYJshYtOn2vb/7VGM49cvQtYW0SSyndIiYoi7QFJpiy0ZFewICyePXOvZNzOcGkIop91gAAAAAElFTkS" +
-"uQmCC\') no-repeat center center;\r\n        }\r\n\r\n    .bcms-contents-tree-droppable" +
-" {\r\n        height: 10px;\r\n    }\r\n\r\n    .bcms-contents-tree-droppable-ready {\r\n " +
-"       height: 10px;\r\n    }\r\n\r\n    .bcms-contents-tree-droppable-active {\r\n     " +
-"   color: black;\r\n        height: 30px;\r\n        margin: 10px 0;\r\n        border" +
-": 1px dashed black;\r\n    }\r\n\r\n    .bcms-contents-hover {\r\n        background-col" +
-"or: #f5f5f5;\r\n    }\r\n\r\n        .bcms-contents-hover > div > .bcms-tree-controls " +
-"{\r\n            display: block;\r\n        }\r\n\r\n    .bcms-tree-controls {\r\n        " +
-"display: none;\r\n        float: right;\r\n    }\r\n\r\n        .bcms-tree-controls a {\r" +
-"\n            position: relative;\r\n            display: inline-block;\r\n          " +
-"  width: 18px;\r\n            height: 18px;\r\n            margin-left: 15px;\r\n     " +
-"       background-position: center;\r\n            cursor: pointer;\r\n            v" +
-"ertical-align: middle;\r\n            text-indent: -9999px;\r\n        }\r\n\r\n    .bcm" +
-"s-tree-controls-config {\r\n        background-image: url(\'data:image/png;base64,i" +
-"VBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZ" +
-"VJlYWR5ccllPAAAA4ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/I" +
-"iBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6b" +
-"nM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NTc3MiwgMjAxNC8wM" +
-"S8xMy0xOTo0NDowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZ" +
-"y8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIge" +
-"G1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJod" +
-"HRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0d" +
-"HA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZ" +
-"DoyNjIwYWQzZS1kMWVkLTQ2MjItYjkyMi1iY2JlZDAwNzdmOTAiIHhtcE1NOkRvY3VtZW50SUQ9Inhtc" +
-"C5kaWQ6QkU4RTM4NUQyQUFFMTFFNDlGN0I5N0E3Njc4OTY0MTciIHhtcE1NOkluc3RhbmNlSUQ9Inhtc" +
-"C5paWQ6QkU4RTM4NUMyQUFFMTFFNDlGN0I5N0E3Njc4OTY0MTciIHhtcDpDcmVhdG9yVG9vbD0iQWRvY" +
-"mUgUGhvdG9zaG9wIENDIDIwMTQgKE1hY2ludG9zaCkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6a" +
-"W5zdGFuY2VJRD0ieG1wLmlpZDo1NjI0ZWNhMi0yMDVkLTQyMTgtOTBlOC1hNTI2NzUyMzhhNTciIHN0U" +
-"mVmOmRvY3VtZW50SUQ9ImFkb2JlOmRvY2lkOnBob3Rvc2hvcDo1M2EwOTQ5Yy03MzBlLTExNzctYWNmM" +
-"y1jMTNkYWY0YzNlNTgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+I" +
-"Dw/eHBhY2tldCBlbmQ9InIiPz40nDz/AAABO0lEQVR42pTTP0sDQRCG8Y0ciqBERRCFlAoWWvoFBBURR" +
-"Cwt7MTCMpoiTcBeC1HS2YudgYAWttrY2UUDogQSk1JU/PeMTOBY9rKbgV8zd7zZncylTLFlAmoUu1jBB" +
-"GpYwHP7hSggZBZlDZD6xF48RKrHEzKIUixEKqc9003QFjJWr+x4b9wXtOToTTveufLNaMzRO8YX7rGIQ" +
-"3z4gl4wY/VkXhdW76nT1YYxYsKqlBQ0iRvMBYQ0cOAKmsctpgJDVmUE9oy2cZSwqNfo1Rk1camDfo1vd" +
-"qTNnYRflhMu4z3paBKQxpl+O66ST2GtU0h7s0805AEV6/mbzqDmG5acaB113ZcfVGXl8YtN3IX8/5Eeu" +
-"U935hv9+qyA88A9+r9aUef0qKcZ0pntmy5KTpRHChsYwCmyerXg+hNgAKZiOglvOgJeAAAAAElFTkSuQ" +
-"mCC\');\r\n    }\r\n\r\n        .bcms-tree-controls-config:hover {\r\n            backgro" +
-"und-image: url(\'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo" +
-"5XAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4ZpVFh0WE1MOmNvbS5hZG9iZS" +
-"54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj" +
-"8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3" +
-"JlIDUuNS1jMDIxIDc5LjE1NTc3MiwgMjAxNC8wMS8xMy0xOTo0NDowMCAgICAgICAgIj4gPHJkZjpSRE" +
-"YgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPH" +
-"JkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb2" +
-"0veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cG" +
-"UvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE" +
-"1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDoyNjIwYWQzZS1kMWVkLTQ2MjItYjkyMi1iY2JlZD" +
-"AwNzdmOTAiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QkU5MDQwQzAyQUFFMTFFNDlGN0I5N0E3Nj" +
-"c4OTY0MTciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QkU5MDQwQkYyQUFFMTFFNDlGN0I5N0E3Nj" +
-"c4OTY0MTciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKE1hY2ludG9zaC" +
-"kiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1NjI0ZWNhMi0yMD" +
-"VkLTQyMTgtOTBlOC1hNTI2NzUyMzhhNTciIHN0UmVmOmRvY3VtZW50SUQ9ImFkb2JlOmRvY2lkOnBob3" +
-"Rvc2hvcDo1M2EwOTQ5Yy03MzBlLTExNzctYWNmMy1jMTNkYWY0YzNlNTgiLz4gPC9yZGY6RGVzY3JpcH" +
-"Rpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7JS4S2AAABO0lEQV" +
-"R42pTTPUsDQRCH8Y0cimDQSEAUUipYaOkXEFREELG0sBMLyyQWNoq9FqKksxc7AwFT2Gpjl04jhEjAl1" +
-"ZUfHtGJnAse9nNwK+ZO/7ZncylzF7DBFQWBSxhDC3Modl+IQoImUZFA6Q+UYyHSPV4QtIox0KktrVnug" +
-"naQM7qVRzvjfqCFhy9Scc7Vd+MRhy9Y3yhhnkc4sMX9IgpqyfzurB6jU5Xy2DYhFU5KWgc15gJCHnGgS" +
-"toFjeYCAxZlhHYM9rEUcKiXqFXZ/SKSx30S3yzI21uJfyynHAR70lHk4BBnOm34yr5FFY6hbQ3+0RD7n" +
-"FnPX/TGbR8w5ITreJJ9+UHD7Ly+MU6bkP+/0iP3Kc7841+fbaL88A9+r9aSedU19MM6cz2TRclJ9pBCm" +
-"sYwCnyerXg+hNgAPL/OeZrZihbAAAAAElFTkSuQmCC\');\r\n        }\r\n\r\n    .bcms-tree-contr" +
-"ols-history {\r\n        background-image: url(\'data:image/png;base64,iVBORw0KGgoA" +
-"AAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccll" +
-"PAAAA4ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVN" +
-"ME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8i" +
-"IHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NTc3MiwgMjAxNC8wMS8xMy0xOTo0" +
-"NDowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAy" +
-"LzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1w" +
-"TU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMu" +
-"YWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5h" +
-"ZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDoyNjIwYWQz" +
-"ZS1kMWVkLTQ2MjItYjkyMi1iY2JlZDAwNzdmOTAiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QkU4" +
-"ODlDQkMyQUFFMTFFNDlGN0I5N0E3Njc4OTY0MTciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NzNB" +
-"QkFCOTQyQUFFMTFFNDlGN0I5N0E3Njc4OTY0MTciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9z" +
-"aG9wIENDIDIwMTQgKE1hY2ludG9zaCkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJ" +
-"RD0ieG1wLmlpZDo1NjI0ZWNhMi0yMDVkLTQyMTgtOTBlOC1hNTI2NzUyMzhhNTciIHN0UmVmOmRvY3Vt" +
-"ZW50SUQ9ImFkb2JlOmRvY2lkOnBob3Rvc2hvcDo1M2EwOTQ5Yy03MzBlLTExNzctYWNmMy1jMTNkYWY0" +
-"YzNlNTgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tl" +
-"dCBlbmQ9InIiPz5+20vPAAABkklEQVR42oyUzUpCURSFr9JUiCwNyiZNfIIIK5SkYVAQ5rQG/bxEUS9R" +
-"D1CTiCiaFUVihTRq2KAmpUIkQTgqBFtb1onFycwNH/eec/denP1zbijYfQ/a2DRY5HOEe8/gEhyACz8g" +
-"5AklwQ7IBJ3tCqyDB7cRlo9pcOeJNECVNGQ/Q9+0L2QnOQERrstgDcTAEIlxr0yfCGOSLrUQnrdgnA43" +
-"YA7U/kirHxyDCa5LIGUnyopIBcyLSJGo1ehT4dpisyaUE6ct8CbrSeKb+WzLOmepPeJllMXsA3VxaP50" +
-"97dZjazlPeDJTpTgh1dP5D+rM8YsYUKfXQQ1hWKbE7faX+V7XNrv7LqNaEhSG3TjEuZgBcw17wVNMVBx" +
-"xc8zpjUyJrQvgZtgoItUzWdD1nsmdMahCjjBRyDaQSRKn2EZyPMwC7YEPmR27sEq6BUBe1/hN5eexSyb" +
-"ht5+u4CnXsEb0uK41MS1fxYU/NtvG2OSpmuAu7QqUqJvQR3V7P+SAjNggffQBvYLvHCGDq0mOkNm3wIM" +
-"ABy8XV+rkpVKAAAAAElFTkSuQmCC\');\r\n    }\r\n\r\n        .bcms-tree-controls-history:ho" +
-"ver {\r\n            background-image: url(\'data:image/png;base64,iVBORw0KGgoAAAAN" +
-"SUhEUgAAABIAAAASCAYAAABWzo5XAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAA" +
-"A4ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1w" +
-"Q2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6" +
-"eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NTc3MiwgMjAxNC8wMS8xMy0xOTo0NDow" +
-"MCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIy" +
-"LXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09" +
-"Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRv" +
-"YmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9i" +
-"ZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDoyNjIwYWQzZS1k" +
-"MWVkLTQ2MjItYjkyMi1iY2JlZDAwNzdmOTAiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QkU4RTM4" +
-"NjUyQUFFMTFFNDlGN0I5N0E3Njc4OTY0MTciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QkU4RTM4" +
-"NjQyQUFFMTFFNDlGN0I5N0E3Njc4OTY0MTciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9w" +
-"IENDIDIwMTQgKE1hY2ludG9zaCkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0i" +
-"eG1wLmlpZDo1NjI0ZWNhMi0yMDVkLTQyMTgtOTBlOC1hNTI2NzUyMzhhNTciIHN0UmVmOmRvY3VtZW50" +
-"SUQ9ImFkb2JlOmRvY2lkOnBob3Rvc2hvcDo1M2EwOTQ5Yy03MzBlLTExNzctYWNmMy1jMTNkYWY0YzNl" +
-"NTgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBl" +
-"bmQ9InIiPz6bbQbPAAABiUlEQVR42pSUT0tCURDF33u0lQJJg7K1WzcRUShKyxZBmNta9OdLFPYlolWb" +
-"oogIol1RJBpIq5atS4VIkHBVCHVOnBvDRcQGfvhm3szh3Zm5hkH5JehjebCq32nFmHgHzsCtXxB6Qmmw" +
-"D3LBYLsH2+DZBSLzMgsePZEeaImeieeUm/WF+CWXICa/AbZAAkyKhGIN5cRUk3ZCITgEo0p4ABlwADrm" +
-"KzqKZZQTqIa1IYUKYFYvmmAZtOVXhbW2cpryWVugUNEklcG78eeFb8zZM34x0ohdY0+D4e3EDCBPoZSc" +
-"N9D9h1BXNbQUhT6HKPo2VL343/hbek6a8Tur9RENzfgn3LpEWizaCCh5RQsqtLjml1TzuzIUOjaFu2B8" +
-"iKMyZ8f4RxS6BnUFuMEXID5AJK6cKfmsvYnUsDXwYXbnCWyCMSPA5w29c8djzTo17O3nBbzyGt4zI06a" +
-"nrjxL4GKf/sZmDHHdANwl9aK1JVbsYnW+P8yBxbBiu4hF/YLvGqHztkTu0O0HwEGALKcWTRWogHlAAAA" +
-"AElFTkSuQmCC\');\r\n        }\r\n\r\n    .bcms-tree-controls-edit {\r\n        background" +
-"-image: url(\'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XA" +
-"AAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4ZpVFh0WE1MOmNvbS5hZG9iZS54b" +
-"XAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+I" +
-"Dx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlI" +
-"DUuNS1jMDIxIDc5LjE1NTc3MiwgMjAxNC8wMS8xMy0xOTo0NDowMCAgICAgICAgIj4gPHJkZjpSREYge" +
-"G1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZ" +
-"jpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20ve" +
-"GFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvU" +
-"mVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NO" +
-"k9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDoyNjIwYWQzZS1kMWVkLTQ2MjItYjkyMi1iY2JlZDAwN" +
-"zdmOTAiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QkU4ODlDQzAyQUFFMTFFNDlGN0I5N0E3Njc4O" +
-"TY0MTciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QkU4ODlDQkYyQUFFMTFFNDlGN0I5N0E3Njc4O" +
-"TY0MTciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKE1hY2ludG9zaCkiP" +
-"iA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1NjI0ZWNhMi0yMDVkL" +
-"TQyMTgtOTBlOC1hNTI2NzUyMzhhNTciIHN0UmVmOmRvY3VtZW50SUQ9ImFkb2JlOmRvY2lkOnBob3Rvc" +
-"2hvcDo1M2EwOTQ5Yy03MzBlLTExNzctYWNmMy1jMTNkYWY0YzNlNTgiLz4gPC9yZGY6RGVzY3JpcHRpb" +
-"24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7JVpV+AAABA0lEQVR42" +
-"qzUPQ/BQBzH8ToGG3ZisDGWRSz1sFusXoDJ4j3YLQw1W0wkBmYGi0Q8DCYSQZNuJpH4NflfchqtO3HJN" +
-"06bfvLXtAJa19YUVhr1UB7tUAtNnBNMAcmhOSrQdRk0QnXnZEgBmaKI63gQ9ZEtM1HWAxGxNpNAZj4IX" +
-"0n2B8RZC/bjzxHXFTWYDxKVRIro4IZ0BeRGyNb9HOl0T2QRgyMipDrJG8KhME0SQ2NkqSIcStAkQ1RFJ" +
-"Q/s7Z58guK076AnWqOyC+PIxmtUEUoJ794erWhvfUP4S8shkz5PqIkqhBjfEA7VhO+msJeaRITuaIkG6" +
-"EwTHdEFPWT/rF4CDADWFj0fhaXULQAAAABJRU5ErkJggg==\');\r\n    }\r\n\r\n        .bcms-tree-" +
-"controls-edit:hover {\r\n            background-image: url(\'data:image/png;base64," +
-"iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFn" +
-"ZVJlYWR5ccllPAAAA4ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/" +
-"IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6" +
-"bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NTc3MiwgMjAxNC8w" +
-"MS8xMy0xOTo0NDowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9y" +
-"Zy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIg" +
-"eG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJo" +
-"dHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0" +
-"dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRp" +
-"ZDoyNjIwYWQzZS1kMWVkLTQ2MjItYjkyMi1iY2JlZDAwNzdmOTAiIHhtcE1NOkRvY3VtZW50SUQ9Inht" +
-"cC5kaWQ6QkU5MDQwQjgyQUFFMTFFNDlGN0I5N0E3Njc4OTY0MTciIHhtcE1NOkluc3RhbmNlSUQ9Inht" +
-"cC5paWQ6QkU5MDQwQjcyQUFFMTFFNDlGN0I5N0E3Njc4OTY0MTciIHhtcDpDcmVhdG9yVG9vbD0iQWRv" +
-"YmUgUGhvdG9zaG9wIENDIDIwMTQgKE1hY2ludG9zaCkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6" +
-"aW5zdGFuY2VJRD0ieG1wLmlpZDo1NjI0ZWNhMi0yMDVkLTQyMTgtOTBlOC1hNTI2NzUyMzhhNTciIHN0" +
-"UmVmOmRvY3VtZW50SUQ9ImFkb2JlOmRvY2lkOnBob3Rvc2hvcDo1M2EwOTQ5Yy03MzBlLTExNzctYWNm" +
-"My1jMTNkYWY0YzNlNTgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+" +
-"IDw/eHBhY2tldCBlbmQ9InIiPz4neRuoAAABBUlEQVR42qzUPQ/BQBzH8ToGG3ZisDFiEUs97BarF2Cy" +
-"eAE2u8lQs8VEYmBmsEjEw2AiETSxmUTi1+R/ybXR9k5c8o2rxid/TduA1jlpCiuN+qiA9qiNptYJpoDk" +
-"0QIV6XcZNEYN62RIAZmhiOP7IBqgh8xEORdExLpMApl7IHwl2R8Qay3Zj39HXDfUZB5IVBIpoaMTyiog" +
-"d0J2zvsoS9dEFtE5IkKqk9gQDoVpkhiaIFMV4VCCJhmhGiq7YLZr8g2K076H3miDKg6MI1u3UUUoJTx7" +
-"B7SmvemH8IeWQwZ9nlELVQnR/RAO1YVjQ9hLTSJCT7RCQ3Shiay33RW9ZF9WHwEGACLCPPyTiwJWAAAA" +
-"AElFTkSuQmCC\');\r\n        }\r\n\r\n    .bcms-tree-controls-delete {\r\n        backgrou" +
-"nd-image: url(\'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5" +
-"XAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4ZpVFh0WE1MOmNvbS5hZG9iZS5" +
-"4bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8" +
-"+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3J" +
-"lIDUuNS1jMDIxIDc5LjE1NTc3MiwgMjAxNC8wMS8xMy0xOTo0NDowMCAgICAgICAgIj4gPHJkZjpSREY" +
-"geG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJ" +
-"kZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20" +
-"veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGU" +
-"vUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1" +
-"NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDoyNjIwYWQzZS1kMWVkLTQ2MjItYjkyMi1iY2JlZDA" +
-"wNzdmOTAiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QkU4RTM4NjEyQUFFMTFFNDlGN0I5N0E3Njc" +
-"4OTY0MTciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QkU4RTM4NjAyQUFFMTFFNDlGN0I5N0E3Njc" +
-"4OTY0MTciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKE1hY2ludG9zaCk" +
-"iPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1NjI0ZWNhMi0yMDV" +
-"kLTQyMTgtOTBlOC1hNTI2NzUyMzhhNTciIHN0UmVmOmRvY3VtZW50SUQ9ImFkb2JlOmRvY2lkOnBob3R" +
-"vc2hvcDo1M2EwOTQ5Yy03MzBlLTExNzctYWNmMy1jMTNkYWY0YzNlNTgiLz4gPC9yZGY6RGVzY3JpcHR" +
-"pb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7bM2OFAAABDUlEQVR" +
-"42qySPQrCQBCFJxIF/1BR8Ao5il5ESzsrCwsrG2uPIh7EKo2CGhH/bVRYZ+NbGEISg/HBx05mZ9/O7sZ" +
-"SSpGWNT1SQCOmz2Tx/WTGzEAWqW7NHzMUrY4wIcSdqOIwoxLjMHl8W4CQc1ATaaSP4jJXZiGKFTCbLFD" +
-"jYs1nN3FHin4Q35HfrS1yFqVQhv6koNFF3Mk3rnFGW4wr5oX4BAi5JeJNEqMWM0M8BFpzpo3YkwvtgJG" +
-"ZLDAHxA8xvxf/lxfXkWm3Io4jpXPVJEfbYdTF5xCjMzaRtak7WscZef/qyLxanbkjzgFCrhGoDX01M9l" +
-"jbuL5jSZMOYmRabcISNyJVjPkGny9BRgAvUdQSHl+oj0AAAAASUVORK5CYII=\');\r\n    }\r\n\r\n     " +
-"   .bcms-tree-controls-delete:hover {\r\n            background-image: url(\'data:i" +
-"mage/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAGXRFWHRTb2Z0d2Fy" +
-"ZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tl" +
-"dCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1s" +
-"bnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1" +
-"NTc3MiwgMjAxNC8wMS8xMy0xOTo0NDowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRw" +
-"Oi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiBy" +
-"ZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHht" +
-"bG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4" +
-"bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1l" +
-"bnRJRD0ieG1wLmRpZDoyNjIwYWQzZS1kMWVkLTQ2MjItYjkyMi1iY2JlZDAwNzdmOTAiIHhtcE1NOkRv" +
-"Y3VtZW50SUQ9InhtcC5kaWQ6QkU5NUMwRTMyQUFFMTFFNDlGN0I5N0E3Njc4OTY0MTciIHhtcE1NOklu" +
-"c3RhbmNlSUQ9InhtcC5paWQ6QkU5NUMwRTIyQUFFMTFFNDlGN0I5N0E3Njc4OTY0MTciIHhtcDpDcmVh" +
-"dG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKE1hY2ludG9zaCkiPiA8eG1wTU06RGVyaXZl" +
-"ZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1NjI0ZWNhMi0yMDVkLTQyMTgtOTBlOC1hNTI2" +
-"NzUyMzhhNTciIHN0UmVmOmRvY3VtZW50SUQ9ImFkb2JlOmRvY2lkOnBob3Rvc2hvcDo1M2EwOTQ5Yy03" +
-"MzBlLTExNzctYWNmMy1jMTNkYWY0YzNlNTgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4g" +
-"PC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7RDI7zAAABDUlEQVR42qySuwrCQBBFJ0EFXygo" +
-"WNnnU/RHbO2sRESsbPwe8UNSpVFQIyI+GxXW2XgXhpDEYLxw2Mns5O7sw1JKkZY1WVNIU2bA5PH9ZGbM" +
-"UBapUTsYbYpXT5gQ4l5ccZRRhXGYIr4tQMg5qIk10lvxmCvjimIFzCIuajz881lNnJGiH8RnFHSbEzmL" +
-"MsimPylsdBFn8o1rktEOo35UL8QnQMitEG/TGHWYBeIx0FoyXcS+/DEXMjKTJeaI+CHmD+J9+UkdmXZr" +
-"YjtSOldPs7U9Rl18jjA6YxFZm7mjTZKR/6+OzK01mDviAiDkmqHayFszk33mJq7faM5U0xiZdsuAxJlo" +
-"tSKOIdBbgAEArfdQSIIhMdAAAAAASUVORK5CYII=\');\r\n        }\r\n\r\n    .bcms-tree-control" +
-"s-add {\r\n        background-image: url(\'data:image/png;base64,iVBORw0KGgoAAAANSU" +
-"hEUgAAABAAAAAQCAYAAAAf8/9hAAAAPklEQVQ4y2NgmPGOAQc+DMT/ofgwTnV4DPiPhkcNwGPAYSyKic" +
-"WHGSjQDMHUMIASLxwZTQc0NuAwSmjjUAcAbxLzwsvYFoMAAAAASUVORK5CYII=\');\r\n    }\r\n\r\n    " +
-"    .bcms-tree-controls-add:hover {\r\n            background-image: url(\'data:ima" +
-"ge/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAPklEQVQ4y2NgaHzEgA" +
-"MfBuL/UHwYpzo8BvxHw6MG4DHgMBbFxOLDDBRohmBqGECJF46MpgMaG3AYJbRxqAMATWnQwmj3tBgAAA" +
-"AASUVORK5CYII=\');\r\n        }\r\n</style>\r\n<script");
+"uQmCC\') no-repeat center center;\r\n        }\r\n\r\n    .bcms-contents-tree-drop-area" +
+" {\r\n        color: black;\r\n        height: 30px;\r\n        margin: 10px 0;\r\n     " +
+"   border: 1px dashed black;\r\n    }\r\n\r\n    .bcms-contents-hover {\r\n        backg" +
+"round-color: #f5f5f5;\r\n    }\r\n\r\n        .bcms-contents-hover > div > .bcms-tree-" +
+"controls {\r\n            display: block;\r\n        }\r\n\r\n    .bcms-tree-controls {\r" +
+"\n        display: none;\r\n        float: right;\r\n    }\r\n\r\n        .bcms-tree-cont" +
+"rols a {\r\n            position: relative;\r\n            display: inline-block;\r\n " +
+"           width: 18px;\r\n            height: 18px;\r\n            margin-left: 15p" +
+"x;\r\n            background-position: center;\r\n            cursor: pointer;\r\n    " +
+"        vertical-align: middle;\r\n            text-indent: -9999px;\r\n        }\r\n\r" +
+"\n    .bcms-tree-controls-config {\r\n        background-image: url(\'data:image/png" +
+";base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAGXRFWHRTb2Z0d2FyZQBBZG9i" +
+"ZSBJbWFnZVJlYWR5ccllPAAAA4ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdp" +
+"bj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0i" +
+"YWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NTc3Miwg" +
+"MjAxNC8wMS8xMy0xOTo0NDowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3" +
+"LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJv" +
+"dXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0" +
+"UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4" +
+"bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0i" +
+"eG1wLmRpZDoyNjIwYWQzZS1kMWVkLTQ2MjItYjkyMi1iY2JlZDAwNzdmOTAiIHhtcE1NOkRvY3VtZW50" +
+"SUQ9InhtcC5kaWQ6QkU4RTM4NUQyQUFFMTFFNDlGN0I5N0E3Njc4OTY0MTciIHhtcE1NOkluc3RhbmNl" +
+"SUQ9InhtcC5paWQ6QkU4RTM4NUMyQUFFMTFFNDlGN0I5N0E3Njc4OTY0MTciIHhtcDpDcmVhdG9yVG9v" +
+"bD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKE1hY2ludG9zaCkiPiA8eG1wTU06RGVyaXZlZEZyb20g" +
+"c3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1NjI0ZWNhMi0yMDVkLTQyMTgtOTBlOC1hNTI2NzUyMzhh" +
+"NTciIHN0UmVmOmRvY3VtZW50SUQ9ImFkb2JlOmRvY2lkOnBob3Rvc2hvcDo1M2EwOTQ5Yy03MzBlLTEx" +
+"NzctYWNmMy1jMTNkYWY0YzNlNTgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94Onht" +
+"cG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz40nDz/AAABO0lEQVR42pTTP0sDQRCG8Y0ciqBERRCFlAoW" +
+"WvoFBBURRCwt7MTCMpoiTcBeC1HS2YudgYAWttrY2UUDogQSk1JU/PeMTOBY9rKbgV8zd7zZncylTLFl" +
+"AmoUu1jBBGpYwHP7hSggZBZlDZD6xF48RKrHEzKIUixEKqc9003QFjJWr+x4b9wXtOToTTveufLNaMzR" +
+"O8YX7rGIQ3z4gl4wY/VkXhdW76nT1YYxYsKqlBQ0iRvMBYQ0cOAKmsctpgJDVmUE9oy2cZSwqNfo1Rk1" +
+"camDfo1vdqTNnYRflhMu4z3paBKQxpl+O66ST2GtU0h7s0805AEV6/mbzqDmG5acaB113ZcfVGXl8YtN" +
+"3IX8/5EeuU935hv9+qyA88A9+r9aUef0qKcZ0pntmy5KTpRHChsYwCmyerXg+hNgAKZiOglvOgJeAAAA" +
+"AElFTkSuQmCC\');\r\n    }\r\n\r\n        .bcms-tree-controls-config:hover {\r\n          " +
+"  background-image: url(\'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASC" +
+"AYAAABWzo5XAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4ZpVFh0WE1MOmNvb" +
+"S5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY" +
+"3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlI" +
+"FhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NTc3MiwgMjAxNC8wMS8xMy0xOTo0NDowMCAgICAgICAgIj4gP" +
+"HJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtb" +
+"nMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZ" +
+"G9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xL" +
+"jAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuM" +
+"C8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDoyNjIwYWQzZS1kMWVkLTQ2MjItYjkyM" +
+"i1iY2JlZDAwNzdmOTAiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QkU5MDQwQzAyQUFFMTFFNDlGN" +
+"0I5N0E3Njc4OTY0MTciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QkU5MDQwQkYyQUFFMTFFNDlGN" +
+"0I5N0E3Njc4OTY0MTciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKE1hY" +
+"2ludG9zaCkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1NjI0Z" +
+"WNhMi0yMDVkLTQyMTgtOTBlOC1hNTI2NzUyMzhhNTciIHN0UmVmOmRvY3VtZW50SUQ9ImFkb2JlOmRvY" +
+"2lkOnBob3Rvc2hvcDo1M2EwOTQ5Yy03MzBlLTExNzctYWNmMy1jMTNkYWY0YzNlNTgiLz4gPC9yZGY6R" +
+"GVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7JS4S2A" +
+"AABO0lEQVR42pTTPUsDQRCH8Y0cimDQSEAUUipYaOkXEFREELG0sBMLyyQWNoq9FqKksxc7AwFT2Gpjl" +
+"04jhEjAl1ZUfHtGJnAse9nNwK+ZO/7ZncylzF7DBFQWBSxhDC3Modl+IQoImUZFA6Q+UYyHSPV4QtIox" +
+"0KktrVnugnaQM7qVRzvjfqCFhy9Scc7Vd+MRhy9Y3yhhnkc4sMX9IgpqyfzurB6jU5Xy2DYhFU5KWgc1" +
+"5gJCHnGgStoFjeYCAxZlhHYM9rEUcKiXqFXZ/SKSx30S3yzI21uJfyynHAR70lHk4BBnOm34yr5FFY6h" +
+"bQ3+0RD7nFnPX/TGbR8w5ITreJJ9+UHD7Ly+MU6bkP+/0iP3Kc7841+fbaL88A9+r9aSedU19MM6cz2T" +
+"RclJ9pBCmsYwCnyerXg+hNgAPL/OeZrZihbAAAAAElFTkSuQmCC\');\r\n        }\r\n\r\n    .bcms-t" +
+"ree-controls-history {\r\n        background-image: url(\'data:image/png;base64,iVB" +
+"ORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJ" +
+"lYWR5ccllPAAAA4ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiB" +
+"pZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM" +
+"6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NTc3MiwgMjAxNC8wMS8" +
+"xMy0xOTo0NDowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8" +
+"xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1" +
+"sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHR" +
+"wOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA" +
+"6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo" +
+"yNjIwYWQzZS1kMWVkLTQ2MjItYjkyMi1iY2JlZDAwNzdmOTAiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5" +
+"kaWQ6QkU4ODlDQkMyQUFFMTFFNDlGN0I5N0E3Njc4OTY0MTciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5" +
+"paWQ6NzNBQkFCOTQyQUFFMTFFNDlGN0I5N0E3Njc4OTY0MTciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmU" +
+"gUGhvdG9zaG9wIENDIDIwMTQgKE1hY2ludG9zaCkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5" +
+"zdGFuY2VJRD0ieG1wLmlpZDo1NjI0ZWNhMi0yMDVkLTQyMTgtOTBlOC1hNTI2NzUyMzhhNTciIHN0UmV" +
+"mOmRvY3VtZW50SUQ9ImFkb2JlOmRvY2lkOnBob3Rvc2hvcDo1M2EwOTQ5Yy03MzBlLTExNzctYWNmMy1" +
+"jMTNkYWY0YzNlNTgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw" +
+"/eHBhY2tldCBlbmQ9InIiPz5+20vPAAABkklEQVR42oyUzUpCURSFr9JUiCwNyiZNfIIIK5SkYVAQ5rQ" +
+"G/bxEUS9RD1CTiCiaFUVihTRq2KAmpUIkQTgqBFtb1onFycwNH/eec/denP1zbijYfQ/a2DRY5HOEe8/" +
+"gEhyACz8g5AklwQ7IBJ3tCqyDB7cRlo9pcOeJNECVNGQ/Q9+0L2QnOQERrstgDcTAEIlxr0yfCGOSLrU" +
+"QnrdgnA43YA7U/kirHxyDCa5LIGUnyopIBcyLSJGo1ehT4dpisyaUE6ct8CbrSeKb+WzLOmepPeJllMX" +
+"sA3VxaP5097dZjazlPeDJTpTgh1dP5D+rM8YsYUKfXQQ1hWKbE7faX+V7XNrv7LqNaEhSG3TjEuZgBcw" +
+"17wVNMVBxxc8zpjUyJrQvgZtgoItUzWdD1nsmdMahCjjBRyDaQSRKn2EZyPMwC7YEPmR27sEq6BUBe1/" +
+"hN5eexSybht5+u4CnXsEb0uK41MS1fxYU/NtvG2OSpmuAu7QqUqJvQR3V7P+SAjNggffQBvYLvHCGDq0" +
+"mOkNm3wIMABy8XV+rkpVKAAAAAElFTkSuQmCC\');\r\n    }\r\n\r\n        .bcms-tree-controls-h" +
+"istory:hover {\r\n            background-image: url(\'data:image/png;base64,iVBORw0" +
+"KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR" +
+"5ccllPAAAA4ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0" +
+"iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV" +
+"0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NTc3MiwgMjAxNC8wMS8xMy0" +
+"xOTo0NDowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk" +
+"5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM" +
+"6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8" +
+"vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9" +
+"ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDoyNjI" +
+"wYWQzZS1kMWVkLTQ2MjItYjkyMi1iY2JlZDAwNzdmOTAiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ" +
+"6QkU4RTM4NjUyQUFFMTFFNDlGN0I5N0E3Njc4OTY0MTciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ" +
+"6QkU4RTM4NjQyQUFFMTFFNDlGN0I5N0E3Njc4OTY0MTciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGh" +
+"vdG9zaG9wIENDIDIwMTQgKE1hY2ludG9zaCkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGF" +
+"uY2VJRD0ieG1wLmlpZDo1NjI0ZWNhMi0yMDVkLTQyMTgtOTBlOC1hNTI2NzUyMzhhNTciIHN0UmVmOmR" +
+"vY3VtZW50SUQ9ImFkb2JlOmRvY2lkOnBob3Rvc2hvcDo1M2EwOTQ5Yy03MzBlLTExNzctYWNmMy1jMTN" +
+"kYWY0YzNlNTgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHB" +
+"hY2tldCBlbmQ9InIiPz6bbQbPAAABiUlEQVR42pSUT0tCURDF33u0lQJJg7K1WzcRUShKyxZBmNta9Od" +
+"LFPYlolWboogIol1RJBpIq5atS4VIkHBVCHVOnBvDRcQGfvhm3szh3Zm5hkH5JehjebCq32nFmHgHzsC" +
+"tXxB6QmmwD3LBYLsH2+DZBSLzMgsePZEeaImeieeUm/WF+CWXICa/AbZAAkyKhGIN5cRUk3ZCITgEo0p" +
+"4ABlwADrmKzqKZZQTqIa1IYUKYFYvmmAZtOVXhbW2cpryWVugUNEklcG78eeFb8zZM34x0ohdY0+D4e3" +
+"EDCBPoZScN9D9h1BXNbQUhT6HKPo2VL343/hbek6a8Tur9RENzfgn3LpEWizaCCh5RQsqtLjml1TzuzI" +
+"UOjaFu2B8iKMyZ8f4RxS6BnUFuMEXID5AJK6cKfmsvYnUsDXwYXbnCWyCMSPA5w29c8djzTo17O3nBbz" +
+"yGt4zI06anrjxL4GKf/sZmDHHdANwl9aK1JVbsYnW+P8yBxbBiu4hF/YLvGqHztkTu0O0HwEGALKcWTR" +
+"WogHlAAAAAElFTkSuQmCC\');\r\n        }\r\n\r\n    .bcms-tree-controls-edit {\r\n        b" +
+"ackground-image: url(\'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYA" +
+"AABWzo5XAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4ZpVFh0WE1MOmNvbS5h" +
+"ZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3pr" +
+"YzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhN" +
+"UCBDb3JlIDUuNS1jMDIxIDc5LjE1NTc3MiwgMjAxNC8wMS8xMy0xOTo0NDowMCAgICAgICAgIj4gPHJk" +
+"ZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMj" +
+"Ij4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9i" +
+"ZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAv" +
+"c1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8i" +
+"IHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDoyNjIwYWQzZS1kMWVkLTQ2MjItYjkyMi1i" +
+"Y2JlZDAwNzdmOTAiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QkU4ODlDQzAyQUFFMTFFNDlGN0I5" +
+"N0E3Njc4OTY0MTciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QkU4ODlDQkYyQUFFMTFFNDlGN0I5" +
+"N0E3Njc4OTY0MTciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKE1hY2lu" +
+"dG9zaCkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1NjI0ZWNh" +
+"Mi0yMDVkLTQyMTgtOTBlOC1hNTI2NzUyMzhhNTciIHN0UmVmOmRvY3VtZW50SUQ9ImFkb2JlOmRvY2lk" +
+"OnBob3Rvc2hvcDo1M2EwOTQ5Yy03MzBlLTExNzctYWNmMy1jMTNkYWY0YzNlNTgiLz4gPC9yZGY6RGVz" +
+"Y3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7JVpV+AAAB" +
+"A0lEQVR42qzUPQ/BQBzH8ToGG3ZisDGWRSz1sFusXoDJ4j3YLQw1W0wkBmYGi0Q8DCYSQZNuJpH4Nflf" +
+"chqtO3HJN06bfvLXtAJa19YUVhr1UB7tUAtNnBNMAcmhOSrQdRk0QnXnZEgBmaKI63gQ9ZEtM1HWAxGx" +
+"NpNAZj4IX0n2B8RZC/bjzxHXFTWYDxKVRIro4IZ0BeRGyNb9HOl0T2QRgyMipDrJG8KhME0SQ2NkqSIc" +
+"StAkQ1RFJQ/s7Z58guK076AnWqOyC+PIxmtUEUoJ794erWhvfUP4S8shkz5PqIkqhBjfEA7VhO+msJea" +
+"RITuaIkG6EwTHdEFPWT/rF4CDADWFj0fhaXULQAAAABJRU5ErkJggg==\');\r\n    }\r\n\r\n        .b" +
+"cms-tree-controls-edit:hover {\r\n            background-image: url(\'data:image/pn" +
+"g;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAGXRFWHRTb2Z0d2FyZQBBZG9" +
+"iZSBJbWFnZVJlYWR5ccllPAAAA4ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWd" +
+"pbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0" +
+"iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NTc3Miw" +
+"gMjAxNC8wMS8xMy0xOTo0NDowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d" +
+"3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJ" +
+"vdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN" +
+"0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp" +
+"4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0" +
+"ieG1wLmRpZDoyNjIwYWQzZS1kMWVkLTQ2MjItYjkyMi1iY2JlZDAwNzdmOTAiIHhtcE1NOkRvY3VtZW5" +
+"0SUQ9InhtcC5kaWQ6QkU5MDQwQjgyQUFFMTFFNDlGN0I5N0E3Njc4OTY0MTciIHhtcE1NOkluc3RhbmN" +
+"lSUQ9InhtcC5paWQ6QkU5MDQwQjcyQUFFMTFFNDlGN0I5N0E3Njc4OTY0MTciIHhtcDpDcmVhdG9yVG9" +
+"vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKE1hY2ludG9zaCkiPiA8eG1wTU06RGVyaXZlZEZyb20" +
+"gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1NjI0ZWNhMi0yMDVkLTQyMTgtOTBlOC1hNTI2NzUyMzh" +
+"hNTciIHN0UmVmOmRvY3VtZW50SUQ9ImFkb2JlOmRvY2lkOnBob3Rvc2hvcDo1M2EwOTQ5Yy03MzBlLTE" +
+"xNzctYWNmMy1jMTNkYWY0YzNlNTgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94Onh" +
+"tcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4neRuoAAABBUlEQVR42qzUPQ/BQBzH8ToGG3ZisDFiEUs" +
+"97BarF2CyeAE2u8lQs8VEYmBmsEjEw2AiETSxmUTi1+R/ybXR9k5c8o2rxid/TduA1jlpCiuN+qiA9qi" +
+"NptYJpoDk0QIV6XcZNEYN62RIAZmhiOP7IBqgh8xEORdExLpMApl7IHwl2R8Qay3Zj39HXDfUZB5IVBI" +
+"poaMTyiogd0J2zvsoS9dEFtE5IkKqk9gQDoVpkhiaIFMV4VCCJhmhGiq7YLZr8g2K076H3miDKg6MI1u" +
+"3UUUoJTx7B7SmvemH8IeWQwZ9nlELVQnR/RAO1YVjQ9hLTSJCT7RCQ3Shiay33RW9ZF9WHwEGACLCPPy" +
+"TiwJWAAAAAElFTkSuQmCC\');\r\n        }\r\n\r\n    .bcms-tree-controls-delete {\r\n       " +
+" background-image: url(\'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCA" +
+"YAAABWzo5XAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4ZpVFh0WE1MOmNvbS" +
+"5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3" +
+"prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIF" +
+"hNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NTc3MiwgMjAxNC8wMS8xMy0xOTo0NDowMCAgICAgICAgIj4gPH" +
+"JkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbn" +
+"MjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG" +
+"9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLj" +
+"Avc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC" +
+"8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDoyNjIwYWQzZS1kMWVkLTQ2MjItYjkyMi" +
+"1iY2JlZDAwNzdmOTAiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QkU4RTM4NjEyQUFFMTFFNDlGN0" +
+"I5N0E3Njc4OTY0MTciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QkU4RTM4NjAyQUFFMTFFNDlGN0" +
+"I5N0E3Njc4OTY0MTciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKE1hY2" +
+"ludG9zaCkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1NjI0ZW" +
+"NhMi0yMDVkLTQyMTgtOTBlOC1hNTI2NzUyMzhhNTciIHN0UmVmOmRvY3VtZW50SUQ9ImFkb2JlOmRvY2" +
+"lkOnBob3Rvc2hvcDo1M2EwOTQ5Yy03MzBlLTExNzctYWNmMy1jMTNkYWY0YzNlNTgiLz4gPC9yZGY6RG" +
+"VzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7bM2OFAA" +
+"ABDUlEQVR42qySPQrCQBCFJxIF/1BR8Ao5il5ESzsrCwsrG2uPIh7EKo2CGhH/bVRYZ+NbGEISg/HBx0" +
+"5mZ9/O7sZSSpGWNT1SQCOmz2Tx/WTGzEAWqW7NHzMUrY4wIcSdqOIwoxLjMHl8W4CQc1ATaaSP4jJXZi" +
+"GKFTCbLFDjYs1nN3FHin4Q35HfrS1yFqVQhv6koNFF3Mk3rnFGW4wr5oX4BAi5JeJNEqMWM0M8BFpzpo" +
+"3YkwvtgJGZLDAHxA8xvxf/lxfXkWm3Io4jpXPVJEfbYdTF5xCjMzaRtak7WscZef/qyLxanbkjzgFCrh" +
+"GoDX01M9ljbuL5jSZMOYmRabcISNyJVjPkGny9BRgAvUdQSHl+oj0AAAAASUVORK5CYII=\');\r\n    }" +
+"\r\n\r\n        .bcms-tree-controls-delete:hover {\r\n            background-image: ur" +
+"l(\'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAGXRFWHR" +
+"Tb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw" +
+"/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1" +
+"ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDI" +
+"xIDc5LjE1NTc3MiwgMjAxNC8wMS8xMy0xOTo0NDowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmR" +
+"mPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcml" +
+"wdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9" +
+"tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2V" +
+"SZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmF" +
+"sRG9jdW1lbnRJRD0ieG1wLmRpZDoyNjIwYWQzZS1kMWVkLTQ2MjItYjkyMi1iY2JlZDAwNzdmOTAiIHh" +
+"tcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QkU5NUMwRTMyQUFFMTFFNDlGN0I5N0E3Njc4OTY0MTciIHh" +
+"tcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QkU5NUMwRTIyQUFFMTFFNDlGN0I5N0E3Njc4OTY0MTciIHh" +
+"tcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKE1hY2ludG9zaCkiPiA8eG1wTU0" +
+"6RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1NjI0ZWNhMi0yMDVkLTQyMTgtOTB" +
+"lOC1hNTI2NzUyMzhhNTciIHN0UmVmOmRvY3VtZW50SUQ9ImFkb2JlOmRvY2lkOnBob3Rvc2hvcDo1M2E" +
+"wOTQ5Yy03MzBlLTExNzctYWNmMy1jMTNkYWY0YzNlNTgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmR" +
+"mOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7RDI7zAAABDUlEQVR42qySuwrCQBB" +
+"FJ0EFXygoWNnnU/RHbO2sRESsbPwe8UNSpVFQIyI+GxXW2XgXhpDEYLxw2Mns5O7sw1JKkZY1WVNIU2b" +
+"A5PH9ZGbMUBapUTsYbYpXT5gQ4l5ccZRRhXGYIr4tQMg5qIk10lvxmCvjimIFzCIuajz881lNnJGiH8R" +
+"nFHSbEzmLMsimPylsdBFn8o1rktEOo35UL8QnQMitEG/TGHWYBeIx0FoyXcS+/DEXMjKTJeaI+CHmD+J" +
+"9+UkdmXZrYjtSOldPs7U9Rl18jjA6YxFZm7mjTZKR/6+OzK01mDviAiDkmqHayFszk33mJq7faM5U0xi" +
+"ZdsuAxJlotSKOIdBbgAEArfdQSIIhMdAAAAAASUVORK5CYII=\');\r\n        }\r\n\r\n    .bcms-tre" +
+"e-controls-add {\r\n        background-image: url(\'data:image/png;base64,iVBORw0KG" +
+"goAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAPklEQVQ4y2NgmPGOAQc+DMT/ofgwTnV4DPiPhkcNw" +
+"GPAYSyKicWHGSjQDMHUMIASLxwZTQc0NuAwSmjjUAcAbxLzwsvYFoMAAAAASUVORK5CYII=\');\r\n    " +
+"}\r\n\r\n        .bcms-tree-controls-add:hover {\r\n            background-image: url(" +
+"\'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAPklEQVQ4y" +
+"2NgaHzEgAMfBuL/UHwYpzo8BvxHw6MG4DHgMBbFxOLDDBRohmBqGECJF46MpgMaG3AYJbRxqAMATWnQw" +
+"mj3tBgAAAAASUVORK5CYII=\');\r\n        }\r\n</style>\r\n<script");
 
 WriteLiteral(" type=\"text/html\"");
 
 WriteLiteral(" id=\"bcms-contents-tree-list-template\"");
 
-WriteLiteral(">\r\n    <!-- ko if: $data.length > 0 -->\r\n    <!-- ko foreach: $data -->\r\n    <!--" +
-" ko if: type == types.content && $index() == 0 -->\r\n    <div class=\"bcms-content" +
-"s-tree-droppable\" data-bind=\"droppableContent: {type: \'top\', region: parentRegio" +
-"n}, css: {\'bcms-contents-tree-droppable-active\': activeZone() == \'top\', \'bcms-co" +
-"ntents-tree-droppable-ready\': $root.isBeingDragged()}\">\r\n        &nbsp;\r\n    </d" +
-"iv>\r\n    <!-- /ko -->\r\n    <div data-bind=\"\r\n        css: {\r\n            \'bcms-c" +
-"ontents-tree-region\': type == types.region,\r\n            \'bcms-contents-tree-con" +
-"tent\': type == types.content,\r\n            \'bcms-dragging\': isBeingDragged(),\r\n " +
-"           \'bcms-contents-hover\': isHover()\r\n        },\r\n        event: {\r\n     " +
-"       mouseleave: onMouseLeave, mouseenter: onMouseEnter\r\n        },\r\n        d" +
-"raggableContent: type == types.content\">\r\n        <div data-bind=\"css: {\'bcms-co" +
-"ntents-tree-region-header\': type == types.region}\">\r\n            <span data-bind" +
-"=\"text: title()\"></span>\r\n            <div class=\"bcms-tree-controls\" data-bind=" +
-"\"visible: !isBeingDragged()\">\r\n                <!-- ko if: type == types.content" +
-" -->\r\n                <!-- ko if: model.visibleButtons.configure -->\r\n          " +
-"      <a class=\"bcms-tree-controls-config\" data-bind=\"click: configure\"></a>\r\n  " +
-"              <!-- /ko -->\r\n                <!-- ko if: model.visibleButtons.his" +
-"tory -->\r\n                <a class=\"bcms-tree-controls-history\" data-bind=\"click" +
-": history\"></a>\r\n                <!-- /ko -->\r\n                <!-- ko if: model" +
-".visibleButtons.edit -->\r\n                <a class=\"bcms-tree-controls-edit\" dat" +
-"a-bind=\"click: editItem\"></a>\r\n                <!-- /ko -->\r\n                <!-" +
-"- ko if: model.visibleButtons.delete -->\r\n                <a class=\"bcms-tree-co" +
-"ntrols-delete\" data-bind=\"click: deleteItem\"></a>\r\n                <!-- /ko -->\r" +
-"\n                <!-- /ko -->\r\n                <!-- ko if: type == types.region " +
-"-->\r\n                <a class=\"bcms-tree-controls-add\" data-bind=\"click: addCont" +
-"ent\"></a>\r\n                <!-- /ko -->\r\n            </div>\r\n        </div>\r\n   " +
-"     <div data-bind=\"with: items()\">\r\n            <div data-bind=\"template: { na" +
-"me: \'bcms-contents-tree-list-template\' }\"></div>\r\n        </div>\r\n\r\n        <!--" +
-" ko if: type == types.region && items().length === 0 -->\r\n        <div class=\"bc" +
-"ms-contents-tree-droppable\" data-bind=\"droppableContent: {type: \'emptyListZone\'," +
-" region: $data}, css: {\'bcms-contents-tree-droppable-active\': activeZone() == \'e" +
-"mptyListZone\', \'bcms-contents-tree-droppable-ready\': $root.isBeingDragged()}\">\r\n" +
-"            &nbsp;\r\n        </div>\r\n        <!-- /ko -->\r\n    </div>\r\n\r\n    <!--" +
-" ko if: type == types.content && !isBeingDragged() -->\r\n    <div class=\"bcms-con" +
-"tents-tree-droppable\" data-bind=\"droppableContent: {type: \'middle\', region: pare" +
-"ntRegion}, css: {\'bcms-contents-tree-droppable-active\': activeZone() == \'middle\'" +
-", \'bcms-contents-tree-droppable-ready\': $root.isBeingDragged()}\">\r\n        &nbsp" +
-";\r\n    </div>\r\n    <!-- /ko -->\r\n    <!-- /ko -->\r\n    <!-- /ko -->\r\n</script>");
+WriteLiteral(">\r\n    <!-- ko if: $data.length > 0 -->\r\n    <!-- ko foreach: $data -->\r\n    <div" +
+" data-bind=\"css:{\'bcms-contents-tree-sort-block\': type == types.content}, dragga" +
+"bleContent: type == types.content\">\r\n        <div data-bind=\"\r\n            css: " +
+"{\r\n                \'bcms-contents-tree-region\': type == types.region,\r\n         " +
+"       \'bcms-contents-tree-content\': type == types.content,\r\n                \'bc" +
+"ms-dragging\': isBeingDragged(),\r\n                \'bcms-contents-hover\': isHover(" +
+")\r\n            },\r\n            event: {\r\n                mouseleave: onMouseLeav" +
+"e, mouseenter: onMouseEnter\r\n            }, \r\n            attr: {\r\n             " +
+"   \'data-id\': id\r\n            } \">\r\n            <div data-bind=\"css: {\'bcms-cont" +
+"ents-tree-region-header\': type == types.region}\">\r\n                <span data-bi" +
+"nd=\"text: title()\"></span>\r\n                <div class=\"bcms-tree-controls\" data" +
+"-bind=\"visible: !isBeingDragged()\">\r\n                    <!-- ko if: type == typ" +
+"es.content -->\r\n                    <!-- ko if: model.visibleButtons.configure -" +
+"->\r\n                    <a class=\"bcms-tree-controls-config\" data-bind=\"click: c" +
+"onfigure\"></a>\r\n                    <!-- /ko -->\r\n                    <!-- ko if" +
+": model.visibleButtons.history -->\r\n                    <a class=\"bcms-tree-cont" +
+"rols-history\" data-bind=\"click: history\"></a>\r\n                    <!-- /ko -->\r" +
+"\n                    <!-- ko if: model.visibleButtons.edit -->\r\n                " +
+"    <a class=\"bcms-tree-controls-edit\" data-bind=\"click: editItem\"></a>\r\n       " +
+"             <!-- /ko -->\r\n                    <!-- ko if: model.visibleButtons." +
+"delete -->\r\n                    <a class=\"bcms-tree-controls-delete\" data-bind=\"" +
+"click: deleteItem\"></a>\r\n                    <!-- /ko -->\r\n                    <" +
+"!-- /ko -->\r\n                    <!-- ko if: type == types.region -->\r\n         " +
+"           <a class=\"bcms-tree-controls-add\" data-bind=\"click: addContent\"></a>\r" +
+"\n                    <!-- /ko -->\r\n                </div>\r\n            </div>\r\n " +
+"           <div data-bind=\"with: items()\">\r\n                <div data-bind=\"temp" +
+"late: { name: \'bcms-contents-tree-list-template\' }\"></div>\r\n            </div>\r\n" +
+"        </div>\r\n    </div>\r\n    <!-- /ko -->\r\n    <!-- /ko -->\r\n</script>");
 
         }
     }

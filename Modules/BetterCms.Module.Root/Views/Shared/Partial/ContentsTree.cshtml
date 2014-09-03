@@ -90,15 +90,7 @@
             background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAwElEQVQ4y82UMQoCMRBFAxbay9qId8ghbdQbWKynUEFFEcTCbezWRm+y6v8yA0GygYyNxWuG7IP8+RvnvXcJRuABbmCQOpuS9EAFXsIBdCyiRSBRZhbREjwDSQP2FpGiImfNyCRiiGNwyhCtQClL+Yj6YJP4oG2u+V1YEw6uke3kcndStl9FNUVDcDZcrZE5K1HosAvmYJshYtOn2vb/7VGM49cvQtYW0SSyndIiYoi7QFJpiy0ZFewICyePXOvZNzOcGkIop91gAAAAAElFTkSuQmCC') no-repeat center center;
         }
 
-    .bcms-contents-tree-droppable {
-        height: 10px;
-    }
-
-    .bcms-contents-tree-droppable-ready {
-        height: 10px;
-    }
-
-    .bcms-contents-tree-droppable-active {
+    .bcms-contents-tree-drop-area {
         color: black;
         height: 30px;
         margin: 10px 0;
@@ -173,60 +165,47 @@
 <script type="text/html" id="bcms-contents-tree-list-template">
     <!-- ko if: $data.length > 0 -->
     <!-- ko foreach: $data -->
-    <!-- ko if: type == types.content && $index() == 0 -->
-    <div class="bcms-contents-tree-droppable" data-bind="droppableContent: {type: 'top', region: parentRegion}, css: {'bcms-contents-tree-droppable-active': activeZone() == 'top', 'bcms-contents-tree-droppable-ready': $root.isBeingDragged()}">
-        &nbsp;
-    </div>
-    <!-- /ko -->
-    <div data-bind="
-        css: {
-            'bcms-contents-tree-region': type == types.region,
-            'bcms-contents-tree-content': type == types.content,
-            'bcms-dragging': isBeingDragged(),
-            'bcms-contents-hover': isHover()
-        },
-        event: {
-            mouseleave: onMouseLeave, mouseenter: onMouseEnter
-        },
-        draggableContent: type == types.content">
-        <div data-bind="css: {'bcms-contents-tree-region-header': type == types.region}">
-            <span data-bind="text: title()"></span>
-            <div class="bcms-tree-controls" data-bind="visible: !isBeingDragged()">
-                <!-- ko if: type == types.content -->
-                <!-- ko if: model.visibleButtons.configure -->
-                <a class="bcms-tree-controls-config" data-bind="click: configure"></a>
-                <!-- /ko -->
-                <!-- ko if: model.visibleButtons.history -->
-                <a class="bcms-tree-controls-history" data-bind="click: history"></a>
-                <!-- /ko -->
-                <!-- ko if: model.visibleButtons.edit -->
-                <a class="bcms-tree-controls-edit" data-bind="click: editItem"></a>
-                <!-- /ko -->
-                <!-- ko if: model.visibleButtons.delete -->
-                <a class="bcms-tree-controls-delete" data-bind="click: deleteItem"></a>
-                <!-- /ko -->
-                <!-- /ko -->
-                <!-- ko if: type == types.region -->
-                <a class="bcms-tree-controls-add" data-bind="click: addContent"></a>
-                <!-- /ko -->
+    <div data-bind="css:{'bcms-contents-tree-sort-block': type == types.content}, draggableContent: type == types.content">
+        <div data-bind="
+            css: {
+                'bcms-contents-tree-region': type == types.region,
+                'bcms-contents-tree-content': type == types.content,
+                'bcms-dragging': isBeingDragged(),
+                'bcms-contents-hover': isHover()
+            },
+            event: {
+                mouseleave: onMouseLeave, mouseenter: onMouseEnter
+            }, 
+            attr: {
+                'data-id': id
+            } ">
+            <div data-bind="css: {'bcms-contents-tree-region-header': type == types.region}">
+                <span data-bind="text: title()"></span>
+                <div class="bcms-tree-controls" data-bind="visible: !isBeingDragged()">
+                    <!-- ko if: type == types.content -->
+                    <!-- ko if: model.visibleButtons.configure -->
+                    <a class="bcms-tree-controls-config" data-bind="click: configure"></a>
+                    <!-- /ko -->
+                    <!-- ko if: model.visibleButtons.history -->
+                    <a class="bcms-tree-controls-history" data-bind="click: history"></a>
+                    <!-- /ko -->
+                    <!-- ko if: model.visibleButtons.edit -->
+                    <a class="bcms-tree-controls-edit" data-bind="click: editItem"></a>
+                    <!-- /ko -->
+                    <!-- ko if: model.visibleButtons.delete -->
+                    <a class="bcms-tree-controls-delete" data-bind="click: deleteItem"></a>
+                    <!-- /ko -->
+                    <!-- /ko -->
+                    <!-- ko if: type == types.region -->
+                    <a class="bcms-tree-controls-add" data-bind="click: addContent"></a>
+                    <!-- /ko -->
+                </div>
+            </div>
+            <div data-bind="with: items()">
+                <div data-bind="template: { name: 'bcms-contents-tree-list-template' }"></div>
             </div>
         </div>
-        <div data-bind="with: items()">
-            <div data-bind="template: { name: 'bcms-contents-tree-list-template' }"></div>
-        </div>
-
-        <!-- ko if: type == types.region && items().length === 0 -->
-        <div class="bcms-contents-tree-droppable" data-bind="droppableContent: {type: 'emptyListZone', region: $data}, css: {'bcms-contents-tree-droppable-active': activeZone() == 'emptyListZone', 'bcms-contents-tree-droppable-ready': $root.isBeingDragged()}">
-            &nbsp;
-        </div>
-        <!-- /ko -->
     </div>
-
-    <!-- ko if: type == types.content && !isBeingDragged() -->
-    <div class="bcms-contents-tree-droppable" data-bind="droppableContent: {type: 'middle', region: parentRegion}, css: {'bcms-contents-tree-droppable-active': activeZone() == 'middle', 'bcms-contents-tree-droppable-ready': $root.isBeingDragged()}">
-        &nbsp;
-    </div>
-    <!-- /ko -->
     <!-- /ko -->
     <!-- /ko -->
 </script>
