@@ -286,7 +286,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                     regionViewModel.changedContents = regionContents;
                 }
                 if (!leaveSortModeOpen) {
-                    regionViewModel.contents = regionContents;
+                    regionViewModel.setContents(regionContents);
                 }
             }
 
@@ -421,7 +421,6 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         self.parentRegion = null;
         self.parentPageContentId = parentPageContentId;
         self.parentContent = null;
-        self.childContents = null;
         self.isInvisible = regionStart.data("invisible") === true;
 
         self.left = 0;
@@ -523,18 +522,8 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             });
         };
 
-        self.getChildContents = function () {
-            if (self.childContents == null) {
-                self.childContents = [];
-
-                for (var i = 0; i < pageViewModel.contents.length; i++) {
-                    if (pageViewModel.contents[i].region == self) {
-                        self.childContents.push(pageViewModel.contents[i]);
-                    }
-                }
-            }
-
-            return self.childContents;
+        self.setContents = function (changedContents) {
+            self.contents = changedContents;
         };
     }
 

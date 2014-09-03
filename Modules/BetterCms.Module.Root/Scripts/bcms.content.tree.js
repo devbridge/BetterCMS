@@ -61,11 +61,10 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
 
     function createRegionViewModel(regionModel, parentContent, level) {
         var model = new TreeItemViewModel(),
-            childContents,
             itemModel,
             i;
 
-        model.id = regionModel.id;
+        model.itemId = bcms.createGuid();
         model.title(regionModel.title);
         model.model = regionModel;
         model.type = treeItemTypes.region;
@@ -74,10 +73,9 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         model.level(level);
 
         // Collect child contents
-        childContents = regionModel.getChildContents();
         level++;
-        for (i = 0; i < childContents.length; i++) {
-            itemModel = createContentViewModel(childContents[i], model, level);
+        for (i = 0; i < regionModel.contents.length; i++) {
+            itemModel = createContentViewModel(regionModel.contents[i], model, level);
 
             model.items.push(itemModel);
         }
@@ -109,7 +107,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             itemModel,
             i;
 
-        model.id = contentModel.contentId;
+        model.itemId = bcms.createGuid();
         model.title(contentModel.title);
         model.model = contentModel;
         model.type = treeItemTypes.content;
@@ -196,7 +194,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             }
 
             for (j = 0; j < items.length; j ++) {
-                if (items[j].id == itemId) {
+                if (items[j].itemId == itemId) {
                     return items[j];
                 }
 
@@ -222,7 +220,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         self.model = null;
         self.title = ko.observable();
         self.type = null;
-        self.id = null;
+        self.itemId = null;
         self.isInvisible = false;
         self.types = treeItemTypes;
 
@@ -290,7 +288,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                 buttons: [doNotsaveButton],
                 onAccept: function () {
                     for (i = 0; i < changedRegions.length; i++) {
-                        changedRegions[i].contents = changedRegions[i].changedContents;
+                        changedRegions[i].setContents(changedRegions[i].changedContents);
                     }
                     contentModule.saveContentChanges(changedRegions, function () {
                         // Open pages structure modal after user accepts changes
@@ -372,7 +370,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
 
                 hasContentsChanged = contentModule.hasContentsOrderChanged(contentsBeforeReorder, contentsAfterReorder);
                 if (hasContentsChanged) {
-                    treeItem.model.contents = contentsAfterReorder;
+                    treeItem.model.setContents(contentsAfterReorder);
 
                     changedRegions.push(treeItem.model);
                 }
@@ -416,9 +414,9 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                                 isUpdating = false;
 
                                 var regionContainer = data.item.parents(selectors.firstParentRegion),
-                                    regionId = regionContainer.data('id'),
+                                    regionId = regionContainer.data('itemId'),
                                     regionModelBefore = dragObject.parentRegion,
-                                    regionModelAfter = regionId == regionModelBefore.id ? regionModelBefore : treeViewModel.getItemById(regionId),
+                                    regionModelAfter = regionId == regionModelBefore.itemId ? regionModelBefore : treeViewModel.getItemById(regionId),
                                     correctOrder = [],
                                     updateOrder = false,
                                     allItems = regionModelAfter.items();
@@ -431,14 +429,14 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
 
                                 i = 0;
                                 regionContainer.find(selectors.childContents).each(function() {
-                                    var id = $(this).data('id'),
-                                        itemModel = (id == dragObject.id && regionModelBefore != regionModelAfter)
+                                    var id = $(this).data('itemId'),
+                                        itemModel = (id == dragObject.itemId && regionModelBefore != regionModelAfter)
                                             ? dragObject
                                             : treeViewModel.getItemById(id, allItems);
 
                                     if (itemModel.type == treeItemTypes.content && itemModel.parentRegion == regionModelAfter) {
                                         correctOrder.push(itemModel);
-                                        if (!updateOrder && (!allItems[i] || itemModel.id != allItems[i].id)) {
+                                        if (!updateOrder && (!allItems[i] || itemModel.itemId != allItems[i].itemId)) {
                                             updateOrder = true;
                                         }
                                     }
