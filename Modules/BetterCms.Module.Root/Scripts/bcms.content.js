@@ -863,8 +863,6 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 currentRegion.contents.push(contentViewModel);
             }
         }
-
-        console.log('Regions found: ' + pageViewModel.regions.length);
     }
 
     /**
@@ -1120,7 +1118,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
                 $.each(items, function (index) {
                     totalItemsWidth += items[index].element.outerWidth();
-                    console.log('Item: ' + items[index].element.outerWidth() + '; total: ' + totalItemsWidth + '; cw: ' + cw);
+                    // console.log('Item: ' + items[index].element.outerWidth() + '; total: ' + totalItemsWidth + '; cw: ' + cw);
                 });
 
                 pathContainer.css('width', cw > totalItemsWidth ? totalItemsWidth : cw);

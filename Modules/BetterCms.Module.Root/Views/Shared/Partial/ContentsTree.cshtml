@@ -31,11 +31,6 @@
         box-sizing: border-box;
     }
 
-    .bcms-contents-tree-region-icons {
-        display: none;
-        float: right;
-    }
-
     .bcms-contents-tree-region-header span {
         line-height: 1em;
         color: #0383df;
@@ -79,14 +74,10 @@
             background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAoUlEQVQ4y63TMQ7CMAyF4UxI3OObaM8KHUDiLohbVJR7wAAIBEuCqkiB0jL8Qxy/J9txAkLGAkt0uEQOMbbI8/uHGdZ44FnggS3mucEMuw/CnH3UvA02P4gT62RQ4T7C4I4qYDVCnFiFOO38IhTI87qA64QKriWDMLCKU6mFobSlIX7rPdEE1BOesZ6ySJu/rvLkz9SnQoMjbjijjbE6z38BOfIicutUfNcAAAAASUVORK5CYII=') no-repeat center center;
         }
 
-    .bcms-contents-tree-content-icons {
-        display: none;
-        float: right;
-    }
-
     .bcms-dragging {
         background-color: #f5f5f5;
         opacity: 0.8;
+        z-index: 9999;
     }
 
         .bcms-dragging:after {
@@ -100,7 +91,11 @@
         }
 
     .bcms-contents-tree-droppable {
-        height: 20px;
+        height: 10px;
+    }
+
+    .bcms-contents-tree-droppable-ready {
+        height: 10px;
     }
 
     .bcms-contents-tree-droppable-active {
@@ -114,25 +109,26 @@
         background-color: #f5f5f5;
     }
 
-        .bcms-contents-hover .bcms-contents-tree-content-icons {
+        .bcms-contents-hover > div > .bcms-tree-controls {
             display: block;
         }
 
-        .bcms-contents-hover .bcms-contents-tree-region-icons {
-            display: block;
-        }
-
-    .bcms-tree-controls a {
-        position: relative;
-        display: inline-block;
-        width: 18px;
-        height: 18px;
-        margin-left: 15px;
-        background-position: center;
-        cursor: pointer;
-        vertical-align: middle;
-        text-indent: -9999px;
+    .bcms-tree-controls {
+        display: none;
+        float: right;
     }
+
+        .bcms-tree-controls a {
+            position: relative;
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            margin-left: 15px;
+            background-position: center;
+            cursor: pointer;
+            vertical-align: middle;
+            text-indent: -9999px;
+        }
 
     .bcms-tree-controls-config {
         background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NTc3MiwgMjAxNC8wMS8xMy0xOTo0NDowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDoyNjIwYWQzZS1kMWVkLTQ2MjItYjkyMi1iY2JlZDAwNzdmOTAiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QkU4RTM4NUQyQUFFMTFFNDlGN0I5N0E3Njc4OTY0MTciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QkU4RTM4NUMyQUFFMTFFNDlGN0I5N0E3Njc4OTY0MTciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKE1hY2ludG9zaCkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1NjI0ZWNhMi0yMDVkLTQyMTgtOTBlOC1hNTI2NzUyMzhhNTciIHN0UmVmOmRvY3VtZW50SUQ9ImFkb2JlOmRvY2lkOnBob3Rvc2hvcDo1M2EwOTQ5Yy03MzBlLTExNzctYWNmMy1jMTNkYWY0YzNlNTgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz40nDz/AAABO0lEQVR42pTTP0sDQRCG8Y0ciqBERRCFlAoWWvoFBBURRCwt7MTCMpoiTcBeC1HS2YudgYAWttrY2UUDogQSk1JU/PeMTOBY9rKbgV8zd7zZncylTLFlAmoUu1jBBGpYwHP7hSggZBZlDZD6xF48RKrHEzKIUixEKqc9003QFjJWr+x4b9wXtOToTTveufLNaMzRO8YX7rGIQ3z4gl4wY/VkXhdW76nT1YYxYsKqlBQ0iRvMBYQ0cOAKmsctpgJDVmUE9oy2cZSwqNfo1Rk1camDfo1vdqTNnYRflhMu4z3paBKQxpl+O66ST2GtU0h7s0805AEV6/mbzqDmG5acaB113ZcfVGXl8YtN3IX8/5EeuU935hv9+qyA88A9+r9aUef0qKcZ0pntmy5KTpRHChsYwCmyerXg+hNgAKZiOglvOgJeAAAAAElFTkSuQmCC');
@@ -173,21 +169,12 @@
         .bcms-tree-controls-add:hover {
             background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAPklEQVQ4y2NgaHzEgAMfBuL/UHwYpzo8BvxHw6MG4DHgMBbFxOLDDBRohmBqGECJF46MpgMaG3AYJbRxqAMATWnQwmj3tBgAAAAASUVORK5CYII=');
         }
-
-    /*TEST ONLY*/
-    .bcms-contents-tree-content:hover .bcms-contents-tree-content-icons {
-        display: block;
-    }
-
-    .bcms-contents-tree-region:hover .bcms-contents-tree-region-icons {
-        display: block;
-    }
 </style>
 <script type="text/html" id="bcms-contents-tree-list-template">
     <!-- ko if: $data.length > 0 -->
     <!-- ko foreach: $data -->
     <!-- ko if: type == types.content && $index() == 0 -->
-    <div class="bcms-contents-tree-droppable" data-bind="droppableContent: {type: 'top', region: parentRegion}, css: {'bcms-contents-tree-droppable-active': activeZone() == 'top'}">
+    <div class="bcms-contents-tree-droppable" data-bind="droppableContent: {type: 'top', region: parentRegion}, css: {'bcms-contents-tree-droppable-active': activeZone() == 'top', 'bcms-contents-tree-droppable-ready': $root.isBeingDragged()}">
         &nbsp;
     </div>
     <!-- /ko -->
@@ -195,25 +182,28 @@
         css: {
             'bcms-contents-tree-region': type == types.region,
             'bcms-contents-tree-content': type == types.content,
-            'bcms-dragging': isBeingDragged()
+            'bcms-dragging': isBeingDragged(),
+            'bcms-contents-hover': isHover()
         },
-        draggableContent: type == types.content,
-        style: { zIndex: !isBeingDragged() ? '0' : '9999'}">
+        event: {
+            mouseleave: onMouseLeave, mouseenter: onMouseEnter
+        },
+        draggableContent: type == types.content">
         <div data-bind="css: {'bcms-contents-tree-region-header': type == types.region}">
             <span data-bind="text: title()"></span>
-            <div class="bcms-tree-controls" data-bind="css: {'bcms-contents-tree-region-icons': type==types.region, 'bcms-contents-tree-content-icons': type==types.content}, visible: !isBeingDragged()">
+            <div class="bcms-tree-controls" data-bind="visible: !isBeingDragged()">
                 <!-- ko if: type == types.content -->
                 <!-- ko if: model.visibleButtons.configure -->
-                <a class="bcms-tree-controls-config" data-bind="click: configure">TODO: Configure</a>
+                <a class="bcms-tree-controls-config" data-bind="click: configure"></a>
                 <!-- /ko -->
                 <!-- ko if: model.visibleButtons.history -->
                 <a class="bcms-tree-controls-history" data-bind="click: history"></a>
                 <!-- /ko -->
                 <!-- ko if: model.visibleButtons.edit -->
-                <a class="bcms-tree-controls-edit" data-bind="click: editItem">@RootGlobalization.Button_Edit</a>
+                <a class="bcms-tree-controls-edit" data-bind="click: editItem"></a>
                 <!-- /ko -->
                 <!-- ko if: model.visibleButtons.delete -->
-                <a class="bcms-tree-controls-delete" data-bind="click: deleteItem">@RootGlobalization.Button_Delete</a>
+                <a class="bcms-tree-controls-delete" data-bind="click: deleteItem"></a>
                 <!-- /ko -->
                 <!-- /ko -->
                 <!-- ko if: type == types.region -->
@@ -226,14 +216,14 @@
         </div>
 
         <!-- ko if: type == types.region && items().length === 0 -->
-        <div class="bcms-contents-tree-droppable" data-bind="droppableContent: {type: 'emptyListZone', region: $data}, css: {'bcms-contents-tree-droppable-active': activeZone() == 'emptyListZone'}">
+        <div class="bcms-contents-tree-droppable" data-bind="droppableContent: {type: 'emptyListZone', region: $data}, css: {'bcms-contents-tree-droppable-active': activeZone() == 'emptyListZone', 'bcms-contents-tree-droppable-ready': $root.isBeingDragged()}">
             &nbsp;
         </div>
         <!-- /ko -->
     </div>
 
-    <!-- ko if: type == types.content -->
-    <div class="bcms-contents-tree-droppable" data-bind="droppableContent: {type: 'middle', region: parentRegion}, css: {'bcms-contents-tree-droppable-active': activeZone() == 'middle'}">
+    <!-- ko if: type == types.content && !isBeingDragged() -->
+    <div class="bcms-contents-tree-droppable" data-bind="droppableContent: {type: 'middle', region: parentRegion}, css: {'bcms-contents-tree-droppable-active': activeZone() == 'middle', 'bcms-contents-tree-droppable-ready': $root.isBeingDragged()}">
         &nbsp;
     </div>
     <!-- /ko -->

@@ -59,7 +59,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         }
     }
 
-    function createRegionViewModel(regionModel) {
+    function createRegionViewModel(regionModel, parentContent, level) {
         var model = new TreeItemViewModel(),
             childContents,
             itemModel,
@@ -69,11 +69,14 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         model.model = regionModel;
         model.type = treeItemTypes.region;
         model.isInvisible = regionModel.isInvisible;
+        model.parentContent = parentContent;
+        model.level(level);
 
         // Collect child contents
         childContents = regionModel.getChildContents();
+        level++;
         for (i = 0; i < childContents.length; i++) {
-            itemModel = createContentViewModel(childContents[i], model);
+            itemModel = createContentViewModel(childContents[i], model, level);
 
             model.items.push(itemModel);
         }
@@ -88,7 +91,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                 setContentModelValues(contentViewModel, json);
 
                 contentViewModel.initializeContent();
-                model.items.push(createContentViewModel(contentViewModel, model));
+                model.items.push(createContentViewModel(contentViewModel, model, regionModel.level() + 1));
             });
         };
 
@@ -99,7 +102,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         return model;
     }
 
-    function createContentViewModel(contentModel, parentRegion) {
+    function createContentViewModel(contentModel, parentRegion, level) {
         var model = new TreeItemViewModel(),
             childRegions,
             itemModel,
@@ -110,10 +113,12 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         model.type = treeItemTypes.content;
         model.isInvisible = contentModel.isInvisible;
         model.parentRegion = parentRegion;
+        model.level(level);
 
         childRegions = contentModel.getChildRegions();
+        level++;
         for (i = 0; i < childRegions.length; i++) {
-            itemModel = createRegionViewModel(childRegions[i]);
+            itemModel = createRegionViewModel(childRegions[i], model, level);
 
             model.items.push(itemModel);
         }
@@ -160,15 +165,18 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         self.items = ko.observableArray();
         self.visibleItems = ko.observableArray();
         self.invisibleItems = ko.observableArray();
+        self.isBeingDragged = ko.observable(false);
         self.reloadPage = false;
         self.contentsSorted = false;
+
+        self.currentLevel = ko.observable(0);
 
         // Collect child regions
         for (i = 0; i < pageModel.regions.length; i++) {
             if (pageModel.regions[i].parentRegion) {
                 continue;
             }
-            itemModel = createRegionViewModel(pageModel.regions[i]);
+            itemModel = createRegionViewModel(pageModel.regions[i], null, 1);
             if (itemModel.isInvisible) {
                 self.invisibleItems.push(itemModel);
             } else {
@@ -199,8 +207,32 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         self.history = function () { };
         self.configure = function () { };
 
-        self.isBeingDragged = ko.observable(false);
+        self.isActive = ko.observable(false);
         self.activeZone = ko.observable(dropZoneTypes.none);
+        self.level = ko.observable(0);
+
+        self.isBeingDragged = ko.observable(false);
+        self.isBeingDragged.subscribe(function(newValue) {
+            treeViewModel.isBeingDragged(newValue);
+        });
+
+        self.onMouseLeave = function() {
+            this.isActive(false);
+
+            treeViewModel.currentLevel(self.level() - 1);
+        };
+
+        self.onMouseEnter = function () {
+            this.isActive(true);
+
+            treeViewModel.currentLevel(this.level());
+        };
+
+        self.isHover = ko.computed(function() {
+            return (!treeViewModel || !treeViewModel.isBeingDragged())
+                && self.isActive()
+                && self.level() == treeViewModel.currentLevel();
+        });
 
         return self;
     }
@@ -300,7 +332,6 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         for (i = 0; i < l; i++) {
             treeItem = treeItems[i];
 
-            //console.log("Level 1: Tree item: %s, type: %s", treeItem.type, treeItem.title());
             if (treeItem.type == treeItemTypes.region) {
                 contentsBeforeReorder = treeItem.model.contents;
                 contentsAfterReorder = [];
@@ -308,7 +339,6 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                 for (j = 0; j < treeItem.items().length; j++) {
                     subTreeItem = treeItem.items()[j];
 
-                    //console.log("Level 2: Subtree item: %s, type: %s", subTreeItem.type, subTreeItem.title());
                     if (subTreeItem.type == treeItemTypes.content) {
                         contentsAfterReorder.push(subTreeItem.model);
                     }
@@ -320,15 +350,8 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                 if (hasContentsChanged) {
                     treeItem.model.contents = contentsAfterReorder;
 
-//                    for (j = 0; j < contentsAfterReorder.length; j++) {
-//                        contentsAfterReorder[j].region = treeItem.model;
-//                        contentsAfterReorder[j].parentContent = treeItem.model.parentContent;
-//                        contentsAfterReorder[j].parentPageContentId = treeItem.model.parentPageContentId;
-//                    }
-
                     changedRegions.push(treeItem.model);
                 }
-                // console.log("Region: %s, Before: %s, After: %s, Changed: %s", treeItem.title(), contentsBeforeReorder.length, contentsAfterReorder.length, hasContentsChanged);
             }
         }
 
@@ -406,22 +429,18 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                             treeViewModel.contentsSorted = true;
 
                             var dragObject = $(ui.draggable).data("dragObject");
-//                                forFix = $(ui.draggable).data('draggable'),
-//                                originalDragObject = dragObject;
                             ui.helper.remove();
 
                             dragObject.parentRegion.removeContent(dragObject);
                             dragObject.parentRegion = dropRegionModel;
 
                             dragObject.isBeingDragged(false);
-//                            dragObject.displayOrder(0);
-//
+
                             // Add content to region where it should be.
                             var index;
                             if (dropZoneType == dropZoneTypes.topZone) {
                                 index = $.inArray(dropZoneObject, dropRegionModel.items());
                                 
-                                console.log("Top zone: %s", index);
                                 dropRegionModel.items.splice(index, 0, dragObject);
                             }
                             else if (dropZoneType == dropZoneTypes.middle) {
@@ -429,29 +448,15 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                                 if (index + 1 <= dropZoneObject, dropRegionModel.items().length) {
                                     index++;
                                 }
-                                console.log("Middle zone: %s", index);
+
                                 dropRegionModel.items.splice(index, 0, dragObject);
                             } else {
                                 dropRegionModel.items.push(dragObject);
                             }
                             dropZoneObject.activeZone(dropZoneTypes.none);
-//
-//                            sitemap.activeMapModel.updateNodesOrderAndParent();
-//
-                            // Fix for jQuery drag object.
-//                            $(ui.draggable).data('draggable', forFix);
-//
-//                            if (originalDragObject.dropped && $.isFunction(originalDragObject.dropped)) {
-//                                originalDragObject.dropped(dragObject);
-//                            }
-//
-//                            updateValidation();
-//                            bcms.trigger(events.sitemapNodeAdded, dragObject);
                         }
                     };
-//                if (dropZoneObject.getSitemap && !dropZoneObject.getSitemap().settings.canDropNode) {
-//                    return;
-//                }
+
                 $(element).droppable(setup);
             }
         };
