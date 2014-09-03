@@ -450,8 +450,6 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                                     for (var i = 0; i < correctOrder.length; i++) {
                                         regionModelAfter.items.push(correctOrder[i]);
                                     }
-                                } else {
-                                    regionModelAfter.items.push(dragObject);
                                 }
                             }
                         }

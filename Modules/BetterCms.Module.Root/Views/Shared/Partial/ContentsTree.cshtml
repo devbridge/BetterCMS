@@ -175,7 +175,7 @@
             },
             event: {
                 mouseleave: onMouseLeave, mouseenter: onMouseEnter
-            }, 
+            },
             attr: {
                 'data-id': id
             } ">
@@ -201,9 +201,15 @@
                     <!-- /ko -->
                 </div>
             </div>
+
+            <!-- ko if: items().length > 0 -->
             <div data-bind="with: items()">
                 <div data-bind="template: { name: 'bcms-contents-tree-list-template' }"></div>
             </div>
+            <!-- /ko -->
+            <!-- ko if: type == types.region && items().length == 0 -->
+            <div class="bcms-contents-tree-sort-block" data-bind="draggableContent:true">&nbsp;</div>
+            <!-- /ko -->
         </div>
     </div>
     <!-- /ko -->
