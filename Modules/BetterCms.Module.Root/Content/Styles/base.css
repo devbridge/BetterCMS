@@ -898,72 +898,48 @@ a.bcms-remove-image {
     z-index: 9;
 }
 
-.bcms-region-actions {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 66px;
-    height: 26px;
-    z-index: 1010;
-    border-style: none none dashed dashed;
-    border-width: 1px;
-    border-color: #009AEB;
-}
-/**/
-.bcms-region-button:first-child {
-    margin-left: 0;
-    background-color:  #009AEB;
-}
-
-.bcms-region-sortdone {
-}
-
 .bcms-region-button {
+    display: inline-block;
     height: 26px;
-    background-color: #8e8e8e;
-    float: left;
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
+    line-height: 25px;
+    margin: 0 0 0 4px;
     padding: 0 10px;
     color: white;
-    line-height: 25px;
-    display: inline-block;
-    margin-left: 2px;
     font-size: 12px;
+    background-color: #8e8e8e;
 }
 
 .bcms-region-actions {
     position: absolute;
     top: 0;
-    right: 0;
+    right: -1px;
     height: 26px;
     z-index: 1010;
+    font-size: 0px;
     border-style: none none dashed dashed;
     border-width: 1px;
     border-color: #009AEB;
 }
-/**/
-.bcms-region-button {
-    width: 31px;
-    height: 26px;
+
+.bcms-region-button:hover {
+    background-color: #0E5B90;
+    cursor: pointer;
+}
+
+div.bcms-region-sortdone {
+    margin-left: 0;
     background-color: #009AEB;
-    float: left;
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
 }
 
-    .bcms-region-button:hover {
-        background-color: #0E5B90;
-        cursor: pointer;
-    }
-
-.bcms-region-addcontent {
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAWdEVYdENyZWF0aW9uIFRpbWUAMDcvMjYvMTJzxIU/AAAAMklEQVQokWP8//8/AxaALsiIroAJmy5iwBDSyMKAGRDYAIaaIeZHjMhlGE0ADAwMDAwAXswHHBrCtxsAAAAASUVORK5CYII=);
+div.bcms-region-addcontent {
+    padding: 0 15px;
+    margin-left: 0;
+    background: #009AEB url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAWdEVYdENyZWF0aW9uIFRpbWUAMDcvMjYvMTJzxIU/AAAAMklEQVQokWP8//8/AxaALsiIroAJmy5iwBDSyMKAGRDYAIaaIeZHjMhlGE0ADAwMDAwAXswHHBrCtxsAAAAASUVORK5CYII=) no-repeat center center;
 }
 
-.bcms-region-sortcontent {
-    margin-left: 4px;
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAANCAYAAACZ3F9/AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAWdEVYdENyZWF0aW9uIFRpbWUAMDcvMjYvMTJzxIU/AAAAJUlEQVQokWP8////fwYyABM5mijSyMLAwMBIdxtHAwePjUMkcAAfRgYeCyCNRwAAAABJRU5ErkJggg==);
+div.bcms-region-sortcontent {
+    padding: 0 15px;
+    background: #009AEB url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAANCAYAAACZ3F9/AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAWdEVYdENyZWF0aW9uIFRpbWUAMDcvMjYvMTJzxIU/AAAAJUlEQVQokWP8////fwYyABM5mijSyMLAwMBIdxtHAwePjUMkcAAfRgYeCyCNRwAAAABJRU5ErkJggg==) no-repeat center center;
 }
 
 /* Content sorting */

@@ -27,7 +27,6 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             regionSortDoneButtons: '.bcms-region-sortdone',
             regionSortCancelButtons: '.bcms-region-sortcancel',
             regionButtons: '.bcms-region-button',
-            regionActions: '.bcms-region-actions',
             regionSortWrappers: '.bcms-sort-wrapper',
             regionSortBlock: '.bcms-sorting-block',
             regionTreeButtons: '.bcms-region-contentstree',
@@ -259,9 +258,6 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 regionViewModel = this;
 
             if (!leaveSortModeOpen) {
-                $(selectors.regionActions, regionViewModel.overlay).css('width', this.regionActionsWidth);
-
-                $(selectors.regionActions, regionViewModel.overlay).show();
                 $(selectors.regionButtons, regionViewModel.overlay).show();
                 $(selectors.regionSortDoneButtons, regionViewModel.overlay).hide();
                 $(selectors.regionSortCancelButtons, regionViewModel.overlay).hide();
@@ -324,17 +320,10 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
             var regionViewModel = this;
 
-            if (regionViewModel != currentRegionViewModel) {
-                $(selectors.regionActions, regionViewModel.overlay).hide();
-            } else {
-                this.regionActionsWidth = $(selectors.regionActions, regionViewModel.overlay).css('width');
-                $(selectors.regionActions, regionViewModel.overlay).css('width', '171px');
-
-                $(selectors.regionButtons, regionViewModel.overlay).hide();
-                $(selectors.regionSortDoneButtons, regionViewModel.overlay).show();
-                $(selectors.regionSortCancelButtons, regionViewModel.overlay).show();
-                $(selectors.regionTreeButtons, regionViewModel.overlay).show();
-            }
+            $(selectors.regionButtons, regionViewModel.overlay).hide();
+            $(selectors.regionSortDoneButtons, regionViewModel.overlay).show();
+            $(selectors.regionSortCancelButtons, regionViewModel.overlay).show();
+            $(selectors.regionTreeButtons, regionViewModel.overlay).show();
 
             $(regionViewModel.contents).each(function () {
                 var sortWrapper = $('<div class="bcms-sort-wrapper" />');
