@@ -3117,14 +3117,15 @@ a.ui-state-default:hover {
     content: "";
     position: absolute;
     top: 50%;
-    left: 0;
+    left: 3px;
     margin-top: -8px;
     width: 16px;
     height: 16px;
 }
 
 .bcms-path-master, .bcms-path-page, .bcms-path-child-content {
-    padding-left: 20px;
+    position: relative;
+    padding-left: 25px;
 }
 
     .bcms-path-master:after {
@@ -3139,7 +3140,9 @@ a.ui-state-default:hover {
         background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAApUlEQVQ4y63TMQ7CMAyF4UxIHKW0ZwUGKvGdBXGLCrgHDBSBYElRiVIElOEf4vg92Y4TEBJmmGOPc2QXY7M0v3+YYIUb7gPcsMY0NZhg80aYso2ap0H9hbhj1RmUuP5gcEUZsPhB3LEIcdovF0VRZMkY7APaERW0WYOhCjJVHLMtfEGTHeIHvXcsA6oRz1iNWaT6r6s8+jP1KbHEARec0MRYleY/AFT3fCBIyhQSAAAAAElFTkSuQmCC') no-repeat center;
     }
 
-.bcms-path-child-content-active:after {
+.bcms-path-child-content-active {
+    color: white;
+    cursor: default;
 }
 
 /*Regions tree container*/
