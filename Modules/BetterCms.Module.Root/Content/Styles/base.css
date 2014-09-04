@@ -3117,7 +3117,7 @@ a.ui-state-default:hover {
     content: "";
     position: absolute;
     top: 50%;
-    left: 3px;
+    left: 5px;
     margin-top: -8px;
     width: 16px;
     height: 16px;
@@ -3143,6 +3143,9 @@ a.ui-state-default:hover {
 .bcms-path-child-content-active {
     color: white;
     cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
 }
 
 /*Regions tree container*/
