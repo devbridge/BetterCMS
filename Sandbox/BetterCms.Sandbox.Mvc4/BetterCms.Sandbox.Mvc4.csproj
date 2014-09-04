@@ -226,6 +226,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Areas\bcms-root\Views\Shared\Partial\ContentsTree.generated.cs">
+      <DependentUpon>ContentsTree.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\SandboxController.cs" />
     <Compile Include="Custom\CustomCacheTest.cs" />
@@ -258,7 +263,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\bcms-images-gallery\" />
-    <Folder Include="Areas\bcms-root\Views\Shared\Partial\" />
     <Folder Include="Areas\bcms-search\" />
     <Folder Include="file\bcms-blog\scripts\" />
     <Folder Include="file\bcms-media\scripts\" />
@@ -399,6 +403,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Blog\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\bcms-root\Views\Shared\Partial\ContentsTree.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ContentsTree.generated.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

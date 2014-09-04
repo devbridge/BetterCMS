@@ -2,12 +2,11 @@
 <script type="text/html" id="bcms-contents-tree-template">
     <div class="bcms-scroll-window" id="bcms-contents-tree">
         <div class="bcms-padded-content">
-            <div data-bind="visible: visibleItems().length > 0, with: visibleItems()">
+            <div class="bcms-tree-container" data-bind="visible: visibleItems().length > 0, with: visibleItems()">
                 <h2 data-bind="visible: $parent.invisibleItems().length > 0">TODO: Visible regions</h2>
                 <div data-bind='template: { name: "bcms-contents-tree-list-template" }'></div>
             </div>
-
-            <div data-bind="visible: invisibleItems().length > 0, with: invisibleItems()">
+            <div class="bcms-tree-container" data-bind="visible: invisibleItems().length > 0, with: invisibleItems()">
                 <h2>TODO: Invisible regions</h2>
                 <div data-bind='template: { name: "bcms-contents-tree-list-template" }'></div>
             </div>
@@ -20,15 +19,26 @@
         text-rendering: optimizeLegibility;
     }
 
+    .bcms-tree-container {
+        padding-bottom: 15px;
+    }
+
+        .bcms-tree-container > h2 {
+            margin: 15px 0;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
     .bcms-contents-tree-region {
         position: relative;
         min-height: 48px;
-        padding: 15px 15px 5px 30px;
-        margin-top: 40px;
+        padding: 15px 15px 15px 30px;
+        margin-top: 15px;
         background-color: #ffffff;
         border: 1px dashed #0383df;
         -moz-box-sizing: border-box;
         box-sizing: border-box;
+        transition: background-color 200ms ease;
     }
 
     .bcms-contents-tree-region-header span {
@@ -51,12 +61,14 @@
 
     .bcms-contents-tree-content {
         position: relative;
-        min-height: 43px;
+        min-height: 50px;
         padding: 15px 15px 15px 30px;
+        margin-top: 15px;
         background-color: #ffffff;
         border: 1px solid black;
         -moz-box-sizing: border-box;
         box-sizing: border-box;
+        transition: background-color 150ms ease;
     }
 
         .bcms-contents-tree-content span {
@@ -75,6 +87,8 @@
         }
 
     .bcms-dragging {
+        min-height: 50px;
+        padding: 15px 15px 15px 30px;
         background-color: #f5f5f5;
         opacity: 0.8;
         z-index: 9999;
@@ -92,8 +106,8 @@
 
     .bcms-contents-tree-drop-area {
         color: black;
-        height: 30px;
-        margin: 10px 0;
+        height: 48px;
+        margin: 15px 0 0;
         border: 1px dashed black;
     }
 
@@ -102,12 +116,15 @@
     }
 
         .bcms-contents-hover > div > .bcms-tree-controls {
-            display: block;
+            visibility: visible;
+            opacity: 1;
         }
 
     .bcms-tree-controls {
-        display: none;
         float: right;
+        visibility: hidden;
+        opacity: 0;
+        transition: all 150ms ease;
     }
 
         .bcms-tree-controls a {
@@ -201,7 +218,6 @@
                     <!-- /ko -->
                 </div>
             </div>
-
             <!-- ko if: items().length > 0 -->
             <div data-bind="with: items()">
                 <div data-bind="template: { name: 'bcms-contents-tree-list-template' }"></div>
