@@ -381,11 +381,19 @@ namespace BetterCms.Module.Pages
                 {
                       new HtmlElementProjection("div")
                           {
+                              Id = page => "bcms-sidemenu-regions",
+                              Tooltip = page => "TODO: Page structure",
+                              Order = 10,
+                              CssClass = page => "bcms-sidemenu-regions"
+                          },
+
+                      new HtmlElementProjection("div")
+                          {
                               Id = page => "bcms-sidemenu-pubstatus",
                               Tooltip = page => page.Status == PageStatus.Published 
                                                     ? PagesGlobalization.Sidebar_PageStatusPublishedTooltip
                                                     : PagesGlobalization.Sidebar_PageStatusUnpublishedTooltip,
-                              Order = 10,
+                              Order = 20,
                               CssClass = page => page.Status == PageStatus.Published 
                                                     ? "bcms-sidemenu-pubstatus"
                                                     : "bcms-sidemenu-pubstatus bcms-pubstatus-warn",
@@ -398,7 +406,7 @@ namespace BetterCms.Module.Pages
                               Tooltip = page => page.HasSEO 
                                                     ? PagesGlobalization.Sidebar_PageStatusSeoOkTooltip
                                                     : PagesGlobalization.Sidebar_PageStatusNoSeoTooltip,
-                              Order = 20,
+                              Order = 30,
                               CssClass = page => page.HasSEO 
                                                     ? "bcms-sidemenu-seostatus"
                                                     : "bcms-sidemenu-seostatus bcms-seostatus-warn",
