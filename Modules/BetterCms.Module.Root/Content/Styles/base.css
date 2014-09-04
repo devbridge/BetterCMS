@@ -909,7 +909,40 @@ a.bcms-remove-image {
     border-width: 1px;
     border-color: #009AEB;
 }
+/**/
+.bcms-region-button:first-child {
+    margin-left: 0;
+    background-color:  #009AEB;
+}
 
+.bcms-region-sortdone {
+}
+
+.bcms-region-button {
+    height: 26px;
+    background-color: #8e8e8e;
+    float: left;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    padding: 0 10px;
+    color: white;
+    line-height: 25px;
+    display: inline-block;
+    margin-left: 2px;
+    font-size: 12px;
+}
+
+.bcms-region-actions {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 26px;
+    z-index: 1010;
+    border-style: none none dashed dashed;
+    border-width: 1px;
+    border-color: #009AEB;
+}
+/**/
 .bcms-region-button {
     width: 31px;
     height: 26px;
