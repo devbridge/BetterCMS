@@ -69,13 +69,13 @@ WriteTo(__razor_helper_writer, RenderMasterPage(viewModel.MasterPage));
 #line hidden
 WriteLiteralTo(__razor_helper_writer, "        <div");
 
-WriteLiteralTo(__razor_helper_writer, " class=\"bcms-layout-path-item\"");
+WriteLiteralTo(__razor_helper_writer, " class=\"bcms-layout-path-item bcms-path-master\"");
 
 WriteLiteralTo(__razor_helper_writer, " data-url=\"");
 
 
 #line 27 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
-                       WriteTo(__razor_helper_writer, viewModel.MasterPage.PageUrl);
+                                        WriteTo(__razor_helper_writer, viewModel.MasterPage.PageUrl);
 
 
 #line default
@@ -86,7 +86,7 @@ WriteLiteralTo(__razor_helper_writer, ">");
 
 
 #line 27 "..\..\Views\Shared\Partial\MasterPagesPath.cshtml"
-                                                      WriteTo(__razor_helper_writer, viewModel.MasterPage.Title);
+                                                                       WriteTo(__razor_helper_writer, viewModel.MasterPage.Title);
 
 
 #line default

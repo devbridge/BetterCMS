@@ -48,7 +48,9 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             masterPagesPathToggler: 'bcms-path-toggler',
             masterPagesPathInactiveArrow: 'bcms-path-arrow-inactive',
             masterPagesPathItem: 'bcms-layout-path-item',
-            masterPagesPathChildContentItem: 'bcms-layout-path-child-content'
+            masterPagesPathChildContentItem: 'bcms-path-child-content',
+            masterPagesPathChildContentActiveItem: 'bcms-path-child-content-active',
+            masterPagesPathPageItem: 'bcms-path-page'
         },
         keys = {
             showMasterPagesPath: 'bcms.showMasterPagesPath',
@@ -680,15 +682,12 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
             if (masterPagesModel != null) {
                 masterPagesModel.calculatePathPositions();
-                masterPagesModel.addParentContent(self.title, function () {
+                masterPagesModel.addParentContent(self.title, null, function () {
                     pageViewModel.currentParentContent = self;
 
                     content.refreshOverlays();
-                    recalculateParentContentOverlays();
                 });
             }
-
-            recalculateParentContentOverlays();
         };
 
         self.getChildRegions = function () {
@@ -728,66 +727,6 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
         return self;
     };
-
-    function getParentContentOverlay(id) {
-        var overlay = $('#' + id);
-
-        if (overlay.length == 0) {
-            overlay = $('<div style="position: fixed; background-color: black; opacity: 0.4;"></div>');
-            overlay.attr('id', id);
-            $('body').append(overlay);
-        }
-
-        return overlay;
-    }
-
-    function recalculateParentContentOverlays() {
-        var parentContent = pageViewModel.currentParentContent,
-            maxWidth = 10000,
-            maxHeight = 10000,
-            leftOverlay = getParentContentOverlay('bcms-parent-content-left-overlay'),
-            rightOverlay = getParentContentOverlay('bcms-parent-content-right-overlay'),
-            topOverlay = getParentContentOverlay('bcms-parent-content-top-overlay'),
-            bottomOverlay = getParentContentOverlay('bcms-parent-content-bottom-overlay');
-
-        if (parentContent == null) {
-            leftOverlay.hide();
-            rightOverlay.hide();
-            topOverlay.hide();
-            bottomOverlay.hide();
-
-            return;
-        } else {
-            leftOverlay.show();
-            rightOverlay.show();
-            topOverlay.show();
-            bottomOverlay.show();
-        }
-
-        // Left
-        leftOverlay.css('top', 0);
-        leftOverlay.css('left', 0);
-        leftOverlay.css('height', maxHeight);
-        leftOverlay.css('width', parentContent.left);
-
-        // Right
-        rightOverlay.css('top', 0);
-        rightOverlay.css('left', parentContent.left + parentContent.width);
-        rightOverlay.css('height', maxHeight);
-        rightOverlay.css('width', maxWidth - parentContent.left - parentContent.width);
-
-        // Top
-        topOverlay.css('top', 0);
-        topOverlay.css('left', parentContent.left);
-        topOverlay.css('height', parentContent.top);
-        topOverlay.css('width', parentContent.width);
-
-        // Bottom
-        bottomOverlay.css('top', parentContent.top + parentContent.height);
-        bottomOverlay.css('left', parentContent.left);
-        bottomOverlay.css('height', maxHeight - parentContent.top + parentContent.height);
-        bottomOverlay.css('width', parentContent.width);
-    }
 
     function collectRegionsAndContents(tags) {
         var tagsCount = tags.length,
@@ -887,7 +826,6 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 if (masterPagesModel != null) {
                     masterPagesModel.calculatePathPositions();
                 }
-                recalculateParentContentOverlays();
             }, 100);
         });
     };
@@ -970,9 +908,6 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             currentItem = 0,
             maxItem = 0,
             currentPage = null;
-
-        // TODO: remove after tests
-        self.items = items;
 
         function hasPath() {
             return items.length > 0;
@@ -1152,12 +1087,27 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             redraw(slideToTheFirstParent);
         };
 
-        self.addParentContent = function (title, onClick) {
+        function setLastParentInactive() {
+            var lastItem = items[items.length - 1].element;
+            if (lastItem.hasClass(classes.masterPagesPathChildContentActiveItem)) {
+                lastItem.removeClass(classes.masterPagesPathChildContentActiveItem);
+                lastItem.addClass(classes.masterPagesPathChildContentItem);
+            }
+        }
 
-            if (currentPage == null) {
+        function setLastParentActive() {
+            var lastItem = items[items.length - 1].element;
+            if (lastItem.hasClass(classes.masterPagesPathChildContentItem)) {
+                lastItem.removeClass(classes.masterPagesPathChildContentItem);
+                lastItem.addClass(classes.masterPagesPathChildContentActiveItem);
+            }
+        }
+
+        self.addParentContent = function (title, cssClass, onClick) {
+
+            if (!currentPage) {
                 currentPage = true;
-
-                currentPage = self.addParentContent(globalization.currentPage, function () {
+                currentPage = self.addParentContent(globalization.currentPage, classes.masterPagesPathPageItem, function () {
                     items.pop();
                     currentPage.remove();
                     currentPage = null;
@@ -1165,41 +1115,52 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                     pageViewModel.currentParentContent = null;
 
                     content.refreshOverlays();
-                    recalculateParentContentOverlays();
                 });
             }
 
             var div = $('<div></div>'),
                 index = items.length,
-                model = new PathViewModel(div, index);
+                model = new PathViewModel(div, index),
+                onItemClick = function () {
+                    var currentItemIndex = $(this).data('index'),
+                        total = items.length,
+                        i,
+                        item;
+
+                    if (currentItemIndex == total - 1) {
+                        return;
+                    }
+
+                    for (i = currentItemIndex + 1; i < total; i++) {
+                        item = items.pop();
+                        item.element.remove();
+                    }
+
+                    setLastParentActive();
+
+                    if ($.isFunction(onClick)) {
+                        onClick();
+                    }
+
+                    redraw();
+                };
 
             div.addClass(classes.masterPagesPathItem);
-            div.addClass(classes.masterPagesPathChildContentItem);
+            if (cssClass) {
+                div.addClass(cssClass);
+            } else {
+                setLastParentInactive();
+                div.addClass(classes.masterPagesPathChildContentActiveItem);
+            }
             div.html(title);
             div.data('index', index);
-
-            div.on('click', function () {
-                var currentItemIndex = $(this).data('index'),
-                    total = items.length,
-                    i,
-                    item;
-
-                for (i = currentItemIndex + 1; i < total; i++) {
-                    item = items.pop();
-                    item.element.remove();
-                }
-
-                if ($.isFunction(onClick)) {
-                    onClick();
-                }
-
-                redraw();
-            });
+            div.on('click', onItemClick);
 
             innerContainer.append(div);
             items.push(model);
 
             redraw(slideToTheFirstParent);
+            setPathVisibility(1);
 
             return div;
         };
