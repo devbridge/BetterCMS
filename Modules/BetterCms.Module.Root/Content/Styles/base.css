@@ -907,6 +907,7 @@ a.bcms-remove-image {
     color: white;
     font-size: 12px;
     background-color: #8e8e8e;
+    transition: all 150ms ease;
 }
 
 .bcms-region-actions {
@@ -940,6 +941,14 @@ div.bcms-region-addcontent {
 div.bcms-region-sortcontent {
     padding: 0 15px;
     background: #009AEB url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAANCAYAAACZ3F9/AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAWdEVYdENyZWF0aW9uIFRpbWUAMDcvMjYvMTJzxIU/AAAAJUlEQVQokWP8////fwYyABM5mijSyMLAwMBIdxtHAwePjUMkcAAfRgYeCyCNRwAAAABJRU5ErkJggg==) no-repeat center center;
+}
+
+div.bcms-region-contentstree:hover {
+    background-color: #757575;
+}
+
+div.bcms-region-sortcancel:hover {
+    background-color: #757575;
 }
 
 /* Content sorting */
