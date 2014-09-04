@@ -30,7 +30,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             regionActions: '.bcms-region-actions',
             regionSortWrappers: '.bcms-sort-wrapper',
             regionSortBlock: '.bcms-sorting-block',
-            pageStructureSidebarIcon: '#bcms-sidemenu-regions',
+            regionTreeButtons: '.bcms-region-contentstree',
 
             masterPagesPathContainer: '.bcms-layout-path',
             masterPagesPathHandler: '.bcms-layout-path-handle',
@@ -74,13 +74,6 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
     content.selectors = selectors;
     content.links = links;
     content.globalization = globalization;
-
-    /*
-    * Determines if sort mode is on 
-    */
-    content.isSortModeOn = function() {
-        return isSortMode;
-    };
 
     /**
     * Shows overlay over content region:
@@ -272,6 +265,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 $(selectors.regionButtons, regionViewModel.overlay).show();
                 $(selectors.regionSortDoneButtons, regionViewModel.overlay).hide();
                 $(selectors.regionSortCancelButtons, regionViewModel.overlay).hide();
+                $(selectors.regionTreeButtons, regionViewModel.overlay).hide();
 
                 if (isSortMode) {
                     regionViewModel.sortBlock.sortable('destroy');
@@ -299,7 +293,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             }
 
             if (!leaveSortModeOpen) {
-                $.each(regionContents, function() {
+                $.each(regionContents, function () {
                     if (this.isInvisible) {
                         return;
                     }
@@ -339,6 +333,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 $(selectors.regionButtons, regionViewModel.overlay).hide();
                 $(selectors.regionSortDoneButtons, regionViewModel.overlay).show();
                 $(selectors.regionSortCancelButtons, regionViewModel.overlay).show();
+                $(selectors.regionTreeButtons, regionViewModel.overlay).show();
             }
 
             $(regionViewModel.contents).each(function () {
@@ -507,6 +502,13 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
             $(selectors.regionSortButtons, self.overlay).on('click', function () {
                 content.turnSortModeOn(self);
+            });
+
+            $(selectors.regionTreeButtons, self.overlay).on('click', function () {
+                bcms.trigger(bcms.events.editContentsTree, {
+                    pageViewModel: pageViewModel,
+                    regionViewModel: self
+                });
             });
 
             $(selectors.regionSortDoneButtons, self.overlay).on('click', function () {
@@ -825,11 +827,6 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                     masterPagesModel.calculatePathPositions();
                 }
             }, 100);
-        });
-
-        // Init page structure icon
-        $(selectors.pageStructureSidebarIcon).on('click', function() {
-            bcms.trigger(bcms.events.editContentsTree, pageViewModel);
         });
     };
 
