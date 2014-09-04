@@ -262,11 +262,8 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
     /*
     * Opens modal window with all regions / contents listed
     */
-    function onEditContentsTree(data) {
-
-        var pageModel = data.pageViewModel,
-            regionModel = data.regionViewModel,
-            changedRegions = contentModule.turnSortModeOff(false, true),
+    function onEditContentsTree(pageModel) {
+        var changedRegions = contentModule.isSortModeOn() ? contentModule.turnSortModeOff(false, true) : [],
             doNotsaveButton,
             dialog,
             i;
@@ -275,7 +272,6 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
 
             doNotsaveButton = new modal.button(globalization.resetSortChanges, null, 5, function () {
                 contentModule.turnSortModeOff(true);
-                contentModule.turnSortModeOn(regionModel);
                 dialog.close();
 
                 // Open pages structure modal after user resets changes
@@ -290,6 +286,8 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                     for (i = 0; i < changedRegions.length; i++) {
                         changedRegions[i].setContents(changedRegions[i].changedContents);
                     }
+
+                    contentModule.turnSortModeOff();
                     contentModule.saveContentChanges(changedRegions, function () {
                         // Open pages structure modal after user accepts changes
                         openContentsTree(pageModel, function() {
