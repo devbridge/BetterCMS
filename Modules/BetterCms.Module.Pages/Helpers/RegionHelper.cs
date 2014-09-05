@@ -9,11 +9,13 @@ namespace BetterCms.Module.Pages.Helpers
     public static class RegionHelper
     {
         public const string DynamicRegionIdentifierPrefix = "ContentRegion";
+        
+        public const string WidgetDynamicRegionIdentifierPrefix = "WidgetRegion";
 
-        public static int GetLastDynamicRegionNumber(IEnumerable<string> regionIdentifiers)
+        public static int GetLastDynamicRegionNumber(IEnumerable<string> regionIdentifiers, string prefix = DynamicRegionIdentifierPrefix)
         {
             var maxNr = 0;
-            var length = DynamicRegionIdentifierPrefix.Length;
+            var length = prefix.Length;
             foreach (var identifier in regionIdentifiers.Distinct())
             {
                 int nr = 0;
@@ -26,6 +28,10 @@ namespace BetterCms.Module.Pages.Helpers
                     try
                     {
                         var nrStr = identifier.Substring(length);
+                        if (nrStr.Contains("_"))
+                        {
+                            nrStr = nrStr.Substring(0, nrStr.IndexOf("_", StringComparison.InvariantCultureIgnoreCase));
+                        }
                         Int32.TryParse(nrStr, out nr);
                     }
                     catch

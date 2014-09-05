@@ -104,7 +104,9 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
 
                     if (htmlContentWidget.ContentRegions != null)
                     {
-                        model.LastDynamicRegionNumber = RegionHelper.GetLastDynamicRegionNumber(htmlContentWidget.ContentRegions.Select(cr => cr.Region.RegionIdentifier));
+                        model.LastDynamicRegionNumber = RegionHelper.GetLastDynamicRegionNumber(
+                            htmlContentWidget.ContentRegions.Select(cr => cr.Region.RegionIdentifier),
+                            RegionHelper.WidgetDynamicRegionIdentifierPrefix);
                     }
                 }
 
