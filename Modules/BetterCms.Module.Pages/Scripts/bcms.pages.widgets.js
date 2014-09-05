@@ -179,9 +179,11 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Opens dialog with an edit html content widget form.
         */
-        widgets.openEditHtmlContentWidgetDialog = function (id, postSuccess, availablePreviewOnPageContentId, onCloseCallback) {
+        widgets.openEditHtmlContentWidgetDialog = function (id, postSuccess, availablePreviewOnPageContentId, onCloseCallback, includeChildRegions) {
             var optionsViewModel,
                 editorId;
+
+            includeChildRegions = (includeChildRegions === true) ? 1 : 0;
 
             modal.edit({
                 isPreviewAvailable: availablePreviewOnPageContentId != null,
@@ -224,7 +226,11 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         },
 
                         formSerialize: function (form) {
-                            return widgets.serializeFormWithChildWidgetOptions(form, editorId);
+                            return widgets.serializeFormWithChildWidgetOptions(form, editorId, function(data) {
+                                if (includeChildRegions) {
+                                    data.IncludeChildRegions = true;
+                                }
+                            });
                         },
                         formContentType: 'application/json; charset=utf-8'
                     });
@@ -876,9 +882,9 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 }
             } else if (contentViewModel.contentType == contentTypes.htmlWidget) {
                 // Edit
-                contentViewModel.onEditContent = function (onSuccess) {
+                contentViewModel.onEditContent = function (onSuccess, includeChildRegions) {
                     onAfterSuccessCallback = onSuccess;
-                    widgets.openEditHtmlContentWidgetDialog(contentId, onSave, pageContentId);
+                    widgets.openEditHtmlContentWidgetDialog(contentId, onSave, pageContentId, null, includeChildRegions);
                 };
 
                 // Configure
@@ -982,7 +988,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
          * Serializes content edit form with child widget options
          */
-        widgets.serializeFormWithChildWidgetOptions = function (form, htmlEditorId) {
+        widgets.serializeFormWithChildWidgetOptions = function (form, htmlEditorId, onBeforeStringify) {
             var serializedForm = forms.serializeToObject(form, true),
                 childOptions = htmlEditorId != null ? getChildContentOptions(htmlEditorId) : null,
                 childContentOptionValues = [],
@@ -1012,6 +1018,10 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         OptionValues: childOptions[i].toJson()
                     });
                 }
+            }
+
+            if ($.isFunction(onBeforeStringify)) {
+                onBeforeStringify(serializedForm, childContentOptionValues);
             }
 
             model = {

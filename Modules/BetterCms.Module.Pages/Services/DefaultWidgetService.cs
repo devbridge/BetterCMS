@@ -13,6 +13,7 @@ using BetterCms.Core.Exceptions.Mvc;
 
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.SiteSettings;
 using BetterCms.Module.Pages.ViewModels.Widgets;
@@ -450,6 +451,41 @@ namespace BetterCms.Module.Pages.Services
                     throw new ConfirmationRequestException(() => message, logMessage);
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets the list of widget child regions view models.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns>The list of widget child regions view models</returns>
+        public List<PageContentChildRegionViewModel> GetWidgetChildRegionViewModels(Root.Models.Content content)
+        {
+            var models = new List<PageContentChildRegionViewModel>();
+
+            if (content.ContentRegions != null)
+            {
+                foreach (var contentRegion in content.ContentRegions.Where(cr => !cr.IsDeleted).Distinct())
+                {
+                    models.Add(new PageContentChildRegionViewModel(contentRegion));
+                }
+            }
+
+            var childContents = childContentService.RetrieveChildrenContentsRecursively(true, new[] { content.Id });
+            if (childContents != null)
+            {
+                foreach (var childContent in childContents)
+                {
+                    if (childContent.Child.ContentRegions != null)
+                    {
+                        foreach (var contentRegion in childContent.Child.ContentRegions.Where(cr => !cr.IsDeleted).Distinct())
+                        {
+                            models.Add(new PageContentChildRegionViewModel(contentRegion));
+                        }
+                    }
+                }
+            }
+
+            return models.GroupBy(r => r.RegionIdentifier).Select(r => r.First()).ToList();
         }
     }
 }

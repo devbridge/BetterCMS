@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Mvc.Commands;
-
+using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Content;
 
 using BetterCms.Module.Root.Models;
@@ -18,14 +17,14 @@ namespace BetterCms.Module.Pages.Command.Content.InsertContent
     {
         private readonly IContentService contentService;
         private readonly PageContentProjectionFactory projectionFactory;
-        private readonly IChildContentService childContentService;
+        private readonly IWidgetService widgetService;
 
         public InsertContentToPageCommand(IContentService contentService, PageContentProjectionFactory projectionFactory,
-            IChildContentService childContentService)
+            IWidgetService widgetService)
         {
             this.contentService = contentService;
             this.projectionFactory = projectionFactory;
-            this.childContentService = childContentService;
+            this.widgetService = widgetService;
         }
 
         /// <summary>
@@ -84,32 +83,7 @@ namespace BetterCms.Module.Pages.Command.Content.InsertContent
 
             if (request.IncludeChildRegions)
             {
-                model.Regions = new List<PageContentChildRegionViewModel>();
-
-                if (content.ContentRegions != null)
-                {
-                    foreach (var contentRegion in content.ContentRegions.Distinct())
-                    {
-                        model.Regions.Add(new PageContentChildRegionViewModel(contentRegion));
-                    }
-                }
-
-                var childContents = childContentService.RetrieveChildrenContentsRecursively(true, new[] { content.Id });
-                if (childContents != null)
-                {
-                    foreach (var childContent in childContents)
-                    {
-                        if (childContent.Child.ContentRegions != null)
-                        {
-                            foreach (var contentRegion in childContent.Child.ContentRegions.Distinct())
-                            {
-                                model.Regions.Add(new PageContentChildRegionViewModel(contentRegion));
-                            }
-                        }
-                    }
-                }
-
-                model.Regions = model.Regions.GroupBy(r => r.RegionIdentifier).Select(r => r.First()).ToList();
+                model.Regions = widgetService.GetWidgetChildRegionViewModels(content);
             }
 
             return model;

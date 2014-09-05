@@ -394,6 +394,41 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
         }
     };
 
+    /*
+    * Helper methods for filter and loop through an array 
+    */
+    app.asEnumerable = function (arr) {
+        var i,
+            l = arr.length,
+            forEach = function (callBack) {
+                for (i = 0; i < l; i++) {
+                    callBack(arr[i]);
+                }
+
+                return app.asEnumerable(arr);
+            };
+
+        return {
+            where: function (whereClause) {
+                var filtered = [];
+
+                forEach(function(x) {
+                    if (whereClause(x)) {
+                        filtered.push(x);
+                    }
+                });
+
+                return app.asEnumerable(filtered);
+            },
+
+            toArray: function() {
+                return arr;
+            },
+
+            forEach: forEach
+        };
+    };
+
     /**
     * Initiliazes web page: checks browser version
     */

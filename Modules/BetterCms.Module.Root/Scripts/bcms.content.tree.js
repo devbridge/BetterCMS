@@ -159,12 +159,41 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         }
 
         model.editItem = function () {
-            contentModel.onEditContent(function(json) {
+            contentModel.onEditContent(function (json) {
+                var regionModels,
+                    regionTreeItemViewModel;
+
                 treeViewModel.reloadPage = true;
 
                 setContentModelValues(model.model, json);
                 model.title(model.model.title);
-            });
+
+                // Check if new regions where added
+                regionModels = createRegionViewModels(json.Data.Regions, model.parentRegion.id, model.parentRegion.pageContentId);
+                bcms
+                    .asEnumerable(regionModels)
+                    .where(function (x) {
+                        return bcms.asEnumerable(model.items()).where(function (y) {
+                            return x.id === y.model.id;
+                        }).toArray().length == 0;
+                    })
+                    .forEach(function(x) {
+                        regionTreeItemViewModel = createRegionTreeItemViewModel(x, model, model.level() + 1);
+                        model.items.push(regionTreeItemViewModel);
+                    });
+
+                // Check if regions where removed
+                bcms
+                    .asEnumerable(model.items())
+                    .where(function (y) {
+                        return bcms.asEnumerable(regionModels).where(function (x) {
+                            return x.id === y.model.id;
+                        }).toArray().length == 0;
+                    })
+                    .forEach(function (x) {
+                        model.items.remove(x);
+                    });
+            }, true);
         };
 
         model.deleteItem = function () {
