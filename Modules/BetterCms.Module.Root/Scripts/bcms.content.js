@@ -408,11 +408,11 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
     /**
     * Page region view model
     */
-    function RegionViewModel(regionStart, regionEnd, regionContents, parentRegionId, parentPageContentId) {
+    content.RegionViewModel = function(regionStart, regionEnd, regionContents, parentRegionId, parentPageContentId) {
         var self = this;
 
-        self.id = regionStart.data('id');
-        self.title = regionStart.data('identifier');
+        self.id = null;
+        self.title = null;
         self.regionStart = regionStart;
         self.regionEnd = regionEnd;
         self.contents = regionContents;
@@ -423,14 +423,20 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         self.parentRegion = null;
         self.parentPageContentId = parentPageContentId;
         self.parentContent = null;
-        self.isInvisible = regionStart.data("invisible") === true;
+        self.isInvisible = false;
+
+        if (self.regionStart) {
+            self.isInvisible = self.regionStart.data("invisible") === true;
+            self.id = self.regionStart.data('id');
+            self.title = self.regionStart.data('identifier');
+        }
 
         self.left = 0;
         self.top = 0;
         self.width = 0;
         self.height = 0;
 
-        self.recalculatePositions = function () {
+        self.recalculatePositions = function() {
             var positions = calculatePositions(self.regionStart, self.regionEnd);
 
             self.left = positions.left;
@@ -448,7 +454,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             }
         };
 
-        self.initializeRegion = function () {
+        self.initializeRegion = function() {
 
             if (self.parentRegionId && !self.parentRegion) {
                 for (i = 0; i < pageViewModel.regions.length; i++) {
@@ -469,10 +475,11 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 }
             }
 
-            self.onAddContent = function (onSuccess) {
+            self.onAddContent = function(onSuccess, includeChildRegions) {
                 bcms.trigger(bcms.events.addPageContent, {
                     regionViewModel: self,
-                    onSuccess: onSuccess
+                    onSuccess: onSuccess,
+                    includeChildRegions: includeChildRegions
                 });
             };
 
@@ -496,22 +503,22 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             self.overlay = rectangle;
             self.sortBlock = this.overlay.find(selectors.regionSortBlock);
 
-            $(selectors.regionAddContentButtons, self.overlay).on('click', function () {
+            $(selectors.regionAddContentButtons, self.overlay).on('click', function() {
                 self.onAddContent();
             });
 
-            $(selectors.regionSortButtons, self.overlay).on('click', function () {
+            $(selectors.regionSortButtons, self.overlay).on('click', function() {
                 content.turnSortModeOn(self);
             });
 
-            $(selectors.regionTreeButtons, self.overlay).on('click', function () {
+            $(selectors.regionTreeButtons, self.overlay).on('click', function() {
                 bcms.trigger(bcms.events.editContentsTree, {
                     pageViewModel: pageViewModel,
                     regionViewModel: self
                 });
             });
 
-            $(selectors.regionSortDoneButtons, self.overlay).on('click', function () {
+            $(selectors.regionSortDoneButtons, self.overlay).on('click', function() {
                 var changedRegions = content.turnSortModeOff();
 
                 if (changedRegions.length > 0) {
@@ -519,15 +526,15 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 }
             });
 
-            $(selectors.regionSortCancelButtons, self.overlay).on('click', function () {
+            $(selectors.regionSortCancelButtons, self.overlay).on('click', function() {
                 content.cancelSortMode();
             });
         };
 
-        self.setContents = function (changedContents) {
+        self.setContents = function(changedContents) {
             self.contents = changedContents;
         };
-    }
+    };
 
     /**
     * Page content view model
@@ -763,7 +770,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                     parentPageContentId = allContents[allContents.length - 1].pageContentId;
                 }
 
-                var regionViewModel = new RegionViewModel(currentRegion.startTag, currentTag, currentRegion.contents, parentRegionId, parentPageContentId);
+                var regionViewModel = new content.RegionViewModel(currentRegion.startTag, currentTag, currentRegion.contents, parentRegionId, parentPageContentId);
                 pageViewModel.regions.push(regionViewModel);
 
                 $.each(currentRegion.contents, function () {

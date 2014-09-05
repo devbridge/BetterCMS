@@ -47,10 +47,12 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         if (json.Data.Title || json.Data.WidgetName) {
             contentViewModel.title = json.Data.Title || json.Data.WidgetName;
         }
-        if (json.Data.ContentVersion || json.Data.Version) {
-            contentViewModel.contentVersion = json.Data.ContentVersion || json.Data.Version;
+        if (json.Data.ContentVersion || json.Data.OriginalVersion || json.Data.Version) {
+            contentViewModel.contentVersion = json.Data.ContentVersion || json.Data.OriginalVersion || json.Data.Version;
         }
-        contentViewModel.contentType = json.Data.ContentType;
+        if (json.Data.ContentType) {
+            contentViewModel.contentType = json.Data.ContentType;
+        }
         if (json.Data.PageContentId) {
             contentViewModel.pageContentId = json.Data.PageContentId;
         }
@@ -59,7 +61,27 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         }
     }
 
-    function createRegionViewModel(regionModel, parentContent, level) {
+    function createRegionViewModels(json, parentRegionId, parentPageContentId) {
+        var regions = [],
+            i,
+            regionViewModel;
+
+        if (json && json.length > 0) {
+            for (i = 0; i < json.length; i++) {
+                regionViewModel = new contentModule.RegionViewModel(null, null, [], parentRegionId, parentPageContentId);
+                regionViewModel.isInvisible = true;
+                regionViewModel.id = json[i].RegionId;
+                regionViewModel.title = json[i].RegionIdentifier;
+                regionViewModel.initializeRegion();
+
+                regions.push(regionViewModel);
+            }
+        }
+
+        return regions;
+    }
+
+    function createRegionTreeItemViewModel(regionModel, parentContent, level) {
         var model = new TreeItemViewModel(),
             itemModel,
             i;
@@ -75,7 +97,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         // Collect child contents
         level++;
         for (i = 0; i < regionModel.contents.length; i++) {
-            itemModel = createContentViewModel(regionModel.contents[i], model, level);
+            itemModel = createContentTreeItemViewModel(regionModel.contents[i], model, level);
 
             model.items.push(itemModel);
         }
@@ -84,14 +106,27 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             regionModel.onAddContent(function (json) {
                 treeViewModel.reloadPage = true;
 
-                var contentViewModel = new contentModule.ContentViewModel(null, null, regionModel.parentPageContentId);
+                var regionModels,
+                    contentViewModel = new contentModule.ContentViewModel(null, null, regionModel.parentPageContentId),
+                    contentTreeItemViewModel,
+                    regionTreeItemViewModel;
 
                 contentViewModel.isInvisible = true;
                 setContentModelValues(contentViewModel, json);
 
                 contentViewModel.initializeContent();
-                model.items.push(createContentViewModel(contentViewModel, model, model.level() + 1));
-            });
+                contentTreeItemViewModel = createContentTreeItemViewModel(contentViewModel, model, model.level() + 1);
+
+                // Set content regions
+                regionModels = createRegionViewModels(json.Data.Regions, regionModel.id, contentViewModel.pageContentId);
+                for (i = 0; i < regionModels.length; i++) {
+                    regionTreeItemViewModel = createRegionTreeItemViewModel(regionModels[i], contentViewModel, model.level() + 2);
+
+                    contentTreeItemViewModel.items.push(regionTreeItemViewModel);
+                }
+
+                model.items.push(contentTreeItemViewModel);
+            }, true);
         };
 
         model.removeContent = function (contentViewModel) {
@@ -101,7 +136,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         return model;
     }
 
-    function createContentViewModel(contentModel, parentRegion, level) {
+    function createContentTreeItemViewModel(contentModel, parentRegion, level) {
         var model = new TreeItemViewModel(),
             childRegions,
             itemModel,
@@ -118,7 +153,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         childRegions = contentModel.getChildRegions();
         level++;
         for (i = 0; i < childRegions.length; i++) {
-            itemModel = createRegionViewModel(childRegions[i], model, level);
+            itemModel = createRegionTreeItemViewModel(childRegions[i], model, level);
 
             model.items.push(itemModel);
         }
@@ -145,8 +180,10 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         };
 
         model.configure = function() {
-            contentModel.onConfigureContent(function() {
+            contentModel.onConfigureContent(function(json) {
                 treeViewModel.reloadPage = true;
+
+                setContentModelValues(model.model, json);
             });
         };
 
@@ -176,7 +213,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             if (pageModel.regions[i].parentRegion) {
                 continue;
             }
-            itemModel = createRegionViewModel(pageModel.regions[i], null, 1);
+            itemModel = createRegionTreeItemViewModel(pageModel.regions[i], null, 1);
             if (itemModel.isInvisible) {
                 self.invisibleItems.push(itemModel);
             } else {

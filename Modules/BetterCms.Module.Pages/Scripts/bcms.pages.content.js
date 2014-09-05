@@ -98,6 +98,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         pagesContent.onAddNewContent = function(data) {
             var editorId,
                 regionViewModel = data.regionViewModel,
+                includeChildRegions = bcms.boolAsString(data.includeChildRegions),
                 onSuccess = data.onSuccess || function() {
                     redirect.ReloadWithAlert();
                 };
@@ -122,7 +123,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                     enableInsertDynamicRegion = true;
                                 }
                             }
-                            pagesContent.initializeAddNewContentForm(contentDialog, editInSourceMode, enableInsertDynamicRegion, editorId, data.Data, onSuccess);
+                            pagesContent.initializeAddNewContentForm(contentDialog, editInSourceMode, enableInsertDynamicRegion, editorId, data.Data, onSuccess, includeChildRegions);
                         },
 
                         beforePost: function() {
@@ -253,9 +254,9 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Initializes content dialog form.
         */
-        pagesContent.initializeAddNewContentForm = function (dialog, editInSourceMode, enableInsertDynamicRegion, editorId, data, onSuccess) {
+        pagesContent.initializeAddNewContentForm = function (dialog, editInSourceMode, enableInsertDynamicRegion, editorId, data, onSuccess, includeChildRegions) {
             var onInsert = function() {
-                pagesContent.insertWidget(this, dialog, onSuccess);
+                pagesContent.insertWidget(this, dialog, onSuccess, includeChildRegions);
             };
 
             dialog.container.find(selectors.dataPickers).initializeDatepicker(globalization.datePickerTooltipTitle);
@@ -417,12 +418,12 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Inserts widget to CMS page
         */
-        pagesContent.insertWidget = function (self, dialog, onSuccess) {
+        pagesContent.insertWidget = function (self, dialog, onSuccess, includeChildRegions) {
             var regionId = dialog.container.find(selectors.contentFormRegionId).val(),
                 parentPageContentId = dialog.container.find(selectors.parentPageContentId).val(),
                 widgetContainer = $(self).parents(selectors.widgetContainerBlock),
                 contentId = widgetContainer.data('originalId'),
-                url = $.format(links.insertContentToPageUrl, bcms.pageId, contentId, regionId, parentPageContentId);
+                url = $.format(links.insertContentToPageUrl, bcms.pageId, contentId, regionId, parentPageContentId, includeChildRegions);
 
             if (!onSuccess) {
                 onSuccess = function() {
@@ -515,9 +516,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         */
         function onContentModelCreated(contentViewModel) {
             var contentId = contentViewModel.contentId,
-                pageContentId = contentViewModel.pageContentId,
-                contentVersion = contentViewModel.contentVersion,
-                pageContentVersion = contentViewModel.pageContentVersion;
+                pageContentId = contentViewModel.pageContentId;
 
             if (contentViewModel.contentType == contentTypes.htmlContent) {
                 // Edit content
@@ -539,7 +538,10 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             // Delete content
             contentViewModel.onDeleteContent = function (onDeleteSuccess) {
-                pagesContent.removeContentFromPage(pageContentId, pageContentVersion, contentVersion, onDeleteSuccess);
+                pagesContent.removeContentFromPage(contentViewModel.pageContentId,
+                    contentViewModel.pageContentVersion,
+                    contentViewModel.contentVersion,
+                    onDeleteSuccess);
             };
 
             // Content history

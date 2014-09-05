@@ -35,5 +35,13 @@ namespace BetterCms.Module.Pages.Command.Content.InsertContent
         /// The parent page content identifier.
         /// </value>
         public Guid? ParentPageContentId { get; set; }
+
+        /// <summary>
+        /// Determines, if child regions should be included to the results.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if child regions should be included to the results; otherwise, <c>false</c>.
+        /// </value>
+        public bool IncludeChildRegions { get; set; }
     }
 }

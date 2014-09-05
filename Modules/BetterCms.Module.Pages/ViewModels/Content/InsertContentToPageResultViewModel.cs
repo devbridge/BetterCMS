@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Module.Root.ViewModels.Cms;
 
 namespace BetterCms.Module.Pages.ViewModels.Content
 {
@@ -23,5 +25,7 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         public int ContentVersion { get; set; }
         
         public int PageContentVersion { get; set; }
+
+        public List<PageContentChildRegionViewModel> Regions { get; set; }
     }
 }

@@ -505,9 +505,9 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             return optionListViewModel.isValid(true);
                         },
 
-                        postSuccess: function () {
+                        postSuccess: function (json) {
                             if ($.isFunction(onSaveCallback)) {
-                                onSaveCallback();
+                                onSaveCallback(json);
                             }
                         }
                     });
@@ -857,9 +857,9 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
                 // Configure
                 contentViewModel.onConfigureContent = function (onSuccess) {
-                    widgets.configureWidget(pageContentId, function () {
+                    widgets.configureWidget(pageContentId, function (json) {
                         if ($.isFunction(onSuccess)) {
-                            onSuccess();
+                            onSuccess(json);
                         } else {
                             redirect.ReloadWithAlert();
                         }
@@ -883,9 +883,9 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
                 // Configure
                 contentViewModel.onConfigureContent = function (onSuccess) {
-                    widgets.configureWidget(pageContentId, function () {
+                    widgets.configureWidget(pageContentId, function (json) {
                         if ($.isFunction(onSuccess)) {
-                            onSuccess();
+                            onSuccess(json);
                         } else {
                             redirect.ReloadWithAlert();
                         }

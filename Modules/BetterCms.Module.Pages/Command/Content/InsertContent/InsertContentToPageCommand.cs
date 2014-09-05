@@ -1,6 +1,12 @@
-﻿using BetterCms.Core.DataAccess.DataContext;
+﻿using System.Collections.Generic;
+using System.Linq;
+
+using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Mvc.Commands;
+
 using BetterCms.Module.Pages.ViewModels.Content;
+
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Projections;
@@ -12,11 +18,14 @@ namespace BetterCms.Module.Pages.Command.Content.InsertContent
     {
         private readonly IContentService contentService;
         private readonly PageContentProjectionFactory projectionFactory;
+        private readonly IChildContentService childContentService;
 
-        public InsertContentToPageCommand(IContentService contentService, PageContentProjectionFactory projectionFactory)
+        public InsertContentToPageCommand(IContentService contentService, PageContentProjectionFactory projectionFactory,
+            IChildContentService childContentService)
         {
             this.contentService = contentService;
             this.projectionFactory = projectionFactory;
+            this.childContentService = childContentService;
         }
 
         /// <summary>
@@ -30,7 +39,11 @@ namespace BetterCms.Module.Pages.Command.Content.InsertContent
             
             var page = Repository.AsProxy<Root.Models.Page>(request.PageId);
             var region = Repository.AsProxy<Region>(request.RegionId);
-            var content = Repository.AsQueryable<Root.Models.Content>(c => c.Id == request.ContentId).FirstOne();
+            var content = Repository
+                .AsQueryable<Root.Models.Content>(c => c.Id == request.ContentId)
+                .FetchMany(c => c.ContentRegions)
+                .ToList()
+                .FirstOne();
             
             PageContent parentPageContent = null;
             if (request.ParentPageContentId.HasValue && !request.ParentPageContentId.Value.HasDefaultValue())
@@ -56,7 +69,7 @@ namespace BetterCms.Module.Pages.Command.Content.InsertContent
 
             var accessor = projectionFactory.GetAccessorForType(content);
 
-            return new InsertContentToPageResultViewModel
+            var model = new InsertContentToPageResultViewModel
                 {
                     PageContentId = pageContent.Id,
                     ContentId = content.Id,
@@ -68,6 +81,38 @@ namespace BetterCms.Module.Pages.Command.Content.InsertContent
                     PageContentVersion = pageContent.Version,
                     ContentType = accessor != null ? accessor.GetContentWrapperType() : null
                 };
+
+            if (request.IncludeChildRegions)
+            {
+                model.Regions = new List<PageContentChildRegionViewModel>();
+
+                if (content.ContentRegions != null)
+                {
+                    foreach (var contentRegion in content.ContentRegions.Distinct())
+                    {
+                        model.Regions.Add(new PageContentChildRegionViewModel(contentRegion));
+                    }
+                }
+
+                var childContents = childContentService.RetrieveChildrenContentsRecursively(true, new[] { content.Id });
+                if (childContents != null)
+                {
+                    foreach (var childContent in childContents)
+                    {
+                        if (childContent.Child.ContentRegions != null)
+                        {
+                            foreach (var contentRegion in childContent.Child.ContentRegions.Distinct())
+                            {
+                                model.Regions.Add(new PageContentChildRegionViewModel(contentRegion));
+                            }
+                        }
+                    }
+                }
+
+                model.Regions = model.Regions.GroupBy(r => r.RegionIdentifier).Select(r => r.First()).ToList();
+            }
+
+            return model;
         }
     }
 }

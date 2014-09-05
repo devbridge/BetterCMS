@@ -13,7 +13,7 @@ using ContentEntity = BetterCms.Module.Root.Models.Content;
 
 namespace BetterCms.Module.Pages.Command.Content.SavePageContentOptions
 {
-    public class SavePageContentOptionsCommand : CommandBase, ICommand<ContentOptionValuesViewModel, bool>
+    public class SavePageContentOptionsCommand : CommandBase, ICommand<ContentOptionValuesViewModel, SavePageContentOptionsCommandResponse>
     {
         /// <summary>
         /// Gets or sets the option service.
@@ -28,8 +28,9 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageContentOptions
         /// </summary>
         /// <param name="model">The model.</param>
         /// <returns></returns>
-        public bool Execute(ContentOptionValuesViewModel model)
+        public SavePageContentOptionsCommandResponse Execute(ContentOptionValuesViewModel model)
         {
+            int version = 0;
             if (model != null && !model.OptionValuesContainerId.HasDefaultValue())
             {
                 var pageContent = Repository.AsQueryable<PageContent>()
@@ -50,10 +51,12 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageContentOptions
                     UnitOfWork.Commit();
 
                     Events.PageEvents.Instance.OnPageContentConfigured(pageContent);
+
+                    version = pageContent.Version;
                 }                
             }
 
-            return true;
+            return new SavePageContentOptionsCommandResponse() { PageContentVersion = version };
         }
     }
 }

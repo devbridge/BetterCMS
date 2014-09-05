@@ -384,6 +384,17 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
     };
 
     /**
+    * Returns string 1 or 0, converted from boolean
+    */
+    app.boolAsString = function (boolValue) {
+        if (boolValue) {
+            return "1";
+        } else {
+            return "0";
+        }
+    };
+
+    /**
     * Initiliazes web page: checks browser version
     */
     function globalInit() {

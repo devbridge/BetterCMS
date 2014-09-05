@@ -42,12 +42,13 @@ namespace BetterCms.Module.Pages.Controllers
         /// <param name="contentId">The widget id.</param>
         /// <param name="regionId">The region id.</param>
         /// <param name="parentPageContentId">The parent page content identifier.</param>
+        /// <param name="includeChildRegions">The include child regions.</param>
         /// <returns>
         /// Json with result status.
         /// </returns>
         [HttpPost]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
-        public ActionResult InsertContentToPage(string pageId, string contentId, string regionId, string parentPageContentId)
+        public ActionResult InsertContentToPage(string pageId, string contentId, string regionId, string parentPageContentId, string includeChildRegions)
         {
             var request = new InsertContentToPageRequest
                 {
@@ -56,7 +57,8 @@ namespace BetterCms.Module.Pages.Controllers
                     RegionId = regionId.ToGuidOrDefault(),
                     ParentPageContentId = (!string.IsNullOrWhiteSpace(parentPageContentId)) 
                         ? parentPageContentId.ToGuidOrDefault() 
-                        : (System.Guid?) null
+                        : (System.Guid?) null,
+                    IncludeChildRegions = includeChildRegions.ToBoolOrDefault()
                 };
 
             var result = GetCommand<InsertContentToPageCommand>().ExecuteCommand(request);
@@ -231,9 +233,9 @@ namespace BetterCms.Module.Pages.Controllers
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult PageContentOptions(ContentOptionValuesViewModel model)
         {
-            bool success = GetCommand<SavePageContentOptionsCommand>().ExecuteCommand(model);
+            var response = GetCommand<SavePageContentOptionsCommand>().ExecuteCommand(model);
 
-            return Json(new WireJson { Success = success });
+            return WireJson(response != null, response);
         }
 
         /// <summary>
