@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 using BetterCms.Core.DataAccess;
@@ -13,7 +13,6 @@ using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Exceptions.Service;
 using BetterCms.Core.Services.Storage;
-
 using BetterCms.Module.MediaManager.Content.Resources;
 using BetterCms.Module.MediaManager.Helpers;
 using BetterCms.Module.MediaManager.Models;
@@ -172,116 +171,102 @@ namespace BetterCms.Module.MediaManager.Services
         /// <returns>Image entity.</returns>
         public MediaImage UploadImage(Guid rootFolderId, string fileName, long fileLength, Stream fileStream, Guid reuploadMediaId)
         {
-            MediaImage originalMedia;
-            string folderName;
-            string versionedFileName;
-            Size size;
-            if (!reuploadMediaId.HasDefaultValue())
-            {
-                originalMedia = repository.First<MediaImage>(image => image.Id == reuploadMediaId);
-                fileName = string.Concat(Path.GetFileNameWithoutExtension(originalMedia.OriginalFileName), Path.GetExtension(fileName));
-                folderName = Path.GetFileName(Path.GetDirectoryName(originalMedia.FileUri.OriginalString));
-                versionedFileName = MediaImageHelper.CreateVersionedFileName(fileName, originalMedia.Version + 1);
-            }
-            else
-            {
-                folderName = mediaFileService.CreateRandomFolderName();
-                versionedFileName = MediaImageHelper.CreateVersionedFileName(fileName, 1);
-            }
+            var size = GetSize(fileStream);
 
-            try
+            using (var thumbnailFileStream = new MemoryStream())
             {
-                size = GetImageSize(fileStream);
-            }
-            catch (ImagingException ex)
-            {
-                var message = MediaGlobalization.MultiFileUpload_ImageFormatNotSuported;
-                const string logMessage = "Failed to get image size.";
-                throw new ValidationException(() => message, logMessage, ex);
-            }
-
-            using (var thumbnailImage = new MemoryStream())
-            {
-                CreatePngThumbnail(fileStream, thumbnailImage, ThumbnailSize);
-
-                MediaImage image = new MediaImage();
-                if (!rootFolderId.HasDefaultValue())
+                MediaImage publicImage;
+                string folderName;
+                string publicFileName;
+                CreatePngThumbnail(fileStream, thumbnailFileStream, ThumbnailSize);
+                
+                if (!reuploadMediaId.HasDefaultValue())
                 {
-                    image.Folder = repository.AsProxy<MediaFolder>(rootFolderId);
+                    // Re-uploading image: Get original image, folder name,.file extension, file name
+                    var originalImage = repository.First<MediaImage>(image => image.Id == reuploadMediaId);
+                    folderName = Path.GetFileName(Path.GetDirectoryName(originalImage.FileUri.OriginalString));
+                    publicFileName = MediaImageHelper.CreatePublicFileName(originalImage.OriginalFileName, originalImage.OriginalFileExtension);
+
+                    // Get original file stream
+                    using (var originalFileStream = DownloadFileStream(originalImage.PublicUrl))
+                    {
+                        // Get thumbnail file stream
+                        using (var originalThumbnailFileStream = DownloadFileStream(originalImage.PublicThumbnailUrl))
+                        {
+                            // Check is re-uploaded image has the same extension as original
+                            var reuploadedFileExtension = Path.GetExtension(fileName);
+                            if (reuploadedFileExtension != null && !reuploadedFileExtension.Equals(originalImage.OriginalFileExtension))
+                            {
+                                // Correct re-uploaded file stream with original codec
+                                var originalCodec = ImageHelper.GetImageCodec(Image.FromStream(originalFileStream));
+                                var uploadedImage = Image.FromStream(fileStream);
+                                var updatedWithCodecFileStream = new MemoryStream();
+                                uploadedImage.Save(updatedWithCodecFileStream, originalCodec, null);
+                                fileStream = updatedWithCodecFileStream;
+                            }
+
+                            // Create version file name for current original image
+                            var versionedFileName = MediaImageHelper.CreateVersionedFileName(
+                                originalImage.OriginalFileName,
+                                originalImage.OriginalFileExtension,
+                                GetVersion(originalImage));
+
+                            // Update urls with version file name
+                            SetNewUrls(originalImage, folderName, versionedFileName);
+
+                            // Re-upload original and thumbnail images to version urls
+                            StartTasksForImage(originalImage, originalFileStream, originalThumbnailFileStream);
+                        }
+                    }
+
+                    publicImage = CreateImage(rootFolderId, folderName, originalImage.OriginalFileName, originalImage.OriginalFileExtension, fileName,
+                        publicFileName, size, fileLength, thumbnailFileStream.Length);
+                }
+                else
+                {
+                    // Uploading new image
+                    folderName = mediaFileService.CreateRandomFolderName();
+                    publicFileName = MediaImageHelper.CreatePublicFileName(fileName, Path.GetExtension(fileName));
+
+                    // Create new original image and upload file stream to the storage
+                    publicImage = CreateImage( rootFolderId, folderName, fileName, Path.GetExtension(fileName), fileName, publicFileName, size, fileLength,
+                        thumbnailFileStream.Length);
                 }
 
-                image.Title = Path.GetFileName(fileName);
-                image.Caption = null;
-                image.OriginalFileName = fileName;
-                image.OriginalFileExtension = Path.GetExtension(fileName);
-                image.Type = MediaType.Image;
-
-                image.Width = size.Width;
-                image.Height = size.Height;
-                image.Size = fileLength;
-                image.FileUri = mediaFileService.GetFileUri(MediaType.Image, folderName, versionedFileName);
-                image.PublicUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, versionedFileName);
-
-                image.CropCoordX1 = null;
-                image.CropCoordY1 = null;
-                image.CropCoordX2 = null;
-                image.CropCoordY2 = null;
-
-                image.OriginalWidth = size.Width;
-                image.OriginalHeight = size.Height;
-                image.OriginalSize = fileLength;
-                image.OriginalUri = mediaFileService.GetFileUri(MediaType.Image, folderName, MediaImageHelper.OriginalImageFilePrefix + versionedFileName);
-                image.PublicOriginallUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, MediaImageHelper.OriginalImageFilePrefix + versionedFileName);
-                    
-
-                image.ThumbnailWidth = ThumbnailSize.Width;
-                image.ThumbnailHeight = ThumbnailSize.Height;
-                image.ThumbnailSize = thumbnailImage.Length;
-                image.ThumbnailUri = mediaFileService.GetFileUri(MediaType.Image, folderName, ThumbnailImageFilePrefix + Path.GetFileNameWithoutExtension(versionedFileName) + ".png");
-                image.PublicThumbnailUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, ThumbnailImageFilePrefix + Path.GetFileNameWithoutExtension(versionedFileName) + ".png");
-
-                image.ImageAlign = null;
-                image.IsTemporary = true;
-                image.IsUploaded = null;
-                image.IsThumbnailUploaded = null;
-                image.IsOriginalUploaded = null;
-
                 unitOfWork.BeginTransaction();
-                repository.Save(image);
+                repository.Save(publicImage);
                 unitOfWork.Commit();
 
-                Task imageUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(fileStream, image.FileUri, image.Id, img => { img.IsUploaded = true; }, img => { img.IsUploaded = false; }, true);
-                Task originalUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(fileStream, image.OriginalUri, image.Id, img => { img.IsOriginalUploaded = true; }, img => { img.IsOriginalUploaded = false; }, true);
-                Task thumbnailUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(thumbnailImage, image.ThumbnailUri, image.Id, img => { img.IsThumbnailUploaded = true; }, img => { img.IsThumbnailUploaded = false; }, true);
+                StartTasksForImage(publicImage, fileStream, thumbnailFileStream);
 
-                Task.Factory.ContinueWhenAll(
-                    new[]
-                        {
-                            imageUpload, 
-                            originalUpload, 
-                            thumbnailUpload
-                        },
-                    result =>
+                if (!reuploadMediaId.HasDefaultValue())
+                {
+                    // Update original id for version image
+                    var originalMedia = repository.First<MediaImage>(image => image.Id == reuploadMediaId);
+                    originalMedia.Original = publicImage;
+
+                    unitOfWork.BeginTransaction();
+                    while (true)
                     {
-                        // During uploading progress Cancel action can by executed. Need to remove uploaded images from the storage.
-                        ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(session =>
-                            {
-                                var media = session.Get<MediaImage>(image.Id);
-                                var isUploaded = (media.IsUploaded.HasValue && media.IsUploaded.Value)
-                                                  || (media.IsThumbnailUploaded.HasValue && media.IsThumbnailUploaded.Value)
-                                                  || (media.IsOriginalUploaded.HasValue && media.IsOriginalUploaded.Value);
-                                if (media.IsCanceled && isUploaded)
-                                {
-                                    RemoveImageWithFiles(media.Id, media.Version);
-                                }
-                            });
-                    });
+                        var preOriginalId = originalMedia.Id;
+                        var prePreOriginal = repository.FirstOrDefault<MediaImage>(i => i.Original != null && i.Original.Id == preOriginalId);
+                        if (prePreOriginal != null)
+                        {
+                            prePreOriginal.Original = publicImage;
+                            repository.Save(prePreOriginal);
+                            preOriginalId = prePreOriginal.Id;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    
+                    repository.Save(originalMedia);
+                    unitOfWork.Commit();
+                }
 
-                imageUpload.Start();
-                originalUpload.Start();
-                thumbnailUpload.Start();
-
-                return image;
+                return publicImage;
             }
         }
 
@@ -306,6 +291,38 @@ namespace BetterCms.Module.MediaManager.Services
                 throw new ImagingException(string.Format("Stream {0} is not valid image stream. Can not determine image size.", imageStream.GetType()), e);
             }
         }        
+
+        /// <summary>
+        /// Updates the thumbnail.
+        /// </summary>
+        /// <param name="mediaImage">The media image.</param>
+        /// <param name="size">The size.</param>
+        public void UpdateThumbnail(MediaImage mediaImage, Size size)
+        {
+            if (size.IsEmpty)
+            {
+                size = ThumbnailSize;
+            }
+
+            var downloadResponse = storageService.DownloadObject(mediaImage.FileUri);
+
+            using (var memoryStream = new MemoryStream())
+            {
+                CreatePngThumbnail(downloadResponse.ResponseStream, memoryStream, size);
+
+                mediaImage.ThumbnailWidth = size.Width;
+                mediaImage.ThumbnailHeight = size.Height;
+                mediaImage.ThumbnailSize = memoryStream.Length;
+
+                storageService.UploadObject(new UploadRequest { InputStream = memoryStream, Uri = mediaImage.ThumbnailUri, IgnoreAccessControl = true});
+            }
+        }
+
+        private int GetVersion(MediaImage image)
+        {
+            var versionsCount = repository.AsQueryable<MediaImage>().Count(i => i.Original != null && i.Original.Id == image.Id);
+            return versionsCount + 1;
+        }
 
         /// <summary>
         /// Created image thmbnail in PNG format: resizes the image and crops to fit.
@@ -347,32 +364,6 @@ namespace BetterCms.Module.MediaManager.Services
             }
         }
 
-        /// <summary>
-        /// Updates the thumbnail.
-        /// </summary>
-        /// <param name="mediaImage">The media image.</param>
-        /// <param name="size">The size.</param>
-        public void UpdateThumbnail(MediaImage mediaImage, Size size)
-        {
-            if (size.IsEmpty)
-            {
-                size = ThumbnailSize;
-            }
-
-            var downloadResponse = storageService.DownloadObject(mediaImage.FileUri);
-
-            using (var memoryStream = new MemoryStream())
-            {
-                CreatePngThumbnail(downloadResponse.ResponseStream, memoryStream, size);
-
-                mediaImage.ThumbnailWidth = size.Width;
-                mediaImage.ThumbnailHeight = size.Height;
-                mediaImage.ThumbnailSize = memoryStream.Length;
-
-                storageService.UploadObject(new UploadRequest { InputStream = memoryStream, Uri = mediaImage.ThumbnailUri, IgnoreAccessControl = true});
-            }
-        }
-
         private void ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(Action<ISession> work)
         {
             using (var session = sessionFactoryProvider.OpenSession(false))
@@ -389,6 +380,116 @@ namespace BetterCms.Module.MediaManager.Services
                     session.Close();
                 }
             }
+        }
+
+        private void SetNewUrls(MediaImage image, string folderName, string fileName)
+        {
+            image.FileUri = mediaFileService.GetFileUri(MediaType.Image, folderName, fileName);
+            image.PublicUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, fileName);
+
+            image.OriginalUri = mediaFileService.GetFileUri(MediaType.Image, folderName, MediaImageHelper.OriginalImageFilePrefix + fileName);
+            image.PublicOriginallUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, MediaImageHelper.OriginalImageFilePrefix + fileName);
+
+            image.ThumbnailUri = mediaFileService.GetFileUri(MediaType.Image, folderName, ThumbnailImageFilePrefix + Path.GetFileNameWithoutExtension(fileName) + ".png");
+            image.PublicThumbnailUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, ThumbnailImageFilePrefix + Path.GetFileNameWithoutExtension(fileName) + ".png");
+        }
+
+        private MediaImage CreateImage(Guid rootFolderId, string folderName, 
+            string fileName, string extension, string imageTitle, string fileNameForUrl,
+            Size size, long fileLength, long thumbnailImageLength)
+        {
+            MediaImage image = new MediaImage();
+            if (!rootFolderId.HasDefaultValue())
+            {
+                image.Folder = repository.AsProxy<MediaFolder>(rootFolderId);
+            }
+
+            image.Title = Path.GetFileName(imageTitle);
+            image.Caption = null;
+            image.OriginalFileName = fileName;
+            image.OriginalFileExtension = extension;
+            image.Type = MediaType.Image;
+
+            image.Width = size.Width;
+            image.Height = size.Height;
+            image.Size = fileLength;
+            image.FileUri = mediaFileService.GetFileUri(MediaType.Image, folderName, fileNameForUrl);
+            image.PublicUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, fileNameForUrl);
+
+            image.CropCoordX1 = null;
+            image.CropCoordY1 = null;
+            image.CropCoordX2 = null;
+            image.CropCoordY2 = null;
+
+            image.OriginalWidth = size.Width;
+            image.OriginalHeight = size.Height;
+            image.OriginalSize = fileLength;
+            image.OriginalUri = mediaFileService.GetFileUri(MediaType.Image, folderName, MediaImageHelper.OriginalImageFilePrefix + fileNameForUrl);
+            image.PublicOriginallUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, MediaImageHelper.OriginalImageFilePrefix + fileNameForUrl);
+            
+            image.ThumbnailWidth = ThumbnailSize.Width;
+            image.ThumbnailHeight = ThumbnailSize.Height;
+            image.ThumbnailSize = thumbnailImageLength;
+            image.ThumbnailUri = mediaFileService.GetFileUri(MediaType.Image, folderName, ThumbnailImageFilePrefix + Path.GetFileNameWithoutExtension(fileNameForUrl) + ".png");
+            image.PublicThumbnailUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, ThumbnailImageFilePrefix + Path.GetFileNameWithoutExtension(fileNameForUrl) + ".png");
+          
+            image.ImageAlign = null;
+            image.IsTemporary = true;
+            image.IsUploaded = null;
+            image.IsThumbnailUploaded = null;
+            image.IsOriginalUploaded = null;
+
+            return image;
+        }
+
+        private MemoryStream DownloadFileStream(string fileUrl)
+        {
+            byte[] imageData;
+            using (var wc = new WebClient())
+            {
+                imageData = wc.DownloadData(fileUrl);
+            }
+            return new MemoryStream(imageData);
+        }
+
+        private Size GetSize(Stream fileStream)
+        {
+            try
+            {
+                var size = GetImageSize(fileStream);
+                return size;
+            }
+            catch (ImagingException ex)
+            {
+                var message = MediaGlobalization.MultiFileUpload_ImageFormatNotSuported;
+                const string logMessage = "Failed to get image size.";
+                throw new ValidationException(() => message, logMessage, ex);
+            }
+        }
+
+        private void StartTasksForImage(MediaImage mediaImage, Stream fileStream, MemoryStream thumbnailFileStream)
+        {
+            var publicImageUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(fileStream, mediaImage.FileUri, mediaImage.Id, img => { img.IsUploaded = true; }, img => { img.IsUploaded = false; }, true);
+            var publicOriginalUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(fileStream, mediaImage.OriginalUri, mediaImage.Id, img => { img.IsOriginalUploaded = true; }, img => { img.IsOriginalUploaded = false; }, true);
+            var publicThumbnailUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(thumbnailFileStream, mediaImage.ThumbnailUri, mediaImage.Id, img => { img.IsThumbnailUploaded = true; }, img => { img.IsThumbnailUploaded = false; }, true);
+
+            Task.Factory.ContinueWhenAll(
+                new[] { publicImageUpload, publicOriginalUpload, publicThumbnailUpload, },
+                result => ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(
+                    session =>
+                    {
+                        var media = session.Get<MediaImage>(mediaImage.Id);
+                        var isUploaded = (media.IsUploaded.HasValue && media.IsUploaded.Value) || (media.IsThumbnailUploaded.HasValue && media.IsThumbnailUploaded.Value)
+                                         || (media.IsOriginalUploaded.HasValue && media.IsOriginalUploaded.Value);
+                        if (media.IsCanceled && isUploaded)
+                        {
+                            RemoveImageWithFiles(media.Id, media.Version);
+                        }
+                    }));
+
+            publicImageUpload.Start();
+            publicOriginalUpload.Start();
+            publicThumbnailUpload.Start();
         }
     }
 }
