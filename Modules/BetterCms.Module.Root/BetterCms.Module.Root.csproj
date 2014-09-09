@@ -192,7 +192,7 @@
     <Compile Include="Models\Migrations\Migration201406191600.cs" />
     <Compile Include="Models\Migrations\Migration201406101600.cs" />
     <Compile Include="Models\PagesView.cs" />
-    <Compile Include="Mvc\PageHtmlRenderer\ChildContentRenderHelper.cs" />
+    <Compile Include="Mvc\PageHtmlRenderer\PageContentRenderHelper.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\PageContentHtmlRenderer.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\RenderingContentOptionProperty.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\IRenderingOption.cs" />

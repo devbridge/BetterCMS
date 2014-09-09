@@ -26,7 +26,7 @@ namespace BetterCms.Module.Root.Services
 
         public void CollectChildContents(string html, Models.Content content)
         {
-            var widgetModels = ChildContentRenderHelper.ParseWidgetsFromHtml(html, true);
+            var widgetModels = PageContentRenderHelper.ParseWidgetsFromHtml(html, true);
             if (widgetModels != null && widgetModels.Count > 0)
             {
                 // Validate widget ids

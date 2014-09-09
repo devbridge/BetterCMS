@@ -52,18 +52,31 @@ WriteLiteral(@">
     <div class=""bcms-scroll-window"" id=""bcms-contents-tree"">
         <div class=""bcms-padded-content"">
             <div class=""bcms-tree-container"" data-bind=""visible: visibleItems().length > 0, with: visibleItems()"">
-                <h2 data-bind=""visible: $parent.invisibleItems().length > 0"">TODO: Visible regions</h2>
+                <h2 data-bind=""visible: $parent.invisibleItems().length > 0"">");
+
+            
+            #line 6 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
+                                                                        Write(RootGlobalization.ContentsTree_VisibleItems_Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@"</h2>
                 <div data-bind='template: { name: ""bcms-contents-tree-list-template"" }'></div>
             </div>
             <div class=""bcms-tree-container"" data-bind=""visible: invisibleItems().length > 0, with: invisibleItems()"">
-                <h2>TODO: Invisible regions</h2>
-                <div data-bind='template: { name: ""bcms-contents-tree-list-template"" }'></div>
-            </div>
-        </div>
-    </div>
-</script>
+                <h2>");
 
-<script");
+            
+            #line 10 "..\..\Views\Shared\Partial\ContentsTree.cshtml"
+               Write(RootGlobalization.ContentsTree_InvisibleItems_Title);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</h2>\r\n                <div data-bind=\'template: { name: \"bcms-contents-tree-list" +
+"-template\" }\'></div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</script>\r" +
+"\n\r\n<script");
 
 WriteLiteral(" type=\"text/html\"");
 

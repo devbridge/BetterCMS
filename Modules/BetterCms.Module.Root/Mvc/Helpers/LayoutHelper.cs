@@ -11,12 +11,8 @@ using System.Web.WebPages;
 
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Module.Root.Mvc.Grids.GridOptions;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
-using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.ViewModels.Cms;
-
-using NHibernate.Linq;
 
 namespace BetterCms.Module.Root.Mvc.Helpers
 {
@@ -33,7 +29,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// <param name="model">The model.</param>
         public static void RenderSectionContents(this HtmlHelper htmlHelper, WebPageBase webPage, RenderPageViewModel model)
         {
-            var contentHtmlHelper = new ChildContentRenderHelper(htmlHelper);
+            var contentHtmlHelper = new PageContentRenderHelper(htmlHelper);
 
             foreach (var region in model.Regions)
             {
@@ -234,55 +230,23 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             return new MvcHtmlString(attributes);
         }
 
-        public static MvcHtmlString RenderInvisibleRegions(this HtmlHelper htmlHelper, RenderPageViewModel childModel)
+        /// <summary>
+        /// Renders the invisible regions:.
+        /// - Layout regions:
+        /// -- When switching from layout A to layout B, and layout B has nor regions, which were in layout A
+        /// -- When layout regions are deleted in Site Settings -> Page Layouts -> Templates
+        /// - Widget regions:
+        /// -- When region was deleted from the widget, and page has a content, assigned to that region
+        /// </summary>
+        /// <param name="htmlHelper">The HTML helper.</param>
+        /// <param name="model">The  model.</param>
+        /// <returns></returns>
+        public static MvcHtmlString RenderInvisibleRegions(this HtmlHelper htmlHelper, RenderPageViewModel model)
         {
-            if (!childModel.CanManageContent)
-            {
-                return null;
-            }
+            var childContentRenderHelper = new PageContentRenderHelper(htmlHelper);
+            var html = childContentRenderHelper.RenderInvisibleRegions(model);
 
-            var model = childModel.RenderingPage;
-            if (model == null)
-            {
-                return null;
-            }
-
-            var contentsBuilder = new StringBuilder();
-            var contents = model.Contents.Where(c => model.Regions.All(r => r.RegionId != c.RegionId));
-            contentsBuilder = RenderInvisibleRegionsRecursively(contentsBuilder, contents);
-
-            var html = contentsBuilder.ToString();
-            if (!string.IsNullOrWhiteSpace(html))
-            {
-                return new MvcHtmlString(html);
-            }
-
-            return null;
-        }
-
-        private static StringBuilder RenderInvisibleRegionsRecursively(StringBuilder contentsBuilder, IEnumerable<PageContentProjection> contents)
-        {
-            foreach (var group in contents.GroupBy(c => c.RegionId))
-            {
-                var region = group.First();
-                var regionModel = new PageRegionViewModel { RegionId = region.RegionId, RegionIdentifier = region.RegionIdentifier };
-                using (new LayoutRegionWrapper(contentsBuilder, regionModel, true, true))
-                {
-                    foreach (var projection in group)
-                    {
-                        using (new RegionContentWrapper(contentsBuilder, projection, true, true))
-                        {
-                            var childRegionContentProjections = projection.GetChildRegionContentProjections();
-                            if (childRegionContentProjections != null)
-                            {
-                                contentsBuilder = RenderInvisibleRegionsRecursively(contentsBuilder, childRegionContentProjections);
-                            }
-                        }
-                    }
-                }
-            }
-
-            return contentsBuilder;
+            return new MvcHtmlString(html);
         }
     }
 }

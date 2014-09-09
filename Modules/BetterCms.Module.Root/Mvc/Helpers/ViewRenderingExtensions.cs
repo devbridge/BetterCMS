@@ -79,7 +79,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                 var renderedMaster = RenderRecursively(controller, currentModel.MasterPage, pageModel, htmlHelper);
 
                 var pageHtmlHelper = new PageHtmlRenderer.PageHtmlRenderer(renderedMaster, pageModel);
-                var contentHtmlHelper = new ChildContentRenderHelper(htmlHelper);
+                var contentHtmlHelper = new PageContentRenderHelper(htmlHelper);
 
                 foreach (var region in currentModel.Regions)
                 {
@@ -111,6 +111,11 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     pageHtmlHelper.ReplaceRegionRepresentationHtml();
                 }
                 renderedMaster = pageHtmlHelper.GetReplacedHtml();
+
+                if (pageModel == currentModel)
+                {
+                    renderedMaster = contentHtmlHelper.GetReplacedInvisibleRegions(pageModel, renderedMaster);
+                }
 
                 return renderedMaster;
             }

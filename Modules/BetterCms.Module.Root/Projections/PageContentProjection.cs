@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Data.Metadata.Edm;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Web.Mvc;
@@ -139,7 +138,6 @@ namespace BetterCms.Module.Root.Projections
         public string[] GetCustomStyles(HtmlHelper html)
         {
             return null;
-            return GetStylesAndScripts(accessor => accessor.GetCustomStyles(html));
         }
 
         public string[] GetCustomJavaScript(HtmlHelper html)
@@ -150,13 +148,11 @@ namespace BetterCms.Module.Root.Projections
         public string[] GetStylesResources(HtmlHelper html)
         {
             return null;
-            return GetStylesAndScripts(accessor => accessor.GetStylesResources(html));
         }
 
         public string[] GetJavaScriptResources(HtmlHelper html)
         {
             return null;
-            return GetStylesAndScripts(accessor => accessor.GetJavaScriptResources(html));
         }
 
         public IEnumerable<ChildContentProjection> GetChildProjections()

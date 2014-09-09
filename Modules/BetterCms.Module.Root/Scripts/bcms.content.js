@@ -310,7 +310,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
     /**
     * Turns region content sorting mode ON:
     */
-    content.turnSortModeOn = function (currentRegionViewModel) {
+    content.turnSortModeOn = function() {
         isSortMode = true;
 
         $.each(pageViewModel.regions, function () {

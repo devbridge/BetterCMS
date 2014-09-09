@@ -417,8 +417,8 @@ namespace BetterCms.Module.Pages.Services
         private void CheckIfContentHasDeletingWidgetsWithDynamicRegions(Widget widget, string targetHtml)
         {
             var sourceHtml = ((IDynamicContentContainer)widget).Html;
-            var sourceWidgets = ChildContentRenderHelper.ParseWidgetsFromHtml(sourceHtml);
-            var targetWidgets = ChildContentRenderHelper.ParseWidgetsFromHtml(targetHtml);
+            var sourceWidgets = PageContentRenderHelper.ParseWidgetsFromHtml(sourceHtml);
+            var targetWidgets = PageContentRenderHelper.ParseWidgetsFromHtml(targetHtml);
             
             // Get ids of child widgets, which are being removed from the content
             var removingWidgetIds = sourceWidgets

@@ -601,6 +601,24 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lost &amp; Found regions.
+        /// </summary>
+        public static string ContentsTree_InvisibleItems_Title {
+            get {
+                return ResourceManager.GetString("ContentsTree_InvisibleItems_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visible regions.
+        /// </summary>
+        public static string ContentsTree_VisibleItems_Title {
+            get {
+                return ResourceManager.GetString("ContentsTree_VisibleItems_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sorry, looks like &lt;b&gt;cookies are disabled&lt;/b&gt; in your browser. For full web experience.
         /// </summary>
         public static string CookieSupport_MustBeEnabled_Message_FirstLine {
