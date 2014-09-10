@@ -8,6 +8,7 @@ using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 
+using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
@@ -20,7 +21,7 @@ using BetterCms.Module.Root.Services;
 
 namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
 {
-    public class SavePageHtmlContentCommand : CommandBase, ICommand<SavePageHtmlContentCommandRequest, SavePageHtmlContentResponse>
+    public class SavePageHtmlContentCommand : CommandBase, ICommand<SavePageHtmlContentCommandRequest, InsertContentToPageResultViewModel>
     {
         private readonly IContentService contentService;
         
@@ -35,7 +36,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
             this.optionsService = optionsService;
         }
 
-        public SavePageHtmlContentResponse Execute(SavePageHtmlContentCommandRequest request)
+        public InsertContentToPageResultViewModel Execute(SavePageHtmlContentCommandRequest request)
         {
             var model = request.Content;
             if (model.DesirableStatus == ContentStatus.Published)
@@ -72,20 +73,13 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                 // Check if user has confirmed the deletion of content
                 if (!model.IsUserConfirmed && pageContent.Page.IsMasterPage)
                 {
-                    var hasAnyChildren = contentService.CheckIfContentHasDeletingChildren(model.PageId, model.ContentId, model.PageContent);
-                    if (hasAnyChildren)
-                    {
-                        var message = PagesGlobalization.SaveContent_ContentHasChildrenContents_RegionDeleteConfirmationMessage;
-                        var logMessage = string.Format("User is trying to delete content regions which has children contents. Confirmation is required. PageContentId: {0}, ContentId: {1}, PageId: {2}",
-                               model.Id, model.ContentId, model.PageId);
-                        throw new ConfirmationRequestException(() => message, logMessage);
-                    }
+                    contentService.CheckIfContentHasDeletingChildrenWithException(model.PageId, model.ContentId, model.PageContent);
                 }
             }
             else
             {              
                 pageContent = new PageContent();
-                pageContent.Order = contentService.GetPageContentNextOrderNumber(model.PageId);
+                pageContent.Order = contentService.GetPageContentNextOrderNumber(model.PageId, model.ParentPageContentId);
 
                 if (configuration.Security.AccessControlEnabled)
                 {
@@ -109,6 +103,14 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                 pageContent.Page = Repository.AsProxy<Root.Models.Page>(model.PageId);
             }
             pageContent.Region = Repository.AsProxy<Region>(model.RegionId);
+            if (!model.ParentPageContentId.HasDefaultValue())
+            {
+                pageContent.Parent = Repository.AsProxy<PageContent>(model.ParentPageContentId);
+            }
+            else
+            {
+                pageContent.Parent = null;
+            }
 
             var contentToSave = new HtmlContent
                 {
@@ -174,12 +176,18 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                 }
             }
 
-            return new SavePageHtmlContentResponse {
-                                                       PageContentId = pageContent.Id,
-                                                       ContentId = pageContent.Content.Id,
-                                                       RegionId = pageContent.Region.Id,
-                                                       PageId = pageContent.Page.Id
-                                                   };
+            return new InsertContentToPageResultViewModel
+                {
+                    PageContentId = pageContent.Id,
+                    ContentId = pageContent.Content.Id,
+                    RegionId = pageContent.Region.Id,
+                    PageId = pageContent.Page.Id,
+                    DesirableStatus = request.Content.DesirableStatus,
+                    Title = pageContent.Content.Name,
+                    ContentVersion = pageContent.Content.Version,
+                    PageContentVersion = pageContent.Version,
+                    ContentType = HtmlContentAccessor.ContentWrapperType
+                };
         }
     }
 }

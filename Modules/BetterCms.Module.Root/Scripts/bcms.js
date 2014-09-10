@@ -19,8 +19,9 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
             editModeOn: 'editModeOn',
             addPageContent: 'addPageContent',
             sortPageContent: 'sortPageContent',
-            createContentOverlay: 'createContentOverlay',
-            pageCreated: 'pageCreated'
+            contentModelCreated: 'contentModelCreated',
+            pageCreated: 'pageCreated',
+            editContentsTree: 'editContentsTree'
         },
         eventListeners = {},
         contentStatus = {
@@ -380,6 +381,52 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
             var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
             return v.toString(16).toUpperCase();
         });
+    };
+
+    /**
+    * Returns string 1 or 0, converted from boolean
+    */
+    app.boolAsString = function (boolValue) {
+        if (boolValue) {
+            return "1";
+        } else {
+            return "0";
+        }
+    };
+
+    /*
+    * Helper methods for filter and loop through an array 
+    */
+    app.asEnumerable = function (arr) {
+        var i,
+            l = arr.length,
+            forEach = function (callBack) {
+                for (i = 0; i < l; i++) {
+                    callBack(arr[i]);
+                }
+
+                return app.asEnumerable(arr);
+            };
+
+        return {
+            where: function (whereClause) {
+                var filtered = [];
+
+                forEach(function(x) {
+                    if (whereClause(x)) {
+                        filtered.push(x);
+                    }
+                });
+
+                return app.asEnumerable(filtered);
+            },
+
+            toArray: function() {
+                return arr;
+            },
+
+            forEach: forEach
+        };
     };
 
     /**

@@ -217,14 +217,6 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         public bool UseCanonicalUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to enable inserttion of dynamic regions.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if to enable insertion of dynamic regions; otherwise, <c>false</c>.
-        /// </value>
-        public bool EnableInsertDynamicRegion { get; set; }
-
-        /// <summary>
         /// Gets or sets a value whether user confirmed content saving when affecting children pages.
         /// </summary>
         /// <value>

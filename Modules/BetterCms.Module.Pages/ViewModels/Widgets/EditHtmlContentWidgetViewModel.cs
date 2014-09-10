@@ -44,6 +44,22 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
         public bool CanDestroyDraft { get; set; }
 
         /// <summary>
+        /// Gets or sets the last dynamic region number.
+        /// </summary>
+        /// <value>
+        /// The last dynamic region number.
+        /// </value>
+        public int LastDynamicRegionNumber { get; set; }
+
+        /// <summary>
+        /// Determines, if child regions should be included to the results.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if child regions should be included to the results; otherwise, <c>false</c>.
+        /// </value>
+        public bool IncludeChildRegions { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

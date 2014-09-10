@@ -221,55 +221,69 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 33 "..\..\Views\Content\EditPageHtmlContent.cshtml"
-           Write(Html.HiddenFor(model => model.PageId));
+           Write(Html.HiddenFor(model => model.ParentPageContentId, new { @id = "bcmsParentPageContentId" }));
 
             
             #line default
             #line hidden
             
             #line 33 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+                                                                                                            
+                
+            
+            #line default
+            #line hidden
+            
+            #line 34 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+           Write(Html.HiddenFor(model => model.PageId));
+
+            
+            #line default
+            #line hidden
+            
+            #line 34 "..\..\Views\Content\EditPageHtmlContent.cshtml"
                                                       
                 
             
             #line default
             #line hidden
             
-            #line 34 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 35 "..\..\Views\Content\EditPageHtmlContent.cshtml"
            Write(Html.HiddenFor(model => model.RegionId, new { @id = "bcmsContentToRegionId" }));
 
             
             #line default
             #line hidden
             
-            #line 34 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 35 "..\..\Views\Content\EditPageHtmlContent.cshtml"
                                                                                                                
                 
             
             #line default
             #line hidden
             
-            #line 35 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 36 "..\..\Views\Content\EditPageHtmlContent.cshtml"
            Write(Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" }));
 
             
             #line default
             #line hidden
             
-            #line 35 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 36 "..\..\Views\Content\EditPageHtmlContent.cshtml"
                                                                                                                  
                 
             
             #line default
             #line hidden
             
-            #line 36 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 37 "..\..\Views\Content\EditPageHtmlContent.cshtml"
            Write(Html.HiddenFor(modal => modal.IsUserConfirmed, new { @id = "bcms-user-confirmed-region-deletion" }));
 
             
             #line default
             #line hidden
             
-            #line 36 "..\..\Views\Content\EditPageHtmlContent.cshtml"
+            #line 37 "..\..\Views\Content\EditPageHtmlContent.cshtml"
                                                                                                                     
             }
 

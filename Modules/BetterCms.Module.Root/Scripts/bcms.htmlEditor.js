@@ -71,7 +71,10 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
         };
 
         CKEDITOR.instances[id].InsertWidget = function (editor) {
-            bcms.trigger(htmlEditor.events.insertWidget, editor);
+            bcms.trigger(htmlEditor.events.insertWidget, {
+                editor: editor,
+                editorId: id
+            });
         };
 
         CKEDITOR.instances[id].EditChildWidgetOptions = function (editor, widgetId, assignmentId, contentId, optionListViewModel, onCloseClick) {
@@ -157,10 +160,12 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
         });
     };
 
-    htmlEditor.enableInsertDynamicRegion = function (textareaId) {
+    htmlEditor.enableInsertDynamicRegion = function (textareaId, isMasterPage, lastDynamicRegionNumber) {
         var instance = htmlEditor.getInstance(textareaId);
 
         instance.DynamicRegionsEnabled = true;
+        instance.LastDynamicRegionNumber = lastDynamicRegionNumber;
+        instance.IsMasterPage = isMasterPage;
     };
 
     htmlEditor.isSourceMode = function (textareaId) {
@@ -178,7 +183,7 @@ bettercms.define('bcms.htmlEditor', ['bcms.jquery', 'bcms', 'ckeditor'], functio
         $('#' + id).val(html);
     };
 
-    htmlEditor.getInstance = function(textareaId) {
+    htmlEditor.getInstance = function (textareaId) {
         var id = textareaId || htmlEditor.id;
 
         return CKEDITOR.instances[id];

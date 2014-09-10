@@ -51,6 +51,8 @@ namespace BetterCms.Module.Root.ViewModels.Cms
             }
 
             PageData = page;
+
+            RenderedPageContents = new List<Guid>();
         }
 
         /// <summary>
@@ -59,6 +61,8 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         public RenderPageViewModel()
         {
             Bag = new DynamicDictionary();
+
+            RenderedPageContents = new List<Guid>();
         }
 
         public IPage PageData { get; private set; }
@@ -84,6 +88,8 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         public string Title { get; set; }
         
         public bool IsMasterPage { get; set; }
+
+        public bool IsPreviewing { get; set; }
 
         public ForceProtocolType ForceAccessProtocol { get; set; }
 
@@ -364,6 +370,14 @@ namespace BetterCms.Module.Root.ViewModels.Cms
         /// <c>true</c> if entity can be saved unsecured; otherwise, <c>false</c>.
         /// </value>
         public bool SaveUnsecured { get; set; }
+
+        /// <summary>
+        /// Gets or sets the rendered page contents.
+        /// </summary>
+        /// <value>
+        /// The rendered page contents.
+        /// </value>
+        internal List<Guid> RenderedPageContents { get; set; }
 
         /// <summary>
         /// Clones this instance.

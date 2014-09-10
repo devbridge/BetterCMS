@@ -34,12 +34,12 @@ namespace BetterCms.Module.Blog.Accessors
             return "&nbsp;";
         }
 
-        public override string GetCustomStyles(HtmlHelper html)
+        public override string[] GetCustomStyles(HtmlHelper html)
         {
             return null;
         }
 
-        public override string GetCustomJavaScript(HtmlHelper html)
+        public override string[] GetCustomJavaScript(HtmlHelper html)
         {
             return null;
         }

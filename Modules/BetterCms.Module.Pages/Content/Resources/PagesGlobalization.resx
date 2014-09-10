@@ -1155,9 +1155,6 @@
   <data name="ClonePage_Dialog_AsMasterPage_Tooltip_Description" xml:space="preserve">
     <value>Create new master page from the current page.</value>
   </data>
-  <data name="SaveContent_ContentHasChildrenContents_RegionDeleteConfirmationMessage" xml:space="preserve">
-    <value>You are trying to delete dynamic regions. There are some children pages, which have contents created within these regions. If you delete this region, children page contens will be deleted also. Anyway, you can restore them by restoring archived version of current content. &lt;br /&gt;&lt;br /&gt;Are you sure you want to continue?</value>
-  </data>
   <data name="DeletePageContent_ContentHasChildrenContents_DeleteConfirmationMessage" xml:space="preserve">
     <value>You are trying to delete content which contains dynamic regions. There are some children pages, which have contents created within these regions. If you delete this content, children page contens will be deleted also and there will be no possibility to restore them. &lt;br /&gt;&lt;br /&gt;Are you sure you want to continue and lose all the children contents?</value>
   </data>
@@ -1361,5 +1358,8 @@
   </data>
   <data name="WidgetUsages_Type_MasterPage" xml:space="preserve">
     <value>Master page</value>
+  </data>
+  <data name="SaveWidget_ContentHasChildrenWidgetWithDynamicContents_ConfirmationMessage" xml:space="preserve">
+    <value>You are trying to remove child widget which has children with dynamic regions. There are some children pages, which have contents created within these regions. If you delete this region, children page contents will be deleted also. &lt;br /&gt;&lt;br /&gt;Are you sure you want to continue?</value>
   </data>
 </root>

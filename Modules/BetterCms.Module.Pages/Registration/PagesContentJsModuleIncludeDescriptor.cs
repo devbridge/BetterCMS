@@ -21,8 +21,8 @@ namespace BetterCms.Module.Pages.Registration
             Links = new IActionProjection[]
                 {      
                     new JavaScriptModuleLinkTo<ContentController>(this, "loadWidgetsUrl", controller => controller.Widgets("{0}")),
-                    new JavaScriptModuleLinkTo<ContentController>(this, "loadAddNewHtmlContentDialogUrl", controller => controller.AddPageHtmlContent("{0}", "{1}")),
-                    new JavaScriptModuleLinkTo<ContentController>(this, "insertContentToPageUrl", controller => controller.InsertContentToPage("{0}", "{1}", "{2}")),
+                    new JavaScriptModuleLinkTo<ContentController>(this, "loadAddNewHtmlContentDialogUrl", controller => controller.AddPageHtmlContent("{0}", "{1}", "{2}")),
+                    new JavaScriptModuleLinkTo<ContentController>(this, "insertContentToPageUrl", controller => controller.InsertContentToPage("{0}", "{1}", "{2}", "{3}", "{4}")),
                     new JavaScriptModuleLinkTo<ContentController>(this, "deletePageContentUrl", controller => controller.DeletePageContent("{0}", "{1}", "{2}", "{3}")),
                     new JavaScriptModuleLinkTo<ContentController>(this, "editPageContentUrl", controller => controller.EditPageHtmlContent("{0}")),
                     new JavaScriptModuleLinkTo<ContentController>(this, "sortPageContentUrl", controller => controller.SortPageContent(null)),

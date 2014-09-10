@@ -4,8 +4,10 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
-
+using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
@@ -196,6 +198,55 @@ namespace BetterCms.Module.Pages.Services
             }
 
             return query.Where(mp => updatingIds.Contains(mp.Master.Id)).ToList();
+        }
+
+        public int GetLastDynamicRegionNumber(Guid pageId)
+        {
+            ContentRegion crAlias = null;
+            Region regionAlias = null;
+            Root.Models.Content contentAlias = null;
+            Root.Models.Content hAlias = null;
+            PageContent pcAlias = null;
+
+            // Load all original contents
+            var originalFuture = repository
+                .AsQueryOver(() => crAlias)
+                .Inner.JoinAlias(() => crAlias.Region, () => regionAlias)
+                .Inner.JoinAlias(() => crAlias.Content, () => contentAlias)
+                .Inner.JoinAlias(() => contentAlias.PageContents, () => pcAlias)
+
+                .Where(() => pcAlias.Page.Id == pageId)
+                .And(() => contentAlias.GetType() == typeof(HtmlContent))
+                .And(() => contentAlias.Status == ContentStatus.Draft
+                    || contentAlias.Status == ContentStatus.Published)
+                .And(() => !crAlias.IsDeleted
+                    && !contentAlias.IsDeleted
+                    && !pcAlias.IsDeleted)
+                .SelectList(list => list.SelectGroup(() => regionAlias.RegionIdentifier))
+                .Future<string>();
+
+            // Load all draft contents
+            var draftFuture = repository
+                .AsQueryOver(() => crAlias)
+                .Inner.JoinAlias(() => crAlias.Region, () => regionAlias)
+                .Inner.JoinAlias(() => crAlias.Content, () => hAlias)
+                .Inner.JoinAlias(() => hAlias.Original, () => contentAlias)
+                .Inner.JoinAlias(() => contentAlias.PageContents, () => pcAlias)
+
+                .Where(() => pcAlias.Page.Id == pageId)
+                .And(() => contentAlias.GetType() == typeof(HtmlContent))
+                .And(() => hAlias.Status == ContentStatus.Draft
+                    && contentAlias.Status == ContentStatus.Published)
+                .And(() => !crAlias.IsDeleted
+                    && !contentAlias.IsDeleted
+                    && !pcAlias.IsDeleted
+                    && !hAlias.IsDeleted)
+                .SelectList(list => list.SelectGroup(() => regionAlias.RegionIdentifier))
+                .Future<string>();
+
+            var regionIdentifiers = draftFuture.ToList().Concat(originalFuture.ToList()).Distinct();
+
+            return RegionHelper.GetLastDynamicRegionNumber(regionIdentifiers);
         }
     }
 }

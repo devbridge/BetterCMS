@@ -16,6 +16,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         private readonly StringBuilder sb;
         private readonly PageRegionViewModel region;
         private readonly bool allowContentManagement;
+        private readonly bool isInvisible;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LayoutRegionWrapper" /> class.
@@ -23,11 +24,13 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// <param name="sb">The string builder.</param>
         /// <param name="region">The region.</param>
         /// <param name="allowContentManagement">if set to <c>true</c> allows content management.</param>
-        public LayoutRegionWrapper(StringBuilder sb, PageRegionViewModel region, bool allowContentManagement)
+        /// <param name="isInvisible">if set to <c>true</c> [is invisible].</param>
+        public LayoutRegionWrapper(StringBuilder sb, PageRegionViewModel region, bool allowContentManagement, bool isInvisible = false)
         {
             this.sb = sb;
             this.region = region;
             this.allowContentManagement = allowContentManagement;
+            this.isInvisible = isInvisible;
 
             if (allowContentManagement)
             {
@@ -51,7 +54,11 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// </summary>
         private void RenderOpeningTags()
         {
-            sb.AppendFormat(@"<div class=""{0}"" data-id=""{1}""></div>", RegionStartClassName, region.RegionId);
+            sb.AppendFormat(@"<div class=""{0}"" data-id=""{1}"" data-identifier=""{2}""{3}></div>", 
+                RegionStartClassName,               // 0 
+                region.RegionId,                    // 1
+                region.RegionIdentifier,            // 2
+                isInvisible ? " data-invisible=\"true\"" : null); // 3
             sb.AppendLine();
         }
 

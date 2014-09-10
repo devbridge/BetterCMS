@@ -18,6 +18,15 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
         public System.Guid ContentId { get; set; }
 
         /// <summary>
+        /// Gets or sets the parent page content identifier.
+        /// </summary>
+        /// <value>
+        /// The parent page content identifier.
+        /// </value>
+        [DataMember]
+        public System.Guid? ParentPageContentId { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether content is published.
         /// </summary>
         /// <value>

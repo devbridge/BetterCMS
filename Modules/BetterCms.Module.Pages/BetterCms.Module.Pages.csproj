@@ -131,6 +131,7 @@
     <Compile Include="Command\Content\GetInsertHtmlContent\GetInsertHtmlContentCommand.cs" />
     <Compile Include="Command\Content\GetInsertHtmlContent\InsertHtmlContentRequest.cs" />
     <Compile Include="Command\Content\GetChildContentOptions\GetChildContentOptionsCommand.cs" />
+    <Compile Include="Command\Content\SavePageContentOptions\SavePageContentOptionsCommandResponse.cs" />
     <Compile Include="Command\Content\SavePageHtmlContent\SavePageHtmlContentCommandRequest.cs" />
     <Compile Include="Command\History\GetSitemapHistory\GetSitemapHistoryCommand.cs" />
     <Compile Include="Command\History\GetSitemapHistory\GetSitemapHistoryRequest.cs" />
@@ -164,6 +165,7 @@
     <Compile Include="Events\LayoutEvents.cs" />
     <Compile Include="Events\TagEvents.cs" />
     <Compile Include="Exceptions\DraftNotFoundException.cs" />
+    <Compile Include="Helpers\RegionHelper.cs" />
     <Compile Include="Helpers\SitemapHelper.cs" />
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
     <Compile Include="Helpers\UrlHelper.cs" />
@@ -194,7 +196,6 @@
     <Compile Include="Command\Content\DeletePageContent\DeletePageContentCommand.cs" />
     <Compile Include="Command\Content\DeletePageContent\DeletePageContentCommandRequest.cs" />
     <Compile Include="Command\Content\GetPageHtmlContent\GetPageHtmlContentCommand.cs" />
-    <Compile Include="Command\Content\SavePageHtmlContent\SavePageHtmlContentResponse.cs" />
     <Compile Include="Command\Content\SortPageContent\SortPageContentCommand.cs" />
     <Compile Include="Command\History\DestroyContentDraft\DestroyContentDraftCommand.cs" />
     <Compile Include="Command\History\DestroyContentDraft\DestroyContentDraftCommandResponse.cs" />
@@ -346,6 +347,8 @@
     <Compile Include="Services\IWidgetService.cs" />
     <Compile Include="ViewModels\Content\ContentViewModel.cs" />
     <Compile Include="ViewModels\Content\ContentSortViewModel.cs" />
+    <Compile Include="ViewModels\Content\InsertContentToPageResultViewModel.cs" />
+    <Compile Include="ViewModels\Content\PageContentChildRegionViewModel.cs" />
     <Compile Include="ViewModels\Content\RestorePageContentViewModel.cs" />
     <Compile Include="ViewModels\Content\IDraftDestroy.cs" />
     <Compile Include="ViewModels\Content\PageContentSortViewModel.cs" />
@@ -753,9 +756,9 @@
     <EmbeddedResource Include="Scripts\bcms.pages.template.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.widgets.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.properties.js" />
-    <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.masterpage.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.languages.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>

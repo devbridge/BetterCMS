@@ -340,6 +340,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage.
+        /// </summary>
+        public static string Button_Manage {
+            get {
+                return ResourceManager.GetString("Button_Manage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
         public static string Button_No {
@@ -556,6 +565,60 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Discard changes.
+        /// </summary>
+        public static string ContentsTree_Dialog_ResetSortChanges_Button {
+            get {
+                return ResourceManager.GetString("ContentsTree_Dialog_ResetSortChanges_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save changes.
+        /// </summary>
+        public static string ContentsTree_Dialog_SaveSortChanges_Button {
+            get {
+                return ResourceManager.GetString("ContentsTree_Dialog_SaveSortChanges_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Some contents were sorted / moved to another regions. Do you want to save these changes before continue?.
+        /// </summary>
+        public static string ContentsTree_Dialog_SaveSortChanges_ConfirmationMessage {
+            get {
+                return ResourceManager.GetString("ContentsTree_Dialog_SaveSortChanges_ConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page structure.
+        /// </summary>
+        public static string ContentsTree_Dialog_Title {
+            get {
+                return ResourceManager.GetString("ContentsTree_Dialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lost &amp; Found regions.
+        /// </summary>
+        public static string ContentsTree_InvisibleItems_Title {
+            get {
+                return ResourceManager.GetString("ContentsTree_InvisibleItems_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visible regions.
+        /// </summary>
+        public static string ContentsTree_VisibleItems_Title {
+            get {
+                return ResourceManager.GetString("ContentsTree_VisibleItems_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sorry, looks like &lt;b&gt;cookies are disabled&lt;/b&gt; in your browser. For full web experience.
         /// </summary>
         public static string CookieSupport_MustBeEnabled_Message_FirstLine {
@@ -759,6 +822,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         public static string MasterPage_Or_Layout_ShouldBeSelected_ValidationMessage {
             get {
                 return ResourceManager.GetString("MasterPage_Or_Layout_ShouldBeSelected_ValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current page.
+        /// </summary>
+        public static string MasterPagesPath_CurrentPage_Title {
+            get {
+                return ResourceManager.GetString("MasterPagesPath_CurrentPage_Title", resourceCulture);
             }
         }
         
@@ -1047,6 +1119,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         public static string SaveCategory_CategoryExists_Message {
             get {
                 return ResourceManager.GetString("SaveCategory_CategoryExists_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are trying to delete dynamic regions. There are some children pages, which have contents created within these regions. If you delete this region, children page contens will be deleted also. Anyway, you can restore them by restoring archived version of current content. &lt;br /&gt;&lt;br /&gt;Are you sure you want to continue?.
+        /// </summary>
+        public static string SaveContent_ContentHasChildrenContents_RegionDeleteConfirmationMessage {
+            get {
+                return ResourceManager.GetString("SaveContent_ContentHasChildrenContents_RegionDeleteConfirmationMessage", resourceCulture);
             }
         }
         

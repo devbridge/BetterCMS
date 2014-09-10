@@ -7,27 +7,28 @@ using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.Api;
-using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
+
 using BetterCms.Module.Api.Extensions;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Operations.Root;
 
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
+
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Models.Events;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
+
 using BetterCms.Module.Root;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 using BetterCms.Module.Root.Services;
-using BetterCms.Module.Root.ViewModels.Option;
 
 using ServiceStack.ServiceInterface;
 
@@ -400,6 +401,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                                 LastModifiedOn = pageContent.ModifiedOn,
 
                                 ContentId = pageContent.Content.Id,
+                                ParentPageContentId = pageContent.Parent != null ? pageContent.Parent.Id : (Guid?)null,
                                 Name = pageContent.Content.Name,
                                 RegionId = pageContent.Region.Id,
                                 RegionIdentifier = pageContent.Region.RegionIdentifier,
