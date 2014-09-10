@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Web.Http;
+using System.Web.Mvc;
 
 using BetterCms.Core.ActionResults;
 using BetterCms.Module.GoogleAnalytics.Command.Sitemap;
