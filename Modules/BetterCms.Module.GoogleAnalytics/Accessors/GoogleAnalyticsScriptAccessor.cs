@@ -15,7 +15,14 @@ namespace BetterCms.Module.GoogleAnalytics.Accessors
 
         public string[] GetCustomJavaScript(HtmlHelper html)
         {
-            return new[] { string.Format(GoogleAnalyticsModuleConstants.GoogleAnalyticsScript, GoogleAnalyticsModuleHelper.GetAnalyticsKey(cmsConfiguration)) };
+            var analyticsKey = GoogleAnalyticsModuleHelper.GetAnalyticsKey(cmsConfiguration);
+
+            if (!string.IsNullOrWhiteSpace(analyticsKey))
+            {
+                return new[] { string.Format(GoogleAnalyticsModuleConstants.GoogleAnalyticsScript, analyticsKey) };
+            }
+
+            return null;
         }
 
         public string[] GetJavaScriptResources(HtmlHelper html)

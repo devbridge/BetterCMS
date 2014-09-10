@@ -40,8 +40,7 @@
 
         public static string GetAnalyticsKey(ICmsConfiguration cmsConfiguration)
         {
-            var value = GetConfigurationValue(cmsConfiguration, GoogleAnalyticsModuleConstants.KeyForAnalyticsKey);
-            return !string.IsNullOrEmpty(value) ? value : GoogleAnalyticsModuleConstants.DeveloperAnalyticsKey;
+            return GetConfigurationValue(cmsConfiguration, GoogleAnalyticsModuleConstants.KeyForAnalyticsKey);
         }
 
         private static string GetConfigurationValue(ICmsConfiguration cmsConfiguration, string key)
