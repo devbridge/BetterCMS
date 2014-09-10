@@ -39,7 +39,8 @@ namespace BetterCms.Module.Pages.Command.Content.InsertContent
             var page = Repository.AsProxy<Root.Models.Page>(request.PageId);
             var region = Repository.AsProxy<Region>(request.RegionId);
             var content = Repository
-                .AsQueryable<Root.Models.Content>(c => c.Id == request.ContentId)
+                .AsQueryable<Root.Models.Content>()
+                .Where(c => c.Id == request.ContentId)
                 .FetchMany(c => c.ContentRegions)
                 .ToList()
                 .FirstOne();

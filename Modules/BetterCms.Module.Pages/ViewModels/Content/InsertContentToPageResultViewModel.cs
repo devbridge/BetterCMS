@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 
 using BetterCms.Core.DataContracts.Enums;
-using BetterCms.Module.Root.ViewModels.Cms;
 
 namespace BetterCms.Module.Pages.ViewModels.Content
 {
@@ -27,5 +26,11 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         public int PageContentVersion { get; set; }
 
         public List<PageContentChildRegionViewModel> Regions { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0}, Title: {1}, PageId: {2}, RegionId: {3}, ContentId: {4}, PageContentId: {5}", 
+                base.ToString(), Title, PageId, RegionId, ContentId, PageContentId);
+        }
     }
 }

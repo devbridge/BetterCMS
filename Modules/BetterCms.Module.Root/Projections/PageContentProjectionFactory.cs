@@ -29,7 +29,7 @@ namespace BetterCms.Module.Root.Projections
             this.unitOfWork = unitOfWork;
         }
 
-        public TProjection Create<TProjection>(IPageContent pageContent, IContent content, IList<IOptionValue> options,
+        public virtual TProjection Create<TProjection>(IPageContent pageContent, IContent content, IList<IOptionValue> options,
             IEnumerable<ChildContentProjection> childContentProjections, IEnumerable<PageContentProjection> childRegionContentProjections,
             Func<IPageContent, IContent, IContentAccessor, IEnumerable<ChildContentProjection>, IEnumerable<PageContentProjection>, TProjection> createProjectionDelegate)
             where TProjection : PageContentProjection
@@ -48,7 +48,7 @@ namespace BetterCms.Module.Root.Projections
             return pageContentProjection;
         }
 
-        public IContentAccessor GetAccessorForType(IContent content, IList<IOptionValue> options = null)
+        public virtual IContentAccessor GetAccessorForType(IContent content, IList<IOptionValue> options = null)
         {
             IContentAccessor contentAccessor = null;
             Type contentType;
