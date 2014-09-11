@@ -223,6 +223,9 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
             for (var i = 0; i < options.buttons.length; i++) {
                 var button = options.buttons[i];
                 button.dialog = this;
+                if (!button.css()) {
+                    button.css(classes.grayButton);
+                }
                 model.buttons.push(button);
             }
         }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 
 using BetterCms.Core.Exceptions.Mvc;
@@ -17,6 +16,7 @@ using BetterCms.Module.Pages.Command.Content.SavePageContentOptions;
 using BetterCms.Module.Pages.Command.Content.SavePageHtmlContent;
 using BetterCms.Module.Pages.Command.Content.SortPageContent;
 using BetterCms.Module.Pages.Command.Widget.GetWidgetCategory;
+
 using BetterCms.Module.Pages.ViewModels.Content;
 
 using BetterCms.Module.Root;
@@ -41,26 +41,29 @@ namespace BetterCms.Module.Pages.Controllers
         /// <param name="pageId">The page id.</param>
         /// <param name="contentId">The widget id.</param>
         /// <param name="regionId">The region id.</param>
+        /// <param name="parentPageContentId">The parent page content identifier.</param>
+        /// <param name="includeChildRegions">The include child regions.</param>
         /// <returns>
         /// Json with result status.
         /// </returns>
         [HttpPost]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
-        public ActionResult InsertContentToPage(string pageId, string contentId, string regionId)
+        public ActionResult InsertContentToPage(string pageId, string contentId, string regionId, string parentPageContentId, string includeChildRegions)
         {
             var request = new InsertContentToPageRequest
-            {
-                ContentId = contentId.ToGuidOrDefault(),
-                PageId = pageId.ToGuidOrDefault(),
-                RegionId = regionId.ToGuidOrDefault()
-            };
+                {
+                    ContentId = contentId.ToGuidOrDefault(),
+                    PageId = pageId.ToGuidOrDefault(),
+                    RegionId = regionId.ToGuidOrDefault(),
+                    ParentPageContentId = (!string.IsNullOrWhiteSpace(parentPageContentId)) 
+                        ? parentPageContentId.ToGuidOrDefault() 
+                        : (System.Guid?) null,
+                    IncludeChildRegions = includeChildRegions.ToBoolOrDefault()
+                };
 
-            if (GetCommand<InsertContentToPageCommand>().ExecuteCommand(request))
-            {
-                return Json(new WireJson { Success = true });
-            }
+            var result = GetCommand<InsertContentToPageCommand>().ExecuteCommand(request);
 
-            return Json(new WireJson { Success = false });
+            return WireJson(result != null, result);
         }
 
         /// <summary>
@@ -105,16 +108,23 @@ namespace BetterCms.Module.Pages.Controllers
         /// <summary>
         /// Creates add page content modal dialog for given page.
         /// </summary>
-        /// <param name="pageId">The page id.</param>
-        /// <param name="regionId">The region id.</param>
+        /// <param name="pageIdentifier">The page identifier.</param>
+        /// <param name="regionIdentifier">The region identifier.</param>
+        /// <param name="parentPageContentIdentifier">The parent page content identifier.</param>
         /// <returns>
         /// ViewResult to render add page content modal dialog.
         /// </returns>
         [HttpGet]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
-        public ActionResult AddPageHtmlContent(string pageId, string regionId)
+        public ActionResult AddPageHtmlContent(string pageIdentifier, string regionIdentifier, string parentPageContentIdentifier)
         {
-            var model = GetCommand<GetInsertHtmlContentCommand>().ExecuteCommand(new InsertHtmlContentRequest() { PageId = pageId, RegionId = regionId });
+            var addRequest = new InsertHtmlContentRequest
+                    {
+                        PageId = pageIdentifier,
+                        RegionId = regionIdentifier,
+                        ParentPageContentId = parentPageContentIdentifier
+                    };
+            var model = GetCommand<GetInsertHtmlContentCommand>().ExecuteCommand(addRequest);
 
             if (model != null)
             {
@@ -142,26 +152,7 @@ namespace BetterCms.Module.Pages.Controllers
             {
                 var result = GetCommand<SavePageHtmlContentCommand>().ExecuteCommand(request);
 
-                if (result != null)
-                {
-                    return
-                        Json(
-                            new WireJson
-                                {
-                                    Success = true,
-                                    Data =
-                                        new
-                                            {
-                                                PageContentId = result.PageContentId,
-                                                ContentId = result.ContentId,
-                                                RegionId = result.RegionId,
-                                                PageId = result.PageId,
-                                                DesirableStatus = request.Content.DesirableStatus
-                                            }
-                                });
-                }
-
-                return Json(new WireJson { Success = false });
+                return WireJson(result != null, result);
             }
             catch (ConfirmationRequestException exc)
             {
@@ -242,9 +233,9 @@ namespace BetterCms.Module.Pages.Controllers
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
         public ActionResult PageContentOptions(ContentOptionValuesViewModel model)
         {
-            bool success = GetCommand<SavePageContentOptionsCommand>().ExecuteCommand(model);
+            var response = GetCommand<SavePageContentOptionsCommand>().ExecuteCommand(model);
 
-            return Json(new WireJson { Success = success });
+            return WireJson(response != null, response);
         }
 
         /// <summary>

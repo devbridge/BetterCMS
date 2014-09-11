@@ -20,6 +20,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         private readonly bool allowContentManagement;
         private readonly string clearFixClassName;
         private readonly bool renderClearFixDiv;
+        private readonly bool isInvisible;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RegionContentWrapper" /> class.
@@ -27,7 +28,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// <param name="sb">The string builder.</param>
         /// <param name="content">The region content.</param>
         /// <param name="allowContentManagement">if set to <c>true</c> allows content management.</param>
-        public RegionContentWrapper(StringBuilder sb, PageContentProjection content, bool allowContentManagement)
+        public RegionContentWrapper(StringBuilder sb, PageContentProjection content, bool allowContentManagement, bool isInvisible = false)
         {
             this.sb = sb;
             this.content = content;
@@ -35,6 +36,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
 
             clearFixClassName = CmsContext.Config.ContentEndingDivCssClassName;
             renderClearFixDiv = CmsContext.Config.RenderContentEndingDiv;
+            this.isInvisible = isInvisible;
 
             RenderOpeningTags();
         }
@@ -55,7 +57,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             if (allowContentManagement)
             {
                 sb.AppendFormat(
-                    @"<div class=""{0}"" data-page-content-id=""{1}"" data-content-id=""{2}"" data-page-content-version=""{3}"" data-content-version=""{4}"" data-content-type=""{5}"" data-content-title=""{6}"" {7}></div>",
+                    @"<div class=""{0}"" data-page-content-id=""{1}"" data-content-id=""{2}"" data-page-content-version=""{3}"" data-content-version=""{4}"" data-content-type=""{5}"" data-content-title=""{6}"" {7}{8}></div>",
                     ContentStartClassName, // 0
                     content.PageContentId, // 1
                     content.ContentId, // 2
@@ -63,7 +65,9 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     content.ContentVersion, // 4
                     content.GetContentWrapperType(), // 5
                     content.GetTitle(), // 6
-                    content.PageContentStatus == ContentStatus.Draft ? " data-draft=\"true\"" : null); // 7
+                    content.PageContentStatus == ContentStatus.Draft ? " data-draft=\"true\"" : null, // 7
+                    isInvisible ? " data-invisible=\"true\"" : null // 8
+                    );
                 sb.AppendLine();
             }
         }

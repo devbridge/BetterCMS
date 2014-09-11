@@ -1,4 +1,6 @@
-﻿using BetterCms.Core.DataContracts;
+﻿using System.Collections.Generic;
+
+using BetterCms.Core.DataContracts;
 
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Projections;
@@ -10,6 +12,7 @@ namespace BetterCms.Module.Root.Services
         PageContentProjection CreatePageContentProjection(
             bool canManageContent,
             PageContent pageContent,
+            List<PageContent> allPageContents, 
             IChildContent childContent = null,
             System.Guid? previewPageContentId = null,
             bool retrieveCorrectVersion = true);

@@ -86,7 +86,7 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPostList
             var count = query.ToRowCountFutureValue();
 
             var blogPosts = query.AddSortingAndPaging(request).Future<SiteSettingBlogPostViewModel>();
-            IEnumerable<LookupKeyValue> languagesFuture = configuration.EnableMultilanguage ? languageService.GetLanguages() : null;
+            IEnumerable<LookupKeyValue> languagesFuture = configuration.EnableMultilanguage ? languageService.GetLanguagesLookupValues() : null;
 
             var model = new BlogsGridViewModel<SiteSettingBlogPostViewModel>(blogPosts.ToList(), request, count.Value, categoryService.GetCategories());
             if (languagesFuture != null)

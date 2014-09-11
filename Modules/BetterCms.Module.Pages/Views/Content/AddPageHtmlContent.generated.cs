@@ -201,41 +201,55 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 25 "..\..\Views\Content\AddPageHtmlContent.cshtml"
-           Write(Html.HiddenFor(model => model.PageId));
+           Write(Html.HiddenFor(model => model.ParentPageContentId, new { @id = "bcmsParentPageContentId" }));
 
             
             #line default
             #line hidden
             
             #line 25 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+                                                                                                            
+                
+            
+            #line default
+            #line hidden
+            
+            #line 26 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+           Write(Html.HiddenFor(model => model.PageId));
+
+            
+            #line default
+            #line hidden
+            
+            #line 26 "..\..\Views\Content\AddPageHtmlContent.cshtml"
                                                       
                 
             
             #line default
             #line hidden
             
-            #line 26 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+            #line 27 "..\..\Views\Content\AddPageHtmlContent.cshtml"
            Write(Html.HiddenFor(model => model.RegionId, new { @id = "bcmsContentToRegionId" }));
 
             
             #line default
             #line hidden
             
-            #line 26 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+            #line 27 "..\..\Views\Content\AddPageHtmlContent.cshtml"
                                                                                                
                 
             
             #line default
             #line hidden
             
-            #line 27 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+            #line 28 "..\..\Views\Content\AddPageHtmlContent.cshtml"
            Write(Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status"}));
 
             
             #line default
             #line hidden
             
-            #line 27 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+            #line 28 "..\..\Views\Content\AddPageHtmlContent.cshtml"
                                                                                                                 
             }
 
@@ -253,7 +267,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 32 "..\..\Views\Content\AddPageHtmlContent.cshtml"
+            #line 33 "..\..\Views\Content\AddPageHtmlContent.cshtml"
        Write(Html.Partial("Partial/SelectWidget", Model.WidgetCategories));
 
             

@@ -52,14 +52,14 @@ namespace BetterCms.Module.Pages.Services
         private readonly IContentProjectionService contentProjectionService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DefaultPreviewService"/> class.
+        /// Initializes a new instance of the <see cref="DefaultPreviewService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="securityService">The security service.</param>
-        /// <param name="childContentService">The child content service.</param>
         /// <param name="contentProjectionService">The content projection service.</param>
+        /// <param name="childContentService">The child content service.</param>
         public DefaultPreviewService(IRepository repository, ISecurityService securityService, 
-            IChildContentService childContentService, IContentProjectionService contentProjectionService)
+            IContentProjectionService contentProjectionService, IChildContentService childContentService)
         {
             this.repository = repository;
             this.securityService = securityService;
@@ -106,14 +106,15 @@ namespace BetterCms.Module.Pages.Services
 
             childContentService.RetrieveChildrenContentsRecursively(true, new[] { pageContent.Content });
 
-            var contentProjection = contentProjectionService.CreatePageContentProjection(true, pageContent, retrieveCorrectVersion: false);
+            var contentProjection = contentProjectionService.CreatePageContentProjection(true, pageContent, new List<PageContent> { pageContent }, retrieveCorrectVersion: false);
 
             var pageViewModel = new RenderPageViewModel
                                     {
                                         Contents = new List<PageContentProjection> { contentProjection },
                                         Stylesheets = new List<IStylesheetAccessor> { contentProjection },
                                         Regions = new List<PageRegionViewModel> { regionViewModel },
-                                        AreRegionsEditable = true
+                                        AreRegionsEditable = true,
+                                        IsPreviewing = true
                                     };
             if (allowJavaScript)
             {

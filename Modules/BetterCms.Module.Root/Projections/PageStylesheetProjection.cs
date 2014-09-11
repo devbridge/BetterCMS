@@ -36,7 +36,7 @@ namespace BetterCms.Module.Root.Projections
         /// </summary>
         /// <param name="html">The HTML.</param>
         /// <returns>Custom style</returns>
-        public string GetCustomStyles(System.Web.Mvc.HtmlHelper html)
+        public string[] GetCustomStyles(System.Web.Mvc.HtmlHelper html)
         {
             return styleAccessor.GetCustomStyles(html);
         }

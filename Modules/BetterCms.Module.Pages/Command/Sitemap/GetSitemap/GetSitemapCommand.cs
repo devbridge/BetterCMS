@@ -56,7 +56,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemap
         {
             if (sitemapId.HasDefaultValue())
             {
-                var langs = CmsConfiguration.EnableMultilanguage ? LanguageService.GetLanguages().ToList() : new List<LookupKeyValue>();
+                var langs = CmsConfiguration.EnableMultilanguage ? LanguageService.GetLanguagesLookupValues().ToList() : new List<LookupKeyValue>();
                 return new SitemapViewModel()
                     {
                         AccessControlEnabled = CmsConfiguration.Security.AccessControlEnabled,
@@ -83,7 +83,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemap
             }
 
             var tagsFuture = TagService.GetSitemapTagNames(sitemapId);
-            var languagesFuture = CmsConfiguration.EnableMultilanguage ? LanguageService.GetLanguages() : null;
+            var languagesFuture = CmsConfiguration.EnableMultilanguage ? LanguageService.GetLanguagesLookupValues() : null;
             var pagesToFuture = SitemapHelper.GetPagesToFuture(CmsConfiguration.EnableMultilanguage, Repository);
 
             IQueryable<Models.Sitemap> sitemapQuery = Repository.AsQueryable<Models.Sitemap>()

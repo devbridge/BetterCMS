@@ -52,7 +52,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemapVersion
         /// </returns>
         public SitemapViewModel Execute(Guid versionId)
         {
-            var languagesFuture = CmsConfiguration.EnableMultilanguage ? LanguageService.GetLanguages() : null;
+            var languagesFuture = CmsConfiguration.EnableMultilanguage ? LanguageService.GetLanguagesLookupValues() : null;
             var pagesToFuture = SitemapHelper.GetPagesToFuture(CmsConfiguration.EnableMultilanguage, Repository);
 
             // Return current or old version.

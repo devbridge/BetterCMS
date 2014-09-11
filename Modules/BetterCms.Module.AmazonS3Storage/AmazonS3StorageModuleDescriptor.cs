@@ -1,4 +1,6 @@
-﻿using Autofac;
+﻿using System;
+
+using Autofac;
 
 using BetterCms.Configuration;
 using BetterCms.Core.Modules;
@@ -18,6 +20,22 @@ namespace BetterCms.Module.AmazonS3Storage
         public AmazonS3StorageModuleDescriptor(ICmsConfiguration configuration)
             : base(configuration)
         {
+        }
+
+        internal const string ModuleId = "3723f5a8-b855-4c20-878f-cd2ed43451fa";
+
+        /// <summary>
+        /// Gets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public override Guid Id
+        {
+            get
+            {
+                return new Guid(ModuleId);
+            }
         }
 
         /// <summary>

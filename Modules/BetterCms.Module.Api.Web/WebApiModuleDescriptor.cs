@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 
 using Autofac;
 
@@ -33,6 +34,22 @@ namespace BetterCms.Module.Api
             : base(cmsConfiguration)
         {
             CoreEvents.Instance.HostStart += ApplicationStart;
+        }
+
+        internal const string ModuleId = "f19e11dc-f991-48e7-be82-ab4d2c07209d";
+
+        /// <summary>
+        /// Gets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public override Guid Id
+        {
+            get
+            {
+                return new Guid(ModuleId);
+            }
         }
 
         /// <summary>

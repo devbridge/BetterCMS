@@ -79,6 +79,7 @@
         @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" })
         @Html.HiddenFor(modal => modal.PreviewOnPageContentId, new { @class = "bcms-preview-page-content-id" })
         @Html.HiddenFor(model => model.EditInSourceMode, new { @id = "bcms-edit-in-source-mode" })
+        @Html.HiddenFor(modal => modal.IsUserConfirmed, new { @id = "bcms-user-confirmed-region-deletion" })
         @Html.HiddenSubmit()
     }
 </div>

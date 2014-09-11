@@ -21,6 +21,7 @@ namespace BetterCms.Configuration
         private const string ModuleGalleryNode = "moduleGallery";
         private const string WorkingDirectoryRootPathAttribute = "workingDirectoryRootPath";
         private const string ArticleUrlPatternAttribute = "articleUrlPattern";
+        private const string ModulesNode = "modules";
         private const string UrlPatternsNode = "urlPatterns";
         private const string InstallationNode = "installation";
         private const string UsersNode = "users";
@@ -228,6 +229,12 @@ namespace BetterCms.Configuration
             set { this[EnableMacrosAttribute] = value; }
         }
 
+        #endregion
+
+        #region Child Nodes
+
+
+
         /// <summary>
         /// Gets or sets the URL patterns.
         /// </summary>
@@ -241,10 +248,13 @@ namespace BetterCms.Configuration
             set { this[UrlPatternsNode] = value; }
         }
 
-        #endregion
+        [ConfigurationProperty(ModulesNode, IsRequired = false)]
+        public ModulesCollection Modules
+        {
+            get { return (ModulesCollection)this[ModulesNode]; }
+            set { this[ModulesNode] = value; }
+        }
 
-        #region Child Nodes
-        
         /// <summary>
         /// Gets or sets the configuration of CMS storage service.
         /// </summary>

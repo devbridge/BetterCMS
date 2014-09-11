@@ -25,7 +25,8 @@ namespace BetterCms.Module.MediaManager.Command.Upload.Upload
         {
             var maxLength = CmsConfiguration.Storage.MaximumFileNameLength > 0 ? CmsConfiguration.Storage.MaximumFileNameLength : 100;
 
-            var fileName = request.FileName;
+            // Fix for IIS express + IE (if full path is returned)
+            var fileName = Path.GetFileName(request.FileName);
             if (fileName.Length > maxLength)
             {
                 fileName = string.Concat(Path.GetFileNameWithoutExtension(fileName.Substring(0, maxLength)), Path.GetExtension(fileName));

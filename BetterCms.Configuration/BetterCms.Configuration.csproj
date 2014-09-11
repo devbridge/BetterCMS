@@ -115,6 +115,8 @@
     <Compile Include="Configuration\DatabaseType.cs" />
     <Compile Include="Configuration\DefaultConfigurationLoader.cs" />
     <Compile Include="Configuration\CmsSecurityConfigurationElement.cs" />
+    <Compile Include="Configuration\ModuleElement.cs" />
+    <Compile Include="Configuration\ModulesCollection.cs" />
     <Compile Include="Configuration\StorageServiceType.cs" />
     <Compile Include="Configuration\TrailingSlashBehaviorType.cs" />
     <Compile Include="Configuration\UrlPatternsCollection.cs" />

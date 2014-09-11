@@ -34,7 +34,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.WidgetTests
 
                         var unitOfWork = new DefaultUnitOfWork(session);
                         var repository = new DefaultRepository(unitOfWork);
-                        var widgetService = new DefaultWidgetService(repository, unitOfWork, null, null);
+                        var widgetService = new DefaultWidgetService(repository, unitOfWork, null, null, null);
                         var command = new GetSiteSettingsWidgetsCommand(widgetService);
 
                         var response = command.Execute(new WidgetsFilter { SearchQuery = control1.Name.Substring(1, control1.Name.Length - 1) });
@@ -57,7 +57,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.WidgetTests
                     {
                         var unitOfWork = new DefaultUnitOfWork(session);
                         var repository = new DefaultRepository(unitOfWork);
-                        var widgetService = new DefaultWidgetService(repository, unitOfWork, null, null);
+                        var widgetService = new DefaultWidgetService(repository, unitOfWork, null, null, null);
                         var command = new GetSiteSettingsWidgetsCommand(widgetService);
 
                         var response = command.Execute(new WidgetsFilter { SearchQuery = Guid.NewGuid().ToString() });

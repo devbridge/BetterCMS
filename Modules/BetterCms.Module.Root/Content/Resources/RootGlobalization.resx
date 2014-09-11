@@ -603,4 +603,31 @@
   <data name="Authentication_ViewAsPublic_Public" xml:space="preserve">
     <value>Anonymous</value>
   </data>
+  <data name="MasterPagesPath_CurrentPage_Title" xml:space="preserve">
+    <value>Current page</value>
+  </data>
+  <data name="SaveContent_ContentHasChildrenContents_RegionDeleteConfirmationMessage" xml:space="preserve">
+    <value>You are trying to delete dynamic regions. There are some children pages, which have contents created within these regions. If you delete this region, children page contens will be deleted also. Anyway, you can restore them by restoring archived version of current content. &lt;br /&gt;&lt;br /&gt;Are you sure you want to continue?</value>
+  </data>
+  <data name="ContentsTree_Dialog_Title" xml:space="preserve">
+    <value>Page structure</value>
+  </data>
+  <data name="ContentsTree_Dialog_ResetSortChanges_Button" xml:space="preserve">
+    <value>Discard changes</value>
+  </data>
+  <data name="ContentsTree_Dialog_SaveSortChanges_Button" xml:space="preserve">
+    <value>Save changes</value>
+  </data>
+  <data name="ContentsTree_Dialog_SaveSortChanges_ConfirmationMessage" xml:space="preserve">
+    <value>Some contents were sorted / moved to another regions. Do you want to save these changes before continue?</value>
+  </data>
+  <data name="Button_Manage" xml:space="preserve">
+    <value>Manage</value>
+  </data>
+  <data name="ContentsTree_InvisibleItems_Title" xml:space="preserve">
+    <value>Lost &amp; Found regions</value>
+  </data>
+  <data name="ContentsTree_VisibleItems_Title" xml:space="preserve">
+    <value>Visible regions</value>
+  </data>
 </root>

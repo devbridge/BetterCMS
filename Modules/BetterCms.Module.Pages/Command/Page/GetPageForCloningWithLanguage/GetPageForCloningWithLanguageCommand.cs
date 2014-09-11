@@ -62,7 +62,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageForCloningWithLanguage
                     })
                 .ToFuture();
 
-            var languagesFuture = languageService.GetLanguages();
+            var languagesFuture = languageService.GetLanguagesLookupValues();
             var result = pageFutureQuery.FirstOne();
             var model = result.Model;
             model.Languages = languagesFuture.ToList();

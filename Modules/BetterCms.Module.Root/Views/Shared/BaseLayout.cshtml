@@ -39,6 +39,21 @@
 }
 
 @section CmsScripts {
+    @if (Model.CanManageContent)
+    {
+        @Html.Partial("Partial/Region")
+        @Html.Partial("Partial/ContentOverlay")
+        @Html.Action("Container", "Sidebar")
+        @Html.Partial("Partial/Modal")
+        @Html.Partial("Partial/Alert")
+        @Html.Partial("Partial/Confirm")
+        @Html.Partial("Partial/Info")
+        @Html.Partial("Partial/Tooltip")
+        @Html.Partial("Partial/ImagePreview")
+        @Html.Partial("Partial/SiteSettingTab")
+        @Html.Partial("Partial/ContentsTree")
+    }
+
     @if (Model.JavaScripts != null)
     {
         @Html.RenderPageCustomJavaScript(Model.JavaScripts)

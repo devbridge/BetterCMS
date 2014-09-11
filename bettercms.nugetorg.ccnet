@@ -98,134 +98,146 @@
     <exec description="Publish BetterCms resources to Amazon S3 CDN enabled cloud.">
       <executable>$(buildsFolder)\BetterCMS_NUGETORG\Tools\AmazonS3\s3</executable>
       <buildArgs>put bettercms/$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter]/ $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\resources\*.* /sub /acl:public-read /cacheControl:public,max-age=31536000 /noGui /toLower</buildArgs>
-      <buildTimeoutSeconds>600</buildTimeoutSeconds>
+      <buildTimeoutSeconds>900</buildTimeoutSeconds>
       <successExitCodes>0</successExitCodes>
     </exec>
 
     <exec description="Publish BetterCms.Core to NuGet.org">
       <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
       <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Core.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
-      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+      <buildTimeoutSeconds>600</buildTimeoutSeconds>
     </exec>
 
     <exec description="Publish BetterCms.Module.Root to NuGet.org">
       <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
       <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.Root.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
-      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+      <buildTimeoutSeconds>1200</buildTimeoutSeconds>
     </exec>
 
     <exec description="Publish BetterCms.Module.MediaManager to NuGet.org">
       <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
       <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.MediaManager.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
-      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+      <buildTimeoutSeconds>900</buildTimeoutSeconds>
     </exec>
 
     <exec description="Publish BetterCms.Module.Pages to NuGet.org">
       <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
       <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.Pages.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
-      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+      <buildTimeoutSeconds>900</buildTimeoutSeconds>
     </exec>
 
     <exec description="Publish BetterCms.Module.Blog to NuGet.org">
       <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
       <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.Blog.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
-      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+      <buildTimeoutSeconds>600</buildTimeoutSeconds>
     </exec>
 
     <exec description="Publish BetterCms.Module.Installation to NuGet.org">
       <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
       <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.Installation.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
-      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+      <buildTimeoutSeconds>600</buildTimeoutSeconds>
     </exec>
 
     <exec description="Publish BetterCMS to NuGet.org">
       <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
       <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCMS.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
-      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+      <buildTimeoutSeconds>600</buildTimeoutSeconds>
     </exec>
 
     <exec description="Publish BetterCms.Module.AmazonS3Storage to NuGet.org">
       <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
       <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.AmazonS3Storage.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
-      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+      <buildTimeoutSeconds>600</buildTimeoutSeconds>
     </exec>
 
     <exec description="Publish BetterCms.Module.WindowsAzureStorage to NuGet.org">
       <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
       <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.WindowsAzureStorage.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
-      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+      <buildTimeoutSeconds>600</buildTimeoutSeconds>
     </exec>
 
     <exec description="Publish BetterCms.Module.Newsletter to NuGet.org">
       <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
       <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.Newsletter.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
-      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+      <buildTimeoutSeconds>600</buildTimeoutSeconds>
     </exec>
 
     <exec description="Publish BetterCms.Module.AppFabricCache to NuGet.org">
       <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
       <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.AppFabricCache.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
-      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+      <buildTimeoutSeconds>600</buildTimeoutSeconds>
     </exec>
 
     <exec description="Publish BetterCms.Module.Api.Abstractions to NuGet.org">
       <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
       <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.Api.Abstractions.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
-      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+      <buildTimeoutSeconds>600</buildTimeoutSeconds>
     </exec>
 
     <exec description="Publish BetterCms.Module.Api.Web to NuGet.org">
       <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
       <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.Api.Web.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
-      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+      <buildTimeoutSeconds>600</buildTimeoutSeconds>
     </exec>
 
     <exec description="Publish BetterCms.Module.Api to NuGet.org">
       <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
       <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.Api.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
-      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+      <buildTimeoutSeconds>600</buildTimeoutSeconds>
     </exec>
 
     <exec description="Publish BetterCms.Module.Users to NuGet.org">
       <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
       <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.Users.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
-      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+      <buildTimeoutSeconds>600</buildTimeoutSeconds>
     </exec>
 
     <exec description="Publish BetterCms.Module.Users.Api to NuGet.org">
       <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
       <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.Users.Api.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
-      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+      <buildTimeoutSeconds>600</buildTimeoutSeconds>
     </exec>
 
     <exec description="Publish BetterCms.Module.ImagesGallery to NuGet.org">
       <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
       <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.ImagesGallery.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
-      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+      <buildTimeoutSeconds>900</buildTimeoutSeconds>
     </exec>
-    
+
     <exec description="Publish BetterCms.Module.Search to NuGet.org">
       <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
       <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.Search.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
-      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+      <buildTimeoutSeconds>600</buildTimeoutSeconds>
     </exec>
 
     <exec description="Publish BetterCms.Module.LuceneSearch to NuGet.org">
       <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
       <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.LuceneSearch.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
-      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+      <buildTimeoutSeconds>600</buildTimeoutSeconds>
     </exec>
 
     <exec description="Publish BetterCms.Module.GoogleSiteSearch to NuGet.org">
       <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
       <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.GoogleSiteSearch.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
-      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+      <buildTimeoutSeconds>600</buildTimeoutSeconds>
     </exec>
 
     <exec description="Publish BetterCms.Module.Search.Api to NuGet.org">
       <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
       <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.Search.Api.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
-      <buildTimeoutSeconds>300</buildTimeoutSeconds>
+      <buildTimeoutSeconds>600</buildTimeoutSeconds>
+    </exec>
+
+    <exec description="Publish BetterCms.Module.GoogleAnalytics to NuGet.org">
+      <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
+      <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.GoogleAnalytics.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
+      <buildTimeoutSeconds>600</buildTimeoutSeconds>
+    </exec>
+    
+    <exec description="Publish BetterCms.Module.OpenGraphIntegration to NuGet.org">
+      <executable>$(buildsFolder)\BetterCMS_NUGETORG\Code\.nuget\nuget</executable>
+      <buildArgs>push $(buildsFolder)\BetterCMS_NUGETORG\Code\Build\BetterCms.NugetPackage\bin\Release\BetterCms.Module.OpenGraphIntegration.$[CmsVersion]$[CmsMilestone]$[CmsMilestoneCounter].nupkg</buildArgs>
+      <buildTimeoutSeconds>600</buildTimeoutSeconds>
     </exec>
 
     <exec description="Clean up project.">

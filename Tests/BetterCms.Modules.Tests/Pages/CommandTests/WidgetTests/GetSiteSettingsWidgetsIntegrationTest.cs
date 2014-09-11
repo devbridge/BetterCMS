@@ -39,7 +39,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.WidgetTests
 
                     var unitOfWork = new DefaultUnitOfWork(session);
                     var repository = new DefaultRepository(unitOfWork);
-                    var widgetService = new DefaultWidgetService(repository, unitOfWork, null, null);
+                    var widgetService = new DefaultWidgetService(repository, unitOfWork, null, null, null);
                     var command = new GetSiteSettingsWidgetsCommand(widgetService);
 
                     var result = command.Execute(new WidgetsFilter

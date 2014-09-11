@@ -5,6 +5,7 @@ using System.Linq;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
+using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.DataTier;
@@ -12,6 +13,7 @@ using BetterCms.Core.Exceptions.Mvc;
 
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.SiteSettings;
 using BetterCms.Module.Pages.ViewModels.Widgets;
@@ -19,8 +21,11 @@ using BetterCms.Module.Pages.ViewModels.Widgets;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.Extensions;
+using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Option;
+
+using NHibernate.Criterion;
 
 using CategoryEntity = BetterCms.Module.Root.Models.Category;
 
@@ -35,13 +40,17 @@ namespace BetterCms.Module.Pages.Services
         private readonly IOptionService optionService;
         
         private readonly IContentService contentService;
+        
+        private readonly IChildContentService childContentService;
 
-        public DefaultWidgetService(IRepository repository, IUnitOfWork unitOfWork, IOptionService optionService, IContentService contentService)
+        public DefaultWidgetService(IRepository repository, IUnitOfWork unitOfWork, IOptionService optionService, IContentService contentService,
+            IChildContentService childContentService)
         {
             this.repository = repository;
             this.unitOfWork = unitOfWork;
             this.optionService = optionService;
             this.contentService = contentService;
+            this.childContentService = childContentService;
         }
 
         public void SaveHtmlContentWidget(EditHtmlContentWidgetViewModel model, IList<ContentOptionValuesViewModel> childContentOptionValues,
@@ -138,6 +147,13 @@ namespace BetterCms.Module.Pages.Services
                 originalWidget = repository.FirstOrDefault<TEntity>(model.Id);
                 isCreatingNew = originalWidget == null;
                 createNewWithId = isCreatingNew && !model.Id.HasDefaultValue();
+            }
+
+            var dynamicContentContainer = widgetContent as IDynamicContentContainer;
+            if (dynamicContentContainer != null && !isCreatingNew && !model.IsUserConfirmed)
+            {
+                contentService.CheckIfContentHasDeletingChildrenWithException(null, widgetContent.Id, dynamicContentContainer.Html);
+                CheckIfContentHasDeletingWidgetsWithDynamicRegions(originalWidget, dynamicContentContainer.Html);
             }
 
             if (model.DesirableStatus == ContentStatus.Published)
@@ -396,6 +412,80 @@ namespace BetterCms.Module.Pages.Services
                 });
 
             return new SiteSettingWidgetListViewModel(widgets, filter, count.Value);
+        }
+
+        private void CheckIfContentHasDeletingWidgetsWithDynamicRegions(Widget widget, string targetHtml)
+        {
+            var sourceHtml = ((IDynamicContentContainer)widget).Html;
+            var sourceWidgets = PageContentRenderHelper.ParseWidgetsFromHtml(sourceHtml);
+            var targetWidgets = PageContentRenderHelper.ParseWidgetsFromHtml(targetHtml);
+            
+            // Get ids of child widgets, which are being removed from the content
+            var removingWidgetIds = sourceWidgets
+                .Where(sw => targetWidgets.All(tw => tw.WidgetId != sw.WidgetId))
+                .Select(sw => sw.WidgetId)
+                .Distinct()
+                .ToArray();
+            if (removingWidgetIds.Any())
+            {
+                var childContents = childContentService.RetrieveChildrenContentsRecursively(true, removingWidgetIds);
+                var childContentIds = childContents.Select(cc => cc.Child.Id).Distinct().ToList();
+
+                PageContent pcAlias = null;
+                ContentRegion contentRegionAlias = null;
+
+                var subQuery = QueryOver.Of(() => contentRegionAlias)
+                    .Where(() => !contentRegionAlias.IsDeleted)
+                    .And(Restrictions.In(Projections.Property(() => contentRegionAlias.Content.Id), childContentIds))
+                    .And(() => contentRegionAlias.Region == pcAlias.Region)
+                    .Select(cr => cr.Id);
+
+                var areAnyContentUsages = repository.AsQueryOver(() => pcAlias)
+                    .WithSubquery.WhereExists(subQuery)
+                    .And(() => !pcAlias.IsDeleted)
+                    .RowCount() > 0;
+
+                if (areAnyContentUsages) { 
+                    var message = PagesGlobalization.SaveWidget_ContentHasChildrenWidgetWithDynamicContents_ConfirmationMessage;
+                    var logMessage = string.Format("User is trying to remove child widget which has children with dynamic regions and assigned contents. Confirmation is required.");
+                    throw new ConfirmationRequestException(() => message, logMessage);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the list of widget child regions view models.
+        /// </summary>
+        /// <param name="content">The content.</param>
+        /// <returns>The list of widget child regions view models</returns>
+        public List<PageContentChildRegionViewModel> GetWidgetChildRegionViewModels(Root.Models.Content content)
+        {
+            var models = new List<PageContentChildRegionViewModel>();
+
+            if (content.ContentRegions != null)
+            {
+                foreach (var contentRegion in content.ContentRegions.Where(cr => !cr.IsDeleted).Distinct())
+                {
+                    models.Add(new PageContentChildRegionViewModel(contentRegion));
+                }
+            }
+
+            var childContents = childContentService.RetrieveChildrenContentsRecursively(true, new[] { content.Id });
+            if (childContents != null)
+            {
+                foreach (var childContent in childContents)
+                {
+                    if (childContent.Child.ContentRegions != null)
+                    {
+                        foreach (var contentRegion in childContent.Child.ContentRegions.Where(cr => !cr.IsDeleted).Distinct())
+                        {
+                            models.Add(new PageContentChildRegionViewModel(contentRegion));
+                        }
+                    }
+                }
+            }
+
+            return models.GroupBy(r => r.RegionIdentifier).Select(r => r.First()).ToList();
         }
     }
 }

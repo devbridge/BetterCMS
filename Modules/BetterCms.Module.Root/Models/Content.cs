@@ -27,24 +27,19 @@ namespace BetterCms.Module.Root.Models
 
         public virtual IList<ChildContent> ChildContents { get; set; }
 
-        IList<IChildContent> IContent.Children
-        {
-            get
-            {
-                if (ChildContents != null)
-                {
-                    return ChildContents.Cast<IChildContent>().ToArray();
-                }
-
-                return null;
-            }
-        }
-
         public virtual IList<PageContent> PageContents { get; set; }
 
         public virtual IList<ContentOption> ContentOptions { get; set; }
         
         public virtual IList<ContentRegion> ContentRegions { get; set; }
+
+        IEnumerable<IContentRegion> IContent.ContentRegions
+        {
+            get
+            {
+                return ContentRegions;
+            }
+        }
 
         IEnumerable<IDeletableOption<Content>> IOptionContainer<Content>.Options
         {
@@ -145,6 +140,11 @@ namespace BetterCms.Module.Root.Models
             }
 
             return content;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0}, Name: {1}", base.ToString(), Name);
         }
     }
 }

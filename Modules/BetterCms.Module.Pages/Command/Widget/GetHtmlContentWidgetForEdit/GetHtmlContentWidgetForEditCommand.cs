@@ -4,7 +4,7 @@ using System.Linq;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Mvc.Commands;
-
+using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Widgets;
@@ -101,6 +101,13 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
                         .OrderBy(o => o.OptionKey)
                         .ToList();
                     optionService.SetCustomOptionValueTitles(model.Options);
+
+                    if (htmlContentWidget.ContentRegions != null)
+                    {
+                        model.LastDynamicRegionNumber = RegionHelper.GetLastDynamicRegionNumber(
+                            htmlContentWidget.ContentRegions.Select(cr => cr.Region.RegionIdentifier),
+                            RegionHelper.WidgetDynamicRegionIdentifierPrefix);
+                    }
                 }
 
                 if (model == null)

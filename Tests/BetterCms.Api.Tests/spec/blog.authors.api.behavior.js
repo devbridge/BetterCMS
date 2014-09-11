@@ -102,8 +102,8 @@ describe('blog.authors.api.behavior', function () {
                     { field: 'Version', value: '2' },
                     { field: 'Name', value: '02002' },
                     { field: 'ImageId', value: 'a19a6e5d7e4948a5b5e0a206012117bd' },
-                    { field: 'ImageUrl', value: 'http://bettercms.sandbox.mvc4.local/uploads/image/b244cadb494d4121b896f21ac93483ef/1_1.jpg' },
-                    { field: 'ImageThumbnailUrl', value: 'http://bettercms.sandbox.mvc4.local/uploads/image/b244cadb494d4121b896f21ac93483ef/t_1_1.png' },
+                    { field: 'ImageUrl', value: 'http://bettercms.sandbox.mvc4.local.net/uploads/image/b244cadb494d4121b896f21ac93483ef/1_1.jpg' },
+                    { field: 'ImageThumbnailUrl', value: 'http://bettercms.sandbox.mvc4.local.net/uploads/image/b244cadb494d4121b896f21ac93483ef/t_1_1.png' },
                     { field: 'ImageCaption', value: 'Image Caption' }
                 ]
             }

@@ -392,8 +392,8 @@ describe('pages.pages.api.behavior', function () {
                     { field: 'CategoryId', value: '1427628c1e7e4beb9098a2070081d2dc' },
                     { field: 'CategoryName', value: '01011' },
                     { field: 'MainImageId', value: '389e059bcc6c4336a863a2070083436c' },
-                    { field: 'MainImageUrl', value: 'http://bettercms.sandbox.mvc4.local/uploads/image/6173795ceadc4b619d68005ef57c9ca8/1_1.jpg' },
-                    { field: 'MainImageThumbnauilUrl', value: 'http://bettercms.sandbox.mvc4.local/uploads/image/6173795ceadc4b619d68005ef57c9ca8/t_1_1.png' },
+                    { field: 'MainImageUrl', value: 'http://bettercms.sandbox.mvc4.local.net/uploads/image/6173795ceadc4b619d68005ef57c9ca8/1_1.jpg' },
+                    { field: 'MainImageThumbnauilUrl', value: 'http://bettercms.sandbox.mvc4.local.net/uploads/image/6173795ceadc4b619d68005ef57c9ca8/t_1_1.png' },
                     { field: 'MainImageCaption', value: '01011 caption' },
                     { field: 'IsArchived', value: false },
                     { field: 'IsMasterPage', value: false },
@@ -449,7 +449,8 @@ describe('pages.pages.api.behavior', function () {
                     { field: 'Name', value: '01012' },
                     { field: 'RegionId', value: 'e3e2e7fe62df4ba683216fdcc1691d8a' },
                     { field: 'RegionIdentifier', value: 'CMSMainContent' },
-                    { field: 'Order', value: '0' }
+                    { field: 'Order', value: '0' },
+                    { field: 'ParentPageContentId' }
                 ]
             }
         };
@@ -475,7 +476,7 @@ describe('pages.pages.api.behavior', function () {
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
             // data.filter.where.length + 1 <-- Because field ContentType cannnot be filtered by
-            expect(data.filter.where.length + 1).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
+            expect(data.filter.where.length + 1).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties count should be equal to filterting parameters count.');
         });
     });
 

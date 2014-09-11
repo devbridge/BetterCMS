@@ -1,5 +1,6 @@
 ﻿@using BetterCms.Module.Root.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Root.Mvc.PageHtmlRenderer
 
 @model BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel
 
@@ -15,11 +16,8 @@
     privateModel.RenderAdminMode = false;
 
     var pageSource = ViewRenderingExtensions.RenderPageToString(ViewContext.Controller as CmsControllerBase, privateModel);
-    // var pageSource = "<h1>Hello World!</h1>";
 
     <iframe id="bcms-content-frame" style="position: absolute; width: 100%; height: 100%; padding: 0; margin: 0; border: 0; top: 0; left: 0; right: 0;"></iframe>
-    
-    @*<iframe style="position: absolute; width: 100%; height: 100%; padding: 0; margin: 0; border: 0; top: 0; left: 0; right: 0; z-index: 80000;" src="http://www.google.lt"></iframe>*@
 
     <script type="text/html" id="bcms-content-html">@pageSource</script>
     <script type="text/javascript" language="javascript">
@@ -33,6 +31,7 @@
             text = decodeHtml(html),
             iframe = document.getElementById('bcms-content-frame'),
             host = location.protocol + '//' + location.host,
+            l = host.length,
             links,
             tryCount = 0,
             maxTryCount = 5,
@@ -49,14 +48,15 @@
                                 url = links[i].href;
                                 update = true;
 
-                                console.log(url);
-                                if (url && (url.startsWith(host) || (url.startsWith('/') && !url.startsWith('//')))) {
+                                if (url && (url.slice(0, l) == host || (url.slice(0, 1) == '/' && url.slice(0, 2) !== '//'))) {
                                     update = false;
                                 }
 
                                 if (update) {
                                     links[i].target = '_parent';
                                 }
+
+                                console.log("URL: %s, update: %s, target: %s", url, update, links[i].target);
                             }
                         } else {
                             onTimeout();
@@ -71,16 +71,6 @@
         iframe.src = 'javascript:window["contents"]';
 
         onTimeout();
-
-        /*setTimeout(function () {
-            var i, url, update;
-            links = iframe.contentWindow.document.getElementsByTagName('a');
-            console.log(links);
-            console.log(links.length);
-
-            
-        }, 500);*/
-
     </script>
 }
 else
@@ -96,4 +86,12 @@ else
 
     // Render regions and contents.
     Html.RenderSectionContents(this, Model);
+    if (Model.RenderingPage == null)
+    {
+        @Html.RenderInvisibleRegions(Model)
+    }
+    else
+    {
+        @PageContentRenderHelper.InvisibleRegionsPlaceholder
+    }
 }

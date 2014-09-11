@@ -102,6 +102,12 @@ namespace BetterCms
         string ArticleUrlPattern { get; set; }
 
         /// <summary>
+        /// Gets or sets the modules.
+        /// </summary>
+        /// <value> The modules. </value>
+        ModulesCollection Modules { get; set; }
+
+        /// <summary>
         /// Gets or sets the URL patterns.
         /// </summary>
         /// <value> The URL patterns. </value>

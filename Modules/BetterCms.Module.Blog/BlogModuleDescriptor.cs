@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Autofac;
@@ -61,6 +62,33 @@ namespace BetterCms.Module.Blog
             RootEvents.Instance.PageRetrieved += Events_PageRetrieved;
 
             RegisterRenderingPageProperties();
+        }
+
+        internal const string ModuleId = "f2fd4209-8cc1-42a4-9b81-bde4de11008a";
+
+        /// <summary>
+        /// Gets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public override Guid Id
+        {
+            get
+            {
+                return new Guid(ModuleId);
+            }
+        }
+
+        /// <summary>
+        /// Flag describe is module root or additional
+        /// </summary>
+        public override bool IsRootModule
+        {
+            get
+            {
+                return true;
+            }
         }
 
         /// <summary>
