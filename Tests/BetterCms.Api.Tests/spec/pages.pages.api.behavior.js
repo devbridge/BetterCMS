@@ -449,7 +449,8 @@ describe('pages.pages.api.behavior', function () {
                     { field: 'Name', value: '01012' },
                     { field: 'RegionId', value: 'e3e2e7fe62df4ba683216fdcc1691d8a' },
                     { field: 'RegionIdentifier', value: 'CMSMainContent' },
-                    { field: 'Order', value: '0' }
+                    { field: 'Order', value: '0' },
+                    { field: 'ParentPageContentId' }
                 ]
             }
         };
@@ -475,7 +476,7 @@ describe('pages.pages.api.behavior', function () {
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
             // data.filter.where.length + 1 <-- Because field ContentType cannnot be filtered by
-            expect(data.filter.where.length + 1).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties cound should be equal to filterting parameters count.');
+            expect(data.filter.where.length + 1).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties count should be equal to filterting parameters count.');
         });
     });
 
