@@ -3154,8 +3154,9 @@ a.ui-state-default:hover {
 /*Regions tree container*/
 .bcms-draggable-region {
     position: relative;
-    height: 35px;
-    line-height: 35px;
+    width: 100%;
+    height: 39px;
+    line-height: 39px;
     padding-left: 34px;
     margin: 0 -2px 0 0;
     color: #0099ee;
@@ -3163,6 +3164,8 @@ a.ui-state-default:hover {
     border: 1px dashed #0099ee;
     font-size: 12px;
     font-weight: 700;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
     .bcms-draggable-region:after {
