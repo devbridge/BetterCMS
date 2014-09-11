@@ -77,7 +77,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
 
                     if (file is MediaImage)
                     {
-                        UpdateMedia(request, folder, files);
+                        UpdateMedia(request, folder, files, true);
                     }
                     else
                     {
@@ -152,7 +152,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
             return response;
         }
 
-        private void UpdateMedia(MultiFileUploadViewModel request, MediaFolder folder, List<MediaFile> files)
+        private void UpdateMedia(MultiFileUploadViewModel request, MediaFolder folder, List<MediaFile> files, bool isReUploading = false)
         {
             foreach (var fileId in request.UploadedFiles)
             {
@@ -166,6 +166,12 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                     file.IsTemporary = false;
                     file.PublishedOn = DateTime.Now;
                     Repository.Save(file);
+
+                    if (isReUploading)
+                    {
+                        file.PublicUrl += string.Format("?{0}", DateTime.Now);
+                        ((MediaImage)file).PublicThumbnailUrl += string.Format("?{0}", DateTime.Now);
+                    }
 
                     files.Add(file);
                 }

@@ -13,7 +13,7 @@ namespace BetterCms.Module.MediaManager.Command.History.RestoreMediaVersion
 {
     public class RestoreMediaVersionCommand : CommandBase, ICommand<Guid, bool>
     {
-        private IMediaImageService imageService;
+        private readonly IMediaImageService imageService;
 
         public RestoreMediaVersionCommand(IMediaImageService imageService)
         {

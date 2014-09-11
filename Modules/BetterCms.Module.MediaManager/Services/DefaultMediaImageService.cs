@@ -325,25 +325,28 @@ namespace BetterCms.Module.MediaManager.Services
             var folderName = Path.GetFileName(Path.GetDirectoryName(originalImage.FileUri.OriginalString));
             var publicFileName = MediaImageHelper.CreatePublicFileName(originalImage.OriginalFileName, originalImage.OriginalFileExtension);
 
+            var archivedImage = MoveToHistory(originalImage);
+
             using (var fileStream = DownloadFileStream(image.PublicUrl))
             {
                 // Get thumbnail file stream
                 using (var thumbnailFileStream = DownloadFileStream(image.PublicThumbnailUrl))
                 {
-                    var newOriginalImage = (MediaImage) image.Clone();
-                    newOriginalImage.Original = null;
-                    newOriginalImage.PublishedOn = DateTime.Now;
-                    SetNewUrls(newOriginalImage, folderName, publicFileName);
-                    
+                    image.CopyDataTo(originalImage);
+                    originalImage.Original = null;
+                    originalImage.PublishedOn = DateTime.Now;
+                    SetNewUrls(originalImage, folderName, publicFileName);
+
+                    archivedImage.Original = originalImage;
+
                     unitOfWork.BeginTransaction();
-                    repository.Save(newOriginalImage);
+                    repository.Save(originalImage);
+                    repository.Save(archivedImage);
                     unitOfWork.Commit();
+                    
+                    StartTasksForImage(originalImage, fileStream, thumbnailFileStream);
 
-                    UpdateOriginal(originalImage, newOriginalImage);
-                    MoveToHistory(originalImage, newOriginalImage);
-                    StartTasksForImage(newOriginalImage, fileStream, thumbnailFileStream);
-
-                    return newOriginalImage;
+                    return originalImage;
                 }
             }
         }
@@ -407,31 +410,32 @@ namespace BetterCms.Module.MediaManager.Services
             unitOfWork.Commit();
         }
 
-        private MediaImage MoveToHistory(MediaImage originalImage, MediaImage newOriginalImage)
+        private MediaImage MoveToHistory(MediaImage originalImage)
         {
             var versionedFileName = MediaImageHelper.CreateVersionedFileName(
                                 originalImage.OriginalFileName,
                                 originalImage.OriginalFileExtension,
-                                GetVersion(newOriginalImage) - 1);
+                                GetVersion(originalImage));
 
-            var folderName = Path.GetFileName(Path.GetDirectoryName(newOriginalImage.FileUri.OriginalString));
+            var folderName = Path.GetFileName(Path.GetDirectoryName(originalImage.FileUri.OriginalString));
+            var archivedImage = (MediaImage)originalImage.Clone();
 
-            using (var originalFileStream = DownloadFileStream(originalImage.PublicUrl))
+            using (var originalFileStream = DownloadFileStream(archivedImage.PublicUrl))
             {
-                using (var originalThumbnailFileStream = DownloadFileStream(originalImage.PublicThumbnailUrl))
+                using (var originalThumbnailFileStream = DownloadFileStream(archivedImage.PublicThumbnailUrl))
                 {
                     // Update urls with version file name
-                    SetNewUrls(originalImage, folderName, versionedFileName);
+                    SetNewUrls(archivedImage, folderName, versionedFileName);
 
                     unitOfWork.BeginTransaction();
-                    repository.Save(originalImage);
+                    repository.Save(archivedImage);
                     unitOfWork.Commit();
 
                     // Re-upload original and thumbnail images to version urls
-                    StartTasksForImage(originalImage, originalFileStream, originalThumbnailFileStream);
+                    StartTasksForImage(archivedImage, originalFileStream, originalThumbnailFileStream);
                 }
             }
-            return null;
+            return archivedImage;
         }
 
         private int GetVersion(MediaImage image)

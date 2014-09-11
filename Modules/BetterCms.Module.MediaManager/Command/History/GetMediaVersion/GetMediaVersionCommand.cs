@@ -106,7 +106,7 @@ namespace BetterCms.Module.MediaManager.Command.History.GetMediaVersion
 
                 if (media.Image != null)
                 {
-                    response.AddImage(media.Image.Caption, fileUrlResolver.EnsureFullPathUrl(media.Image.PublicUrl));
+                    response.AddImage(media.Image.Caption, fileUrlResolver.EnsureFullPathUrl(media.Image.PublicUrl + string.Format("?{0}", DateTime.Now)));
                 }
 
                 if (image != null)
