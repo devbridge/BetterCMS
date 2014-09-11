@@ -23,11 +23,11 @@ namespace BetterCms.Module.Pages.Accessors
             this.options = options;
         }
 
-        public string GetCustomJavaScript(HtmlHelper html)
+        public string[] GetCustomJavaScript(HtmlHelper html)
         {
-            if (page != null)
+            if (page != null && !string.IsNullOrWhiteSpace(page.CustomJS))
             {
-                return page.CustomJS;
+                return new[] { page.CustomJS };
             }
 
             return null;

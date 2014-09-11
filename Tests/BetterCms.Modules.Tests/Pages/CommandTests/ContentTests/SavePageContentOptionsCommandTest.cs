@@ -84,7 +84,8 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                 command.OptionService = new DefaultOptionService(repository, new HttpRuntimeCacheService());
                 var result = command.Execute(request);
 
-                Assert.IsTrue(result);
+                Assert.IsNotNull(result);
+                Assert.Greater(result.PageContentVersion, pageContent.Version);
 
                 // Check results: one of page content values must be deleted after save
                 var results = repository

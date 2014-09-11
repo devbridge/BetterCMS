@@ -34,25 +34,25 @@ namespace BetterCms.Module.Pages.Accessors
             return "&nbsp;";
         }
 
-        public override string GetCustomStyles(HtmlHelper html)
+        public override string[] GetCustomStyles(HtmlHelper html)
         {
             if (Content.UseCustomCss && !string.IsNullOrWhiteSpace(Content.CustomCss))
             {
                 var css = CssHelper.FixCss(Content.CustomCss);
                 if (!string.IsNullOrWhiteSpace(css))
                 {
-                    return css;
+                    return new[] { css };
                 }
             }
 
             return null;
         }
 
-        public override string GetCustomJavaScript(HtmlHelper html)
+        public override string[] GetCustomJavaScript(HtmlHelper html)
         {
             if (Content.UseCustomJs && !string.IsNullOrWhiteSpace(Content.CustomJs))
             {
-                return Content.CustomJs;
+                return new[] { Content.CustomJs };
             }
 
             return null;

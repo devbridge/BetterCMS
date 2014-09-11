@@ -47,7 +47,9 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                            CreatedOn = blogPost.CreatedOn.ToFormattedDateString(),
                            PageStatus = blogPost.Status,
                            DesirableStatus = request.Content.DesirableStatus,
-                           PageContentId = blogPost.PageContents[0].Id
+                           PageContentId = blogPost.PageContents[0].Id,
+                           ContentId = blogPost.PageContents[0].Content.Id,
+                           ContentVersion = blogPost.PageContents[0].Content.Version
                        };
         }
     }

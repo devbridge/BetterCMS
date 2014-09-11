@@ -42,7 +42,8 @@ namespace BetterCms.Module.Pages.Command.Content.SortPageContent
 
             var sortedPageContents = new List<PageContent>();
             var regionIds = request.PageContents.Select(r => r.RegionId).Distinct().ToArray();
-            var pageContentIds = request.PageContents.Select(r => r.PageContentId).Distinct().ToArray();
+            var parentPageContentIds = request.PageContents.Where(r => r.ParentPageContentId.HasValue).Select(r => r.ParentPageContentId.Value);
+            var pageContentIds = request.PageContents.Select(r => r.PageContentId).Concat(parentPageContentIds).Distinct().ToArray();
 
             // Load all page contents from all regions from request
             var contentsFuture = Repository
@@ -71,23 +72,34 @@ namespace BetterCms.Module.Pages.Command.Content.SortPageContent
             var pageContents = contentsFuture.ToList();
             
             request.PageContents
-                .GroupBy(group => group.RegionId)
+                .GroupBy(group => new System.Tuple<Guid, Guid?>(group.RegionId, group.ParentPageContentId))
                 .ForEach(group =>
                              {
-                                 var regionId = group.Key;
+                                 var regionId = group.Key.Item1;
+                                 var parentPageContentId = group.Key.Item2;
                                  var region = Repository.AsProxy<Region>(regionId);
                                  var index = 0;
 
                                  foreach (var viewModel in group)
                                  {
                                      var pageContent = pageContents.FirstOrDefault(f => f.Id == viewModel.PageContentId);
+                                     
+                                     PageContent parentPageContent = null;
+                                     if (parentPageContentId.HasValue && !parentPageContentId.Value.HasDefaultValue())
+                                     {
+                                         parentPageContent = pageContents.Where(f => f.Id == parentPageContentId).FirstOne();
+                                     }
 
                                      if (pageContent == null)
                                      {
                                          throw new EntityNotFoundException(typeof(PageContent), Guid.Empty);
                                      }
 
-                                     if (pageContent.Order != index || pageContent.Region.Id != regionId)
+                                     if (pageContent.Order != index 
+                                         || pageContent.Region.Id != regionId
+                                         || pageContent.Parent == null && parentPageContent != null
+                                         || pageContent.Parent != null && parentPageContent == null
+                                         || (pageContent.Parent != null && parentPageContent != null && parentPageContent.Id != pageContent.Parent.Id))
                                      {
                                          if (pageContent.Version != viewModel.Version)
                                          {
@@ -96,6 +108,7 @@ namespace BetterCms.Module.Pages.Command.Content.SortPageContent
 
                                          pageContent.Order = index;
                                          pageContent.Region = region;
+                                         pageContent.Parent = parentPageContent;
 
                                          sortedPageContents.Add(pageContent);
                                          Repository.Save(pageContent);

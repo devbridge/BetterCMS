@@ -38,10 +38,10 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         private readonly IOptionService optionService;
 
         private readonly IContentProjectionService contentProjectionService;
-
+        
         private readonly IChildContentService childContentService;
 
-        public GetPageToRenderCommand(IPageAccessor pageAccessor, PageStylesheetProjectionFactory pageStylesheetProjectionFactory,
+        public GetPageToRenderCommand(IPageAccessor pageAccessor, PageStylesheetProjectionFactory pageStylesheetProjectionFactory, 
             PageJavaScriptProjectionFactory pageJavaScriptProjectionFactory,
             ICmsConfiguration cmsConfiguration, RootModuleDescriptor rootModuleDescriptor, IOptionService optionService,
             IContentProjectionService contentProjectionService, IChildContentService childContentService)
@@ -146,10 +146,10 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                     .Where(pc => pc.Page == page.MasterPage)
                     .SelectMany(pc => pc.Content.ContentRegions.Distinct())
                     .Select(cr => new PageRegionViewModel
-                    {
-                        RegionId = cr.Region.Id,
-                        RegionIdentifier = cr.Region.RegionIdentifier
-                    })
+                        {
+                            RegionId = cr.Region.Id,
+                            RegionIdentifier = cr.Region.RegionIdentifier
+                        })
                     .ToList();
             }
             else
@@ -157,8 +157,10 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 throw new InvalidOperationException(string.Format("Failed to load layout or master page for page {0}.", request.PageUrl));
             }
 
-            var pageContents = allPageContents.Where(pc => pc.Page.Id == page.Id);
-            var contentProjections = pageContents.Distinct().Select(f => contentProjectionService.CreatePageContentProjection(request.CanManageContent, f, null, request.PreviewPageContentId)).Where(c => c != null).ToList();
+            var pageContents = allPageContents.Where(pc => pc.Page.Id == page.Id).Where(pc => pc.Parent == null || allPageContents.All(apc => apc.Id != pc.Parent.Id));
+            var contentProjections = pageContents.Distinct()
+                    .Select(f => contentProjectionService.CreatePageContentProjection(request.CanManageContent, f, allPageContents, null, request.PreviewPageContentId))
+                    .Where(c => c != null).ToList();
 
             renderPageViewModel.Contents = contentProjections;
             renderPageViewModel.Metadata = pageAccessor.GetPageMetaData(page).ToList();
@@ -311,22 +313,23 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             pageContentsQuery = pageContentsQuery
                 .Fetch(f => f.Content)
                 .ThenFetchMany(f => f.ContentOptions)
+
                 .FetchMany(f => f.Options)
+
                 .Fetch(f => f.Content)
                 .ThenFetchMany(f => f.ContentRegions)
                 .ThenFetch(f => f.Region)
+
                 // Fetch child contents
                 .Fetch(f => f.Content)
-                .ThenFetchMany(f => f.ChildContents)
-                .ThenFetch(f => f.Child);
+                .ThenFetchMany(f => f.ChildContents);
 
             if (request.CanManageContent || request.PreviewPageContentId != null)
             {
                 pageContentsQuery = pageContentsQuery
                     .Fetch(f => f.Content)
                     .ThenFetchMany(f => f.History)
-                    .ThenFetchMany(f => f.ChildContents)
-                    .ThenFetch(f => f.Child);
+                    .ThenFetchMany(f => f.ChildContents);
             }
 
             var pageContents = pageContentsQuery.ToList();

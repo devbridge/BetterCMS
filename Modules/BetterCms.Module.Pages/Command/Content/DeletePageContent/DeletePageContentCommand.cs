@@ -1,7 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Commands;
 
@@ -41,61 +45,103 @@ namespace BetterCms.Module.Pages.Command.Content.DeletePageContent
         /// <returns>True if deleted successfully and False otherwise.</returns>
         public bool Execute(DeletePageContentCommandRequest request)
         {
-            UnitOfWork.BeginTransaction();
+            var deletingPageContent = Repository
+                .AsQueryable<PageContent>()
+                .Where(f => f.Id == request.PageContentId)
+                .Fetch(f => f.Content)
+                .Fetch(f => f.Page)
+                .ThenFetchMany(f => f.PageContents)
+                .ThenFetch(f => f.Content)
+                .ToList()
+                .FirstOne();
 
-            var pageContent = Repository.AsQueryable<PageContent>()
-                                    .Where(f => f.Id == request.PageContentId)
-                                    .Fetch(f => f.Content)
-                                    .Fetch(f => f.Page)
-                                    .FirstOne();
+            if (request.ContentVersion != deletingPageContent.Content.Version)
+            {
+                throw new ConcurrentDataException(deletingPageContent.Content);
+            }
+            if (request.PageContentVersion != deletingPageContent.Version)
+            {
+                throw new ConcurrentDataException(deletingPageContent);
+            }
 
-            var htmlContent = pageContent.Content as HtmlContent;
-            if (htmlContent != null)
+            var htmlContainer = deletingPageContent.Content as IDynamicContentContainer;
+            if (htmlContainer != null)
             {
                 // Check if user has confirmed the deletion of content
-                if (!request.IsUserConfirmed && pageContent.Page.IsMasterPage)
+                if (!request.IsUserConfirmed)
                 {
-                    var hasAnyChildren = contentService.CheckIfContentHasDeletingChildren(pageContent.Page.Id, pageContent.Content.Id);
+                    var hasAnyChildren = contentService.CheckIfContentHasDeletingChildren(deletingPageContent.Page.Id, deletingPageContent.Content.Id);
                     if (hasAnyChildren)
                     {
                         var message = PagesGlobalization.DeletePageContent_ContentHasChildrenContents_DeleteConfirmationMessage;
                         var logMessage = string.Format("User is trying to delete content which has children contents. Confirmation is required. PageContentId: {0}, ContentId: {1}, PageId: {2}",
-                               request.PageContentId, pageContent.Page.Id, pageContent.Content.Id);
+                               request.PageContentId, deletingPageContent.Page.Id, deletingPageContent.Content.Id);
                         throw new ConfirmationRequestException(() => message, logMessage);
                     }
                 }
-
-                var draft = pageContent.Content.History != null ? pageContent.Content.History.FirstOrDefault(c => c.Status == ContentStatus.Draft) : null;
-                if (draft != null)
-                {
-                    Repository.Delete<HtmlContent>(draft.Id, request.ContentVersion);
-                    Repository.Delete<HtmlContent>(pageContent.Content.Id, pageContent.Content.Version);
-                }
-                else
-                {
-                    Repository.Delete<HtmlContent>(pageContent.Content.Id, request.ContentVersion);
-                }
             }
 
-            if (pageContent.Options != null)
-            {
-                foreach (var option in pageContent.Options)
-                {
-                    Repository.Delete(option);
-                }
-            }
+            var pageContentsToDelete = new List<PageContent> { deletingPageContent };
+            pageContentsToDelete = RetrieveAllChildrenToDelete(deletingPageContent.Page.PageContents.ToList(), pageContentsToDelete, new[] { deletingPageContent.Id });
 
-            Repository.Delete<PageContent>(pageContent.Id, request.PageContentVersion);
+            UnitOfWork.BeginTransaction();
+
+            var htmlContentsToDelete = new List<HtmlContent>();
+            pageContentsToDelete.ForEach(pageContent =>
+                {
+                    // If content is HTML content, delete HTML content
+                    var htmlContent = pageContent.Content as HtmlContent;
+                    if (htmlContent != null)
+                    {
+                        var draft = pageContent.Content.History != null ? pageContent.Content.History.FirstOrDefault(c => c.Status == ContentStatus.Draft) : null;
+                        if (draft != null)
+                        {
+                            Repository.Delete(draft);
+                        }
+
+                        Repository.Delete(pageContent.Content);
+                        htmlContentsToDelete.Insert(0, htmlContent);
+                    }
+
+                    if (pageContent.Options != null)
+                    {
+                        foreach (var option in pageContent.Options)
+                        {
+                            Repository.Delete(option);
+                        }
+                    }
+
+                    Repository.Delete(pageContent);
+                });
+
             UnitOfWork.Commit();
 
             // Notify
-            Events.PageEvents.Instance.OnPageContentDeleted(pageContent);
-            if (htmlContent != null)
-            {
-                Events.PageEvents.Instance.OnHtmlContentDeleted(htmlContent);
-            }
+            pageContentsToDelete.Reverse();
+            pageContentsToDelete.ForEach(pageContent => Events.PageEvents.Instance.OnPageContentDeleted(pageContent));
+            htmlContentsToDelete.ForEach(htmlContent => Events.PageEvents.Instance.OnHtmlContentDeleted(htmlContent));
 
             return true;
+        }
+
+        /// <summary>
+        /// Retrieves all children to delete.
+        /// </summary>
+        /// <param name="allPageContents">All page contents.</param>
+        /// <param name="pageContentsToDelete">The page contents to delete.</param>
+        /// <returns>The list with page contents to delete</returns>
+        private List<PageContent> RetrieveAllChildrenToDelete(List<PageContent> allPageContents, List<PageContent> pageContentsToDelete, Guid[] parentIds)
+        {
+            var children = allPageContents.Where(pc => pc.Parent != null && parentIds.Contains(pc.Parent.Id)).ToList();
+
+            if (children.Any())
+            {
+                pageContentsToDelete.AddRange(children);
+                parentIds = children.Select(c => c.Id).ToArray();
+                pageContentsToDelete = RetrieveAllChildrenToDelete(allPageContents, pageContentsToDelete, parentIds);
+            }
+
+            return pageContentsToDelete;
         }
     }
 }

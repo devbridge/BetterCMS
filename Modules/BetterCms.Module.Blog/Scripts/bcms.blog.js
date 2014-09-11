@@ -205,10 +205,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             };
         
         htmlEditor.initializeHtmlEditor(selectors.htmlEditor, data.ContentId, {}, data.EditInSourceMode);
-        if (data.EnableInsertDynamicRegion) {
-            htmlEditor.enableInsertDynamicRegion();
-        }
-        
+       
         if (data.Version == 0) {
             newPost = true;
         }
@@ -750,21 +747,23 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
     }
 
     /**
-    * Called when content overlay is created
+    * Called when content view model is created
     */
-    function onCreateContentOverlay(contentViewModel) {
-        var onSave = function () {
-                redirect.ReloadWithAlert();
-            };
-        
+    function onContentModelCreated(contentViewModel) {
         if (contentViewModel.contentType == contentTypes.blogContent) {
-            contentViewModel.removeConfigureButton();
-            contentViewModel.removeDeleteButton();
-
             // Edit
-            contentViewModel.onEditContent = function() {
-                editBlogPost(bcms.pageId, onSave, true);
+            contentViewModel.onEditContent = function(onSuccess) {
+                editBlogPost(bcms.pageId, function (json) {
+                    if ($.isFunction(onSuccess)) {
+                        onSuccess(json);
+                    } else {
+                        redirect.ReloadWithAlert();
+                    }
+                }, true);
             };
+
+            contentViewModel.visibleButtons.configure = false;
+            contentViewModel.visibleButtons["delete"] = false;
         }
     }
 
@@ -993,7 +992,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
     /**
     * Subscribe to events
     */
-    bcms.on(bcms.events.createContentOverlay, onCreateContentOverlay);
+    bcms.on(bcms.events.contentModelCreated, onContentModelCreated);
     
 
     /**

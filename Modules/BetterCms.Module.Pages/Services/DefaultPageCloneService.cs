@@ -141,7 +141,9 @@ namespace BetterCms.Module.Pages.Services
             // Clone contents.
             var createdContents = new List<Root.Models.Content>();
             var createdPageContents = new List<PageContent>();
-            pageContents.ForEach(pageContent => ClonePageContent(pageContent, newPage, ref createdContents, ref createdPageContents));
+            var clonedPageContentReferences = new Dictionary<PageContent, PageContent>(pageContents.Count);
+            pageContents.ForEach(pageContent => ClonePageContent(pageContent, newPage, createdContents, createdPageContents, clonedPageContentReferences));
+            UpdateParentPageContents(pageContents, clonedPageContentReferences);
 
             // Clone tags.
             pageTags.ForEach(pageTag => ClonePageTags(pageTag, newPage));
@@ -237,7 +239,13 @@ namespace BetterCms.Module.Pages.Services
         /// </summary>
         /// <param name="pageContent">Content of the page.</param>
         /// <param name="newPage">The new page.</param>
-        private void ClonePageContent(PageContent pageContent, PageProperties newPage, ref List<Root.Models.Content> createdContents, ref List<PageContent> createdPageContents)
+        /// <param name="createdContents">The created contents.</param>
+        /// <param name="createdPageContents">The created page contents.</param>
+        /// <param name="clonedPageContentReferences">The cloned page content references.</param>
+        private void ClonePageContent(PageContent pageContent, PageProperties newPage, 
+            List<Root.Models.Content> createdContents, 
+            List<PageContent> createdPageContents,
+            Dictionary<PageContent, PageContent> clonedPageContentReferences)
         {
             var newPageContent = new PageContent();
             newPageContent.Page = newPage;
@@ -291,6 +299,16 @@ namespace BetterCms.Module.Pages.Services
             }
 
             repository.Save(newPageContent);
+            clonedPageContentReferences.Add(pageContent, newPageContent);
+        }
+
+        private void UpdateParentPageContents(List<PageContent> pageContents, Dictionary<PageContent, PageContent> clonedPageContentReferences)
+        {
+            foreach (var pageContent in pageContents.Where(pc => pc.Parent != null))
+            {
+                var clonedParent = clonedPageContentReferences.FirstOrDefault(cpc => cpc.Key == pageContent.Parent).Value;
+                clonedPageContentReferences[pageContent].Parent = clonedParent;
+            }
         }
 
         private void AddAccessRules(PageProperties newPage, IEnumerable<IAccessRule> userAccess)

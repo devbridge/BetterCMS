@@ -1,14 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using Autofac;
 
 using BetterCms.Core;
+using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
-
+using BetterCms.Core.Modules.Registration;
 using BetterCms.Events;
 
 using BetterCms.Module.Root.Content.Resources;
@@ -71,7 +73,34 @@ namespace BetterCms.Module.Root
             languagesJsModuleIncludeDescriptor = new LanguagesJsModuleIncludeDescriptor(this);
 
             InitializeSecurity();            
-        }        
+        }
+
+        internal const string ModuleId = "456353c3-f4af-4016-838b-12e4677c3133";
+
+        /// <summary>
+        /// Gets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public override Guid Id
+        {
+            get
+            {
+                return new Guid(ModuleId);
+            }
+        }
+
+        /// <summary>
+        /// Flag describe is module root or additional
+        /// </summary>
+        public override bool IsRootModule
+        {
+            get
+            {
+                return true;
+            }
+        }
 
         /// <summary>
         /// Gets the name.
@@ -235,6 +264,7 @@ namespace BetterCms.Module.Root
                 {
                     authenticationJsModuleIncludeDescriptor,                    
                     new ContentJsModuleIncludeDescriptor(this),       
+                    new ContentTreeJsModuleIncludeDescriptor(this),
                     new DatePickerJsModuleIncludeDescriptor(this), 
                     new DynamicContentJsModuleIncludeDescriptor(this), 
                     new FormsJsModuleIncludeDescriptor(this),

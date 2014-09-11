@@ -75,7 +75,7 @@ namespace BetterCms.Module.Pages.Command.Page.AddNewPage
             }
 
             var showLanguages = cmsConfiguration.EnableMultilanguage && !request.CreateMasterPage;
-            var languagesFuture = (showLanguages) ? languageService.GetLanguages() : null;
+            var languagesFuture = (showLanguages) ? languageService.GetLanguagesLookupValues() : null;
 
             var principal = securityService.GetCurrentPrincipal();
             var model = new AddNewPageViewModel

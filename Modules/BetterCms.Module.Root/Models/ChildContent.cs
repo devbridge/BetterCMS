@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Models;
 
+using NHibernate.Proxy.DynamicProxy;
+
 namespace BetterCms.Module.Root.Models
 {
     [Serializable]
@@ -23,6 +25,10 @@ namespace BetterCms.Module.Root.Models
             {
                 return Child;
             }
+            set
+            {
+                Child = (Content)value;
+            }
         }
 
         IEnumerable<IOption> IChildContent.Options
@@ -31,6 +37,38 @@ namespace BetterCms.Module.Root.Models
             {
                 return Options;
             }
+        }
+
+        public virtual ChildContent Clone()
+        {
+            return CopyDataTo(new ChildContent());
+        }
+
+        public virtual ChildContent CopyDataTo(ChildContent targetChildContent, bool copyOptions = true)
+        {
+            targetChildContent.Id = Id;
+            targetChildContent.Version = Version;
+            targetChildContent.Child = Child;
+            targetChildContent.Parent = Parent;
+            targetChildContent.AssignmentIdentifier = AssignmentIdentifier;
+
+            if (copyOptions && Options != null)
+            {
+                if (targetChildContent.Options == null)
+                {
+                    targetChildContent.Options = new List<ChildContentOption>();
+                }
+
+                foreach (var childContentOption in Options)
+                {
+                    var clonedOption = childContentOption.Clone();
+                    clonedOption.ChildContent = targetChildContent;
+
+                    targetChildContent.Options.Add(clonedOption);
+                }
+            }
+
+            return targetChildContent;
         }
     }
 }

@@ -33,6 +33,12 @@ namespace BetterCms.Module.Root.Views.Cms
     #line default
     #line hidden
     
+    #line 2 "..\..\Views\Cms\Index.cshtml"
+    using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
+    
+    #line default
+    #line hidden
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Cms/Index.cshtml")]
     public partial class Index : System.Web.Mvc.WebViewPage<BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel>
@@ -45,7 +51,7 @@ namespace BetterCms.Module.Root.Views.Cms
 WriteLiteral("\r\n");
 
             
-            #line 5 "..\..\Views\Cms\Index.cshtml"
+            #line 6 "..\..\Views\Cms\Index.cshtml"
   
     ViewBag.Title = Model.Title;
 
@@ -64,10 +70,44 @@ WriteLiteral("\r\n");
 WriteLiteral("\r\n\r\n");
 
             
-            #line 18 "..\..\Views\Cms\Index.cshtml"
+            #line 19 "..\..\Views\Cms\Index.cshtml"
   
     // Render regions and contents.
     Html.RenderSectionContents(this, Model);
+    if (Model.RenderingPage == null)
+    {
+        
+            
+            #line default
+            #line hidden
+            
+            #line 24 "..\..\Views\Cms\Index.cshtml"
+   Write(Html.RenderInvisibleRegions(Model));
+
+            
+            #line default
+            #line hidden
+            
+            #line 24 "..\..\Views\Cms\Index.cshtml"
+                                           
+    }
+    else
+    {
+        
+            
+            #line default
+            #line hidden
+            
+            #line 28 "..\..\Views\Cms\Index.cshtml"
+   Write(PageContentRenderHelper.InvisibleRegionsPlaceholder);
+
+            
+            #line default
+            #line hidden
+            
+            #line 28 "..\..\Views\Cms\Index.cshtml"
+                                                            
+    }
 
             
             #line default

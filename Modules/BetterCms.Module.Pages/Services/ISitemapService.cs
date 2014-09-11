@@ -13,6 +13,26 @@ namespace BetterCms.Module.Pages.Services
     public interface ISitemapService
     {
         /// <summary>
+        /// Gets specific sitemap.
+        /// </summary>
+        /// <param name="sitemapId">The sitemap identifier. Gets the first one if this parameter has empty GUID value.</param>
+        /// <returns>The sitemap.</returns>
+        Sitemap Get(Guid sitemapId);
+
+        /// <summary>
+        /// Gets specific sitemap.
+        /// </summary>
+        /// <param name="sitemapTitle">The sitemap title.</param>
+        /// <returns>The sitemap.</returns>
+        Sitemap GetByTitle(string sitemapTitle);
+
+        /// <summary>
+        /// Gets first sitemap.
+        /// </summary>
+        /// <returns>The sitemap.</returns>
+        Sitemap GetFirst();
+
+        /// <summary>
         /// Gets the nodes by URL.
         /// </summary>
         /// <param name="page">The page.</param>
@@ -104,9 +124,9 @@ namespace BetterCms.Module.Pages.Services
         /// <summary>
         /// Deletes the sitemap.
         /// </summary>
-        /// <param name="id">The identifier.</param>
+        /// <param name="sitemapId">The identifier.</param>
         /// <param name="version">The version.</param>
         /// <param name="currentUser">The current user.</param>
-        void DeleteSitemap(Guid id, int version, IPrincipal currentUser);
+        void DeleteSitemap(Guid sitemapId, int version, IPrincipal currentUser);
     }
 }

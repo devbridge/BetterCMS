@@ -190,6 +190,8 @@
     <Compile Include="Modules\CssIncludeDescriptor.cs" />
     <Compile Include="Modules\Projections\JavaScriptModuleLink.cs" />
     <Compile Include="Mvc\Binders\JSONDataBinder.cs" />
+    <Compile Include="ActionResults\IHaveCustomXmlSettings.cs" />
+    <Compile Include="ActionResults\XmlResult.cs" />
     <Compile Include="Security\SuppressFormsAuthenticationRedirectModule.cs" />
     <Compile Include="Mvc\Attributes\NoCacheAttribute.cs" />
     <Compile Include="Mvc\Extensions\VirtualPath.cs" />

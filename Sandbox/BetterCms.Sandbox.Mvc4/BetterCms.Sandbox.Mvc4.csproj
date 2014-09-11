@@ -258,7 +258,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\bcms-images-gallery\" />
-    <Folder Include="Areas\bcms-media\Views\" />
+    <Folder Include="Areas\bcms-root\Views\Shared\Partial\" />
     <Folder Include="Areas\bcms-search\" />
     <Folder Include="file\bcms-blog\scripts\" />
     <Folder Include="file\bcms-media\scripts\" />
@@ -289,6 +289,10 @@
       <Project>{a66a3046-ef60-4c51-ada7-eb055763419b}</Project>
       <Name>BetterCms.Module.Blog</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.GoogleAnalytics\BetterCms.Module.GoogleAnalytics.csproj">
+      <Project>{8af079ab-c376-41ea-bd26-2034a29b46e9}</Project>
+      <Name>BetterCms.Module.GoogleAnalytics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.ImagesGallery\BetterCms.Module.ImagesGallery.csproj">
       <Project>{0bb64452-9b66-403e-94c6-e66c6071d12b}</Project>
       <Name>BetterCms.Module.ImagesGallery</Name>
@@ -308,6 +312,10 @@
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Newsletter\BetterCms.Module.Newsletter.csproj">
       <Project>{5235602a-ee7c-45a3-8b41-0c8770303650}</Project>
       <Name>BetterCms.Module.Newsletter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\BetterCms.Module.OpenGraphIntegration\BetterCms.Module.OpenGraphIntegration.csproj">
+      <Project>{eea18f38-f27d-4e23-be8f-9458c9248340}</Project>
+      <Name>BetterCms.Module.OpenGraphIntegration</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\BetterCms.Module.Pages\BetterCms.Module.Pages.csproj">
       <Project>{fc04d4c2-8688-498f-b546-292c7e3688a9}</Project>
@@ -451,7 +459,7 @@
           <IISUrl>http://localhost:8004/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>True</UseCustomServer>
-          <CustomServerUrl>http://bettercms.sandbox.mvc4.local</CustomServerUrl>
+          <CustomServerUrl>http://bettercms.sandbox.mvc4.local.net</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

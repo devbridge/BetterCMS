@@ -46,7 +46,7 @@ namespace BetterCms.Module.Pages.Command.Sitemap.GetSitemapsForNewPage
         public List<SitemapViewModel> Execute()
         {
             var sitemaps = new List<SitemapViewModel>();
-            var languagesFuture = CmsConfiguration.EnableMultilanguage ? LanguageService.GetLanguages() : null;
+            var languagesFuture = CmsConfiguration.EnableMultilanguage ? LanguageService.GetLanguagesLookupValues() : null;
             var pagesToFuture = SitemapHelper.GetPagesToFuture(CmsConfiguration.EnableMultilanguage, Repository);
             IQueryable<Models.Sitemap> sitemapQuery =
                 Repository.AsQueryable<Models.Sitemap>().FetchMany(map => map.AccessRules).FetchMany(map => map.Nodes).ThenFetch(node => node.Page);

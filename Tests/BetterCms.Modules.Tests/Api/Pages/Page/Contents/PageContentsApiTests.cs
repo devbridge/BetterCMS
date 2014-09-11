@@ -8,7 +8,7 @@ using BetterCms.Module.Api.Operations.Pages.Pages.Page.Contents.Content;
 using BetterCms.Module.Api.Operations.Root;
 
 using BetterCms.Module.MediaManager.Provider;
-using BetterCms.Module.Pages.Models;
+
 using BetterCms.Module.Root.Models;
 
 using NHibernate;
@@ -30,6 +30,8 @@ namespace BetterCms.Test.Module.Api.Pages.Page.Contents
         
         private bool setOptions;
 
+        private bool hasParentContent;
+
         private int contentConfigredCount;
 
         [Test]
@@ -37,6 +39,7 @@ namespace BetterCms.Test.Module.Api.Pages.Page.Contents
         {
             updateOrder = false;
             setOptions = false;
+            hasParentContent = false;
 
             RunTest();
         }
@@ -46,6 +49,7 @@ namespace BetterCms.Test.Module.Api.Pages.Page.Contents
         {
             updateOrder = true;
             setOptions = false;
+            hasParentContent = false;
 
             RunTest();
         }
@@ -55,6 +59,17 @@ namespace BetterCms.Test.Module.Api.Pages.Page.Contents
         {
             updateOrder = true;
             setOptions = true;
+            hasParentContent = false;
+
+            RunTest();
+        }
+        
+        [Test]
+        public void Should_CRUD_PageContent_WithSortWithOption_WithParentContent_Successfully()
+        {
+            updateOrder = true;
+            setOptions = true;
+            hasParentContent = true;
 
             RunTest();
         }
@@ -94,6 +109,10 @@ namespace BetterCms.Test.Module.Api.Pages.Page.Contents
 
         protected override SavePageContentModel GetCreateModel(ISession session)
         {
+            var parentContent = TestDataProvider.CreateNewHtmlContent(20);
+            var parentRegion = TestDataProvider.CreateNewRegion();
+            var parentPageContent = TestDataProvider.CreateNewPageContent(parentContent, page, parentRegion);
+
             var content = TestDataProvider.CreateNewHtmlContent(20);
             var region = TestDataProvider.CreateNewRegion();
 
@@ -105,6 +124,10 @@ namespace BetterCms.Test.Module.Api.Pages.Page.Contents
                                      Type = BetterCms.Core.DataContracts.Enums.OptionType.Text
                                  };
 
+            session.SaveOrUpdate(parentContent);
+            session.SaveOrUpdate(parentRegion);
+            session.SaveOrUpdate(parentPageContent);
+
             session.SaveOrUpdate(content);
             session.SaveOrUpdate(region);
             session.SaveOrUpdate(contentOption);
@@ -114,7 +137,9 @@ namespace BetterCms.Test.Module.Api.Pages.Page.Contents
                             Order = 100, 
                             ContentId = content.Id, 
                             RegionId = region.Id,
+                            ParentPageContentId = hasParentContent ? parentPageContent.Id : (Guid?)null
                         };
+
             if (setOptions)
             {
                 model.Options = new List<OptionValueModel>
@@ -189,9 +214,18 @@ namespace BetterCms.Test.Module.Api.Pages.Page.Contents
             Assert.IsNotNull(getResponse.Data.RegionId);
             Assert.IsNotNull(getResponse.Data.PageId);
             Assert.IsNotNull(getResponse.Data.ContentId);
+            if (hasParentContent)
+            {
+                Assert.IsNotNull(getResponse.Data.ParentPageContentId);
+            }
+            else
+            {
+                Assert.IsNull(getResponse.Data.ParentPageContentId);
+            }
             Assert.Greater(getResponse.Data.Order, 0);
 
             Assert.AreEqual(getResponse.Data.ContentId, model.ContentId);
+            Assert.AreEqual(getResponse.Data.ParentPageContentId, model.ParentPageContentId);
             Assert.AreEqual(getResponse.Data.RegionId, model.RegionId);
             Assert.AreEqual(getResponse.Data.PageId, page.Id);
             Assert.AreEqual(getResponse.Data.Order, model.Order);

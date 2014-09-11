@@ -35,6 +35,14 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         public virtual int Version { get; set; }
 
         /// <summary>
+        /// Gets or sets the parent page content identifier.
+        /// </summary>
+        /// <value>
+        /// The parent page content identifier.
+        /// </value>
+        public virtual Guid? ParentPageContentId { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

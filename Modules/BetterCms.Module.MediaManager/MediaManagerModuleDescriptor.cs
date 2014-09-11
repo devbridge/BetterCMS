@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 using Autofac;
@@ -73,6 +74,33 @@ namespace BetterCms.Module.MediaManager
 
             // Register images gallery custom option: album
             CustomOptionsProvider.RegisterProvider(MediaManagerFolderOptionProvider.Identifier, new MediaManagerFolderOptionProvider());
+        }
+
+        internal const string ModuleId = "73f53dfe-bf78-4e80-b231-9b275129b2cb";
+
+        /// <summary>
+        /// Gets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public override Guid Id
+        {
+            get
+            {
+                return new Guid(ModuleId);
+            }
+        }
+
+        /// <summary>
+        /// Flag describe is module root or additional
+        /// </summary>
+        public override bool IsRootModule
+        {
+            get
+            {
+                return true;
+            }
         }
 
         /// <summary>

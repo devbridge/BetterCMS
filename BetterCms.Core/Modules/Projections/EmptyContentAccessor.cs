@@ -29,12 +29,12 @@ namespace BetterCms.Core.Modules.Projections
             return string.Format(contentHtml);
         }
 
-        public override string GetCustomStyles(HtmlHelper html)
+        public override string[] GetCustomStyles(HtmlHelper html)
         {
             return null;
         }
 
-        public override string GetCustomJavaScript(HtmlHelper html)
+        public override string[] GetCustomJavaScript(HtmlHelper html)
         {
             return null;
         }

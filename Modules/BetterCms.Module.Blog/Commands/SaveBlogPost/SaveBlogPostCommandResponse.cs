@@ -15,6 +15,14 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         public virtual Guid Id { get; set; }
 
         /// <summary>
+        /// Gets or sets the content identifier.
+        /// </summary>
+        /// <value>
+        /// The content identifier.
+        /// </value>
+        public virtual Guid ContentId { get; set; }
+
+        /// <summary>
         /// Gets or sets the page content id.
         /// </summary>
         /// <value>
@@ -29,6 +37,14 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// The entity version.
         /// </value>
         public virtual int Version { get; set; }
+
+        /// <summary>
+        /// Gets or sets the content version.
+        /// </summary>
+        /// <value>
+        /// The content version.
+        /// </value>
+        public virtual int ContentVersion { get; set; }
 
         /// <summary>
         /// Gets or sets the page URL.

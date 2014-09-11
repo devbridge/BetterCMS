@@ -30,6 +30,7 @@
                 @Html.HiddenFor(model => model.Version)
                 @Html.HiddenFor(model => model.ContentVersion, new { @id = "bcmsPageContentVersion"})
                 @Html.HiddenFor(model => model.ContentId, new { @id = "bcmsContentId"})
+                @Html.HiddenFor(model => model.ParentPageContentId, new { @id = "bcmsParentPageContentId" })
                 @Html.HiddenFor(model => model.PageId)
                 @Html.HiddenFor(model => model.RegionId, new { @id = "bcmsContentToRegionId" })                
                 @Html.HiddenFor(modal => modal.DesirableStatus, new { @class = "bcms-content-desirable-status" })

@@ -105,7 +105,6 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                                     IntroText = bp.Description,
                                     AuthorId = bp.Author != null ? bp.Author.Id : (Guid?)null,
                                     CategoryId = bp.Category != null ? bp.Category.Id : (Guid?)null,
-                                    EnableInsertDynamicRegion = bp.IsMasterPage,
                                     Image = bp.Image == null || bp.Image.IsDeleted ? null :
                                         new ImageSelectorViewModel
                                         {

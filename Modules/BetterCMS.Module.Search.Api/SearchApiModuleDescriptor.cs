@@ -1,4 +1,6 @@
-﻿using Autofac;
+﻿using System;
+
+using Autofac;
 
 using BetterCms.Core.Modules;
 using BetterCms.Module.Api.Operations.Pages.Pages.Search;
@@ -15,6 +17,22 @@ namespace BetterCms.Module.Search.Api
         public SearchApiModuleDescriptor(ICmsConfiguration cmsConfiguration)
             : base(cmsConfiguration)
         {
+        }
+
+        internal const string ModuleId = "a383b814-6dbf-497f-9f57-24fa57b74edd";
+
+        /// <summary>
+        /// Gets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        public override Guid Id
+        {
+            get
+            {
+                return new Guid(ModuleId);
+            }
         }
 
         /// <summary>
