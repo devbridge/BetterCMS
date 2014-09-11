@@ -219,7 +219,7 @@ namespace BetterCms.Module.MediaManager.Services
                         }
                     }
 
-                    publicImage = CreateImage(rootFolderId, folderName, originalImage.OriginalFileName, originalImage.OriginalFileExtension, fileName,
+                    publicImage = CreateImage(rootFolderId, folderName, originalImage.OriginalFileName, originalImage.OriginalFileExtension, originalImage.OriginalFileName,
                         publicFileName, size, fileLength, thumbnailFileStream.Length);
                 }
                 else
@@ -318,10 +318,34 @@ namespace BetterCms.Module.MediaManager.Services
             }
         }
 
-        private int GetVersion(MediaImage image)
+        
+
+        public MediaImage MakeAsOriginal(MediaImage image, MediaImage originalImage)
         {
-            var versionsCount = repository.AsQueryable<MediaImage>().Count(i => i.Original != null && i.Original.Id == image.Id);
-            return versionsCount + 1;
+            var folderName = Path.GetFileName(Path.GetDirectoryName(originalImage.FileUri.OriginalString));
+            var publicFileName = MediaImageHelper.CreatePublicFileName(originalImage.OriginalFileName, originalImage.OriginalFileExtension);
+
+            using (var fileStream = DownloadFileStream(image.PublicUrl))
+            {
+                // Get thumbnail file stream
+                using (var thumbnailFileStream = DownloadFileStream(image.PublicThumbnailUrl))
+                {
+                    var newOriginalImage = (MediaImage) image.Clone();
+                    newOriginalImage.Original = null;
+                    newOriginalImage.PublishedOn = DateTime.Now;
+                    SetNewUrls(newOriginalImage, folderName, publicFileName);
+                    
+                    unitOfWork.BeginTransaction();
+                    repository.Save(newOriginalImage);
+                    unitOfWork.Commit();
+
+                    UpdateOriginal(originalImage, newOriginalImage);
+                    MoveToHistory(originalImage, newOriginalImage);
+                    StartTasksForImage(newOriginalImage, fileStream, thumbnailFileStream);
+
+                    return newOriginalImage;
+                }
+            }
         }
 
         /// <summary>
@@ -364,6 +388,58 @@ namespace BetterCms.Module.MediaManager.Services
             }
         }
 
+        private void UpdateOriginal(Media preOriginalMedia, Media originalMedia)
+        {
+            unitOfWork.BeginTransaction();
+
+            preOriginalMedia.Original = originalMedia;
+            repository.Save(preOriginalMedia);
+
+            var preOriginalId = preOriginalMedia.Id;
+            var images = repository.AsQueryable<MediaImage>().Where(i => i.Original != null && i.Original.Id == preOriginalId);
+
+            foreach (var image in images)
+            {
+                image.Original = originalMedia;
+                repository.Save(image);
+            }
+
+            unitOfWork.Commit();
+        }
+
+        private MediaImage MoveToHistory(MediaImage originalImage, MediaImage newOriginalImage)
+        {
+            var versionedFileName = MediaImageHelper.CreateVersionedFileName(
+                                originalImage.OriginalFileName,
+                                originalImage.OriginalFileExtension,
+                                GetVersion(newOriginalImage) - 1);
+
+            var folderName = Path.GetFileName(Path.GetDirectoryName(newOriginalImage.FileUri.OriginalString));
+
+            using (var originalFileStream = DownloadFileStream(originalImage.PublicUrl))
+            {
+                using (var originalThumbnailFileStream = DownloadFileStream(originalImage.PublicThumbnailUrl))
+                {
+                    // Update urls with version file name
+                    SetNewUrls(originalImage, folderName, versionedFileName);
+
+                    unitOfWork.BeginTransaction();
+                    repository.Save(originalImage);
+                    unitOfWork.Commit();
+
+                    // Re-upload original and thumbnail images to version urls
+                    StartTasksForImage(originalImage, originalFileStream, originalThumbnailFileStream);
+                }
+            }
+            return null;
+        }
+
+        private int GetVersion(MediaImage image)
+        {
+            var versionsCount = repository.AsQueryable<MediaImage>().Count(i => i.Original != null && i.Original.Id == image.Id);
+            return versionsCount + 1;
+        }
+
         private void ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(Action<ISession> work)
         {
             using (var session = sessionFactoryProvider.OpenSession(false))
@@ -394,14 +470,14 @@ namespace BetterCms.Module.MediaManager.Services
             image.PublicThumbnailUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, ThumbnailImageFilePrefix + Path.GetFileNameWithoutExtension(fileName) + ".png");
         }
 
-        private MediaImage CreateImage(Guid rootFolderId, string folderName, 
+        private MediaImage CreateImage(Guid? rootFolderId, string folderName, 
             string fileName, string extension, string imageTitle, string fileNameForUrl,
             Size size, long fileLength, long thumbnailImageLength)
         {
             MediaImage image = new MediaImage();
-            if (!rootFolderId.HasDefaultValue())
+            if (rootFolderId != null && !((Guid)rootFolderId).HasDefaultValue())
             {
-                image.Folder = repository.AsProxy<MediaFolder>(rootFolderId);
+                image.Folder = repository.AsProxy<MediaFolder>((Guid)rootFolderId);
             }
 
             image.Title = Path.GetFileName(imageTitle);

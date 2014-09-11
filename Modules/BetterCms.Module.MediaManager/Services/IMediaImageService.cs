@@ -13,5 +13,7 @@ namespace BetterCms.Module.MediaManager.Services
         void RemoveImageWithFiles(Guid mediaImageId, int version, bool doNotCheckVersion = false);
 
         void UpdateThumbnail(MediaImage mediaImage, Size size);
+
+        MediaImage MakeAsOriginal(MediaImage image, MediaImage originalImage);
     }
 }
