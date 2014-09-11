@@ -920,8 +920,10 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             return showPage;
         }
 
-        function setPathVisibility(isVisible) {
-            localStorage.setItem(keys.showMasterPagesPath, isVisible);
+        function setPathVisibility(isVisible, doNotChangeUpdateStorage) {
+            if (!doNotChangeUpdateStorage) {
+                localStorage.setItem(keys.showMasterPagesPath, isVisible);
+            }
 
             if (isVisible == 1) {
                 pathContainer.removeClass(classes.masterPagesPathToggler);
@@ -1031,27 +1033,27 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 return;
             }
 
-            setTimeout(function () {
-                var ww = $(window).width(),
-                cw = ww * 0.8,
-                totalItemsWidth = leftSlider.outerWidth() + leftSlider.outerWidth() + 30;
+            var ww = $(window).width(),
+            cw = ww * 0.8,
+            totalItemsWidth = leftSlider.outerWidth() + leftSlider.outerWidth() + 30;
 
-                $.each(items, function (index) {
-                    totalItemsWidth += items[index].element.outerWidth();
-                    // console.log('Item: ' + items[index].element.outerWidth() + '; total: ' + totalItemsWidth + '; cw: ' + cw);
-                });
+            $.each(items, function (index) {
+                totalItemsWidth += items[index].element.outerWidth();
+                console.log('Item: ' + items[index].element.outerWidth() + '; total: ' + totalItemsWidth + '; cw: ' + cw);
+            });
 
-                pathContainer.css('width', cw > totalItemsWidth ? totalItemsWidth : cw);
-                pathContainer.css('left', ww / 2);
-                pathContainer.css('margin-left', cw > totalItemsWidth ? totalItemsWidth / -2 : cw / -2);
+            pathContainer.css('width', cw > totalItemsWidth ? totalItemsWidth : cw);
+            pathContainer.css('left', ww / 2);
+            pathContainer.css('margin-left', cw > totalItemsWidth ? totalItemsWidth / -2 : cw / -2);
 
-                if ($.isFunction(onAfterCalculate)) {
-                    onAfterCalculate();
-                }
-            }, 100);
+            if ($.isFunction(onAfterCalculate)) {
+                onAfterCalculate();
+            }
         };
 
         self.initialize = function () {
+            setPathVisibility(0, true);
+
             pathContainer.find(selectors.masterPagesPathItem).each(function (index) {
                 var item = $(this),
                     html = item.html();
@@ -1070,7 +1072,6 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                 });
             });
 
-            setPathVisibility(getPathVisibility());
             handle.on('click', onHandleClick);
 
             leftSlider.on('click', function () {
@@ -1081,6 +1082,8 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             });
 
             redraw(slideToTheFirstParent);
+            self.calculatePathPositions();
+            setPathVisibility(getPathVisibility());
         };
 
         function setLastParentInactive() {
