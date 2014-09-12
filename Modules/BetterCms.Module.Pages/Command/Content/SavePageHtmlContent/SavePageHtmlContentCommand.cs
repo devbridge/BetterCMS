@@ -12,6 +12,7 @@ using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Content;
 
 using BetterCms.Module.Root;
@@ -28,12 +29,16 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
         private readonly ICmsConfiguration configuration;
         
         private readonly IOptionService optionsService;
+        
+        private readonly IWidgetService widgetService;
 
-        public SavePageHtmlContentCommand(IContentService contentService, ICmsConfiguration configuration, IOptionService optionsService)
+        public SavePageHtmlContentCommand(IContentService contentService, ICmsConfiguration configuration, 
+            IOptionService optionsService, IWidgetService widgetService)
         {
             this.contentService = contentService;
             this.configuration = configuration;
             this.optionsService = optionsService;
+            this.widgetService = widgetService;
         }
 
         public InsertContentToPageResultViewModel Execute(SavePageHtmlContentCommandRequest request)
@@ -176,7 +181,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                 }
             }
 
-            return new InsertContentToPageResultViewModel
+            var response = new InsertContentToPageResultViewModel
                 {
                     PageContentId = pageContent.Id,
                     ContentId = pageContent.Content.Id,
@@ -188,6 +193,13 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                     PageContentVersion = pageContent.Version,
                     ContentType = HtmlContentAccessor.ContentWrapperType
                 };
+
+            if (request.Content.IncludeChildRegions)
+            {
+                response.Regions = widgetService.GetWidgetChildRegionViewModels(pageContent.Content);
+            }
+
+            return response;
         }
     }
 }

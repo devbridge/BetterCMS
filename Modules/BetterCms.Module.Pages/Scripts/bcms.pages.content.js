@@ -155,7 +155,11 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         },
 
                         formSerialize: function (form) {
-                            return widgets.serializeFormWithChildWidgetOptions(form, editorId);
+                            return widgets.serializeFormWithChildWidgetOptions(form, editorId, function (serializedData) {
+                                if (includeChildRegions) {
+                                    serializedData.IncludeChildRegions = true;
+                                }
+                            });
                         },
                         formContentType: 'application/json; charset=UTF-8'
                     });
@@ -284,7 +288,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Initializes content edit dialog form.
         */
-        pagesContent.initializeEditContentForm = function (dialog, editInSourceMode, enableInsertDynamicRegion, data, editorId) {
+        pagesContent.initializeEditContentForm = function (dialog, editInSourceMode, enableInsertDynamicRegion, data, editorId, includeChildRegions) {
             var canEdit = security.IsAuthorized(["BcmsEditContent"]),
                 canPublish = security.IsAuthorized(["BcmsPublishContent"]),
                 form = dialog.container.find(selectors.firstForm);
@@ -305,8 +309,12 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
                 history.destroyDraftVersion(contentId, contentVersion, dialog.container, function () {
                     dialog.close();
-                    pagesContent.editPageContent(pageContentId, function () {
-                        redirect.ReloadWithAlert();
+
+                    pagesContent.editPageContent(pageContentId, {
+                        onCloseClick: function() {
+                            redirect.ReloadWithAlert();
+                        },
+                        includeChildRegions: includeChildRegions
                     });
                 });
             });
@@ -520,8 +528,11 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             if (contentViewModel.contentType == contentTypes.htmlContent) {
                 // Edit content
-                contentViewModel.onEditContent = function (onSuccess) {
-                    pagesContent.editPageContent(pageContentId, null, onSuccess);
+                contentViewModel.onEditContent = function (onSuccess, includeChildRegions) {
+                    pagesContent.editPageContent(pageContentId, {
+                        onSuccess: onSuccess,
+                        includeChildRegions: includeChildRegions
+                    });
                 };
 
                 contentViewModel.visibleButtons.configure = false;
@@ -558,8 +569,17 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Opens dialog for editing page regular content  
         */
-        pagesContent.editPageContent = function (contentId, onCloseClick, onSuccess) {
+        pagesContent.editPageContent = function (contentId, opts) {
+            opts = $.extend({
+                onCloseClick: null,
+                onSuccess: null,
+                includeChildRegions: false
+            }, opts);
+
             var canEdit = security.IsAuthorized(["BcmsEditContent"]),
+                onCloseClick = opts.onCloseClick,
+                onSuccess = opts.onSuccess,
+                includeChildRegions = (opts.includeChildRegions === true),
                 editorId;
 
             modal.edit({
@@ -585,7 +605,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                     enableInsertDynamicRegion = true;
                                 }
                             }
-                            pagesContent.initializeEditContentForm(contentDialog, editInSourceMode, enableInsertDynamicRegion, data.Data, editorId);
+                            pagesContent.initializeEditContentForm(contentDialog, editInSourceMode, enableInsertDynamicRegion, data.Data, editorId, includeChildRegions);
                         },
 
                         beforePost: function () {
@@ -629,7 +649,11 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         },
 
                         formSerialize: function (form) {
-                            return widgets.serializeFormWithChildWidgetOptions(form, editorId);
+                            return widgets.serializeFormWithChildWidgetOptions(form, editorId, function (serializedData) {
+                                if (includeChildRegions) {
+                                    serializedData.IncludeChildRegions = true;
+                                }
+                            });
                         },
                         formContentType: 'application/json; charset=utf-8'
                     });

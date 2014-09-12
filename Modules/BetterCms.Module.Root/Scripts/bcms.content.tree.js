@@ -169,7 +169,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                 model.title(model.model.title);
 
                 // Check if new regions where added
-                regionModels = createRegionViewModels(json.Data.Regions, model.parentRegion.id, model.parentRegion.pageContentId);
+                regionModels = createRegionViewModels(json.Data.Regions, model.parentRegion.model.id, model.model.pageContentId);
                 bcms
                     .asEnumerable(regionModels)
                     .where(function (x) {
