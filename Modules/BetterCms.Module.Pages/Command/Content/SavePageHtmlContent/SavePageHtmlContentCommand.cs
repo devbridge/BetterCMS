@@ -181,6 +181,10 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                 }
             }
 
+            var contentData = (HtmlContent)(pageContent.Content.History != null
+                    ? pageContent.Content.History.FirstOrDefault(c => c.Status == ContentStatus.Draft) ?? pageContent.Content
+                    : pageContent.Content);
+
             var response = new InsertContentToPageResultViewModel
                 {
                     PageContentId = pageContent.Id,
@@ -188,7 +192,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                     RegionId = pageContent.Region.Id,
                     PageId = pageContent.Page.Id,
                     DesirableStatus = request.Content.DesirableStatus,
-                    Title = pageContent.Content.Name,
+                    Title = contentData.Name,
                     ContentVersion = pageContent.Content.Version,
                     PageContentVersion = pageContent.Version,
                     ContentType = HtmlContentAccessor.ContentWrapperType
@@ -196,7 +200,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
 
             if (request.Content.IncludeChildRegions)
             {
-                response.Regions = widgetService.GetWidgetChildRegionViewModels(pageContent.Content);
+                response.Regions = widgetService.GetWidgetChildRegionViewModels(contentData);
             }
 
             return response;

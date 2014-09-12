@@ -2,6 +2,7 @@
 
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Content;
@@ -42,6 +43,7 @@ namespace BetterCms.Module.Pages.Command.Content.InsertContent
                 .AsQueryable<Root.Models.Content>()
                 .Where(c => c.Id == request.ContentId)
                 .FetchMany(c => c.ContentRegions)
+                .FetchMany(c => c.History)
                 .ToList()
                 .FirstOne();
             
@@ -69,6 +71,10 @@ namespace BetterCms.Module.Pages.Command.Content.InsertContent
 
             var accessor = projectionFactory.GetAccessorForType(content);
 
+            var contentData = (pageContent.Content.History != null
+                    ? pageContent.Content.History.FirstOrDefault(c => c.Status == ContentStatus.Draft) ?? pageContent.Content
+                    : pageContent.Content);
+
             var model = new InsertContentToPageResultViewModel
                 {
                     PageContentId = pageContent.Id,
@@ -76,7 +82,7 @@ namespace BetterCms.Module.Pages.Command.Content.InsertContent
                     RegionId = request.RegionId,
                     PageId = request.PageId,
                     DesirableStatus = content.Status,
-                    Title = content.Name,
+                    Title = contentData.Name,
                     ContentVersion = content.Version,
                     PageContentVersion = pageContent.Version,
                     ContentType = accessor != null ? accessor.GetContentWrapperType() : null
@@ -84,7 +90,7 @@ namespace BetterCms.Module.Pages.Command.Content.InsertContent
 
             if (request.IncludeChildRegions)
             {
-                model.Regions = widgetService.GetWidgetChildRegionViewModels(content);
+                model.Regions = widgetService.GetWidgetChildRegionViewModels(contentData);
             }
 
             return model;
