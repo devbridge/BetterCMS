@@ -181,7 +181,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                 }
             }
 
-            var contentData = (HtmlContent)(pageContent.Content.History != null
+            var contentData = (pageContent.Content.History != null
                     ? pageContent.Content.History.FirstOrDefault(c => c.Status == ContentStatus.Draft) ?? pageContent.Content
                     : pageContent.Content);
 
