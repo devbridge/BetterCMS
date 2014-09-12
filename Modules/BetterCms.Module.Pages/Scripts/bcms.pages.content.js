@@ -288,7 +288,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Initializes content edit dialog form.
         */
-        pagesContent.initializeEditContentForm = function (dialog, editInSourceMode, enableInsertDynamicRegion, data, editorId, includeChildRegions) {
+        pagesContent.initializeEditContentForm = function (dialog, editInSourceMode, enableInsertDynamicRegion, data, editorId, includeChildRegions, onSuccess) {
             var canEdit = security.IsAuthorized(["BcmsEditContent"]),
                 canPublish = security.IsAuthorized(["BcmsPublishContent"]),
                 form = dialog.container.find(selectors.firstForm);
@@ -307,13 +307,19 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     pageContentId = dialog.container.find(selectors.pageContentId).val(),
                     contentVersion = dialog.container.find(selectors.contentVersion).val();
 
-                history.destroyDraftVersion(contentId, contentVersion, dialog.container, function () {
+                history.destroyDraftVersion(contentId, contentVersion, dialog.container, function (publishedId, json) {
                     dialog.close();
 
                     pagesContent.editPageContent(pageContentId, {
-                        onCloseClick: function() {
-                            redirect.ReloadWithAlert();
+                        onCloseClick: function () {
+                            // If is set what to do on success, do it, otherwise - reload the page
+                            if ($.isFunction(onSuccess)) {
+                                onSuccess(json);
+                            } else {
+                                redirect.ReloadWithAlert();
+                            }
                         },
+                        onSuccess: onSuccess,
                         includeChildRegions: includeChildRegions
                     });
                 });
@@ -591,21 +597,21 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 onLoad: function (dialog) {
                     var url = $.format(links.editPageContentUrl, contentId);
                     dynamicContent.bindDialog(dialog, url, {
-                        contentAvailable: function (contentDialog, data) {
+                        contentAvailable: function (contentDialog, json) {
                             var editInSourceMode = false,
                                 enableInsertDynamicRegion = false;
 
                             editorId = dialog.container.find(selectors.htmlEditor).attr('id');
 
-                            if (data && data.Data) {
-                                if (data.Data.EditInSourceMode) {
+                            if (json && json.Data) {
+                                if (json.Data.EditInSourceMode) {
                                     editInSourceMode = true;
                                 }
-                                if (data.Data.EnableInsertDynamicRegion) {
+                                if (json.Data.EnableInsertDynamicRegion) {
                                     enableInsertDynamicRegion = true;
                                 }
                             }
-                            pagesContent.initializeEditContentForm(contentDialog, editInSourceMode, enableInsertDynamicRegion, data.Data, editorId, includeChildRegions);
+                            pagesContent.initializeEditContentForm(contentDialog, editInSourceMode, enableInsertDynamicRegion, json.Data, editorId, includeChildRegions, onSuccess);
                         },
 
                         beforePost: function () {

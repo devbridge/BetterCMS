@@ -12,10 +12,13 @@ namespace BetterCms.Module.Pages.Command.History.DestroyContentDraft
     public class DestroyContentDraftCommand : CommandBase, ICommand<DestroyContentDraftCommandRequest, DestroyContentDraftCommandResponse>
     {
         private IDraftService draftService;
+        
+        private IWidgetService widgetService;
 
-        public DestroyContentDraftCommand(IDraftService draftService)
+        public DestroyContentDraftCommand(IDraftService draftService, IWidgetService widgetService)
         {
             this.draftService = draftService;
+            this.widgetService = widgetService;
         }
 
         /// <summary>
@@ -48,6 +51,8 @@ namespace BetterCms.Module.Pages.Command.History.DestroyContentDraft
             {
                 response.CategoryName = widget.Category.Name;
             }
+
+            response.Regions = widgetService.GetWidgetChildRegionViewModels(content.Original);
 
             return response;
         }
