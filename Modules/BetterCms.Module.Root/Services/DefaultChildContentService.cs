@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
@@ -13,7 +12,6 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 
 using NHibernate.Criterion;
-using NHibernate.Hql.Ast.ANTLR;
 
 namespace BetterCms.Module.Root.Services
 {

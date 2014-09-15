@@ -152,7 +152,7 @@ namespace BetterCms.Module.Pages.Controllers
             {
                 ValidateModelExplicilty(request.Content);
 
-                InsertContentToPageResultViewModel result = null;
+                ChangedContentResultViewModel result = null;
                 if (ModelState.IsValid)
                 {
                     result = GetCommand<SavePageHtmlContentCommand>().ExecuteCommand(request);

@@ -562,8 +562,11 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             };
 
             // Content history
-            contentViewModel.onContentHistory = function () {
-                history.openPageContentHistoryDialog(contentId, pageContentId);
+            contentViewModel.onContentHistory = function (onContentRestore, includeChildRegions) {
+                history.openPageContentHistoryDialog(contentId, pageContentId, {
+                    onContentRestore: onContentRestore,
+                    includeChildRegions: includeChildRegions
+                });
             };
 
             // Change draft icon

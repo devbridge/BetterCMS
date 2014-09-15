@@ -14,7 +14,7 @@ using BetterCms.Module.Root.Services;
 
 namespace BetterCms.Module.Pages.Command.Content.InsertContent
 {
-    public class InsertContentToPageCommand : CommandBase, ICommand<InsertContentToPageRequest, InsertContentToPageResultViewModel>
+    public class InsertContentToPageCommand : CommandBase, ICommand<InsertContentToPageRequest, ChangedContentResultViewModel>
     {
         private readonly IContentService contentService;
         private readonly PageContentProjectionFactory projectionFactory;
@@ -33,7 +33,7 @@ namespace BetterCms.Module.Pages.Command.Content.InsertContent
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        public InsertContentToPageResultViewModel Execute(InsertContentToPageRequest request)
+        public ChangedContentResultViewModel Execute(InsertContentToPageRequest request)
         {
             UnitOfWork.BeginTransaction();
             
@@ -75,7 +75,7 @@ namespace BetterCms.Module.Pages.Command.Content.InsertContent
                     ? pageContent.Content.History.FirstOrDefault(c => c.Status == ContentStatus.Draft) ?? pageContent.Content
                     : pageContent.Content);
 
-            var model = new InsertContentToPageResultViewModel
+            var model = new ChangedContentResultViewModel
                 {
                     PageContentId = pageContent.Id,
                     ContentId = content.Id,

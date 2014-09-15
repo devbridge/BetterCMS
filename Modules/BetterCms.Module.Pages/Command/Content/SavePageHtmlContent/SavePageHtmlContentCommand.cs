@@ -22,7 +22,7 @@ using BetterCms.Module.Root.Services;
 
 namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
 {
-    public class SavePageHtmlContentCommand : CommandBase, ICommand<SavePageHtmlContentCommandRequest, InsertContentToPageResultViewModel>
+    public class SavePageHtmlContentCommand : CommandBase, ICommand<SavePageHtmlContentCommandRequest, ChangedContentResultViewModel>
     {
         private readonly IContentService contentService;
         
@@ -41,7 +41,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
             this.widgetService = widgetService;
         }
 
-        public InsertContentToPageResultViewModel Execute(SavePageHtmlContentCommandRequest request)
+        public ChangedContentResultViewModel Execute(SavePageHtmlContentCommandRequest request)
         {
             var model = request.Content;
             if (model.DesirableStatus == ContentStatus.Published)
@@ -185,7 +185,7 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                     ? pageContent.Content.History.FirstOrDefault(c => c.Status == ContentStatus.Draft) ?? pageContent.Content
                     : pageContent.Content);
 
-            var response = new InsertContentToPageResultViewModel
+            var response = new ChangedContentResultViewModel
                 {
                     PageContentId = pageContent.Id,
                     ContentId = pageContent.Content.Id,

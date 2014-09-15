@@ -5,7 +5,7 @@ using BetterCms.Core.DataContracts.Enums;
 
 namespace BetterCms.Module.Pages.ViewModels.Content
 {
-    public class InsertContentToPageResultViewModel
+    public class ChangedContentResultViewModel
     {
         public string Title { get; set; }
         

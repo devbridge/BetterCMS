@@ -347,7 +347,7 @@
     <Compile Include="Services\IWidgetService.cs" />
     <Compile Include="ViewModels\Content\ContentViewModel.cs" />
     <Compile Include="ViewModels\Content\ContentSortViewModel.cs" />
-    <Compile Include="ViewModels\Content\InsertContentToPageResultViewModel.cs" />
+    <Compile Include="ViewModels\Content\ChangedContentResultViewModel.cs" />
     <Compile Include="ViewModels\Content\PageContentChildRegionViewModel.cs" />
     <Compile Include="ViewModels\Content\RestorePageContentViewModel.cs" />
     <Compile Include="ViewModels\Content\IDraftDestroy.cs" />

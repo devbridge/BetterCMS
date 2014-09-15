@@ -53,12 +53,46 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         if (json.Data.ContentType) {
             contentViewModel.contentType = json.Data.ContentType;
         }
-        if (json.Data.PageContentId) {
+        if (json.Data.PageContentId && !bcms.isEmptyGuid(json.Data.PageContentId)) {
             contentViewModel.pageContentId = json.Data.PageContentId;
         }
         if (json.Data.PageContentVersion) {
             contentViewModel.pageContentVersion = json.Data.PageContentVersion;
         }
+    }
+
+    function setContentModelValuesAndRegions(model, json) {
+        var regionModels,
+            regionTreeItemViewModel;
+
+        setContentModelValues(model.model, json);
+        model.title(model.model.title);
+
+        // Check if new regions where added
+        regionModels = createRegionViewModels(json.Data.Regions, model.parentRegion.model.id, model.model.pageContentId);
+        bcms
+            .asEnumerable(regionModels)
+            .where(function (x) {
+                return bcms.asEnumerable(model.items()).where(function (y) {
+                    return x.id === y.model.id;
+                }).toArray().length == 0;
+            })
+            .forEach(function (x) {
+                regionTreeItemViewModel = createRegionTreeItemViewModel(x, model, model.level() + 1);
+                model.items.push(regionTreeItemViewModel);
+            });
+
+        // Check if regions where removed
+        bcms
+            .asEnumerable(model.items())
+            .where(function (y) {
+                return bcms.asEnumerable(regionModels).where(function (x) {
+                    return x.id === y.model.id;
+                }).toArray().length == 0;
+            })
+            .forEach(function (x) {
+                model.items.remove(x);
+            });
     }
 
     function createRegionViewModels(json, parentRegionId, parentPageContentId) {
@@ -160,39 +194,9 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
 
         model.editItem = function () {
             contentModel.onEditContent(function (json) {
-                var regionModels,
-                    regionTreeItemViewModel;
-
                 treeViewModel.reloadPage = true;
 
-                setContentModelValues(model.model, json);
-                model.title(model.model.title);
-
-                // Check if new regions where added
-                regionModels = createRegionViewModels(json.Data.Regions, model.parentRegion.model.id, model.model.pageContentId);
-                bcms
-                    .asEnumerable(regionModels)
-                    .where(function (x) {
-                        return bcms.asEnumerable(model.items()).where(function (y) {
-                            return x.id === y.model.id;
-                        }).toArray().length == 0;
-                    })
-                    .forEach(function(x) {
-                        regionTreeItemViewModel = createRegionTreeItemViewModel(x, model, model.level() + 1);
-                        model.items.push(regionTreeItemViewModel);
-                    });
-
-                // Check if regions where removed
-                bcms
-                    .asEnumerable(model.items())
-                    .where(function (y) {
-                        return bcms.asEnumerable(regionModels).where(function (x) {
-                            return x.id === y.model.id;
-                        }).toArray().length == 0;
-                    })
-                    .forEach(function (x) {
-                        model.items.remove(x);
-                    });
+                setContentModelValuesAndRegions(model, json);
             }, true);
         };
 
@@ -205,7 +209,11 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         };
 
         model.history = function() {
-            contentModel.onContentHistory();
+            contentModel.onContentHistory(function (json) {
+                treeViewModel.reloadPage = true;
+
+                setContentModelValuesAndRegions(model, json);
+            });
         };
 
         model.configure = function() {
