@@ -150,7 +150,13 @@ namespace BetterCms.Module.Pages.Controllers
         {
             try
             {
-                var result = GetCommand<SavePageHtmlContentCommand>().ExecuteCommand(request);
+                ValidateModelExplicilty(request.Content);
+
+                InsertContentToPageResultViewModel result = null;
+                if (ModelState.IsValid)
+                {
+                    result = GetCommand<SavePageHtmlContentCommand>().ExecuteCommand(request);
+                }
 
                 return WireJson(result != null, result);
             }

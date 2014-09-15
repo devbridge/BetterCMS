@@ -274,6 +274,28 @@ namespace BetterCms.Module.Root.Mvc
         /// <param name="filterContext">Information about the current request and action.</param>
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            UpdateModelStateErrors();
+
+            base.OnActionExecuting(filterContext);
+        }
+
+        /// <summary>
+        /// Validates the model explicilty.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        protected virtual void ValidateModelExplicilty(object model)
+        {
+            if (!TryValidateModel(model))
+            {
+                UpdateModelStateErrors();
+            }
+        }
+
+        /// <summary>
+        /// Updates the model state errors.
+        /// </summary>
+        private void UpdateModelStateErrors()
+        {
             if (!ModelState.IsValid)
             {
                 var modelStateErrors = from item in ModelState.Values
@@ -282,10 +304,13 @@ namespace BetterCms.Module.Root.Mvc
 
                 Messages.AddError(modelStateErrors.ToArray());
             }
+        }
 
-            base.OnActionExecuting(filterContext);
-        }           
-    
+        /// <summary>
+        /// Gets the command.
+        /// </summary>
+        /// <typeparam name="TCommand">The type of the command.</typeparam>
+        /// <returns>Command instance</returns>
         protected TCommand GetCommand<TCommand>() where TCommand : ICommandBase
         {
             return CommandResolver.ResolveCommand<TCommand>(this);
