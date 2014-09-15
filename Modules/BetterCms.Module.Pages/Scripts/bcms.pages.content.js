@@ -307,7 +307,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     pageContentId = dialog.container.find(selectors.pageContentId).val(),
                     contentVersion = dialog.container.find(selectors.contentVersion).val();
 
-                history.destroyDraftVersion(contentId, contentVersion, dialog.container, function (publishedId, json) {
+                history.destroyDraftVersion(contentId, contentVersion, includeChildRegions, dialog.container, function (publishedId, json) {
                     dialog.close();
 
                     pagesContent.editPageContent(pageContentId, {

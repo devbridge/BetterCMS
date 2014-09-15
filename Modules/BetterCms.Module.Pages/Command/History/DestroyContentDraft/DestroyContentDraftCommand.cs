@@ -52,7 +52,10 @@ namespace BetterCms.Module.Pages.Command.History.DestroyContentDraft
                 response.CategoryName = widget.Category.Name;
             }
 
-            response.Regions = widgetService.GetWidgetChildRegionViewModels(content.Original);
+            if (request.IncludeChildRegions)
+            {
+                response.Regions = widgetService.GetWidgetChildRegionViewModels(content.Original);
+            }
 
             return response;
         }

@@ -13,6 +13,8 @@ using BetterCms.Module.Root.Mvc;
 
 using Microsoft.Web.Mvc;
 
+using NHibernate.Hql.Ast.ANTLR.Tree;
+
 namespace BetterCms.Module.Pages.Controllers
 {
     /// <summary>
@@ -91,17 +93,19 @@ namespace BetterCms.Module.Pages.Controllers
         /// </summary>
         /// <param name="id">The id.</param>
         /// <param name="version">The version.</param>
+        /// <param name="includeChildRegions">Determines, if child regions should be included to the results.</param>
         /// <returns>
         /// Json result.
         /// </returns>
         [HttpPost]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
-        public ActionResult DestroyContentDraft(string id, string version)
+        public ActionResult DestroyContentDraft(string id, string version, string includeChildRegions)
         {
             var request = new DestroyContentDraftCommandRequest
                               {
                                   Id = id.ToGuidOrDefault(),
-                                  Version = version.ToIntOrDefault()
+                                  Version = version.ToIntOrDefault(),
+                                  IncludeChildRegions = includeChildRegions.ToBoolOrDefault()
                               };
             var response = GetCommand<DestroyContentDraftCommand>().ExecuteCommand(request);
 

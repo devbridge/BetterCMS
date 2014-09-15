@@ -342,7 +342,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 var contentId = dialog.container.find(selectors.contentId).val(),
                     contentVersion = dialog.container.find(selectors.contentVersion).val();
 
-                contentHistory.destroyDraftVersion(contentId, contentVersion, dialog.container, function (publishedId, json) {
+                contentHistory.destroyDraftVersion(contentId, contentVersion, includeChildRegions, dialog.container, function (publishedId, json) {
                     dialog.close();
 
                     var onCloseCallback = function () {
@@ -405,7 +405,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 var contentId = dialog.container.find(selectors.contentId).val(),
                     contentVersion = dialog.container.find(selectors.contentVersion).val();
 
-                contentHistory.destroyDraftVersion(contentId, contentVersion, dialog.container, function (publishedId, json) {
+                contentHistory.destroyDraftVersion(contentId, contentVersion, includeChildRegions, dialog.container, function (publishedId, json) {
                     dialog.close();
 
                     var onCloseCallback = function () {

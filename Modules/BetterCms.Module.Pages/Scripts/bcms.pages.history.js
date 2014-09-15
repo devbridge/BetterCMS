@@ -192,13 +192,13 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
     /**
     * Destroys draft version of the content
     */
-    history.destroyDraftVersion = function(id, version, container, onSuccess) {
+    history.destroyDraftVersion = function(id, version, includeChildRegions, container, onSuccess) {
         modal.confirm({
             content: globalization.contentVersionDestroyDraftConfirmation,
             acceptTitle: globalization.destroyButtonTitle,
             onAccept: function() {
 
-                var url = $.format(links.destroyContentDraftVersionUrl, id, version),
+                var url = $.format(links.destroyContentDraftVersionUrl, id, version, includeChildRegions ? 1 : 0),
                     onComplete = function (json) {
                         container.hideLoading();
 
