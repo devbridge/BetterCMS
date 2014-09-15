@@ -239,13 +239,15 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         ko.applyBindings(blogViewModel, dialog.container.find(selectors.firstForm).get(0));
         
         dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
-            history.destroyDraftVersion(data.ContentId, data.ContentVersion, includeChildRegions, dialog.container, function () {
+            history.destroyDraftVersion(data.ContentId, data.ContentVersion, includeChildRegions, dialog.container, function (publishedId, json) {
                 var onSave = postSuccess,
                     onClose = null;
 
                 dialog.close();
                 if (calledFromPage) {
-                    onClose = postSuccess;
+                    onClose = function() {
+                        onSave(json);
+                    };
                 }
 
                 editBlogPost(data.Id, {
