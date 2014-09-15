@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
@@ -95,9 +96,14 @@ namespace BetterCms.Module.Root.Services
             }
 
             // Remove childs, which not exists in source.
-            destination.ChildContents
+            var childsToDelete = destination.ChildContents
                 .Where(s => source.ChildContents.All(d => s.AssignmentIdentifier != d.AssignmentIdentifier))
-                .Distinct().ToList().ForEach(d => repository.Delete(d));
+                .Distinct().ToList();
+            childsToDelete.ForEach(d =>
+                {
+                    destination.ChildContents.Remove(d);
+                    repository.Delete(d);
+                });
         }
 
         private void CopyChildContents(IList<ChildContent> destinationChildren, IList<ChildContent> sourceChildren)

@@ -147,7 +147,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             if (content && content.Data && content.Data.EditInSourceMode) {
                                 editInSourceMode = true;
                             }
-                            optionsViewModel = initializeEditHtmlContentWidgetForm(dialog, availablePreviewOnPageContentId, postSuccess, editInSourceMode, content, editorId);
+                            optionsViewModel = initializeEditHtmlContentWidgetForm(dialog, availablePreviewOnPageContentId, postSuccess, editInSourceMode, content, editorId, false);
                         },
 
                         beforePost: function () {
@@ -197,7 +197,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             if (content && content.Data && content.Data.EditInSourceMode) {
                                 editInSourceMode = true;
                             }
-                            optionsViewModel = initializeEditHtmlContentWidgetForm(dialog, availablePreviewOnPageContentId, postSuccess, editInSourceMode, content, editorId);
+                            optionsViewModel = initializeEditHtmlContentWidgetForm(dialog, availablePreviewOnPageContentId, postSuccess, editInSourceMode, content, editorId, includeChildRegions);
                         },
 
                         beforePost: function () {
@@ -314,7 +314,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Initializes 'Edit Html Content Widget' dialog form.
         */
-        function initializeEditHtmlContentWidgetForm(dialog, availablePreviewOnPageContentId, onSaveCallback, editInSourceMode, content, editorId) {
+        function initializeEditHtmlContentWidgetForm(dialog, availablePreviewOnPageContentId, onSaveCallback, editInSourceMode, content, editorId, includeChildRegions) {
             var optionsContainer = dialog.container.find(selectors.optionsTab),
                 data = content.Data || {},
                 widgetOptions = data.Options,
@@ -405,7 +405,7 @@ bettercms.define('bcms.pages.widgets', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 var contentId = dialog.container.find(selectors.contentId).val(),
                     contentVersion = dialog.container.find(selectors.contentVersion).val();
 
-                contentHistory.destroyDraftVersion(contentId, contentVersion, includeChildRegions, dialog.container, function (publishedId, json) {
+                contentHistory.destroyDraftVersion(contentId, contentVersion, false, dialog.container, function (publishedId, json) {
                     dialog.close();
 
                     var onCloseCallback = function () {

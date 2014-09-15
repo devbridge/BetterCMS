@@ -503,11 +503,16 @@ namespace BetterCms.Module.Root.Services
                                  source.ContentRegions.Remove(s);
                              });
 
-            // Remove regions, which not exists in source.
-            destination.ContentRegions
+            // Remove regions, which not exist in source.
+            var regionsToDelete = destination.ContentRegions
                 .Where(s => source.ContentRegions.All(d => s.Region.RegionIdentifier.ToLowerInvariant() != d.Region.RegionIdentifier.ToLowerInvariant()))
-                .Distinct().ToList()
-                .ForEach(d => repository.Delete(d));
+                .Distinct().ToList();
+            regionsToDelete.ForEach(
+                d =>
+                {
+                    destination.ContentRegions.Remove(d);
+                    repository.Delete(d);
+                });
         }
 
         /// <summary>
