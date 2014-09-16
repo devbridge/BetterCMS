@@ -9,7 +9,7 @@ using BetterCms.Core.Security;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Root;
-
+using BetterCms.Module.Blog.Models;
 using BetterCms.Module.MediaManager.Services;
 
 using BetterCms.Module.Pages.Models;
@@ -135,6 +135,11 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
                 LoadTags(listResponse, request.Data.IncludeTags, request.Data.IncludeAccessRules);
             }
 
+            if (listResponse.Items.Count > 0)
+            {
+                LoadContentIds(listResponse);
+            }
+
             return new GetBlogPostsResponse
                        {
                            Data = listResponse
@@ -208,6 +213,18 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
                         .ToList();
                 });
             }
+        }
+
+        private void LoadContentIds(DataListResponse<BlogPostModel> response)
+        {
+            response.Items.ToList().ForEach(
+                page =>
+                {
+                    page.ContentId =
+                        repository.AsQueryable<Module.Root.Models.PageContent>(pc => pc.Page.Id == page.Id && !pc.Content.IsDeleted && pc.Content is BlogPostContent)
+                            .Select(pc => pc.Content.Id)
+                            .FirstOrDefault();
+                });
         }
 
         private class TagModel
