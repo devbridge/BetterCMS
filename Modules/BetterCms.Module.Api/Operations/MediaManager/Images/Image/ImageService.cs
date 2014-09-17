@@ -78,50 +78,59 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         {
             var model = repository
                 .AsQueryable<MediaImage>(media => media.Id == request.ImageId && media.Type == Module.MediaManager.Models.MediaType.Image)
-                .Select(media => new ImageModel
-                                     {
-                                         Id = media.Id,
-                                         Version = media.Version,
-                                         CreatedBy = media.CreatedByUser,
-                                         CreatedOn = media.CreatedOn,
-                                         LastModifiedBy = media.ModifiedByUser,
-                                         LastModifiedOn = media.ModifiedOn,
+                .Select(media => new
+                    {
+                        Model = new ImageModel
+                            {
+                                Id = media.Id,
+                                Version = media.Version,
+                                CreatedBy = media.CreatedByUser,
+                                CreatedOn = media.CreatedOn,
+                                LastModifiedBy = media.ModifiedByUser,
+                                LastModifiedOn = media.ModifiedOn,
 
-                                         Title = media.Title,
-                                         Description = media.Description,
-                                         Caption = media.Caption,
-                                         FileExtension = media.OriginalFileExtension,
-                                         FileSize = media.Size,
-                                         ImageUrl = media.PublicUrl,
-                                         Width = media.Width,
-                                         Height = media.Height,
-                                         ThumbnailUrl = media.PublicThumbnailUrl,
-                                         ThumbnailWidth = media.ThumbnailWidth,
-                                         ThumbnailHeight = media.ThumbnailHeight,
-                                         ThumbnailSize = media.ThumbnailSize,
-                                         IsArchived = media.IsArchived,
-                                         FolderId = media.Folder != null && !media.Folder.IsDeleted ? media.Folder.Id : (Guid?)null,
-                                         FolderName = media.Folder != null && !media.Folder.IsDeleted ? media.Folder.Title : null,
-                                         PublishedOn = media.PublishedOn,
-                                         OriginalFileName = media.OriginalFileName,
-                                         OriginalFileExtension = media.OriginalFileExtension,
-                                         OriginalWidth = media.OriginalWidth,
-                                         OriginalHeight = media.OriginalHeight,
-                                         OriginalSize = media.OriginalSize,
-                                         OriginalUrl = media.PublicOriginallUrl,
+                                Title = media.Title,
+                                Description = media.Description,
+                                Caption = media.Caption,
+                                FileExtension = media.OriginalFileExtension,
+                                FileSize = media.Size,
+                                ImageUrl = media.PublicUrl,
+                                Width = media.Width,
+                                Height = media.Height,
+                                ThumbnailUrl = media.PublicThumbnailUrl,
+                                ThumbnailWidth = media.ThumbnailWidth,
+                                ThumbnailHeight = media.ThumbnailHeight,
+                                ThumbnailSize = media.ThumbnailSize,
+                                IsArchived = media.IsArchived,
+                                FolderId = media.Folder != null && !media.Folder.IsDeleted ? media.Folder.Id : (Guid?)null,
+                                FolderName = media.Folder != null && !media.Folder.IsDeleted ? media.Folder.Title : null,
+                                PublishedOn = media.PublishedOn,
+                                OriginalFileName = media.OriginalFileName,
+                                OriginalFileExtension = media.OriginalFileExtension,
+                                OriginalWidth = media.OriginalWidth,
+                                OriginalHeight = media.OriginalHeight,
+                                OriginalSize = media.OriginalSize,
+                                OriginalUrl = media.PublicOriginallUrl,
 
-                                         FileUri = media.FileUri.ToString(),
-                                         IsUploaded = media.IsUploaded,
-                                         IsTemporary = media.IsTemporary,
-                                         IsCanceled = media.IsCanceled,
-                                         OriginalUri = media.OriginalUri.ToString(),
-                                         ThumbnailUri = media.ThumbnailUri.ToString()
-                                     })
+                                IsUploaded = media.IsUploaded,
+                                IsTemporary = media.IsTemporary,
+                                IsCanceled = media.IsCanceled
+                            },
+
+                        FileUri = media.FileUri,
+                        OriginalUri = media.OriginalUri,
+                        ThumbnailUri = media.ThumbnailUri
+                    })
                 .FirstOne();
 
-            model.ImageUrl = fileUrlResolver.EnsureFullPathUrl(model.ImageUrl);
-            model.ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(model.ThumbnailUrl);
-            model.OriginalUrl = fileUrlResolver.EnsureFullPathUrl(model.OriginalUrl);
+
+            model.Model.FileUri = model.FileUri.ToString();
+            model.Model.ThumbnailUri = model.ThumbnailUri.ToString();
+            model.Model.OriginalUri = model.OriginalUri.ToString();
+
+            model.Model.ImageUrl = fileUrlResolver.EnsureFullPathUrl(model.Model.ImageUrl);
+            model.Model.ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(model.Model.ThumbnailUrl);
+            model.Model.OriginalUrl = fileUrlResolver.EnsureFullPathUrl(model.Model.OriginalUrl);
 
             IList<TagModel> tags;
             if (request.Data.IncludeTags)
@@ -149,7 +158,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
 
             return new GetImageResponse
                        {
-                           Data = model,
+                           Data = model.Model,
                            Tags = tags
                        };
         }

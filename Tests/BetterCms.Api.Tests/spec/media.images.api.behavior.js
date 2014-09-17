@@ -255,6 +255,13 @@ describe('media.images.api.behavior', function () {
             expect(image.originalSize).toBe(92217, 'Correctly filtered originalSize should be retrieved.');
             expect(image.originalUrl).toBe('http://bettercms.sandbox.mvc4.local.net/uploads/image/15f824b13a9e428fa013dc1940741295/o___Tapir.png', 'Correctly filtered originalUrl should be retrieved.');
 
+            expect(image.fileUri).toBe('file:///D:/Projects/BCMS/Code/MAIN/Tests/BetterCms.Api.Tests/uploads/image/15f824b13a9e428fa013dc1940741295/__Tapir_9.png', 'Correctly filtered fileUri should be retrieved.');
+            expect(image.originalUri).toBe('file:///D:/Projects/BCMS/Code/MAIN/Tests/BetterCms.Api.Tests/uploads/image/15f824b13a9e428fa013dc1940741295/o___Tapir.png', 'Correctly filtered originalUri should be retrieved.');
+            expect(image.thumbnailUri).toBe('file:///D:/Projects/BCMS/Code/MAIN/Tests/BetterCms.Api.Tests/uploads/image/15f824b13a9e428fa013dc1940741295/t___Tapir_9.png', 'Correctly filtered thumbnailUri should be retrieved.');
+            expect(image.isUploaded).toBe(true, 'Correctly filtered isUploaded should be retrieved.');
+            expect(image.isTemporary).toBe(false, 'Correctly filtered isTemporary should be retrieved.');
+            expect(image.isCanceled).toBe(false, 'Correctly filtered IsCanceled should be retrieved.');
+
             // Tags
             var tags = result.tags;
             expect(tags).toBeDefinedAndNotNull('JSON tags object should be retrieved.');
