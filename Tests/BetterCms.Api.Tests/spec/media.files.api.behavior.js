@@ -259,6 +259,11 @@ describe('media.files.api.behavior', function () {
             expect(file.thumbnailUrl).toBe('http://bettercms.sandbox.mvc4.local/uploads/image/88247a8341184fc2be8c1761c7b86c02/t_1_1.png', 'Correctly filtered thumbnailUrl should be retrieved.');
             expect(file.thumbnailId).toBeDefinedAndNotNull('thumbnailId should be retrieved.');
             expect(file.thumbnailCaption).toBe('Image caption for _0001_File_For_Tests', 'Correctly filtered thumbnailCaption should be retrieved.');
+
+            expect(file.fileUri).toBe('file:///D:/Projects/BCMS/Code/MAIN/Tests/BetterCms.Api.Tests/uploads/file/8f46bc6b4fd74c10aba01bf1f7269b92/__Tapir.png', 'Correctly filtered fileUri should be retrieved.');
+            expect(file.isUploaded).toBe(true, 'Correctly filtered isUploaded should be retrieved.');
+            expect(file.isTemporary).toBe(false, 'Correctly filtered isTemporary should be retrieved.');
+            expect(file.isCanceled).toBe(false, 'Correctly filtered IsCanceled should be retrieved.');
             
             // Tags
             var tags = result.tags;
