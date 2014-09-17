@@ -49,7 +49,6 @@ namespace BetterCms.Module.Pages.Helpers.Extensions
                     var page = viewModel.Bag.PageData.PageProperties as PageProperties;
                     if (page != null)
                     {
-                        page.IsReadOnly = viewModel.IsReadOnly;
                         viewModel.Bag.PageData.PagePropertiesViewModel = new RenderPagePropertiesViewModel(page);
                     }
                 }

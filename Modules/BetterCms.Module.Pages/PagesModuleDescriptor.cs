@@ -331,7 +331,7 @@ namespace BetterCms.Module.Pages
                                 Order = 10,
                                 CssClass = page => page.Status != PageStatus.Published ? "bcms-sidemenu-select" : "bcms-sidemenu-select bcms-select-published",
                                 AccessRole = RootModuleConstants.UserRoles.PublishContent,
-                                ShouldBeRendered = page => ShouldBeRendered(page)
+                                ShouldBeRendered = page => !page.IsMasterPage && !IsReadOnly(page)
                         }, 
                     
                     new EditPagePropertiesButtonProjection(pagePropertiesJsModuleIncludeDescriptor, page => page.IsMasterPage ? "editMasterPageProperties" : "editPageProperties")
@@ -526,9 +526,9 @@ namespace BetterCms.Module.Pages
             PageHtmlRenderer.Register(new RenderingPageCategoryProperty());
         }
 
-        private bool ShouldBeRendered(IPage page)
+        private bool IsReadOnly(IPage page)
         {
-            return (page is PageProperties) ? !page.IsMasterPage && !((PageProperties)page).IsReadOnly : !page.IsMasterPage;
+            return (page is RenderPageViewModel) && ((RenderPageViewModel)page).IsReadOnly;
         }
     }
 }
