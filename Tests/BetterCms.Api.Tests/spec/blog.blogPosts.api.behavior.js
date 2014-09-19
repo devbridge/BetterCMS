@@ -407,7 +407,7 @@ describe('blog.blogPosts.api.behavior', function () {
                     { field: 'LanguageId', value: '2000fc5567104616a34fa38e0100f060' },
                     { field: 'LanguageGroupIdentifier', value: '2fc90bc7af3341eb84cec8d29baaf6a4' },
                     { field: 'LanguageCode', value: 'arn' },
-                    { field: 'ContentId', value: 'bd05f17eecd54bbb85b3a2f100b48f92' }
+                    { field: 'ContentId', value: 'a3867237aa3345619051a206012b0b86' }
                 ]
             }
         };

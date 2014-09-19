@@ -120,7 +120,10 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
                         IsArchived = blogPost.IsArchived,
                         LanguageId = blogPost.Language != null ? blogPost.Language.Id : (Guid?)null,
                         LanguageCode = blogPost.Language != null ? blogPost.Language.Code : null,
-                        LanguageGroupIdentifier = blogPost.LanguageGroupIdentifier
+                        LanguageGroupIdentifier = blogPost.LanguageGroupIdentifier,
+                        ContentId = blogPost.PageContents.Where(pc => !pc.Content.IsDeleted && pc.Content is BlogPostContent)
+                            .Select(pc => pc.Content.Id)
+                            .FirstOrDefault()
                     })
                     .ToDataListResponse(request);
 
@@ -133,11 +136,6 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
             if (listResponse.Items.Count > 0 && (request.Data.IncludeTags || request.Data.IncludeAccessRules))
             {
                 LoadTags(listResponse, request.Data.IncludeTags, request.Data.IncludeAccessRules);
-            }
-
-            if (listResponse.Items.Count > 0)
-            {
-                LoadContentIds(listResponse);
             }
 
             return new GetBlogPostsResponse
@@ -213,18 +211,6 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
                         .ToList();
                 });
             }
-        }
-
-        private void LoadContentIds(DataListResponse<BlogPostModel> response)
-        {
-            response.Items.ToList().ForEach(
-                page =>
-                {
-                    page.ContentId =
-                        repository.AsQueryable<Module.Root.Models.PageContent>(pc => pc.Page.Id == page.Id && !pc.Content.IsDeleted && pc.Content is BlogPostContent)
-                            .Select(pc => pc.Content.Id)
-                            .FirstOrDefault();
-                });
         }
 
         private class TagModel
