@@ -299,6 +299,9 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             }
         });
 
+        pageViewModel.currentParentContent = null;
+        masterPagesModel.removeParentContents();
+
         if (!leaveSortModeOpen) {
             content.refreshOverlays();
             isSortMode = false;
@@ -853,6 +856,14 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
                     this.contentEnd.hide();
                 }
             });
+
+            $.each(pageViewModel.regions, function () {
+                if (this.isInvisible) {
+                    return;
+                }
+
+                this.overlay.hide();
+            });
         }
     }
 
@@ -1162,6 +1173,12 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             setPathVisibility(1);
 
             return div;
+        };
+
+        self.removeParentContents = function() {
+            if (currentPage && $.isFunction(currentPage.click)) {
+                currentPage.click();
+            }
         };
 
         return self;
