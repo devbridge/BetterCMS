@@ -36,7 +36,8 @@ namespace BetterCms.Module.MediaManager.Command.History.RestoreMediaVersion
 
                 if (currentOriginal != null)
                 {
-                    var newOriginalImage = imageService.MakeAsOriginal(imageToRevert, currentOriginal);
+                    var archivedImage = imageService.MoveToHistory(currentOriginal);
+                    var newOriginalImage = imageService.MakeAsOriginal(imageToRevert, currentOriginal, archivedImage);
                     Events.MediaManagerEvents.Instance.OnMediaRestored(newOriginalImage);
                 }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
@@ -77,7 +78,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
 
                     if (file is MediaImage)
                     {
-                        UpdateMedia(request, folder, files, true);
+                        UpdateMedia(request, folder, files);
                     }
                     else
                     {
@@ -134,10 +135,16 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
 
                 UnitOfWork.Commit();
 
-                // Update pages content with new file URL
-                if (!request.ReuploadMediaId.HasDefaultValue())
+                if (request.ReuploadMediaId.HasDefaultValue())
                 {
-
+                    foreach (var file in files)
+                    {
+                        if (file is MediaImage)
+                        {
+                            file.PublicUrl += string.Format("?{0}", DateTime.Now.ToString(MediaManagerModuleDescriptor.HardLoadImageDateTimeFormat));
+                            ((MediaImage)file).PublicThumbnailUrl += string.Format("?{0}", DateTime.Now.ToString(MediaManagerModuleDescriptor.HardLoadImageDateTimeFormat));
+                        }
+                    }
                 }
 
                 response.Medias = files.Select(Convert).ToList();
@@ -152,7 +159,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
             return response;
         }
 
-        private void UpdateMedia(MultiFileUploadViewModel request, MediaFolder folder, List<MediaFile> files, bool isReUploading = false)
+        private void UpdateMedia(MultiFileUploadViewModel request, MediaFolder folder, List<MediaFile> files)
         {
             foreach (var fileId in request.UploadedFiles)
             {
@@ -166,12 +173,6 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
                     file.IsTemporary = false;
                     file.PublishedOn = DateTime.Now;
                     Repository.Save(file);
-
-                    if (isReUploading)
-                    {
-                        file.PublicUrl += string.Format("?{0}", DateTime.Now);
-                        ((MediaImage)file).PublicThumbnailUrl += string.Format("?{0}", DateTime.Now);
-                    }
 
                     files.Add(file);
                 }
