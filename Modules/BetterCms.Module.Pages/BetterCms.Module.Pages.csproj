@@ -165,6 +165,7 @@
     <Compile Include="Events\LayoutEvents.cs" />
     <Compile Include="Events\TagEvents.cs" />
     <Compile Include="Exceptions\DraftNotFoundException.cs" />
+    <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Helpers\RegionHelper.cs" />
     <Compile Include="Helpers\SitemapHelper.cs" />
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />

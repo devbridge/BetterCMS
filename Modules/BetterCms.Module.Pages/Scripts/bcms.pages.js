@@ -406,10 +406,15 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                         },
 
                         postSuccess: function (data) {
-                            if (bcms.trigger(bcms.events.pageCreated, { Data: data.Data, Callback: postSuccess }) <= 0) {
-                                if (postSuccess && $.isFunction(postSuccess)) {
-                                    postSuccess(data);
+                            if (data.Data.IsSitemapActionEnabled)
+                            {
+                                if (bcms.trigger(bcms.events.pageCreated, { Data: data.Data, Callback: postSuccess }) <= 0) {
+                                    if (postSuccess && $.isFunction(postSuccess)) {
+                                        postSuccess(data);
+                                    }
                                 }
+                            } else {
+                                postSuccess(data);
                             }
                         }
                     });
@@ -789,10 +794,14 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                                 var postSuccess = function (data) {
                                     redirect.RedirectWithAlert(json.Data.Url || json.Data.PageUrl);
                                 };
-                                if (bcms.trigger(bcms.events.pageCreated, { Data: json.Data, Callback: postSuccess }) <= 0) {
-                                    if (postSuccess && $.isFunction(postSuccess)) {
-                                        postSuccess(json.Data);
+                                if (json.Data.IsSitemapActionEnabled) {
+                                    if (bcms.trigger(bcms.events.pageCreated, { Data: json.Data, Callback: postSuccess }) <= 0) {
+                                        if (postSuccess && $.isFunction(postSuccess)) {
+                                            postSuccess(json.Data);
+                                        }
                                     }
+                                } else {
+                                    postSuccess(json.Data);
                                 }
                             } else {
                                 modal.showMessages(json);

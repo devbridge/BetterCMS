@@ -40,6 +40,14 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         public bool ShowWarningAboutNoCultures { get; set; }
 
         /// <summary>
+        /// Gets or sets the sitemap action enabled flag.
+        /// </summary>
+        /// <value>
+        /// The sitemap action enabled flag.
+        /// </value>
+        public bool IsSitemapActionEnabled { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>
