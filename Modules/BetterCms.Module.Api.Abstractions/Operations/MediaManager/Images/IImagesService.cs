@@ -5,6 +5,11 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
     public interface IImagesService
     {
         /// <summary>
+        /// Gets the upload image service.
+        /// </summary>
+        IUploadImageService Upload { get; }
+
+        /// <summary>
         /// Gets images list.
         /// </summary>
         /// <param name="request">The request.</param>

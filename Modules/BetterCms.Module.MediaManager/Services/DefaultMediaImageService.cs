@@ -170,7 +170,7 @@ namespace BetterCms.Module.MediaManager.Services
         /// <param name="fileLength">Length of the file.</param>
         /// <param name="fileStream">The file stream.</param>
         /// <returns>Image entity.</returns>
-        public MediaImage UploadImage(Guid rootFolderId, string fileName, long fileLength, Stream fileStream, Guid reuploadMediaId)
+        public MediaImage UploadImage(Guid rootFolderId, string fileName, long fileLength, Stream fileStream, Guid reuploadMediaId, MediaImage filledInImage = null)
         {
             MediaImage originalMedia;
             string folderName;
@@ -204,21 +204,33 @@ namespace BetterCms.Module.MediaManager.Services
             {
                 CreatePngThumbnail(fileStream, thumbnailImage, ThumbnailSize);
 
-                MediaImage image = new MediaImage();
-                if (!rootFolderId.HasDefaultValue())
+                MediaImage image;
+                if (filledInImage == null)
                 {
-                    image.Folder = repository.AsProxy<MediaFolder>(rootFolderId);
+                    image = new MediaImage();
+
+                    if (!rootFolderId.HasDefaultValue())
+                    {
+                        image.Folder = repository.AsProxy<MediaFolder>(rootFolderId);
+                    }
+
+                    image.Title = Path.GetFileName(fileName);
+                    image.Caption = null;
+                    image.Size = fileLength;
+                    image.IsTemporary = true;
+                }
+                else
+                {
+                    image = filledInImage;
+                    image.IsTemporary = false;
                 }
 
-                image.Title = Path.GetFileName(fileName);
-                image.Caption = null;
                 image.OriginalFileName = fileName;
                 image.OriginalFileExtension = Path.GetExtension(fileName);
                 image.Type = MediaType.Image;
 
                 image.Width = size.Width;
                 image.Height = size.Height;
-                image.Size = fileLength;
                 image.FileUri = mediaFileService.GetFileUri(MediaType.Image, folderName, versionedFileName);
                 image.PublicUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, versionedFileName);
 
@@ -241,7 +253,6 @@ namespace BetterCms.Module.MediaManager.Services
                 image.PublicThumbnailUrl = mediaFileService.GetPublicFileUrl(MediaType.Image, folderName, ThumbnailImageFilePrefix + Path.GetFileNameWithoutExtension(versionedFileName) + ".png");
 
                 image.ImageAlign = null;
-                image.IsTemporary = true;
                 image.IsUploaded = null;
                 image.IsThumbnailUploaded = null;
                 image.IsOriginalUploaded = null;

@@ -174,10 +174,12 @@
     <Compile Include="Operations\MediaManager\DefaultMediaManagerApiOperations.cs" />
     <Compile Include="Operations\MediaManager\Files\FilesService.cs" />
     <Compile Include="Operations\MediaManager\Files\File\FileService.cs" />
+    <Compile Include="Operations\MediaManager\Files\UploadFileService.cs" />
     <Compile Include="Operations\MediaManager\Folders\FoldersService.cs" />
     <Compile Include="Operations\MediaManager\Folders\Folder\FolderService.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\ImageService.cs" />
     <Compile Include="Operations\MediaManager\Images\ImagesService.cs" />
+    <Compile Include="Operations\MediaManager\Images\UploadImageService.cs" />
     <Compile Include="Operations\MediaManager\MediaTree\MediaTreeService.cs" />
     <Compile Include="Operations\Blog\BlogPosts\BlogPost\Content\BlogPostContentService.cs" />
     <Compile Include="Operations\Pages\Contents\Content\ContentService.cs" />

@@ -136,6 +136,7 @@
     <Compile Include="Operations\MediaManager\Files\File\PutFileRequest.cs" />
     <Compile Include="Operations\MediaManager\Files\File\PutFileResponse.cs" />
     <Compile Include="Operations\MediaManager\Files\File\SaveFileModel.cs" />
+    <Compile Include="Operations\MediaManager\Files\IUploadFileService.cs" />
     <Compile Include="Operations\MediaManager\Folders\Folder\DeleteFolderRequest.cs" />
     <Compile Include="Operations\MediaManager\Folders\Folder\DeleteFolderResponse.cs" />
     <Compile Include="Operations\MediaManager\Folders\Folder\FolderModel.cs" />
@@ -159,6 +160,13 @@
     <Compile Include="Operations\MediaManager\Images\Image\SaveImageModel.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\PutImageRequest.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\PutImageResponse.cs" />
+    <Compile Include="Operations\MediaManager\Images\Image\UploadFileModel.cs" />
+    <Compile Include="Operations\MediaManager\Images\Image\UploadFileRequest.cs" />
+    <Compile Include="Operations\MediaManager\Images\Image\UploadFileResponse.cs" />
+    <Compile Include="Operations\MediaManager\Images\Image\UploadImageModel.cs" />
+    <Compile Include="Operations\MediaManager\Images\Image\UploadImageRequest.cs" />
+    <Compile Include="Operations\MediaManager\Images\Image\UploadImageResponse.cs" />
+    <Compile Include="Operations\MediaManager\Images\IUploadImageService.cs" />
     <Compile Include="Operations\MediaManager\MediaType.cs" />
     <Compile Include="Operations\Pages\Contents\Content\Draft\DestroyContentDraftRequest.cs" />
     <Compile Include="Operations\Pages\Contents\Content\Draft\DestroyContentDraftResponse.cs" />
