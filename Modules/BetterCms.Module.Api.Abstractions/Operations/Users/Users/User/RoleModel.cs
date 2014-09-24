@@ -19,6 +19,14 @@ namespace BetterCms.Module.Api.Operations.Users.Users.User
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets the description of the role.
+        /// </summary>
+        /// <value>
+        /// The description of the role.
+        /// </value>
+        public string Description { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether role is systematic.
         /// </summary>
         /// <value>
