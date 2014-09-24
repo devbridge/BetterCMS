@@ -213,9 +213,11 @@
     <Compile Include="Registration\MediaUploadJsModuleIncludeDescriptor.cs" />
     <Compile Include="Services\DefaultMediaFileUrlResolver.cs" />
     <Compile Include="Services\DefaultMediaHistoryService.cs" />
+    <Compile Include="Services\DefaultMediaImageVersionPathService.cs" />
     <Compile Include="Services\DefaultMediaService.cs" />
     <Compile Include="Services\DefaultTagService.cs" />
     <Compile Include="Services\IMediaAudioService.cs" />
+    <Compile Include="Services\IMediaImageVersionPathService.cs" />
     <Compile Include="Services\IMediaService.cs" />
     <Compile Include="Services\IMediaFileUrlResolver.cs" />
     <Compile Include="Services\IMediaHistoryService.cs" />

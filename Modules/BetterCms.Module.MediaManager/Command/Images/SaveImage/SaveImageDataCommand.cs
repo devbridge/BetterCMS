@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Web.Helpers;
 
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Module.MediaManager.Helpers;
 using BetterCms.Module.MediaManager.Models;
-using BetterCms.Module.MediaManager.Models.Extensions;
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.Images;
 using BetterCms.Module.Root.Mvc;
@@ -53,26 +50,27 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
         {
             var mediaImage = Repository.First<MediaImage>(request.Id.ToGuidOrDefault());
 
-            UnitOfWork.BeginTransaction();
-            Repository.Save(mediaImage.CreateHistoryItem());
             mediaImage.PublishedOn = DateTime.Now;
-
             mediaImage.Caption = request.Caption;
             mediaImage.Title = request.Title;
             mediaImage.Description = request.Description;
             mediaImage.ImageAlign = request.ImageAlign;
-            mediaImage.Version = request.Version.ToIntOrDefault();
-
+            
             // Calling resize and after then crop
-            ResizeAndCropImage(mediaImage, request);
+            var archivedImage = MediaImageService.MoveToHistory(mediaImage);
+            var croppedFileStream = ResizeAndCropImage(mediaImage, request);
+            MediaImageService.SaveEditedImage(mediaImage, archivedImage, croppedFileStream);
 
-            Repository.Save(mediaImage);
+            UnitOfWork.BeginTransaction();
 
             // Save tags
             IList<Root.Models.Tag> newTags;
             TagService.SaveMediaTags(mediaImage, request.Tags, out newTags);
 
             UnitOfWork.Commit();
+
+            // Update thumbnail
+            MediaImageService.UpdateThumbnail(mediaImage, Size.Empty);
 
             // Notify.
             Events.MediaManagerEvents.Instance.OnMediaFileUpdated(mediaImage);
@@ -83,7 +81,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
         /// </summary>
         /// <param name="mediaImage">The image.</param>
         /// <param name="request">The request.</param>
-        private void ResizeAndCropImage(MediaImage mediaImage, ImageViewModel request)
+        private MemoryStream ResizeAndCropImage(MediaImage mediaImage, ImageViewModel request)
         {
             int? x1 = request.CropCoordX1;
             int? x2 = request.CropCoordX2;
@@ -101,6 +99,8 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
             var newHeight = request.ImageHeight;
             var resized = (newWidth != mediaImage.OriginalWidth || newHeight != mediaImage.OriginalHeight);
 
+            var memoryStream = new MemoryStream();
+
             var hasChanges = (mediaImage.Width != newWidth 
                 || mediaImage.Height != newHeight 
                 || x1 != mediaImage.CropCoordX1 
@@ -110,7 +110,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
 
             if (hasChanges)
             {
-                var downloadResponse = StorageService.DownloadObject(mediaImage.OriginalUri);
+                DownloadResponse downloadResponse = StorageService.DownloadObject(mediaImage.OriginalUri);
                 var dimensionsCalculator = new ImageDimensionsCalculator(newWidth, newHeight, mediaImage.OriginalWidth, mediaImage.OriginalHeight, x1, x2, y1, y2);
                 using (var image = Image.FromStream(downloadResponse.ResponseStream))
                 {
@@ -133,22 +133,8 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
                         destination = ImageHelper.Crop(destination, rec);
                     }
                     
-                    // Change image file names depending on file version
-                    var newVersion = mediaImage.Version + 1;
-                    mediaImage.FileUri = ApplyVersionToFileUri(mediaImage.FileUri, mediaImage.OriginalFileName, newVersion);
-                    mediaImage.PublicUrl = ApplyVersionToFileUrl(mediaImage.PublicUrl, mediaImage.OriginalFileName, newVersion);
-
-                    mediaImage.ThumbnailUri = ApplyVersionToFileUri(mediaImage.ThumbnailUri, mediaImage.OriginalFileName, newVersion);
-                    mediaImage.PublicThumbnailUrl = ApplyVersionToFileUrl(mediaImage.PublicThumbnailUrl, mediaImage.OriginalFileName, newVersion);
-
-                    // Upload image to storage
-                    var memoryStream = new MemoryStream();
                     destination.Save(memoryStream, codec, null);
                     mediaImage.Size = memoryStream.Length;
-                    StorageService.UploadObject(new UploadRequest { InputStream = memoryStream, Uri = mediaImage.FileUri, IgnoreAccessControl = true });
-
-                    // Update thumbnail
-                    MediaImageService.UpdateThumbnail(mediaImage, Size.Empty);
                 }
             }
 
@@ -159,6 +145,8 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
 
             mediaImage.Width = newWidth;
             mediaImage.Height = newHeight;
+
+            return memoryStream;
         }
 
         /// <summary>

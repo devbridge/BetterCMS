@@ -312,7 +312,7 @@ namespace BetterCms.Module.Pages
                                              Value = page.Status == PageStatus.Published
                                                                 ? "published"
                                                                 : "publish",
-                                             IsSelected = page.Status == PageStatus.Published                                             
+                                             IsSelected = page.Status == PageStatus.Published
                                          }, 
 
                                      page => new DropDownListProjectionItem
@@ -331,7 +331,7 @@ namespace BetterCms.Module.Pages
                                 Order = 10,
                                 CssClass = page => page.Status != PageStatus.Published ? "bcms-sidemenu-select" : "bcms-sidemenu-select bcms-select-published",
                                 AccessRole = RootModuleConstants.UserRoles.PublishContent,
-                                ShouldBeRendered = page => !page.IsMasterPage
+                                ShouldBeRendered = page => ShouldBeRendered(page)
                         }, 
                     
                     new EditPagePropertiesButtonProjection(pagePropertiesJsModuleIncludeDescriptor, page => page.IsMasterPage ? "editMasterPageProperties" : "editPageProperties")
@@ -395,6 +395,11 @@ namespace BetterCms.Module.Pages
                             AccessRole = RootModuleConstants.UserRoles.DeleteContent
                         }
                 };
+        }
+
+        private bool ShouldBeRendered(IPage page)
+        {
+            return (page is PageProperties) ? !page.IsMasterPage && !((PageProperties)page).IsReadOnly : !page.IsMasterPage;
         }
 
         /// <summary>
