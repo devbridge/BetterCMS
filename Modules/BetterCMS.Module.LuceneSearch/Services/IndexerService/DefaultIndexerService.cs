@@ -7,7 +7,10 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
 
+using BetterCms.Events;
+
 using BetterCMS.Module.LuceneSearch.Content.Resources;
+using BetterCMS.Module.LuceneSearch.Helpers;
 using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 
 using BetterCms;
@@ -224,6 +227,8 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             doc.Add(new Field(LuceneIndexDocumentKeys.Id, pageData.Id.ToString(), Field.Store.YES, Field.Index.ANALYZED));
             doc.Add(new Field(LuceneIndexDocumentKeys.IsPublished, pageData.IsPublished.ToString(), Field.Store.YES, Field.Index.ANALYZED));
 
+            doc = LuceneEvents.Instance.OnDocumentSaving(doc, pageData).Document;
+
             writer.UpdateDocument(path, doc, analyzer);
         }
 
@@ -280,20 +285,33 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
                 }
             }
 
+            Filter isPublishedFilter = null;
             if (!RetrieveUnpublishedPages())
             {
-                // Exclude unpublished pages
                 var isPublishedQuery = new TermQuery(new Term(LuceneIndexDocumentKeys.IsPublished, "true"));
-                Filter isPublishedFilter = new QueryWrapperFilter(isPublishedQuery);
-
-                searcher.Search(query, isPublishedFilter, collector);
+                isPublishedFilter = new QueryWrapperFilter(isPublishedQuery);
+            }
+            
+            if (LuceneSearchHelper.Search != null)
+            {
+                collector = LuceneSearchHelper.Search(query, isPublishedFilter, collector);
             }
             else
             {
-                // Search within all the pages
-                searcher.Search(query, collector);
+                query = LuceneEvents.Instance.OnSearchQueryExecuting(query, searchQuery).Query;
+                
+                if (isPublishedFilter != null)
+                {
+                    // Exclude unpublished pages
+                    searcher.Search(query, isPublishedFilter, collector);
+                }
+                else
+                {
+                    // Search within all the pages
+                    searcher.Search(query, collector);
+                }
             }
-            
+
             ScoreDoc[] hits = collector.TopDocs(skip, take).ScoreDocs;
             
             for (int i = 0; i < hits.Length; i++)
@@ -310,6 +328,9 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             }
 
             CheckAvailability(result);
+
+            // todo ????
+            LuceneEvents.Instance.OnSearchResultRetrieving(hits.ToList(), result);
 
             return new SearchResults
                        {
