@@ -79,5 +79,11 @@ namespace BetterCms.Module.MediaManager.Models
 
             return copy;
         }
+
+        public virtual bool IsEdited()
+        {
+            return CropCoordX1 != null && CropCoordX2 != null && CropCoordY1 != null && CropCoordY2 != null
+                || Height != OriginalHeight || Width != OriginalWidth;
+        }
     }
 }

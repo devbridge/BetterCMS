@@ -101,39 +101,47 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
             var model = repository
                 .AsQueryable<MediaFile>()
                 .Where(media => media.Id == request.FileId && media.Type == Module.MediaManager.Models.MediaType.File)
-                .Select(media => new FileModel
+                .Select(media => new
                     {
-                        Id = media.Id,
-                        Version = media.Version,
-                        CreatedBy = media.CreatedByUser,
-                        CreatedOn = media.CreatedOn,
-                        LastModifiedBy = media.ModifiedByUser,
-                        LastModifiedOn = media.ModifiedOn,
+                        Model = new FileModel
+                            {
+                                Id = media.Id,
+                                Version = media.Version,
+                                CreatedBy = media.CreatedByUser,
+                                CreatedOn = media.CreatedOn,
+                                LastModifiedBy = media.ModifiedByUser,
+                                LastModifiedOn = media.ModifiedOn,
 
-                        Title = media.Title,
-                        Description = media.Description,
-                        FileExtension = media.OriginalFileExtension,
-                        FileSize = media.Size,
-                        FileUrl = fileUrlResolver.EnsureFullPathUrl(media.PublicUrl),
-                        IsArchived = media.IsArchived,
-                        FolderId = media.Folder != null && !media.Folder.IsDeleted ? media.Folder.Id : (Guid?)null,
-                        FolderName = media.Folder != null && !media.Folder.IsDeleted ? media.Folder.Title : null,
-                        PublishedOn = media.PublishedOn,
-                        OriginalFileName = media.OriginalFileName,
-                        OriginalFileExtension = media.OriginalFileExtension,
-                        ThumbnailId = media.Image != null && !media.Image.IsDeleted ? media.Image.Id : (Guid?)null,
-                        ThumbnailCaption = media.Image != null && !media.Image.IsDeleted ? media.Image.Caption : null,
-                        ThumbnailUrl = media.Image != null && !media.Image.IsDeleted ? media.Image.PublicThumbnailUrl : null,
+                                Title = media.Title,
+                                Description = media.Description,
+                                FileExtension = media.OriginalFileExtension,
+                                FileSize = media.Size,
+                                IsArchived = media.IsArchived,
+                                FolderId = media.Folder != null && !media.Folder.IsDeleted ? media.Folder.Id : (Guid?)null,
+                                FolderName = media.Folder != null && !media.Folder.IsDeleted ? media.Folder.Title : null,
+                                PublishedOn = media.PublishedOn,
+                                OriginalFileName = media.OriginalFileName,
+                                OriginalFileExtension = media.OriginalFileExtension,
+                                ThumbnailId = media.Image != null && !media.Image.IsDeleted ? media.Image.Id : (Guid?)null,
+                                ThumbnailCaption = media.Image != null && !media.Image.IsDeleted ? media.Image.Caption : null,
+                                ThumbnailUrl = media.Image != null && !media.Image.IsDeleted ? media.Image.PublicThumbnailUrl : null,
+                                FileUrl = media.PublicUrl,
 
-                        FileUri = media.FileUri.ToString(),
-                        IsUploaded = media.IsUploaded,
-                        IsTemporary = media.IsTemporary,
-                        IsCanceled = media.IsCanceled,
+                                IsUploaded = media.IsUploaded,
+                                IsTemporary = media.IsTemporary,
+                                IsCanceled = media.IsCanceled
+                            },
+
+                            FileUri = media.FileUri,
+                            
                     })
                 .FirstOne();
 
-            model.FileUrl = fileService.GetDownloadFileUrl(Module.MediaManager.Models.MediaType.File, model.Id, model.FileUrl);
-            model.ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(model.ThumbnailUrl);
+            model.Model.FileUrl = fileService.GetDownloadFileUrl(Module.MediaManager.Models.MediaType.File, model.Model.Id, model.Model.FileUrl);
+            model.Model.ThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(model.Model.ThumbnailUrl);
+            model.Model.FileUrl = fileUrlResolver.EnsureFullPathUrl(model.Model.FileUrl);
+
+            model.Model.FileUri = model.FileUri.ToString();
 
             IEnumerable<TagModel> tagsFuture;
             if (request.Data.IncludeTags)
@@ -182,7 +190,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
 
             return new GetFileResponse
                    {
-                       Data = model,
+                       Data = model.Model,
                        Tags = tagsFuture != null ? tagsFuture.ToList() : null,
                        AccessRules = accessRulesFuture != null ? accessRulesFuture.ToList() : null
                    };

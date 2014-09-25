@@ -68,13 +68,18 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
     /**
     * Restores specified version from history.
     */
-    function restoreVersion(container, id) {
+    function restoreVersion(dialog, container, id, onContentRestore, includeChildRegions) {
         var submitRestoreIt = function (isConfirmed) {
-            var url = $.format(links.restoreContentVersionUrl, id, isConfirmed),
+            var url = $.format(links.restoreContentVersionUrl, id, isConfirmed, includeChildRegions),
                 onComplete = function (json) {
                     messages.refreshBox(container, json);
                     if (json.Success) {
-                        redirect.ReloadWithAlert();
+                        if ($.isFunction(onContentRestore)) {
+                            dialog.close();
+                            onContentRestore(json);
+                        } else {
+                            redirect.ReloadWithAlert();
+                        }
                     } else {
                         if (json.Data && json.Data.ConfirmationMessage) {
                             modal.confirm({
@@ -122,7 +127,7 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
     /**
     * Initializes EditSeo dialog events.
     */
-    history.initPageContentHistoryDialogEvents = function (dialog) {
+    history.initPageContentHistoryDialogEvents = function (dialog, opts) {
         dialog.maximizeHeight();
 
         var container = dialog.container.find(selectors.modalContent);
@@ -130,7 +135,7 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         container.find(selectors.gridRestoreLinks).on('click', function (event) {
             bcms.stopEventPropagation(event);
             
-            restoreVersion(container, $(this).data('id'));
+            restoreVersion(dialog, container, $(this).data('id'), opts.onContentRestore, opts.includeChildRegions);
         });
         
         container.find(selectors.gridCells).on('click', function () {
@@ -165,7 +170,12 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
     /**
     * Loads history preview dialog.
     */
-    history.openPageContentHistoryDialog = function (contentId, pageContentId) {
+    history.openPageContentHistoryDialog = function (contentId, pageContentId, opts) {
+        opts = $.extend({
+            onContentRestore: null,
+            includeChildRegions: false
+        }, opts);
+
         modal.open({
             title: globalization.contentHistoryDialogTitle,
             cancelTitle: globalization.closeButtonTitle,
@@ -174,7 +184,7 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 var url = $.format(links.loadContentHistoryDialogUrl, contentId, pageContentId);
                 dynamicContent.bindDialog(dialog, url, {
                     contentAvailable : function () {
-                        history.initPageContentHistoryDialogEvents(dialog);
+                        history.initPageContentHistoryDialogEvents(dialog, opts);
                     },
                         
                     beforePost: function () {
@@ -192,13 +202,13 @@ bettercms.define('bcms.pages.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
     /**
     * Destroys draft version of the content
     */
-    history.destroyDraftVersion = function(id, version, container, onSuccess) {
+    history.destroyDraftVersion = function(id, version, includeChildRegions, container, onSuccess) {
         modal.confirm({
             content: globalization.contentVersionDestroyDraftConfirmation,
             acceptTitle: globalization.destroyButtonTitle,
             onAccept: function() {
 
-                var url = $.format(links.destroyContentDraftVersionUrl, id, version),
+                var url = $.format(links.destroyContentDraftVersionUrl, id, version, includeChildRegions ? 1 : 0),
                     onComplete = function (json) {
                         container.hideLoading();
 

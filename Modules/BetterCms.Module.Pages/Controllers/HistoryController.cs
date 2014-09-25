@@ -13,6 +13,8 @@ using BetterCms.Module.Root.Mvc;
 
 using Microsoft.Web.Mvc;
 
+using NHibernate.Hql.Ast.ANTLR.Tree;
+
 namespace BetterCms.Module.Pages.Controllers
 {
     /// <summary>
@@ -70,15 +72,26 @@ namespace BetterCms.Module.Pages.Controllers
         /// Restores the page content version.
         /// </summary>
         /// <param name="id">The id.</param>
-        /// <returns>Json result.</returns>
+        /// <param name="isUserConfirmed">Determines, if user is confirmed the restoring of a content version.</param>
+        /// <param name="includeChildRegions">Determines, if child regions should be included to the results.</param>
+        /// <returns>
+        /// Json result.
+        /// </returns>
         [HttpPost]
         [BcmsAuthorize(RootModuleConstants.UserRoles.PublishContent, RootModuleConstants.UserRoles.Administration)]
-        public ActionResult RestorePageContentVersion(string id, string isUserConfirmed)
+        public ActionResult RestorePageContentVersion(string id, string isUserConfirmed, string includeChildRegions)
         {
             try
             {
-                var result = GetCommand<RestoreContentVersionCommand>().ExecuteCommand(new RestorePageContentViewModel() { PageContentId = id.ToGuidOrDefault(), IsUserConfirmed = isUserConfirmed.ToBoolOrDefault() });
-                return WireJson(result);
+                var request = new RestorePageContentViewModel
+                {
+                    PageContentId = id.ToGuidOrDefault(), 
+                    IsUserConfirmed = isUserConfirmed.ToBoolOrDefault(),
+                    IncludeChildRegions = includeChildRegions.ToBoolOrDefault()
+                };
+                var response = GetCommand<RestoreContentVersionCommand>().ExecuteCommand(request);
+
+                return WireJson(response != null, response);
             }
             catch (ConfirmationRequestException exc)
             {
@@ -91,17 +104,19 @@ namespace BetterCms.Module.Pages.Controllers
         /// </summary>
         /// <param name="id">The id.</param>
         /// <param name="version">The version.</param>
+        /// <param name="includeChildRegions">Determines, if child regions should be included to the results.</param>
         /// <returns>
         /// Json result.
         /// </returns>
         [HttpPost]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent, RootModuleConstants.UserRoles.Administration)]
-        public ActionResult DestroyContentDraft(string id, string version)
+        public ActionResult DestroyContentDraft(string id, string version, string includeChildRegions)
         {
             var request = new DestroyContentDraftCommandRequest
                               {
                                   Id = id.ToGuidOrDefault(),
-                                  Version = version.ToIntOrDefault()
+                                  Version = version.ToIntOrDefault(),
+                                  IncludeChildRegions = includeChildRegions.ToBoolOrDefault()
                               };
             var response = GetCommand<DestroyContentDraftCommand>().ExecuteCommand(request);
 

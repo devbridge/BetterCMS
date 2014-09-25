@@ -109,6 +109,8 @@ namespace BetterCms.Module.Pages.Controllers
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult EditHtmlContentWidget([ModelBinder(typeof(JSONDataBinder))] SaveWidgetCommandRequest<EditHtmlContentWidgetViewModel> request)
         {
+            ValidateModelExplicilty(request.Content);
+
             try
             {
                 if (ModelState.IsValid)
@@ -176,6 +178,8 @@ namespace BetterCms.Module.Pages.Controllers
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult EditServerControlWidget([ModelBinder(typeof(JSONDataBinder))] SaveWidgetCommandRequest<EditServerControlWidgetViewModel> request)
         {
+            ValidateModelExplicilty(request.Content);
+
             if (ModelState.IsValid)
             {
                 var response = GetCommand<SaveServerControlWidgetCommand>().ExecuteCommand(request);

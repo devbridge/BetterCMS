@@ -108,12 +108,18 @@ namespace BetterCms.Module.Blog.Controllers
         {
             try
             {
-                var response = GetCommand<SaveBlogPostCommand>().ExecuteCommand(request);
-                if (response != null)
+                ValidateModelExplicilty(request.Content);
+
+                SaveBlogPostCommandResponse response = null;
+                if (ModelState.IsValid)
                 {
-                    if (request.Content.DesirableStatus != ContentStatus.Preview && request.Content.Id.HasDefaultValue())
+                    response = GetCommand<SaveBlogPostCommand>().ExecuteCommand(request);
+                    if (response != null)
                     {
-                        Messages.AddSuccess(BlogGlobalization.CreatePost_CreatedSuccessfully_Message);
+                        if (request.Content.DesirableStatus != ContentStatus.Preview && request.Content.Id.HasDefaultValue())
+                        {
+                            Messages.AddSuccess(BlogGlobalization.CreatePost_CreatedSuccessfully_Message);
+                        }
                     }
                 }
 

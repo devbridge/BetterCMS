@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Module.Pages.ViewModels.Content;
 
 namespace BetterCms.Module.Blog.Commands.SaveBlogPost
 {
@@ -101,5 +103,13 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// The desirable status.
         /// </value>
         public ContentStatus DesirableStatus { get; set; }
+
+        /// <summary>
+        /// Gets or sets the regions.
+        /// </summary>
+        /// <value>
+        /// The regions.
+        /// </value>
+        public List<PageContentChildRegionViewModel> Regions { get; set; }
     }
 }

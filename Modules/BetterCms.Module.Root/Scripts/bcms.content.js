@@ -4,13 +4,15 @@ window.cms = {};
 /*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
+bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.redirect'], function ($, bcms, modal, redirect) {
     'use strict';
 
     var content = {},
 
         // Selectors used in the module to locate DOM elements:
         selectors = {
+            html: 'html',
+
             contentOverlay: '#bcms-content-overlay',
             contentDelete: '.bcms-content-delete',
             contentEdit: '.bcms-content-edit',
@@ -49,10 +51,12 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             masterPagesPathItem: 'bcms-layout-path-item',
             masterPagesPathChildContentItem: 'bcms-path-child-content',
             masterPagesPathChildContentActiveItem: 'bcms-path-child-content-active',
-            masterPagesPathPageItem: 'bcms-path-page'
+            masterPagesPathPageItem: 'bcms-path-page',
+            editingOnClass: 'bcms-on'
         },
         keys = {
             showMasterPagesPath: 'bcms.showMasterPagesPath',
+            editingOn: 'bcms.editingOn'
         },
         resizeTimer,
         currentContentDom,
@@ -62,7 +66,10 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
         globalization = {
             showMasterPagesPath: null,
             hideMasterPagesPath: null,
-            currentPage: null
+            currentPage: null,
+            saveSortChanges: null,
+            resetSortChanges: null,
+            saveSortChangesConfirmation: null
         },
         pageViewModel,
         opacityAnimationSpeed = 50,
@@ -199,7 +206,24 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
     */
     content.saveContentChanges = function (regionViewModels, onSuccess) {
         var models = [],
-            i, l, regionViewModel;
+            onAfterSave = function (pageContents) {
+                for (i = 0, l = regionViewModels.length; i < l; i++) {
+                    $.each(regionViewModels[i].contents, function () {
+                        for (j = 0; j < pageContents.length; j++) {
+                            if (pageContents[j].PageContentId == this.pageContentId) {
+                                this.pageContentVersion = pageContents[j].Version;
+                            }
+                        }
+                    });
+                }
+
+                if ($.isFunction(onSuccess)) {
+                    onSuccess(pageContents);
+                } else {
+                    redirect.ReloadWithAlert();
+                }
+            },
+            i, j, l, regionViewModel;
 
         for (i = 0, l = regionViewModels.length; i < l; i++) {
             regionViewModel = regionViewModels[i];
@@ -221,7 +245,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
 
         bcms.trigger(bcms.events.sortPageContent, {
             models: models,
-            onSuccess: onSuccess
+            onSuccess: onAfterSave
         });
     };
 
@@ -243,13 +267,12 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
     };
 
     /**
-    * Turns region content sorting mode OFF:
+    * Returns the list with regions, where contents order have changed
     */
-    content.turnSortModeOff = function (cancel, leaveSortModeOpen) {
-
+    content.getChangedRegions = function() {
         var changedRegions = [];
 
-        $.each(pageViewModel.regions, function () {
+        $.each(pageViewModel.regions, function() {
             if (this.isInvisible || !pageViewModel.isRegionVisible(this)) {
                 return;
             }
@@ -257,54 +280,121 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             var regionContents = [],
                 regionViewModel = this;
 
-            if (!leaveSortModeOpen) {
-                $(selectors.regionButtons, regionViewModel.overlay).show();
-                $(selectors.regionSortDoneButtons, regionViewModel.overlay).hide();
-                $(selectors.regionSortCancelButtons, regionViewModel.overlay).hide();
-                $(selectors.regionTreeButtons, regionViewModel.overlay).hide();
-
-                if (isSortMode) {
-                    regionViewModel.sortBlock.sortable('destroy');
-                }
-                regionViewModel.overlay.removeClass(classes.regionSortOverlay);
-            }
-
-            $(selectors.regionSortWrappers, regionViewModel.overlay).each(function () {
+            $(selectors.regionSortWrappers, regionViewModel.overlay).each(function() {
                 var viewModel = $(this).data('target');
                 regionContents.push(viewModel);
-
-                if (!leaveSortModeOpen) {
-                    $(this).remove();
-                }
             });
 
-            if (!cancel) {
-                if (content.hasContentsOrderChanged(regionViewModel.contents, regionContents)) {
-                    changedRegions.push(regionViewModel);
-                    regionViewModel.changedContents = regionContents;
-                }
-                if (!leaveSortModeOpen) {
-                    regionViewModel.setContents(regionContents);
-                }
-            }
-
-            if (!leaveSortModeOpen) {
-                $.each(regionContents, function () {
-                    if (this.isInvisible) {
-                        return;
-                    }
-
-                    this.overlay.show();
-                });
+            if (content.hasContentsOrderChanged(regionViewModel.contents, regionContents)) {
+                changedRegions.push(regionViewModel);
+                regionViewModel.changedContents = regionContents;
             }
         });
 
-        if (!leaveSortModeOpen) {
-            content.refreshOverlays();
-            isSortMode = false;
-        }
-
         return changedRegions;
+    };
+
+    /**
+    * Shows confirmation dialog about region contents save
+    */
+    content.showConfirmationAboutContentsSave = function (onSave, onReset) {
+        var doNotsaveButton,
+            dialog;
+
+        doNotsaveButton = new modal.button(globalization.resetSortChanges, null, 5, function () {
+            content.turnSortModeOff(true, false);
+            content.turnSortModeOn();
+
+            dialog.close();
+
+            if ($.isFunction(onReset)) {
+                onReset();
+            }
+        });
+
+        dialog = modal.confirm({
+            content: globalization.saveSortChangesConfirmation,
+            acceptTitle: globalization.saveSortChanges,
+            buttons: [doNotsaveButton],
+            onAccept: function() {
+                var changedRegions = content.getChangedRegions(),
+                    i;
+
+                for (i = 0; i < changedRegions.length; i++) {
+                    changedRegions[i].setContents(changedRegions[i].changedContents);
+                }
+
+                content.saveContentChanges(changedRegions, onSave);
+            }
+        });
+    };
+
+    /**
+    * Turns region content sorting mode OFF:
+    */
+    content.turnSortModeOff = function (cancel, confirmChanges, onAfterSave, onAfterTurnOff) {
+        var changedRegions = content.getChangedRegions(),
+            turnOffAction = function() {
+                $.each(pageViewModel.regions, function() {
+                    if (this.isInvisible || !pageViewModel.isRegionVisible(this)) {
+                        return;
+                    }
+
+                    var regionContents = [],
+                        regionViewModel = this;
+
+                    $(selectors.regionButtons, regionViewModel.overlay).show();
+                    $(selectors.regionSortDoneButtons, regionViewModel.overlay).hide();
+                    $(selectors.regionSortCancelButtons, regionViewModel.overlay).hide();
+                    $(selectors.regionTreeButtons, regionViewModel.overlay).hide();
+
+                    if (isSortMode) {
+                        regionViewModel.sortBlock.sortable('destroy');
+                    }
+                    regionViewModel.overlay.removeClass(classes.regionSortOverlay);
+
+                    $(selectors.regionSortWrappers, regionViewModel.overlay).each(function() {
+                        var viewModel = $(this).data('target');
+                        regionContents.push(viewModel);
+
+                        $(this).remove();
+                    });
+
+                    if (!cancel) {
+                        regionViewModel.setContents(regionContents);
+                    }
+
+                    $.each(regionContents, function() {
+                        if (this.isInvisible) {
+                            return;
+                        }
+
+                        this.overlay.show();
+                    });
+                });
+
+                pageViewModel.currentParentContent = null;
+                masterPagesModel.removeParentContents();
+
+                content.refreshOverlays();
+                isSortMode = false;
+
+                if ($.isFunction(onAfterTurnOff)) {
+                    onAfterTurnOff();
+                }
+            };
+
+        if (changedRegions.length > 0 && confirmChanges) {
+            content.showConfirmationAboutContentsSave(null, function () {
+                turnOffAction();
+            });
+        } else {
+            turnOffAction();
+
+            if (!cancel && changedRegions.length > 0) {
+                content.saveContentChanges(changedRegions, onAfterSave);
+            }
+        }
     };
 
     /**
@@ -497,22 +587,17 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             });
 
             $(selectors.regionSortButtons, self.overlay).on('click', function() {
-                content.turnSortModeOn(self);
+                content.turnSortModeOn();
             });
 
             $(selectors.regionTreeButtons, self.overlay).on('click', function() {
                 bcms.trigger(bcms.events.editContentsTree, {
-                    pageViewModel: pageViewModel,
-                    regionViewModel: self
+                    pageViewModel: pageViewModel
                 });
             });
 
             $(selectors.regionSortDoneButtons, self.overlay).on('click', function() {
-                var changedRegions = content.turnSortModeOff();
-
-                if (changedRegions.length > 0) {
-                    content.saveContentChanges(changedRegions);
-                }
+                content.turnSortModeOff(false, false);
             });
 
             $(selectors.regionSortCancelButtons, self.overlay).on('click', function() {
@@ -830,7 +915,11 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
     * Cancels sort mode after the 'editModeOff' event is triggered.
     */
     content.cancelSortMode = function () {
-        content.turnSortModeOff(true);
+        if (!isSortMode) {
+            return;
+        }
+
+        content.turnSortModeOff(true, false);
 
         bcms.logger.trace('Cancel Sort Mode');
     };
@@ -839,20 +928,37 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
     * Occurs when edit mode is turned off
     */
     function onEditModeOff() {
-        content.cancelSortMode();
+        var editOffAction = function () {
+            localStorage.removeItem(keys.editingOn);
+            $(selectors.html).removeClass(classes.editingOnClass);
 
-        if (pageViewModel != null) {
-            $.each(pageViewModel.contents, function () {
-                if (this.isInvisible) {
-                    return;
-                }
+            if (pageViewModel != null) {
+                $.each(pageViewModel.contents, function () {
+                    if (this.isInvisible) {
+                        return;
+                    }
 
-                this.overlay.hide();
+                    this.overlay.hide();
 
-                if (this.hideEndingDiv) {
-                    this.contentEnd.hide();
-                }
-            });
+                    if (this.hideEndingDiv) {
+                        this.contentEnd.hide();
+                    }
+                });
+
+                $.each(pageViewModel.regions, function () {
+                    if (this.isInvisible) {
+                        return;
+                    }
+
+                    this.overlay.hide();
+                });
+            }
+        };
+
+        if (isSortMode) {
+            content.turnSortModeOff(true, true, null, editOffAction);
+        } else {
+            editOffAction();
         }
     }
 
@@ -860,6 +966,9 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
     * Occurs when edit mode is turned on
     */
     function onEditModeOn() {
+        localStorage.setItem(keys.editingOn, '1');
+        $(selectors.html).addClass(classes.editingOnClass);
+
         if (pageViewModel != null) {
             $.each(pageViewModel.contents, function () {
                 if (this.isInvisible || !pageViewModel.isContentVisible(this)) {
@@ -1162,6 +1271,12 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms'], function ($, bcms) {
             setPathVisibility(1);
 
             return div;
+        };
+
+        self.removeParentContents = function() {
+            if (currentPage && $.isFunction(currentPage.click)) {
+                currentPage.click();
+            }
         };
 
         return self;

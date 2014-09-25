@@ -25,7 +25,10 @@ namespace BetterCms.Module.Root.Registration
                 {              
                     new JavaScriptModuleGlobalization(this, "showMasterPagesPath", () => RootGlobalization.MasterPagesPath_ShowPath_Button),        
                     new JavaScriptModuleGlobalization(this, "hideMasterPagesPath", () => RootGlobalization.MasterPagesPath_HidePath_Button),
-                    new JavaScriptModuleGlobalization(this, "currentPage", () => RootGlobalization.MasterPagesPath_CurrentPage_Title)
+                    new JavaScriptModuleGlobalization(this, "currentPage", () => RootGlobalization.MasterPagesPath_CurrentPage_Title),
+                    new JavaScriptModuleGlobalization(this, "saveSortChanges", () => RootGlobalization.ContentsSort_SaveSortChanges_Button),
+                    new JavaScriptModuleGlobalization(this, "resetSortChanges", () => RootGlobalization.ContentsSort_ResetSortChanges_Button),
+                    new JavaScriptModuleGlobalization(this, "saveSortChangesConfirmation", () => RootGlobalization.ContentsSort_SaveSortChanges_ConfirmationMessage),
                 };
         }
     }
