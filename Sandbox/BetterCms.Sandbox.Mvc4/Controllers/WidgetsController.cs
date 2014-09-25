@@ -12,5 +12,10 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
         {
             return View(model);
         }
+
+        public ActionResult TestPostAndGetWithInheritance(TestPostAndGetInheritedViewModel model)
+        {
+            return View(model);
+        }
     }
 }
