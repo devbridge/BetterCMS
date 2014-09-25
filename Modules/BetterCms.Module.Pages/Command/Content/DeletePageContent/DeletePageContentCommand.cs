@@ -61,15 +61,7 @@ namespace BetterCms.Module.Pages.Command.Content.DeletePageContent
             }
 
             // Check content's / draft content's version
-            var contentToCheck = deletingPageContent.Content;
-            if (contentToCheck.History != null)
-            {
-                var draft = contentToCheck.History.FirstOrDefault(c => c.Status == ContentStatus.Draft);
-                if (draft != null)
-                {
-                    contentToCheck = draft;
-                }
-            }
+            var contentToCheck = contentService.GetDraftOrPublishedContent(deletingPageContent.Content);
             if (request.ContentVersion != contentToCheck.Version)
             {
                 throw new ConcurrentDataException(contentToCheck);

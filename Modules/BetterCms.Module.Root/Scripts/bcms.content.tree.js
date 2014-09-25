@@ -44,8 +44,8 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         if (json.Data.Title || json.Data.WidgetName) {
             contentViewModel.title = json.Data.Title || json.Data.WidgetName;
         }
-        if (json.Data.ContentVersion || json.Data.OriginalVersion || json.Data.Version) {
-            contentViewModel.contentVersion = json.Data.ContentVersion || json.Data.OriginalVersion || json.Data.Version;
+        if (json.Data.ContentVersion || json.Data.Version || json.Data.OriginalVersion) {
+            contentViewModel.contentVersion = json.Data.ContentVersion || json.Data.Version || json.Data.OriginalVersion;
         }
         if (json.Data.ContentType) {
             contentViewModel.contentType = json.Data.ContentType;
