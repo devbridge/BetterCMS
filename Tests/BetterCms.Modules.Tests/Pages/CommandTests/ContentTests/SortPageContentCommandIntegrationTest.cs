@@ -73,7 +73,9 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
                     };
                 var response = command.Execute(request);
 
-                Assert.IsTrue(response);
+                Assert.IsNotNull(response);
+                Assert.IsNotNull(response.PageContents);
+                Assert.AreEqual(response.PageContents.Count, request.PageContents.Count);
 
                 session.Flush();
                 session.Clear();
