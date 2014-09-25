@@ -208,9 +208,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     info.close();
                     if (json.Success) {
                         if ($.isFunction(onSuccess)) {
-                            onSuccess();
-                        } else {
-                            redirect.ReloadWithAlert();
+                            onSuccess(json.Data.PageContents);
                         }
                     } else {
                         if (json.Messages && json.Messages.length > 0) {
