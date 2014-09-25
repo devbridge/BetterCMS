@@ -23,6 +23,7 @@ using BetterCms.Module.Pages.Command.Page.SavePageProperties;
 using BetterCms.Module.Pages.Command.Page.SavePagePublishStatus;
 using BetterCms.Module.Pages.Command.Page.SuggestPages;
 using BetterCms.Module.Pages.Content.Resources;
+using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.Page;
@@ -47,6 +48,14 @@ namespace BetterCms.Module.Pages.Controllers
         /// The page service.
         /// </summary>
         private readonly IPageService pageService;
+
+        /// <summary>
+        /// Gets or sets the CMS configuration.
+        /// </summary>
+        /// <value>
+        /// The CMS configuration.
+        /// </value>
+        public ICmsConfiguration CmsConfiguration { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PageController"/> class.
@@ -131,6 +140,8 @@ namespace BetterCms.Module.Pages.Controllers
                 {
                     response.PageUrl = HttpUtility.UrlDecode(Http.GetAbsolutePath(response.PageUrl));
                     Messages.AddSuccess(PagesGlobalization.SavePage_CreatedSuccessfully_Message);
+
+                    response.IsSitemapActionEnabled = ConfigurationHelper.IsSitemapActionEnabledAfterAddingNewPage(CmsConfiguration);
                     return Json(new WireJson { Success = true, Data = response });
                 }
             }
@@ -319,6 +330,7 @@ namespace BetterCms.Module.Pages.Controllers
             if (model != null)
             {
                 Messages.AddSuccess(string.Format(PagesGlobalization.ClonePage_Dialog_Success, model.PageUrl));
+                model.IsSitemapActionEnabled = ConfigurationHelper.IsSitemapActionEnabledAfterAddingTranslationForPage(CmsConfiguration);
                 return Json(new WireJson { Success = true, Data = model });
             }
 

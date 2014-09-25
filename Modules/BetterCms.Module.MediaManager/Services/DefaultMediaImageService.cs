@@ -174,7 +174,7 @@ namespace BetterCms.Module.MediaManager.Services
         /// <param name="fileLength">Length of the file.</param>
         /// <param name="fileStream">The file stream.</param>
         /// <returns>Image entity.</returns>
-        public MediaImage UploadImage(Guid rootFolderId, string fileName, long fileLength, Stream fileStream, Guid reuploadMediaId)
+        public MediaImage UploadImage(Guid rootFolderId, string fileName, long fileLength, Stream fileStream, Guid reuploadMediaId, MediaImage filledInImage = null)
         {
             var size = GetSize(fileStream);
 
@@ -231,7 +231,7 @@ namespace BetterCms.Module.MediaManager.Services
                     publicFileName = MediaImageHelper.CreatePublicFileName(fileName, Path.GetExtension(fileName));
 
                     // Create new original image and upload file stream to the storage
-                    publicImage = CreateImage( rootFolderId, fileName, Path.GetExtension(fileName), fileName, size, fileLength, thumbnailFileStream.Length);
+                    publicImage = CreateImage( rootFolderId, fileName, Path.GetExtension(fileName), fileName, size, fileLength, thumbnailFileStream.Length, filledInImage);
                     mediaImageVersionPathService.SetPathForNewOriginal(publicImage, folderName, publicFileName);
                 }
 
@@ -519,23 +519,37 @@ namespace BetterCms.Module.MediaManager.Services
             return fileStream;
         }
 
-        private MediaImage CreateImage(Guid? rootFolderId, string fileName, string extension, string imageTitle, Size size, long fileLength, long thumbnailImageLength)
+        private MediaImage CreateImage(Guid? rootFolderId, string fileName, string extension, string imageTitle, Size size, long fileLength, long thumbnailImageLength, MediaImage filledInImage = null)
         {
-            MediaImage image = new MediaImage();
-            if (rootFolderId != null && !((Guid)rootFolderId).HasDefaultValue())
+            MediaImage image;
+
+            if (filledInImage == null)
             {
-                image.Folder = repository.AsProxy<MediaFolder>((Guid)rootFolderId);
+                image = new MediaImage();
+
+                if (rootFolderId != null && !((Guid)rootFolderId).HasDefaultValue())
+                {
+                    image.Folder = repository.AsProxy<MediaFolder>((Guid)rootFolderId);
+                }
+
+                image.Title = Path.GetFileName(imageTitle);
+                image.Caption = null;
+                image.Size = fileLength;
+                image.IsTemporary = true;
+            }
+            else
+            {
+                image = filledInImage;
             }
 
-            image.Title = Path.GetFileName(imageTitle);
-            image.Caption = null;
+            
             image.OriginalFileName = fileName;
             image.OriginalFileExtension = extension;
             image.Type = MediaType.Image;
 
             image.Width = size.Width;
             image.Height = size.Height;
-            image.Size = fileLength;
+            
             
             image.CropCoordX1 = null;
             image.CropCoordY1 = null;
@@ -551,7 +565,7 @@ namespace BetterCms.Module.MediaManager.Services
             image.ThumbnailSize = thumbnailImageLength;
 
             image.ImageAlign = null;
-            image.IsTemporary = true;
+            
             image.IsUploaded = null;
             image.IsThumbnailUploaded = null;
             image.IsOriginalUploaded = null;

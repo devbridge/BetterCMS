@@ -37,12 +37,18 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
         /// <param name="repository">The repository.</param>
         /// <param name="fileUrlResolver">The file URL resolver.</param>
         /// <param name="imageService">The image service.</param>
-        public ImagesService(IRepository repository, IMediaFileUrlResolver fileUrlResolver, IImageService imageService)
+        public ImagesService(IRepository repository, IMediaFileUrlResolver fileUrlResolver, IImageService imageService, IUploadImageService uploadImageService)
         {
             this.repository = repository;
             this.fileUrlResolver = fileUrlResolver;
             this.imageService = imageService;
+            Upload = uploadImageService;
         }
+
+        /// <summary>
+        /// Gets the upload image service.
+        /// </summary>
+        public IUploadImageService Upload { get; private set; }
 
         /// <summary>
         /// Gets images list.

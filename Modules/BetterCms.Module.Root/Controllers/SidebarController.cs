@@ -2,14 +2,13 @@
 using System.Linq;
 using System.Web.Mvc;
 
-using BetterCms.Core.DataContracts;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Modules.Registration;
 using BetterCms.Core.Security;
-using BetterCms.Core.Services;
 using BetterCms.Module.Root.Models.Sidebar;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels;
+using BetterCms.Module.Root.ViewModels.Cms;
 
 using Common.Logging;
 
@@ -35,11 +34,6 @@ namespace BetterCms.Module.Root.Controllers
         private readonly IModulesRegistration modulesRegistration;
 
         /// <summary>
-        /// The page extensions.
-        /// </summary>
-        private readonly IPageAccessor pageAccessor;
-
-        /// <summary>
         /// The contract for BetterCMS application host.
         /// </summary>
         private readonly ICmsConfiguration configuration;
@@ -50,11 +44,10 @@ namespace BetterCms.Module.Root.Controllers
         /// <param name="modulesRegistration">The modules.</param>
         /// <param name="pageAccessor">The page extensions.</param>
         /// <param name="configuration">The CMS configuration.</param>
-        public SidebarController(IModulesRegistration modulesRegistration, IPageAccessor pageAccessor, ICmsConfiguration configuration)
+        public SidebarController(IModulesRegistration modulesRegistration, ICmsConfiguration configuration)
         {
             this.configuration = configuration;
             this.modulesRegistration = modulesRegistration;
-            this.pageAccessor = pageAccessor;
         }
 
         /// <summary>
@@ -62,29 +55,27 @@ namespace BetterCms.Module.Root.Controllers
         /// </summary>
         /// <returns>Partial view of side menu container.</returns>
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
-        public ActionResult Container()
+        public ActionResult Container(RenderPageViewModel renderPageViewModel)
         {
             SidebarContainerViewModel model = new SidebarContainerViewModel();
 
             try
             {
-                IPage page = pageAccessor.GetCurrentPage(HttpContext);
-               
                 model.HeaderProjections = new PageProjectionsViewModel
                     {
-                        Page = page,
+                        Page = renderPageViewModel,
                         Projections = modulesRegistration.GetSidebarHeaderProjections().OrderBy(f => f.Order)
                     };
 
                 model.SideProjections = new PageProjectionsViewModel
                     {
-                        Page = page,
+                        Page = renderPageViewModel,
                         Projections = modulesRegistration.GetSidebarSideProjections().OrderBy(f => f.Order)
                     };
 
                 model.BodyProjections = new PageProjectionsViewModel
                     {
-                        Page = page,
+                        Page = renderPageViewModel,
                         Projections = modulesRegistration.GetSidebarBodyProjections().OrderBy(f => f.Order)
                     };
 
