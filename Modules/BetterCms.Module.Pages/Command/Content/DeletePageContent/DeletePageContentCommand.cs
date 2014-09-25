@@ -55,13 +55,24 @@ namespace BetterCms.Module.Pages.Command.Content.DeletePageContent
                 .ToList()
                 .FirstOne();
 
-            if (request.ContentVersion != deletingPageContent.Content.Version)
-            {
-                throw new ConcurrentDataException(deletingPageContent.Content);
-            }
             if (request.PageContentVersion != deletingPageContent.Version)
             {
                 throw new ConcurrentDataException(deletingPageContent);
+            }
+
+            // Check content's / draft content's version
+            var contentToCheck = deletingPageContent.Content;
+            if (contentToCheck.History != null)
+            {
+                var draft = contentToCheck.History.FirstOrDefault(c => c.Status == ContentStatus.Draft);
+                if (draft != null)
+                {
+                    contentToCheck = draft;
+                }
+            }
+            if (request.ContentVersion != contentToCheck.Version)
+            {
+                throw new ConcurrentDataException(contentToCheck);
             }
 
             var htmlContainer = deletingPageContent.Content as IDynamicContentContainer;
