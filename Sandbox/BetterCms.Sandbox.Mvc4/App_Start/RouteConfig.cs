@@ -15,6 +15,11 @@ namespace BetterCms.Sandbox.Mvc4
 
             routes.MapRoute("SandboxController_TestRewrite", "sandbox/test-rewrite/{*url}", new { controller = "Sandbox", action = "TestRewrite" });
 
+            routes.MapRoute("WidgetController_TestPostAndGet", 
+                "cmswidget/testpostandget", 
+                new { controller = "Widgets", action = "TestPostAndGet" },
+                new[] { "BetterCms.Sandbox.Mvc4.Controllers" });
+
             routes.MapRoute("BlogController_TestIndex", 
                 "testblogindex", 
                 new { controller = "Blog",  action = "Index" },
