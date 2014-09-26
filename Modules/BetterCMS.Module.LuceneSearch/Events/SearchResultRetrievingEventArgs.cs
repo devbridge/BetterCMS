@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using BetterCms.Module.Search.Models;
 
-using Lucene.Net.Search;
+using Lucene.Net.Documents;
 
 // ReSharper disable CheckNamespace
 namespace BetterCms.Events
@@ -11,11 +11,11 @@ namespace BetterCms.Events
 {
     public class SearchResultRetrievingEventArgs: EventArgs
     {
-        public List<ScoreDoc> Documents { get; set; }
+        public List<Document> Documents { get; set; }
 
         public List<SearchResultItem> ResultItems { get; set; }
 
-        public SearchResultRetrievingEventArgs(List<ScoreDoc> documents, List<SearchResultItem> resultItems)
+        public SearchResultRetrievingEventArgs(List<Document> documents, List<SearchResultItem> resultItems)
         {
             Documents = documents;
             ResultItems = resultItems;

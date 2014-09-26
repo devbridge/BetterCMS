@@ -313,11 +313,12 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             }
 
             ScoreDoc[] hits = collector.TopDocs(skip, take).ScoreDocs;
-            
+            List<Document> hitDocuments = new List<Document>();
             for (int i = 0; i < hits.Length; i++)
             {
                 int docId = hits[i].Doc;
                 Document d = searcher.Doc(docId);
+                hitDocuments.Add(d);
                 result.Add(new SearchResultItem
                                {
                                    FormattedUrl = d.Get(LuceneIndexDocumentKeys.Path),
@@ -329,8 +330,7 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
             CheckAvailability(result);
 
-            // todo ????
-            LuceneEvents.Instance.OnSearchResultRetrieving(hits.ToList(), result);
+            LuceneEvents.Instance.OnSearchResultRetrieving(hitDocuments, result);
 
             return new SearchResults
                        {

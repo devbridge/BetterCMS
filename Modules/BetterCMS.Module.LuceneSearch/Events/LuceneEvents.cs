@@ -51,7 +51,7 @@ namespace BetterCms.Events
             return args;
         }
 
-        public SearchResultRetrievingEventArgs OnSearchResultRetrieving(List<ScoreDoc> documents, List<SearchResultItem> resultItems)
+        public SearchResultRetrievingEventArgs OnSearchResultRetrieving(List<Document> documents, List<SearchResultItem> resultItems)
         {
             var args = new SearchResultRetrievingEventArgs(documents, resultItems);
 

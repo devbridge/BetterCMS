@@ -58,13 +58,13 @@ namespace BetterCms.Test.Module.LuceneSearch.EventTests
         {
             searchResultRetrieving = false;
 
-            Events.LuceneEvents.Instance.OnSearchResultRetrieving(new List<ScoreDoc>(), new List<SearchResultItem>());
+            Events.LuceneEvents.Instance.OnSearchResultRetrieving(new List<Document>(), new List<SearchResultItem>());
             System.Threading.Thread.Sleep(10);
             Assert.IsFalse(searchResultRetrieving);
 
             Events.LuceneEvents.Instance.SearchResultRetrieving += delegate { searchResultRetrieving = true; };
 
-            Events.LuceneEvents.Instance.OnSearchResultRetrieving(new List<ScoreDoc>(), new List<SearchResultItem>());
+            Events.LuceneEvents.Instance.OnSearchResultRetrieving(new List<Document>(), new List<SearchResultItem>());
             System.Threading.Thread.Sleep(10);
             Assert.IsTrue(searchResultRetrieving);
         }
