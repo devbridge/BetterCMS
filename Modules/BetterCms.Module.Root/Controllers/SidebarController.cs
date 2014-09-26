@@ -42,7 +42,6 @@ namespace BetterCms.Module.Root.Controllers
         /// Initializes a new instance of the <see cref="SidebarController" /> class.
         /// </summary>
         /// <param name="modulesRegistration">The modules.</param>
-        /// <param name="pageAccessor">The page extensions.</param>
         /// <param name="configuration">The CMS configuration.</param>
         public SidebarController(IModulesRegistration modulesRegistration, ICmsConfiguration configuration)
         {
