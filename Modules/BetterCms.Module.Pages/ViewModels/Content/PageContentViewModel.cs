@@ -242,6 +242,14 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         public bool IsUserConfirmed { get; set; }
 
         /// <summary>
+        /// Determines, if child regions should be included to the results.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if child regions should be included to the results; otherwise, <c>false</c>.
+        /// </value>
+        public bool IncludeChildRegions { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

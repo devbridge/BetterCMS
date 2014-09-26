@@ -23,8 +23,8 @@ namespace BetterCms.Module.Pages.Registration
                 {
                     new JavaScriptModuleLinkTo<HistoryController>(this, "loadContentHistoryDialogUrl", controller => controller.ContentHistory("{0}")),
                     new JavaScriptModuleLinkTo<HistoryController>(this, "loadContentVersionPreviewUrl", controller => controller.ContentVersion("{0}")),
-                    new JavaScriptModuleLinkTo<HistoryController>(this, "restoreContentVersionUrl", controller => controller.RestorePageContentVersion("{0}", "{1}")),
-                    new JavaScriptModuleLinkTo<HistoryController>(this, "destroyContentDraftVersionUrl", controller => controller.DestroyContentDraft("{0}", "{1}"))
+                    new JavaScriptModuleLinkTo<HistoryController>(this, "restoreContentVersionUrl", controller => controller.RestorePageContentVersion("{0}", "{1}", "{3}")),
+                    new JavaScriptModuleLinkTo<HistoryController>(this, "destroyContentDraftVersionUrl", controller => controller.DestroyContentDraft("{0}", "{1}", "{2}"))
                 };
 
             Globalization = new IActionProjection[]

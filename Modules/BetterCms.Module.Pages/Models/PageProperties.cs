@@ -35,6 +35,8 @@ namespace BetterCms.Module.Pages.Models
         public virtual MediaImage FeaturedImage { get; set; }
         public virtual bool IsArchived { get; set; }
 
+        public virtual bool IsReadOnly { get; set; }
+
         public PageProperties()
         {
             UseCanonicalUrl = true;

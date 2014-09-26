@@ -59,7 +59,7 @@ namespace BetterCms.Test.Module.Api.Media.Files
                     Title = TestDataProvider.ProvideRandomString(MaxLength.Name),
                     Description = TestDataProvider.ProvideRandomString(MaxLength.Text),
                     FileSize = TestDataProvider.ProvideRandomNumber(0, 10000),
-                    FileUri = "C:/tmp.jpg",
+                    FileUri = "file:///C:/tmp.jpg",
                     FolderId = null,
                     IsArchived = true,
                     IsCanceled = TestDataProvider.ProvideRandomBooleanValue(),

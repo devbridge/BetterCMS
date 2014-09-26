@@ -12,6 +12,7 @@ using BetterCms.Module.Pages.Accessors;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Content;
 
 using BetterCms.Module.Root;
@@ -21,22 +22,26 @@ using BetterCms.Module.Root.Services;
 
 namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
 {
-    public class SavePageHtmlContentCommand : CommandBase, ICommand<SavePageHtmlContentCommandRequest, InsertContentToPageResultViewModel>
+    public class SavePageHtmlContentCommand : CommandBase, ICommand<SavePageHtmlContentCommandRequest, ChangedContentResultViewModel>
     {
         private readonly IContentService contentService;
         
         private readonly ICmsConfiguration configuration;
         
         private readonly IOptionService optionsService;
+        
+        private readonly IWidgetService widgetService;
 
-        public SavePageHtmlContentCommand(IContentService contentService, ICmsConfiguration configuration, IOptionService optionsService)
+        public SavePageHtmlContentCommand(IContentService contentService, ICmsConfiguration configuration, 
+            IOptionService optionsService, IWidgetService widgetService)
         {
             this.contentService = contentService;
             this.configuration = configuration;
             this.optionsService = optionsService;
+            this.widgetService = widgetService;
         }
 
-        public InsertContentToPageResultViewModel Execute(SavePageHtmlContentCommandRequest request)
+        public ChangedContentResultViewModel Execute(SavePageHtmlContentCommandRequest request)
         {
             var model = request.Content;
             if (model.DesirableStatus == ContentStatus.Published)
@@ -176,18 +181,29 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
                 }
             }
 
-            return new InsertContentToPageResultViewModel
+            var contentData = (pageContent.Content.History != null
+                    ? pageContent.Content.History.FirstOrDefault(c => c.Status == ContentStatus.Draft) ?? pageContent.Content
+                    : pageContent.Content);
+
+            var response = new ChangedContentResultViewModel
                 {
                     PageContentId = pageContent.Id,
                     ContentId = pageContent.Content.Id,
                     RegionId = pageContent.Region.Id,
                     PageId = pageContent.Page.Id,
                     DesirableStatus = request.Content.DesirableStatus,
-                    Title = pageContent.Content.Name,
+                    Title = contentData.Name,
                     ContentVersion = pageContent.Content.Version,
                     PageContentVersion = pageContent.Version,
                     ContentType = HtmlContentAccessor.ContentWrapperType
                 };
+
+            if (request.Content.IncludeChildRegions)
+            {
+                response.Regions = widgetService.GetWidgetChildRegionViewModels(contentData);
+            }
+
+            return response;
         }
     }
 }

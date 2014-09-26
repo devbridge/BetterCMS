@@ -81,7 +81,10 @@ namespace BetterCms.Module.MediaManager.Command.History.GetMediaVersion
 
                 if (image != null)
                 {
-                    response.AddUrl(MediaGlobalization.MediaHistory_Preview_Properties_PublicThumbnailUrl, fileUrlResolver.EnsureFullPathUrl(image.PublicThumbnailUrl));
+                    response.AddUrl(
+                        MediaGlobalization.MediaHistory_Preview_Properties_PublicThumbnailUrl,
+                        fileUrlResolver.EnsureFullPathUrl(
+                            image.PublicThumbnailUrl + string.Format("?{0}", DateTime.Now.ToString(MediaManagerModuleDescriptor.HardLoadImageDateTimeFormat))));
                 }
 
                 response.AddProperty(MediaGlobalization.MediaHistory_Preview_Properties_FileSize, file.SizeAsText());
@@ -106,12 +109,18 @@ namespace BetterCms.Module.MediaManager.Command.History.GetMediaVersion
 
                 if (media.Image != null)
                 {
-                    response.AddImage(media.Image.Caption, fileUrlResolver.EnsureFullPathUrl(media.Image.PublicUrl));
+                    response.AddImage(
+                        media.Image.Caption,
+                        fileUrlResolver.EnsureFullPathUrl(
+                            media.Image.PublicUrl + string.Format("?{0}", DateTime.Now.ToString(MediaManagerModuleDescriptor.HardLoadImageDateTimeFormat))));
                 }
 
                 if (image != null)
                 {
-                    response.AddImage(image.Caption, fileUrlResolver.EnsureFullPathUrl(image.PublicUrl));
+                    response.AddImage(
+                        image.Caption,
+                        fileUrlResolver.EnsureFullPathUrl(
+                            image.PublicUrl + string.Format("?{0}", DateTime.Now.ToString(MediaManagerModuleDescriptor.HardLoadImageDateTimeFormat))));
                 }
             }
 

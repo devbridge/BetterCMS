@@ -127,8 +127,6 @@ bettercms.define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security'], func
     * Turns edit mode ON.
     */
     sidemenu.turnEditModeOn = function () {
-        localStorage.setItem(keys.editingOn, '1');
-        $(selectors.html).addClass(classes.editingOnClass);
         bcms.trigger(bcms.events.editModeOn);
     };
 
@@ -136,8 +134,6 @@ bettercms.define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security'], func
     * Turns edit mode OFF.
     */
     sidemenu.turnEditModeOff = function () {
-        localStorage.removeItem(keys.editingOn);
-        $(selectors.html).removeClass(classes.editingOnClass);
         bcms.trigger(bcms.events.editModeOff);
     };
 

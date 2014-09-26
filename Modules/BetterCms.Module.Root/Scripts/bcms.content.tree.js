@@ -15,10 +15,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         links = {},
         globalization = {
             contentsTreeTitle: null,
-            closeTreeButtonTitle: null,
-            saveSortChanges: null,
-            resetSortChanges: null,
-            saveSortChangesConfirmation: null
+            closeTreeButtonTitle: null
         },
         classes = {
             sortableContentPlaceholder: "bcms-contents-tree-drop-area"
@@ -53,12 +50,46 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         if (json.Data.ContentType) {
             contentViewModel.contentType = json.Data.ContentType;
         }
-        if (json.Data.PageContentId) {
+        if (json.Data.PageContentId && !bcms.isEmptyGuid(json.Data.PageContentId)) {
             contentViewModel.pageContentId = json.Data.PageContentId;
         }
         if (json.Data.PageContentVersion) {
             contentViewModel.pageContentVersion = json.Data.PageContentVersion;
         }
+    }
+
+    function setContentModelValuesAndRegions(model, json) {
+        var regionModels,
+            regionTreeItemViewModel;
+
+        setContentModelValues(model.model, json);
+        model.title(model.model.title);
+
+        // Check if new regions where added
+        regionModels = createRegionViewModels(json.Data.Regions, model.parentRegion.model.id, model.model.pageContentId);
+        bcms
+            .asEnumerable(regionModels)
+            .where(function (x) {
+                return bcms.asEnumerable(model.items()).where(function (y) {
+                    return x.id === y.model.id;
+                }).toArray().length == 0;
+            })
+            .forEach(function (x) {
+                regionTreeItemViewModel = createRegionTreeItemViewModel(x, model, model.level() + 1);
+                model.items.push(regionTreeItemViewModel);
+            });
+
+        // Check if regions where removed
+        bcms
+            .asEnumerable(model.items())
+            .where(function (y) {
+                return bcms.asEnumerable(regionModels).where(function (x) {
+                    return x.id === y.model.id;
+                }).toArray().length == 0;
+            })
+            .forEach(function (x) {
+                model.items.remove(x);
+            });
     }
 
     function createRegionViewModels(json, parentRegionId, parentPageContentId) {
@@ -160,39 +191,9 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
 
         model.editItem = function () {
             contentModel.onEditContent(function (json) {
-                var regionModels,
-                    regionTreeItemViewModel;
-
                 treeViewModel.reloadPage = true;
 
-                setContentModelValues(model.model, json);
-                model.title(model.model.title);
-
-                // Check if new regions where added
-                regionModels = createRegionViewModels(json.Data.Regions, model.parentRegion.id, model.parentRegion.pageContentId);
-                bcms
-                    .asEnumerable(regionModels)
-                    .where(function (x) {
-                        return bcms.asEnumerable(model.items()).where(function (y) {
-                            return x.id === y.model.id;
-                        }).toArray().length == 0;
-                    })
-                    .forEach(function(x) {
-                        regionTreeItemViewModel = createRegionTreeItemViewModel(x, model, model.level() + 1);
-                        model.items.push(regionTreeItemViewModel);
-                    });
-
-                // Check if regions where removed
-                bcms
-                    .asEnumerable(model.items())
-                    .where(function (y) {
-                        return bcms.asEnumerable(regionModels).where(function (x) {
-                            return x.id === y.model.id;
-                        }).toArray().length == 0;
-                    })
-                    .forEach(function (x) {
-                        model.items.remove(x);
-                    });
+                setContentModelValuesAndRegions(model, json);
             }, true);
         };
 
@@ -205,7 +206,11 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         };
 
         model.history = function() {
-            contentModel.onContentHistory();
+            contentModel.onContentHistory(function (json) {
+                treeViewModel.reloadPage = true;
+
+                setContentModelValuesAndRegions(model, json);
+            });
         };
 
         model.configure = function() {
@@ -330,40 +335,20 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
     */
     function onEditContentsTree(data) {
         var pageModel = data.pageViewModel,
-            regionModel = data.regionViewModel,
-            changedRegions = contentModule.turnSortModeOff(false, true),
-            doNotsaveButton,
-            dialog,
-            i;
-
-        if (changedRegions.length > 0) {
-
-            doNotsaveButton = new modal.button(globalization.resetSortChanges, null, 5, function () {
-                contentModule.turnSortModeOff(true);
-                contentModule.turnSortModeOn(regionModel);
-                dialog.close();
-
+            changedRegions = contentModule.getChangedRegions(),
+            onSave = function() {
+                // Open pages structure modal after user accepts changes
+                openContentsTree(pageModel, function () {
+                    treeViewModel.reloadPage = true;
+                });
+            },
+            onReset = function() {
                 // Open pages structure modal after user resets changes
                 openContentsTree(pageModel);
-            });
+            };
 
-            dialog = modal.confirm({
-                content: globalization.saveSortChangesConfirmation,
-                acceptTitle: globalization.saveSortChanges,
-                buttons: [doNotsaveButton],
-                onAccept: function () {
-                    for (i = 0; i < changedRegions.length; i++) {
-                        changedRegions[i].setContents(changedRegions[i].changedContents);
-                    }
-
-                    contentModule.saveContentChanges(changedRegions, function () {
-                        // Open pages structure modal after user accepts changes
-                        openContentsTree(pageModel, function() {
-                            treeViewModel.reloadPage = true;
-                        });
-                    });
-                }
-            });
+        if (changedRegions.length > 0) {
+            contentModule.showConfirmationAboutContentsSave(onSave, onReset);
         } else {
             // Open pages structure modal, when there are no changes
             openContentsTree(pageModel);
@@ -391,7 +376,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                 if (treeViewModel.contentsSorted) {
                     var changedRegions = checkIfRegionContentsChanged([], treeViewModel.items());
                     if (changedRegions.length > 0) {
-                        contentModule.saveContentChanges(changedRegions);
+                        contentModule.saveContentChanges(changedRegions, null);
 
                         return;
                     }

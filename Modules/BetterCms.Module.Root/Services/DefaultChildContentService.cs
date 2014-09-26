@@ -94,9 +94,14 @@ namespace BetterCms.Module.Root.Services
             }
 
             // Remove childs, which not exists in source.
-            destination.ChildContents
+            var childsToDelete = destination.ChildContents
                 .Where(s => source.ChildContents.All(d => s.AssignmentIdentifier != d.AssignmentIdentifier))
-                .Distinct().ToList().ForEach(d => repository.Delete(d));
+                .Distinct().ToList();
+            childsToDelete.ForEach(d =>
+                {
+                    destination.ChildContents.Remove(d);
+                    repository.Delete(d);
+                });
         }
 
         private void CopyChildContents(IList<ChildContent> destinationChildren, IList<ChildContent> sourceChildren)
@@ -299,7 +304,9 @@ namespace BetterCms.Module.Root.Services
             var query = repository
                 .AsQueryOver(() => ccAlias)
                 .Where(Restrictions.In(NHibernate.Criterion.Projections.Property(() => ccAlias.Parent.Id), ids))
+                .And(() => !ccAlias.IsDeleted)
                 .Inner.JoinAlias(() => ccAlias.Child, () => childAlias)
+                .Where(() => !childAlias.IsDeleted)
                 .Left.JoinAlias(() => childAlias.ContentOptions, () => cOptionAlias)
                 .Left.JoinAlias(() => ccAlias.Options, () => ccOptionAlias)
 
@@ -316,6 +323,7 @@ namespace BetterCms.Module.Root.Services
                     .Left.JoinAlias(() => historyAlias.ChildContents, () => historyCcAlias)
                     .Left.JoinAlias(() => historyCcAlias.Child, () => historyChildAlias);
             }
+
 
             return query.List<ChildContent>();
         }

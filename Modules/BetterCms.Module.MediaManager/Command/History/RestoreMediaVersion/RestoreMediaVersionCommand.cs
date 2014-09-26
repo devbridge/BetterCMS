@@ -6,18 +6,45 @@ using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Models.Extensions;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.MediaManager.Command.History.RestoreMediaVersion
 {
     public class RestoreMediaVersionCommand : CommandBase, ICommand<Guid, bool>
     {
+        private readonly IMediaImageService imageService;
+
+        public RestoreMediaVersionCommand(IMediaImageService imageService)
+        {
+            this.imageService = imageService;
+        }
+
         public bool Execute(Guid mediaHistoryItemId)
         {
-            var versionToRevert = Repository
-                .AsQueryable<Media>(p => p.Id == mediaHistoryItemId)
+            var imageToRevert = Repository
+                .AsQueryable<MediaImage>(i => i.Id == mediaHistoryItemId)
                 .Fetch(f => f.Original)
-                .First();
+                .FirstOrDefault();
+
+            if (imageToRevert != null)
+            {
+                var currentOriginal = Repository
+                .AsQueryable<MediaImage>(i => imageToRevert.Original != null && i.Id == imageToRevert.Original.Id)
+                .Fetch(f => f.Original)
+                .FirstOrDefault();
+
+                if (currentOriginal != null)
+                {
+                    var archivedImage = imageService.MoveToHistory(currentOriginal);
+                    var newOriginalImage = imageService.MakeAsOriginal(imageToRevert, currentOriginal, archivedImage);
+                    Events.MediaManagerEvents.Instance.OnMediaRestored(newOriginalImage);
+                }
+
+                return true;
+            }
+            
+            var versionToRevert = Repository.AsQueryable<Media>(p => p.Id == mediaHistoryItemId).Fetch(f => f.Original).First();
 
             var original = versionToRevert.Original;
 

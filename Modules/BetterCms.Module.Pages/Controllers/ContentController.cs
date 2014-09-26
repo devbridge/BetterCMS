@@ -150,7 +150,13 @@ namespace BetterCms.Module.Pages.Controllers
         {
             try
             {
-                var result = GetCommand<SavePageHtmlContentCommand>().ExecuteCommand(request);
+                ValidateModelExplicilty(request.Content);
+
+                ChangedContentResultViewModel result = null;
+                if (ModelState.IsValid)
+                {
+                    result = GetCommand<SavePageHtmlContentCommand>().ExecuteCommand(request);
+                }
 
                 return WireJson(result != null, result);
             }
@@ -284,7 +290,8 @@ namespace BetterCms.Module.Pages.Controllers
         public ActionResult SortPageContent(PageContentSortViewModel model)
         {
             var response = GetCommand<SortPageContentCommand>().ExecuteCommand(model);
-            return Json(new WireJson { Success = response });
+
+            return WireJson(response != null, response);
         }
 
         /// <summary>

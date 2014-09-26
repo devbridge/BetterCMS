@@ -37,6 +37,11 @@ namespace BetterCms.Module.MediaManager
         internal const string MediaManagerSchemaName = "bcms_media";
 
         /// <summary>
+        /// DateTime format for hard loading media images
+        /// </summary>
+        internal const string HardLoadImageDateTimeFormat = "yyMMddHHmmss";
+
+        /// <summary>
         /// The media java script module descriptor.
         /// </summary>
         private readonly MediaManagerJsModuleIncludeDescriptor mediaJsModuleIncludeDescriptor;
@@ -186,7 +191,8 @@ namespace BetterCms.Module.MediaManager
             containerBuilder.RegisterType<DefaultMediaImageService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
             containerBuilder.RegisterType<DefaultMediaService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
             containerBuilder.RegisterType<DefaultMediaHistoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
-            containerBuilder.RegisterType<DefaultTagService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
+            containerBuilder.RegisterType<DefaultTagService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultMediaImageVersionPathService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 
         /// <summary>

@@ -19,5 +19,13 @@ namespace BetterCms.Module.Pages.Command.History.DestroyContentDraft
         /// The destroying draft version.
         /// </value>
         public int Version { get; set; }
+
+        /// <summary>
+        /// Determines, if child regions should be included to the results.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if child regions should be included to the results; otherwise, <c>false</c>.
+        /// </value>
+        public bool IncludeChildRegions { get; set; }
     }
 }

@@ -15,7 +15,7 @@ using NHibernate.Linq;
 
 namespace BetterCms.Module.Pages.Command.Content.SortPageContent
 {
-    public class SortPageContentCommand : CommandBase, ICommand<PageContentSortViewModel, bool>
+    public class SortPageContentCommand : CommandBase, ICommand<PageContentSortViewModel, SortPageContentCommandResponse>
     {
         /// <summary>
         /// The CMS configuration
@@ -36,7 +36,7 @@ namespace BetterCms.Module.Pages.Command.Content.SortPageContent
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        public bool Execute(PageContentSortViewModel request)
+        public SortPageContentCommandResponse Execute(PageContentSortViewModel request)
         {
             UnitOfWork.BeginTransaction();
 
@@ -44,6 +44,7 @@ namespace BetterCms.Module.Pages.Command.Content.SortPageContent
             var regionIds = request.PageContents.Select(r => r.RegionId).Distinct().ToArray();
             var parentPageContentIds = request.PageContents.Where(r => r.ParentPageContentId.HasValue).Select(r => r.ParentPageContentId.Value);
             var pageContentIds = request.PageContents.Select(r => r.PageContentId).Concat(parentPageContentIds).Distinct().ToArray();
+            var response = new SortPageContentCommandResponse { PageContents = request.PageContents };
 
             // Load all page contents from all regions from request
             var contentsFuture = Repository
@@ -126,7 +127,17 @@ namespace BetterCms.Module.Pages.Command.Content.SortPageContent
                 Events.PageEvents.Instance.OnPageContentSorted(pageContent);
             }
 
-            return true;
+            // Update versions
+            foreach (var pageContent in pageContents)
+            {
+                var responseContent = response.PageContents.FirstOrDefault(pc => pc.PageContentId == pageContent.Id);
+                if (responseContent != null)
+                {
+                    responseContent.Version = pageContent.Version;
+                }
+            }
+
+            return response;
         }
     }
 }
