@@ -15,6 +15,8 @@ namespace BetterCMS.Module.LuceneSearch.Workers
 {
     public class DefaultContentIndexingRobot : WorkerBase
     {
+        private IIndexerService indexerService;
+
         public DefaultContentIndexingRobot(TimeSpan timespan)
             : base(timespan)
         {
@@ -26,90 +28,128 @@ namespace BetterCMS.Module.LuceneSearch.Workers
 
             using (var lifetimeScope = ContextScopeProvider.CreateChildContainer())
             {
-                var indexerService = lifetimeScope.Resolve<IIndexerService>();
-                var scrapeService = lifetimeScope.Resolve<IScrapeService>();
-                var crawlerService = lifetimeScope.Resolve<IWebCrawlerService>();
-
-                string message;
-                if (!crawlerService.IsConfigured(out message))
+                using (indexerService = lifetimeScope.Resolve<IIndexerService>())
                 {
-                    Log.ErrorFormat("Cannot start Lucene web crawler: {0}", message);
-                    return;
-                }
+                    var scrapeService = lifetimeScope.Resolve<IScrapeService>();
+                    var crawlerService = lifetimeScope.Resolve<IWebCrawlerService>();
 
-                if (!indexerService.OpenWriter())
-                {
-                    Log.Error("Lucene Content Indexing Robot cannot continue. Failed to open writer.");
-                    return;
-                }
-
-                var links = scrapeService.GetLinksForProcessing();
-
-                var pages = new List<PageData>();
-                var idsToDelete = new List<Guid>();
-
-                foreach (var link in links)
-                {
-                    scrapeService.MarkStarted(link.Id);
-
-                    PageData response;
-
-                    try
+                    string message;
+                    if (!crawlerService.IsConfigured(out message))
                     {
-                        response = crawlerService.FetchPage(link.Path);
-                    }
-                    catch (Exception exc)
-                    {
-                        Log.Error("Unhandled excpetion occured while fetching a page.", exc);
-                        response = null;
+                        Log.ErrorFormat("Cannot start Lucene web crawler: {0}", message);
+                        return;
                     }
 
-                    if (response != null)
+                    if (!indexerService.OpenWriter())
                     {
-                        response.IsPublished = link.IsPublished;
-                        response.Id = link.Id;
+                        Log.Error("Lucene Content Indexing Robot cannot continue. Failed to open writer.");
+                        return;
+                    }
 
-                        switch (response.StatusCode)
+                    var links = scrapeService.GetLinksForProcessing();
+
+                    var pages = new List<PageData>();
+                    var idsToDelete = new List<Guid>();
+
+                    foreach (var link in links)
+                    {
+                        if (hostShuttingDown)
                         {
-                            case (HttpStatusCode.OK):
+                            return;
+                        }
+
+                        scrapeService.MarkStarted(link.Id);
+
+                        PageData response;
+
+                        try
+                        {
+                            response = crawlerService.FetchPage(link.Path);
+
+                            if (hostShuttingDown)
+                            {
+                                return;
+                            }
+                        }
+                        catch (Exception exc)
+                        {
+                            Log.Error("Unhandled excpetion occured while fetching a page.", exc);
+                            response = null;
+                        }
+
+                        if (response != null)
+                        {
+                            response.IsPublished = link.IsPublished;
+                            response.Id = link.Id;
+
+                            switch (response.StatusCode)
+                            {
+                                case (HttpStatusCode.OK):
                                 {
                                     pages.Add(response);
                                     break;
                                 }
 
-                            case HttpStatusCode.NotFound:
+                                case HttpStatusCode.NotFound:
                                 {
                                     idsToDelete.Add(link.Id);
                                     scrapeService.Delete(link.Id);
                                     break;
                                 }
 
-                            default:
+                                default:
                                 {
                                     scrapeService.MarkFailed(link.Id);
                                     break;
                                 }
+                            }
+                        }
+                        else
+                        {
+                            scrapeService.MarkFailed(link.Id);
                         }
                     }
-                    else
-                    {
-                        scrapeService.MarkFailed(link.Id);
-                    }
-                }
 
-                foreach (var page in pages)
-                {
-                    indexerService.AddHtmlDocument(page);
-                    scrapeService.MarkVisited(page.Id);
+                    if (hostShuttingDown)
+                    {
+                        return;
+                    }
+
+                    foreach (var page in pages)
+                    {
+                        indexerService.AddHtmlDocument(page);
+                        scrapeService.MarkVisited(page.Id);
+
+                        if (hostShuttingDown)
+                        {
+                            return;
+                        }
+                    }
+
+                    if (idsToDelete.Any())
+                    {
+                        indexerService.DeleteDocuments(idsToDelete.Distinct().ToArray());
+                    }
+
+                    indexerService.OptimizeIndex();
                 }
-                if (idsToDelete.Any())
-                {
-                    indexerService.DeleteDocuments(idsToDelete.Distinct().ToArray());
-                }
-                indexerService.CloseWriter();
             }
 
-            Log.Trace("Lucene Content Indexing Robot finished indexing.");
+            if (!hostShuttingDown)
+            {
+                Log.Trace("Lucene Content Indexing Robot finished indexing.");
+            }
+        }
+
+        protected override void OnStop()
+        {
+            if (indexerService != null)
+            {
+                indexerService.Dispose();
+            }
+            base.OnStop();
+
+            Log.Trace("Lucene Content Indexing Robot stopped by web server.");
         }
     }
 }
