@@ -74,6 +74,7 @@ namespace BetterCms.Module.MediaManager
 
             // Register images gallery custom option: album
             CustomOptionsProvider.RegisterProvider(MediaManagerFolderOptionProvider.Identifier, new MediaManagerFolderOptionProvider());
+            CustomOptionsProvider.RegisterProvider(MediaManagerImageUrlOptionProvider.Identifier, new MediaManagerImageUrlOptionProvider());
         }
 
         internal const string ModuleId = "73f53dfe-bf78-4e80-b231-9b275129b2cb";

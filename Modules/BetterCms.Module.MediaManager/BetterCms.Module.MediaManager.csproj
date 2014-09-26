@@ -184,6 +184,7 @@
     <Compile Include="Models\MediaFolder.cs" />
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaImage.cs" />
+    <Compile Include="Models\Migrations\Migration201409241658.cs" />
     <Compile Include="Models\Migrations\Migration201310211500.cs" />
     <Compile Include="Models\Migrations\Migration201310081420.cs" />
     <Compile Include="Models\Migrations\Migration201306071105.cs">
@@ -206,6 +207,7 @@
     <Compile Include="Models\Migrations\Migration201308272154.cs" />
     <Compile Include="Models\Migrations\MigrationVersionMetaData.cs" />
     <Compile Include="Models\MediaTag.cs" />
+    <Compile Include="Provider\MediaManagerImageUrlOptionProvider.cs" />
     <Compile Include="Provider\MediaManagerFolderOptionProvider.cs" />
     <Compile Include="Registration\FileEditorJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\MediaHistoryJsModuleIncludeDescriptor.cs" />
@@ -358,6 +360,9 @@
     <EmbeddedResource Include="Scripts\bcms.media.history.js" />
     <EmbeddedResource Include="Scripts\bcms.media.js" />
     <EmbeddedResource Include="Scripts\bcms.media.fileeditor.js" />
+    <Content Include="Scripts\bcms.media.min.js">
+      <DependentUpon>bcms.media.js</DependentUpon>
+    </Content>
     <Content Include="web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -366,6 +371,9 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\bcms.media.min.js.map">
+      <DependentUpon>bcms.media.min.js</DependentUpon>
+    </Content>
     <None Include="Views\Files\FileInsert.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>FileInsert.generated.cs</LastGenOutput>
