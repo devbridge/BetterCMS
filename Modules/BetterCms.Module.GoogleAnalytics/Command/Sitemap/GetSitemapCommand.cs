@@ -84,17 +84,33 @@ namespace BetterCms.Module.GoogleAnalytics.Command.Sitemap
                         {
                             if (pageTranslation.LanguageId != null && pageTranslation.PageUrl != node.Page.PageUrl)
                             {
-                                url.Links.Add(new GoogleSitemapLink
-                                {
-                                    LinkType = GoogleAnalyticsModuleHelper.GetLinkType(cmsConfiguration),
-                                    LanguageCode = languages.First(l => l.Id == pageTranslation.LanguageId).Code,
-                                    Url = httpContextAccessor.MapPublicPath(pageTranslation.PageUrl)
-                                });
+                                url.Links.Add(
+                                    new GoogleSitemapLink
+                                    {
+                                        LinkType = GoogleAnalyticsModuleHelper.GetLinkType(cmsConfiguration),
+                                        LanguageCode = languages.First(l => l.Id == pageTranslation.LanguageId).Code,
+                                        Url = httpContextAccessor.MapPublicPath(pageTranslation.PageUrl)
+                                    });
                             }
                         }
-                    }  
+                    }
 
                     urlset.Urls.Add(url);
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(node.Url))
+                    {
+                        var url = new GoogleSitemapUrl(GoogleAnalyticsModuleHelper.GetDateTimeFormat(cmsConfiguration))
+                        {
+                            Location = httpContextAccessor.MapPublicPath(node.Url),
+                            LastModifiedDateTime = node.ModifiedOn,
+                            ChangeFrequency = GoogleAnalyticsModuleHelper.GetChangeFrequency(cmsConfiguration),
+                            Priority = GoogleAnalyticsModuleHelper.GetPriority(cmsConfiguration)
+                        };
+
+                        urlset.Urls.Add(url);
+                    }
                 }
             }
 
