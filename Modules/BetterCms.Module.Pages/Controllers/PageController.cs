@@ -141,7 +141,6 @@ namespace BetterCms.Module.Pages.Controllers
                     response.PageUrl = HttpUtility.UrlDecode(Http.GetAbsolutePath(response.PageUrl));
                     Messages.AddSuccess(PagesGlobalization.SavePage_CreatedSuccessfully_Message);
 
-                    response.IsSitemapActionEnabled = ConfigurationHelper.IsSitemapActionEnabledAfterAddingNewPage(CmsConfiguration);
                     return Json(new WireJson { Success = true, Data = response });
                 }
             }
