@@ -578,5 +578,19 @@ namespace BetterCms.Module.Root.Services
                 childContentService.CollectChildContents(dynamicContainer.Html, content);
             }
         }
+
+        public TEntity GetDraftOrPublishedContent<TEntity>(TEntity content) where TEntity : Models.Content
+        {
+            if (content.History != null)
+            {
+                var draft = content.History.FirstOrDefault(c => c.Status == ContentStatus.Draft);
+                if (draft != null)
+                {
+                    return (TEntity)draft;
+                }
+            }
+
+            return content;
+        }
     }
 }

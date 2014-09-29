@@ -83,7 +83,7 @@ namespace BetterCms.Module.Pages.Command.Content.InsertContent
                     PageId = request.PageId,
                     DesirableStatus = content.Status,
                     Title = contentData.Name,
-                    ContentVersion = content.Version,
+                    ContentVersion = contentData.Version,
                     PageContentVersion = pageContent.Version,
                     ContentType = accessor != null ? accessor.GetContentWrapperType() : null
                 };

@@ -1,0 +1,13 @@
+﻿@model BetterCms.Sandbox.Mvc4.Models.TestPostAndGetInheritedViewModel
+           
+<h1>Model title value: @Model.Title</h1>
+
+<form method="POST">
+    <input type="text" name="Title" value="@Model.Title" />
+    <input type="submit" value="POST" />
+</form>
+
+<form method="GET">
+    <input type="text" name="Title" value="@Model.Title" />
+    <input type="submit" value="GET" />
+</form>

@@ -39,6 +39,7 @@ namespace BetterCms.Module.Root.Services
             Guid? previewPageContentId = null, 
             bool retrieveCorrectVersion = true)
         {
+            // Run logic of projection creation, because it's not created yet
             Models.Content contentToProject = null;
             var content = childContent == null ? pageContent.Content : (Models.Content)childContent.ChildContent;
 
@@ -95,7 +96,7 @@ namespace BetterCms.Module.Root.Services
             }
 
             // Create a collection of child regions (dynamic regions) contents projections
-            var childRegionContentProjections = CreateListOfChildRegionContentProjectionsRecursively(canManageContent, previewPageContentId, pageContent, allPageContents);
+            var childRegionContentProjections = CreateListOfChildRegionContentProjectionsRecursively(canManageContent, previewPageContentId, pageContent, allPageContents, contentToProject);
 
             // Create a collection of child contents (child widgets) projections
             var childContentsProjections = CreateListOfChildProjectionsRecursively(canManageContent, previewPageContentId, pageContent, allPageContents, contentToProject.ChildContents);
@@ -119,7 +120,9 @@ namespace BetterCms.Module.Root.Services
 
             var optionValues = childContent != null ? childContent.Options : pageContent.Options;
             var options = optionService.GetMergedOptionValues(contentToProject.ContentOptions, optionValues);
-            return pageContentProjectionFactory.Create(pageContent, contentToProject, options, childContentsProjections, childRegionContentProjections, createProjectionDelegate);
+            var contentProjection = pageContentProjectionFactory.Create(pageContent, contentToProject, options, childContentsProjections, childRegionContentProjections, createProjectionDelegate);
+
+            return contentProjection;
         }
 
         private IEnumerable<ChildContentProjection> CreateListOfChildProjectionsRecursively(
@@ -154,10 +157,14 @@ namespace BetterCms.Module.Root.Services
             bool canManageContent,
             Guid? previewPageContentId, 
             PageContent pageContent,
-            List<PageContent> allPageContents)
+            List<PageContent> allPageContents,
+            Models.Content contentToProject)
         {
             var childRegionContentProjections = new List<PageContentProjection>();
-            var childRegionPageContents = allPageContents.Where(apc => apc.Parent != null && apc.Parent.Id == pageContent.Id);
+            var childRegionPageContents = allPageContents.Where(apc => apc.Parent != null 
+                && apc.Parent.Id == pageContent.Id
+                && contentToProject.ContentRegions != null
+                && contentToProject.ContentRegions.Any(cr => cr.Region == apc.Region));
             foreach (var childPageContent in childRegionPageContents)
             {
                 var childRegionContentProjection = CreatePageContentProjection(canManageContent, childPageContent, allPageContents, null, previewPageContentId);

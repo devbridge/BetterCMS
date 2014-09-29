@@ -55,13 +55,16 @@ namespace BetterCms.Module.Pages.Command.Content.DeletePageContent
                 .ToList()
                 .FirstOne();
 
-            if (request.ContentVersion != deletingPageContent.Content.Version)
-            {
-                throw new ConcurrentDataException(deletingPageContent.Content);
-            }
             if (request.PageContentVersion != deletingPageContent.Version)
             {
                 throw new ConcurrentDataException(deletingPageContent);
+            }
+
+            // Check content's / draft content's version
+            var contentToCheck = contentService.GetDraftOrPublishedContent(deletingPageContent.Content);
+            if (request.ContentVersion != contentToCheck.Version)
+            {
+                throw new ConcurrentDataException(contentToCheck);
             }
 
             var htmlContainer = deletingPageContent.Content as IDynamicContentContainer;

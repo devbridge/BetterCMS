@@ -1,0 +1,5 @@
+﻿@model BetterCms.Module.Root.ViewModels.Cms.RenderWidgetViewModel
+
+@{
+    Html.RenderAction("TestPostAndGet", "Widgets", new { Area = "", WidgetModel = Model });
+}

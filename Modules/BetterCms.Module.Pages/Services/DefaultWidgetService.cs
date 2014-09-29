@@ -475,9 +475,10 @@ namespace BetterCms.Module.Pages.Services
             {
                 foreach (var childContent in childContents)
                 {
-                    if (childContent.Child.ContentRegions != null)
+                    var contentToAdd = contentService.GetDraftOrPublishedContent(childContent.Child);
+                    if (contentToAdd.ContentRegions != null)
                     {
-                        foreach (var contentRegion in childContent.Child.ContentRegions.Where(cr => !cr.IsDeleted).Distinct())
+                        foreach (var contentRegion in contentToAdd.ContentRegions.Where(cr => !cr.IsDeleted).Distinct())
                         {
                             models.Add(new PageContentChildRegionViewModel(contentRegion));
                         }
