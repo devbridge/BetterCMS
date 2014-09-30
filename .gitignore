@@ -88,3 +88,8 @@ logs
 
 /Modules/BetterCms.Module.OpenGraphIntegration/Web.Debug.config
 /Modules/BetterCms.Module.OpenGraphIntegration/Web.Release.config
+
+#osx system files
+.DS_Store
+._.DS_Store
+._.*
