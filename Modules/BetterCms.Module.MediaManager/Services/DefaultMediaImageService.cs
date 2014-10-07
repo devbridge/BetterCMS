@@ -173,11 +173,12 @@ namespace BetterCms.Module.MediaManager.Services
         /// <param name="fileName">Name of the file.</param>
         /// <param name="fileLength">Length of the file.</param>
         /// <param name="fileStream">The file stream.</param>
+        /// <param name="reuploadMediaId"></param>
+        /// <param name="filledInImage"></param>
+        /// <param name="overrideUrl"></param>
         /// <returns>Image entity.</returns>
-        public MediaImage UploadImage(Guid rootFolderId, string fileName, long fileLength, Stream fileStream, Guid reuploadMediaId, MediaImage filledInImage = null)
+        public MediaImage UploadImage(Guid rootFolderId, string fileName, long fileLength, Stream fileStream, Guid reuploadMediaId, MediaImage filledInImage = null, bool overrideUrl = true)
         {
-            var size = GetSize(fileStream);
-
             using (var thumbnailFileStream = new MemoryStream())
             {
                 MediaImage publicImage;
@@ -185,6 +186,8 @@ namespace BetterCms.Module.MediaManager.Services
                 string publicFileName;
 
                 fileStream = RotateImage(fileStream);
+                var size = GetSize(fileStream);
+
                 CreatePngThumbnail(fileStream, thumbnailFileStream, ThumbnailSize);
                 
                 if (!reuploadMediaId.HasDefaultValue())
@@ -192,7 +195,9 @@ namespace BetterCms.Module.MediaManager.Services
                     // Re-uploading image: Get original image, folder name, file extension, file name
                     var originalImage = repository.First<MediaImage>(image => image.Id == reuploadMediaId);
                     folderName = Path.GetFileName(Path.GetDirectoryName(originalImage.FileUri.OriginalString));
-                    publicFileName = MediaImageHelper.CreatePublicFileName(originalImage.OriginalFileName, originalImage.OriginalFileExtension);
+                    publicFileName = overrideUrl
+                        ? MediaImageHelper.CreatePublicFileName(originalImage.OriginalFileName, originalImage.OriginalFileExtension)
+                        : MediaImageHelper.CreateNotOverridedFileName(originalImage.OriginalFileName, originalImage.OriginalFileExtension, GetVersion(originalImage));
 
                     // Get original file stream
                     using (var originalFileStream = DownloadFileStream(originalImage.PublicUrl))
@@ -326,11 +331,14 @@ namespace BetterCms.Module.MediaManager.Services
         /// <param name="image">The new original image.</param>
         /// <param name="originalImage">The current original image.</param>
         /// <param name="archivedImage">The archived image.</param>
+        /// <param name="overrideUrl">To override public Url ot not.</param>
         /// <returns>The new original image.</returns>
-        public MediaImage MakeAsOriginal(MediaImage image, MediaImage originalImage, MediaImage archivedImage)
+        public MediaImage MakeAsOriginal(MediaImage image, MediaImage originalImage, MediaImage archivedImage, bool overrideUrl = true)
         {
             var folderName = Path.GetFileName(Path.GetDirectoryName(originalImage.FileUri.OriginalString));
-            var publicFileName = MediaImageHelper.CreatePublicFileName(originalImage.OriginalFileName, originalImage.OriginalFileExtension);
+            var publicFileName = overrideUrl
+                ? MediaImageHelper.CreatePublicFileName(originalImage.OriginalFileName, originalImage.OriginalFileExtension)
+                : MediaImageHelper.CreateNotOverridedFileName(originalImage.OriginalFileName, originalImage.OriginalFileExtension, GetVersion(originalImage));
 
             using (var fileStream = DownloadFileStream(image.PublicUrl))
             {
@@ -370,10 +378,13 @@ namespace BetterCms.Module.MediaManager.Services
         /// <param name="image">The edited image.</param>
         /// <param name="archivedImage">The archived image.</param>
         /// <param name="croppedImageFileStream">The stream with edited image.</param>
-        public void SaveEditedImage(MediaImage image, MediaImage archivedImage, MemoryStream croppedImageFileStream)
+        /// <param name="overrideUrl">To override public url or not.</param>
+        public void SaveEditedImage(MediaImage image, MediaImage archivedImage, MemoryStream croppedImageFileStream, bool overrideUrl = true)
         {
             var folderName = Path.GetFileName(Path.GetDirectoryName(image.FileUri.OriginalString));
-            var publicFileName = MediaImageHelper.CreatePublicFileName(image.OriginalFileName, image.OriginalFileExtension);
+            var publicFileName = overrideUrl
+                ? MediaImageHelper.CreatePublicFileName(image.OriginalFileName, image.OriginalFileExtension)
+                : MediaImageHelper.CreateNotOverridedFileName(image.OriginalFileName, image.OriginalFileExtension, GetVersion(image));
 
             using (var fileStream = croppedImageFileStream)
             {
@@ -478,6 +489,7 @@ namespace BetterCms.Module.MediaManager.Services
             {
                 int rotationValue = originalImage.GetPropertyItem(0x0112).Value[0];
                 var wasRotated = true;
+
                 switch (rotationValue)
                 {
                     case 1: // landscape, do nothing

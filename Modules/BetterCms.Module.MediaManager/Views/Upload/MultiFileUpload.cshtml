@@ -1,5 +1,6 @@
 ﻿@using BetterCms.Module.MediaManager.Content.Resources
 @using BetterCms.Module.MediaManager.Controllers
+@using BetterCms.Module.MediaManager.Models
 @using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc
@@ -40,6 +41,13 @@
                     }
                     else
                     {
+                        if (Model.RootFolderType == MediaType.Image)
+                        {
+                            <select id="bcms-media-reupload-override" class="bcms-global-select" name="OverrideOption">
+                                <option value="true">@MediaGlobalization.ImageUpload_SaveWithOverride_Title</option>
+                                <option value="false">@MediaGlobalization.ImageUpload_SaveAsNewVersion_Title</option>
+                            </select>
+                        }
                         <div class="bcms-dropzone-infotext">@MediaGlobalization.MultiFileUpload_DragDropBox_Reupload</div>
                     }
                     <div class="bcms-btn-upload-files">

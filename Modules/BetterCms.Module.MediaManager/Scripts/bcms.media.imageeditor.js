@@ -9,6 +9,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
             selectors = {
                 imageToEdit: ".bcms-croped-block img",
                 imageVersionField: "#image-version-field",
+                imageOverrideField: "#image-override-field",
                 imageCaption: "#Caption",
                 imageFileName: "#image-file-name",
                 imageFileSize: "#image-file-size",
@@ -21,7 +22,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
 
                 imageSizeEditBoxWidth: "#image-width",
                 imageSizeEditBoxHeight: "#image-height",
-                
+
                 imageTitleEditInput: "#bcms-image-title-editor",
 
                 imageToCrop: ".bcms-croped-block img",
@@ -39,7 +40,9 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 imageEditorUpdateFailureMessageTitle: null,
                 imageEditorUpdateFailureMessageMessage: null,
                 closeButtonTitle: null,
-                imageEditorHasChangesMessage: null
+                imageEditorHasChangesMessage: null,
+                saveWithOverrideButtonTitle: null,
+                saveAsNewVersionButtonTitle: null
             },
             constants = {
                 maxHeightToFit: 557,
@@ -72,8 +75,17 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
         * Show image editor dialog.
         */
         imageEditor.showImageEditorDialog = function (imageId, callback) {
-            modal.open({
+
+            var saveAsNewVersion = new modal.button(globalization.saveAsNewVersionButtonTitle, null, 5, function () {
+                    $(selectors.imageOverrideField).val(false);
+                    modelDialog.acceptClick();
+                }),
+                modelDialog;
+
+            modelDialog = modal.open({
                 title: globalization.imageEditorDialogTitle,
+                acceptTitle: globalization.saveWithOverrideButtonTitle,
+                buttons: [saveAsNewVersion],
                 onLoad: function (dialog) {
                     var url = $.format(links.imageEditorDialogUrl, imageId);
                     dynamicContent.bindDialog(dialog, url, {
@@ -153,7 +165,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
         var EditorBaseViewModel = (function () {
             function EditorBaseViewModel(dialog, boxSelector) {
                 var self = this;
-
+                
                 self.dialog = dialog;
                 self.boxSelector = boxSelector;
                 self.isOpened = ko.observable(false);
@@ -517,7 +529,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
             self.titleEditorViewModel = titleEditorViewModel;
             self.imageEditorViewModel = imageEditorViewModel;
             self.tags = tagsViewModel;
-
+            
             // Track form changes
             self.imageAlign = ko.observable(data.ImageAlign);
             self.modelChanged = false;

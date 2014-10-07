@@ -43,7 +43,14 @@ namespace BetterCms.Module.MediaManager.Command.Upload.Upload
 
             if (request.Type == MediaType.Image)
             {
-                var media = MediaImageService.UploadImage(request.RootFolderId, fileName, request.FileLength, request.FileStream, request.ReuploadMediaId);
+                var media = MediaImageService.UploadImage(
+                    request.RootFolderId,
+                    fileName,
+                    request.FileLength,
+                    request.FileStream,
+                    request.ReuploadMediaId,
+                    null,
+                    request.ShouldOverride);
                 
                 Events.MediaManagerEvents.Instance.OnMediaFileUploaded(media);
 

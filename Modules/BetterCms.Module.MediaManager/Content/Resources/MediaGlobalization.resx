@@ -630,4 +630,22 @@
   <data name="FileEditor_Dialog_Title_Title" xml:space="preserve">
     <value>File title</value>
   </data>
+  <data name="MediaHistory_RestoreAsNewVersion_AcceptButtonTitle" xml:space="preserve">
+    <value>Restore as new</value>
+  </data>
+  <data name="MediaHistory_RestoreWithOverride_AcceptButtonTitle" xml:space="preserve">
+    <value>Restore with override</value>
+  </data>
+  <data name="ImageEditor_SaveWithOverride_Title" xml:space="preserve">
+    <value>Save with override</value>
+  </data>
+  <data name="ImageEditor_SaveAsNewVersion_Title" xml:space="preserve">
+    <value>Save new version</value>
+  </data>
+  <data name="ImageUpload_SaveWithOverride_Title" xml:space="preserve">
+    <value>Upload with override</value>
+  </data>
+  <data name="ImageUpload_SaveAsNewVersion_Title" xml:space="preserve">
+    <value>Upload as new version</value>
+  </data>
 </root>

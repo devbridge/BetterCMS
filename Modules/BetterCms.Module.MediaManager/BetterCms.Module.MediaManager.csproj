@@ -116,6 +116,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Command\History\RestoreMediaVersion\RestoreMediaVersionRequest.cs" />
     <Compile Include="Events\MediaManagerEvents.cs" />
     <Compile Include="Command\Audios\GetAudios\GetAudiosCommand.cs" />
     <Compile Include="Command\Files\GetFile\GetFileCommand.cs" />

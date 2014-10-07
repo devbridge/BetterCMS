@@ -8,15 +8,15 @@ namespace BetterCms.Module.MediaManager.Services
 {
     public interface IMediaImageService
     {
-        MediaImage UploadImage(Guid rootFolderId, string fileName, long fileLength, Stream file, Guid reuploadMediaId, MediaImage filledInImage = null);
+        MediaImage UploadImage(Guid rootFolderId, string fileName, long fileLength, Stream file, Guid reuploadMediaId, MediaImage filledInImage = null, bool overrideUrl = true);
 
         void RemoveImageWithFiles(Guid mediaImageId, int version, bool doNotCheckVersion = false, bool originalWasNotUploaded = false);
 
         void UpdateThumbnail(MediaImage mediaImage, Size size);
 
-        MediaImage MakeAsOriginal(MediaImage image, MediaImage originalImage, MediaImage archivedImage);
+        MediaImage MakeAsOriginal(MediaImage image, MediaImage originalImage, MediaImage archivedImage, bool overrideUrl = true);
 
-        void SaveEditedImage(MediaImage image, MediaImage archivedImage, MemoryStream croppedImageFileStream);
+        void SaveEditedImage(MediaImage image, MediaImage archivedImage, MemoryStream croppedImageFileStream, bool overrideUrl = true);
 
         MediaImage MoveToHistory(MediaImage originalImage);
     }

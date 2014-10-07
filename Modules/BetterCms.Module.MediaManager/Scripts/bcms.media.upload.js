@@ -17,7 +17,8 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
                 fileUploadingResult: '#jsonResult',
                 folderDropDown: '#SelectedFolderId',
                 uploadButtonLabel: '.bcms-btn-upload-files-text',
-                userAccessControlContainer: '#bcms-accesscontrol-context'
+                userAccessControlContainer: '#bcms-accesscontrol-context',
+                overrideSelect: "bcms-media-reupload-override"
             },
             classes = {
                 dragZoneActive: 'bcms-dropzone-active'
@@ -55,6 +56,8 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
             };
 
         options.uploads.filesToAccept(rootFolderType == 1 ? 'image/*' : '');
+
+
 
         if (fileApiSupported) {
             modal.open({
@@ -503,6 +506,13 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
                 data: { rootFolderId: options.rootFolderId, rootFolderType: options.rootFolderType, reuploadMediaId: options.reuploadMediaId },
                 maxSimultaneousUploads: 4,
                 onFileAdded: function (file) {
+                    var overrideSelect = document.getElementById(selectors.overrideSelect);
+                    if (overrideSelect) {
+                        this.data['shouldOverride'] = overrideSelect.options[overrideSelect.selectedIndex].value;
+                    } else {
+                        this.data['shouldOverride'] = "true";
+                    }
+                    
                     if (options.reuploadMediaId && options.reuploadMediaId != constants.defaultReuploadMediaId && uploadsModel.uploads().length > 0) {
                         messageBox.clearMessages();
                         messageBox.addWarningMessage(globalization.multipleFilesWarningMessageOnReupload);
@@ -565,6 +575,11 @@ bettercms.define('bcms.media.upload', ['bcms.jquery', 'bcms', 'bcms.dynamicConte
 
                         onTransfer: function () {
                             fileModel.isProgressVisible(false);
+
+                            if (overrideSelect) {
+                                overrideSelect.disabled = true;
+                            }
+
                             transferAnimationId = setInterval(function () {
                                 if (fileModel.uploadProgress() >= 100) {
                                     fileModel.uploadProgress(0);

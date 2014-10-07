@@ -522,6 +522,12 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             }
         };
 
+        self.isImage = function () {
+            if (self.path().type == mediaTypes.image)
+                return true;
+            return false;
+        };
+
         function showPreview(data, clientX, clientY) {
             if (menu.isVisible || !data.isImage()) {
                 return;
@@ -835,7 +841,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             if (this.isDeleting()) {
                 return;
             }
-            history.openMediaHistoryDialog(this.id(), function () {
+            history.openMediaHistoryDialog(this.id(), folderViewModel.isImage(), function () {
                 folderViewModel.searchMedia();
             });
         };
