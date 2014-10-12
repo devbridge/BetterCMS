@@ -333,6 +333,9 @@
   <data name="MultiFileUpload_DragDropBox" xml:space="preserve">
     <value>Drag files here to upload</value>
   </data>
+  <data name="MultiFileUpload_OverriveOption" xml:space="preserve">
+    <value>Override options</value>
+  </data>
   <data name="MultiFileUpload_Failed" xml:space="preserve">
     <value>Your upload attempt failed!</value>
   </data>

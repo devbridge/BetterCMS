@@ -1420,6 +1420,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Override options.
+        /// </summary>
+        public static string MultiFileUpload_OverriveOption {
+            get {
+                return ResourceManager.GetString("MultiFileUpload_OverriveOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Upload completed. File is still processing in the server..
         /// </summary>
         public static string MultiFileUpload_Processing_ServerSide {

@@ -99,14 +99,9 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
             var newHeight = request.ImageHeight;
             var resized = (newWidth != mediaImage.OriginalWidth || newHeight != mediaImage.OriginalHeight);
 
-            var memoryStream = new MemoryStream();
+            MemoryStream memoryStream = null;
 
-            var hasChanges = (mediaImage.Width != newWidth 
-                || mediaImage.Height != newHeight 
-                || x1 != mediaImage.CropCoordX1 
-                || x2 != mediaImage.CropCoordX2
-                || y1 != mediaImage.CropCoordY1 
-                || y2 != mediaImage.CropCoordY2); 
+            var hasChanges = cropped || resized; 
 
             if (hasChanges)
             {
@@ -132,19 +127,20 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
                         Rectangle rec = new Rectangle(cropX12, cropY12, width, heigth);
                         destination = ImageHelper.Crop(destination, rec);
                     }
-                    
+
+                    memoryStream = new MemoryStream();
                     destination.Save(memoryStream, codec, null);
                     mediaImage.Size = memoryStream.Length;
                 }
+
+                mediaImage.CropCoordX1 = x1;
+                mediaImage.CropCoordY1 = y1;
+                mediaImage.CropCoordX2 = x2;
+                mediaImage.CropCoordY2 = y2;
+
+                mediaImage.Width = newWidth;
+                mediaImage.Height = newHeight;
             }
-
-            mediaImage.CropCoordX1 = x1;
-            mediaImage.CropCoordY1 = y1;
-            mediaImage.CropCoordX2 = x2;
-            mediaImage.CropCoordY2 = y2;
-
-            mediaImage.Width = newWidth;
-            mediaImage.Height = newHeight;
 
             return memoryStream;
         }
