@@ -39,8 +39,16 @@
 
         private static string GetConfigurationValue(ICmsConfiguration cmsConfiguration, string key)
         {
-            var moduleConfiguration = cmsConfiguration.Modules.GetByName(PagesModuleDescriptor.ModuleName);
-            return moduleConfiguration != null ? moduleConfiguration.GetValue(key) : string.Empty;
+            if (cmsConfiguration.Modules != null)
+            {
+                var moduleConfiguration = cmsConfiguration.Modules.GetByName(PagesModuleDescriptor.ModuleName);
+                if (moduleConfiguration != null)
+                {
+                    return moduleConfiguration.GetValue(key);
+                }
+            }
+
+            return null;
         }
     }
 }

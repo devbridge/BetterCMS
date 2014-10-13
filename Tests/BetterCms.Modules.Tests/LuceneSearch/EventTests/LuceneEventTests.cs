@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+
+using BetterCms.Events;
 
 using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 
@@ -29,11 +32,18 @@ namespace BetterCms.Test.Module.LuceneSearch.EventTests
             System.Threading.Thread.Sleep(10);
             Assert.IsFalse(documentSaving);
 
-            Events.LuceneEvents.Instance.DocumentSaving += delegate { documentSaving = true; };
+            Events.LuceneEvents.Instance.DocumentSaving += InstanceOnDocumentSaving;
 
             Events.LuceneEvents.Instance.OnDocumentSaving(new Document(), new PageData());
             System.Threading.Thread.Sleep(10);
             Assert.IsTrue(documentSaving);
+
+            Events.LuceneEvents.Instance.DocumentSaving -= InstanceOnDocumentSaving;
+        }
+
+        private void InstanceOnDocumentSaving(DocumentSavingEventArgs args)
+        {
+            documentSaving = true;
         }
 
         [Test]
@@ -45,13 +55,19 @@ namespace BetterCms.Test.Module.LuceneSearch.EventTests
             System.Threading.Thread.Sleep(10);
             Assert.IsFalse(searchQueryExecuting);
 
-            Events.LuceneEvents.Instance.SearchQueryExecuting += delegate { searchQueryExecuting = true; };
+            Events.LuceneEvents.Instance.SearchQueryExecuting += InstanceOnSearchQueryExecuting;
 
             Events.LuceneEvents.Instance.OnSearchQueryExecuting(new BooleanQuery(), string.Empty);
             System.Threading.Thread.Sleep(10);
             Assert.IsTrue(searchQueryExecuting);
+
+            Events.LuceneEvents.Instance.SearchQueryExecuting -= InstanceOnSearchQueryExecuting;
         }
 
+        private void InstanceOnSearchQueryExecuting(SearchQueryExecutingEventArgs args)
+        {
+            searchQueryExecuting = true;
+        }
 
         [Test]
         public void Should_Fire_Search_Result_Retrieving_Event()
@@ -62,11 +78,18 @@ namespace BetterCms.Test.Module.LuceneSearch.EventTests
             System.Threading.Thread.Sleep(10);
             Assert.IsFalse(searchResultRetrieving);
 
-            Events.LuceneEvents.Instance.SearchResultRetrieving += delegate { searchResultRetrieving = true; };
+            Events.LuceneEvents.Instance.SearchResultRetrieving += InstanceOnSearchResultRetrieving;
 
             Events.LuceneEvents.Instance.OnSearchResultRetrieving(new List<Document>(), new List<SearchResultItem>());
             System.Threading.Thread.Sleep(10);
             Assert.IsTrue(searchResultRetrieving);
+
+            Events.LuceneEvents.Instance.SearchResultRetrieving -= InstanceOnSearchResultRetrieving;
+        }
+
+        private void InstanceOnSearchResultRetrieving(SearchResultRetrievingEventArgs args)
+        {
+            searchResultRetrieving = true;
         }
     }
 }

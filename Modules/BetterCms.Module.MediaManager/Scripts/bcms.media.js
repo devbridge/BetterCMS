@@ -2100,6 +2100,36 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     }
 
     /**
+    * Called when user press browse button in the options grid with type = "Media Manager Image Url".
+    */
+    function onExecuteMediaManagerImageOption(valueObservable, titleObservable, optionModel) {
+        var onMediaSelect = function(selectedImage) {
+            var url = selectedImage.getImageUrl();
+
+
+                valueObservable(url);
+                titleObservable(url);
+
+                if (optionModel.key && !optionModel.key()) {
+                    optionModel.key(name);
+                }
+
+                optionModel.hasFocus(true);
+            },
+            onMediaClose = function() {
+                optionModel.hasFocus(true);
+            },
+
+            options = {
+                onAccept: onMediaSelect,
+                onClose: onMediaClose,
+            };
+
+        media.openImageInsertDialog(options);
+    }
+
+
+    /**
     * Called when context menu is shown.
     */
     function onShowContextMenu() {
@@ -2124,6 +2154,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         fileEditor.SetMedia(media);
         
         optionsModule.registerCustomOption('media-images-folder', onExecuteMediaManagerFolderOption);
+        optionsModule.registerCustomOption('media-images-url', onExecuteMediaManagerImageOption);
     };
 
     /**

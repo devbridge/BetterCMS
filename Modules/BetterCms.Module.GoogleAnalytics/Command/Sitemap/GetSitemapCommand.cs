@@ -47,13 +47,17 @@ namespace BetterCms.Module.GoogleAnalytics.Command.Sitemap
             {
                 sitemap = sitemapService.GetByTitle(GoogleAnalyticsModuleHelper.GetSitemapTitle(cmsConfiguration)) ?? sitemapService.GetFirst();
                 if (sitemap == null)
+                {
                     throw new CmsException("There aren't any sitemaps created.");
+                }
             }
             else
             {
                 sitemap = sitemapService.Get(sitemapModel.SitemapId);
                 if (sitemap == null)
+                {
                     throw new EntityNotFoundException(typeof(Pages.Models.Sitemap), sitemapModel.SitemapId);
+                }
             }
 
             var urlset = new GoogleSitemapUrlSet();

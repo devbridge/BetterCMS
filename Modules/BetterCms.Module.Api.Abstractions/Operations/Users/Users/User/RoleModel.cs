@@ -24,6 +24,7 @@ namespace BetterCms.Module.Api.Operations.Users.Users.User
         /// <value>
         /// The description of the role.
         /// </value>
+        [DataMember]
         public string Description { get; set; }
 
         /// <summary>
