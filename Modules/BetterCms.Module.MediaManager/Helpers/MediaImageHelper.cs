@@ -27,7 +27,7 @@ namespace BetterCms.Module.MediaManager.Helpers
         /// </summary>
         public const string OverridedImageFileWithoutExtensionNamePattern = "{0}_{1}_{2}";
 
-        public const string HistoricalVersionedFileNamePattern = "{0}_{1}.{2}";
+        public const string HistoricalVersionedFileNamePattern = "{0}.{1}";
 
         /// <summary>
         /// The public image file name pattern.
@@ -81,19 +81,19 @@ namespace BetterCms.Module.MediaManager.Helpers
             return string.Format(VersionedImageFileWithoutExtensionNamePattern, fileName, version);
         }
 
-        public static string CreateHistoricalVersionedFileName(string fileName, string extension, int version)
+        public static string CreateHistoricalVersionedFileName(string fileName, string extension)
         {
             var currentExtension = Path.GetExtension(fileName);
             if (!string.IsNullOrWhiteSpace(currentExtension))
             {
                 currentExtension = currentExtension.Trim('.');
-                return string.Format(HistoricalVersionedFileNamePattern, Guid.NewGuid().ToString("N"), version, currentExtension);
+                return string.Format(HistoricalVersionedFileNamePattern, Guid.NewGuid().ToString("N"), currentExtension);
             }
 
             if (!string.IsNullOrWhiteSpace(extension))
             {
                 extension = extension.Trim('.');
-                return string.Format(HistoricalVersionedFileNamePattern, Guid.NewGuid().ToString("N"), version, extension);
+                return string.Format(HistoricalVersionedFileNamePattern, Guid.NewGuid().ToString("N"), extension);
             }
 
             throw new CmsException("Extension cann't be null or empty");

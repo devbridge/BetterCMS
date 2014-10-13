@@ -57,9 +57,17 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
             mediaImage.ImageAlign = request.ImageAlign;
             
             // Calling resize and after then crop
-            var archivedImage = MediaImageService.MoveToHistory(mediaImage);
             var croppedFileStream = ResizeAndCropImage(mediaImage, request);
-            MediaImageService.SaveEditedImage(mediaImage, archivedImage, croppedFileStream, request.ShouldOverride);
+
+            if (croppedFileStream != null)
+            {
+                var archivedImage = MediaImageService.MoveToHistory(mediaImage);
+                MediaImageService.SaveEditedImage(mediaImage, archivedImage, croppedFileStream, request.ShouldOverride);
+            }
+            else
+            {
+                MediaImageService.SaveImage(mediaImage);
+            }
 
             UnitOfWork.BeginTransaction();
 

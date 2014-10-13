@@ -736,6 +736,15 @@ namespace BetterCms.Module.MediaManager.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string ImageEditor_Save_Title {
+            get {
+                return ResourceManager.GetString("ImageEditor_Save_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save new version.
         /// </summary>
         public static string ImageEditor_SaveAsNewVersion_Title {

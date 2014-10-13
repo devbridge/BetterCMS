@@ -18,6 +18,8 @@ namespace BetterCms.Module.MediaManager.Services
 
         void SaveEditedImage(MediaImage image, MediaImage archivedImage, MemoryStream croppedImageFileStream, bool overrideUrl = true);
 
+        void SaveImage(MediaImage image);
+
         MediaImage MoveToHistory(MediaImage originalImage);
     }
 }

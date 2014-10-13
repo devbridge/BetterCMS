@@ -213,8 +213,7 @@ namespace BetterCms.Module.MediaManager.Services
                             // Create version file name for current original image
                             var historicalUrl = MediaImageHelper.CreateHistoricalVersionedFileName(
                                 clonedOriginalImage.OriginalFileName,
-                                clonedOriginalImage.OriginalFileExtension,
-                                GetVersion(originalImage));
+                                clonedOriginalImage.OriginalFileExtension);
 
                             // Update urls with version file name
                             mediaImageVersionPathService.SetPathForArchive(clonedOriginalImage, folderName, historicalUrl);
@@ -233,7 +232,7 @@ namespace BetterCms.Module.MediaManager.Services
 
                     if (!overrideUrl)
                     {
-                        publicFileName = MediaImageHelper.CreateVersionedFileName(originalImage.OriginalFileName, originalImage.Version);
+                        publicFileName = MediaImageHelper.CreateVersionedFileName(originalImage.OriginalFileName, GetVersion(originalImage));
                         mediaImageVersionPathService.SetPathForNewOriginal(originalImage, folderName, publicFileName);
                     }
                 }
@@ -320,22 +319,37 @@ namespace BetterCms.Module.MediaManager.Services
             
             using (var fileStream = DownloadFileStream(image.PublicUrl))
             {
+                string publicUrlTemp = string.Empty, publicThumbnailUrlTemp = string.Empty, publicOriginallUrlTemp = string.Empty;
+                Uri fileUriTemp = null, thumbnailUriTemp = null, originalUriTemp = null;
+
+                if (overrideUrl)
+                {
+                    publicUrlTemp = originalImage.PublicUrl;
+                    fileUriTemp = originalImage.FileUri;
+                    publicThumbnailUrlTemp = originalImage.PublicThumbnailUrl;
+                    thumbnailUriTemp = originalImage.ThumbnailUri;
+                    publicOriginallUrlTemp = originalImage.PublicOriginallUrl;
+                    originalUriTemp = originalImage.OriginalUri;
+                }
+
+                image.CopyDataTo(originalImage);
+
                 if (!overrideUrl)
                 {
-                    var publicFileName = MediaImageHelper.CreateVersionedFileName(originalImage.OriginalFileName, originalImage.Version);
+                    var publicFileName = MediaImageHelper.CreateVersionedFileName(originalImage.OriginalFileName, GetVersion(originalImage));
                     mediaImageVersionPathService.SetPathForNewOriginal(image, folderName, publicFileName, archivedImage.OriginalUri, archivedImage.PublicOriginallUrl);
                 }
                 else
                 {
-                    image.PublicUrl = originalImage.PublicUrl;
-                    image.FileUri = originalImage.FileUri;
-                    image.PublicThumbnailUrl = originalImage.PublicThumbnailUrl;
-                    image.ThumbnailUri = originalImage.ThumbnailUri;
-                    image.PublicOriginallUrl = originalImage.PublicOriginallUrl;
-                    image.OriginalUri = originalImage.OriginalUri;
+                    originalImage.PublicUrl = publicUrlTemp;
+                    originalImage.FileUri = fileUriTemp;
+                    originalImage.PublicThumbnailUrl = publicThumbnailUrlTemp;
+                    originalImage.ThumbnailUri = thumbnailUriTemp;
+                    originalImage.PublicOriginallUrl = publicOriginallUrlTemp;
+                    originalImage.OriginalUri = originalUriTemp;
                 }
 
-                image.CopyDataTo(originalImage);
+                
                 originalImage.Original = null;
                 originalImage.PublishedOn = DateTime.Now;
                 
@@ -378,7 +392,7 @@ namespace BetterCms.Module.MediaManager.Services
 
                 if (!overrideUrl)
                 {
-                    var publicFileName = MediaImageHelper.CreateVersionedFileName(image.OriginalFileName, image.Version);
+                    var publicFileName = MediaImageHelper.CreateVersionedFileName(image.OriginalFileName, GetVersion(image));
                     mediaImageVersionPathService.SetPathForNewOriginal(image, folderName, publicFileName, archivedImage.OriginalUri, archivedImage.PublicOriginallUrl);
                 }
                 
@@ -389,6 +403,13 @@ namespace BetterCms.Module.MediaManager.Services
                 storageService.UploadObject(new UploadRequest { InputStream = fileStream, Uri = image.FileUri, IgnoreAccessControl = true });
                 UpdateThumbnail(image, Size.Empty);
             }
+        }
+
+        public void SaveImage(MediaImage image)
+        {
+            unitOfWork.BeginTransaction();
+            repository.Save(image);
+            unitOfWork.Commit();
         }
         
         /// <summary>
@@ -403,8 +424,7 @@ namespace BetterCms.Module.MediaManager.Services
 
             var historicalFileName = MediaImageHelper.CreateHistoricalVersionedFileName(
                                 originalImage.OriginalFileName,
-                                originalImage.OriginalFileExtension,
-                                GetVersion(originalImage));
+                                originalImage.OriginalFileExtension);
 
             var folderName = Path.GetFileName(Path.GetDirectoryName(originalImage.FileUri.OriginalString));
             
@@ -668,7 +688,7 @@ namespace BetterCms.Module.MediaManager.Services
         private int GetVersion(MediaImage image)
         {
             var versionsCount = repository.AsQueryable<MediaImage>().Count(i => i.Original != null && i.Original.Id == image.Id);
-            return versionsCount + 1;
+            return versionsCount;
         }
 
         private void ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(Action<ISession> work)

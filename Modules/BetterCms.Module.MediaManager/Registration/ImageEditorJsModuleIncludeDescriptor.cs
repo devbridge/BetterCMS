@@ -32,6 +32,7 @@ namespace BetterCms.Module.MediaManager.Registration
                     new JavaScriptModuleGlobalization(this, "imageEditorUpdateFailureMessageTitle", () => MediaGlobalization.ImageEditor_UpdateFailureMessage_Title),
                     new JavaScriptModuleGlobalization(this, "imageEditorUpdateFailureMessageMessage", () => MediaGlobalization.ImageEditor_UpdateFailureMessage_Message),
                     new JavaScriptModuleGlobalization(this, "imageEditorHasChangesMessage", () => MediaGlobalization.ImageEditor_HasChanges_Message),
+                    new JavaScriptModuleGlobalization(this, "saveButtonTitle", () => MediaGlobalization.ImageEditor_Save_Title),
                     new JavaScriptModuleGlobalization(this, "saveAsNewVersionButtonTitle", () => MediaGlobalization.ImageEditor_SaveAsNewVersion_Title),
                     new JavaScriptModuleGlobalization(this, "saveWithOverrideButtonTitle", () => MediaGlobalization.ImageEditor_SaveWithOverride_Title),
                     new JavaScriptModuleGlobalization(this, "closeButtonTitle", () => RootGlobalization.Button_Close)

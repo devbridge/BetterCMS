@@ -41,15 +41,19 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 imageEditorUpdateFailureMessageMessage: null,
                 closeButtonTitle: null,
                 imageEditorHasChangesMessage: null,
+                saveButtonTitle: null,
                 saveWithOverrideButtonTitle: null,
                 saveAsNewVersionButtonTitle: null
             },
             constants = {
+                accept: 'bcms-modal-accept',
+                acceptAsNew: 'bcms-modal-accept-as-new',
                 maxHeightToFit: 557,
                 maxWidthToFit: 839,
                 jcropBackgroundColor: '#F5F5F5'
             },
-            jCropApi = null;
+            jCropApi = null,
+            wasCropChanged = false;
 
         /**
         * Assign objects to module.
@@ -76,7 +80,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
         */
         imageEditor.showImageEditorDialog = function (imageId, callback) {
 
-            var saveAsNewVersion = new modal.button(globalization.saveAsNewVersionButtonTitle, null, 5, function () {
+            var saveAsNewVersion = new modal.button(globalization.saveAsNewVersionButtonTitle, 'bcms-btn-small bcms-modal-accept-as-new', 5, function () {
                     $(selectors.imageOverrideField).val(false);
                     modelDialog.acceptClick();
                 }),
@@ -84,7 +88,6 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
 
             modelDialog = modal.open({
                 title: globalization.imageEditorDialogTitle,
-                acceptTitle: globalization.saveWithOverrideButtonTitle,
                 buttons: [saveAsNewVersion],
                 onLoad: function (dialog) {
                     var url = $.format(links.imageEditorDialogUrl, imageId);
@@ -105,8 +108,12 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                             dialog.close();
                         }
                     });
-                }
+                },
+                onAccept: function () { wasCropChanged = false; },
+                onClose: function () { wasCropChanged = false; }
             });
+
+            modelDialog.disableExtraButtons();
         };
 
         /**
@@ -358,6 +365,11 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                     }
                 };
 
+                self.onCropChanged = function(coords) {
+                    wasCropChanged = true;
+                    self.onCropCoordsUpdated(coords);
+                };
+
                 self.hasCrop = ko.computed(function () {
                     return self.cropCoordX1() != 0
                         || self.cropCoordY1() != 0
@@ -461,7 +473,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                     destroyJCrop();
                     
                     var cropperOptions = {
-                        onChange: self.onCropCoordsUpdated,
+                        onChange: self.onCropChanged,
                         onSelect: self.onCropCoordsUpdated,
                         onRelease: self.onCropCoordsUpdated,
                         trueSize: [self.originalWidth, self.originalHeight],
@@ -530,11 +542,41 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
             self.imageEditorViewModel = imageEditorViewModel;
             self.tags = tagsViewModel;
             
+            // Track buttons
+            self.accessButton = ko.utils.arrayFirst(dialog.model.buttons(), function (item) {
+                return item.css().indexOf(constants.accept) > 0;
+            });
+
+            self.accessAsNewButton = ko.utils.arrayFirst(dialog.model.buttons(), function (item) {
+                return item.css().indexOf(constants.acceptAsNew) > 0;
+            });
+
             // Track form changes
             self.imageAlign = ko.observable(data.ImageAlign);
             self.modelChanged = false;
             self.onValueChange = function() {
                 self.modelChanged = true;
+            };
+
+            self.onImageChanged = function() {
+                self.modelModified = imageEditorViewModel.width() != String(data.ImageWidth)
+                    || imageEditorViewModel.height() != String(data.ImageHeight);
+
+                if (wasCropChanged) {
+                    self.modelModified = true;
+                }
+
+                if (self.modelModified) {
+                    self.accessButton.title(globalization.saveWithOverrideButtonTitle);
+                    if (self.accessAsNewButton) {
+                        self.accessAsNewButton.disabled(false);
+                    }
+                } else {
+                    self.accessButton.title(globalization.saveButtonTitle);
+                    if (self.accessAsNewButton) {
+                        self.accessAsNewButton.disabled(true);
+                    }
+                }
             };
 
             imageEditorViewModel.cropCoordX1.subscribe(self.onValueChange);
@@ -546,6 +588,13 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
             tagsViewModel.items.subscribe(self.onValueChange);
             self.imageAlign.subscribe(self.onValueChange);
             
+            imageEditorViewModel.cropCoordX1.subscribe(self.onImageChanged);
+            imageEditorViewModel.cropCoordX2.subscribe(self.onImageChanged);
+            imageEditorViewModel.cropCoordY1.subscribe(self.onImageChanged);
+            imageEditorViewModel.cropCoordY2.subscribe(self.onImageChanged);
+            imageEditorViewModel.oldWidth.subscribe(self.onImageChanged);
+            imageEditorViewModel.oldHeight.subscribe(self.onImageChanged);
+
             self.reupload = function () {
                 var reupload = function () {
                     mediaUpload.openReuploadFilesDialog(data.Id, data.FolderId || '', 1, function (filesData) {
