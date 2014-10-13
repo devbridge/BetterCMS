@@ -107,7 +107,7 @@ namespace BetterCms.Module.GoogleAnalytics.Command.Sitemap
                     {
                         var url = new GoogleSitemapUrl(GoogleAnalyticsModuleHelper.GetDateTimeFormat(cmsConfiguration))
                         {
-                            Location = httpContextAccessor.MapPublicPath(node.Url),
+                            Location = node.Url,
                             LastModifiedDateTime = node.ModifiedOn,
                             ChangeFrequency = GoogleAnalyticsModuleHelper.GetChangeFrequency(cmsConfiguration),
                             Priority = GoogleAnalyticsModuleHelper.GetPriority(cmsConfiguration)
