@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 
-using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.MediaManager.Models;
 
 namespace BetterCms.Module.MediaManager.Command.Upload
@@ -19,5 +18,7 @@ namespace BetterCms.Module.MediaManager.Command.Upload
         public Stream FileStream { get; set; }
 
         public Guid ReuploadMediaId { get; set; }
+
+        public bool ShouldOverride { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 using BetterCms.Module.Root.Mvc;
@@ -14,12 +15,12 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePageWithLanguage
     public class ClonePageWithLanguageCommand : CommandBase, ICommand<ClonePageWithLanguageViewModel, ClonePageWithLanguageViewModel>
     {
         private readonly IPageCloneService cloneService;
-        private readonly IPageService pageService;
+        private readonly ICmsConfiguration cmsConfiguration;
 
-        public ClonePageWithLanguageCommand(IPageCloneService cloneService, IPageService pageService)
+        public ClonePageWithLanguageCommand(IPageCloneService cloneService, ICmsConfiguration cmsConfiguration)
         {
             this.cloneService = cloneService;
-            this.pageService = pageService;
+            this.cmsConfiguration = cmsConfiguration;
         }
 
         /// <summary>
@@ -51,7 +52,8 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePageWithLanguage
                     PageTitle = newPage.Title,
                     PageUrl = newPage.PageUrl,
                     IsMasterPage = newPage.IsMasterPage,
-                    LanguageId = request.LanguageId
+                    LanguageId = request.LanguageId,
+                    IsSitemapActionEnabled = ConfigurationHelper.IsSitemapActionEnabledAfterAddingTranslationForPage(cmsConfiguration)
                 };
         }
     }

@@ -391,15 +391,26 @@ describe('pages.pages.api.behavior', function () {
                     { field: 'MasterPageId' },
                     { field: 'CategoryId', value: '1427628c1e7e4beb9098a2070081d2dc' },
                     { field: 'CategoryName', value: '01011' },
-                    { field: 'MainImageId', value: '389e059bcc6c4336a863a2070083436c' },
-                    { field: 'MainImageUrl', value: 'http://bettercms.sandbox.mvc4.local.net/uploads/image/6173795ceadc4b619d68005ef57c9ca8/1_1.jpg' },
-                    { field: 'MainImageThumbnauilUrl', value: 'http://bettercms.sandbox.mvc4.local.net/uploads/image/6173795ceadc4b619d68005ef57c9ca8/t_1_1.png' },
-                    { field: 'MainImageCaption', value: '01011 caption' },
                     { field: 'IsArchived', value: false },
                     { field: 'IsMasterPage', value: false },
                     { field: 'LanguageId', value: '67432fcff2c349c09678a2a70091cf48' },
                     { field: 'LanguageCode', value: 'ar-YE' },
-                    { field: 'LanguageGroupIdentifier', value: 'b2aa47dc114b47dd8f24d489bf8cdf71' }
+                    { field: 'LanguageGroupIdentifier', value: 'b2aa47dc114b47dd8f24d489bf8cdf71' },
+
+                    { field: 'MainImageId', value: '389e059bcc6c4336a863a2070083436c' },
+                    { field: 'MainImageUrl', value: 'http://bettercms.sandbox.mvc4.local.net/uploads/image/6173795ceadc4b619d68005ef57c9ca8/1_1.jpg' },
+                    { field: 'MainImageThumbnauilUrl', value: 'http://bettercms.sandbox.mvc4.local.net/uploads/image/6173795ceadc4b619d68005ef57c9ca8/t_1_1.png' },
+                    { field: 'MainImageCaption', value: '01011 caption' },
+
+                    { field: 'SecondaryImageId', value: '5ae75858d0da418c9ed8a3b600d89294' },
+                    { field: 'SecondaryImageUrl', value: 'http://bettercms.sandbox.mvc4.local.net/uploads/image/2c2b58710274429fbb99488d8194907f/__sam.png' },
+                    { field: 'SecondaryImageThumbnailUrl', value: 'http://bettercms.sandbox.mvc4.local.net/uploads/image/2c2b58710274429fbb99488d8194907f/t___sam.png' },
+                    { field: 'SecondaryImageCaption', value: '01011-secondary-caption' },
+
+                    { field: 'FeaturedImageId', value: '059f65eef4bc43c1be9da3b600d89294' },
+                    { field: 'FeaturedImageUrl', value: 'http://bettercms.sandbox.mvc4.local.net/uploads/image/0f1037a441ee4b3aa2216ecff1183eb9/__logo-square.png' },
+                    { field: 'FeaturedImageThumbnailUrl', value: 'http://bettercms.sandbox.mvc4.local.net/uploads/image/0f1037a441ee4b3aa2216ecff1183eb9/t___logo-square.png' },
+                    { field: 'FeaturedImageCaption', value: '01011-featured-caption' }
                 ]
             }
         };
@@ -919,15 +930,26 @@ describe('pages.pages.api.behavior', function () {
                     { field: 'MasterPageId', value: '5d5eb2f6dd16420d81fca2f100db32d4' },
                     { field: 'CategoryId' },
                     { field: 'CategoryName' },
-                    { field: 'MainImageId' },
-                    { field: 'MainImageUrl' },
-                    { field: 'MainImageThumbnauilUrl' },
-                    { field: 'MainImageCaption' },
                     { field: 'IsArchived', value: false },
                     { field: 'IsMasterPage', value: false },
                     { field: 'LanguageId' },
                     { field: 'LanguageCode' },
-                    { field: 'LanguageGroupIdentifier' }
+                    { field: 'LanguageGroupIdentifier' },
+
+                    { field: 'MainImageId' },
+                    { field: 'MainImageUrl' },
+                    { field: 'MainImageThumbnauilUrl' },
+                    { field: 'MainImageCaption' },
+
+                    { field: 'SecondaryImageId' },
+                    { field: 'SecondaryImageUrl' },
+                    { field: 'SecondaryImageThumbnailUrl' },
+                    { field: 'SecondaryImageCaption' },
+
+                    { field: 'FeaturedImageId' },
+                    { field: 'FeaturedImageUrl' },
+                    { field: 'FeaturedImageThumbnailUrl' },
+                    { field: 'FeaturedImageCaption' }
                 ]
             }
         };

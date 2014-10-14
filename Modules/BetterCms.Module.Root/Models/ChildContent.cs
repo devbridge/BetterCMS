@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Models;
 
-using NHibernate.Proxy.DynamicProxy;
-
 namespace BetterCms.Module.Root.Models
 {
     [Serializable]

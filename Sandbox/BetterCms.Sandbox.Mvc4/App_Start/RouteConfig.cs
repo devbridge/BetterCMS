@@ -15,11 +15,18 @@ namespace BetterCms.Sandbox.Mvc4
 
             routes.MapRoute("SandboxController_TestRewrite", "sandbox/test-rewrite/{*url}", new { controller = "Sandbox", action = "TestRewrite" });
 
+            // Widgets inheritance testing
             routes.MapRoute("WidgetController_TestPostAndGet", 
                 "cmswidget/testpostandget", 
                 new { controller = "Widgets", action = "TestPostAndGet" },
                 new[] { "BetterCms.Sandbox.Mvc4.Controllers" });
+            
+            routes.MapRoute("WidgetController_TestPostAndGetWithInheritance", 
+                "cmswidget/testpostandgetwithinheritance", 
+                new { controller = "Widgets", action = "TestPostAndGetWithInheritance" },
+                new[] { "BetterCms.Sandbox.Mvc4.Controllers" });
 
+            // Blog post tests
             routes.MapRoute("BlogController_TestIndex", 
                 "testblogindex", 
                 new { controller = "Blog",  action = "Index" },

@@ -7,7 +7,10 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
 
+using BetterCms.Events;
+
 using BetterCMS.Module.LuceneSearch.Content.Resources;
+using BetterCMS.Module.LuceneSearch.Helpers;
 using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 
 using BetterCms;
@@ -70,6 +73,8 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
         private bool initialized;
         
         private bool searchForPartOfWords;
+
+        private bool isClosing;
 
         private StandardAnalyzer analyzer;
 
@@ -158,13 +163,19 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         private bool OpenWriter(bool create)
         {
+            if (isClosing)
+            {
+                return false;
+            }
+
             var tryNumber = 0;
-            while (File.Exists(IndexWriter.WRITE_LOCK_NAME))
+            const int maxTryCount = 3;
+            while (File.Exists(Path.Combine(directory, IndexWriter.WRITE_LOCK_NAME)))
             {
                 Thread.Sleep(1000);
 
                 tryNumber++;
-                if (tryNumber <= 10)
+                if (tryNumber >= maxTryCount)
                 {
                     Log.Error("Failed to open Lucene index writer. Write lock file is locked.");
 
@@ -224,6 +235,8 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             doc.Add(new Field(LuceneIndexDocumentKeys.Id, pageData.Id.ToString(), Field.Store.YES, Field.Index.ANALYZED));
             doc.Add(new Field(LuceneIndexDocumentKeys.IsPublished, pageData.IsPublished.ToString(), Field.Store.YES, Field.Index.ANALYZED));
 
+            doc = LuceneEvents.Instance.OnDocumentSaving(doc, pageData).Document;
+
             writer.UpdateDocument(path, doc, analyzer);
         }
 
@@ -258,58 +271,76 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
             var skip = request.Skip > 0 ? request.Skip : 0;
 
             var result = new List<SearchResultItem>();
-            var searcher = new IndexSearcher(reader);
             TopScoreDocCollector collector = TopScoreDocCollector.Create(take + skip, true);
-
-            var searchQuery = request.Query;
-            Query query;
-            try
+            using (var searcher = new IndexSearcher(reader))
             {
-                query = parser.Parse(searchQuery);
-            }
-            catch (ParseException)
-            {
+                var searchQuery = request.Query;
+                Query query;
                 try
                 {
-                    searchQuery = QueryParser.Escape(searchQuery);
                     query = parser.Parse(searchQuery);
                 }
-                catch (ParseException exc)
+                catch (ParseException)
                 {
-                    throw new ValidationException(() => exc.Message, exc.Message, exc);
+                    try
+                    {
+                        searchQuery = QueryParser.Escape(searchQuery);
+                        query = parser.Parse(searchQuery);
+                    }
+                    catch (ParseException exc)
+                    {
+                        throw new ValidationException(() => exc.Message, exc.Message, exc);
+                    }
                 }
-            }
 
-            if (!RetrieveUnpublishedPages())
-            {
-                // Exclude unpublished pages
-                var isPublishedQuery = new TermQuery(new Term(LuceneIndexDocumentKeys.IsPublished, "true"));
-                Filter isPublishedFilter = new QueryWrapperFilter(isPublishedQuery);
+                Filter isPublishedFilter = null;
+                if (!RetrieveUnpublishedPages())
+                {
+                    var isPublishedQuery = new TermQuery(new Term(LuceneIndexDocumentKeys.IsPublished, "true"));
+                    isPublishedFilter = new QueryWrapperFilter(isPublishedQuery);
+                }
 
-                searcher.Search(query, isPublishedFilter, collector);
-            }
-            else
-            {
-                // Search within all the pages
-                searcher.Search(query, collector);
-            }
-            
-            ScoreDoc[] hits = collector.TopDocs(skip, take).ScoreDocs;
-            
-            for (int i = 0; i < hits.Length; i++)
-            {
-                int docId = hits[i].Doc;
-                Document d = searcher.Doc(docId);
-                result.Add(new SearchResultItem
-                               {
-                                   FormattedUrl = d.Get(LuceneIndexDocumentKeys.Path),
-                                   Link = d.Get(LuceneIndexDocumentKeys.Path),
-                                   Title = d.Get(LuceneIndexDocumentKeys.Title),
-                                   Snippet = GetSnippet(d.Get(LuceneIndexDocumentKeys.Content), request.Query)
-                               });
-            }
+                if (LuceneSearchHelper.Search != null)
+                {
+                    collector = LuceneSearchHelper.Search(query, isPublishedFilter, collector);
+                }
+                else
+                {
+                    query = LuceneEvents.Instance.OnSearchQueryExecuting(query, searchQuery).Query;
 
-            CheckAvailability(result);
+                    if (isPublishedFilter != null)
+                    {
+                        // Exclude unpublished pages
+                        searcher.Search(query, isPublishedFilter, collector);
+                    }
+                    else
+                    {
+                        // Search within all the pages
+                        searcher.Search(query, collector);
+                    }
+                }
+
+                ScoreDoc[] hits = collector.TopDocs(skip, take).ScoreDocs;
+                List<Document> hitDocuments = new List<Document>();
+                for (int i = 0; i < hits.Length; i++)
+                {
+                    int docId = hits[i].Doc;
+                    Document d = searcher.Doc(docId);
+                    hitDocuments.Add(d);
+                    result.Add(
+                        new SearchResultItem
+                        {
+                            FormattedUrl = d.Get(LuceneIndexDocumentKeys.Path),
+                            Link = d.Get(LuceneIndexDocumentKeys.Path),
+                            Title = d.Get(LuceneIndexDocumentKeys.Title),
+                            Snippet = GetSnippet(d.Get(LuceneIndexDocumentKeys.Content), request.Query)
+                        });
+                }
+
+                CheckAvailability(result);
+
+                LuceneEvents.Instance.OnSearchResultRetrieving(hitDocuments, result);
+            }
 
             return new SearchResults
                        {
@@ -381,12 +412,19 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
         {
             if (writer != null)
             {
-                writer.Optimize();
-                writer.Dispose();
+                writer.Dispose(true);
                 writer = null;
             }
         }
-        
+
+        public void OptimizeIndex()
+        {
+            if (writer != null)
+            {
+                writer.Optimize();
+            }
+        }
+       
         private void CloseReader()
         {
             if (reader != null)
@@ -587,6 +625,8 @@ namespace BetterCMS.Module.LuceneSearch.Services.IndexerService
 
         public void Dispose()
         {
+            isClosing = true;
+
             CloseWriter();
             CloseReader();
             

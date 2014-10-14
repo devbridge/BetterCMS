@@ -196,6 +196,7 @@ namespace BetterCms.Module.MediaManager.Controllers
         {
             var rootFolderId = Request.Form["rootFolderId"].ToGuidOrDefault();
             var reuploadMediaId = Request.Form["reuploadMediaId"].ToGuidOrDefault();
+            var shouldOverride = Request.Form["shouldOverride"].ToBoolOrDefault();
             var rootFolderType = (MediaType)Enum.Parse(typeof(MediaType), Request.Form["rootFolderType"]);
 
             if (file != null && FileFormatIsValid(rootFolderType, file.ContentType))
@@ -207,7 +208,8 @@ namespace BetterCms.Module.MediaManager.Controllers
                         FileLength = file.ContentLength,
                         FileName = file.FileName,
                         FileStream = file.InputStream,
-                        ReuploadMediaId = reuploadMediaId
+                        ReuploadMediaId = reuploadMediaId,
+                        ShouldOverride = shouldOverride
                     };
 
                 var media = GetCommand<UploadCommand>().ExecuteCommand(request);

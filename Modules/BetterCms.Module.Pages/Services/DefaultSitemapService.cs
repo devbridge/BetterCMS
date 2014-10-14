@@ -73,7 +73,7 @@ namespace BetterCms.Module.Pages.Services
                 .ThenFetch(mapNode => mapNode.Translations)
                 .Distinct()
                 .ToList()
-                .First();
+                .FirstOrDefault();
 
             return sitemap;
         }
@@ -93,7 +93,7 @@ namespace BetterCms.Module.Pages.Services
                 .ThenFetch(mapNode => mapNode.Translations)
                 .Distinct()
                 .ToList()
-                .First();
+                .FirstOrDefault();
 
             return sitemap;
         }
@@ -111,7 +111,7 @@ namespace BetterCms.Module.Pages.Services
                 .ThenFetch(mapNode => mapNode.Translations)
                 .Distinct()
                 .ToList()
-                .First();
+                .FirstOrDefault();
 
             return sitemap;
         }

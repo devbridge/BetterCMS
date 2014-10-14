@@ -430,6 +430,20 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
     };
 
     /**
+    * Check is localStorage supported
+    */
+    function isLocalStorageNameSupported() {
+        var testKey = 'isSupportedKey';
+        try {
+            localStorage.setItem(testKey, '1');
+            localStorage.removeItem(testKey);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    /**
     * Initiliazes web page: checks browser version
     */
     function globalInit() {
@@ -441,6 +455,10 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
                 browserInfo.hide();
             });
             browserInfo.css('display', 'block');
+        }
+
+        if (!isLocalStorageNameSupported()) {
+            window.localStorage = { setitem: function() {} };
         }
 
         // Handle unauthorized ajax errors

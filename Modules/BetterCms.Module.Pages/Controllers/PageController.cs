@@ -141,7 +141,6 @@ namespace BetterCms.Module.Pages.Controllers
                     response.PageUrl = HttpUtility.UrlDecode(Http.GetAbsolutePath(response.PageUrl));
                     Messages.AddSuccess(PagesGlobalization.SavePage_CreatedSuccessfully_Message);
 
-                    response.IsSitemapActionEnabled = ConfigurationHelper.IsSitemapActionEnabledAfterAddingNewPage(CmsConfiguration);
                     return Json(new WireJson { Success = true, Data = response });
                 }
             }
@@ -330,7 +329,7 @@ namespace BetterCms.Module.Pages.Controllers
             if (model != null)
             {
                 Messages.AddSuccess(string.Format(PagesGlobalization.ClonePage_Dialog_Success, model.PageUrl));
-                model.IsSitemapActionEnabled = ConfigurationHelper.IsSitemapActionEnabledAfterAddingTranslationForPage(CmsConfiguration);
+                
                 return Json(new WireJson { Success = true, Data = model });
             }
 
