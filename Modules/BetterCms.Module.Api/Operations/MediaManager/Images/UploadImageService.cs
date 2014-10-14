@@ -70,6 +70,11 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
                 Guid.Empty,
                 mediaImage);
 
+            if (savedImage != null)
+            {
+                Events.MediaManagerEvents.Instance.OnMediaFileUploaded(savedImage);
+            }
+
             return new UploadImageResponse
             {
                 Data = savedImage.Id
