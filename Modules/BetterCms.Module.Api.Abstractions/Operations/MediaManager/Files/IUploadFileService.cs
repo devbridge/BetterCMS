@@ -1,4 +1,4 @@
-﻿using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
+﻿using BetterCms.Module.Api.Operations.MediaManager.Files.File;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.Files
 {

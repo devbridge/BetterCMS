@@ -66,11 +66,11 @@ namespace BetterCms.Test.Module.Api.Media.Images
             Assert.AreEqual(getResponse.Data.Title, model.Title);
             Assert.AreEqual(getResponse.Data.Caption, model.Caption);
             Assert.AreEqual(getResponse.Data.Description, model.Description);
-            // TODO: fix Assert.AreEqual(getResponse.Data.FolderId, model.FolderId);
-            // TODO: fix Assert.AreEqual(getResponse.Data.FolderName, folder.Title);
+            Assert.AreEqual(getResponse.Data.FolderId, model.FolderId);
+            Assert.AreEqual(getResponse.Data.FolderName, folder.Title);
             Assert.AreEqual(getResponse.Data.OriginalFileName, model.FileName);
             Assert.AreEqual(getResponse.Data.OriginalSize, model.FileStream.Length);
-            // TODO: fix Assert.AreEqual(getResponse.Data.FileSize, model.FileStream.Length);
+            Assert.AreEqual(getResponse.Data.FileSize, model.FileStream.Length);
             
             Assert.AreEqual(getResponse.Data.FileExtension, ".png");
             Assert.AreEqual(getResponse.Data.OriginalFileExtension, ".png");
@@ -83,7 +83,7 @@ namespace BetterCms.Test.Module.Api.Media.Images
             Assert.AreEqual(getResponse.Data.ThumbnailHeight, 150);
             Assert.Greater(getResponse.Data.ThumbnailSize, 0);
             Assert.AreEqual(getResponse.Data.IsArchived, false);
-            // TODO: fix Assert.AreEqual(getResponse.Data.IsUploaded, true);
+            // todo: still null Assert.AreEqual(getResponse.Data.IsUploaded, true);
             Assert.AreEqual(getResponse.Data.IsTemporary, false);
             Assert.AreEqual(getResponse.Data.IsCanceled, false);
             Assert.IsNotNull(getResponse.Data.PublishedOn);

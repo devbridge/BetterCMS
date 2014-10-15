@@ -8,7 +8,9 @@ namespace BetterCms.Module.MediaManager.Services
 {
     public interface IMediaImageService
     {
-        MediaImage UploadImage(Guid rootFolderId, string fileName, long fileLength, Stream file, Guid reuploadMediaId, MediaImage filledInImage = null, bool overrideUrl = true);
+        MediaImage UploadImage(Guid rootFolderId, string fileName, long fileLength, Stream file, Guid reuploadMediaId, bool overrideUrl = true);
+
+        MediaImage UploadImageWithStream(Stream fileStream, MediaImage image);
 
         void RemoveImageWithFiles(Guid mediaImageId, int version, bool doNotCheckVersion = false, bool originalWasNotUploaded = false);
 

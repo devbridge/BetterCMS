@@ -176,7 +176,7 @@ namespace BetterCms.Module.MediaManager.Services
         /// <param name="filledInImage"></param>
         /// <param name="overrideUrl"></param>
         /// <returns>Image entity.</returns>
-        public MediaImage UploadImage(Guid rootFolderId, string fileName, long fileLength, Stream fileStream, Guid reuploadMediaId, MediaImage filledInImage = null, bool overrideUrl = true)
+        public MediaImage UploadImage(Guid rootFolderId, string fileName, long fileLength, Stream fileStream, Guid reuploadMediaId, bool overrideUrl = true)
         {
             using (var thumbnailFileStream = new MemoryStream())
             {
@@ -243,7 +243,7 @@ namespace BetterCms.Module.MediaManager.Services
                     publicFileName = MediaImageHelper.CreatePublicFileName(fileName, Path.GetExtension(fileName));
 
                     // Create new original image and upload file stream to the storage
-                    originalImage = CreateImage( rootFolderId, fileName, Path.GetExtension(fileName), fileName, size, fileLength, thumbnailFileStream.Length, filledInImage);
+                    originalImage = CreateImage( rootFolderId, fileName, Path.GetExtension(fileName), fileName, size, fileLength, thumbnailFileStream.Length);
                     mediaImageVersionPathService.SetPathForNewOriginal(originalImage, folderName, publicFileName);
                 }
 
@@ -251,7 +251,33 @@ namespace BetterCms.Module.MediaManager.Services
                 repository.Save(originalImage);
                 unitOfWork.Commit();
 
-                StartTasksForImage(originalImage, fileStream, thumbnailFileStream);
+                StartTasksForImage(originalImage, fileStream, thumbnailFileStream, false);
+
+                return originalImage;
+            }
+        }
+
+        public MediaImage UploadImageWithStream(Stream fileStream, MediaImage image)
+        {
+            using (var thumbnailFileStream = new MemoryStream())
+            {
+                fileStream = RotateImage(fileStream);
+                var size = GetSize(fileStream);
+
+                CreatePngThumbnail(fileStream, thumbnailFileStream, ThumbnailSize);
+
+                var folderName = image.Folder != null ? image.Folder.Title : mediaFileService.CreateRandomFolderName();
+                var publicFileName = MediaImageHelper.CreatePublicFileName(image.OriginalFileName, image.OriginalFileExtension);
+
+                // Create new original image and upload file stream to the storage
+                var originalImage = CreateImage(null, image.OriginalFileName, image.OriginalFileExtension, image.Title, size, image.Size, thumbnailFileStream.Length, image);
+                mediaImageVersionPathService.SetPathForNewOriginal(originalImage, folderName, publicFileName);
+
+                unitOfWork.BeginTransaction();
+                repository.Save(originalImage);
+                unitOfWork.Commit();
+
+                StartTasksForImage(originalImage, fileStream, thumbnailFileStream, false, true);
 
                 return originalImage;
             }
@@ -734,13 +760,33 @@ namespace BetterCms.Module.MediaManager.Services
             }
         }
 
-        private void StartTasksForImage(MediaImage mediaImage, Stream fileStream, MemoryStream thumbnailFileStream, bool shouldNotUploadOriginal = false)
+        private void StartTasksForImage(
+            MediaImage mediaImage,
+            Stream fileStream,
+            MemoryStream thumbnailFileStream,
+            bool shouldNotUploadOriginal = false,
+            bool waitForUploadResult = false)
         {
-            var publicImageUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(fileStream, mediaImage.FileUri, mediaImage.Id, img => { img.IsUploaded = true; }, img => { img.IsUploaded = false; }, true);
-            var publicOriginalUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(fileStream, mediaImage.OriginalUri, mediaImage.Id, img => { img.IsOriginalUploaded = true; }, img => { img.IsOriginalUploaded = false; }, true);
-            var publicThumbnailUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(thumbnailFileStream, mediaImage.ThumbnailUri, mediaImage.Id, img => { img.IsThumbnailUploaded = true; }, img => { img.IsThumbnailUploaded = false; }, true);
+            var publicImageUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(
+                fileStream,
+                mediaImage.FileUri,
+                mediaImage.Id,
+                img =>{img.IsUploaded = true;},img =>{img.IsUploaded = false;},
+                true);
+            var publicOriginalUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(
+                fileStream,
+                mediaImage.OriginalUri,
+                mediaImage.Id,
+                img =>{img.IsOriginalUploaded = true;},img =>{img.IsOriginalUploaded = false;},
+                true);
+            var publicThumbnailUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(
+                thumbnailFileStream,
+                mediaImage.ThumbnailUri,
+                mediaImage.Id,
+                img =>{img.IsThumbnailUploaded = true;},img =>{img.IsThumbnailUploaded = false;},
+                true);
 
-            Task.Factory.ContinueWhenAll(
+            var waitForTasks = Task.Factory.ContinueWhenAll(
                 new[] { publicImageUpload, publicOriginalUpload, publicThumbnailUpload, },
                 result => ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(
                     session =>

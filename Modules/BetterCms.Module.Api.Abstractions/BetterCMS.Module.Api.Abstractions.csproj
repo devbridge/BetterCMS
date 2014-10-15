@@ -160,9 +160,9 @@
     <Compile Include="Operations\MediaManager\Images\Image\SaveImageModel.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\PutImageRequest.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\PutImageResponse.cs" />
-    <Compile Include="Operations\MediaManager\Images\Image\UploadFileModel.cs" />
-    <Compile Include="Operations\MediaManager\Images\Image\UploadFileRequest.cs" />
-    <Compile Include="Operations\MediaManager\Images\Image\UploadFileResponse.cs" />
+    <Compile Include="Operations\MediaManager\Files\File\UploadFileModel.cs" />
+    <Compile Include="Operations\MediaManager\Files\File\UploadFileRequest.cs" />
+    <Compile Include="Operations\MediaManager\Files\File\UploadFileResponse.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\UploadImageModel.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\UploadImageRequest.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\UploadImageResponse.cs" />

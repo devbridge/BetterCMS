@@ -2,14 +2,16 @@
 using System.IO;
 using System.Runtime.Serialization;
 
-namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
+using BetterCms.Module.Api.Infrastructure;
+
+namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
 {
     /// <summary>
     /// The upload file model.
     /// </summary>
     [DataContract]
     [Serializable]
-    public class UploadFileModel
+    public class UploadFileModel: SaveModelBase
     {
         /// <summary>
         /// Gets or sets file id.

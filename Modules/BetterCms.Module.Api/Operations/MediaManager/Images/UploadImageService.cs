@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
@@ -59,16 +60,14 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
                 Type = Module.MediaManager.Models.MediaType.Image,
                 Caption = request.Data.Caption,
                 Title = request.Data.Title,
-                Description = request.Data.Description
+                Description = request.Data.Description,
+                Size = request.Data.FileStream.Length,
+                Folder = parentFolder,
+                OriginalFileName = request.Data.FileName,
+                OriginalFileExtension = Path.GetExtension(request.Data.FileName)
             };
 
-            var savedImage = mediaImageService.UploadImage(
-                parentFolder != null ? parentFolder.Id : Guid.Empty,
-                request.Data.FileName,
-                request.Data.FileStream.Length,
-                request.Data.FileStream,
-                Guid.Empty,
-                mediaImage);
+            var savedImage = mediaImageService.UploadImageWithStream(request.Data.FileStream, mediaImage);
 
             if (savedImage != null)
             {
@@ -77,7 +76,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
 
             return new UploadImageResponse
             {
-                Data = savedImage.Id
+                Data = savedImage.Id,
             };
         }
     }

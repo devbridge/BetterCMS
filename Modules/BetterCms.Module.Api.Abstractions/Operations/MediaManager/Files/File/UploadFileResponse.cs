@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
-namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
+namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
 {
     /// <summary>
     /// Uploading file response.

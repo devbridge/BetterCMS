@@ -4,7 +4,7 @@ using System.Linq;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.Exceptions.Api;
-using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
+using BetterCms.Module.Api.Operations.MediaManager.Files.File;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 
