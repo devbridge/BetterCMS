@@ -8,7 +8,7 @@ using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Services;
-
+using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Pages.Command.Content.GetPageHtmlContent;
@@ -30,24 +30,22 @@ namespace BetterCms.Test.Module.Pages.CommandTests.ContentTests
             var pageContent = TestDataProvider.CreateNewPageContent(htmlContent);
             htmlContent.Status = ContentStatus.Published;
 
-            // Create command
-            var command = new GetPageHtmlContentCommand();
-            command.UnitOfWork = new Mock<IUnitOfWork>().Object;
-            command.Repository = new Mock<IRepository>().Object;
-            command.Configuration = Container.Resolve<ICmsConfiguration>();
-            command.Context = new Mock<ICommandContext>().Object;
-            
             // Mock security service
             var securityMock = new Mock<ISecurityService>();
             securityMock.Setup(s => s.IsAuthorized(It.IsAny<IPrincipal>(), It.IsAny<string>())).Returns(true);
-            command.SecurityService = securityMock.Object;
 
             // Mock content service
-            var serviceMock = new Mock<IContentService>();
-            serviceMock
+            var contentServiceMock = new Mock<IContentService>();
+            contentServiceMock
                 .Setup(f => f.GetPageContentForEdit(pageContent.Id))
                 .Returns(new Tuple<PageContent, Content>(pageContent, htmlContent));
-            command.ContentService = serviceMock.Object;
+
+            // Create command
+            var command = new GetPageHtmlContentCommand(contentServiceMock.Object, new Mock<IMasterPageService>().Object, Container.Resolve<ICmsConfiguration>());
+            command.UnitOfWork = new Mock<IUnitOfWork>().Object;
+            command.Repository = new Mock<IRepository>().Object;
+            command.Context = new Mock<ICommandContext>().Object;
+            command.SecurityService = securityMock.Object;
 
             // Execute command
             var result = command.Execute(pageContent.Id);                     

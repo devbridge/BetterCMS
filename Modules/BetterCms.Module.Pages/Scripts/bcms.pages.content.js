@@ -13,6 +13,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 contentId: '#bcmsContentId',
                 contentVersion: '#bcmsPageContentVersion',
                 pageContentId: '#bcmsPageContentId',
+                parentPageContentId: '#bcmsParentPageContentId',
                 contentFormRegionId: '#bcmsContentToRegionId',
                 desirableStatus: '#bcmsContentDesirableStatus',
                 dataPickers: '.bcms-datepicker',
@@ -42,7 +43,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 customJsContainer: '#bcms-custom-js-container',
                 customCssContainer: '#bcms-custom-css-container',
                 aceEditorContainer: '.bcms-editor-field-area-container:first',
-                
+
                 editInSourceModeHiddenField: '#bcms-edit-in-source-mode',
                 firstForm: 'form:first',
                 datePickers: 'input.bcms-datepicker'
@@ -90,18 +91,23 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         */
         pagesContent.links = links;
         pagesContent.globalization = globalization;
-        
+
         /**
         * Open dialog with add new content form
         */
-        pagesContent.onAddNewContent = function(regionId) {
-            var editorId;
+        pagesContent.onAddNewContent = function (data) {
+            var editorId,
+                regionViewModel = data.regionViewModel,
+                includeChildRegions = bcms.boolAsString(data.includeChildRegions),
+                onSuccess = data.onSuccess || function () {
+                    redirect.ReloadWithAlert();
+                };
 
             modal.edit({
                 title: globalization.addNewContentDialogTitle,
                 disableSaveAndPublish: !security.IsAuthorized(["BcmsPublishContent"]),
                 onLoad: function (dialog) {
-                    var url = $.format(links.loadAddNewHtmlContentDialogUrl, bcms.pageId, regionId);
+                    var url = $.format(links.loadAddNewHtmlContentDialogUrl, bcms.pageId, regionViewModel.id, regionViewModel.parentPageContentId);
                     dynamicContent.bindDialog(dialog, url, {
                         contentAvailable: function (contentDialog, data) {
                             var editInSourceMode = false,
@@ -117,10 +123,10 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                     enableInsertDynamicRegion = true;
                                 }
                             }
-                            pagesContent.initializeAddNewContentForm(contentDialog, editInSourceMode, enableInsertDynamicRegion, editorId);
+                            pagesContent.initializeAddNewContentForm(contentDialog, editInSourceMode, enableInsertDynamicRegion, editorId, data.Data, onSuccess, includeChildRegions);
                         },
 
-                        beforePost: function() {
+                        beforePost: function () {
                             htmlEditor.updateEditorContent(editorId);
 
                             var editInSourceMode = htmlEditor.isSourceMode(editorId);
@@ -129,23 +135,31 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                             return true;
                         },
 
-                        postSuccess: function (json) {                            
+                        postSuccess: function (json) {
                             if (json.Data.DesirableStatus == bcms.contentStatus.preview) {
                                 try {
                                     var result = json.Data;
                                     $(selectors.contentId).val(result.ContentId);
                                     $(selectors.pageContentId).val(result.PageContentId);
                                     preview.previewPageContent(result.PageId, result.PageContentId);
-                                } finally  {
+                                } finally {
                                     return false;
-                                }                                 
+                                }
                             } else {
-                                redirect.ReloadWithAlert();
-                            }                            
+                                if ($.isFunction(onSuccess)) {
+                                    onSuccess(json);
+                                }
+                            }
+
+                            return true;
                         },
 
-                        formSerialize: function(form) {
-                            return widgets.serializeFormWithChildWidgetOptions(form, editorId);
+                        formSerialize: function (form) {
+                            return widgets.serializeFormWithChildWidgetOptions(form, editorId, function (serializedData) {
+                                if (includeChildRegions) {
+                                    serializedData.IncludeChildRegions = true;
+                                }
+                            });
                         },
                         formContentType: 'application/json; charset=UTF-8'
                     });
@@ -162,12 +176,14 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Save content order after sorting.
         */
-        pagesContent.onSortPageContent = function (model) {
-            var info = modal.info({
-                content: globalization.sortingPageContentMessage,
-                disableCancel: true,
-                disableAccept: true
-            });
+        pagesContent.onSortPageContent = function (data) {
+            var models = data.models,
+                onSuccess = data.onSuccess,
+                info = modal.info({
+                    content: globalization.sortingPageContentMessage,
+                    disableCancel: true,
+                    disableAccept: true
+                });
 
             var url = links.sortPageContentUrl,
                alertOnError = function () {
@@ -178,7 +194,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                },
                dataToSend = JSON.stringify({
                    PageId: bcms.pageId,
-                   PageContents: model
+                   PageContents: models
                });
 
             $.ajax({
@@ -191,7 +207,9 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 success: function (json) {
                     info.close();
                     if (json.Success) {
-                        redirect.ReloadWithAlert();
+                        if ($.isFunction(onSuccess)) {
+                            onSuccess(json.Data.PageContents);
+                        }
                     } else {
                         if (json.Messages && json.Messages.length > 0) {
                             modal.showMessages(json);
@@ -206,7 +224,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 }
             });
         };
-        
+
         function initializeWidgetsTab(dialog, onInsert, editorId) {
             dialog.container.find(selectors.widgetsSearchButton).on('click', function () {
                 pagesContent.updateWidgetCategoryList(dialog, onInsert);
@@ -214,7 +232,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             dialog.container.find(selectors.widgetCreateButton).on('click', function () {
                 widgets.openCreateHtmlContentWidgetDialog(function (json) {
-                    htmlEditor.updateEditorContent();
+                    htmlEditor.updateEditorContent(editorId);
                     // Reload search results after category was created.
                     pagesContent.updateWidgetCategoryList(dialog, onInsert);
                     messages.refreshBox(dialog.container, json);
@@ -238,17 +256,17 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Initializes content dialog form.
         */
-        pagesContent.initializeAddNewContentForm = function (dialog, editInSourceMode, enableInsertDynamicRegion, editorId) {
-            var onInsert = function() {
-                pagesContent.insertWidget(this, dialog);
+        pagesContent.initializeAddNewContentForm = function (dialog, editInSourceMode, enableInsertDynamicRegion, editorId, data, onSuccess, includeChildRegions) {
+            var onInsert = function () {
+                pagesContent.insertWidget(this, dialog, onSuccess, includeChildRegions);
             };
 
             dialog.container.find(selectors.dataPickers).initializeDatepicker(globalization.datePickerTooltipTitle);
 
             initializeWidgetsTab(dialog, onInsert, editorId);
-            
+
             dialog.container.find(selectors.anyTab).click(function () {
-                setTimeout(function() {
+                setTimeout(function () {
                     dialog.setFocus();
                 }, 100);
             });
@@ -257,29 +275,29 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
             htmlEditor.initializeHtmlEditor(editorId, '', {}, editInSourceMode);
             if (enableInsertDynamicRegion) {
-                htmlEditor.enableInsertDynamicRegion(editorId);
+                htmlEditor.enableInsertDynamicRegion(editorId, true, data.LastDynamicRegionNumber);
             }
 
             pagesContent.initializeCustomTextArea(dialog);
 
             codeEditor.initialize(dialog.container);
         };
-        
+
         /**
         * Initializes content edit dialog form.
         */
-        pagesContent.initializeEditContentForm = function (dialog, editInSourceMode, enableInsertDynamicRegion, data, editorId) {
+        pagesContent.initializeEditContentForm = function (dialog, editInSourceMode, enableInsertDynamicRegion, data, editorId, includeChildRegions, onSuccess) {
             var canEdit = security.IsAuthorized(["BcmsEditContent"]),
                 canPublish = security.IsAuthorized(["BcmsPublishContent"]),
                 form = dialog.container.find(selectors.firstForm);
 
             htmlEditor.initializeHtmlEditor(editorId, data.ContentId, {}, editInSourceMode);
             if (enableInsertDynamicRegion) {
-                htmlEditor.enableInsertDynamicRegion(editorId);
+                htmlEditor.enableInsertDynamicRegion(editorId, true, data.LastDynamicRegionNumber);
             }
 
             pagesContent.initializeCustomTextArea(dialog);
-            
+
             codeEditor.initialize(dialog.container);
 
             dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
@@ -287,14 +305,24 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     pageContentId = dialog.container.find(selectors.pageContentId).val(),
                     contentVersion = dialog.container.find(selectors.contentVersion).val();
 
-                history.destroyDraftVersion(contentId, contentVersion, dialog.container, function () {
+                history.destroyDraftVersion(contentId, contentVersion, includeChildRegions, dialog.container, function (publishedId, json) {
                     dialog.close();
-                    pagesContent.editPageContent(pageContentId, function () {
-                        redirect.ReloadWithAlert();
+
+                    pagesContent.editPageContent(pageContentId, {
+                        onCloseClick: function () {
+                            // If is set what to do on success, do it, otherwise - reload the page
+                            if ($.isFunction(onSuccess)) {
+                                onSuccess(json);
+                            } else {
+                                redirect.ReloadWithAlert();
+                            }
+                        },
+                        onSuccess: onSuccess,
+                        includeChildRegions: includeChildRegions
                     });
                 });
             });
-            
+
             // User with only BcmsPublishContent but without BcmsEditContent can only publish and change publish dates
             if (form.data('readonly') !== true && canPublish && !canEdit) {
                 form.addClass(classes.inactive);
@@ -312,15 +340,15 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             dialog.container.find(selectors.dataPickers).initializeDatepicker();
         };
 
-         /**
-        * Initializes custom css and js text fields.
-        */
-        pagesContent.initializeCustomTextArea = function(dialog) {
-            dialog.container.find(selectors.enableCustomCss).on('change', function() {
+        /**
+       * Initializes custom css and js text fields.
+       */
+        pagesContent.initializeCustomTextArea = function (dialog) {
+            dialog.container.find(selectors.enableCustomCss).on('change', function () {
                 showHideCustomCssText(dialog, true);
             });
 
-            dialog.container.find(selectors.enableCustomJs).on('change', function() {
+            dialog.container.find(selectors.enableCustomJs).on('change', function () {
                 showHideCustomJsText(dialog, true);
             });
             showHideCustomCssText(dialog);
@@ -334,14 +362,14 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             $.ajax({
                 url: $.format(links.loadWidgetsUrl, dialog.container.find(selectors.widgetsSearchInput).val()),
                 cache: false,
-            }).done(function (data) {            
+            }).done(function (data) {
                 dialog.container.find(selectors.widgetsContainer).html(data);
 
                 initializeWidgets(dialog.container, dialog, onInsert);
                 dialog.container.find(selectors.widgetsSearchInput).focus();
             });
         };
-        
+
         /**
         * Initializes widget categories list with sliders.
         */
@@ -363,10 +391,10 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     };
 
                 widgets.deleteWidget(widgetId, widgetVersion, widgetName,
-                    function() {
+                    function () {
                         widgetContainer.showLoading();
                     },
-                    function(data) {
+                    function (data) {
                         onComplete(data);
                         pagesContent.updateWidgetCategoryList(dialog, onInsert);
                     },
@@ -377,9 +405,9 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 var self = $(this),
                     widgetContainer = self.parents(selectors.widgetContainerBlock),
                     widgetId = widgetContainer.data('id'),
-                    widgetType = widgetContainer.data('type');               
-                
-                widgets.editWidget(widgetId, widgetType, function(data) {
+                    widgetType = widgetContainer.data('type');
+
+                widgets.editWidget(widgetId, widgetType, function (data) {
                     messages.refreshBox(widgetContainer, data);
                     pagesContent.updateWidgetCategoryList(dialog, onInsert);
                 },
@@ -387,7 +415,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             });
 
             preview.initialize(container.find(selectors.widgetsContainer), selectors.widgetIFramePreview);
-            
+
             // Add preview for widget with images (unbind click for iframe preview)
             dialog.container.find(selectors.widgetImagePreview).unbind('click');
             dialog.container.find(selectors.widgetImagePreview).on('click', function () {
@@ -398,15 +426,22 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 modal.imagePreview(url, alt);
             });
         };
-              
+
         /**
         * Inserts widget to CMS page
         */
-        pagesContent.insertWidget = function (self, dialog) {
+        pagesContent.insertWidget = function (self, dialog, onSuccess, includeChildRegions) {
             var regionId = dialog.container.find(selectors.contentFormRegionId).val(),
+                parentPageContentId = dialog.container.find(selectors.parentPageContentId).val(),
                 widgetContainer = $(self).parents(selectors.widgetContainerBlock),
                 contentId = widgetContainer.data('originalId'),
-                url = $.format(links.insertContentToPageUrl, bcms.pageId, contentId, regionId);
+                url = $.format(links.insertContentToPageUrl, bcms.pageId, contentId, regionId, parentPageContentId, includeChildRegions);
+
+            if (!onSuccess) {
+                onSuccess = function () {
+                    redirect.ReloadWithAlert();
+                };
+            }
 
             $.ajax({
                 type: 'POST',
@@ -428,7 +463,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 success: function (data) {
                     dialog.close();
                     if (data && data.Success) {
-                        redirect.ReloadWithAlert();
+                        onSuccess(data);
                     } else {
                         modal.alert({
                             title: globalization.errorTitle,
@@ -489,53 +524,69 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         };
 
         /**
-        * Called when content overlay is created
+        * Called when content view model is created
         */
-        function onCreateContentOverlay(contentViewModel) {
+        function onContentModelCreated(contentViewModel) {
             var contentId = contentViewModel.contentId,
-                pageContentId = contentViewModel.pageContentId,
-                contentVersion = contentViewModel.contentVersion,
-                pageContentVersion = contentViewModel.pageContentVersion;
+                pageContentId = contentViewModel.pageContentId;
 
             if (contentViewModel.contentType == contentTypes.htmlContent) {
-                contentViewModel.removeConfigureButton();
-
                 // Edit content
-                contentViewModel.onEditContent = function() {
-                    pagesContent.editPageContent(pageContentId);
+                contentViewModel.onEditContent = function (onSuccess, includeChildRegions) {
+                    pagesContent.editPageContent(pageContentId, {
+                        onSuccess: onSuccess,
+                        includeChildRegions: includeChildRegions
+                    });
                 };
-                
+
+                contentViewModel.visibleButtons.configure = false;
+
                 if (!security.IsAuthorized(["BcmsEditContent", "BcmsPublishContent"])) {
-                    contentViewModel.removeHistoryButton();
-                    contentViewModel.removeEditButton();
+                    contentViewModel.visibleButtons.history = false;
+                    contentViewModel.visibleButtons.edit = false;
                 }
-                
+
                 if (!security.IsAuthorized(["BcmsEditContent"])) {
-                    contentViewModel.removeDeleteButton();
+                    contentViewModel.visibleButtons["delete"] = false;
                 }
             }
-            
+
             // Delete content
-            contentViewModel.onDeleteContent = function () {
-                pagesContent.removeContentFromPage(pageContentId, pageContentVersion, contentVersion);
+            contentViewModel.onDeleteContent = function (onDeleteSuccess) {
+                pagesContent.removeContentFromPage(contentViewModel.pageContentId,
+                    contentViewModel.pageContentVersion,
+                    contentViewModel.contentVersion,
+                    onDeleteSuccess);
             };
-            
+
             // Content history
-            contentViewModel.onContentHistory = function() {
-                history.openPageContentHistoryDialog(contentId, pageContentId);
+            contentViewModel.onContentHistory = function (onContentRestore, includeChildRegions) {
+                history.openPageContentHistoryDialog(contentId, pageContentId, {
+                    onContentRestore: onContentRestore,
+                    includeChildRegions: includeChildRegions
+                });
             };
 
             // Change draft icon
             if (contentViewModel.draft) {
-                contentViewModel.addDraftIcon();
+                contentViewModel.visibleButtons.draft = true;
             }
-        };
+        }
 
         /**
         * Opens dialog for editing page regular content  
         */
-        pagesContent.editPageContent = function (contentId, onCloseClick) {
+        pagesContent.editPageContent = function (contentId, opts) {
+            opts = $.extend({
+                onCloseClick: null,
+                onSuccess: null,
+                includeChildRegions: false
+            }, opts);
+
             var canEdit = security.IsAuthorized(["BcmsEditContent"]),
+                onCloseClick = opts.onCloseClick,
+                onSuccess = opts.onSuccess,
+                includeChildRegions = (opts.includeChildRegions === true),
                 editorId;
 
             modal.edit({
@@ -547,33 +598,33 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 onLoad: function (dialog) {
                     var url = $.format(links.editPageContentUrl, contentId);
                     dynamicContent.bindDialog(dialog, url, {
-                        contentAvailable: function (contentDialog, data) {
+                        contentAvailable: function (contentDialog, json) {
                             var editInSourceMode = false,
                                 enableInsertDynamicRegion = false;
 
                             editorId = dialog.container.find(selectors.htmlEditor).attr('id');
 
-                            if (data && data.Data) {
-                                if (data.Data.EditInSourceMode) {
+                            if (json && json.Data) {
+                                if (json.Data.EditInSourceMode) {
                                     editInSourceMode = true;
                                 }
-                                if (data.Data.EnableInsertDynamicRegion) {
+                                if (json.Data.EnableInsertDynamicRegion) {
                                     enableInsertDynamicRegion = true;
                                 }
                             }
-                            pagesContent.initializeEditContentForm(contentDialog, editInSourceMode, enableInsertDynamicRegion, data.Data, editorId);
+                            pagesContent.initializeEditContentForm(contentDialog, editInSourceMode, enableInsertDynamicRegion, json.Data, editorId, includeChildRegions, onSuccess);
                         },
 
                         beforePost: function () {
                             htmlEditor.updateEditorContent(editorId);
-                            
+
                             var editInSourceMode = htmlEditor.isSourceMode(editorId);
                             dialog.container.find(selectors.editInSourceModeHiddenField).val(editInSourceMode);
 
                             return true;
                         },
 
-                        postError: function(json) {
+                        postError: function (json) {
                             if (json.Data && json.Data.ConfirmationMessage) {
                                 modal.confirm({
                                     content: json.Data.ConfirmationMessage,
@@ -588,18 +639,28 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
                         postSuccess: function (json) {
                             if (json.Data.DesirableStatus == bcms.contentStatus.preview) {
-                                try {                                    
+                                try {
                                     preview.previewPageContent(bcms.pageId, json.Data.PageContentId);
                                 } finally {
                                     return false;
                                 }
                             } else {
-                                redirect.ReloadWithAlert();
+                                if ($.isFunction(onSuccess)) {
+                                    onSuccess(json);
+                                } else {
+                                    redirect.ReloadWithAlert();
+                                }
                             }
+
+                            return true;
                         },
 
                         formSerialize: function (form) {
-                            return widgets.serializeFormWithChildWidgetOptions(form, editorId);
+                            return widgets.serializeFormWithChildWidgetOptions(form, editorId, function (serializedData) {
+                                if (includeChildRegions) {
+                                    serializedData.IncludeChildRegions = true;
+                                }
+                            });
                         },
                         formContentType: 'application/json; charset=utf-8'
                     });
@@ -616,28 +677,34 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Removes regular content from page.
         */
-        pagesContent.removeContentFromPage = function (pageContentId, pageContentVersion, contentVersion) {
-            var createUrl = function(isUserConfirmed) {
-                    return $.format(links.deletePageContentUrl, pageContentId, pageContentVersion, contentVersion, isUserConfirmed);
-                },
-                getUrl = function() {
+        pagesContent.removeContentFromPage = function (pageContentId, pageContentVersion, contentVersion, onDeleteSuccess) {
+            if (!onDeleteSuccess) {
+                onDeleteSuccess = function () {
+                    redirect.ReloadWithAlert({
+                        title: globalization.deleteContentSuccessMessageTitle,
+                        message: globalization.deleteContentSuccessMessageMessage,
+                        timeout: 1500
+                    });
+                };
+            }
+
+            var createUrl = function (isUserConfirmed) {
+                return $.format(links.deletePageContentUrl, pageContentId, pageContentVersion, contentVersion, isUserConfirmed);
+            },
+                getUrl = function () {
                     return createUrl(false);
                 },
                 onDeleteCompleted = function (json) {
                     try {
                         if (json.Success) {
-                            redirect.ReloadWithAlert({
-                                title: globalization.deleteContentSuccessMessageTitle,
-                                message: globalization.deleteContentSuccessMessageMessage,
-                                timeout: 1500
-                            });
+                            onDeleteSuccess(json);
                         }
                         else {
                             if (json.Data && json.Data.ConfirmationMessage) {
                                 modal.confirm({
                                     content: json.Data.ConfirmationMessage,
                                     onAccept: function () {
-                                        getUrl = function() {
+                                        getUrl = function () {
                                             return createUrl(true);
                                         };
                                         confirmDialog.accept();
@@ -677,8 +744,8 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                         return false;
                     }
                 });
-        };    
-        
+        };
+
         /**
         * Function tries to resolve ace editor container ithin given container and focuses the editor
         */
@@ -688,7 +755,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 aceEditor.focus();
             }
         }
-        
+
         /**
         * IE11 fix: recall resize method after editors initialization
         */
@@ -721,7 +788,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
         function showHideCustomJsText(dialog, focus) {
             var customJsContainer = dialog.container.find(selectors.customJsContainer);
-            
+
             if (dialog.container.find(selectors.enableCustomJs).attr('checked')) {
                 customJsContainer.show();
                 resizeAceEditor(customJsContainer);
@@ -738,17 +805,33 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         */
         function onDynamicRegionInsert(htmlContentEditor) {
             if (htmlContentEditor != null) {
-                var guid = bcms.createGuid(),
+                var last = htmlContentEditor.LastDynamicRegionNumber || 0,
+                    isMasterPage = htmlContentEditor.IsMasterPage === true,
+                    regionIdentifier,
                     html;
-                
+
+                // If widget
+                if (!isMasterPage) {
+                    last++;
+                    regionIdentifier = 'WidgetRegion' + last + '_' + bcms.createGuid().replace('-', '');
+                } else {
+                    last++;
+                    if (last == 1) {
+                        regionIdentifier = 'CMSMainContent';
+                    } else {
+                        regionIdentifier = 'ContentRegion' + last;
+                    }
+                }
+                htmlContentEditor.LastDynamicRegionNumber = last;
+
                 if (htmlContentEditor.mode == 'source') {
-                    html = '<div>{{DYNAMIC_REGION:' + guid + '}}</div>';
+                    html = '<div>{{DYNAMIC_REGION:' + regionIdentifier + '}}</div>';
                     htmlContentEditor.addHtml(html);
                 } else {
                     // Create fake CKEditor object with real object representation (inversion of code in /[BetterCms.Module.Root]/Scripts/ckeditor/plugins/cms-dynamicregion/plugin.js).
                     // NOTE: EDITOR.createFakeParserElement(...) functionality does not work...
                     html = '<div class="bcms-draggable-region" data-cke-realelement="%3Cdiv%3E%7B%7BDYNAMIC_REGION%3A'
-                        + guid
+                        + regionIdentifier
                         + '%7D%7D%3C%2Fdiv%3E" data-cke-real-node-type="1" title="Dynamic Region" data-cke-real-element-type="cmsdynamicregion" isregion="true">Content to add</div>';
                     var re = CKEDITOR.dom.element.createFromHtml(html, htmlContentEditor.document);
                     htmlContentEditor.insertElement(re);
@@ -759,13 +842,16 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Inserts child widget to the content
         */
-        function onWidgetInsert(htmlContentEditor) {
+        function onWidgetInsert(opts) {
+            var htmlContentEditor = opts.editor,
+                editorId = opts.editorId;
+
             if (!htmlContentEditor) {
                 return;
             }
 
             var dialog,
-                onInsert = function() {
+                onInsert = function () {
                     var widgetContainer = $(this).parents(selectors.widgetContainerBlock),
                         contentId = widgetContainer.data('originalId').toUpperCase(),
                         title = widgetContainer.find(selectors.widgetName).text(),
@@ -788,7 +874,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     var url = links.selectWidgetUrl;
                     dynamicContent.bindDialog(dialog, url, {
                         contentAvailable: function (contentDialog) {
-                            initializeWidgetsTab(contentDialog, onInsert);
+                            initializeWidgetsTab(contentDialog, onInsert, editorId);
                             initializeWidgets(contentDialog.container, contentDialog, onInsert);
                         },
                     });
@@ -799,7 +885,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Initializes page module.
         */
-        pagesContent.init = function() {
+        pagesContent.init = function () {
             bcms.logger.debug('Initializing bcms.pages.content module.');
         };
 
@@ -808,7 +894,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         */
         bcms.on(bcms.events.addPageContent, pagesContent.onAddNewContent);
         bcms.on(bcms.events.sortPageContent, pagesContent.onSortPageContent);
-        bcms.on(bcms.events.createContentOverlay, onCreateContentOverlay);
+        bcms.on(bcms.events.contentModelCreated, onContentModelCreated);
         bcms.on(htmlEditor.events.insertDynamicRegion, onDynamicRegionInsert);
         bcms.on(htmlEditor.events.insertWidget, onWidgetInsert);
 

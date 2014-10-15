@@ -2,13 +2,16 @@
 
 @model RenderPageViewModel
 
-@if (Model.CanManageContent && Model.RenderingPage != null)
+@if (Model.CanManageContent)
 {
     <div class="bcms-layout-path" style="display:none">
         <div class="bcms-path-arrow-left bcms-path-arrow-inactive"></div>
         <div class="bcms-path-arrow-right"></div>
         <div class="bcms-layout-path-inner">
-            @RenderMasterPage(Model.RenderingPage)	
+            @if (Model.RenderingPage != null)
+            {
+                @RenderMasterPage(Model.RenderingPage)
+            }
         </div>
         <div class="bcms-layout-path-handle">
             Hide Path
@@ -21,6 +24,6 @@
     if (viewModel.MasterPage != null)
     {
         @RenderMasterPage(viewModel.MasterPage)
-        <div class="bcms-layout-path-item" data-url="@viewModel.MasterPage.PageUrl">@viewModel.MasterPage.Title</div>
+        <div class="bcms-layout-path-item bcms-path-master" data-url="@viewModel.MasterPage.PageUrl">@viewModel.MasterPage.Title</div>
     }
 }

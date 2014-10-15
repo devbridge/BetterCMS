@@ -7,6 +7,7 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Content;
 
 using BetterCms.Module.Root;
@@ -19,9 +20,18 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageHtmlContent
 {
     public class GetPageHtmlContentCommand : CommandBase, ICommand<Guid, PageContentViewModel>
     {
-        public virtual IContentService ContentService { get; set; }
+        private readonly IContentService contentService;
 
-        public virtual ICmsConfiguration Configuration { get; set; }
+        private readonly ICmsConfiguration configuration;
+
+        private readonly IMasterPageService masterPageService;
+
+        public GetPageHtmlContentCommand(IContentService contentService, IMasterPageService masterPageService, ICmsConfiguration configuration)
+        {
+            this.masterPageService = masterPageService;
+            this.configuration = configuration;
+            this.contentService = contentService;
+        }
 
         /// <summary>
         /// Executes the specified request.
@@ -30,7 +40,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageHtmlContent
         /// <returns></returns>        
         public PageContentViewModel Execute(Guid pageContentId)
         {
-            var pageContentForEdit = ContentService.GetPageContentForEdit(pageContentId);
+            var pageContentForEdit = contentService.GetPageContentForEdit(pageContentId);
 
             if (pageContentForEdit == null)
             {
@@ -45,6 +55,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageHtmlContent
                                                 Id = pageContent.Id,
                                                 PageId = pageContent.Page.Id,
                                                 RegionId = pageContent.Region.Id,
+                                                ParentPageContentId = pageContent.Parent != null ? pageContent.Parent.Id : Guid.Empty,
                                                 ContentId = pageContent.Content.Id,
                                                 ContentName = content.Name,
                                                 LiveFrom = content.ActivationDate,
@@ -62,7 +73,7 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageHtmlContent
                                                 HasPublishedContent = content.Original != null
                                             };
 
-            if (Configuration.Security.AccessControlEnabled)
+            if (configuration.Security.AccessControlEnabled)
             {
                 var accessRules = Repository.AsQueryable<PageContent>()
                                             .Where(x => x.Id == pageContentId && !x.IsDeleted)
@@ -76,6 +87,11 @@ namespace BetterCms.Module.Pages.Command.Content.GetPageHtmlContent
 
             model.CanEditContent = SecurityService.IsAuthorized(Context.Principal, RootModuleConstants.UserRoles.EditContent);
             model.CanDestroyDraft = model.CurrentStatus == ContentStatus.Draft && model.HasPublishedContent && model.CanEditContent;
+
+            if (model.EnableInsertDynamicRegion)
+            {
+                model.LastDynamicRegionNumber = masterPageService.GetLastDynamicRegionNumber(model.PageId);
+            }
 
             return model;
         }

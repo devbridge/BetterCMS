@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Module.Pages.ViewModels.Content;
 
 namespace BetterCms.Module.Blog.Commands.SaveBlogPost
 {
@@ -13,6 +15,14 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// The blog id.
         /// </value>
         public virtual Guid Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the content identifier.
+        /// </summary>
+        /// <value>
+        /// The content identifier.
+        /// </value>
+        public virtual Guid ContentId { get; set; }
 
         /// <summary>
         /// Gets or sets the page content id.
@@ -29,6 +39,14 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// The entity version.
         /// </value>
         public virtual int Version { get; set; }
+
+        /// <summary>
+        /// Gets or sets the content version.
+        /// </summary>
+        /// <value>
+        /// The content version.
+        /// </value>
+        public virtual int ContentVersion { get; set; }
 
         /// <summary>
         /// Gets or sets the page URL.
@@ -85,5 +103,13 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
         /// The desirable status.
         /// </value>
         public ContentStatus DesirableStatus { get; set; }
+
+        /// <summary>
+        /// Gets or sets the regions.
+        /// </summary>
+        /// <value>
+        /// The regions.
+        /// </value>
+        public List<PageContentChildRegionViewModel> Regions { get; set; }
     }
 }

@@ -19,8 +19,9 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
             editModeOn: 'editModeOn',
             addPageContent: 'addPageContent',
             sortPageContent: 'sortPageContent',
-            createContentOverlay: 'createContentOverlay',
-            pageCreated: 'pageCreated'
+            contentModelCreated: 'contentModelCreated',
+            pageCreated: 'pageCreated',
+            editContentsTree: 'editContentsTree'
         },
         eventListeners = {},
         contentStatus = {
@@ -383,6 +384,66 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
     };
 
     /**
+    * Returns string 1 or 0, converted from boolean
+    */
+    app.boolAsString = function (boolValue) {
+        if (boolValue) {
+            return "1";
+        } else {
+            return "0";
+        }
+    };
+
+    /*
+    * Helper methods for filter and loop through an array 
+    */
+    app.asEnumerable = function (arr) {
+        var i,
+            l = arr.length,
+            forEach = function (callBack) {
+                for (i = 0; i < l; i++) {
+                    callBack(arr[i]);
+                }
+
+                return app.asEnumerable(arr);
+            };
+
+        return {
+            where: function (whereClause) {
+                var filtered = [];
+
+                forEach(function(x) {
+                    if (whereClause(x)) {
+                        filtered.push(x);
+                    }
+                });
+
+                return app.asEnumerable(filtered);
+            },
+
+            toArray: function() {
+                return arr;
+            },
+
+            forEach: forEach
+        };
+    };
+
+    /**
+    * Check is localStorage supported
+    */
+    function isLocalStorageNameSupported() {
+        var testKey = 'isSupportedKey';
+        try {
+            localStorage.setItem(testKey, '1');
+            localStorage.removeItem(testKey);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    /**
     * Initiliazes web page: checks browser version
     */
     function globalInit() {
@@ -394,6 +455,10 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
                 browserInfo.hide();
             });
             browserInfo.css('display', 'block');
+        }
+
+        if (!isLocalStorageNameSupported()) {
+            window.localStorage = { setitem: function() {} };
         }
 
         // Handle unauthorized ajax errors

@@ -30,7 +30,7 @@ namespace BetterCms.Module.MediaManager.Registration
                 {
                     new JavaScriptModuleGlobalization(this, "uploadFilesDialogTitle", () => MediaGlobalization.MultiFileUpload_DialogTitle),
                     new JavaScriptModuleGlobalization(this, "failedToProcessFile", () => MediaGlobalization.MediaManager_FailedToProcessFile_Message),
-                    new JavaScriptModuleGlobalization(this, "multipleFilesWarningMessageOnReupload", () => MediaGlobalization.MediaManager_MultipleFilesWarning_Message),
+                    new JavaScriptModuleGlobalization(this, "multipleFilesWarningMessageOnReupload", () => MediaGlobalization.MediaManager_MultipleFilesWarning_Message)
                 };
         }
     }

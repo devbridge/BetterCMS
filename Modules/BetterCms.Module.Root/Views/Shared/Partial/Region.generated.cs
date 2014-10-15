@@ -27,6 +27,12 @@ namespace BetterCms.Module.Root.Views.Shared.Partial
     using System.Web.UI;
     using System.Web.WebPages;
     
+    #line 1 "..\..\Views\Shared\Partial\Region.cshtml"
+    using BetterCms.Module.Root.Content.Resources;
+    
+    #line default
+    #line hidden
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/Partial/Region.cshtml")]
     public partial class Region : System.Web.Mvc.WebViewPage<BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel>
@@ -46,13 +52,13 @@ WriteLiteral(">\r\n    <div class=\"bcms-region-overlay bcms-layer\">\r\n       
 "ion-overlay-inner\">\r\n            <div class=\"bcms-hidden-overlay-bg\"></div>\r\n");
 
             
-            #line 7 "..\..\Views\Shared\Partial\Region.cshtml"
+            #line 8 "..\..\Views\Shared\Partial\Region.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 7 "..\..\Views\Shared\Partial\Region.cshtml"
+            #line 8 "..\..\Views\Shared\Partial\Region.cshtml"
              if (!Model.IsReadOnly && Model.HasEditRole)
             {
 
@@ -69,7 +75,46 @@ WriteLiteral(" class=\"bcms-region-button bcms-region-sortdone\"");
 
 WriteLiteral(" style=\"display: none;\"");
 
-WriteLiteral("></div>\r\n                    <div");
+WriteLiteral(">");
+
+            
+            #line 11 "..\..\Views\Shared\Partial\Region.cshtml"
+                                                                                           Write(RootGlobalization.Button_Save);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                    <div");
+
+WriteLiteral(" class=\"bcms-region-button bcms-region-contentstree\"");
+
+WriteLiteral(" style=\"display: none;\"");
+
+WriteLiteral(">");
+
+            
+            #line 12 "..\..\Views\Shared\Partial\Region.cshtml"
+                                                                                               Write(RootGlobalization.Button_Manage);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                    <div");
+
+WriteLiteral(" class=\"bcms-region-button bcms-region-sortcancel\"");
+
+WriteLiteral(" style=\"display: none;\"");
+
+WriteLiteral(">");
+
+            
+            #line 13 "..\..\Views\Shared\Partial\Region.cshtml"
+                                                                                             Write(RootGlobalization.Button_Cancel);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</div>\r\n                    <div");
 
 WriteLiteral(" class=\"bcms-region-button bcms-region-addcontent\"");
 
@@ -86,13 +131,13 @@ WriteLiteral(" class=\"bcms-sorting-block\"");
 WriteLiteral("></div>\r\n");
 
             
-            #line 15 "..\..\Views\Shared\Partial\Region.cshtml"
+            #line 18 "..\..\Views\Shared\Partial\Region.cshtml"
             }
 
             
             #line default
             #line hidden
-WriteLiteral("        </div>\r\n    </div>\r\n</script>\r\n");
+WriteLiteral("        </div>\r\n    </div>\r\n</script>");
 
         }
     }

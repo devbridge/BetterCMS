@@ -13,6 +13,11 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
     /// </summary>
     public class ImageViewModel
     {
+        public ImageViewModel()
+        {
+            ShouldOverride = true;
+        }
+
         private const string dimensionRegularExpression = "^[1-9][0-9]{0,3}$";
 
         /// <summary>
@@ -214,6 +219,11 @@ namespace BetterCms.Module.MediaManager.ViewModels.Images
         /// The folder id.
         /// </value>
         public System.Guid? FolderId { get; set; }
+
+        /// <summary>
+        /// Gets or sets override flag.
+        /// </summary>
+        public bool ShouldOverride { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

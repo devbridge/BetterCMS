@@ -22,7 +22,7 @@ namespace BetterCms.Module.MediaManager.Registration
                 {
                     new JavaScriptModuleLinkTo<HistoryController>(this, "loadMediaHistoryDialogUrl", c => c.MediaHistory("{0}")),
                     new JavaScriptModuleLinkTo<HistoryController>(this, "loadMediaVersionPreviewUrl", c => c.MediaVersion("{0}")),
-                    new JavaScriptModuleLinkTo<HistoryController>(this, "restoreMediaVersionUrl", c => c.RestoreMediaVersion("{0}")),
+                    new JavaScriptModuleLinkTo<HistoryController>(this, "restoreMediaVersionUrl", c => c.RestoreMediaVersion("{0}", "{1}")),
                     new JavaScriptModuleLinkTo<FilesController>(this, "downloadFileUrl", c => c.Download("{0}"))
                 };
 
@@ -31,6 +31,8 @@ namespace BetterCms.Module.MediaManager.Registration
                     new JavaScriptModuleGlobalization(this, "mediaHistoryDialogTitle", () => MediaGlobalization.MediaHistory_DialogTitle),
                     new JavaScriptModuleGlobalization(this, "mediaVersionRestoreConfirmation", () => MediaGlobalization.MediaHistory_Restore_ConfirmationMessage),
                     new JavaScriptModuleGlobalization(this, "restoreButtonTitle", () => MediaGlobalization.MediaHistory_Restore_AcceptButtonTitle),
+                    new JavaScriptModuleGlobalization(this, "restoreWithOverrideButtonTitle", () => MediaGlobalization.MediaHistory_RestoreWithOverride_AcceptButtonTitle),
+                    new JavaScriptModuleGlobalization(this, "restoreAsNewVersionButtonTitle", () => MediaGlobalization.MediaHistory_RestoreAsNewVersion_AcceptButtonTitle),
                     new JavaScriptModuleGlobalization(this, "closeButtonTitle", () => RootGlobalization.Button_Close)
                 };
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
@@ -67,59 +68,53 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
 
                 if (request.ReuploadMediaId.HasDefaultValue())
                 {
-                    foreach (var fileId in request.UploadedFiles)
-                    {
-                        if (!fileId.HasDefaultValue())
-                        {
-                            var file = Repository.FirstOrDefault<MediaFile>(fileId);
-                            if (folder != null && (file.Folder == null || file.Folder.Id != folder.Id))
-                            {
-                                file.Folder = folder;
-                            }
-                            file.IsTemporary = false;
-                            file.PublishedOn = DateTime.Now;
-                            Repository.Save(file);
-
-                            files.Add(file);
-                        }
-                    }
+                    UpdateMedia(request, folder, files);
                 }
                 else
                 {
                     // Re-upload performed.
                     var fileId = request.UploadedFiles.FirstOrDefault();
-                    if (!fileId.HasDefaultValue())
+                    var file = Repository.FirstOrDefault<MediaFile>(fileId);
+
+                    if (file is MediaImage)
                     {
-                        var originalMedia = Repository.First<MediaFile>(request.ReuploadMediaId);
-                        if (cmsConfiguration.Security.AccessControlEnabled && !(originalMedia is IAccessControlDisabled))
+                        UpdateMedia(request, folder, files);
+                    }
+                    else
+                    {
+                        if (!fileId.HasDefaultValue())
                         {
-                            AccessControlService.DemandAccess(originalMedia, Context.Principal, AccessLevel.ReadWrite);
+                            var originalMedia = Repository.First<MediaFile>(request.ReuploadMediaId);
+                            if (cmsConfiguration.Security.AccessControlEnabled && !(originalMedia is IAccessControlDisabled))
+                            {
+                                AccessControlService.DemandAccess(originalMedia, Context.Principal, AccessLevel.ReadWrite);
+                            }
+
+                            var historyItem = originalMedia.CreateHistoryItem();
+                            Repository.Save(historyItem);
+
+                            // Do not update access control, if reuploading
+                            updateAccessControl = false;
+
+
+                            file.CopyDataTo(originalMedia);
+
+                            originalMedia.Title = historyItem.Title;
+                            originalMedia.Description = historyItem.Description;
+                            originalMedia.IsArchived = historyItem.IsArchived;
+                            originalMedia.Folder = historyItem.Folder;
+                            originalMedia.Image = historyItem.Image;
+                            if (file is MediaImage && originalMedia is MediaImage)
+                            {
+                                ((MediaImage)originalMedia).Caption = ((MediaImage)historyItem).Caption;
+                                ((MediaImage)originalMedia).ImageAlign = ((MediaImage)historyItem).ImageAlign;
+                            }
+
+                            originalMedia.IsTemporary = false;
+                            originalMedia.PublishedOn = DateTime.Now;
+
+                            files.Add(originalMedia);
                         }
-
-                        var historyItem = originalMedia.CreateHistoryItem();
-                        Repository.Save(historyItem);
-
-                        // Do not update access control, if reuploading
-                        updateAccessControl = false;
-
-                        var file = Repository.FirstOrDefault<MediaFile>(fileId);
-                        file.CopyDataTo(originalMedia);
-
-                        originalMedia.Title = historyItem.Title;
-                        originalMedia.Description = historyItem.Description;
-                        originalMedia.IsArchived = historyItem.IsArchived;
-                        originalMedia.Folder = historyItem.Folder;
-                        originalMedia.Image = historyItem.Image;
-                        if (file is MediaImage && originalMedia is MediaImage)
-                        {
-                            ((MediaImage)originalMedia).Caption = ((MediaImage)historyItem).Caption;
-                            ((MediaImage)originalMedia).ImageAlign = ((MediaImage)historyItem).ImageAlign;
-                        }
-
-                        originalMedia.IsTemporary = false;
-                        originalMedia.PublishedOn = DateTime.Now;
-
-                        files.Add(originalMedia);
                     }
                 }
 
@@ -140,6 +135,18 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
 
                 UnitOfWork.Commit();
 
+                if (request.ReuploadMediaId.HasDefaultValue())
+                {
+                    foreach (var file in files)
+                    {
+                        if (file is MediaImage)
+                        {
+                            file.PublicUrl += string.Format("?{0}", DateTime.Now.ToString(MediaManagerModuleDescriptor.HardLoadImageDateTimeFormat));
+                            ((MediaImage)file).PublicThumbnailUrl += string.Format("?{0}", DateTime.Now.ToString(MediaManagerModuleDescriptor.HardLoadImageDateTimeFormat));
+                        }
+                    }
+                }
+
                 response.Medias = files.Select(Convert).ToList();
 
                 // Notify.
@@ -150,6 +157,26 @@ namespace BetterCms.Module.MediaManager.Command.Upload.ConfirmUpload
             }
 
             return response;
+        }
+
+        private void UpdateMedia(MultiFileUploadViewModel request, MediaFolder folder, List<MediaFile> files)
+        {
+            foreach (var fileId in request.UploadedFiles)
+            {
+                if (!fileId.HasDefaultValue())
+                {
+                    var file = Repository.FirstOrDefault<MediaFile>(fileId);
+                    if (folder != null && (file.Folder == null || file.Folder.Id != folder.Id))
+                    {
+                        file.Folder = folder;
+                    }
+                    file.IsTemporary = false;
+                    file.PublishedOn = DateTime.Now;
+                    Repository.Save(file);
+
+                    files.Add(file);
+                }
+            }
         }
 
         private MediaFileViewModel Convert(MediaFile file)

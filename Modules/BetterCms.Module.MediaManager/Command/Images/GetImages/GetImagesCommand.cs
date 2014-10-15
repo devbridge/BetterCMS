@@ -40,7 +40,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImages
                 var dimensionsCalculator = new ImageDimensionsCalculator(image);
 
                 model.Tooltip = image.Caption;
-                model.ThumbnailUrl = FileUrlResolver.EnsureFullPathUrl(image.PublicThumbnailUrl);
+                model.ThumbnailUrl = FileUrlResolver.EnsureFullPathUrl(image.PublicThumbnailUrl + string.Format("?{0}", DateTime.Now.ToString(MediaManagerModuleDescriptor.HardLoadImageDateTimeFormat)));
                 model.IsProcessing = image.IsUploaded == null || image.IsThumbnailUploaded == null || image.IsOriginalUploaded == null;
                 model.IsFailed = image.IsUploaded == false || image.IsThumbnailUploaded == false || image.IsOriginalUploaded == false;
                 model.Height = dimensionsCalculator.ResizedCroppedHeight;

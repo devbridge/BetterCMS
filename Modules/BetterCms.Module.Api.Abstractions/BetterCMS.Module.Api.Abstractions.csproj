@@ -39,23 +39,23 @@
   <ItemGroup>
     <Reference Include="ServiceStack, Version=3.9.56.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ServiceStack.3.9.56\lib\net35\ServiceStack.dll</HintPath>
+      <HintPath>..\..\packages\ServiceStack.3.9.71\lib\net35\ServiceStack.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Common, Version=3.9.56.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ServiceStack.Common.3.9.56\lib\net35\ServiceStack.Common.dll</HintPath>
+      <HintPath>..\..\packages\ServiceStack.Common.3.9.71\lib\net35\ServiceStack.Common.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Interfaces, Version=3.9.56.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ServiceStack.Common.3.9.56\lib\net35\ServiceStack.Interfaces.dll</HintPath>
+      <HintPath>..\..\packages\ServiceStack.Common.3.9.71\lib\net35\ServiceStack.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.ServiceInterface, Version=3.9.56.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ServiceStack.3.9.56\lib\net35\ServiceStack.ServiceInterface.dll</HintPath>
+      <HintPath>..\..\packages\ServiceStack.3.9.71\lib\net35\ServiceStack.ServiceInterface.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.Text, Version=3.9.56.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\ServiceStack.Text.3.9.56\lib\net35\ServiceStack.Text.dll</HintPath>
+      <HintPath>..\..\packages\ServiceStack.Text.3.9.71\lib\net35\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -136,6 +136,7 @@
     <Compile Include="Operations\MediaManager\Files\File\PutFileRequest.cs" />
     <Compile Include="Operations\MediaManager\Files\File\PutFileResponse.cs" />
     <Compile Include="Operations\MediaManager\Files\File\SaveFileModel.cs" />
+    <Compile Include="Operations\MediaManager\Files\IUploadFileService.cs" />
     <Compile Include="Operations\MediaManager\Folders\Folder\DeleteFolderRequest.cs" />
     <Compile Include="Operations\MediaManager\Folders\Folder\DeleteFolderResponse.cs" />
     <Compile Include="Operations\MediaManager\Folders\Folder\FolderModel.cs" />
@@ -159,6 +160,13 @@
     <Compile Include="Operations\MediaManager\Images\Image\SaveImageModel.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\PutImageRequest.cs" />
     <Compile Include="Operations\MediaManager\Images\Image\PutImageResponse.cs" />
+    <Compile Include="Operations\MediaManager\Files\File\UploadFileModel.cs" />
+    <Compile Include="Operations\MediaManager\Files\File\UploadFileRequest.cs" />
+    <Compile Include="Operations\MediaManager\Files\File\UploadFileResponse.cs" />
+    <Compile Include="Operations\MediaManager\Images\Image\UploadImageModel.cs" />
+    <Compile Include="Operations\MediaManager\Images\Image\UploadImageRequest.cs" />
+    <Compile Include="Operations\MediaManager\Images\Image\UploadImageResponse.cs" />
+    <Compile Include="Operations\MediaManager\Images\IUploadImageService.cs" />
     <Compile Include="Operations\MediaManager\MediaType.cs" />
     <Compile Include="Operations\Pages\Contents\Content\Draft\DestroyContentDraftRequest.cs" />
     <Compile Include="Operations\Pages\Contents\Content\Draft\DestroyContentDraftResponse.cs" />

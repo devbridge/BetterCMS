@@ -10,6 +10,8 @@ using BetterCms.Core.Modules.Projections;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Root.ViewModels.Cms;
 
+using NHibernate.Linq;
+
 namespace BetterCms.Module.Root.Mvc.Helpers
 {
     public static class ViewRenderingExtensions
@@ -77,7 +79,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                 var renderedMaster = RenderRecursively(controller, currentModel.MasterPage, pageModel, htmlHelper);
 
                 var pageHtmlHelper = new PageHtmlRenderer.PageHtmlRenderer(renderedMaster, pageModel);
-                var contentHtmlHelper = new ChildContentRenderHelper(htmlHelper);
+                var contentHtmlHelper = new PageContentRenderHelper(htmlHelper);
 
                 foreach (var region in currentModel.Regions)
                 {
@@ -94,7 +96,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                                 // Pass current model as view data model
                                 htmlHelper.ViewData.Model = pageModel;
 
-                                contentsBuilder = contentHtmlHelper.AppendHtml(contentsBuilder, projection);
+                                contentsBuilder = contentHtmlHelper.AppendHtml(contentsBuilder, projection, currentModel);
                             }
                         }
                     }
@@ -109,6 +111,11 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                     pageHtmlHelper.ReplaceRegionRepresentationHtml();
                 }
                 renderedMaster = pageHtmlHelper.GetReplacedHtml();
+
+                if (pageModel == currentModel)
+                {
+                    renderedMaster = contentHtmlHelper.GetReplacedInvisibleRegions(pageModel, renderedMaster);
+                }
 
                 return renderedMaster;
             }
@@ -127,6 +134,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             newModel.ModifiedOn = pageModel.ModifiedOn;
             newModel.CreatedByUser = pageModel.CreatedByUser;
             newModel.ModifiedByUser = pageModel.ModifiedByUser;
+            newModel.IsMasterPage = pageModel.IsMasterPage;
 
             PopulateCollections(newModel, pageModel);
 

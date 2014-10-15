@@ -10,7 +10,7 @@ namespace BetterCms.Module.MediaManager.Services
     {
         void RemoveFile(Guid fileId, int version, bool doNotCheckVersion = false);
 
-        MediaFile UploadFile(MediaType type, Guid rootFolderId, string fileName, long fileLength, Stream fileStream);
+        MediaFile UploadFile(MediaType type, Guid rootFolderId, string fileName, long fileLength, Stream fileStream, bool isTemporary = true);
 
         string CreateRandomFolderName();
 

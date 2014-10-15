@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Module.Pages.ViewModels.Content;
 
 namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
 {
@@ -96,5 +98,13 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
         /// The page content id to preview this widget.
         /// </value>
         public Guid? PreviewOnPageContentId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the regions.
+        /// </summary>
+        /// <value>
+        /// The regions.
+        /// </value>
+        public List<PageContentChildRegionViewModel> Regions { get; set; }
     }
 }

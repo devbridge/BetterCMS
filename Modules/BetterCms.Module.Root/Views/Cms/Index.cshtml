@@ -1,4 +1,5 @@
 ﻿@using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Root.Mvc.PageHtmlRenderer
 
 @model BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel
 
@@ -18,4 +19,12 @@
 @{
     // Render regions and contents.
     Html.RenderSectionContents(this, Model);
+    if (Model.RenderingPage == null)
+    {
+        @Html.RenderInvisibleRegions(Model)
+    }
+    else
+    {
+        @PageContentRenderHelper.InvisibleRegionsPlaceholder
+    }
 }

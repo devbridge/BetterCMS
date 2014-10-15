@@ -52,19 +52,27 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
         /// <param name="fileUrlResolver">The file URL resolver.</param>
         /// <param name="accessControlService">The access control service.</param>
         /// <param name="fileService">The file service.</param>
+        /// <param name="uploadFileService">The upload file service.</param>
         public FilesService(
             IRepository repository,
             IMediaFileService mediaFileService,
             IMediaFileUrlResolver fileUrlResolver,
             IAccessControlService accessControlService,
-            IFileService fileService)
+            IFileService fileService,
+            IUploadFileService uploadFileService)
         {
             this.repository = repository;
             this.mediaFileService = mediaFileService;
             this.fileUrlResolver = fileUrlResolver;
             this.accessControlService = accessControlService;
             this.fileService = fileService;
+            Upload = uploadFileService;
         }
+
+        /// <summary>
+        /// Gets the upload file service.
+        /// </summary>
+        public IUploadFileService Upload { get; private set; }
 
         /// <summary>
         /// Gets files list.

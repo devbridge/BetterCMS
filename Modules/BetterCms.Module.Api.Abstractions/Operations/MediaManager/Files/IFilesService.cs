@@ -8,6 +8,11 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
     public interface IFilesService
     {
         /// <summary>
+        /// Gets the upload file service.
+        /// </summary>
+        IUploadFileService Upload { get; }
+
+        /// <summary>
         /// Gets files list.
         /// </summary>
         /// <param name="request">The request.</param>

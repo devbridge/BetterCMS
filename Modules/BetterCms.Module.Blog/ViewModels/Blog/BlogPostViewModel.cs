@@ -11,7 +11,6 @@ using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Mvc.Attributes;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
-using BetterCms.Module.Root.ViewModels.Option;
 using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.Blog.ViewModels.Blog
@@ -217,14 +216,6 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         public bool UseCanonicalUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to enable inserttion of dynamic regions.
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if to enable insertion of dynamic regions; otherwise, <c>false</c>.
-        /// </value>
-        public bool EnableInsertDynamicRegion { get; set; }
-
-        /// <summary>
         /// Gets or sets a value whether user confirmed content saving when affecting children pages.
         /// </summary>
         /// <value>
@@ -239,6 +230,14 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// <c>true</c> if dialog should be opened in the read only mode; otherwise, <c>false</c>.
         /// </value>
         public bool IsReadOnly { get; set; }
+
+        /// <summary>
+        /// Determines, if child regions should be included to the results.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if child regions should be included to the results; otherwise, <c>false</c>.
+        /// </value>
+        public bool IncludeChildRegions { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlogPostViewModel" /> class.

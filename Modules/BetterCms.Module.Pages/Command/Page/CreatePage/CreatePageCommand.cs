@@ -6,6 +6,7 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
 
 using BetterCms.Module.Pages.Command.Page.SavePageProperties;
+using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
@@ -150,7 +151,9 @@ namespace BetterCms.Module.Pages.Command.Page.CreatePage
             // Notifying, that page is created
             Events.PageEvents.Instance.OnPageCreated(page);
 
-            return new SavePageResponse(page);
+            var response = new SavePageResponse(page) { IsSitemapActionEnabled = ConfigurationHelper.IsSitemapActionEnabledAfterAddingNewPage(cmsConfiguration) };
+
+            return response;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace BetterCMS.Module.LuceneSearch.Workers
 
         private readonly Thread workingThread;
 
-        private bool hostShuttingDown;
+        protected bool hostShuttingDown;
 
         private TimeSpan sleep;
 
@@ -28,12 +28,18 @@ namespace BetterCMS.Module.LuceneSearch.Workers
 
         protected abstract void DoWork();
 
+        protected virtual void OnStop()
+        {
+        }
+        
         public void Stop(bool immediate)
         {
             lock (lockObject)
             {
                 hostShuttingDown = true;
             }
+
+            OnStop();
 
             HostingEnvironment.UnregisterObject(this);
         }

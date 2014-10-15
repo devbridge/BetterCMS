@@ -14,12 +14,16 @@ namespace BetterCms.Module.Root.Services
 
         Models.Content RestoreContentFromArchive(Models.Content restoreFrom);
 
-        int GetPageContentNextOrderNumber(Guid pageId);
+        int GetPageContentNextOrderNumber(Guid pageId, Guid? parentPageContentId);
 
         void PublishDraftContent(Guid pageId);
 
-        bool CheckIfContentHasDeletingChildren(Guid pageId, Guid contentId, string html = null);
+        bool CheckIfContentHasDeletingChildren(Guid? pageId, Guid contentId, string html = null);
+
+        void CheckIfContentHasDeletingChildrenWithException(Guid? pageId, Guid contentId, string html = null);
 
         void UpdateDynamicContainer(Models.Content content);
+
+        TEntity GetDraftOrPublishedContent<TEntity>(TEntity content) where TEntity : Models.Content;
     }
 }

@@ -6,18 +6,45 @@ using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Models.Extensions;
+using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.MediaManager.Command.History.RestoreMediaVersion
 {
-    public class RestoreMediaVersionCommand : CommandBase, ICommand<Guid, bool>
+    public class RestoreMediaVersionCommand : CommandBase, ICommand<RestoreMediaVersionRequest, bool>
     {
-        public bool Execute(Guid mediaHistoryItemId)
+        private readonly IMediaImageService imageService;
+
+        public RestoreMediaVersionCommand(IMediaImageService imageService)
         {
-            var versionToRevert = Repository
-                .AsQueryable<Media>(p => p.Id == mediaHistoryItemId)
+            this.imageService = imageService;
+        }
+
+        public bool Execute(RestoreMediaVersionRequest request)
+        {
+            var imageToRevert = Repository
+                .AsQueryable<MediaImage>(i => i.Id == request.VersionId)
                 .Fetch(f => f.Original)
-                .First();
+                .FirstOrDefault();
+
+            if (imageToRevert != null)
+            {
+                var currentOriginal = Repository
+                .AsQueryable<MediaImage>(i => imageToRevert.Original != null && i.Id == imageToRevert.Original.Id)
+                .Fetch(f => f.Original)
+                .FirstOrDefault();
+
+                if (currentOriginal != null)
+                {
+                    var archivedImage = imageService.MoveToHistory(currentOriginal);
+                    var newOriginalImage = imageService.MakeAsOriginal(imageToRevert, currentOriginal, archivedImage, request.ShouldOverridUrl);
+                    Events.MediaManagerEvents.Instance.OnMediaRestored(newOriginalImage);
+                }
+
+                return true;
+            }
+            
+            var versionToRevert = Repository.AsQueryable<Media>(p => p.Id == request.VersionId).Fetch(f => f.Original).First();
 
             var original = versionToRevert.Original;
 

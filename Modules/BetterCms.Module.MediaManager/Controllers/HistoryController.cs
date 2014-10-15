@@ -67,12 +67,21 @@ namespace BetterCms.Module.MediaManager.Controllers
         /// Restores the media version.
         /// </summary>
         /// <param name="id">The id.</param>
+        /// <param name="shouldOverrideString">Override public url when restore version.</param>
         /// <returns>WireJson result.</returns>
         [HttpPost]
         [BcmsAuthorize(RootModuleConstants.UserRoles.EditContent)]
-        public ActionResult RestoreMediaVersion(string id)
+        public ActionResult RestoreMediaVersion(string id, string shouldOverrideString)
         {
-            var result = GetCommand<RestoreMediaVersionCommand>().ExecuteCommand(id.ToGuidOrDefault());
+            bool shouldOverride;
+            if (!bool.TryParse(shouldOverrideString, out shouldOverride))
+            {
+                shouldOverride = true;
+            }
+
+            var result =
+                GetCommand<RestoreMediaVersionCommand>()
+                    .ExecuteCommand(new RestoreMediaVersionRequest { VersionId = id.ToGuidOrDefault(), ShouldOverridUrl = shouldOverride });
             
             return WireJson(result);
         }

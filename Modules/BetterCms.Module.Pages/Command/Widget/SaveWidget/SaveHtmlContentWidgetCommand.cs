@@ -23,7 +23,7 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
             HtmlContentWidget originalWiget;
             WidgetService.SaveHtmlContentWidget(request.Content, request.ChildContentOptionValues, out widget, out originalWiget);
 
-            return new SaveWidgetResponse
+            var response = new SaveWidgetResponse
                     {
                         Id = widget.Id,
                         OriginalId = originalWiget.Id,
@@ -37,6 +37,13 @@ namespace BetterCms.Module.Pages.Command.Widget.SaveWidget
                         DesirableStatus = request.Content.DesirableStatus,
                         PreviewOnPageContentId = request.Content.PreviewOnPageContentId
                     };
+
+            if (request.Content.IncludeChildRegions)
+            {
+                response.Regions = WidgetService.GetWidgetChildRegionViewModels(widget);
+            }
+
+            return response;
         }
     }
 }

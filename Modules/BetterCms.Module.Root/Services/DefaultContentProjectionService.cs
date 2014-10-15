@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
@@ -9,6 +10,8 @@ using BetterCms.Core.Modules.Projections;
 
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Projections;
+
+using NHibernate.Proxy.DynamicProxy;
 
 namespace BetterCms.Module.Root.Services
 {
@@ -18,20 +21,25 @@ namespace BetterCms.Module.Root.Services
 
         private readonly PageContentProjectionFactory pageContentProjectionFactory;
 
+        private readonly IUnitOfWork unitOfWork;
+
         public DefaultContentProjectionService(PageContentProjectionFactory pageContentProjectionFactory,
-            IOptionService optionService)
+            IOptionService optionService, IUnitOfWork unitOfWork)
         {
             this.optionService = optionService;
             this.pageContentProjectionFactory = pageContentProjectionFactory;
+            this.unitOfWork = unitOfWork;
         }
 
         public PageContentProjection CreatePageContentProjection(
             bool canManageContent,
             PageContent pageContent,
+            List<PageContent> allPageContents, 
             IChildContent childContent = null,
             Guid? previewPageContentId = null, 
             bool retrieveCorrectVersion = true)
         {
+            // Run logic of projection creation, because it's not created yet
             Models.Content contentToProject = null;
             var content = childContent == null ? pageContent.Content : (Models.Content)childContent.ChildContent;
 
@@ -87,28 +95,41 @@ namespace BetterCms.Module.Root.Services
                 throw new CmsException(string.Format("A content version was not found to project on the page. PageContent={0}; CanManageContent={1}, PreviewPageContentId={2};", pageContent, canManageContent, previewPageContentId));
             }
 
-            // Create a collection of child contents (child widgets) projections
-            var childContentsProjections = CreateListOfChildProjectionsRecursively(canManageContent, previewPageContentId, pageContent, contentToProject.ChildContents);
+            // Create a collection of child regions (dynamic regions) contents projections
+            var childRegionContentProjections = CreateListOfChildRegionContentProjectionsRecursively(canManageContent, previewPageContentId, pageContent, allPageContents, contentToProject);
 
-            Func<IPageContent, IContent, IContentAccessor, IEnumerable<ChildContentProjection>, PageContentProjection> createProjectionDelegate;
+            // Create a collection of child contents (child widgets) projections
+            var childContentsProjections = CreateListOfChildProjectionsRecursively(canManageContent, previewPageContentId, pageContent, allPageContents, contentToProject.ChildContents);
+
+            Func<IPageContent, IContent, IContentAccessor, IEnumerable<ChildContentProjection>, IEnumerable<PageContentProjection>, PageContentProjection> createProjectionDelegate;
             if (childContent != null)
             {
-                createProjectionDelegate = (pc, c, a, ccpl) => new ChildContentProjection(pc, childContent, a, ccpl);
+                createProjectionDelegate = (pc, c, a, ccpl, pcpl) =>
+                {
+                    if (childContent.ChildContent is IProxy)
+                    {
+                        childContent.ChildContent = (IContent)unitOfWork.Session.GetSessionImplementation().PersistenceContext.Unproxy(childContent.ChildContent);
+                    }
+                    return new ChildContentProjection(pc, childContent, a, ccpl, pcpl);
+                };
             }
             else
             {
-                createProjectionDelegate = (pc, c, a, ccpl) => new PageContentProjection(pc, c, a, ccpl);
+                createProjectionDelegate = (pc, c, a, ccpl, pcpl) => new PageContentProjection(pc, c, a, ccpl, pcpl);
             }
 
             var optionValues = childContent != null ? childContent.Options : pageContent.Options;
             var options = optionService.GetMergedOptionValues(contentToProject.ContentOptions, optionValues);
-            return pageContentProjectionFactory.Create(pageContent, contentToProject, options, childContentsProjections, createProjectionDelegate);
+            var contentProjection = pageContentProjectionFactory.Create(pageContent, contentToProject, options, childContentsProjections, childRegionContentProjections, createProjectionDelegate);
+
+            return contentProjection;
         }
 
         private IEnumerable<ChildContentProjection> CreateListOfChildProjectionsRecursively(
             bool canManageContent, 
             Guid? previewPageContentId, 
             PageContent pageContent,
+            List<PageContent> allPageContents,
             IEnumerable<ChildContent> children)
         {
             List<ChildContentProjection> childProjections;
@@ -117,7 +138,7 @@ namespace BetterCms.Module.Root.Services
                 childProjections = new List<ChildContentProjection>();
                 foreach (var child in children.Where(c => !c.Child.IsDeleted).Distinct())
                 {
-                    var childProjection = (ChildContentProjection)CreatePageContentProjection(canManageContent, pageContent, child, previewPageContentId);
+                    var childProjection = (ChildContentProjection)CreatePageContentProjection(canManageContent, pageContent, allPageContents, child, previewPageContentId);
                     if (childProjection != null)
                     {
                         childProjections.Add(childProjection);
@@ -130,6 +151,27 @@ namespace BetterCms.Module.Root.Services
             }
 
             return childProjections;
+        }
+
+        private IList<PageContentProjection> CreateListOfChildRegionContentProjectionsRecursively(
+            bool canManageContent,
+            Guid? previewPageContentId, 
+            PageContent pageContent,
+            List<PageContent> allPageContents,
+            Models.Content contentToProject)
+        {
+            var childRegionContentProjections = new List<PageContentProjection>();
+            var childRegionPageContents = allPageContents.Where(apc => apc.Parent != null 
+                && apc.Parent.Id == pageContent.Id
+                && contentToProject.ContentRegions != null
+                && contentToProject.ContentRegions.Any(cr => cr.Region == apc.Region));
+            foreach (var childPageContent in childRegionPageContents)
+            {
+                var childRegionContentProjection = CreatePageContentProjection(canManageContent, childPageContent, allPageContents, null, previewPageContentId);
+                childRegionContentProjections.Add(childRegionContentProjection);
+            }
+
+            return childRegionContentProjections;
         }
     }
 }

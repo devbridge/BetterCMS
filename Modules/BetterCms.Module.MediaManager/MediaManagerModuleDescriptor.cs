@@ -37,6 +37,11 @@ namespace BetterCms.Module.MediaManager
         internal const string MediaManagerSchemaName = "bcms_media";
 
         /// <summary>
+        /// DateTime format for hard loading media images
+        /// </summary>
+        internal const string HardLoadImageDateTimeFormat = "yyMMddHHmmss";
+
+        /// <summary>
         /// The media java script module descriptor.
         /// </summary>
         private readonly MediaManagerJsModuleIncludeDescriptor mediaJsModuleIncludeDescriptor;
@@ -74,6 +79,7 @@ namespace BetterCms.Module.MediaManager
 
             // Register images gallery custom option: album
             CustomOptionsProvider.RegisterProvider(MediaManagerFolderOptionProvider.Identifier, new MediaManagerFolderOptionProvider());
+            CustomOptionsProvider.RegisterProvider(MediaManagerImageUrlOptionProvider.Identifier, new MediaManagerImageUrlOptionProvider());
         }
 
         internal const string ModuleId = "73f53dfe-bf78-4e80-b231-9b275129b2cb";
@@ -186,7 +192,8 @@ namespace BetterCms.Module.MediaManager
             containerBuilder.RegisterType<DefaultMediaImageService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
             containerBuilder.RegisterType<DefaultMediaService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
             containerBuilder.RegisterType<DefaultMediaHistoryService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
-            containerBuilder.RegisterType<DefaultTagService>().AsImplementedInterfaces().InstancePerLifetimeScope();            
+            containerBuilder.RegisterType<DefaultTagService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            containerBuilder.RegisterType<DefaultMediaImageVersionPathService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
 
         /// <summary>

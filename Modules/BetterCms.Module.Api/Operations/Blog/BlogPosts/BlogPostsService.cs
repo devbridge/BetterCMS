@@ -9,7 +9,7 @@ using BetterCms.Core.Security;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Root;
-
+using BetterCms.Module.Blog.Models;
 using BetterCms.Module.MediaManager.Services;
 
 using BetterCms.Module.Pages.Models;
@@ -120,7 +120,10 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
                         IsArchived = blogPost.IsArchived,
                         LanguageId = blogPost.Language != null ? blogPost.Language.Id : (Guid?)null,
                         LanguageCode = blogPost.Language != null ? blogPost.Language.Code : null,
-                        LanguageGroupIdentifier = blogPost.LanguageGroupIdentifier
+                        LanguageGroupIdentifier = blogPost.LanguageGroupIdentifier,
+                        ContentId = blogPost.PageContents.Where(pc => !pc.Content.IsDeleted && pc.Content is BlogPostContent)
+                            .Select(pc => pc.Content.Id)
+                            .FirstOrDefault()
                     })
                     .ToDataListResponse(request);
 

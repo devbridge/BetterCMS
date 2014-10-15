@@ -21,6 +21,8 @@ namespace BetterCms.Module.MediaManager.ViewModels.Upload
 
         public Guid ReuploadMediaId { get; set; }
 
+        public bool ShouldOverride { get; set; }
+
         public List<UserAccessViewModel> UserAccessList { get; set; }
 
         public bool AccessControlEnabled { get; set; }
@@ -28,6 +30,7 @@ namespace BetterCms.Module.MediaManager.ViewModels.Upload
         public MultiFileUploadViewModel()
         {
             UserAccessList = new List<UserAccessViewModel>();
+            ShouldOverride = true;
         }
 
         /// <summary>

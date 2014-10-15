@@ -264,6 +264,7 @@ namespace BetterCms.Module.Root
                 {
                     authenticationJsModuleIncludeDescriptor,                    
                     new ContentJsModuleIncludeDescriptor(this),       
+                    new ContentTreeJsModuleIncludeDescriptor(this),
                     new DatePickerJsModuleIncludeDescriptor(this), 
                     new DynamicContentJsModuleIncludeDescriptor(this), 
                     new FormsJsModuleIncludeDescriptor(this),

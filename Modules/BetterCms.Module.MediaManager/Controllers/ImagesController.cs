@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 
 using BetterCms.Core.Security;
 
@@ -115,6 +116,7 @@ namespace BetterCms.Module.MediaManager.Controllers
             if (GetCommand<SaveImageDataCommand>().ExecuteCommand(model))
             {
                 var result = GetCommand<GetImageCommand>().ExecuteCommand(model.Id.ToGuidOrDefault());
+                result.ThumbnailUrl += string.Format("?{0}", DateTime.Now.ToString(MediaManagerModuleDescriptor.HardLoadImageDateTimeFormat));
                 return Json(new WireJson { Success = result != null, Data = result });
             }
 

@@ -1,3 +1,4 @@
+@using BetterCms.Module.Root.Content.Resources
 @model BetterCms.Module.Root.ViewModels.Cms.RenderPageViewModel
 
 <script type="text/html" id="bcms-region-overlay-template">
@@ -7,7 +8,9 @@
             @if (!Model.IsReadOnly && Model.HasEditRole)
             {
                 <div class="bcms-region-actions">
-                    <div class="bcms-region-button bcms-region-sortdone" style="display: none;"></div>
+                    <div class="bcms-region-button bcms-region-sortdone" style="display: none;">@RootGlobalization.Button_Save</div>
+                    <div class="bcms-region-button bcms-region-contentstree" style="display: none;">@RootGlobalization.Button_Manage</div>
+                    <div class="bcms-region-button bcms-region-sortcancel" style="display: none;">@RootGlobalization.Button_Cancel</div>
                     <div class="bcms-region-button bcms-region-addcontent"></div>
                     <div class="bcms-region-button bcms-region-sortcontent"></div>
                 </div>

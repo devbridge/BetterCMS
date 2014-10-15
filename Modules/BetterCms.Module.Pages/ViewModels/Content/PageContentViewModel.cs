@@ -9,7 +9,7 @@ using BetterCms.Core.Models;
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Mvc.Attributes;
 using BetterCms.Module.Pages.ViewModels.Widgets;
-using BetterCms.Module.Root.ViewModels.Option;
+
 using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.Pages.ViewModels.Content
@@ -97,6 +97,14 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         public Guid RegionId { get; set; }
 
         /// <summary>
+        /// Gets or sets the parent page content identifier.
+        /// </summary>
+        /// <value>
+        /// The parent page content identifier.
+        /// </value>
+        public Guid ParentPageContentId { get; set; }
+
+        /// <summary>
         /// Gets or sets the name of the page content.
         /// </summary>
         /// <value>
@@ -168,6 +176,14 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         public bool EnableInsertDynamicRegion { get; set; }
 
         /// <summary>
+        /// Gets or sets the last dynamic region number.
+        /// </summary>
+        /// <value>
+        /// The last dynamic region number.
+        /// </value>
+        public int LastDynamicRegionNumber { get; set; }
+
+        /// <summary>
         /// Gets or sets the custom JavaSctript.
         /// </summary>
         /// <value>
@@ -224,6 +240,14 @@ namespace BetterCms.Module.Pages.ViewModels.Content
         /// <c>true</c> if user confirmed content saving when affecting children pages; otherwise, <c>false</c>.
         /// </value>
         public bool IsUserConfirmed { get; set; }
+
+        /// <summary>
+        /// Determines, if child regions should be included to the results.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if child regions should be included to the results; otherwise, <c>false</c>.
+        /// </value>
+        public bool IncludeChildRegions { get; set; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

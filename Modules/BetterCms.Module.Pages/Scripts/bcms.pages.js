@@ -405,7 +405,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                             }
                         },
 
-                        postSuccess: function (data) {
+                        postSuccess: function(data) {
                             if (bcms.trigger(bcms.events.pageCreated, { Data: data.Data, Callback: postSuccess }) <= 0) {
                                 if (postSuccess && $.isFunction(postSuccess)) {
                                     postSuccess(data);
@@ -786,7 +786,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
 
                         postSuccess: function (json) {
                             if (json.Success && json.Data && (json.Data.Url || json.Data.PageUrl)) {
-                                var postSuccess = function (data) {
+                                var postSuccess = function(data) {
                                     redirect.RedirectWithAlert(json.Data.Url || json.Data.PageUrl);
                                 };
                                 if (bcms.trigger(bcms.events.pageCreated, { Data: json.Data, Callback: postSuccess }) <= 0) {

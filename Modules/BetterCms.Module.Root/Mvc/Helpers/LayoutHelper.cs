@@ -29,11 +29,12 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// <param name="model">The model.</param>
         public static void RenderSectionContents(this HtmlHelper htmlHelper, WebPageBase webPage, RenderPageViewModel model)
         {
+            var contentHtmlHelper = new PageContentRenderHelper(htmlHelper);
+
             foreach (var region in model.Regions)
             {
                 var contentsBuilder = new StringBuilder();
                 var projections = model.Contents.Where(c => c.RegionId == region.RegionId).OrderBy(c => c.Order).ToList();
-                var contentHtmlHelper = new ChildContentRenderHelper(htmlHelper);
 
                 using (new LayoutRegionWrapper(contentsBuilder, region, model.AreRegionsEditable))
                 {
@@ -42,7 +43,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                         // Add content Html
                         using (new RegionContentWrapper(contentsBuilder, projection, model.CanManageContent && model.AreRegionsEditable))
                         {
-                            contentsBuilder = contentHtmlHelper.AppendHtml(contentsBuilder, projection);
+                            contentsBuilder = contentHtmlHelper.AppendHtml(contentsBuilder, projection, model);
                         }
                     }
                 }
@@ -91,10 +92,16 @@ namespace BetterCms.Module.Root.Mvc.Helpers
 
                 foreach (var content in styles)
                 {
-                    var css = content.GetCustomStyles(htmlHelper);
-                    if (!string.IsNullOrWhiteSpace(css))
+                    var cssList = content.GetCustomStyles(htmlHelper);
+                    if (cssList != null)
                     {
-                        inlineCssBuilder.AppendLine(css);
+                        foreach (var css in cssList)
+                        {
+                            if (!string.IsNullOrWhiteSpace(css))
+                            {
+                                inlineCssBuilder.AppendLine(css);
+                            }
+                        }
                     }
 
                     var includes = content.GetStylesResources(htmlHelper);
@@ -138,12 +145,18 @@ namespace BetterCms.Module.Root.Mvc.Helpers
 
                 foreach (var content in scripts)
                 {
-                    var jScript = content.GetCustomJavaScript(htmlHelper);
-                    if (!string.IsNullOrWhiteSpace(jScript))
+                    var jScriptList = content.GetCustomJavaScript(htmlHelper);
+                    if (jScriptList != null)
                     {
-                        inlineJsBuilder.Append(@"<script type=""text/javascript"" language=""javascript"">");
-                        inlineJsBuilder.Append(jScript);
-                        inlineJsBuilder.AppendLine(@"</script>");
+                        foreach (var jScript in jScriptList)
+                        {
+                            if (!string.IsNullOrWhiteSpace(jScript))
+                            {
+                                inlineJsBuilder.Append(@"<script type=""text/javascript"" language=""javascript"">");
+                                inlineJsBuilder.Append(jScript);
+                                inlineJsBuilder.AppendLine(@"</script>");
+                            }
+                        }
                     }
 
                     var includes = content.GetJavaScriptResources(htmlHelper);
@@ -215,6 +228,25 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             }
 
             return new MvcHtmlString(attributes);
+        }
+
+        /// <summary>
+        /// Renders the invisible regions:.
+        /// - Layout regions:
+        /// -- When switching from layout A to layout B, and layout B has nor regions, which were in layout A
+        /// -- When layout regions are deleted in Site Settings -> Page Layouts -> Templates
+        /// - Widget regions:
+        /// -- When region was deleted from the widget, and page has a content, assigned to that region
+        /// </summary>
+        /// <param name="htmlHelper">The HTML helper.</param>
+        /// <param name="model">The  model.</param>
+        /// <returns></returns>
+        public static MvcHtmlString RenderInvisibleRegions(this HtmlHelper htmlHelper, RenderPageViewModel model)
+        {
+            var childContentRenderHelper = new PageContentRenderHelper(htmlHelper);
+            var html = childContentRenderHelper.RenderInvisibleRegions(model);
+
+            return new MvcHtmlString(html);
         }
     }
 }

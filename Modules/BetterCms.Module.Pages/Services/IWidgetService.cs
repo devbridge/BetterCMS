@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.ViewModels.Content;
 using BetterCms.Module.Pages.ViewModels.Filter;
 using BetterCms.Module.Pages.ViewModels.SiteSettings;
 using BetterCms.Module.Pages.ViewModels.Widgets;
@@ -18,5 +19,7 @@ namespace BetterCms.Module.Pages.Services
         bool DeleteWidget(System.Guid widgetId, int widgetVersion);
 
         SiteSettingWidgetListViewModel GetFilteredWidgetsList(WidgetsFilter filter);
+
+        List<PageContentChildRegionViewModel> GetWidgetChildRegionViewModels(Root.Models.Content content);
     }
 }

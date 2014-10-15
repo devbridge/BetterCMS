@@ -138,7 +138,7 @@ namespace BetterCms.Module.Root.Controllers
                             Response.StatusCode = 403;
                             LogAccessForbidden(model.RenderPage);
 
-                            return Content("403 Access Forbidden", "text/plain");
+                            throw new HttpException(403, "Access to the page forbidden.");
                         }
 
                         // Notify.

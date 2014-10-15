@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Autofac;
 using Autofac.Core;
 
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules.Projections;
@@ -20,34 +21,42 @@ namespace BetterCms.Module.Root.Projections
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
         private readonly PerWebRequestContainerProvider containerProvider;
+        private readonly IUnitOfWork unitOfWork;
 
-        public PageContentProjectionFactory(PerWebRequestContainerProvider containerProvider)
+        public PageContentProjectionFactory(PerWebRequestContainerProvider containerProvider, IUnitOfWork unitOfWork)
         {
             this.containerProvider = containerProvider;
+            this.unitOfWork = unitOfWork;
         }
 
-        public PageContentProjection Create(IPageContent pageContent, IContent content, IList<IOptionValue> options)
-        {
-            return Create(pageContent, content, options, null, (pc, c, a, ch) => new PageContentProjection(pc, c, a, ch));
-        }
-
-        public PageContentProjection Create(IPageContent pageContent, IContent content, IList<IOptionValue> options, 
-            IEnumerable<ChildContentProjection> childContentProjections)
-        {
-            return Create(pageContent, content, options, childContentProjections, (pc, c, a, ch) => new PageContentProjection(pc, c, a, ch));
-        }
-
-        public TProjection Create<TProjection>(IPageContent pageContent, IContent content, IList<IOptionValue> options,
-            IEnumerable<ChildContentProjection> childContentProjections,
-            Func<IPageContent, IContent, IContentAccessor, IEnumerable<ChildContentProjection>, TProjection> createProjectionDelegate)
+        public virtual TProjection Create<TProjection>(IPageContent pageContent, IContent content, IList<IOptionValue> options,
+            IEnumerable<ChildContentProjection> childContentProjections, IEnumerable<PageContentProjection> childRegionContentProjections,
+            Func<IPageContent, IContent, IContentAccessor, IEnumerable<ChildContentProjection>, IEnumerable<PageContentProjection>, TProjection> createProjectionDelegate)
             where TProjection : PageContentProjection
         {
-            IContentAccessor contentAccessor = null;            
+            IContentAccessor contentAccessor = GetAccessorForType(content, options);
+
+            if (contentAccessor == null)
+            {
+                Log.Error(string.Format("A content accessor was not found for the content type {0} with id={1}.", content.GetType().FullName, content.Id));
+
+                contentAccessor = new EmptyContentAccessor(string.Format("<i style=\"color:red;\">{0}</i>", RootGlobalization.Message_FailedToRenderContent));
+            }
+
+            TProjection pageContentProjection = createProjectionDelegate.Invoke(pageContent, content, contentAccessor, childContentProjections, childRegionContentProjections);
+
+            return pageContentProjection;
+        }
+
+        public virtual IContentAccessor GetAccessorForType(IContent content, IList<IOptionValue> options = null)
+        {
+            IContentAccessor contentAccessor = null;
             Type contentType;
 
             if (content is IProxy)
             {
-                contentType = content.GetType().BaseType;
+                content = (IContent)unitOfWork.Session.GetSessionImplementation().PersistenceContext.Unproxy(content);
+                contentType = content.GetType();
             }
             else
             {
@@ -66,16 +75,7 @@ namespace BetterCms.Module.Root.Projections
                                                              });
             }
 
-            if (contentAccessor == null)
-            {
-                Log.Error(string.Format("A content accessor was not found for the content type {0} with id={1}.", content.GetType().FullName, content.Id));
-
-                contentAccessor = new EmptyContentAccessor(string.Format("<i style=\"color:red;\">{0}</i>", RootGlobalization.Message_FailedToRenderContent));
-            }
-
-            TProjection pageContentProjection = createProjectionDelegate.Invoke(pageContent, content, contentAccessor, childContentProjections);
-
-            return pageContentProjection;
+            return contentAccessor;
         }
     }
 }

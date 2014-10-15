@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Mvc.Binders;
 using BetterCms.Core.Security;
 
@@ -108,21 +109,30 @@ namespace BetterCms.Module.Pages.Controllers
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult EditHtmlContentWidget([ModelBinder(typeof(JSONDataBinder))] SaveWidgetCommandRequest<EditHtmlContentWidgetViewModel> request)
         {
-            if (ModelState.IsValid)
+            ValidateModelExplicilty(request.Content);
+
+            try
             {
-                var response = GetCommand<SaveHtmlContentWidgetCommand>().ExecuteCommand(request);
-                if (response != null)
+                if (ModelState.IsValid)
                 {
-                    if (request.Content.Id.HasDefaultValue())
+                    var response = GetCommand<SaveHtmlContentWidgetCommand>().ExecuteCommand(request);
+                    if (response != null)
                     {
-                        Messages.AddSuccess(PagesGlobalization.SaveWidget_CreatedSuccessfully_Message);
+                        if (request.Content.Id.HasDefaultValue())
+                        {
+                            Messages.AddSuccess(PagesGlobalization.SaveWidget_CreatedSuccessfully_Message);
+                        }
+
+                        return Json(new WireJson { Success = true, Data = response });
                     }
-
-                    return Json(new WireJson { Success = true, Data = response });
                 }
-            }
 
-            return Json(new WireJson { Success = false });
+                return Json(new WireJson { Success = false });
+            }
+            catch (ConfirmationRequestException exc)
+            {
+                return Json(new WireJson { Success = false, Data = new { ConfirmationMessage = exc.Resource() } });
+            }
         }
 
         /// <summary>
@@ -168,6 +178,8 @@ namespace BetterCms.Module.Pages.Controllers
         [BcmsAuthorize(RootModuleConstants.UserRoles.Administration)]
         public ActionResult EditServerControlWidget([ModelBinder(typeof(JSONDataBinder))] SaveWidgetCommandRequest<EditServerControlWidgetViewModel> request)
         {
+            ValidateModelExplicilty(request.Content);
+
             if (ModelState.IsValid)
             {
                 var response = GetCommand<SaveServerControlWidgetCommand>().ExecuteCommand(request);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing.Printing;
 
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
@@ -97,6 +98,14 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
         /// The language id.
         /// </value>
         public Guid? LanguageId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sitemap action enabled flag.
+        /// </summary>
+        /// <value>
+        /// The sitemap action enabled flag.
+        /// </value>
+        public bool IsSitemapActionEnabled { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SavePageResponse" /> class.

@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Root;
@@ -9,6 +10,15 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
     [System.Serializable]
     public class BlogPostModel : ModelBase
     {
+        /// <summary>
+        /// Gets or sets the blog post content identifier.
+        /// </summary>
+        /// <value>
+        /// The blog post content identifier.
+        /// </value>
+        [DataMember]
+        public Guid ContentId { get; set; }
+
         /// <summary>
         /// Gets or sets the blog post URL.
         /// </summary>

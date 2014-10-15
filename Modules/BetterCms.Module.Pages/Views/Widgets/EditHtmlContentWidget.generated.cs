@@ -555,13 +555,27 @@ WriteLiteral("\r\n        </div>\r\n");
             #line hidden
             
             #line 82 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
-   Write(Html.HiddenSubmit());
+   Write(Html.HiddenFor(modal => modal.IsUserConfirmed, new { @id = "bcms-user-confirmed-region-deletion" }));
 
             
             #line default
             #line hidden
             
             #line 82 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+                                                                                                            
+        
+            
+            #line default
+            #line hidden
+            
+            #line 83 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
+   Write(Html.HiddenSubmit());
+
+            
+            #line default
+            #line hidden
+            
+            #line 83 "..\..\Views\Widgets\EditHtmlContentWidget.cshtml"
                             
     }
 

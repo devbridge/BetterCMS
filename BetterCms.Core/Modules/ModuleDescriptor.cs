@@ -332,9 +332,15 @@ namespace BetterCms.Core.Modules
 
             if (controllerTypes != null)
             {
+                var namespaces = new List<string>();
+
                 foreach (Type controllerType in controllerTypes)
                 {
                     string key = (AreaName + "-" + controllerType.Name).ToUpperInvariant();
+                    if (!namespaces.Contains(controllerType.Namespace))
+                    {
+                        namespaces.Add(controllerType.Namespace);
+                    }
 
                     containerBuilder
                         .RegisterType(controllerType)
@@ -349,9 +355,10 @@ namespace BetterCms.Core.Modules
                         string.Format("bcms_{0}_internal_routes", AreaName),
                         string.Format("{0}/{{controller}}/{{action}}", AreaName),
                         new
-                        {
-                            area = AreaName
-                        });
+                            {
+                                area = AreaName
+                            },
+                        namespaces.ToArray());
             }
         }
         

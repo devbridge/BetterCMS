@@ -60,9 +60,6 @@
     <None Include="Packages\BetterCms.Module.GoogleAnalytics\BetterCms.Module.GoogleAnalytics.nuspec.template">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Packages\BetterCms.Module.GoogleAnalytics\cms.config.transform">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Packages\BetterCms.Module.ImagesGallery\BetterCms.Module.ImagesGallery.nuspec.template">
       <SubType>Designer</SubType>
     </None>
@@ -436,7 +433,6 @@ mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search\content"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search\content\net40"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search\content\net40\Config"
-copy "$(ProjectDir)Packages\BetterCms.Module.Search\cms.config.transform" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search\content\net40\Config\cms.config.transform" /Y
 
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search\lib"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.Search\lib\net40"
@@ -467,7 +463,6 @@ mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleSiteSearch"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleSiteSearch\content"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleSiteSearch\content\net40"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleSiteSearch\content\net40\Config"
-copy "$(ProjectDir)Packages\BetterCms.Module.GoogleSiteSearch\cms.config.transform" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleSiteSearch\content\net40\Config\cms.config.transform" /Y
 
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleSiteSearch\lib"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleSiteSearch\lib\net40"
@@ -484,7 +479,6 @@ mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleAnalytics"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleAnalytics\content"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleAnalytics\content\net40"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleAnalytics\content\net40\Config"
-copy "$(ProjectDir)Packages\BetterCms.Module.GoogleAnalytics\cms.config.transform" "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleAnalytics\content\net40\Config\cms.config.transform" /Y
 
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleAnalytics\lib"
 mkdir "$(ProjectDir)$(OutDir)packages\BetterCms.Module.GoogleAnalytics\lib\net40"

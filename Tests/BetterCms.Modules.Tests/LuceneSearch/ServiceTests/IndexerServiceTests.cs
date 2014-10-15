@@ -1,9 +1,13 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 using Autofac;
 
+using BetterCms.Events;
+
+using BetterCMS.Module.LuceneSearch.Helpers;
 using BetterCMS.Module.LuceneSearch.Services.IndexerService;
 using BetterCMS.Module.LuceneSearch.Services.WebCrawlerService;
 
@@ -14,7 +18,13 @@ using BetterCms.Module.Search.Models;
 
 using HtmlAgilityPack;
 
+using Lucene.Net.Documents;
+using Lucene.Net.Index;
+using Lucene.Net.Search;
+
 using NUnit.Framework;
+
+using ServiceStack.Common.Extensions;
 
 namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
 {
@@ -271,6 +281,91 @@ namespace BetterCms.Test.Module.LuceneSearch.ServiceTests
             Assert.AreEqual(results.Items[0].Title, "Title with <> HTML entities");
         }
         
+        [Test]
+        public void Should_Fire_Attached_Delegate()
+        {
+            var luceneDelegateFired = false;
+
+            var service = new DefaultIndexerService(Container.Resolve<ICmsConfiguration>(), Container.Resolve<IRepository>(),
+                    Container.Resolve<ISecurityService>(), Container.Resolve<IAccessControlService>());
+
+            var delegateBefore = LuceneSearchHelper.Search;
+            LuceneSearchHelper.Search = (query, filter, arg3) =>
+            {
+                luceneDelegateFired = true;
+
+                return TopScoreDocCollector.Create(0, true);
+            };
+            
+            var results = service.Search(new SearchRequest("\"Test page HTML content\""));
+
+            Assert.IsTrue(luceneDelegateFired);
+            Assert.IsNotNull(results);
+            Assert.IsNotNull(results.Items);
+            Assert.IsEmpty(results.Items);
+
+            LuceneSearchHelper.Search = delegateBefore;
+        }
+        
+        [Test]
+        public void Should_Fire_OnDocumentSavingEvent_AndReturnCorrectData()
+        {
+            var document1 = new HtmlDocument();
+            document1.DocumentNode.AppendChild(HtmlNode.CreateNode("<title>zzz</title>"));
+            document1.DocumentNode.AppendChild(HtmlNode.CreateNode("<body>zzz</body>"));
+
+            var page1 = new PageData { AbsolutePath = "/test-on-document-saving", Content = document1, Id = Guid.NewGuid(), IsPublished = true };
+            Document document = null;
+
+            DefaultEventHandler<DocumentSavingEventArgs> onDocumentSaving = args => 
+            {
+                args.Document.Add(new Field("TestLuceneField", "TestLuceneFieldValue", Field.Store.YES, Field.Index.ANALYZED));
+            };
+            DefaultEventHandler<SearchResultRetrievingEventArgs> onSearchResultRetrieving = args => 
+            {
+                Assert.AreEqual(args.Documents.Count(), 1);
+                Assert.AreEqual(args.ResultItems.Count(), 1);
+
+                document = args.Documents[0];
+            };
+            DefaultEventHandler<SearchQueryExecutingEventArgs> onSearchQueryExecuting = args => 
+            {
+                Assert.AreEqual(args.RequestQuery, "Nonsense with no results");
+
+                args.Query = new TermQuery(new Term("content", "zzz"));
+            };
+                
+            Events.LuceneEvents.Instance.DocumentSaving += onDocumentSaving;
+            Events.LuceneEvents.Instance.SearchResultRetrieving += onSearchResultRetrieving;
+            Events.LuceneEvents.Instance.SearchQueryExecuting += onSearchQueryExecuting;
+
+            var service = new DefaultIndexerService(Container.Resolve<ICmsConfiguration>(), Container.Resolve<IRepository>(),
+                    Container.Resolve<ISecurityService>(), Container.Resolve<IAccessControlService>());
+
+            if (service.OpenWriter())
+            {
+                service.AddHtmlDocument(page1);
+                service.CloseWriter();
+            }
+
+            var results = service.Search(new SearchRequest("Nonsense with no results"));
+
+            Assert.IsNotNull(results);
+            Assert.IsNotNull(results.Items);
+
+            Assert.IsNotNull(document);
+            Assert.AreEqual(document.Get("TestLuceneField"), "TestLuceneFieldValue");
+
+            Events.LuceneEvents.Instance.DocumentSaving -= onDocumentSaving;
+            Events.LuceneEvents.Instance.SearchResultRetrieving -= onSearchResultRetrieving;
+            Events.LuceneEvents.Instance.SearchQueryExecuting -= onSearchQueryExecuting;
+        }
+
+        private void InstanceOnDocumentSaving(DocumentSavingEventArgs args)
+        {
+            throw new NotImplementedException();
+        }
+
         private void AddAuthorizedDocumentToIndex(DefaultIndexerService service)
         {
             if (!authorizedDocumentAdded)

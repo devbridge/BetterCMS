@@ -6,6 +6,7 @@ using BetterCms.Core.Security;
 
 using BetterCms.Module.Pages.Content.Resources;
 using BetterCms.Module.Pages.Models;
+using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Content;
 
 using BetterCms.Module.Root;
@@ -19,7 +20,7 @@ namespace BetterCms.Module.Pages.Command.History.RestoreContentVersion
     /// <summary>
     /// Command for restoring page content version
     /// </summary>
-    public class RestoreContentVersionCommand : CommandBase, ICommand<RestorePageContentViewModel, bool>
+    public class RestoreContentVersionCommand : CommandBase, ICommand<RestorePageContentViewModel, ChangedContentResultViewModel>
     {
         /// <summary>
         /// Gets or sets the content service.
@@ -30,13 +31,21 @@ namespace BetterCms.Module.Pages.Command.History.RestoreContentVersion
         public IContentService contentService { get; set; }
 
         /// <summary>
+        /// Gets or sets the widget service.
+        /// </summary>
+        /// <value>
+        /// The widget service.
+        /// </value>
+        public IWidgetService WidgetService { get; set; }
+
+        /// <summary>
         /// Executes the specified request.
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>
         /// <c>true</c>, if successfully restored.
         /// </returns>
-        public bool Execute(RestorePageContentViewModel request)
+        public ChangedContentResultViewModel Execute(RestorePageContentViewModel request)
         {
             var content = Repository
                 .AsQueryable<Root.Models.Content>(p => p.Id == request.PageContentId)
@@ -86,7 +95,20 @@ namespace BetterCms.Module.Pages.Command.History.RestoreContentVersion
 
             Events.RootEvents.Instance.OnContentRestored(restoredContent);
 
-            return true;
+            var response = new ChangedContentResultViewModel
+                {
+                    ContentId = restoredContent.Id,
+                    DesirableStatus = restoredContent.Status,
+                    Title = restoredContent.Name,
+                    ContentVersion = restoredContent.Version
+                };
+
+            //if (request.IncludeChildRegions)
+            //{
+                response.Regions = WidgetService.GetWidgetChildRegionViewModels(restoredContent);
+            //}
+
+            return response;
         }
     }
 }

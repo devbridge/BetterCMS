@@ -522,6 +522,12 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             }
         };
 
+        self.isImage = function () {
+            if (self.path().type == mediaTypes.image)
+                return true;
+            return false;
+        };
+
         function showPreview(data, clientX, clientY) {
             if (menu.isVisible || !data.isImage()) {
                 return;
@@ -835,7 +841,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             if (this.isDeleting()) {
                 return;
             }
-            history.openMediaHistoryDialog(this.id(), function () {
+            history.openMediaHistoryDialog(this.id(), folderViewModel.isImage(), function () {
                 folderViewModel.searchMedia();
             });
         };
@@ -2094,6 +2100,36 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
     }
 
     /**
+    * Called when user press browse button in the options grid with type = "Media Manager Image Url".
+    */
+    function onExecuteMediaManagerImageOption(valueObservable, titleObservable, optionModel) {
+        var onMediaSelect = function(selectedImage) {
+            var url = selectedImage.getImageUrl();
+
+
+                valueObservable(url);
+                titleObservable(url);
+
+                if (optionModel.key && !optionModel.key()) {
+                    optionModel.key(name);
+                }
+
+                optionModel.hasFocus(true);
+            },
+            onMediaClose = function() {
+                optionModel.hasFocus(true);
+            },
+
+            options = {
+                onAccept: onMediaSelect,
+                onClose: onMediaClose,
+            };
+
+        media.openImageInsertDialog(options);
+    }
+
+
+    /**
     * Called when context menu is shown.
     */
     function onShowContextMenu() {
@@ -2118,6 +2154,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         fileEditor.SetMedia(media);
         
         optionsModule.registerCustomOption('media-images-folder', onExecuteMediaManagerFolderOption);
+        optionsModule.registerCustomOption('media-images-url', onExecuteMediaManagerImageOption);
     };
 
     /**

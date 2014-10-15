@@ -1,5 +1,6 @@
 ﻿@using BetterCms.Module.MediaManager.Content.Resources
 @using BetterCms.Module.MediaManager.Controllers
+@using BetterCms.Module.MediaManager.Models
 @using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc
@@ -30,8 +31,19 @@
                 {
                     @Html.HiddenFor(f => f.SelectedFolderId, new { @Value = Model.RootFolderId })
                 }
+                
+                @if (!Model.ReuploadMediaId.HasDefaultValue())
+                    {
+                        if (Model.RootFolderType == MediaType.Image)
+                        {
+                            <div class="bcms-filter-text">@MediaGlobalization.MultiFileUpload_OverriveOption</div>
+                            <select id="bcms-media-reupload-override" class="bcms-global-select" name="OverrideOption">
+                                <option value="true">@MediaGlobalization.ImageUpload_SaveWithOverride_Title</option>
+                                <option value="false">@MediaGlobalization.ImageUpload_SaveAsNewVersion_Title</option>
+                            </select>
+                        }
+                    }
             </div>
-
             <div id="bcms-media-uploads">
                 <div id="bcms-files-dropzone" class="bcms-dropzone">
                     @if (Model.ReuploadMediaId.HasDefaultValue())
@@ -45,7 +57,7 @@
                     <div class="bcms-btn-upload-files">
                         <label for="bcms-files-upload-input" class="bcms-btn-upload-files-text">@MediaGlobalization.MultiFileUpload_UploadButton</label>
                         <input type="file"
-                               @(Model.ReuploadMediaId.HasDefaultValue() ? "multiple=\"multiple\"" : string.Empty)
+                            @(Model.ReuploadMediaId.HasDefaultValue() ? "multiple=\"multiple\"" : string.Empty)
                                name="uploadFiles" id="bcms-files-upload-input" style="position: absolute; left: -999em; top: -999em;"
                                data-bind="attr: { accept : filesToAccept() }" />
                     </div>

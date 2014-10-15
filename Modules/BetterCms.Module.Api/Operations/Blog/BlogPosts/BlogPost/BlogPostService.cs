@@ -7,7 +7,7 @@ using BetterCms.Core.DataContracts.Enums;
 
 using BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties;
 using BetterCms.Module.Api.Operations.Pages.Contents.Content.BlogPostContent;
-
+using BetterCms.Module.Blog.Models;
 using BetterCms.Module.MediaManager.Services;
 
 using ServiceStack.ServiceInterface;
@@ -73,11 +73,20 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
 
             model.MainImageUrl = fileUrlResolver.EnsureFullPathUrl(model.MainImageUrl);
             model.MainImageThumbnauilUrl = fileUrlResolver.EnsureFullPathUrl(model.MainImageThumbnauilUrl);
+            LoadContentId(model);
 
             return new GetBlogPostResponse
                        {
                            Data = model
                        };
+        }
+
+        private void LoadContentId(BlogPostModel post)
+        {
+            post.ContentId =
+                        repository.AsQueryable<Module.Root.Models.PageContent>(pc => pc.Page.Id == post.Id && !pc.Content.IsDeleted && pc.Content is BlogPostContent)
+                            .Select(pc => pc.Content.Id)
+                            .FirstOrDefault();
         }
 
         IBlogPostPropertiesService IBlogPostService.Properties

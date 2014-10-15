@@ -16,19 +16,11 @@ namespace BetterCms.Core.DataContracts
         string Name { get; }
 
         /// <summary>
-        /// Gets the preview URL.
+        /// Gets the list of content regions.
         /// </summary>
         /// <value>
-        /// The preview URL.
+        /// The list of content regions.
         /// </value>
-        string PreviewUrl { get; }
-
-        /// <summary>
-        /// Gets the list of child content.
-        /// </summary>
-        /// <value>
-        /// The child contents.
-        /// </value>
-        IList<IChildContent> Children { get; }
+        IEnumerable<IContentRegion> ContentRegions { get; }
     }
 }

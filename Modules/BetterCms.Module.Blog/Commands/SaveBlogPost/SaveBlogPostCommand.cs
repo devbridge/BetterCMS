@@ -1,6 +1,10 @@
-﻿using BetterCms.Core.Mvc.Commands;
+﻿using System.Linq;
+
+using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Mvc.Commands;
 
 using BetterCms.Module.Blog.Services;
+using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Root.Mvc;
 
 namespace BetterCms.Module.Blog.Commands.SaveBlogPost
@@ -12,13 +16,17 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
     {
         private readonly IBlogService blogService;
 
+        private readonly IWidgetService widgetService;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SaveBlogPostCommand" /> class.
         /// </summary>
         /// <param name="blogService">The blog service.</param>
-        public SaveBlogPostCommand(IBlogService blogService)
+        /// <param name="widgetService">The widget service.</param>
+        public SaveBlogPostCommand(IBlogService blogService, IWidgetService widgetService)
         {
             this.blogService = blogService;
+            this.widgetService = widgetService;
         }
 
         /// <summary>
@@ -36,7 +44,7 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                 return null;
             }
 
-            return new SaveBlogPostCommandResponse
+            var response = new SaveBlogPostCommandResponse
                        {
                            Id = blogPost.Id,
                            Version = blogPost.Version,
@@ -47,8 +55,22 @@ namespace BetterCms.Module.Blog.Commands.SaveBlogPost
                            CreatedOn = blogPost.CreatedOn.ToFormattedDateString(),
                            PageStatus = blogPost.Status,
                            DesirableStatus = request.Content.DesirableStatus,
-                           PageContentId = blogPost.PageContents[0].Id
+                           PageContentId = blogPost.PageContents[0].Id,
+                           ContentId = blogPost.PageContents[0].Content.Id,
+                           ContentVersion = blogPost.PageContents[0].Content.Version
                        };
+
+            if (request.Content.IncludeChildRegions)
+            {
+                var content = blogPost.PageContents[0].Content;
+                var contentData = (content.History != null
+                    ? content.History.FirstOrDefault(c => c.Status == ContentStatus.Draft) ?? content
+                    : content);
+
+                response.Regions = widgetService.GetWidgetChildRegionViewModels(contentData);
+            }
+
+            return response;
         }
     }
 }

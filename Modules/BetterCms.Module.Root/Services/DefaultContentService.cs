@@ -8,16 +8,18 @@ using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.DataTier;
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Services;
-
+using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
+using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Helpers;
 
 using NHibernate.Linq;
 
 namespace BetterCms.Module.Root.Services
 {
-    internal class DefaultContentService : IContentService
+    public class DefaultContentService : IContentService
     {
         /// <summary>
         /// A security service.
@@ -33,13 +35,14 @@ namespace BetterCms.Module.Root.Services
         /// The option service
         /// </summary>
         private readonly IOptionService optionService;
-        
+
         /// <summary>
         /// The child content service
         /// </summary>
         private readonly IChildContentService childContentService;
 
-        public DefaultContentService(ISecurityService securityService, IRepository repository, IOptionService optionService, IChildContentService childContentService)
+        public DefaultContentService(ISecurityService securityService, IRepository repository, IOptionService optionService,
+            IChildContentService childContentService)
         {
             this.securityService = securityService;
             this.repository = repository;
@@ -357,6 +360,8 @@ namespace BetterCms.Module.Root.Services
             Models.Content content = repository.AsQueryable<Models.Content>()
                                   .Where(p => p.Id == contentId && !p.IsDeleted)
                                   .FetchMany(p => p.History)
+                                  .FetchMany(p => p.ContentRegions)
+                                  .ThenFetch(cr => cr.Region)
                                   .ToList()
                                   .FirstOrDefault();
 
@@ -368,26 +373,24 @@ namespace BetterCms.Module.Root.Services
             return null;
         }
 
-        public int GetPageContentNextOrderNumber(Guid pageId)
+        public int GetPageContentNextOrderNumber(Guid pageId, Guid? parentPageContentId)
         {
             var page = repository.AsProxy<Page>(pageId);
+            PageContent parent = parentPageContentId.HasValue && !parentPageContentId.Value.HasDefaultValue() 
+                ? repository.AsProxy<PageContent>(parentPageContentId.Value) : null;
+
             var max = repository
                 .AsQueryable<PageContent>()
-                .Where(f => f.Page == page && !f.IsDeleted)
+                .Where(f => f.Page == page && !f.IsDeleted && f.Parent == parent)
                 .Select(f => (int?)f.Order)
                 .Max();
-            int order;
 
             if (max == null)
             {
-                order = 0;
+                return 0;
             }
-            else
-            {
-                order = max.Value + 1;
-            }
-
-            return order;
+           
+            return max.Value + 1;
         }
 
         public void PublishDraftContent(Guid pageId)
@@ -494,17 +497,20 @@ namespace BetterCms.Module.Root.Services
             source.ContentRegions
                 .Where(s => destination.ContentRegions.All(d => s.Region.RegionIdentifier.ToLowerInvariant() != d.Region.RegionIdentifier.ToLowerInvariant()))
                 .Distinct().ToList()
-                .ForEach(s =>
-                             {
-                                 destination.ContentRegions.Add(new ContentRegion { Region = s.Region, Content = destination });
-                                 source.ContentRegions.Remove(s);
-                             });
+                .ForEach(s => 
+                    {
+                        destination.ContentRegions.Add(new ContentRegion { Region = s.Region, Content = destination });
+                    });
 
-            // Remove regions, which not exists in source.
-            destination.ContentRegions
+            // Remove regions, which not exist in source.
+            var regionsToDelete = destination.ContentRegions
                 .Where(s => source.ContentRegions.All(d => s.Region.RegionIdentifier.ToLowerInvariant() != d.Region.RegionIdentifier.ToLowerInvariant()))
-                .Distinct().ToList()
-                .ForEach(d => repository.Delete(d));
+                .Distinct().ToList();
+            regionsToDelete.ForEach(d =>
+                {
+                    destination.ContentRegions.Remove(d);
+                    repository.Delete(d);
+                });
         }
 
         /// <summary>
@@ -516,7 +522,7 @@ namespace BetterCms.Module.Root.Services
         /// <returns>
         /// Boolean value, indicating, if content has any children contents, which are based on deleting regions
         /// </returns>
-        public bool CheckIfContentHasDeletingChildren(Guid pageId, Guid contentId, string html = null)
+        public bool CheckIfContentHasDeletingChildren(Guid? pageId, Guid contentId, string html = null)
         {
             bool hasAnyContents = false;
             var regionIdentifiers = GetRegionIds(html).Select(s => s.ToLowerInvariant()).ToArray();
@@ -530,12 +536,29 @@ namespace BetterCms.Module.Root.Services
 
             if (regionIds.Length > 0)
             {
-                hasAnyContents = repository
+                var validationQuery = repository
                     .AsQueryable<PageContent>()
-                    .Any(pc => pc.Page.MasterPage.Id == pageId && regionIds.Contains(pc.Region.Id));
+                    .Where(pc => regionIds.Contains(pc.Region.Id));
+                if (pageId.HasValue)
+                {
+                    validationQuery = validationQuery.Where(pc => pc.Page.MasterPage.Id == pageId);
+                }
+                
+                hasAnyContents = validationQuery.Any();
             }
 
             return hasAnyContents;
+        }
+
+        public void CheckIfContentHasDeletingChildrenWithException(Guid? pageId, Guid contentId, string html = null)
+        {
+            var hasAnyChildren = CheckIfContentHasDeletingChildren(pageId, contentId, html);
+            if (hasAnyChildren)
+            {
+                var message = RootGlobalization.SaveContent_ContentHasChildrenContents_RegionDeleteConfirmationMessage;
+                var logMessage = string.Format("User is trying to delete content regions which has children contents. Confirmation is required. ContentId: {0}, PageId: {1}", contentId, pageId);
+                throw new ConfirmationRequestException(() => message, logMessage);
+            }
         }
 
         public void UpdateDynamicContainer(Models.Content content)
@@ -554,6 +577,20 @@ namespace BetterCms.Module.Root.Services
                 CollectDynamicRegions(dynamicContainer.Html, content, content.ContentRegions);
                 childContentService.CollectChildContents(dynamicContainer.Html, content);
             }
+        }
+
+        public TEntity GetDraftOrPublishedContent<TEntity>(TEntity content) where TEntity : Models.Content
+        {
+            if (content.History != null)
+            {
+                var draft = content.History.FirstOrDefault(c => c.Status == ContentStatus.Draft);
+                if (draft != null)
+                {
+                    return (TEntity)draft;
+                }
+            }
+
+            return content;
         }
     }
 }

@@ -1,0 +1,68 @@
+﻿@using BetterCms.Module.Root.Content.Resources
+<script type="text/html" id="bcms-contents-tree-template">
+    <div class="bcms-scroll-window" id="bcms-contents-tree">
+        <div class="bcms-padded-content">
+            <div class="bcms-tree-container" data-bind="visible: visibleItems().length > 0, with: visibleItems()">
+                <h2 data-bind="visible: $parent.invisibleItems().length > 0">@RootGlobalization.ContentsTree_VisibleItems_Title</h2>
+                <div data-bind='template: { name: "bcms-contents-tree-list-template" }'></div>
+            </div>
+            <div class="bcms-tree-container" data-bind="visible: invisibleItems().length > 0, with: invisibleItems()">
+                <h2>@RootGlobalization.ContentsTree_InvisibleItems_Title</h2>
+                <div data-bind='template: { name: "bcms-contents-tree-list-template" }'></div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="bcms-contents-tree-list-template">
+    <!-- ko if: $data.length > 0 -->
+    <!-- ko foreach: $data -->
+    <div data-bind="css:{'bcms-contents-tree-sort-block': type == types.content}, draggableContent: type == types.content">
+        <div data-bind="
+            css: {
+                'bcms-contents-tree-region': type == types.region,
+                'bcms-contents-tree-content': type == types.content,
+                'bcms-dragging': isBeingDragged(),
+                'bcms-contents-hover': isHover()
+            },
+            event: {
+                mouseleave: onMouseLeave, mouseenter: onMouseEnter
+            },
+            attr: {
+                'data-item-id': itemId
+            } ">
+            <div data-bind="css: {'bcms-contents-tree-region-header': type == types.region}">
+                <span data-bind="text: title()"></span>
+                <div class="bcms-tree-controls" data-bind="visible: !isBeingDragged()">
+                    <!-- ko if: type == types.content -->
+                    <!-- ko if: model.visibleButtons.configure -->
+                    <a class="bcms-tree-controls-config" data-bind="click: configure"></a>
+                    <!-- /ko -->
+                    <!-- ko if: model.visibleButtons.history -->
+                    <a class="bcms-tree-controls-history" data-bind="click: history"></a>
+                    <!-- /ko -->
+                    <!-- ko if: model.visibleButtons.edit -->
+                    <a class="bcms-tree-controls-edit" data-bind="click: editItem"></a>
+                    <!-- /ko -->
+                    <!-- ko if: model.visibleButtons.delete -->
+                    <a class="bcms-tree-controls-delete" data-bind="click: deleteItem"></a>
+                    <!-- /ko -->
+                    <!-- /ko -->
+                    <!-- ko if: type == types.region -->
+                    <a class="bcms-tree-controls-add" data-bind="click: addContent"></a>
+                    <!-- /ko -->
+                </div>
+            </div>
+            <!-- ko if: items().length > 0 -->
+            <div data-bind="with: items()">
+                <div data-bind="template: { name: 'bcms-contents-tree-list-template' }"></div>
+            </div>
+            <!-- /ko -->
+            <!-- ko if: type == types.region && items().length == 0 -->
+            <div class="bcms-contents-tree-sort-block" data-bind="draggableContent:true">&nbsp;</div>
+            <!-- /ko -->
+        </div>
+    </div>
+    <!-- /ko -->
+    <!-- /ko -->
+</script>

@@ -22,7 +22,8 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             versionPreviewLoaderContainer: '.bcms-history-preview',
             mediaHistoryForm: '#bcms-pagecontenthistory-form',
             mediaHistorySearchButton: '.bcms-btn-search',
-            modalContent: '.bcms-modal-content-padded'
+            modalContent: '.bcms-modal-content-padded',
+            popinfoFrame: '.bcms-popinfo-frame'
         },
         
         links = {
@@ -36,6 +37,8 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             mediaHistoryDialogTitle: null,
             mediaVersionRestoreConfirmation: null,
             restoreButtonTitle: null,
+            restoreWithOverrideButtonTitle: null,
+            restoreAsNewVersionButtonTitle: null,
             closeButtonTitle: null
         };
 
@@ -76,13 +79,54 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
     /**
     * Restores specified version from history
     */
-    function restoreVersion(container, id) {
-        modal.confirm({
+    function restoreVersion(container, id, isImage) {
+        var dialog;
+
+        var extraButton = [];
+        var overrideAcceptButtonTitle = null;
+        var overrideOnShowFunction = null;
+
+        if (isImage && isImage == true) {
+            var createNewVersion = new modal.button(globalization.restoreAsNewVersionButtonTitle, null, 5, function() {
+
+                var url = $.format(links.restoreMediaVersionUrl, id, "false"),
+                    onComplete = function(json) {
+                        messages.refreshBox(container, json);
+                        if (json.Success) {
+                            var form = container.find(selectors.mediaHistoryForm);
+                            form.submit();
+                        }
+                    };
+
+                $.ajax({
+                        type: 'POST',
+                        cache: false,
+                        url: url
+                    })
+                    .done(function(result) {
+                        onComplete(result);
+                    })
+                    .fail(function(response) {
+                        onComplete(bcms.parseFailedResponse(response));
+                    });
+
+                dialog.close();
+            });
+
+            extraButton = [createNewVersion];
+            overrideAcceptButtonTitle = globalization.restoreWithOverrideButtonTitle;
+            overrideOnShowFunction = function() {
+                $(selectors.popinfoFrame).width(400);
+            };
+        }
+
+        dialog = modal.confirm({
             content: globalization.mediaVersionRestoreConfirmation,
-            acceptTitle: globalization.restoreButtonTitle,
+            acceptTitle: overrideAcceptButtonTitle,
+            buttons: extraButton,
             onAccept: function () {
                 
-                var url = $.format(links.restoreMediaVersionUrl, id),
+                var url = $.format(links.restoreMediaVersionUrl, id, "true"),
                         onComplete = function (json) {
                             messages.refreshBox(container, json);
                             if (json.Success) {
@@ -102,24 +146,25 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                     .fail(function (response) {
                         onComplete(bcms.parseFailedResponse(response));
                     });
-            }
+            },
+            onShow: overrideOnShowFunction
         });
     }
    
     /**
     * Posts media history form with search query.
     */
-    function searchPageContentHistory(dialog, container, form) {
+    function searchPageContentHistory(dialog, container, form, isImage) {
         grid.submitGridForm(form, function (data) {
             container.html(data);
-            history.initMediaHistoryDialogEvents(dialog, data);
+            history.initMediaHistoryDialogEvents(dialog, isImage, data);
         });
     }
 
     /**
     * Initializes EditSeo dialog events.
     */
-    history.initMediaHistoryDialogEvents = function (dialog) {
+    history.initMediaHistoryDialogEvents = function (dialog, isImage) {
         dialog.maximizeHeight();
 
         var container = dialog.container.find(selectors.modalContent);
@@ -127,7 +172,7 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         container.find(selectors.gridRestoreLinks).on('click', function (event) {
             bcms.stopEventPropagation(event);
             
-            restoreVersion(container, $(this).data('id'));
+            restoreVersion(container, $(this).data('id'), isImage);
         });
         
         container.find(selectors.gridDownloadLinks).on('click', function (event) {
@@ -150,24 +195,24 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         var form = container.find(selectors.mediaHistoryForm);
         grid.bindGridForm(form, function (data) {
             container.html(data);
-            history.initMediaHistoryDialogEvents(dialog);
+            history.initMediaHistoryDialogEvents(dialog, isImage);
         });
 
         form.on('submit', function (event) {
             bcms.stopEventPropagation(event);
-            searchPageContentHistory(dialog, container, form);
+            searchPageContentHistory(dialog, container, form, isImage);
             return false;
         });
 
         form.find(selectors.mediaHistorySearchButton).on('click', function () {
-            searchPageContentHistory(dialog, container, form);
+            searchPageContentHistory(dialog, container, form, isImage);
         });
     };   
     
     /**
     * Loads history preview dialog.
     */
-    history.openMediaHistoryDialog = function (mediaId, onClose) {
+    history.openMediaHistoryDialog = function (mediaId, isImage, onClose) {
         modal.open({
             title: globalization.mediaHistoryDialogTitle,
             cancelTitle: globalization.closeButtonTitle,
@@ -176,7 +221,7 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 var url = $.format(links.loadMediaHistoryDialogUrl, mediaId);
                 dynamicContent.bindDialog(dialog, url, {
                     contentAvailable : function () {
-                        history.initMediaHistoryDialogEvents(dialog);
+                        history.initMediaHistoryDialogEvents(dialog, isImage);
                     },
                         
                     beforePost: function () {

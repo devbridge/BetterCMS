@@ -117,7 +117,7 @@ namespace BetterCms.Module.MediaManager.Services
             }
         }
 
-        public virtual MediaFile UploadFile(MediaType type, Guid rootFolderId, string fileName, long fileLength, Stream fileStream)
+        public virtual MediaFile UploadFile(MediaType type, Guid rootFolderId, string fileName, long fileLength, Stream fileStream, bool isTemporary = true)
         {
             string folderName = CreateRandomFolderName();
             MediaFile file = new MediaFile();
@@ -132,12 +132,12 @@ namespace BetterCms.Module.MediaManager.Services
             file.Size = fileLength;
             file.FileUri = GetFileUri(type, folderName, fileName);
             file.PublicUrl = GetPublicFileUrl(type, folderName, fileName);
-            file.IsTemporary = true;
+            file.IsTemporary = isTemporary;
             file.IsCanceled = false;
             file.IsUploaded = null;
             if (configuration.Security.AccessControlEnabled)
             {
-                file.AddRule(new AccessRule() { AccessLevel = AccessLevel.ReadWrite, Identity = securityService.CurrentPrincipalName });
+                file.AddRule(new AccessRule { AccessLevel = AccessLevel.ReadWrite, Identity = securityService.CurrentPrincipalName });
             }
 
             unitOfWork.BeginTransaction();

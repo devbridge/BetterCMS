@@ -25,7 +25,8 @@
             @Html.HiddenFor(model => model.CropCoordX2, new { @data_bind = "value: Math.floor(imageEditorViewModel.cropCoordX2())" })
             @Html.HiddenFor(model => model.CropCoordY1, new { @data_bind = "value: Math.floor(imageEditorViewModel.cropCoordY1())" })
             @Html.HiddenFor(model => model.CropCoordY2, new { @data_bind = "value: Math.floor(imageEditorViewModel.cropCoordY2())" })
-
+            @Html.HiddenFor(model => model.ShouldOverride, new { @id = "image-override-field" })
+            
             <div class="bcms-input-list-holder">
                 @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_CropImage_Tooltip_Description)
                 <div class="bcms-content-titles">
@@ -75,8 +76,8 @@
                        })
                             @Html.BcmsValidationMessageFor(f => f.Title)
                         </div>
-                        <div class="bcms-btn-small" data-bind="click: save">@RootGlobalization.Button_Ok</div>
-                        <div class="bcms-btn-links-small" data-bind="click: close">@RootGlobalization.Button_Cancel</div>
+                            <div class="bcms-btn-small" data-bind="click: save">@RootGlobalization.Button_Ok</div>
+                            <div class="bcms-btn-links-small" data-bind="click: close">@RootGlobalization.Button_Cancel</div>
                     </div>
                 </div>
 
@@ -101,26 +102,26 @@
                         <span>@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Width:</span>
                         <div class="bcms-custom-input-box" style="width: 75px;">
                             @Html.TextBoxFor(f => f.ImageWidth, new
-                       {
-                           @class = "bcms-editor-field-box",
-                           @id = "image-width",
-                           @data_bind = "value: width, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeHeight }"
-                       })
+                            {
+                                @class = "bcms-editor-field-box",
+                                @id = "image-width",
+                                @data_bind = "value: width, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeHeight }"
+                            })
                             @Html.BcmsValidationMessageFor(f => f.ImageWidth)
                         </div>
                         <span>@MediaGlobalization.ImageEditor_Dialog_ChangeSize_Height:</span>
                         <div class="bcms-custom-input-box" style="width: 75px;">
                             @Html.TextBoxFor(f => f.ImageHeight, new
-                       {
-                           @class = "bcms-editor-field-box",
-                           @id = "image-height",
-                           @data_bind = "value: height, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeWidth }"
-                       })
+                            {
+                                @class = "bcms-editor-field-box",
+                                @id = "image-height",
+                                @data_bind = "value: height, valueUpdate: 'afterkeydown', enterPress: save, escPress: close, event: { change: changeWidth }"
+                            })
                             @Html.BcmsValidationMessageFor(f => f.ImageHeight)
                         </div>
+
                         <div class="bcms-btn-small" data-bind="click: save">@RootGlobalization.Button_Ok</div>
                         <div class="bcms-btn-links-small" data-bind="click: close">@RootGlobalization.Button_Cancel</div>
-
                         <a data-bind="click: restoreOriginalSize">@MediaGlobalization.ImageEditor_Dialog_RestoreOriginalSize_Title</a>
                     </div>
                 </div>

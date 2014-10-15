@@ -81,7 +81,8 @@ namespace BetterCms.Module.MediaManager.Services
                         : medias.OrderByDescending(statusNameExpression);
                     break;
                 default:
-                    medias = medias.OrderBy(media => media.Original).ThenByDescending(o => o.CreatedOn);
+//                    medias = medias.OrderBy(media => media.Original).ThenByDescending(o => o.CreatedOn);
+                    medias = medias.OrderBy(media => media.Original).ThenByDescending(o => o.PublishedOn);
                     break;
             }
 

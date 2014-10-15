@@ -106,11 +106,23 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
     /**
     * Opens blog edit form
     */
-    function openBlogEditForm(url, title, postSuccess, onClose, calledFromPage) {
+    function openBlogEditForm(url, title, opts) {
+
+        opts = $.extend({
+            postSuccess: null, 
+            onClose: null, 
+            calledFromPage: null, 
+            includeChildRegions: false
+        }, opts);
+
         var canEdit = security.IsAuthorized(["BcmsEditContent"]),
+            postSuccess = opts.postSuccess, 
+            onClose = opts.onClose, 
+            calledFromPage = opts.calledFromPage,
+            includeChildRegions = (opts.includeChildRegions == true),
             blogViewModel,
             permalinkValue;
-        
+
         modal.edit({
             title: title,
             disableSaveDraft: !canEdit,
@@ -119,7 +131,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             onLoad: function (dialog) {
                 dynamicContent.bindDialog(dialog, url, {
                     contentAvailable: function (dialog, content) {
-                        blogViewModel = initEditBlogPostDialogEvents(dialog, content, calledFromPage, postSuccess);
+                        blogViewModel = initEditBlogPostDialogEvents(dialog, content, calledFromPage, postSuccess, includeChildRegions);
                     },
 
                     beforePost: function () {
@@ -171,7 +183,11 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                     },
 
                     formSerialize: function (form) {
-                        return widgets.serializeFormWithChildWidgetOptions(form, selectors.htmlEditor);
+                        return widgets.serializeFormWithChildWidgetOptions(form, selectors.htmlEditor, function (serializedData) {
+                            if (includeChildRegions) {
+                                serializedData.IncludeChildRegions = true;
+                            }
+                        });
                     },
                     formContentType: 'application/json; charset=utf-8'
                 });
@@ -191,7 +207,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
     /**
     * Initializes blog edit form
     */
-    function initEditBlogPostDialogEvents(dialog, content, calledFromPage, postSuccess) {
+    function initEditBlogPostDialogEvents(dialog, content, calledFromPage, postSuccess, includeChildRegions) {
         var data = content.Data,
             image = data.Image,
             tagsList = data.Tags,
@@ -205,10 +221,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
             };
         
         htmlEditor.initializeHtmlEditor(selectors.htmlEditor, data.ContentId, {}, data.EditInSourceMode);
-        if (data.EnableInsertDynamicRegion) {
-            htmlEditor.enableInsertDynamicRegion();
-        }
-        
+       
         if (data.Version == 0) {
             newPost = true;
         }
@@ -226,15 +239,23 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         ko.applyBindings(blogViewModel, dialog.container.find(selectors.firstForm).get(0));
         
         dialog.container.find(selectors.destroyDraftVersionLink).on('click', function () {
-            history.destroyDraftVersion(data.ContentId, data.ContentVersion, dialog.container, function () {
+            history.destroyDraftVersion(data.ContentId, data.ContentVersion, includeChildRegions, dialog.container, function (publishedId, json) {
                 var onSave = postSuccess,
                     onClose = null;
 
                 dialog.close();
                 if (calledFromPage) {
-                    onClose = postSuccess;
+                    onClose = function() {
+                        onSave(json);
+                    };
                 }
-                editBlogPost(data.Id, onSave, calledFromPage, onClose);
+
+                editBlogPost(data.Id, {
+                    postSuccess: onSave,
+                    calledFromPage: calledFromPage,
+                    onClose: onClose,
+                    includeChildRegions: includeChildRegions
+                });
             });
         });
         
@@ -277,17 +298,32 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         var url = $.format(links.loadCreateNewPostDialogUrl, window.location.pathname),
             title = globalization.createNewPostDialogTitle;
 
-        openBlogEditForm(url, title, postSuccess);
+        openBlogEditForm(url, title, {
+            postSuccess: postSuccess
+        });
     }
         
     /**
     * Edits blog post
     */
-    function editBlogPost(id, postSuccess, calledFromPage, onClose) {
+    function editBlogPost(id, opts) {
+
+        opts = $.extend({
+            postSuccess: null,
+            calledFromPage: false,
+            onClose: null,
+            includeChildRegions: false
+        }, opts);
+
         var url = $.format(links.loadEditPostDialogUrl, id),
             title = globalization.editPostDialogTitle;
 
-        openBlogEditForm(url, title, postSuccess, onClose, calledFromPage);
+        openBlogEditForm(url, title, {
+            postSuccess: opts.postSuccess,
+            onClose: opts.onClose,
+            calledFromPage: opts.calledFromPage,
+            includeChildRegions: opts.includeChildRegions
+        });
     }
 
     /**
@@ -404,7 +440,10 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
                     onAfterSiteSettingsBlogPostSaved(json, row);
                 };
 
-            editBlogPost(id, onSave, false);
+            editBlogPost(id, {
+                postSuccess: onSave,
+                calledFromPage: false
+            });
         });
 
         container.find(selectors.siteSettingsBlogTitleCell).on('click', function (event) {
@@ -750,21 +789,30 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
     }
 
     /**
-    * Called when content overlay is created
+    * Called when content view model is created
     */
-    function onCreateContentOverlay(contentViewModel) {
-        var onSave = function () {
-                redirect.ReloadWithAlert();
-            };
-        
+    function onContentModelCreated(contentViewModel) {
         if (contentViewModel.contentType == contentTypes.blogContent) {
-            contentViewModel.removeConfigureButton();
-            contentViewModel.removeDeleteButton();
-
             // Edit
-            contentViewModel.onEditContent = function() {
-                editBlogPost(bcms.pageId, onSave, true);
+            contentViewModel.onEditContent = function (onSuccess, includeChildRegions) {
+                var onSave = function(json) {
+                        if ($.isFunction(onSuccess)) {
+                            onSuccess(json);
+                        } else {
+                            redirect.ReloadWithAlert();
+                        }
+                    },
+                    opts = {
+                        postSuccess: onSave,
+                        calledFromPage: true,
+                        includeChildRegions: includeChildRegions
+                    };
+
+                editBlogPost(bcms.pageId, opts);
             };
+
+            contentViewModel.visibleButtons.configure = false;
+            contentViewModel.visibleButtons["delete"] = false;
         }
     }
 
@@ -993,7 +1041,7 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
     /**
     * Subscribe to events
     */
-    bcms.on(bcms.events.createContentOverlay, onCreateContentOverlay);
+    bcms.on(bcms.events.contentModelCreated, onContentModelCreated);
     
 
     /**
