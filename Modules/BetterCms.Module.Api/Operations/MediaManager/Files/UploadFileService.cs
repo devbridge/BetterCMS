@@ -60,6 +60,11 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
                 request.Data.FileStream,
                 false);
 
+            if (savedFile != null)
+            {
+                Events.MediaManagerEvents.Instance.OnMediaFileUploaded(savedFile);
+            }
+
             return new UploadFileResponse
             {
                 Data = savedFile.Id

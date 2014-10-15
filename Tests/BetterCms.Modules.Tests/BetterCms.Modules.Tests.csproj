@@ -159,6 +159,7 @@
     <Compile Include="Api\Blog\Authors\AuthorsApiTests.cs" />
     <Compile Include="Api\Blog\BlogPosts\BlogPostsApiTests.cs" />
     <Compile Include="Api\Media\Files\FilesApiTests.cs" />
+    <Compile Include="Api\Media\Files\UploadFilesApiTests.cs" />
     <Compile Include="Api\Media\Folders\FoldersApiTests.cs" />
     <Compile Include="Api\Media\Images\ImagesApiTests.cs" />
     <Compile Include="Api\Media\Images\UploadImageApiTests.cs" />

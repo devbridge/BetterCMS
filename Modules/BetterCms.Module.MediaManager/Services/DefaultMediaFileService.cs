@@ -137,7 +137,7 @@ namespace BetterCms.Module.MediaManager.Services
             file.IsUploaded = null;
             if (configuration.Security.AccessControlEnabled)
             {
-                file.AddRule(new AccessRule() { AccessLevel = AccessLevel.ReadWrite, Identity = securityService.CurrentPrincipalName });
+                file.AddRule(new AccessRule { AccessLevel = AccessLevel.ReadWrite, Identity = securityService.CurrentPrincipalName });
             }
 
             unitOfWork.BeginTransaction();
