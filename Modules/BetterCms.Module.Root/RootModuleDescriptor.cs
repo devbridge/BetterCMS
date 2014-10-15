@@ -4,13 +4,11 @@ using System.Collections.Generic;
 using Autofac;
 
 using BetterCms.Core;
-using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Dependencies;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Modules.Projections;
-using BetterCms.Core.Modules.Registration;
 using BetterCms.Events;
 
 using BetterCms.Module.Root.Content.Resources;
@@ -192,6 +190,8 @@ namespace BetterCms.Module.Root
             containerBuilder.RegisterType<DefaultLanguageService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultContentProjectionService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultChildContentService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            
+            containerBuilder.RegisterType<CmsConfigurationService>().AsImplementedInterfaces().SingleInstance();
         }
 
         /// <summary>

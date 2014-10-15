@@ -26,6 +26,8 @@ using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Cms;
 
+using Iesi.Collections;
+
 namespace BetterCms.Module.Pages
 {
     /// <summary>
@@ -99,6 +101,11 @@ namespace BetterCms.Module.Pages
         private readonly SitemapJsModuleIncludeDescriptor sitemapJsModuleIncludeDescriptor;
 
         /// <summary>
+        /// bcms.pages.setting.js java script module descriptor.
+        /// </summary>
+        private readonly SettingJsModuleIncludeDescriptor settingJsModuleIncludeDescriptor;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PagesModuleDescriptor" /> class.
         /// </summary>
         public PagesModuleDescriptor(ICmsConfiguration configuration) : base(configuration)
@@ -113,6 +120,7 @@ namespace BetterCms.Module.Pages
             masterPagesJsModuleIncludeDescriptor = new MasterPagesJsModuleIncludeDescriptor(this);
             historyJsModuleIncludeDescriptor = new HistoryJsModuleIncludeDescriptor(this);
             sitemapJsModuleIncludeDescriptor = new SitemapJsModuleIncludeDescriptor(this);
+            settingJsModuleIncludeDescriptor = new SettingJsModuleIncludeDescriptor(this);
 
             RootEvents.Instance.PageRetrieved += Events_PageRetrieved;
 
@@ -285,6 +293,7 @@ namespace BetterCms.Module.Pages
                     masterPagesJsModuleIncludeDescriptor,
                     historyJsModuleIncludeDescriptor,
                     sitemapJsModuleIncludeDescriptor,
+                    settingJsModuleIncludeDescriptor,
                     new PagesLanguagesJsModuleIncludeDescriptor(this), 
                     new JsIncludeDescriptor(this, "bcms.pages.filter")
                 };
@@ -487,7 +496,15 @@ namespace BetterCms.Module.Pages
                             Title = page => NavigationGlobalization.SiteSettings_SitemapMenuItem,
                             CssClass = page => "bcms-sidebar-link",
                             AccessRole = RootModuleConstants.UserRoles.EditContent
-                        }                                      
+                        },
+
+                    new LinkActionProjection(settingJsModuleIncludeDescriptor, page => "loadConfigurationSettingsList")
+                        {
+                            Order = 4500,
+                            Title = page => NavigationGlobalization.SiteSettings_SettingsMenuItem,
+                            CssClass = page => "bcms-sidebar-link",
+                            AccessRole = RootModuleConstants.UserRoles.EditContent
+                        },
                 };
         }
 

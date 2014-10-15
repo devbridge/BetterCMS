@@ -85,17 +85,18 @@ namespace BetterCms.Configuration
             return section;
         }
 
-        public ICmsConfiguration LoadCmsConfiguration()
+        public CmsConfigurationSection LoadCmsConfiguration()
         {
             // NOTE: LoadConfig<CmsConfigurationSection> fails to load storage and menu section elements. May be because they are of type ConfigurationElementCollection and not ConfigurationElement
             // return LoadConfig<CmsConfigurationSection>();
             return LoadCmsConfigurationInternal();
         }
 
-        private static ICmsConfiguration LoadCmsConfigurationInternal()
+        private static CmsConfigurationSection LoadCmsConfigurationInternal()
         {
             var config = ConfigurationManager.GetSection("cms");
-            return (ICmsConfiguration)config;
+            //return (ICmsConfiguration)config;
+            return (CmsConfigurationSection)config;
         }
 
         public T LoadConfig<T>() where T : ConfigurationSection

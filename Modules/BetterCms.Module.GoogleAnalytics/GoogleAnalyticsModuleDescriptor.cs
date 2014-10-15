@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using Autofac;
 
+using BetterCms.Core.DataContracts.Enums;
+using BetterCms.Core.Models;
 using BetterCms.Core.Modules;
 using BetterCms.Events;
 using BetterCms.Module.GoogleAnalytics.Accessors;
+using BetterCms.Module.GoogleAnalytics.Content.Resources;
 
 namespace BetterCms.Module.GoogleAnalytics
 {
@@ -62,10 +66,11 @@ namespace BetterCms.Module.GoogleAnalytics
         /// Initializes a new instance of the <see cref="GoogleAnalyticsModuleDescriptor"/> class
         /// </summary>
         /// <param name="configuration">The configuration</param>
-        public GoogleAnalyticsModuleDescriptor(ICmsConfiguration configuration)
+        public GoogleAnalyticsModuleDescriptor(ICmsConfiguration configuration)//, ICmsConfigurationService cmsConfigurationService)
             : base(configuration)
         {
             cmsConfiguration = configuration;
+//            this.cmsConfigurationService = cmsConfigurationService;
             RootEvents.Instance.PageRendering += Events_PageRendering;
         }
 
@@ -80,6 +85,38 @@ namespace BetterCms.Module.GoogleAnalytics
                 "bcms-google-sitemap",
                 GoogleAnalyticsModuleHelper.GetSitemapUrl(cmsConfiguration),
                 new { area = AreaName, controller = "GoogleSitemap", action = "Index" });
+        }
+
+        protected override IEnumerable<ConfigurationKeyValueDescriptor> RegisteredConfigurationSettings()
+        {
+            return new List<ConfigurationKeyValueDescriptor>
+            {
+                new ConfigurationKeyValueDescriptor
+                {
+                    Key = GoogleAnalyticsModuleConstants.SitemapTitleKey,
+                    Value = "Default Site Map",
+                    Priority = 1,
+                    Title = () => GoogleAnalyticsGlobalization.SitemapTitle_DisplayName,
+                    Type = OptionType.Text,
+                    //Map = (configuration, value) => configuration.Storage.MaximumFileNameLength = value
+                },
+                new ConfigurationKeyValueDescriptor
+                {
+                    Key = GoogleAnalyticsModuleConstants.PriorityKey,
+                    Value = "0.6",
+                    Priority = 2,
+                    Title = () => "Priority",
+                    Type = OptionType.Text
+                },
+                new ConfigurationKeyValueDescriptor
+                {
+                    Key = GoogleAnalyticsModuleConstants.SitemapUrlKey,
+                    Value = "sitemap1.xml",
+                    Priority = 3,
+                    Title = () => GoogleAnalyticsGlobalization.SitemapUrl_DisplayName,
+                    Type = OptionType.Text
+                }
+            };
         }
 
         /// <summary>

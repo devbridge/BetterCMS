@@ -218,6 +218,22 @@ namespace BetterCms.Core.Modules.Registration
         }
 
         /// <summary>
+        /// Registers Better CMS module types.
+        /// </summary>
+        /// <param name="moduleDescriptor">Module information.</param>
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
+        public void RegisterModuleTypes(ModuleDescriptor moduleDescriptor)
+        {
+            ContainerBuilder containerBuilder = new ContainerBuilder();
+
+            ModuleRegistrationContext registrationContext = new ModuleRegistrationContext(moduleDescriptor);
+
+            moduleDescriptor.RegisterModuleTypes(registrationContext, containerBuilder);
+
+            ContextScopeProvider.RegisterTypes(containerBuilder);
+        }
+
+        /// <summary>
         /// Registers Better CMS module.
         /// </summary>
         /// <param name="moduleDescriptor">Module information.</param>
@@ -228,11 +244,12 @@ namespace BetterCms.Core.Modules.Registration
 
             ModuleRegistrationContext registrationContext = new ModuleRegistrationContext(moduleDescriptor);            
            
-            moduleDescriptor.RegisterModuleTypes(registrationContext, containerBuilder);            
+            // #634
+            //moduleDescriptor.RegisterModuleTypes(registrationContext, containerBuilder);            
             moduleDescriptor.RegisterModuleCommands(registrationContext, containerBuilder);            
             moduleDescriptor.RegisterModuleControllers(registrationContext, containerBuilder, controllerExtensions);
             moduleDescriptor.RegisterCustomRoutes(registrationContext, containerBuilder);
-
+            
             ContextScopeProvider.RegisterTypes(containerBuilder);
 
             knownModules.Add(moduleDescriptor.AreaName.ToLowerInvariant(), registrationContext);
@@ -315,15 +332,37 @@ namespace BetterCms.Core.Modules.Registration
                     }
 
                     moduleDescriptors = moduleDescriptors.OrderBy(f => f.Order).ToList();
+
+                    // Register all modules types
                     foreach (var moduleDescriptor in moduleDescriptors)
                     {
                         try
                         {
-                            RegisterModule(moduleDescriptor);                            
+                            RegisterModuleTypes(moduleDescriptor);
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.ErrorFormat("Failed to register module types for module of type {0}.", ex, moduleDescriptor.GetType().FullName);
+                        }
+                    }
+
+                    // Override configuration settings for modules
+                    // Register modules
+                    foreach (var moduleDescriptor in moduleDescriptors)
+                    {
+                        var childContainer = ContextScopeProvider.CreateChildContainer();
+                        try
+                        {
+                            moduleDescriptor.OverrideConfigurationSettings(childContainer);
+                            RegisterModule(moduleDescriptor);
                         }
                         catch (Exception ex)
                         {
                             Log.ErrorFormat("Failed to register module of type {0}.", ex, moduleDescriptor.GetType().FullName);
+                        }
+                        finally
+                        {
+                            childContainer.Dispose();
                         }
                     }
                 }

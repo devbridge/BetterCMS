@@ -115,6 +115,11 @@
   <ItemGroup>
     <Compile Include="Accessors\GoogleAnalyticsScriptAccessor.cs" />
     <Compile Include="Command\Sitemap\GetSitemapCommand.cs" />
+    <Compile Include="Content\Resources\GoogleAnalyticsGlobalization.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GoogleAnalyticsGlobalization.resx</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\GoogleSitemapController.cs" />
     <Compile Include="GoogleAnalyticsModuleConstants.cs" />
     <Compile Include="GoogleAnalyticsModuleDescriptor.cs" />
@@ -135,7 +140,12 @@
     </Content>
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Content\Resources\GoogleAnalyticsGlobalization.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GoogleAnalyticsGlobalization.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

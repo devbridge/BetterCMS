@@ -7,6 +7,7 @@ using BetterCms.Core.Dependencies;
 using BetterCms.Core.Exceptions;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Mvc.Commands;
+using BetterCms.Core.Services;
 using BetterCms.Core.Web;
 using BetterCms.Module.GoogleAnalytics.Models;
 using BetterCms.Module.Pages.Services;
@@ -19,15 +20,19 @@ namespace BetterCms.Module.GoogleAnalytics.Command.Sitemap
     {
         private readonly ICmsConfiguration cmsConfiguration;
 
+        private readonly ICmsConfigurationService cmsConfigurationService;
+
         private readonly ISitemapService sitemapService;
 
         private readonly ILanguageService languageService;
 
         private readonly IPageService pageService;
         
-        public GetSitemapCommand(ICmsConfiguration cmsConfiguration, ISitemapService sitemapService, ILanguageService languageService, IPageService pageService)
+        public GetSitemapCommand(ICmsConfiguration cmsConfiguration, ISitemapService sitemapService, 
+            ILanguageService languageService, IPageService pageService, ICmsConfigurationService cmsConfigurationService)
         {
             this.cmsConfiguration = cmsConfiguration;
+            this.cmsConfigurationService = cmsConfigurationService;
             this.sitemapService = sitemapService;
             this.languageService = languageService;
             this.pageService = pageService;
@@ -44,7 +49,10 @@ namespace BetterCms.Module.GoogleAnalytics.Command.Sitemap
 
             if (sitemapModel.SitemapId.HasDefaultValue())
             {
-                sitemap = sitemapService.GetByTitle(GoogleAnalyticsModuleHelper.GetSitemapTitle(cmsConfiguration)) ?? sitemapService.GetFirst();
+                var timeoutValue = cmsConfiguration.Storage.ProcessTimeout;
+
+                sitemap =
+                    sitemapService.GetByTitle(GoogleAnalyticsModuleHelper.GetSitemapTitle(cmsConfiguration)) ?? sitemapService.GetFirst();
                 if (sitemap == null)
                     throw new CmsException("There aren't any sitemaps created.");
             }

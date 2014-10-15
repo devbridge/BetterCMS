@@ -33,6 +33,13 @@ namespace BetterCms.Configuration
             return null;
         }
 
+        public IEnumerable<ICmsModuleConfiguration> GetList()
+        {
+            foreach (ModuleElement type in this)
+            {
+                yield return type;
+            }
+        }
 
         public new IEnumerator<ModuleElement> GetEnumerator()
         {

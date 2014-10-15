@@ -1,9 +1,87 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Reflection;
 
 namespace BetterCms.Configuration
 {
+    //public class CmsConfigurtion : ICmsConfiguration
+    //{
+    //    public CmsConfigurtion(ICmsConfiguration cms)
+    //    {
+    //        Version = cms.Version;
+    //        UseMinifiedResources = useMinifiedResources;
+    //        ResourcesBasePath = resourcesBasePath;
+    //        LoginUrl = loginUrl;
+    //        WebSiteUrl = webSiteUrl;
+    //        WorkingDirectoryRootPath = workingDirectoryRootPath;
+    //        Storage = storage;
+    //        Database = database;
+    //        Security = security;
+    //        Users = users;
+    //        Search = search;
+    //        PageNotFoundUrl = pageNotFoundUrl;
+    //        ArticleUrlPattern = articleUrlPattern;
+    //        Modules = modules;
+    //        UrlPatterns = urlPatterns;
+    //        ModuleGallery = moduleGallery;
+    //        Installation = installation;
+    //        Cache = cache;
+    //        UrlMode = urlMode;
+    //        RenderContentEndingDiv = renderContentEndingDiv;
+    //        ContentEndingDivCssClassName = contentEndingDivCssClassName;
+    //        EnableMultilanguage = enableMultilanguage;
+    //        EnableMacros = enableMacros;
+    //    }
+
+    //    public string Version { get; private set; }
+
+    //    public bool UseMinifiedResources { get; private set; }
+
+    //    public string ResourcesBasePath { get; private set; }
+
+    //    public string LoginUrl { get; set; }
+
+    //    public string WebSiteUrl { get; set; }
+
+    //    public string WorkingDirectoryRootPath { get; private set; }
+
+    //    public ICmsStorageConfiguration Storage { get; private set; }
+
+    //    public ICmsDatabaseConfiguration Database { get; private set; }
+
+    //    public ICmsSecurityConfiguration Security { get; private set; }
+
+    //    public ICmsUsersConfiguration Users { get; private set; }
+
+    //    public ICmsSearchConfiguration Search { get; private set; }
+
+    //    public string PageNotFoundUrl { get; set; }
+
+    //    public string ArticleUrlPattern { get; set; }
+
+    //    public ModulesCollection Modules { get; set; }
+
+    //    public UrlPatternsCollection UrlPatterns { get; set; }
+
+    //    public ICmsModuleGalleryConfiguration ModuleGallery { get; private set; }
+
+    //    public ICmsInstallationConfiguration Installation { get; private set; }
+
+    //    public ICmsCacheConfiguration Cache { get; private set; }
+
+    //    public TrailingSlashBehaviorType UrlMode { get; private set; }
+
+    //    public bool RenderContentEndingDiv { get; private set; }
+
+    //    public string ContentEndingDivCssClassName { get; private set; }
+
+    //    public bool EnableMultilanguage { get; private set; }
+
+    //    public bool EnableMacros { get; private set; }
+    //}
+
     public class CmsConfigurationSection : ConfigurationSection, ICmsConfiguration
     {
         private const string VersionAttribute = "version";
@@ -253,6 +331,14 @@ namespace BetterCms.Configuration
         {
             get { return (ModulesCollection)this[ModulesNode]; }
             set { this[ModulesNode] = value; }
+        }
+
+        List<ICmsModuleConfiguration> ICmsConfiguration.Modules
+        {
+            get
+            {
+                return Modules.GetList().ToList();
+            }
         }
 
         /// <summary>

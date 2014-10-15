@@ -1,9 +1,10 @@
-﻿using System.Configuration;
+﻿using System.Collections.Generic;
+using System.Configuration;
 
 namespace BetterCms.Configuration
 {
     [ConfigurationCollection(typeof(KeyValueElement), AddItemName = "add", CollectionType = ConfigurationElementCollectionType.BasicMap)]
-    public class ModuleElement : ConfigurationElementCollection
+    public class ModuleElement : ConfigurationElementCollection, ICmsModuleConfiguration
     {
         [ConfigurationProperty("name", DefaultValue = "", IsKey = true, IsRequired = true)]
         public string Name
@@ -44,9 +45,14 @@ namespace BetterCms.Configuration
             return element == null ? null : element.Value;
         }
 
-        public void Add(KeyValueElement element)
+        public IEnumerable<KeyValueElement> GetKeyValues()
         {
-            BaseAdd(element);
+            foreach (KeyValueElement type in this)
+            {
+                yield return type;
+            }
         }
+
+        public void SetValue(string key, string value){}
     }
 }

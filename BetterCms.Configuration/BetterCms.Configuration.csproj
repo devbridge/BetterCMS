@@ -115,11 +115,16 @@
     <Compile Include="Configuration\DatabaseType.cs" />
     <Compile Include="Configuration\DefaultConfigurationLoader.cs" />
     <Compile Include="Configuration\CmsSecurityConfigurationElement.cs" />
+    <Compile Include="Configuration\Dynamic\DynamicCmsConfiguration.cs" />
+    <Compile Include="Configuration\Dynamic\DynamicKeyValue.cs" />
+    <Compile Include="Configuration\Dynamic\DynamicModule.cs" />
+    <Compile Include="Configuration\ICmsModuleConfiguration.cs" />
     <Compile Include="Configuration\ModuleElement.cs" />
     <Compile Include="Configuration\ModulesCollection.cs" />
     <Compile Include="Configuration\StorageServiceType.cs" />
     <Compile Include="Configuration\TrailingSlashBehaviorType.cs" />
     <Compile Include="Configuration\UrlPatternsCollection.cs" />
+    <Compile Include="ICmsFileConfiguration.cs" />
     <Compile Include="ICmsSearchConfiguration.cs" />
     <Compile Include="ICmsUsersConfiguration.cs" />
     <Compile Include="ICmsInstallationConfiguration.cs" />

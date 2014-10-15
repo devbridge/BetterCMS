@@ -1,0 +1,59 @@
+﻿@using BetterCms.Module.Pages.Content.Resources
+@using BetterCms.Module.Pages.Controllers
+@using BetterCms.Module.Pages.ViewModels.Setting
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Mvc.Grids.Extensions
+@using BetterCms.Module.Root.Mvc.Grids.TableRenderers
+@using BetterCms.Module.Root.Mvc.Helpers
+@using Microsoft.Web.Mvc
+@using MvcContrib.UI.Grid
+
+@model ConfigurationSettingsListViewModel
+          
+
+@{
+    Action<ColumnBuilder<ConfigurationSettingItemViewModel>> columns = column =>
+    {
+        column.EditButtonColumn(renderId: false);
+
+        column.For(f => f.Name).Named(PagesGlobalization.SiteSettings_ConfigurationSettings_NameColumn)
+            .SortColumnName("Name").HeaderAttributes(@style => "width: 150px;").Encode(false);
+
+        column.For(f => f.Value).Named(PagesGlobalization.SiteSettings_ConfigurationSettings_ValueColumn).SortColumnName("Value");
+
+        column.For(f => f.ModuleName).Named(PagesGlobalization.SiteSettings_ConfigurationSettings_ModuleNameColumn)
+            .SortColumnName("ModuleName").HeaderAttributes(@style => "width: 150px;");
+
+        column.HistoryButtonColumn(renderId: false);
+        
+        column.DeleteButtonColumn(renderId:false);
+    };
+}
+
+@using (Html.BeginForm<SettingController>(f => f.Settings(null), FormMethod.Post, new { @id = "bcms-settings-form", @class = "bcms-ajax-form" }))
+{
+    @Html.HiddenGridOptions(Model.GridOptions)
+
+    <div class="bcms-twocols-title-block">
+        <div class="bcms-large-titles">@PagesGlobalization.SiteSettings_Settings_Title</div>
+        <div class="bcms-btn-links-main" id="bcms-create-setting-button">@PagesGlobalization.SiteSettings_Widgets_AddNew</div>
+        <div class="bcms-search-block">
+            @Html.TextBoxFor(m => m.SearchQuery, new { @class = "bcms-editor-field-box bcms-search-query", @placeholder = RootGlobalization.WaterMark_Search })
+            <div class="bcms-btn-search" id="bcms-setting-search-btn">@PagesGlobalization.SiteSettings_Settings_Search</div>
+        </div>
+        <div class="bcms-featured-grid bcms-clearfix">
+            @Html.RenderPaging(Model)
+        </div>
+    </div> 
+
+    @Html.SiteSettingsMessagesBox()
+
+    @(Html
+          .Grid(Model.Items)
+          .Sort(Model.GridOptions)
+          .Columns(columns)
+          .Attributes(@class => "bcms-tables")          
+          .RowAttributes(row => new Dictionary<string, object> { { "data-id", row.Item.Id }, { "data-version", row.Item.Version } })
+          .RenderUsing(new EditableHtmlTableGridRenderer<ConfigurationSettingItemViewModel>()))
+}
+

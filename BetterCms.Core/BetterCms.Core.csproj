@@ -129,6 +129,7 @@
     <Compile Include="DataAccess\DataContext\Migrations\VersionInfo.cs" />
     <Compile Include="DataAccess\PredicateBuilder.cs" />
     <Compile Include="DataContracts\Enums\ForceProtocolType.cs" />
+    <Compile Include="DataContracts\Enums\TakenFrom.cs" />
     <Compile Include="DataContracts\IChildContent.cs" />
     <Compile Include="DataContracts\IContentRegion.cs" />
     <Compile Include="DataContracts\ICustomOption.cs" />
@@ -186,7 +187,9 @@
     <Compile Include="Exceptions\Api\CmsApiException.cs" />
     <Compile Include="Exceptions\Api\CmsApiValidationException.cs" />
     <Compile Include="Exceptions\Mvc\ConfirmationRequestException.cs" />
+    <Compile Include="Models\ConfigurationKeyValueDescriptor.cs" />
     <Compile Include="Models\EntityIdGenerator.cs" />
+    <Compile Include="Models\Setting.cs" />
     <Compile Include="Modules\CssIncludeDescriptor.cs" />
     <Compile Include="Modules\Projections\JavaScriptModuleLink.cs" />
     <Compile Include="Mvc\Binders\JSONDataBinder.cs" />
@@ -210,6 +213,9 @@
     <Compile Include="Security\DefaultTextEncryptor.cs" />
     <Compile Include="Security\SpecialIdentities.cs" />
     <Compile Include="Security\UserRole.cs" />
+    <Compile Include="Services\CmsConfigurationOverrider.cs" />
+    <Compile Include="Services\DefaultSettingsService.cs" />
+    <Compile Include="Services\ISettingsService.cs" />
     <Compile Include="Services\Storage\FtpStorageService.cs" />
     <Compile Include="Services\Storage\DownloadResponse.cs" />
     <Compile Include="Services\Storage\FileSystemStorageService.cs" />

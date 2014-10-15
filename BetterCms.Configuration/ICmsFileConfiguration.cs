@@ -1,12 +1,8 @@
-using System.Collections.Generic;
-
-using BetterCms.Configuration;
+﻿using BetterCms.Configuration;
 
 namespace BetterCms
 {
-    /// <summary>
-    /// </summary>
-    public interface ICmsConfiguration
+    public interface ICmsFileConfiguration
     {
         /// <summary>
         /// Gets the Better CMS version.
@@ -72,7 +68,7 @@ namespace BetterCms
         /// <summary>
         /// Gets the configuration of CMS permissions service.
         /// </summary>
-        ICmsSecurityConfiguration Security { get;  }
+        ICmsSecurityConfiguration Security { get; }
 
         /// <summary>
         /// Gets the configuration of CMS users.
@@ -107,7 +103,7 @@ namespace BetterCms
         /// Gets or sets the modules.
         /// </summary>
         /// <value> The modules. </value>
-        List<ICmsModuleConfiguration> Modules { get; }
+        ModulesCollection Modules { get; set; }
 
         /// <summary>
         /// Gets or sets the URL patterns.

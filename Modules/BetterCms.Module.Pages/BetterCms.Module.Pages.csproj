@@ -146,6 +146,7 @@
     <Compile Include="Command\Page\GetPageForCloningWithLanguage\GetPageForCloningWithLanguageCommand.cs" />
     <Compile Include="Command\Page\GetUntranslatedPagesList\GetUntranslatedPagesListCommand.cs" />
     <Compile Include="Command\Page\SuggestPages\SuggestPagesCommand.cs" />
+    <Compile Include="Command\Setting\GetSettingsListCommand.cs" />
     <Compile Include="Command\Sitemap\DeleteSitemap\DeleteSitemapCommand.cs" />
     <Compile Include="Command\Sitemap\GetPageTranslations\GetPageTranslationsCommand.cs" />
     <Compile Include="Command\Sitemap\GetSitemapsForNewPage\GetSitemapsForNewPageCommand.cs" />
@@ -157,6 +158,7 @@
     <Compile Include="Command\Widget\PreviewWidget\PreviewWidgetCommand.cs" />
     <Compile Include="Command\Widget\PreviewWidget\PreviewWidgetCommandRequest.cs" />
     <Compile Include="Command\Widget\SaveWidget\SaveWidgetCommandRequest.cs" />
+    <Compile Include="Controllers\SettingController.cs" />
     <Compile Include="Events\CategoryEvents.cs" />
     <Compile Include="Events\ContentEvents.cs" />
     <Compile Include="Events\PagePropertiesChangingEventArgs.cs" />
@@ -311,6 +313,7 @@
     <Compile Include="Registration\PagesLanguagesJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\MasterPagesJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\HistoryJsModuleIncludeDescriptor.cs" />
+    <Compile Include="Registration\SettingJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\SitemapJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\TemplatesJsModuleIncludeDescriptor.cs" />
     <Compile Include="Registration\PagesContentJsModuleIncludeDescriptor.cs" />
@@ -370,6 +373,8 @@
     <Compile Include="ViewModels\Page\RenderPageCategoryViewModel.cs" />
     <Compile Include="ViewModels\Page\RenderPageImageViewModel.cs" />
     <Compile Include="ViewModels\Page\RenderPagePropertiesViewModel.cs" />
+    <Compile Include="ViewModels\Setting\ConfigurationSettingsListViewModel.cs" />
+    <Compile Include="ViewModels\Setting\ConfigurationSettingItemViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\SitemapNodeTranslationViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\PageLinkViewModel.cs" />
     <Compile Include="ViewModels\Sitemap\SitemapViewModel.cs" />
@@ -395,6 +400,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EditOptions.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Setting\Settings.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Settings.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Widgets\Partial\WidgetUsagesTemplate.generated.cs">
       <AutoGen>True</AutoGen>
@@ -756,6 +766,7 @@
     <EmbeddedResource Include="Scripts\bcms.pages.content.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.masterpage.js" />
     <EmbeddedResource Include="Scripts\bcms.pages.languages.js" />
+    <EmbeddedResource Include="Scripts\bcms.pages.setting.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -763,6 +774,10 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>WidgetUsagesTemplate.generated.cs</LastGenOutput>
     </Content>
+    <None Include="Views\Setting\Settings.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Settings.generated.cs</LastGenOutput>
+    </None>
     <None Include="Views\Shared\Partial\WarnMessageAboutDraft.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>WarnMessageAboutDraft.generated.cs</LastGenOutput>
@@ -1101,6 +1116,7 @@
       <LastGenOutput>ChildContentOptions.generated.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

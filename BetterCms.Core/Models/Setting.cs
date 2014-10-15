@@ -1,8 +1,6 @@
 ﻿using System;
 
-using BetterCms.Core.Models;
-
-namespace BetterCms.Module.Root.Models
+namespace BetterCms.Core.Models
 {
     [Serializable]
     public class Setting: Entity

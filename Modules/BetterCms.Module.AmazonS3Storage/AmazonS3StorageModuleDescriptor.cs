@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Runtime.Remoting.Messaging;
 
 using Autofac;
 
 using BetterCms.Configuration;
+using BetterCms.Core.Models;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Services.Storage;
 
@@ -66,6 +69,16 @@ namespace BetterCms.Module.AmazonS3Storage
             }
         }
 
+        protected override IEnumerable<ConfigurationKeyValueDescriptor> RegisteredConfigurationSettings()
+        {
+            /*return "  <add key="AmazonAccessKey" value="[BETTERCMS_AMAZON_STORAGE_ACCESS_KEY]" />
+    <add key="AmazonSecretKey" value="[BETTERCMS_AMAZON_STORAGE_SECRET_KEY]" />
+    <add key="AmazonBucketName" value="[BETTERCMS_AMAZON_STORAGE_BUCKET_NAME]" />
+    <add key="AmazonTokenExpiryTime" value="00:01:00" />"
+            */
+
+            return base.RegisteredConfigurationSettings();
+        }
 
         /// <summary>
         /// Registers module types.

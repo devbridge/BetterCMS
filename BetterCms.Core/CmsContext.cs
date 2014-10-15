@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Compilation;
 using System.Web.Hosting;
@@ -10,6 +11,7 @@ using System.Web.WebPages;
 using Autofac;
 
 using BetterCms.Configuration;
+using BetterCms.Configuration.Dynamic;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
@@ -25,6 +27,7 @@ using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Mvc.Extensions;
 using BetterCms.Core.Mvc.Routes;
 using BetterCms.Core.Security;
+using BetterCms.Core.Services;
 using BetterCms.Core.Services.Caching;
 using BetterCms.Core.Services.Storage;
 using BetterCms.Core.Web;
@@ -49,6 +52,8 @@ namespace BetterCms.Core
 
         private static volatile ICmsConfiguration config;
 
+        private static volatile AppSettingsSection appSettingsConfiguration;
+        
         /// <summary>
         /// Gets the Better CMS configuration.
         /// </summary>
@@ -66,7 +71,7 @@ namespace BetterCms.Core
                         if (config == null)
                         {
                             IConfigurationLoader configurationLoader = new DefaultConfigurationLoader();
-                            config = configurationLoader.LoadCmsConfiguration();                            
+                            config = new DynamicCmsConfiguration(configurationLoader.LoadCmsConfiguration());
                         }
                     }
                 }
@@ -74,6 +79,33 @@ namespace BetterCms.Core
                 return config;
             }
         }
+
+        /// <summary>
+        /// Gets the AppSettings configuration section.
+        /// </summary>
+        /// <value>
+        /// The AppSettings configuration section.
+        /// </value>
+        public static AppSettingsSection AppSettingsConfiguration
+        {
+            get
+            {
+                if (appSettingsConfiguration == null)
+                {
+                    lock (configurationLoaderLock)
+                    {
+                        if (appSettingsConfiguration == null)
+                        {
+                            IConfigurationLoader configurationLoader = new DefaultConfigurationLoader();
+                            appSettingsConfiguration = configurationLoader.LoadConfig<AppSettingsSection>();
+                        }
+                    }
+                }
+
+                return appSettingsConfiguration;
+            }
+        }
+
         /// <summary>
         /// Constructs the host context.
         /// </summary>
@@ -136,6 +168,9 @@ namespace BetterCms.Core
             builder.RegisterType<DefaultVersionChecker>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<DefaultMigrationRunner>().AsImplementedInterfaces().SingleInstance();
 
+            builder.RegisterInstance(AppSettingsConfiguration).As<AppSettingsSection>().SingleInstance();
+            builder.RegisterType<DefaultSettingsService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            
             RegisterCacheService(builder);
 
             RegisterStorageService(builder);

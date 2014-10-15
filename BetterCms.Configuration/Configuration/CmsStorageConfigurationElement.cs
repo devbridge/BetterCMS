@@ -4,6 +4,26 @@ using System.Globalization;
 
 namespace BetterCms.Configuration
 {
+    //public class CmsStorageConfiguration : ICmsStorageConfiguration
+    //{
+    //    public string PublicContentUrlRoot { get; set; }
+
+    //    public string ContentRoot { get; set; }
+
+    //    public string PublicSecuredContentUrlRoot { get; set; }
+
+    //    public string SecuredContentRoot { get; set; }
+
+    //    public int MaximumFileNameLength { get; set; }
+
+    //    public StorageServiceType ServiceType { get; set; }
+
+    //    public TimeSpan ProcessTimeout
+    //    {
+    //        get; set;
+    //    }
+    //}
+
     [ConfigurationCollection(typeof(KeyValueElement), AddItemName = "add", CollectionType = ConfigurationElementCollectionType.BasicMap)]
     public class CmsStorageConfigurationElement : ConfigurationElementCollection, ICmsStorageConfiguration
     {

@@ -177,7 +177,7 @@
     <Compile Include="Models\MasterPage.cs" />
     <Compile Include="Models\Maps\ContentRegionMap.cs" />
     <Compile Include="Models\ContentRegion.cs" />
-    <Compile Include="Models\Migrations\Migration201408291545.cs" />
+    <Compile Include="Models\Migrations\Migration201409022338.cs" />
     <Compile Include="Models\Migrations\Migration201404171400.cs" />
     <Compile Include="Models\Migrations\Migration201312301700.cs" />
     <Compile Include="Models\Migrations\Migration201312171300.cs" />
@@ -192,7 +192,6 @@
     <Compile Include="Models\Migrations\Migration201406191600.cs" />
     <Compile Include="Models\Migrations\Migration201406101600.cs" />
     <Compile Include="Models\PagesView.cs" />
-    <Compile Include="Models\Setting.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\ChildContentRenderHelper.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\PageContentHtmlRenderer.cs" />
     <Compile Include="Mvc\PageHtmlRenderer\RenderingContentOptionProperty.cs" />
@@ -335,11 +334,12 @@
     <Compile Include="Mvc\Helpers\MessagesHelper.cs" />
     <Compile Include="Registration\TabsJsModuleIncludeDescriptor.cs" />
     <Compile Include="RootModuleConstants.cs" />
+    <Compile Include="Services\CmsConfigurationService.cs" />
     <Compile Include="Services\DefaultChildContentService.cs" />
     <Compile Include="Services\DefaultContentProjectionService.cs" />
     <Compile Include="Services\DefaultLanguageService.cs" />
-    <Compile Include="Services\DefaultSettingsService.cs" />
     <Compile Include="Services\IChildContentService.cs" />
+    <Compile Include="Services\ICmsConfigurationService.cs" />
     <Compile Include="Services\IContentProjectionService.cs" />
     <Compile Include="Services\ILanguageService.cs" />
     <Compile Include="Services\DefaultEntityTrackingCacheService.cs" />
@@ -355,7 +355,6 @@
     <Compile Include="Services\IEntityTrackingService.cs" />
     <Compile Include="Services\IOptionService.cs" />
     <Compile Include="Services\IRenderingService.cs" />
-    <Compile Include="Services\ISettingsService.cs" />
     <Compile Include="Services\IUserProfileUrlResolver.cs" />
     <Compile Include="ViewModels\Authentication\InfoViewModel.cs" />
     <Compile Include="ViewModels\Autocomplete\SuggestionViewModel.cs" />
@@ -1304,6 +1303,7 @@
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\lock.png" />
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\refresh.png" />
     <EmbeddedResource Include="Scripts\ckeditor\styles.js" />
+    <EmbeddedResource Include="Scripts\bcms.settings.js" />
     <Content Include="Views\Web.config" />
     <None Include="Views\Sidebar\Container.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -1566,6 +1566,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Scripts\ckeditor\plugins\wsc\README.md" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

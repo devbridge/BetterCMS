@@ -1362,4 +1362,19 @@
   <data name="WidgetUsages_Type_MasterPage" xml:space="preserve">
     <value>Master page</value>
   </data>
+  <data name="SiteSettings_ConfigurationSettings_ModuleNameColumn" xml:space="preserve">
+    <value>Module Name</value>
+  </data>
+  <data name="SiteSettings_ConfigurationSettings_NameColumn" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="SiteSettings_ConfigurationSettings_ValueColumn" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="SiteSettings_Settings_Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SiteSettings_Settings_Title" xml:space="preserve">
+    <value>Configuration settings</value>
+  </data>
 </root>

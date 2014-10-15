@@ -6,11 +6,15 @@ using System.Web.Mvc;
 
 using Autofac;
 
+using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.Exceptions;
+using BetterCms.Core.Models;
 using BetterCms.Core.Modules.Projections;
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Mvc.Extensions;
+using BetterCms.Core.Services;
 
 namespace BetterCms.Core.Modules
 {
@@ -291,6 +295,11 @@ namespace BetterCms.Core.Modules
             return null;
         }
 
+        protected virtual IEnumerable<ConfigurationKeyValueDescriptor> RegisteredConfigurationSettings()
+        {
+            return null;
+        }
+
         public virtual IEnumerable<IPageActionProjection> RegisterSidebarHeaderProjections(ContainerBuilder containerBuilder)
         {
             return null;
@@ -370,6 +379,20 @@ namespace BetterCms.Core.Modules
                 .AsSelf()
                 .PropertiesAutowired()
                 .InstancePerLifetimeScope();
+        }
+
+        internal void OverrideConfigurationSettings(ILifetimeScope container)
+        {
+            var dynamicConfig = RegisteredConfigurationSettings();
+
+            var settingsService = container.Resolve<ISettingsService>();
+            if (dynamicConfig != null)
+            {
+                foreach (var key in dynamicConfig)
+                {
+                    this.Override(null, key, Configuration);
+                }
+            }
         }
 
         protected void RegisterContentRendererType<TContentRenderer, TContent>(ContainerBuilder containerBuilder) 

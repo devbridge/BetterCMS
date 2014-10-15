@@ -1,4 +1,6 @@
-﻿namespace BetterCms.Module.GoogleAnalytics
+﻿using System.Linq;
+
+namespace BetterCms.Module.GoogleAnalytics
 {
     public static class GoogleAnalyticsModuleHelper
     {
@@ -46,7 +48,7 @@
 
         private static string GetConfigurationValue(ICmsConfiguration cmsConfiguration, string key)
         {
-            var moduleConfiguration = cmsConfiguration.Modules.GetByName(GoogleAnalyticsModuleDescriptor.ModuleName);
+            var moduleConfiguration = cmsConfiguration.Modules.First(m => m.Name.Equals(GoogleAnalyticsModuleDescriptor.ModuleName));
             return moduleConfiguration != null ? moduleConfiguration.GetValue(key) : string.Empty;
         }
     }
