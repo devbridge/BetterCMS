@@ -111,11 +111,6 @@ namespace BetterCms.Test.Module.Api
             deletedEventCount++;
         }
 
-        protected void Instance_EntityUpdated<TEntity>(Events.SingleItemEventArgs<TEntity> args)
-        {
-            updatedEventCount++;
-        }
-
         protected void Instance_EntityCreated<TEntity>(Events.SingleItemEventArgs<TEntity> args)
         {
             createdEventCount++;

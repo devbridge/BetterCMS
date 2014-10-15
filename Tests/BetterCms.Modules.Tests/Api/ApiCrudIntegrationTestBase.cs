@@ -59,6 +59,11 @@ namespace BetterCms.Test.Module.Api
             CheckEventsCount(1, 1, 1);
         }
 
+        protected void Instance_EntityUpdated<TEntity>(Events.SingleItemEventArgs<TEntity> args)
+        {
+            updatedEventCount++;
+        }
+
         protected void RunWithIdSpecified(
             ISession session,
             Func<TGetRequest, TGetResponse> getFunc,

@@ -55,12 +55,8 @@ namespace BetterCms.Core.Web
             {
                 return current.Server.MapPath(path);
             }
-            else
-            {
-                return Path.Combine(GetExecutingAssemblyPath(), path);
-            }
-
-            return path;
+            
+            return Path.Combine(GetExecutingAssemblyPath(), path);
         }
 
         /// <summary>
@@ -112,21 +108,11 @@ namespace BetterCms.Core.Web
         /// <returns></returns>
         private string GetServerUrl(HttpRequestBase request)
         {
-            if (request != null 
+            if (request != null
                 && string.IsNullOrWhiteSpace(cmsConfiguration.WebSiteUrl) || cmsConfiguration.WebSiteUrl.Equals("auto", StringComparison.InvariantCultureIgnoreCase))
             {
                 var url = request.Url.AbsoluteUri;
-                string query;
-
-                if (HttpContext.Current != null)
-                {
-                    query = HttpContext.Current.Request.Url.PathAndQuery;
-                }
-                else
-                {
-                    query = GetExecutingAssemblyPath();
-                }
-
+                var query = HttpContext.Current.Request.Url.PathAndQuery;
                 if (!string.IsNullOrEmpty(query) && query != "/")
                 {
                     url = url.Replace(query, null);
@@ -142,8 +128,8 @@ namespace BetterCms.Core.Web
         {
             string codeBase = Assembly.GetExecutingAssembly().CodeBase;
             UriBuilder uri = new UriBuilder(codeBase);
-            
-            return Path.GetPathRoot(uri.Path);
+
+            return Path.GetDirectoryName(uri.Path);
         }
     }
 }
