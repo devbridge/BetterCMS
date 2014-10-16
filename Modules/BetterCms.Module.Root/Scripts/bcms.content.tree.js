@@ -488,7 +488,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                                             ? dragObject
                                             : treeViewModel.getItemById(id, allItems);
 
-                                    if (itemModel.type == treeItemTypes.content && itemModel.parentRegion == regionModelAfter) {
+                                    if (itemModel != null && itemModel.type == treeItemTypes.content && itemModel.parentRegion == regionModelAfter) {
                                         correctOrder.push(itemModel);
                                         if (!updateOrder && (!allItems[i] || itemModel.itemId != allItems[i].itemId)) {
                                             updateOrder = true;
