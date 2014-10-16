@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 
+using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Models;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
@@ -40,7 +41,21 @@ namespace BetterCms.Test.Module.Api.Media.Images
             Events.MediaManagerEvents.Instance.MediaFileUploaded -= Instance_EntityCreated;
             Events.MediaManagerEvents.Instance.MediaFileDeleted -= Instance_EntityDeleted;
         }
-        
+
+        [Test]
+        [ExpectedException(typeof(CmsApiValidationException))]
+        public void Should_Throw_Exception_For_Invalid_Folder_Type()
+        {
+            RunApiActionInTransaction((api, session) =>
+            {
+                folder = TestDataProvider.CreateNewMediaFolder(false, MediaType.File);
+                session.SaveOrUpdate(folder);
+                session.Flush();
+
+                Run(session, api.Media.Images.Upload.Post, api.Media.Image.Get, api.Media.Image.Delete);
+            });
+        }
+
         protected override UploadImageModel GetCreateModel(ISession session)
         {
             return new UploadImageModel
@@ -48,10 +63,11 @@ namespace BetterCms.Test.Module.Api.Media.Images
                 Caption = TestDataProvider.ProvideRandomString(MaxLength.Name),
                 Description = TestDataProvider.ProvideRandomString(MaxLength.Text),
                 FolderId = folder.Id,
-                Title = TestDataProvider.ProvideRandomString(MaxLength.Name),
+                Title = TestDataProvider.ProvideRandomString(50),
                 Version = 0,
                 FileName = TestBigImageFileName,
-                FileStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(TestBigImagePath)
+                FileStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(TestBigImagePath),
+                WaitForUploadResult = true
             };
         }
 
@@ -83,10 +99,10 @@ namespace BetterCms.Test.Module.Api.Media.Images
             Assert.AreEqual(getResponse.Data.ThumbnailHeight, 150);
             Assert.Greater(getResponse.Data.ThumbnailSize, 0);
             Assert.AreEqual(getResponse.Data.IsArchived, false);
-            // todo: still null Assert.AreEqual(getResponse.Data.IsUploaded, true);
             Assert.AreEqual(getResponse.Data.IsTemporary, false);
             Assert.AreEqual(getResponse.Data.IsCanceled, false);
             Assert.IsNotNull(getResponse.Data.PublishedOn);
+            Assert.AreEqual(getResponse.Data.IsUploaded, true);
 
             const string urlStart = "http://bettercms.sandbox.mvc4.local.net/uploads/image/";
 

@@ -174,7 +174,7 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
                 var stringBuilder = new StringBuilder(html);
                 var pageHtmlHelper = new PageHtmlRenderer(stringBuilder, pageModel);
 
-                foreach (var region in projection.Content.ContentRegions)
+                foreach (var region in projection.Content.ContentRegions.Distinct())
                 {
                     var contentsBuilder = new StringBuilder();
                     var regionModel = new PageRegionViewModel

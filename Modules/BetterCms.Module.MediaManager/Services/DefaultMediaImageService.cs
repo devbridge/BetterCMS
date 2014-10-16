@@ -172,10 +172,11 @@ namespace BetterCms.Module.MediaManager.Services
         /// <param name="fileName">Name of the file.</param>
         /// <param name="fileLength">Length of the file.</param>
         /// <param name="fileStream">The file stream.</param>
-        /// <param name="reuploadMediaId"></param>
-        /// <param name="filledInImage"></param>
-        /// <param name="overrideUrl"></param>
-        /// <returns>Image entity.</returns>
+        /// <param name="reuploadMediaId">The reupload media identifier.</param>
+        /// <param name="overrideUrl">if set to <c>true</c> override URL.</param>
+        /// <returns>
+        /// Image entity.
+        /// </returns>
         public MediaImage UploadImage(Guid rootFolderId, string fileName, long fileLength, Stream fileStream, Guid reuploadMediaId, bool overrideUrl = true)
         {
             using (var thumbnailFileStream = new MemoryStream())
@@ -257,7 +258,7 @@ namespace BetterCms.Module.MediaManager.Services
             }
         }
 
-        public MediaImage UploadImageWithStream(Stream fileStream, MediaImage image)
+        public MediaImage UploadImageWithStream(Stream fileStream, MediaImage image, bool waitForUploadResult = false)
         {
             using (var thumbnailFileStream = new MemoryStream())
             {
@@ -266,7 +267,7 @@ namespace BetterCms.Module.MediaManager.Services
 
                 CreatePngThumbnail(fileStream, thumbnailFileStream, ThumbnailSize);
 
-                var folderName = image.Folder != null ? image.Folder.Title : mediaFileService.CreateRandomFolderName();
+                var folderName = mediaFileService.CreateRandomFolderName();
                 var publicFileName = MediaImageHelper.CreatePublicFileName(image.OriginalFileName, image.OriginalFileExtension);
 
                 // Create new original image and upload file stream to the storage
@@ -275,9 +276,19 @@ namespace BetterCms.Module.MediaManager.Services
 
                 unitOfWork.BeginTransaction();
                 repository.Save(originalImage);
-                unitOfWork.Commit();
 
-                StartTasksForImage(originalImage, fileStream, thumbnailFileStream, false, true);
+                if (!waitForUploadResult)
+                {
+                    unitOfWork.Commit();
+                }
+                
+                StartTasksForImage(originalImage, fileStream, thumbnailFileStream, false, waitForUploadResult);
+                
+                if (waitForUploadResult)
+                {
+                    unitOfWork.Commit();
+                    Events.MediaManagerEvents.Instance.OnMediaFileUpdated(originalImage);
+                }
 
                 return originalImage;
             }
@@ -767,45 +778,189 @@ namespace BetterCms.Module.MediaManager.Services
             bool shouldNotUploadOriginal = false,
             bool waitForUploadResult = false)
         {
-            var publicImageUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(
+            if (waitForUploadResult)
+            {
+                StartTasksForImageSync(mediaImage, fileStream, thumbnailFileStream, shouldNotUploadOriginal);
+            }
+            else
+            {
+                StartTasksForImageAsync(mediaImage, fileStream, thumbnailFileStream, shouldNotUploadOriginal);
+            }
+        }
+
+        private void StartTasksForImageSync(
+            MediaImage mediaImage, 
+            Stream fileStream, 
+            MemoryStream thumbnailFileStream, 
+            bool shouldNotUploadOriginal = false)
+        {
+            mediaFileService.UploadMediaFileToStorageSync(
+                fileStream,
+                mediaImage.FileUri, 
+                mediaImage, 
+                img =>
+                {
+                    if (img != null)
+                    {
+                        img.IsUploaded = true;
+                    }
+                },
+                img =>
+                {
+                    if (img != null)
+                    {
+                        img.IsUploaded = false;
+                    }
+                },
+                true);
+
+            if (!shouldNotUploadOriginal)
+            {
+                mediaFileService.UploadMediaFileToStorageSync(
+                    fileStream,
+                    mediaImage.OriginalUri,
+                    mediaImage,
+                    img =>
+                    {
+                        if (img != null)
+                        {
+                            img.IsUploaded = true;
+                        }
+                    },
+                    img =>
+                    {
+                        if (img != null)
+                        {
+                            img.IsUploaded = false;
+                        }
+                    },
+                    true);
+            }
+
+            mediaFileService.UploadMediaFileToStorageSync(
+                thumbnailFileStream,
+                mediaImage.ThumbnailUri, 
+                mediaImage, 
+                img =>
+                {
+                    if (img != null)
+                    {
+                        img.IsUploaded = true;
+                    }
+                },
+                img =>
+                {
+                    if (img != null)
+                    {
+                        img.IsUploaded = false;
+                    }
+                },
+                true);
+
+            OnAfterUploadCompleted(mediaImage, shouldNotUploadOriginal);
+        }
+        
+        private void StartTasksForImageAsync(
+            MediaImage mediaImage, 
+            Stream fileStream, 
+            MemoryStream thumbnailFileStream, 
+            bool shouldNotUploadOriginal = false)
+        {
+            var publicImageUpload = mediaFileService.UploadMediaFileToStorageAsync<MediaImage>(
                 fileStream,
                 mediaImage.FileUri,
                 mediaImage.Id,
-                img =>{img.IsUploaded = true;},img =>{img.IsUploaded = false;},
+                img =>
+                {
+                    if (img != null)
+                    {
+                        img.IsUploaded = true;
+                    }
+                },
+                img =>
+                {
+                    if (img != null)
+                    {
+                        img.IsUploaded = false;
+                    }
+                },
                 true);
-            var publicOriginalUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(
-                fileStream,
-                mediaImage.OriginalUri,
-                mediaImage.Id,
-                img =>{img.IsOriginalUploaded = true;},img =>{img.IsOriginalUploaded = false;},
-                true);
-            var publicThumbnailUpload = mediaFileService.UploadMediaFileToStorage<MediaImage>(
+
+            var publicThumbnailUpload = mediaFileService.UploadMediaFileToStorageAsync<MediaImage>(
                 thumbnailFileStream,
                 mediaImage.ThumbnailUri,
                 mediaImage.Id,
-                img =>{img.IsThumbnailUploaded = true;},img =>{img.IsThumbnailUploaded = false;},
+                img =>
+                {
+                    if (img != null)
+                    {
+                        img.IsThumbnailUploaded = true;
+                    }
+                },
+                img =>
+                {
+                    if (img != null)
+                    {
+                        img.IsThumbnailUploaded = false;
+                    }
+                },
                 true);
 
-            var waitForTasks = Task.Factory.ContinueWhenAll(
-                new[] { publicImageUpload, publicOriginalUpload, publicThumbnailUpload, },
+            var allTasks = new List<Task> { publicImageUpload, publicThumbnailUpload };
+
+            Task publicOriginalUpload = null;
+            if (!shouldNotUploadOriginal)
+            {
+                publicOriginalUpload = mediaFileService.UploadMediaFileToStorageAsync<MediaImage>(
+                fileStream,
+                mediaImage.OriginalUri,
+                mediaImage.Id,
+                img =>
+                {
+                    if (img != null)
+                    {
+                        img.IsOriginalUploaded = true;
+                    }
+                },
+                img =>
+                {
+                    if (img != null)
+                    {
+                        img.IsOriginalUploaded = false;
+                    }
+                },
+                true);
+                allTasks.Add(publicOriginalUpload);
+            }
+
+            Task.Factory.ContinueWhenAll(
+                allTasks.ToArray(),
                 result => ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(
                     session =>
                     {
                         var media = session.Get<MediaImage>(mediaImage.Id);
-                        var isUploaded = (media.IsUploaded.HasValue && media.IsUploaded.Value) || (media.IsThumbnailUploaded.HasValue && media.IsThumbnailUploaded.Value)
-                                         || ((media.IsOriginalUploaded.HasValue && media.IsOriginalUploaded.Value) && shouldNotUploadOriginal);
-                        if (media.IsCanceled && isUploaded)
+                        if (media != null)
                         {
-                            RemoveImageWithFiles(media.Id, media.Version, false, shouldNotUploadOriginal);
+                            OnAfterUploadCompleted(media, shouldNotUploadOriginal);
                         }
                     }));
 
             publicImageUpload.Start();
-            if (!shouldNotUploadOriginal)
+            if (publicOriginalUpload != null)
             {
                 publicOriginalUpload.Start();
             }
             publicThumbnailUpload.Start();
+        }
+
+        private void OnAfterUploadCompleted(MediaImage media, bool shouldNotUploadOriginal)
+        {
+            var isUploaded = (media.IsUploaded.HasValue && media.IsUploaded.Value) || (media.IsThumbnailUploaded.HasValue && media.IsThumbnailUploaded.Value)
+                                 || ((media.IsOriginalUploaded.HasValue && media.IsOriginalUploaded.Value) && shouldNotUploadOriginal);
+            if (media.IsCanceled && isUploaded)
+            {
+                RemoveImageWithFiles(media.Id, media.Version, false, shouldNotUploadOriginal);
+            }
         }
 
         #endregion

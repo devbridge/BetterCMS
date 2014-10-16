@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Api;
+
 using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
-
-using NHibernate.Linq;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.Images
 {
@@ -35,19 +33,13 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
         /// <returns>The upload image response.</returns>
         public UploadImageResponse Post(UploadImageRequest request)
         {
-            IEnumerable<MediaFolder> parentFolderFuture = null;
+            MediaFolder parentFolder = null;
             if (request.Data.FolderId.HasValue)
             {
-                parentFolderFuture = repository.AsQueryable<MediaFolder>()
+                parentFolder = repository.AsQueryable<MediaFolder>()
                     .Where(c => c.Id == request.Data.FolderId.Value && !c.IsDeleted)
-                    .ToFuture();
-            }
+                    .FirstOne();
 
-            
-            MediaFolder parentFolder = null;
-            if (parentFolderFuture != null)
-            {
-                parentFolder = parentFolderFuture.First();
                 if (parentFolder.Type != Module.MediaManager.Models.MediaType.Image)
                 {
                     throw new CmsApiValidationException("Folder must be type of an image.");
@@ -67,7 +59,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
                 OriginalFileExtension = Path.GetExtension(request.Data.FileName)
             };
 
-            var savedImage = mediaImageService.UploadImageWithStream(request.Data.FileStream, mediaImage);
+            var savedImage = mediaImageService.UploadImageWithStream(request.Data.FileStream, mediaImage, request.Data.WaitForUploadResult);
 
             if (savedImage != null)
             {
