@@ -26,6 +26,18 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         public Guid? FolderId { get; set; }
 
         /// <summary>
+        /// Gets or sets file title.
+        /// </summary>
+        [DataMember]
+        public string Title { get; set; }
+
+        /// <summary>
+        /// Gets or sets file description.
+        /// </summary>
+        [DataMember]
+        public string Description { get; set; }
+
+        /// <summary>
         /// Gets or sets file name.
         /// </summary>
         [DataMember]

@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Reflection;
 
+using BetterCms.Core.Models;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.MediaManager.Files.File;
 using BetterCms.Module.MediaManager.Models;
@@ -47,7 +48,9 @@ namespace BetterCms.Test.Module.Api.Media.Files
             {
                 FileName = TestBigImageFileName,
                 FileStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(TestBigImagePath),
-                FolderId = folder.Id
+                FolderId = folder.Id,
+                Title = TestDataProvider.ProvideRandomString(MaxLength.Name),
+                Description = TestDataProvider.ProvideRandomString(MaxLength.Text)
             };
         }
 
@@ -76,7 +79,8 @@ namespace BetterCms.Test.Module.Api.Media.Files
                 && getResponse.Data.FileUrl.EndsWith(string.Format("/{0}", TestBigImageFileName)));
             Assert.IsTrue(getResponse.Data.FileUri.EndsWith(string.Format("/{0}", TestBigImageFileName)));
 
-            Assert.AreEqual(getResponse.Data.Title, TestBigImageFileName);
+            Assert.AreEqual(getResponse.Data.Title, model.Title);
+            Assert.AreEqual(getResponse.Data.Description, model.Description);
         }
     }
 }

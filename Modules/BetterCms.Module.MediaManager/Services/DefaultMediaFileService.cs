@@ -117,7 +117,8 @@ namespace BetterCms.Module.MediaManager.Services
             }
         }
 
-        public virtual MediaFile UploadFile(MediaType type, Guid rootFolderId, string fileName, long fileLength, Stream fileStream, bool isTemporary = true)
+        public virtual MediaFile UploadFile(MediaType type, Guid rootFolderId, string fileName, long fileLength, Stream fileStream, bool isTemporary = true, 
+            string title = "", string description = "")
         {
             string folderName = CreateRandomFolderName();
             MediaFile file = new MediaFile();
@@ -125,7 +126,11 @@ namespace BetterCms.Module.MediaManager.Services
             {
                 file.Folder = repository.AsProxy<MediaFolder>(rootFolderId);
             }
-            file.Title = Path.GetFileName(fileName);
+            file.Title = !string.IsNullOrEmpty(title) ? title : Path.GetFileName(fileName);
+            if (!string.IsNullOrEmpty(description))
+            {
+                file.Description = description;
+            }
             file.Type = type;
             file.OriginalFileName = fileName;
             file.OriginalFileExtension = Path.GetExtension(fileName);           

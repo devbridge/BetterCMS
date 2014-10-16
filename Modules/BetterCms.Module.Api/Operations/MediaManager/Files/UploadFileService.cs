@@ -58,7 +58,9 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
                 request.Data.FileName,
                 request.Data.FileStream.Length,
                 request.Data.FileStream,
-                false);
+                false,
+                request.Data.Title,
+                request.Data.Description);
 
             if (savedFile != null)
             {
