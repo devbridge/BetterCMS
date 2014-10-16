@@ -38,7 +38,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         if (json.Data.ContentId || json.Data.Id) {
             contentViewModel.contentId = json.Data.ContentId || json.Data.Id;
         }
-        if (json.Data.DesirableStatus || json.Data.HasDraft) {
+        if (json.Data.DesirableStatus || typeof json.Data.HasDraft == "boolean") {
             contentViewModel.draft = json.Data.DesirableStatus == contentStatuses.draft || json.Data.HasDraft;
         }
         if (json.Data.Title || json.Data.WidgetName) {
@@ -64,6 +64,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
 
         setContentModelValues(model.model, json);
         model.title(model.model.title);
+        model.draft(model.model.draft);
 
         // Check if new regions where added
         regionModels = createRegionViewModels(json.Data.Regions, model.parentRegion.model.id, model.model.pageContentId);
@@ -180,6 +181,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         model.isInvisible = contentModel.isInvisible;
         model.parentRegion = parentRegion;
         model.level(level);
+        model.draft(contentModel.draft);
 
         childRegions = contentModel.getChildRegions();
         level++;
@@ -303,6 +305,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
 
         self.isActive = ko.observable(false);
         self.level = ko.observable(0);
+        self.draft = ko.observable(false);
 
         self.isBeingDragged = ko.observable(false);
         self.isBeingDragged.subscribe(function(newValue) {

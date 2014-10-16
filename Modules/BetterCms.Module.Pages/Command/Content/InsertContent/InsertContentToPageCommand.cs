@@ -81,7 +81,7 @@ namespace BetterCms.Module.Pages.Command.Content.InsertContent
                     ContentId = content.Id,
                     RegionId = request.RegionId,
                     PageId = request.PageId,
-                    DesirableStatus = content.Status,
+                    DesirableStatus = contentData.Status,
                     Title = contentData.Name,
                     ContentVersion = contentData.Version,
                     PageContentVersion = pageContent.Version,
