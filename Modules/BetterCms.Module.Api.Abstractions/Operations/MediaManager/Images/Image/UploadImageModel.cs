@@ -54,5 +54,14 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images.Image
         /// </summary>
         [DataMember]
         public Stream FileStream { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to wait for upload result or not.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if to wait for upload result; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember]
+        public bool WaitForUploadResult { get; set; }
     }
 }

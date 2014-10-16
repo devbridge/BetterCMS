@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Module.Api.Operations.MediaManager.Files.File;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
-
-using NHibernate.Linq;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.Files
 {
@@ -34,18 +32,13 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
         /// <returns>The upload file response.</returns>
         public UploadFileResponse Post(UploadFileRequest request)
         {
-            IEnumerable<MediaFolder> parentFolderFuture = null;
+            MediaFolder parentFolder = null;
             if (request.Data.FolderId.HasValue)
             {
-                parentFolderFuture = repository.AsQueryable<MediaFolder>()
+                parentFolder = repository.AsQueryable<MediaFolder>()
                     .Where(c => c.Id == request.Data.FolderId.Value && !c.IsDeleted)
-                    .ToFuture();
-            }
-            
-            MediaFolder parentFolder = null;
-            if (parentFolderFuture != null)
-            {
-                parentFolder = parentFolderFuture.First();
+                    .FirstOne();
+
                 if (parentFolder.Type != Module.MediaManager.Models.MediaType.File)
                 {
                     throw new CmsApiValidationException("Folder must be type of an file.");
