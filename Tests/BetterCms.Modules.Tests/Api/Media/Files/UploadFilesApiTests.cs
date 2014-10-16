@@ -2,8 +2,10 @@
 using System.Reflection;
 
 using BetterCms.Core.Exceptions.Api;
+using BetterCms.Core.Models;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.MediaManager.Files.File;
+using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.MediaManager.Models;
 
 using NHibernate;
@@ -62,7 +64,16 @@ namespace BetterCms.Test.Module.Api.Media.Files
             {
                 FileName = TestBigImageFileName,
                 FileStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(TestBigImagePath),
-                FolderId = folder.Id
+                FolderId = folder.Id,
+                Title = TestDataProvider.ProvideRandomString(MaxLength.Name),
+                Description = TestDataProvider.ProvideRandomString(MaxLength.Text),
+                AccessRules =
+                    new[]
+                    {
+                        new AccessRuleModel { AccessLevel = AccessLevel.ReadWrite, Identity = TestDataProvider.ProvideRandomString(20), IsForRole = false },
+                        new AccessRuleModel { AccessLevel = AccessLevel.Deny, Identity = TestDataProvider.ProvideRandomString(20), IsForRole = true }
+                    },
+                WaitForUploadResult = true
             };
         }
 
@@ -83,8 +94,9 @@ namespace BetterCms.Test.Module.Api.Media.Files
             Assert.AreEqual(getResponse.Data.IsArchived, false);
             Assert.AreEqual(getResponse.Data.IsCanceled, false);
             Assert.AreEqual(getResponse.Data.IsTemporary, false);
+            Assert.AreEqual(getResponse.Data.IsUploaded, true);
             Assert.IsNotNull(getResponse.Data.PublishedOn);
-            // TODO: check access rules after fixes Assert.GreaterOrEqual(getResponse.AccessRules.Count, 0);
+            Assert.AreEqual(getResponse.AccessRules.Count, model.AccessRules.Count);
             
             const string urlStart = "http://bettercms.sandbox.mvc4.local.net/uploads/file/";
 
@@ -92,8 +104,8 @@ namespace BetterCms.Test.Module.Api.Media.Files
                 && getResponse.Data.FileUrl.EndsWith(string.Format("/{0}", TestBigImageFileName)));
             Assert.IsTrue(getResponse.Data.FileUri.EndsWith(string.Format("/{0}", TestBigImageFileName)));
 
-            Assert.AreEqual(getResponse.Data.Title, TestBigImageFileName);
-            Assert.AreEqual(getResponse.Data.Description, null);
+            Assert.AreEqual(getResponse.Data.Title, model.Title);
+            Assert.AreEqual(getResponse.Data.Description, model.Description);
             
             Assert.AreEqual(getResponse.Data.ThumbnailId, null);
             Assert.AreEqual(getResponse.Data.ThumbnailCaption, null);
