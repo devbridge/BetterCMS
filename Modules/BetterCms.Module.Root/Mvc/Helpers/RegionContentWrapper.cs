@@ -28,6 +28,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
         /// <param name="sb">The string builder.</param>
         /// <param name="content">The region content.</param>
         /// <param name="allowContentManagement">if set to <c>true</c> allows content management.</param>
+        /// <param name="isInvisible">if set to <c>true</c> [is invisible].</param>
         public RegionContentWrapper(StringBuilder sb, PageContentProjection content, bool allowContentManagement, bool isInvisible = false)
         {
             this.sb = sb;

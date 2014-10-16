@@ -55,6 +55,14 @@ namespace BetterCms.Module.Root.Projections
                 return pageContent.Id;
             }
         }
+        
+        public virtual Guid PageId
+        {
+            get
+            {
+                return pageContent.Page.Id;
+            }
+        }
 
         public virtual int PageContentVersion
         {

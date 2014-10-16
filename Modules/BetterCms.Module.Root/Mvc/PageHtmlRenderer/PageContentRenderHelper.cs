@@ -184,17 +184,22 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
                         };
                     var childRegionContentProjections = childRegionContents.Where(c => c.RegionId == regionModel.RegionId).OrderBy(c => c.Order).ToList();
 
-                    using (new LayoutRegionWrapper(contentsBuilder, regionModel, pageModel.AreRegionsEditable))
+                    var canEditRegion = projection.PageId == pageModel.Id && pageModel.AreRegionsEditable;
+                    using (new LayoutRegionWrapper(contentsBuilder, regionModel, canEditRegion))
                     {
                         foreach (var childRegionContentProjection in childRegionContentProjections)
                         {
                             // Add Html
-                            using (new RegionContentWrapper(contentsBuilder, childRegionContentProjection, pageModel.CanManageContent && pageModel.AreRegionsEditable))
+                            using (new RegionContentWrapper(contentsBuilder, childRegionContentProjection, pageModel.CanManageContent && canEditRegion))
                             {
                                 // Pass current model as view data model
+                                var modelBefore = htmlHelper.ViewData.Model;
                                 htmlHelper.ViewData.Model = pageModel;
 
                                 contentsBuilder = AppendHtml(contentsBuilder, childRegionContentProjection, pageModel);
+
+                                // Restore model, which was before changes
+                                htmlHelper.ViewData.Model = modelBefore;
                             }
                         }
                     }
@@ -204,10 +209,6 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
                     pageHtmlHelper.ReplaceRegionHtml(regionModel.RegionIdentifier, regionHtml);
                 }
 
-                if (pageModel.AreRegionsEditable)
-                {
-                    pageHtmlHelper.ReplaceRegionRepresentationHtml();
-                }
                 return pageHtmlHelper.GetReplacedHtml().ToString();
             }
 
