@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Root;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
 {
@@ -57,5 +59,14 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// </value>
         [DataMember]
         public bool WaitForUploadResult { get; set; }
+
+        /// <summary>
+        /// Gets or sets the access rules.
+        /// </summary>
+        /// <value>
+        /// The access rules.
+        /// </value>
+        [DataMember]
+        public IList<AccessRuleModel> AccessRules { get; set; }
     }
 }

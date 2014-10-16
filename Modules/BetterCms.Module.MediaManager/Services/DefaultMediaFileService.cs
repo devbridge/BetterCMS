@@ -173,6 +173,77 @@ namespace BetterCms.Module.MediaManager.Services
             return file;
         }
 
+        public MediaFile UploadFileWithStream(
+            MediaType type,
+            Guid rootFolderId,
+            string fileName,
+            long fileLength,
+            Stream fileStream,
+            bool WaitForUploadResult = false,
+            string title = "",
+            string description = "")
+        {
+            string folderName = CreateRandomFolderName();
+            MediaFile file = new MediaFile();
+            if (!rootFolderId.HasDefaultValue())
+            {
+                file.Folder = repository.AsProxy<MediaFolder>(rootFolderId);
+            }
+            file.Title = !string.IsNullOrEmpty(title) ? title : Path.GetFileName(fileName);
+            if (!string.IsNullOrEmpty(description))
+            {
+                file.Description = description;
+            }
+            file.Type = type;
+            file.OriginalFileName = fileName;
+            file.OriginalFileExtension = Path.GetExtension(fileName);
+            file.Size = fileLength;
+            file.FileUri = GetFileUri(type, folderName, fileName);
+            file.PublicUrl = GetPublicFileUrl(type, folderName, fileName);
+            file.IsTemporary = false;
+            file.IsCanceled = false;
+            file.IsUploaded = null;
+            if (configuration.Security.AccessControlEnabled)
+            {
+                file.AddRule(new AccessRule { AccessLevel = AccessLevel.ReadWrite, Identity = securityService.CurrentPrincipalName });
+            }
+
+            unitOfWork.BeginTransaction();
+            repository.Save(file);
+            unitOfWork.Commit();
+
+            if (WaitForUploadResult)
+            {
+                UploadMediaFileToStorageSync(
+                    fileStream, file.FileUri, file, media => { media.IsUploaded = true; }, media => { media.IsUploaded = false; }, false);
+            }
+            else
+            {
+                Task fileUploadTask = UploadMediaFileToStorageAsync<MediaFile>(fileStream, file.FileUri, file.Id, media => { media.IsUploaded = true; }, media => { media.IsUploaded = false; }, false);
+                fileUploadTask.ContinueWith(
+                    task =>
+                    {
+                        // During uploading progress Cancel action can by executed. Need to remove uploaded files from the storage.
+                        ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(
+                            session =>
+                            {
+                                var media = session.Get<MediaFile>(file.Id);
+                                if (media != null)
+                                {
+                                    if (media.IsCanceled && media.IsUploaded.HasValue && media.IsUploaded.Value)
+                                    {
+                                        RemoveFile(media.Id, media.Version);
+                                    }
+                                }
+                            });
+                    });
+
+                fileUploadTask.Start();
+            }
+
+            return file;
+        }
+
         public virtual string CreateRandomFolderName()
         {
             return Guid.NewGuid().ToString().Replace("-", string.Empty);
@@ -236,12 +307,12 @@ namespace BetterCms.Module.MediaManager.Services
             }
         }
 
-        public Task UploadMediaFileToStorageAsync<TMedia>(Stream sourceStream, 
-            Uri fileUri, 
-            Guid mediaId, 
-            Action<TMedia> updateMediaAfterUpload, 
-            Action<TMedia> updateMediaAfterFail, 
-            bool ignoreAccessControl) 
+        public Task UploadMediaFileToStorageAsync<TMedia>(Stream sourceStream,
+            Uri fileUri,
+            Guid mediaId,
+            Action<TMedia> updateMediaAfterUpload,
+            Action<TMedia> updateMediaAfterFail,
+            bool ignoreAccessControl)
             where TMedia : MediaFile
         {
             var stream = new MemoryStream();
@@ -362,6 +433,13 @@ namespace BetterCms.Module.MediaManager.Services
             }
 
             return mediaFileUrlResolver.GetMediaFileFullUrl(id, fileUrl);
+        }
+
+        public void SaveMediaFile(MediaFile file)
+        {
+            unitOfWork.BeginTransaction();
+            repository.Save(file);
+            unitOfWork.Commit();
         }
     }
 }
