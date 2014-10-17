@@ -56,7 +56,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.PageTests
                         new Mock<ISecurityService>().Object, new Mock<IAccessControlService>().Object, repository, uow, 
                         Container.Resolve<ICmsConfiguration>());
 
-                    var command = new ClonePageCommand(pageCloningService);
+                    var command = new ClonePageCommand(pageCloningService, Container.Resolve<ICmsConfiguration>());
                     command.Repository = repository;
                     command.UnitOfWork = uow;
 

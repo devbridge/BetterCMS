@@ -88,5 +88,13 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         ///   <c>true</c> if clone page as master page; otherwise, <c>false</c>.
         /// </value>
         public bool CloneAsMasterPage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sitemap action enabled flag.
+        /// </summary>
+        /// <value>
+        /// The sitemap action enabled flag.
+        /// </value>
+        public bool IsSitemapActionEnabled { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using BetterCms.Core.Mvc.Commands;
-
+using BetterCms.Module.Pages.Helpers;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 
@@ -14,9 +14,12 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
     {
         private readonly IPageCloneService cloneService;
 
-        public ClonePageCommand(IPageCloneService cloneService)
+        private readonly ICmsConfiguration cmsConfiguration;
+
+        public ClonePageCommand(IPageCloneService cloneService, ICmsConfiguration cmsConfiguration)
         {
             this.cloneService = cloneService;
+            this.cmsConfiguration = cmsConfiguration;
         }
 
         /// <summary>
@@ -33,7 +36,8 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
                            PageId = newPage.Id,
                            PageTitle = newPage.Title,
                            PageUrl = newPage.PageUrl,
-                           IsMasterPage = newPage.IsMasterPage
+                           IsMasterPage = newPage.IsMasterPage,
+                           IsSitemapActionEnabled = ConfigurationHelper.IsSitemapActionEnabledAfterAddingTranslationForPage(cmsConfiguration)
                        };
         }
     }
