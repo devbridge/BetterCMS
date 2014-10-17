@@ -31,10 +31,11 @@ namespace BetterCms.Core.Modules
 
             if (isExternal)
             {
-                if (string.IsNullOrEmpty(fileName))
+                if (string.IsNullOrEmpty(fileName) || string.IsNullOrEmpty(minFileName))
                 {
-                    throw new CmsException("Path for the external Js file can not by empty");
+                    throw new CmsException("Paths for the external JS file and minified JS file can not by empty");
                 }
+
                 FileName = System.IO.Path.GetFileName(fileName);
                 Path = fileName;
                 MinPath = minFileName;
