@@ -188,7 +188,6 @@
     <Compile Include="Exceptions\Mvc\ConfirmationRequestException.cs" />
     <Compile Include="Models\EntityIdGenerator.cs" />
     <Compile Include="Modules\CssIncludeDescriptor.cs" />
-    <Compile Include="Modules\ExternalJsIncludeDescriptor.cs" />
     <Compile Include="Modules\Projections\JavaScriptModuleLink.cs" />
     <Compile Include="Mvc\Binders\JSONDataBinder.cs" />
     <Compile Include="ActionResults\IHaveCustomXmlSettings.cs" />
