@@ -179,7 +179,7 @@ namespace BetterCms.Module.MediaManager.Services
             string fileName,
             long fileLength,
             Stream fileStream,
-            bool WaitForUploadResult = false,
+            bool waitForUploadResult = false,
             string title = "",
             string description = "")
         {
@@ -210,12 +210,18 @@ namespace BetterCms.Module.MediaManager.Services
 
             unitOfWork.BeginTransaction();
             repository.Save(file);
-            unitOfWork.Commit();
 
-            if (WaitForUploadResult)
+            if (!waitForUploadResult)
             {
-                UploadMediaFileToStorageSync(
-                    fileStream, file.FileUri, file, media => { media.IsUploaded = true; }, media => { media.IsUploaded = false; }, false);
+                unitOfWork.Commit();
+            }
+
+            if (waitForUploadResult)
+            {
+                UploadMediaFileToStorageSync(fileStream, file.FileUri, file, media => { media.IsUploaded = true; }, media => { media.IsUploaded = false; }, false);
+
+                unitOfWork.Commit();
+                Events.MediaManagerEvents.Instance.OnMediaFileUpdated(file);
             }
             else
             {
@@ -315,6 +321,7 @@ namespace BetterCms.Module.MediaManager.Services
             bool ignoreAccessControl)
             where TMedia : MediaFile
         {
+
             var stream = new MemoryStream();
 
             sourceStream.Seek(0, SeekOrigin.Begin);

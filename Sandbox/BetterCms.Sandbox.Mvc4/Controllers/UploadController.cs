@@ -27,6 +27,7 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
                         var uploadRequest = new UploadFileRequest();
                         uploadRequest.Data.FileStream = model.File.InputStream;
                         uploadRequest.Data.FileName = model.File.FileName;
+                        uploadRequest.Data.WaitForUploadResult = model.Method == "sync";
 
                         var uploadResponse = api.Media.Files.Upload.Post(uploadRequest);
 
@@ -34,7 +35,7 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
                         var getResponse = api.Media.File.Get(getRequest);
 
                         model.Result = string.Format(
-                            "<h2 style='color; green'>File upload successful!</h2> File can be downloaded here: <div><a href='{0}' />{1}</div>",
+                            "<h2 style='color; green'>File upload successful!</h2> File can be downloaded here: <div><a href='{0}' />{1}</a></div>",
                             getResponse.Data.FileUrl,
                             getResponse.Data.Title);
                     }
@@ -43,6 +44,7 @@ namespace BetterCms.Sandbox.Mvc4.Controllers
                         var uploadRequest = new UploadImageRequest();
                         uploadRequest.Data.FileStream = model.File.InputStream;
                         uploadRequest.Data.FileName = model.File.FileName;
+                        uploadRequest.Data.WaitForUploadResult = model.Method == "sync";
 
                         var uploadResponse = api.Media.Images.Upload.Post(uploadRequest);
 

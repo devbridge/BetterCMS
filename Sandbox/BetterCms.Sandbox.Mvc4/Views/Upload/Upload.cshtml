@@ -9,11 +9,19 @@
 
 @using (Html.BeginForm("Upload", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+    <span>Select type of uploading file:</span>
     <p>
-        Select type of uploading file:
         <select name="type">
             <option value="">Image</option>
             <option value="file"@(Model != null && Model.Type == "file" ? " selected" : string.Empty)>File</option>
+        </select>
+    </p>
+
+    <span>Select type of upload method (determines, if response should wait while file is being processed to the storage):</span>
+    <p>
+        <select name="method">
+            <option value="">Asynchronous (do not wait)</option>
+            <option value="sync" @(Model != null && Model.Method == "sync" ? " selected" : string.Empty)>Synchronous (wait)</option>
         </select>
     </p>
     <p>
