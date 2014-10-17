@@ -51,7 +51,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
                 Id = request.Data.Id.GetValueOrDefault(),
                 Type = Module.MediaManager.Models.MediaType.Image,
                 Caption = request.Data.Caption,
-                Title = request.Data.Title,
+                Title = request.Data.Title ?? Path.GetFileName(request.Data.FileName),
                 Description = request.Data.Description,
                 Size = request.Data.FileStream.Length,
                 Folder = parentFolder,

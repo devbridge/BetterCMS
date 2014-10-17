@@ -227,6 +227,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\BlogController.cs" />
+    <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\WidgetsController.cs" />
     <Compile Include="Controllers\SandboxController.cs" />
     <Compile Include="Custom\CustomCacheTest.cs" />
@@ -240,6 +241,7 @@
     <Compile Include="Models\SitemapMenuViewModel.cs" />
     <Compile Include="Models\TestPostAndGetInheritedViewModel.cs" />
     <Compile Include="Models\TestPostAndGetViewModel.cs" />
+    <Compile Include="Models\TestUploadViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
   </ItemGroup>
@@ -422,6 +424,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Widgets\TestPostAndGetWithInheritance.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Upload\Upload.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

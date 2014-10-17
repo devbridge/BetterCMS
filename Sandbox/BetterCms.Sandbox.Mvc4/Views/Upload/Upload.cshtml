@@ -1,0 +1,24 @@
+﻿@model BetterCms.Sandbox.Mvc4.Models.TestUploadViewModel
+
+<h1>Sandbox Upload Tester</h1>
+
+@if (Model != null && Model.Result != null)
+{
+    @Html.Raw(Model.Result)
+}
+
+@using (Html.BeginForm("Upload", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <p>
+        Select type of uploading file:
+        <select name="type">
+            <option value="">Image</option>
+            <option value="file"@(Model != null && Model.Type == "file" ? " selected" : string.Empty)>File</option>
+        </select>
+    </p>
+    <p>
+        <input type="file" name="file" />
+        <input type="submit" value="upload" />
+    </p>
+}
+
