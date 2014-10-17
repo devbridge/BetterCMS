@@ -824,14 +824,14 @@ namespace BetterCms.Module.MediaManager.Services
                     {
                         if (img != null)
                         {
-                            img.IsUploaded = true;
+                            img.IsOriginalUploaded = true;
                         }
                     },
                     img =>
                     {
                         if (img != null)
                         {
-                            img.IsUploaded = false;
+                            img.IsOriginalUploaded = false;
                         }
                     },
                     true);
@@ -845,14 +845,14 @@ namespace BetterCms.Module.MediaManager.Services
                 {
                     if (img != null)
                     {
-                        img.IsUploaded = true;
+                        img.IsThumbnailUploaded = true;
                     }
                 },
                 img =>
                 {
                     if (img != null)
                     {
-                        img.IsUploaded = false;
+                        img.IsThumbnailUploaded = false;
                     }
                 },
                 true);
