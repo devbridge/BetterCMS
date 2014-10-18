@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Remoting.Messaging;
 
 using Autofac;
 
 using BetterCms.Configuration;
-using BetterCms.Core.Models;
+using BetterCms.Configuration.Dynamic;
 using BetterCms.Core.Modules;
 using BetterCms.Core.Services.Storage;
 

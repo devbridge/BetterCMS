@@ -115,9 +115,11 @@
     <Compile Include="Configuration\DatabaseType.cs" />
     <Compile Include="Configuration\DefaultConfigurationLoader.cs" />
     <Compile Include="Configuration\CmsSecurityConfigurationElement.cs" />
+    <Compile Include="Configuration\Dynamic\ConfigurationKeyValueDescriptor.cs" />
     <Compile Include="Configuration\Dynamic\DynamicCmsConfiguration.cs" />
-    <Compile Include="Configuration\Dynamic\DynamicKeyValue.cs" />
-    <Compile Include="Configuration\Dynamic\DynamicModule.cs" />
+    <Compile Include="Configuration\Dynamic\DynamicModuleElement.cs" />
+    <Compile Include="Configuration\Dynamic\OptionType.cs" />
+    <Compile Include="Configuration\Dynamic\TakenFrom.cs" />
     <Compile Include="Configuration\ICmsModuleConfiguration.cs" />
     <Compile Include="Configuration\ModuleElement.cs" />
     <Compile Include="Configuration\ModulesCollection.cs" />

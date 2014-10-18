@@ -1,5 +1,6 @@
 using System;
 
+using BetterCms.Configuration.Dynamic;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;

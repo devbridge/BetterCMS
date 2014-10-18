@@ -6,7 +6,7 @@ using ApiContentStatus = BetterCms.Module.Api.Operations.Pages.Contents.Content.
 using MediaManagerMediaContentType = BetterCms.Module.MediaManager.Models.MediaContentType;
 using ApiMediaContentType = BetterCms.Module.Api.Operations.MediaManager.MediaContentType;
 
-using CoreOptionType = BetterCms.Core.DataContracts.Enums.OptionType;
+using CoreOptionType = BetterCms.Configuration.Dynamic.OptionType;
 using ApiOptionType = BetterCms.Module.Api.Operations.Root.OptionType;
 
 using CoreAccessLevel = BetterCms.Core.Security.AccessLevel;

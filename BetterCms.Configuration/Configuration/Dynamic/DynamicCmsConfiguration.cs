@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 
 namespace BetterCms.Configuration.Dynamic
 {
@@ -24,12 +23,21 @@ namespace BetterCms.Configuration.Dynamic
             Modules = new List<ICmsModuleConfiguration>();
             foreach (var module in cmsConfigurationSection.Modules)
             {
-                var newModule = new DynamicModule
+                var newModule = new DynamicModuleElement
                 {
-                    Name = module.Name,
-                    KeyValues = module.GetKeyValues().ToList().Select(x => new DynamicKeyValue { Key = x.Key, Value = x.Value }).ToList()
+                    Name = module.Name
                 };
-                
+
+                foreach (var keyValue in module.GetKeyValues().ToList())
+                {
+                    newModule.ConfigurationValues.Add(new ConfigurationKeyValueDescriptor
+                    {
+                        Name = keyValue.Key,
+                        Value = keyValue.Value,
+                        TakenFrom = TakenFrom.CmsConfig
+                    });
+                }
+
                 Modules.Add(newModule);
             }
 
@@ -72,24 +80,22 @@ namespace BetterCms.Configuration.Dynamic
         public List<ICmsModuleConfiguration> Modules { get; set; }
 
 
+        // TODO: Doesn't override for current moment
         public ICmsStorageConfiguration Storage { get; private set; }
 
         public ICmsDatabaseConfiguration Database { get; private set; }
 
         public ICmsSecurityConfiguration Security { get; private set; }
 
+        public ICmsModuleGalleryConfiguration ModuleGallery { get; private set; }
+
         public ICmsUsersConfiguration Users { get; private set; }
 
         public ICmsSearchConfiguration Search { get; private set; }
-
-        public ICmsModuleGalleryConfiguration ModuleGallery { get; private set; }
-
+        
         public ICmsInstallationConfiguration Installation { get; private set; }
 
         public ICmsCacheConfiguration Cache { get; private set; }
-
-        
-        
 
         public UrlPatternsCollection UrlPatterns { get; set; }
 

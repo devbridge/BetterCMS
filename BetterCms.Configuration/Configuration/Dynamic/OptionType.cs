@@ -1,6 +1,6 @@
 using System;
 
-namespace BetterCms.Core.DataContracts.Enums
+namespace BetterCms.Configuration.Dynamic
 {
     [Serializable]
     public enum OptionType

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 
+using BetterCms.Configuration.Dynamic;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;

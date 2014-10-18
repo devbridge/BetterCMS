@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
+using BetterCms.Configuration.Dynamic;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;

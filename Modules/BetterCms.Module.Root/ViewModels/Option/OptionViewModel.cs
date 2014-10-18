@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 
+using BetterCms.Configuration.Dynamic;
 using BetterCms.Core.DataContracts;
 
 namespace BetterCms.Module.Root.ViewModels.Option
@@ -102,7 +103,7 @@ namespace BetterCms.Module.Root.ViewModels.Option
             }
         }
 
-        Core.DataContracts.Enums.OptionType IOption.Type
+        OptionType IOption.Type
         {
             get
             {

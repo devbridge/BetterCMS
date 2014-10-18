@@ -4,6 +4,7 @@ using System.Linq;
 
 using Autofac;
 
+using BetterCms.Configuration.Dynamic;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts.Enums;

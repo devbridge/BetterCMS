@@ -121,7 +121,7 @@ namespace BetterCms.Test.Module.Api.Pages.Page.Contents
                                      Content = content,
                                      DefaultValue = TestDataProvider.ProvideRandomString(100),
                                      Key = TestDataProvider.ProvideRandomString(100),
-                                     Type = BetterCms.Core.DataContracts.Enums.OptionType.Text
+                                     Type = BetterCms.Configuration.Dynamic.OptionType.Text
                                  };
 
             session.SaveOrUpdate(parentContent);

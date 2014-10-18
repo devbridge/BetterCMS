@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Configuration.Dynamic;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;

@@ -129,7 +129,6 @@
     <Compile Include="DataAccess\DataContext\Migrations\VersionInfo.cs" />
     <Compile Include="DataAccess\PredicateBuilder.cs" />
     <Compile Include="DataContracts\Enums\ForceProtocolType.cs" />
-    <Compile Include="DataContracts\Enums\TakenFrom.cs" />
     <Compile Include="DataContracts\IChildContent.cs" />
     <Compile Include="DataContracts\IContentRegion.cs" />
     <Compile Include="DataContracts\ICustomOption.cs" />
@@ -165,7 +164,6 @@
     <Compile Include="DataAccess\DataContext\RestrictionsExtensions.cs" />
     <Compile Include="DataAccess\DataContext\SessionExtensions.cs" />
     <Compile Include="DataContracts\Enums\ContentStatus.cs" />
-    <Compile Include="DataContracts\Enums\OptionType.cs" />
     <Compile Include="DataContracts\ICategory.cs" />
     <Compile Include="DataContracts\IContent.cs" />
     <Compile Include="DataContracts\IEntity.cs" />
@@ -187,7 +185,6 @@
     <Compile Include="Exceptions\Api\CmsApiException.cs" />
     <Compile Include="Exceptions\Api\CmsApiValidationException.cs" />
     <Compile Include="Exceptions\Mvc\ConfirmationRequestException.cs" />
-    <Compile Include="Models\ConfigurationKeyValueDescriptor.cs" />
     <Compile Include="Models\EntityIdGenerator.cs" />
     <Compile Include="Models\Setting.cs" />
     <Compile Include="Modules\CssIncludeDescriptor.cs" />

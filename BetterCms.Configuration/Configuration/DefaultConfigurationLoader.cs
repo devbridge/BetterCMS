@@ -61,7 +61,7 @@ namespace BetterCms.Configuration
                 {
                     section = TraverseConfigSections<T>(config.RootSectionGroup);
                 }
-                catch
+                catch(Exception ex)
                 {
                     throw;
                 }

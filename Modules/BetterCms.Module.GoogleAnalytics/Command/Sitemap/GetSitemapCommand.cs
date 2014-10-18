@@ -21,7 +21,8 @@ namespace BetterCms.Module.GoogleAnalytics.Command.Sitemap
     {
         private readonly ICmsConfiguration cmsConfiguration;
 
-        private readonly ICmsConfigurationService cmsConfigurationService;
+        // todo: WHY????
+        //private readonly ICmsConfigurationService cmsConfigurationService;
 
         private readonly ISitemapService sitemapService;
 
@@ -30,10 +31,10 @@ namespace BetterCms.Module.GoogleAnalytics.Command.Sitemap
         private readonly IPageService pageService;
         
         public GetSitemapCommand(ICmsConfiguration cmsConfiguration, ISitemapService sitemapService, 
-            ILanguageService languageService, IPageService pageService, ICmsConfigurationService cmsConfigurationService)
+            ILanguageService languageService, IPageService pageService)//, ICmsConfigurationService cmsConfigurationService)
         {
             this.cmsConfiguration = cmsConfiguration;
-            this.cmsConfigurationService = cmsConfigurationService;
+            //this.cmsConfigurationService = cmsConfigurationService;
             this.sitemapService = sitemapService;
             this.languageService = languageService;
             this.pageService = pageService;

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 
+using BetterCms.Configuration.Dynamic;
 using BetterCms.Core.DataContracts.Enums;
 
 using BetterCms.Module.ImagesGallery.Command.GetAlbum;

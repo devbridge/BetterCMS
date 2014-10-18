@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using Autofac;
 
+using BetterCms.Configuration.Dynamic;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 using BetterCms.Core.Modules;
@@ -93,7 +94,7 @@ namespace BetterCms.Module.GoogleAnalytics
             {
                 new ConfigurationKeyValueDescriptor
                 {
-                    Key = GoogleAnalyticsModuleConstants.SitemapTitleKey,
+                    Name = GoogleAnalyticsModuleConstants.SitemapTitleKey,
                     Value = "Default Site Map",
                     Priority = 1,
                     Title = () => GoogleAnalyticsGlobalization.SitemapTitle_DisplayName,
@@ -102,7 +103,7 @@ namespace BetterCms.Module.GoogleAnalytics
                 },
                 new ConfigurationKeyValueDescriptor
                 {
-                    Key = GoogleAnalyticsModuleConstants.PriorityKey,
+                    Name = GoogleAnalyticsModuleConstants.PriorityKey,
                     Value = "0.6",
                     Priority = 2,
                     Title = () => "Priority",
@@ -110,7 +111,7 @@ namespace BetterCms.Module.GoogleAnalytics
                 },
                 new ConfigurationKeyValueDescriptor
                 {
-                    Key = GoogleAnalyticsModuleConstants.SitemapUrlKey,
+                    Name = GoogleAnalyticsModuleConstants.SitemapUrlKey,
                     Value = "sitemap1.xml",
                     Priority = 3,
                     Title = () => GoogleAnalyticsGlobalization.SitemapUrl_DisplayName,

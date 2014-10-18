@@ -41,11 +41,13 @@
         {
             if (cmsConfiguration.Modules != null)
             {
-                var moduleConfiguration = cmsConfiguration.Modules.GetByName(PagesModuleDescriptor.ModuleName);
-                if (moduleConfiguration != null)
-                {
-                    return moduleConfiguration.GetValue(key);
-                }
+                // todo WHY???
+
+                //var moduleConfiguration = cmsConfiguration.Modules.GetByName(PagesModuleDescriptor.ModuleName);
+                //if (moduleConfiguration != null)
+                //{
+                //    return moduleConfiguration.GetValue(key);
+                //}
             }
 
             return null;

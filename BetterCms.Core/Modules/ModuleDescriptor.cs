@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
 
 using Autofac;
 
+using BetterCms.Configuration.Dynamic;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
@@ -390,16 +392,12 @@ namespace BetterCms.Core.Modules
 
         internal void OverrideConfigurationSettings(ILifetimeScope container)
         {
-            var dynamicConfig = RegisteredConfigurationSettings();
-
+            var constantConfigurationValues = RegisteredConfigurationSettings();
+            var appSettingConfigurationValues = GetAppSettingCollection();
             var settingsService = container.Resolve<ISettingsService>();
-            if (dynamicConfig != null)
-            {
-                foreach (var key in dynamicConfig)
-                {
-                    this.Override(null, key, Configuration);
-                }
-            }
+            var databaseConfigurationValues = settingsService.GetModuleSettings(Id);
+
+            this.Override(constantConfigurationValues, Configuration, appSettingConfigurationValues, databaseConfigurationValues);
         }
 
         protected void RegisterContentRendererType<TContentRenderer, TContent>(ContainerBuilder containerBuilder) 
@@ -477,6 +475,20 @@ namespace BetterCms.Core.Modules
             }
 
             return (baseType.IsGenericType && baseType.GetGenericTypeDefinition() == genericType) || IsAssignableToGenericType(baseType, genericType);
+        }
+
+        private IEnumerable<KeyValueConfigurationElement> GetAppSettingCollection()
+        {
+            var appSettingCollection = new List<KeyValueConfigurationElement>();
+            foreach (var key in CmsContext.AppSettingsConfiguration.Settings.AllKeys)
+            {
+                if (key.StartsWith(string.Format("bcms_{0}_", Name)))
+                {
+                    appSettingCollection.Add(CmsContext.AppSettingsConfiguration.Settings[key]);
+                }
+            }
+
+            return appSettingCollection;
         }
     }
 }

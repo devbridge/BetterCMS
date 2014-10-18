@@ -1,17 +1,14 @@
 ﻿using System;
 
-using BetterCms.Core.DataContracts.Enums;
-
-namespace BetterCms.Core.Models
+namespace BetterCms.Configuration.Dynamic
 {
     public class ConfigurationKeyValueDescriptor
     {
         public ConfigurationKeyValueDescriptor()
         {
+            Priority = 1;
             TakenFrom = TakenFrom.ModuleDescriptor;
         }
-
-        public string Key { get; set; }
 
         public string Value { get; set; }
 
@@ -24,5 +21,7 @@ namespace BetterCms.Core.Models
         public OptionType Type { get; set; }
 
         public TakenFrom TakenFrom { get; set; }
+
+        public string Name { get; set; }
     }
 }

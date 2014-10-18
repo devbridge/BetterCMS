@@ -1,4 +1,5 @@
-﻿using BetterCms.Core.DataContracts.Enums;
+﻿using BetterCms.Configuration.Dynamic;
+using BetterCms.Core.DataContracts.Enums;
 
 namespace BetterCms.Core.DataContracts
 {

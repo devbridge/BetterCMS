@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 
+using BetterCms.Configuration.Dynamic;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Module.Blog.Accessors;

@@ -191,7 +191,7 @@ namespace BetterCms.Module.Root
             containerBuilder.RegisterType<DefaultContentProjectionService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             containerBuilder.RegisterType<DefaultChildContentService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             
-            containerBuilder.RegisterType<CmsConfigurationService>().AsImplementedInterfaces().SingleInstance();
+            //todo: WHY??? containerBuilder.RegisterType<CmsConfigurationService>().AsImplementedInterfaces().SingleInstance();
         }
 
         /// <summary>

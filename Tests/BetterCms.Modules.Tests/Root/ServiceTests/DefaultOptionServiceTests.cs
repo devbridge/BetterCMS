@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Configuration.Dynamic;
 using BetterCms.Core.DataContracts;
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Services.Caching;
