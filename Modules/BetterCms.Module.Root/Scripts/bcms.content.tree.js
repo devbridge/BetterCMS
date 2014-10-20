@@ -15,7 +15,10 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         links = {},
         globalization = {
             contentsTreeTitle: null,
-            closeTreeButtonTitle: null
+            closeTreeButtonTitle: null,
+            saveSortChanges: null,
+            resetSortChanges: null,
+            saveSortChangesConfirmation: null
         },
         classes = {
             sortableContentPlaceholder: "bcms-contents-tree-drop-area"
@@ -356,7 +359,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
     }
 
     function openContentsTree(pageModel, onModelCreated) {
-        modal.open({
+        var manageDialog = modal.open({
             title: globalization.contentsTreeTitle,
             cancelTitle: globalization.closeTreeButtonTitle,
             disableAccept: true,
@@ -373,25 +376,87 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             },
 
             onClose: function () {
-                if (treeViewModel.contentsSorted) {
-                    var changedRegions = checkIfRegionContentsChanged([], treeViewModel.items());
-                    if (changedRegions.length > 0) {
-                        contentModule.saveContentChanges(changedRegions, null);
+                if (checkIfRegionContentsChanged([], treeViewModel.items())) {
+                    var doNotsaveButton,
+                        dialog;
 
-                        return;
-                    }
-                }
+                    doNotsaveButton = new modal.button(globalization.resetSortChanges, null, 5, function() {
+                        dialog.close();
+                        manageDialog.close();
+                        redirect.ReloadWithAlert();
+                    });
 
-                if (treeViewModel.reloadPage) {
-                    redirect.ReloadWithAlert();
+                    dialog = modal.confirm({
+                        content: globalization.saveSortChangesConfirmation,
+                        acceptTitle: globalization.saveSortChanges,
+                        buttons: [doNotsaveButton],
+                        onAccept: function() {
+                            manageDialog.close();
+                            if (treeViewModel.contentsSorted) {
+                                var changedRegions = checkIfRegionContentsChangedWithUpdate([], treeViewModel.items());
+                                if (changedRegions.length > 0) {
+                                    contentModule.saveContentChanges(changedRegions, null);
+                                }
+                            }
+
+                            if (treeViewModel.reloadPage) {
+                                redirect.ReloadWithAlert();
+                            }
+                        }
+                    });
+
+                    return false;
+                } else {
+                    return true;
                 }
             }
         });
+
+        
     }
 
     /*
     * Checks if order of contents has changed and if there are changes, saves the changes. 
     */
+    function checkIfRegionContentsChangedWithUpdate(changedRegions, treeItems) {
+        var l = treeItems.length,
+            i,
+            j,
+            treeItem,
+            subTreeItem,
+            contentsBeforeReorder,
+            contentsAfterReorder,
+            hasContentsChanged;
+
+        for (i = 0; i < l; i++) {
+            treeItem = treeItems[i];
+
+            if (treeItem.type == treeItemTypes.region) {
+                contentsBeforeReorder = treeItem.model.contents;
+                contentsAfterReorder = [];
+
+                for (j = 0; j < treeItem.items().length; j++) {
+                    subTreeItem = treeItem.items()[j];
+
+                    if (subTreeItem.type == treeItemTypes.content) {
+                        contentsAfterReorder.push(subTreeItem.model);
+                    }
+
+                    changedRegions = checkIfRegionContentsChangedWithUpdate(changedRegions, subTreeItem.items());
+                }
+
+                hasContentsChanged = contentModule.hasContentsOrderChanged(contentsBeforeReorder, contentsAfterReorder);
+                if (hasContentsChanged) {
+                    treeItem.model.setContents(contentsAfterReorder);
+
+                    changedRegions.push(treeItem.model);
+                }
+            }
+        }
+
+        return changedRegions;
+    }
+
     function checkIfRegionContentsChanged(changedRegions, treeItems) {
         var l = treeItems.length,
             i,
@@ -416,19 +481,19 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                         contentsAfterReorder.push(subTreeItem.model);
                     }
 
-                    changedRegions = checkIfRegionContentsChanged(changedRegions, subTreeItem.items());
+                    if (checkIfRegionContentsChanged(changedRegions, subTreeItem.items())) {
+                        return true;
+                    }
                 }
 
                 hasContentsChanged = contentModule.hasContentsOrderChanged(contentsBeforeReorder, contentsAfterReorder);
                 if (hasContentsChanged) {
-                    treeItem.model.setContents(contentsAfterReorder);
-
-                    changedRegions.push(treeItem.model);
+                    return true;
                 }
             }
         }
 
-        return changedRegions;
+        return false;
     }
 
     /**
