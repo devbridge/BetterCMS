@@ -400,8 +400,6 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>FileInsert.generated.cs</LastGenOutput>
     </None>
-    <Content Include="Web.config.uninstall.xdt" />
-    <Content Include="Web.config.install.xdt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\Upload\SingleFileUpload.cshtml">

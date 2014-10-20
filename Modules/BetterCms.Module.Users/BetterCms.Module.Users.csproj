@@ -298,8 +298,6 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>ListTemplate.generated.cs</LastGenOutput>
     </None>
-    <Content Include="Web.config.uninstall.xdt" />
-    <Content Include="Web.config.install.xdt" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />

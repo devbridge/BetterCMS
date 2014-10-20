@@ -211,8 +211,6 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>ThreeColumnsLayout.generated.cs</LastGenOutput>
     </None>
-    <Content Include="Web.config.uninstall.xdt" />
-    <Content Include="Web.config.install.xdt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\Shared\TwoColumnsLayout.cshtml">

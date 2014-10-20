@@ -136,8 +136,6 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web.config.uninstall.xdt" />
-    <Content Include="Web.config.install.xdt" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

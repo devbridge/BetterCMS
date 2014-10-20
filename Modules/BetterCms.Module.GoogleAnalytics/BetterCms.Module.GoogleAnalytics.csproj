@@ -127,9 +127,6 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web.config.uninstall.xdt" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -149,9 +146,6 @@
       <Project>{66E7E4DF-EEEA-4B1E-8663-A1B430EB7375}</Project>
       <Name>BetterCms.Module.Root</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Web.config.install.xdt" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

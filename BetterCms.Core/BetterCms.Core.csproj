@@ -327,8 +327,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Web.config.install.xdt" />
-    <None Include="Web.config.uninstall.xdt" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
