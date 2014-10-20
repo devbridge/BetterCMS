@@ -25,6 +25,9 @@
     }
     else
     {
-        @PageContentRenderHelper.InvisibleRegionsPlaceholder
+        if (Model.CanManageContent)
+        {
+            @PageContentRenderHelper.InvisibleRegionsPlaceholder
+        }
     }
 }
