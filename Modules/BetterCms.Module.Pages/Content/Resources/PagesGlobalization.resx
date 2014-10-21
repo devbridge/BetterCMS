@@ -703,7 +703,7 @@
     <value>Register +</value>
   </data>
   <data name="DeletePageContent_ConfirmationMessage" xml:space="preserve">
-    <value>Are you sure you want to delete content?</value>
+    <value>Are you sure you want to delete "{0}" content?</value>
   </data>
   <data name="DeletePageContent_ConfirmationTitle" xml:space="preserve">
     <value>Delete content</value>

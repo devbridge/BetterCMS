@@ -555,6 +555,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
             contentViewModel.onDeleteContent = function (onDeleteSuccess) {
                 pagesContent.removeContentFromPage(contentViewModel.pageContentId,
                     contentViewModel.pageContentVersion,
+                    contentViewModel.title,
                     contentViewModel.contentVersion,
                     onDeleteSuccess);
             };
@@ -677,7 +678,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         /**
         * Removes regular content from page.
         */
-        pagesContent.removeContentFromPage = function (pageContentId, pageContentVersion, contentVersion, onDeleteSuccess) {
+        pagesContent.removeContentFromPage = function (pageContentId, pageContentVersion, contentName, contentVersion, onDeleteSuccess) {
             if (!onDeleteSuccess) {
                 onDeleteSuccess = function () {
                     redirect.ReloadWithAlert({
@@ -726,7 +727,7 @@ bettercms.define('bcms.pages.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                 },
                 confirmDialog = modal.confirm({
                     title: globalization.deleteContentConfirmationTitle,
-                    content: globalization.deleteContentConfirmationMessage,
+                    content: $.format(globalization.deleteContentConfirmationMessage, contentName),
                     onAccept: function () {
                         $.ajax({
                             type: 'POST',
