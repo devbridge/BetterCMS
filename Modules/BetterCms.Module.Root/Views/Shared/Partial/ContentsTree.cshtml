@@ -58,9 +58,11 @@
                 <div data-bind="template: { name: 'bcms-contents-tree-list-template' }"></div>
             </div>
             <!-- /ko -->
-            <!-- ko if: type == types.region && items().length == 0 -->
+            
+            <!-- ko if: type == types.region-->
             <div class="bcms-contents-tree-sort-block" data-bind="draggableContent:true">&nbsp;</div>
             <!-- /ko -->
+            
         </div>
     </div>
     <!-- /ko -->

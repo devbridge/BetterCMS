@@ -391,12 +391,11 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                         acceptTitle: globalization.saveSortChanges,
                         buttons: [doNotsaveButton],
                         onAccept: function () {
+                            dialog.close();
                             manageDialog.close();
-                            if (treeViewModel.contentsSorted) {
-                                var changedRegions = checkIfRegionContentsChanged([], treeViewModel.items());
-                                if (changedRegions.length > 0) {
-                                    contentModule.saveContentChanges(changedRegions, null);
-                                }
+                            var changedRegions = checkIfRegionContentsChanged([], treeViewModel.items());
+                            if (changedRegions.length > 0) {
+                                contentModule.saveContentChanges(changedRegions, null);
                             }
 
                             if (treeViewModel.reloadPage) {
@@ -487,7 +486,6 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                         },
                         update: function (e, data) {
                             if (isUpdating) {
-                                treeViewModel.contentsSorted = true;
                                 isUpdating = false;
 
                                 var regionContainer = data.item.parents(selectors.firstParentRegion),
@@ -497,6 +495,10 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                                     correctOrder = [],
                                     updateOrder = false,
                                     allItems = regionModelAfter.items();
+
+                                if (regionId != regionModelBefore.itemId) {
+                                    treeViewModel.contentsSorted = true;
+                                }
 
                                 if (regionModelBefore != regionModelAfter) {
                                     dragObject.parentRegion = regionModelAfter;
