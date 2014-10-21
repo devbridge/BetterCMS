@@ -399,7 +399,9 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                                 }
                             }
 
-                            redirect.ReloadWithAlert();
+                            if (treeViewModel.reloadPage) {
+                                redirect.ReloadWithAlert();
+                            }
                         }
                     });
 
