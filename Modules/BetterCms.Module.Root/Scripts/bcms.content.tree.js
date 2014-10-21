@@ -376,11 +376,11 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             },
 
             onClose: function () {
-                if (checkIfRegionContentsChanged([], treeViewModel.items())) {
+                if (treeViewModel.contentsSorted) {
                     var doNotsaveButton,
                         dialog;
 
-                    doNotsaveButton = new modal.button(globalization.resetSortChanges, null, 5, function() {
+                    doNotsaveButton = new modal.button(globalization.resetSortChanges, null, 5, function () {
                         dialog.close();
                         manageDialog.close();
                         redirect.ReloadWithAlert();
@@ -390,18 +390,16 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                         content: globalization.saveSortChangesConfirmation,
                         acceptTitle: globalization.saveSortChanges,
                         buttons: [doNotsaveButton],
-                        onAccept: function() {
+                        onAccept: function () {
                             manageDialog.close();
                             if (treeViewModel.contentsSorted) {
-                                var changedRegions = checkIfRegionContentsChangedWithUpdate([], treeViewModel.items());
+                                var changedRegions = checkIfRegionContentsChanged([], treeViewModel.items());
                                 if (changedRegions.length > 0) {
                                     contentModule.saveContentChanges(changedRegions, null);
                                 }
                             }
 
-                            if (treeViewModel.reloadPage) {
-                                redirect.ReloadWithAlert();
-                            }
+                            redirect.ReloadWithAlert();
                         }
                     });
 
@@ -418,45 +416,6 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
     /*
     * Checks if order of contents has changed and if there are changes, saves the changes. 
     */
-    function checkIfRegionContentsChangedWithUpdate(changedRegions, treeItems) {
-        var l = treeItems.length,
-            i,
-            j,
-            treeItem,
-            subTreeItem,
-            contentsBeforeReorder,
-            contentsAfterReorder,
-            hasContentsChanged;
-
-        for (i = 0; i < l; i++) {
-            treeItem = treeItems[i];
-
-            if (treeItem.type == treeItemTypes.region) {
-                contentsBeforeReorder = treeItem.model.contents;
-                contentsAfterReorder = [];
-
-                for (j = 0; j < treeItem.items().length; j++) {
-                    subTreeItem = treeItem.items()[j];
-
-                    if (subTreeItem.type == treeItemTypes.content) {
-                        contentsAfterReorder.push(subTreeItem.model);
-                    }
-
-                    changedRegions = checkIfRegionContentsChangedWithUpdate(changedRegions, subTreeItem.items());
-                }
-
-                hasContentsChanged = contentModule.hasContentsOrderChanged(contentsBeforeReorder, contentsAfterReorder);
-                if (hasContentsChanged) {
-                    treeItem.model.setContents(contentsAfterReorder);
-
-                    changedRegions.push(treeItem.model);
-                }
-            }
-        }
-
-        return changedRegions;
-    }
-
     function checkIfRegionContentsChanged(changedRegions, treeItems) {
         var l = treeItems.length,
             i,
@@ -481,19 +440,19 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                         contentsAfterReorder.push(subTreeItem.model);
                     }
 
-                    if (checkIfRegionContentsChanged(changedRegions, subTreeItem.items())) {
-                        return true;
-                    }
+                    changedRegions = checkIfRegionContentsChanged(changedRegions, subTreeItem.items());
                 }
 
                 hasContentsChanged = contentModule.hasContentsOrderChanged(contentsBeforeReorder, contentsAfterReorder);
                 if (hasContentsChanged) {
-                    return true;
+                    treeItem.model.setContents(contentsAfterReorder);
+
+                    changedRegions.push(treeItem.model);
                 }
             }
         }
 
-        return false;
+        return changedRegions;
     }
 
     /**
