@@ -496,11 +496,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                                     updateOrder = false,
                                     allItems = regionModelAfter.items();
 
-                                if (regionId != regionModelBefore.itemId) {
-                                    treeViewModel.contentsSorted = true;
-                                }
-
-                                if (regionModelBefore != regionModelAfter) {
+                               if (regionModelBefore != regionModelAfter) {
                                     dragObject.parentRegion = regionModelAfter;
 
                                     regionModelBefore.removeContent(dragObject);
@@ -522,6 +518,11 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
 
                                     i++;
                                 });
+
+                                if (regionId != regionModelBefore.itemId && updateOrder) {
+                                    treeViewModel.contentsSorted = true;
+                                }
+
                                 if (updateOrder) {
                                     regionModelAfter.items.removeAll();
                                     for (var i = 0; i < correctOrder.length; i++) {
