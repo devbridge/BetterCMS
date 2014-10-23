@@ -10,7 +10,8 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             contentTreeContainer: '#bcms-contents-tree',
             sortableContentConnectors: '.bcms-contents-tree-sort-block',
             firstParentRegion: '.bcms-contents-tree-region:first',
-            childContents: '.bcms-contents-tree-content'
+            childContents: '.bcms-contents-tree-content',
+            zeroHeightPlaceHolder: '#bcms-zero-height-placeholder'
         },
         links = {},
         globalization = {
@@ -244,7 +245,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         self.contentsSorted = false;
 
         self.currentLevel = ko.observable(0);
-
+        dragg
         // Collect child regions
         for (i = 0; i < pageModel.regions.length; i++) {
             if (pageModel.regions[i].parentRegion) {
@@ -473,10 +474,16 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                         dropOnEmpty: true,
                         placeholder: classes.sortableContentPlaceholder,
                         tolerance: "intersect",
-                        start: function () {
+                        start: function (e, data) {
                             isUpdating = true;
                             if (dragObject.isBeingDragged) {
                                 dragObject.isBeingDragged(true);
+                            }
+                            
+                            var regionContainer = data.item.parents(selectors.firstParentRegion);
+                            var zhChildren = regionContainer.children(selectors.zeroHeightPlaceHolder);
+                            if (zhChildren) {
+                                zhChildren.height("18px");
                             }
                         },
                         stop: function () {
@@ -496,10 +503,16 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                                     updateOrder = false,
                                     allItems = regionModelAfter.items();
 
-                               if (regionModelBefore != regionModelAfter) {
+                                if (regionModelBefore != regionModelAfter) {
                                     dragObject.parentRegion = regionModelAfter;
 
                                     regionModelBefore.removeContent(dragObject);
+                                }
+                                else {
+                                    if (regionContainer.children(selectors.zeroHeightPlaceHolder)) {
+
+                                        regionContainer.children(selectors.zeroHeightPlaceHolder).height("0px");
+                                    }
                                 }
 
                                 i = 0;

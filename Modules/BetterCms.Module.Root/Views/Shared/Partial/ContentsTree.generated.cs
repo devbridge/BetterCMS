@@ -110,10 +110,14 @@ WriteLiteral(">\r\n    <!-- ko if: $data.length > 0 -->\r\n    <!-- ko foreach: 
 "/div>\r\n            <!-- ko if: items().length > 0 -->\r\n            <div data-bin" +
 "d=\"with: items()\">\r\n                <div data-bind=\"template: { name: \'bcms-cont" +
 "ents-tree-list-template\' }\"></div>\r\n            </div>\r\n            <!-- /ko -->" +
-"\r\n            \r\n            <!-- ko if: type == types.region-->\r\n            <di" +
-"v class=\"bcms-contents-tree-sort-block\" data-bind=\"draggableContent:true\">&nbsp;" +
-"</div>\r\n            <!-- /ko -->\r\n            \r\n        </div>\r\n    </div>\r\n    " +
-"<!-- /ko -->\r\n    <!-- /ko -->\r\n</script>");
+"\r\n            \r\n            <!-- ko if: type == types.region && items().length =" +
+"= 0 -->\r\n            <div class=\"bcms-contents-tree-sort-block\" data-bind=\"dragg" +
+"ableContent:true\">&nbsp;</div>\r\n            <!-- /ko -->\r\n            \r\n        " +
+"    <!-- ko if: type == types.region && items().length == 1 -->\r\n               " +
+"     <div id=\"bcms-zero-height-placeholder\" style=\"height: 0\" class=\"bcms-conten" +
+"ts-tree-sort-block\" data-bind=\"draggableContent: true\"></div>\r\n            <!-- " +
+"/ko -->\r\n                        \r\n        </div>\r\n    </div>\r\n    <!-- /ko -->\r" +
+"\n    <!-- /ko -->\r\n</script>");
 
         }
     }
