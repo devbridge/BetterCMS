@@ -1148,7 +1148,6 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
 
             $.each(items, function (index) {
                 totalItemsWidth += items[index].element.outerWidth();
-                console.log('Item: ' + items[index].element.outerWidth() + '; total: ' + totalItemsWidth + '; cw: ' + cw);
             });
 
             pathContainer.css('width', cw > totalItemsWidth ? totalItemsWidth : cw);

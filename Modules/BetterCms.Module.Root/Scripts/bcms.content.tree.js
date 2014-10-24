@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders', 'bcms.modal', 'bcms.content', 'bcms.redirect'],
-    function ($, bcms, ko, modal, contentModule, redirect) {
+function ($, bcms, ko, modal, contentModule, redirect) {
     'use strict';
 
     var tree = {},
@@ -10,8 +10,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             contentTreeContainer: '#bcms-contents-tree',
             sortableContentConnectors: '.bcms-contents-tree-sort-block',
             firstParentRegion: '.bcms-contents-tree-region:first',
-            childContents: '.bcms-contents-tree-content',
-            zeroHeightPlaceHolder: '#bcms-zero-height-placeholder'
+            childContents: '.bcms-contents-tree-content'
         },
         links = {},
         globalization = {
@@ -209,7 +208,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             });
         };
 
-        model.history = function() {
+        model.history = function () {
             contentModel.onContentHistory(function (json) {
                 treeViewModel.reloadPage = true;
 
@@ -217,8 +216,8 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             });
         };
 
-        model.configure = function() {
-            contentModel.onConfigureContent(function(json) {
+        model.configure = function () {
+            contentModel.onConfigureContent(function (json) {
                 treeViewModel.reloadPage = true;
 
                 setContentModelValues(model.model, json);
@@ -229,8 +228,8 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
     }
 
     /*
-     * Regions/contents tree list view model
-     */
+        * Regions/contents tree list view model
+        */
     function TreeViewModel(pageModel) {
         var self = this,
             i,
@@ -260,14 +259,14 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         }
 
         self.getItemById = function (itemId, items) {
-            var j, 
+            var j,
                 item;
 
             if (!items) {
                 items = treeViewModel.items();
             }
 
-            for (j = 0; j < items.length; j ++) {
+            for (j = 0; j < items.length; j++) {
                 if (items[j].itemId == itemId) {
                     return items[j];
                 }
@@ -285,8 +284,8 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
     }
 
     /*
-     * Tree item (region or content) view model
-     */
+        * Tree item (region or content) view model
+        */
     function TreeItemViewModel() {
         var self = this;
 
@@ -297,6 +296,8 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         self.itemId = null;
         self.isInvisible = false;
         self.types = treeItemTypes;
+        self.parentRegion = null;
+        self.parentContent = null;
 
         self.editItem = function () { };
         self.deleteItem = function () { };
@@ -308,11 +309,11 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         self.level = ko.observable(0);
 
         self.isBeingDragged = ko.observable(false);
-        self.isBeingDragged.subscribe(function(newValue) {
+        self.isBeingDragged.subscribe(function (newValue) {
             treeViewModel.isBeingDragged(newValue);
         });
 
-        self.onMouseLeave = function() {
+        self.onMouseLeave = function () {
             this.isActive(false);
 
             treeViewModel.currentLevel(self.level() - 1);
@@ -324,7 +325,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             treeViewModel.currentLevel(this.level());
         };
 
-        self.isHover = ko.computed(function() {
+        self.isHover = ko.computed(function () {
             return (!treeViewModel || !treeViewModel.isBeingDragged())
                 && self.isActive()
                 && self.level() == treeViewModel.currentLevel();
@@ -339,13 +340,13 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
     function onEditContentsTree(data) {
         var pageModel = data.pageViewModel,
             changedRegions = contentModule.getChangedRegions(),
-            onSave = function() {
+            onSave = function () {
                 // Open pages structure modal after user accepts changes
                 openContentsTree(pageModel, function () {
                     treeViewModel.reloadPage = true;
                 });
             },
-            onReset = function() {
+            onReset = function () {
                 // Open pages structure modal after user resets changes
                 openContentsTree(pageModel);
             };
@@ -363,7 +364,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             title: globalization.contentsTreeTitle,
             cancelTitle: globalization.closeTreeButtonTitle,
             disableAccept: true,
-            onLoad: function(dialog) {
+            onLoad: function (dialog) {
                 var container = $($(selectors.treeTemplate).html());
                 dialog.setContent(container);
 
@@ -424,7 +425,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             }
         });
 
-        
+
     }
 
     /*
@@ -474,64 +475,59 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
     */
     function addDraggableBinding() {
         ko.bindingHandlers.draggableContent = {
-            init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+            init: function (element, valueAccessor, allBindingsAccessor, koViewModel) {
                 if (!valueAccessor()) {
                     return;
                 }
 
-                var dragObject = viewModel,
-                    isUpdating = false,
+                var viewModel;
+                if ($.isArray(koViewModel)) {
+                    viewModel = koViewModel[0];
+                } else {
+                    viewModel = koViewModel;
+                }
+
+                var isUpdating = false,
                     setup = {
                         connectWith: selectors.sortableContentConnectors,
                         dropOnEmpty: true,
                         placeholder: classes.sortableContentPlaceholder,
                         tolerance: "intersect",
-                        start: function (e, data) {
+                        start: function () {
                             isUpdating = true;
-                            if (dragObject.isBeingDragged) {
-                                dragObject.isBeingDragged(true);
-                            }
-                            
-                            var regionContainer = data.item.parents(selectors.firstParentRegion);
-                            var zhChildren = regionContainer.children(selectors.zeroHeightPlaceHolder);
-                            if (zhChildren) {
-                                zhChildren.height("18px");
+                            if (viewModel.isBeingDragged) {
+                                viewModel.isBeingDragged(true);
                             }
                         },
                         stop: function () {
-                            if (dragObject.isBeingDragged) {
-                                dragObject.isBeingDragged(false);
+                            if (viewModel.isBeingDragged) {
+                                viewModel.isBeingDragged(false);
                             }
                         },
                         update: function (e, data) {
                             if (isUpdating) {
+
                                 isUpdating = false;
 
                                 var regionContainer = data.item.parents(selectors.firstParentRegion),
                                     regionId = regionContainer.data('itemId'),
-                                    regionModelBefore = dragObject.parentRegion,
+                                    regionModelBefore = viewModel.parentRegion,
                                     regionModelAfter = regionId == regionModelBefore.itemId ? regionModelBefore : treeViewModel.getItemById(regionId),
                                     correctOrder = [],
                                     updateOrder = false,
                                     allItems = regionModelAfter.items();
 
                                 if (regionModelBefore != regionModelAfter) {
-                                    dragObject.parentRegion = regionModelAfter;
+                                    viewModel.parentRegion = regionModelAfter;
 
-                                    regionModelBefore.removeContent(dragObject);
-                                }
-                                else {
-                                    if (regionContainer.children(selectors.zeroHeightPlaceHolder)) {
-
-                                        regionContainer.children(selectors.zeroHeightPlaceHolder).height("0px");
-                                    }
+                                    regionModelBefore.removeContent(viewModel);
                                 }
 
                                 i = 0;
-                                regionContainer.find(selectors.childContents).each(function() {
+                                regionContainer.find(selectors.childContents).each(function () {
                                     var id = $(this).data('itemId'),
-                                        itemModel = (id == dragObject.itemId && regionModelBefore != regionModelAfter)
-                                            ? dragObject
+                                        itemModel = (id == viewModel.itemId && regionModelBefore != regionModelAfter)
+                                            ? viewModel
                                             : treeViewModel.getItemById(id, allItems);
 
                                     if (itemModel.type == treeItemTypes.content && itemModel.parentRegion == regionModelAfter) {
@@ -544,7 +540,7 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                                     i++;
                                 });
 
-                                if (regionId != regionModelBefore.itemId && updateOrder) {
+                                if (regionId != regionModelBefore.itemId || updateOrder) {
                                     treeViewModel.contentsSorted = true;
                                 }
 

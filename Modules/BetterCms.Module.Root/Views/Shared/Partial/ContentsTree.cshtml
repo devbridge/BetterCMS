@@ -56,17 +56,14 @@
             <!-- ko if: items().length > 0 -->
             <div data-bind="with: items()">
                 <div data-bind="template: { name: 'bcms-contents-tree-list-template' }"></div>
+                <!-- ko if: $parent != null && $parent.types && $parent.type == $parent.types.region && $data.length == 1 -->
+                <div style="padding: 0; margin: 0;" class="bcms-contents-tree-sort-block" data-bind="draggableContent: true">&nbsp;</div>
+                <!-- /ko -->
             </div>
             <!-- /ko -->
-            
             <!-- ko if: type == types.region && items().length == 0 -->
             <div class="bcms-contents-tree-sort-block" data-bind="draggableContent:true">&nbsp;</div>
             <!-- /ko -->
-            
-            <!-- ko if: type == types.region && items().length == 1 -->
-                    <div id="bcms-zero-height-placeholder" style="height: 0" class="bcms-contents-tree-sort-block" data-bind="draggableContent: true"></div>
-            <!-- /ko -->
-                        
         </div>
     </div>
     <!-- /ko -->
