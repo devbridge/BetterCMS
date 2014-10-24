@@ -245,7 +245,6 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
         self.contentsSorted = false;
 
         self.currentLevel = ko.observable(0);
-        dragg
         // Collect child regions
         for (i = 0; i < pageModel.regions.length; i++) {
             if (pageModel.regions[i].parentRegion) {
@@ -377,14 +376,21 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
             },
 
             onClose: function () {
+                if (manageDialog.isClosing) {
+                    return true;
+                }
+
                 if (treeViewModel.contentsSorted) {
                     var doNotsaveButton,
                         dialog;
 
                     doNotsaveButton = new modal.button(globalization.resetSortChanges, null, 5, function () {
                         dialog.close();
+                        manageDialog.isClosing = true;
                         manageDialog.close();
-                        redirect.ReloadWithAlert();
+                        if (treeViewModel.reloadPage) {
+                            redirect.ReloadWithAlert();
+                        }
                     });
 
                     dialog = modal.confirm({
@@ -393,20 +399,26 @@ bettercms.define('bcms.content.tree', ['bcms.jquery', 'bcms', 'bcms.ko.extenders
                         buttons: [doNotsaveButton],
                         onAccept: function () {
                             dialog.close();
-                            manageDialog.close();
                             var changedRegions = checkIfRegionContentsChanged([], treeViewModel.items());
                             if (changedRegions.length > 0) {
                                 contentModule.saveContentChanges(changedRegions, null);
-                            }
-
-                            if (treeViewModel.reloadPage) {
-                                redirect.ReloadWithAlert();
+                            } else {
+                                if (treeViewModel.reloadPage) {
+                                    redirect.ReloadWithAlert();
+                                } else {
+                                    manageDialog.isClosing = true;
+                                    manageDialog.close();
+                                }
                             }
                         }
                     });
 
                     return false;
                 } else {
+                    if (treeViewModel.reloadPage) {
+                        redirect.ReloadWithAlert();
+                    }
+
                     return true;
                 }
             }
