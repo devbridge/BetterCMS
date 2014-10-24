@@ -42,7 +42,7 @@
                     <a class="bcms-tree-controls-history" data-bind="click: history"></a>
                     <!-- /ko -->
                     <!-- ko if: model.visibleButtons.edit -->
-                    <a class="bcms-tree-controls-edit" data-bind="click: editItem"></a>
+                    <a class="bcms-tree-controls-edit" data-bind="click: editItem, css: {'bcms-tree-controls-edit-draft': draft()}"></a>
                     <!-- /ko -->
                     <!-- ko if: model.visibleButtons.delete -->
                     <a class="bcms-tree-controls-delete" data-bind="click: deleteItem"></a>

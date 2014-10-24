@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.IO;
 using System.Linq;
 
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Api;
+
 using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
-
-using NHibernate.Linq;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.Images
 {
@@ -34,19 +33,13 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
         /// <returns>The upload image response.</returns>
         public UploadImageResponse Post(UploadImageRequest request)
         {
-            IEnumerable<MediaFolder> parentFolderFuture = null;
+            MediaFolder parentFolder = null;
             if (request.Data.FolderId.HasValue)
             {
-                parentFolderFuture = repository.AsQueryable<MediaFolder>()
+                parentFolder = repository.AsQueryable<MediaFolder>()
                     .Where(c => c.Id == request.Data.FolderId.Value && !c.IsDeleted)
-                    .ToFuture();
-            }
+                    .FirstOne();
 
-            
-            MediaFolder parentFolder = null;
-            if (parentFolderFuture != null)
-            {
-                parentFolder = parentFolderFuture.First();
                 if (parentFolder.Type != Module.MediaManager.Models.MediaType.Image)
                 {
                     throw new CmsApiValidationException("Folder must be type of an image.");
@@ -58,21 +51,24 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
                 Id = request.Data.Id.GetValueOrDefault(),
                 Type = Module.MediaManager.Models.MediaType.Image,
                 Caption = request.Data.Caption,
-                Title = request.Data.Title,
-                Description = request.Data.Description
+                Title = request.Data.Title ?? Path.GetFileName(request.Data.FileName),
+                Description = request.Data.Description,
+                Size = request.Data.FileStream.Length,
+                Folder = parentFolder,
+                OriginalFileName = request.Data.FileName,
+                OriginalFileExtension = Path.GetExtension(request.Data.FileName)
             };
 
-            var savedImage = mediaImageService.UploadImage(
-                parentFolder != null ? parentFolder.Id : Guid.Empty,
-                request.Data.FileName,
-                request.Data.FileStream.Length,
-                request.Data.FileStream,
-                Guid.Empty,
-                mediaImage);
+            var savedImage = mediaImageService.UploadImageWithStream(request.Data.FileStream, mediaImage, request.Data.WaitForUploadResult);
+
+            if (savedImage != null)
+            {
+                Events.MediaManagerEvents.Instance.OnMediaFileUploaded(savedImage);
+            }
 
             return new UploadImageResponse
             {
-                Data = savedImage.Id
+                Data = savedImage.Id,
             };
         }
     }

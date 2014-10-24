@@ -181,12 +181,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\ApiCrdIntegrationTestBase.cs" />
     <Compile Include="Api\ApiIntegrationTestBase.cs" />
     <Compile Include="Api\Blog\Authors\AuthorsApiTests.cs" />
     <Compile Include="Api\Blog\BlogPosts\BlogPostsApiTests.cs" />
     <Compile Include="Api\Media\Files\FilesApiTests.cs" />
+    <Compile Include="Api\Media\Files\UploadFilesApiTests.cs" />
     <Compile Include="Api\Media\Folders\FoldersApiTests.cs" />
     <Compile Include="Api\Media\Images\ImagesApiTests.cs" />
+    <Compile Include="Api\Media\Images\UploadImageApiTests.cs" />
     <Compile Include="Api\Pages\Contents\Draft\DestroyContentDraftTest.cs" />
     <Compile Include="Api\Pages\Contents\HtmlContent\HtmlContentApiTests.cs" />
     <Compile Include="Api\Pages\Properties\PagePropertiesApiTests.cs" />

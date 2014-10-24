@@ -103,6 +103,8 @@ describe('users.users.api.behavior', function () {
             api.expectBasePropertiesAreNotNull(result.roles[0]);
             expect(result.roles[0].name).toBe('04001 - 1', 'Correctly filtered roles[0].name should be retrieved.');
             expect(result.roles[1].name).toBe('04001 - 2', 'Correctly filtered roles[1].name should be retrieved.');
+            expect(result.roles[0].description).toBe('04001 - 1 Description', 'Correctly filtered roles[0].description should be retrieved.');
+            expect(result.roles[1].description).toBe('04001 - 2 Description', 'Correctly filtered roles[1].description should be retrieved.');
             expect(result.roles[0].isSystematic).toBe(false, 'Correctly filtered roles[0].isSystematic should be retrieved.');
             expect(result.roles[1].isSystematic).toBe(true, 'Correctly filtered roles[1].isSystematic should be retrieved.');
         });
@@ -219,6 +221,8 @@ describe('users.users.api.behavior', function () {
             api.expectBasePropertiesAreNotNull(result.roles[0]);
             expect(result.roles[0].name).toBe('04004 - 1', 'Correctly filtered roles[0].name should be retrieved.');
             expect(result.roles[1].name).toBe('04004 - 2', 'Correctly filtered roles[1].name should be retrieved.');
+            expect(result.roles[0].description).toBe('04004 - 1 Description', 'Correctly filtered roles[0].description should be retrieved.');
+            expect(result.roles[1].description).toBe('04004 - 2 Description', 'Correctly filtered roles[1].description should be retrieved.');
             expect(result.roles[0].isSystematic).toBe(false, 'Correctly filtered roles[0].isSystematic should be retrieved.');
             expect(result.roles[1].isSystematic).toBe(true, 'Correctly filtered roles[1].isSystematic should be retrieved.');
         });

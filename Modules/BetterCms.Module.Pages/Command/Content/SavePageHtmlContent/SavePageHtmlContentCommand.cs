@@ -188,12 +188,12 @@ namespace BetterCms.Module.Pages.Command.Content.SavePageHtmlContent
             var response = new ChangedContentResultViewModel
                 {
                     PageContentId = pageContent.Id,
-                    ContentId = pageContent.Content.Id,
+                    ContentId = contentData.Id,
                     RegionId = pageContent.Region.Id,
                     PageId = pageContent.Page.Id,
                     DesirableStatus = request.Content.DesirableStatus,
                     Title = contentData.Name,
-                    ContentVersion = pageContent.Content.Version,
+                    ContentVersion = contentData.Version,
                     PageContentVersion = pageContent.Version,
                     ContentType = HtmlContentAccessor.ContentWrapperType
                 };

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 
@@ -48,7 +50,13 @@ namespace BetterCms.Core.Web
         /// </returns>
         public string MapPath(string path)
         {
-            return HttpContext.Current.Server.MapPath(path);
+            var current = GetCurrent();
+            if (current != null)
+            {
+                return current.Server.MapPath(path);
+            }
+            
+            return Path.Combine(GetExecutingAssemblyPath(), path);
         }
 
         /// <summary>
@@ -100,7 +108,7 @@ namespace BetterCms.Core.Web
         /// <returns></returns>
         private string GetServerUrl(HttpRequestBase request)
         {
-            if (request != null 
+            if (request != null
                 && string.IsNullOrWhiteSpace(cmsConfiguration.WebSiteUrl) || cmsConfiguration.WebSiteUrl.Equals("auto", StringComparison.InvariantCultureIgnoreCase))
             {
                 var url = request.Url.AbsoluteUri;
@@ -114,6 +122,14 @@ namespace BetterCms.Core.Web
             }
 
             return cmsConfiguration.WebSiteUrl;
+        }
+
+        private string GetExecutingAssemblyPath()
+        {
+            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+            UriBuilder uri = new UriBuilder(codeBase);
+
+            return Path.GetDirectoryName(uri.Path);
         }
     }
 }

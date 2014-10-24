@@ -41,7 +41,7 @@ function ($, bcms, ko, modal, contentModule, redirect) {
         if (json.Data.ContentId || json.Data.Id) {
             contentViewModel.contentId = json.Data.ContentId || json.Data.Id;
         }
-        if (json.Data.DesirableStatus || json.Data.HasDraft) {
+        if (json.Data.DesirableStatus || typeof json.Data.HasDraft == "boolean") {
             contentViewModel.draft = json.Data.DesirableStatus == contentStatuses.draft || json.Data.HasDraft;
         }
         if (json.Data.Title || json.Data.WidgetName) {
@@ -67,6 +67,7 @@ function ($, bcms, ko, modal, contentModule, redirect) {
 
         setContentModelValues(model.model, json);
         model.title(model.model.title);
+        model.draft(model.model.draft);
 
         // Check if new regions where added
         regionModels = createRegionViewModels(json.Data.Regions, model.parentRegion.model.id, model.model.pageContentId);
@@ -183,6 +184,7 @@ function ($, bcms, ko, modal, contentModule, redirect) {
         model.isInvisible = contentModel.isInvisible;
         model.parentRegion = parentRegion;
         model.level(level);
+        model.draft(contentModel.draft);
 
         childRegions = contentModel.getChildRegions();
         level++;
@@ -307,6 +309,7 @@ function ($, bcms, ko, modal, contentModule, redirect) {
 
         self.isActive = ko.observable(false);
         self.level = ko.observable(0);
+        self.draft = ko.observable(false);
 
         self.isBeingDragged = ko.observable(false);
         self.isBeingDragged.subscribe(function (newValue) {
@@ -530,7 +533,7 @@ function ($, bcms, ko, modal, contentModule, redirect) {
                                             ? viewModel
                                             : treeViewModel.getItemById(id, allItems);
 
-                                    if (itemModel.type == treeItemTypes.content && itemModel.parentRegion == regionModelAfter) {
+                                    if (itemModel != null && itemModel.type == treeItemTypes.content && itemModel.parentRegion == regionModelAfter) {
                                         correctOrder.push(itemModel);
                                         if (!updateOrder && (!allItems[i] || itemModel.itemId != allItems[i].itemId)) {
                                             updateOrder = true;

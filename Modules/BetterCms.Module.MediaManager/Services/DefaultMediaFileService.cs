@@ -117,7 +117,8 @@ namespace BetterCms.Module.MediaManager.Services
             }
         }
 
-        public virtual MediaFile UploadFile(MediaType type, Guid rootFolderId, string fileName, long fileLength, Stream fileStream, bool isTemporary = true)
+        public virtual MediaFile UploadFile(MediaType type, Guid rootFolderId, string fileName, long fileLength, Stream fileStream, bool isTemporary = true, 
+            string title = "", string description = "")
         {
             string folderName = CreateRandomFolderName();
             MediaFile file = new MediaFile();
@@ -125,7 +126,11 @@ namespace BetterCms.Module.MediaManager.Services
             {
                 file.Folder = repository.AsProxy<MediaFolder>(rootFolderId);
             }
-            file.Title = Path.GetFileName(fileName);
+            file.Title = !string.IsNullOrEmpty(title) ? title : Path.GetFileName(fileName);
+            if (!string.IsNullOrEmpty(description))
+            {
+                file.Description = description;
+            }
             file.Type = type;
             file.OriginalFileName = fileName;
             file.OriginalFileExtension = Path.GetExtension(fileName);           
@@ -137,14 +142,14 @@ namespace BetterCms.Module.MediaManager.Services
             file.IsUploaded = null;
             if (configuration.Security.AccessControlEnabled)
             {
-                file.AddRule(new AccessRule() { AccessLevel = AccessLevel.ReadWrite, Identity = securityService.CurrentPrincipalName });
+                file.AddRule(new AccessRule { AccessLevel = AccessLevel.ReadWrite, Identity = securityService.CurrentPrincipalName });
             }
 
             unitOfWork.BeginTransaction();
             repository.Save(file);
             unitOfWork.Commit();
 
-            Task fileUploadTask = UploadMediaFileToStorage<MediaFile>(fileStream, file.FileUri, file.Id, media => { media.IsUploaded = true; }, media => { media.IsUploaded = false; }, false);
+            Task fileUploadTask = UploadMediaFileToStorageAsync<MediaFile>(fileStream, file.FileUri, file.Id, media => { media.IsUploaded = true; }, media => { media.IsUploaded = false; }, false);
             fileUploadTask.ContinueWith(
                 task =>
                     {
@@ -153,14 +158,94 @@ namespace BetterCms.Module.MediaManager.Services
                             session =>
                                 {
                                     var media = session.Get<MediaFile>(file.Id);
-                                    if (media.IsCanceled && media.IsUploaded.HasValue && media.IsUploaded.Value)
+                                    if (media != null)
                                     {
-                                        RemoveFile(media.Id, media.Version);
+                                        if (media.IsCanceled && media.IsUploaded.HasValue && media.IsUploaded.Value)
+                                        {
+                                            RemoveFile(media.Id, media.Version);
+                                        }
                                     }
                                 });
                     });
 
             fileUploadTask.Start();
+
+            return file;
+        }
+
+        public MediaFile UploadFileWithStream(
+            MediaType type,
+            Guid rootFolderId,
+            string fileName,
+            long fileLength,
+            Stream fileStream,
+            bool waitForUploadResult = false,
+            string title = "",
+            string description = "")
+        {
+            string folderName = CreateRandomFolderName();
+            MediaFile file = new MediaFile();
+            if (!rootFolderId.HasDefaultValue())
+            {
+                file.Folder = repository.AsProxy<MediaFolder>(rootFolderId);
+            }
+            file.Title = !string.IsNullOrEmpty(title) ? title : Path.GetFileName(fileName);
+            if (!string.IsNullOrEmpty(description))
+            {
+                file.Description = description;
+            }
+            file.Type = type;
+            file.OriginalFileName = fileName;
+            file.OriginalFileExtension = Path.GetExtension(fileName);
+            file.Size = fileLength;
+            file.FileUri = GetFileUri(type, folderName, fileName);
+            file.PublicUrl = GetPublicFileUrl(type, folderName, fileName);
+            file.IsTemporary = false;
+            file.IsCanceled = false;
+            file.IsUploaded = null;
+            if (configuration.Security.AccessControlEnabled)
+            {
+                file.AddRule(new AccessRule { AccessLevel = AccessLevel.ReadWrite, Identity = securityService.CurrentPrincipalName });
+            }
+
+            unitOfWork.BeginTransaction();
+            repository.Save(file);
+
+            if (!waitForUploadResult)
+            {
+                unitOfWork.Commit();
+            }
+
+            if (waitForUploadResult)
+            {
+                UploadMediaFileToStorageSync(fileStream, file.FileUri, file, media => { media.IsUploaded = true; }, media => { media.IsUploaded = false; }, false);
+
+                unitOfWork.Commit();
+                Events.MediaManagerEvents.Instance.OnMediaFileUpdated(file);
+            }
+            else
+            {
+                Task fileUploadTask = UploadMediaFileToStorageAsync<MediaFile>(fileStream, file.FileUri, file.Id, media => { media.IsUploaded = true; }, media => { media.IsUploaded = false; }, false);
+                fileUploadTask.ContinueWith(
+                    task =>
+                    {
+                        // During uploading progress Cancel action can by executed. Need to remove uploaded files from the storage.
+                        ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(
+                            session =>
+                            {
+                                var media = session.Get<MediaFile>(file.Id);
+                                if (media != null)
+                                {
+                                    if (media.IsCanceled && media.IsUploaded.HasValue && media.IsUploaded.Value)
+                                    {
+                                        RemoveFile(media.Id, media.Version);
+                                    }
+                                }
+                            });
+                    });
+
+                fileUploadTask.Start();
+            }
 
             return file;
         }
@@ -195,78 +280,116 @@ namespace BetterCms.Module.MediaManager.Services
             return HttpUtility.UrlDecode(absoluteUri);
         }
 
-        /// <summary>
-        /// Creates a task to upload a file to the storage.
-        /// </summary>
-        /// <typeparam name="TMedia">The type of the media.</typeparam>
-        /// <param name="sourceStream">The source stream.</param>
-        /// <param name="fileUri">The file URI.</param>
-        /// <param name="mediaId">The media id.</param>
-        /// <param name="updateMediaAfterUpload">An action to update a specific field for the media after file upload.</param>
-        /// <param name="updateMediaAfterFail">An action to update a specific field for the media after file upload fails.</param>
-        /// <param name="ignoreAccessControl">if set to <c>true</c> ignore access control.</param>
-        /// <returns>
-        /// Upload file task.
-        /// </returns>
-        public Task UploadMediaFileToStorage<TMedia>(Stream sourceStream, Uri fileUri, Guid mediaId, Action<TMedia> updateMediaAfterUpload, Action<TMedia> updateMediaAfterFail, bool ignoreAccessControl) where TMedia : MediaFile
+        public void UploadMediaFileToStorageSync<TMedia>(
+            Stream sourceStream,
+            Uri fileUri,
+            TMedia media,
+            Action<TMedia> updateMediaAfterUpload,
+            Action<TMedia> updateMediaAfterFail,
+            bool ignoreAccessControl) where TMedia : MediaFile
         {
+            using (var stream = new MemoryStream())
+            {
+                sourceStream.Seek(0, SeekOrigin.Begin);
+                sourceStream.CopyTo(stream);
+
+                try
+                {
+                    ExecuteFileUpload(fileUri, stream, ignoreAccessControl);
+                    updateMediaAfterUpload(media);
+                }
+                catch (Exception exc)
+                {
+                    updateMediaAfterFail(media);
+
+                    // Log exception
+                    LogManager.GetCurrentClassLogger().Error("Failed to upload file.",  exc);
+                }
+                finally
+                {
+                    stream.Close();
+                    stream.Dispose();
+                }
+            }
+        }
+
+        public Task UploadMediaFileToStorageAsync<TMedia>(Stream sourceStream,
+            Uri fileUri,
+            Guid mediaId,
+            Action<TMedia> updateMediaAfterUpload,
+            Action<TMedia> updateMediaAfterFail,
+            bool ignoreAccessControl)
+            where TMedia : MediaFile
+        {
+
             var stream = new MemoryStream();
 
             sourceStream.Seek(0, SeekOrigin.Begin);
             sourceStream.CopyTo(stream);
 
-            var task = new Task(
-                () =>
+            Action<ISession> failedResultAction = session =>
+            {
+                var media = session.Get<TMedia>(mediaId);
+                if (media != null)
                 {
-                    var upload = new UploadRequest();
-                    upload.CreateDirectory = true;
-                    upload.Uri = fileUri;
-                    upload.InputStream = stream;
-                    upload.IgnoreAccessControl = ignoreAccessControl;
+                    updateMediaAfterFail(media);
+                    session.SaveOrUpdate(media);
+                    session.Flush();
+                    Events.MediaManagerEvents.Instance.OnMediaFileUpdated(media);
+                }
+            };
 
-                    storageService.UploadObject(upload);
-                });
+            Action<ISession> completedAction = session =>
+            {
+                var media = session.Get<TMedia>(mediaId);
+                if (media != null)
+                {
+                    updateMediaAfterUpload(media);
+                    session.SaveOrUpdate(media);
+                    session.Flush();
+                    Events.MediaManagerEvents.Instance.OnMediaFileUpdated(media);
+                }
+            };
 
+            Action finalAction = () =>
+            {
+                stream.Close();
+                stream.Dispose();
+            };
+
+            var task = new Task(() => ExecuteFileUpload(fileUri, stream, ignoreAccessControl));
             task
              .ContinueWith(
                 t =>
                 {
                     if (t.Exception == null)
                     {
-                        ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(session =>
-                        {
-                            var media = session.Get<TMedia>(mediaId);
-                            updateMediaAfterUpload(media);
-                            session.SaveOrUpdate(media);
-                            session.Flush();
-                            Events.MediaManagerEvents.Instance.OnMediaFileUpdated(media);
-                        });
+                        ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(completedAction);
                     }
                     else
                     {
-                        ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(session =>
-                        {
-                            var media = session.Get<TMedia>(mediaId);
-                            updateMediaAfterFail(media);
-                            session.SaveOrUpdate(media);
-                            session.Flush();
-                            Events.MediaManagerEvents.Instance.OnMediaFileUpdated(media);
-                        });
+                        ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(failedResultAction);
 
                         // Log exception
                         LogManager.GetCurrentClassLogger().Error("Failed to upload file.", t.Exception.Flatten());
                     }
                 })
-             .ContinueWith(
-                t =>
-                {
-                    stream.Close();
-                    stream.Dispose();
-                });
+             .ContinueWith(t => finalAction());
 
             return task;
         }
-       
+
+        private void ExecuteFileUpload(Uri fileUri, Stream stream, bool ignoreAccessControl)
+        {
+            var upload = new UploadRequest();
+            upload.CreateDirectory = true;
+            upload.Uri = fileUri;
+            upload.InputStream = stream;
+            upload.IgnoreAccessControl = ignoreAccessControl;
+
+            storageService.UploadObject(upload);
+        }
+
         private void ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(Action<ISession> work)
         {
             using (var session = sessionFactoryProvider.OpenSession(false))
@@ -317,6 +440,13 @@ namespace BetterCms.Module.MediaManager.Services
             }
 
             return mediaFileUrlResolver.GetMediaFileFullUrl(id, fileUrl);
+        }
+
+        public void SaveMediaFile(MediaFile file)
+        {
+            unitOfWork.BeginTransaction();
+            repository.Save(file);
+            unitOfWork.Commit();
         }
     }
 }

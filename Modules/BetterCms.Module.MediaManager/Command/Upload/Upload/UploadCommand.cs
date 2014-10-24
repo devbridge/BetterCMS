@@ -49,7 +49,6 @@ namespace BetterCms.Module.MediaManager.Command.Upload.Upload
                     request.FileLength,
                     request.FileStream,
                     request.ReuploadMediaId,
-                    null,
                     request.ShouldOverride);
                 
                 Events.MediaManagerEvents.Instance.OnMediaFileUploaded(media);
