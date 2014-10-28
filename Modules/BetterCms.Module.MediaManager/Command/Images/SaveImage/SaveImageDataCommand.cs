@@ -50,7 +50,6 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
         {
             var mediaImage = Repository.First<MediaImage>(request.Id.ToGuidOrDefault());
 
-            mediaImage.PublishedOn = DateTime.Now;
             mediaImage.Caption = request.Caption;
             mediaImage.Title = request.Title;
             mediaImage.Description = request.Description;

@@ -374,7 +374,7 @@ namespace BetterCms.Module.MediaManager.Services
                 if (!overrideUrl)
                 {
                     var publicFileName = MediaImageHelper.CreateVersionedFileName(originalImage.OriginalFileName, GetVersion(originalImage));
-                    mediaImageVersionPathService.SetPathForNewOriginal(image, folderName, publicFileName, archivedImage.OriginalUri, archivedImage.PublicOriginallUrl);
+                    mediaImageVersionPathService.SetPathForNewOriginal(originalImage, folderName, publicFileName, archivedImage.OriginalUri, archivedImage.PublicOriginallUrl);
                 }
                 else
                 {
