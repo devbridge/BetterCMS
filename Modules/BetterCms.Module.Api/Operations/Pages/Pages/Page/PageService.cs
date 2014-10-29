@@ -208,6 +208,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
                         MainImageId = page.Image != null && !page.Image.IsDeleted ? page.Image.Id : (Guid?)null,
                         MainImageUrl = page.Image != null && !page.Image.IsDeleted ? page.Image.PublicUrl : null,
                         MainImageThumbnauilUrl = page.Image != null && !page.Image.IsDeleted ? page.Image.PublicThumbnailUrl : null,
+                        MainImageThumbnailUrl = page.Image != null && !page.Image.IsDeleted ? page.Image.PublicThumbnailUrl : null,
                         MainImageCaption = page.Image != null && !page.Image.IsDeleted ? page.Image.Caption : null,
                         IsArchived = page.IsArchived,
                         IsMasterPage = page.IsMasterPage,
@@ -219,6 +220,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
 
             model.MainImageUrl = fileUrlResolver.EnsureFullPathUrl(model.MainImageUrl);
             model.MainImageThumbnauilUrl = fileUrlResolver.EnsureFullPathUrl(model.MainImageThumbnauilUrl);
+            model.MainImageThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(model.MainImageThumbnailUrl);
 
             return new GetPageResponse { Data = model };
         }

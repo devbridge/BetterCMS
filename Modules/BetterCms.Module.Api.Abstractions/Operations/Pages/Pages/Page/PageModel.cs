@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
@@ -113,8 +114,18 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
         /// <value>
         /// The main image thumbnauil URL.
         /// </value>
+        [Obsolete]
         [DataMember]
         public string MainImageThumbnauilUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the main image thumbnail URL.
+        /// </summary>
+        /// <value>
+        /// The main image thumbnail URL.
+        /// </value>
+        [DataMember]
+        public string MainImageThumbnailUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the main image caption.

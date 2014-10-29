@@ -400,6 +400,7 @@ describe('pages.pages.api.behavior', function () {
                     { field: 'MainImageId', value: '389e059bcc6c4336a863a2070083436c' },
                     { field: 'MainImageUrl', value: 'http://bettercms.sandbox.mvc4.local.net/uploads/image/6173795ceadc4b619d68005ef57c9ca8/1_1.jpg' },
                     { field: 'MainImageThumbnauilUrl', value: 'http://bettercms.sandbox.mvc4.local.net/uploads/image/6173795ceadc4b619d68005ef57c9ca8/t_1_1.png' },
+                    { field: 'MainImageThumbnailUrl', value: 'http://bettercms.sandbox.mvc4.local.net/uploads/image/6173795ceadc4b619d68005ef57c9ca8/t_1_1.png' },
                     { field: 'MainImageCaption', value: '01011 caption' },
 
                     { field: 'SecondaryImageId', value: '5ae75858d0da418c9ed8a3b600d89294' },
@@ -939,6 +940,7 @@ describe('pages.pages.api.behavior', function () {
                     { field: 'MainImageId' },
                     { field: 'MainImageUrl' },
                     { field: 'MainImageThumbnauilUrl' },
+                    { field: 'MainImageThumbnailUrl' },
                     { field: 'MainImageCaption' },
 
                     { field: 'SecondaryImageId' },
@@ -1224,6 +1226,7 @@ describe('pages.pages.api.behavior', function () {
         expect(page.categoryName).toBe('Category for _0000_Page_For_Tests', 'Correctly filtered categoryName should be retrieved.');
         expect(page.mainImageId).toBeDefinedAndNotNull('mainImageId should be retrieved.');
         expect(page.mainImageThumbnauilUrl).toBeDefinedAndNotNull('mainImageThumbnailUrl should be retrieved.');
+        expect(page.mainImageThumbnailUrl).toBeDefinedAndNotNull('mainImageThumbnailUrl should be retrieved.');
         expect(page.mainImageCaption).toBe("Image for _0000_Page_For_Tests", 'Correctly filtered mainImageCaption should be retrieved.');
         expect(page.isArchived).toBe(true, 'Correctly filtered isArchived should be retrieved.');
         expect(page.isMasterPage).toBe(false, 'Correctly filtered isMasterPage should be retrieved.');
@@ -1245,6 +1248,7 @@ describe('pages.pages.api.behavior', function () {
         expect(page.categoryName).toBe('Category for _0000_Page_For_Tests', 'Correctly filtered categoryName should be retrieved.');
         expect(page.mainImageId).toBeDefinedAndNotNull('mainImageId should be retrieved.');
         expect(page.mainImageThumbnauilUrl).toBeDefinedAndNotNull('mainImageThumbnailUrl should be retrieved.');
+        expect(page.mainImageThumbnailUrl).toBeDefinedAndNotNull('mainImageThumbnailUrl should be retrieved.');
         expect(page.mainImageCaption).toBe("Image for _0000_Page_For_Tests", 'Correctly filtered mainImageCaption should be retrieved.');
         expect(page.isArchived).toBe(true, 'Correctly filtered isArchived should be retrieved.');
         expect(page.isMasterPage).toBe(false, 'Correctly filtered isMasterPage should be retrieved.');
