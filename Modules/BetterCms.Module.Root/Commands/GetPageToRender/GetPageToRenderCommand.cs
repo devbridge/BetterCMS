@@ -222,7 +222,6 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         {
             IQueryable<Page> query = (IQueryable<Page>)pageAccessor.GetPageQuery();
             query = query.Where(f => !f.IsDeleted);
-
             if (request.PageId == null)
             {
                 var requestUrl = request.PageUrl.UrlHash();
@@ -239,7 +238,15 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 query = query.Where(f => f.Status == PageStatus.Published);
             }
 
-            // Add fetched entities.
+            var page = GetPageQueryNew(query);
+            
+            pageAccessor.CachePage(page);
+
+            return page;
+        }
+
+        private Page GetPageQueryOld(IQueryable<Page> query)
+        {
             query = query
                 .FetchMany(f => f.Options)
                 .Fetch(f => f.PagesView)
@@ -249,7 +256,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 .ThenFetch(f => f.Region)
                 .Fetch(f => f.Layout)
                 .ThenFetchMany(f => f.LayoutOptions)
-                
+
                 // Fetch master page with reference to master page
                 .FetchMany(f => f.MasterPages)
                 .ThenFetch(f => f.Master)
@@ -278,9 +285,115 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             }
 
             var page = query.ToList().FirstOrDefault();
-            pageAccessor.CachePage(page);
+            return page;
+        }
+
+        private Page GetPageQueryNew(IQueryable<Page> query)
+        {
+            var pageFutureQuery = query.Fetch(f => f.MasterPage)
+                .FetchMany(f => f.MasterPages)
+                .ThenFetch(f => f.Master).ToFuture();
+
+            var page = pageFutureQuery.ToList().FirstOrDefault();
+
+            if (page != null)
+            {
+                var pagesIds = GetPageIds(page);
+                var layoutsIds = GetLayoutIds(page);
+
+                page.Options.ForEach(Repository.Detach);
+                Repository.Detach(page.PagesView);
+                Repository.Detach(page.Layout);
+
+                // Pages options
+                var options = Repository.AsQueryable<PageOption>().
+                    Where(i => pagesIds.Contains(i.Page.Id)).ToFuture().ToList();
+
+                // Pages views
+                var pageViews = Repository.AsQueryable<PagesView>()
+                    .Where(i => pagesIds.Contains(i.Page.Id)).ToFuture().ToList();
+                
+                // Layouts
+                var layouts = Repository.AsQueryable<Layout>()
+                    .Where(i => layoutsIds.Contains(i.Id))
+                    .FetchMany(i => i.LayoutRegions)
+                    .ThenFetch(i => i.Region).ToFuture().ToList();
+                layouts.ForEach(Repository.Detach);
+                var layoutOptions = Repository.AsQueryable<LayoutOption>()
+                    .Where(i => layoutsIds.Contains(i.Layout.Id)).ToFuture().ToList();
+                layouts.ForEach(l => l.LayoutOptions = layoutOptions.Where(lo => lo.Layout.Id == l.Id).ToList());
+
+                page = SetPageData(page, options, pageViews, layouts);
+
+                return page;
+            }
+
+            return null;
+        }
+
+        private Page SetPageData(Page page, List<PageOption> options,
+            List<PagesView> pagesViews, List<Layout> layouts)
+        {
+            page.Options = options.Where(i => i.Page.Id == page.Id).ToList();
+            page.PagesView = pagesViews.FirstOrDefault(i => i.Page.Id == page.Id);
+            if (page.Layout != null)
+            {
+                page.Layout = layouts.FirstOrDefault(i => i.Id == page.Layout.Id);
+            }
+
+            foreach (var masterPage in page.MasterPages)
+            {
+                masterPage.Master.Options.ForEach(Repository.Detach);
+                Repository.Detach(masterPage.Master.PagesView);
+
+                masterPage.Master.Options = options.Where(i => i.Page.Id == masterPage.Master.Id).ToList();
+                masterPage.Master.PagesView = pagesViews.FirstOrDefault(i => i.Page.Id == masterPage.Master.Id);
+                if (masterPage.Master.Layout != null)
+                {
+                    masterPage.Master.Layout = layouts.FirstOrDefault(i => i.Id == masterPage.Master.Layout.Id);
+                }
+            }
+
+            if (page.MasterPage != null)
+            {
+                page.MasterPage.Options = options.Where(i => i.Page.Id == page.MasterPage.Id).ToList();
+                page.MasterPage.PagesView = pagesViews.FirstOrDefault(i => i.Page.Id == page.MasterPage.Id);
+                if (page.MasterPage.Layout != null)
+                {
+                    page.MasterPage.Layout = layouts.FirstOrDefault(i => i.Id == page.MasterPage.Layout.Id);
+                }
+            }
 
             return page;
+        }
+
+        private List<Guid> GetPageIds(Page page)
+        {
+            var pagesIds = new List<Guid> { page.Id };
+            foreach (var masterPage in page.MasterPages)
+            {
+                pagesIds.Add(masterPage.Master.Id);
+            }
+            
+            return pagesIds.Distinct().ToList();
+        }
+
+        private List<Guid> GetLayoutIds(Page page)
+        {
+            var layoutIds = new List<Guid>();
+            if (page.Layout != null)
+            {
+                layoutIds.Add(page.Layout.Id);
+            }
+            foreach (var masterPage in page.MasterPages)
+            {
+                if (masterPage.Master.Layout != null)
+                {
+                    layoutIds.Add(masterPage.Master.Layout.Id);
+                }
+            }
+            
+            return layoutIds.Distinct().ToList();
         }
 
         /// <summary>
@@ -310,6 +423,17 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             pageContentsQuery = pageContentsQuery.Where(f => !f.IsDeleted && !f.Content.IsDeleted && !f.Page.IsDeleted);
 
+            var pageContents = GetPageContentsQueryNew(pageContentsQuery, request);
+
+            childContentService.RetrieveChildrenContentsRecursively(request.CanManageContent, pageContents.Select(pc => pc.Content).Distinct().ToList());
+
+            return pageContents;
+        }
+
+        private List<PageContent> GetPageContentsQueryOld(IQueryable<PageContent> pageContentsQuery, GetPageToRenderRequest request)
+        {
+            pageContentsQuery = pageContentsQuery.Where(f => !f.IsDeleted && !f.Content.IsDeleted && !f.Page.IsDeleted);
+
             pageContentsQuery = pageContentsQuery
                 .Fetch(f => f.Content)
                 .ThenFetchMany(f => f.ContentOptions)
@@ -334,7 +458,72 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             var pageContents = pageContentsQuery.ToList();
 
-            childContentService.RetrieveChildrenContentsRecursively(request.CanManageContent, pageContents.Select(pc => pc.Content).Distinct().ToList());
+            return pageContents;
+        }
+
+        private List<PageContent> GetPageContentsQueryNew(IQueryable<PageContent> pageContentsQuery, GetPageToRenderRequest request)
+        {
+            var pageContents = pageContentsQuery.ToFuture().ToList();
+            var contentsIds = pageContents.Where(i => i.Content != null).Select(i => i.Content.Id).Distinct().ToList();
+            var pageContentsIds = pageContents.Select(i => i.Id).Distinct().ToList();
+
+            foreach (var pageContent in pageContents)
+            {
+                pageContent.Options.ForEach(Repository.Detach);
+                Repository.Detach(pageContent.Content);
+            }
+
+            var pageContentOptions = Repository.AsQueryable<PageContentOption>()
+                .Where(i => pageContentsIds.Contains(i.PageContent.Id)).ToFuture().ToList();
+
+            var contents = Repository.AsQueryable<Models.Content>()
+                .Where(i => contentsIds.Contains(i.Id)).ToFuture().ToList();
+
+            foreach (var content in contents)
+            {
+                content.ContentOptions.ForEach(Repository.Detach);
+                content.ContentRegions.ForEach(Repository.Detach);
+                content.ChildContents.ForEach(Repository.Detach);
+                content.History.ForEach(Repository.Detach);
+            }
+
+            var contentOptions = Repository.AsQueryable<ContentOption>()
+                .Where(i => contentsIds.Contains(i.Content.Id)).ToFuture().ToList();
+
+            var contentRegions = Repository.AsQueryable<ContentRegion>()
+                .Where(i => contentsIds.Contains(i.Content.Id))
+                .Fetch(i => i.Region).ToFuture().ToList();
+
+            var childContents = Repository.AsQueryable<ChildContent>()
+                .Where(i => contentsIds.Contains(i.Parent.Id)).ToFuture().ToList();
+
+            List<Models.Content> contentHistories = new List<Models.Content>();
+            if (request.CanManageContent || request.PreviewPageContentId != null)
+            {
+                contentHistories =
+                    Repository.AsQueryable<Models.Content>()
+                    .Where(i => contentsIds.Contains(i.Original.Id))
+                    .FetchMany(i => i.ChildContents).ToFuture().ToList();
+            }
+
+            // Fill contents data
+            foreach (var content in contents)
+            {
+                content.ContentOptions = contentOptions.Where(i => i.Content.Id == content.Id).ToList();
+                content.ContentRegions = contentRegions.Where(i => i.Content.Id == content.Id).ToList();
+                content.ChildContents = childContents.Where(i => i.Parent.Id == content.Id).ToList();
+                if (request.CanManageContent || request.PreviewPageContentId != null)
+                {
+                    content.History = contentHistories.Where(i => i.Original.Id == content.Id).ToList();
+                }
+            }
+
+            // Fill page content data
+            foreach (var pageContent in pageContents)
+            {
+                pageContent.Options = pageContentOptions.Where(i => i.PageContent.Id == pageContent.Id).ToList();
+                pageContent.Content = contents.FirstOrDefault(i => i.Id == pageContent.Content.Id);
+            }
 
             return pageContents;
         }

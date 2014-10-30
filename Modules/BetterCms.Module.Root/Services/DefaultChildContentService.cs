@@ -12,6 +12,7 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 
 using NHibernate.Criterion;
+using NHibernate.Linq;
 
 namespace BetterCms.Module.Root.Services
 {
@@ -151,7 +152,7 @@ namespace BetterCms.Module.Root.Services
         /// <param name="references">The references.</param>
         /// <param name="children">The children: list of Tuple, where Item1: Parent, Item2: Childs.</param>
         /// <returns></returns>
-        private List<Guid> PopulateReferencesList(List<Guid> references, IEnumerable<Tuple<Guid, Guid, string>> children)
+        private List<Guid> PopulateReferencesList(List<Guid> references, IEnumerable<System.Tuple<Guid, Guid, string>> children)
         {
             var childrenIds = new List<Guid>();
 
@@ -203,7 +204,7 @@ namespace BetterCms.Module.Root.Services
                 var references = new List<Guid>();
                 var childrenIds = PopulateReferencesList(
                     references,
-                    destinationChildren.Select(s => new Tuple<Guid, Guid, string>(destination.Id, s.Child.Id, s.Child.Name)));
+                    destinationChildren.Select(s => new System.Tuple<Guid, Guid, string>(destination.Id, s.Child.Id, s.Child.Name)));
 
                 ValidateChildContentsCircularReferences(childrenIds, references);
             }
@@ -222,7 +223,7 @@ namespace BetterCms.Module.Root.Services
                 .Select(cc => new { ParentId = cc.Parent.Id, ChildId = cc.Child.Id, Name = cc.Child.Name })
                 .ToList()
                 .Distinct()
-                .Select(cc => new Tuple<Guid, Guid, string>(cc.ParentId, cc.ChildId, cc.Name));
+                .Select(cc => new System.Tuple<Guid, Guid, string>(cc.ParentId, cc.ChildId, cc.Name));
 
             var circularReference = children.FirstOrDefault(c => !references.Contains(c.Item1) && references.Contains(c.Item2));
             if (circularReference != null)
@@ -252,7 +253,7 @@ namespace BetterCms.Module.Root.Services
             if (contentIdsToRetrieve.Any())
             {
                 // Load child contents
-                var childContents = GetChildContents(contentIdsToRetrieve, canManageContent);
+                var childContents = GetChildContentsNew(contentIdsToRetrieve, canManageContent);
 
                 // Add parents without children to the dictionary
                 contentIdsToRetrieve
@@ -326,6 +327,54 @@ namespace BetterCms.Module.Root.Services
 
 
             return query.List<ChildContent>();
+        }
+
+        private IList<ChildContent> GetChildContentsNew(IEnumerable<Guid> ids, bool canManageContent)
+        {
+            var childContents = repository.AsQueryable<ChildContent>()
+                .Where(i => ids.Contains(i.Parent.Id) && !i.IsDeleted)
+                .Fetch(i => i.Child).ToFuture().ToList();
+
+            var childIds = childContents.Select(i => i.Child.Id).Distinct().ToList();
+
+            foreach (var childContent in childContents)
+            {
+                childContent.Child.ContentOptions.ForEach(repository.Detach);
+                childContent.Child.ContentRegions.ForEach(repository.Detach);
+                childContent.Child.ChildContents.ForEach(repository.Detach);
+            }
+
+            var contentOptions = repository.AsQueryable<ContentOption>()
+                .Where(i => childIds.Contains(i.Content.Id)).ToFuture().ToList();
+
+            var contentRegions = repository.AsQueryable<ContentRegion>()
+                .Where(i => childIds.Contains(i.Content.Id))
+                .Fetch(i => i.Region).ToFuture().ToList();
+
+            var childChildContents = repository.AsQueryable<ChildContent>()
+                .Where(i => childIds.Contains(i.Parent.Id)).ToFuture().ToList();
+
+            foreach (var childContent in childContents)
+            {
+                childContent.Child.ContentOptions = contentOptions.Where(i => i.Content.Id == childContent.Child.Id).ToList();
+                childContent.Child.ContentRegions = contentRegions.Where(i => i.Content.Id == childContent.Child.Id).ToList();
+                childContent.Child.ChildContents = childChildContents.Where(i => i.Parent.Id == childContent.Child.Id).ToList();
+            }
+
+            if (canManageContent)
+            {
+                var histories = repository.AsQueryable<Models.Content>()
+                    .Where(i => childIds.Contains(i.Original.Id))
+                    .FetchMany(i => i.ChildContents)
+                    .ThenFetch(i => i.Child).ToFuture().ToList();
+
+                foreach (var childContent in childContents)
+                {
+                    childContent.Child.History = histories.Where(i => i.Original.Id == childContent.Child.Id).ToList();
+                }
+            }
+
+            return childContents;
         }
 
         public void RetrieveChildrenContentsRecursively(bool canManageContent, IEnumerable<Models.Content> contents)
