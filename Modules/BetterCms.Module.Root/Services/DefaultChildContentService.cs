@@ -253,7 +253,7 @@ namespace BetterCms.Module.Root.Services
             if (contentIdsToRetrieve.Any())
             {
                 // Load child contents
-                var childContents = GetChildContentsNew(contentIdsToRetrieve, canManageContent);
+                var childContents = GetChildContents(contentIdsToRetrieve, canManageContent);
 
                 // Add parents without children to the dictionary
                 contentIdsToRetrieve
@@ -287,53 +287,11 @@ namespace BetterCms.Module.Root.Services
             return dictionary;
         }
 
-        private IList<ChildContent> GetChildContents(Guid[] ids, bool canManageContent)
-        {
-            ChildContent ccAlias = null;
-            ChildContentOption ccOptionAlias = null;
-            Models.Content childAlias = null;
-            ContentOption cOptionAlias = null;
-            ContentRegion cRegionAlias = null;
-            Region regionAlias = null;
-
-            ChildContent ccAlias1 = null;
-            Models.Content ccChildAlias = null;
-            Models.Content historyAlias = null;
-            ChildContent historyCcAlias = null;
-            Models.Content historyChildAlias = null;
-
-            var query = repository
-                .AsQueryOver(() => ccAlias)
-                .Where(Restrictions.In(NHibernate.Criterion.Projections.Property(() => ccAlias.Parent.Id), ids))
-                .And(() => !ccAlias.IsDeleted)
-                .Inner.JoinAlias(() => ccAlias.Child, () => childAlias)
-                .Where(() => !childAlias.IsDeleted)
-                .Left.JoinAlias(() => childAlias.ContentOptions, () => cOptionAlias)
-                .Left.JoinAlias(() => ccAlias.Options, () => ccOptionAlias)
-
-                .Left.JoinAlias(() => childAlias.ContentRegions, () => cRegionAlias)
-                .Left.JoinAlias(() => cRegionAlias.Region, () => regionAlias)
-
-                .Left.JoinAlias(() => childAlias.ChildContents, () => ccAlias1)
-                .Left.JoinAlias(() => ccAlias1.Child, () => ccChildAlias);
-
-            if (canManageContent)
-            {
-                query = query
-                    .Left.JoinAlias(() => childAlias.History, () => historyAlias)
-                    .Left.JoinAlias(() => historyAlias.ChildContents, () => historyCcAlias)
-                    .Left.JoinAlias(() => historyCcAlias.Child, () => historyChildAlias);
-            }
-
-
-            return query.List<ChildContent>();
-        }
-
-        private IList<ChildContent> GetChildContentsNew(IEnumerable<Guid> ids, bool canManageContent)
+        private IList<ChildContent> GetChildContents(IEnumerable<Guid> ids, bool canManageContent)
         {
             var childContents = repository.AsQueryable<ChildContent>()
                 .Where(i => ids.Contains(i.Parent.Id) && !i.IsDeleted)
-                .Fetch(i => i.Child).ToFuture().ToList();
+                .Fetch(i => i.Child).ToList();
 
             var childIds = childContents.Select(i => i.Child.Id).Distinct().ToList();
 
@@ -345,11 +303,20 @@ namespace BetterCms.Module.Root.Services
             }
 
             var contentOptions = repository.AsQueryable<ContentOption>()
-                .Where(i => childIds.Contains(i.Content.Id)).ToFuture().ToList();
+                .Where(i => childIds.Contains(i.Content.Id)).ToFuture();
 
             var contentRegions = repository.AsQueryable<ContentRegion>()
                 .Where(i => childIds.Contains(i.Content.Id))
-                .Fetch(i => i.Region).ToFuture().ToList();
+                .Fetch(i => i.Region).ToFuture();
+
+            IEnumerable<Models.Content> histories = new List<Models.Content>();
+            if (canManageContent)
+            {
+                histories = repository.AsQueryable<Models.Content>()
+                    .Where(i => childIds.Contains(i.Original.Id))
+                    .FetchMany(i => i.ChildContents)
+                    .ThenFetch(i => i.Child).ToFuture();
+            }
 
             var childChildContents = repository.AsQueryable<ChildContent>()
                 .Where(i => childIds.Contains(i.Parent.Id)).ToFuture().ToList();
@@ -359,16 +326,7 @@ namespace BetterCms.Module.Root.Services
                 childContent.Child.ContentOptions = contentOptions.Where(i => i.Content.Id == childContent.Child.Id).ToList();
                 childContent.Child.ContentRegions = contentRegions.Where(i => i.Content.Id == childContent.Child.Id).ToList();
                 childContent.Child.ChildContents = childChildContents.Where(i => i.Parent.Id == childContent.Child.Id).ToList();
-            }
-
-            if (canManageContent)
-            {
-                var histories = repository.AsQueryable<Models.Content>()
-                    .Where(i => childIds.Contains(i.Original.Id))
-                    .FetchMany(i => i.ChildContents)
-                    .ThenFetch(i => i.Child).ToFuture().ToList();
-
-                foreach (var childContent in childContents)
+                if (canManageContent)
                 {
                     childContent.Child.History = histories.Where(i => i.Original.Id == childContent.Child.Id).ToList();
                 }

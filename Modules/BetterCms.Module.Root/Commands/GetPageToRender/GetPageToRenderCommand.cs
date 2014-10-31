@@ -238,63 +238,18 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 query = query.Where(f => f.Status == PageStatus.Published);
             }
 
-            var page = GetPageQueryNew(query);
+            var page = CollectPageData(query);
             
             pageAccessor.CachePage(page);
 
             return page;
         }
 
-        private Page GetPageQueryOld(IQueryable<Page> query)
+        private Page CollectPageData(IQueryable<Page> query)
         {
-            query = query
-                .FetchMany(f => f.Options)
-                .Fetch(f => f.PagesView)
-                .Fetch(f => f.MasterPage)
-                .Fetch(f => f.Layout)
-                .ThenFetchMany(f => f.LayoutRegions)
-                .ThenFetch(f => f.Region)
-                .Fetch(f => f.Layout)
-                .ThenFetchMany(f => f.LayoutOptions)
-
-                // Fetch master page with reference to master page
+            var page = query.Fetch(f => f.MasterPage)
                 .FetchMany(f => f.MasterPages)
-                .ThenFetch(f => f.Master)
-                .ThenFetchMany(f => f.AccessRules)
-
-                .FetchMany(f => f.MasterPages)
-                .ThenFetch(f => f.Master)
-                .ThenFetchMany(f => f.Options)
-
-                // Fetch master page with reference to layout with it's regions and options
-                .FetchMany(f => f.MasterPages)
-                .ThenFetch(f => f.Master)
-                .ThenFetch(f => f.Layout)
-                .ThenFetchMany(f => f.LayoutRegions)
-                .ThenFetch(f => f.Region)
-
-                .FetchMany(f => f.MasterPages)
-                .ThenFetch(f => f.Master)
-                .ThenFetch(f => f.Layout)
-                .ThenFetchMany(f => f.LayoutOptions);
-
-            // Add access rules if access control is enabled.
-            if (cmsConfiguration.Security.AccessControlEnabled)
-            {
-                query = query.FetchMany(f => f.AccessRules);
-            }
-
-            var page = query.ToList().FirstOrDefault();
-            return page;
-        }
-
-        private Page GetPageQueryNew(IQueryable<Page> query)
-        {
-            var pageFutureQuery = query.Fetch(f => f.MasterPage)
-                .FetchMany(f => f.MasterPages)
-                .ThenFetch(f => f.Master).ToFuture();
-
-            var page = pageFutureQuery.ToList().FirstOrDefault();
+                .ThenFetch(f => f.Master).ToList().FirstOrDefault();
 
             if (page != null)
             {
@@ -307,20 +262,22 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
                 // Pages options
                 var options = Repository.AsQueryable<PageOption>().
-                    Where(i => pagesIds.Contains(i.Page.Id)).ToFuture().ToList();
+                    Where(i => pagesIds.Contains(i.Page.Id)).ToFuture();
 
                 // Pages views
                 var pageViews = Repository.AsQueryable<PagesView>()
-                    .Where(i => pagesIds.Contains(i.Page.Id)).ToFuture().ToList();
+                    .Where(i => pagesIds.Contains(i.Page.Id)).ToFuture();
                 
                 // Layouts
-                var layouts = Repository.AsQueryable<Layout>()
+                var layoutsQuery = Repository.AsQueryable<Layout>()
                     .Where(i => layoutsIds.Contains(i.Id))
                     .FetchMany(i => i.LayoutRegions)
-                    .ThenFetch(i => i.Region).ToFuture().ToList();
-                layouts.ForEach(Repository.Detach);
+                    .ThenFetch(i => i.Region).ToFuture();
                 var layoutOptions = Repository.AsQueryable<LayoutOption>()
-                    .Where(i => layoutsIds.Contains(i.Layout.Id)).ToFuture().ToList();
+                    .Where(i => layoutsIds.Contains(i.Layout.Id)).ToFuture();
+
+                var layouts = layoutsQuery.ToList();
+                layouts.ToList().ForEach(Repository.Detach);
                 layouts.ForEach(l => l.LayoutOptions = layoutOptions.Where(lo => lo.Layout.Id == l.Id).ToList());
 
                 page = SetPageData(page, options, pageViews, layouts);
@@ -331,8 +288,8 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             return null;
         }
 
-        private Page SetPageData(Page page, List<PageOption> options,
-            List<PagesView> pagesViews, List<Layout> layouts)
+        private Page SetPageData(Page page, IEnumerable<PageOption> options,
+            IEnumerable<PagesView> pagesViews, IEnumerable<Layout> layouts)
         {
             page.Options = options.Where(i => i.Page.Id == page.Id).ToList();
             page.PagesView = pagesViews.FirstOrDefault(i => i.Page.Id == page.Id);
@@ -423,47 +380,16 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             pageContentsQuery = pageContentsQuery.Where(f => !f.IsDeleted && !f.Content.IsDeleted && !f.Page.IsDeleted);
 
-            var pageContents = GetPageContentsQueryNew(pageContentsQuery, request);
+            var pageContents = CollectPageContentsData(pageContentsQuery, request);
 
             childContentService.RetrieveChildrenContentsRecursively(request.CanManageContent, pageContents.Select(pc => pc.Content).Distinct().ToList());
 
             return pageContents;
         }
 
-        private List<PageContent> GetPageContentsQueryOld(IQueryable<PageContent> pageContentsQuery, GetPageToRenderRequest request)
+        private List<PageContent> CollectPageContentsData(IEnumerable<PageContent> pageContentsQuery, GetPageToRenderRequest request)
         {
-            pageContentsQuery = pageContentsQuery.Where(f => !f.IsDeleted && !f.Content.IsDeleted && !f.Page.IsDeleted);
-
-            pageContentsQuery = pageContentsQuery
-                .Fetch(f => f.Content)
-                .ThenFetchMany(f => f.ContentOptions)
-
-                .FetchMany(f => f.Options)
-
-                .Fetch(f => f.Content)
-                .ThenFetchMany(f => f.ContentRegions)
-                .ThenFetch(f => f.Region)
-
-                // Fetch child contents
-                .Fetch(f => f.Content)
-                .ThenFetchMany(f => f.ChildContents);
-
-            if (request.CanManageContent || request.PreviewPageContentId != null)
-            {
-                pageContentsQuery = pageContentsQuery
-                    .Fetch(f => f.Content)
-                    .ThenFetchMany(f => f.History)
-                    .ThenFetchMany(f => f.ChildContents);
-            }
-
             var pageContents = pageContentsQuery.ToList();
-
-            return pageContents;
-        }
-
-        private List<PageContent> GetPageContentsQueryNew(IQueryable<PageContent> pageContentsQuery, GetPageToRenderRequest request)
-        {
-            var pageContents = pageContentsQuery.ToFuture().ToList();
             var contentsIds = pageContents.Where(i => i.Content != null).Select(i => i.Content.Id).Distinct().ToList();
             var pageContentsIds = pageContents.Select(i => i.Id).Distinct().ToList();
 
@@ -474,10 +400,29 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             }
 
             var pageContentOptions = Repository.AsQueryable<PageContentOption>()
-                .Where(i => pageContentsIds.Contains(i.PageContent.Id)).ToFuture().ToList();
+                .Where(i => pageContentsIds.Contains(i.PageContent.Id)).ToFuture();
 
             var contents = Repository.AsQueryable<Models.Content>()
-                .Where(i => contentsIds.Contains(i.Id)).ToFuture().ToList();
+                .Where(i => contentsIds.Contains(i.Id)).ToFuture();
+
+            var contentOptions = Repository.AsQueryable<ContentOption>()
+                .Where(i => contentsIds.Contains(i.Content.Id)).ToFuture();
+
+            var contentRegions = Repository.AsQueryable<ContentRegion>()
+                .Where(i => contentsIds.Contains(i.Content.Id))
+                .Fetch(i => i.Region).ToFuture();
+
+            IEnumerable<Models.Content> contentHistories = new List<Models.Content>();
+            if (request.CanManageContent || request.PreviewPageContentId != null)
+            {
+                contentHistories =
+                    Repository.AsQueryable<Models.Content>()
+                    .Where(i => contentsIds.Contains(i.Original.Id))
+                    .FetchMany(i => i.ChildContents).ToFuture();
+            }
+
+            var childContents = Repository.AsQueryable<ChildContent>()
+                .Where(i => contentsIds.Contains(i.Parent.Id)).ToFuture().ToList();
 
             foreach (var content in contents)
             {
@@ -485,25 +430,6 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 content.ContentRegions.ForEach(Repository.Detach);
                 content.ChildContents.ForEach(Repository.Detach);
                 content.History.ForEach(Repository.Detach);
-            }
-
-            var contentOptions = Repository.AsQueryable<ContentOption>()
-                .Where(i => contentsIds.Contains(i.Content.Id)).ToFuture().ToList();
-
-            var contentRegions = Repository.AsQueryable<ContentRegion>()
-                .Where(i => contentsIds.Contains(i.Content.Id))
-                .Fetch(i => i.Region).ToFuture().ToList();
-
-            var childContents = Repository.AsQueryable<ChildContent>()
-                .Where(i => contentsIds.Contains(i.Parent.Id)).ToFuture().ToList();
-
-            List<Models.Content> contentHistories = new List<Models.Content>();
-            if (request.CanManageContent || request.PreviewPageContentId != null)
-            {
-                contentHistories =
-                    Repository.AsQueryable<Models.Content>()
-                    .Where(i => contentsIds.Contains(i.Original.Id))
-                    .FetchMany(i => i.ChildContents).ToFuture().ToList();
             }
 
             // Fill contents data
