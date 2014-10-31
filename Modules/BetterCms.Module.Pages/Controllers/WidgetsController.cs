@@ -180,6 +180,8 @@ namespace BetterCms.Module.Pages.Controllers
         {
             ValidateModelExplicilty(request.Content);
 
+            CheckUrlForPreCompiled(request.Content.Url, PagesGlobalization.SaveWidget_VirtualPathNotExists_Message);
+
             if (ModelState.IsValid)
             {
                 var response = GetCommand<SaveServerControlWidgetCommand>().ExecuteCommand(request);

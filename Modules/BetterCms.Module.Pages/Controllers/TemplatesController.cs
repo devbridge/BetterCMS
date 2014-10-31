@@ -81,6 +81,8 @@ namespace BetterCms.Module.Pages.Controllers
         [HttpPost]
         public ActionResult RegisterTemplate(TemplateEditViewModel model)
         {
+            CheckUrlForPreCompiled(model.Url, PagesGlobalization.SaveTemplate_VirtualPathNotExists_Message);
+
             if (ModelState.IsValid)
             {
                 if (model.Regions != null && model.Regions.GroupBy(r => r.Identifier).SelectMany(g => g.Skip(1)).Any())

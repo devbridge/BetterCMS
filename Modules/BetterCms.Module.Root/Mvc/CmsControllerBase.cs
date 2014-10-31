@@ -291,6 +291,18 @@ namespace BetterCms.Module.Root.Mvc
             }
         }
 
+        protected void CheckUrlForPreCompiled(string url, string errorMessage)
+        {
+            var pathExistenceError = ModelState["Url"].Errors.FirstOrDefault(e => e.ErrorMessage.Equals(string.Format(errorMessage, url)));
+            if (pathExistenceError != null)
+            {
+                if (ViewEngines.Engines.FindView(this.ControllerContext, url, string.Empty).View != null)
+                {
+                    ModelState["Url"].Errors.Remove(pathExistenceError);
+                }
+            }
+        }
+
         /// <summary>
         /// Updates the model state errors.
         /// </summary>
