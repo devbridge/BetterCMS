@@ -297,9 +297,9 @@ namespace BetterCms.Module.Root.Services
 
             foreach (var childContent in childContents)
             {
-                childContent.Child.ContentOptions.ForEach(repository.Detach);
-                childContent.Child.ContentRegions.ForEach(repository.Detach);
-                childContent.Child.ChildContents.ForEach(repository.Detach);
+                childContent.Child.ContentOptions = new List<ContentOption>();
+                childContent.Child.ContentRegions = new List<ContentRegion>();
+                childContent.Child.ChildContents = new List<ChildContent>();
             }
 
             var contentOptions = repository.AsQueryable<ContentOption>()
@@ -313,7 +313,7 @@ namespace BetterCms.Module.Root.Services
             if (canManageContent)
             {
                 histories = repository.AsQueryable<Models.Content>()
-                    .Where(i => childIds.Contains(i.Original.Id))
+                    .Where(i => childIds.Contains(i.Original.Id) && i.Status != ContentStatus.Archived)
                     .FetchMany(i => i.ChildContents)
                     .ThenFetch(i => i.Child).ToFuture();
             }
@@ -321,18 +321,26 @@ namespace BetterCms.Module.Root.Services
             var childChildContents = repository.AsQueryable<ChildContent>()
                 .Where(i => childIds.Contains(i.Parent.Id)).ToFuture().ToList();
 
+            SetChildContentData(childContents, contentOptions.ToList(), contentRegions.ToList(),
+                childChildContents, histories.ToList());
+
+            return childContents;
+        }
+
+        private void SetChildContentData(List<ChildContent> childContents, List<ContentOption> contentOptions,
+            List<ContentRegion> contentRegions, List<ChildContent> childChildContents,
+            List<Models.Content> histories)
+        {
             foreach (var childContent in childContents)
             {
                 childContent.Child.ContentOptions = contentOptions.Where(i => i.Content.Id == childContent.Child.Id).ToList();
                 childContent.Child.ContentRegions = contentRegions.Where(i => i.Content.Id == childContent.Child.Id).ToList();
                 childContent.Child.ChildContents = childChildContents.Where(i => i.Parent.Id == childContent.Child.Id).ToList();
-                if (canManageContent)
+                if (histories.Count > 0)
                 {
                     childContent.Child.History = histories.Where(i => i.Original.Id == childContent.Child.Id).ToList();
                 }
             }
-
-            return childContents;
         }
 
         public void RetrieveChildrenContentsRecursively(bool canManageContent, IEnumerable<Models.Content> contents)

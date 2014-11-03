@@ -427,15 +427,11 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             foreach (var pageContent in pageContents)
             {
-                pageContent.Options.ForEach(Repository.Detach);
-                Repository.Detach(pageContent.Content);
+                pageContent.Options = new List<PageContentOption>();
             }
 
             var pageContentOptions = Repository.AsQueryable<PageContentOption>()
                 .Where(i => pageContentsIds.Contains(i.PageContent.Id)).ToFuture();
-
-            var contents = Repository.AsQueryable<Models.Content>()
-                .Where(i => contentsIds.Contains(i.Id)).ToFuture();
 
             var contentOptions = Repository.AsQueryable<ContentOption>()
                 .Where(i => contentsIds.Contains(i.Content.Id)).ToFuture();
@@ -449,41 +445,62 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             {
                 contentHistories =
                     Repository.AsQueryable<Models.Content>()
-                    .Where(i => contentsIds.Contains(i.Original.Id))
+                    .Where(i => contentsIds.Contains(i.Original.Id) && i.Status != ContentStatus.Archived)
                     .FetchMany(i => i.ChildContents).ToFuture();
             }
 
             var childContents = Repository.AsQueryable<ChildContent>()
-                .Where(i => contentsIds.Contains(i.Parent.Id)).ToFuture().ToList();
+                .Where(i => contentsIds.Contains(i.Parent.Id)).ToFuture();
 
-            foreach (var content in contents)
-            {
-                content.ContentOptions.ForEach(Repository.Detach);
-                content.ContentRegions.ForEach(Repository.Detach);
-                content.ChildContents.ForEach(Repository.Detach);
-                content.History.ForEach(Repository.Detach);
-            }
+            var contents = Repository.AsQueryable<Models.Content>()
+                .Where(i => contentsIds.Contains(i.Id)).ToFuture().ToList();
+
+            FakeDetachPageContent(contents);
 
             // Fill contents data
+            SetContentsData(contents, contentOptions.ToList(), contentRegions.ToList(),
+                childContents.ToList(), contentHistories.ToList());
+
+            // Fill page content data
+            SetPageContentsData(pageContents, pageContentOptions.ToList(), contents);
+
+            return pageContents;
+        }
+
+        private void FakeDetachPageContent(List<Models.Content> contents)
+        {
             foreach (var content in contents)
             {
-                content.ContentOptions = contentOptions.Where(i => i.Content.Id == content.Id).ToList();
+                content.ContentOptions = new List<ContentOption>();
+                content.ContentRegions = new List<ContentRegion>();
+                content.ChildContents = new List<ChildContent>();
+                content.History = new List<Models.Content>();
+            }
+        }
+
+        private void SetContentsData(List<Models.Content> contents, List<ContentOption> contentOptions,
+            List<ContentRegion> contentRegions, List<ChildContent> childContents, List<Models.Content> contentHistories)
+        {
+            foreach (var content in contents)
+            {
+                content.ContentOptions = contentOptions.ToList().Where(i => i.Content.Id == content.Id).ToList();
                 content.ContentRegions = contentRegions.Where(i => i.Content.Id == content.Id).ToList();
                 content.ChildContents = childContents.Where(i => i.Parent.Id == content.Id).ToList();
-                if (request.CanManageContent || request.PreviewPageContentId != null)
+                if (contentHistories.Count > 0)
                 {
                     content.History = contentHistories.Where(i => i.Original.Id == content.Id).ToList();
                 }
             }
+        }
 
-            // Fill page content data
+        private void SetPageContentsData(List<PageContent> pageContents,
+            List<PageContentOption> pageContentOptions, List<Models.Content> contents)
+        {
             foreach (var pageContent in pageContents)
             {
                 pageContent.Options = pageContentOptions.Where(i => i.PageContent.Id == pageContent.Id).ToList();
                 pageContent.Content = contents.FirstOrDefault(i => i.Id == pageContent.Content.Id);
             }
-
-            return pageContents;
         }
 
         /// <summary>
