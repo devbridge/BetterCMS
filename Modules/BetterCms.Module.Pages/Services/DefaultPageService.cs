@@ -7,6 +7,7 @@ using System.Web;
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataContracts;
+using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Modules.Projections;
@@ -328,7 +329,12 @@ namespace BetterCms.Module.Pages.Services
         {
             var languagesFuture = repository.AsQueryable<Language>().ToFuture();
 
-            var page = repository.AsQueryable<PageProperties>(p => p.Id == model.PageId).ToFuture().FirstOne();
+            var page = repository
+                .AsQueryable<PageProperties>(p => p.Id == model.PageId)
+                .FetchMany(p => p.PageContents)
+                .ThenFetch(pc => pc.Content)
+                .ToFuture()
+                .FirstOne();
             if (model.Version > 0 && page.Version != model.Version)
             {
                 throw new ConcurrentDataException(page);
@@ -444,10 +450,25 @@ namespace BetterCms.Module.Pages.Services
             }
 
             var deletedPageContents = new List<PageContent>();
+            var htmlContentsToDelete = new List<HtmlContent>();
             if (page.PageContents != null)
             {
                 foreach (var pageContent in page.PageContents)
                 {
+                    // If content is HTML content, delete HTML content
+                    var htmlContent = pageContent.Content as HtmlContent;
+                    if (htmlContent != null)
+                    {
+                        var draft = pageContent.Content.History != null ? pageContent.Content.History.FirstOrDefault(c => c.Status == ContentStatus.Draft) : null;
+                        if (draft != null)
+                        {
+                            repository.Delete(draft);
+                        }
+
+                        repository.Delete(htmlContent);
+                        htmlContentsToDelete.Add(htmlContent);
+                    }
+
                     repository.Delete(pageContent);
                     deletedPageContents.Add(pageContent);
                 }
@@ -515,6 +536,12 @@ namespace BetterCms.Module.Pages.Services
             foreach (var deletedPageContent in deletedPageContents)
             {
                 Events.PageEvents.Instance.OnPageContentDeleted(deletedPageContent);
+            }
+
+            // Notify about deleted html contents
+            foreach (var htmlContent in htmlContentsToDelete)
+            {
+                Events.PageEvents.Instance.OnHtmlContentDeleted(htmlContent);
             }
 
             // Notifying, that page is deleted.
