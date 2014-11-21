@@ -3024,7 +3024,7 @@ a.ui-state-default:hover {
     padding: 0 4px 4px;
     background-color: black;
     border-radius: 0 0 2px 2px;
-    z-index: 999;
+    z-index: 1100;
     -webkit-transition: top 150ms;
     transition: top 150ms;
 }
