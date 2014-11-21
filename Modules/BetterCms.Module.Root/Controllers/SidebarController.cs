@@ -56,25 +56,26 @@ namespace BetterCms.Module.Root.Controllers
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
         public ActionResult Container(RenderPageViewModel renderPageViewModel)
         {
+            var modelToRender = renderPageViewModel.RenderingPage ?? renderPageViewModel;
             SidebarContainerViewModel model = new SidebarContainerViewModel();
 
             try
             {
                 model.HeaderProjections = new PageProjectionsViewModel
                     {
-                        Page = renderPageViewModel,
+                        Page = modelToRender,
                         Projections = modulesRegistration.GetSidebarHeaderProjections().OrderBy(f => f.Order)
                     };
 
                 model.SideProjections = new PageProjectionsViewModel
                     {
-                        Page = renderPageViewModel,
+                        Page = modelToRender,
                         Projections = modulesRegistration.GetSidebarSideProjections().OrderBy(f => f.Order)
                     };
 
                 model.BodyProjections = new PageProjectionsViewModel
                     {
-                        Page = renderPageViewModel,
+                        Page = modelToRender,
                         Projections = modulesRegistration.GetSidebarBodyProjections().OrderBy(f => f.Order)
                     };
 
