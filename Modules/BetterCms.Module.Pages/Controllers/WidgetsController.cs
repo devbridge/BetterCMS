@@ -182,6 +182,13 @@ namespace BetterCms.Module.Pages.Controllers
 
             if (ModelState.IsValid)
             {
+                var viewEngineResult = ViewEngines.Engines.FindView(ControllerContext, request.Content.Url, null);
+                if (viewEngineResult == null || viewEngineResult.View == null)
+                {
+                    Messages.AddError(string.Format(PagesGlobalization.SaveWidget_VirtualPathNotExists_Message, request.Content.Url));
+                    return Json(new WireJson { Success = false });
+                }
+
                 var response = GetCommand<SaveServerControlWidgetCommand>().ExecuteCommand(request);
                 if (response != null)
                 {

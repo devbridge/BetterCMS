@@ -41,6 +41,8 @@ namespace BetterCms.Core.Web
             return new HttpContextWrapper(httpContext); 
         }
 
+        // TBD: create a DefaultControllerContextAccessor service to get current controller views and etc. 
+
         /// <summary>
         /// Returns the physical file path that corresponds to the specified virtual path on the Web server.
         /// </summary>

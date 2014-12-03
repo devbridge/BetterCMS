@@ -21,7 +21,6 @@ namespace BetterCms.Module.Pages.ViewModels.Widgets
         /// </value>
         [Required(ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_RequiredAttribute_Message")]
         [StringLength(MaxLength.Url, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
-        [ValidVirtualPathValidation(ErrorMessageResourceType = typeof(PagesGlobalization), ErrorMessageResourceName = "SaveWidget_VirtualPathNotExists_Message")]
         public string Url { get; set; }
 
         /// <summary>

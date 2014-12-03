@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 
+using BetterCms.Core.Exceptions.Mvc;
 using BetterCms.Core.Security;
 
 using BetterCms.Module.Pages.Command.Layout.DeleteTemplate;
@@ -83,6 +84,13 @@ namespace BetterCms.Module.Pages.Controllers
         {
             if (ModelState.IsValid)
             {
+                var viewEngineResult = ViewEngines.Engines.FindView(ControllerContext, model.Url, null);
+                if (viewEngineResult == null || viewEngineResult.View == null)
+                {
+                    Messages.AddError(string.Format(PagesGlobalization.SaveTemplate_VirtualPathNotExists_Message, model.Url));
+                    return Json(new WireJson { Success = false });
+                }
+
                 if (model.Regions != null && model.Regions.GroupBy(r => r.Identifier).SelectMany(g => g.Skip(1)).Any())
                 {
                     Messages.AddError(PagesGlobalization.SaveTemplate_DublicateRegionIdentificator_Message);
