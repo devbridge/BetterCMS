@@ -248,7 +248,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
         private Page CollectPageData(IQueryable<Page> query)
         {
-            var page = query.Fetch(f => f.MasterPage)
+            var page = query
                 .Fetch(f => f.PagesView)
                 .Fetch(f => f.MasterPage)
                 .FetchMany(f => f.MasterPages)
@@ -467,7 +467,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             return pageContents;
         }
 
-        private void FakeDetachPageContent(List<Models.Content> contents)
+        private void FakeDetachPageContent(IList<Models.Content> contents)
         {
             foreach (var content in contents)
             {
@@ -478,12 +478,12 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             }
         }
 
-        private void SetContentsData(List<Models.Content> contents, List<ContentOption> contentOptions,
-            List<ContentRegion> contentRegions, List<ChildContent> childContents, List<Models.Content> contentHistories)
+        private void SetContentsData(IList<Models.Content> contents, IList<ContentOption> contentOptions,
+            IList<ContentRegion> contentRegions, IList<ChildContent> childContents, IList<Models.Content> contentHistories)
         {
             foreach (var content in contents)
             {
-                content.ContentOptions = contentOptions.ToList().Where(i => i.Content.Id == content.Id).ToList();
+                content.ContentOptions = contentOptions.Where(i => i.Content.Id == content.Id).ToList();
                 content.ContentRegions = contentRegions.Where(i => i.Content.Id == content.Id).ToList();
                 content.ChildContents = childContents.Where(i => i.Parent.Id == content.Id).ToList();
                 if (contentHistories.Count > 0)
@@ -493,8 +493,8 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             }
         }
 
-        private void SetPageContentsData(List<PageContent> pageContents,
-            List<PageContentOption> pageContentOptions, List<Models.Content> contents)
+        private void SetPageContentsData(IList<PageContent> pageContents,
+            IList<PageContentOption> pageContentOptions, IList<Models.Content> contents)
         {
             foreach (var pageContent in pageContents)
             {
@@ -526,7 +526,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         /// <param name="optionValues">The option values.</param>
         /// <param name="childrenPages">The children pages.</param>
         /// <returns>Merged option values</returns>
-        private List<IOptionValue> GetMergedOptionValues(IEnumerable<IOption> options, IEnumerable<IOption> optionValues, IList<Page> childrenPages)
+        private IList<IOptionValue> GetMergedOptionValues(IEnumerable<IOption> options, IEnumerable<IOption> optionValues, IList<Page> childrenPages)
         {
             var mergedOptions = new List<IOptionValue>();
 
