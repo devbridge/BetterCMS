@@ -19,6 +19,7 @@ using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Cms;
 using BetterCms.Module.Root.Models.Extensions;
 using BetterCms.Module.Root.ViewModels.Security;
+using BetterCms.Module.Root.Views.Language;
 
 using NHibernate.Linq;
 
@@ -142,7 +143,14 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 renderPageViewModel.MasterPage = CreatePageViewModel(renderingPage, allPageContents, masterPage.Master, request, childPagesList);
                 childPagesList.Remove(page);
 
-                renderPageViewModel.Options = GetMergedOptionValues(new List<IOption>(), page.Options, childPagesList);
+                var masterOptions = new List<PageOption>();
+                foreach (var optionValue in renderingPage.MasterPages
+                    .SelectMany(mp => mp.Master.Options.Where(optionValue => !masterOptions.Contains(optionValue))))
+                {
+                    masterOptions.Add(optionValue);
+                }
+
+                renderPageViewModel.Options = GetMergedOptionValues(masterOptions, page.Options, childPagesList);
                 renderPageViewModel.Regions = allPageContents
                     .Where(pc => pc.Page == page.MasterPage)
                     .SelectMany(pc => pc.Content.ContentRegions.Distinct())
@@ -250,6 +258,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         {
             var page = query
                 .Fetch(f => f.PagesView)
+                .Fetch(f => f.Language)
                 .Fetch(f => f.MasterPage)
                 .FetchMany(f => f.MasterPages)
                 .ThenFetch(f => f.Master)

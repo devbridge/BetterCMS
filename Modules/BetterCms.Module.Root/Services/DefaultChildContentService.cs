@@ -294,12 +294,14 @@ namespace BetterCms.Module.Root.Services
                 .Fetch(i => i.Child).ToList();
 
             var childIds = childContents.Select(i => i.Child.Id).Distinct().ToList();
+            var childContentIds = childContents.Select(i => i.Id).Distinct().ToList();
 
             foreach (var childContent in childContents)
             {
                 childContent.Child.ContentOptions = new List<ContentOption>();
                 childContent.Child.ContentRegions = new List<ContentRegion>();
                 childContent.Child.ChildContents = new List<ChildContent>();
+                childContent.Options = new List<ChildContentOption>();
             }
 
             var contentOptions = repository.AsQueryable<ContentOption>()
@@ -318,24 +320,28 @@ namespace BetterCms.Module.Root.Services
                     .ThenFetch(i => i.Child).ToFuture();
             }
 
+            var childContentOptions = repository.AsQueryable<ChildContentOption>()
+                .Where(i => childContentIds.Contains(i.ChildContent.Id)).ToFuture();
+
             var childChildContents = repository.AsQueryable<ChildContent>()
                 .Where(i => childIds.Contains(i.Parent.Id)).ToFuture().ToList();
 
             SetChildContentData(childContents, contentOptions.ToList(), contentRegions.ToList(),
-                childChildContents, histories.ToList());
+                childChildContents, childContentOptions.ToList(), histories.ToList());
 
             return childContents;
         }
 
-        private void SetChildContentData(List<ChildContent> childContents, List<ContentOption> contentOptions,
-            List<ContentRegion> contentRegions, List<ChildContent> childChildContents,
-            List<Models.Content> histories)
+        private void SetChildContentData(IList<ChildContent> childContents, IList<ContentOption> contentOptions,
+            IList<ContentRegion> contentRegions, IList<ChildContent> childChildContents, IList<ChildContentOption> childContentOptions,
+            IList<Models.Content> histories)
         {
             foreach (var childContent in childContents)
             {
                 childContent.Child.ContentOptions = contentOptions.Where(i => i.Content.Id == childContent.Child.Id).ToList();
                 childContent.Child.ContentRegions = contentRegions.Where(i => i.Content.Id == childContent.Child.Id).ToList();
                 childContent.Child.ChildContents = childChildContents.Where(i => i.Parent.Id == childContent.Child.Id).ToList();
+                childContent.Options = childContentOptions.Where(i => i.Id == childContent.Id).ToList();
                 if (histories.Count > 0)
                 {
                     childContent.Child.History = histories.Where(i => i.Original.Id == childContent.Child.Id).ToList();
