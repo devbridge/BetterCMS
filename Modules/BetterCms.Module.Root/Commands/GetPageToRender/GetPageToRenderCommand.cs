@@ -18,6 +18,8 @@ using BetterCms.Module.Root.Projections;
 using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Cms;
 using BetterCms.Module.Root.Models.Extensions;
+using BetterCms.Module.Root.ViewModels.Security;
+using BetterCms.Module.Root.Views.Language;
 
 using NHibernate.Linq;
 
@@ -141,7 +143,14 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 renderPageViewModel.MasterPage = CreatePageViewModel(renderingPage, allPageContents, masterPage.Master, request, childPagesList);
                 childPagesList.Remove(page);
 
-                renderPageViewModel.Options = GetMergedOptionValues(new List<IOption>(), page.Options, childPagesList);
+                var masterOptions = new List<PageOption>();
+                foreach (var optionValue in renderingPage.MasterPages
+                    .SelectMany(mp => mp.Master.Options.Where(optionValue => !masterOptions.Contains(optionValue))))
+                {
+                    masterOptions.Add(optionValue);
+                }
+
+                renderPageViewModel.Options = GetMergedOptionValues(masterOptions, page.Options, childPagesList);
                 renderPageViewModel.Regions = allPageContents
                     .Where(pc => pc.Page == page.MasterPage)
                     .SelectMany(pc => pc.Content.ContentRegions.Distinct())
@@ -222,7 +231,6 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         {
             IQueryable<Page> query = (IQueryable<Page>)pageAccessor.GetPageQuery();
             query = query.Where(f => !f.IsDeleted);
-
             if (request.PageId == null)
             {
                 var requestUrl = request.PageUrl.UrlHash();
@@ -239,48 +247,151 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 query = query.Where(f => f.Status == PageStatus.Published);
             }
 
-            // Add fetched entities.
-            query = query
-                .FetchMany(f => f.Options)
-                .Fetch(f => f.PagesView)
-                .Fetch(f => f.MasterPage)
-                .Fetch(f => f.Layout)
-                .ThenFetchMany(f => f.LayoutRegions)
-                .ThenFetch(f => f.Region)
-                .Fetch(f => f.Layout)
-                .ThenFetchMany(f => f.LayoutOptions)
-                
-                // Fetch master page with reference to master page
-                .FetchMany(f => f.MasterPages)
-                .ThenFetch(f => f.Master)
-                .ThenFetchMany(f => f.AccessRules)
-
-                .FetchMany(f => f.MasterPages)
-                .ThenFetch(f => f.Master)
-                .ThenFetchMany(f => f.Options)
-
-                // Fetch master page with reference to layout with it's regions and options
-                .FetchMany(f => f.MasterPages)
-                .ThenFetch(f => f.Master)
-                .ThenFetch(f => f.Layout)
-                .ThenFetchMany(f => f.LayoutRegions)
-                .ThenFetch(f => f.Region)
-
-                .FetchMany(f => f.MasterPages)
-                .ThenFetch(f => f.Master)
-                .ThenFetch(f => f.Layout)
-                .ThenFetchMany(f => f.LayoutOptions);
-
-            // Add access rules if access control is enabled.
-            if (cmsConfiguration.Security.AccessControlEnabled)
-            {
-                query = query.FetchMany(f => f.AccessRules);
-            }
-
-            var page = query.ToList().FirstOrDefault();
+            var page = CollectPageData(query);
+            
             pageAccessor.CachePage(page);
 
             return page;
+        }
+
+        private Page CollectPageData(IQueryable<Page> query)
+        {
+            var page = query
+                .Fetch(f => f.PagesView)
+                .Fetch(f => f.Language)
+                .Fetch(f => f.MasterPage)
+                .FetchMany(f => f.MasterPages)
+                .ThenFetch(f => f.Master)
+                .ToList()
+                .FirstOrDefault();
+
+            if (page != null)
+            {
+                FakeDetachPage(page);
+
+                var pagesIds = GetPageIds(page);
+                var layoutsIds = GetLayoutIds(page);
+
+                // Pages options
+                var optionsFuture = Repository.AsQueryable<PageOption>().
+                    Where(i => pagesIds.Contains(i.Page.Id)).ToFuture();
+
+                // Pages access rules
+                var accessRulesFuture = Repository
+                   .AsQueryable<Page>()
+                   .Where(x => pagesIds.Contains(x.Id) && !x.IsDeleted)
+                   .Select(x => new PageAccessRulesModel { AccessRules = x.AccessRules, PageId = x.Id })
+                   .ToFuture();
+                
+                // Layouts
+                var layoutsQuery = Repository.AsQueryable<Layout>()
+                    .Where(i => layoutsIds.Contains(i.Id))
+                    .FetchMany(i => i.LayoutRegions)
+                    .ThenFetch(i => i.Region).ToFuture();
+                var layoutOptions = Repository.AsQueryable<LayoutOption>()
+                    .Where(i => layoutsIds.Contains(i.Layout.Id)).ToFuture();
+
+                var layouts = layoutsQuery.ToList();
+                layouts.ToList().ForEach(Repository.Detach);
+                layouts.ForEach(l => l.LayoutOptions = layoutOptions.Where(lo => lo.Layout.Id == l.Id).ToList());
+
+                page = SetPageData(page, optionsFuture.ToList(), layouts, accessRulesFuture.ToList());
+
+                return page;
+            }
+
+            return null;
+        }
+
+        private Page SetPageData(Page page, List<PageOption> options, List<Layout> layouts, List<PageAccessRulesModel> accessRules)
+        {
+            SetPageOptions(page, options);
+            SetPageAcessRules(page, accessRules);
+            SetPageLayout(page, layouts);
+
+            if (page.MasterPages != null)
+            {
+                foreach (var masterPage in page.MasterPages)
+                {
+                    FakeDetachPage(masterPage.Master);
+
+                    SetPageOptions(masterPage.Master, options);
+                    SetPageAcessRules(masterPage.Master, accessRules);
+                    SetPageLayout(masterPage.Master, layouts);
+                }
+            }
+
+            if (page.MasterPage != null)
+            {
+                FakeDetachPage(page.MasterPage);
+
+                SetPageOptions(page.MasterPage, options);
+                SetPageAcessRules(page.MasterPage, accessRules);
+                SetPageLayout(page.MasterPage, layouts);
+            }
+
+            return page;
+        }
+
+        private void FakeDetachPage(Page page)
+        {
+            // Instead of detaching  full object, detaching only properies, which will be loaded using future queries
+            // Cannot detach whole page, because it should be up-to-date:
+            // there are many items, which are loaded using lazy load later (images, pageTags, etc)
+            page.Options = new List<PageOption>();
+            page.AccessRules = new List<AccessRule>();
+        }
+
+        private void SetPageLayout(Page page, List<Layout> layouts)
+        {
+            if (page.Layout != null)
+            {
+                page.Layout = layouts.FirstOrDefault(i => i.Id == page.Layout.Id);
+            }
+        }
+
+        private void SetPageOptions(Page page, List<PageOption> options)
+        {
+            page.Options = options.Where(i => i.Page.Id == page.Id).ToList();
+        }
+
+        private void SetPageAcessRules(Page page, List<PageAccessRulesModel> accessRules)
+        {
+            var pageAccessRules = accessRules.FirstOrDefault(ar => ar.PageId == page.Id);
+            page.AccessRules = pageAccessRules == null || pageAccessRules.AccessRules == null
+                ? new List<AccessRule>() : pageAccessRules.AccessRules.ToList();
+        }
+
+        private List<Guid> GetPageIds(Page page)
+        {
+            var pagesIds = new List<Guid> { page.Id };
+            if (page.MasterPages != null)
+            {
+                foreach (var masterPage in page.MasterPages)
+                {
+                    pagesIds.Add(masterPage.Master.Id);
+                }
+            }
+
+            return pagesIds.Distinct().ToList();
+        }
+
+        private List<Guid> GetLayoutIds(Page page)
+        {
+            var layoutIds = new List<Guid>();
+            if (page.Layout != null)
+            {
+                layoutIds.Add(page.Layout.Id);
+            }
+            foreach (var masterPage in page.MasterPages)
+            {
+                if (masterPage.Master.Layout != null)
+                {
+                    layoutIds.Add(masterPage.Master.Layout.Id);
+                }
+            }
+            
+            return layoutIds.Distinct().ToList();
         }
 
         /// <summary>
@@ -310,33 +421,95 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
 
             pageContentsQuery = pageContentsQuery.Where(f => !f.IsDeleted && !f.Content.IsDeleted && !f.Page.IsDeleted);
 
-            pageContentsQuery = pageContentsQuery
-                .Fetch(f => f.Content)
-                .ThenFetchMany(f => f.ContentOptions)
-
-                .FetchMany(f => f.Options)
-
-                .Fetch(f => f.Content)
-                .ThenFetchMany(f => f.ContentRegions)
-                .ThenFetch(f => f.Region)
-
-                // Fetch child contents
-                .Fetch(f => f.Content)
-                .ThenFetchMany(f => f.ChildContents);
-
-            if (request.CanManageContent || request.PreviewPageContentId != null)
-            {
-                pageContentsQuery = pageContentsQuery
-                    .Fetch(f => f.Content)
-                    .ThenFetchMany(f => f.History)
-                    .ThenFetchMany(f => f.ChildContents);
-            }
-
-            var pageContents = pageContentsQuery.ToList();
+            var pageContents = CollectPageContentsData(pageContentsQuery, request);
 
             childContentService.RetrieveChildrenContentsRecursively(request.CanManageContent, pageContents.Select(pc => pc.Content).Distinct().ToList());
 
             return pageContents;
+        }
+
+        private List<PageContent> CollectPageContentsData(IEnumerable<PageContent> pageContentsQuery, GetPageToRenderRequest request)
+        {
+            var pageContents = pageContentsQuery.ToList();
+            var contentsIds = pageContents.Where(i => i.Content != null).Select(i => i.Content.Id).Distinct().ToList();
+            var pageContentsIds = pageContents.Select(i => i.Id).Distinct().ToList();
+
+            foreach (var pageContent in pageContents)
+            {
+                pageContent.Options = new List<PageContentOption>();
+            }
+
+            var pageContentOptions = Repository.AsQueryable<PageContentOption>()
+                .Where(i => pageContentsIds.Contains(i.PageContent.Id)).ToFuture();
+
+            var contentOptions = Repository.AsQueryable<ContentOption>()
+                .Where(i => contentsIds.Contains(i.Content.Id)).ToFuture();
+
+            var contentRegions = Repository.AsQueryable<ContentRegion>()
+                .Where(i => contentsIds.Contains(i.Content.Id))
+                .Fetch(i => i.Region).ToFuture();
+
+            IEnumerable<Models.Content> contentHistories = new List<Models.Content>();
+            if (request.CanManageContent || request.PreviewPageContentId != null)
+            {
+                contentHistories =
+                    Repository.AsQueryable<Models.Content>()
+                    .Where(i => contentsIds.Contains(i.Original.Id) && i.Status != ContentStatus.Archived)
+                    .FetchMany(i => i.ChildContents).ToFuture();
+            }
+
+            var childContents = Repository.AsQueryable<ChildContent>()
+                .Where(i => contentsIds.Contains(i.Parent.Id)).ToFuture();
+
+            var contents = Repository.AsQueryable<Models.Content>()
+                .Where(i => contentsIds.Contains(i.Id)).ToFuture().ToList();
+
+            FakeDetachPageContent(contents);
+
+            // Fill contents data
+            SetContentsData(contents, contentOptions.ToList(), contentRegions.ToList(),
+                childContents.ToList(), contentHistories.ToList());
+
+            // Fill page content data
+            SetPageContentsData(pageContents, pageContentOptions.ToList(), contents);
+
+            return pageContents;
+        }
+
+        private void FakeDetachPageContent(IList<Models.Content> contents)
+        {
+            foreach (var content in contents)
+            {
+                content.ContentOptions = new List<ContentOption>();
+                content.ContentRegions = new List<ContentRegion>();
+                content.ChildContents = new List<ChildContent>();
+                content.History = new List<Models.Content>();
+            }
+        }
+
+        private void SetContentsData(IList<Models.Content> contents, IList<ContentOption> contentOptions,
+            IList<ContentRegion> contentRegions, IList<ChildContent> childContents, IList<Models.Content> contentHistories)
+        {
+            foreach (var content in contents)
+            {
+                content.ContentOptions = contentOptions.Where(i => i.Content.Id == content.Id).ToList();
+                content.ContentRegions = contentRegions.Where(i => i.Content.Id == content.Id).ToList();
+                content.ChildContents = childContents.Where(i => i.Parent.Id == content.Id).ToList();
+                if (contentHistories.Count > 0)
+                {
+                    content.History = contentHistories.Where(i => i.Original.Id == content.Id).ToList();
+                }
+            }
+        }
+
+        private void SetPageContentsData(IList<PageContent> pageContents,
+            IList<PageContentOption> pageContentOptions, IList<Models.Content> contents)
+        {
+            foreach (var pageContent in pageContents)
+            {
+                pageContent.Options = pageContentOptions.Where(i => i.PageContent.Id == pageContent.Id).ToList();
+                pageContent.Content = contents.FirstOrDefault(i => i.Id == pageContent.Content.Id);
+            }
         }
 
         /// <summary>
@@ -362,7 +535,7 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
         /// <param name="optionValues">The option values.</param>
         /// <param name="childrenPages">The children pages.</param>
         /// <returns>Merged option values</returns>
-        private List<IOptionValue> GetMergedOptionValues(IEnumerable<IOption> options, IEnumerable<IOption> optionValues, IList<Page> childrenPages)
+        private IList<IOptionValue> GetMergedOptionValues(IEnumerable<IOption> options, IEnumerable<IOption> optionValues, IList<Page> childrenPages)
         {
             var mergedOptions = new List<IOptionValue>();
 
@@ -380,6 +553,12 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
             }
 
             return mergedOptions;
+        }
+
+        private class PageAccessRulesModel
+        {
+            public IEnumerable<AccessRule> AccessRules { get; set; }
+            public Guid PageId { get; set; }
         }
     }
 }

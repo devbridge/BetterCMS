@@ -12,6 +12,7 @@ using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 
 using NHibernate.Criterion;
+using NHibernate.Linq;
 
 namespace BetterCms.Module.Root.Services
 {
@@ -151,7 +152,7 @@ namespace BetterCms.Module.Root.Services
         /// <param name="references">The references.</param>
         /// <param name="children">The children: list of Tuple, where Item1: Parent, Item2: Childs.</param>
         /// <returns></returns>
-        private List<Guid> PopulateReferencesList(List<Guid> references, IEnumerable<Tuple<Guid, Guid, string>> children)
+        private List<Guid> PopulateReferencesList(List<Guid> references, IEnumerable<System.Tuple<Guid, Guid, string>> children)
         {
             var childrenIds = new List<Guid>();
 
@@ -203,7 +204,7 @@ namespace BetterCms.Module.Root.Services
                 var references = new List<Guid>();
                 var childrenIds = PopulateReferencesList(
                     references,
-                    destinationChildren.Select(s => new Tuple<Guid, Guid, string>(destination.Id, s.Child.Id, s.Child.Name)));
+                    destinationChildren.Select(s => new System.Tuple<Guid, Guid, string>(destination.Id, s.Child.Id, s.Child.Name)));
 
                 ValidateChildContentsCircularReferences(childrenIds, references);
             }
@@ -222,7 +223,7 @@ namespace BetterCms.Module.Root.Services
                 .Select(cc => new { ParentId = cc.Parent.Id, ChildId = cc.Child.Id, Name = cc.Child.Name })
                 .ToList()
                 .Distinct()
-                .Select(cc => new Tuple<Guid, Guid, string>(cc.ParentId, cc.ChildId, cc.Name));
+                .Select(cc => new System.Tuple<Guid, Guid, string>(cc.ParentId, cc.ChildId, cc.Name));
 
             var circularReference = children.FirstOrDefault(c => !references.Contains(c.Item1) && references.Contains(c.Item2));
             if (circularReference != null)
@@ -286,46 +287,66 @@ namespace BetterCms.Module.Root.Services
             return dictionary;
         }
 
-        private IList<ChildContent> GetChildContents(Guid[] ids, bool canManageContent)
+        private IList<ChildContent> GetChildContents(IEnumerable<Guid> ids, bool canManageContent)
         {
-            ChildContent ccAlias = null;
-            ChildContentOption ccOptionAlias = null;
-            Models.Content childAlias = null;
-            ContentOption cOptionAlias = null;
-            ContentRegion cRegionAlias = null;
-            Region regionAlias = null;
+            var childContents = repository.AsQueryable<ChildContent>()
+                .Where(i => ids.Contains(i.Parent.Id) && !i.IsDeleted)
+                .Fetch(i => i.Child).ToList();
 
-            ChildContent ccAlias1 = null;
-            Models.Content ccChildAlias = null;
-            Models.Content historyAlias = null;
-            ChildContent historyCcAlias = null;
-            Models.Content historyChildAlias = null;
+            var childIds = childContents.Select(i => i.Child.Id).Distinct().ToList();
+            var childContentIds = childContents.Select(i => i.Id).Distinct().ToList();
 
-            var query = repository
-                .AsQueryOver(() => ccAlias)
-                .Where(Restrictions.In(NHibernate.Criterion.Projections.Property(() => ccAlias.Parent.Id), ids))
-                .And(() => !ccAlias.IsDeleted)
-                .Inner.JoinAlias(() => ccAlias.Child, () => childAlias)
-                .Where(() => !childAlias.IsDeleted)
-                .Left.JoinAlias(() => childAlias.ContentOptions, () => cOptionAlias)
-                .Left.JoinAlias(() => ccAlias.Options, () => ccOptionAlias)
-
-                .Left.JoinAlias(() => childAlias.ContentRegions, () => cRegionAlias)
-                .Left.JoinAlias(() => cRegionAlias.Region, () => regionAlias)
-
-                .Left.JoinAlias(() => childAlias.ChildContents, () => ccAlias1)
-                .Left.JoinAlias(() => ccAlias1.Child, () => ccChildAlias);
-
-            if (canManageContent)
+            foreach (var childContent in childContents)
             {
-                query = query
-                    .Left.JoinAlias(() => childAlias.History, () => historyAlias)
-                    .Left.JoinAlias(() => historyAlias.ChildContents, () => historyCcAlias)
-                    .Left.JoinAlias(() => historyCcAlias.Child, () => historyChildAlias);
+                childContent.Child.ContentOptions = new List<ContentOption>();
+                childContent.Child.ContentRegions = new List<ContentRegion>();
+                childContent.Child.ChildContents = new List<ChildContent>();
+                childContent.Options = new List<ChildContentOption>();
             }
 
+            var contentOptions = repository.AsQueryable<ContentOption>()
+                .Where(i => childIds.Contains(i.Content.Id)).ToFuture();
 
-            return query.List<ChildContent>();
+            var contentRegions = repository.AsQueryable<ContentRegion>()
+                .Where(i => childIds.Contains(i.Content.Id))
+                .Fetch(i => i.Region).ToFuture();
+
+            IEnumerable<Models.Content> histories = new List<Models.Content>();
+            if (canManageContent)
+            {
+                histories = repository.AsQueryable<Models.Content>()
+                    .Where(i => childIds.Contains(i.Original.Id) && i.Status != ContentStatus.Archived)
+                    .FetchMany(i => i.ChildContents)
+                    .ThenFetch(i => i.Child).ToFuture();
+            }
+
+            var childContentOptions = repository.AsQueryable<ChildContentOption>()
+                .Where(i => childContentIds.Contains(i.ChildContent.Id)).ToFuture();
+
+            var childChildContents = repository.AsQueryable<ChildContent>()
+                .Where(i => childIds.Contains(i.Parent.Id)).ToFuture().ToList();
+
+            SetChildContentData(childContents, contentOptions.ToList(), contentRegions.ToList(),
+                childChildContents, childContentOptions.ToList(), histories.ToList());
+
+            return childContents;
+        }
+
+        private void SetChildContentData(IList<ChildContent> childContents, IList<ContentOption> contentOptions,
+            IList<ContentRegion> contentRegions, IList<ChildContent> childChildContents, IList<ChildContentOption> childContentOptions,
+            IList<Models.Content> histories)
+        {
+            foreach (var childContent in childContents)
+            {
+                childContent.Child.ContentOptions = contentOptions.Where(i => i.Content.Id == childContent.Child.Id).ToList();
+                childContent.Child.ContentRegions = contentRegions.Where(i => i.Content.Id == childContent.Child.Id).ToList();
+                childContent.Child.ChildContents = childChildContents.Where(i => i.Parent.Id == childContent.Child.Id).ToList();
+                childContent.Options = childContentOptions.Where(i => i.Id == childContent.Id).ToList();
+                if (histories.Count > 0)
+                {
+                    childContent.Child.History = histories.Where(i => i.Original.Id == childContent.Child.Id).ToList();
+                }
+            }
         }
 
         public void RetrieveChildrenContentsRecursively(bool canManageContent, IEnumerable<Models.Content> contents)
