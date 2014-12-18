@@ -84,32 +84,35 @@ namespace BetterCms.Module.OpenGraphIntegration
             }
             args.RenderPageData.Metadata.Add(new OpenGraphMetaDataProjection("title", args.RenderPageData.PageData.Title));
             args.RenderPageData.Metadata.Add(new OpenGraphMetaDataProjection("url", httpContextAccessor.MapPublicPath(args.RenderPageData.PageData.PageUrl)));
-            if (args.RenderPageData.GetPageModel().MainImage != null)
+
+            var pageModel = args.RenderPageData.GetPageModel();
+
+            if (pageModel.MainImage != null)
             {
                 args.RenderPageData.Metadata.Add(
-                    new OpenGraphMetaDataProjection("image", args.RenderPageData.GetPageModel().MainImage.PublicUrl));
+                    new OpenGraphMetaDataProjection("image", pageModel.MainImage.PublicUrl));
             }
             else
             {
-                if (args.RenderPageData.GetPageModel().FeaturedImage != null)
+                if (pageModel.FeaturedImage != null)
                 {
                     args.RenderPageData.Metadata.Add(
-                        new OpenGraphMetaDataProjection("image", args.RenderPageData.GetPageModel().FeaturedImage.PublicUrl));
+                        new OpenGraphMetaDataProjection("image", pageModel.FeaturedImage.PublicUrl));
                 }
                 else
                 {
-                    if (args.RenderPageData.GetPageModel().SecondaryImage != null)
+                    if (pageModel.SecondaryImage != null)
                     {
                         args.RenderPageData.Metadata.Add(
-                            new OpenGraphMetaDataProjection("image", args.RenderPageData.GetPageModel().SecondaryImage.PublicUrl));
+                            new OpenGraphMetaDataProjection("image", pageModel.SecondaryImage.PublicUrl));
                     }
 
                 }
             }
 
-            if (!string.IsNullOrEmpty(args.RenderPageData.GetPageModel().Description))
+            if (!string.IsNullOrEmpty(pageModel.Description))
             {
-                args.RenderPageData.Metadata.Add(new OpenGraphMetaDataProjection("description", args.RenderPageData.GetPageModel().Description));
+                args.RenderPageData.Metadata.Add(new OpenGraphMetaDataProjection("description", pageModel.Description));
             }
         }
     }
