@@ -4,6 +4,7 @@
     {
         private const string enableAddNewPageToSitemapActionKey = "enableAddNewPageToSitemapAction";
         private const string enableAddNewTranslationPageToSitemapActionKey = "enableAddNewTranslationPageToSitemapAction";
+        private const string enableAddClonedPageToSitemapActionKey = "enableAddClonedPageToSitemapAction";
 
         public static bool IsSitemapActionEnabledAfterAddingNewPage(ICmsConfiguration cmsConfiguration)
         {
@@ -34,6 +35,21 @@
                 }
             }
 
+            return true;
+        }
+
+        public static bool IsSitemapActionEnabledAfterCloningPage(ICmsConfiguration cmsConfiguration)
+        {
+            var value = GetConfigurationValue(cmsConfiguration, enableAddClonedPageToSitemapActionKey);
+
+            if (!string.IsNullOrEmpty(value))
+            {
+                bool isEnabled;
+                if (bool.TryParse(value, out isEnabled))
+                {
+                    return isEnabled;
+                }
+            }
             return true;
         }
 

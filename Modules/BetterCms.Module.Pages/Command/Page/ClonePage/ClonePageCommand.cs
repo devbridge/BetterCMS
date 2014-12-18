@@ -37,7 +37,7 @@ namespace BetterCms.Module.Pages.Command.Page.ClonePage
                            PageTitle = newPage.Title,
                            PageUrl = newPage.PageUrl,
                            IsMasterPage = newPage.IsMasterPage,
-                           IsSitemapActionEnabled = ConfigurationHelper.IsSitemapActionEnabledAfterAddingTranslationForPage(cmsConfiguration)
+                           IsSitemapActionEnabled = ConfigurationHelper.IsSitemapActionEnabledAfterCloningPage(cmsConfiguration)
                        };
         }
     }
