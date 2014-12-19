@@ -293,6 +293,11 @@ namespace BetterCms.Module.Root.Services
                 .Where(i => ids.Contains(i.Parent.Id) && !i.IsDeleted)
                 .Fetch(i => i.Child).ToList();
 
+            if (!canManageContent)
+            {
+                childContents = childContents.Where(c => c.Child.Status == ContentStatus.Published).ToList();
+            }
+
             var childIds = childContents.Select(i => i.Child.Id).Distinct().ToList();
             var childContentIds = childContents.Select(i => i.Id).Distinct().ToList();
 
@@ -354,6 +359,7 @@ namespace BetterCms.Module.Root.Services
             var dictionary = new Dictionary<Guid, IList<ChildContent>>();
             var idsToRetrieve = new List<Guid>();
             var contentsList = contents.ToList();
+
             contentsList.ForEach(
                 c =>
                 {
