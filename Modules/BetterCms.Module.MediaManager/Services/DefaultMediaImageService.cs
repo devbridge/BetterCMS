@@ -354,7 +354,7 @@ namespace BetterCms.Module.MediaManager.Services
         {
             var folderName = Path.GetFileName(Path.GetDirectoryName(originalImage.FileUri.OriginalString));
             
-            using (var fileStream = DownloadFileStream(image.FileUri.AbsoluteUri))
+            using (var fileStream = DownloadFileStream(image.PublicUrl))
             {
                 string publicUrlTemp = string.Empty, publicThumbnailUrlTemp = string.Empty, publicOriginallUrlTemp = string.Empty;
                 Uri fileUriTemp = null, thumbnailUriTemp = null, originalUriTemp = null;
@@ -465,9 +465,9 @@ namespace BetterCms.Module.MediaManager.Services
 
             var folderName = Path.GetFileName(Path.GetDirectoryName(originalImage.FileUri.OriginalString));
             
-            using (var originalFileStream = DownloadFileStream(clonnedOriginalImage.FileUri.AbsoluteUri))
+            using (var originalFileStream = DownloadFileStream(clonnedOriginalImage.PublicUrl))
             {
-                using (var originalThumbnailFileStream = DownloadFileStream(clonnedOriginalImage.ThumbnailUri.AbsoluteUri))
+                using (var originalThumbnailFileStream = DownloadFileStream(clonnedOriginalImage.PublicThumbnailUrl))
                 {
                     mediaImageVersionPathService.SetPathForArchive(clonnedOriginalImage, folderName, historicalFileName);
 
