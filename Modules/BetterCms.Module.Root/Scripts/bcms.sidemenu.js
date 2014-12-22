@@ -1,7 +1,7 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security'], function ($, bcms, security) {
+bettercms.define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security', 'bcms.store'], function ($, bcms, security, store) {
     'use strict';
 
     var sidemenu = {},
@@ -58,7 +58,7 @@ bettercms.define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security'], func
                 ? { 'right': sideMenuWidth }
                 : { 'left': sideMenuWidth };
 
-        localStorage.setItem(keys.sideMenuOpen, '1');
+        store.set(keys.sideMenuOpen, '1');
 
         if (doNotAnimate) {
             sidemenuContainer.css(css).addClass(classes.stateOpen);
@@ -80,7 +80,7 @@ bettercms.define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security'], func
 					? { 'right': sideMenuWidth }
 					: { 'left': sideMenuWidth };
 
-        localStorage.removeItem(keys.sideMenuOpen);
+        store.remove(keys.sideMenuOpen);
 
         if (doNotAnimate) {
             sidemenuContainer.removeClass(classes.stateOpen);
@@ -103,7 +103,7 @@ bettercms.define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security'], func
     * Moves sidebar menu to the right.
     */
     sidemenu.moveToRight = function () {
-        localStorage.setItem(keys.sideMenuOnTheRight, '1');
+        store.set(keys.sideMenuOnTheRight, '1');
         sidemenuContainer.css({
             'left': 'auto',
             'right': sidemenu.isOpen() ? '0px' : '-260px'
@@ -115,7 +115,7 @@ bettercms.define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security'], func
     * Moves sidebar menu to the left.
     */
     sidemenu.moveToLeft = function () {
-        localStorage.removeItem(keys.sideMenuOnTheRight);
+        store.remove(keys.sideMenuOnTheRight);
         sidemenuContainer.css({
             'left': sidemenu.isOpen() ? '0px' : '-260px',
             'right': 'auto'
@@ -146,10 +146,10 @@ bettercms.define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security'], func
         $(selectors.container).hide();
         sidemenuContainer = $(selectors.container);
 
-        var offsetTop = localStorage.getItem(keys.sideMenuOffsetTop),
-            isMenuOnTheRight = localStorage.getItem(keys.sideMenuOnTheRight),
-            isSideMenuOpen = localStorage.getItem(keys.sideMenuOpen),
-            editingOn = localStorage.getItem(keys.editingOn),
+        var offsetTop = store.get(keys.sideMenuOffsetTop),
+            isMenuOnTheRight = store.get(keys.sideMenuOnTheRight),
+            isSideMenuOpen = store.get(keys.sideMenuOpen),
+            editingOn = store.get(keys.editingOn),
             middleOfThePage;
 
         if (offsetTop) {
@@ -217,7 +217,7 @@ bettercms.define('bcms.sidemenu', ['bcms.jquery', 'bcms', 'bcms.security'], func
                     top = 0;
                     sidemenuContainer.css('top', '0px');
                 } 
-                localStorage.setItem(keys.sideMenuOffsetTop, top);
+                store.set(keys.sideMenuOffsetTop, top);
             },
             start: function () {
                 middleOfThePage = $(window).width() / 2;

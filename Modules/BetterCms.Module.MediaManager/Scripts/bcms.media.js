@@ -1,8 +1,8 @@
 ﻿/*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.media', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'bcms.media.upload', 'bcms.media.imageeditor', 'bcms.htmlEditor', 'bcms.ko.extenders', 'bcms.contextMenu', 'bcms.security', 'bcms.media.history', 'bcms.media.fileeditor', 'bcms.tags', 'bcms.options'],
-function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUpload, imageEditor, htmlEditor, ko, menu, security, history, fileEditor, tags, optionsModule) {
+bettercms.define('bcms.media', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent', 'bcms.messages', 'bcms.media.upload', 'bcms.media.imageeditor', 'bcms.htmlEditor', 'bcms.ko.extenders', 'bcms.contextMenu', 'bcms.security', 'bcms.media.history', 'bcms.media.fileeditor', 'bcms.tags', 'bcms.options', 'bcms.store'],
+function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUpload, imageEditor, htmlEditor, ko, menu, security, history, fileEditor, tags, optionsModule, store) {
     'use strict';
 
     var media = {},
@@ -322,7 +322,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         self.medias = ko.observableArray();
         self.path = ko.observable();
-        self.isGrid = ko.observable(localStorage.getItem(keys.folderViewMode) == 1);
+        self.isGrid = ko.observable(store.get(keys.folderViewMode) == 1);
         self.canSelectMedia = ko.observable(false);
         self.canInsertMedia = ko.observable(false);
         self.canInsertMediaWithOptions = ko.observable(false);
@@ -433,7 +433,7 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
 
         self.switchViewStyle = function () {
             var isGrid = !self.isGrid();
-            localStorage.setItem(keys.folderViewMode, isGrid ? 1 : 0);
+            store.set(keys.folderViewMode, isGrid ? 1 : 0);
             bcms.trigger(media.events.mediaListViewModeChanged, isGrid);
         };
 

@@ -40,6 +40,7 @@
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.redirect.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.sidemenu.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.siteSettings.js" />
+      <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.store.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.security.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.tabs.js" />
       <JavaScriptFiles Include="$(ProjectDir)Scripts\bcms.tooltip.js" />

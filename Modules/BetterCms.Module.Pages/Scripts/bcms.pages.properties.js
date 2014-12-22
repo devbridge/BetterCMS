@@ -2,8 +2,8 @@
 /*global bettercms */
 
 bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.forms', 'bcms.dynamicContent', 'bcms.tags', 'bcms.ko.extenders',
-        'bcms.media', 'bcms.redirect', 'bcms.options', 'bcms.security', 'bcms.messages', 'bcms.codeEditor', 'bcms.pages.languages'],
-    function ($, bcms, modal, forms, dynamicContent, tags, ko, media, redirect, options, security, messages, codeEditor, pageLanguages) {
+        'bcms.media', 'bcms.redirect', 'bcms.options', 'bcms.security', 'bcms.messages', 'bcms.codeEditor', 'bcms.pages.languages', 'bcms.store'],
+    function ($, bcms, modal, forms, dynamicContent, tags, ko, media, redirect, options, security, messages, codeEditor, pageLanguages, store) {
         'use strict';
 
         var page = {},
@@ -113,12 +113,12 @@ bettercms.define('bcms.pages.properties', ['bcms.jquery', 'bcms', 'bcms.modal', 
                 }
             });
 
-            var infoMessageClosed = localStorage.getItem(keys.editPagePropertiesInfoMessageClosed);
+            var infoMessageClosed = store.get(keys.editPagePropertiesInfoMessageClosed);
             if (infoMessageClosed && infoMessageClosed === '1') {
                 page.hideEditPagePropertiesInfoMessage(dialog);
             } else {
                 dialog.container.find(selectors.editPagePropertiesCloseInfoMessageBox).on('click', function () {
-                    localStorage.setItem(keys.editPagePropertiesInfoMessageClosed, '1');
+                    store.set(keys.editPagePropertiesInfoMessageClosed, '1');
                     page.hideEditPagePropertiesInfoMessage(dialog);
                 });
             }

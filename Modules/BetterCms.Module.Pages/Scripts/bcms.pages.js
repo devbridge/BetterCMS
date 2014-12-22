@@ -2,8 +2,8 @@
 /*global bettercms */
 
 bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSettings', 'bcms.forms', 'bcms.dynamicContent',
-        'bcms.pages.properties', 'bcms.grid', 'bcms.redirect', 'bcms.messages', 'bcms.pages.filter', 'bcms.options', 'bcms.ko.extenders', 'bcms.security', 'bcms.sidemenu', 'bcms.datepicker', 'bcms.pages.languages'],
-    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, grid, redirect, messages, filter, options, ko, security, sidemenu, datepicker, pageLanguages) {
+        'bcms.pages.properties', 'bcms.grid', 'bcms.redirect', 'bcms.messages', 'bcms.pages.filter', 'bcms.options', 'bcms.ko.extenders', 'bcms.security', 'bcms.sidemenu', 'bcms.datepicker', 'bcms.pages.languages', 'bcms.store'],
+    function ($, bcms, modal, siteSettings, forms, dynamicContent, pageProperties, grid, redirect, messages, filter, options, ko, security, sidemenu, datepicker, pageLanguages, store) {
         'use strict';
 
         var page = {},
@@ -200,7 +200,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
         * Initializes AddNewPage dialog events.
         */
         page.initAddNewPageDialogEvents = function (dialog, content) {
-            var infoMessageClosed = localStorage.getItem(keys.addNewPageInfoMessageClosed),
+            var infoMessageClosed = store.get(keys.addNewPageInfoMessageClosed),
                 optionsContainer = dialog.container.find(selectors.addNewPageOptionsTab),
                 accessContainer = dialog.container.find(selectors.addNewPageUserAccess),
                 languageViewModel = content.Data.Languages ? new pageLanguages.PageLanguageViewModel(content.Data.Languages) : null,
@@ -227,7 +227,7 @@ bettercms.define('bcms.pages', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteS
                 page.hideAddNewPageInfoMessage(dialog);
             } else {
                 dialog.container.find(selectors.addNewPageCloseInfoMessage).on('click', function () {
-                    localStorage.setItem(keys.addNewPageInfoMessageClosed, '1');
+                    store.set(keys.addNewPageInfoMessageClosed, '1');
                     page.hideAddNewPageInfoMessage(dialog);
                 });
             }

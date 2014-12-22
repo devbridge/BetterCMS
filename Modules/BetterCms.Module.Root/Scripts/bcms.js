@@ -1,6 +1,6 @@
 ﻿/*global bettercms */
 
-bettercms.define('bcms', ['bcms.jquery'], function ($) {
+bettercms.define('bcms', ['bcms.jquery','bcms.store'], function ($, store) {
     'use strict';
 
     var app = {
@@ -135,11 +135,11 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
         };
 
         self.getMaxLevel = function () {
-            var level = localStorage.getItem(keys.loggerLevel);
+            var level = store.get(keys.loggerLevel);
 
             if (!level) {
                 level = self.levels.info;
-                localStorage.setItem(keys.loggerLevel, level);
+                store.set(keys.loggerLevel, level);
             }
 
             return level;
@@ -430,20 +430,6 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
     };
 
     /**
-    * Check is localStorage supported
-    */
-    function isLocalStorageNameSupported() {
-        var testKey = 'isSupportedKey';
-        try {
-            localStorage.setItem(testKey, '1');
-            localStorage.removeItem(testKey);
-            return true;
-        } catch (error) {
-            return false;
-        }
-    }
-
-    /**
     * Initiliazes web page: checks browser version
     */
     function globalInit() {
@@ -455,10 +441,6 @@ bettercms.define('bcms', ['bcms.jquery'], function ($) {
                 browserInfo.hide();
             });
             browserInfo.css('display', 'block');
-        }
-
-        if (!isLocalStorageNameSupported()) {
-            window.localStorage = { setitem: function() {} };
         }
 
         // Handle unauthorized ajax errors

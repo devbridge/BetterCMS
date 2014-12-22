@@ -1332,6 +1332,7 @@
     <EmbeddedResource Include="Scripts\ckeditor\skins\moono\images\refresh.png" />
     <EmbeddedResource Include="Scripts\ckeditor\styles.js" />
     <EmbeddedResource Include="Scripts\bcms.content.tree.js" />
+    <EmbeddedResource Include="Scripts\bcms.store.js" />
     <Content Include="Views\Web.config" />
     <None Include="Views\Shared\Partial\ContentsTree.cshtml">
       <LastGenOutput>ContentsTree.generated.cs</LastGenOutput>

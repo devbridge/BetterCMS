@@ -4,7 +4,7 @@ window.cms = {};
 /*jslint unparam: true, white: true, browser: true, devel: true */
 /*global bettercms */
 
-bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.redirect'], function ($, bcms, modal, redirect) {
+bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.redirect', 'bcms.store'], function ($, bcms, modal, redirect, store) {
     'use strict';
 
     var content = {},
@@ -929,7 +929,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
     */
     function onEditModeOff() {
         var editOffAction = function () {
-            localStorage.removeItem(keys.editingOn);
+            store.remove(keys.editingOn);
             $(selectors.html).removeClass(classes.editingOnClass);
 
             if (pageViewModel != null) {
@@ -966,7 +966,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
     * Occurs when edit mode is turned on
     */
     function onEditModeOn() {
-        localStorage.setItem(keys.editingOn, '1');
+        store.set(keys.editingOn, '1');
         $(selectors.html).addClass(classes.editingOnClass);
 
         if (pageViewModel != null) {
@@ -1019,7 +1019,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
         }
 
         function getPathVisibility() {
-            var showPage = localStorage.getItem(keys.showMasterPagesPath);
+            var showPage = store.get(keys.showMasterPagesPath);
 
             if (showPage === undefined) {
                 showPage = 1;
@@ -1031,7 +1031,7 @@ bettercms.define('bcms.content', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.red
 
         function setPathVisibility(isVisible, doNotChangeUpdateStorage) {
             if (!doNotChangeUpdateStorage) {
-                localStorage.setItem(keys.showMasterPagesPath, isVisible);
+                store.set(keys.showMasterPagesPath, isVisible);
             }
 
             if (isVisible == 1) {
