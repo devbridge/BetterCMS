@@ -6,6 +6,7 @@
         storage;
 
     store.disabled = false;
+    store.enabled = !store.disabled;
     store.version = '1.3.17';
     store.set = function (key, value) { }
     store.get = function (key, defaultVal) { }
