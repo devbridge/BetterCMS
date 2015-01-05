@@ -780,8 +780,8 @@ bettercms.define('bcms.modal', ['bcms.jquery', 'bcms', 'bcms.tabs', 'bcms.ko.ext
                 previewFailure.show();
             }
         });
-
-        img.attr('src', src);
+        
+        img.attr('src', src + (src.indexOf('?') != -1 ? '&' : '?') + (new Date()).getTime());
 
         return dialog;
     };

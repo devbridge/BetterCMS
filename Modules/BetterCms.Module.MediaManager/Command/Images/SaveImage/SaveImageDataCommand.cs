@@ -11,6 +11,8 @@ using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels.Images;
 using BetterCms.Module.Root.Mvc;
 
+using NHibernate.Linq.ExpressionTransformers;
+
 namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
 {
     /// <summary>
@@ -49,18 +51,18 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
         public void Execute(ImageViewModel request)
         {
             var mediaImage = Repository.First<MediaImage>(request.Id.ToGuidOrDefault());
+            var archivedImage = MediaImageService.MoveToHistory(mediaImage);
+
+            // Calling resize and after then crop
+            var croppedFileStream = ResizeAndCropImage(mediaImage, request);
 
             mediaImage.Caption = request.Caption;
             mediaImage.Title = request.Title;
             mediaImage.Description = request.Description;
             mediaImage.ImageAlign = request.ImageAlign;
-            
-            // Calling resize and after then crop
-            var croppedFileStream = ResizeAndCropImage(mediaImage, request);
 
             if (croppedFileStream != null)
             {
-                var archivedImage = MediaImageService.MoveToHistory(mediaImage);
                 MediaImageService.SaveEditedImage(mediaImage, archivedImage, croppedFileStream, request.ShouldOverride);
             }
             else
@@ -108,7 +110,12 @@ namespace BetterCms.Module.MediaManager.Command.Images.SaveImage
 
             MemoryStream memoryStream = null;
 
-            var hasChanges = cropped || resized; 
+            var hasChanges = (mediaImage.Width != newWidth
+                || mediaImage.Height != newHeight
+                || x1 != mediaImage.CropCoordX1
+                || x2 != mediaImage.CropCoordX2
+                || y1 != mediaImage.CropCoordY1
+                || y2 != mediaImage.CropCoordY2); 
 
             if (hasChanges)
             {
