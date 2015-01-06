@@ -52,8 +52,7 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 maxWidthToFit: 839,
                 jcropBackgroundColor: '#F5F5F5'
             },
-            jCropApi = null,
-            wasCropChanged = false;
+            jCropApi = null;
 
         /**
         * Assign objects to module.
@@ -109,8 +108,8 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                         }
                     });
                 },
-                onAccept: function () { wasCropChanged = false; },
-                onClose: function () { wasCropChanged = false; }
+                onAccept: function () { },
+                onClose: function () { }
             });
 
             modelDialog.disableExtraButtons();
@@ -366,7 +365,6 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                 };
 
                 self.onCropChanged = function(coords) {
-                    wasCropChanged = true;
                     self.onCropCoordsUpdated(coords);
                 };
 
@@ -560,12 +558,12 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
 
             self.onImageChanged = function() {
                 self.modelModified = imageEditorViewModel.width() != String(data.ImageWidth)
-                    || imageEditorViewModel.height() != String(data.ImageHeight);
-
-                if (wasCropChanged) {
-                    self.modelModified = true;
-                }
-
+                    || imageEditorViewModel.height() != String(data.ImageHeight)
+                    || Math.round(imageEditorViewModel.cropCoordX1()) != String(data.CropCoordX1)
+                    || Math.round(imageEditorViewModel.cropCoordX2()) != String(data.CropCoordX2)
+                    || Math.round(imageEditorViewModel.cropCoordY1()) != String(data.CropCoordY1)
+                    || Math.round(imageEditorViewModel.cropCoordY2()) != String(data.CropCoordY2);
+                
                 if (self.modelModified) {
                     self.accessButton.title(globalization.saveWithOverrideButtonTitle);
                     if (self.accessAsNewButton) {

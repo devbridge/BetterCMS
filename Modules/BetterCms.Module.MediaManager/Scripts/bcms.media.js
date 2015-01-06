@@ -251,8 +251,9 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
         }
 
         self.setItem = function (item) {
+            var src = item.publicUrl();
 
-            self.imageUrl(item.publicUrl());
+            self.imageUrl(src + (src.indexOf('?') != -1 ? '&' : '?') + (new Date()).getTime());
             self.previewUrl(item.thumbnailUrl());
 
             self.dimensions(item.width + ' x ' + item.height);
