@@ -65,7 +65,7 @@ namespace BetterCms.Module.MediaManager.Command.Images.GetImage
                     CropCoordY1 = image.CropCoordY1.HasValue ? image.CropCoordY1.Value : 0,
                     CropCoordX2 = image.CropCoordX2.HasValue ? image.CropCoordX2.Value : image.OriginalWidth,
                     CropCoordY2 = image.CropCoordY2.HasValue ? image.CropCoordY2.Value : image.OriginalHeight,
-                    OriginalImageUrl = FileUrlResolver.EnsureFullPathUrl(image.PublicOriginallUrl),
+                    OriginalImageUrl = FileUrlResolver.EnsureFullPathUrl(image.PublicOriginallUrl + string.Format("?{0}", DateTime.Now.ToString(MediaManagerModuleDescriptor.HardLoadImageDateTimeFormat))),
                     FolderId = image.Folder != null ? image.Folder.Id : (Guid?)null,
                     Tags = TagService.GetMediaTagNames(imageId)
                 };
