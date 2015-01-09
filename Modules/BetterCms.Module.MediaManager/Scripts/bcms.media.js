@@ -645,10 +645,10 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
             self.isReadOnly = ko.observable(item.IsReadOnly);
 
             self.getImageUrl = function () {
-                if (!self.thumbnailUrl()) {
+                if (!self.publicUrl()) {
                     return null;
                 }
-                return self.thumbnailUrl();
+                return self.publicUrl();
             };
 
             self.contextMenu = new MediaItemContextMenuViewModel();
