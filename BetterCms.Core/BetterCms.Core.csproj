@@ -210,6 +210,7 @@
     <Compile Include="Models\EntityIdGenerator.cs" />
     <Compile Include="Modules\CssIncludeDescriptor.cs" />
     <Compile Include="Modules\Projections\JavaScriptModuleLink.cs" />
+    <Compile Include="Modules\JsShimConfigDescriptor.cs" />
     <Compile Include="Mvc\Binders\JSONDataBinder.cs" />
     <Compile Include="ActionResults\IHaveCustomXmlSettings.cs" />
     <Compile Include="ActionResults\XmlResult.cs" />
