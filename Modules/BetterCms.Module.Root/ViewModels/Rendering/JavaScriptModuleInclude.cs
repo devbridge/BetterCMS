@@ -62,6 +62,14 @@
         public ProjectionsViewModel Globalization { get; set; }
 
         /// <summary>
+        /// Gets or sets the shim configuration.
+        /// </summary>
+        /// <value>
+        /// The shim configuration.
+        /// </value>
+        public JavaScriptModuleShimConfigurationViewModel ShimConfig { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

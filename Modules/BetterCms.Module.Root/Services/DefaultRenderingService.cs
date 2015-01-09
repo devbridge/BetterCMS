@@ -71,7 +71,12 @@ namespace BetterCms.Module.Root.Services
                                 Globalization = new ProjectionsViewModel
                                 {
                                     Projections = f.Globalization.OrderBy(x => x.Order)
-                                }
+                                },
+                                ShimConfig = f.ShimConfiguration != null ? new JavaScriptModuleShimConfigurationViewModel
+                                                 {
+                                                     Exports = f.ShimConfiguration.Exports,
+                                                     Depends = f.ShimConfiguration.Depends
+                                                 } : null
                             });
                 }
             }

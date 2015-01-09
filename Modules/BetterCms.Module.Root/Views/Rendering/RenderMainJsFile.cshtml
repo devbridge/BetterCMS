@@ -22,6 +22,10 @@ bettercms.requirejs.config({
          @Model.JavaScriptModules.RenderCommaSeparatedNamePathPairs(Model.UseMinReferences)
     },    
 
+    shim: {
+        @Model.JavaScriptModules.RenderCommaSeparatedNameShimConfigPairs()
+    },
+    
     waitSeconds: 15
 });
 
