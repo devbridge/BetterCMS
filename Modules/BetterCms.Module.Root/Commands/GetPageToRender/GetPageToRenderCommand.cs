@@ -462,7 +462,9 @@ namespace BetterCms.Module.Root.Commands.GetPageToRender
                 .Where(i => contentsIds.Contains(i.Parent.Id)).ToFuture();
 
             var contents = Repository.AsQueryable<Models.Content>()
-                .Where(i => contentsIds.Contains(i.Id)).ToFuture().ToList();
+                .Where(i => contentsIds.Contains(i.Id)).ToFuture()
+                .ToList()
+                .Select(c => Repository.UnProxy(c)).ToList();
 
             FakeDetachPageContent(contents);
 
