@@ -651,6 +651,13 @@ function ($, bcms, modal, siteSettings, forms, dynamicContent, messages, mediaUp
                 return self.publicUrl();
             };
 
+            self.getImageThumbnailUrl = function() {
+                if (!self.thumbnailUrl()) {
+                    return null;
+                }
+                return self.thumbnailUrl();
+            }
+
             self.contextMenu = new MediaItemContextMenuViewModel();
 
             self.isFile = function () {

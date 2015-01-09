@@ -224,8 +224,8 @@
 
                 <div class="bcms-media-items-block">
                     <div data-bind="css: iconClassNames(), click: onIconClicked.bind($data, $root)">
-                        <!-- ko if: getImageUrl() && !isProcessing() -->
-                        <img data-bind="attr: { alt: tooltip(), src: getImageUrl() }, event: { mousemove: $root.movePreview, mouseleave: $root.hidePreview, mouseout: $root.hidePreview }" />
+                        <!-- ko if: getImageThumbnailUrl() && !isProcessing() -->
+                        <img data-bind="attr: { alt: tooltip(), src: getImageThumbnailUrl() }, event: { mousemove: $root.movePreview, mouseleave: $root.hidePreview, mouseout: $root.hidePreview }" />
                         <!-- /ko -->
                     </div>
                     <div class="bcms-media-name" data-bind="click: onTitleClicked.bind($data, $root)">
