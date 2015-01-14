@@ -10,6 +10,11 @@ namespace BetterCms.Module.Root.Models.Maps
             Table("Categories");
 
             Map(x => x.Name).Length(MaxLength.Name).Not.Nullable();
+            Map(x => x.Macro).Nullable().Length(MaxLength.Text);
+            Map(x => x.DisplayOrder).Not.Nullable();
+
+            References(f => f.ParentCategory).Cascade.SaveUpdate().Nullable().LazyLoad();
+            HasMany(f => f.ChildCategories).Table("Categories").KeyColumn("ParentCategoryId").Inverse().Cascade.SaveUpdate().Where("IsDeleted = 0").LazyLoad();
         }
     }
 }

@@ -146,6 +146,7 @@
     <Compile Include="Commands\Authentication\GetAuthenticationInfo\GetAuthenticationInfoCommand.cs" />
     <Compile Include="Commands\Authentication\SearchUsers\SearchUsersCommand.cs" />
     <Compile Include="Commands\Authentication\SearchRoles\SearchRolesCommand.cs" />
+    <Compile Include="Commands\Category\SaveCategoryTree\SaveCategoryTreeCommand.cs" />
     <Compile Include="Commands\Language\DeleteLanguage\DeleteLanguageCommand.cs" />
     <Compile Include="Commands\Language\GetLanguageList\GetLanguageListCommand.cs" />
     <Compile Include="Commands\Language\SaveLanguage\SaveLanguageCommand.cs" />
@@ -188,10 +189,12 @@
     <Compile Include="Controllers\SidebarController.cs" />
     <Compile Include="Controllers\SiteSettingsController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
+    <Compile Include="Models\CategoryTree.cs" />
     <Compile Include="Models\ChildContentOption.cs" />
     <Compile Include="Models\IChildRegionContainer.cs" />
     <Compile Include="Models\Language.cs" />
     <Compile Include="Models\Extensions\CultureInfoExtensions.cs" />
+    <Compile Include="Models\Maps\CategoryTreeMap.cs" />
     <Compile Include="Models\Maps\LanguageMap.cs" />
     <Compile Include="Models\Maps\ChildContentMap.cs" />
     <Compile Include="Models\Maps\MasterPageMap.cs" />
@@ -211,6 +214,7 @@
     <Compile Include="Models\Migrations\Migration201310170919.cs" />
     <Compile Include="Models\Migrations\Migration201310160818.cs" />
     <Compile Include="Models\Migrations\Migration201310180900.cs" />
+    <Compile Include="Models\Migrations\Migration201501131230.cs" />
     <Compile Include="Models\Migrations\Migration201408131530.cs" />
     <Compile Include="Models\Migrations\Migration201407231054.cs" />
     <Compile Include="Models\Migrations\Migration201406191600.cs" />
@@ -359,9 +363,11 @@
     <Compile Include="Mvc\Helpers\MessagesHelper.cs" />
     <Compile Include="Registration\TabsJsModuleIncludeDescriptor.cs" />
     <Compile Include="RootModuleConstants.cs" />
+    <Compile Include="Services\DefaultCategoryService.cs" />
     <Compile Include="Services\DefaultChildContentService.cs" />
     <Compile Include="Services\DefaultContentProjectionService.cs" />
     <Compile Include="Services\DefaultLanguageService.cs" />
+    <Compile Include="Services\ICategoryService.cs" />
     <Compile Include="Services\IChildContentService.cs" />
     <Compile Include="Services\IContentProjectionService.cs" />
     <Compile Include="Services\ILanguageService.cs" />
@@ -382,6 +388,7 @@
     <Compile Include="ViewModels\Authentication\InfoViewModel.cs" />
     <Compile Include="ViewModels\Autocomplete\SuggestionViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryItemViewModel.cs" />
+    <Compile Include="ViewModels\Category\CategoryTreeViewModel.cs" />
     <Compile Include="ViewModels\Cms\CmsRequestViewModel.cs" />
     <Compile Include="ViewModels\Cms\PageRegionViewModel.cs" />
     <Compile Include="DataContracts\Enums\PageRetrievedEventResults.cs" />
