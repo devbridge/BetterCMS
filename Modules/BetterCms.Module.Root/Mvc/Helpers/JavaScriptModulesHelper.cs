@@ -66,7 +66,7 @@ namespace BetterCms.Module.Root.Mvc.Helpers
                 config.Add(string.Format("deps : [{0}]", string.Join(", ", shimConfig.Depends.Select(d => string.Concat("'", d, "'")))));
             }
 
-            if (shimConfig.Depends != null)
+            if (shimConfig.Exports != null)
             {
                 config.Add(string.Format("exports : '{0}'", shimConfig.Exports));
             }
