@@ -400,11 +400,16 @@ namespace BetterCms.Module.MediaManager.Services
                 repository.Save(originalImage);
                 unitOfWork.Commit();
 
-                storageService.UploadObject(new UploadRequest { InputStream = fileStream, Uri = originalImage.FileUri, IgnoreAccessControl = true });
                 if (!image.IsEdited())
                 {
-                    storageService.UploadObject(new UploadRequest { InputStream = fileStream, Uri = originalImage.OriginalUri, IgnoreAccessControl = true });
+                    using (var fileStreamReplica = new MemoryStream())
+                    {
+                        fileStream.CopyTo(fileStreamReplica);
+                        storageService.UploadObject(new UploadRequest { InputStream = fileStreamReplica, Uri = originalImage.OriginalUri, IgnoreAccessControl = true });
+                    }
                 }
+                storageService.UploadObject(new UploadRequest { InputStream = fileStream, Uri = originalImage.FileUri, IgnoreAccessControl = true });
+
                 UpdateThumbnail(originalImage, Size.Empty);
 
                 return originalImage;
