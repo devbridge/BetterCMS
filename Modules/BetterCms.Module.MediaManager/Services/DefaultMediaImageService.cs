@@ -179,6 +179,7 @@ namespace BetterCms.Module.MediaManager.Services
         /// </returns>
         public MediaImage UploadImage(Guid rootFolderId, string fileName, long fileLength, Stream fileStream, Guid reuploadMediaId, bool overrideUrl = true)
         {
+            overrideUrl = false; // TODO: temporary disabling feature #1055.
             using (var thumbnailFileStream = new MemoryStream())
             {
                 MediaImage originalImage;
@@ -352,6 +353,7 @@ namespace BetterCms.Module.MediaManager.Services
         /// <returns>The new original image.</returns>
         public MediaImage MakeAsOriginal(MediaImage image, MediaImage originalImage, MediaImage archivedImage, bool overrideUrl = true)
         {
+            overrideUrl = false; // TODO: temporary disabling feature #1055.
             var folderName = Path.GetFileName(Path.GetDirectoryName(originalImage.FileUri.OriginalString));
             
             using (var fileStream = DownloadFileStream(image.PublicUrl))
@@ -425,6 +427,7 @@ namespace BetterCms.Module.MediaManager.Services
         /// <param name="overrideUrl">To override public url or not.</param>
         public void SaveEditedImage(MediaImage image, MediaImage archivedImage, MemoryStream croppedImageFileStream, bool overrideUrl = true)
         {
+            overrideUrl = false; // TODO: temporary disabling feature #1055.
             var folderName = Path.GetFileName(Path.GetDirectoryName(image.FileUri.OriginalString));
             
             using (var fileStream = croppedImageFileStream ?? DownloadFileStream(image.PublicUrl))

@@ -126,8 +126,10 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
         dialog = modal.confirm({
             content: globalization.mediaVersionRestoreConfirmation,
-            acceptTitle: overrideAcceptButtonTitle,
-            buttons: extraButton,
+            acceptTitle: globalization.restoreButtonTitle,
+// TODO: temporary disabling feature #1055.
+//            acceptTitle: overrideAcceptButtonTitle,
+//            buttons: extraButton,
             onAccept: function () {
                 
                 var url = $.format(links.restoreMediaVersionUrl, id, "true"),
