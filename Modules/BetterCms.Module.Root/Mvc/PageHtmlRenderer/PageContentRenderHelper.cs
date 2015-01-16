@@ -97,7 +97,7 @@ namespace BetterCms.Module.Root.Mvc.PageHtmlRenderer
             }
 
             // Add child contents in the master page to child region is possible only if content is widget.
-            // If content is regulat HTML content, it works as master page contents, and contens may be added only in the child page
+            // If content is regular HTML content, it works as master page contents, and contents may be added only in the child page
             // If page is for preview, doesn't rendering children regions
             if ((!renderingPageModel.IsMasterPage || projection.Content is IChildRegionContainer) && !pageModel.IsPreviewing)
             {

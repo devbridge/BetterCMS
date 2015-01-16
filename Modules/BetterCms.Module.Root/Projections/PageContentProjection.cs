@@ -48,6 +48,13 @@ namespace BetterCms.Module.Root.Projections
             info.AddValue("contentAccessor", contentAccessor, contentAccessor.GetType());
         }
 
+        public virtual IPageContent PageContent
+        {
+            get
+            {
+                return pageContent;
+            }
+        }
         public virtual Guid PageContentId
         {
             get
