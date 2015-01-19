@@ -86,17 +86,21 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         var overrideAcceptButtonTitle = null;
         var overrideOnShowFunction = null;
 
+        var loaderContainer = container.find(selectors.versionPreviewLoaderContainer);
         if (isImage && isImage == true) {
             var createNewVersion = new modal.button(globalization.restoreAsNewVersionButtonTitle, null, 5, function() {
 
                 var url = $.format(links.restoreMediaVersionUrl, id, "false"),
-                    onComplete = function(json) {
+                    onComplete = function (json) {
                         messages.refreshBox(container, json);
+                        loaderContainer.hideLoading();
                         if (json.Success) {
                             var form = container.find(selectors.mediaHistoryForm);
                             form.submit();
                         }
                     };
+
+                loaderContainer.showLoading();
 
                 $.ajax({
                         type: 'POST',
@@ -122,8 +126,10 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
 
         dialog = modal.confirm({
             content: globalization.mediaVersionRestoreConfirmation,
-            acceptTitle: overrideAcceptButtonTitle,
-            buttons: extraButton,
+            acceptTitle: globalization.restoreButtonTitle,
+// TODO: temporary disabling feature #1055.
+//            acceptTitle: overrideAcceptButtonTitle,
+//            buttons: extraButton,
             onAccept: function () {
                 
                 var url = $.format(links.restoreMediaVersionUrl, id, "true"),
@@ -134,6 +140,8 @@ bettercms.define('bcms.media.history', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
                                 form.submit();
                             }
                         };
+
+                loaderContainer.showLoading();
 
                 $.ajax({
                     type: 'POST',

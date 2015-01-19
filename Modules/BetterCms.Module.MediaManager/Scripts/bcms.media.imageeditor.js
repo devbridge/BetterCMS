@@ -563,18 +563,18 @@ bettercms.define('bcms.media.imageeditor', ['bcms.jquery', 'bcms', 'bcms.modal',
                     || Math.round(imageEditorViewModel.cropCoordX2()) != String(data.CropCoordX2)
                     || Math.round(imageEditorViewModel.cropCoordY1()) != String(data.CropCoordY1)
                     || Math.round(imageEditorViewModel.cropCoordY2()) != String(data.CropCoordY2);
-                
-                if (self.modelModified) {
-                    self.accessButton.title(globalization.saveWithOverrideButtonTitle);
-                    if (self.accessAsNewButton) {
-                        self.accessAsNewButton.disabled(false);
-                    }
-                } else {
-                    self.accessButton.title(globalization.saveButtonTitle);
+// TODO: temporary disabling feature #1055.
+//                if (self.modelModified) {
+//                    self.accessButton.title(globalization.saveWithOverrideButtonTitle);
+//                    if (self.accessAsNewButton) {
+//                        self.accessAsNewButton.disabled(false);
+//                    }
+//                } else {
+//                    self.accessButton.title(globalization.saveButtonTitle);
                     if (self.accessAsNewButton) {
                         self.accessAsNewButton.disabled(true);
                     }
-                }
+//                }
             };
 
             imageEditorViewModel.cropCoordX1.subscribe(self.onValueChange);
