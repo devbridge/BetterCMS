@@ -181,32 +181,47 @@ namespace BetterCms.Module.MediaManager.Services
             Stream fileStream,
             bool waitForUploadResult = false,
             string title = "",
-            string description = "")
+            string description = "",
+            MediaFile reuploadMediaFile = null)
         {
             string folderName = CreateRandomFolderName();
             MediaFile file = new MediaFile();
-            if (!rootFolderId.HasDefaultValue())
+            if (reuploadMediaFile == null)
             {
-                file.Folder = repository.AsProxy<MediaFolder>(rootFolderId);
+                file = new MediaFile();
+
+                if (!rootFolderId.HasDefaultValue())
+                {
+                    file.Folder = repository.AsProxy<MediaFolder>(rootFolderId);
+                }
+                if (!string.IsNullOrEmpty(description))
+                {
+                    file.Description = description;
+                }
+                file.Type = type;
+                file.Title = !string.IsNullOrEmpty(title) ? title : Path.GetFileName(fileName);
+
+                if (configuration.Security.AccessControlEnabled)
+                {
+                    file.AddRule(new AccessRule { AccessLevel = AccessLevel.ReadWrite, Identity = securityService.CurrentPrincipalName });
+                }
             }
-            file.Title = !string.IsNullOrEmpty(title) ? title : Path.GetFileName(fileName);
-            if (!string.IsNullOrEmpty(description))
+            else
             {
-                file.Description = description;
+                file = reuploadMediaFile;
             }
-            file.Type = type;
+            file.FileUri = GetFileUri(type, folderName, fileName);
+            file.PublicUrl = GetPublicFileUrl(type, folderName, fileName);
+
+
             file.OriginalFileName = fileName;
             file.OriginalFileExtension = Path.GetExtension(fileName);
             file.Size = fileLength;
-            file.FileUri = GetFileUri(type, folderName, fileName);
-            file.PublicUrl = GetPublicFileUrl(type, folderName, fileName);
+
             file.IsTemporary = false;
             file.IsCanceled = false;
             file.IsUploaded = null;
-            if (configuration.Security.AccessControlEnabled)
-            {
-                file.AddRule(new AccessRule { AccessLevel = AccessLevel.ReadWrite, Identity = securityService.CurrentPrincipalName });
-            }
+
 
             unitOfWork.BeginTransaction();
             repository.Save(file);

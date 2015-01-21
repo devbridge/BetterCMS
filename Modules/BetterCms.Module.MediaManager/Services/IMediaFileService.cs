@@ -13,8 +13,8 @@ namespace BetterCms.Module.MediaManager.Services
         MediaFile UploadFile(MediaType type, Guid rootFolderId, string fileName, long fileLength, Stream fileStream,
             bool isTemporary = true, string title = "", string description = "");
 
-        MediaFile UploadFileWithStream(MediaType type, Guid rootFolderId, string fileName, long fileLength, Stream fileStream, 
-            bool WaitForUploadResult = false, string title = "", string description = "");
+        MediaFile UploadFileWithStream(MediaType type, Guid rootFolderId, string fileName, long fileLength, Stream fileStream,
+            bool WaitForUploadResult = false, string title = "", string description = "", MediaFile reuploadMediaFile = null);
 
         string CreateRandomFolderName();
 

@@ -1,9 +1,14 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 
+using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.MediaManager.Files;
 using BetterCms.Module.Api.Operations.MediaManager.Files.File;
 using BetterCms.Module.Api.Operations.MediaManager.Folders.Folder;
 using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
+
+using ServiceStack;
 
 namespace BetterCms.Module.Api.Extensions
 {

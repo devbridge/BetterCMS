@@ -135,6 +135,9 @@
     <Compile Include="Operations\MediaManager\Files\File\PostFileResponse.cs" />
     <Compile Include="Operations\MediaManager\Files\File\PutFileRequest.cs" />
     <Compile Include="Operations\MediaManager\Files\File\PutFileResponse.cs" />
+    <Compile Include="Operations\MediaManager\Files\File\ReuploadFileModel.cs" />
+    <Compile Include="Operations\MediaManager\Files\File\ReuploadFileRequest.cs" />
+    <Compile Include="Operations\MediaManager\Files\File\ReuploadFileResponse.cs" />
     <Compile Include="Operations\MediaManager\Files\File\SaveFileModel.cs" />
     <Compile Include="Operations\MediaManager\Files\IUploadFileService.cs" />
     <Compile Include="Operations\MediaManager\Folders\Folder\DeleteFolderRequest.cs" />
