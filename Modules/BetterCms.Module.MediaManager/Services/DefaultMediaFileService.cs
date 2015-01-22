@@ -9,6 +9,7 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.DataAccess.DataContext.Fetching;
 using BetterCms.Core.Exceptions;
+using BetterCms.Core.Exceptions.DataTier;
 using BetterCms.Core.Security;
 using BetterCms.Core.Services;
 using BetterCms.Core.Services.Caching;
@@ -22,6 +23,7 @@ using BetterCms.Module.Root.Mvc;
 using Common.Logging;
 
 using NHibernate;
+using NHibernate.Hql.Ast.ANTLR;
 
 namespace BetterCms.Module.MediaManager.Services
 {
@@ -149,7 +151,7 @@ namespace BetterCms.Module.MediaManager.Services
             repository.Save(file);
             unitOfWork.Commit();
 
-            Task fileUploadTask = UploadMediaFileToStorageAsync<MediaFile>(fileStream, file.FileUri, file.Id, media => { media.IsUploaded = true; }, media => { media.IsUploaded = false; }, false);
+            Task fileUploadTask = UploadMediaFileToStorageAsync<MediaFile>(fileStream, file.FileUri, file.Id, (media, session) => { media.IsUploaded = true; }, media => { media.IsUploaded = false; }, false);
             fileUploadTask.ContinueWith(
                 task =>
                     {
@@ -182,65 +184,116 @@ namespace BetterCms.Module.MediaManager.Services
             bool waitForUploadResult = false,
             string title = "",
             string description = "",
-            MediaFile reuploadMediaFile = null)
+            Guid? reuploadMediaId = null)
         {
             string folderName = CreateRandomFolderName();
-            MediaFile file = new MediaFile();
-            if (reuploadMediaFile == null)
+            MediaFile tempFile;
+            bool createHistoryItem;
+
+            if (reuploadMediaId.HasValue && !reuploadMediaId.Equals(Guid.Empty))
             {
-                file = new MediaFile();
-
-                if (!rootFolderId.HasDefaultValue())
+                var originalEntity = repository.AsQueryable<MediaFile>().FirstOrDefault(f => f.Id == reuploadMediaId);
+                if (originalEntity == null)
                 {
-                    file.Folder = repository.AsProxy<MediaFolder>(rootFolderId);
+                    throw new EntityNotFoundException("File with specified ID could not be found");
                 }
-                if (!string.IsNullOrEmpty(description))
-                {
-                    file.Description = description;
-                }
-                file.Type = type;
-                file.Title = !string.IsNullOrEmpty(title) ? title : Path.GetFileName(fileName);
-
-                if (configuration.Security.AccessControlEnabled)
-                {
-                    file.AddRule(new AccessRule { AccessLevel = AccessLevel.ReadWrite, Identity = securityService.CurrentPrincipalName });
-                }
+                tempFile = (MediaFile)originalEntity.Clone();
+                createHistoryItem = true;
             }
             else
             {
-                file = reuploadMediaFile;
+                tempFile = new MediaFile();
+
+                if (!rootFolderId.HasDefaultValue())
+                {
+                    tempFile.Folder = repository.AsProxy<MediaFolder>(rootFolderId);
+                }
+                if (!string.IsNullOrEmpty(description))
+                {
+                    tempFile.Description = description;
+                }
+                tempFile.Type = type;
+                tempFile.Title = !string.IsNullOrEmpty(title) ? title : Path.GetFileName(fileName);
+
+                if (configuration.Security.AccessControlEnabled)
+                {
+                    tempFile.AddRule(new AccessRule { AccessLevel = AccessLevel.ReadWrite, Identity = securityService.CurrentPrincipalName });
+                }
+                createHistoryItem = false;
             }
-            file.FileUri = GetFileUri(type, folderName, fileName);
-            file.PublicUrl = GetPublicFileUrl(type, folderName, fileName);
+
+            tempFile.FileUri = GetFileUri(type, folderName, fileName);
+            tempFile.PublicUrl = GetPublicFileUrl(type, folderName, fileName);
 
 
-            file.OriginalFileName = fileName;
-            file.OriginalFileExtension = Path.GetExtension(fileName);
-            file.Size = fileLength;
+            tempFile.OriginalFileName = fileName;
+            tempFile.OriginalFileExtension = Path.GetExtension(fileName);
+            tempFile.Size = fileLength;
 
-            file.IsTemporary = false;
-            file.IsCanceled = false;
-            file.IsUploaded = null;
+            tempFile.IsTemporary = true;
+            tempFile.IsCanceled = false;
+            tempFile.IsUploaded = null;
 
 
             unitOfWork.BeginTransaction();
-            repository.Save(file);
+            repository.Save(tempFile);
 
             if (!waitForUploadResult)
             {
                 unitOfWork.Commit();
             }
 
+
             if (waitForUploadResult)
             {
-                UploadMediaFileToStorageSync(fileStream, file.FileUri, file, media => { media.IsUploaded = true; }, media => { media.IsUploaded = false; }, false);
+                UploadMediaFileToStorageSync(fileStream, tempFile.FileUri, tempFile, media => { media.IsUploaded = true; media.IsTemporary = false; }, media => { media.IsUploaded = false; }, false);
 
+                var swapEntity = tempFile.Clone();
+                if (createHistoryItem)
+                {
+                    var originalEntity = repository.AsQueryable<MediaFile>().First(f => f.Id == reuploadMediaId);
+                    // swap
+                    tempFile.CopyDataTo(swapEntity);
+                    originalEntity.CopyDataTo(tempFile);
+                    swapEntity.CopyDataTo(originalEntity);
+                    tempFile.Original = originalEntity;
+                    unitOfWork.Session.SaveOrUpdate(originalEntity);
+                }
                 unitOfWork.Commit();
-                Events.MediaManagerEvents.Instance.OnMediaFileUpdated(file);
+                Events.MediaManagerEvents.Instance.OnMediaFileUpdated(tempFile);
             }
             else
             {
-                Task fileUploadTask = UploadMediaFileToStorageAsync<MediaFile>(fileStream, file.FileUri, file.Id, media => { media.IsUploaded = true; }, media => { media.IsUploaded = false; }, false);
+                Action<MediaFile, ISession> action;
+                if (createHistoryItem)
+                {
+                    action = delegate(MediaFile mediaFile, ISession session)
+                    {
+                        mediaFile.IsUploaded = true;
+                        mediaFile.IsTemporary = false;
+
+                        var swapEntity = mediaFile.Clone();
+                        var originalEntity = session.Get<MediaFile>(reuploadMediaId);
+                        // swap
+                        mediaFile.CopyDataTo(swapEntity);
+                        originalEntity.CopyDataTo(mediaFile);
+                        swapEntity.CopyDataTo(originalEntity);
+
+                        mediaFile.Original = originalEntity;
+
+                        session.SaveOrUpdate(originalEntity);
+                    };
+                }
+                else
+                {
+                    action = delegate(MediaFile mediaFile, ISession session)
+                    {
+                        mediaFile.IsUploaded = true;
+                        mediaFile.IsTemporary = false;
+                    };
+                }
+
+                Task fileUploadTask = UploadMediaFileToStorageAsync<MediaFile>(fileStream, tempFile.FileUri, tempFile.Id, action, media => { media.IsUploaded = false; }, false);
                 fileUploadTask.ContinueWith(
                     task =>
                     {
@@ -248,7 +301,7 @@ namespace BetterCms.Module.MediaManager.Services
                         ExecuteActionOnThreadSeparatedSessionWithNoConcurrencyTracking(
                             session =>
                             {
-                                var media = session.Get<MediaFile>(file.Id);
+                                var media = session.Get<MediaFile>(tempFile.Id);
                                 if (media != null)
                                 {
                                     if (media.IsCanceled && media.IsUploaded.HasValue && media.IsUploaded.Value)
@@ -262,7 +315,7 @@ namespace BetterCms.Module.MediaManager.Services
                 fileUploadTask.Start();
             }
 
-            return file;
+            return tempFile;
         }
 
         public virtual string CreateRandomFolderName()
@@ -331,7 +384,7 @@ namespace BetterCms.Module.MediaManager.Services
         public Task UploadMediaFileToStorageAsync<TMedia>(Stream sourceStream,
             Uri fileUri,
             Guid mediaId,
-            Action<TMedia> updateMediaAfterUpload,
+            Action<TMedia, ISession> updateMediaAfterUpload,
             Action<TMedia> updateMediaAfterFail,
             bool ignoreAccessControl)
             where TMedia : MediaFile
@@ -359,7 +412,7 @@ namespace BetterCms.Module.MediaManager.Services
                 var media = session.Get<TMedia>(mediaId);
                 if (media != null)
                 {
-                    updateMediaAfterUpload(media);
+                    updateMediaAfterUpload(media, session);
                     session.SaveOrUpdate(media);
                     session.Flush();
                     Events.MediaManagerEvents.Instance.OnMediaFileUpdated(media);

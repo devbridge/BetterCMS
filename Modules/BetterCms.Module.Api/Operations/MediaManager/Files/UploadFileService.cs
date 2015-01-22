@@ -100,13 +100,13 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
                 throw new CmsApiValidationException("MediaFile ID must be provided");
             }
 
-            var file = repository.AsQueryable<MediaFile>().FirstOrDefault(f => f.Id == request.Data.Id);
-            if (file == null)
-            {
-                throw new CmsApiValidationException("File with specified ID could not be found");
-            }
+//            var file = repository.AsQueryable<MediaFile>().FirstOrDefault(f => f.Id == request.Data.Id);
+//            if (file == null)
+//            {
+//                throw new CmsApiValidationException("File with specified ID could not be found");
+//            }
             // Create and save history item
-            mediaFileService.SaveMediaFile((MediaFile)file.CreateHistoryItem());
+//            mediaFileService.SaveMediaFile((MediaFile)file.CreateHistoryItem());
 
             var savedFile = mediaFileService.UploadFileWithStream(
                 Module.MediaManager.Models.MediaType.File,
@@ -117,7 +117,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
                 request.Data.WaitForUploadResult,
                 string.Empty,
                 string.Empty,
-                file);
+                request.Data.Id);
 
 //            mediaFileService.SaveMediaFile(savedFile);
             return new ReuploadFileResponse { Data = savedFile.Id };
