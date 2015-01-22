@@ -511,6 +511,24 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete the category tree?.
+        /// </summary>
+        public static string CategoryTree_Delete_Confirmation_Message {
+            get {
+                return ResourceManager.GetString("CategoryTree_Delete_Confirmation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category tree deleted successfully..
+        /// </summary>
+        public static string CategoryTree_DeletedSuccessfully_Message {
+            get {
+                return ResourceManager.GetString("CategoryTree_DeletedSuccessfully_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to delete item &quot;{0}&quot;?.
         /// </summary>
         public static string CategoryTree_DeleteNode_Confirmation_Message {

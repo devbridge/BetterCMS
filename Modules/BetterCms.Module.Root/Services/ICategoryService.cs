@@ -1,6 +1,7 @@
 ﻿using BetterCms.Module.Root.Models;
 using System;
 using System.Collections.Generic;
+using System.Security.Principal;
 
 namespace BetterCms.Module.Root.Services
 {
@@ -30,5 +31,7 @@ namespace BetterCms.Module.Root.Services
         /// Updated or newly created category.
         /// </returns>
         Category SaveCategory(out bool categoryUpdated, CategoryTree categoryTree, Guid categoryId, int version, string name, int displayOrder, string macro, Guid parentCategoryId, bool isDeleted = false, Category parentCategory = null, List<Category> categories = null);
+
+        void DeleteCategoryTree(Guid id, int version, IPrincipal currentUser);
     }
 }

@@ -2,6 +2,7 @@
 
 using BetterCms.Core.Security;
 using BetterCms.Module.Root.Commands.Category.DeleteCategory;
+using BetterCms.Module.Root.Commands.Category.DeleteCategoryTree;
 using BetterCms.Module.Root.Commands.Category.GetCategoryList;
 using BetterCms.Module.Root.Commands.Category.GetCategoryTree;
 using BetterCms.Module.Root.Commands.Category.GetCategoryTreesList;
@@ -127,6 +128,24 @@ namespace BetterCms.Module.Root.Controllers
             }
 
             return Json(new WireJson { Success = false });
+        }
+
+        [HttpPost]
+        public ActionResult DeleteCategoryTree(string id, string version)
+        {
+            var success =
+                GetCommand<DeleteCategoryTreeCommand>().ExecuteCommand(new CategoryTreeViewModel
+                                                                           {
+                                                                               Id = id.ToGuidOrDefault(),
+                                                                               Version = version.ToIntOrDefault()
+                                                                           });
+
+            if (success)
+            {
+                Messages.AddSuccess(RootGlobalization.CategoryTree_DeletedSuccessfully_Message);
+            }
+
+            return Json(new WireJson(success));
         }
     }
 }

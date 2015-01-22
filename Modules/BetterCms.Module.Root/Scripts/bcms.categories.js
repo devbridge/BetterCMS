@@ -6,7 +6,8 @@
             links = {
                 loadSiteSettingsCategoryTreesListUrl: null,
                 categoryTreeEditDialogUrl: null,
-                saveCategoryTreeUrl: null
+                saveCategoryTreeUrl: null,
+                deleteCategoryTreeUrl: null
             },
             globalization = {
                 categoryTreeCreatorDialogTitle: null,
@@ -15,12 +16,14 @@
                 placeNodeHere: null,
                 categoryTreeIsEmpty: null,
                 deleteCategoryNodeConfirmationMessage: null,
-                someCategoryNodesAreInEditingState: null
+                someCategoryNodesAreInEditingState: null,
+                categoryTreeDeleteConfirmMessage: null
             },
             selectors = {
                 siteSettingsCategoryTreesForm: "#bcms-categorytrees-form",
                 searchField: ".bcms-search-query",
                 searchButton: "#bcms-categorytrees-search-btn",
+
                 siteSettingsGridItemCreateButton: "#bcms-create-categorytree-button",
                 siteSettingsGridItemEditButton: ".bcms-grid-item-edit-button",
                 siteSettingsGridItemDeleteButton: ".bcms-grid-item-delete-button",
@@ -812,8 +815,17 @@
             throw new Error("TODO: not implemented");
         };
 
-        function deleteCategoryTree() {
-            throw new Error("TODO: not implemented");
+        function deleteCategoryTree(self, container) {
+            var id = self.data("id"),
+                version = self.data("version");
+
+            module.deleteCategoryTree(id, version, function (json) {
+                messages.refreshBox(selectors.siteSettingsCategoryTreesForm, json);
+                if (json.Success) {
+                    self.parents(selectors.siteSettingsGridRowTemplateFirstRow).remove();
+                    grid.showHideEmptyRow(container);
+                }
+            });
         };
 
         function initializeListItems(container, masterContainer) {
@@ -880,6 +892,33 @@
                 contentAvailable: initializeListOfCategoryTrees
             });
         };
+
+        module.deleteCategoryTree = function(id, version, callBack) {
+            var url = $.format(links.deleteCategoryTreeUrl, id, version),
+                onDeleteCompleted = function (json) {
+                    if ($.isFunction(callBack)) {
+                        callBack(json);
+                    }
+                };
+            modal.confirm({
+                content: globalization.categoryTreeDeleteConfirmMessage,
+                onAccept: function () {
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        cache: false
+                    })
+                    .done(function (json) {
+                        onDeleteCompleted(json);
+                    })
+                    .fail(function (response) {
+                        onDeleteCompleted(bcms.parseFailedResponse(response));
+                    });
+                }
+            });
+        }
 
         /**
         * Initializes module.

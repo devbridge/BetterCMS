@@ -146,6 +146,7 @@
     <Compile Include="Commands\Authentication\GetAuthenticationInfo\GetAuthenticationInfoCommand.cs" />
     <Compile Include="Commands\Authentication\SearchUsers\SearchUsersCommand.cs" />
     <Compile Include="Commands\Authentication\SearchRoles\SearchRolesCommand.cs" />
+    <Compile Include="Commands\Category\DeleteCategoryTree\DeleteCategoryTreeCommand.cs" />
     <Compile Include="Commands\Category\GetCategoryTreesList\GetCategoryTreesListCommand.cs" />
     <Compile Include="Commands\Category\GetCategoryTree\GetCategoryTreeCommand.cs" />
     <Compile Include="Commands\Category\SaveCategoryTree\SaveCategoryTreeCommand.cs" />

@@ -75,9 +75,9 @@ namespace BetterCms.Module.Root.Commands.Category.SaveCategoryTree
 
             return new CategoryTreeViewModel
             {
-                Id = request.Id,
-                Title = request.Title,
-                Version = request.Version
+                Id = categoryTree.Id,
+                Title = categoryTree.Title,
+                Version = categoryTree.Version
             };
         }
 

@@ -690,4 +690,10 @@
   <data name="CategoryTree_NodeEdit_Title_Tooltip_Message" xml:space="preserve">
     <value>Edit the title of the category item as you would like it displayed.</value>
   </data>
+  <data name="CategoryTree_DeletedSuccessfully_Message" xml:space="preserve">
+    <value>Category tree deleted successfully.</value>
+  </data>
+  <data name="CategoryTree_Delete_Confirmation_Message" xml:space="preserve">
+    <value>Are you sure you want to delete the category tree?</value>
+  </data>
 </root>

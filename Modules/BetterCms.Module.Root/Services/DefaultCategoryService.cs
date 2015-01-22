@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 
 using BetterCms.Core.DataAccess;
+using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.Exceptions.DataTier;
+using BetterCms.Core.Security;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
@@ -22,15 +26,19 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         private readonly ICmsConfiguration cmsConfiguration;
 
+        private readonly IUnitOfWork unitOfWork;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultCategoryService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
-        public DefaultCategoryService(IRepository repository, ICmsConfiguration cmsConfiguration)
+        /// <param name="unitOfWork">The unit of work.</param>
+        public DefaultCategoryService(IRepository repository, ICmsConfiguration cmsConfiguration, IUnitOfWork unitOfWork)
         {
             this.repository = repository;
             this.cmsConfiguration = cmsConfiguration;
+            this.unitOfWork = unitOfWork;
         }
 
         /// <summary>
@@ -117,6 +125,46 @@ namespace BetterCms.Module.Root.Services
             }
 
             return category;
+        }
+
+        public void DeleteCategoryTree(Guid id, int version, IPrincipal currentUser)
+        {
+            var categoryTree = repository
+                .AsQueryable<CategoryTree>()
+                .Where(map => map.Id == id)
+// TODO:                .FetchMany(map => map.AccessRules)
+                .Distinct()
+                .ToList()
+                .First();
+
+// TODO:            // Security.
+//            if (cmsConfiguration.Security.AccessControlEnabled)
+//            {
+//                var roles = new[] { RootModuleConstants.UserRoles.EditContent };
+//                accessControlService.DemandAccess(sitemap, currentUser, AccessLevel.ReadWrite, roles);
+//            }
+
+            // Concurrency.
+            if (version > 0 && categoryTree.Version != version)
+            {
+                throw new ConcurrentDataException(categoryTree);
+            }
+
+            unitOfWork.BeginTransaction();
+
+// TODO:
+//            if (sitemap.AccessRules != null)
+//            {
+//                var rules = sitemap.AccessRules.ToList();
+//                rules.ForEach(sitemap.RemoveRule);
+//            }
+
+            repository.Delete(categoryTree);
+
+            unitOfWork.Commit();
+
+            // Events.
+// TODO:            Events.SitemapEvents.Instance.OnSitemapDeleted(categoryTree);
         }
     }
 }

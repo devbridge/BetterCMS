@@ -23,6 +23,7 @@ namespace BetterCms.Module.Root.Registration
                       new JavaScriptModuleLinkTo<CategoryController>(this, "loadSiteSettingsCategoryTreesListUrl", c => c.CategoryTrees(null)),
                       new JavaScriptModuleLinkTo<CategoryController>(this, "categoryTreeEditDialogUrl", c => c.EditCategoryTree("{0}")),
                       new JavaScriptModuleLinkTo<CategoryController>(this, "saveCategoryTreeUrl", c => c.SaveCategoryTree(null)),
+                      new JavaScriptModuleLinkTo<CategoryController>(this, "deleteCategoryTreeUrl", c => c.DeleteCategoryTree("{0}", "{1}")),
                 };
 
             Globalization = new IActionProjection[]
@@ -34,6 +35,7 @@ namespace BetterCms.Module.Root.Registration
                     new JavaScriptModuleGlobalization(this, "categoryTreeIsEmpty", () => RootGlobalization.CategoryTree_TreeIsEmpty_Message),
                     new JavaScriptModuleGlobalization(this, "deleteCategoryNodeConfirmationMessage", () => RootGlobalization.CategoryTree_DeleteNode_Confirmation_Message),
                     new JavaScriptModuleGlobalization(this, "someCategoryNodesAreInEditingState", () => RootGlobalization.CategoryTree_SomeNodesAreInEditingState),
+                    new JavaScriptModuleGlobalization(this, "categoryTreeDeleteConfirmMessage", () => RootGlobalization.CategoryTree_Delete_Confirmation_Message),
                 };
         }
     }
