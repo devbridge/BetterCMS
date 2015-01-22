@@ -1,0 +1,70 @@
+﻿@using BetterCms.Module.Root
+@using BetterCms.Module.Root.Content.Resources
+@using BetterCms.Module.Root.Controllers
+@using BetterCms.Module.Root.Mvc.Helpers
+@using BetterCms.Module.Root.ViewModels.Category
+@using Microsoft.Web.Mvc
+@model CategoryTreeViewModel
+<div class="bcms-tab-header">
+    <a class="bcms-tab bcms-tab-active" data-name="#bcms-tab-1">Properties</a>
+    <a class="bcms-tab" data-name="#bcms-tab-2">Nodes</a>
+</div>
+<div id="bcms-categorytree-addnode">
+    @Html.TabbedContentMessagesBox()
+    @* Form is required for unobtrusive validation. *@
+    @using (Html.BeginForm<CategoryController>(f => f.EditCategoryTree(null), FormMethod.Post, new
+        {
+            @class = "bcms-categorytree-form bcms-ajax-form",
+            data_readonly = Model.IsReadOnly.ToString().ToLower()
+        }))
+    {
+        <div id="bcms-tab-1" class="bcms-tab-single">
+            <div class="bcms-padded-content">
+                <div class="bcms-input-list-holder">
+                    @Html.Tooltip(RootGlobalization.CategoryTree_EditDialog_Title_Tooltip_Description)
+                    <div class="bcms-content-titles">@RootGlobalization.CategoryTree_EditDialog_Title_Title</div>
+                    <div class="bcms-input-box">
+                        @Html.TextBoxFor(model => model.Title, new { @class = "bcms-editor-field-box", data_bind = "value: title, valueUpdate: 'afterkeydown', hasfocus: true" })
+                        @Html.BcmsValidationMessageFor(f => f.Title)
+                        @Html.HiddenFor(m => m.Id)
+                        @Html.HiddenFor(m => m.Version)
+                    </div>
+                </div>
+@*                @if (Model.AccessControlEnabled)*@
+@*                {*@
+@*                    @Html.Partial(RootModuleConstants.AccessControlTemplate)*@
+@*                }*@
+            </div>
+        </div>
+        <div id="bcms-tab-2" class="bcms-tab-single">
+            <div class="bcms-scroll-window">
+
+                <div class="bcms-columns-container">
+                    <div class="bcms-sitemap-filter-holder">
+@*                        <div class="bcms-language-bar" style="display: none;" data-bind="visible: showLanguages, with: language">*@
+@*                            <div class="bcms-filter-text bcms-table-middle-box">Edit sitemap in language:</div>*@
+@*                            <div class="bcms-table-middle-box">*@
+@*                                <select class="bcms-global-select" data-bind="options: languages, optionsText: 'value', optionsValue: 'key', value: languageId"></select>*@
+@*                            </div>*@
+@*                        </div>*@
+
+                        <div class="bcms-expand-link-holder" @* data-bind="droppable: 'emptyListZone'" TODO: check later. NOTE: jQuery error is raised on leave over. *@>
+                            <div class="bcms-expand-link" data-bind="click: expandAll">@RootGlobalization.CategoryTree_Button_ExpandAll</div>
+                            <div class="bcms-expand-link" data-bind="click: collapseAll">@RootGlobalization.CategoryTree_Button_CollapseAll</div>
+                        </div>
+                    </div>
+
+                    <div class="bcms-rightcol">
+                        <div class="bcms-sitemap-holder bcms-sitemap-edit">
+                            <div class="bcms-addnode-placement-holder@(Model.IsReadOnly ? "-readonly" : string.Empty)">
+                                @Html.Partial("Partial/CategoryTree", new CategoryTreeNodeViewModel())
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+</div>
+@Html.Partial("Partial/CategoryTreeTemplate", new CategoryTreeNodeViewModel())

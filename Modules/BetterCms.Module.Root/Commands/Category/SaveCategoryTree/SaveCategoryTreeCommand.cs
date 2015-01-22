@@ -5,6 +5,10 @@ using BetterCms.Module.Root.ViewModels.Category;
 using System.Collections.Generic;
 using System.Linq;
 
+using BetterCms.Module.Root.Models;
+
+using NHibernate.Linq;
+
 namespace BetterCms.Module.Root.Commands.Category.SaveCategoryTree
 {
     public class SaveCategoryTreeCommand : CommandBase, ICommand<CategoryTreeViewModel, CategoryTreeViewModel>
@@ -35,13 +39,20 @@ namespace BetterCms.Module.Root.Commands.Category.SaveCategoryTree
 
             var createNew = request.Id.HasDefaultValue();
 
-            Models.CategoryTree categoryTree;
+            var categories = !createNew ? Repository.AsQueryable<Models.Category>()
+                                                        .Where(node => node.CategoryTree.Id == request.Id)
+                                                        .ToFuture()
+                                                  : new List<Models.Category>();
 
-            var categories = Repository.AsQueryable<Models.Category>().ToList();
+            var categoryTree = !createNew ? this.Repository.AsQueryable<CategoryTree>().Where(s => s.Id == request.Id).ToFuture().ToList().First() : new CategoryTree();
 
             UnitOfWork.BeginTransaction();
 
-            SaveCategoryTree(request.RootCategories, null, categories);
+            categoryTree.Title = request.Title;
+            categoryTree.Version = request.Version;
+            Repository.Save(categoryTree);
+
+            SaveCategoryTree(categoryTree, request.RootNodes, null, categories.ToList());
             
             UnitOfWork.Commit();
 
@@ -70,7 +81,7 @@ namespace BetterCms.Module.Root.Commands.Category.SaveCategoryTree
             };
         }
 
-        private void SaveCategoryTree(IEnumerable<CategoryItemViewModel> categories, Models.Category parentCategory, List<Models.Category> categoryList)
+        private void SaveCategoryTree(CategoryTree categoryTree, IEnumerable<CategoryTreeNodeViewModel> categories, Models.Category parentCategory, List<Models.Category> categoryList)
         {
             if (categories == null)
             {
@@ -85,7 +96,7 @@ namespace BetterCms.Module.Root.Commands.Category.SaveCategoryTree
                 var delete = !viewModel.Id.HasDefaultValue() && isDeleted;
 
                 bool updatedInDB;
-                var category = CategoryService.SaveCategory(out updatedInDB, viewModel.Id, viewModel.Version, viewModel.Name, viewModel.DisplayOrder, viewModel.Macro, viewModel.ParentCategoryId, isDeleted, parentCategory, categoryList);
+                var category = CategoryService.SaveCategory(out updatedInDB, categoryTree, viewModel.Id, viewModel.Version, viewModel.Title, viewModel.DisplayOrder, viewModel.Macro, viewModel.ParentId, isDeleted, parentCategory, categoryList);
 
                 if (create && updatedInDB)
                 {
@@ -99,8 +110,8 @@ namespace BetterCms.Module.Root.Commands.Category.SaveCategoryTree
                 {
                     deletedCategories.Add(category);
                 }
-                
-                SaveCategoryTree(viewModel.ChildCategories, category, categoryList);
+
+                SaveCategoryTree(categoryTree, viewModel.ChildNodes, category, categoryList);
             }
         }
     }

@@ -65,8 +65,8 @@ namespace BetterCms.Module.Root.Models.Migrations
 
                 CreateDefaultCategoryTree();
             }
-            
-            if (!Schema.Schema(SchemaName).Table("Categories").Column("CategpryTreeId").Exists())
+
+            if (!Schema.Schema(SchemaName).Table("Categories").Column("CategoryTreeId").Exists())
             {
                 Create
                     .Column("CategoryTreeId")
@@ -75,18 +75,18 @@ namespace BetterCms.Module.Root.Models.Migrations
 
                 Update
                     .Table("Categories").InSchema(SchemaName)
-                    .Set(new { CategpryTreeId = DefaultCategoryTreeId })
+                    .Set(new { CategoryTreeId = DefaultCategoryTreeId })
                     .AllRows();
                 
                 Alter
                     .Table("Categories").InSchema(SchemaName)
-                    .AlterColumn("CategpryTreeId")
+                    .AlterColumn("CategoryTreeId")
                     .AsGuid().NotNullable();
 
                 Create
                     .ForeignKey("FK_Cms_Categories_CategoryTreeId_Cms_CategoryTree_Id")
                     .FromTable("Categories").InSchema(SchemaName).ForeignColumn("CategoryTreeId")
-                    .ToTable("CategoryTree").InSchema(SchemaName).PrimaryColumn("Id");
+                    .ToTable("CategoryTrees").InSchema(SchemaName).PrimaryColumn("Id");
 
                 Create
                     .Index("IX_Cms_Categories_CategoryTreeId")

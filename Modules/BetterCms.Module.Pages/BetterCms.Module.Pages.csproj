@@ -420,6 +420,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EditOptions.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Sitemap\Sitemaps.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Sitemaps.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Widgets\Partial\WidgetUsagesTemplate.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -669,11 +674,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Preview.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Sitemap\Sitemaps.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Sitemaps.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Templates\EditTemplate.generated.cs">
       <AutoGen>True</AutoGen>

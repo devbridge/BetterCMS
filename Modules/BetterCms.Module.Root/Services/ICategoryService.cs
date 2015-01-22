@@ -11,11 +11,12 @@ namespace BetterCms.Module.Root.Services
         /// </summary>
         /// <returns>List of category lookup values.</returns>
         IEnumerable<LookupKeyValue> GetCategories();
-        
+
         /// <summary>
         /// Saves the category.
         /// </summary>
         /// <param name="categoryUpdated">true if category updated.</param>
+        /// <param name="categoryTree">The category tree.</param>
         /// <param name="categoryId">The category identifier.</param>
         /// <param name="version">The version.</param>
         /// <param name="name">The name.</param>
@@ -28,6 +29,6 @@ namespace BetterCms.Module.Root.Services
         /// <returns>
         /// Updated or newly created category.
         /// </returns>
-        Category SaveCategory(out bool categoryUpdated, Guid categoryId, int version, string name, int displayOrder, string macro, Guid parentCategoryId, bool isDeleted = false, Category parentCategory = null, List<Category> categories = null);
+        Category SaveCategory(out bool categoryUpdated, CategoryTree categoryTree, Guid categoryId, int version, string name, int displayOrder, string macro, Guid parentCategoryId, bool isDeleted = false, Category parentCategory = null, List<Category> categories = null);
     }
 }

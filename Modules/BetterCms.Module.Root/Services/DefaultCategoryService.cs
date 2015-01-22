@@ -51,7 +51,7 @@ namespace BetterCms.Module.Root.Services
                 .ToFuture();
         }
 
-        public Category SaveCategory(out bool categoryUpdated, Guid categoryId, int version, string name, int displayOrder, string macro, Guid parentCategoryId, bool isDeleted = false, Category parentCategory = null, List<Category> categories = null)
+        public Category SaveCategory(out bool categoryUpdated, CategoryTree categoryTree, Guid categoryId, int version, string name, int displayOrder, string macro, Guid parentCategoryId, bool isDeleted = false, Category parentCategory = null, List<Category> categories = null)
         {
             categoryUpdated = false;
 
@@ -67,6 +67,10 @@ namespace BetterCms.Module.Root.Services
             else
             {
                 var updated = false;
+                if (category.CategoryTree == null)
+                {
+                    category.CategoryTree = categoryTree;
+                }
 
                 if (category.Name != name)
                 {

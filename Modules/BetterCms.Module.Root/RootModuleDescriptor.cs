@@ -58,6 +58,11 @@ namespace BetterCms.Module.Root
         private readonly TagsJsModuleIncludeDescriptor tagsJsModuleIncludeDescriptor;
 
         /// <summary>
+        /// bcms.categories.js java script module descriptor.
+        /// </summary>
+        private readonly CategoriesJavaScriptModuleDescriptor categoriesJavaScriptModuleDescriptor;
+
+        /// <summary>
         /// bcms.languages.js java script module descriptor.
         /// </summary>
         private readonly LanguagesJsModuleIncludeDescriptor languagesJsModuleIncludeDescriptor;
@@ -70,6 +75,7 @@ namespace BetterCms.Module.Root
             authenticationJsModuleIncludeDescriptor = new AuthenticationJsModuleIncludeDescriptor(this);
             siteSettingsJsModuleIncludeDescriptor = new SiteSettingsJsModuleIncludeDescriptor(this);
             tagsJsModuleIncludeDescriptor = new TagsJsModuleIncludeDescriptor(this);
+            categoriesJavaScriptModuleDescriptor = new CategoriesJavaScriptModuleDescriptor(this);
             languagesJsModuleIncludeDescriptor = new LanguagesJsModuleIncludeDescriptor(this);
 
             InitializeSecurity();            
@@ -300,6 +306,7 @@ namespace BetterCms.Module.Root
                     new JsIncludeDescriptor(this, "ace", "ace/ace.js", "ace/ace.js"),
                     new JsIncludeDescriptor(this, "ckeditor", "ckeditor/ckeditor.js", "ckeditor/ckeditor.js"),
                     tagsJsModuleIncludeDescriptor,
+                    categoriesJavaScriptModuleDescriptor,
                     languagesJsModuleIncludeDescriptor,
                     new OptionsJsModuleIncludeDescriptor(this)
                 };
@@ -343,6 +350,13 @@ namespace BetterCms.Module.Root
                     new LinkActionProjection(tagsJsModuleIncludeDescriptor, page => "loadSiteSettingsCategoryList")
                         {
                             Order = 2000,
+                            Title = page => RootGlobalization.SiteSettings_CategoriesMenuItem + " (basic)",
+                            CssClass = page => "bcms-sidebar-link",
+                            AccessRole = RootModuleConstants.UserRoles.EditContent
+                        },
+                    new LinkActionProjection(categoriesJavaScriptModuleDescriptor, page => "loadSiteSettingsCategoryTreesList")
+                        {
+                            Order = 2050,
                             Title = page => RootGlobalization.SiteSettings_CategoriesMenuItem,
                             CssClass = page => "bcms-sidebar-link",
                             AccessRole = RootModuleConstants.UserRoles.EditContent

@@ -3,11 +3,15 @@
 using BetterCms.Core.Security;
 using BetterCms.Module.Root.Commands.Category.DeleteCategory;
 using BetterCms.Module.Root.Commands.Category.GetCategoryList;
+using BetterCms.Module.Root.Commands.Category.GetCategoryTree;
+using BetterCms.Module.Root.Commands.Category.GetCategoryTreesList;
 using BetterCms.Module.Root.Commands.Category.SaveCategory;
+using BetterCms.Module.Root.Commands.Category.SaveCategoryTree;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Mvc.Grids.GridOptions;
+using BetterCms.Module.Root.ViewModels;
 using BetterCms.Module.Root.ViewModels.Category;
 
 using Microsoft.Web.Mvc;
@@ -84,6 +88,45 @@ namespace BetterCms.Module.Root.Controllers
             }
 
             return Json(new WireJson(success));
+        }
+
+        public ActionResult CategoryTrees(CategoryTreesFilter request)
+        {
+            request.SetDefaultPaging();
+            var model = GetCommand<GetCategoryTreesListCommand>().ExecuteCommand(request);
+
+            var view = RenderView("CategoryTrees", model);
+
+            return ComboWireJson(model != null, view, new {}, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult EditCategoryTree(string sitemapId)
+        {
+            var model = GetCommand<GetCategoryTreeCommand>().ExecuteCommand(sitemapId.ToGuidOrDefault());
+            var success = model != null;
+            var view = RenderView("CategoryTreeEdit", model);
+            return ComboWireJson(success, view, model, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult SaveCategoryTree(CategoryTreeViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var response = GetCommand<SaveCategoryTreeCommand>().ExecuteCommand(model);
+                if (response != null)
+                {
+                    if (model.Id.HasDefaultValue())
+                    {
+                        Messages.AddSuccess(RootGlobalization.CategoryTree_CategoryTreeCreatedSuccessfully_Message);
+                    }
+
+                    return Json(new WireJson { Success = true, Data = response });
+                }
+            }
+
+            return Json(new WireJson { Success = false });
         }
     }
 }
