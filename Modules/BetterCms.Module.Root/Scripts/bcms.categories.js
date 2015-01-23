@@ -811,8 +811,17 @@
             }, true);
         };
 
-        function editCategoryTree() {
-            throw new Error("TODO: not implemented");
+        function editCategoryTree(self, container) {
+            var id = self.data("id");
+
+            loadAddNodeDialog(id, function (data) {
+                if (data.Data != null) {
+                    var row = self.parents(selectors.siteSettingsGridRowTemplateFirstRow),
+                        cell = row.find(selectors.siteSettingsGridRowTitleCell);
+                    cell.html(data.Data.Title);
+                    row.find(selectors.siteSettingsGridItemDeleteButton).data("version", data.Data.Version);
+                }
+            }, globalization.categoryTreeEditorDialogTitle);
         };
 
         function deleteCategoryTree(self, container) {
