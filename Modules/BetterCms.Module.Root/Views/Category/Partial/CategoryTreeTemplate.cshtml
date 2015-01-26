@@ -3,7 +3,7 @@
 @model BetterCms.Module.Root.ViewModels.Category.CategoryTreeNodeViewModel
 <script type="text/html" id="bcms-navigation-categorynode-template">
     <!-- ko if: !hasChildNodes() -->
-    <div class="bcms-nodes-dropzone bcms-nodes-dropzone-active" data-bind="droppable: 'emptyListZone'">
+    <div class="bcms-nodes-dropzone bcms-nodes-dropzone-active" data-bind="droppableCategoryNode: 'emptyListZone'">
         <div class="bcms-node-infotext" data-bind="text: getNoDataMessage()">@RootGlobalization.CategoryTree_PlaceLinkHere_Message</div>
     </div>
     <!-- /ko -->
@@ -12,11 +12,11 @@
     <div class="bcms-tree-holder">
         <!-- ko if: isFirstNode() -->
         <div class="bcms-nodes-dropzone"
-             data-bind="css: { 'bcms-nodes-dropzone-active': activeZone() == 'topZone'  }, droppable: 'topZone'">
+             data-bind="css: { 'bcms-nodes-dropzone-active': activeZone() == 'topZone'  }, droppableCategoryNode: 'topZone'">
             <div class="bcms-node-infotext">@RootGlobalization.CategoryTree_PlaceLinkHere_Message</div>
         </div>
         <!-- /ko -->
-        <div data-bind="draggable: $parentContext.$index, style: { zIndex: !isBeingDragged() ? '0' : '9999' }">
+        <div data-bind="draggableCategoryNode: $parentContext.$index, style: { zIndex: !isBeingDragged() ? '0' : '9999' }">
             <div class="bcms-placement-node" data-bind="
                         attr: { id: containerId },
                         css: { 'bcms-placement-node-drag': isBeingDragged(), 'bcms-placement-node-edit': isActive(), 'bcms-placement-one-active': !isBeingDragged() && superDraggable() },
@@ -24,7 +24,7 @@
                 <!-- ko if: hasChildNodes() -->
                 <a class="bcms-expand-collapse-node" data-bind="click: toggleExpand, css: { 'bcms-expanded-nodes': isExpanded() }">&nbsp;</a>
                 <!-- /ko -->
-                <div class="bcms-node-info" data-bind="droppable: 'middleZone'">
+                <div class="bcms-node-info" data-bind="droppableCategoryNode: 'middleZone'">
                     <div class="bcms-placement-title" data-bind="text: title"></div>
                 </div>
                 <!-- ko if: getCategoryTree().settings.canEditNode && isActive() -->
@@ -83,7 +83,7 @@
             <div class="bcms-nodes-dropzone"
                  data-bind="css: { 'bcms-nodes-dropzone-active': activeZone() == 'bottomZone' },
                             style: { paddingBottom: !(parentNode().parentNode) && isLastNode() ? '80px' : '' },
-                            droppable: 'bottomZone'">
+                            droppableCategoryNode: 'bottomZone'">
                 <div class="bcms-node-infotext">@RootGlobalization.CategoryTree_PlaceLinkHere_Message</div>
             </div>
             <!-- /ko -->
