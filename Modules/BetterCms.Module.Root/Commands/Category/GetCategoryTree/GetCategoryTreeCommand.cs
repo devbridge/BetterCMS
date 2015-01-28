@@ -5,6 +5,7 @@ using System.Web;
 
 using BetterCms.Core.Mvc.Commands;
 using BetterCms.Core.Security;
+using BetterCms.Module.Root.Helpers;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.ViewModels.Category;
@@ -61,14 +62,13 @@ namespace BetterCms.Module.Root.Commands.Category.GetCategoryTree
 
             IQueryable<CategoryTree> sitemapQuery = Repository.AsQueryable<CategoryTree>()
                 .Where(map => map.Id == sitemapId)
-                .FetchMany(map => map.RootCategories);
+                .FetchMany(map => map.Categories);
 
-            if (CmsConfiguration.EnableMultilanguage)
-            {
-                sitemapQuery = sitemapQuery
-                    .FetchMany(map => map.RootCategories);
+//            if (CmsConfiguration.EnableMultilanguage)
+//            {
+//                sitemapQuery = sitemapQuery
 //                    .ThenFetchMany(node => node.Translations);
-            }
+//            }
 
             var sitemap = sitemapQuery.Distinct().ToFuture().ToList().First();
 //            var languages = CmsConfiguration.EnableMultilanguage ? languagesFuture.ToList() : new List<LookupKeyValue>();
@@ -77,13 +77,12 @@ namespace BetterCms.Module.Root.Commands.Category.GetCategoryTree
                 Id = sitemap.Id,
                 Version = sitemap.Version,
                 Title = sitemap.Title,
-//                RootNodes =
-//                    CategoriesHelper.GetCategoryTreeNodesInHierarchy(
-//                        CmsConfiguration.EnableMultilanguage,
-//                        sitemap.Nodes.Distinct().Where(f => f.ParentNode == null).ToList(),
-//                        sitemap.Nodes.Distinct().ToList(),
-//                        null,  // TODO: languages.Select(l => l.Key.ToGuidOrDefault()).ToList(),
-//                        null), // TODO (pagesToFuture ?? new List<SitemapHelper.PageData>()).ToList()),
+                RootNodes =
+                    CategoriesHelper.GetCategoryTreeNodesInHierarchy(
+                        CmsConfiguration.EnableMultilanguage,
+                        sitemap.Categories.Distinct().Where(f => f.ParentCategory == null).ToList(),
+                        sitemap.Categories.Distinct().ToList(),
+                        null),  // TODO: languages.Select(l => l.Key.ToGuidOrDefault()).ToList(),
 //                Tags = tagsFuture.ToList(),
 //                AccessControlEnabled = CmsConfiguration.Security.AccessControlEnabled,
 //                ShowLanguages = CmsConfiguration.EnableMultilanguage && languages.Any(),

@@ -348,16 +348,9 @@ namespace BetterCms.Module.Root
         {
             return new List<IPageActionProjection>
                 {
-                    new LinkActionProjection(tagsJsModuleIncludeDescriptor, page => "loadSiteSettingsCategoryList")
-                        {
-                            Order = 2000,
-                            Title = page => RootGlobalization.SiteSettings_CategoriesMenuItem + " (basic)",
-                            CssClass = page => "bcms-sidebar-link",
-                            AccessRole = RootModuleConstants.UserRoles.EditContent
-                        },
                     new LinkActionProjection(categoriesJavaScriptModuleDescriptor, page => "loadSiteSettingsCategoryTreesList")
                         {
-                            Order = 2050,
+                            Order = 2000,
                             Title = page => RootGlobalization.SiteSettings_CategoriesMenuItem,
                             CssClass = page => "bcms-sidebar-link",
                             AccessRole = RootModuleConstants.UserRoles.EditContent

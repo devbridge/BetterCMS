@@ -55,8 +55,8 @@ WriteLiteral(" type=\"text/html\"");
 WriteLiteral(" id=\"bcms-navigation-categorynode-template\"");
 
 WriteLiteral(">\r\n    <!-- ko if: !hasChildNodes() -->\r\n    <div class=\"bcms-nodes-dropzone bcms" +
-"-nodes-dropzone-active\" data-bind=\"droppable: \'emptyListZone\'\">\r\n        <div cl" +
-"ass=\"bcms-node-infotext\" data-bind=\"text: getNoDataMessage()\">");
+"-nodes-dropzone-active\" data-bind=\"droppableCategoryNode: \'emptyListZone\'\">\r\n   " +
+"     <div class=\"bcms-node-infotext\" data-bind=\"text: getNoDataMessage()\">");
 
             
             #line 7 "..\..\Views\Category\Partial\CategoryTreeTemplate.cshtml"
@@ -73,7 +73,7 @@ WriteLiteral(@"</div>
     <div class=""bcms-tree-holder"">
         <!-- ko if: isFirstNode() -->
         <div class=""bcms-nodes-dropzone""
-             data-bind=""css: { 'bcms-nodes-dropzone-active': activeZone() == 'topZone'  }, droppable: 'topZone'"">
+             data-bind=""css: { 'bcms-nodes-dropzone-active': activeZone() == 'topZone'  }, droppableCategoryNode: 'topZone'"">
             <div class=""bcms-node-infotext"">");
 
             
@@ -86,7 +86,7 @@ WriteLiteral(@"</div>
 WriteLiteral(@"</div>
         </div>
         <!-- /ko -->
-        <div data-bind=""draggable: $parentContext.$index, style: { zIndex: !isBeingDragged() ? '0' : '9999' }"">
+        <div data-bind=""draggableCategoryNode: $parentContext.$index, style: { zIndex: !isBeingDragged() ? '0' : '9999' }"">
             <div class=""bcms-placement-node"" data-bind=""
                         attr: { id: containerId },
                         css: { 'bcms-placement-node-drag': isBeingDragged(), 'bcms-placement-node-edit': isActive(), 'bcms-placement-one-active': !isBeingDragged() && superDraggable() },
@@ -94,7 +94,7 @@ WriteLiteral(@"</div>
                 <!-- ko if: hasChildNodes() -->
                 <a class=""bcms-expand-collapse-node"" data-bind=""click: toggleExpand, css: { 'bcms-expanded-nodes': isExpanded() }"">&nbsp;</a>
                 <!-- /ko -->
-                <div class=""bcms-node-info"" data-bind=""droppable: 'middleZone'"">
+                <div class=""bcms-node-info"" data-bind=""droppableCategoryNode: 'middleZone'"">
                     <div class=""bcms-placement-title"" data-bind=""text: title""></div>
                 </div>
                 <!-- ko if: getCategoryTree().settings.canEditNode && isActive() -->
@@ -256,7 +256,7 @@ WriteLiteral(@"</div>
             <div class=""bcms-nodes-dropzone""
                  data-bind=""css: { 'bcms-nodes-dropzone-active': activeZone() == 'bottomZone' },
                             style: { paddingBottom: !(parentNode().parentNode) && isLastNode() ? '80px' : '' },
-                            droppable: 'bottomZone'"">
+                            droppableCategoryNode: 'bottomZone'"">
                 <div class=""bcms-node-infotext"">");
 
             

@@ -162,10 +162,6 @@
     <Compile Include="Events\RootEvents.cs" />
     <Compile Include="Events\PageRenderingEventArgs.cs" />
     <Compile Include="Events\TagEvents.cs" />
-    <Compile Include="Commands\Category\DeleteCategory\DeleteCategoryCommand.cs" />
-    <Compile Include="Commands\Category\DeleteCategory\DeleteCategoryCommandRequest.cs" />
-    <Compile Include="Commands\Category\GetCategoryList\GetCategoryListCommand.cs" />
-    <Compile Include="Commands\Category\SaveCategory\SaveCategoryCommand.cs" />
     <Compile Include="Commands\GetMainJsData\GetMainJsDataCommand.cs" />
     <Compile Include="Commands\GetProcessorJsData\GetProcessorJsDataCommand.cs" />
     <Compile Include="Commands\GetPageToRender\GetPageToRenderRequest.cs" />
@@ -192,6 +188,7 @@
     <Compile Include="Controllers\SidebarController.cs" />
     <Compile Include="Controllers\SiteSettingsController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
+    <Compile Include="Helpers\CategoriesHelper.cs" />
     <Compile Include="Models\CategoryTree.cs" />
     <Compile Include="Models\ChildContentOption.cs" />
     <Compile Include="Models\IChildRegionContainer.cs" />
@@ -396,7 +393,6 @@
     <Compile Include="ViewModels\Authentication\InfoViewModel.cs" />
     <Compile Include="ViewModels\Autocomplete\SuggestionViewModel.cs" />
     <Compile Include="ViewModels\CategoryTreesFilter.cs" />
-    <Compile Include="ViewModels\Category\CategoryItemViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryTreeNodeViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryTreesGridViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryTreeGridViewModel.cs" />
@@ -448,11 +444,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Info.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Category\Categories.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Categories.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Category\CategoryTreeEdit.generated.cs">
       <DependentUpon>CategoryTreeEdit.cshtml</DependentUpon>
@@ -1569,12 +1560,6 @@
     <None Include="Views\Tags\TagsTemplate.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>TagsTemplate.generated.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Views\Category\Categories.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>Categories.generated.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

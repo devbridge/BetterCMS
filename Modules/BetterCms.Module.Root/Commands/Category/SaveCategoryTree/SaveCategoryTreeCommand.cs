@@ -56,22 +56,20 @@ namespace BetterCms.Module.Root.Commands.Category.SaveCategoryTree
             
             UnitOfWork.Commit();
 
-            //TODO: should we add events for categories ?
-            //foreach (var category in createdCategories)
-            //{
-            //    Events.SitemapEvents.Instance.OnSitemapNodeCreated(node);
-            //}
+            foreach (var category in createdCategories)
+            {
+                Events.RootEvents.Instance.OnCategoryCreated(category);
+            }
 
-            //foreach (var node in updatedNodes)
-            //{
-            //    Events.SitemapEvents.Instance.OnSitemapNodeUpdated(node);
-            //}
+            foreach (var category in updatedCategories)
+            {
+                Events.RootEvents.Instance.OnCategoryUpdated(category);
+            }
 
-            //foreach (var node in deletedNodes)
-            //{
-            //    Events.SitemapEvents.Instance.OnSitemapNodeDeleted(node);
-            //}
-            //:~
+            foreach (var category in deletedCategories)
+            {
+                Events.RootEvents.Instance.OnCategoryDeleted(category);
+            }
 
             return new CategoryTreeViewModel
             {

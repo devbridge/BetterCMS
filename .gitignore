@@ -89,6 +89,9 @@ logs
 /Modules/BetterCms.Module.OpenGraphIntegration/Web.Debug.config
 /Modules/BetterCms.Module.OpenGraphIntegration/Web.Release.config
 
+/Sandbox/BetterCms.Sandbox.Mvc4/Areas/**
+/Sandbox/BetterCms.Sandbox.Mvc4/file/**
+
 #osx system files
 .DS_Store
 ._.DS_Store
