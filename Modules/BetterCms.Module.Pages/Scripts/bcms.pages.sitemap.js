@@ -109,7 +109,7 @@ bettercms.define('bcms.pages.sitemap', ['bcms.jquery', 'bcms', 'bcms.modal', 'bc
         sitemap.activeMapModel = null;
         sitemap.activeLoadingContainer = null;
         sitemap.activeMessageContainer = null;
-
+        sitemap.events = events;
         /**
         * Loads a sitemap view to the site settings container.
         */
