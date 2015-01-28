@@ -129,8 +129,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                               IsArchived = page.IsArchived,
                               IsMasterPage = page.IsMasterPage,
                               TemplateId = page.Layout.Id,
-                              MasterPageId = page.MasterPage.Id,
-                              CategoryId = page.Category.Id,
+                              MasterPageId = page.MasterPage.Id,                                                            
                               LanguageId = page.Language.Id,
                               AccessControlEnabled = cmsConfiguration.Security.AccessControlEnabled,
                               IsInSitemap = page.PagesView.IsInSitemap,
@@ -171,6 +170,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
 
             var tagsFuture = tagService.GetPageTagNames(id);
             var categories = categoryService.GetCategories();
+            var selectedCategories = categoryService.GetSelectedCategoriesIds<Root.Models.Page>(id).Select(c => c.ToLowerInvariantString());
             var languagesFuture = (cmsConfiguration.EnableMultilanguage) ? languageService.GetLanguagesLookupValues() : null;
 
             IEnumerable<AccessRule> userAccessFuture;
@@ -204,6 +204,7 @@ namespace BetterCms.Module.Pages.Command.Page.GetPageProperties
                 model.Model.Tags = tagsFuture.ToList();
                 model.Model.RedirectFromOldUrl = true;
                 model.Model.Categories = categories;
+                model.Model.SelectItemCategories = selectedCategories.ToList();
                 model.Model.PageAccessProtocols = this.GetProtocolForcingTypes();
                 model.Model.UpdateSitemap = true;
                 model.Model.CustomOptions = optionService.GetCustomOptions();

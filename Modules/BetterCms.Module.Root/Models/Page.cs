@@ -7,13 +7,15 @@ using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
 using BetterCms.Core.Security;
 
+using NHibernate.Linq;
+
 namespace BetterCms.Module.Root.Models
 {
     /// <summary>
     /// A generic page entity.
     /// </summary>
     [Serializable]
-    public class Page : EquatableEntity<Page>, IPage, IAccessSecuredObject
+    public class Page : EquatableEntity<Page>, IPage, IAccessSecuredObject, ICategorized
     {
         /// <summary>
         /// Gets or sets the page URL.
@@ -194,6 +196,16 @@ namespace BetterCms.Module.Root.Models
             }           
         }
 
+        public virtual IList<Category> Categories { get; set; }
+
+        IEnumerable<ICategory> ICategorized.Categories
+        {
+            get
+            {
+                return Categories;
+            }
+        }
+
         public virtual bool SaveUnsecured { get; set; }
 
         public virtual PagesView PagesView { get; set; }
@@ -213,6 +225,15 @@ namespace BetterCms.Module.Root.Models
             AccessRules.Remove((AccessRule)accessRule);
         }
 
+        public virtual void AddCategory(ICategory category)
+        {
+            Categories.Add(category as Category);
+        }
+
+        public virtual void RemoveCategory(ICategory category)
+        {
+            Categories.Remove(category as Category);
+        }
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>

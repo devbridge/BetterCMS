@@ -109,7 +109,7 @@ namespace BetterCms.Module.Pages.Command.Widget.GetServerControlWidgetForEdit
             {
                 model = new EditServerControlWidgetViewModel();
             }
-
+            // TODO Set selected categories
             model.Categories = categories.ToList();
             model.CustomOptions = optionService.GetCustomOptions();
             

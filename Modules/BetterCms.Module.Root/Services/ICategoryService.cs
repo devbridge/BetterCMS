@@ -1,4 +1,8 @@
-﻿using BetterCms.Module.Root.Models;
+﻿using System.Web.Mvc;
+
+using BetterCms.Core.DataContracts;
+using BetterCms.Core.Models;
+using BetterCms.Module.Root.Models;
 using System;
 using System.Collections.Generic;
 using System.Security.Principal;
@@ -11,8 +15,10 @@ namespace BetterCms.Module.Root.Services
         /// Gets the list of category lookup values.
         /// </summary>
         /// <returns>List of category lookup values.</returns>
+
         IEnumerable<LookupKeyValue> GetCategories();
 
+        IEnumerable<Guid> GetSelectedCategoriesIds<TEntity>(Guid? entityId) where TEntity : Entity, ICategorized;
         /// <summary>
         /// Saves the category.
         /// </summary>
@@ -33,5 +39,7 @@ namespace BetterCms.Module.Root.Services
         Category SaveCategory(out bool categoryUpdated, CategoryTree categoryTree, Guid categoryId, int version, string name, int displayOrder, string macro, Guid parentCategoryId, bool isDeleted = false, Category parentCategory = null, List<Category> categories = null);
 
         void DeleteCategoryTree(Guid id, int version, IPrincipal currentUser);
+
+        void SaveEntityCategories<TEntity>(Guid id, IEnumerable<string> currentCategories) where TEntity : Entity, ICategorized;
     }
 }

@@ -32,6 +32,8 @@ namespace BetterCms.Module.Root.Models.Maps
             HasMany(x => x.MasterPages).KeyColumn("PageId").Cascade.SaveUpdate().Inverse().LazyLoad().Where("IsDeleted = 0");
 
             HasManyToMany(x => x.AccessRules).Table("PageAccessRules").Schema(SchemaName).Cascade.AllDeleteOrphan().LazyLoad();
+
+            HasManyToMany(x => x.Categories).Table("PageCategories").Schema(SchemaName).Cascade.AllDeleteOrphan().LazyLoad();
         }
     }
 }

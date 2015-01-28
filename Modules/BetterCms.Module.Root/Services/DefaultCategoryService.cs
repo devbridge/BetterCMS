@@ -2,14 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
+using System.Web.Mvc;
 
 using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
+using BetterCms.Core.DataContracts;
 using BetterCms.Core.Exceptions.DataTier;
+using BetterCms.Core.Models;
 using BetterCms.Core.Security;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
+using FluentNHibernate.Utils;
+
+using NHibernate.Criterion;
 using NHibernate.Linq;
 
 namespace BetterCms.Module.Root.Services
@@ -52,11 +58,26 @@ namespace BetterCms.Module.Root.Services
             return repository
                 .AsQueryable<Category>()
                 .Select(c => new LookupKeyValue
-                                 {
-                                     Key = c.Id.ToString().ToLowerInvariant(),
-                                     Value = c.Name
-                                 })
+                {
+                    Key = c.Id.ToString().ToLowerInvariant(),
+                    Value = c.Name
+                })
                 .ToFuture();
+        }
+
+        public IEnumerable<Guid> GetSelectedCategoriesIds<TEntity>(Guid? entityId) where TEntity : Entity, ICategorized
+        {
+            TEntity entityAlias = null;
+            Category categoryAlias = null;
+
+            return repository.AsQueryOver<Category>()
+                             .WithSubquery.WhereProperty(c => c.Id)
+                             .In(QueryOver.Of(() => entityAlias)
+                                     .JoinQueryOver(() => entityAlias.Categories, () => categoryAlias)
+                                     .Where(() => entityAlias.Id == entityId)
+                                     .SelectList(list => list.Select(() => categoryAlias.Id)))
+                                     .Select(category => category.Id)
+                                     .Future<Guid>();
         }
 
         public Category SaveCategory(out bool categoryUpdated, CategoryTree categoryTree, Guid categoryId, int version, string name, int displayOrder, string macro, Guid parentCategoryId, bool isDeleted = false, Category parentCategory = null, List<Category> categories = null)
@@ -132,17 +153,17 @@ namespace BetterCms.Module.Root.Services
             var categoryTree = repository
                 .AsQueryable<CategoryTree>()
                 .Where(map => map.Id == id)
-// TODO:                .FetchMany(map => map.AccessRules)
+                // TODO:                .FetchMany(map => map.AccessRules)
                 .Distinct()
                 .ToList()
                 .First();
 
-// TODO:            // Security.
-//            if (cmsConfiguration.Security.AccessControlEnabled)
-//            {
-//                var roles = new[] { RootModuleConstants.UserRoles.EditContent };
-//                accessControlService.DemandAccess(sitemap, currentUser, AccessLevel.ReadWrite, roles);
-//            }
+            // TODO:            // Security.
+            //            if (cmsConfiguration.Security.AccessControlEnabled)
+            //            {
+            //                var roles = new[] { RootModuleConstants.UserRoles.EditContent };
+            //                accessControlService.DemandAccess(sitemap, currentUser, AccessLevel.ReadWrite, roles);
+            //            }
 
             // Concurrency.
             if (version > 0 && categoryTree.Version != version)
@@ -152,19 +173,47 @@ namespace BetterCms.Module.Root.Services
 
             unitOfWork.BeginTransaction();
 
-// TODO:
-//            if (sitemap.AccessRules != null)
-//            {
-//                var rules = sitemap.AccessRules.ToList();
-//                rules.ForEach(sitemap.RemoveRule);
-//            }
+            // TODO:
+            //            if (sitemap.AccessRules != null)
+            //            {
+            //                var rules = sitemap.AccessRules.ToList();
+            //                rules.ForEach(sitemap.RemoveRule);
+            //            }
 
             repository.Delete(categoryTree);
 
             unitOfWork.Commit();
 
             // Events.
-// TODO:            Events.SitemapEvents.Instance.OnSitemapDeleted(categoryTree);
+            // TODO:            Events.SitemapEvents.Instance.OnSitemapDeleted(categoryTree);
+        }
+
+        public void SaveEntityCategories<TEntity>(Guid id, IEnumerable<string> currentCategories) where TEntity : Entity, ICategorized
+        {
+            var page = repository.FirstOrDefault<TEntity>(id);
+            var categories = currentCategories != null ? currentCategories.Select(i => new Guid(i)).ToList() : new List<Guid>();
+
+            if (page != null)
+            {
+                var newCategoryIds = categories.Where(cId => page.Categories.All(pc => pc.Id != cId)).ToArray();
+                var newCategories = repository.AsQueryOver<Category>().WhereRestrictionOn(t => t.Id).IsIn(newCategoryIds).Future<Category>();
+
+                // Remove categories
+                var removedCategories = page.Categories.Where(c => !categories.Contains(c.Id)).ToList();
+
+                foreach (var removedCategory in removedCategories)
+                {
+                    page.RemoveCategory(removedCategory);
+                }
+
+                // Attach new categories
+                foreach (var newCategory in newCategories)
+                {
+                    page.AddCategory(newCategory);
+                }
+
+                repository.Save(page);
+            }
         }
     }
 }

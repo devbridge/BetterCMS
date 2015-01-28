@@ -173,6 +173,7 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
             }
 
             model.Authors = authorService.GetAuthors();
+            // TODO Set selected categories
             model.Categories = categoryService.GetCategories();
             model.RedirectFromOldUrl = true;
 
