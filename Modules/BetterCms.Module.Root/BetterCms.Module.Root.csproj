@@ -192,6 +192,7 @@
     <Compile Include="Controllers\SidebarController.cs" />
     <Compile Include="Controllers\SiteSettingsController.cs" />
     <Compile Include="Controllers\TagsController.cs" />
+    <Compile Include="Helpers\CategoriesHelper.cs" />
     <Compile Include="Models\CategoryTree.cs" />
     <Compile Include="Models\ChildContentOption.cs" />
     <Compile Include="Models\IChildRegionContainer.cs" />

@@ -7,6 +7,6 @@ namespace BetterCms.Module.Root.Models
     {
         public virtual string Title { get; set; }
 
-        public virtual IList<Category> RootCategories { get; set; }
+        public virtual IList<Category> Categories { get; set; }
     }
 }

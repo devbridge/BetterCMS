@@ -292,9 +292,9 @@
             self.getNodeHeight = ko.computed(function () {
                 if (self.isActive()) {
                     if (self.getCategoryTree().showMacros) {
-                        return "136px";
+                        return "70px";
                     }
-                    return "101px";
+                    return "33px";
                 }
                 return "";
             });
