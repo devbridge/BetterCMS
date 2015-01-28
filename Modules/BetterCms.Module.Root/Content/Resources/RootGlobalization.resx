@@ -696,4 +696,13 @@
   <data name="CategoryTree_Delete_Confirmation_Message" xml:space="preserve">
     <value>Are you sure you want to delete the category tree?</value>
   </data>
+  <data name="CategoryTree_Macro_Placeholder_Message" xml:space="preserve">
+    <value>Type custom application data (macro) ...</value>
+  </data>
+  <data name="CategoryTree_EditDialog_Macro_Title" xml:space="preserve">
+    <value>Macro</value>
+  </data>
+  <data name="CategoryTree_EditDialog_Macro_Tooltip_Message" xml:space="preserve">
+    <value>Edit the field dedicated to application developers for specific / custom functionality.</value>
+  </data>
 </root>
