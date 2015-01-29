@@ -70,18 +70,19 @@ namespace BetterCms.Module.Root.Commands.Category.GetCategoryTree
 //                    .ThenFetchMany(node => node.Translations);
 //            }
 
-            var sitemap = sitemapQuery.Distinct().ToFuture().ToList().First();
+            var categoryTree = sitemapQuery.Distinct().ToFuture().ToList().First();
 //            var languages = CmsConfiguration.EnableMultilanguage ? languagesFuture.ToList() : new List<LookupKeyValue>();
             var model = new CategoryTreeViewModel
             {
-                Id = sitemap.Id,
-                Version = sitemap.Version,
-                Title = sitemap.Title,
+                Id = categoryTree.Id,
+                Version = categoryTree.Version,
+                Title = categoryTree.Title,
+                Macro = categoryTree.Macro,
                 RootNodes =
                     CategoriesHelper.GetCategoryTreeNodesInHierarchy(
                         CmsConfiguration.EnableMultilanguage,
-                        sitemap.Categories.Distinct().Where(f => f.ParentCategory == null).ToList(),
-                        sitemap.Categories.Distinct().ToList(),
+                        categoryTree.Categories.Distinct().Where(f => f.ParentCategory == null).ToList(),
+                        categoryTree.Categories.Distinct().ToList(),
                         null),  // TODO: languages.Select(l => l.Key.ToGuidOrDefault()).ToList(),
 //                Tags = tagsFuture.ToList(),
 //                AccessControlEnabled = CmsConfiguration.Security.AccessControlEnabled,

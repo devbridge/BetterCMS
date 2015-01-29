@@ -69,6 +69,15 @@ namespace BetterCms.Module.Root.ViewModels.Category
         public bool ShowMacros { get; set; }
 
         /// <summary>
+        /// Gets or sets the macro.
+        /// </summary>
+        /// <value>
+        /// The macro.
+        /// </value>
+        [StringLength(MaxLength.Text, ErrorMessageResourceType = typeof(RootGlobalization), ErrorMessageResourceName = "Validation_StringLengthAttribute_Message")]
+        public string Macro { get; set; }
+
+        /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
         /// <returns>

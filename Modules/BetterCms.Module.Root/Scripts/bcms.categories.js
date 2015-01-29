@@ -565,6 +565,7 @@
 
             self.version = jsonCategoryTree.Version;
             self.title = ko.observable(jsonCategoryTree.Title);
+            self.macro = ko.observable(jsonCategoryTree.Macro);
             // TODO: self.accessControl = security.createUserAccessViewModel(jsonCategoryTree.UserAccessList);
 
 // TODO:      self.languageId = ko.observable("");
@@ -774,7 +775,8 @@
                             if (onDoneCallback && $.isFunction(onDoneCallback)) {
                                 if (json.Data == null) {
                                     json.Data = {
-                                        Title: self.title()
+                                        Title: self.title(),
+                                        Macro: self.macro()
                                     };
                                 }
                                 onDoneCallback(json);
@@ -844,6 +846,7 @@
                     Id: self.id(),
                     Version: self.version,
                     Title: self.title(),
+                    Macro: self.macro(),
                     RootNodes: self.composeJsonNodes()
                     // TODO: UserAccessList: userAccessList
                 };

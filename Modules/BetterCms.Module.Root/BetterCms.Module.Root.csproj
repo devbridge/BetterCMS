@@ -215,6 +215,7 @@
     <Compile Include="Models\Migrations\Migration201310170919.cs" />
     <Compile Include="Models\Migrations\Migration201310160818.cs" />
     <Compile Include="Models\Migrations\Migration201310180900.cs" />
+    <Compile Include="Models\Migrations\Migration201501131230.cs" />
     <Compile Include="Models\Migrations\Migration201408131530.cs" />
     <Compile Include="Models\Migrations\Migration201407231054.cs" />
     <Compile Include="Models\Migrations\Migration201406191600.cs" />

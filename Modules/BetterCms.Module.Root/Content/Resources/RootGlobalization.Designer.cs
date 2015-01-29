@@ -556,6 +556,24 @@ namespace BetterCms.Module.Root.Content.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Macro.
+        /// </summary>
+        public static string CategoryTree_EditDialog_Macro_Title {
+            get {
+                return ResourceManager.GetString("CategoryTree_EditDialog_Macro_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit the field dedicated to application developers for specific / custom functionality..
+        /// </summary>
+        public static string CategoryTree_EditDialog_Macro_Tooltip_Message {
+            get {
+                return ResourceManager.GetString("CategoryTree_EditDialog_Macro_Tooltip_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Title.
         /// </summary>
         public static string CategoryTree_EditDialog_Title_Title {
@@ -579,6 +597,15 @@ namespace BetterCms.Module.Root.Content.Resources {
         public static string CategoryTree_EditorDialog_Title {
             get {
                 return ResourceManager.GetString("CategoryTree_EditorDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type custom application data (macro) ....
+        /// </summary>
+        public static string CategoryTree_Macro_Placeholder_Message {
+            get {
+                return ResourceManager.GetString("CategoryTree_Macro_Placeholder_Message", resourceCulture);
             }
         }
         
