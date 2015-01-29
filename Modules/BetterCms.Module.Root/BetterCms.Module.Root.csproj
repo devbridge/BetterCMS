@@ -220,6 +220,7 @@
     <Compile Include="Models\Migrations\Migration201407231054.cs" />
     <Compile Include="Models\Migrations\Migration201406191600.cs" />
     <Compile Include="Models\Migrations\Migration201406101600.cs" />
+    <Compile Include="Models\Migrations\Migration201501281145.cs" />
     <Compile Include="Models\PagesView.cs" />
     <Compile Include="Mvc\Extensions\HtmlAttributesUtility.cs" />
     <Compile Include="Mvc\Extensions\HtmlHelperExtensions.cs" />

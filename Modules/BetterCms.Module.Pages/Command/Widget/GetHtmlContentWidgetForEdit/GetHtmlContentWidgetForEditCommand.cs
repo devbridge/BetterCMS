@@ -120,7 +120,6 @@ namespace BetterCms.Module.Pages.Command.Widget.GetHtmlContentWidgetForEdit
                 model = new EditHtmlContentWidgetViewModel();
             }
 
-            // TODO Set selected categories
             model.Categories = categories.ToList();
             model.CustomOptions = optionService.GetCustomOptions();
             model.CanDestroyDraft = model.CurrentStatus == ContentStatus.Draft && model.HasPublishedContent;

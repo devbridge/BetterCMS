@@ -101,6 +101,7 @@ namespace BetterCms.Module.Pages.Services
             var count = query.ToRowCountFutureValue();
 
             var categoriesFuture = categoryService.GetCategories();
+
             IEnumerable<LookupKeyValue> languagesFuture = configuration.EnableMultilanguage ? languageService.GetLanguagesLookupValues() : null;
 
             var pages = query.AddSortingAndPaging(request).Future<SiteSettingPageViewModel>();
@@ -111,7 +112,7 @@ namespace BetterCms.Module.Pages.Services
                             string.Format("{0}-{1}", l.IsMasterPage ? "m" : "l", l.TemplateId),
                             l.Title))
                         .ToList();
-                                                            // TODO Set selected categories
+
             var model = CreateModel(pages, request, count, categoriesFuture, layouts);
 
             if (languagesFuture != null)

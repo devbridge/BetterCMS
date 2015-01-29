@@ -115,7 +115,8 @@ namespace BetterCms.Test.Module.Api.Pages.Properties
 
         protected override SavePagePropertiesModel GetCreateModel(ISession session)
         {
-            var category = TestDataProvider.CreateNewCategory();
+            var categoryTree = TestDataProvider.CreateNewCategoryTree();
+            var category = TestDataProvider.CreateNewCategory(categoryTree);
             var image = TestDataProvider.CreateNewMediaImage();
             session.SaveOrUpdate(category);
             session.SaveOrUpdate(image);

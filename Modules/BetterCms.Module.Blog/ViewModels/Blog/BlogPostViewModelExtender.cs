@@ -110,13 +110,6 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         /// </value>
         public System.Collections.Generic.IList<IAccessRule> AccessRules { get; set; }
 
-        /// <summary>
-        /// Gets or sets the categories.
-        /// </summary>
-        /// <value>
-        /// The access rules.
-        /// </value>
-        public System.Collections.Generic.IList<Guid> Categories { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to update language.

@@ -181,7 +181,10 @@ namespace BetterCms.Tests.Helpers
             entity.MetaDescription = ProvideRandomString(MaxLength.Text);
 
             entity.Layout = layout ?? CreateNewLayout();
-            entity.Categories = new List<Category>() { CreateNewCategory() };             
+
+            var categoryTree = CreateNewCategoryTree();
+
+            entity.Categories = new List<Category>() { CreateNewCategory(categoryTree) };             
             entity.Image = CreateNewMediaImage();
             entity.FeaturedImage = CreateNewMediaImage();
             entity.SecondaryImage = CreateNewMediaImage();
@@ -240,13 +243,29 @@ namespace BetterCms.Tests.Helpers
             return entity;
         }
 
-        public Category CreateNewCategory()
+        public CategoryTree CreateNewCategoryTree()
+        {
+            var entity = new CategoryTree();
+
+            PopulateBaseFields(entity);
+
+            entity.Title = ProvideRandomString(MaxLength.Name);
+            entity.Categories = new List<Category>();
+
+            return entity;
+        }
+
+        public Category CreateNewCategory(CategoryTree tree)
         {
             var entity = new Category();
 
             PopulateBaseFields(entity);
 
             entity.Name = ProvideRandomString(MaxLength.Name);
+
+            entity.CategoryTree = tree;
+
+            tree.Categories.Add(entity);
 
             return entity;
         }
@@ -377,9 +396,10 @@ namespace BetterCms.Tests.Helpers
             var entity = new Widget();
 
             PopulateBaseFields(entity);
+            var categoryTree = CreateNewCategoryTree();
 
             entity.Name = ProvideRandomString(MaxLength.Name);
-            entity.Category = category ?? CreateNewCategory();
+            entity.Category = category ?? CreateNewCategory(categoryTree);
             entity.Status = ContentStatus.Archived;
             entity.Original = null;
             entity.PublishedByUser = ProvideRandomString(MaxLength.Name);
@@ -417,8 +437,9 @@ namespace BetterCms.Tests.Helpers
             var entity = new ServerControlWidget();
 
             PopulateBaseFields(entity);
+            var categoryTree = CreateNewCategoryTree();
 
-            entity.Category = CreateNewCategory();
+            entity.Category = CreateNewCategory(categoryTree);
             entity.Name = ProvideRandomString(MaxLength.Name);
             entity.Url = ProvideRandomString(MaxLength.Url);
             entity.PreviewUrl = ProvideRandomString(MaxLength.Url);
@@ -436,7 +457,9 @@ namespace BetterCms.Tests.Helpers
 
             PopulateBaseFields(entity);
 
-            entity.Category = CreateNewCategory();
+            var categoryTree = CreateNewCategoryTree();
+
+            entity.Category = CreateNewCategory(categoryTree);
 
             entity.Name = ProvideRandomString(MaxLength.Name);
             entity.Html = ProvideRandomString(100);

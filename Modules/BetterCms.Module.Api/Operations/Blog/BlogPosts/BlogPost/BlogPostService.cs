@@ -74,14 +74,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
             model.MainImageThumbnauilUrl = fileUrlResolver.EnsureFullPathUrl(model.MainImageThumbnauilUrl);
             model.MainImageThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(model.MainImageThumbnailUrl);
 
-                        // TODO Categories
-                        //CategoryId = blogPost.Category != null && !blogPost.Category.IsDeleted ? blogPost.Category.Id : (Guid?)null,
-                        //CategoryName = blogPost.Category != null && !blogPost.Category.IsDeleted ? blogPost.Category.Name : null,
-
-
             LoadContentId(model);
-
-
 
             model.Categories = (from pagePr in repository.AsQueryable<Module.Blog.Models.BlogPost>()
                                 from category in pagePr.Categories

@@ -208,7 +208,7 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             session.SaveOrUpdate(blogPost.Image);
             session.SaveOrUpdate(blogPost.FeaturedImage);
             session.SaveOrUpdate(blogPost.SecondaryImage);
-            session.SaveOrUpdate(blogPost.Language);
+            session.SaveOrUpdate(blogPost.Language);            
 
             session.Flush();
             session.Clear();
@@ -323,7 +323,7 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
             request.Data.IncludeChildContentsOptions = true;
             request.Data.IncludeLayout = true;
             request.Data.IncludeLanguage = true;
-
+            request.Data.IncludeCategories = true;
             return request;
         }
 
