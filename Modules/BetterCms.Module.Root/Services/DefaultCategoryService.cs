@@ -188,31 +188,31 @@ namespace BetterCms.Module.Root.Services
             // TODO:            Events.SitemapEvents.Instance.OnSitemapDeleted(categoryTree);
         }
 
-        public void SaveEntityCategories<TEntity>(Guid id, IEnumerable<string> currentCategories) where TEntity : Entity, ICategorized
+        public void CombineEntityCategories<TEntity>(TEntity entity, IEnumerable<System.Guid> currentCategories) where TEntity : Entity, ICategorized
         {
-            var page = repository.FirstOrDefault<TEntity>(id);
-            var categories = currentCategories != null ? currentCategories.Select(i => new Guid(i)).ToList() : new List<Guid>();
+            var categories = currentCategories != null ? currentCategories.ToList() : new List<Guid>();
 
-            if (page != null)
+            if (entity != null)
             {
-                var newCategoryIds = categories.Where(cId => page.Categories.All(pc => pc.Id != cId)).ToArray();
+                var newCategoryIds = entity.Categories != null ? categories.Where(cId => entity.Categories.All(pc => pc.Id != cId)).ToArray() : categories.ToArray();
                 var newCategories = repository.AsQueryOver<Category>().WhereRestrictionOn(t => t.Id).IsIn(newCategoryIds).Future<Category>();
 
-                // Remove categories
-                var removedCategories = page.Categories.Where(c => !categories.Contains(c.Id)).ToList();
-
-                foreach (var removedCategory in removedCategories)
+                if (entity.Categories != null)
                 {
-                    page.RemoveCategory(removedCategory);
+                    // Remove categories
+                    var removedCategories = entity.Categories.Where(c => !categories.Contains(c.Id)).ToList();
+
+                    foreach (var removedCategory in removedCategories)
+                    {
+                        entity.RemoveCategory(removedCategory);
+                    }
                 }
 
                 // Attach new categories
                 foreach (var newCategory in newCategories)
                 {
-                    page.AddCategory(newCategory);
-                }
-
-                repository.Save(page);
+                    entity.AddCategory(newCategory);
+                }              
             }
         }
     }

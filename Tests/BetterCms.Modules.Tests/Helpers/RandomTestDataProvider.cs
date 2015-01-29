@@ -181,7 +181,7 @@ namespace BetterCms.Tests.Helpers
             entity.MetaDescription = ProvideRandomString(MaxLength.Text);
 
             entity.Layout = layout ?? CreateNewLayout();
-            entity.Category = CreateNewCategory();
+            entity.Categories = new List<Category>() { CreateNewCategory() };             
             entity.Image = CreateNewMediaImage();
             entity.FeaturedImage = CreateNewMediaImage();
             entity.SecondaryImage = CreateNewMediaImage();

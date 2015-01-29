@@ -18,6 +18,8 @@ using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 using BetterCms.Module.Root.Services;
 
+using FluentNHibernate.Utils;
+
 using BlogContent = BetterCms.Module.Root.Models.Content;
 using ITagService = BetterCms.Module.Pages.Services.ITagService;
 
@@ -90,7 +92,7 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
             var model = new BlogPostViewModel();
 
             if (!id.HasDefaultValue())
-            {
+            {               
                 var result = Repository.AsQueryable<BlogPost>()
                     .Where(bp => bp.Id == id)
                     .Select(bp => new {
@@ -103,8 +105,7 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                                     BlogUrl = bp.PageUrl,
                                     UseCanonicalUrl = bp.UseCanonicalUrl,
                                     IntroText = bp.Description,
-                                    AuthorId = bp.Author != null ? bp.Author.Id : (Guid?)null,
-                                    CategoryId = bp.Category != null ? bp.Category.Id : (Guid?)null,
+                                    AuthorId = bp.Author != null ? bp.Author.Id : (Guid?)null,                                  
                                     Image = bp.Image == null || bp.Image.IsDeleted ? null :
                                         new ImageSelectorViewModel
                                         {
@@ -159,7 +160,7 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                     {
                         model.LiveFromDate = DateTime.Today;
                     }
-
+                    model.SelectItemCategories = categoryService.GetSelectedCategoriesIds<BlogPost>(id).ToList();
                     model.Tags = tagService.GetPageTagNames(id).ToList();
                 }
                 else
@@ -173,7 +174,6 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
             }
 
             model.Authors = authorService.GetAuthors();
-            // TODO Set selected categories
             model.Categories = categoryService.GetCategories();
             model.RedirectFromOldUrl = true;
 

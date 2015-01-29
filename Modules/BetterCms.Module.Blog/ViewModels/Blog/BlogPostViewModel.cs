@@ -5,13 +5,15 @@ using System.Web.Mvc;
 
 using BetterCms.Core.DataContracts.Enums;
 using BetterCms.Core.Models;
-
+using BetterCms.Core.Mvc.Binders;
 using BetterCms.Module.Blog.Content.Resources;
 using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.Pages.Mvc.Attributes;
 using BetterCms.Module.Root.Content.Resources;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.ViewModels.Security;
+
+using Newtonsoft.Json;
 
 namespace BetterCms.Module.Blog.ViewModels.Blog
 {
@@ -136,12 +138,13 @@ namespace BetterCms.Module.Blog.ViewModels.Blog
         public string BlogUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the cathegory.
+        /// Gets or sets the list of SelectedCategories Ids.
         /// </summary>
         /// <value>
-        /// The cathegory.
+        /// The list of categories Ids.
         /// </value>
-        public virtual Guid? CategoryId { get; set; }
+        [JsonConverter(typeof(SingleValueArrayConverter<Guid>))]
+        public IList<Guid> SelectItemCategories { get; set; }
 
         /// <summary>
         /// Gets or sets the desirable status for the saved widget.

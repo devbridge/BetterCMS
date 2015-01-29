@@ -80,7 +80,7 @@ namespace BetterCms.Module.Pages.ViewModels.Page
         /// <value>
         /// The list of categories Ids.
         /// </value>
-        public IEnumerable<string> SelectItemCategories { get; set; }
+        public IList<Guid> SelectItemCategories { get; set; }
 
         /// <summary>
         /// Gets or sets the page custom CSS.

@@ -231,7 +231,7 @@ namespace BetterCms.Module.Pages.Command.Page.SavePageProperties
                 page.PageUrlHash = page.PageUrl.UrlHash();
                 page.ForceAccessProtocol = request.ForceAccessProtocol;
 
-                categoryService.SaveEntityCategories<Models.PageProperties>(request.Id, request.SelectItemCategories);                
+                categoryService.CombineEntityCategories(page, request.SelectItemCategories);                
 
                 page.Title = request.PageName;
                 page.CustomCss = request.PageCSS;

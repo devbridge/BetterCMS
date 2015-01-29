@@ -196,6 +196,7 @@
     <Compile Include="Models\Maps\SitemapNodeTranslationMap.cs" />
     <Compile Include="Models\Migrations\Migration201401211353.cs" />
     <Compile Include="Models\Migrations\Migration201401091655.cs" />
+    <Compile Include="Models\Migrations\Migration201501290930.cs" />
     <Compile Include="Models\SitemapNodeTranslation.cs" />
     <Compile Include="Models\Maps\SitemapArchiveMap.cs" />
     <Compile Include="Models\Migrations\Migration201401061130.cs" />

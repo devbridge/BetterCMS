@@ -53,8 +53,6 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
                         PublishedOn = blogPost.PublishedOn,
                         LayoutId = blogPost.Layout != null && !blogPost.Layout.IsDeleted ? blogPost.Layout.Id : (Guid?)null,
                         MasterPageId = blogPost.MasterPage != null && !blogPost.MasterPage.IsDeleted ? blogPost.MasterPage.Id : (Guid?)null,
-                        CategoryId = blogPost.Category != null && !blogPost.Category.IsDeleted ? blogPost.Category.Id : (Guid?)null,
-                        CategoryName = blogPost.Category != null && !blogPost.Category.IsDeleted ? blogPost.Category.Name : null,
                         AuthorId = blogPost.Author != null && !blogPost.Author.IsDeleted ? blogPost.Author.Id : (Guid?)null,
                         AuthorName = blogPost.Author != null && !blogPost.Author.IsDeleted ? blogPost.Author.Name : null,
                         MainImageId = blogPost.Image != null && !blogPost.Image.IsDeleted ? blogPost.Image.Id : (Guid?)null,
@@ -75,7 +73,29 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
             model.MainImageUrl = fileUrlResolver.EnsureFullPathUrl(model.MainImageUrl);
             model.MainImageThumbnauilUrl = fileUrlResolver.EnsureFullPathUrl(model.MainImageThumbnauilUrl);
             model.MainImageThumbnailUrl = fileUrlResolver.EnsureFullPathUrl(model.MainImageThumbnailUrl);
+
+                        // TODO Categories
+                        //CategoryId = blogPost.Category != null && !blogPost.Category.IsDeleted ? blogPost.Category.Id : (Guid?)null,
+                        //CategoryName = blogPost.Category != null && !blogPost.Category.IsDeleted ? blogPost.Category.Name : null,
+
+
             LoadContentId(model);
+
+
+
+            model.Categories = (from pagePr in repository.AsQueryable<Module.Blog.Models.BlogPost>()
+                                from category in pagePr.Categories
+                                where pagePr.Id == model.Id
+                                select new CategoryModel
+                                {
+                                    Id = category.Id,
+                                    Version = category.Version,
+                                    CreatedBy = category.CreatedByUser,
+                                    CreatedOn = category.CreatedOn,
+                                    LastModifiedBy = category.ModifiedByUser,
+                                    LastModifiedOn = category.ModifiedOn,
+                                    Name = category.Name
+                                }).ToList();
 
             return new GetBlogPostResponse
                        {

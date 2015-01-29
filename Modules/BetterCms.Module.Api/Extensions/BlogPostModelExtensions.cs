@@ -25,7 +25,7 @@ namespace BetterCms.Module.Api.Extensions
             serviceModel.LiveToDate = model.ExpirationDate;
             serviceModel.BlogUrl = model.BlogPostUrl;
             serviceModel.AuthorId = model.AuthorId;
-            serviceModel.CategoryId = model.CategoryId;
+            serviceModel.Categories = model.Categories;
             serviceModel.DesirableStatus = model.IsPublished ? ContentStatus.Published : ContentStatus.Draft;
             serviceModel.Tags = model.Tags;
             serviceModel.Image = new ImageSelectorViewModel { ImageId = model.MainImageId };

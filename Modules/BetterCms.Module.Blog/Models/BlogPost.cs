@@ -1,11 +1,12 @@
 ﻿using System;
 
+using BetterCms.Core.DataContracts;
 using BetterCms.Module.Pages.Models;
 
 namespace BetterCms.Module.Blog.Models
 {
     [Serializable]
-    public class BlogPost : PageProperties
+    public class BlogPost : PageProperties, ICategorized
     {
         public virtual Author Author { get; set; }
 

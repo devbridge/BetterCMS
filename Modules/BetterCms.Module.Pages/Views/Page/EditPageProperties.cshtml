@@ -110,14 +110,6 @@
                     <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_BasicPropertiesTab_Category_Title</div>
                     
                     @Html.MultipleDropDown(Model.Categories.ToSelectListItems(Model.SelectItemCategories), new { @class = "multiple-dropdown-select" })
-
-@*                    <select multiple="multiple" class="multiple-dropdown-select">*@
-@*                        @foreach (var category in Model.Categories.ToSelectListItems(Model.SelectItemCategories))*@
-@*                        {*@
-@*                            <option @(category.Selected ? "selected" : "") value="@category.Value">@category.Text</option>*@
-@*                        }*@
-@*                    </select>*@
-
                 </div>
 
                 <div class="bcms-tags-box-holder" data-bind="with: tags">

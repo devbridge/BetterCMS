@@ -40,6 +40,6 @@ namespace BetterCms.Module.Root.Services
 
         void DeleteCategoryTree(Guid id, int version, IPrincipal currentUser);
 
-        void SaveEntityCategories<TEntity>(Guid id, IEnumerable<string> currentCategories) where TEntity : Entity, ICategorized;
+        void CombineEntityCategories<TEntity>(TEntity entity, IEnumerable<System.Guid> currentCategories) where TEntity : Entity, ICategorized;
     }
 }

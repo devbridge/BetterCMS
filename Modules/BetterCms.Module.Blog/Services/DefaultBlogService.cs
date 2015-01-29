@@ -49,6 +49,11 @@ namespace BetterCms.Module.Blog.Services
         /// </summary>
         private const string RegionIdentifier = BlogModuleConstants.BlogPostMainContentRegionIdentifier;
 
+        /// <summary>
+        /// The category service
+        /// </summary>
+        private ICategoryService categoryService;
+
         private static readonly ILog Logger = LogManager.GetCurrentClassLogger();
 
         protected readonly ICmsConfiguration configuration;
@@ -85,7 +90,7 @@ namespace BetterCms.Module.Blog.Services
             IOptionService blogOptionService, IAccessControlService accessControlService, ISecurityService securityService,
             IContentService contentService, ITagService tagService,
             IPageService pageService, IRedirectService redirectService, IMasterPageService masterPageService,
-            IUnitOfWork unitOfWork, RootOptionService optionService)
+            IUnitOfWork unitOfWork, RootOptionService optionService, ICategoryService categoryService)
         {
             this.configuration = configuration;
             this.urlService = urlService;
@@ -100,6 +105,7 @@ namespace BetterCms.Module.Blog.Services
             this.masterPageService = masterPageService;
             this.tagService = tagService;
             this.unitOfWork = unitOfWork;
+            this.categoryService = categoryService;
         }
 
         /// <summary>
@@ -256,7 +262,9 @@ namespace BetterCms.Module.Blog.Services
                 blogPost.Title = request.Title;
                 blogPost.Description = request.IntroText;
                 blogPost.Author = request.AuthorId.HasValue ? repository.AsProxy<Author>(request.AuthorId.Value) : null;
-                blogPost.Category = request.CategoryId.HasValue ? repository.AsProxy<Category>(request.CategoryId.Value) : null;
+
+                categoryService.CombineEntityCategories(blogPost, request.SelectItemCategories);
+                
                 blogPost.Image = (request.Image != null && request.Image.ImageId.HasValue) ? repository.AsProxy<MediaImage>(request.Image.ImageId.Value) : null;
                 if (isNew || request.DesirableStatus == ContentStatus.Published)
                 {
@@ -274,7 +282,7 @@ namespace BetterCms.Module.Blog.Services
                 }
                 else
                 {
-                    blogPost.PageUrl = CreateBlogPermalink(request.Title, null, blogPost.Category != null ? (Guid?)blogPost.Category.Id : null);
+                    blogPost.PageUrl = CreateBlogPermalink(request.Title, null, blogPost.Categories != null ? (Guid?)blogPost.Categories.First().Id : null);
                 }
 
                 blogPost.MetaTitle = request.MetaTitle ?? request.Title;
@@ -328,7 +336,7 @@ namespace BetterCms.Module.Blog.Services
             content = SaveContentWithStatusUpdate(isNew, newContent, request, principal);
             pageContent.Content = content;
             optionService.SaveChildContentOptions(content, childContentOptionValues, request.DesirableStatus);
-
+            
             blogPost.PageUrlHash = blogPost.PageUrl.UrlHash();
             blogPost.UseCanonicalUrl = request.UseCanonicalUrl;
 
@@ -626,11 +634,11 @@ namespace BetterCms.Module.Blog.Services
                 var searchQuery = string.Format("%{0}%", request.SearchQuery);
                 query = query.Where(Restrictions.InsensitiveLike(Projections.Property(() => alias.Title), searchQuery));
             }
-
-            if (request.CategoryId.HasValue)
-            {
-                query = query.Where(Restrictions.Eq(Projections.Property(() => alias.Category.Id), request.CategoryId.Value));
-            }
+            // TODO Categories
+//            if (request.CategoryId.HasValue)
+//            {
+//                query = query.Where(Restrictions.Eq(Projections.Property(() => alias.Category.Id), request.CategoryId.Value));
+//            }
 
             if (request.LanguageId.HasValue)
             {

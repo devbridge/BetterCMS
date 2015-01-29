@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using BetterCms.Core.DataContracts;
 
@@ -116,9 +117,10 @@ namespace BetterCms.Module.Pages.Helpers.Extensions
         public static RenderPageCategoryViewModel GetPageCategoryModel(this RenderPageViewModel viewModel)
         {
             var pageModel = GetPageModel(viewModel);
-            if (pageModel != null)
+            if (pageModel != null && pageModel.Categories != null)
             {
-                return pageModel.Category;
+                // TODO Set selected categories            
+                return pageModel.Categories.FirstOrDefault();
             }
 
             return null;
@@ -226,18 +228,18 @@ namespace BetterCms.Module.Pages.Helpers.Extensions
         /// <param name="viewModel">The view model.</param>
         /// <returns></returns>
         [Obsolete("Use Bag.PageData or GetPageModel() method")]
-        public static Category GetPageCategory(this RenderPageViewModel viewModel)
+        public static IEnumerable<Category> GetPageCategories(this RenderPageViewModel viewModel)
         {
             if (viewModel.Bag.PageData != null)
             {
                 var page = viewModel.Bag.PageData.PageProperties as PageProperties;
-                if (page != null)
+                if (page != null && page.Categories != null)
                 {
-                    return page.Category;
+                    return page.Categories;
                 }
             }
 
-            return null;
+            return Enumerable.Empty<Category>();
         }
     }
 }

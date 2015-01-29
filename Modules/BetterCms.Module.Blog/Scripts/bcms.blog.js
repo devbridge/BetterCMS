@@ -275,6 +275,8 @@ bettercms.define('bcms.blog', ['bcms.jquery', 'bcms', 'bcms.modal', 'bcms.siteSe
         
         dialog.container.find(selectors.datePickers).initializeDatepicker(globalization.datePickerTooltipTitle);
 
+        $(".multiple-dropdown-select").multipleSelect({ name: "Categories" });
+
         return blogViewModel;
     }
 

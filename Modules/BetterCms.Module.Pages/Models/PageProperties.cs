@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
+using BetterCms.Core.DataContracts;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Root.Models;
 
 namespace BetterCms.Module.Pages.Models
 {
     [Serializable]
-    public class PageProperties : Page
+    public class PageProperties : Page, ICategorized
     {
         public virtual string Description { get; set; }
         public virtual string CustomCss { get; set; }
@@ -28,14 +30,24 @@ namespace BetterCms.Module.Pages.Models
         }
 
         public virtual IList<PageTag> PageTags { get; set; }
-        
-        public virtual Category Category { get; set; }
+
+
         public virtual MediaImage Image { get; set; }
         public virtual MediaImage SecondaryImage { get; set; }
         public virtual MediaImage FeaturedImage { get; set; }
         public virtual bool IsArchived { get; set; }
 
         public virtual bool IsReadOnly { get; set; }
+
+        public virtual IList<Category> Categories { get; set; }
+
+        IEnumerable<ICategory> ICategorized.Categories
+        {
+            get
+            {
+                return Categories;
+            }
+        }
 
         public PageProperties()
         {
@@ -45,6 +57,21 @@ namespace BetterCms.Module.Pages.Models
         public virtual PageProperties Duplicate()
         {
             return CopyDataToDuplicate(new PageProperties());
+        }
+
+        public virtual void AddCategory(ICategory category)
+        {
+            if (Categories == null)
+            {
+                Categories = new List<Category>();
+            }
+
+            Categories.Add(category as Category);
+        }
+
+        public virtual void RemoveCategory(ICategory category)
+        {
+            Categories.Remove(category as Category);
         }
 
         protected virtual PageProperties CopyDataToDuplicate(PageProperties duplicate)
@@ -65,7 +92,7 @@ namespace BetterCms.Module.Pages.Models
             duplicate.Image = Image;
             duplicate.SecondaryImage = SecondaryImage;
             duplicate.FeaturedImage = FeaturedImage;
-            duplicate.Category = Category;
+            duplicate.Categories = Categories.ToList();
             duplicate.IsArchived = IsArchived;
             duplicate.IsMasterPage = IsMasterPage;
             duplicate.ForceAccessProtocol = ForceAccessProtocol;

@@ -24,6 +24,9 @@ using BlogML.Xml;
 
 using Common.Logging;
 
+using FluentNHibernate.Testing.Values;
+using FluentNHibernate.Utils;
+
 using ValidationException = BetterCms.Core.Exceptions.Mvc.ValidationException;
 
 namespace BetterCms.Module.Blog.Services
@@ -332,7 +335,17 @@ namespace BetterCms.Module.Blog.Services
                         }
                         if (blogML.Categories != null && blogML.Categories.Count > 0)
                         {
-                            blogPostModel.CategoryId = categories[blogML.Categories[0].Ref];
+                            for (var i = 0; i < blogML.Categories.Count; i++)
+                            {
+                                var category = blogML.Categories[i];
+
+                                if (blogPostModel.SelectItemCategories == null)
+                                {
+                                    blogPostModel.SelectItemCategories = new List<Guid>();
+                                }
+
+                                blogPostModel.SelectItemCategories.Add(new Guid(categories[category.Ref].ToLowerInvariantString()));                                
+                            }                            
                         }
 
                         string[] error;

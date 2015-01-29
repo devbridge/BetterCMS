@@ -9,6 +9,7 @@ using BetterCms.Core.Security;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Pages.Pages.Page;
+using BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties;
 using BetterCms.Module.Api.Operations.Pages.Pages.Search;
 using BetterCms.Module.Api.Operations.Root;
 
@@ -142,8 +143,6 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
                         PublishedOn = page.PublishedOn,
                         LayoutId = page.Layout != null && !page.Layout.IsDeleted ? page.Layout.Id : (Guid?)null,
                         MasterPageId = page.MasterPage != null && !page.MasterPage.IsDeleted ? page.MasterPage.Id : (Guid?)null,
-                        CategoryId = page.Category != null && !page.Category.IsDeleted ? page.Category.Id : (Guid?)null,
-                        CategoryName = page.Category != null && !page.Category.IsDeleted ? page.Category.Name : null,
                         MainImageId = page.Image != null && !page.Image.IsDeleted ? page.Image.Id : (Guid?)null,
                         MainImageUrl = page.Image != null && !page.Image.IsDeleted ? page.Image.PublicUrl : null,
                         MainImageThumbnauilUrl = page.Image != null && !page.Image.IsDeleted ? page.Image.PublicThumbnailUrl : null,
@@ -162,7 +161,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
                         LanguageId = page.Language != null ? page.Language.Id : (Guid?)null,
                         LanguageCode = page.Language != null ? page.Language.Code : null,
                         LanguageGroupIdentifier = page.LanguageGroupIdentifier,
-                        Metadata = includeMetadata 
+                        Metadata = includeMetadata
                             ? new MetadataModel
                                   {
                                       MetaDescription = page.MetaDescription,
@@ -182,9 +181,9 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
             }
 
             if (listResponse.Items.Count > 0
-                && (request.Data.IncludePageOptions || request.Data.IncludeTags || request.Data.IncludeAccessRules))
+                && (request.Data.IncludePageOptions || request.Data.IncludeTags || request.Data.IncludeAccessRules || request.Data.IncludeCategories))
             {
-                LoadInnerCollections(listResponse, request.Data.IncludePageOptions, request.Data.IncludeTags, request.Data.IncludeAccessRules);
+                LoadInnerCollections(listResponse, request.Data.IncludePageOptions, request.Data.IncludeTags, request.Data.IncludeAccessRules, request.Data.IncludeCategories);
             }
 
             return new GetPagesResponse
@@ -193,7 +192,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
             };
         }
 
-        private void LoadInnerCollections(DataListResponse<PageModel> response, bool includeOptions, bool includeTags, bool includeAccessRules)
+        private void LoadInnerCollections(DataListResponse<PageModel> response, bool includeOptions, bool includeTags, bool includeAccessRules, bool includeCategories)
         {
             var pageIds = response.Items.Select(i => i.Id).Distinct().ToArray();
 
@@ -214,19 +213,19 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
             if (includeAccessRules)
             {
                 rulesFuture = (from page in repository.AsQueryable<Module.Root.Models.Page>()
-                    from accessRule in page.AccessRules
-                    where pageIds.Contains(page.Id)
-                    orderby accessRule.IsForRole, accessRule.Identity
-                    select new AccessRuleModelEx
-                           {
-                               AccessRule = new AccessRuleModel
-                               {
-                                   AccessLevel = (AccessLevel)(int)accessRule.AccessLevel,
-                                   Identity = accessRule.Identity,
-                                   IsForRole = accessRule.IsForRole
-                               },
-                               PageId = page.Id
-                           })
+                               from accessRule in page.AccessRules
+                               where pageIds.Contains(page.Id)
+                               orderby accessRule.IsForRole, accessRule.Identity
+                               select new AccessRuleModelEx
+                                      {
+                                          AccessRule = new AccessRuleModel
+                                          {
+                                              AccessLevel = (AccessLevel)(int)accessRule.AccessLevel,
+                                              Identity = accessRule.Identity,
+                                              IsForRole = accessRule.IsForRole
+                                          },
+                                          PageId = page.Id
+                                      })
                     .ToFuture();
             }
             else
@@ -237,8 +236,8 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
             if (tagsFuture != null)
             {
                 var tags = tagsFuture.ToList();
-                response.Items.ToList().ForEach(page => 
-                { 
+                response.Items.ToList().ForEach(page =>
+                {
                     page.Tags = tags
                         .Where(tag => tag.PageId == page.Id)
                         .Select(tag => tag.Tag)
@@ -249,7 +248,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
             if (rulesFuture != null)
             {
                 var rules = rulesFuture.ToList();
-                response.Items.ToList().ForEach(page => 
+                response.Items.ToList().ForEach(page =>
                 {
                     page.AccessRules = rules
                         .Where(rule => rule.PageId == page.Id)
@@ -262,21 +261,42 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
             {
                 response.Items.ForEach(
                     page =>
-                        {
-                            page.Options = optionService
-                                .GetMergedMasterPagesOptionValues(page.Id, page.MasterPageId, page.LayoutId)
-                                .Select(o => new OptionValueModel
-                                    {
-                                        Key = o.OptionKey,
-                                        Value = o.OptionValue,
-                                        DefaultValue = o.OptionDefaultValue,
-                                        Type = ((Root.OptionType)(int)o.Type),
-                                        UseDefaultValue = o.UseDefaultValue,
-                                        CustomTypeIdentifier = o.CustomOption != null ? o.CustomOption.Identifier : null
-                                    })
-                                .ToList();
-                        });
+                    {
+                        page.Options = optionService
+                            .GetMergedMasterPagesOptionValues(page.Id, page.MasterPageId, page.LayoutId)
+                            .Select(o => new OptionValueModel
+                                {
+                                    Key = o.OptionKey,
+                                    Value = o.OptionValue,
+                                    DefaultValue = o.OptionDefaultValue,
+                                    Type = ((Root.OptionType)(int)o.Type),
+                                    UseDefaultValue = o.UseDefaultValue,
+                                    CustomTypeIdentifier = o.CustomOption != null ? o.CustomOption.Identifier : null
+                                })
+                            .ToList();
+                    });
             }
+
+            if (includeCategories)
+            {
+                response.Items.ForEach( page =>
+                                        {
+                                            page.Categories = (from pagePr in repository.AsQueryable<PageProperties>()
+                                                               from category in pagePr.Categories
+                                                               where pagePr.Id == page.Id
+                                                               select new CategoryModel
+                                                                {
+                                                                    Id = category.Id,
+                                                                    Version = category.Version,
+                                                                    CreatedBy = category.CreatedByUser,
+                                                                    CreatedOn = category.CreatedOn,
+                                                                    LastModifiedBy = category.ModifiedByUser,
+                                                                    LastModifiedOn = category.ModifiedOn,
+                                                                    Name = category.Name
+                                                                }).ToList();
+                                        });
+            }
+
         }
 
         private class TagModel

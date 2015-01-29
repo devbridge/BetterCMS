@@ -368,7 +368,7 @@ namespace BetterCms.Test.Module.Root.HelperTests
 
             if (extendModel)
             {
-                entity.Category = new Category { Name = "Fake Category Name" };
+                entity.Categories = new List<Category>() { new Category { Name = "Fake Category Name" } };
                 entity.Author = new Author { Name = "Fake Author Name" };
                 entity.Image = new MediaImage { PublicUrl = "/Fake/Main/Image/Url/" };
                 entity.SecondaryImage = new MediaImage { PublicUrl = "/Fake/Secondary/Image/Url/" };

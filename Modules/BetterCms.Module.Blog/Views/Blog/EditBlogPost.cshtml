@@ -8,6 +8,7 @@
 @using BetterCms.Module.Root
 @using BetterCms.Module.Root.Content.Resources
 @using BetterCms.Module.Root.Mvc
+@using BetterCms.Module.Root.Mvc.Extensions
 @using BetterCms.Module.Root.Mvc.Helpers
 @using BetterCms.Module.Root.Mvc.UI
 @using BetterCms.Module.Root.ViewModels.Tags
@@ -137,7 +138,8 @@
                 <div class="bcms-input-field-holder">
                     @Html.Tooltip(BlogGlobalization.EditBlockPost_Category_Tooltip_Description)
                     <div class="bcms-content-titles">@BlogGlobalization.EditBlockPost_Category_Title</div>
-                    @Html.DropDownListFor(model => model.CategoryId, Model.Categories.ToSelectList(Model.CategoryId), string.Empty, new { @class = "bcms-global-select", @style = "width: 245px;" })
+                    @Html.MultipleDropDown(Model.Categories.ToSelectListItems(Model.SelectItemCategories), new { @class = "multiple-dropdown-select" })
+@*                    @Html.DropDownListFor(model => model.CategoryId, Model.Categories.ToSelectList(Model.CategoryId), string.Empty, new { @class = "bcms-global-select", @style = "width: 245px;" })*@
                 </div>
 
                 <div class="bcms-blog-tags-holder" data-bind="with: tags">

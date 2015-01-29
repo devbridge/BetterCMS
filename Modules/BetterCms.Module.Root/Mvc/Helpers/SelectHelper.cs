@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
 using BetterCms.Module.Root.Models;
+
+using FluentNHibernate.Utils;
 
 namespace BetterCms.Module.Root.Mvc.Helpers
 {
@@ -18,19 +21,23 @@ namespace BetterCms.Module.Root.Mvc.Helpers
             return new SelectList(source, "Key", "Value", selectedValue ?? -1);
         }
 
-        public static IEnumerable<SelectListItem> ToSelectListItems(this IEnumerable<LookupKeyValue> source, IEnumerable<string> selectedValues)
+        public static IEnumerable<SelectListItem> ToSelectListItems(this IEnumerable<LookupKeyValue> source, IEnumerable<Guid> selectedValues)
         {
-            var values = selectedValues.ToList();
-            foreach (var item in source)
+            if (source != null)
             {
-                var isSelected = values.Any(s => string.CompareOrdinal(s, item.Key) == 0);
+                var values = selectedValues != null ? selectedValues.ToList() : new List<Guid>();
 
-                yield return new SelectListItem()
+                foreach (var item in source)
                 {
-                    Selected = isSelected,
-                    Value = item.Key,
-                    Text = item.Value
-                };
+                    var isSelected = values.Any(s => string.CompareOrdinal(s.ToLowerInvariantString(), item.Key) == 0);
+
+                    yield return new SelectListItem()
+                    {
+                        Selected = isSelected,
+                        Value = item.Key,
+                        Text = item.Value
+                    };
+                }
             }
         }
     }

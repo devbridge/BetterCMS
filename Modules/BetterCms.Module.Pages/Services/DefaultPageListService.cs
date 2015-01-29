@@ -163,10 +163,11 @@ namespace BetterCms.Module.Pages.Services
                                         .Add(Restrictions.InsensitiveLike(Projections.Property(() => alias.MetaKeywords), searchQuery)));
             }
 
-            if (request.CategoryId.HasValue)
-            {
-                query = query.Where(Restrictions.Eq(Projections.Property(() => alias.Category.Id), request.CategoryId.Value));
-            }
+            // TODO Set selected categories 
+//            if (request.CategoryId.HasValue)
+//            {
+//                query = query.Where(Restrictions.Eq(Projections.Property(() => alias.Category.Id), request.CategoryId.Value));
+//            }
 
             if (request.LanguageId.HasValue)
             {
