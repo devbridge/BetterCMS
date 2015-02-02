@@ -194,6 +194,7 @@
     <Compile Include="Helpers\UrlHelper.cs" />
     <Compile Include="Models\Enums\WidgetUsageType.cs" />
     <Compile Include="Models\Maps\SitemapNodeTranslationMap.cs" />
+    <Compile Include="Models\Migrations\Migration201502021540.cs" />
     <Compile Include="Models\Migrations\Migration201401211353.cs" />
     <Compile Include="Models\Migrations\Migration201401091655.cs" />
     <Compile Include="Models\Migrations\Migration201501290930.cs" />
@@ -761,6 +762,7 @@
     <EmbeddedResource Include="Content\Styles\bcms.navigation.css" />
     <Content Include="BuildConfiguration.xml" />
     <EmbeddedResource Include="Models\Migrations\Migration201312121313.sqlserver.sql" />
+    <EmbeddedResource Include="Models\Migrations\Migration201502021540.sqlserver.sql" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
