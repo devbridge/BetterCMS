@@ -204,7 +204,6 @@
     <Compile Include="Models\MasterPage.cs" />
     <Compile Include="Models\Maps\ContentRegionMap.cs" />
     <Compile Include="Models\ContentRegion.cs" />
-    <Compile Include="Models\Migrations\Migration201501271416.cs" />
     <Compile Include="Models\Migrations\Migration201404171400.cs" />
     <Compile Include="Models\Migrations\Migration201312301700.cs" />
     <Compile Include="Models\Migrations\Migration201312171300.cs" />

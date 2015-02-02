@@ -64,7 +64,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
                         CreatedOn = category.CreatedOn,
                         LastModifiedBy = category.ModifiedByUser,
                         LastModifiedOn = category.ModifiedOn,
-
+                        CategoryTreeId = category.CategoryTree.Id,
                         Name = category.Name
                     })
                 .FirstOne();

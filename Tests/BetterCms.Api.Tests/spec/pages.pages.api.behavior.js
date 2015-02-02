@@ -56,7 +56,8 @@ describe('pages.pages.api.behavior', function () {
             filter: {
                 where: [{ field: 'Title', value: constants.testPageTitle }]
             },
-            includeArchived: true
+            includeArchived: true,
+            includeCategories: true,
         };
 
         runs(function () {
@@ -487,7 +488,7 @@ describe('pages.pages.api.behavior', function () {
             expect(result.data.items[0].id).toBe('457c26ad2d654dc381e8a20700848027', 'Correctly filtered id should be retrieved.');
 
             // Check if model properties count didn't changed. If so - update current test filter and another tests.
-            // data.filter.where.length + 1 <-- Because field ContentType cannnot be filtered by
+            // data.filter.where.length + 1 <-- Because field ContentType cannnot be filtered by            
             expect(data.filter.where.length + 1).toBe(api.getCountOfProperties(result.data.items[0]), 'Retrieved result properties count should be equal to filterting parameters count.');
         });
     });
@@ -1222,8 +1223,8 @@ describe('pages.pages.api.behavior', function () {
         expect(page.isPublished).toBe(true, 'Correctly filtered isPublished should be retrieved.');
         expect(page.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
         expect(page.layoutId).toBeDefinedAndNotNull('layoutId should be retrieved.');
-        expect(page.categoryId).toBeDefinedAndNotNull('categoryId should be retrieved.');
-        expect(page.categoryName).toBe('Category for _0000_Page_For_Tests', 'Correctly filtered categoryName should be retrieved.');
+        expect(page.categories.length).toBe(1, 'Categories count should be ' + 1 + '.');        
+        expect(page.categories[0].name).toBe('Category for _0000_Page_For_Tests', 'Correctly filtered categoryName should be retrieved.');
         expect(page.mainImageId).toBeDefinedAndNotNull('mainImageId should be retrieved.');
         expect(page.mainImageThumbnauilUrl).toBeDefinedAndNotNull('mainImageThumbnailUrl should be retrieved.');
         expect(page.mainImageThumbnailUrl).toBeDefinedAndNotNull('mainImageThumbnailUrl should be retrieved.');
@@ -1244,8 +1245,8 @@ describe('pages.pages.api.behavior', function () {
         expect(page.isPublished).toBe(true, 'Correctly filtered isPublished should be retrieved.');
         expect(page.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
         expect(page.layoutId).toBeDefinedAndNotNull('layoutId should be retrieved.');
-        expect(page.categoryId).toBeDefinedAndNotNull('categoryId should be retrieved.');
-        expect(page.categoryName).toBe('Category for _0000_Page_For_Tests', 'Correctly filtered categoryName should be retrieved.');
+        expect(page.categories.length).toBe(1, 'Categories count should be ' + 1 + '.');
+        expect(page.categories[0].name]).toBe('Category for _0000_Page_For_Tests', 'Correctly filtered categoryName should be retrieved.');
         expect(page.mainImageId).toBeDefinedAndNotNull('mainImageId should be retrieved.');
         expect(page.mainImageThumbnauilUrl).toBeDefinedAndNotNull('mainImageThumbnailUrl should be retrieved.');
         expect(page.mainImageThumbnailUrl).toBeDefinedAndNotNull('mainImageThumbnailUrl should be retrieved.');

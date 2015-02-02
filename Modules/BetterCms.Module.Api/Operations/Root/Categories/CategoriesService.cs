@@ -54,7 +54,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories
                         CreatedOn = category.CreatedOn,
                         LastModifiedBy = category.ModifiedByUser,
                         LastModifiedOn = category.ModifiedOn,
-
+                        CategoryTreeId = category.CategoryTree.Id,
                         Name = category.Name
                     })
                 .ToDataListResponse(request);

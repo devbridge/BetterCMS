@@ -116,8 +116,8 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(blogPost.isPublished).toBe(true, 'Correctly filtered isPublished should be retrieved.');
             expect(blogPost.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
             expect(blogPost.layoutId).toBeDefinedAndNotNull('layoutId should be retrieved.');
-            expect(blogPost.categoryId).toBeDefinedAndNotNull('categoryId should be retrieved.');
-            expect(blogPost.categoryName).toBe('Category for _0003_Blog_For_Tests_', 'Correctly filtered categoryName should be retrieved.');
+            expect(blogPost.categories.length).toBe(1, 'Categories count should be ' + 1 + '.');
+            expect(blogPost.categories[0].name).toBe('Category for _0003_Blog_For_Tests_', 'Correctly filtered categoryName should be retrieved.');
             expect(blogPost.authorId).toBeDefinedAndNotNull('authorId should be retrieved.');
             expect(blogPost.authorName).toBe('Author for _0003_Blog_For_Tests_', 'Correctly filtered authorName should be retrieved.');
             expect(blogPost.mainImageId).toBeDefinedAndNotNull('mainImageId should be retrieved.');
@@ -162,8 +162,8 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(blogPost.isPublished).toBe(true, 'Correctly filtered isPublished should be retrieved.');
             expect(blogPost.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
             expect(blogPost.layoutId).toBeDefinedAndNotNull('layoutId should be retrieved.');
-            expect(blogPost.categoryId).toBeDefinedAndNotNull('categoryId should be retrieved.');
-            expect(blogPost.categoryName).toBe('Category for _0003_Blog_For_Tests_', 'Correctly filtered categoryName should be retrieved.');
+            expect(blogPost.categories.length).toBe(1, 'Categories count should be ' + 1 + '.');
+            expect(blogPost.categories[0].name).toBe('Category for _0003_Blog_For_Tests_', 'Correctly filtered categoryName should be retrieved.');
             expect(blogPost.authorId).toBeDefinedAndNotNull('authorId should be retrieved.');
             expect(blogPost.authorName).toBe('Author for _0003_Blog_For_Tests_', 'Correctly filtered authorName should be retrieved.');
             expect(blogPost.mainImageId).toBeDefinedAndNotNull('mainImageId should be retrieved.');
@@ -196,7 +196,8 @@ describe('blog.blogPosts.api.behavior', function () {
             includeAccessRules: true,
             includeTechnicalInfo: true,
             includeChildContentsOptions: true,
-            includeLanguage: true
+            includeLanguage: true,
+            includeCategories: true
         };
 
         runs(function () {
@@ -223,7 +224,7 @@ describe('blog.blogPosts.api.behavior', function () {
             expect(blogPost.isPublished).toBe(true, 'Correctly filtered isPublished should be retrieved.');
             expect(blogPost.publishedOn).toBeDefinedAndNotNull('publishedOn should be retrieved.');
             expect(blogPost.layoutId).toBeDefinedAndNotNull('layoutId should be retrieved.');
-            expect(blogPost.categoryId).toBeDefinedAndNotNull('categoryId should be retrieved.');
+            expect(blogPost.categories.length).toBe(1, 'Categories count should be ' + 1 + '.');
             expect(blogPost.authorId).toBeDefinedAndNotNull('authorId should be retrieved.');
             expect(blogPost.mainImageId).toBeDefinedAndNotNull('mainImageId should be retrieved.');
             expect(blogPost.secondaryImageId).toBeDefinedAndNotNull('secondaryImageId should be retrieved.');
@@ -818,7 +819,8 @@ describe('blog.blogPosts.api.behavior', function () {
             take: take,
             skip: skip,
             includeUnpublished: includeUnpublished,
-            includeArchived: includeArchived
+            includeArchived: includeArchived,
+            includeCategories: true
         };
     }
     
@@ -840,7 +842,8 @@ describe('blog.blogPosts.api.behavior', function () {
         var data = {
             filter: {
                 where: [{ field: 'Title', operation: 'StartsWith', value: 'IFilterByTags' }]
-            },
+            },Should get blog post properties by id..
+Expected 0 to be 1, 'Categories count should be 1.'.
             order: {
                 by: [{ field: 'Title' }]
             },
