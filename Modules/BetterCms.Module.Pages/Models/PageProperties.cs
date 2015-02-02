@@ -92,7 +92,6 @@ namespace BetterCms.Module.Pages.Models
             duplicate.Image = Image;
             duplicate.SecondaryImage = SecondaryImage;
             duplicate.FeaturedImage = FeaturedImage;
-            duplicate.Categories = Categories.ToList();
             duplicate.IsArchived = IsArchived;
             duplicate.IsMasterPage = IsMasterPage;
             duplicate.ForceAccessProtocol = ForceAccessProtocol;

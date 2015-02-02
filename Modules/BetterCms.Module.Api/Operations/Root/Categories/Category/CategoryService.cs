@@ -4,6 +4,7 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Core.DataAccess.DataContext;
 using BetterCms.Core.Exceptions.Api;
 using BetterCms.Core.Exceptions.DataTier;
+using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc;
 
 using ServiceStack.ServiceInterface;
@@ -99,6 +100,8 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
             {
                 categoryToSave.Version = request.Data.Version;
             }
+
+            categoryToSave.CategoryTree = repository.AsProxy<CategoryTree>(request.Data.CategoryTreeId);
 
             if (categories.Any(l => l.Id != request.Id && l.Name == request.Data.Name))
             {

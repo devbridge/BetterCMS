@@ -69,7 +69,7 @@ namespace BetterCms.Test.Module.Pages.CommandTests.EventTests
 
             Assert.IsNull(model.LayoutId);
             Assert.IsNull(model.MasterPageId);
-            Assert.IsNull(model.Categories);
+            Assert.IsEmpty(model.Categories);
             Assert.IsNull(model.MainImageId);
             Assert.IsNull(model.SecondaryImageId);
             Assert.IsNull(model.FeaturedImageId);

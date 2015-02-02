@@ -17,5 +17,14 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// </value>
         [DataMember]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the category tree id.
+        /// </summary>
+        /// <value>
+        /// The title.
+        /// </value>
+        [DataMember]
+        public Guid CategoryTreeId { get; set; }
     }
 }

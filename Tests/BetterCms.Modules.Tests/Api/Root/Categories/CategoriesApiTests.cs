@@ -17,6 +17,8 @@ namespace BetterCms.Test.Module.Api.Root.Categories
         PutCategoryRequest, PutCategoryResponse,
         DeleteCategoryRequest, DeleteCategoryResponse>
     {
+        private BetterCms.Module.Root.Models.CategoryTree categoryTree;
+
         [Test]
         public void Should_CRUD_Category_Successfully()
         {
@@ -25,8 +27,14 @@ namespace BetterCms.Test.Module.Api.Root.Categories
             Events.RootEvents.Instance.CategoryUpdated += Instance_EntityUpdated;
             Events.RootEvents.Instance.CategoryDeleted += Instance_EntityDeleted;
 
-            RunApiActionInTransaction((api, session) =>
-                Run(session, api.Root.Categories.Post, api.Root.Category.Get, api.Root.Category.Put, api.Root.Category.Delete));
+            RunApiActionInTransaction(
+                (api, session) =>
+                {
+                    categoryTree = TestDataProvider.CreateNewCategoryTree();
+                    session.SaveOrUpdate(categoryTree);
+
+                    Run(session, api.Root.Categories.Post, api.Root.Category.Get, api.Root.Category.Put, api.Root.Category.Delete);
+                });
 
             // Detach from events
             Events.RootEvents.Instance.CategoryCreated -= Instance_EntityCreated;
@@ -38,7 +46,8 @@ namespace BetterCms.Test.Module.Api.Root.Categories
         {
             return new SaveCategoryModel
                    {
-                       Name = TestDataProvider.ProvideRandomString(MaxLength.Name)
+                       Name = TestDataProvider.ProvideRandomString(MaxLength.Name),
+                       CategoryTreeId = categoryTree.Id
                    };
         }
 
@@ -51,6 +60,7 @@ namespace BetterCms.Test.Module.Api.Root.Categories
         {
             var request = getResponse.ToPutRequest();
             request.Data.Name = TestDataProvider.ProvideRandomString(MaxLength.Name);
+            request.Data.CategoryTreeId = categoryTree.Id;
 
             return request;
         }
