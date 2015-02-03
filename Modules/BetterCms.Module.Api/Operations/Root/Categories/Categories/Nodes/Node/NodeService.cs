@@ -225,8 +225,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes.Node
                 return new DeleteNodeResponse { Data = false };
             }
             
-            throw new NotImplementedException();
-//            categoryService.DeleteNode(request.Id, request.Data.Version, request.CategoryId);
+            categoryService.DeleteCategoryNode(request.Id, request.Data.Version, request.CategoryTreeId);
 
             return new DeleteNodeResponse { Data = true };
         }

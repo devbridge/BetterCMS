@@ -45,5 +45,7 @@ namespace BetterCms.Module.Root.Services
         void CombineEntityCategories<TEntity, TEntityCategory>(TEntity entity, IEnumerable<System.Guid> currentCategories)
             where TEntity : Entity, ICategorized
             where TEntityCategory : Entity, IEntityCategory, new();
+
+        void DeleteCategoryNode(Guid id, int version, Guid? categoryTreeId = null);
     }
 }
