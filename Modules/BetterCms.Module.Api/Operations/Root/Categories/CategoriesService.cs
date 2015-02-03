@@ -10,7 +10,7 @@ using ServiceStack.ServiceInterface;
 namespace BetterCms.Module.Api.Operations.Root.Categories
 {
     /// <summary>
-    /// The categories service.
+    /// Default service implementation for categories CRUD.
     /// </summary>
     public class CategoriesService : Service, ICategoriesService
     {
@@ -25,7 +25,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories
         private readonly ICategoryService categoryService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CategoriesService"/> class.
+        /// Initializes a new instance of the <see cref="CategoriesService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="categoryService">The category service.</param>
@@ -36,44 +36,49 @@ namespace BetterCms.Module.Api.Operations.Root.Categories
         }
 
         /// <summary>
-        /// Gets the specified request.
+        /// Gets the categories list.
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <returns></returns>
+        /// <returns>
+        ///   <c>GetCategoriesResponse</c> with tags list.
+        /// </returns>
         public GetCategoriesResponse Get(GetCategoriesRequest request)
         {
-            request.Data.SetDefaultOrder("Name");
+            request.Data.SetDefaultOrder("Title");
 
-            var listResponse = repository
-                .AsQueryable<Module.Root.Models.Category>()
-                .Select(category => new CategoryModel
-                    {
-                        Id = category.Id,
-                        Version = category.Version,
-                        CreatedBy = category.CreatedByUser,
-                        CreatedOn = category.CreatedOn,
-                        LastModifiedBy = category.ModifiedByUser,
-                        LastModifiedOn = category.ModifiedOn,
-                        CategoryTreeId = category.CategoryTree.Id,
-                        Name = category.Name
-                    })
-                .ToDataListResponse(request);
+            var query = repository
+                .AsQueryable<Module.Root.Models.CategoryTree>();
+
+            var listResponse = query
+                .Where(map => !map.IsDeleted)
+                .Select(map => new CategoryModel
+                {
+                    Id = map.Id,
+                    Version = map.Version,
+                    CreatedBy = map.CreatedByUser,
+                    CreatedOn = map.CreatedOn,
+                    LastModifiedBy = map.ModifiedByUser,
+                    LastModifiedOn = map.ModifiedOn,
+
+                    Name = map.Title
+                }).ToDataListResponse(request);
 
             return new GetCategoriesResponse
-                       {
-                           Data = listResponse
-                       };
+            {
+                Data = listResponse
+            };
         }
 
         /// <summary>
-        /// Posts the specified request.
+        /// Creates a new category.
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <returns></returns>
+        /// <returns>
+        ///   <c>PostCategoryResponse</c> with a new category id.
+        /// </returns>
         public PostCategoryResponse Post(PostCategoryRequest request)
         {
-            var result =
-                categoryService.Put(
+            var result = categoryService.Put(
                     new PutCategoryRequest
                     {
                         Data = request.Data,

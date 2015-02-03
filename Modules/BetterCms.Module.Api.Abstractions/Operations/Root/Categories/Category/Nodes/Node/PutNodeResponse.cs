@@ -3,14 +3,14 @@ using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
-namespace BetterCms.Module.Api.Operations.Root.Categories.Category
+namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes.Node
 {
     /// <summary>
-    /// Page save response.
+    /// Page category node response.
     /// </summary>
     [Serializable]
     [DataContract]
-    public class PutCategoryResponse : SaveResponseBase
+    public class PutNodeResponse : SaveResponseBase
     {
     }
 }

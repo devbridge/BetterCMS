@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
 namespace BetterCms.Module.Api.Operations.Root.Categories.Category
 {
-    [DataContract]
+    /// <summary>
+    /// Data model for category save.
+    /// </summary>
     [Serializable]
+    [DataContract]
     public class SaveCategoryModel : SaveModelBase
     {
         /// <summary>
@@ -17,14 +21,26 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// </value>
         [DataMember]
         public string Name { get; set; }
-
+        
         /// <summary>
-        /// Gets or sets the category tree id.
+        /// Gets or sets the nodes.
         /// </summary>
         /// <value>
-        /// The title.
+        /// The nodes.
         /// </value>
         [DataMember]
+        public IList<SaveCategoryNodeModel> Nodes { get; set; }
+
+        [DataMember]
         public Guid CategoryTreeId { get; set; }
+
+        //        /// <summary>
+//        /// Gets or sets the access rules.
+//        /// </summary>
+//        /// <value>
+//        /// The access rules.
+//        /// </value>
+//        [DataMember]
+//        public IList<AccessRuleModel> AccessRules { get; set; }
     }
 }

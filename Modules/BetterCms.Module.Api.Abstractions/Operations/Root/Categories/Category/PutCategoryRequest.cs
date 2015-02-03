@@ -8,11 +8,11 @@ using ServiceStack.ServiceHost;
 namespace BetterCms.Module.Api.Operations.Root.Categories.Category
 {
     /// <summary>
-    /// Request for tag update or creation.
+    /// Request to save category.
     /// </summary>
     [Route("/categories/{Id}", Verbs = "PUT")]
-    [DataContract]
     [Serializable]
+    [DataContract]
     public class PutCategoryRequest : PutRequestBase<SaveCategoryModel>, IReturn<PutCategoryResponse>
     {
     }

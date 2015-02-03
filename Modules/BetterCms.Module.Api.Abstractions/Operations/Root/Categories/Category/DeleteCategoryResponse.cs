@@ -6,10 +6,10 @@ using BetterCms.Module.Api.Infrastructure;
 namespace BetterCms.Module.Api.Operations.Root.Categories.Category
 {
     /// <summary>
-    /// Response for category delete operation.
+    /// Category delete response.
     /// </summary>
-    [DataContract]
     [Serializable]
+    [DataContract]
     public class DeleteCategoryResponse : DeleteResponseBase
     {
     }

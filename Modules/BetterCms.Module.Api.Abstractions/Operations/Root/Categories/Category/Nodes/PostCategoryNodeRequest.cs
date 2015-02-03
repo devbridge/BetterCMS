@@ -2,18 +2,19 @@
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes.Node;
 
 using ServiceStack.ServiceHost;
 
-namespace BetterCms.Module.Api.Operations.Root.Categories.Category
+namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes
 {
     /// <summary>
-    /// Request to get category data.
+    /// Request for page creation.
     /// </summary>
-    [Route("/categories/{CategoryId}", Verbs = "GET")]
-    [Serializable]
+    [Route("/categories/{CategoryId}/nodes/", Verbs = "POST")]
     [DataContract]
-    public class GetCategoryRequest : RequestBase<GetCategoryModel>, IReturn<GetCategoryResponse>
+    [Serializable]
+    public class PostCategoryNodeRequest : RequestBase<SaveNodeModel>, IReturn<PostCategoryNodeResponse>
     {
         /// <summary>
         /// Gets or sets the category identifier.

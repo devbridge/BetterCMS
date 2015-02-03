@@ -5,15 +5,15 @@ using BetterCms.Module.Api.Infrastructure;
 
 using ServiceStack.ServiceHost;
 
-namespace BetterCms.Module.Api.Operations.Root.Categories.Category
+namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes
 {
     /// <summary>
     /// Request to get category data.
     /// </summary>
-    [Route("/categories/{CategoryId}", Verbs = "GET")]
+    [Route("/categories/{CategoryId}/nodes/", Verbs = "GET")]
     [Serializable]
     [DataContract]
-    public class GetCategoryRequest : RequestBase<GetCategoryModel>, IReturn<GetCategoryResponse>
+    public class GetCategoryNodesRequest : RequestBase<DataOptions>, IReturn<GetCategoryNodesResponse>
     {
         /// <summary>
         /// Gets or sets the category identifier.

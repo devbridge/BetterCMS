@@ -3,25 +3,22 @@ using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
-using ServiceStack.ServiceHost;
-
 namespace BetterCms.Module.Api.Operations.Root.Categories.Category
 {
     /// <summary>
-    /// Request to get category data.
+    /// Category model.
     /// </summary>
-    [Route("/categories/{CategoryId}", Verbs = "GET")]
     [Serializable]
     [DataContract]
-    public class GetCategoryRequest : RequestBase<GetCategoryModel>, IReturn<GetCategoryResponse>
+    public class CategoryModel : ModelBase
     {
         /// <summary>
-        /// Gets or sets the category identifier.
+        /// Gets or sets the title.
         /// </summary>
         /// <value>
-        /// The category identifier.
+        /// The title.
         /// </value>
         [DataMember]
-        public Guid CategoryId { get; set; }
+        public string Name { get; set; }
     }
 }

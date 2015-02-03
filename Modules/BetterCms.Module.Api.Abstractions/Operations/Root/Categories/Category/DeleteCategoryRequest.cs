@@ -8,11 +8,11 @@ using ServiceStack.ServiceHost;
 namespace BetterCms.Module.Api.Operations.Root.Categories.Category
 {
     /// <summary>
-    /// Request for category update or creation.
+    /// Category delete request.
     /// </summary>
     [Route("/categories/{Id}", Verbs = "DELETE")]
-    [DataContract]
     [Serializable]
+    [DataContract]
     public class DeleteCategoryRequest : DeleteRequestBase, IReturn<DeleteCategoryResponse>
     {
     }

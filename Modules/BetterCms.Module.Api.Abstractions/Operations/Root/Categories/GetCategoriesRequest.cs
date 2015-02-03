@@ -7,10 +7,13 @@ using ServiceStack.ServiceHost;
 
 namespace BetterCms.Module.Api.Operations.Root.Categories
 {
-    [Route("/categories", Verbs = "GET, POST")]
+    /// <summary>
+    /// Request for getting categories list.
+    /// </summary>
+    [Route("/categories", Verbs = "GET")]
     [DataContract]
     [Serializable]
-    public class GetCategoriesRequest : RequestBase<DataOptions>, IReturn<GetCategoriesResponse>
+    public class GetCategoriesRequest : RequestBase<GetCategoriesModel>, IReturn<GetCategoriesResponse>
     {
     }
 }
