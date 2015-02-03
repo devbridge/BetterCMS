@@ -12,7 +12,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories
     /// <summary>
     /// Default service implementation for categories CRUD.
     /// </summary>
-    public class CategoriesService : Service, ICategoriesService
+    public class CategoryTreesService : Service, ICategoryTreesService
     {
         /// <summary>
         /// The repository.
@@ -22,17 +22,17 @@ namespace BetterCms.Module.Api.Operations.Root.Categories
         /// <summary>
         /// The category service.
         /// </summary>
-        private readonly ICategoryService categoryService;
+        private readonly ICategoryTreeService categoryTreeService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CategoriesService" /> class.
+        /// Initializes a new instance of the <see cref="CategoryTreesService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
-        /// <param name="categoryService">The category service.</param>
-        public CategoriesService(IRepository repository, ICategoryService categoryService)
+        /// <param name="categoryTreeService">The category service.</param>
+        public CategoryTreesService(IRepository repository, ICategoryTreeService categoryTreeService)
         {
             this.repository = repository;
-            this.categoryService = categoryService;
+            this.categoryTreeService = categoryTreeService;
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories
         /// <returns>
         ///   <c>GetCategoriesResponse</c> with tags list.
         /// </returns>
-        public GetCategoriesResponse Get(GetCategoriesRequest request)
+        public GetCategoryTreesResponse Get(GetCategoryTreesRequest request)
         {
             request.Data.SetDefaultOrder("Title");
 
@@ -51,7 +51,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories
 
             var listResponse = query
                 .Where(map => !map.IsDeleted)
-                .Select(map => new CategoryModel
+                .Select(map => new CategoryTreeModel
                 {
                     Id = map.Id,
                     Version = map.Version,
@@ -60,10 +60,11 @@ namespace BetterCms.Module.Api.Operations.Root.Categories
                     LastModifiedBy = map.ModifiedByUser,
                     LastModifiedOn = map.ModifiedOn,
 
-                    Name = map.Title
+                    Name = map.Title,
+                    Macro = map.Macro
                 }).ToDataListResponse(request);
 
-            return new GetCategoriesResponse
+            return new GetCategoryTreesResponse
             {
                 Data = listResponse
             };
@@ -72,20 +73,20 @@ namespace BetterCms.Module.Api.Operations.Root.Categories
         /// <summary>
         /// Creates a new category.
         /// </summary>
-        /// <param name="request">The request.</param>
+        /// <param name="treeRequest">The request.</param>
         /// <returns>
         ///   <c>PostCategoryResponse</c> with a new category id.
         /// </returns>
-        public PostCategoryResponse Post(PostCategoryRequest request)
+        public PostCategoryTreeResponse Post(PostCategoryTreeRequest treeRequest)
         {
-            var result = categoryService.Put(
-                    new PutCategoryRequest
+            var result = categoryTreeService.Put(
+                    new PutCategoryTreeRequest
                     {
-                        Data = request.Data,
-                        User = request.User
+                        Data = treeRequest.Data,
+                        User = treeRequest.User
                     });
 
-            return new PostCategoryResponse { Data = result.Data };
+            return new PostCategoryTreeResponse { Data = result.Data };
         }
     }
 }

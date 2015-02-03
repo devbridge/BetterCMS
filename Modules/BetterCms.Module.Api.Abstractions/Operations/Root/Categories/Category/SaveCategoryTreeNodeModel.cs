@@ -1,13 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
 namespace BetterCms.Module.Api.Operations.Root.Categories.Category
 {
+    /// <summary>
+    /// Category node data model.
+    /// </summary>
     [Serializable]
     [DataContract]
-    public class SaveCategoryNodeTranslation : SaveModelBase
+    public class SaveCategoryTreeNodeModel : SaveModelBase
     {
         /// <summary>
         /// Gets or sets the identifier.
@@ -19,31 +23,22 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         public Guid? Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the title.
+        /// Gets or sets the node title.
         /// </summary>
         /// <value>
-        /// The title.
+        /// The node title.
         /// </value>
         [DataMember]
-        public string Title { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to use page title as node title.
+        /// Gets or sets the node display order.
         /// </summary>
         /// <value>
-        /// <c>true</c> if to use page title as node title; otherwise, <c>false</c>.
+        /// The node display order.
         /// </value>
         [DataMember]
-        public bool UsePageTitleAsNodeTitle { get; set; }
-
-        /// <summary>
-        /// Gets or sets the URL.
-        /// </summary>
-        /// <value>
-        /// The URL.
-        /// </value>
-        [DataMember]
-        public string Url { get; set; }
+        public int DisplayOrder { get; set; }
 
         /// <summary>
         /// Gets or sets the macro.
@@ -55,12 +50,12 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         public string Macro { get; set; }
 
         /// <summary>
-        /// Gets or sets the language identifier.
+        /// Gets or sets the nodes.
         /// </summary>
         /// <value>
-        /// The language identifier.
+        /// The nodes.
         /// </value>
         [DataMember]
-        public Guid LanguageId { get; set; }
+        public IList<SaveCategoryTreeNodeModel> Nodes { get; set; }
     }
 }

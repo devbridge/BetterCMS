@@ -3,24 +3,24 @@
     /// <summary>
     /// Service contract for categories.
     /// </summary>
-    public interface ICategoriesService
+    public interface ICategoryTreesService
     {
         /// <summary>
-        /// Gets the categories list.
+        /// Gets the category trees list.
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>GetCategoriesResponse</c> with tags list.</returns>
-        GetCategoriesResponse Get(GetCategoriesRequest request);
+        GetCategoryTreesResponse Get(GetCategoryTreesRequest request);
 
         // NOTE: do not implement: replaces all the categories.
         // PutCategoriesResponse Put(PutCategoriesRequest request);
 
         /// <summary>
-        /// Creates a new category.
+        /// Creates a new category tree.
         /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns><c>PostCategoryResponse</c> with a new category id.</returns>
-        PostCategoryResponse Post(PostCategoryRequest request);
+        /// <param name="treeRequest">The request.</param>
+        /// <returns><c>PostCategoryResponse</c> with a new category tree id.</returns>
+        PostCategoryTreeResponse Post(PostCategoryTreeRequest treeRequest);
 
         // NOTE: do not implement: drops all the categories.
         // DeleteCategoriesResponse Delete(DeleteCategoriesRequest request);

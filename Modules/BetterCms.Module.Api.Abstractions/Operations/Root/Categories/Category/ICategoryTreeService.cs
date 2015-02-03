@@ -7,7 +7,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
     /// <summary>
     /// Service contract for category operations.
     /// </summary>
-    public interface ICategoryService
+    public interface ICategoryTreeService
     {
         /// <summary>
         /// Gets the tree.
@@ -15,7 +15,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// <value>
         /// The tree.
         /// </value>
-        ICategoryTreeService Tree { get; }
+        INodesTreeService Tree { get; }
 
         /// <summary>
         /// Gets the nodes.
@@ -38,20 +38,20 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>GetCategoriesResponse</c> with category data.</returns>
-        GetCategoryResponse Get(GetCategoryRequest request);
+        GetCategoryTreeResponse Get(GetCategoryTreeRequest request);
 
         /// <summary>
         /// Puts the category specified in request.
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>PutCategoriesResponse</c> with updated category data.</returns>
-        PutCategoryResponse Put(PutCategoryRequest request);
+        PutCategoryTreeResponse Put(PutCategoryTreeRequest request);
 
         /// <summary>
         /// Deletes the category specified in request.
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns><c>DeleteCategoriesResponse</c> with success status.</returns>
-        DeleteCategoryResponse Delete(DeleteCategoryRequest request);
+        DeleteCategoryTreeResponse Delete(DeleteCategoryTreeRequest request);
     }
 }

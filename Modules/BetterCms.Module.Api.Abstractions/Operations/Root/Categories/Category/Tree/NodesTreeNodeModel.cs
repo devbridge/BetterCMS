@@ -4,23 +4,20 @@ using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 
-namespace BetterCms.Module.Api.Operations.Root.Categories.Category
+namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Tree
 {
-    /// <summary>
-    /// Category node data model.
-    /// </summary>
     [Serializable]
     [DataContract]
-    public class SaveCategoryNodeModel : SaveModelBase
+    public class NodesTreeNodeModel : ModelBase
     {
         /// <summary>
-        /// Gets or sets the identifier.
+        /// Gets or sets the parent node id.
         /// </summary>
         /// <value>
-        /// The identifier.
+        /// The parent node id.
         /// </value>
         [DataMember]
-        public Guid? Id { get; set; }
+        public Guid? ParentId { get; set; }
 
         /// <summary>
         /// Gets or sets the node title.
@@ -41,6 +38,15 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         public int DisplayOrder { get; set; }
 
         /// <summary>
+        /// Gets or sets the children nodes.
+        /// </summary>
+        /// <value>
+        /// The children nodes.
+        /// </value>
+        [DataMember]
+        public IList<NodesTreeNodeModel> ChildrenNodes { get; set; }
+
+        /// <summary>
         /// Gets or sets the macro.
         /// </summary>
         /// <value>
@@ -48,14 +54,5 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// </value>
         [DataMember]
         public string Macro { get; set; }
-
-        /// <summary>
-        /// Gets or sets the nodes.
-        /// </summary>
-        /// <value>
-        /// The nodes.
-        /// </value>
-        [DataMember]
-        public IList<SaveCategoryNodeModel> Nodes { get; set; }
     }
 }

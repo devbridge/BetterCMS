@@ -174,11 +174,9 @@ namespace BetterCms.Module.Api
             containerBuilder.RegisterType<UploadImageService>().As<IUploadImageService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<MediaTreeService>().As<IMediaTreeService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
 
-            containerBuilder.RegisterType<CategoriesService>().As<ICategoriesService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
-            containerBuilder.RegisterType<CategoryService>().As<ICategoryService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterType<CategoryTreesService>().As<ICategoryTreesService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<CategoryTreeService>().As<ICategoryTreeService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
-            containerBuilder.RegisterType<CategoriesService>().As<ICategoriesService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
-            containerBuilder.RegisterType<CategoryTreeService>().As<ICategoryTreeService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
+            containerBuilder.RegisterType<NodesTreeService>().As<INodesTreeService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<Operations.Root.Categories.Category.Nodes.NodesService>().As<Operations.Root.Categories.Category.Nodes.INodesService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
             containerBuilder.RegisterType<Operations.Root.Categories.Category.Nodes.Node.NodeService>().As<Operations.Root.Categories.Category.Nodes.Node.INodeService>().InstancePerLifetimeScope().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues);
 

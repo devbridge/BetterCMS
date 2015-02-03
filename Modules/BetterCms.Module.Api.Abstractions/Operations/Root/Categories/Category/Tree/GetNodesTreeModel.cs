@@ -5,7 +5,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Tree
 {
     [Serializable]
     [DataContract]
-    public class GetCategoryTreeModel
+    public class GetNodesTreeModel
     {
         /// <summary>
         /// Gets or sets the node id.
@@ -15,14 +15,5 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Tree
         /// </value>
         [DataMember]
         public Guid? NodeId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the language identifier.
-        /// </summary>
-        /// <value>
-        /// The language identifier.
-        /// </value>
-        [DataMember]
-        public Guid? LanguageId { get; set; }
     }
 }

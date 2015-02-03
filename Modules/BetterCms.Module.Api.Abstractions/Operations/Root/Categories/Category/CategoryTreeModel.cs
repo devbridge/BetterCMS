@@ -10,7 +10,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
     /// </summary>
     [Serializable]
     [DataContract]
-    public class CategoryModel : ModelBase
+    public class CategoryTreeModel : ModelBase
     {
         /// <summary>
         /// Gets or sets the title.
@@ -20,5 +20,8 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// </value>
         [DataMember]
         public string Name { get; set; }
+
+        [DataMember]
+        public string Macro { get; set; }
     }
 }

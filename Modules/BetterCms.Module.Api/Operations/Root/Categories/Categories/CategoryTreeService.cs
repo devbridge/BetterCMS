@@ -22,7 +22,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
     /// <summary>
     /// Category service for CRUD operations.
     /// </summary>
-    public class CategoryService : Service, ICategoryService
+    public class CategoryTreeService : Service, ICategoryTreeService
     {
         /// <summary>
         /// The repository.
@@ -37,7 +37,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// <summary>
         /// The tree service.
         /// </summary>
-        private readonly ICategoryTreeService treeService;
+        private readonly INodesTreeService treeService;
 
         /// <summary>
         /// The nodes service.
@@ -70,7 +70,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         private readonly INodeService nodeService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CategoryService" /> class.
+        /// Initializes a new instance of the <see cref="CategoryTreeService" /> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="unitOfWork">The unit of work.</param>
@@ -82,10 +82,10 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// <param name="securityService">The security service.</param>
         /// <param name="categoryService">The category service.</param>
         /// <param name="cmsConfiguration">The CMS configuration.</param>
-        public CategoryService(
+        public CategoryTreeService(
             IRepository repository,
             IUnitOfWork unitOfWork,
-            ICategoryTreeService treeService,
+            INodesTreeService treeService,
             INodeService nodeService,
             INodesService nodesService,
             IAccessControlService accessControlService,
@@ -110,7 +110,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// <value>
         /// The tree.
         /// </value>
-        ICategoryTreeService ICategoryService.Tree
+        INodesTreeService ICategoryTreeService.Tree
         {
             get
             {
@@ -124,7 +124,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// <value>
         /// The nodes.
         /// </value>
-        INodesService ICategoryService.Nodes
+        INodesService ICategoryTreeService.Nodes
         {
             get
             {
@@ -138,7 +138,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// <value>
         /// The node.
         /// </value>
-        INodeService ICategoryService.Node
+        INodeService ICategoryTreeService.Node
         {
             get
             {
@@ -153,7 +153,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// <returns>
         ///   <c>GetCategoriesResponse</c> with category data.
         /// </returns>
-        public GetCategoryResponse Get(GetCategoryRequest request)
+        public GetCategoryTreeResponse Get(GetCategoryTreeRequest request)
         {
 //            var tagsFuture = repository.AsQueryable<CategoryTag>().Where(e => e.Category.Id == request.CategoryId).Select(e => e.Tag.Name).ToFuture();
 
@@ -162,19 +162,19 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
             {
                  nodesFuture =
                     repository.AsQueryable<Module.Root.Models.Category>()
-                        .Where(node => node.CategoryTree.Id == request.CategoryId && !node.IsDeleted)
+                        .Where(node => node.CategoryTree.Id == request.CategoryTreeId && !node.IsDeleted)
                         .ToFuture();
             }
 
             var response =
                 repository.AsQueryable<CategoryTree>()
-                    .Where(s => s.Id == request.CategoryId)
+                    .Where(s => s.Id == request.CategoryTreeId)
                     .Select(
                         s =>
-                        new GetCategoryResponse
+                        new GetCategoryTreeResponse
                             {
                                 Data =
-                                    new CategoryModel
+                                    new CategoryTreeModel
                                         {
                                             Id = s.Id,
                                             CreatedBy = s.CreatedByUser,
@@ -183,6 +183,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
                                             LastModifiedOn = s.ModifiedOn,
                                             Version = s.Version,
                                             Name = s.Title,
+                                            Macro = s.Macro
                                         }
                             })
                     .ToFuture()
@@ -228,7 +229,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// <returns>
         ///   <c>PutCategoriesResponse</c> with updated category data.
         /// </returns>
-        public PutCategoryResponse Put(PutCategoryRequest request)
+        public PutCategoryTreeResponse Put(PutCategoryTreeRequest request)
         {
             IEnumerable<Module.Root.Models.Category> nodesFuture = null;
             if (request.Data.Nodes != null)
@@ -324,7 +325,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
 //                Events.CategoryEvents.Instance.OnCategoryUpdated(category);
 //            }
 
-            return new PutCategoryResponse { Data = category.Id };
+            return new PutCategoryTreeResponse { Data = category.Id };
         }
 
         /// <summary>
@@ -334,17 +335,17 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// <returns>
         ///   <c>DeleteCategoriesResponse</c> with success status.
         /// </returns>
-        public DeleteCategoryResponse Delete(DeleteCategoryRequest request)
+        public DeleteCategoryTreeResponse Delete(DeleteCategoryTreeRequest request)
         {
             if (request.Data == null || request.Id.HasDefaultValue())
             {
-                return new DeleteCategoryResponse { Data = false };
+                return new DeleteCategoryTreeResponse { Data = false };
             }
 
             throw new NotImplementedException();
 //            categoryService.DeleteCategory(request.Id, request.Data.Version, securityService.GetCurrentPrincipal());
 
-            return new DeleteCategoryResponse { Data = true };
+            return new DeleteCategoryTreeResponse { Data = true };
         }
 
 //        /// <summary>
@@ -376,7 +377,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// <param name="createdNodes">The created nodes.</param>
         /// <param name="updatedNodes">The category nodes.</param>
         /// <param name="deletedNodes">The deleted nodes.</param>
-        private void SaveNodes(Module.Root.Models.CategoryTree category, IList<SaveCategoryNodeModel> nodeModels, List<Module.Root.Models.Category> currentNodes, ref IList<Module.Root.Models.Category> createdNodes, ref IList<Module.Root.Models.Category> updatedNodes, ref IList<Module.Root.Models.Category> deletedNodes)
+        private void SaveNodes(Module.Root.Models.CategoryTree category, IList<SaveCategoryTreeNodeModel> nodeModels, List<Module.Root.Models.Category> currentNodes, ref IList<Module.Root.Models.Category> createdNodes, ref IList<Module.Root.Models.Category> updatedNodes, ref IList<Module.Root.Models.Category> deletedNodes)
         {
             var removeAll = nodeModels.IsEmpty();
 
@@ -405,7 +406,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// <returns>
         ///   <c>true</c> if node exists; <c>false</c> otherwise.
         /// </returns>
-        private bool NodeExist(IList<SaveCategoryNodeModel> updatedNodes, Guid id)
+        private bool NodeExist(IList<SaveCategoryTreeNodeModel> updatedNodes, Guid id)
         {
             if (updatedNodes == null || updatedNodes.IsEmpty())
             {
@@ -436,7 +437,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         private void SaveChildNodes(
             Module.Root.Models.CategoryTree category,
             Module.Root.Models.Category parentNode,
-            IEnumerable<SaveCategoryNodeModel> nodesToSave,
+            IEnumerable<SaveCategoryTreeNodeModel> nodesToSave,
             IList<Module.Root.Models.Category> currentNodes,
             ref IList<Module.Root.Models.Category> createdNodes,
             ref IList<Module.Root.Models.Category> updatedNodes,

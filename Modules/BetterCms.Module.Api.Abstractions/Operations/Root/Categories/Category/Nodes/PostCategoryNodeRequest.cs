@@ -11,18 +11,12 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes
     /// <summary>
     /// Request for page creation.
     /// </summary>
-    [Route("/categories/{CategoryId}/nodes/", Verbs = "POST")]
+    [Route("/categorytrees/{CategoryTreeId}/nodes/", Verbs = "POST")]
     [DataContract]
     [Serializable]
     public class PostCategoryNodeRequest : RequestBase<SaveNodeModel>, IReturn<PostCategoryNodeResponse>
     {
-        /// <summary>
-        /// Gets or sets the category identifier.
-        /// </summary>
-        /// <value>
-        /// The category identifier.
-        /// </value>
         [DataMember]
-        public Guid CategoryId { get; set; }
+        public Guid CategoryTreeId { get; set; }
     }
 }

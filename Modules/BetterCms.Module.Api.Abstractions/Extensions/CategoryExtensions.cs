@@ -13,25 +13,25 @@ namespace BetterCms.Module.Api.Extensions
 {
     public static class CategoryExtensions
     {
-        public static PutCategoryRequest ToPutRequest(this GetCategoryResponse response)
+        public static PutCategoryTreeRequest ToPutRequest(this GetCategoryTreeResponse response)
         {
             var model = MapPageModel(response, false);
 
-            return new PutCategoryRequest { Data = model, Id = response.Data.Id };
+            return new PutCategoryTreeRequest { Data = model, Id = response.Data.Id };
         }
 
-        public static PostCategoryRequest ToPostRequest(this GetCategoryResponse response)
+        public static PostCategoryTreeRequest ToPostRequest(this GetCategoryTreeResponse response)
         {
             var model = MapPageModel(response, true);
 
-            return new PostCategoryRequest { Data = model };
+            return new PostCategoryTreeRequest { Data = model };
         }
 
         public static PutNodeRequest ToPutRequest(this GetNodeResponse response)
         {
             var model = MapCategoryNodeModel(response, false);
 
-            return new PutNodeRequest { Data = model, CategoryId = response.Data.CategoryId, Id = response.Data.Id };
+            return new PutNodeRequest { Data = model, CategoryTreeId = response.Data.CategoryId, Id = response.Data.Id };
         }
 
         public static PostCategoryNodeRequest ToPostRequest(this GetNodeResponse response)
@@ -41,9 +41,9 @@ namespace BetterCms.Module.Api.Extensions
             return new PostCategoryNodeRequest { Data = model };
         }
 
-        private static SaveCategoryModel MapPageModel(GetCategoryResponse response, bool resetIds)
+        private static SaveCategoryTreeModel MapPageModel(GetCategoryTreeResponse response, bool resetIds)
         {
-            var model = new SaveCategoryModel
+            var model = new SaveCategoryTreeModel
             {
                 Version = response.Data.Version,
                 Name = response.Data.Name,
@@ -58,9 +58,9 @@ namespace BetterCms.Module.Api.Extensions
             return model;
         }
 
-        private static SaveCategoryNodeModel ToModel(CategoryNodeModel n, bool resetIds)
+        private static SaveCategoryTreeNodeModel ToModel(CategoryNodeModel n, bool resetIds)
         {
-            var model = new SaveCategoryNodeModel
+            var model = new SaveCategoryTreeNodeModel
             {
                 Id = resetIds ? default(Guid) : n.Id,
                 Version = n.Version,
@@ -72,7 +72,7 @@ namespace BetterCms.Module.Api.Extensions
             return model;
         }
 
-        private static IList<SaveCategoryNodeModel> GetSubNodes(IList<SaveCategoryNodeModel> nodes, IList<CategoryNodeModel> allNodes, bool resetIds)
+        private static IList<SaveCategoryTreeNodeModel> GetSubNodes(IList<SaveCategoryTreeNodeModel> nodes, IList<CategoryNodeModel> allNodes, bool resetIds)
         {
             foreach (var node in nodes)
             {

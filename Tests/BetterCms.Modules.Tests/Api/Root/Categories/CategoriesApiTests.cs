@@ -16,11 +16,11 @@ namespace BetterCms.Test.Module.Api.Root.Categories
 {
     [TestFixture]
     public class CategoriesApiTests : ApiCrudIntegrationTestBase<
-        SaveCategoryModel, CategoryModel,
-        PostCategoryRequest, PostCategoryResponse,
-        GetCategoryRequest, GetCategoryResponse,
-        PutCategoryRequest, PutCategoryResponse,
-        DeleteCategoryRequest, DeleteCategoryResponse>
+        SaveCategoryTreeModel, CategoryTreeModel,
+        PostCategoryTreeRequest, PostCategoryTreeResponse,
+        GetCategoryTreeRequest, GetCategoryTreeResponse,
+        PutCategoryTreeRequest, PutCategoryTreeResponse,
+        DeleteCategoryTreeRequest, DeleteCategoryTreeResponse>
     {
         private int createdNodeEventCount;
         private int deletedNodeEventCount;
@@ -68,15 +68,15 @@ namespace BetterCms.Test.Module.Api.Root.Categories
             CheckEventsCount(0, 0, 0);
         }
 
-        protected override SaveCategoryModel GetCreateModel(ISession session)
+        protected override SaveCategoryTreeModel GetCreateModel(ISession session)
         {
-            return new SaveCategoryModel
+            return new SaveCategoryTreeModel
             {
                 Name = TestDataProvider.ProvideRandomString(MaxLength.Name),
                 Nodes =
                     new[]
                                    {
-                                       new SaveCategoryNodeModel
+                                       new SaveCategoryTreeNodeModel
                                            {
                                                Name = TestDataProvider.ProvideRandomString(MaxLength.Name),
                                                DisplayOrder = 0,
@@ -84,7 +84,7 @@ namespace BetterCms.Test.Module.Api.Root.Categories
                                                Nodes =
                                                    new[]
                                                        {
-                                                           new SaveCategoryNodeModel
+                                                           new SaveCategoryTreeNodeModel
                                                                {
                                                                    Name = TestDataProvider.ProvideRandomString(MaxLength.Name),
                                                                    DisplayOrder = 0,
@@ -97,12 +97,12 @@ namespace BetterCms.Test.Module.Api.Root.Categories
             };
         }
 
-        protected override GetCategoryRequest GetGetRequest(SaveResponseBase saveResponseBase)
+        protected override GetCategoryTreeRequest GetGetRequest(SaveResponseBase saveResponseBase)
         {
-            return new GetCategoryRequest { CategoryId = saveResponseBase.Data.Value, Data = new GetCategoryModel { IncludeNodes = true/*, IncludeAccessRules = true,*/ } };
+            return new GetCategoryTreeRequest { CategoryTreeId = saveResponseBase.Data.Value, Data = new GetCategoryTreeModel { IncludeNodes = true/*, IncludeAccessRules = true,*/ } };
         }
 
-        protected override PutCategoryRequest GetUpdateRequest(GetCategoryResponse getResponse)
+        protected override PutCategoryTreeRequest GetUpdateRequest(GetCategoryTreeResponse getResponse)
         {
             var request = getResponse.ToPutRequest();
             request.Data.Name = this.TestDataProvider.ProvideRandomString(MaxLength.Name);
@@ -112,7 +112,7 @@ namespace BetterCms.Test.Module.Api.Root.Categories
             return request;
         }
 
-        protected override void OnAfterGet(GetCategoryResponse getResponse, SaveCategoryModel saveModel)
+        protected override void OnAfterGet(GetCategoryTreeResponse getResponse, SaveCategoryTreeModel saveModel)
         {
             base.OnAfterGet(getResponse, saveModel);
 

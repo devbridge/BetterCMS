@@ -110,7 +110,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes.Node
 
             var model = repository
                 .AsQueryable<Module.Root.Models.Category>()
-                .Where(node => node.CategoryTree.Id == request.CategoryId && node.Id == request.NodeId && !node.IsDeleted)
+                .Where(node => node.CategoryTree.Id == request.CategoryTreeId && node.Id == request.NodeId && !node.IsDeleted)
                 .Select(node => new NodeModel
                     {
                         Id = node.Id,
@@ -147,12 +147,12 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes.Node
         /// </returns>
         public PutNodeResponse Put(PutNodeRequest request)
         {
-            var categoryFuture = repository.AsQueryable<CategoryTree>(e => e.Id == request.CategoryId)
+            var categoryFuture = repository.AsQueryable<CategoryTree>(e => e.Id == request.CategoryTreeId)
 //                .FetchMany(f => f.AccessRules)
                 .ToFuture();
 
             var node =
-                repository.AsQueryable<Module.Root.Models.Category>(e => e.CategoryTree.Id == request.CategoryId && e.Id == request.Id)
+                repository.AsQueryable<Module.Root.Models.Category>(e => e.CategoryTree.Id == request.CategoryTreeId && e.Id == request.Id)
 //                    .FetchMany(n => n.Translations)
 //                    .ToFuture()
 //                    .ToList()
@@ -220,7 +220,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes.Node
         /// </returns>
         public DeleteNodeResponse Delete(DeleteNodeRequest request)
         {
-            if (request.Data == null || request.CategoryId.HasDefaultValue() || request.Id.HasDefaultValue())
+            if (request.Data == null || request.CategoryTreeId.HasDefaultValue() || request.Id.HasDefaultValue())
             {
                 return new DeleteNodeResponse { Data = false };
             }

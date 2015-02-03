@@ -13,16 +13,16 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
     /// </summary>
     [Serializable]
     [DataContract]
-    public class GetCategoryResponse : ResponseBase<CategoryModel>
+    public class GetCategoryTreeResponse : ResponseBase<CategoryTreeModel>
     {
-        /// <summary>
-        /// Gets or sets the access rules.
-        /// </summary>
-        /// <value>
-        /// The access rules.
-        /// </value>
-        [DataMember]
-        public IList<AccessRuleModel> AccessRules { get; set; }
+//        /// <summary>
+//        /// Gets or sets the access rules.
+//        /// </summary>
+//        /// <value>
+//        /// The access rules.
+//        /// </value>
+//        [DataMember]
+//        public IList<AccessRuleModel> AccessRules { get; set; }
 
         /// <summary>
         /// Gets or sets the nodes.

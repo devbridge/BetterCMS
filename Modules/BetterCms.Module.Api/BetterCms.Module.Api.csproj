@@ -238,11 +238,11 @@
     <Compile Include="Operations\Pages\Widgets\WidgetsService.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\WidgetOptionsHelper.cs" />
     <Compile Include="Operations\Pages\Widgets\Widget\WidgetService.cs" />
-    <Compile Include="Operations\Root\Categories\CategoriesService.cs" />
-    <Compile Include="Operations\Root\Categories\Categories\CategoryService.cs" />
+    <Compile Include="Operations\Root\Categories\CategoryTreesService.cs" />
+    <Compile Include="Operations\Root\Categories\Categories\CategoryTreeService.cs" />
     <Compile Include="Operations\Root\Categories\Categories\Nodes\NodesService.cs" />
     <Compile Include="Operations\Root\Categories\Categories\Nodes\Node\NodeService.cs" />
-    <Compile Include="Operations\Root\Categories\Categories\Tree\CategoryTreeService.cs" />
+    <Compile Include="Operations\Root\Categories\Categories\Tree\NodesTreeService.cs" />
     <Compile Include="Operations\Root\Languages\LanguagesService.cs" />
     <Compile Include="Operations\Root\Languages\Language\LanguageService.cs" />
     <Compile Include="Operations\Root\DefaultRootApiOperations.cs" />

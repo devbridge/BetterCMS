@@ -6,11 +6,11 @@ using BetterCms.Module.Api.Infrastructure;
 namespace BetterCms.Module.Api.Operations.Root.Categories
 {
     /// <summary>
-    /// Data model for getting categories list.
+    /// Data model for getting category trees list.
     /// </summary>
     [DataContract]
     [Serializable]
-    public class GetCategoriesModel : DataOptions
+    public class GetCategoryTreesModel : DataOptions
     {
     }
 }

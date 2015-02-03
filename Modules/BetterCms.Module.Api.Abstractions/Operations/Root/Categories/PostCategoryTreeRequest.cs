@@ -3,19 +3,18 @@ using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.Root.Categories.Category;
-using BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes.Node;
 
 using ServiceStack.ServiceHost;
 
 namespace BetterCms.Module.Api.Operations.Root.Categories
 {
     /// <summary>
-    /// Request for category creation.
+    /// Request for category tree creation.
     /// </summary>
-    [Route("/categories", Verbs = "POST")]
+    [Route("/categorytrees", Verbs = "POST")]
     [DataContract]
     [Serializable]
-    public class PostCategoryRequest : RequestBase<SaveCategoryModel>, IReturn<PostCategoryResponse>
+    public class PostCategoryTreeRequest : RequestBase<SaveCategoryTreeModel>, IReturn<PostCategoryTreeResponse>
     {
     }
 }

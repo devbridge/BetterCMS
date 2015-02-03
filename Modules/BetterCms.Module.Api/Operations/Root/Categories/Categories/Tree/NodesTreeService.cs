@@ -10,25 +10,25 @@ using ServiceStack.ServiceInterface;
 
 namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Tree
 {
-    public class CategoryTreeService : Service, ICategoryTreeService
+    public class NodesTreeService : Service, INodesTreeService
     {
         private readonly IRepository repository;
 
         private readonly ICmsConfiguration cmsConfiguration;
 
-        public CategoryTreeService(IRepository repository, ICmsConfiguration cmsConfiguration)
+        public NodesTreeService(IRepository repository, ICmsConfiguration cmsConfiguration)
         {
             this.repository = repository;
             this.cmsConfiguration = cmsConfiguration;
         }
 
-        public GetCategoryTreeResponse Get(GetCategoryTreeRequest request)
+        public GetNodesTreeResponse Get(GetNodesTreeRequest request)
         {
             var allNodes = repository
                 .AsQueryable<Module.Root.Models.Category>()
-                .Where(node => node.CategoryTree.Id == request.CategoryId && !node.IsDeleted)
+                .Where(node => node.CategoryTree.Id == request.CategoryTreeId && !node.IsDeleted)
                 .OrderBy(node => node.DisplayOrder)
-                .Select(node => new CategoryTreeNodeModel
+                .Select(node => new NodesTreeNodeModel
                     {
                         Id = node.Id,
                         Version = node.Version,
@@ -47,10 +47,10 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Tree
 
             var nodes = GetChildren(allNodes, request.Data.NodeId);
 
-            return new GetCategoryTreeResponse { Data = nodes };
+            return new GetNodesTreeResponse { Data = nodes };
         }
 
-        private static List<CategoryTreeNodeModel> GetChildren(List<CategoryTreeNodeModel> allItems, Guid? parentId)
+        private static List<NodesTreeNodeModel> GetChildren(List<NodesTreeNodeModel> allItems, Guid? parentId)
         {
             var childItems = allItems.Where(item => item.ParentId == parentId && item.Id != parentId).OrderBy(node => node.DisplayOrder).ToList();
 

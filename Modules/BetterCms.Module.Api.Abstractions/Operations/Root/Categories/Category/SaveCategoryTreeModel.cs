@@ -11,7 +11,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
     /// </summary>
     [Serializable]
     [DataContract]
-    public class SaveCategoryModel : SaveModelBase
+    public class SaveCategoryTreeModel : SaveModelBase
     {
         /// <summary>
         /// Gets or sets the title.
@@ -29,7 +29,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// The nodes.
         /// </value>
         [DataMember]
-        public IList<SaveCategoryNodeModel> Nodes { get; set; }
+        public IList<SaveCategoryTreeNodeModel> Nodes { get; set; }
 
         [DataMember]
         public Guid CategoryTreeId { get; set; }

@@ -49,7 +49,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes
 
             var listResponse = repository
                 .AsQueryable<Module.Root.Models.Category>()
-                .Where(node => node.CategoryTree.Id == request.CategoryId && !node.IsDeleted)
+                .Where(node => node.CategoryTree.Id == request.CategoryTreeId && !node.IsDeleted)
                 .Select(node => new CategoryNodeModel
                     {
                         Id = node.Id,
@@ -83,7 +83,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes
                     {
                         Data = request.Data,
                         User = request.User,
-                        CategoryId = request.CategoryId
+                        CategoryTreeId = request.CategoryTreeId
                     });
 
             return new PostCategoryNodeResponse { Data = result.Data };

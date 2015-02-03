@@ -8,12 +8,12 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes
     {
         public GetCategoryNodesRequestValidator()
         {
-            RuleFor(request => request.CategoryId).Must(CategoryIdMustBeProvided).WithMessage("A CategoryId field must be provided.");
+            RuleFor(request => request.CategoryTreeId).Must(CategoryTreeIdMustBeProvided).WithMessage("A CategoryTreeId field must be provided.");
         }
 
-        private bool CategoryIdMustBeProvided(GetCategoryNodesRequest getPageRequest, Guid categoryId)
+        private bool CategoryTreeIdMustBeProvided(GetCategoryNodesRequest getPageRequest, Guid categoryTreeId)
         {
-            return categoryId != Guid.Empty;
+            return categoryTreeId != Guid.Empty;
         }
     }
 }

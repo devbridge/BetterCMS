@@ -2,15 +2,16 @@
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Root.Categories.Category;
 
 namespace BetterCms.Module.Api.Operations.Root.Categories
 {
     /// <summary>
-    /// Category creation response.
+    /// Response for categories list.
     /// </summary>
     [DataContract]
     [Serializable]
-    public class PostCategoryResponse : SaveResponseBase
+    public class GetCategoryTreesResponse : ListResponseBase<CategoryTreeModel>
     {
     }
 }
