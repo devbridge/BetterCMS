@@ -208,7 +208,8 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
                                     ParentId = node.ParentCategory != null && !node.ParentCategory.IsDeleted ? node.ParentCategory.Id : (Guid?)null,
                                     Name = node.Name,
                                     DisplayOrder = node.DisplayOrder,
-                                    Macro = node.Macro
+                                    Macro = node.Macro,
+                                    CategoryTreeId = node.CategoryTree.Id
                                 })
                         .Distinct()
                         .ToList();

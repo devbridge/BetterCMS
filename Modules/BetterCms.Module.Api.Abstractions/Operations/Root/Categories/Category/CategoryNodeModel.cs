@@ -47,5 +47,8 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// </value>
         [DataMember]
         public string Macro { get; set; }
+
+        [DataMember]
+        public Guid CategoryTreeId { get; set; }
     }
 }

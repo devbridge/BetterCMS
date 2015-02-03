@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
-using BetterCms.Module.Api.Operations.Root.Categories;
+using BetterCms.Module.Api.Operations.Root.Categories.Category;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.Images
 {
@@ -92,6 +92,6 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
         public bool IsArchived { get; set; }
 
         [DataMember]
-        public IList<CategoryModel> Categories { get; set; }
+        public IList<CategoryNodeModel> Categories { get; set; }
     }
 }
