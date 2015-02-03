@@ -187,7 +187,7 @@ namespace BetterCms.Module.Root.Services
             unitOfWork.Commit();
 
             // Events.
-            // TODO:            Events.SitemapEvents.Instance.OnSitemapDeleted(categoryTree);
+            Events.RootEvents.Instance.OnCategoryTreeDeleted(categoryTree);
         }
 
         public void CombineEntityCategories<TEntity, TEntityCategory>(TEntity entity, IEnumerable<System.Guid> currentCategories) 

@@ -29,9 +29,9 @@ namespace BetterCms.Test.Module.Api.Root.Categories
         public void Should_CRUD_CategoryTree_Successfully()
         {
             // Attach to events
-//            RootEvents.Instance.CategoryTreeCreated += Instance_EntityCreated;
-//            RootEvents.Instance.CategoryTreeUpdated += Instance_EntityUpdated;
-//            RootEvents.Instance.CategoryTreeDeleted += Instance_EntityDeleted;
+            RootEvents.Instance.CategoryTreeCreated += Instance_EntityCreated;
+            RootEvents.Instance.CategoryTreeUpdated += Instance_EntityUpdated;
+            RootEvents.Instance.CategoryTreeDeleted += Instance_EntityDeleted;
             RootEvents.Instance.CategoryCreated += Instance_CategoryNodeCreated;
             RootEvents.Instance.CategoryDeleted += Instance_CategoryNodeDeleted;
 
@@ -41,9 +41,9 @@ namespace BetterCms.Test.Module.Api.Root.Categories
             Assert.AreEqual(1, deletedNodeEventCount, "Deleted node events fired count");
 
             // Detach from events
-//            RootEvents.Instance.CategoryTreeCreated -= Instance_EntityCreated;
-//            RootEvents.Instance.CategoryTreeUpdated -= Instance_EntityUpdated;
-//            RootEvents.Instance.CategoryTreeDeleted -= Instance_EntityDeleted;
+            RootEvents.Instance.CategoryTreeCreated -= Instance_EntityCreated;
+            RootEvents.Instance.CategoryTreeUpdated -= Instance_EntityUpdated;
+            RootEvents.Instance.CategoryTreeDeleted -= Instance_EntityDeleted;
             RootEvents.Instance.CategoryCreated -= Instance_CategoryNodeCreated;
             RootEvents.Instance.CategoryDeleted += Instance_CategoryNodeDeleted;
         }
@@ -58,15 +58,15 @@ namespace BetterCms.Test.Module.Api.Root.Categories
             deletedNodeEventCount++;
         }
 
-        protected override void CheckCreateEvent()
-        {
-            CheckEventsCount(0, 0, 0);
-        }
-
-        protected override void CheckDeleteEvent()
-        {
-            CheckEventsCount(0, 0, 0);
-        }
+//        protected override void CheckCreateEvent()
+//        {
+//            CheckEventsCount(0, 0, 0);
+//        }
+//
+//        protected override void CheckDeleteEvent()
+//        {
+//            CheckEventsCount(0, 0, 0);
+//        }
 
         protected override SaveCategoryTreeModel GetCreateModel(ISession session)
         {

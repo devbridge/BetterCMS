@@ -71,6 +71,15 @@ namespace BetterCms.Module.Root.Commands.Category.SaveCategoryTree
                 Events.RootEvents.Instance.OnCategoryDeleted(category);
             }
 
+            if (createNew)
+            {
+                Events.RootEvents.Instance.OnCategoryTreeCreated(categoryTree);
+            }
+            else
+            {
+                Events.RootEvents.Instance.OnCategoryTreeUpdated(categoryTree);
+            }
+
             return new CategoryTreeViewModel
             {
                 Id = categoryTree.Id,

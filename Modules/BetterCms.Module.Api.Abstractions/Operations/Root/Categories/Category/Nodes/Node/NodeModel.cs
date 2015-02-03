@@ -55,6 +55,6 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes.Node
         /// The category identifier.
         /// </value>
         [DataMember]
-        public Guid CategoryId { get; set; }
+        public Guid CategoryTreeId { get; set; }
     }
 }

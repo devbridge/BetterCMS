@@ -120,7 +120,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes.Node
                         LastModifiedBy = node.ModifiedByUser,
                         LastModifiedOn = node.ModifiedOn,
 
-                        CategoryId = node.CategoryTree.Id,
+                        CategoryTreeId = node.CategoryTree.Id,
                         ParentId = node.ParentCategory != null && !node.ParentCategory.IsDeleted ? node.ParentCategory.Id : (Guid?)null,
                         Name = node.Name,
                         DisplayOrder = node.DisplayOrder,
@@ -196,17 +196,17 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category.Nodes.Node
 
             unitOfWork.Commit();
 
-//            // Fire events.
-//            if (isNew)
-//            {
-//                Events.CategoryEvents.Instance.OnCategoryNodeCreated(node);
-//            }
-//            else
-//            {
-//                Events.CategoryEvents.Instance.OnCategoryNodeUpdated(node);
-//            }
-//
-//            Events.CategoryEvents.Instance.OnCategoryUpdated(category);
+            // Fire events.
+            if (isNew)
+            {
+                Events.RootEvents.Instance.OnCategoryCreated(node);
+            }
+            else
+            {
+                Events.RootEvents.Instance.OnCategoryUpdated(node);
+            }
+
+            Events.RootEvents.Instance.OnCategoryTreeUpdated(category);
 
             return new PutNodeResponse { Data = node.Id };
         }

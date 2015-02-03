@@ -31,7 +31,7 @@ namespace BetterCms.Module.Api.Extensions
         {
             var model = MapCategoryNodeModel(response, false);
 
-            return new PutNodeRequest { Data = model, CategoryTreeId = response.Data.CategoryId, Id = response.Data.Id };
+            return new PutNodeRequest { Data = model, CategoryTreeId = response.Data.CategoryTreeId, Id = response.Data.Id };
         }
 
         public static PostCategoryNodeRequest ToPostRequest(this GetNodeResponse response)

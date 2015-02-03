@@ -240,21 +240,21 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
                        .ToFuture();
             }
 
-            var category =
+            var categoryTree =
                 repository.AsQueryable<CategoryTree>(e => e.Id == request.Id.GetValueOrDefault())
 //                    .FetchMany(f => f.AccessRules)
                     .ToFuture()
                     .ToList()
                     .FirstOrDefault();
 
-            var isNew = category == null;
+            var isNew = categoryTree == null;
             if (isNew)
             {
-                category = new CategoryTree { Id = request.Id.GetValueOrDefault()/*, AccessRules = new List<AccessRule>()*/ };
+                categoryTree = new CategoryTree { Id = request.Id.GetValueOrDefault()/*, AccessRules = new List<AccessRule>()*/ };
             }
             else if (request.Data.Version > 0)
             {
-                category.Version = request.Data.Version;
+                categoryTree.Version = request.Data.Version;
             }
 
 //            if (cmsConfiguration.Security.AccessControlEnabled)
@@ -269,7 +269,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
 //                categoryService.ArchiveCategory(category.Id);
 //            }
 
-            category.Title = request.Data.Name;
+            categoryTree.Title = request.Data.Name;
 
 //            IList<Tag> newTags = null;
 //            if (request.Data.Tags != null)
@@ -287,14 +287,14 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
 //                accessControlService.UpdateAccessControl(category, accessRules);
 //            }
 
-            repository.Save(category);
+            repository.Save(categoryTree);
 
             var createdNodes = (IList<Module.Root.Models.Category>)new List<Module.Root.Models.Category>();
             var updatedNodes = (IList<Module.Root.Models.Category>)new List<Module.Root.Models.Category>();
             var deletedNodes = (IList<Module.Root.Models.Category>)new List<Module.Root.Models.Category>();
             if (request.Data.Nodes != null)
             {
-                SaveNodes(category, request.Data.Nodes, nodesFuture != null ? nodesFuture.ToList() : new List<Module.Root.Models.Category>(), ref createdNodes, ref updatedNodes, ref deletedNodes);
+                SaveNodes(categoryTree, request.Data.Nodes, nodesFuture != null ? nodesFuture.ToList() : new List<Module.Root.Models.Category>(), ref createdNodes, ref updatedNodes, ref deletedNodes);
             }
 
             unitOfWork.Commit();
@@ -316,16 +316,16 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
                 Events.RootEvents.Instance.OnCategoryDeleted(node);
             }
 
-//            if (isNew)
-//            {
-//                Events.CategoryEvents.Instance.OnCategoryCreated(category);
-//            }
-//            else
-//            {
-//                Events.CategoryEvents.Instance.OnCategoryUpdated(category);
-//            }
+            if (isNew)
+            {
+                Events.RootEvents.Instance.OnCategoryTreeCreated(categoryTree);
+            }
+            else
+            {
+                Events.RootEvents.Instance.OnCategoryTreeUpdated(categoryTree);
+            }
 
-            return new PutCategoryTreeResponse { Data = category.Id };
+            return new PutCategoryTreeResponse { Data = categoryTree.Id };
         }
 
         /// <summary>
@@ -342,8 +342,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
                 return new DeleteCategoryTreeResponse { Data = false };
             }
 
-            throw new NotImplementedException();
-//            categoryService.DeleteCategory(request.Id, request.Data.Version, securityService.GetCurrentPrincipal());
+            categoryService.DeleteCategoryTree(request.Id, request.Data.Version, securityService.GetCurrentPrincipal());
 
             return new DeleteCategoryTreeResponse { Data = true };
         }
@@ -427,7 +426,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// <summary>
         /// Saves the child nodes.
         /// </summary>
-        /// <param name="category">The category.</param>
+        /// <param name="categoryTree">The category.</param>
         /// <param name="parentNode">The parent node.</param>
         /// <param name="nodesToSave">The nodes to save.</param>
         /// <param name="currentNodes">The current nodes.</param>
@@ -435,7 +434,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
         /// <param name="updatedNodes">The category nodes.</param>
         /// <param name="deletedNodes">The deleted nodes.</param>
         private void SaveChildNodes(
-            Module.Root.Models.CategoryTree category,
+            Module.Root.Models.CategoryTree categoryTree,
             Module.Root.Models.Category parentNode,
             IEnumerable<SaveCategoryTreeNodeModel> nodesToSave,
             IList<Module.Root.Models.Category> currentNodes,
@@ -457,7 +456,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
                     nodeToSave = new Module.Root.Models.Category
                                      {
                                          Id = nodeModel.Id.GetValueOrDefault(),
-                                         CategoryTree = category
+                                         CategoryTree = categoryTree
                                      };
                 }
                 else if (nodeModel.Version > 0)
@@ -481,7 +480,7 @@ namespace BetterCms.Module.Api.Operations.Root.Categories.Category
                     updatedNodes.Add(nodeToSave);
                 }
 
-                SaveChildNodes(category, nodeToSave, nodeModel.Nodes, currentNodes, ref createdNodes, ref updatedNodes, ref deletedNodes);
+                SaveChildNodes(categoryTree, nodeToSave, nodeModel.Nodes, currentNodes, ref createdNodes, ref updatedNodes, ref deletedNodes);
             }
         }
     }
