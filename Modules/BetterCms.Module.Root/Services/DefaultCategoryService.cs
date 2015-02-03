@@ -187,7 +187,7 @@ namespace BetterCms.Module.Root.Services
             unitOfWork.Commit();
 
             // Events.
-            // TODO:            Events.SitemapEvents.Instance.OnSitemapDeleted(categoryTree);
+            Events.RootEvents.Instance.OnCategoryTreeDeleted(categoryTree);
         }
 
         public void CombineEntityCategories<TEntity, TEntityCategory>(TEntity entity, IEnumerable<System.Guid> currentCategories) 
@@ -223,5 +223,60 @@ namespace BetterCms.Module.Root.Services
                 }              
             }
         }
+
+        public void DeleteCategoryNode(Guid id, int version, Guid? categoryTreeId = null)
+        {
+            IList<Category> deletedNodes = new List<Category>();
+
+            var node = repository.AsQueryable<Category>()
+                .Where(sitemapNode => sitemapNode.Id == id && (!categoryTreeId.HasValue || sitemapNode.CategoryTree.Id == categoryTreeId.Value))
+                .Fetch(sitemapNode => sitemapNode.CategoryTree)
+                .Distinct()
+                .First();
+
+            // Concurrency.
+            if (version > 0 && node.Version != version)
+            {
+                throw new ConcurrentDataException(node);
+            }
+
+            unitOfWork.BeginTransaction();
+
+//            ArchiveSitemap(node.Sitemap.Id);
+
+            DeleteCategoryNode(node, ref deletedNodes);
+
+            unitOfWork.Commit();
+
+            var updatedSitemaps = new List<CategoryTree>();
+            foreach (var deletedNode in deletedNodes)
+            {
+                Events.RootEvents.Instance.OnCategoryDeleted(deletedNode);
+                if (!updatedSitemaps.Contains(deletedNode.CategoryTree))
+                {
+                    updatedSitemaps.Add(deletedNode.CategoryTree);
+                }
+            }
+
+            foreach (var sitemap in updatedSitemaps)
+            {
+                Events.RootEvents.Instance.OnCategoryTreeUpdated(sitemap);
+            }
+        }
+
+        private void DeleteCategoryNode(Category node, ref IList<Category> deletedNodes)
+        {
+            if (node.ChildCategories != null)
+            {
+                foreach (var childNode in node.ChildCategories)
+                {
+                    DeleteCategoryNode(childNode, ref deletedNodes);
+                }
+            }
+
+            repository.Delete(node);
+            deletedNodes.Add(node);
+        }
+
     }
 }

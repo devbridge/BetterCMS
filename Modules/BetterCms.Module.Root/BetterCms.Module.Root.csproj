@@ -368,6 +368,15 @@
     <Compile Include="Mvc\Helpers\MessagesHelper.cs" />
     <Compile Include="Registration\TabsJsModuleIncludeDescriptor.cs" />
     <Compile Include="RootModuleConstants.cs" />
+    <Compile Include="Services\Categories\Nodes\DefaultCategoryNodeService.cs" />
+    <Compile Include="Services\Categories\Nodes\ICategoryNodeService.cs" />
+    <Compile Include="Services\Categories\Tree\CategoryTreeNodeModel.cs" />
+    <Compile Include="Services\Categories\Tree\DefaultCategoryTreeService.cs" />
+    <Compile Include="Services\Categories\Tree\DeleteCategoryTreeRequest.cs" />
+    <Compile Include="Services\Categories\Tree\GetCategoryTreeRequest.cs" />
+    <Compile Include="Services\Categories\Tree\GetCategoryTreeResponse.cs" />
+    <Compile Include="Services\Categories\Tree\ICategoryTreeService.cs" />
+    <Compile Include="Services\Categories\Tree\SaveCategoryTreeRequest.cs" />
     <Compile Include="Services\DefaultCategoryService.cs" />
     <Compile Include="Services\DefaultChildContentService.cs" />
     <Compile Include="Services\DefaultContentProjectionService.cs" />

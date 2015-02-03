@@ -8,7 +8,7 @@ using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.MediaManager.Files.File;
 using BetterCms.Module.Api.Operations.Root;
-using BetterCms.Module.Api.Operations.Root.Categories;
+using BetterCms.Module.Api.Operations.Root.Categories.Category;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 
@@ -205,7 +205,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files
                         item.Categories = (from media in repository.AsQueryable<MediaFile>()
                                            from category in media.Categories
                                            where media.Id == item.Id && !category.IsDeleted
-                                           select new CategoryModel
+                                           select new CategoryNodeModel
                                            {
                                                Id = category.Category.Id,
                                                Version = category.Version,

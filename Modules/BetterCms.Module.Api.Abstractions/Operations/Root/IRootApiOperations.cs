@@ -20,9 +20,9 @@ namespace BetterCms.Module.Api.Operations.Root
 
         ITagService Tag { get; }
         
-        ICategoriesService Categories { get; }
+        ICategoryTreesService Categories { get; }
 
-        ICategoryService Category { get; }
+        ICategoryTreeService Category { get; }
         
         ILanguagesService Languages { get; }
 

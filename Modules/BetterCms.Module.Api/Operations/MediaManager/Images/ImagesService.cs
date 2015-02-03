@@ -4,7 +4,7 @@ using BetterCms.Core.DataAccess;
 using BetterCms.Module.Api.Helpers;
 using BetterCms.Module.Api.Infrastructure;
 using BetterCms.Module.Api.Operations.MediaManager.Images.Image;
-using BetterCms.Module.Api.Operations.Root.Categories;
+using BetterCms.Module.Api.Operations.Root.Categories.Category;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.MediaManager.Services;
 
@@ -129,7 +129,7 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
                         from category in media.Categories
                                         where media.Id == model.Id && !category.IsDeleted
                         select
-                            new CategoryModel
+                            new CategoryNodeModel
                             {
                                 Id = category.Category.Id,
                                 Version = category.Version,
