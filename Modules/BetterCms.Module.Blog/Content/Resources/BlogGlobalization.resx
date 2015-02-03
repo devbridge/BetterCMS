@@ -157,7 +157,7 @@
     <value>Specify the author of this post.</value>
   </data>
   <data name="EditBlockPost_Category_Title" xml:space="preserve">
-    <value>Category</value>
+    <value>Categories</value>
   </data>
   <data name="EditBlockPost_Category_Tooltip_Description" xml:space="preserve">
     <value>Assign this post to a category to identify it with similar posts.</value>

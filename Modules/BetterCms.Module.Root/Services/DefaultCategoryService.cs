@@ -72,11 +72,11 @@ namespace BetterCms.Module.Root.Services
             TEntity entityAlias = null;
             TEntityCategory categoryAlias = default(TEntityCategory);
 
-            return repository.AsQueryOver<Category>()
+            return repository.AsQueryOver<Category>().Where(c => !c.IsDeleted)
                              .WithSubquery.WhereProperty(c => c.Id)
                              .In(QueryOver.Of(() => entityAlias)
                                      .JoinQueryOver(() => entityAlias.Categories, () => categoryAlias)
-                                     .Where(() => entityAlias.Id == entityId)
+                                     .Where(() => entityAlias.Id == entityId && !categoryAlias.IsDeleted)
                                      .SelectList(list => list.Select(() => categoryAlias.Category.Id)))
                                      .Select(category => category.Id)
                                      .Future<Guid>();
@@ -208,7 +208,8 @@ namespace BetterCms.Module.Root.Services
 
                     foreach (var removedCategory in removedCategories)
                     {
-                        entity.RemoveCategory(removedCategory);
+                        //entity.RemoveCategory(removedCategory);
+                        unitOfWork.Session.Delete(removedCategory);
                     }
                 }
 

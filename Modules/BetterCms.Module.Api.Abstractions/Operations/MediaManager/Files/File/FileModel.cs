@@ -1,6 +1,8 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 using BetterCms.Module.Api.Infrastructure;
+using BetterCms.Module.Api.Operations.Root.Categories;
 
 namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
 {
@@ -169,5 +171,8 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Files.File
         /// </value>
         [DataMember]
         public bool IsCanceled { get; set; }
+
+        [DataMember]
+        public IList<CategoryModel> Categories { get; set; }
     }
 }

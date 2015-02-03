@@ -198,7 +198,9 @@
     <Compile Include="Models\Enum\MediaHistoryStatus.cs" />
     <Compile Include="Models\Extensions\MediaExtensions.cs" />
     <Compile Include="Models\Extensions\MediaFileExtensions.cs" />
+    <Compile Include="Models\Maps\MediaCategoryMap.cs" />
     <Compile Include="Models\Maps\MediaTagMap.cs" />
+    <Compile Include="Models\MediaCategory.cs" />
     <Compile Include="Models\MediaImageAlign.cs" />
     <Compile Include="Models\MediaType.cs" />
     <Compile Include="Models\Maps\MediaMap.cs" />
@@ -210,6 +212,7 @@
     <Compile Include="Models\MediaFolder.cs" />
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaImage.cs" />
+    <Compile Include="Models\Migrations\Migration201502031000.cs" />
     <Compile Include="Models\Migrations\Migration201409241658.cs" />
     <Compile Include="Models\Migrations\Migration201310211500.cs" />
     <Compile Include="Models\Migrations\Migration201310081420.cs" />

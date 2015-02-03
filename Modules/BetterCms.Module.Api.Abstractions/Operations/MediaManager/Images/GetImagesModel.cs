@@ -56,6 +56,9 @@ namespace BetterCms.Module.Api.Operations.MediaManager.Images
         /// </value>
         [DataMember]
         public bool IncludeFolders { get; set; }
+        
+        [DataMember]
+        public bool IncludeCategories { get; set; }
 
         /// <summary>
         /// Gets or sets the image tags for filtering.
