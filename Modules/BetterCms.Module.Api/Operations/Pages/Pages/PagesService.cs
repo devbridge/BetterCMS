@@ -283,7 +283,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
                                         {
                                             page.Categories = (from pagePr in repository.AsQueryable<PageProperties>()
                                                                from category in pagePr.Categories
-                                                               where pagePr.Id == page.Id
+                                                               where pagePr.Id == page.Id && !category.IsDeleted
                                                                select new CategoryModel
                                                                 {
                                                                     Id = category.Id,

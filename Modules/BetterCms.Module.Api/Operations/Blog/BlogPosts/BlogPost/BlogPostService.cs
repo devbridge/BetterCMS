@@ -78,7 +78,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
 
             model.Categories = (from pagePr in repository.AsQueryable<Module.Blog.Models.BlogPost>()
                                 from category in pagePr.Categories
-                                where pagePr.Id == model.Id
+                                where pagePr.Id == model.Id && !category.IsDeleted
                                 select new CategoryModel
                                 {
                                     Id = category.Id,
