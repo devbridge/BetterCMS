@@ -1,4 +1,5 @@
 ﻿@using BetterCms.Module.MediaManager.Models
+@using BetterCms.Module.Root.Mvc.Extensions
 @using BetterCms.Module.Root.ViewModels.Tags
 @using Microsoft.Web.Mvc
 @using BetterCms.Module.Root.Mvc.Helpers
@@ -151,6 +152,14 @@
                 </div>
 
             </div>
+
+    <div class="bcms-input-list-holder">
+        @Html.Tooltip(MediaGlobalization.ImageEditor_Dialog_Category_Tooltip_Description)
+
+        <div class="bcms-content-titles">@MediaGlobalization.ImageEditor_Dialog_Category_Title</div>
+
+        @Html.MultipleDropDown(Model.Categories.ToSelectListItems(Model.SelectItemCategories), new { @class = "multiple-dropdown-select" })
+    </div>
 
             <div class="bcms-media-tags-box-holder bcms-clearfix" data-bind="with: tags">
                 @Html.Partial("~/Areas/bcms-root/Views/Tags/TagsTemplate.cshtml", tagsTemplateViewModel)

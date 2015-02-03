@@ -71,7 +71,10 @@ namespace BetterCms.Module.Pages.Models
 
         public virtual void RemoveCategory(IEntityCategory category)
         {
-            Categories.Remove(category as PageCategory);
+            if (Categories != null)
+            {
+                Categories.Remove(category as PageCategory);   
+            }           
         }
 
         protected virtual PageProperties CopyDataToDuplicate(PageProperties duplicate)

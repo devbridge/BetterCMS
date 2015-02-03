@@ -15,6 +15,7 @@ using BetterCms.Module.MediaManager.ViewModels;
 using BetterCms.Module.MediaManager.ViewModels.File;
 
 using BetterCms.Module.Root.Mvc;
+using BetterCms.Module.Root.Services;
 using BetterCms.Module.Root.ViewModels.Security;
 
 namespace BetterCms.Module.MediaManager.Command.Files.GetFile
@@ -50,6 +51,10 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
         private readonly IMediaFileUrlResolver fileUrlResolver;
 
         /// <summary>
+        /// The category service
+        /// </summary>
+        private ICategoryService categoryService;
+        /// <summary>
         /// Initializes a new instance of the <see cref="GetFileCommand" /> class.
         /// </summary>
         /// <param name="tagService">The tag service.</param>
@@ -57,13 +62,14 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
         /// <param name="storageService">The storage service.</param>
         /// <param name="fileService">The file service.</param>
         /// <param name="fileUrlResolver">The file URL resolver.</param>
-        public GetFileCommand(ITagService tagService, ICmsConfiguration configuration, IStorageService storageService, IMediaFileService fileService, IMediaFileUrlResolver fileUrlResolver)
+        public GetFileCommand(ITagService tagService, ICmsConfiguration configuration, IStorageService storageService, IMediaFileService fileService, IMediaFileUrlResolver fileUrlResolver, ICategoryService categoryService)
         {
             this.tagService = tagService;
             this.configuration = configuration;
             this.storageService = storageService;
             this.fileService = fileService;
             this.fileUrlResolver = fileUrlResolver;
+            this.categoryService = categoryService;
         }
 
         /// <summary>
@@ -105,6 +111,12 @@ namespace BetterCms.Module.MediaManager.Command.Files.GetFile
                         },
                     AccessControlEnabled = configuration.Security.AccessControlEnabled
                 };
+
+            var categories = categoryService.GetCategories();
+            var selectedCategories = categoryService.GetSelectedCategoriesIds<Media, MediaCategory>(fileId);
+
+            model.Categories = categories.ToList();
+            model.SelectItemCategories = selectedCategories.ToList();
 
             if (configuration.Security.AccessControlEnabled)
             {
