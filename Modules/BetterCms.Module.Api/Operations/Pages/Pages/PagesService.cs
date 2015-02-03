@@ -292,7 +292,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages
                                                                     CreatedOn = category.CreatedOn,
                                                                     LastModifiedBy = category.ModifiedByUser,
                                                                     LastModifiedOn = category.ModifiedOn,
-                                                                    Name = category.Name
+                                                                    Name = category.Category.Name
                                                                 }).ToList();
                                         });
             }

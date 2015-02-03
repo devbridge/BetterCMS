@@ -65,17 +65,19 @@ namespace BetterCms.Module.Root.Services
                 .ToFuture();
         }
 
-        public IEnumerable<Guid> GetSelectedCategoriesIds<TEntity>(Guid? entityId) where TEntity : Entity, ICategorized
+        public IEnumerable<Guid> GetSelectedCategoriesIds<TEntity, TEntityCategory>(Guid? entityId) 
+            where TEntity : Entity, ICategorized
+            where TEntityCategory : Entity, IEntityCategory
         {
             TEntity entityAlias = null;
-            Category categoryAlias = null;
+            TEntityCategory categoryAlias = default(TEntityCategory);
 
             return repository.AsQueryOver<Category>()
                              .WithSubquery.WhereProperty(c => c.Id)
                              .In(QueryOver.Of(() => entityAlias)
                                      .JoinQueryOver(() => entityAlias.Categories, () => categoryAlias)
                                      .Where(() => entityAlias.Id == entityId)
-                                     .SelectList(list => list.Select(() => categoryAlias.Id)))
+                                     .SelectList(list => list.Select(() => categoryAlias.Category.Id)))
                                      .Select(category => category.Id)
                                      .Future<Guid>();
         }
@@ -188,19 +190,21 @@ namespace BetterCms.Module.Root.Services
             // TODO:            Events.SitemapEvents.Instance.OnSitemapDeleted(categoryTree);
         }
 
-        public void CombineEntityCategories<TEntity>(TEntity entity, IEnumerable<System.Guid> currentCategories) where TEntity : Entity, ICategorized
+        public void CombineEntityCategories<TEntity, TEntityCategory>(TEntity entity, IEnumerable<System.Guid> currentCategories) 
+            where TEntity : Entity, ICategorized
+            where TEntityCategory : Entity, IEntityCategory, new()
         {
             var categories = currentCategories != null ? currentCategories.ToList() : new List<Guid>();
 
             if (entity != null)
             {
-                var newCategoryIds = entity.Categories != null ? categories.Where(cId => entity.Categories.All(pc => pc.Id != cId)).ToArray() : categories.ToArray();
+                var newCategoryIds = entity.Categories != null ? categories.Where(cId => entity.Categories.All(pc => pc.Category.Id != cId)).ToArray() : categories.ToArray();
                 var newCategories = repository.AsQueryOver<Category>().WhereRestrictionOn(t => t.Id).IsIn(newCategoryIds).Future<Category>();
 
                 if (entity.Categories != null)
                 {
                     // Remove categories
-                    var removedCategories = entity.Categories.Where(c => !categories.Contains(c.Id)).ToList();
+                    var removedCategories = entity.Categories.Where(c => !categories.Contains(c.Category.Id)).ToList();
 
                     foreach (var removedCategory in removedCategories)
                     {
@@ -211,7 +215,10 @@ namespace BetterCms.Module.Root.Services
                 // Attach new categories
                 foreach (var newCategory in newCategories)
                 {
-                    entity.AddCategory(newCategory);
+                    var newentityCategory = new TEntityCategory();
+                    newentityCategory.Category = newCategory;
+                    newentityCategory.SetEntity(entity);
+                    entity.AddCategory(newentityCategory);
                 }              
             }
         }

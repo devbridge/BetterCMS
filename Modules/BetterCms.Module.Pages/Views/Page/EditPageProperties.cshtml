@@ -153,8 +153,7 @@
                     <div class="bcms-input-list-holder">
                         @Html.Tooltip(PagesGlobalization.EditPageProperties_ForceProtocol_Tooltip_Description)
                         <div class="bcms-content-titles">@PagesGlobalization.EditPageProperties_ForceProtocol_Title</div>
-                        @*                        // TODO Set selected categories*@
-@*                                                @Html.DropDownListFor(model => model.ForceAccessProtocol, Model.PageAccessProtocols.ToSelectList(Model.CategoryId), null, new { @class = "bcms-global-select" })*@
+                        @Html.DropDownListFor(model => model.ForceAccessProtocol, Model.PageAccessProtocols.ToSelectList(Model.ForceAccessProtocol), null, new { @class = "bcms-global-select" })
                     </div>
                 }
                 @Html.HiddenFor(model => model.CanPublishPage)

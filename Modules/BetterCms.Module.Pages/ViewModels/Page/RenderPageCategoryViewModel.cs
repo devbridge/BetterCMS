@@ -1,17 +1,19 @@
-﻿namespace BetterCms.Module.Pages.ViewModels.Page
+﻿using BetterCms.Module.Pages.Models;
+
+namespace BetterCms.Module.Pages.ViewModels.Page
 {
     public class RenderPageCategoryViewModel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RenderPageCategoryViewModel" /> class.
         /// </summary>
-        public RenderPageCategoryViewModel(Root.Models.Category category)
+        public RenderPageCategoryViewModel(PageCategory category)
         {
             if (category != null)
             {
                 Id = category.Id;
                 Version = category.Version;
-                Name = category.Name;
+                Name = category.Category.Name;
             }
         }
 

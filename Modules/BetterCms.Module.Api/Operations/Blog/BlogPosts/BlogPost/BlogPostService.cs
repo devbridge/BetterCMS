@@ -87,7 +87,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost
                                     CreatedOn = category.CreatedOn,
                                     LastModifiedBy = category.ModifiedByUser,
                                     LastModifiedOn = category.ModifiedOn,
-                                    Name = category.Name
+                                    Name = category.Category.Name
                                 }).ToList();
 
             return new GetBlogPostResponse

@@ -307,7 +307,7 @@ namespace BetterCms.Test.Module.Api.Blog.BlogPosts
                                 } 
                 };
 
-            model.Categories = blogPost.Categories.Select(c => c.Id).ToList();
+            model.Categories = blogPost.Categories.Select(c => c.Category.Id).ToList();
 
             return model;
         }

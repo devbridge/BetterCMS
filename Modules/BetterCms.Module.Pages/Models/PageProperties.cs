@@ -39,9 +39,9 @@ namespace BetterCms.Module.Pages.Models
 
         public virtual bool IsReadOnly { get; set; }
 
-        public virtual IList<Category> Categories { get; set; }
+        public virtual IList<PageCategory> Categories { get; set; }
 
-        IEnumerable<ICategory> ICategorized.Categories
+        IEnumerable<IEntityCategory> ICategorized.Categories
         {
             get
             {
@@ -59,19 +59,19 @@ namespace BetterCms.Module.Pages.Models
             return CopyDataToDuplicate(new PageProperties());
         }
 
-        public virtual void AddCategory(ICategory category)
+        public virtual void AddCategory(IEntityCategory category)
         {
             if (Categories == null)
             {
-                Categories = new List<Category>();
+                Categories = new List<PageCategory>();
             }
 
-            Categories.Add(category as Category);
+            Categories.Add(category as PageCategory);
         }
 
-        public virtual void RemoveCategory(ICategory category)
+        public virtual void RemoveCategory(IEntityCategory category)
         {
-            Categories.Remove(category as Category);
+            Categories.Remove(category as PageCategory);
         }
 
         protected virtual PageProperties CopyDataToDuplicate(PageProperties duplicate)

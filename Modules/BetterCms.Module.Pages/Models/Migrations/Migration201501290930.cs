@@ -27,10 +27,9 @@ namespace BetterCms.Module.Pages.Models.Migrations
             Create
                 .Table("PageCategories")
                 .InSchema(SchemaName)
+                .WithCmsBaseColumns()
                 .WithColumn("PageId").AsGuid().NotNullable()
-                .WithColumn("CategoryId").AsGuid().NotNullable();
-
-            Create.PrimaryKey("PK_Cms_PageCategories").OnTable("PageCategories").WithSchema(SchemaName).Columns(new[] { "PageId", "CategoryId" });
+                .WithColumn("CategoryId").AsGuid().NotNullable();           
 
             Create
                 .ForeignKey("FK_Cms_PageCategories_PageId_Cms_Page_Id")

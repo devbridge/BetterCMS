@@ -11,6 +11,7 @@ using BetterCms.Module.Blog.Helpers.Extensions;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.MediaManager.Models;
 using BetterCms.Module.Pages.Helpers.Extensions;
+using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Root.Models;
 using BetterCms.Module.Root.Mvc.PageHtmlRenderer;
 using BetterCms.Module.Root.Projections;
@@ -368,7 +369,7 @@ namespace BetterCms.Test.Module.Root.HelperTests
 
             if (extendModel)
             {
-                entity.Categories = new List<Category>() { new Category { Name = "Fake Category Name" } };
+                entity.Categories = new List<PageCategory>() { new PageCategory() { Category = new Category { Name = "Fake Category Name" }, Page = entity } };
                 entity.Author = new Author { Name = "Fake Author Name" };
                 entity.Image = new MediaImage { PublicUrl = "/Fake/Main/Image/Url/" };
                 entity.SecondaryImage = new MediaImage { PublicUrl = "/Fake/Secondary/Image/Url/" };

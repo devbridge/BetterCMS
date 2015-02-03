@@ -232,7 +232,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page
                                     CreatedOn = category.CreatedOn,
                                     LastModifiedBy = category.ModifiedByUser,
                                     LastModifiedOn = category.ModifiedOn,
-                                    Name = category.Name
+                                    Name = category.Category.Name
                                 }).ToList();
 
             return new GetPageResponse { Data = model };

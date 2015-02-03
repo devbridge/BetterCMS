@@ -156,6 +156,7 @@
     <Compile Include="DataContracts\ICustomOption.cs" />
     <Compile Include="DataContracts\IDeletableOption.cs" />
     <Compile Include="DataContracts\IDynamicContentContainer.cs" />
+    <Compile Include="DataContracts\IEntityCategory.cs" />
     <Compile Include="DataContracts\IOptionContainer.cs" />
     <Compile Include="DataContracts\IDeleteableEntity.cs" />
     <Compile Include="DataContracts\IOptionValue.cs" />

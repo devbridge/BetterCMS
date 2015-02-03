@@ -184,7 +184,7 @@ namespace BetterCms.Tests.Helpers
 
             var categoryTree = CreateNewCategoryTree();
 
-            entity.Categories = new List<Category>() { CreateNewCategory(categoryTree) };             
+            entity.Categories = new List<PageCategory>() {new PageCategory(){ Category = CreateNewCategory(categoryTree), Page = entity}};             
             entity.Image = CreateNewMediaImage();
             entity.FeaturedImage = CreateNewMediaImage();
             entity.SecondaryImage = CreateNewMediaImage();

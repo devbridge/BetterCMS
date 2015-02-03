@@ -88,7 +88,7 @@ namespace BetterCms.Module.Pages.Services
                 .AsQueryable<PageProperties>()
                 .Where(f => f.Id == pageId)
                 .FetchMany(f => f.Options)
-                .FetchMany(f => f.Categories).ThenFetch(c => c.CategoryTree)
+                .FetchMany(f => f.Categories).ThenFetch(c => c.Category).ThenFetch(c => c.CategoryTree)
                 .FetchMany(f => f.PageContents).ThenFetch(f => f.Region)
                 .FetchMany(f => f.PageContents).ThenFetch(f => f.Content)
                 .FetchMany(f => f.PageContents).ThenFetchMany(f => f.Options)
@@ -380,11 +380,11 @@ namespace BetterCms.Module.Pages.Services
             repository.Save(newMasterPage);
         }        
         
-        private void CloneCategories(Category category, PageProperties newPage)
+        private void CloneCategories(PageCategory category, PageProperties newPage)
         {
             if (newPage.Categories == null)
             {
-                newPage.Categories = new List<Category>();
+                newPage.Categories = new List<PageCategory>();
             }
             newPage.Categories.Add(category);            
         }

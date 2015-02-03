@@ -14,6 +14,7 @@ using BetterCms.Module.Api.Operations.Root;
 using BetterCms.Module.Blog.Models;
 using BetterCms.Module.Blog.Services;
 using BetterCms.Module.MediaManager.Services;
+using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 using BetterCms.Module.Pages.ViewModels.Page;
 
@@ -207,7 +208,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
                 response.AccessRules = LoadAccessRules(response.Data.Id);
             }
 
-            response.Data.Categories = categoriesService.GetSelectedCategoriesIds<Module.Blog.Models.BlogPost>(request.BlogPostId).ToList();
+            response.Data.Categories = categoriesService.GetSelectedCategoriesIds<Module.Blog.Models.BlogPost, PageCategory>(request.BlogPostId).ToList();
             
             if (request.Data.IncludeCategories)
             {
@@ -229,7 +230,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts.BlogPost.Properties
                          CreatedOn = category.CreatedOn,
                          LastModifiedBy = category.ModifiedByUser,
                          LastModifiedOn = category.ModifiedOn,
-                         Name = category.Name
+                         Name = category.Category.Name
                      })
                      .ToList();
         }

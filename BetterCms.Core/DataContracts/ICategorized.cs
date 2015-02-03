@@ -7,10 +7,10 @@ namespace BetterCms.Core.DataContracts
 {
     public interface ICategorized
     {
-        IEnumerable<ICategory> Categories { get; }
+        IEnumerable<IEntityCategory> Categories { get; }
 
-        void AddCategory(ICategory category);
+        void AddCategory(IEntityCategory category);
 
-        void RemoveCategory(ICategory category);
+        void RemoveCategory(IEntityCategory category);
     }
 }

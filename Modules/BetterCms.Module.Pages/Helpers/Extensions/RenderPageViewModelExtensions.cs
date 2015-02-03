@@ -118,8 +118,7 @@ namespace BetterCms.Module.Pages.Helpers.Extensions
         {
             var pageModel = GetPageModel(viewModel);
             if (pageModel != null && pageModel.Categories != null)
-            {
-                // TODO Set selected categories            
+            {          
                 return pageModel.Categories.FirstOrDefault();
             }
 
@@ -228,7 +227,7 @@ namespace BetterCms.Module.Pages.Helpers.Extensions
         /// <param name="viewModel">The view model.</param>
         /// <returns></returns>
         [Obsolete("Use Bag.PageData or GetPageModel() method")]
-        public static IEnumerable<Category> GetPageCategories(this RenderPageViewModel viewModel)
+        public static IEnumerable<PageCategory> GetPageCategories(this RenderPageViewModel viewModel)
         {
             if (viewModel.Bag.PageData != null)
             {
@@ -239,7 +238,7 @@ namespace BetterCms.Module.Pages.Helpers.Extensions
                 }
             }
 
-            return Enumerable.Empty<Category>();
+            return Enumerable.Empty<PageCategory>();
         }
     }
 }

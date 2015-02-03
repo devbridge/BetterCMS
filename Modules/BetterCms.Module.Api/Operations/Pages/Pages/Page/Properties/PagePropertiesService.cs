@@ -329,7 +329,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
 
             if (request.PageId.HasValue)
             {
-                response.Data.Categories = categoryService.GetSelectedCategoriesIds<PageProperties>(request.PageId.Value).ToList();
+                response.Data.Categories = categoryService.GetSelectedCategoriesIds<PageProperties, PageCategory>(request.PageId.Value).ToList();
 
                 if (request.Data.IncludeCategories)
                 {
@@ -353,7 +353,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
                         CreatedOn = category.CreatedOn,
                         LastModifiedBy = category.ModifiedByUser,
                         LastModifiedOn = category.ModifiedOn,
-                        Name = category.Name
+                        Name = category.Category.Name
                     })
                      .ToList();
         }
@@ -557,7 +557,7 @@ namespace BetterCms.Module.Api.Operations.Pages.Pages.Page.Properties
 
             masterPageService.SetMasterOrLayout(pageProperties, request.Data.MasterPageId, request.Data.LayoutId);
 
-            categoryService.CombineEntityCategories(pageProperties, request.Data.Categories);
+            categoryService.CombineEntityCategories<PageProperties, PageCategory>(pageProperties, request.Data.Categories);
 
             pageProperties.IsArchived = request.Data.IsArchived;
             pageProperties.IsMasterPage = request.Data.IsMasterPage;

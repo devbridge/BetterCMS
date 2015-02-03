@@ -193,6 +193,8 @@
     <Compile Include="Helpers\Extensions\RenderPageViewModelExtensions.cs" />
     <Compile Include="Helpers\UrlHelper.cs" />
     <Compile Include="Models\Enums\WidgetUsageType.cs" />
+    <Compile Include="Models\PageCategory.cs" />
+    <Compile Include="Models\Maps\PageCategoryMap.cs" />
     <Compile Include="Models\Maps\SitemapNodeTranslationMap.cs" />
     <Compile Include="Models\Migrations\Migration201502021540.cs" />
     <Compile Include="Models\Migrations\Migration201401211353.cs" />

@@ -11,7 +11,7 @@ using BetterCms.Module.Blog.ViewModels.Blog;
 
 using BetterCms.Module.MediaManager.Services;
 using BetterCms.Module.MediaManager.ViewModels;
-
+using BetterCms.Module.Pages.Models;
 using BetterCms.Module.Pages.Services;
 
 using BetterCms.Module.Root.Models;
@@ -160,7 +160,7 @@ namespace BetterCms.Module.Blog.Commands.GetBlogPost
                     {
                         model.LiveFromDate = DateTime.Today;
                     }
-                    model.SelectItemCategories = categoryService.GetSelectedCategoriesIds<BlogPost>(id).ToList();
+                    model.SelectItemCategories = categoryService.GetSelectedCategoriesIds<BlogPost, PageCategory>(id).ToList();
                     model.Tags = tagService.GetPageTagNames(id).ToList();
                 }
                 else

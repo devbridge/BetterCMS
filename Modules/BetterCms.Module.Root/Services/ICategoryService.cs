@@ -18,7 +18,9 @@ namespace BetterCms.Module.Root.Services
 
         IEnumerable<LookupKeyValue> GetCategories();
 
-        IEnumerable<Guid> GetSelectedCategoriesIds<TEntity>(Guid? entityId) where TEntity : Entity, ICategorized;
+        IEnumerable<Guid> GetSelectedCategoriesIds<TEntity, TEntityCategory>(Guid? entityId)
+            where TEntity : Entity, ICategorized
+            where TEntityCategory : Entity, IEntityCategory;
         /// <summary>
         /// Saves the category.
         /// </summary>
@@ -40,6 +42,8 @@ namespace BetterCms.Module.Root.Services
 
         void DeleteCategoryTree(Guid id, int version, IPrincipal currentUser);
 
-        void CombineEntityCategories<TEntity>(TEntity entity, IEnumerable<System.Guid> currentCategories) where TEntity : Entity, ICategorized;
+        void CombineEntityCategories<TEntity, TEntityCategory>(TEntity entity, IEnumerable<System.Guid> currentCategories)
+            where TEntity : Entity, ICategorized
+            where TEntityCategory : Entity, IEntityCategory, new();
     }
 }

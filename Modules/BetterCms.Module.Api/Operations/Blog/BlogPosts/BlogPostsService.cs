@@ -155,7 +155,7 @@ namespace BetterCms.Module.Api.Operations.Blog.BlogPosts
                                            CreatedOn = category.CreatedOn,
                                            LastModifiedBy = category.ModifiedByUser,
                                            LastModifiedOn = category.ModifiedOn,
-                                           Name = category.Name
+                                           Name = category.Category.Name
                                        }).ToList();
                 });
             }
